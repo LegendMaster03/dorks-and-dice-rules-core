@@ -84,7 +84,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         if (existing is not null)
         {
             return new RuleMutationResult<RuleConceptSourceBindingView>(
-                ToView(existing, sourceEntity),
+                ToView(existing),
                 Created: false);
         }
 
@@ -100,7 +100,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return new RuleMutationResult<RuleConceptSourceBindingView>(
-            ToView(binding, sourceEntity),
+            ToView(binding),
             Created: true);
     }
 
@@ -126,7 +126,6 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         }
 
         var sourceRevision = await dbContext.SourceEntityRevisions
-            .AsNoTracking()
             .Include(value => value.SourceEntity)
             .SingleOrDefaultAsync(
                 value => value.Id == request.SourceEntityRevisionId,
@@ -334,16 +333,11 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             concept.CreatedByUserId,
             concept.CreatedAt);
 
-    private static RuleConceptSourceBindingView ToView(
-        RuleConceptSourceBinding binding,
-        Domain.Sources.SourceEntity sourceEntity) =>
+    private static RuleConceptSourceBindingView ToView(RuleConceptSourceBinding binding) =>
         new(
             binding.Id,
             binding.RuleConceptId,
-            sourceEntity.Id,
-            sourceEntity.EntityType,
-            sourceEntity.Name,
-            sourceEntity.SourceCode,
+            binding.SourceEntityId,
             binding.CreatedByUserId,
             binding.CreatedAt);
 
