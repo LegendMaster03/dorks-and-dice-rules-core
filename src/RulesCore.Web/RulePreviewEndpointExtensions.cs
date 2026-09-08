@@ -1,7 +1,5 @@
 using RulesCore.Application.Hosting;
 using RulesCore.Application.Rules;
-using RulesCore.Infrastructure.Persistence;
-using RulesCore.Infrastructure.Rules;
 
 namespace RulesCore.Web;
 
@@ -13,7 +11,7 @@ public static class RulePreviewEndpointExtensions
             Guid conceptId,
             SetGlobalRuleDecisionRequest request,
             HttpContext httpContext,
-            RulesCoreDbContext dbContext,
+            IRulePatchPreviewService previews,
             CancellationToken cancellationToken) =>
         {
             var authorizationFailure = RequireGlobalRulesAuthority(
@@ -26,7 +24,7 @@ public static class RulePreviewEndpointExtensions
 
             try
             {
-                var preview = await new RulePatchPreviewService(dbContext).PreviewGlobalAsync(
+                var preview = await previews.PreviewGlobalAsync(
                     conceptId,
                     request,
                     authenticationContext!.User.Id,
@@ -62,7 +60,7 @@ public static class RulePreviewEndpointExtensions
             Guid conceptId,
             SetCampaignRuleDecisionRequest request,
             HttpContext httpContext,
-            RulesCoreDbContext dbContext,
+            IRulePatchPreviewService previews,
             CancellationToken cancellationToken) =>
         {
             var authorizationFailure = RequireCampaignRulesEditAuthority(
@@ -76,7 +74,7 @@ public static class RulePreviewEndpointExtensions
 
             try
             {
-                var preview = await new RulePatchPreviewService(dbContext).PreviewCampaignAsync(
+                var preview = await previews.PreviewCampaignAsync(
                     campaignId,
                     conceptId,
                     request,
