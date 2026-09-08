@@ -80,8 +80,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         if (!CampaignRuleDecisionKinds.All.Contains(decisionKind))
         {
             throw new ArgumentException(
-                $"Decision kind must be '{CampaignRuleDecisionKinds.SelectSource}', " +
-                $"'{CampaignRuleDecisionKinds.InheritGlobal}', or '{CampaignRuleDecisionKinds.JsonMergePatch}'.",
+                $"Unsupported campaign rule decision kind '{request.DecisionKind}'.",
                 nameof(request.DecisionKind));
         }
 
@@ -116,6 +115,8 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
 
         Guid? selectedSourceEntityRevisionId = null;
         NormalizedJsonMergePatch? mergePatch = null;
+        NormalizedJsonRulePatch? structuredPatch = null;
+
         if (decisionKind == CampaignRuleDecisionKinds.SelectSource)
         {
             if (request.SourceEntityRevisionId is null || request.SourceEntityRevisionId == Guid.Empty)
@@ -124,12 +125,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
                     "A source entity revision is required for a select-source campaign decision.",
                     nameof(request.SourceEntityRevisionId));
             }
-            if (request.MergePatch.HasValue)
-            {
-                throw new ArgumentException(
-                    "A select-source campaign decision can not include a merge patch.",
-                    nameof(request.MergePatch));
-            }
+            RejectPatches(request, decisionKind);
 
             var sourceRevision = await dbContext.SourceEntityRevisions
                 .AsNoTracking()
@@ -164,14 +160,9 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
                     "An inherit-global campaign decision can not select a source entity revision.",
                     nameof(request.SourceEntityRevisionId));
             }
-            if (request.MergePatch.HasValue)
-            {
-                throw new ArgumentException(
-                    "An inherit-global campaign decision can not include a merge patch.",
-                    nameof(request.MergePatch));
-            }
+            RejectPatches(request, decisionKind);
         }
-        else
+        else if (decisionKind == CampaignRuleDecisionKinds.JsonMergePatch)
         {
             if (request.SourceEntityRevisionId is not null)
             {
@@ -185,10 +176,37 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
                     "A merge patch is required for a json-merge-patch campaign decision.",
                     nameof(request.MergePatch));
             }
-
+            if (request.StructuredPatch is not null)
+            {
+                throw new ArgumentException(
+                    "A json-merge-patch campaign decision can not include a structured rule patch.",
+                    nameof(request.StructuredPatch));
+            }
             mergePatch = JsonMergePatch.Normalize(request.MergePatch.Value);
         }
+        else
+        {
+            if (request.SourceEntityRevisionId is not null)
+            {
+                throw new ArgumentException(
+                    "A json-rule-patch campaign decision patches the selected global baseline and can not select a separate source revision.",
+                    nameof(request.SourceEntityRevisionId));
+            }
+            if (request.MergePatch.HasValue)
+            {
+                throw new ArgumentException(
+                    "A json-rule-patch campaign decision can not include a legacy merge patch field.",
+                    nameof(request.MergePatch));
+            }
+            structuredPatch = request.StructuredPatch is not null
+                ? JsonRulePatch.Normalize(request.StructuredPatch)
+                : throw new ArgumentException(
+                    "A structured patch is required for a json-rule-patch campaign decision.",
+                    nameof(request.StructuredPatch));
+        }
 
+        var patchJson = structuredPatch?.Json ?? mergePatch?.Json;
+        var patchFingerprint = structuredPatch?.Fingerprint ?? mergePatch?.Fingerprint;
         var latestDecision = await dbContext.CampaignRuleDecisions
             .AsNoTracking()
             .Where(value => value.CampaignId == campaignId && value.RuleConceptId == ruleConceptId)
@@ -198,7 +216,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         if (latestDecision is not null
             && string.Equals(latestDecision.DecisionKind, decisionKind, StringComparison.Ordinal)
             && latestDecision.SelectedSourceEntityRevisionId == selectedSourceEntityRevisionId
-            && string.Equals(latestDecision.PatchFingerprint, mergePatch?.Fingerprint, StringComparison.Ordinal)
+            && string.Equals(latestDecision.PatchFingerprint, patchFingerprint, StringComparison.Ordinal)
             && string.Equals(latestDecision.Note, note, StringComparison.Ordinal))
         {
             await transaction.CommitAsync(cancellationToken);
@@ -213,8 +231,8 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             DecisionNumber = (latestDecision?.DecisionNumber ?? 0) + 1,
             DecisionKind = decisionKind,
             SelectedSourceEntityRevisionId = selectedSourceEntityRevisionId,
-            PatchJson = mergePatch?.Json,
-            PatchFingerprint = mergePatch?.Fingerprint,
+            PatchJson = patchJson,
+            PatchFingerprint = patchFingerprint,
             Note = note,
             CreatedByUserId = actor,
             CreatedAt = DateTimeOffset.UtcNow
@@ -419,22 +437,27 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
 
         using var sourceDocument = JsonDocument.Parse(sourceRevision.RawJson);
         var resolvedDocument = sourceDocument.RootElement.Clone();
-        if (campaignDecision?.DecisionKind != CampaignRuleDecisionKinds.SelectSource
-            && globalDecision.DecisionKind == RuleDecisionKinds.JsonMergePatch)
+        if (campaignDecision?.DecisionKind != CampaignRuleDecisionKinds.SelectSource)
         {
-            resolvedDocument = JsonMergePatch.Apply(resolvedDocument, globalDecision.PatchJson);
+            resolvedDocument = ApplyGlobalPatch(resolvedDocument, globalDecision);
         }
-        if (campaignDecision?.DecisionKind == CampaignRuleDecisionKinds.JsonMergePatch)
+        if (campaignDecision is not null)
         {
-            resolvedDocument = JsonMergePatch.Apply(resolvedDocument, campaignDecision.PatchJson);
+            resolvedDocument = ApplyCampaignPatch(resolvedDocument, campaignDecision);
         }
 
-        JsonElement? globalMergePatch = globalDecision.PatchJson is null
-            ? null
-            : JsonMergePatch.ParsePatch(globalDecision.PatchJson);
-        JsonElement? campaignMergePatch = campaignDecision?.PatchJson is null
-            ? null
-            : JsonMergePatch.ParsePatch(campaignDecision.PatchJson);
+        var globalMergePatch = globalDecision.DecisionKind == RuleDecisionKinds.JsonMergePatch
+            ? JsonMergePatch.ParsePatch(globalDecision.PatchJson)
+            : (JsonElement?)null;
+        var globalStructuredPatch = globalDecision.DecisionKind == RuleDecisionKinds.JsonRulePatch
+            ? JsonRulePatch.ParsePatch(globalDecision.PatchJson)
+            : (JsonElement?)null;
+        var campaignMergePatch = campaignDecision?.DecisionKind == CampaignRuleDecisionKinds.JsonMergePatch
+            ? JsonMergePatch.ParsePatch(campaignDecision.PatchJson)
+            : (JsonElement?)null;
+        var campaignStructuredPatch = campaignDecision?.DecisionKind == CampaignRuleDecisionKinds.JsonRulePatch
+            ? JsonRulePatch.ParsePatch(campaignDecision.PatchJson)
+            : (JsonElement?)null;
 
         return new ResolvedCampaignRuleView(
             campaignId,
@@ -453,12 +476,14 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             globalDecision.DecisionKind,
             globalDecision.PatchFingerprint,
             globalMergePatch,
+            globalStructuredPatch,
             campaignDecision?.Id,
             campaignDecision?.DecisionNumber,
             campaignDecision?.DecisionKind ?? CampaignRuleDecisionKinds.InheritGlobal,
             campaignDecision?.Note,
             campaignDecision?.PatchFingerprint,
             campaignMergePatch,
+            campaignStructuredPatch,
             sourceEntity.Id,
             sourceRevision.Id,
             sourceRevision.RevisionNumber,
@@ -472,6 +497,38 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             edition.Key,
             edition.DisplayName,
             resolvedDocument);
+    }
+
+    private static JsonElement ApplyGlobalPatch(JsonElement source, GlobalRuleDecision decision) =>
+        decision.DecisionKind switch
+        {
+            RuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(source, decision.PatchJson),
+            RuleDecisionKinds.JsonRulePatch => JsonRulePatch.Apply(source, decision.PatchJson),
+            _ => source.Clone()
+        };
+
+    private static JsonElement ApplyCampaignPatch(JsonElement source, CampaignRuleDecision decision) =>
+        decision.DecisionKind switch
+        {
+            CampaignRuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(source, decision.PatchJson),
+            CampaignRuleDecisionKinds.JsonRulePatch => JsonRulePatch.Apply(source, decision.PatchJson),
+            _ => source.Clone()
+        };
+
+    private static void RejectPatches(SetCampaignRuleDecisionRequest request, string decisionKind)
+    {
+        if (request.MergePatch.HasValue)
+        {
+            throw new ArgumentException(
+                $"A {decisionKind} campaign decision can not include a merge patch.",
+                nameof(request.MergePatch));
+        }
+        if (request.StructuredPatch is not null)
+        {
+            throw new ArgumentException(
+                $"A {decisionKind} campaign decision can not include a structured rule patch.",
+                nameof(request.StructuredPatch));
+        }
     }
 
     private static CampaignRulesetSelectionView ToView(
@@ -493,9 +550,12 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         CampaignRuleDecision decision,
         bool created)
     {
-        JsonElement? mergePatch = decision.PatchJson is null
-            ? null
-            : JsonMergePatch.ParsePatch(decision.PatchJson);
+        var mergePatch = decision.DecisionKind == CampaignRuleDecisionKinds.JsonMergePatch
+            ? JsonMergePatch.ParsePatch(decision.PatchJson)
+            : (JsonElement?)null;
+        var structuredPatch = decision.DecisionKind == CampaignRuleDecisionKinds.JsonRulePatch
+            ? JsonRulePatch.ParsePatch(decision.PatchJson)
+            : (JsonElement?)null;
         return new CampaignRuleDecisionView(
             decision.Id,
             decision.CampaignId,
@@ -505,6 +565,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             decision.SelectedSourceEntityRevisionId,
             decision.PatchFingerprint,
             mergePatch,
+            structuredPatch,
             decision.Note,
             decision.CreatedByUserId,
             decision.CreatedAt,
