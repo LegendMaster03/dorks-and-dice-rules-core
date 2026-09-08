@@ -12,8 +12,15 @@ public static class RulesAuthority
         string.Equals(context.SiteMode, DorksAndDiceMode, StringComparison.Ordinal)
         && context.HasGlobalRole(RulesLawyerRole);
 
+    public static bool CanAccessCampaignRules(
+        ToolHostAuthenticationContext context,
+        Guid campaignId) =>
+        string.Equals(context.SiteMode, DorksAndDiceMode, StringComparison.Ordinal)
+        && context.Campaigns.Any(campaign => campaign.Id == campaignId);
+
     public static bool CanEditCampaignRules(
         ToolHostAuthenticationContext context,
         Guid campaignId) =>
-        context.HasCampaignRole(campaignId, CampaignDmRole);
+        CanAccessCampaignRules(context, campaignId)
+        && context.HasCampaignRole(campaignId, CampaignDmRole);
 }
