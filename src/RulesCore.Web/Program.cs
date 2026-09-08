@@ -1,17 +1,30 @@
 using Microsoft.EntityFrameworkCore;
+using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Sources;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("RulesCore");
-if (!string.IsNullOrWhiteSpace(connectionString))
+var hasDatabase = !string.IsNullOrWhiteSpace(connectionString);
+if (hasDatabase)
 {
     builder.Services.AddDbContext<RulesCoreDbContext>(options => options.UseNpgsql(connectionString));
+    builder.Services.AddScoped<IRulesCoreSchemaInitializer, RulesCoreSchemaInitializer>();
+    builder.Services.AddScoped<ISourceImportService, SourceImportService>();
+    builder.Services.AddScoped<ISourceCatalogService, SourceCatalogService>();
 }
 
 builder.Services.AddHealthChecks();
 
 var app = builder.Build();
+
+if (hasDatabase)
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    var initializer = scope.ServiceProvider.GetRequiredService<IRulesCoreSchemaInitializer>();
+    await initializer.InitializeAsync();
+}
 
 app.UseStaticFiles();
 
@@ -38,7 +51,7 @@ app.MapGet("/ready", async (IServiceProvider services, CancellationToken cancell
             statusCode: StatusCodes.Status503ServiceUnavailable);
     }
 
-    return Results.Ok(new { status = "ready", database = "postgresql" });
+    return Results.Ok(new { status = "ready", database = "postgresql", sourceLayer = "ready" });
 });
 
 app.MapGet("/", () => Results.Ok(new
@@ -54,7 +67,7 @@ app.MapGet("/", () => Results.Ok(new
 app.MapGet("/api", () => Results.Ok(new
 {
     service = "Rules Core API",
-    version = "0.1-dev",
+    version = "0.2-dev",
     endpointFamilies = new[]
     {
         "/api/rules",
@@ -64,6 +77,35 @@ app.MapGet("/api", () => Results.Ok(new
         "/api/integration"
     }
 }));
+
+if (hasDatabase)
+{
+    app.MapGet("/api/sources", async (
+        ISourceCatalogService catalog,
+        CancellationToken cancellationToken) =>
+        Results.Ok(await catalog.GetPublicPackagesAsync(cancellationToken)));
+
+    app.MapGet("/api/sources/entities/{entityId:guid}", async (
+        Guid entityId,
+        ISourceCatalogService catalog,
+        CancellationToken cancellationToken) =>
+    {
+        var entity = await catalog.GetLatestPublicEntityAsync(entityId, cancellationToken);
+        return entity is null ? Results.NotFound() : Results.Ok(entity);
+    });
+}
+else
+{
+    app.MapGet("/api/sources", () => Results.Problem(
+        title: "Source Layer is unavailable",
+        detail: "ConnectionStrings:RulesCore is not configured.",
+        statusCode: StatusCodes.Status503ServiceUnavailable));
+
+    app.MapGet("/api/sources/entities/{entityId:guid}", (Guid entityId) => Results.Problem(
+        title: "Source Layer is unavailable",
+        detail: "ConnectionStrings:RulesCore is not configured.",
+        statusCode: StatusCodes.Status503ServiceUnavailable));
+}
 
 app.Run();
 
