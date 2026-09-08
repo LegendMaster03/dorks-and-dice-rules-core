@@ -6,9 +6,10 @@ public static class RuleDecisionKinds
 {
     public const string SelectSource = "select-source";
     public const string JsonMergePatch = "json-merge-patch";
+    public const string JsonRulePatch = "json-rule-patch";
 
     public static readonly IReadOnlySet<string> All = new HashSet<string>(
-        [SelectSource, JsonMergePatch],
+        [SelectSource, JsonMergePatch, JsonRulePatch],
         StringComparer.Ordinal);
 }
 
