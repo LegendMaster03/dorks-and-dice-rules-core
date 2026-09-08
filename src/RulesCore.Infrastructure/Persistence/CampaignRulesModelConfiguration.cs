@@ -7,6 +7,16 @@ internal static class CampaignRulesModelConfiguration
 {
     public static void Configure(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<GlobalRuleDecision>(entity =>
+        {
+            entity.Property(value => value.PatchJson)
+                .HasColumnName("patch_json")
+                .HasColumnType("jsonb");
+            entity.Property(value => value.PatchFingerprint)
+                .HasColumnName("patch_fingerprint")
+                .HasMaxLength(64);
+        });
+
         modelBuilder.Entity<CampaignRulesetSelection>(entity =>
         {
             entity.ToTable("campaign_ruleset_selection");
@@ -39,6 +49,12 @@ internal static class CampaignRulesModelConfiguration
             entity.Property(value => value.DecisionKind).HasColumnName("decision_kind").HasMaxLength(80);
             entity.Property(value => value.SelectedSourceEntityRevisionId)
                 .HasColumnName("selected_source_entity_revision_id");
+            entity.Property(value => value.PatchJson)
+                .HasColumnName("patch_json")
+                .HasColumnType("jsonb");
+            entity.Property(value => value.PatchFingerprint)
+                .HasColumnName("patch_fingerprint")
+                .HasMaxLength(64);
             entity.Property(value => value.Note).HasColumnName("note").HasMaxLength(2000);
             entity.Property(value => value.CreatedByUserId).HasColumnName("created_by_user_id").HasMaxLength(200);
             entity.Property(value => value.CreatedAt).HasColumnName("created_at");
