@@ -52,7 +52,9 @@ Stable `rule_concept` records provide source-independent rule identities. A conc
 
 Global decisions support exact `select-source`, simple `json-merge-patch`, and array-aware `json-rule-patch` behavior. Structured rule patches can combine ordinary object merge/delete semantics with ordered `append`, `remove`, `replace-by-key`, `insert-before`, and `insert-after` operations against JSON Pointer-addressed arrays. Selectors must resolve uniquely for destructive or positional operations, so ambiguous edits fail instead of silently changing the wrong list item. The Source Layer is never modified.
 
-Rules Lawyers can create concepts, bind source entities, set decisions, and publish immutable global ruleset revisions through authenticated Tool Host requests. Global mutation requires both the `dorks-and-dice` site mode and the effective `Rules Lawyer` role.
+Rules Lawyers can preview a candidate decision before saving it. `POST /api/global/rules/concepts/{conceptId}/preview` returns the source/base document, candidate document, normalized patch provenance, and a deterministic structural diff without creating a decision or ruleset revision. Preview requires normal Rules Lawyer change authority and independently enforces restricted-source grants because it returns source-backed content.
+
+Rules Lawyers can then create concepts, bind source entities, set decisions, and publish immutable global ruleset revisions through authenticated Tool Host requests. Global mutation requires both the `dorks-and-dice` site mode and the effective `Rules Lawyer` role.
 
 `GET /api/rules/{conceptKey}` resolves the concept from the latest published ruleset and returns exact decision/source provenance plus patch provenance. The source-backed document is returned only when the caller independently satisfies Source Layer access control. Rules Lawyer authority does not grant restricted source access, and a source grant does not grant Rules Lawyer authority.
 
@@ -64,16 +66,19 @@ Campaigns deliberately select a published global ruleset revision rather than fl
 
 Campaign decisions are append-only and support exact source overrides, explicit return to the selected global baseline, simple merge patches, and array-aware structured patches. Campaign patches compose after any global patch, while `select-source` deliberately bypasses the baseline implementation and pins a different bound source revision.
 
+A campaign DM can preview an override through `POST /api/campaigns/{campaignId}/rules/concepts/{conceptId}/preview`. The preview compares the selected global baseline to the proposed campaign result and does not create a campaign decision or publication. It requires DM authority plus any independent source grants needed to display restricted source-backed content.
+
 Campaign reads require authenticated membership in the requested campaign. Campaign mutation additionally requires the campaign-scoped `DM` role. Source licensing remains independent: campaign membership or DM authority does not grant access to restricted source content, and a source grant does not grant campaign authority.
 
 Current campaign endpoints:
 
 - `PUT /api/campaigns/{campaignId}/rules/baseline`
+- `POST /api/campaigns/{campaignId}/rules/concepts/{conceptId}/preview`
 - `PUT /api/campaigns/{campaignId}/rules/concepts/{conceptId}/decision`
 - `POST /api/campaigns/{campaignId}/rules/publish`
 - `GET /api/campaigns/{campaignId}/rules/{conceptKey}`
 
-See `docs/rules-layer.md` for global and campaign concept identity, patch semantics, publication, migration, authority, and resolution behavior.
+See `docs/rules-layer.md` for global and campaign concept identity, patch semantics, preview/diff, publication, migration, authority, and resolution behavior.
 
 ## Deployment
 
