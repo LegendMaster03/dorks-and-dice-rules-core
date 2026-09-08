@@ -113,12 +113,25 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         ArgumentNullException.ThrowIfNull(request);
         var actor = RequireActor(actorUserId);
         var note = NormalizeOptional(request.Note, 2000, nameof(request.Note));
+        if (request.MergePatch.HasValue && request.StructuredPatch is not null)
+        {
+            throw new ArgumentException(
+                "A global rule decision can not include both a legacy JSON merge patch and a structured rule patch.");
+        }
+
         var mergePatch = request.MergePatch.HasValue
             ? JsonMergePatch.Normalize(request.MergePatch.Value)
             : null;
-        var decisionKind = mergePatch is null
-            ? RuleDecisionKinds.SelectSource
-            : RuleDecisionKinds.JsonMergePatch;
+        var structuredPatch = request.StructuredPatch is not null
+            ? JsonRulePatch.Normalize(request.StructuredPatch)
+            : null;
+        var decisionKind = structuredPatch is not null
+            ? RuleDecisionKinds.JsonRulePatch
+            : mergePatch is not null
+                ? RuleDecisionKinds.JsonMergePatch
+                : RuleDecisionKinds.SelectSource;
+        var patchJson = structuredPatch?.Json ?? mergePatch?.Json;
+        var patchFingerprint = structuredPatch?.Fingerprint ?? mergePatch?.Fingerprint;
 
         await using var transaction = await dbContext.Database.BeginTransactionAsync(
             IsolationLevel.Serializable,
@@ -164,7 +177,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         if (latest is not null
             && latest.DecisionKind == decisionKind
             && latest.SelectedSourceEntityRevisionId == sourceRevision.Id
-            && string.Equals(latest.PatchFingerprint, mergePatch?.Fingerprint, StringComparison.Ordinal)
+            && string.Equals(latest.PatchFingerprint, patchFingerprint, StringComparison.Ordinal)
             && string.Equals(latest.Note, note, StringComparison.Ordinal))
         {
             await transaction.CommitAsync(cancellationToken);
@@ -179,8 +192,8 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             DecisionKind = decisionKind,
             SelectedSourceEntityRevisionId = sourceRevision.Id,
             SelectedSourceEntityRevision = sourceRevision,
-            PatchJson = mergePatch?.Json,
-            PatchFingerprint = mergePatch?.Fingerprint,
+            PatchJson = patchJson,
+            PatchFingerprint = patchFingerprint,
             Note = note,
             CreatedByUserId = actor,
             CreatedAt = DateTimeOffset.UtcNow
@@ -306,12 +319,16 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         var concept = entry.RuleConcept;
 
         using var sourceDocument = JsonDocument.Parse(sourceRevision.RawJson);
-        var resolvedDocument = decision.DecisionKind == RuleDecisionKinds.JsonMergePatch
-            ? JsonMergePatch.Apply(sourceDocument.RootElement, decision.PatchJson)
-            : sourceDocument.RootElement.Clone();
-        JsonElement? mergePatch = decision.PatchJson is null
-            ? null
-            : JsonMergePatch.ParsePatch(decision.PatchJson);
+        var resolvedDocument = ApplyDecisionPatch(
+            sourceDocument.RootElement,
+            decision.DecisionKind,
+            decision.PatchJson);
+        var mergePatch = decision.DecisionKind == RuleDecisionKinds.JsonMergePatch
+            ? JsonMergePatch.ParsePatch(decision.PatchJson)
+            : (JsonElement?)null;
+        var structuredPatch = decision.DecisionKind == RuleDecisionKinds.JsonRulePatch
+            ? JsonRulePatch.ParsePatch(decision.PatchJson)
+            : (JsonElement?)null;
 
         return new ResolvedRuleView(
             concept.Id,
@@ -327,6 +344,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             decision.Note,
             decision.PatchFingerprint,
             mergePatch,
+            structuredPatch,
             sourceEntity.Id,
             sourceRevision.Id,
             sourceRevision.RevisionNumber,
@@ -341,6 +359,16 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             edition.DisplayName,
             resolvedDocument);
     }
+
+    private static JsonElement ApplyDecisionPatch(
+        JsonElement source,
+        string decisionKind,
+        string? patchJson) => decisionKind switch
+    {
+        RuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(source, patchJson),
+        RuleDecisionKinds.JsonRulePatch => JsonRulePatch.Apply(source, patchJson),
+        _ => source.Clone()
+    };
 
     private static RuleConceptView ToView(RuleConcept concept) =>
         new(
@@ -361,9 +389,12 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
 
     private static GlobalRuleDecisionView ToView(GlobalRuleDecision decision)
     {
-        JsonElement? mergePatch = decision.PatchJson is null
-            ? null
-            : JsonMergePatch.ParsePatch(decision.PatchJson);
+        var mergePatch = decision.DecisionKind == RuleDecisionKinds.JsonMergePatch
+            ? JsonMergePatch.ParsePatch(decision.PatchJson)
+            : (JsonElement?)null;
+        var structuredPatch = decision.DecisionKind == RuleDecisionKinds.JsonRulePatch
+            ? JsonRulePatch.ParsePatch(decision.PatchJson)
+            : (JsonElement?)null;
         return new GlobalRuleDecisionView(
             decision.Id,
             decision.RuleConceptId,
@@ -375,6 +406,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             decision.SelectedSourceEntityRevision.Fingerprint,
             decision.PatchFingerprint,
             mergePatch,
+            structuredPatch,
             decision.Note,
             decision.CreatedByUserId,
             decision.CreatedAt);
