@@ -6,9 +6,10 @@ public static class CampaignRuleDecisionKinds
 {
     public const string SelectSource = "select-source";
     public const string InheritGlobal = "inherit-global";
+    public const string JsonMergePatch = "json-merge-patch";
 
     public static readonly IReadOnlySet<string> All = new HashSet<string>(
-        [SelectSource, InheritGlobal],
+        [SelectSource, InheritGlobal, JsonMergePatch],
         StringComparer.Ordinal);
 }
 
@@ -33,6 +34,8 @@ public sealed class CampaignRuleDecision
     public int DecisionNumber { get; set; }
     public string DecisionKind { get; set; } = CampaignRuleDecisionKinds.InheritGlobal;
     public Guid? SelectedSourceEntityRevisionId { get; set; }
+    public string? PatchJson { get; set; }
+    public string? PatchFingerprint { get; set; }
     public string? Note { get; set; }
     public string CreatedByUserId { get; set; } = string.Empty;
     public DateTimeOffset CreatedAt { get; set; }
