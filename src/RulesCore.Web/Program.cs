@@ -21,6 +21,7 @@ if (hasDatabase)
     builder.Services.AddScoped<ISourceGrantService, SourceGrantService>();
     builder.Services.AddScoped<IGlobalRulesService, GlobalRulesService>();
     builder.Services.AddScoped<ICampaignRulesService, CampaignRulesService>();
+    builder.Services.AddScoped<IRulePatchPreviewService, RulePatchPreviewService>();
 }
 
 var toolHostBaseUrl = builder.Configuration["ToolHost:BaseUrl"];
@@ -108,7 +109,7 @@ app.MapGet("/", () => Results.Ok(new
 app.MapGet("/api", () => Results.Ok(new
 {
     service = "Rules Core API",
-    version = "0.5-dev",
+    version = "0.6-dev",
     endpointFamilies = new[]
     {
         "/api/rules",
@@ -485,10 +486,12 @@ else
     app.MapGet("/api/rules/{conceptKey}", (string conceptKey) => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/concepts", () => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/concepts/{conceptId:guid}/bindings", (Guid conceptId) => DatabaseUnavailable("Rules Layer"));
+    app.MapPost("/api/global/rules/concepts/{conceptId:guid}/preview", (Guid conceptId) => DatabaseUnavailable("Rules Layer"));
     app.MapPut("/api/global/rules/concepts/{conceptId:guid}/decision", (Guid conceptId) => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/publish", () => DatabaseUnavailable("Rules Layer"));
     app.MapGet("/api/campaigns/{campaignId:guid}/rules/{conceptKey}", (Guid campaignId, string conceptKey) => DatabaseUnavailable("Campaign Rules Layer"));
     app.MapPut("/api/campaigns/{campaignId:guid}/rules/baseline", (Guid campaignId) => DatabaseUnavailable("Campaign Rules Layer"));
+    app.MapPost("/api/campaigns/{campaignId:guid}/rules/concepts/{conceptId:guid}/preview", (Guid campaignId, Guid conceptId) => DatabaseUnavailable("Campaign Rules Layer"));
     app.MapPut("/api/campaigns/{campaignId:guid}/rules/concepts/{conceptId:guid}/decision", (Guid campaignId, Guid conceptId) => DatabaseUnavailable("Campaign Rules Layer"));
     app.MapPost("/api/campaigns/{campaignId:guid}/rules/publish", (Guid campaignId) => DatabaseUnavailable("Campaign Rules Layer"));
 }
