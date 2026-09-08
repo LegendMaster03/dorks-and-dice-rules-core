@@ -7,9 +7,10 @@ public static class CampaignRuleDecisionKinds
     public const string SelectSource = "select-source";
     public const string InheritGlobal = "inherit-global";
     public const string JsonMergePatch = "json-merge-patch";
+    public const string JsonRulePatch = "json-rule-patch";
 
     public static readonly IReadOnlySet<string> All = new HashSet<string>(
-        [SelectSource, InheritGlobal, JsonMergePatch],
+        [SelectSource, InheritGlobal, JsonMergePatch, JsonRulePatch],
         StringComparer.Ordinal);
 }
 
