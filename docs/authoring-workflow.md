@@ -1,6 +1,6 @@
 # Rules authoring workflow
 
-Rules Core exposes a stateless global authoring workflow for the Dorks & Dice Rules Lawyer UI. The workflow deliberately separates browsing, previewing, saving, and publishing so that inspecting a candidate can never mutate the active ruleset.
+Rules Core exposes stateless authoring workflows for the Dorks & Dice Rules Lawyer UI and campaign DM tooling. The workflows deliberately separate browsing, previewing, saving, and publishing so that inspecting a candidate can never mutate the active ruleset.
 
 ## Global authoring sequence
 
@@ -15,7 +15,7 @@ A Rules Lawyer operating in the `dorks-and-dice` site mode uses the following se
 
 The authoring endpoints do not create draft database records. The client may freely abandon a candidate after preview. Saved decisions remain append-only and publication remains a separate deliberate operation.
 
-## Authoring overview
+## Global authoring overview
 
 `GET /api/global/rules/authoring` returns:
 
@@ -27,7 +27,7 @@ The authoring endpoints do not create draft database records. The client may fre
 
 This lets the UI distinguish concepts that have never been adjudicated, concepts whose latest decision is already published, and concepts with pending saved work.
 
-## Concept authoring state
+## Global concept authoring state
 
 `GET /api/global/rules/authoring/concepts/{conceptId}` returns the concept and all Rules Layer source-binding records. Binding IDs and source-entity IDs are Rules Layer metadata and remain visible to an authorized Rules Lawyer.
 
@@ -37,20 +37,80 @@ Each accessible source includes its immutable revisions ordered newest first. Th
 
 The concept response also includes the latest saved global decision, the decision currently present in the latest published ruleset, the latest publication number, and whether the latest saved decision is unpublished.
 
+## Campaign authoring sequence
+
+A campaign DM uses a parallel workflow while remaining pinned to a deliberately selected global baseline:
+
+1. `GET /api/campaigns/{campaignId}/rules/authoring` to inspect the selected global baseline, latest campaign publication, and pending state.
+2. If no baseline is selected, choose a published global ruleset with `PUT /api/campaigns/{campaignId}/rules/baseline`.
+3. `GET /api/campaigns/{campaignId}/rules/authoring/concepts/{conceptId}` to inspect the baseline implementation, campaign decision state, bindings, and exact accessible source revisions.
+4. Construct a `SetCampaignRuleDecisionRequest` using `inherit-global`, `select-source`, `json-merge-patch`, or `json-rule-patch`.
+5. `POST /api/campaigns/{campaignId}/rules/concepts/{conceptId}/preview` to compare the selected global baseline with the proposed campaign result without saving it.
+6. `PUT /api/campaigns/{campaignId}/rules/concepts/{conceptId}/decision` to append the approved campaign decision.
+7. `POST /api/campaigns/{campaignId}/rules/publish` to publish a new immutable campaign ruleset revision.
+
+Selecting a newer global baseline and saving a campaign override are tracked separately. A DM can therefore see whether a campaign needs publication because its baseline changed, because one or more overrides changed, or both.
+
+## Campaign authoring overview
+
+`GET /api/campaigns/{campaignId}/rules/authoring` returns a DM-safe authoring view. Before a baseline is selected it returns an empty concept list and no publication requirement, allowing the UI to prompt the DM to choose a baseline rather than treating the campaign as an error.
+
+After baseline selection the response includes:
+
+- the current append-only baseline selection and exact global ruleset revision;
+- the latest published campaign ruleset, when one exists;
+- `hasUnpublishedBaselineChange`, which is true when the current baseline selection is not the selection used by the latest campaign publication;
+- `needsPublication`, which is true when the baseline changed or a current-baseline concept has an unpublished campaign decision;
+- counts for current-baseline concepts, concepts with explicit campaign decisions, and pending override decisions;
+- one summary per concept in the current selected global baseline.
+
+Concept summaries identify the baseline global decision, latest campaign decision, campaign decision included in the latest campaign publication, and `hasUnpublishedOverrideChange`.
+
+Only concepts present in the current selected global baseline participate in the overview and pending counts. Historical campaign decisions for concepts no longer present in that baseline remain preserved as history but do not make the current campaign ruleset appear dirty.
+
+## Campaign concept authoring state
+
+`GET /api/campaigns/{campaignId}/rules/authoring/concepts/{conceptId}` returns not-found when the campaign has no selected baseline or when the concept is not part of the current selected baseline.
+
+For a current-baseline concept it returns:
+
+- the campaign and current baseline selection;
+- stable concept identity;
+- the exact global decision pinned by the selected baseline;
+- all Rules Layer source-binding records;
+- exact source revisions the current DM may independently access;
+- a count of restricted bindings whose source metadata is not disclosed;
+- the latest saved campaign decision, when one exists;
+- the campaign decision included in the latest campaign publication, when one exists;
+- separate unpublished-baseline and unpublished-override flags.
+
+The baseline global decision exposes Rules Layer provenance and authored patch metadata, not unrestricted source text. Source-backed candidate documents continue to flow through the preview endpoint, which performs the independent source-access check before returning content.
+
 ## Authorization boundaries
 
-The authoring endpoints require the same global change authority as global mutation:
+Global authoring endpoints require the same global change authority as global mutation:
 
 - authenticated Tool Host context;
 - active site mode `dorks-and-dice`;
 - effective global role `Rules Lawyer`.
 
-Anonymous requests return unauthorized. Authenticated users without Rules Lawyer authority, including a Rules Lawyer operating in another site mode, return forbidden.
+Anonymous global requests return unauthorized. Authenticated users without Rules Lawyer authority, including a Rules Lawyer operating in another site mode, return forbidden.
 
-Source access remains an independent axis. Rules Lawyer authority permits working with Rules Layer identities and decisions, but it does not reveal restricted source descriptive metadata or source-backed preview content. A matching `user_source_grant` is still required for those source details. Conversely, a source grant never grants Rules Lawyer change authority.
+Campaign authoring endpoints require:
+
+- authenticated Tool Host context;
+- active site mode `dorks-and-dice`;
+- explicit membership in the requested campaign;
+- campaign-scoped `DM` role.
+
+Anonymous campaign requests return unauthorized. An authenticated nonmember receives not-found behavior. A campaign Player receives forbidden. A DM operating outside Dorks & Dice mode receives not-found behavior because the campaign Rules Layer is not active in that mode.
+
+Source access remains an independent axis for both workflows. Rules Lawyer or DM authority permits working with Rules Layer identities and decisions, but it does not reveal restricted source descriptive metadata or source-backed preview content. A matching `user_source_grant` is still required for those source details. Conversely, a source grant never grants Rules Lawyer or campaign DM change authority.
 
 ## Publication state
 
-A concept has unpublished changes when its latest append-only decision is not the decision referenced by the latest published global ruleset revision. Previewing does not change that state. Saving a different decision makes it pending; publishing a ruleset containing that decision clears the pending state.
+For the global layer, a concept has unpublished changes when its latest append-only decision is not the decision referenced by the latest published global ruleset revision. Previewing does not change that state. Saving a different decision makes it pending; publishing a ruleset containing that decision clears the pending state.
 
-This state is derived from immutable decision/publication records rather than maintained as a mutable draft flag, so it can not drift from publication history.
+For a campaign, baseline state and override state are independent. `hasUnpublishedBaselineChange` compares the latest baseline selection with the baseline selection pinned by the latest campaign publication. `hasUnpublishedOverrideChange` compares the latest campaign decision for a current-baseline concept with the campaign decision pinned for that concept by the latest campaign publication. `needsPublication` is derived from those two sources of change.
+
+All of this state is derived from immutable decision, selection, and publication records rather than maintained as mutable draft flags, so it can not drift from publication history.
