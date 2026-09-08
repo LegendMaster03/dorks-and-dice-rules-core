@@ -72,17 +72,21 @@ Campaign decisions are append-only and support exact source overrides, explicit 
 
 A campaign DM can preview an override through `POST /api/campaigns/{campaignId}/rules/concepts/{conceptId}/preview`. The preview compares the selected global baseline to the proposed campaign result and does not create a campaign decision or publication. It requires DM authority plus any independent source grants needed to display restricted source-backed content.
 
-Campaign reads require authenticated membership in the requested campaign. Campaign mutation additionally requires the campaign-scoped `DM` role. Source licensing remains independent: campaign membership or DM authority does not grant access to restricted source content, and a source grant does not grant campaign authority.
+Campaign authoring is exposed without mutable server-side drafts. `GET /api/campaigns/{campaignId}/rules/authoring` reports the selected baseline, latest campaign publication, current-baseline concepts, pending override count, and whether publication is required because the baseline or an override changed. `GET /api/campaigns/{campaignId}/rules/authoring/concepts/{conceptId}` returns the exact baseline global decision, latest/published campaign decision state, bindings, and source revisions the DM may independently access. Historical overrides for concepts outside the current selected baseline remain preserved but do not make the current campaign appear pending.
+
+Campaign reads require authenticated membership in the requested campaign. Campaign mutation and authoring additionally require the campaign-scoped `DM` role. Source licensing remains independent: campaign membership or DM authority does not grant access to restricted source content, and a source grant does not grant campaign authority.
 
 Current campaign endpoints:
 
+- `GET /api/campaigns/{campaignId}/rules/authoring`
+- `GET /api/campaigns/{campaignId}/rules/authoring/concepts/{conceptId}`
 - `PUT /api/campaigns/{campaignId}/rules/baseline`
 - `POST /api/campaigns/{campaignId}/rules/concepts/{conceptId}/preview`
 - `PUT /api/campaigns/{campaignId}/rules/concepts/{conceptId}/decision`
 - `POST /api/campaigns/{campaignId}/rules/publish`
 - `GET /api/campaigns/{campaignId}/rules/{conceptKey}`
 
-See `docs/rules-layer.md` for global and campaign concept identity, patch semantics, preview/diff, publication, migration, authority, and resolution behavior.
+See `docs/rules-layer.md` for global and campaign concept identity, patch semantics, preview/diff, publication, migration, authority, and resolution behavior. See `docs/authoring-workflow.md` for both global Rules Lawyer and campaign DM authoring state machines.
 
 ## Deployment
 
