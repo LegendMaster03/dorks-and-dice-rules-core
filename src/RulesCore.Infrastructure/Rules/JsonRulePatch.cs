@@ -102,7 +102,7 @@ public static class JsonRulePatch
         }
 
         var path = RequireText(operation.Path, nameof(operation.Path));
-        if (!path.StartsWith('/', StringComparison.Ordinal))
+        if (!path.StartsWith("/", StringComparison.Ordinal))
         {
             throw new ArgumentException(
                 "An array operation path must be an RFC 6901 JSON Pointer beginning with '/'.",
@@ -272,7 +272,7 @@ public static class JsonRulePatch
 
     private static IReadOnlyList<string> ParsePointer(string path)
     {
-        if (!path.StartsWith('/', StringComparison.Ordinal))
+        if (!path.StartsWith("/", StringComparison.Ordinal))
         {
             throw new InvalidDataException(
                 $"Stored array operation path '{path}' is not a valid JSON Pointer.");
@@ -379,7 +379,7 @@ public static class JsonRulePatch
         return property.GetString()!;
     }
 
-    private static JsonNode ParseRequiredNode(JsonElement operation, string propertyName)
+    private static JsonNode? ParseRequiredNode(JsonElement operation, string propertyName)
     {
         if (!operation.TryGetProperty(propertyName, out var value))
         {
@@ -389,9 +389,8 @@ public static class JsonRulePatch
         return ToNode(value);
     }
 
-    private static JsonNode ToNode(JsonElement value) =>
-        JsonNode.Parse(value.GetRawText())
-        ?? JsonValue.Create((string?)null)!;
+    private static JsonNode? ToNode(JsonElement value) =>
+        JsonNode.Parse(value.GetRawText());
 
     private static void RequireValue(JsonElement? value, string operationKind)
     {
@@ -469,5 +468,5 @@ public static class JsonRulePatch
         }
     }
 
-    private sealed record ArraySelector(string? Key, JsonNode Value);
+    private sealed record ArraySelector(string? Key, JsonNode? Value);
 }
