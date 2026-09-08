@@ -122,6 +122,8 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
             decision_number integer NOT NULL,
             decision_kind varchar(80) NOT NULL,
             selected_source_entity_revision_id uuid NOT NULL,
+            patch_json jsonb NULL,
+            patch_fingerprint varchar(64) NULL,
             note varchar(2000) NULL,
             created_by_user_id varchar(200) NOT NULL,
             created_at timestamp with time zone NOT NULL,
@@ -130,6 +132,12 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
                 REFERENCES rule_concept(rule_concept_id) ON DELETE CASCADE,
             CONSTRAINT fk_global_rule_decision_source_revision FOREIGN KEY (selected_source_entity_revision_id)
                 REFERENCES source_entity_revision(source_entity_revision_id));
+        ALTER TABLE global_rule_decision ADD COLUMN IF NOT EXISTS patch_json jsonb NULL;
+        ALTER TABLE global_rule_decision ADD COLUMN IF NOT EXISTS patch_fingerprint varchar(64) NULL;
+        ALTER TABLE global_rule_decision DROP CONSTRAINT IF EXISTS ck_global_rule_decision_kind;
+        ALTER TABLE global_rule_decision ADD CONSTRAINT ck_global_rule_decision_kind CHECK (
+            (decision_kind = 'select-source' AND patch_json IS NULL AND patch_fingerprint IS NULL)
+            OR (decision_kind = 'json-merge-patch' AND patch_json IS NOT NULL AND patch_fingerprint IS NOT NULL));
         CREATE UNIQUE INDEX IF NOT EXISTS ux_global_rule_decision_concept_number
             ON global_rule_decision(rule_concept_id, decision_number);
         CREATE INDEX IF NOT EXISTS ix_global_rule_decision_source_revision
@@ -187,17 +195,32 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
             decision_number integer NOT NULL,
             decision_kind varchar(80) NOT NULL,
             selected_source_entity_revision_id uuid NULL,
+            patch_json jsonb NULL,
+            patch_fingerprint varchar(64) NULL,
             note varchar(2000) NULL,
             created_by_user_id varchar(200) NOT NULL,
             created_at timestamp with time zone NOT NULL,
             CONSTRAINT pk_campaign_rule_decision PRIMARY KEY (campaign_rule_decision_id),
-            CONSTRAINT ck_campaign_rule_decision_kind CHECK (
-                (decision_kind = 'select-source' AND selected_source_entity_revision_id IS NOT NULL)
-                OR (decision_kind = 'inherit-global' AND selected_source_entity_revision_id IS NULL)),
             CONSTRAINT fk_campaign_rule_decision_concept FOREIGN KEY (rule_concept_id)
                 REFERENCES rule_concept(rule_concept_id),
             CONSTRAINT fk_campaign_rule_decision_source_revision FOREIGN KEY (selected_source_entity_revision_id)
                 REFERENCES source_entity_revision(source_entity_revision_id));
+        ALTER TABLE campaign_rule_decision ADD COLUMN IF NOT EXISTS patch_json jsonb NULL;
+        ALTER TABLE campaign_rule_decision ADD COLUMN IF NOT EXISTS patch_fingerprint varchar(64) NULL;
+        ALTER TABLE campaign_rule_decision DROP CONSTRAINT IF EXISTS ck_campaign_rule_decision_kind;
+        ALTER TABLE campaign_rule_decision ADD CONSTRAINT ck_campaign_rule_decision_kind CHECK (
+            (decision_kind = 'select-source'
+                AND selected_source_entity_revision_id IS NOT NULL
+                AND patch_json IS NULL
+                AND patch_fingerprint IS NULL)
+            OR (decision_kind = 'inherit-global'
+                AND selected_source_entity_revision_id IS NULL
+                AND patch_json IS NULL
+                AND patch_fingerprint IS NULL)
+            OR (decision_kind = 'json-merge-patch'
+                AND selected_source_entity_revision_id IS NULL
+                AND patch_json IS NOT NULL
+                AND patch_fingerprint IS NOT NULL));
         CREATE UNIQUE INDEX IF NOT EXISTS ux_campaign_rule_decision_campaign_concept_number
             ON campaign_rule_decision(campaign_id, rule_concept_id, decision_number);
         CREATE INDEX IF NOT EXISTS ix_campaign_rule_decision_source_revision
