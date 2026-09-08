@@ -207,15 +207,13 @@ public sealed class RuleMergePatchIntegrationTests
             await db.GlobalRuleDecisions.ExecuteDeleteAsync();
             await db.RuleConceptSourceBindings.ExecuteDeleteAsync();
             await db.RuleConcepts.ExecuteDeleteAsync();
+            db.ChangeTracker.Clear();
 
             if (packageId != Guid.Empty)
             {
-                var package = await db.SourcePackages.FindAsync(packageId);
-                if (package is not null)
-                {
-                    db.SourcePackages.Remove(package);
-                    await db.SaveChangesAsync();
-                }
+                await db.SourcePackages
+                    .Where(value => value.Id == packageId)
+                    .ExecuteDeleteAsync();
             }
         }
     }
