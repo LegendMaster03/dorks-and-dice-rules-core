@@ -1,44 +1,48 @@
+import { RulesCoreApi, loadToolHostContext } from "./api.js";
+import { RulesAuthoringApp } from "./authoring.js";
+import { alertNode, clear, describeError, element } from "./ui.js";
+
 const root = document.getElementById("tool-root");
 
 if (!root) {
     throw new Error("Rules Core could not find the Dorks & Dice tool root.");
 }
 
-root.replaceChildren();
+installStylesheet();
+clear(root);
+root.append(element("div", {
+    className: "card card-body text-body-secondary",
+    text: "Loading Rules Core…"
+}));
 
-const card = document.createElement("div");
-card.className = "card card-body";
+try {
+    const hostContext = await loadToolHostContext(root);
+    const api = new RulesCoreApi(hostContext);
+    const [session, campaigns] = await Promise.all([
+        api.getSession(),
+        api.getCampaigns()
+    ]);
 
-const heading = document.createElement("h2");
-heading.className = "h5";
-heading.textContent = "Rules Core";
+    const app = new RulesAuthoringApp(root, api, hostContext, session, campaigns);
+    await app.render();
+} catch (error) {
+    console.error("Rules Core failed to initialize.", error);
+    clear(root);
+    root.append(
+        element("div", { className: "card card-body" },
+            element("h2", { className: "h5", text: "Rules Core unavailable" }),
+            alertNode("danger", describeError(error))));
+}
 
-const description = document.createElement("p");
-description.className = "mb-2";
-description.textContent = "Rules Core is connected through the Dorks & Dice Tool Host.";
-
-const status = document.createElement("p");
-status.className = "mb-0 text-body-secondary";
-status.textContent = "Checking host context…";
-
-card.append(heading, description, status);
-root.append(card);
-
-const contextUrl = root.dataset.toolContextUrl;
-if (!contextUrl) {
-    status.textContent = "Host context endpoint was not supplied.";
-} else {
-    try {
-        const response = await fetch(contextUrl, {
-            credentials: "same-origin",
-            headers: { Accept: "application/json" }
-        });
-
-        status.textContent = response.ok
-            ? "Host context is available."
-            : `Host context returned HTTP ${response.status}.`;
-    } catch (error) {
-        console.error("Rules Core host-context check failed.", error);
-        status.textContent = "Host context could not be reached.";
+function installStylesheet() {
+    const id = "rules-core-module-styles";
+    if (document.getElementById(id)) {
+        return;
     }
+
+    const link = document.createElement("link");
+    link.id = id;
+    link.rel = "stylesheet";
+    link.href = new URL("./rules-core.css", import.meta.url).href;
+    document.head.append(link);
 }
