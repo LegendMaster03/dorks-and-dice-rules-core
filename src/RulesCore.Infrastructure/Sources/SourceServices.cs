@@ -343,24 +343,35 @@ public sealed class SourceImportService(RulesCoreDbContext dbContext) : ISourceI
 
 public sealed class SourceCatalogService(RulesCoreDbContext dbContext) : ISourceCatalogService
 {
-    public async Task<IReadOnlyList<SourcePackageSummary>> GetPublicPackagesAsync(
-        CancellationToken cancellationToken = default) =>
-        await dbContext.SourcePackages
+    public async Task<IReadOnlyList<SourcePackageSummary>> GetAccessiblePackagesAsync(
+        string? userId,
+        CancellationToken cancellationToken = default)
+    {
+        var normalizedUserId = NormalizeUserId(userId);
+
+        return await dbContext.SourcePackages
             .AsNoTracking()
-            .Where(value => value.IsPublic)
+            .Where(value =>
+                value.IsPublic
+                || (normalizedUserId != null
+                    && value.UserGrants.Any(grant => grant.UserId == normalizedUserId)))
             .OrderBy(value => value.DisplayName)
             .Select(value => new SourcePackageSummary(
                 value.Id,
                 value.Key,
                 value.DisplayName,
                 value.Provider,
-                value.License))
+                value.License,
+                value.IsPublic))
             .ToArrayAsync(cancellationToken);
+    }
 
-    public async Task<SourceEntityView?> GetLatestPublicEntityAsync(
+    public async Task<SourceEntityView?> GetLatestAccessibleEntityAsync(
         Guid entityId,
+        string? userId,
         CancellationToken cancellationToken = default)
     {
+        var normalizedUserId = NormalizeUserId(userId);
         var entity = await dbContext.SourceEntities
             .AsNoTracking()
             .Include(value => value.Revisions)
@@ -369,7 +380,10 @@ public sealed class SourceCatalogService(RulesCoreDbContext dbContext) : ISource
                 .ThenInclude(value => value.SourcePackage)
             .SingleOrDefaultAsync(
                 value => value.Id == entityId
-                    && value.SourceEdition.SourceWork.SourcePackage.IsPublic,
+                    && (value.SourceEdition.SourceWork.SourcePackage.IsPublic
+                        || (normalizedUserId != null
+                            && value.SourceEdition.SourceWork.SourcePackage.UserGrants
+                                .Any(grant => grant.UserId == normalizedUserId))),
                 cancellationToken);
 
         if (entity is null)
@@ -403,5 +417,89 @@ public sealed class SourceCatalogService(RulesCoreDbContext dbContext) : ISource
             edition.Key,
             edition.DisplayName,
             document.RootElement.Clone());
+    }
+
+    private static string? NormalizeUserId(string? userId) =>
+        string.IsNullOrWhiteSpace(userId) ? null : userId.Trim();
+}
+
+public sealed class SourceGrantService(RulesCoreDbContext dbContext) : ISourceGrantService
+{
+    public async Task GrantAsync(
+        string userId,
+        Guid sourcePackageId,
+        CancellationToken cancellationToken = default)
+    {
+        var normalizedUserId = RequireUserId(userId);
+        var packageExists = await dbContext.SourcePackages
+            .AnyAsync(value => value.Id == sourcePackageId, cancellationToken);
+        if (!packageExists)
+        {
+            throw new KeyNotFoundException($"Source package '{sourcePackageId}' does not exist.");
+        }
+
+        var existing = await dbContext.UserSourceGrants
+            .AnyAsync(
+                value => value.UserId == normalizedUserId
+                    && value.SourcePackageId == sourcePackageId,
+                cancellationToken);
+        if (existing)
+        {
+            return;
+        }
+
+        dbContext.UserSourceGrants.Add(new UserSourceGrant
+        {
+            Id = Guid.NewGuid(),
+            SourcePackageId = sourcePackageId,
+            UserId = normalizedUserId,
+            GrantedAt = DateTimeOffset.UtcNow
+        });
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<bool> RevokeAsync(
+        string userId,
+        Guid sourcePackageId,
+        CancellationToken cancellationToken = default)
+    {
+        var normalizedUserId = RequireUserId(userId);
+        var grant = await dbContext.UserSourceGrants
+            .SingleOrDefaultAsync(
+                value => value.UserId == normalizedUserId
+                    && value.SourcePackageId == sourcePackageId,
+                cancellationToken);
+        if (grant is null)
+        {
+            return false;
+        }
+
+        dbContext.UserSourceGrants.Remove(grant);
+        await dbContext.SaveChangesAsync(cancellationToken);
+        return true;
+    }
+
+    public async Task<bool> HasGrantAsync(
+        string userId,
+        Guid sourcePackageId,
+        CancellationToken cancellationToken = default)
+    {
+        var normalizedUserId = RequireUserId(userId);
+        return await dbContext.UserSourceGrants
+            .AsNoTracking()
+            .AnyAsync(
+                value => value.UserId == normalizedUserId
+                    && value.SourcePackageId == sourcePackageId,
+                cancellationToken);
+    }
+
+    private static string RequireUserId(string userId)
+    {
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            throw new ArgumentException("User ID can not be blank.", nameof(userId));
+        }
+
+        return userId.Trim();
     }
 }
