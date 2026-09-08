@@ -20,6 +20,16 @@ jobs:
         with:
           dotnet-version: "10.0.x"
 
+      - name: Validate browser modules
+        run: |
+          for file in \
+            src/RulesCore.Web/wwwroot/app.js \
+            src/RulesCore.Web/wwwroot/api.js \
+            src/RulesCore.Web/wwwroot/ui.js \
+            src/RulesCore.Web/wwwroot/authoring.js; do
+            node --input-type=module --check < "$file"
+          done
+
       - name: Start disposable PostgreSQL
         run: |
           docker rm -f dorks-and-dice-rules-core-validate-postgres 2>/dev/null || true
