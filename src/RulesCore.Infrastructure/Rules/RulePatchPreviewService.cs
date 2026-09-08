@@ -142,6 +142,10 @@ public sealed class RulePatchPreviewService(RulesCoreDbContext dbContext) : IRul
             request,
             normalizedUserId,
             cancellationToken);
+        if (candidate.InaccessibleSource)
+        {
+            return null;
+        }
 
         JsonElement previewDocument;
         Guid effectiveSourceRevisionId;
@@ -214,7 +218,14 @@ public sealed class RulePatchPreviewService(RulesCoreDbContext dbContext) : IRul
                     cancellationToken);
                 if (sourceRevision is null)
                 {
-                    return new CampaignCandidate(decisionKind, null, null, null, null, null);
+                    return new CampaignCandidate(
+                        decisionKind,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        InaccessibleSource: true);
                 }
 
                 var sourceIsBound = await dbContext.RuleConceptSourceBindings
@@ -235,7 +246,8 @@ public sealed class RulePatchPreviewService(RulesCoreDbContext dbContext) : IRul
                     null,
                     null,
                     null,
-                    null);
+                    null,
+                    InaccessibleSource: false);
             }
 
             case CampaignRuleDecisionKinds.InheritGlobal:
@@ -246,7 +258,7 @@ public sealed class RulePatchPreviewService(RulesCoreDbContext dbContext) : IRul
                         nameof(request.SourceEntityRevisionId));
                 }
                 RejectPatches(request, decisionKind);
-                return new CampaignCandidate(decisionKind, null, null, null, null, null);
+                return new CampaignCandidate(decisionKind, null, null, null, null, null, false);
 
             case CampaignRuleDecisionKinds.JsonMergePatch:
             {
@@ -271,7 +283,8 @@ public sealed class RulePatchPreviewService(RulesCoreDbContext dbContext) : IRul
                     patch.Json,
                     patch.Fingerprint,
                     JsonMergePatch.ParsePatch(patch.Json),
-                    null);
+                    null,
+                    false);
             }
 
             case CampaignRuleDecisionKinds.JsonRulePatch:
@@ -294,7 +307,8 @@ public sealed class RulePatchPreviewService(RulesCoreDbContext dbContext) : IRul
                     patch.Json,
                     patch.Fingerprint,
                     null,
-                    JsonRulePatch.ParsePatch(patch.Json));
+                    JsonRulePatch.ParsePatch(patch.Json),
+                    false);
             }
 
             default:
@@ -362,10 +376,8 @@ public sealed class RulePatchPreviewService(RulesCoreDbContext dbContext) : IRul
         string decisionKind,
         string? patchJson) => decisionKind switch
     {
-        RuleDecisionKinds.JsonMergePatch or CampaignRuleDecisionKinds.JsonMergePatch =>
-            JsonMergePatch.Apply(source, patchJson),
-        RuleDecisionKinds.JsonRulePatch or CampaignRuleDecisionKinds.JsonRulePatch =>
-            JsonRulePatch.Apply(source, patchJson),
+        RuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(source, patchJson),
+        RuleDecisionKinds.JsonRulePatch => JsonRulePatch.Apply(source, patchJson),
         _ => source.Clone()
     };
 
@@ -435,5 +447,6 @@ public sealed class RulePatchPreviewService(RulesCoreDbContext dbContext) : IRul
         string? PatchJson,
         string? PatchFingerprint,
         JsonElement? MergePatch,
-        JsonElement? StructuredPatch);
+        JsonElement? StructuredPatch,
+        bool InaccessibleSource);
 }
