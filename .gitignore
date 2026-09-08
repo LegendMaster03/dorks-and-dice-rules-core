@@ -1,0 +1,44 @@
+# Build outputs
+[Bb]in/
+[Oo]bj/
+artifacts/
+
+# Visual Studio / IDE
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Test results / coverage
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+secrets.json
+appsettings.Local.json
+
+# Rules Core runtime content. Source payloads and user-provided material are never source-controlled.
+data/cache/
+data/uploads/
+data/sources/
+data/blobs/
+imports/
+source-cache/
+
+# Local databases
+*.db
+*.db-shm
+*.db-wal
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
