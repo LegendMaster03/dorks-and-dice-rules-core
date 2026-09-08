@@ -12,7 +12,8 @@ public sealed record BindRuleConceptSourceRequest(
 
 public sealed record SetGlobalRuleDecisionRequest(
     Guid SourceEntityRevisionId,
-    string? Note);
+    string? Note,
+    JsonElement? MergePatch = null);
 
 public sealed record RuleMutationResult<T>(
     T Value,
@@ -42,6 +43,8 @@ public sealed record GlobalRuleDecisionView(
     Guid SourceEntityId,
     int SourceRevisionNumber,
     string SourceFingerprint,
+    string? PatchFingerprint,
+    JsonElement? MergePatch,
     string? Note,
     string CreatedByUserId,
     DateTimeOffset CreatedAt);
@@ -67,6 +70,8 @@ public sealed record ResolvedRuleView(
     int GlobalDecisionNumber,
     string DecisionKind,
     string? DecisionNote,
+    string? GlobalPatchFingerprint,
+    JsonElement? GlobalMergePatch,
     Guid SourceEntityId,
     Guid SourceEntityRevisionId,
     int SourceRevisionNumber,
