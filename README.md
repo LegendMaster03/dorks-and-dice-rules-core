@@ -46,6 +46,18 @@ Grant mutation and source import remain internal application services for now; t
 
 See `docs/source-layer.md` for the persistence, fingerprinting, provenance, and access boundaries.
 
+## Global Rules Layer
+
+Stable `rule_concept` records provide source-independent rule identities. A concept can bind one or more source-specific entities, while append-only global decisions select an exact immutable source revision. Reimporting changed source material therefore does not silently alter an already-adjudicated rule.
+
+Rules Lawyers can create concepts, bind source entities, set the current source-selection decision, and publish immutable global ruleset revisions through authenticated Tool Host requests. Global mutation requires both the `dorks-and-dice` site mode and the effective `Rules Lawyer` role.
+
+`GET /api/rules/{conceptKey}` resolves the concept from the latest published ruleset and returns exact decision/source provenance. The source document is returned only when the caller independently satisfies Source Layer access control. Rules Lawyer authority does not grant restricted source access, and a source grant does not grant Rules Lawyer authority.
+
+Publishing the same effective decisions twice is idempotent. Source changes become visible in the resolved ruleset only after a Rules Lawyer selects the new source revision and publishes a new ruleset revision.
+
+See `docs/rules-layer.md` for concept identity, decision history, publication, authority, and resolution behavior.
+
 ## Deployment
 
 Pushes to `main` trigger `.github/workflows/deploy.yml`, which follows the same self-hosted deployment pattern as the main Dorks & Dice site. The workflow runs the test suite against disposable PostgreSQL 18, builds and smoke-tests `dorks-and-dice-rules-core:latest`, then recreates the production container through Docker Compose.
