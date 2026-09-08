@@ -81,9 +81,21 @@ public static class JsonMergePatch
                 continue;
             }
 
-            targetObject[property.Key] = property.Value is JsonObject
-                ? ApplyNode(targetObject[property.Key], property.Value)
-                : property.Value.DeepClone();
+            if (property.Value is JsonObject patchChild)
+            {
+                if (targetObject[property.Key] is JsonObject targetChild)
+                {
+                    ApplyNode(targetChild, patchChild);
+                }
+                else
+                {
+                    targetObject[property.Key] = ApplyNode(null, patchChild);
+                }
+
+                continue;
+            }
+
+            targetObject[property.Key] = property.Value.DeepClone();
         }
 
         return targetObject;
