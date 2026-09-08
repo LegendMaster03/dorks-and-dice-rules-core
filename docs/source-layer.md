@@ -4,15 +4,18 @@ The Source Layer is the immutable record of what imported source material says b
 
 ## Persistence model
 
-The first vertical slice stores five relational identities in PostgreSQL:
+The current vertical slice stores five source identities plus independent user grants in PostgreSQL:
 
 1. `source_package` - an acquired/imported package and its distribution metadata.
 2. `source_work` - a work contained by the package.
 3. `source_edition` - an edition/release of that work.
 4. `source_entity` - a source-specific entity identity within an edition.
 5. `source_entity_revision` - immutable JSON revisions of that entity.
+6. `user_source_grant` - a stable Dorks & Dice user ID's permission to access a restricted package.
 
 Package, work, and edition keys are normalized at the application boundary. Source entity identity is based on the 5e.tools array/property name plus source code, entity name, and an upstream `uniqueId`/`id` when one is present. The database ID is the local persistent identifier; the natural key and revision fingerprint provide stable content identity.
+
+Source grants deliberately do not contain global or campaign roles. They answer only whether a specific site identity may access a specific source package.
 
 ## Lossless 5e.tools ingestion
 
@@ -24,20 +27,28 @@ Source package/work/edition registration metadata is immutable after first regis
 
 ## Read API boundary
 
-The initial read endpoints are:
+The read endpoints are:
 
-- `GET /api/sources` - lists public source packages.
-- `GET /api/sources/entities/{entityId}` - returns the latest revision of a public source entity with package/work/edition provenance and the preserved source document.
+- `GET /api/sources` - lists all packages accessible in the current request context.
+- `GET /api/sources/entities/{entityId}` - returns the latest accessible source entity revision with package/work/edition provenance and the preserved source document.
 
-Only packages explicitly marked public are exposed by these endpoints. Private/restricted packages return the same not-found behavior as a missing entity. This is deliberately narrower than the final authorization model.
+Anonymous/direct requests can access only packages explicitly marked public. When a request arrives through the authenticated Dorks & Dice Tool gateway, Rules Core redeems the host-issued ticket to obtain the stable user ID and includes private packages having a matching `user_source_grant`.
 
-There is no unauthenticated source-import HTTP endpoint. Imports currently enter through the application service so a future mutation endpoint can be placed behind the Dorks & Dice Tool Host identity contract and Rules Core source-access checks rather than creating a temporary insecure write surface.
+A private entity without a grant returns the same not-found result as a missing entity. This prevents the source API from becoming an oracle for restricted package existence.
 
-## Authorization still to add
+## Source grants
 
-`IsPublic` is only the open-content boundary for this first slice. Restricted content will use separate acquisition and per-user source-grant records. Those grants must remain independent of Rules Lawyer or campaign editing authority:
+`ISourceGrantService` provides idempotent grant, revoke, and grant-check operations inside the application boundary. A grant is keyed by `(user_id, source_package_id)` and is deleted when revoked. Package deletion cascades to its grants.
 
-- Dorks & Dice determines whether an identity may adjudicate/change rules.
+Grant management is not exposed as a public HTTP mutation endpoint yet. The eventual write workflow must establish why the user is entitled to the source and then create the grant without conflating that decision with Rules Layer edit authority.
+
+The two authorization axes remain independent:
+
+- Dorks & Dice determines whether an identity may adjudicate/change global or campaign rules.
 - Rules Core determines whether that identity may read a restricted source.
 
-A later slice will add those grants and authenticated Tool Host introspection before restricted source documents are exposed through the API.
+A user can therefore be a Rules Lawyer without access to a private source, or have access to that source without being allowed to adjudicate global rules.
+
+## Import boundary
+
+There is still no unauthenticated source-import HTTP endpoint. Imports enter through the application service until the acquisition/import workflow is designed around authenticated Tool Host identity and explicit source entitlement. This avoids creating a temporary write surface that would later need to be removed.
