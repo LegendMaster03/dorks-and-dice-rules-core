@@ -1,0 +1,24 @@
+.rules-core-app {
+    --rules-core-code-max-height: 24rem;
+}
+
+.rules-core-app .rules-core-code {
+    max-height: var(--rules-core-code-max-height);
+    overflow: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.rules-core-app .rules-core-patch-input {
+    min-height: 14rem;
+    resize: vertical;
+}
+
+.rules-core-app table td,
+.rules-core-app table th {
+    vertical-align: middle;
+}
+
+.rules-core-app details > summary {
+    cursor: pointer;
+}
