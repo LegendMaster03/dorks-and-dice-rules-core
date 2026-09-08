@@ -48,19 +48,21 @@ See `docs/source-layer.md` for the persistence, fingerprinting, provenance, and 
 
 ## Global Rules Layer
 
-Stable `rule_concept` records provide source-independent rule identities. A concept can bind one or more source-specific entities, while append-only global decisions select an exact immutable source revision. Reimporting changed source material therefore does not silently alter an already-adjudicated rule.
+Stable `rule_concept` records provide source-independent rule identities. A concept can bind one or more source-specific entities, while append-only global decisions pin an exact immutable source revision. Reimporting changed source material therefore does not silently alter an already-adjudicated rule.
 
-Rules Lawyers can create concepts, bind source entities, set the current source-selection decision, and publish immutable global ruleset revisions through authenticated Tool Host requests. Global mutation requires both the `dorks-and-dice` site mode and the effective `Rules Lawyer` role.
+Global decisions support both exact `select-source` and Rules Layer-authored `json-merge-patch` behavior. A merge patch uses an exact source revision as its immutable base, then applies object-level additions, replacements, recursive object merges, property deletion through `null`, and complete array replacement. The Source Layer is never modified.
 
-`GET /api/rules/{conceptKey}` resolves the concept from the latest published ruleset and returns exact decision/source provenance. The source document is returned only when the caller independently satisfies Source Layer access control. Rules Lawyer authority does not grant restricted source access, and a source grant does not grant Rules Lawyer authority.
+Rules Lawyers can create concepts, bind source entities, set decisions, and publish immutable global ruleset revisions through authenticated Tool Host requests. Global mutation requires both the `dorks-and-dice` site mode and the effective `Rules Lawyer` role.
 
-Publishing the same effective decisions twice is idempotent. Source changes become visible in the resolved ruleset only after a Rules Lawyer selects the new source revision and publishes a new ruleset revision.
+`GET /api/rules/{conceptKey}` resolves the concept from the latest published ruleset and returns exact decision/source provenance plus any merge-patch provenance. The source-backed document is returned only when the caller independently satisfies Source Layer access control. Rules Lawyer authority does not grant restricted source access, and a source grant does not grant Rules Lawyer authority.
+
+Publishing the same effective decisions twice is idempotent. Source changes become visible in the resolved ruleset only after a Rules Lawyer deliberately creates a decision against the new source revision and publishes a new ruleset revision.
 
 ## Campaign Rules Layer
 
 Campaigns deliberately select a published global ruleset revision rather than floating with `latest`. Selecting a newer baseline does not affect the campaign's active rules until its DM publishes a new immutable campaign ruleset revision.
 
-Campaign decisions are append-only and currently support exact source overrides plus explicit return to the selected global baseline. A campaign override remains pinned to its selected immutable source revision across later source imports and global publications until the DM changes the decision.
+Campaign decisions are append-only and support exact source overrides, explicit return to the selected global baseline, and campaign `json-merge-patch` composition. Campaign patches apply after any global merge patch, while `select-source` deliberately bypasses the baseline implementation and pins a different bound source revision.
 
 Campaign reads require authenticated membership in the requested campaign. Campaign mutation additionally requires the campaign-scoped `DM` role. Source licensing remains independent: campaign membership or DM authority does not grant access to restricted source content, and a source grant does not grant campaign authority.
 
@@ -71,7 +73,7 @@ Current campaign endpoints:
 - `POST /api/campaigns/{campaignId}/rules/publish`
 - `GET /api/campaigns/{campaignId}/rules/{conceptKey}`
 
-See `docs/rules-layer.md` for global and campaign concept identity, publication, migration, authority, and resolution behavior.
+See `docs/rules-layer.md` for global and campaign concept identity, merge-patch semantics, publication, migration, authority, and resolution behavior.
 
 ## Deployment
 
