@@ -20,6 +20,7 @@ if (hasDatabase)
     builder.Services.AddScoped<ISourceCatalogService, SourceCatalogService>();
     builder.Services.AddScoped<ISourceGrantService, SourceGrantService>();
     builder.Services.AddScoped<IGlobalRulesService, GlobalRulesService>();
+    builder.Services.AddScoped<ICampaignRulesService, CampaignRulesService>();
 }
 
 var toolHostBaseUrl = builder.Configuration["ToolHost:BaseUrl"];
@@ -89,7 +90,8 @@ app.MapGet("/ready", async (IServiceProvider services, CancellationToken cancell
         database = "postgresql",
         sourceLayer = "ready",
         sourceAccess = "ready",
-        globalRulesLayer = "ready"
+        globalRulesLayer = "ready",
+        campaignRulesLayer = "ready"
     });
 });
 
@@ -106,7 +108,7 @@ app.MapGet("/", () => Results.Ok(new
 app.MapGet("/api", () => Results.Ok(new
 {
     service = "Rules Core API",
-    version = "0.4-dev",
+    version = "0.5-dev",
     endpointFamilies = new[]
     {
         "/api/rules",
@@ -325,6 +327,154 @@ if (hasDatabase)
                 statusCode: StatusCodes.Status409Conflict);
         }
     });
+
+    app.MapGet("/api/campaigns/{campaignId:guid}/rules/{conceptKey}", async (
+        Guid campaignId,
+        string conceptKey,
+        HttpContext httpContext,
+        ICampaignRulesService rules,
+        CancellationToken cancellationToken) =>
+    {
+        var authorizationFailure = RequireCampaignRulesReadAuthority(
+            httpContext,
+            campaignId,
+            out var authenticationContext);
+        if (authorizationFailure is not null)
+        {
+            return authorizationFailure;
+        }
+
+        try
+        {
+            var resolved = await rules.ResolveLatestAsync(
+                campaignId,
+                conceptKey,
+                authenticationContext!.User.Id,
+                cancellationToken);
+            return resolved is null ? Results.NotFound() : Results.Ok(resolved);
+        }
+        catch (ArgumentException exception)
+        {
+            return Results.Problem(
+                title: "Invalid campaign rule request",
+                detail: exception.Message,
+                statusCode: StatusCodes.Status400BadRequest);
+        }
+    });
+
+    app.MapPut("/api/campaigns/{campaignId:guid}/rules/baseline", async (
+        Guid campaignId,
+        SelectCampaignRulesetBaselineRequest request,
+        HttpContext httpContext,
+        ICampaignRulesService rules,
+        CancellationToken cancellationToken) =>
+    {
+        var authorizationFailure = RequireCampaignRulesEditAuthority(
+            httpContext,
+            campaignId,
+            out var authenticationContext);
+        if (authorizationFailure is not null)
+        {
+            return authorizationFailure;
+        }
+
+        try
+        {
+            return Results.Ok(await rules.SelectBaselineAsync(
+                campaignId,
+                request,
+                authenticationContext!.User.Id,
+                cancellationToken));
+        }
+        catch (ArgumentException exception)
+        {
+            return Results.Problem(
+                title: "Invalid campaign baseline",
+                detail: exception.Message,
+                statusCode: StatusCodes.Status400BadRequest);
+        }
+        catch (KeyNotFoundException)
+        {
+            return Results.NotFound();
+        }
+    });
+
+    app.MapPut("/api/campaigns/{campaignId:guid}/rules/concepts/{conceptId:guid}/decision", async (
+        Guid campaignId,
+        Guid conceptId,
+        SetCampaignRuleDecisionRequest request,
+        HttpContext httpContext,
+        ICampaignRulesService rules,
+        CancellationToken cancellationToken) =>
+    {
+        var authorizationFailure = RequireCampaignRulesEditAuthority(
+            httpContext,
+            campaignId,
+            out var authenticationContext);
+        if (authorizationFailure is not null)
+        {
+            return authorizationFailure;
+        }
+
+        try
+        {
+            return Results.Ok(await rules.SetDecisionAsync(
+                campaignId,
+                conceptId,
+                request,
+                authenticationContext!.User.Id,
+                cancellationToken));
+        }
+        catch (ArgumentException exception)
+        {
+            return Results.Problem(
+                title: "Invalid campaign rule decision",
+                detail: exception.Message,
+                statusCode: StatusCodes.Status400BadRequest);
+        }
+        catch (KeyNotFoundException)
+        {
+            return Results.NotFound();
+        }
+        catch (InvalidOperationException exception)
+        {
+            return Results.Problem(
+                title: "Campaign rule decision conflict",
+                detail: exception.Message,
+                statusCode: StatusCodes.Status409Conflict);
+        }
+    });
+
+    app.MapPost("/api/campaigns/{campaignId:guid}/rules/publish", async (
+        Guid campaignId,
+        HttpContext httpContext,
+        ICampaignRulesService rules,
+        CancellationToken cancellationToken) =>
+    {
+        var authorizationFailure = RequireCampaignRulesEditAuthority(
+            httpContext,
+            campaignId,
+            out var authenticationContext);
+        if (authorizationFailure is not null)
+        {
+            return authorizationFailure;
+        }
+
+        try
+        {
+            return Results.Ok(await rules.PublishAsync(
+                campaignId,
+                authenticationContext!.User.Id,
+                cancellationToken));
+        }
+        catch (InvalidOperationException exception)
+        {
+            return Results.Problem(
+                title: "Campaign ruleset publication conflict",
+                detail: exception.Message,
+                statusCode: StatusCodes.Status409Conflict);
+        }
+    });
 }
 else
 {
@@ -335,6 +485,10 @@ else
     app.MapPost("/api/global/rules/concepts/{conceptId:guid}/bindings", (Guid conceptId) => DatabaseUnavailable("Rules Layer"));
     app.MapPut("/api/global/rules/concepts/{conceptId:guid}/decision", (Guid conceptId) => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/publish", () => DatabaseUnavailable("Rules Layer"));
+    app.MapGet("/api/campaigns/{campaignId:guid}/rules/{conceptKey}", (Guid campaignId, string conceptKey) => DatabaseUnavailable("Campaign Rules Layer"));
+    app.MapPut("/api/campaigns/{campaignId:guid}/rules/baseline", (Guid campaignId) => DatabaseUnavailable("Campaign Rules Layer"));
+    app.MapPut("/api/campaigns/{campaignId:guid}/rules/concepts/{conceptId:guid}/decision", (Guid campaignId, Guid conceptId) => DatabaseUnavailable("Campaign Rules Layer"));
+    app.MapPost("/api/campaigns/{campaignId:guid}/rules/publish", (Guid campaignId) => DatabaseUnavailable("Campaign Rules Layer"));
 }
 
 app.Run();
@@ -350,6 +504,41 @@ static IResult? RequireGlobalRulesAuthority(
     }
 
     return RulesAuthority.CanEditGlobalRules(authenticationContext)
+        ? null
+        : Results.StatusCode(StatusCodes.Status403Forbidden);
+}
+
+static IResult? RequireCampaignRulesReadAuthority(
+    HttpContext httpContext,
+    Guid campaignId,
+    out ToolHostAuthenticationContext? authenticationContext)
+{
+    authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
+    if (authenticationContext is null)
+    {
+        return Results.Unauthorized();
+    }
+
+    return RulesAuthority.CanAccessCampaignRules(authenticationContext, campaignId)
+        ? null
+        : Results.NotFound();
+}
+
+static IResult? RequireCampaignRulesEditAuthority(
+    HttpContext httpContext,
+    Guid campaignId,
+    out ToolHostAuthenticationContext? authenticationContext)
+{
+    var readFailure = RequireCampaignRulesReadAuthority(
+        httpContext,
+        campaignId,
+        out authenticationContext);
+    if (readFailure is not null)
+    {
+        return readFailure;
+    }
+
+    return RulesAuthority.CanEditCampaignRules(authenticationContext!, campaignId)
         ? null
         : Results.StatusCode(StatusCodes.Status403Forbidden);
 }
