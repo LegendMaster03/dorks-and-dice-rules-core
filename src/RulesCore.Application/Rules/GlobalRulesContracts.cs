@@ -30,9 +30,6 @@ public sealed record RuleConceptSourceBindingView(
     Guid Id,
     Guid RuleConceptId,
     Guid SourceEntityId,
-    string SourceEntityType,
-    string SourceEntityName,
-    string SourceCode,
     string CreatedByUserId,
     DateTimeOffset CreatedAt);
 
