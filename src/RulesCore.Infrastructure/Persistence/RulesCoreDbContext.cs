@@ -17,6 +17,10 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
     public DbSet<GlobalRuleDecision> GlobalRuleDecisions => Set<GlobalRuleDecision>();
     public DbSet<RulesetRevision> RulesetRevisions => Set<RulesetRevision>();
     public DbSet<RulesetRevisionEntry> RulesetRevisionEntries => Set<RulesetRevisionEntry>();
+    public DbSet<CampaignRulesetSelection> CampaignRulesetSelections => Set<CampaignRulesetSelection>();
+    public DbSet<CampaignRuleDecision> CampaignRuleDecisions => Set<CampaignRuleDecision>();
+    public DbSet<CampaignRulesetRevision> CampaignRulesetRevisions => Set<CampaignRulesetRevision>();
+    public DbSet<CampaignRulesetRevisionEntry> CampaignRulesetRevisionEntries => Set<CampaignRulesetRevisionEntry>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -237,5 +241,7 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
                 .HasForeignKey(value => value.SourceEntityRevisionId)
                 .OnDelete(DeleteBehavior.Restrict);
         });
+
+        CampaignRulesModelConfiguration.Configure(modelBuilder);
     }
 }
