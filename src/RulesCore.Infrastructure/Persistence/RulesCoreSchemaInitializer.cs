@@ -137,7 +137,8 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
         ALTER TABLE global_rule_decision DROP CONSTRAINT IF EXISTS ck_global_rule_decision_kind;
         ALTER TABLE global_rule_decision ADD CONSTRAINT ck_global_rule_decision_kind CHECK (
             (decision_kind = 'select-source' AND patch_json IS NULL AND patch_fingerprint IS NULL)
-            OR (decision_kind = 'json-merge-patch' AND patch_json IS NOT NULL AND patch_fingerprint IS NOT NULL));
+            OR (decision_kind = 'json-merge-patch' AND patch_json IS NOT NULL AND patch_fingerprint IS NOT NULL)
+            OR (decision_kind = 'json-rule-patch' AND patch_json IS NOT NULL AND patch_fingerprint IS NOT NULL));
         CREATE UNIQUE INDEX IF NOT EXISTS ux_global_rule_decision_concept_number
             ON global_rule_decision(rule_concept_id, decision_number);
         CREATE INDEX IF NOT EXISTS ix_global_rule_decision_source_revision
@@ -218,6 +219,10 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
                 AND patch_json IS NULL
                 AND patch_fingerprint IS NULL)
             OR (decision_kind = 'json-merge-patch'
+                AND selected_source_entity_revision_id IS NULL
+                AND patch_json IS NOT NULL
+                AND patch_fingerprint IS NOT NULL)
+            OR (decision_kind = 'json-rule-patch'
                 AND selected_source_entity_revision_id IS NULL
                 AND patch_json IS NOT NULL
                 AND patch_fingerprint IS NOT NULL));
