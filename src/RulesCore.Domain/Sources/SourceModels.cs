@@ -11,6 +11,7 @@ public sealed class SourcePackage
     public DateTimeOffset CreatedAt { get; set; }
 
     public ICollection<SourceWork> Works { get; set; } = new List<SourceWork>();
+    public ICollection<UserSourceGrant> UserGrants { get; set; } = new List<UserSourceGrant>();
 }
 
 public sealed class SourceWork
@@ -61,4 +62,14 @@ public sealed class SourceEntityRevision
     public DateTimeOffset ImportedAt { get; set; }
 
     public SourceEntity SourceEntity { get; set; } = null!;
+}
+
+public sealed class UserSourceGrant
+{
+    public Guid Id { get; set; }
+    public Guid SourcePackageId { get; set; }
+    public string UserId { get; set; } = string.Empty;
+    public DateTimeOffset GrantedAt { get; set; }
+
+    public SourcePackage SourcePackage { get; set; } = null!;
 }
