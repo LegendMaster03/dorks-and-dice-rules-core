@@ -13,6 +13,7 @@ public sealed class RuleConcept
     public string Key { get; set; } = string.Empty;
     public string EntityType { get; set; } = string.Empty;
     public string DisplayName { get; set; } = string.Empty;
+    public string CreatedByUserId { get; set; } = string.Empty;
     public DateTimeOffset CreatedAt { get; set; }
 
     public ICollection<RuleConceptSourceBinding> SourceBindings { get; set; } = new List<RuleConceptSourceBinding>();
