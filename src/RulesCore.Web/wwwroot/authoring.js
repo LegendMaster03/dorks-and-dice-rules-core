@@ -13,6 +13,7 @@ import {
 
 const RULES_LAWYER_ROLE = "Rules Lawyer";
 const CAMPAIGN_DM_ROLE = "DM";
+const DORKS_MODE = "dorks-and-dice";
 
 export class RulesAuthoringApp {
     constructor(root, api, hostContext, session, campaigns) {
@@ -21,10 +22,11 @@ export class RulesAuthoringApp {
         this.hostContext = hostContext;
         this.session = session;
         this.campaigns = Array.isArray(campaigns) ? campaigns : [];
-        this.dmCampaigns = this.campaigns.filter(campaign => campaign.role === CAMPAIGN_DM_ROLE);
-        this.canEditGlobal = hostContext.siteMode === "dorks-and-dice"
+        this.dmCampaigns = this.campaigns.filter(value => value.role === CAMPAIGN_DM_ROLE);
+        this.canEditGlobal = hostContext.siteMode === DORKS_MODE
             && (session.globalRoles ?? []).includes(RULES_LAWYER_ROLE);
-        this.activeView = this.canEditGlobal ? "global" : (this.dmCampaigns.length ? "campaign" : "none");
+        this.canEditCampaign = hostContext.siteMode === DORKS_MODE && this.dmCampaigns.length > 0;
+        this.activeView = this.canEditGlobal ? "global" : (this.canEditCampaign ? "campaign" : "none");
         this.activeCampaignId = this.dmCampaigns[0]?.id ?? null;
     }
 
@@ -36,64 +38,74 @@ export class RulesAuthoringApp {
         if (this.activeView === "none") {
             this.root.append(alertNode(
                 "secondary",
-                "This account can open Rules Core, but it does not currently have Rules Lawyer authority or DM authority for an enabled campaign in Dorks & Dice mode."));
+                "This account does not currently have Rules Lawyer authority or DM authority for an enabled campaign in Dorks & Dice mode."));
             return;
         }
 
+        const nav = this.renderNavigation();
         const body = element("div", { className: "mt-3" });
-        this.root.append(this.renderNavigation(), body);
+        this.root.append(nav, body);
         await this.renderActiveView(body);
     }
 
     renderHeader() {
-        const title = element("div", { className: "d-flex flex-wrap align-items-start justify-content-between gap-2" },
-            element("div", {},
-                element("h2", { className: "h4 mb-1", text: "Rules Core" }),
-                element("p", {
-                    className: "text-body-secondary mb-0",
-                    text: "Browse, preview, save, and publish Dorks & Dice rule decisions."
-                })),
-            element("div", { className: "text-end small" },
-                element("div", { className: "fw-semibold", text: this.session.user?.displayName ?? "Signed-in user" }),
-                element("div", { className: "text-body-secondary", text: `Mode: ${this.hostContext.siteMode}` })));
+        const card = element("div", { className: "card card-body" });
+        const row = element("div", {
+            className: "d-flex flex-wrap align-items-start justify-content-between gap-2"
+        });
 
-        return element("div", { className: "card card-body" }, title);
+        const title = element("div");
+        title.append(
+            element("h2", { className: "h4 mb-1", text: "Rules Core" }),
+            element("p", {
+                className: "text-body-secondary mb-0",
+                text: "Browse, preview, save, and publish rule decisions."
+            }));
+
+        const user = element("div", { className: "text-end small" });
+        user.append(
+            element("div", {
+                className: "fw-semibold",
+                text: this.session.user?.displayName ?? "Signed-in user"
+            }),
+            element("div", {
+                className: "text-body-secondary",
+                text: `Mode: ${this.hostContext.siteMode}`
+            }));
+
+        row.append(title, user);
+        card.append(row);
+        return card;
     }
 
     renderNavigation() {
         const nav = element("div", { className: "d-flex flex-wrap gap-2 align-items-center" });
 
         if (this.canEditGlobal) {
-            nav.append(element("button", {
-                type: "button",
-                className: `btn ${this.activeView === "global" ? "btn-primary" : "btn-outline-primary"}`,
-                text: "Global Rules",
-                onClick: async () => {
-                    this.activeView = "global";
-                    await this.render();
-                }
-            }));
+            nav.append(this.navButton("Global Rules", "global"));
         }
-
-        if (this.dmCampaigns.length) {
-            nav.append(element("button", {
-                type: "button",
-                className: `btn ${this.activeView === "campaign" ? "btn-primary" : "btn-outline-primary"}`,
-                text: "Campaign Rules",
-                onClick: async () => {
-                    this.activeView = "campaign";
-                    await this.render();
-                }
-            }));
+        if (this.canEditCampaign) {
+            nav.append(this.navButton("Campaign Rules", "campaign"));
         }
 
         return nav;
     }
 
+    navButton(label, view) {
+        return element("button", {
+            type: "button",
+            className: `btn ${this.activeView === view ? "btn-primary" : "btn-outline-primary"}`,
+            text: label,
+            onClick: async () => {
+                this.activeView = view;
+                await this.render();
+            }
+        });
+    }
+
     async renderActiveView(container) {
         clear(container);
         container.append(this.loadingCard("Loading authoring state…"));
-
         try {
             if (this.activeView === "global") {
                 await this.renderGlobalOverview(container);
@@ -110,176 +122,116 @@ export class RulesAuthoringApp {
         const overview = await this.api.getGlobalAuthoringOverview();
         clear(container);
 
+        const summary = element("div", { className: "card card-body mb-3" });
+        const top = element("div", {
+            className: "d-flex flex-wrap justify-content-between align-items-start gap-3"
+        });
         const publication = overview.latestPublishedRuleset;
-        const summary = element("div", { className: "card card-body mb-3" },
-            element("div", { className: "d-flex flex-wrap justify-content-between align-items-start gap-3" },
-                element("div", {},
-                    element("h3", { className: "h5 mb-2", text: "Global authoring" }),
-                    definitionList([
-                        ["Concepts", String(overview.conceptCount)],
-                        ["With decisions", String(overview.conceptsWithDecisions)],
-                        ["Pending decisions", String(overview.pendingDecisionCount)],
-                        ["Published revision", publication ? `#${publication.revisionNumber}` : "None"]
-                    ])),
-                element("button", {
-                    type: "button",
-                    className: "btn btn-success",
-                    text: overview.pendingDecisionCount > 0 ? "Publish pending rules" : "Publish ruleset",
-                    onClick: async event => this.publishGlobal(event.currentTarget, container)
-                })));
+
+        const metrics = element("div");
+        metrics.append(
+            element("h3", { className: "h5 mb-2", text: "Global authoring" }),
+            definitionList([
+                ["Concepts", String(overview.conceptCount)],
+                ["With decisions", String(overview.conceptsWithDecisions)],
+                ["Pending decisions", String(overview.pendingDecisionCount)],
+                ["Published revision", publication ? `#${publication.revisionNumber}` : "None"]
+            ]));
+
+        const publish = element("button", {
+            type: "button",
+            className: "btn btn-success",
+            text: overview.pendingDecisionCount > 0 ? "Publish pending rules" : "Publish ruleset",
+            onClick: async event => this.publishGlobal(event.currentTarget, container)
+        });
+        top.append(metrics, publish);
+        summary.append(top);
         container.append(summary);
 
         if (!overview.concepts.length) {
             container.append(alertNode(
                 "secondary",
-                "No rule concepts exist yet. Concept creation and source binding are still backend operations in this UI slice."));
+                "No rule concepts exist yet. Concept creation and source binding are not exposed in this UI slice."));
             return;
         }
 
-        const table = element("div", { className: "card" },
-            element("div", { className: "table-responsive" },
-                this.renderGlobalConceptTable(overview.concepts, container)));
-        container.append(table);
-    }
-
-    renderGlobalConceptTable(concepts, container) {
         const table = element("table", { className: "table table-hover align-middle mb-0" });
-        const head = element("thead", {},
-            element("tr", {},
-                element("th", { text: "Rule" }),
-                element("th", { text: "Type" }),
-                element("th", { text: "Bindings" }),
-                element("th", { text: "Decision" }),
-                element("th", { text: "State" }),
-                element("th", { className: "text-end", text: "" })));
+        const head = element("thead");
+        const headRow = element("tr");
+        for (const text of ["Rule", "Type", "Bindings", "Decision", "State", ""]) {
+            headRow.append(element("th", { text }));
+        }
+        head.append(headRow);
+
         const body = element("tbody");
+        for (const concept of overview.concepts) {
+            const row = element("tr");
+            const nameCell = element("td");
+            nameCell.append(
+                element("div", { className: "fw-semibold", text: concept.displayName }),
+                element("div", {
+                    className: "small text-body-secondary font-monospace",
+                    text: concept.key
+                }));
+            row.append(nameCell);
+            row.append(element("td", { text: concept.entityType }));
+            row.append(element("td", { text: String(concept.bindingCount) }));
+            row.append(element("td", {
+                text: concept.latestDecisionNumber
+                    ? `#${concept.latestDecisionNumber} · ${concept.latestDecisionKind}`
+                    : "—"
+            }));
 
-        for (const concept of concepts) {
-            const state = concept.hasUnpublishedChanges
-                ? badge("Pending", "warning")
-                : concept.latestDecisionId
-                    ? badge("Published", "success")
-                    : badge("Needs decision", "secondary");
-            const decision = concept.latestDecisionNumber
-                ? `#${concept.latestDecisionNumber} · ${concept.latestDecisionKind}`
-                : "—";
+            const stateCell = element("td");
+            if (concept.hasUnpublishedChanges) {
+                stateCell.append(badge("Pending", "warning"));
+            } else if (concept.latestDecisionId) {
+                stateCell.append(badge("Published", "success"));
+            } else {
+                stateCell.append(badge("Needs decision", "secondary"));
+            }
+            row.append(stateCell);
 
-            body.append(element("tr", {},
-                element("td", {},
-                    element("div", { className: "fw-semibold", text: concept.displayName }),
-                    element("div", { className: "small text-body-secondary font-monospace", text: concept.key })),
-                element("td", { text: concept.entityType }),
-                element("td", { text: String(concept.bindingCount) }),
-                element("td", { text: decision }),
-                element("td", {}, state),
-                element("td", { className: "text-end" },
-                    element("button", {
-                        type: "button",
-                        className: "btn btn-sm btn-outline-primary",
-                        text: "Open",
-                        onClick: async () => this.renderGlobalConcept(container, concept.id)
-                    }))));
+            const actionCell = element("td", { className: "text-end" });
+            actionCell.append(element("button", {
+                type: "button",
+                className: "btn btn-sm btn-outline-primary",
+                text: "Open",
+                onClick: async () => this.renderGlobalConcept(container, concept.id)
+            }));
+            row.append(actionCell);
+            body.append(row);
         }
 
         table.append(head, body);
-        return table;
+        container.append(element("div", { className: "card" },
+            element("div", { className: "table-responsive" }, table)));
     }
 
     async renderGlobalConcept(container, conceptId) {
         clear(container);
-        container.append(this.loadingCard("Loading rule concept…"));
+        container.append(this.backButton(async () => this.renderGlobalOverview(container)));
+        const loading = this.loadingCard("Loading rule concept…");
+        container.append(loading);
 
         try {
             const detail = await this.api.getGlobalAuthoringConcept(conceptId);
-            clear(container);
-            container.append(this.backButton(async () => this.renderGlobalOverview(container)));
+            loading.remove();
             container.append(this.renderConceptSummary(detail, "global"));
-            container.append(this.renderGlobalDecisionEditor(detail, container));
+            container.append(this.createDecisionEditor("global", detail, container));
         } catch (error) {
-            clear(container);
-            container.append(this.backButton(async () => this.renderGlobalOverview(container)));
+            loading.remove();
             container.append(alertNode("danger", describeError(error)));
         }
-    }
-
-    renderConceptSummary(detail, scope) {
-        const concept = detail.concept;
-        const sourceSummary = detail.accessibleSources.length
-            ? `${detail.accessibleSources.length} accessible source${detail.accessibleSources.length === 1 ? "" : "s"}`
-            : "No accessible sources";
-        const restricted = detail.restrictedBindingCount
-            ? ` · ${detail.restrictedBindingCount} restricted binding${detail.restrictedBindingCount === 1 ? "" : "s"}`
-            : "";
-
-        const stateBadges = element("div", { className: "d-flex flex-wrap gap-2" });
-        if (scope === "global") {
-            stateBadges.append(detail.hasUnpublishedChanges
-                ? badge("Unpublished decision", "warning")
-                : badge("No unpublished decision", "success"));
-        } else {
-            if (detail.hasUnpublishedBaselineChange) {
-                stateBadges.append(badge("Baseline migration pending", "warning"));
-            }
-            if (detail.hasUnpublishedOverrideChange) {
-                stateBadges.append(badge("Override pending", "warning"));
-            }
-            if (!detail.hasUnpublishedBaselineChange && !detail.hasUnpublishedOverrideChange) {
-                stateBadges.append(badge("Published", "success"));
-            }
-        }
-
-        return element("div", { className: "card card-body mb-3" },
-            element("div", { className: "d-flex flex-wrap justify-content-between gap-3" },
-                element("div", {},
-                    element("h3", { className: "h5 mb-1", text: concept.displayName }),
-                    element("div", { className: "font-monospace small text-body-secondary mb-2", text: concept.key }),
-                    element("p", { className: "mb-0", text: `${sourceSummary}${restricted}` })),
-                stateBadges));
-    }
-
-    renderGlobalDecisionEditor(detail, container) {
-        const editor = this.createDecisionEditor({
-            scope: "global",
-            accessibleSources: detail.accessibleSources,
-            currentDecision: detail.latestDecision,
-            baselineDecision: null
-        });
-
-        editor.previewButton.addEventListener("click", async () => {
-            await this.runEditorAction(
-                editor,
-                "Previewing…",
-                () => this.api.previewGlobalDecision(detail.concept.id, this.buildGlobalPayload(editor)),
-                preview => this.renderPreview(editor.result, preview));
-        });
-
-        editor.saveButton.addEventListener("click", async () => {
-            await this.runEditorAction(
-                editor,
-                "Saving…",
-                () => this.api.saveGlobalDecision(detail.concept.id, this.buildGlobalPayload(editor)),
-                async decision => {
-                    editor.result.replaceChildren(alertNode(
-                        "success",
-                        decision.created === false
-                            ? "The latest decision already matches this candidate."
-                            : `Saved decision #${decision.decisionNumber}. It is not active until publication.`));
-                    await this.renderGlobalConcept(container, detail.concept.id);
-                });
-        });
-
-        return editor.card;
     }
 
     async publishGlobal(button, container) {
         setButtonBusy(button, true, "Publishing…");
         try {
             const result = await this.api.publishGlobalRules();
-            const message = result.createdRevision === false
+            window.alert(result.createdRevision === false
                 ? `Global ruleset revision #${result.revisionNumber} is already current.`
-                : `Published global ruleset revision #${result.revisionNumber}.`;
-            clear(container);
-            container.append(alertNode("success", message));
+                : `Published global ruleset revision #${result.revisionNumber}.`);
             await this.renderGlobalOverview(container);
         } catch (error) {
             window.alert(describeError(error));
@@ -305,74 +257,94 @@ export class RulesAuthoringApp {
         const campaign = this.dmCampaigns.find(value => value.id === this.activeCampaignId);
         const baseline = overview.selectedBaseline;
         const published = overview.latestPublishedRuleset;
+        const summary = element("div", { className: "card card-body mb-3" });
+        const top = element("div", {
+            className: "d-flex flex-wrap justify-content-between align-items-start gap-3"
+        });
 
-        container.append(element("div", { className: "card card-body mb-3" },
-            element("div", { className: "d-flex flex-wrap justify-content-between align-items-start gap-3" },
-                element("div", {},
-                    element("h3", { className: "h5 mb-2", text: campaign?.name ?? "Campaign" }),
-                    definitionList([
-                        ["Selected global baseline", baseline ? `#${baseline.rulesetRevisionNumber}` : "None"],
-                        ["Published campaign revision", published ? `#${published.revisionNumber}` : "None"],
-                        ["Concepts", String(overview.conceptCount)],
-                        ["Overrides", String(overview.conceptsWithOverrides)],
-                        ["Pending overrides", String(overview.pendingOverrideCount)]
-                    ])),
-                element("div", { className: "d-flex flex-column gap-2 align-items-end" },
-                    overview.hasUnpublishedBaselineChange ? badge("Baseline migration pending", "warning") : null,
-                    overview.needsPublication ? badge("Publication required", "warning") : badge("Published", "success"),
-                    element("button", {
-                        type: "button",
-                        className: "btn btn-success mt-1",
-                        text: "Publish campaign rules",
-                        disabled: !baseline,
-                        onClick: async event => this.publishCampaign(event.currentTarget, container)
-                    }))));
+        const metrics = element("div");
+        metrics.append(
+            element("h3", { className: "h5 mb-2", text: campaign?.name ?? "Campaign" }),
+            definitionList([
+                ["Selected global baseline", baseline ? `#${baseline.rulesetRevisionNumber}` : "None"],
+                ["Published campaign revision", published ? `#${published.revisionNumber}` : "None"],
+                ["Concepts", String(overview.conceptCount)],
+                ["Overrides", String(overview.conceptsWithOverrides)],
+                ["Pending overrides", String(overview.pendingOverrideCount)]
+            ]));
+
+        const actions = element("div", { className: "d-flex flex-column gap-2 align-items-end" });
+        if (overview.hasUnpublishedBaselineChange) {
+            actions.append(badge("Baseline migration pending", "warning"));
+        }
+        actions.append(overview.needsPublication
+            ? badge("Publication required", "warning")
+            : badge("Published", "success"));
+        actions.append(element("button", {
+            type: "button",
+            className: "btn btn-success mt-1",
+            text: "Publish campaign rules",
+            disabled: !baseline,
+            onClick: async event => this.publishCampaign(event.currentTarget, container)
+        }));
+
+        top.append(metrics, actions);
+        summary.append(top);
+        container.append(summary);
 
         if (!baseline) {
             container.append(alertNode(
                 "info",
-                "This campaign has not selected a global ruleset baseline yet. Baseline discovery and migration selection will be the next campaign UI slice."));
-            return;
-        }
-
-        if (!overview.concepts.length) {
-            container.append(alertNode("secondary", "The selected baseline contains no rule concepts."));
+                "This campaign has not selected a global ruleset baseline yet. Baseline discovery and migration selection are not exposed in this UI slice."));
             return;
         }
 
         const table = element("table", { className: "table table-hover align-middle mb-0" });
-        table.append(element("thead", {},
-            element("tr", {},
-                element("th", { text: "Rule" }),
-                element("th", { text: "Global baseline" }),
-                element("th", { text: "Campaign override" }),
-                element("th", { text: "State" }),
-                element("th", { className: "text-end", text: "" }))));
+        const head = element("thead");
+        const headRow = element("tr");
+        for (const text of ["Rule", "Global baseline", "Campaign override", "State", ""]) {
+            headRow.append(element("th", { text }));
+        }
+        head.append(headRow);
         const body = element("tbody");
 
         for (const concept of overview.concepts) {
-            const overrideText = concept.latestCampaignDecisionNumber
-                ? `#${concept.latestCampaignDecisionNumber} · ${concept.latestCampaignDecisionKind}`
-                : "Inherit global";
-            body.append(element("tr", {},
-                element("td", {},
-                    element("div", { className: "fw-semibold", text: concept.displayName }),
-                    element("div", { className: "small text-body-secondary font-monospace", text: concept.key })),
-                element("td", { text: `#${concept.baselineGlobalDecisionNumber} · ${concept.baselineGlobalDecisionKind}` }),
-                element("td", { text: overrideText }),
-                element("td", {}, concept.hasUnpublishedOverrideChange
-                    ? badge("Pending", "warning")
-                    : badge("Published", "success")),
-                element("td", { className: "text-end" },
-                    element("button", {
-                        type: "button",
-                        className: "btn btn-sm btn-outline-primary",
-                        text: "Open",
-                        onClick: async () => this.renderCampaignConcept(container, concept.id)
-                    }))));
+            const row = element("tr");
+            const nameCell = element("td");
+            nameCell.append(
+                element("div", { className: "fw-semibold", text: concept.displayName }),
+                element("div", {
+                    className: "small text-body-secondary font-monospace",
+                    text: concept.key
+                }));
+            row.append(nameCell);
+            row.append(element("td", {
+                text: `#${concept.baselineGlobalDecisionNumber} · ${concept.baselineGlobalDecisionKind}`
+            }));
+            row.append(element("td", {
+                text: concept.latestCampaignDecisionNumber
+                    ? `#${concept.latestCampaignDecisionNumber} · ${concept.latestCampaignDecisionKind}`
+                    : "Inherit global"
+            }));
+            const state = element("td");
+            state.append(concept.hasUnpublishedOverrideChange
+                ? badge("Pending", "warning")
+                : badge("Published", "success"));
+            row.append(state);
+            const action = element("td", { className: "text-end" });
+            action.append(element("button", {
+                type: "button",
+                className: "btn btn-sm btn-outline-primary",
+                text: "Open",
+                onClick: async () => this.renderCampaignConcept(container, concept.id)
+            }));
+            row.append(action);
+            body.append(row);
         }
-        table.append(body);
-        container.append(element("div", { className: "card" }, element("div", { className: "table-responsive" }, table)));
+
+        table.append(head, body);
+        container.append(element("div", { className: "card" },
+            element("div", { className: "table-responsive" }, table)));
     }
 
     renderCampaignSelector(container) {
@@ -387,15 +359,15 @@ export class RulesAuthoringApp {
 
         for (const campaign of this.dmCampaigns) {
             const option = element("option", { value: campaign.id, text: campaign.name });
-            if (campaign.id === this.activeCampaignId) {
-                option.selected = true;
-            }
+            option.selected = campaign.id === this.activeCampaignId;
             select.append(option);
         }
 
-        return element("div", { className: "card card-body mb-3" },
+        const card = element("div", { className: "card card-body mb-3" });
+        card.append(
             element("label", { className: "form-label fw-semibold", text: "Campaign" }),
             select);
+        return card;
     }
 
     async renderCampaignConcept(container, conceptId) {
@@ -408,61 +380,20 @@ export class RulesAuthoringApp {
             const detail = await this.api.getCampaignAuthoringConcept(this.activeCampaignId, conceptId);
             loading.remove();
             container.append(this.renderConceptSummary(detail, "campaign"));
-            container.append(this.renderCampaignDecisionEditor(detail, container));
+            container.append(this.createDecisionEditor("campaign", detail, container));
         } catch (error) {
             loading.remove();
             container.append(alertNode("danger", describeError(error)));
         }
     }
 
-    renderCampaignDecisionEditor(detail, container) {
-        const editor = this.createDecisionEditor({
-            scope: "campaign",
-            accessibleSources: detail.accessibleSources,
-            currentDecision: detail.latestCampaignDecision,
-            baselineDecision: detail.baselineGlobalDecision
-        });
-
-        editor.previewButton.addEventListener("click", async () => {
-            await this.runEditorAction(
-                editor,
-                "Previewing…",
-                () => this.api.previewCampaignDecision(
-                    detail.campaignId,
-                    detail.concept.id,
-                    this.buildCampaignPayload(editor)),
-                preview => this.renderPreview(editor.result, preview));
-        });
-
-        editor.saveButton.addEventListener("click", async () => {
-            await this.runEditorAction(
-                editor,
-                "Saving…",
-                () => this.api.saveCampaignDecision(
-                    detail.campaignId,
-                    detail.concept.id,
-                    this.buildCampaignPayload(editor)),
-                async decision => {
-                    editor.result.replaceChildren(alertNode(
-                        "success",
-                        decision.created === false
-                            ? "The latest campaign decision already matches this candidate."
-                            : `Saved campaign decision #${decision.decisionNumber}. It is not active until publication.`));
-                    await this.renderCampaignConcept(container, detail.concept.id);
-                });
-        });
-
-        return editor.card;
-    }
-
     async publishCampaign(button, container) {
         setButtonBusy(button, true, "Publishing…");
         try {
             const result = await this.api.publishCampaignRules(this.activeCampaignId);
-            const message = result.createdRevision === false
+            window.alert(result.createdRevision === false
                 ? `Campaign ruleset revision #${result.revisionNumber} is already current.`
-                : `Published campaign ruleset revision #${result.revisionNumber}.`;
-            window.alert(message);
+                : `Published campaign ruleset revision #${result.revisionNumber}.`);
             await this.renderCampaignOverview(container);
         } catch (error) {
             window.alert(describeError(error));
@@ -471,14 +402,57 @@ export class RulesAuthoringApp {
         }
     }
 
-    createDecisionEditor({ scope, accessibleSources, currentDecision, baselineDecision }) {
-        const form = element("div", { className: "card card-body mb-3" });
-        form.append(element("h3", { className: "h5", text: scope === "global" ? "Decision editor" : "Campaign override editor" }));
+    renderConceptSummary(detail, scope) {
+        const card = element("div", { className: "card card-body mb-3" });
+        const row = element("div", {
+            className: "d-flex flex-wrap justify-content-between gap-3"
+        });
+        const info = element("div");
+        info.append(
+            element("h3", { className: "h5 mb-1", text: detail.concept.displayName }),
+            element("div", {
+                className: "font-monospace small text-body-secondary mb-2",
+                text: detail.concept.key
+            }),
+            element("p", {
+                className: "mb-0",
+                text: `${detail.accessibleSources.length} accessible source(s) · ${detail.restrictedBindingCount} restricted binding(s)`
+            }));
 
-        if (scope === "campaign" && baselineDecision) {
-            form.append(alertNode(
+        const state = element("div", { className: "d-flex flex-wrap gap-2" });
+        if (scope === "global") {
+            state.append(detail.hasUnpublishedChanges
+                ? badge("Unpublished decision", "warning")
+                : badge("No unpublished decision", "success"));
+        } else {
+            if (detail.hasUnpublishedBaselineChange) {
+                state.append(badge("Baseline migration pending", "warning"));
+            }
+            if (detail.hasUnpublishedOverrideChange) {
+                state.append(badge("Override pending", "warning"));
+            }
+            if (!detail.hasUnpublishedBaselineChange && !detail.hasUnpublishedOverrideChange) {
+                state.append(badge("Published", "success"));
+            }
+        }
+
+        row.append(info, state);
+        card.append(row);
+        return card;
+    }
+
+    createDecisionEditor(scope, detail, container) {
+        const current = scope === "global" ? detail.latestDecision : detail.latestCampaignDecision;
+        const card = element("div", { className: "card card-body mb-3" });
+        card.append(element("h3", {
+            className: "h5",
+            text: scope === "global" ? "Decision editor" : "Campaign override editor"
+        }));
+
+        if (scope === "campaign") {
+            card.append(alertNode(
                 "secondary",
-                `Selected global baseline uses decision #${baselineDecision.decisionNumber} (${baselineDecision.decisionKind}).`));
+                `Selected global baseline uses decision #${detail.baselineGlobalDecision.decisionNumber} (${detail.baselineGlobalDecision.decisionKind}).`));
         }
 
         const mode = element("select", { className: "form-select" });
@@ -498,21 +472,7 @@ export class RulesAuthoringApp {
             mode.append(element("option", { value, text: label }));
         }
 
-        const source = element("select", { className: "form-select" });
-        source.append(element("option", { value: "", text: accessibleSources.length ? "Select source revision…" : "No accessible source revisions" }));
-        for (const sourceEntity of accessibleSources) {
-            const group = element("optgroup", {
-                attributes: { label: `${sourceEntity.name} · ${sourceEntity.editionDisplayName} · ${sourceEntity.sourceCode}` }
-            });
-            for (const revision of sourceEntity.revisions) {
-                group.append(element("option", {
-                    value: revision.id,
-                    text: `Revision ${revision.revisionNumber} · ${shortFingerprint(revision.fingerprint)} · ${formatDate(revision.importedAt)}`
-                }));
-            }
-            source.append(group);
-        }
-
+        const source = this.renderSourceRevisionSelect(detail.accessibleSources);
         const note = element("textarea", {
             className: "form-control",
             rows: 2,
@@ -523,22 +483,31 @@ export class RulesAuthoringApp {
             rows: 10
         });
         const patchHelp = element("div", { className: "form-text" });
-        const patchGroup = element("div", { className: "mb-3" },
+        const patchGroup = element("div", { className: "mb-3" });
+        patchGroup.append(
             element("label", { className: "form-label fw-semibold", text: "Patch JSON" }),
             patch,
             patchHelp);
-        const sourceGroup = element("div", { className: "mb-3" },
+
+        const sourceGroup = element("div", { className: "mb-3" });
+        sourceGroup.append(
             element("label", { className: "form-label fw-semibold", text: "Source revision" }),
             source);
 
-        form.append(
-            element("div", { className: "row g-3 mb-3" },
-                element("div", { className: "col-lg-6" },
-                    element("label", { className: "form-label fw-semibold", text: "Decision" }), mode),
-                element("div", { className: "col-lg-6" }, sourceGroup)),
-            element("div", { className: "mb-3" },
-                element("label", { className: "form-label fw-semibold", text: "Decision note" }), note),
-            patchGroup);
+        const grid = element("div", { className: "row g-3 mb-3" });
+        const modeColumn = element("div", { className: "col-lg-6" });
+        modeColumn.append(
+            element("label", { className: "form-label fw-semibold", text: "Decision" }),
+            mode);
+        const sourceColumn = element("div", { className: "col-lg-6" });
+        sourceColumn.append(sourceGroup);
+        grid.append(modeColumn, sourceColumn);
+
+        const noteGroup = element("div", { className: "mb-3" });
+        noteGroup.append(
+            element("label", { className: "form-label fw-semibold", text: "Decision note" }),
+            note);
+        card.append(grid, noteGroup, patchGroup);
 
         const previewButton = element("button", {
             type: "button",
@@ -550,138 +519,198 @@ export class RulesAuthoringApp {
             className: "btn btn-primary",
             text: "Save decision"
         });
+        const controls = element("div", { className: "d-flex flex-wrap gap-2" });
+        controls.append(previewButton, saveButton);
         const result = element("div", { className: "mt-3" });
-        form.append(element("div", { className: "d-flex flex-wrap gap-2" }, previewButton, saveButton), result);
+        card.append(controls, result);
 
-        const syncEditor = () => {
-            const kind = mode.value;
-            const needsSource = scope === "global" || kind === "select-source";
-            source.disabled = !needsSource;
-            sourceGroup.classList.toggle("opacity-50", !needsSource);
-            const needsPatch = kind === "json-merge-patch" || kind === "json-rule-patch";
-            patch.disabled = !needsPatch;
-            patchGroup.classList.toggle("d-none", !needsPatch);
+        this.seedEditor(scope, current, mode, source, note, patch);
+        const sync = () => this.syncEditor(scope, mode, source, patch, patchHelp, sourceGroup, patchGroup);
+        mode.addEventListener("change", sync);
+        sync();
 
-            if (kind === "json-merge-patch") {
-                patch.placeholder = '{\n  "field": "replacement",\n  "removeMe": null\n}';
-                patchHelp.textContent = "Object merge/delete semantics. Arrays are replaced wholesale.";
-            } else if (kind === "json-rule-patch") {
-                patch.placeholder = '{\n  "mergePatch": { "field": "replacement" },\n  "arrayOperations": [\n    { "operation": "append", "path": "/items", "value": "new item" }\n  ]\n}';
-                patchHelp.textContent = "Structured rule patch with optional mergePatch and arrayOperations.";
-            }
-        };
-        mode.addEventListener("change", syncEditor);
+        previewButton.addEventListener("click", async () => {
+            await this.runEditorAction(previewButton, saveButton, result, "Previewing…", async () => {
+                const payload = scope === "global"
+                    ? this.buildGlobalPayload(mode, source, note, patch)
+                    : this.buildCampaignPayload(mode, source, note, patch);
+                const preview = scope === "global"
+                    ? await this.api.previewGlobalDecision(detail.concept.id, payload)
+                    : await this.api.previewCampaignDecision(detail.campaignId, detail.concept.id, payload);
+                this.renderPreview(result, preview);
+            });
+        });
 
-        this.seedEditorFromDecision({ scope, currentDecision, mode, source, note, patch });
-        syncEditor();
+        saveButton.addEventListener("click", async () => {
+            await this.runEditorAction(previewButton, saveButton, result, "Saving…", async () => {
+                const payload = scope === "global"
+                    ? this.buildGlobalPayload(mode, source, note, patch)
+                    : this.buildCampaignPayload(mode, source, note, patch);
+                const saved = scope === "global"
+                    ? await this.api.saveGlobalDecision(detail.concept.id, payload)
+                    : await this.api.saveCampaignDecision(detail.campaignId, detail.concept.id, payload);
+                window.alert(saved.created === false
+                    ? "The latest decision already matches this candidate."
+                    : `Saved decision #${saved.decisionNumber}. It is not active until publication.`);
+                if (scope === "global") {
+                    await this.renderGlobalConcept(container, detail.concept.id);
+                } else {
+                    await this.renderCampaignConcept(container, detail.concept.id);
+                }
+            });
+        });
 
-        return { card: form, mode, source, note, patch, previewButton, saveButton, result };
+        return card;
     }
 
-    seedEditorFromDecision({ scope, currentDecision, mode, source, note, patch }) {
-        if (!currentDecision) {
-            if (scope === "global") {
-                mode.value = "select-source";
-            } else {
-                mode.value = "inherit-global";
-            }
-            return;
-        }
+    renderSourceRevisionSelect(sources) {
+        const select = element("select", { className: "form-select" });
+        select.append(element("option", {
+            value: "",
+            text: sources.length ? "Select source revision…" : "No accessible source revisions"
+        }));
 
-        mode.value = currentDecision.decisionKind;
-        source.value = currentDecision.sourceEntityRevisionId ?? "";
-        note.value = currentDecision.note ?? "";
-        if (currentDecision.mergePatch) {
-            patch.value = formatJson(currentDecision.mergePatch);
-        } else if (currentDecision.structuredPatch) {
-            patch.value = formatJson(currentDecision.structuredPatch);
+        for (const source of sources) {
+            const group = element("optgroup", {
+                attributes: {
+                    label: `${source.name} · ${source.editionDisplayName} · ${source.sourceCode}`
+                }
+            });
+            for (const revision of source.revisions) {
+                group.append(element("option", {
+                    value: revision.id,
+                    text: `Revision ${revision.revisionNumber} · ${shortFingerprint(revision.fingerprint)} · ${formatDate(revision.importedAt)}`
+                }));
+            }
+            select.append(group);
+        }
+        return select;
+    }
+
+    seedEditor(scope, current, mode, source, note, patch) {
+        mode.value = current?.decisionKind ?? (scope === "global" ? "select-source" : "inherit-global");
+        source.value = current?.sourceEntityRevisionId ?? "";
+        note.value = current?.note ?? "";
+        if (current?.mergePatch) {
+            patch.value = formatJson(current.mergePatch);
+        } else if (current?.structuredPatch) {
+            patch.value = formatJson(current.structuredPatch);
         }
     }
 
-    buildGlobalPayload(editor) {
-        const sourceEntityRevisionId = editor.source.value;
-        if (!sourceEntityRevisionId) {
+    syncEditor(scope, mode, source, patch, patchHelp, sourceGroup, patchGroup) {
+        const kind = mode.value;
+        const needsSource = scope === "global" || kind === "select-source";
+        source.disabled = !needsSource;
+        sourceGroup.classList.toggle("opacity-50", !needsSource);
+
+        const needsPatch = kind === "json-merge-patch" || kind === "json-rule-patch";
+        patch.disabled = !needsPatch;
+        patchGroup.classList.toggle("d-none", !needsPatch);
+
+        if (kind === "json-merge-patch") {
+            patch.placeholder = '{\n  "field": "replacement",\n  "removeMe": null\n}';
+            patchHelp.textContent = "Object merge/delete semantics. Arrays are replaced wholesale.";
+        } else if (kind === "json-rule-patch") {
+            patch.placeholder = '{\n  "mergePatch": { "field": "replacement" },\n  "arrayOperations": [\n    { "operation": "append", "path": "/items", "value": "new item" }\n  ]\n}';
+            patchHelp.textContent = "Structured rule patch with optional mergePatch and arrayOperations.";
+        }
+    }
+
+    buildGlobalPayload(mode, source, note, patch) {
+        if (!source.value) {
             throw new Error("Select an accessible source revision.");
         }
-
         const payload = {
-            sourceEntityRevisionId,
-            note: editor.note.value.trim() || null
+            sourceEntityRevisionId: source.value,
+            note: note.value.trim() || null
         };
-
-        if (editor.mode.value === "json-merge-patch") {
-            payload.mergePatch = parseRequiredJson(editor.patch.value, "Merge patch");
-        } else if (editor.mode.value === "json-rule-patch") {
-            payload.structuredPatch = parseRequiredJson(editor.patch.value, "Structured patch");
+        if (mode.value === "json-merge-patch") {
+            payload.mergePatch = parseRequiredJson(patch.value, "Merge patch");
+        } else if (mode.value === "json-rule-patch") {
+            payload.structuredPatch = parseRequiredJson(patch.value, "Structured patch");
         }
         return payload;
     }
 
-    buildCampaignPayload(editor) {
-        const kind = editor.mode.value;
+    buildCampaignPayload(mode, source, note, patch) {
         const payload = {
-            decisionKind: kind,
+            decisionKind: mode.value,
             sourceEntityRevisionId: null,
-            note: editor.note.value.trim() || null
+            note: note.value.trim() || null
         };
-
-        if (kind === "select-source") {
-            if (!editor.source.value) {
+        if (mode.value === "select-source") {
+            if (!source.value) {
                 throw new Error("Select an accessible source revision.");
             }
-            payload.sourceEntityRevisionId = editor.source.value;
-        } else if (kind === "json-merge-patch") {
-            payload.mergePatch = parseRequiredJson(editor.patch.value, "Merge patch");
-        } else if (kind === "json-rule-patch") {
-            payload.structuredPatch = parseRequiredJson(editor.patch.value, "Structured patch");
+            payload.sourceEntityRevisionId = source.value;
+        } else if (mode.value === "json-merge-patch") {
+            payload.mergePatch = parseRequiredJson(patch.value, "Merge patch");
+        } else if (mode.value === "json-rule-patch") {
+            payload.structuredPatch = parseRequiredJson(patch.value, "Structured patch");
         }
         return payload;
     }
 
-    async runEditorAction(editor, busyText, action, onSuccess) {
-        editor.result.replaceChildren();
-        setButtonBusy(editor.previewButton, true, busyText);
-        setButtonBusy(editor.saveButton, true, busyText);
+    async runEditorAction(previewButton, saveButton, result, busyText, action) {
+        result.replaceChildren();
+        setButtonBusy(previewButton, true, busyText);
+        setButtonBusy(saveButton, true, busyText);
         try {
-            const result = await action();
-            await onSuccess(result);
+            await action();
         } catch (error) {
-            editor.result.replaceChildren(alertNode("danger", describeError(error)));
+            result.replaceChildren(alertNode("danger", describeError(error)));
         } finally {
-            setButtonBusy(editor.previewButton, false);
-            setButtonBusy(editor.saveButton, false);
+            setButtonBusy(previewButton, false);
+            setButtonBusy(saveButton, false);
         }
     }
 
     renderPreview(container, preview) {
-        const changes = element("div", { className: "list-group list-group-flush" });
+        const card = element("div", { className: "card card-body border-primary" });
+        const header = element("div", {
+            className: "d-flex flex-wrap justify-content-between gap-2 align-items-center mb-2"
+        });
+        header.append(
+            element("h4", { className: "h6 mb-0", text: "Preview" }),
+            badge(preview.decisionKind, "primary"));
+        card.append(header);
+        card.append(element("div", {
+            className: "small text-body-secondary mb-3",
+            text: `${preview.changes.length} structural change${preview.changes.length === 1 ? "" : "s"}`
+        }));
+
         if (!preview.changes.length) {
-            changes.append(element("div", { className: "list-group-item px-0 text-body-secondary", text: "No structural changes." }));
+            card.append(element("div", { className: "text-body-secondary", text: "No structural changes." }));
         } else {
+            const list = element("div", { className: "list-group list-group-flush" });
             for (const change of preview.changes) {
-                changes.append(element("div", { className: "list-group-item px-0" },
-                    element("div", { className: "d-flex flex-wrap gap-2 align-items-center mb-1" },
-                        badge(change.changeKind, change.changeKind === "remove" ? "danger" : change.changeKind === "add" ? "success" : "warning"),
-                        element("code", { text: change.path || "/" })),
-                    element("div", { className: "row g-2" },
-                        change.before !== null && change.before !== undefined
-                            ? element("div", { className: "col-md-6" }, element("div", { className: "small text-body-secondary", text: "Before" }), codeBlock(change.before))
-                            : null,
-                        change.after !== null && change.after !== undefined
-                            ? element("div", { className: "col-md-6" }, element("div", { className: "small text-body-secondary", text: "After" }), codeBlock(change.after))
-                            : null))));
+                const item = element("div", { className: "list-group-item px-0" });
+                const title = element("div", { className: "d-flex flex-wrap gap-2 align-items-center mb-1" });
+                const kind = change.changeKind === "remove"
+                    ? "danger"
+                    : (change.changeKind === "add" ? "success" : "warning");
+                title.append(badge(change.changeKind, kind), element("code", { text: change.path || "/" }));
+                item.append(title);
+                if (change.before !== null && change.before !== undefined) {
+                    item.append(element("div", { className: "small text-body-secondary", text: "Before" }));
+                    item.append(codeBlock(change.before));
+                }
+                if (change.after !== null && change.after !== undefined) {
+                    item.append(element("div", { className: "small text-body-secondary mt-2", text: "After" }));
+                    item.append(codeBlock(change.after));
+                }
+                list.append(item);
             }
+            card.append(list);
         }
 
-        container.replaceChildren(element("div", { className: "card card-body border-primary" },
-            element("div", { className: "d-flex flex-wrap justify-content-between gap-2 align-items-center mb-2" },
-                element("h4", { className: "h6 mb-0", text: "Preview" }),
-                badge(preview.decisionKind, "primary")),
-            element("div", { className: "small text-body-secondary mb-3", text: `${preview.changes.length} structural change${preview.changes.length === 1 ? "" : "s"}` }),
-            changes,
-            element("details", { className: "mt-3" },
-                element("summary", { className: "fw-semibold", text: "Resolved candidate JSON" }),
-                element("div", { className: "mt-2" }, codeBlock(preview.previewDocument)))));
+        const details = element("details", { className: "mt-3" });
+        details.append(
+            element("summary", { className: "fw-semibold", text: "Resolved candidate JSON" }),
+            element("div", { className: "mt-2" }, codeBlock(preview.previewDocument)));
+        card.append(details);
+        container.replaceChildren(card);
     }
 
     loadingCard(message) {
