@@ -77,5 +77,18 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
             ON source_entity_revision(source_entity_id, revision_number);
         CREATE INDEX IF NOT EXISTS ix_source_entity_revision_fingerprint
             ON source_entity_revision(fingerprint);
+
+        CREATE TABLE IF NOT EXISTS user_source_grant (
+            user_source_grant_id uuid NOT NULL,
+            source_package_id uuid NOT NULL,
+            user_id varchar(200) NOT NULL,
+            granted_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_user_source_grant PRIMARY KEY (user_source_grant_id),
+            CONSTRAINT fk_user_source_grant_package FOREIGN KEY (source_package_id)
+                REFERENCES source_package(source_package_id) ON DELETE CASCADE);
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_user_source_grant_user_package
+            ON user_source_grant(user_id, source_package_id);
+        CREATE INDEX IF NOT EXISTS ix_user_source_grant_package
+            ON user_source_grant(source_package_id);
         """;
 }
