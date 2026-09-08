@@ -164,5 +164,80 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
                 REFERENCES source_entity_revision(source_entity_revision_id));
         CREATE UNIQUE INDEX IF NOT EXISTS ux_ruleset_revision_entry_revision_concept
             ON ruleset_revision_entry(ruleset_revision_id, rule_concept_id);
+
+        CREATE TABLE IF NOT EXISTS campaign_ruleset_selection (
+            campaign_ruleset_selection_id uuid NOT NULL,
+            campaign_id uuid NOT NULL,
+            selection_number integer NOT NULL,
+            ruleset_revision_id uuid NOT NULL,
+            selected_by_user_id varchar(200) NOT NULL,
+            selected_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_campaign_ruleset_selection PRIMARY KEY (campaign_ruleset_selection_id),
+            CONSTRAINT fk_campaign_ruleset_selection_ruleset_revision FOREIGN KEY (ruleset_revision_id)
+                REFERENCES ruleset_revision(ruleset_revision_id));
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_campaign_ruleset_selection_campaign_number
+            ON campaign_ruleset_selection(campaign_id, selection_number);
+        CREATE INDEX IF NOT EXISTS ix_campaign_ruleset_selection_ruleset_revision
+            ON campaign_ruleset_selection(ruleset_revision_id);
+
+        CREATE TABLE IF NOT EXISTS campaign_rule_decision (
+            campaign_rule_decision_id uuid NOT NULL,
+            campaign_id uuid NOT NULL,
+            rule_concept_id uuid NOT NULL,
+            decision_number integer NOT NULL,
+            decision_kind varchar(80) NOT NULL,
+            selected_source_entity_revision_id uuid NULL,
+            note varchar(2000) NULL,
+            created_by_user_id varchar(200) NOT NULL,
+            created_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_campaign_rule_decision PRIMARY KEY (campaign_rule_decision_id),
+            CONSTRAINT ck_campaign_rule_decision_kind CHECK (
+                (decision_kind = 'select-source' AND selected_source_entity_revision_id IS NOT NULL)
+                OR (decision_kind = 'inherit-global' AND selected_source_entity_revision_id IS NULL)),
+            CONSTRAINT fk_campaign_rule_decision_concept FOREIGN KEY (rule_concept_id)
+                REFERENCES rule_concept(rule_concept_id),
+            CONSTRAINT fk_campaign_rule_decision_source_revision FOREIGN KEY (selected_source_entity_revision_id)
+                REFERENCES source_entity_revision(source_entity_revision_id));
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_campaign_rule_decision_campaign_concept_number
+            ON campaign_rule_decision(campaign_id, rule_concept_id, decision_number);
+        CREATE INDEX IF NOT EXISTS ix_campaign_rule_decision_source_revision
+            ON campaign_rule_decision(selected_source_entity_revision_id);
+
+        CREATE TABLE IF NOT EXISTS campaign_ruleset_revision (
+            campaign_ruleset_revision_id uuid NOT NULL,
+            campaign_id uuid NOT NULL,
+            revision_number integer NOT NULL,
+            baseline_selection_id uuid NOT NULL,
+            fingerprint varchar(64) NOT NULL,
+            published_by_user_id varchar(200) NOT NULL,
+            published_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_campaign_ruleset_revision PRIMARY KEY (campaign_ruleset_revision_id),
+            CONSTRAINT fk_campaign_ruleset_revision_baseline_selection FOREIGN KEY (baseline_selection_id)
+                REFERENCES campaign_ruleset_selection(campaign_ruleset_selection_id));
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_campaign_ruleset_revision_campaign_number
+            ON campaign_ruleset_revision(campaign_id, revision_number);
+        CREATE INDEX IF NOT EXISTS ix_campaign_ruleset_revision_campaign_fingerprint
+            ON campaign_ruleset_revision(campaign_id, fingerprint);
+
+        CREATE TABLE IF NOT EXISTS campaign_ruleset_revision_entry (
+            campaign_ruleset_revision_entry_id uuid NOT NULL,
+            campaign_ruleset_revision_id uuid NOT NULL,
+            rule_concept_id uuid NOT NULL,
+            baseline_ruleset_revision_entry_id uuid NOT NULL,
+            campaign_rule_decision_id uuid NULL,
+            source_entity_revision_id uuid NOT NULL,
+            CONSTRAINT pk_campaign_ruleset_revision_entry PRIMARY KEY (campaign_ruleset_revision_entry_id),
+            CONSTRAINT fk_campaign_ruleset_revision_entry_revision FOREIGN KEY (campaign_ruleset_revision_id)
+                REFERENCES campaign_ruleset_revision(campaign_ruleset_revision_id) ON DELETE CASCADE,
+            CONSTRAINT fk_campaign_ruleset_revision_entry_concept FOREIGN KEY (rule_concept_id)
+                REFERENCES rule_concept(rule_concept_id),
+            CONSTRAINT fk_campaign_ruleset_revision_entry_baseline_entry FOREIGN KEY (baseline_ruleset_revision_entry_id)
+                REFERENCES ruleset_revision_entry(ruleset_revision_entry_id),
+            CONSTRAINT fk_campaign_ruleset_revision_entry_campaign_decision FOREIGN KEY (campaign_rule_decision_id)
+                REFERENCES campaign_rule_decision(campaign_rule_decision_id),
+            CONSTRAINT fk_campaign_ruleset_revision_entry_source_revision FOREIGN KEY (source_entity_revision_id)
+                REFERENCES source_entity_revision(source_entity_revision_id));
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_campaign_ruleset_revision_entry_revision_concept
+            ON campaign_ruleset_revision_entry(campaign_ruleset_revision_id, rule_concept_id);
         """;
 }
