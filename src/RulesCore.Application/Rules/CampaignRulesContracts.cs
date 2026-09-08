@@ -9,7 +9,8 @@ public sealed record SetCampaignRuleDecisionRequest(
     string DecisionKind,
     Guid? SourceEntityRevisionId,
     string? Note,
-    JsonElement? MergePatch = null);
+    JsonElement? MergePatch = null,
+    RuleStructuredPatchRequest? StructuredPatch = null);
 
 public sealed record CampaignRulesetSelectionView(
     Guid Id,
@@ -31,6 +32,7 @@ public sealed record CampaignRuleDecisionView(
     Guid? SourceEntityRevisionId,
     string? PatchFingerprint,
     JsonElement? MergePatch,
+    JsonElement? StructuredPatch,
     string? Note,
     string CreatedByUserId,
     DateTimeOffset CreatedAt,
@@ -67,12 +69,14 @@ public sealed record ResolvedCampaignRuleView(
     string GlobalDecisionKind,
     string? GlobalPatchFingerprint,
     JsonElement? GlobalMergePatch,
+    JsonElement? GlobalStructuredPatch,
     Guid? CampaignRuleDecisionId,
     int? CampaignDecisionNumber,
     string EffectiveDecisionKind,
     string? CampaignDecisionNote,
     string? CampaignPatchFingerprint,
     JsonElement? CampaignMergePatch,
+    JsonElement? CampaignStructuredPatch,
     Guid SourceEntityId,
     Guid SourceEntityRevisionId,
     int SourceRevisionNumber,
