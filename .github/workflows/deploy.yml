@@ -1,0 +1,146 @@
+name: Deploy Rules Core
+run-name: Deploy ${{ github.ref_name }} at ${{ github.sha }}
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+concurrency:
+  group: dorks-and-dice-rules-core
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, dorks-and-dice-rules-core]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Start disposable PostgreSQL
+        run: |
+          docker rm -f dorks-and-dice-rules-core-test-postgres 2>/dev/null || true
+          docker network create dorks-and-dice-rules-core-test 2>/dev/null || true
+          docker run -d --name dorks-and-dice-rules-core-test-postgres \
+            --network dorks-and-dice-rules-core-test \
+            -e POSTGRES_DB=rules_core_test \
+            -e POSTGRES_USER=rules_core_test \
+            -e POSTGRES_PASSWORD=rules_core_test \
+            postgres:18
+
+          ready=false
+          for i in {1..30}; do
+            if docker exec dorks-and-dice-rules-core-test-postgres \
+              pg_isready -U rules_core_test -d rules_core_test; then
+              ready=true
+              break
+            fi
+            sleep 1
+          done
+
+          if [ "$ready" != "true" ]; then
+            docker logs dorks-and-dice-rules-core-test-postgres
+            exit 1
+          fi
+
+      - name: Run tests
+        run: |
+          docker run --rm \
+            --user "$(id -u):$(id -g)" \
+            --network dorks-and-dice-rules-core-test \
+            -e HOME=/tmp \
+            -e DOTNET_CLI_HOME=/tmp/dotnet \
+            -e NUGET_PACKAGES=/tmp/nuget \
+            -e ConnectionStrings__RulesCore='Host=dorks-and-dice-rules-core-test-postgres;Port=5432;Database=rules_core_test;Username=rules_core_test;Password=rules_core_test' \
+            -v "$PWD:/src" \
+            -w /src \
+            mcr.microsoft.com/dotnet/sdk:10.0 \
+            dotnet test dorks-and-dice-rules-core.slnx --configuration Release
+
+      - name: Build image
+        run: docker build -t dorks-and-dice-rules-core:latest -f src/RulesCore.Web/Dockerfile .
+
+      - name: Smoke test container
+        run: |
+          docker rm -f dorks-and-dice-rules-core-smoketest 2>/dev/null || true
+          docker run -d --name dorks-and-dice-rules-core-smoketest \
+            --network dorks-and-dice-rules-core-test \
+            -e ConnectionStrings__RulesCore='Host=dorks-and-dice-rules-core-test-postgres;Port=5432;Database=rules_core_test;Username=rules_core_test;Password=rules_core_test' \
+            dorks-and-dice-rules-core:latest
+
+          ready=false
+          for i in {1..20}; do
+            health=$(docker run --rm \
+              --network dorks-and-dice-rules-core-test \
+              curlimages/curl:8.12.1 \
+              -fsS http://dorks-and-dice-rules-core-smoketest:8080/health 2>/dev/null || true)
+            readiness=$(docker run --rm \
+              --network dorks-and-dice-rules-core-test \
+              curlimages/curl:8.12.1 \
+              -fsS http://dorks-and-dice-rules-core-smoketest:8080/ready 2>/dev/null || true)
+
+            if [ "$health" = "Healthy" ] && echo "$readiness" | grep -q '"status":"ready"'; then
+              ready=true
+              break
+            fi
+            sleep 1
+          done
+
+          if [ "$ready" != "true" ]; then
+            echo "Rules Core smoke test failed."
+            docker logs dorks-and-dice-rules-core-smoketest || true
+            exit 1
+          fi
+
+      - name: Cleanup test infrastructure
+        if: always()
+        run: |
+          docker rm -f dorks-and-dice-rules-core-smoketest 2>/dev/null || true
+          docker rm -f dorks-and-dice-rules-core-test-postgres 2>/dev/null || true
+          docker network rm dorks-and-dice-rules-core-test 2>/dev/null || true
+
+      - name: Deploy
+        run: |
+          ENV_FILE=/mnt/HDDs/www/dorks-and-dice-rules-core/.env
+          if [ ! -f "$ENV_FILE" ]; then
+            echo "Rules Core deployment configuration is missing: $ENV_FILE"
+            exit 1
+          fi
+
+          docker compose \
+            --project-name dorks-and-dice-rules-core \
+            --env-file "$ENV_FILE" \
+            -f docker-compose.yml \
+            config >/dev/null
+
+          # The first automated deployment replaces the manually-created bootstrap container.
+          # Subsequent deployments recreate the Compose-managed container with the same name.
+          docker rm -f dorks-and-dice-rules-core 2>/dev/null || true
+
+          docker compose \
+            --project-name dorks-and-dice-rules-core \
+            --env-file "$ENV_FILE" \
+            -f docker-compose.yml \
+            up -d --force-recreate --remove-orphans
+
+      - name: Verify deployed service
+        run: |
+          ready=false
+          for i in {1..20}; do
+            response=$(docker run --rm \
+              --network dorks-and-dice-backend \
+              curlimages/curl:8.12.1 \
+              -fsS http://dorks-and-dice-rules-core:8080/ready 2>/dev/null || true)
+
+            if echo "$response" | grep -q '"status":"ready"'; then
+              echo "$response"
+              ready=true
+              break
+            fi
+            sleep 1
+          done
+
+          if [ "$ready" != "true" ]; then
+            echo "Deployed Rules Core did not become ready."
+            docker logs dorks-and-dice-rules-core || true
+            exit 1
+          fi

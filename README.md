@@ -31,6 +31,19 @@ dotnet run --project src/RulesCore.Web
 
 Set `ConnectionStrings__RulesCore` to a PostgreSQL connection string before database-backed work. The service can start without a database during early standalone development; `/ready` reports unavailable until PostgreSQL is configured and reachable.
 
+## Deployment
+
+Pushes to `main` trigger `.github/workflows/deploy.yml`, which follows the same self-hosted deployment pattern as the main Dorks & Dice site. The workflow runs the test suite against disposable PostgreSQL 18, builds and smoke-tests `dorks-and-dice-rules-core:latest`, then recreates the production container through Docker Compose.
+
+The production workflow expects:
+
+- a self-hosted GitHub Actions runner with the `dorks-and-dice-rules-core` label;
+- `/mnt/HDDs/www/dorks-and-dice-rules-core/.env` containing `ConnectionStrings__RulesCore`;
+- the external Docker network `dorks-and-dice-backend`;
+- the production PostgreSQL database referenced by the deployment-only connection string.
+
+The production database and credentials are not created, modified, or stored by the workflow.
+
 ## Tool hosting
 
 The existing Dorks & Dice Tool Host supports both embedded modules and proxied applications. Rules Core currently exposes:
@@ -40,6 +53,6 @@ The existing Dorks & Dice Tool Host supports both embedded modules and proxied a
 - `/app.js` - minimal ES module for the existing Embedded Module integration.
 - `/` and `/api` - standalone service metadata.
 
-The host strips browser Cookie and Authorization headers before proxying and does not support WebSockets or tool-owned cookie sessions. For that reason the initial scaffold deliberately does not use Blazor Server or a separate Identity store. Dorks & Dice remains the production identity/authorization authority; the authenticated write contract will be added explicitly rather than inferred from proxy headers.
+The host strips browser Cookie and Authorization headers before proxying and does not support WebSockets or tool-owned cookie sessions. Rules Core therefore does not use Blazor Server or a separate Identity store. Dorks & Dice remains the production identity/authorization authority; Rules Core will consume the host's authenticated Tool gateway contract rather than infer identity from browser-controlled headers.
 
 See `docs/architecture.md` and `docs/tool-hosting.md` for the current boundaries.

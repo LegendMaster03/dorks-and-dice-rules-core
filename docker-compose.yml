@@ -1,0 +1,13 @@
+services:
+  rules-core:
+    image: dorks-and-dice-rules-core:latest
+    container_name: dorks-and-dice-rules-core
+    restart: unless-stopped
+    environment:
+      ConnectionStrings__RulesCore: "${ConnectionStrings__RulesCore:?ConnectionStrings__RulesCore must be configured}"
+    networks:
+      - dorks-and-dice-backend
+
+networks:
+  dorks-and-dice-backend:
+    external: true
