@@ -56,7 +56,22 @@ Rules Lawyers can create concepts, bind source entities, set the current source-
 
 Publishing the same effective decisions twice is idempotent. Source changes become visible in the resolved ruleset only after a Rules Lawyer selects the new source revision and publishes a new ruleset revision.
 
-See `docs/rules-layer.md` for concept identity, decision history, publication, authority, and resolution behavior.
+## Campaign Rules Layer
+
+Campaigns deliberately select a published global ruleset revision rather than floating with `latest`. Selecting a newer baseline does not affect the campaign's active rules until its DM publishes a new immutable campaign ruleset revision.
+
+Campaign decisions are append-only and currently support exact source overrides plus explicit return to the selected global baseline. A campaign override remains pinned to its selected immutable source revision across later source imports and global publications until the DM changes the decision.
+
+Campaign reads require authenticated membership in the requested campaign. Campaign mutation additionally requires the campaign-scoped `DM` role. Source licensing remains independent: campaign membership or DM authority does not grant access to restricted source content, and a source grant does not grant campaign authority.
+
+Current campaign endpoints:
+
+- `PUT /api/campaigns/{campaignId}/rules/baseline`
+- `PUT /api/campaigns/{campaignId}/rules/concepts/{conceptId}/decision`
+- `POST /api/campaigns/{campaignId}/rules/publish`
+- `GET /api/campaigns/{campaignId}/rules/{conceptKey}`
+
+See `docs/rules-layer.md` for global and campaign concept identity, publication, migration, authority, and resolution behavior.
 
 ## Deployment
 
