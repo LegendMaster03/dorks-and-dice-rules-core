@@ -131,31 +131,34 @@ public sealed class SourceLayerIntegrationTests
             publicPackageKey = $"public-{Guid.NewGuid():N}";
             privatePackageKey = $"private-{Guid.NewGuid():N}";
 
+            var publicJson = """
+                {
+                  "skill": [
+                    {
+                      "name": "Investigation",
+                      "source": "TST",
+                      "ability": "int",
+                      "unmodeled": { "preserved": true }
+                    }
+                  ]
+                }
+                """;
+            var privateJson = """
+                {
+                  "skill": [
+                    {
+                      "name": "Private Skill",
+                      "source": "PRIVATE",
+                      "ability": "wis"
+                    }
+                  ]
+                }
+                """;
+
             var publicResult = await importer.Import5eToolsDocumentAsync(
-                CreateRequest(publicPackageKey, """
-                    {
-                      "skill": [
-                        {
-                          "name": "Investigation",
-                          "source": "TST",
-                          "ability": "int",
-                          "unmodeled": { "preserved": true }
-                        }
-                      ]
-                    }
-                    "", isPublic: true));
+                CreateRequest(publicPackageKey, publicJson, isPublic: true));
             var privateResult = await importer.Import5eToolsDocumentAsync(
-                CreateRequest(privatePackageKey, """
-                    {
-                      "skill": [
-                        {
-                          "name": "Private Skill",
-                          "source": "PRIVATE",
-                          "ability": "wis"
-                        }
-                      ]
-                    }
-                    "", isPublic: false));
+                CreateRequest(privatePackageKey, privateJson, isPublic: false));
 
             publicEntityId = publicResult.Entities[0].EntityId;
             privateEntityId = privateResult.Entities[0].EntityId;
@@ -163,10 +166,10 @@ public sealed class SourceLayerIntegrationTests
 
         using var publicResponse = await client.GetAsync($"/api/sources/entities/{publicEntityId}");
         Assert.Equal(HttpStatusCode.OK, publicResponse.StatusCode);
-        using var publicJson = JsonDocument.Parse(await publicResponse.Content.ReadAsStringAsync());
-        Assert.Equal(publicPackageKey, publicJson.RootElement.GetProperty("packageKey").GetString());
-        Assert.Equal("Investigation", publicJson.RootElement.GetProperty("name").GetString());
-        Assert.True(publicJson.RootElement
+        using var publicResponseJson = JsonDocument.Parse(await publicResponse.Content.ReadAsStringAsync());
+        Assert.Equal(publicPackageKey, publicResponseJson.RootElement.GetProperty("packageKey").GetString());
+        Assert.Equal("Investigation", publicResponseJson.RootElement.GetProperty("name").GetString());
+        Assert.True(publicResponseJson.RootElement
             .GetProperty("document")
             .GetProperty("unmodeled")
             .GetProperty("preserved")
