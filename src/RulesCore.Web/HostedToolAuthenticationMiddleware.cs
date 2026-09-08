@@ -62,6 +62,11 @@ public sealed class HostedToolAuthenticationMiddleware(RequestDelegate next)
             httpContext.Response.StatusCode = StatusCodes.Status502BadGateway;
             return;
         }
+        catch (OperationCanceledException) when (!httpContext.RequestAborted.IsCancellationRequested)
+        {
+            httpContext.Response.StatusCode = StatusCodes.Status504GatewayTimeout;
+            return;
+        }
 
         if (authenticationContext is null)
         {
