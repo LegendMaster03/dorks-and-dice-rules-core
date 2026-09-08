@@ -22,6 +22,7 @@ if (hasDatabase)
     builder.Services.AddScoped<IGlobalRulesService, GlobalRulesService>();
     builder.Services.AddScoped<ICampaignRulesService, CampaignRulesService>();
     builder.Services.AddScoped<IRulePatchPreviewService, RulePatchPreviewService>();
+    builder.Services.AddScoped<IGlobalRulesAuthoringService, GlobalRulesAuthoringService>();
 }
 
 var toolHostBaseUrl = builder.Configuration["ToolHost:BaseUrl"];
@@ -109,7 +110,7 @@ app.MapGet("/", () => Results.Ok(new
 app.MapGet("/api", () => Results.Ok(new
 {
     service = "Rules Core API",
-    version = "0.6-dev",
+    version = "0.7-dev",
     endpointFamilies = new[]
     {
         "/api/rules",
@@ -478,6 +479,7 @@ if (hasDatabase)
     });
 
     app.MapRulePreviewEndpoints();
+    app.MapGlobalRuleAuthoringEndpoints();
 }
 else
 {
@@ -487,6 +489,8 @@ else
     app.MapPost("/api/global/rules/concepts", () => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/concepts/{conceptId:guid}/bindings", (Guid conceptId) => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/concepts/{conceptId:guid}/preview", (Guid conceptId) => DatabaseUnavailable("Rules Layer"));
+    app.MapGet("/api/global/rules/authoring", () => DatabaseUnavailable("Rules Layer"));
+    app.MapGet("/api/global/rules/authoring/concepts/{conceptId:guid}", (Guid conceptId) => DatabaseUnavailable("Rules Layer"));
     app.MapPut("/api/global/rules/concepts/{conceptId:guid}/decision", (Guid conceptId) => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/publish", () => DatabaseUnavailable("Rules Layer"));
     app.MapGet("/api/campaigns/{campaignId:guid}/rules/{conceptKey}", (Guid campaignId, string conceptKey) => DatabaseUnavailable("Campaign Rules Layer"));
