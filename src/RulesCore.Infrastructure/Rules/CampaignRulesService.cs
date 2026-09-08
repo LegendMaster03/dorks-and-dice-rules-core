@@ -80,7 +80,8 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         if (!CampaignRuleDecisionKinds.All.Contains(decisionKind))
         {
             throw new ArgumentException(
-                $"Decision kind must be '{CampaignRuleDecisionKinds.SelectSource}' or '{CampaignRuleDecisionKinds.InheritGlobal}'.",
+                $"Decision kind must be '{CampaignRuleDecisionKinds.SelectSource}', " +
+                $"'{CampaignRuleDecisionKinds.InheritGlobal}', or '{CampaignRuleDecisionKinds.JsonMergePatch}'.",
                 nameof(request.DecisionKind));
         }
 
@@ -114,6 +115,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         }
 
         Guid? selectedSourceEntityRevisionId = null;
+        NormalizedJsonMergePatch? mergePatch = null;
         if (decisionKind == CampaignRuleDecisionKinds.SelectSource)
         {
             if (request.SourceEntityRevisionId is null || request.SourceEntityRevisionId == Guid.Empty)
@@ -121,6 +123,12 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
                 throw new ArgumentException(
                     "A source entity revision is required for a select-source campaign decision.",
                     nameof(request.SourceEntityRevisionId));
+            }
+            if (request.MergePatch.HasValue)
+            {
+                throw new ArgumentException(
+                    "A select-source campaign decision can not include a merge patch.",
+                    nameof(request.MergePatch));
             }
 
             var sourceRevision = await dbContext.SourceEntityRevisions
@@ -148,11 +156,37 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
 
             selectedSourceEntityRevisionId = sourceRevision.Id;
         }
-        else if (request.SourceEntityRevisionId is not null)
+        else if (decisionKind == CampaignRuleDecisionKinds.InheritGlobal)
         {
-            throw new ArgumentException(
-                "An inherit-global campaign decision can not select a source entity revision.",
-                nameof(request.SourceEntityRevisionId));
+            if (request.SourceEntityRevisionId is not null)
+            {
+                throw new ArgumentException(
+                    "An inherit-global campaign decision can not select a source entity revision.",
+                    nameof(request.SourceEntityRevisionId));
+            }
+            if (request.MergePatch.HasValue)
+            {
+                throw new ArgumentException(
+                    "An inherit-global campaign decision can not include a merge patch.",
+                    nameof(request.MergePatch));
+            }
+        }
+        else
+        {
+            if (request.SourceEntityRevisionId is not null)
+            {
+                throw new ArgumentException(
+                    "A json-merge-patch campaign decision patches the selected global baseline and can not select a separate source revision.",
+                    nameof(request.SourceEntityRevisionId));
+            }
+            if (!request.MergePatch.HasValue)
+            {
+                throw new ArgumentException(
+                    "A merge patch is required for a json-merge-patch campaign decision.",
+                    nameof(request.MergePatch));
+            }
+
+            mergePatch = JsonMergePatch.Normalize(request.MergePatch.Value);
         }
 
         var latestDecision = await dbContext.CampaignRuleDecisions
@@ -164,6 +198,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         if (latestDecision is not null
             && string.Equals(latestDecision.DecisionKind, decisionKind, StringComparison.Ordinal)
             && latestDecision.SelectedSourceEntityRevisionId == selectedSourceEntityRevisionId
+            && string.Equals(latestDecision.PatchFingerprint, mergePatch?.Fingerprint, StringComparison.Ordinal)
             && string.Equals(latestDecision.Note, note, StringComparison.Ordinal))
         {
             await transaction.CommitAsync(cancellationToken);
@@ -178,6 +213,8 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             DecisionNumber = (latestDecision?.DecisionNumber ?? 0) + 1,
             DecisionKind = decisionKind,
             SelectedSourceEntityRevisionId = selectedSourceEntityRevisionId,
+            PatchJson = mergePatch?.Json,
+            PatchFingerprint = mergePatch?.Fingerprint,
             Note = note,
             CreatedByUserId = actor,
             CreatedAt = DateTimeOffset.UtcNow
@@ -380,7 +417,25 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         var campaignDecision = entry.CampaignRuleDecision;
         var baselineRuleset = latestRevision.BaselineSelection.RulesetRevision;
 
-        using var document = JsonDocument.Parse(sourceRevision.RawJson);
+        using var sourceDocument = JsonDocument.Parse(sourceRevision.RawJson);
+        var resolvedDocument = sourceDocument.RootElement.Clone();
+        if (campaignDecision?.DecisionKind != CampaignRuleDecisionKinds.SelectSource
+            && globalDecision.DecisionKind == RuleDecisionKinds.JsonMergePatch)
+        {
+            resolvedDocument = JsonMergePatch.Apply(resolvedDocument, globalDecision.PatchJson);
+        }
+        if (campaignDecision?.DecisionKind == CampaignRuleDecisionKinds.JsonMergePatch)
+        {
+            resolvedDocument = JsonMergePatch.Apply(resolvedDocument, campaignDecision.PatchJson);
+        }
+
+        JsonElement? globalMergePatch = globalDecision.PatchJson is null
+            ? null
+            : JsonMergePatch.ParsePatch(globalDecision.PatchJson);
+        JsonElement? campaignMergePatch = campaignDecision?.PatchJson is null
+            ? null
+            : JsonMergePatch.ParsePatch(campaignDecision.PatchJson);
+
         return new ResolvedCampaignRuleView(
             campaignId,
             concept.Id,
@@ -395,10 +450,15 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             baselineRuleset.Fingerprint,
             globalDecision.Id,
             globalDecision.DecisionNumber,
+            globalDecision.DecisionKind,
+            globalDecision.PatchFingerprint,
+            globalMergePatch,
             campaignDecision?.Id,
             campaignDecision?.DecisionNumber,
             campaignDecision?.DecisionKind ?? CampaignRuleDecisionKinds.InheritGlobal,
             campaignDecision?.Note,
+            campaignDecision?.PatchFingerprint,
+            campaignMergePatch,
             sourceEntity.Id,
             sourceRevision.Id,
             sourceRevision.RevisionNumber,
@@ -411,7 +471,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             work.DisplayName,
             edition.Key,
             edition.DisplayName,
-            document.RootElement.Clone());
+            resolvedDocument);
     }
 
     private static CampaignRulesetSelectionView ToView(
@@ -431,18 +491,25 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
 
     private static CampaignRuleDecisionView ToView(
         CampaignRuleDecision decision,
-        bool created) =>
-        new(
+        bool created)
+    {
+        JsonElement? mergePatch = decision.PatchJson is null
+            ? null
+            : JsonMergePatch.ParsePatch(decision.PatchJson);
+        return new CampaignRuleDecisionView(
             decision.Id,
             decision.CampaignId,
             decision.RuleConceptId,
             decision.DecisionNumber,
             decision.DecisionKind,
             decision.SelectedSourceEntityRevisionId,
+            decision.PatchFingerprint,
+            mergePatch,
             decision.Note,
             decision.CreatedByUserId,
             decision.CreatedAt,
             created);
+    }
 
     private static PublishedCampaignRulesetRevisionView ToView(
         CampaignRulesetRevision revision,
@@ -484,6 +551,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
                 value.BaselineEntry.Id.ToString("D"),
                 value.CampaignDecision?.Id.ToString("D") ?? "baseline",
                 value.CampaignDecision?.DecisionKind ?? CampaignRuleDecisionKinds.InheritGlobal,
+                value.CampaignDecision?.PatchFingerprint ?? string.Empty,
                 value.CampaignDecision?.Note ?? string.Empty,
                 value.SourceEntityRevisionId.ToString("D"),
                 value.SourceFingerprint)));
