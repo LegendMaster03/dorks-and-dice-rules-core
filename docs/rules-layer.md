@@ -150,16 +150,37 @@ Source-content access remains a separate axis. A DM may have authority to select
 
 The response includes campaign publication provenance, the pinned global baseline revision, global decision/patch provenance, optional campaign-decision/patch provenance, exact effective source revision provenance, package/work/edition provenance, and the final composed document.
 
+## Preview and diff
+
+Rules Core can evaluate a candidate global or campaign decision before that decision is persisted. Preview uses the same pinned source revisions, merge semantics, structured array operations, source-binding rules, and campaign composition order as publication.
+
+A preview response contains:
+
+- the concept and scope being previewed;
+- the candidate decision kind and canonical patch fingerprint;
+- the source revision used by the current/base rule and the source revision that would be effective after the candidate;
+- the normalized merge or structured patch, when present;
+- the complete base document;
+- the complete candidate document;
+- a deterministic structural change list using RFC 6901 paths.
+
+Object changes are reported at the changed property path as `add`, `remove`, or `replace`. Arrays are reported as one `replace` at the array path when their ordered contents differ. The authored structured patch remains available alongside the diff, so a UI can explain that an array replacement in the result came from specific operations such as `append`, `remove`, or `insert-before` rather than from a wholesale authored replacement.
+
+Preview is deliberately non-persisting: it does not create a global decision, campaign decision, or ruleset revision. Global preview requires the same Dorks-mode `Rules Lawyer` authority used for global mutation. Campaign preview requires campaign membership plus the campaign-scoped `DM` role.
+
+Because preview returns source-backed documents, change authority is not enough to see restricted material. The caller must independently have a Rules Core source grant for every restricted source document returned by the preview. Inaccessible restricted material uses not-found behavior.
+
 ## Current API
 
-Global mutation endpoints:
+Global mutation and authoring endpoints:
 
 - `POST /api/global/rules/concepts`
 - `POST /api/global/rules/concepts/{conceptId}/bindings`
+- `POST /api/global/rules/concepts/{conceptId}/preview`
 - `PUT /api/global/rules/concepts/{conceptId}/decision`
 - `POST /api/global/rules/publish`
 
-`PUT /api/global/rules/concepts/{conceptId}/decision` remains backward compatible with source-only selection. Supplying `mergePatch` creates a `json-merge-patch` decision. Supplying `structuredPatch` creates a `json-rule-patch` decision. A request can not supply both patch forms.
+The global preview and decision endpoints accept the same decision request shape. Source-only requests preview/select the exact source revision. Supplying `mergePatch` previews/creates a `json-merge-patch` decision. Supplying `structuredPatch` previews/creates a `json-rule-patch` decision. A request can not supply both patch forms.
 
 Global resolved read endpoint:
 
@@ -168,10 +189,11 @@ Global resolved read endpoint:
 Campaign endpoints:
 
 - `PUT /api/campaigns/{campaignId}/rules/baseline`
+- `POST /api/campaigns/{campaignId}/rules/concepts/{conceptId}/preview`
 - `PUT /api/campaigns/{campaignId}/rules/concepts/{conceptId}/decision`
 - `POST /api/campaigns/{campaignId}/rules/publish`
 - `GET /api/campaigns/{campaignId}/rules/{conceptKey}`
 
-Campaign decision requests use `decisionKind` to choose `select-source`, `inherit-global`, `json-merge-patch`, or `json-rule-patch`. Patch decisions leave `sourceEntityRevisionId` null. `json-merge-patch` uses `mergePatch`; `json-rule-patch` uses `structuredPatch`.
+Campaign preview and decision requests use `decisionKind` to choose `select-source`, `inherit-global`, `json-merge-patch`, or `json-rule-patch`. Patch decisions leave `sourceEntityRevisionId` null. `json-merge-patch` uses `mergePatch`; `json-rule-patch` uses `structuredPatch`.
 
-The current implementation establishes exact source selection, authored object merge/replace/delete semantics, item-aware array composition, immutable global publication, deliberate campaign migration, and campaign-specific composition. Arbitrary campaign-only concepts, temporary/session overrides, richer multi-field selectors/set-style array operations, diff/rollback UI, and broader authoring workflows remain later layers built on the immutable publication model.
+The current implementation establishes exact source selection, authored object merge/replace/delete semantics, item-aware array composition, non-persisting preview/diff, immutable global publication, deliberate campaign migration, and campaign-specific composition. Arbitrary campaign-only concepts, temporary/session overrides, richer multi-field selectors/set-style array operations, rollback UI, and broader authoring workflows remain later layers built on the immutable publication model.
