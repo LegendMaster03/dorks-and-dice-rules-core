@@ -1,0 +1,16 @@
+.git
+.github
+.vs
+**/bin
+**/obj
+TestResults
+coverage
+data/cache
+data/uploads
+data/sources
+data/blobs
+imports
+source-cache
+.env
+.env.*
+!.env.example

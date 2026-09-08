@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="src/RulesCore.Domain/RulesCore.Domain.csproj" />
+  <Project Path="src/RulesCore.Application/RulesCore.Application.csproj" />
+  <Project Path="src/RulesCore.Infrastructure/RulesCore.Infrastructure.csproj" />
+  <Project Path="src/RulesCore.Web/RulesCore.Web.csproj" />
+  <Project Path="tests/RulesCore.Tests/RulesCore.Tests.csproj" />
+  <Project Path="tests/RulesCore.IntegrationTests/RulesCore.IntegrationTests.csproj" />
+</Solution>

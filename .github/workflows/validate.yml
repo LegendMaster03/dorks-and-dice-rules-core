@@ -1,0 +1,30 @@
+name: Validate Rules Core
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "**" ]
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Restore
+        run: dotnet restore dorks-and-dice-rules-core.slnx
+
+      - name: Test
+        run: dotnet test dorks-and-dice-rules-core.slnx --configuration Release --no-restore
+
+      - name: Build container
+        run: docker build -t dorks-and-dice-rules-core:test -f src/RulesCore.Web/Dockerfile .

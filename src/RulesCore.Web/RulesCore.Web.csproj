@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../RulesCore.Application/RulesCore.Application.csproj" />
+    <ProjectReference Include="../RulesCore.Infrastructure/RulesCore.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>
