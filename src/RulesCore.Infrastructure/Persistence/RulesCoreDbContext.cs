@@ -10,6 +10,7 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
     public DbSet<SourceEdition> SourceEditions => Set<SourceEdition>();
     public DbSet<SourceEntity> SourceEntities => Set<SourceEntity>();
     public DbSet<SourceEntityRevision> SourceEntityRevisions => Set<SourceEntityRevision>();
+    public DbSet<UserSourceGrant> UserSourceGrants => Set<UserSourceGrant>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -100,6 +101,25 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
             entity.HasOne(value => value.SourceEntity)
                 .WithMany(value => value.Revisions)
                 .HasForeignKey(value => value.SourceEntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<UserSourceGrant>(entity =>
+        {
+            entity.ToTable("user_source_grant");
+            entity.HasKey(value => value.Id).HasName("pk_user_source_grant");
+            entity.Property(value => value.Id).HasColumnName("user_source_grant_id");
+            entity.Property(value => value.SourcePackageId).HasColumnName("source_package_id");
+            entity.Property(value => value.UserId).HasColumnName("user_id").HasMaxLength(200);
+            entity.Property(value => value.GrantedAt).HasColumnName("granted_at");
+            entity.HasIndex(value => new { value.UserId, value.SourcePackageId })
+                .IsUnique()
+                .HasDatabaseName("ux_user_source_grant_user_package");
+            entity.HasIndex(value => value.SourcePackageId)
+                .HasDatabaseName("ix_user_source_grant_package");
+            entity.HasOne(value => value.SourcePackage)
+                .WithMany(value => value.UserGrants)
+                .HasForeignKey(value => value.SourcePackageId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
     }
