@@ -475,6 +475,8 @@ if (hasDatabase)
                 statusCode: StatusCodes.Status409Conflict);
         }
     });
+
+    app.MapRulePreviewEndpoints();
 }
 else
 {
