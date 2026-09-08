@@ -368,7 +368,7 @@ public sealed class CampaignRuleAuthoringIntegrationTests
                 var detail = (await migratedDetailResponse.Content
                     .ReadFromJsonAsync<CampaignRuleAuthoringConceptView>())!;
                 Assert.Equal(selection2.Id, detail.SelectedBaseline.Id);
-                Assert.Equal(publicRevision2Id, detail.BaselineGlobalDecision.SelectedSourceEntityRevisionId);
+                Assert.Equal(publicRevision2Id, detail.BaselineGlobalDecision.SourceEntityRevisionId);
                 Assert.True(detail.HasUnpublishedBaselineChange);
                 Assert.False(detail.HasUnpublishedOverrideChange);
             }
