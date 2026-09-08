@@ -31,6 +31,19 @@ dotnet run --project src/RulesCore.Web
 
 Set `ConnectionStrings__RulesCore` to a PostgreSQL connection string before database-backed work. The service can start without a database during early standalone development; `/ready` reports unavailable until PostgreSQL is configured and reachable.
 
+## Source Layer
+
+The first Source Layer vertical slice persists package, work, edition, entity, and immutable entity-revision records in PostgreSQL. `ISourceImportService` accepts 5e.tools-shaped JSON, preserves complete entity objects as JSONB, computes stable SHA-256 content fingerprints, and creates a new revision only when source content changes.
+
+The initial read API exposes only source packages explicitly marked public:
+
+- `GET /api/sources`
+- `GET /api/sources/entities/{entityId}`
+
+Restricted-source grants and authenticated mutation endpoints are intentionally not part of this slice. There is no public HTTP import endpoint; ingestion remains behind the application service until Tool Host authentication and source-access enforcement are wired into Rules Core.
+
+See `docs/source-layer.md` for the persistence, fingerprinting, provenance, and access boundaries.
+
 ## Deployment
 
 Pushes to `main` trigger `.github/workflows/deploy.yml`, which follows the same self-hosted deployment pattern as the main Dorks & Dice site. The workflow runs the test suite against disposable PostgreSQL 18, builds and smoke-tests `dorks-and-dice-rules-core:latest`, then recreates the production container through Docker Compose.
