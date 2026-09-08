@@ -23,6 +23,7 @@ if (hasDatabase)
     builder.Services.AddScoped<ICampaignRulesService, CampaignRulesService>();
     builder.Services.AddScoped<IRulePatchPreviewService, RulePatchPreviewService>();
     builder.Services.AddScoped<IGlobalRulesAuthoringService, GlobalRulesAuthoringService>();
+    builder.Services.AddScoped<ICampaignRulesAuthoringService, CampaignRulesAuthoringService>();
 }
 
 var toolHostBaseUrl = builder.Configuration["ToolHost:BaseUrl"];
@@ -110,7 +111,7 @@ app.MapGet("/", () => Results.Ok(new
 app.MapGet("/api", () => Results.Ok(new
 {
     service = "Rules Core API",
-    version = "0.7-dev",
+    version = "0.8-dev",
     endpointFamilies = new[]
     {
         "/api/rules",
@@ -480,6 +481,7 @@ if (hasDatabase)
 
     app.MapRulePreviewEndpoints();
     app.MapGlobalRuleAuthoringEndpoints();
+    app.MapCampaignRuleAuthoringEndpoints();
 }
 else
 {
@@ -494,6 +496,8 @@ else
     app.MapPut("/api/global/rules/concepts/{conceptId:guid}/decision", (Guid conceptId) => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/publish", () => DatabaseUnavailable("Rules Layer"));
     app.MapGet("/api/campaigns/{campaignId:guid}/rules/{conceptKey}", (Guid campaignId, string conceptKey) => DatabaseUnavailable("Campaign Rules Layer"));
+    app.MapGet("/api/campaigns/{campaignId:guid}/rules/authoring", (Guid campaignId) => DatabaseUnavailable("Campaign Rules Layer"));
+    app.MapGet("/api/campaigns/{campaignId:guid}/rules/authoring/concepts/{conceptId:guid}", (Guid campaignId, Guid conceptId) => DatabaseUnavailable("Campaign Rules Layer"));
     app.MapPut("/api/campaigns/{campaignId:guid}/rules/baseline", (Guid campaignId) => DatabaseUnavailable("Campaign Rules Layer"));
     app.MapPost("/api/campaigns/{campaignId:guid}/rules/concepts/{conceptId:guid}/preview", (Guid campaignId, Guid conceptId) => DatabaseUnavailable("Campaign Rules Layer"));
     app.MapPut("/api/campaigns/{campaignId:guid}/rules/concepts/{conceptId:guid}/decision", (Guid campaignId, Guid conceptId) => DatabaseUnavailable("Campaign Rules Layer"));
