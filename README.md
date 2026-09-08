@@ -54,11 +54,15 @@ Global decisions support exact `select-source`, simple `json-merge-patch`, and a
 
 Rules Lawyers can preview a candidate decision before saving it. `POST /api/global/rules/concepts/{conceptId}/preview` returns the source/base document, candidate document, normalized patch provenance, and a deterministic structural diff without creating a decision or ruleset revision. Preview requires normal Rules Lawyer change authority and independently enforces restricted-source grants because it returns source-backed content.
 
+The hosted authoring API exposes the state needed to drive the Rules Lawyer UI without introducing mutable server-side drafts. `GET /api/global/rules/authoring` summarizes concepts, the latest publication, and pending saved decisions. `GET /api/global/rules/authoring/concepts/{conceptId}` returns bindings, exact accessible source revisions, the latest saved decision, and publication state. Restricted bindings remain visible only as Rules Layer identities/counts until the current user independently possesses the corresponding source grant.
+
 Rules Lawyers can then create concepts, bind source entities, set decisions, and publish immutable global ruleset revisions through authenticated Tool Host requests. Global mutation requires both the `dorks-and-dice` site mode and the effective `Rules Lawyer` role.
 
 `GET /api/rules/{conceptKey}` resolves the concept from the latest published ruleset and returns exact decision/source provenance plus patch provenance. The source-backed document is returned only when the caller independently satisfies Source Layer access control. Rules Lawyer authority does not grant restricted source access, and a source grant does not grant Rules Lawyer authority.
 
 Publishing the same effective decisions twice is idempotent. Source changes become visible in the resolved ruleset only after a Rules Lawyer deliberately creates a decision against the new source revision and publishes a new ruleset revision.
+
+See `docs/authoring-workflow.md` for the browse -> preview -> save -> publish workflow and its authorization/source-access boundaries.
 
 ## Campaign Rules Layer
 
