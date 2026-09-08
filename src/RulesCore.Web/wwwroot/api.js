@@ -49,10 +49,14 @@ export class RulesCoreApi {
             { method: "POST", body: payload });
     }
 
-    saveGlobalDecision(conceptId, payload) {
-        return this.backend(
+    async saveGlobalDecision(conceptId, payload) {
+        const result = await this.backend(
             `/api/global/rules/concepts/${encodeURIComponent(conceptId)}/decision`,
             { method: "PUT", body: payload });
+        return {
+            ...result.value,
+            created: result.created
+        };
     }
 
     publishGlobalRules() {
