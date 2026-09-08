@@ -62,6 +62,22 @@ The source API applies both open-content and grant rules:
 
 Grant mutation is currently an internal application service. No public grant-management or source-import write endpoint is exposed yet.
 
+## Global rules authority
+
+Global Rules Layer mutation is authorized from the redeemed host context. The request must be in `dorks-and-dice` mode and the user must have the effective global `Rules Lawyer` role. Rules Core rechecks this on every mutation endpoint rather than relying on frontend visibility.
+
+## Campaign rules authority
+
+Campaign Rules Layer reads and writes use the campaign memberships supplied by the host. Rules Core does not maintain a duplicate campaign-membership database.
+
+- Campaign reads require `dorks-and-dice` mode and explicit membership in the requested enabled campaign.
+- An authenticated nonmember receives not-found behavior.
+- Campaign mutations additionally require the campaign-scoped `DM` role.
+- A campaign Player may read the published campaign ruleset but receives forbidden on campaign mutations.
+- Source-content grants remain independent from campaign membership and DM authority.
+
+The campaign ID accepted by Rules Core is therefore only meaningful when it is present in the redeemed Tool Host context.
+
 ## Rules Core endpoints
 
 Current endpoints include:
@@ -74,10 +90,14 @@ Current endpoints include:
 - `GET /api/integration/session` - redeemed hosted identity context; requires a valid Tool Host ticket.
 - `GET /api/sources` - public packages plus private packages granted to the hosted identity.
 - `GET /api/sources/entities/{entityId}` - latest accessible source revision with provenance.
+- `GET /api/rules/{conceptKey}` - latest published global resolved rule.
+- `POST /api/global/rules/concepts` - create a global rule concept.
+- `POST /api/global/rules/concepts/{conceptId}/bindings` - bind a source entity to a concept.
+- `PUT /api/global/rules/concepts/{conceptId}/decision` - append/select the current global source decision.
+- `POST /api/global/rules/publish` - publish an immutable global ruleset revision.
+- `PUT /api/campaigns/{campaignId}/rules/baseline` - deliberately select a published global baseline for a campaign.
+- `PUT /api/campaigns/{campaignId}/rules/concepts/{conceptId}/decision` - append a campaign override or return-to-baseline decision.
+- `POST /api/campaigns/{campaignId}/rules/publish` - publish an immutable campaign ruleset revision.
+- `GET /api/campaigns/{campaignId}/rules/{conceptKey}` - resolve a rule from the latest published campaign ruleset.
 
-Planned endpoint families:
-
-- `/api/rules/...` - resolved rules/content consumption.
-- `/api/global/rules/...` - global Rules Layer adjudication; requires Dorks-mode Rules Lawyer authority.
-- `/api/campaigns/{campaignId}/rules/...` - campaign Rules Layer; requires campaign-scoped authority.
-- `/api/integration/...` - explicitly trusted Dorks & Dice service-to-service operations.
+Future integration work can add richer service-to-service operations, but the identity and campaign authority boundary remains the main Dorks & Dice host while restricted source authorization remains owned by Rules Core.
