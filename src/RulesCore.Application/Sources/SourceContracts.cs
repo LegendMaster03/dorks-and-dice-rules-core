@@ -34,7 +34,8 @@ public sealed record SourcePackageSummary(
     string Key,
     string DisplayName,
     string Provider,
-    string? License);
+    string? License,
+    bool IsPublic);
 
 public sealed record SourceEntityView(
     Guid EntityId,
@@ -61,10 +62,30 @@ public interface ISourceImportService
 
 public interface ISourceCatalogService
 {
-    Task<IReadOnlyList<SourcePackageSummary>> GetPublicPackagesAsync(
+    Task<IReadOnlyList<SourcePackageSummary>> GetAccessiblePackagesAsync(
+        string? userId,
         CancellationToken cancellationToken = default);
 
-    Task<SourceEntityView?> GetLatestPublicEntityAsync(
+    Task<SourceEntityView?> GetLatestAccessibleEntityAsync(
         Guid entityId,
+        string? userId,
+        CancellationToken cancellationToken = default);
+}
+
+public interface ISourceGrantService
+{
+    Task GrantAsync(
+        string userId,
+        Guid sourcePackageId,
+        CancellationToken cancellationToken = default);
+
+    Task<bool> RevokeAsync(
+        string userId,
+        Guid sourcePackageId,
+        CancellationToken cancellationToken = default);
+
+    Task<bool> HasGrantAsync(
+        string userId,
+        Guid sourcePackageId,
         CancellationToken cancellationToken = default);
 }
