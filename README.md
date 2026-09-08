@@ -33,14 +33,16 @@ Set `ConnectionStrings__RulesCore` to a PostgreSQL connection string before data
 
 ## Source Layer
 
-The first Source Layer vertical slice persists package, work, edition, entity, and immutable entity-revision records in PostgreSQL. `ISourceImportService` accepts 5e.tools-shaped JSON, preserves complete entity objects as JSONB, computes stable SHA-256 content fingerprints, and creates a new revision only when source content changes.
+The Source Layer persists package, work, edition, entity, immutable entity-revision, and per-user source-grant records in PostgreSQL. `ISourceImportService` accepts 5e.tools-shaped JSON, preserves complete entity objects as JSONB, computes stable SHA-256 content fingerprints, and creates a new revision only when source content changes.
 
-The initial read API exposes only source packages explicitly marked public:
+The source read API is access-aware:
 
 - `GET /api/sources`
 - `GET /api/sources/entities/{entityId}`
 
-Restricted-source grants and authenticated mutation endpoints are intentionally not part of this slice. There is no public HTTP import endpoint; ingestion remains behind the application service until Tool Host authentication and source-access enforcement are wired into Rules Core.
+Anonymous/direct requests see only public packages. Hosted requests redeem the main site's one-time Tool authentication ticket and use the resulting stable user ID to include private packages for which Rules Core stores an explicit `user_source_grant`. Missing and inaccessible private entities both return not-found behavior.
+
+Grant mutation and source import remain internal application services for now; there is no unauthenticated write endpoint.
 
 See `docs/source-layer.md` for the persistence, fingerprinting, provenance, and access boundaries.
 
@@ -59,13 +61,16 @@ The production database and credentials are not created, modified, or stored by 
 
 ## Tool hosting
 
-The existing Dorks & Dice Tool Host supports both embedded modules and proxied applications. Rules Core currently exposes:
+The Dorks & Dice Tool Host supports both embedded modules and proxied applications. Rules Core currently exposes:
 
 - `/health` - liveness endpoint used by the host/deployment.
 - `/ready` - database-aware readiness endpoint.
 - `/app.js` - minimal ES module for the existing Embedded Module integration.
 - `/` and `/api` - standalone service metadata.
+- `/api/integration/session` - authenticated backend view of the redeemed Tool Host context.
 
-The host strips browser Cookie and Authorization headers before proxying and does not support WebSockets or tool-owned cookie sessions. Rules Core therefore does not use Blazor Server or a separate Identity store. Dorks & Dice remains the production identity/authorization authority; Rules Core will consume the host's authenticated Tool gateway contract rather than infer identity from browser-controlled headers.
+The host strips browser Cookie, Authorization, forwarding, and reserved Tool-auth headers before proxying. For authenticated backend requests it injects a short-lived one-time ticket. Rules Core redeems that ticket against the main site's fixed `rules-core` introspection endpoint before accepting the supplied identity, global roles, or campaign memberships.
+
+Rules Core does not use Blazor Server or a separate production Identity store. Dorks & Dice remains the identity and change-authority source; Rules Core separately owns restricted source-content grants.
 
 See `docs/architecture.md` and `docs/tool-hosting.md` for the current boundaries.
