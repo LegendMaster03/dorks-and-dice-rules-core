@@ -70,6 +70,24 @@ export class RulesCoreApi {
             { method: "DELETE" });
     }
 
+    getSourceNormalizationCandidates({ entityType = null, query = null, limit = 100 } = {}) {
+        const parameters = new URLSearchParams();
+        if (entityType) {
+            parameters.set("entityType", entityType);
+        }
+        if (query) {
+            parameters.set("q", query);
+        }
+        parameters.set("limit", String(limit));
+        return this.backend(`/api/global/rules/normalization/candidates?${parameters.toString()}`);
+    }
+
+    acceptSourceNormalization(sourceEntityId) {
+        return this.backend(
+            `/api/global/rules/normalization/entities/${encodeURIComponent(sourceEntityId)}/accept`,
+            { method: "POST" });
+    }
+
     createGlobalConcept(payload) {
         return this.backend("/api/global/rules/concepts", {
             method: "POST",
