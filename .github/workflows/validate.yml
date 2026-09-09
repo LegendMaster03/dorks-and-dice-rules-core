@@ -28,6 +28,7 @@ jobs:
             src/RulesCore.Web/wwwroot/ui.js \
             src/RulesCore.Web/wwwroot/authoring.js \
             src/RulesCore.Web/wwwroot/concept-source-authoring.js \
+            src/RulesCore.Web/wwwroot/source-normalization.js \
             src/RulesCore.Web/wwwroot/source-admin.js \
             src/RulesCore.Web/wwwroot/source-access-admin.js \
             src/RulesCore.Web/wwwroot/campaign-baseline-authoring.js; do
