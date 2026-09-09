@@ -43,9 +43,9 @@ The source read API is access-aware:
 
 Anonymous/direct requests see only public packages. Hosted requests redeem the main site's one-time Tool authentication ticket and use the resulting stable user ID to include private packages for which Rules Core stores an explicit `user_source_grant`. Missing and inaccessible private entities both return not-found behavior.
 
-Source ingestion is exposed through `POST /api/source-admin/import` only to effective `Dev` users while the site is in `dorks-and-dice` mode. Importing a restricted package does not automatically grant the importing Dev access to that package. Grant mutation remains a separate internal authorization operation.
+Source ingestion is exposed through `POST /api/source-admin/import` only to effective `Dev` users while the site is in `dorks-and-dice` mode. Importing a restricted package does not automatically grant the importing Dev access to that package. The Dev may explicitly grant or revoke only the current authenticated account through the Source Administration package catalog; the target user ID is always derived from the redeemed Tool Host identity. Arbitrary other-user grant mutation and acquisition tracking are not exposed yet.
 
-See `docs/source-layer.md` and `docs/source-administration.md` for persistence, fingerprinting, provenance, access boundaries, and Dev-only ingestion.
+See `docs/source-layer.md` and `docs/source-administration.md` for persistence, fingerprinting, provenance, access boundaries, Dev-only ingestion, and explicit current-account source grants.
 
 ## Global Rules Layer
 
