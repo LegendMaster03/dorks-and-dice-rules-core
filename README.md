@@ -67,6 +67,14 @@ Publishing the same effective decisions twice is idempotent. Source changes beco
 
 See `docs/source-normalization.md` for reviewed normalization semantics and `docs/authoring-workflow.md` for the browse -> preview -> save -> publish workflow and its authorization/source-access boundaries.
 
+## Resolved Rules Browser
+
+Published rules are also available through access-aware catalogs. `GET /api/rules` lists the latest global publication filtered to source packages the current identity may access. `GET /api/campaigns/{campaignId}/rules` does the same for the latest published campaign ruleset and requires campaign membership. Catalog responses include rule identity and source provenance but not source-backed rule documents; full documents continue to use the existing per-concept resolved endpoints and their independent source-access checks.
+
+The embedded `Rules Browser` is available to authenticated Dorks & Dice users even when they have no Rules Lawyer or DM authority. Players can browse a campaign they belong to, while Rules Lawyers and DMs retain the separate authoring views. Unpublished global decisions, campaign baseline selections, and campaign overrides are not exposed through this read-only browser.
+
+See `docs/rules-browser.md` for catalog behavior, campaign membership rules, source-access filtering, and the current generic resolved-document renderer.
+
 ## Campaign Rules Layer
 
 Campaigns deliberately select a published global ruleset revision rather than floating with `latest`. Selecting a newer baseline does not affect the campaign's active rules until its DM publishes a new immutable campaign ruleset revision.
@@ -83,6 +91,7 @@ Campaign reads require authenticated membership in the requested campaign. Campa
 
 Current campaign endpoints:
 
+- `GET /api/campaigns/{campaignId}/rules`
 - `GET /api/campaigns/{campaignId}/rules/authoring`
 - `GET /api/campaigns/{campaignId}/rules/authoring/concepts/{conceptId}`
 - `GET /api/campaigns/{campaignId}/rules/baselines`
