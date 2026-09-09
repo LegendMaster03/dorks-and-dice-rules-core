@@ -22,6 +22,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("./concept-source-authoring.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-access-admin.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-admin.js", app, StringComparison.Ordinal);
+        Assert.Contains("./source-normalization.js", app, StringComparison.Ordinal);
         Assert.Contains("rules-core.css", app, StringComparison.Ordinal);
 
         var api = await GetAssetAsync(client, "/api.js", "javascript");
@@ -34,6 +35,8 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("getSourceAdministrationPackages", api, StringComparison.Ordinal);
         Assert.Contains("grantCurrentUserSourcePackage", api, StringComparison.Ordinal);
         Assert.Contains("revokeCurrentUserSourcePackage", api, StringComparison.Ordinal);
+        Assert.Contains("getSourceNormalizationCandidates", api, StringComparison.Ordinal);
+        Assert.Contains("acceptSourceNormalization", api, StringComparison.Ordinal);
         Assert.Contains("getCampaignBaselineCandidates", api, StringComparison.Ordinal);
         Assert.Contains("previewCampaignBaseline", api, StringComparison.Ordinal);
 
@@ -58,6 +61,15 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("Create rule concept", conceptSourceAuthoring, StringComparison.Ordinal);
         Assert.Contains("Source bindings", conceptSourceAuthoring, StringComparison.Ordinal);
         Assert.Contains("Find sources", conceptSourceAuthoring, StringComparison.Ordinal);
+
+        var sourceNormalization = await GetAssetAsync(
+            client,
+            "/source-normalization.js",
+            "javascript");
+        Assert.Contains("Normalize imported sources", sourceNormalization, StringComparison.Ordinal);
+        Assert.Contains("Suggestions never apply automatically", sourceNormalization, StringComparison.Ordinal);
+        Assert.Contains("Create + bind", sourceNormalization, StringComparison.Ordinal);
+        Assert.Contains("Bind to concept", sourceNormalization, StringComparison.Ordinal);
 
         var sourceAdmin = await GetAssetAsync(client, "/source-admin.js", "javascript");
         Assert.Contains("Source Administration", sourceAdmin, StringComparison.Ordinal);
