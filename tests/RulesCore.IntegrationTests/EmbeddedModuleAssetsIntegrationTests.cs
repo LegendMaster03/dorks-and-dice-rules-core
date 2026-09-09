@@ -18,6 +18,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         var app = await GetAssetAsync(client, "/app.js", "javascript");
         Assert.Contains("./api.js", app, StringComparison.Ordinal);
         Assert.Contains("./authoring.js", app, StringComparison.Ordinal);
+        Assert.Contains("./campaign-baseline-authoring.js", app, StringComparison.Ordinal);
         Assert.Contains("./concept-source-authoring.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-admin.js", app, StringComparison.Ordinal);
         Assert.Contains("rules-core.css", app, StringComparison.Ordinal);
@@ -29,12 +30,22 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("createGlobalConcept", api, StringComparison.Ordinal);
         Assert.Contains("bindGlobalConceptSource", api, StringComparison.Ordinal);
         Assert.Contains("importSourceDocument", api, StringComparison.Ordinal);
+        Assert.Contains("getCampaignBaselineCandidates", api, StringComparison.Ordinal);
+        Assert.Contains("previewCampaignBaseline", api, StringComparison.Ordinal);
 
         var authoring = await GetAssetAsync(client, "/authoring.js", "javascript");
         Assert.Contains("Global Rules", authoring, StringComparison.Ordinal);
         Assert.Contains("Campaign Rules", authoring, StringComparison.Ordinal);
         Assert.Contains("Preview", authoring, StringComparison.Ordinal);
         Assert.Contains("Save decision", authoring, StringComparison.Ordinal);
+
+        var campaignBaselineAuthoring = await GetAssetAsync(
+            client,
+            "/campaign-baseline-authoring.js",
+            "javascript");
+        Assert.Contains("Global baseline", campaignBaselineAuthoring, StringComparison.Ordinal);
+        Assert.Contains("Preview migration", campaignBaselineAuthoring, StringComparison.Ordinal);
+        Assert.Contains("Select baseline", campaignBaselineAuthoring, StringComparison.Ordinal);
 
         var conceptSourceAuthoring = await GetAssetAsync(
             client,
