@@ -9,6 +9,7 @@ import {
 
 const DEV_ROLE = "Dev";
 const DORKS_MODE = "dorks-and-dice";
+const IMPORT_RESULT_DISPLAY_LIMIT = 100;
 
 export function installSourceAdministration(app) {
     app.canAdministerSources = app.hostContext.siteMode === DORKS_MODE
@@ -51,9 +52,10 @@ async function renderSourceAdministration(app, container) {
 
     const formCard = element("div", { className: "card card-body" });
     const form = element("form");
+    const packageControls = packageFields();
     form.append(
         sectionHeading("Package"),
-        packageFields(),
+        packageControls.row,
         sectionHeading("Work and edition"));
 
     const workEdition = workEditionFields();
@@ -83,13 +85,6 @@ async function renderSourceAdministration(app, container) {
     const result = element("div", { className: "mt-3" });
     form.append(submit, result);
 
-    const packageControls = form.querySelectorAll("[data-source-package-field]");
-    const packageKey = packageControls[0];
-    const packageDisplayName = packageControls[1];
-    const provider = packageControls[2];
-    const license = packageControls[3];
-    const isPublic = packageControls[4];
-
     form.addEventListener("submit", async event => {
         event.preventDefault();
         result.replaceChildren();
@@ -106,11 +101,11 @@ async function renderSourceAdministration(app, container) {
             }
 
             const payload = {
-                packageKey: packageKey.value.trim(),
-                packageDisplayName: packageDisplayName.value.trim(),
-                provider: provider.value.trim(),
-                license: license.value.trim() || null,
-                isPublic: isPublic.checked,
+                packageKey: packageControls.packageKey.value.trim(),
+                packageDisplayName: packageControls.packageDisplayName.value.trim(),
+                provider: packageControls.provider.value.trim(),
+                license: packageControls.license.value.trim() || null,
+                isPublic: packageControls.isPublic.checked,
                 workKey: workEdition.workKey.value.trim(),
                 workDisplayName: workEdition.workDisplayName.value.trim(),
                 editionKey: workEdition.editionKey.value.trim(),
@@ -140,7 +135,7 @@ async function renderSourceAdministration(app, container) {
 function packageFields() {
     const row = element("div", { className: "row g-3 mb-4" });
     const packageKey = textField("Package key", "srd-5e", "col-lg-3", true);
-    const displayName = textField("Package display name", "5e SRD", "col-lg-3", true);
+    const packageDisplayName = textField("Package display name", "5e SRD", "col-lg-3", true);
     const provider = textField("Provider", "manual", "col-lg-2", true);
     const license = textField("License", "CC-BY-4.0", "col-lg-2", false);
 
@@ -151,8 +146,7 @@ function packageFields() {
     }));
     const isPublic = element("input", {
         type: "checkbox",
-        className: "form-check-input",
-        dataset: { sourcePackageField: "true" }
+        className: "form-check-input"
     });
     isPublic.checked = true;
     const check = element("div", { className: "form-check pt-2" });
@@ -161,11 +155,20 @@ function packageFields() {
         element("label", { className: "form-check-label ms-2", text: "Public source" }));
     visibilityColumn.append(check);
 
-    for (const input of [packageKey.input, displayName.input, provider.input, license.input]) {
-        input.dataset.sourcePackageField = "true";
-    }
-    row.append(packageKey.group, displayName.group, provider.group, license.group, visibilityColumn);
-    return row;
+    row.append(
+        packageKey.group,
+        packageDisplayName.group,
+        provider.group,
+        license.group,
+        visibilityColumn);
+    return {
+        row,
+        packageKey: packageKey.input,
+        packageDisplayName: packageDisplayName.input,
+        provider: provider.input,
+        license: license.input,
+        isPublic
+    };
 }
 
 function workEditionFields() {
@@ -222,8 +225,9 @@ function renderImportResult(container, imported, isPublic) {
             "This restricted package was not automatically granted to any user. Source grants remain a separate authorization operation."));
     }
 
+    const displayedEntities = imported.entities.slice(0, IMPORT_RESULT_DISPLAY_LIMIT);
     const list = element("div", { className: "list-group list-group-flush" });
-    for (const entity of imported.entities) {
+    for (const entity of displayedEntities) {
         const item = element("div", {
             className: "list-group-item px-0 d-flex flex-wrap justify-content-between gap-2"
         });
@@ -238,6 +242,14 @@ function renderImportResult(container, imported, isPublic) {
         list.append(item);
     }
     card.append(list);
+
+    if (imported.entities.length > displayedEntities.length) {
+        card.append(element("div", {
+            className: "small text-body-secondary mt-2",
+            text: `Showing the first ${displayedEntities.length} entities. ${imported.entities.length - displayedEntities.length} additional entities were imported successfully.`
+        }));
+    }
+
     container.replaceChildren(card);
 }
 
