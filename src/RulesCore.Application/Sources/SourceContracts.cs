@@ -81,16 +81,19 @@ public interface ISourceCatalogService
         string? userId,
         CancellationToken cancellationToken = default);
 
-    Task<IReadOnlyList<SourceEntitySummary>> SearchAccessibleEntitiesAsync(
+    Task<SourceEntityView?> GetLatestAccessibleEntityAsync(
+        Guid entityId,
+        string? userId,
+        CancellationToken cancellationToken = default);
+}
+
+public interface ISourceEntitySearchService
+{
+    Task<IReadOnlyList<SourceEntitySummary>> SearchAccessibleAsync(
         string? userId,
         string? entityType = null,
         string? query = null,
         int limit = 100,
-        CancellationToken cancellationToken = default);
-
-    Task<SourceEntityView?> GetLatestAccessibleEntityAsync(
-        Guid entityId,
-        string? userId,
         CancellationToken cancellationToken = default);
 }
 
