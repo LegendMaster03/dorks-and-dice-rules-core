@@ -11,6 +11,7 @@ public static class GlobalRuleAuthoringEndpointExtensions
         // extension. Source administration remains independently authorized even though its
         // endpoint family is registered from the same composition point.
         app.MapSourceAdministrationEndpoints();
+        app.MapSourceNormalizationEndpoints();
 
         app.MapGet("/api/global/rules/authoring", async (
             HttpContext httpContext,
