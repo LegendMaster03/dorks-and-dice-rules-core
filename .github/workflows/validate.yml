@@ -27,6 +27,7 @@ jobs:
             src/RulesCore.Web/wwwroot/api.js \
             src/RulesCore.Web/wwwroot/ui.js \
             src/RulesCore.Web/wwwroot/authoring.js \
+            src/RulesCore.Web/wwwroot/rules-browser.js \
             src/RulesCore.Web/wwwroot/concept-source-authoring.js \
             src/RulesCore.Web/wwwroot/source-normalization.js \
             src/RulesCore.Web/wwwroot/source-admin.js \
