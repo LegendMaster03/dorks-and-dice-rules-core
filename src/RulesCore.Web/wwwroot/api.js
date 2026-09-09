@@ -54,6 +54,22 @@ export class RulesCoreApi {
         });
     }
 
+    getSourceAdministrationPackages() {
+        return this.backend("/api/source-admin/packages");
+    }
+
+    grantCurrentUserSourcePackage(sourcePackageId) {
+        return this.backend(
+            `/api/source-admin/packages/${encodeURIComponent(sourcePackageId)}/current-user-grant`,
+            { method: "POST" });
+    }
+
+    revokeCurrentUserSourcePackage(sourcePackageId) {
+        return this.backend(
+            `/api/source-admin/packages/${encodeURIComponent(sourcePackageId)}/current-user-grant`,
+            { method: "DELETE" });
+    }
+
     createGlobalConcept(payload) {
         return this.backend("/api/global/rules/concepts", {
             method: "POST",
