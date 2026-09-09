@@ -1,5 +1,7 @@
 using RulesCore.Application.Hosting;
 using RulesCore.Application.Rules;
+using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Rules;
 
 namespace RulesCore.Web;
 
@@ -12,7 +14,7 @@ public static class SourceNormalizationEndpointExtensions
             string? q,
             int? limit,
             HttpContext httpContext,
-            ISourceNormalizationService normalization,
+            RulesCoreDbContext dbContext,
             CancellationToken cancellationToken) =>
         {
             var authorizationFailure = RequireGlobalRulesAuthority(
@@ -25,6 +27,7 @@ public static class SourceNormalizationEndpointExtensions
 
             try
             {
+                var normalization = new SourceNormalizationService(dbContext);
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(await normalization.GetCandidatesAsync(
                     authenticationContext!.User.Id,
@@ -42,7 +45,7 @@ public static class SourceNormalizationEndpointExtensions
         app.MapPost("/api/global/rules/normalization/entities/{sourceEntityId:guid}/accept", async (
             Guid sourceEntityId,
             HttpContext httpContext,
-            ISourceNormalizationService normalization,
+            RulesCoreDbContext dbContext,
             CancellationToken cancellationToken) =>
         {
             var authorizationFailure = RequireGlobalRulesAuthority(
@@ -55,6 +58,7 @@ public static class SourceNormalizationEndpointExtensions
 
             try
             {
+                var normalization = new SourceNormalizationService(dbContext);
                 var result = await normalization.AcceptAsync(
                     sourceEntityId,
                     authenticationContext!.User.Id,
