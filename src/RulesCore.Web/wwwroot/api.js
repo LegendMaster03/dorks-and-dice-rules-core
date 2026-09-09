@@ -35,6 +35,24 @@ export class RulesCoreApi {
         return requestJson(`${this.hostApiBaseUrl}/campaigns`, { method: "GET" });
     }
 
+    getGlobalRulesCatalog({ entityType = null, query = null, limit = 200 } = {}) {
+        return this.backend(`/api/rules?${catalogParameters(entityType, query, limit)}`);
+    }
+
+    getCampaignRulesCatalog(campaignId, { entityType = null, query = null, limit = 200 } = {}) {
+        return this.backend(
+            `/api/campaigns/${encodeURIComponent(campaignId)}/rules?${catalogParameters(entityType, query, limit)}`);
+    }
+
+    getResolvedGlobalRule(conceptKey) {
+        return this.backend(`/api/rules/${encodeURIComponent(conceptKey)}`);
+    }
+
+    getResolvedCampaignRule(campaignId, conceptKey) {
+        return this.backend(
+            `/api/campaigns/${encodeURIComponent(campaignId)}/rules/${encodeURIComponent(conceptKey)}`);
+    }
+
     searchSourceEntities({ entityType = null, query = null, limit = 100 } = {}) {
         const parameters = new URLSearchParams();
         if (entityType) {
@@ -184,6 +202,18 @@ export class RulesCoreApi {
         }
         return requestJson(`${this.backendBaseUrl}${path}`, options);
     }
+}
+
+function catalogParameters(entityType, query, limit) {
+    const parameters = new URLSearchParams();
+    if (entityType) {
+        parameters.set("entityType", entityType);
+    }
+    if (query) {
+        parameters.set("q", query);
+    }
+    parameters.set("limit", String(limit));
+    return parameters.toString();
 }
 
 async function requestJson(url, options = {}) {
