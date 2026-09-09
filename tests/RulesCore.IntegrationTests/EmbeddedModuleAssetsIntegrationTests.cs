@@ -18,17 +18,29 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         var app = await GetAssetAsync(client, "/app.js", "javascript");
         Assert.Contains("./api.js", app, StringComparison.Ordinal);
         Assert.Contains("./authoring.js", app, StringComparison.Ordinal);
+        Assert.Contains("./concept-source-authoring.js", app, StringComparison.Ordinal);
         Assert.Contains("rules-core.css", app, StringComparison.Ordinal);
 
         var api = await GetAssetAsync(client, "/api.js", "javascript");
         Assert.Contains("/upstream", api, StringComparison.Ordinal);
         Assert.Contains("saveGlobalDecision", api, StringComparison.Ordinal);
+        Assert.Contains("searchSourceEntities", api, StringComparison.Ordinal);
+        Assert.Contains("createGlobalConcept", api, StringComparison.Ordinal);
+        Assert.Contains("bindGlobalConceptSource", api, StringComparison.Ordinal);
 
         var authoring = await GetAssetAsync(client, "/authoring.js", "javascript");
         Assert.Contains("Global Rules", authoring, StringComparison.Ordinal);
         Assert.Contains("Campaign Rules", authoring, StringComparison.Ordinal);
         Assert.Contains("Preview", authoring, StringComparison.Ordinal);
         Assert.Contains("Save decision", authoring, StringComparison.Ordinal);
+
+        var conceptSourceAuthoring = await GetAssetAsync(
+            client,
+            "/concept-source-authoring.js",
+            "javascript");
+        Assert.Contains("Create rule concept", conceptSourceAuthoring, StringComparison.Ordinal);
+        Assert.Contains("Source bindings", conceptSourceAuthoring, StringComparison.Ordinal);
+        Assert.Contains("Find sources", conceptSourceAuthoring, StringComparison.Ordinal);
 
         await GetAssetAsync(client, "/ui.js", "javascript");
         await GetAssetAsync(client, "/rules-core.css", "text/css");
