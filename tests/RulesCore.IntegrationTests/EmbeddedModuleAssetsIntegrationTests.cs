@@ -19,6 +19,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("./api.js", app, StringComparison.Ordinal);
         Assert.Contains("./authoring.js", app, StringComparison.Ordinal);
         Assert.Contains("./concept-source-authoring.js", app, StringComparison.Ordinal);
+        Assert.Contains("./source-admin.js", app, StringComparison.Ordinal);
         Assert.Contains("rules-core.css", app, StringComparison.Ordinal);
 
         var api = await GetAssetAsync(client, "/api.js", "javascript");
@@ -27,6 +28,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("searchSourceEntities", api, StringComparison.Ordinal);
         Assert.Contains("createGlobalConcept", api, StringComparison.Ordinal);
         Assert.Contains("bindGlobalConceptSource", api, StringComparison.Ordinal);
+        Assert.Contains("importSourceDocument", api, StringComparison.Ordinal);
 
         var authoring = await GetAssetAsync(client, "/authoring.js", "javascript");
         Assert.Contains("Global Rules", authoring, StringComparison.Ordinal);
@@ -41,6 +43,11 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("Create rule concept", conceptSourceAuthoring, StringComparison.Ordinal);
         Assert.Contains("Source bindings", conceptSourceAuthoring, StringComparison.Ordinal);
         Assert.Contains("Find sources", conceptSourceAuthoring, StringComparison.Ordinal);
+
+        var sourceAdmin = await GetAssetAsync(client, "/source-admin.js", "javascript");
+        Assert.Contains("Source Administration", sourceAdmin, StringComparison.Ordinal);
+        Assert.Contains("Import source document", sourceAdmin, StringComparison.Ordinal);
+        Assert.Contains("Dev control-plane operation", sourceAdmin, StringComparison.Ordinal);
 
         await GetAssetAsync(client, "/ui.js", "javascript");
         await GetAssetAsync(client, "/rules-core.css", "text/css");
