@@ -1,5 +1,6 @@
 import { RulesCoreApi, loadToolHostContext } from "./api.js";
 import { RulesAuthoringApp } from "./authoring.js";
+import { installConceptSourceAuthoring } from "./concept-source-authoring.js";
 import { alertNode, clear, describeError, element } from "./ui.js";
 
 const root = document.getElementById("tool-root");
@@ -24,6 +25,7 @@ try {
     ]);
 
     const app = new RulesAuthoringApp(root, api, hostContext, session, campaigns);
+    installConceptSourceAuthoring(app);
     await app.render();
 } catch (error) {
     console.error("Rules Core failed to initialize.", error);
