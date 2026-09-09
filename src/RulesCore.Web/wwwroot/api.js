@@ -47,6 +47,13 @@ export class RulesCoreApi {
         return this.backend(`/api/sources/entities?${parameters.toString()}`);
     }
 
+    importSourceDocument(payload) {
+        return this.backend("/api/source-admin/import", {
+            method: "POST",
+            body: payload
+        });
+    }
+
     createGlobalConcept(payload) {
         return this.backend("/api/global/rules/concepts", {
             method: "POST",
