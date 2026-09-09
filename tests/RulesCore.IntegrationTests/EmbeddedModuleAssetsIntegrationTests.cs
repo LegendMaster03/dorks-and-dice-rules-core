@@ -18,6 +18,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         var app = await GetAssetAsync(client, "/app.js", "javascript");
         Assert.Contains("./api.js", app, StringComparison.Ordinal);
         Assert.Contains("./authoring.js", app, StringComparison.Ordinal);
+        Assert.Contains("./rules-browser.js", app, StringComparison.Ordinal);
         Assert.Contains("./campaign-baseline-authoring.js", app, StringComparison.Ordinal);
         Assert.Contains("./concept-source-authoring.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-access-admin.js", app, StringComparison.Ordinal);
@@ -27,6 +28,10 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
 
         var api = await GetAssetAsync(client, "/api.js", "javascript");
         Assert.Contains("/upstream", api, StringComparison.Ordinal);
+        Assert.Contains("getGlobalRulesCatalog", api, StringComparison.Ordinal);
+        Assert.Contains("getCampaignRulesCatalog", api, StringComparison.Ordinal);
+        Assert.Contains("getResolvedGlobalRule", api, StringComparison.Ordinal);
+        Assert.Contains("getResolvedCampaignRule", api, StringComparison.Ordinal);
         Assert.Contains("saveGlobalDecision", api, StringComparison.Ordinal);
         Assert.Contains("searchSourceEntities", api, StringComparison.Ordinal);
         Assert.Contains("createGlobalConcept", api, StringComparison.Ordinal);
@@ -39,6 +44,12 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("acceptSourceNormalization", api, StringComparison.Ordinal);
         Assert.Contains("getCampaignBaselineCandidates", api, StringComparison.Ordinal);
         Assert.Contains("previewCampaignBaseline", api, StringComparison.Ordinal);
+
+        var rulesBrowser = await GetAssetAsync(client, "/rules-browser.js", "javascript");
+        Assert.Contains("Rules Browser", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Browse published rules that this account may access", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Resolved rule document", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Campaign override", rulesBrowser, StringComparison.Ordinal);
 
         var authoring = await GetAssetAsync(client, "/authoring.js", "javascript");
         Assert.Contains("Global Rules", authoring, StringComparison.Ordinal);
