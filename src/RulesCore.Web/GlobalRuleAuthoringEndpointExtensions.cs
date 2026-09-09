@@ -7,11 +7,11 @@ public static class GlobalRuleAuthoringEndpointExtensions
 {
     public static void MapGlobalRuleAuthoringEndpoints(this WebApplication app)
     {
-        // Program currently composes database-backed authoring endpoint families through this
-        // extension. Source administration remains independently authorized even though its
-        // endpoint family is registered from the same composition point.
+        // Program currently composes database-backed endpoint families through this extension.
+        // Each family still owns its own authorization boundary.
         app.MapSourceAdministrationEndpoints();
         app.MapSourceNormalizationEndpoints();
+        app.MapResolvedRulesCatalogEndpoints();
 
         app.MapGet("/api/global/rules/authoring", async (
             HttpContext httpContext,
