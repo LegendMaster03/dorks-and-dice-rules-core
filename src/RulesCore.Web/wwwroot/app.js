@@ -2,6 +2,7 @@ import { RulesCoreApi, loadToolHostContext } from "./api.js";
 import { RulesAuthoringApp } from "./authoring.js";
 import { installCampaignBaselineAuthoring } from "./campaign-baseline-authoring.js";
 import { installConceptSourceAuthoring } from "./concept-source-authoring.js";
+import { installSourceAccessAdministration } from "./source-access-admin.js";
 import { installSourceAdministration } from "./source-admin.js";
 import { alertNode, clear, describeError, element } from "./ui.js";
 
@@ -29,6 +30,7 @@ try {
     const app = new RulesAuthoringApp(root, api, hostContext, session, campaigns);
     installConceptSourceAuthoring(app);
     installSourceAdministration(app);
+    installSourceAccessAdministration(app);
     installCampaignBaselineAuthoring(app);
     await app.render();
 } catch (error) {
