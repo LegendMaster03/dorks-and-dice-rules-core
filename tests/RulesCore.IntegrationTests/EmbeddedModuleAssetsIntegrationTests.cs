@@ -20,6 +20,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("./authoring.js", app, StringComparison.Ordinal);
         Assert.Contains("./campaign-baseline-authoring.js", app, StringComparison.Ordinal);
         Assert.Contains("./concept-source-authoring.js", app, StringComparison.Ordinal);
+        Assert.Contains("./source-access-admin.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-admin.js", app, StringComparison.Ordinal);
         Assert.Contains("rules-core.css", app, StringComparison.Ordinal);
 
@@ -30,6 +31,9 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("createGlobalConcept", api, StringComparison.Ordinal);
         Assert.Contains("bindGlobalConceptSource", api, StringComparison.Ordinal);
         Assert.Contains("importSourceDocument", api, StringComparison.Ordinal);
+        Assert.Contains("getSourceAdministrationPackages", api, StringComparison.Ordinal);
+        Assert.Contains("grantCurrentUserSourcePackage", api, StringComparison.Ordinal);
+        Assert.Contains("revokeCurrentUserSourcePackage", api, StringComparison.Ordinal);
         Assert.Contains("getCampaignBaselineCandidates", api, StringComparison.Ordinal);
         Assert.Contains("previewCampaignBaseline", api, StringComparison.Ordinal);
 
@@ -59,6 +63,15 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("Source Administration", sourceAdmin, StringComparison.Ordinal);
         Assert.Contains("Import source document", sourceAdmin, StringComparison.Ordinal);
         Assert.Contains("Dev control-plane operation", sourceAdmin, StringComparison.Ordinal);
+
+        var sourceAccessAdmin = await GetAssetAsync(
+            client,
+            "/source-access-admin.js",
+            "javascript");
+        Assert.Contains("Current account source access", sourceAccessAdmin, StringComparison.Ordinal);
+        Assert.Contains("Grant my account", sourceAccessAdmin, StringComparison.Ordinal);
+        Assert.Contains("Revoke my account", sourceAccessAdmin, StringComparison.Ordinal);
+        Assert.Contains("only the current authenticated account", sourceAccessAdmin, StringComparison.Ordinal);
 
         await GetAssetAsync(client, "/ui.js", "javascript");
         await GetAssetAsync(client, "/rules-core.css", "text/css");
