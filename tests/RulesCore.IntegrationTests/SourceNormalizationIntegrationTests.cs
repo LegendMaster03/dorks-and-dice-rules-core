@@ -44,6 +44,9 @@ public sealed class SourceNormalizationIntegrationTests
         var public2024Key = $"normalization-2024-{Guid.NewGuid():N}";
         var restrictedKey = $"normalization-private-{Guid.NewGuid():N}";
         var conflictKey = $"normalization-conflict-{Guid.NewGuid():N}";
+        var conflictToken = Guid.NewGuid().ToString("N")[..8];
+        var conflictName = $"Conflicted {conflictToken}";
+        var conflictConceptKey = $"skill.conflicted-{conflictToken}";
         var packageKeys = new[] { public2014Key, public2024Key, restrictedKey, conflictKey };
 
         Guid public2014EntityId = Guid.Empty;
@@ -73,12 +76,12 @@ public sealed class SourceNormalizationIntegrationTests
                 await grants.GrantAsync("normalizer", restricted.PackageId);
 
                 var conflict = await importer.Import5eToolsDocumentAsync(
-                    SourceRequest(conflictKey, "conflict", "Conflicted", "CONFLICT", isPublic: true));
+                    SourceRequest(conflictKey, "conflict", conflictName, "CONFLICT", isPublic: true));
                 conflictEntityId = conflict.Entities.Single().EntityId;
 
                 await globalRules.CreateConceptAsync(
                     new CreateRuleConceptRequest(
-                        "skill.conflicted",
+                        conflictConceptKey,
                         "spell",
                         "Deliberate key collision"),
                     "seed-rules-lawyer");
@@ -229,7 +232,7 @@ public sealed class SourceNormalizationIntegrationTests
 
             using (var conflictRequest = HostedRequest(
                        HttpMethod.Get,
-                       "/api/global/rules/normalization/candidates?q=Conflicted",
+                       $"/api/global/rules/normalization/candidates?q={conflictToken}",
                        "rules-lawyer-ticket"))
             using (var conflictResponse = await client.SendAsync(conflictRequest))
             {
@@ -239,7 +242,7 @@ public sealed class SourceNormalizationIntegrationTests
                 var conflictCandidate = Assert.Single(candidates);
                 Assert.Equal(conflictEntityId, conflictCandidate.SourceEntityId);
                 Assert.Equal(SourceNormalizationSuggestionKinds.Conflict, conflictCandidate.SuggestionKind);
-                Assert.Equal("skill.conflicted", conflictCandidate.SuggestedConceptKey);
+                Assert.Equal(conflictConceptKey, conflictCandidate.SuggestedConceptKey);
             }
 
             using (var conflictAccept = HostedRequest(
@@ -265,7 +268,7 @@ public sealed class SourceNormalizationIntegrationTests
         }
         finally
         {
-            await CleanupAsync(factory, packageKeys);
+            await CleanupAsync(factory, packageKeys, conflictConceptKey);
         }
     }
 
@@ -330,7 +333,8 @@ public sealed class SourceNormalizationIntegrationTests
 
     private static async Task CleanupAsync(
         WebApplicationFactory<Program> factory,
-        IReadOnlyCollection<string> packageKeys)
+        IReadOnlyCollection<string> packageKeys,
+        string conflictConceptKey)
     {
         await using var scope = factory.Services.CreateAsyncScope();
         var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
@@ -349,7 +353,7 @@ public sealed class SourceNormalizationIntegrationTests
             .Distinct()
             .ToArrayAsync();
         var seededConflictId = await db.RuleConcepts
-            .Where(value => value.Key == "skill.conflicted" && value.DisplayName == "Deliberate key collision")
+            .Where(value => value.Key == conflictConceptKey)
             .Select(value => (Guid?)value.Id)
             .SingleOrDefaultAsync();
 
