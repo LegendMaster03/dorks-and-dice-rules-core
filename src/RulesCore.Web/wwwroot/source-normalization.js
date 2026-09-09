@@ -15,6 +15,12 @@ export function installSourceNormalization(app) {
             return;
         }
 
+        for (const alert of container.querySelectorAll(".alert")) {
+            if (alert.textContent?.includes("Concept creation and source binding are not exposed")) {
+                alert.textContent = "No rule concepts exist yet. Create one manually or accept a reviewed source normalization suggestion below.";
+            }
+        }
+
         const card = createNormalizationCard(app, container);
         const insertionPoint = container.children[2] ?? null;
         container.insertBefore(card, insertionPoint);
