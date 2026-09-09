@@ -107,6 +107,16 @@ export class RulesCoreApi {
             `/api/campaigns/${encodeURIComponent(campaignId)}/rules/authoring/concepts/${encodeURIComponent(conceptId)}`);
     }
 
+    getCampaignBaselineCandidates(campaignId) {
+        return this.backend(
+            `/api/campaigns/${encodeURIComponent(campaignId)}/rules/baselines`);
+    }
+
+    previewCampaignBaseline(campaignId, rulesetRevisionId) {
+        return this.backend(
+            `/api/campaigns/${encodeURIComponent(campaignId)}/rules/baselines/${encodeURIComponent(rulesetRevisionId)}/preview`);
+    }
+
     previewCampaignDecision(campaignId, conceptId, payload) {
         return this.backend(
             `/api/campaigns/${encodeURIComponent(campaignId)}/rules/concepts/${encodeURIComponent(conceptId)}/preview`,
