@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
+using RulesCore.Domain.Rules;
 using RulesCore.Infrastructure.Persistence;
 
 namespace RulesCore.Infrastructure.Rules;
