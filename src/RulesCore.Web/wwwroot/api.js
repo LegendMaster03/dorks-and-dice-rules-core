@@ -35,6 +35,34 @@ export class RulesCoreApi {
         return requestJson(`${this.hostApiBaseUrl}/campaigns`, { method: "GET" });
     }
 
+    searchSourceEntities({ entityType = null, query = null, limit = 100 } = {}) {
+        const parameters = new URLSearchParams();
+        if (entityType) {
+            parameters.set("entityType", entityType);
+        }
+        if (query) {
+            parameters.set("q", query);
+        }
+        parameters.set("limit", String(limit));
+        return this.backend(`/api/sources/entities?${parameters.toString()}`);
+    }
+
+    createGlobalConcept(payload) {
+        return this.backend("/api/global/rules/concepts", {
+            method: "POST",
+            body: payload
+        });
+    }
+
+    bindGlobalConceptSource(conceptId, sourceEntityId) {
+        return this.backend(
+            `/api/global/rules/concepts/${encodeURIComponent(conceptId)}/bindings`,
+            {
+                method: "POST",
+                body: { sourceEntityId }
+            });
+    }
+
     getGlobalAuthoringOverview() {
         return this.backend("/api/global/rules/authoring");
     }
