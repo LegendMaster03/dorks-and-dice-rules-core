@@ -22,6 +22,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("./campaign-baseline-authoring.js", app, StringComparison.Ordinal);
         Assert.Contains("./concept-source-authoring.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-access-admin.js", app, StringComparison.Ordinal);
+        Assert.Contains("./source-acquisition-admin.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-admin.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-normalization.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-revision-review.js", app, StringComparison.Ordinal);
@@ -44,6 +45,9 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("getSourceAdministrationPackages", api, StringComparison.Ordinal);
         Assert.Contains("grantCurrentUserSourcePackage", api, StringComparison.Ordinal);
         Assert.Contains("revokeCurrentUserSourcePackage", api, StringComparison.Ordinal);
+        Assert.Contains("getCurrentUserSourceAcquisitions", api, StringComparison.Ordinal);
+        Assert.Contains("recordCurrentUserSourceAcquisition", api, StringComparison.Ordinal);
+        Assert.Contains("voidCurrentUserSourceAcquisition", api, StringComparison.Ordinal);
         Assert.Contains("getSourceNormalizationCandidates", api, StringComparison.Ordinal);
         Assert.Contains("acceptSourceNormalization", api, StringComparison.Ordinal);
         Assert.Contains("getCampaignBaselineCandidates", api, StringComparison.Ordinal);
@@ -110,6 +114,15 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("Grant my account", sourceAccessAdmin, StringComparison.Ordinal);
         Assert.Contains("Revoke my account", sourceAccessAdmin, StringComparison.Ordinal);
         Assert.Contains("only the current authenticated account", sourceAccessAdmin, StringComparison.Ordinal);
+
+        var sourceAcquisitionAdmin = await GetAssetAsync(
+            client,
+            "/source-acquisition-admin.js",
+            "javascript");
+        Assert.Contains("Current account acquisition history", sourceAcquisitionAdmin, StringComparison.Ordinal);
+        Assert.Contains("does not grant or revoke source-content access", sourceAcquisitionAdmin, StringComparison.Ordinal);
+        Assert.Contains("Record acquisition", sourceAcquisitionAdmin, StringComparison.Ordinal);
+        Assert.Contains("Void record", sourceAcquisitionAdmin, StringComparison.Ordinal);
 
         await GetAssetAsync(client, "/ui.js", "javascript");
         await GetAssetAsync(client, "/rules-core.css", "text/css");
