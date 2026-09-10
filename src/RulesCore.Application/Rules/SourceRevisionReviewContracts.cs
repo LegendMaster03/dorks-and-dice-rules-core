@@ -35,6 +35,28 @@ public sealed record SourceRevisionReviewPreviewView(
     JsonElement? CandidateResolvedDocument,
     IReadOnlyList<RuleDocumentChangeView> Changes);
 
+public sealed record AdoptLatestSourceRevisionRequest(
+    Guid ExpectedGlobalRuleDecisionId,
+    Guid ExpectedLatestSourceEntityRevisionId,
+    string ExpectedLatestFingerprint);
+
+public sealed record AdoptedSourceRevisionView(
+    Guid RuleConceptId,
+    string ConceptKey,
+    Guid PreviousGlobalRuleDecisionId,
+    Guid GlobalRuleDecisionId,
+    int GlobalDecisionNumber,
+    string DecisionKind,
+    Guid PreviousSourceEntityRevisionId,
+    Guid SourceEntityRevisionId,
+    int SourceRevisionNumber,
+    string SourceFingerprint,
+    string? PatchFingerprint,
+    string? Note,
+    string CreatedByUserId,
+    DateTimeOffset CreatedAt,
+    bool RequiresPublication);
+
 public interface ISourceRevisionReviewService
 {
     Task<IReadOnlyList<SourceRevisionReviewItemView>> GetPendingAsync(
@@ -44,5 +66,11 @@ public interface ISourceRevisionReviewService
     Task<SourceRevisionReviewPreviewView?> PreviewAsync(
         Guid ruleConceptId,
         string userId,
+        CancellationToken cancellationToken = default);
+
+    Task<AdoptedSourceRevisionView?> AdoptLatestAsync(
+        Guid ruleConceptId,
+        AdoptLatestSourceRevisionRequest request,
+        string actorUserId,
         CancellationToken cancellationToken = default);
 }
