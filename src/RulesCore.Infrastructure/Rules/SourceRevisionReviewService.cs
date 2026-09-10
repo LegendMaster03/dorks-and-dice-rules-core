@@ -23,10 +23,7 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
                 .ThenInclude(value => value.SourceEdition)
                 .ThenInclude(value => value.SourceWork)
                 .ThenInclude(value => value.SourcePackage)
-            .Where(value =>
-                value.SelectedSourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.IsPublic
-                || value.SelectedSourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.UserGrants
-                    .Any(grant => grant.UserId == normalizedUserId))
+                .ThenInclude(value => value.UserGrants)
             .OrderBy(value => value.RuleConceptId)
             .ThenByDescending(value => value.DecisionNumber)
             .ToArrayAsync(cancellationToken);
@@ -34,6 +31,13 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
         var latestDecisions = decisions
             .GroupBy(value => value.RuleConceptId)
             .Select(group => group.First())
+            .Where(decision =>
+            {
+                var package = decision.SelectedSourceEntityRevision
+                    .SourceEntity.SourceEdition.SourceWork.SourcePackage;
+                return package.IsPublic
+                    || package.UserGrants.Any(grant => grant.UserId == normalizedUserId);
+            })
             .ToArray();
         if (latestDecisions.Length == 0)
         {
