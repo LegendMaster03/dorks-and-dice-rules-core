@@ -12,6 +12,7 @@ public static class GlobalRuleAuthoringEndpointExtensions
         app.MapSourceAdministrationEndpoints();
         app.MapSourceNormalizationEndpoints();
         app.MapResolvedRulesCatalogEndpoints();
+        app.MapSourceRevisionReviewEndpoints();
 
         app.MapGet("/api/global/rules/authoring", async (
             HttpContext httpContext,
