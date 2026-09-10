@@ -11,7 +11,7 @@ public static class SourceAdministrationEndpointExtensions
     public static void MapSourceAdministrationEndpoints(this WebApplication app)
     {
         app.MapPost("/api/source-admin/import/preview", async (
-            Import5eToolsDocumentRequest request,
+            SourceAdminImportRequest request,
             HttpContext httpContext,
             ISourceImportService importer,
             CancellationToken cancellationToken) =>
@@ -24,10 +24,20 @@ public static class SourceAdministrationEndpointExtensions
 
             try
             {
+                var preparation = SourceAdminImportPartitioner.Prepare(request);
+                var preview = await importer.Preview5eToolsDocumentAsync(
+                    preparation.LogicalRequest,
+                    cancellationToken);
+                if (preparation.Warnings.Count > 0)
+                {
+                    preview = preview with
+                    {
+                        Warnings = preview.Warnings.Concat(preparation.Warnings).ToArray()
+                    };
+                }
+
                 httpContext.Response.Headers.CacheControl = "no-store";
-                return Results.Ok(await importer.Preview5eToolsDocumentAsync(
-                    request,
-                    cancellationToken));
+                return Results.Ok(preview);
             }
             catch (ArgumentException exception)
             {
@@ -44,7 +54,7 @@ public static class SourceAdministrationEndpointExtensions
         });
 
         app.MapPost("/api/source-admin/import", async (
-            Import5eToolsDocumentRequest request,
+            SourceAdminImportRequest request,
             HttpContext httpContext,
             ISourceImportService importer,
             CancellationToken cancellationToken) =>
@@ -57,9 +67,10 @@ public static class SourceAdministrationEndpointExtensions
 
             try
             {
+                var preparation = SourceAdminImportPartitioner.Prepare(request);
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(await importer.Import5eToolsDocumentAsync(
-                    request,
+                    preparation.LogicalRequest,
                     cancellationToken));
             }
             catch (ArgumentException exception)
