@@ -130,7 +130,7 @@ async function renderPreview(app, container, conceptId) {
         }),
         element("button", {
             type: "button",
-            className: "btn btn-sm btn-primary",
+            className: "btn btn-sm btn-outline-primary",
             text: "Open rule editor",
             onClick: async () => app.renderGlobalConcept(container, conceptId)
         }));
@@ -153,9 +153,10 @@ async function renderPreview(app, container, conceptId) {
                 preview.compatibilityMessage
                     ?? "The current decision can not be replayed against the latest source revision without manual editing."));
         } else {
+            toolbar.append(createAdoptButton(app, container, preview));
             container.append(alertNode(
                 "info",
-                "This is a read-only comparison. The current decision remains pinned to its existing source revision until a Rules Lawyer saves a new decision and publishes it."));
+                "Previewing does not change the Rules Layer. Adopting the latest source creates a new pending global decision with the same decision semantics; publication remains a separate explicit action."));
         }
 
         container.append(renderResolvedDocuments(preview));
@@ -166,6 +167,42 @@ async function renderPreview(app, container, conceptId) {
         loading.remove();
         container.append(alertNode("danger", describeError(error)));
     }
+}
+
+function createAdoptButton(app, container, preview) {
+    const update = preview.update;
+    const button = element("button", {
+        type: "button",
+        className: "btn btn-sm btn-primary",
+        text: "Adopt latest source revision"
+    });
+
+    button.addEventListener("click", async () => {
+        const confirmed = window.confirm(
+            `Create a new global decision for ${update.displayName} using source revision #${update.latestRevisionNumber}? This preserves the current decision kind and patch, but does not publish the rule.`);
+        if (!confirmed) {
+            return;
+        }
+
+        setButtonBusy(button, true, "Creating decision…");
+        try {
+            const result = await app.api.adoptLatestSourceRevision(
+                update.ruleConceptId,
+                {
+                    expectedGlobalRuleDecisionId: update.globalRuleDecisionId,
+                    expectedLatestSourceEntityRevisionId: update.latestSourceEntityRevisionId,
+                    expectedLatestFingerprint: update.latestFingerprint
+                });
+            window.alert(
+                `Created pending global decision #${result.globalDecisionNumber} using source revision #${result.sourceRevisionNumber}. It has not been published.`);
+            await app.renderGlobalConcept(container, update.ruleConceptId);
+        } catch (error) {
+            window.alert(describeError(error));
+            setButtonBusy(button, false);
+        }
+    });
+
+    return button;
 }
 
 function renderPreviewSummary(preview) {
