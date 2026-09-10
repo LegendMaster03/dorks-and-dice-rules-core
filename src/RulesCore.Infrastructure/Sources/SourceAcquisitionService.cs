@@ -14,6 +14,7 @@ public sealed class SourceAcquisitionService(RulesCoreDbContext dbContext)
         CancellationToken cancellationToken = default)
     {
         var userId = RequireUserId(currentUserId);
+        await EnsureSchemaAsync(cancellationToken);
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
         if (openedHere)
@@ -77,6 +78,7 @@ public sealed class SourceAcquisitionService(RulesCoreDbContext dbContext)
         RequireGuid(sourcePackageId, nameof(sourcePackageId));
         var kind = RequireKind(request.AcquisitionKind);
         var reference = NormalizeOptional(request.Reference, 500, nameof(request.Reference));
+        await EnsureSchemaAsync(cancellationToken);
 
         var package = await dbContext.SourcePackages
             .AsNoTracking()
@@ -171,6 +173,7 @@ public sealed class SourceAcquisitionService(RulesCoreDbContext dbContext)
         var userId = RequireUserId(currentUserId);
         RequireGuid(sourceAcquisitionId, nameof(sourceAcquisitionId));
         var reason = NormalizeOptional(request.Reason, 1000, nameof(request.Reason));
+        await EnsureSchemaAsync(cancellationToken);
 
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
@@ -270,6 +273,9 @@ public sealed class SourceAcquisitionService(RulesCoreDbContext dbContext)
             }
         }
     }
+
+    private Task EnsureSchemaAsync(CancellationToken cancellationToken) =>
+        dbContext.Database.ExecuteSqlRawAsync(AcquisitionSchemaSql, cancellationToken);
 
     private static SourceAcquisitionView ReadView(DbDataReader reader)
     {
@@ -380,4 +386,37 @@ public sealed class SourceAcquisitionService(RulesCoreDbContext dbContext)
         string Key,
         string DisplayName,
         bool IsPublic);
+
+    private const string AcquisitionSchemaSql = """
+        CREATE TABLE IF NOT EXISTS source_acquisition (
+            source_acquisition_id uuid NOT NULL,
+            source_package_id uuid NOT NULL,
+            user_id varchar(200) NOT NULL,
+            acquisition_kind varchar(80) NOT NULL,
+            reference_text varchar(500) NULL,
+            acquired_at timestamp with time zone NULL,
+            recorded_by_user_id varchar(200) NOT NULL,
+            recorded_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_source_acquisition PRIMARY KEY (source_acquisition_id),
+            CONSTRAINT fk_source_acquisition_package FOREIGN KEY (source_package_id)
+                REFERENCES source_package(source_package_id) ON DELETE CASCADE,
+            CONSTRAINT ck_source_acquisition_kind CHECK (
+                acquisition_kind IN ('physical-copy', 'digital-copy', 'subscription', 'licensed-access', 'other')));
+        CREATE INDEX IF NOT EXISTS ix_source_acquisition_user
+            ON source_acquisition(user_id, recorded_at DESC);
+        CREATE INDEX IF NOT EXISTS ix_source_acquisition_package
+            ON source_acquisition(source_package_id);
+
+        CREATE TABLE IF NOT EXISTS source_acquisition_revocation (
+            source_acquisition_revocation_id uuid NOT NULL,
+            source_acquisition_id uuid NOT NULL,
+            reason varchar(1000) NULL,
+            revoked_by_user_id varchar(200) NOT NULL,
+            revoked_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_source_acquisition_revocation PRIMARY KEY (source_acquisition_revocation_id),
+            CONSTRAINT fk_source_acquisition_revocation_acquisition FOREIGN KEY (source_acquisition_id)
+                REFERENCES source_acquisition(source_acquisition_id) ON DELETE CASCADE);
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_source_acquisition_revocation_acquisition
+            ON source_acquisition_revocation(source_acquisition_id);
+        """;
 }
