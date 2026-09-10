@@ -4,6 +4,7 @@ import { installCampaignBaselineAuthoring } from "./campaign-baseline-authoring.
 import { installConceptSourceAuthoring } from "./concept-source-authoring.js";
 import { installResolvedRulesBrowser } from "./rules-browser.js";
 import { installSourceAccessAdministration } from "./source-access-admin.js";
+import { installSourceAcquisitionAdministration } from "./source-acquisition-admin.js";
 import { installSourceAdministration } from "./source-admin.js";
 import { installSourceNormalization } from "./source-normalization.js";
 import { installSourceRevisionReview } from "./source-revision-review.js";
@@ -37,6 +38,7 @@ try {
     installSourceRevisionReview(app);
     installSourceAdministration(app);
     installSourceAccessAdministration(app);
+    installSourceAcquisitionAdministration(app);
     installCampaignBaselineAuthoring(app);
     await app.render();
 } catch (error) {
