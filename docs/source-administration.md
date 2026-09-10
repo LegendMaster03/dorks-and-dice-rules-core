@@ -15,16 +15,30 @@ The main site remains the authority for that role. Owner inherits the site's top
 
 ## Import contract
 
-`POST /api/source-admin/import` accepts the existing `Import5eToolsDocumentRequest` contract:
+`POST /api/source-admin/import/preview` and `POST /api/source-admin/import` accept the Source Administration import contract:
 
 - package key, display name, provider, license, and public/restricted flag;
 - work key and display name;
-- edition key and display name;
-- a 5e.tools-shaped JSON document.
+- release key and display name;
+- optional canonical game-edition, release-kind, and publication-date metadata;
+- a 5e.tools-shaped JSON document;
+- optional `includedSourceCodes` selecting one or more item-level 5e.tools source codes from an aggregate document.
 
-Package, work, and edition identity metadata is immutable under its key. Conflicting metadata is rejected rather than silently changing provenance.
+The Source Administration boundary converts the submitted request into the existing logical `Import5eToolsDocumentRequest` used by the Source Layer importer.
 
-Import preserves complete entity objects in immutable Source Layer revisions. Canonical SHA-256 fingerprints make reimporting semantically identical JSON idempotent; changed source content creates the next revision instead of overwriting the previous one.
+Package, work, and release identity metadata is immutable under its key. Conflicting metadata is rejected rather than silently changing provenance.
+
+Import preserves complete selected entity objects in immutable Source Layer revisions. Canonical SHA-256 fingerprints make reimporting semantically identical JSON idempotent; changed source content creates the next revision instead of overwriting the previous one.
+
+### Aggregate source-code partitioning
+
+A physical 5e.tools data file can aggregate records from multiple logical source publications. Item-level `source` codes remain part of source entity identity, while Rules Core work/release and D&D-edition metadata applies to the logical release selected for one import operation.
+
+When an unfiltered preview contains more than one item-level source code, Rules Core emits a provenance warning. Import is not automatically blocked because multiple source codes are not intrinsically invalid, but a Dev should not assign one work/release identity to records that actually belong to different publications.
+
+`includedSourceCodes` allows the same submitted aggregate JSON to be previewed and imported repeatedly as separate logical source releases. Filtering is case-insensitive, does not mutate the submitted aggregate, and retains the complete selected entity objects. A filter that selects no importable entities is rejected. The preview explicitly reports when partitioning is active.
+
+This partitioning belongs at the Source Administration ingestion boundary rather than in durable source identity. The core importer continues to receive one logical work/release at a time.
 
 ## Source-access administration
 
@@ -67,7 +81,9 @@ PostgreSQL integration tests cover the boundary: anonymous, Rules Lawyer-only, a
 
 ## Embedded UI
 
-Users with effective Dev authority in Dorks & Dice mode receive a `Source Administration` view in the embedded Rules Core module. The ingestion section exposes package/work/edition metadata, public/restricted selection, and raw 5e.tools-shaped JSON ingestion. The browser performs basic JSON syntax validation, but the backend importer remains authoritative for schema/provenance validation.
+Users with effective Dev authority in Dorks & Dice mode receive a `Source Administration` view in the embedded Rules Core module. The ingestion section exposes package/work/release metadata, public/restricted selection, optional source-code partitioning, and raw 5e.tools-shaped JSON ingestion. The browser performs basic JSON syntax validation, but the backend importer remains authoritative for schema/provenance validation.
+
+The optional Source-code filter accepts comma-separated item-level source codes such as `SRD51` or `SRD52`. Preview must be repeated after changing the filter, just as it must after changing any other source metadata or JSON content.
 
 A separate `Current account source access` card lists package metadata and allows explicit grant/revoke only for the signed-in account. Public packages are shown as available without a grant. Restricted packages show whether the current account is granted and expose `Grant my account` or `Revoke my account` accordingly.
 
