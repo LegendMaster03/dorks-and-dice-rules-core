@@ -21,7 +21,9 @@ Acquisition provenance is stored separately from these identities and grants. `s
 
 ## Lossless 5e.tools ingestion
 
-`ISourceImportService` accepts a 5e.tools-shaped JSON document. Top-level entity arrays are imported without projecting the entity into a fixed application schema. The complete entity object is stored as PostgreSQL `jsonb`, so fields unknown to Rules Core survive ingestion and can be returned later.
+`ISourceImportService` accepts a 5e.tools-shaped JSON document representing one logical work/release import. Top-level entity arrays are imported without projecting the entity into a fixed application schema. The complete entity object is stored as PostgreSQL `jsonb`, so fields unknown to Rules Core survive ingestion and can be returned later.
+
+Physical upstream data files do not have to match Rules Core's logical work/release boundary one-to-one. Some 5e.tools-shaped distributions aggregate several item-level source codes in one JSON file. Source Administration can partition such an aggregate by `source` code before invoking `ISourceImportService`, allowing the same physical document to feed separate work/release imports without rewriting the selected entity objects. An unfiltered mixed-source preview emits a provenance warning. See `docs/source-administration.md`.
 
 Each entity also receives a SHA-256 fingerprint computed from a canonical JSON representation. Object property ordering does not affect the fingerprint. Array ordering remains significant. Reimporting semantically identical JSON is idempotent; changed content creates the next immutable revision instead of updating an existing revision.
 
@@ -77,4 +79,4 @@ There is no unauthenticated source-import endpoint. `POST /api/source-admin/impo
 
 Import authority is a control-plane permission, not an entitlement decision. Public imports become available according to normal public-source rules. Restricted imports remain unreadable to the importer until a separate grant exists.
 
-The Source Administration UI exposes package/work/edition provenance, visibility, 5e.tools-shaped JSON ingestion, current-account acquisition history, and current-account grant controls while leaving Rules Layer concept creation and adjudication as separate explicit operations. See `docs/source-administration.md` for the administrative workflow.
+The Source Administration UI exposes package/work/edition provenance, visibility, optional aggregate source-code partitioning, 5e.tools-shaped JSON ingestion, current-account acquisition history, and current-account grant controls while leaving Rules Layer concept creation and adjudication as separate explicit operations. See `docs/source-administration.md` for the administrative workflow.
