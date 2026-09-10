@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
 using RulesCore.Domain.Rules;
 using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.Infrastructure.Rules;
 
@@ -178,6 +179,7 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
         RequireGuid(request.ExpectedLatestSourceEntityRevisionId, nameof(request.ExpectedLatestSourceEntityRevisionId));
         var actor = RequireUserId(actorUserId);
         var expectedFingerprint = RequireFingerprint(request.ExpectedLatestFingerprint);
+        await SourceFrameworkStore.EnsureSchemaAsync(dbContext, cancellationToken);
 
         await using var transaction = await dbContext.Database.BeginTransactionAsync(
             IsolationLevel.Serializable,
@@ -265,6 +267,12 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
         };
         dbContext.GlobalRuleDecisions.Add(adopted);
         await dbContext.SaveChangesAsync(cancellationToken);
+        await SourceFrameworkStore.CopyDecisionContributionsAsync(
+            dbContext,
+            current.Id,
+            adopted.Id,
+            actor,
+            cancellationToken);
         await transaction.CommitAsync(cancellationToken);
 
         return new AdoptedSourceRevisionView(

@@ -10,15 +10,46 @@ public static class SourceAdministrationEndpointExtensions
 {
     public static void MapSourceAdministrationEndpoints(this WebApplication app)
     {
+        app.MapPost("/api/source-admin/import/preview", async (
+            Import5eToolsDocumentRequest request,
+            HttpContext httpContext,
+            ISourceImportService importer,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireSourceAdministrationAuthority(httpContext, out _);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            try
+            {
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(await importer.Preview5eToolsDocumentAsync(
+                    request,
+                    cancellationToken));
+            }
+            catch (ArgumentException exception)
+            {
+                return InvalidImport(exception.Message);
+            }
+            catch (InvalidDataException exception)
+            {
+                return InvalidImport(exception.Message);
+            }
+            catch (JsonException exception)
+            {
+                return InvalidImport(exception.Message);
+            }
+        });
+
         app.MapPost("/api/source-admin/import", async (
             Import5eToolsDocumentRequest request,
             HttpContext httpContext,
             ISourceImportService importer,
             CancellationToken cancellationToken) =>
         {
-            var authorizationFailure = RequireSourceAdministrationAuthority(
-                httpContext,
-                out _);
+            var authorizationFailure = RequireSourceAdministrationAuthority(httpContext, out _);
             if (authorizationFailure is not null)
             {
                 return authorizationFailure;

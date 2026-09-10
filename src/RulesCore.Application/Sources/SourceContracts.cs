@@ -12,7 +12,48 @@ public sealed record Import5eToolsDocumentRequest(
     string WorkDisplayName,
     string EditionKey,
     string EditionDisplayName,
-    string Json);
+    string Json,
+    string? GameEdition = null,
+    string? ReleaseKind = null,
+    DateOnly? PublicationDate = null);
+
+public static class SourceImportPreviewActions
+{
+    public const string NewEntity = "new-entity";
+    public const string NewRevision = "new-revision";
+    public const string Unchanged = "unchanged";
+}
+
+public sealed record SourceImportPreviewEntity(
+    Guid? EntityId,
+    string EntityType,
+    string Name,
+    string SourceCode,
+    int? CurrentRevisionNumber,
+    string Fingerprint,
+    string Action);
+
+public sealed record SourceImportPreviewResult(
+    string PackageKey,
+    string PackageDisplayName,
+    string Provider,
+    string? License,
+    bool IsPublic,
+    string WorkKey,
+    string WorkDisplayName,
+    string EditionKey,
+    string EditionDisplayName,
+    string? GameEdition,
+    string? ReleaseKind,
+    DateOnly? PublicationDate,
+    bool CanImport,
+    IReadOnlyList<string> Conflicts,
+    IReadOnlyList<string> Warnings,
+    int EntityCount,
+    int NewEntityCount,
+    int NewRevisionCount,
+    int UnchangedCount,
+    IReadOnlyList<SourceImportPreviewEntity> Entities);
 
 public sealed record ImportedSourceEntity(
     Guid EntityId,
@@ -27,7 +68,10 @@ public sealed record SourceImportResult(
     Guid PackageId,
     Guid WorkId,
     Guid EditionId,
-    IReadOnlyList<ImportedSourceEntity> Entities);
+    IReadOnlyList<ImportedSourceEntity> Entities,
+    string? GameEdition = null,
+    string? ReleaseKind = null,
+    DateOnly? PublicationDate = null);
 
 public sealed record SourcePackageSummary(
     Guid Id,
@@ -70,6 +114,10 @@ public sealed record SourceEntityView(
 
 public interface ISourceImportService
 {
+    Task<SourceImportPreviewResult> Preview5eToolsDocumentAsync(
+        Import5eToolsDocumentRequest request,
+        CancellationToken cancellationToken = default);
+
     Task<SourceImportResult> Import5eToolsDocumentAsync(
         Import5eToolsDocumentRequest request,
         CancellationToken cancellationToken = default);

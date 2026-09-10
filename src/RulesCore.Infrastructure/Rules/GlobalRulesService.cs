@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
 using RulesCore.Domain.Rules;
 using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.Infrastructure.Rules;
 
@@ -132,7 +133,16 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
                 : RuleDecisionKinds.SelectSource;
         var patchJson = structuredPatch?.Json ?? mergePatch?.Json;
         var patchFingerprint = structuredPatch?.Fingerprint ?? mergePatch?.Fingerprint;
+        var contributions = SourceFrameworkStore.NormalizeDecisionContributions(request.Contributions);
+        if (contributions.Any(value => value.SourceEntityRevisionId == request.SourceEntityRevisionId))
+        {
+            throw new ArgumentException(
+                "The selected base source revision can not also be recorded as a consolidation contribution.",
+                nameof(request));
+        }
+        var contributionFingerprint = SourceFrameworkStore.ComputeContributionFingerprint(contributions);
 
+        await SourceFrameworkStore.EnsureSchemaAsync(dbContext, cancellationToken);
         await using var transaction = await dbContext.Database.BeginTransactionAsync(
             IsolationLevel.Serializable,
             cancellationToken);
@@ -166,6 +176,12 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
                 "The selected source revision belongs to an entity that is not bound to this rule concept.");
         }
 
+        await ValidateContributionsAsync(
+            ruleConceptId,
+            contributions,
+            actor,
+            cancellationToken);
+
         var latest = await dbContext.GlobalRuleDecisions
             .AsNoTracking()
             .Include(value => value.SelectedSourceEntityRevision)
@@ -174,14 +190,23 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             .OrderByDescending(value => value.DecisionNumber)
             .FirstOrDefaultAsync(cancellationToken);
 
-        if (latest is not null
-            && latest.DecisionKind == decisionKind
-            && latest.SelectedSourceEntityRevisionId == sourceRevision.Id
-            && string.Equals(latest.PatchFingerprint, patchFingerprint, StringComparison.Ordinal)
-            && string.Equals(latest.Note, note, StringComparison.Ordinal))
+        if (latest is not null)
         {
-            await transaction.CommitAsync(cancellationToken);
-            return new RuleMutationResult<GlobalRuleDecisionView>(ToView(latest), Created: false);
+            var existingContributions = await SourceFrameworkStore.GetDecisionContributionsAsync(
+                dbContext,
+                latest.Id,
+                cancellationToken);
+            var existingContributionFingerprint = SourceFrameworkStore.ComputeContributionFingerprint(
+                existingContributions);
+            if (latest.DecisionKind == decisionKind
+                && latest.SelectedSourceEntityRevisionId == sourceRevision.Id
+                && string.Equals(latest.PatchFingerprint, patchFingerprint, StringComparison.Ordinal)
+                && string.Equals(latest.Note, note, StringComparison.Ordinal)
+                && string.Equals(existingContributionFingerprint, contributionFingerprint, StringComparison.Ordinal))
+            {
+                await transaction.CommitAsync(cancellationToken);
+                return new RuleMutationResult<GlobalRuleDecisionView>(ToView(latest), Created: false);
+            }
         }
 
         var decision = new GlobalRuleDecision
@@ -200,6 +225,12 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         };
         dbContext.GlobalRuleDecisions.Add(decision);
         await dbContext.SaveChangesAsync(cancellationToken);
+        await SourceFrameworkStore.InsertDecisionContributionsAsync(
+            dbContext,
+            decision.Id,
+            contributions,
+            actor,
+            cancellationToken);
         await transaction.CommitAsync(cancellationToken);
 
         return new RuleMutationResult<GlobalRuleDecisionView>(ToView(decision), Created: true);
@@ -358,6 +389,59 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             edition.Key,
             edition.DisplayName,
             resolvedDocument);
+    }
+
+    private async Task ValidateContributionsAsync(
+        Guid ruleConceptId,
+        IReadOnlyCollection<NormalizedDecisionContribution> contributions,
+        string actorUserId,
+        CancellationToken cancellationToken)
+    {
+        if (contributions.Count == 0)
+        {
+            return;
+        }
+
+        var revisionIds = contributions.Select(value => value.SourceEntityRevisionId).ToArray();
+        var revisions = await dbContext.SourceEntityRevisions
+            .AsNoTracking()
+            .Include(value => value.SourceEntity)
+                .ThenInclude(value => value.SourceEdition)
+                .ThenInclude(value => value.SourceWork)
+                .ThenInclude(value => value.SourcePackage)
+                .ThenInclude(value => value.UserGrants)
+            .Where(value => revisionIds.Contains(value.Id))
+            .ToArrayAsync(cancellationToken);
+        if (revisions.Length != revisionIds.Length)
+        {
+            throw new InvalidOperationException(
+                "One or more consolidation source revisions do not exist or are no longer available.");
+        }
+
+        var sourceEntityIds = revisions.Select(value => value.SourceEntityId).Distinct().ToArray();
+        var boundSourceIds = await dbContext.RuleConceptSourceBindings
+            .AsNoTracking()
+            .Where(value => value.RuleConceptId == ruleConceptId
+                && sourceEntityIds.Contains(value.SourceEntityId))
+            .Select(value => value.SourceEntityId)
+            .ToArrayAsync(cancellationToken);
+        var boundSet = boundSourceIds.ToHashSet();
+
+        foreach (var revision in revisions)
+        {
+            if (!boundSet.Contains(revision.SourceEntityId))
+            {
+                throw new InvalidOperationException(
+                    "Every consolidation contribution must come from a source entity bound to this rule concept.");
+            }
+
+            var package = revision.SourceEntity.SourceEdition.SourceWork.SourcePackage;
+            if (!package.IsPublic && !package.UserGrants.Any(grant => grant.UserId == actorUserId))
+            {
+                throw new InvalidOperationException(
+                    "A consolidation contribution is not accessible to the current Rules Lawyer.");
+            }
+        }
     }
 
     private static JsonElement ApplyDecisionPatch(
