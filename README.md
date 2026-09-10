@@ -61,11 +61,13 @@ Rules Lawyers can create concepts, search source entities they may access, bind 
 
 To reduce repetitive cross-edition setup, `GET /api/global/rules/normalization/candidates` proposes deterministic concept keys for accessible unbound source entities. A Rules Lawyer reviews each proposal and may accept it with `POST /api/global/rules/normalization/entities/{sourceEntityId}/accept`. Acceptance creates or reuses a stable concept and binds the source entity, but never creates a rule decision or publishes anything. Name/type matching is therefore an authoring suggestion rather than an automatic semantic merge. Restricted source metadata remains filtered by independent source grants.
 
+When a bound source entity receives a newer immutable revision, `GET /api/global/rules/source-updates` surfaces any latest global decision that is still pinned to an older accessible revision. `GET /api/global/rules/source-updates/{conceptId}/preview` replays the current decision semantics against the newest source revision and compares the resulting rule to the current resolved rule. If a structured patch no longer applies cleanly, the preview reports the incompatibility instead of guessing. Review is read-only: a Rules Lawyer must still open the ordinary editor, save an explicit new decision, and publish it before anything changes.
+
 `GET /api/rules/{conceptKey}` resolves the concept from the latest published ruleset and returns exact decision/source provenance plus patch provenance. The source-backed document is returned only when the caller independently satisfies Source Layer access control. Rules Lawyer authority does not grant restricted source access, and a source grant does not grant Rules Lawyer authority.
 
 Publishing the same effective decisions twice is idempotent. Source changes become visible in the resolved ruleset only after a Rules Lawyer deliberately creates a decision against the new source revision and publishes a new ruleset revision.
 
-See `docs/source-normalization.md` for reviewed normalization semantics and `docs/authoring-workflow.md` for the browse -> preview -> save -> publish workflow and its authorization/source-access boundaries.
+See `docs/source-normalization.md` for reviewed normalization semantics, `docs/source-revision-review.md` for deliberate source-update review, and `docs/authoring-workflow.md` for the browse -> preview -> save -> publish workflow and its authorization/source-access boundaries.
 
 ## Resolved Rules Browser
 
