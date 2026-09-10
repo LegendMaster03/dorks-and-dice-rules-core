@@ -35,24 +35,6 @@ export class RulesCoreApi {
         return requestJson(`${this.hostApiBaseUrl}/campaigns`, { method: "GET" });
     }
 
-    getGlobalRulesCatalog({ entityType = null, query = null, limit = 200 } = {}) {
-        return this.backend(`/api/rules?${catalogParameters(entityType, query, limit)}`);
-    }
-
-    getCampaignRulesCatalog(campaignId, { entityType = null, query = null, limit = 200 } = {}) {
-        return this.backend(
-            `/api/campaigns/${encodeURIComponent(campaignId)}/rules?${catalogParameters(entityType, query, limit)}`);
-    }
-
-    getResolvedGlobalRule(conceptKey) {
-        return this.backend(`/api/rules/${encodeURIComponent(conceptKey)}`);
-    }
-
-    getResolvedCampaignRule(campaignId, conceptKey) {
-        return this.backend(
-            `/api/campaigns/${encodeURIComponent(campaignId)}/rules/${encodeURIComponent(conceptKey)}`);
-    }
-
     searchSourceEntities({ entityType = null, query = null, limit = 100 } = {}) {
         const parameters = new URLSearchParams();
         if (entityType) {
@@ -104,6 +86,15 @@ export class RulesCoreApi {
         return this.backend(
             `/api/global/rules/normalization/entities/${encodeURIComponent(sourceEntityId)}/accept`,
             { method: "POST" });
+    }
+
+    getSourceRevisionUpdates() {
+        return this.backend("/api/global/rules/source-updates");
+    }
+
+    previewSourceRevisionUpdate(conceptId) {
+        return this.backend(
+            `/api/global/rules/source-updates/${encodeURIComponent(conceptId)}/preview`);
     }
 
     createGlobalConcept(payload) {
@@ -196,6 +187,26 @@ export class RulesCoreApi {
             });
     }
 
+    getGlobalRulesCatalog({ entityType = null, query = null, limit = 200 } = {}) {
+        const parameters = catalogParameters(entityType, query, limit);
+        return this.backend(`/api/rules?${parameters.toString()}`);
+    }
+
+    getCampaignRulesCatalog(campaignId, { entityType = null, query = null, limit = 200 } = {}) {
+        const parameters = catalogParameters(entityType, query, limit);
+        return this.backend(
+            `/api/campaigns/${encodeURIComponent(campaignId)}/rules?${parameters.toString()}`);
+    }
+
+    getGlobalResolvedRule(conceptKey) {
+        return this.backend(`/api/rules/${encodeURIComponent(conceptKey)}`);
+    }
+
+    getCampaignResolvedRule(campaignId, conceptKey) {
+        return this.backend(
+            `/api/campaigns/${encodeURIComponent(campaignId)}/rules/${encodeURIComponent(conceptKey)}`);
+    }
+
     backend(path, options = {}) {
         if (!path.startsWith("/")) {
             throw new Error("Backend paths must start with '/'.");
@@ -213,7 +224,7 @@ function catalogParameters(entityType, query, limit) {
         parameters.set("q", query);
     }
     parameters.set("limit", String(limit));
-    return parameters.toString();
+    return parameters;
 }
 
 async function requestJson(url, options = {}) {
