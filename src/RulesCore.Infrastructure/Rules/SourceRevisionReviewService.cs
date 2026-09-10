@@ -1,3 +1,4 @@
+using System.Data;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
@@ -111,10 +112,7 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
         string userId,
         CancellationToken cancellationToken = default)
     {
-        if (ruleConceptId == Guid.Empty)
-        {
-            throw new ArgumentException("Value can not be an empty GUID.", nameof(ruleConceptId));
-        }
+        RequireGuid(ruleConceptId, nameof(ruleConceptId));
         var normalizedUserId = RequireUserId(userId);
         var pending = await GetPendingAsync(normalizedUserId, cancellationToken);
         var update = pending.SingleOrDefault(value => value.RuleConceptId == ruleConceptId);
@@ -168,6 +166,125 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
         }
     }
 
+    public async Task<AdoptedSourceRevisionView?> AdoptLatestAsync(
+        Guid ruleConceptId,
+        AdoptLatestSourceRevisionRequest request,
+        string actorUserId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        RequireGuid(ruleConceptId, nameof(ruleConceptId));
+        RequireGuid(request.ExpectedGlobalRuleDecisionId, nameof(request.ExpectedGlobalRuleDecisionId));
+        RequireGuid(request.ExpectedLatestSourceEntityRevisionId, nameof(request.ExpectedLatestSourceEntityRevisionId));
+        var actor = RequireUserId(actorUserId);
+        var expectedFingerprint = RequireFingerprint(request.ExpectedLatestFingerprint);
+
+        await using var transaction = await dbContext.Database.BeginTransactionAsync(
+            IsolationLevel.Serializable,
+            cancellationToken);
+
+        var current = await dbContext.GlobalRuleDecisions
+            .AsNoTracking()
+            .Include(value => value.RuleConcept)
+            .Include(value => value.SelectedSourceEntityRevision)
+                .ThenInclude(value => value.SourceEntity)
+                .ThenInclude(value => value.SourceEdition)
+                .ThenInclude(value => value.SourceWork)
+                .ThenInclude(value => value.SourcePackage)
+                .ThenInclude(value => value.UserGrants)
+            .Where(value => value.RuleConceptId == ruleConceptId)
+            .OrderByDescending(value => value.DecisionNumber)
+            .FirstOrDefaultAsync(cancellationToken);
+        if (current is null)
+        {
+            throw new KeyNotFoundException($"Rule concept '{ruleConceptId}' has no global rule decision.");
+        }
+
+        if (current.Id != request.ExpectedGlobalRuleDecisionId)
+        {
+            throw new InvalidOperationException(
+                "The global rule decision changed after this source update was reviewed. Reload the review before adopting a source revision.");
+        }
+
+        var package = current.SelectedSourceEntityRevision
+            .SourceEntity.SourceEdition.SourceWork.SourcePackage;
+        if (!package.IsPublic && !package.UserGrants.Any(grant => grant.UserId == actor))
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            return null;
+        }
+
+        var latestRevision = await dbContext.SourceEntityRevisions
+            .AsNoTracking()
+            .Where(value => value.SourceEntityId == current.SelectedSourceEntityRevision.SourceEntityId)
+            .OrderByDescending(value => value.RevisionNumber)
+            .FirstAsync(cancellationToken);
+
+        if (latestRevision.RevisionNumber <= current.SelectedSourceEntityRevision.RevisionNumber)
+        {
+            throw new InvalidOperationException(
+                "This global rule decision no longer has a newer source revision to adopt.");
+        }
+
+        if (latestRevision.Id != request.ExpectedLatestSourceEntityRevisionId
+            || !string.Equals(latestRevision.Fingerprint, expectedFingerprint, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                "The source entity changed after this update was reviewed. Reload the review before adopting a source revision.");
+        }
+
+        using (var latestSource = JsonDocument.Parse(latestRevision.RawJson))
+        {
+            try
+            {
+                _ = ApplyDecision(
+                    latestSource.RootElement,
+                    current.DecisionKind,
+                    current.PatchJson);
+            }
+            catch (Exception exception) when (IsPatchCompatibilityFailure(exception))
+            {
+                throw new InvalidOperationException(
+                    $"The existing {current.DecisionKind} decision can not be carried forward to source revision #{latestRevision.RevisionNumber}: {exception.Message}",
+                    exception);
+            }
+        }
+
+        var adopted = new GlobalRuleDecision
+        {
+            Id = Guid.NewGuid(),
+            RuleConceptId = current.RuleConceptId,
+            DecisionNumber = current.DecisionNumber + 1,
+            DecisionKind = current.DecisionKind,
+            SelectedSourceEntityRevisionId = latestRevision.Id,
+            PatchJson = current.PatchJson,
+            PatchFingerprint = current.PatchFingerprint,
+            Note = current.Note,
+            CreatedByUserId = actor,
+            CreatedAt = DateTimeOffset.UtcNow
+        };
+        dbContext.GlobalRuleDecisions.Add(adopted);
+        await dbContext.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+
+        return new AdoptedSourceRevisionView(
+            current.RuleConceptId,
+            current.RuleConcept.Key,
+            current.Id,
+            adopted.Id,
+            adopted.DecisionNumber,
+            adopted.DecisionKind,
+            current.SelectedSourceEntityRevisionId,
+            latestRevision.Id,
+            latestRevision.RevisionNumber,
+            latestRevision.Fingerprint,
+            adopted.PatchFingerprint,
+            adopted.Note,
+            adopted.CreatedByUserId,
+            adopted.CreatedAt,
+            RequiresPublication: true);
+    }
+
     private static JsonElement ApplyDecision(
         JsonElement source,
         string decisionKind,
@@ -184,6 +301,31 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
             or InvalidDataException
             or JsonException
             or KeyNotFoundException;
+
+    private static void RequireGuid(Guid value, string parameterName)
+    {
+        if (value == Guid.Empty)
+        {
+            throw new ArgumentException("Value can not be an empty GUID.", parameterName);
+        }
+    }
+
+    private static string RequireFingerprint(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException("Expected source fingerprint can not be blank.", nameof(value));
+        }
+
+        var normalized = value.Trim().ToLowerInvariant();
+        if (normalized.Length != 64 || normalized.Any(character => !Uri.IsHexDigit(character)))
+        {
+            throw new ArgumentException(
+                "Expected source fingerprint must be a 64-character SHA-256 hexadecimal value.",
+                nameof(value));
+        }
+        return normalized;
+    }
 
     private static string RequireUserId(string value)
     {
