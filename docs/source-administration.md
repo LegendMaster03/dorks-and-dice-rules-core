@@ -1,6 +1,6 @@
 # Source administration
 
-Source ingestion and source-access administration are control-plane operations. They are deliberately separate from Rules Layer authoring, and source-content access remains an explicit entitlement rather than an implication of Dev or Rules Lawyer authority.
+Source ingestion, source-access administration, and acquisition provenance are control-plane operations. They are deliberately separate from Rules Layer authoring, and source-content access remains an explicit entitlement rather than an implication of Dev or Rules Lawyer authority or of an acquisition record.
 
 ## Authority
 
@@ -39,15 +39,31 @@ The target user ID is never accepted from the browser. Rules Core always derives
 
 Grant and revoke operations are idempotent. Granting an already-granted package or revoking an already-absent grant succeeds without creating duplicate state. Public packages reject grant mutation because public content does not require a per-user entitlement.
 
+## Acquisition provenance
+
+A Dev can record how the current authenticated account obtained a source package without changing that account's source-content grant. This is deliberately historical/provenance data rather than authorization evidence.
+
+Current endpoints are:
+
+- `GET /api/source-admin/acquisitions` - lists only the signed-in account's acquisition records.
+- `POST /api/source-admin/packages/{sourcePackageId}/current-user-acquisitions` - appends an acquisition record for the signed-in account.
+- `POST /api/source-admin/acquisitions/{sourceAcquisitionId}/void` - appends a revocation/void marker to one of the signed-in account's records.
+
+Supported acquisition kinds are `physical-copy`, `digital-copy`, `subscription`, `licensed-access`, and `other`. A record can also contain an optional non-secret reference and acquisition time. The reference field is for ordinary provenance such as a provider, order label, library reference, or similar note; passwords, license keys, payment information, and other secrets must not be stored there.
+
+Acquisition records are append-only. A mistaken or superseded record is not deleted or rewritten; a separate one-to-one revocation record marks it void and can retain an optional reason. Repeating a void operation is idempotent and preserves the original void provenance.
+
+Recording or voiding an acquisition never creates, deletes, or changes `user_source_grant`. Likewise, granting or revoking source access does not create, delete, or reinterpret acquisition history. See `docs/source-acquisitions.md` for the detailed model and invariants.
+
 ## Access isolation
 
-Import authority and source-read authority remain independent.
+Import authority, acquisition provenance, and source-read authority remain independent.
 
 A Dev may import a restricted package, but the import does not create a `user_source_grant` for the Dev or for anyone else. The restricted package remains unavailable through normal source search/read APIs until the Dev separately chooses to grant the current account. Revoking that grant immediately returns the current account to normal restricted-source hiding behavior.
 
-The self-grant control is therefore an explicit entitlement operation, not an automatic consequence of Dev authority. A Dev who never grants the current account still can not read restricted source content. Likewise, a source grant does not grant Dev, Rules Lawyer, or campaign DM authority.
+The self-grant control is therefore an explicit entitlement operation, not an automatic consequence of Dev authority or acquisition provenance. A Dev who never grants the current account still can not read restricted source content even after recording that the account owns or otherwise acquired the package. Likewise, a source grant does not grant Dev, Rules Lawyer, or campaign DM authority.
 
-PostgreSQL integration tests cover the boundary: anonymous, Rules Lawyer-only, and wrong-mode requests can not use the administration catalog; a Dev can see package metadata but can not read a restricted entity before granting the current account; explicit grant unlocks normal source reads; repeat grant is idempotent; public grant mutation is rejected; explicit revoke hides the restricted entity again; repeat revoke is idempotent.
+PostgreSQL integration tests cover the boundary: anonymous, Rules Lawyer-only, and wrong-mode requests can not use source administration; a Dev can record only the signed-in account's acquisition provenance; another Dev can not read or void that record; acquisition recording does not unlock a restricted entity; explicit grant does unlock it; voiding the acquisition does not revoke that grant; and only explicit grant revocation hides the entity again.
 
 ## Embedded UI
 
@@ -55,10 +71,14 @@ Users with effective Dev authority in Dorks & Dice mode receive a `Source Admini
 
 A separate `Current account source access` card lists package metadata and allows explicit grant/revoke only for the signed-in account. Public packages are shown as available without a grant. Restricted packages show whether the current account is granted and expose `Grant my account` or `Revoke my account` accordingly.
 
+The `Current account acquisition history` card records package, acquisition type, optional reference, and optional acquisition time. Existing records remain visible after being voided. The UI repeatedly states that acquisition provenance does not grant or revoke source-content access so it can not be mistaken for the entitlement control.
+
 Large imports are processed normally, while the result UI renders only the first 100 entity results to avoid creating an unnecessarily large browser DOM.
 
 ## Deliberate omissions
 
-This slice does not expose arbitrary other-user source-grant mutation or acquisition tracking. Supporting another account's entitlement requires an explicit administrative workflow with recipient resolution and appropriate audit semantics; it is not inferred from the current Dev's authority.
+This slice does not expose arbitrary other-user source-grant or acquisition mutation. Supporting another account requires an explicit administrative workflow with recipient resolution and appropriate audit semantics; it is not inferred from the current Dev's authority.
+
+Acquisition records are self-recorded provenance. Rules Core does not currently verify receipts, subscriptions, licenses, ownership, or legal entitlement against an external provider, and acquisition records are intentionally not used as an authorization decision.
 
 Source administration also does not automatically create Rules Layer concepts from imported source entities. Normalization and adjudication remain explicit Rules Layer operations.
