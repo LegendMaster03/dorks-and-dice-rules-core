@@ -33,6 +33,7 @@ jobs:
             src/RulesCore.Web/wwwroot/source-revision-review.js \
             src/RulesCore.Web/wwwroot/source-admin.js \
             src/RulesCore.Web/wwwroot/source-access-admin.js \
+            src/RulesCore.Web/wwwroot/source-acquisition-admin.js \
             src/RulesCore.Web/wwwroot/campaign-baseline-authoring.js; do
             node --input-type=module --check < "$file"
           done
