@@ -177,6 +177,7 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
     private static bool IsPatchCompatibilityFailure(Exception exception) =>
         exception is ArgumentException
             or InvalidOperationException
+            or InvalidDataException
             or JsonException
             or KeyNotFoundException;
 
