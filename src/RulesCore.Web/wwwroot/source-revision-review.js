@@ -145,6 +145,7 @@ async function renderPreview(app, container, conceptId) {
     try {
         const preview = await app.api.previewSourceRevisionUpdate(conceptId);
         loading.remove();
+        toolbar.append(createRejectButton(app, container, preview));
         container.append(renderPreviewSummary(preview));
 
         if (!preview.patchCompatible) {
@@ -159,6 +160,9 @@ async function renderPreview(app, container, conceptId) {
                 "Previewing does not change the Rules Layer. Adopting the latest source creates a new pending global decision with the same decision semantics; publication remains a separate explicit action."));
         }
 
+        container.append(alertNode(
+            "secondary",
+            "Rejecting records only that this exact source revision was reviewed for this exact global decision. A newer source revision or a newer global decision will surface the update again."));
         container.append(renderResolvedDocuments(preview));
         if (preview.patchCompatible) {
             container.append(renderChanges(preview.changes));
@@ -196,6 +200,47 @@ function createAdoptButton(app, container, preview) {
             window.alert(
                 `Created pending global decision #${result.globalDecisionNumber} using source revision #${result.sourceRevisionNumber}. It has not been published.`);
             await app.renderGlobalConcept(container, update.ruleConceptId);
+        } catch (error) {
+            window.alert(describeError(error));
+            setButtonBusy(button, false);
+        }
+    });
+
+    return button;
+}
+
+function createRejectButton(app, container, preview) {
+    const update = preview.update;
+    const button = element("button", {
+        type: "button",
+        className: "btn btn-sm btn-outline-danger",
+        text: "Reject latest source revision"
+    });
+
+    button.addEventListener("click", async () => {
+        const reason = window.prompt(
+            `Why should source revision #${update.latestRevisionNumber} not be adopted for global decision #${update.globalDecisionNumber}? This dismisses only this exact review target.`);
+        if (reason === null) {
+            return;
+        }
+        if (!reason.trim()) {
+            window.alert("A rejection reason is required.");
+            return;
+        }
+
+        setButtonBusy(button, true, "Recording rejection…");
+        try {
+            const result = await app.api.rejectLatestSourceRevision(
+                update.ruleConceptId,
+                {
+                    expectedGlobalRuleDecisionId: update.globalRuleDecisionId,
+                    expectedLatestSourceEntityRevisionId: update.latestSourceEntityRevisionId,
+                    expectedLatestFingerprint: update.latestFingerprint,
+                    reason: reason.trim()
+                });
+            window.alert(
+                `Recorded rejection of source revision #${result.sourceRevisionNumber} for the current global decision. No rule decision or publication was changed.`);
+            await app.renderGlobalOverview(container);
         } catch (error) {
             window.alert(describeError(error));
             setButtonBusy(button, false);
