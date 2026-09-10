@@ -6,6 +6,7 @@ import { installResolvedRulesBrowser } from "./rules-browser.js";
 import { installSourceAccessAdministration } from "./source-access-admin.js";
 import { installSourceAdministration } from "./source-admin.js";
 import { installSourceNormalization } from "./source-normalization.js";
+import { installSourceRevisionReview } from "./source-revision-review.js";
 import { alertNode, clear, describeError, element } from "./ui.js";
 
 const root = document.getElementById("tool-root");
@@ -33,6 +34,7 @@ try {
     installResolvedRulesBrowser(app);
     installConceptSourceAuthoring(app);
     installSourceNormalization(app);
+    installSourceRevisionReview(app);
     installSourceAdministration(app);
     installSourceAccessAdministration(app);
     installCampaignBaselineAuthoring(app);
