@@ -70,6 +70,22 @@ export class RulesCoreApi {
             { method: "DELETE" });
     }
 
+    getCurrentUserSourceAcquisitions() {
+        return this.backend("/api/source-admin/acquisitions");
+    }
+
+    recordCurrentUserSourceAcquisition(sourcePackageId, payload) {
+        return this.backend(
+            `/api/source-admin/packages/${encodeURIComponent(sourcePackageId)}/current-user-acquisitions`,
+            { method: "POST", body: payload });
+    }
+
+    voidCurrentUserSourceAcquisition(sourceAcquisitionId, payload = {}) {
+        return this.backend(
+            `/api/source-admin/acquisitions/${encodeURIComponent(sourceAcquisitionId)}/void`,
+            { method: "POST", body: payload });
+    }
+
     getSourceNormalizationCandidates({ entityType = null, query = null, limit = 100 } = {}) {
         const parameters = new URLSearchParams();
         if (entityType) {
