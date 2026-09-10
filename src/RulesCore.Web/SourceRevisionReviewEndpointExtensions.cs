@@ -66,6 +66,57 @@ public static class SourceRevisionReviewEndpointExtensions
                     statusCode: StatusCodes.Status400BadRequest);
             }
         });
+
+        app.MapPost("/api/global/rules/source-updates/{conceptId:guid}/adopt", async (
+            Guid conceptId,
+            AdoptLatestSourceRevisionRequest request,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireGlobalRulesAuthority(
+                httpContext,
+                out var authenticationContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            try
+            {
+                var review = new SourceRevisionReviewService(dbContext);
+                var adopted = await review.AdoptLatestAsync(
+                    conceptId,
+                    request,
+                    authenticationContext!.User.Id,
+                    cancellationToken);
+                if (adopted is null)
+                {
+                    return Results.NotFound();
+                }
+
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(adopted);
+            }
+            catch (ArgumentException exception)
+            {
+                return Results.Problem(
+                    title: "Invalid source revision adoption request",
+                    detail: exception.Message,
+                    statusCode: StatusCodes.Status400BadRequest);
+            }
+            catch (KeyNotFoundException)
+            {
+                return Results.NotFound();
+            }
+            catch (InvalidOperationException exception)
+            {
+                return Results.Problem(
+                    title: "Source revision adoption conflict",
+                    detail: exception.Message,
+                    statusCode: StatusCodes.Status409Conflict);
+            }
+        });
     }
 
     private static IResult? RequireGlobalRulesAuthority(
