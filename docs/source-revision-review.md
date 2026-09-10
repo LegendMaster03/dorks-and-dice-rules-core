@@ -30,10 +30,20 @@ Structured patches are intentionally strict. If a stored array selector, JSON Po
 
 Preview is read-only. It does not create a `global_rule_decision`, publish a `ruleset_revision`, change the Source Layer, or acknowledge/dismiss the update.
 
+## Deliberate adoption
+
+After a compatible preview, `POST /api/global/rules/source-updates/{conceptId}/adopt` can create the next append-only global decision against the reviewed latest source revision. The operation carries forward the exact current decision kind, stored patch, patch fingerprint, and note; only the pinned source revision and decision provenance change.
+
+The request carries optimistic review tokens for the global decision ID, latest source revision ID, and latest source fingerprint. If another Rules Lawyer changes the decision, or another source revision is imported after the preview, adoption fails with a conflict and requires a fresh review. Restricted source access is checked again during the mutation.
+
+Adoption is rejected when the stored decision can not be replayed cleanly against the latest source revision. In particular, Rules Core does not rewrite broken structured-patch selectors or infer replacement array operations.
+
+Adoption creates a pending global decision only. It never publishes a `ruleset_revision`; publication remains a separate Rules Lawyer action. Repeating the same reviewed adoption request after it succeeds also conflicts because the expected global decision is no longer current.
+
 ## Hosted authoring UI
 
-When pending source updates exist, the Global Rules view shows a **Source updates to review** panel. Each row identifies the selected and latest source revisions and opens a read-only comparison.
+When pending source updates exist, the Global Rules view shows a **Source updates to review** panel. Each row identifies the selected and latest source revisions and opens a comparison.
 
-The comparison shows the current resolved rule, the candidate result when compatible, and the structural changes. The Rules Lawyer can then open the ordinary rule editor and deliberately save whatever new decision is appropriate. Publication remains a separate explicit action.
+The comparison shows the current resolved rule, the candidate result when compatible, and the structural changes. A compatible preview exposes **Adopt latest source revision**, which requires an explicit confirmation and creates the pending decision described above. The Rules Lawyer can instead open the ordinary rule editor whenever the update needs a different decision or patch. Publication remains a separate explicit action.
 
-This keeps the same invariant used elsewhere in Rules Core: source changes are discoverable and easy to evaluate, but only an authorized human decision changes the Rules Layer.
+This keeps the same invariant used elsewhere in Rules Core: source changes are discoverable and easy to evaluate, but only an authorized human decision changes the Rules Layer, and publication is never implied by review or adoption.
