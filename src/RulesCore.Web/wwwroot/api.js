@@ -97,6 +97,12 @@ export class RulesCoreApi {
             `/api/global/rules/source-updates/${encodeURIComponent(conceptId)}/preview`);
     }
 
+    adoptLatestSourceRevision(conceptId, payload) {
+        return this.backend(
+            `/api/global/rules/source-updates/${encodeURIComponent(conceptId)}/adopt`,
+            { method: "POST", body: payload });
+    }
+
     createGlobalConcept(payload) {
         return this.backend("/api/global/rules/concepts", {
             method: "POST",
