@@ -17,6 +17,8 @@ Package, work, and edition keys are normalized at the application boundary. Sour
 
 Source grants deliberately do not contain global or campaign roles. They answer only whether a specific site identity may access a specific restricted source package.
 
+Acquisition provenance is stored separately from these identities and grants. `source_acquisition` records how the current account says it obtained a package, while `source_acquisition_revocation` marks an acquisition record void without deleting history. Acquisition records never create or remove `user_source_grant`; see `docs/source-acquisitions.md`.
+
 ## Lossless 5e.tools ingestion
 
 `ISourceImportService` accepts a 5e.tools-shaped JSON document. Top-level entity arrays are imported without projecting the entity into a fixed application schema. The complete entity object is stored as PostgreSQL `jsonb`, so fields unknown to Rules Core survive ingestion and can be returned later.
@@ -51,12 +53,23 @@ The browser never supplies the target user ID. Rules Core derives it from the re
 
 Importing a restricted package does not grant the importing Dev access. Granting access remains a separate explicit operation, so Dev authority itself still does not imply restricted source-content access.
 
-The two authorization axes remain independent:
+## Acquisition provenance
 
-- Dorks & Dice determines whether an identity may administer source imports or adjudicate/change global or campaign rules.
-- Rules Core determines whether that identity may read a restricted source.
+Acquisition history is intentionally distinct from source grants. Effective `Dev` users in Dorks & Dice mode can list, append, and void only the current authenticated account's acquisition records through the Source Administration API.
 
-A user can therefore be a Rules Lawyer without access to a restricted source, have access to that source without being a Rules Lawyer, or be a Dev who can administer package metadata while still lacking the package's source-content grant.
+Recording a physical copy, digital copy, subscription, licensed access, or other acquisition is a self-recorded provenance statement. Rules Core does not currently verify receipts, ownership, subscription status, or external-provider entitlement, so this data is never consumed as an authorization decision.
+
+A void operation preserves the original acquisition and appends a separate revocation record. It does not revoke a source grant. Conversely, source-grant mutation does not alter acquisition history.
+
+## Authorization axes
+
+The authorization boundaries remain independent:
+
+- Dorks & Dice determines whether an identity may administer source imports/provenance or adjudicate/change global or campaign rules.
+- Rules Core `user_source_grant` determines whether that identity may read a restricted source.
+- Source acquisition records describe provenance only and are not evidence that grants access.
+
+A user can therefore be a Rules Lawyer without access to a restricted source, have access to that source without being a Rules Lawyer, or be a Dev who can administer package/provenance metadata while still lacking the package's source-content grant.
 
 ## Import boundary
 
@@ -64,4 +77,4 @@ There is no unauthenticated source-import endpoint. `POST /api/source-admin/impo
 
 Import authority is a control-plane permission, not an entitlement decision. Public imports become available according to normal public-source rules. Restricted imports remain unreadable to the importer until a separate grant exists.
 
-The Source Administration UI exposes package/work/edition provenance, visibility, and 5e.tools-shaped JSON ingestion while leaving Rules Layer concept creation and adjudication as separate explicit operations. See `docs/source-administration.md` for the administrative workflow and its current-account grant controls.
+The Source Administration UI exposes package/work/edition provenance, visibility, 5e.tools-shaped JSON ingestion, current-account acquisition history, and current-account grant controls while leaving Rules Layer concept creation and adjudication as separate explicit operations. See `docs/source-administration.md` for the administrative workflow.
