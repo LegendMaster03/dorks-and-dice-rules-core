@@ -8,34 +8,26 @@ import { installSourceAcquisitionAdministration } from "./source-acquisition-adm
 import { installSourceAdministration } from "./source-admin.js";
 import { installSourceNormalization } from "./source-normalization.js";
 import { installSourceRevisionReview } from "./source-revision-review.js";
+import { installSourceVersioning } from "./source-versioning.js";
 import { alertNode, clear, describeError, element } from "./ui.js";
 
 const root = document.getElementById("tool-root");
-
-if (!root) {
-    throw new Error("Rules Core could not find the Dorks & Dice tool root.");
-}
+if (!root) throw new Error("Rules Core could not find the Dorks & Dice tool root.");
 
 installStylesheet();
 clear(root);
-root.append(element("div", {
-    className: "card card-body text-body-secondary",
-    text: "Loading Rules Core…"
-}));
+root.append(element("div", { className: "card card-body text-body-secondary", text: "Loading Rules Core…" }));
 
 try {
     const hostContext = await loadToolHostContext(root);
     const api = new RulesCoreApi(hostContext);
-    const [session, campaigns] = await Promise.all([
-        api.getSession(),
-        api.getCampaigns()
-    ]);
-
+    const [session, campaigns] = await Promise.all([api.getSession(), api.getCampaigns()]);
     const app = new RulesAuthoringApp(root, api, hostContext, session, campaigns);
     installResolvedRulesBrowser(app);
     installConceptSourceAuthoring(app);
     installSourceNormalization(app);
     installSourceRevisionReview(app);
+    installSourceVersioning(app);
     installSourceAdministration(app);
     installSourceAccessAdministration(app);
     installSourceAcquisitionAdministration(app);
@@ -44,18 +36,14 @@ try {
 } catch (error) {
     console.error("Rules Core failed to initialize.", error);
     clear(root);
-    root.append(
-        element("div", { className: "card card-body" },
-            element("h2", { className: "h5", text: "Rules Core unavailable" }),
-            alertNode("danger", describeError(error))));
+    root.append(element("div", { className: "card card-body" },
+        element("h2", { className: "h5", text: "Rules Core unavailable" }),
+        alertNode("danger", describeError(error))));
 }
 
 function installStylesheet() {
     const id = "rules-core-module-styles";
-    if (document.getElementById(id)) {
-        return;
-    }
-
+    if (document.getElementById(id)) return;
     const link = document.createElement("link");
     link.id = id;
     link.rel = "stylesheet";

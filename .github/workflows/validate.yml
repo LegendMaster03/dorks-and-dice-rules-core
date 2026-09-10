@@ -31,6 +31,7 @@ jobs:
             src/RulesCore.Web/wwwroot/concept-source-authoring.js \
             src/RulesCore.Web/wwwroot/source-normalization.js \
             src/RulesCore.Web/wwwroot/source-revision-review.js \
+            src/RulesCore.Web/wwwroot/source-versioning.js \
             src/RulesCore.Web/wwwroot/source-admin.js \
             src/RulesCore.Web/wwwroot/source-access-admin.js \
             src/RulesCore.Web/wwwroot/source-acquisition-admin.js \
