@@ -35,6 +35,90 @@ export class RulesCoreApi {
         return requestJson(`${this.hostApiBaseUrl}/campaigns`, { method: "GET" });
     }
 
+    searchSourceEntities({ entityType = null, query = null, limit = 100 } = {}) {
+        const parameters = new URLSearchParams();
+        if (entityType) {
+            parameters.set("entityType", entityType);
+        }
+        if (query) {
+            parameters.set("q", query);
+        }
+        parameters.set("limit", String(limit));
+        return this.backend(`/api/sources/entities?${parameters.toString()}`);
+    }
+
+    importSourceDocument(payload) {
+        return this.backend("/api/source-admin/import", {
+            method: "POST",
+            body: payload
+        });
+    }
+
+    getSourceAdministrationPackages() {
+        return this.backend("/api/source-admin/packages");
+    }
+
+    grantCurrentUserSourcePackage(sourcePackageId) {
+        return this.backend(
+            `/api/source-admin/packages/${encodeURIComponent(sourcePackageId)}/current-user-grant`,
+            { method: "POST" });
+    }
+
+    revokeCurrentUserSourcePackage(sourcePackageId) {
+        return this.backend(
+            `/api/source-admin/packages/${encodeURIComponent(sourcePackageId)}/current-user-grant`,
+            { method: "DELETE" });
+    }
+
+    getSourceNormalizationCandidates({ entityType = null, query = null, limit = 100 } = {}) {
+        const parameters = new URLSearchParams();
+        if (entityType) {
+            parameters.set("entityType", entityType);
+        }
+        if (query) {
+            parameters.set("q", query);
+        }
+        parameters.set("limit", String(limit));
+        return this.backend(`/api/global/rules/normalization/candidates?${parameters.toString()}`);
+    }
+
+    acceptSourceNormalization(sourceEntityId) {
+        return this.backend(
+            `/api/global/rules/normalization/entities/${encodeURIComponent(sourceEntityId)}/accept`,
+            { method: "POST" });
+    }
+
+    getSourceRevisionUpdates() {
+        return this.backend("/api/global/rules/source-updates");
+    }
+
+    previewSourceRevisionUpdate(conceptId) {
+        return this.backend(
+            `/api/global/rules/source-updates/${encodeURIComponent(conceptId)}/preview`);
+    }
+
+    adoptLatestSourceRevision(conceptId, payload) {
+        return this.backend(
+            `/api/global/rules/source-updates/${encodeURIComponent(conceptId)}/adopt`,
+            { method: "POST", body: payload });
+    }
+
+    createGlobalConcept(payload) {
+        return this.backend("/api/global/rules/concepts", {
+            method: "POST",
+            body: payload
+        });
+    }
+
+    bindGlobalConceptSource(conceptId, sourceEntityId) {
+        return this.backend(
+            `/api/global/rules/concepts/${encodeURIComponent(conceptId)}/bindings`,
+            {
+                method: "POST",
+                body: { sourceEntityId }
+            });
+    }
+
     getGlobalAuthoringOverview() {
         return this.backend("/api/global/rules/authoring");
     }
@@ -72,6 +156,16 @@ export class RulesCoreApi {
             `/api/campaigns/${encodeURIComponent(campaignId)}/rules/authoring/concepts/${encodeURIComponent(conceptId)}`);
     }
 
+    getCampaignBaselineCandidates(campaignId) {
+        return this.backend(
+            `/api/campaigns/${encodeURIComponent(campaignId)}/rules/baselines`);
+    }
+
+    previewCampaignBaseline(campaignId, rulesetRevisionId) {
+        return this.backend(
+            `/api/campaigns/${encodeURIComponent(campaignId)}/rules/baselines/${encodeURIComponent(rulesetRevisionId)}/preview`);
+    }
+
     previewCampaignDecision(campaignId, conceptId, payload) {
         return this.backend(
             `/api/campaigns/${encodeURIComponent(campaignId)}/rules/concepts/${encodeURIComponent(conceptId)}/preview`,
@@ -99,12 +193,44 @@ export class RulesCoreApi {
             });
     }
 
+    getGlobalRulesCatalog({ entityType = null, query = null, limit = 200 } = {}) {
+        const parameters = catalogParameters(entityType, query, limit);
+        return this.backend(`/api/rules?${parameters.toString()}`);
+    }
+
+    getCampaignRulesCatalog(campaignId, { entityType = null, query = null, limit = 200 } = {}) {
+        const parameters = catalogParameters(entityType, query, limit);
+        return this.backend(
+            `/api/campaigns/${encodeURIComponent(campaignId)}/rules?${parameters.toString()}`);
+    }
+
+    getGlobalResolvedRule(conceptKey) {
+        return this.backend(`/api/rules/${encodeURIComponent(conceptKey)}`);
+    }
+
+    getCampaignResolvedRule(campaignId, conceptKey) {
+        return this.backend(
+            `/api/campaigns/${encodeURIComponent(campaignId)}/rules/${encodeURIComponent(conceptKey)}`);
+    }
+
     backend(path, options = {}) {
         if (!path.startsWith("/")) {
             throw new Error("Backend paths must start with '/'.");
         }
         return requestJson(`${this.backendBaseUrl}${path}`, options);
     }
+}
+
+function catalogParameters(entityType, query, limit) {
+    const parameters = new URLSearchParams();
+    if (entityType) {
+        parameters.set("entityType", entityType);
+    }
+    if (query) {
+        parameters.set("q", query);
+    }
+    parameters.set("limit", String(limit));
+    return parameters;
 }
 
 async function requestJson(url, options = {}) {

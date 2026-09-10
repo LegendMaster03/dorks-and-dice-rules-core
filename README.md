@@ -38,13 +38,14 @@ The Source Layer persists package, work, edition, entity, immutable entity-revis
 The source read API is access-aware:
 
 - `GET /api/sources`
+- `GET /api/sources/entities`
 - `GET /api/sources/entities/{entityId}`
 
 Anonymous/direct requests see only public packages. Hosted requests redeem the main site's one-time Tool authentication ticket and use the resulting stable user ID to include private packages for which Rules Core stores an explicit `user_source_grant`. Missing and inaccessible private entities both return not-found behavior.
 
-Grant mutation and source import remain internal application services for now; there is no unauthenticated write endpoint.
+Source ingestion is exposed through `POST /api/source-admin/import` only to effective `Dev` users while the site is in `dorks-and-dice` mode. Importing a restricted package does not automatically grant the importing Dev access to that package. The Dev may explicitly grant or revoke only the current authenticated account through the Source Administration package catalog; the target user ID is always derived from the redeemed Tool Host identity. Arbitrary other-user grant mutation and acquisition tracking are not exposed yet.
 
-See `docs/source-layer.md` for the persistence, fingerprinting, provenance, and access boundaries.
+See `docs/source-layer.md` and `docs/source-administration.md` for persistence, fingerprinting, provenance, access boundaries, Dev-only ingestion, and explicit current-account source grants.
 
 ## Global Rules Layer
 
@@ -56,13 +57,25 @@ Rules Lawyers can preview a candidate decision before saving it. `POST /api/glob
 
 The hosted authoring API exposes the state needed to drive the Rules Lawyer UI without introducing mutable server-side drafts. `GET /api/global/rules/authoring` summarizes concepts, the latest publication, and pending saved decisions. `GET /api/global/rules/authoring/concepts/{conceptId}` returns bindings, exact accessible source revisions, the latest saved decision, and publication state. Restricted bindings remain visible only as Rules Layer identities/counts until the current user independently possesses the corresponding source grant.
 
-Rules Lawyers can then create concepts, bind source entities, set decisions, and publish immutable global ruleset revisions through authenticated Tool Host requests. Global mutation requires both the `dorks-and-dice` site mode and the effective `Rules Lawyer` role.
+Rules Lawyers can create concepts, search source entities they may access, bind those sources, set decisions, and publish immutable global ruleset revisions through the hosted authoring UI. Global mutation requires both the `dorks-and-dice` site mode and the effective `Rules Lawyer` role.
+
+To reduce repetitive cross-edition setup, `GET /api/global/rules/normalization/candidates` proposes deterministic concept keys for accessible unbound source entities. A Rules Lawyer reviews each proposal and may accept it with `POST /api/global/rules/normalization/entities/{sourceEntityId}/accept`. Acceptance creates or reuses a stable concept and binds the source entity, but never creates a rule decision or publishes anything. Name/type matching is therefore an authoring suggestion rather than an automatic semantic merge. Restricted source metadata remains filtered by independent source grants.
+
+When a bound source entity receives a newer immutable revision, `GET /api/global/rules/source-updates` surfaces any latest global decision that is still pinned to an older accessible revision. `GET /api/global/rules/source-updates/{conceptId}/preview` replays the current decision semantics against the newest source revision and compares the resulting rule to the current resolved rule. If the replay is compatible, `POST /api/global/rules/source-updates/{conceptId}/adopt` can deliberately create the next pending global decision against the reviewed revision while preserving the current decision kind, patch, patch fingerprint, and note. Adoption uses expected decision/revision/fingerprint tokens so stale reviews conflict, and incompatible structured patches are never rewritten or guessed. Review and adoption never publish; publication remains a separate Rules Lawyer action.
 
 `GET /api/rules/{conceptKey}` resolves the concept from the latest published ruleset and returns exact decision/source provenance plus patch provenance. The source-backed document is returned only when the caller independently satisfies Source Layer access control. Rules Lawyer authority does not grant restricted source access, and a source grant does not grant Rules Lawyer authority.
 
 Publishing the same effective decisions twice is idempotent. Source changes become visible in the resolved ruleset only after a Rules Lawyer deliberately creates a decision against the new source revision and publishes a new ruleset revision.
 
-See `docs/authoring-workflow.md` for the browse -> preview -> save -> publish workflow and its authorization/source-access boundaries.
+See `docs/source-normalization.md` for reviewed normalization semantics, `docs/source-revision-review.md` for deliberate source-update review and adoption, and `docs/authoring-workflow.md` for the browse -> preview -> save -> publish workflow and its authorization/source-access boundaries.
+
+## Resolved Rules Browser
+
+Published rules are also available through access-aware catalogs. `GET /api/rules` lists the latest global publication filtered to source packages the current identity may access. `GET /api/campaigns/{campaignId}/rules` does the same for the latest published campaign ruleset and requires campaign membership. Catalog responses include rule identity and source provenance but not source-backed rule documents; full documents continue to use the existing per-concept resolved endpoints and their independent source-access checks.
+
+The embedded `Rules Browser` is available to authenticated Dorks & Dice users even when they have no Rules Lawyer or DM authority. Players can browse a campaign they belong to, while Rules Lawyers and DMs retain the separate authoring views. Unpublished global decisions, campaign baseline selections, and campaign overrides are not exposed through this read-only browser.
+
+See `docs/rules-browser.md` for catalog behavior, campaign membership rules, source-access filtering, and the current generic resolved-document renderer.
 
 ## Campaign Rules Layer
 
@@ -72,14 +85,19 @@ Campaign decisions are append-only and support exact source overrides, explicit 
 
 A campaign DM can preview an override through `POST /api/campaigns/{campaignId}/rules/concepts/{conceptId}/preview`. The preview compares the selected global baseline to the proposed campaign result and does not create a campaign decision or publication. It requires DM authority plus any independent source grants needed to display restricted source-backed content.
 
-Campaign authoring is exposed without mutable server-side drafts. `GET /api/campaigns/{campaignId}/rules/authoring` reports the selected baseline, latest campaign publication, current-baseline concepts, pending override count, and whether publication is required because the baseline or an override changed. `GET /api/campaigns/{campaignId}/rules/authoring/concepts/{conceptId}` returns the exact baseline global decision, latest/published campaign decision state, bindings, and source revisions the DM may independently access. Historical overrides for concepts outside the current selected baseline remain preserved but do not make the current campaign appear pending.
+Campaign authoring is exposed without mutable server-side drafts. `GET /api/campaigns/{campaignId}/rules/authoring` reports the selected baseline, latest campaign publication, current-baseline concepts, pending campaign-decision count, and whether publication is required because the baseline or a campaign decision changed. `GET /api/campaigns/{campaignId}/rules/authoring/concepts/{conceptId}` returns the exact baseline global decision, latest/published campaign decision state, bindings, and source revisions the DM may independently access. Historical campaign decisions for concepts outside the current selected baseline remain preserved but do not make the current campaign appear pending.
 
-Campaign reads require authenticated membership in the requested campaign. Campaign mutation and authoring additionally require the campaign-scoped `DM` role. Source licensing remains independent: campaign membership or DM authority does not grant access to restricted source content, and a source grant does not grant campaign authority.
+DMs can discover published global baselines with `GET /api/campaigns/{campaignId}/rules/baselines` and preview a migration with `GET /api/campaigns/{campaignId}/rules/baselines/{rulesetRevisionId}/preview`. The migration preview compares Rules Layer structure and campaign-decision activation without returning source-backed documents. The hosted UI then lets the DM deliberately select a candidate baseline; that selection remains pending until campaign publication.
+
+Campaign reads require authenticated membership in the requested campaign. Campaign mutation, authoring, baseline discovery, and migration preview additionally require the campaign-scoped `DM` role. Source licensing remains independent: campaign membership or DM authority does not grant access to restricted source content, and a source grant does not grant campaign authority.
 
 Current campaign endpoints:
 
+- `GET /api/campaigns/{campaignId}/rules`
 - `GET /api/campaigns/{campaignId}/rules/authoring`
 - `GET /api/campaigns/{campaignId}/rules/authoring/concepts/{conceptId}`
+- `GET /api/campaigns/{campaignId}/rules/baselines`
+- `GET /api/campaigns/{campaignId}/rules/baselines/{rulesetRevisionId}/preview`
 - `PUT /api/campaigns/{campaignId}/rules/baseline`
 - `POST /api/campaigns/{campaignId}/rules/concepts/{conceptId}/preview`
 - `PUT /api/campaigns/{campaignId}/rules/concepts/{conceptId}/decision`
@@ -107,7 +125,7 @@ The Dorks & Dice Tool Host supports both embedded modules and proxied applicatio
 
 - `/health` - liveness endpoint used by the host/deployment.
 - `/ready` - database-aware readiness endpoint.
-- `/app.js` - minimal ES module for the existing Embedded Module integration.
+- `/app.js` - ES module entry point for the existing Embedded Module integration.
 - `/` and `/api` - standalone service metadata.
 - `/api/integration/session` - authenticated backend view of the redeemed Tool Host context.
 

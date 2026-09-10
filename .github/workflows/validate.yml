@@ -26,7 +26,14 @@ jobs:
             src/RulesCore.Web/wwwroot/app.js \
             src/RulesCore.Web/wwwroot/api.js \
             src/RulesCore.Web/wwwroot/ui.js \
-            src/RulesCore.Web/wwwroot/authoring.js; do
+            src/RulesCore.Web/wwwroot/authoring.js \
+            src/RulesCore.Web/wwwroot/rules-browser.js \
+            src/RulesCore.Web/wwwroot/concept-source-authoring.js \
+            src/RulesCore.Web/wwwroot/source-normalization.js \
+            src/RulesCore.Web/wwwroot/source-revision-review.js \
+            src/RulesCore.Web/wwwroot/source-admin.js \
+            src/RulesCore.Web/wwwroot/source-access-admin.js \
+            src/RulesCore.Web/wwwroot/campaign-baseline-authoring.js; do
             node --input-type=module --check < "$file"
           done
 

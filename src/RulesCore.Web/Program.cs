@@ -18,6 +18,7 @@ if (hasDatabase)
     builder.Services.AddScoped<IRulesCoreSchemaInitializer, RulesCoreSchemaInitializer>();
     builder.Services.AddScoped<ISourceImportService, SourceImportService>();
     builder.Services.AddScoped<ISourceCatalogService, SourceCatalogService>();
+    builder.Services.AddScoped<ISourceEntitySearchService, SourceEntitySearchService>();
     builder.Services.AddScoped<ISourceGrantService, SourceGrantService>();
     builder.Services.AddScoped<IGlobalRulesService, GlobalRulesService>();
     builder.Services.AddScoped<ICampaignRulesService, CampaignRulesService>();
@@ -111,7 +112,7 @@ app.MapGet("/", () => Results.Ok(new
 app.MapGet("/api", () => Results.Ok(new
 {
     service = "Rules Core API",
-    version = "0.8-dev",
+    version = "0.9-dev",
     endpointFamilies = new[]
     {
         "/api/rules",
@@ -145,6 +146,26 @@ if (hasDatabase)
             .GetAuthenticationContext(httpContext)?
             .User.Id;
         return Results.Ok(await catalog.GetAccessiblePackagesAsync(userId, cancellationToken));
+    });
+
+    app.MapGet("/api/sources/entities", async (
+        string? entityType,
+        string? q,
+        int? limit,
+        HttpContext httpContext,
+        ISourceEntitySearchService search,
+        CancellationToken cancellationToken) =>
+    {
+        var userId = HostedToolAuthenticationMiddleware
+            .GetAuthenticationContext(httpContext)?
+            .User.Id;
+        httpContext.Response.Headers.CacheControl = "no-store";
+        return Results.Ok(await search.SearchAccessibleAsync(
+            userId,
+            entityType,
+            q,
+            limit ?? 100,
+            cancellationToken));
     });
 
     app.MapGet("/api/sources/entities/{entityId:guid}", async (
@@ -486,6 +507,7 @@ if (hasDatabase)
 else
 {
     app.MapGet("/api/sources", () => DatabaseUnavailable("Source Layer"));
+    app.MapGet("/api/sources/entities", () => DatabaseUnavailable("Source Layer"));
     app.MapGet("/api/sources/entities/{entityId:guid}", (Guid entityId) => DatabaseUnavailable("Source Layer"));
     app.MapGet("/api/rules/{conceptKey}", (string conceptKey) => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/concepts", () => DatabaseUnavailable("Rules Layer"));

@@ -1,5 +1,7 @@
 using RulesCore.Application.Hosting;
 using RulesCore.Application.Rules;
+using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Rules;
 
 namespace RulesCore.Web;
 
@@ -66,6 +68,72 @@ public static class CampaignRuleAuthoringEndpointExtensions
 
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(concept);
+            }
+            catch (ArgumentException exception)
+            {
+                return InvalidRequest(exception);
+            }
+        });
+
+        app.MapGet("/api/campaigns/{campaignId:guid}/rules/baselines", async (
+            Guid campaignId,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireCampaignRulesEditAuthority(
+                httpContext,
+                campaignId,
+                out _);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            try
+            {
+                var discovery = new CampaignBaselineDiscoveryService(dbContext);
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(await discovery.GetCandidatesAsync(
+                    campaignId,
+                    cancellationToken));
+            }
+            catch (ArgumentException exception)
+            {
+                return InvalidRequest(exception);
+            }
+        });
+
+        app.MapGet("/api/campaigns/{campaignId:guid}/rules/baselines/{rulesetRevisionId:guid}/preview", async (
+            Guid campaignId,
+            Guid rulesetRevisionId,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireCampaignRulesEditAuthority(
+                httpContext,
+                campaignId,
+                out _);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            try
+            {
+                var discovery = new CampaignBaselineDiscoveryService(dbContext);
+                var preview = await discovery.PreviewAsync(
+                    campaignId,
+                    rulesetRevisionId,
+                    cancellationToken);
+                if (preview is null)
+                {
+                    return Results.NotFound();
+                }
+
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(preview);
             }
             catch (ArgumentException exception)
             {

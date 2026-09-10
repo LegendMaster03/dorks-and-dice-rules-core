@@ -1,5 +1,12 @@
 import { RulesCoreApi, loadToolHostContext } from "./api.js";
 import { RulesAuthoringApp } from "./authoring.js";
+import { installCampaignBaselineAuthoring } from "./campaign-baseline-authoring.js";
+import { installConceptSourceAuthoring } from "./concept-source-authoring.js";
+import { installResolvedRulesBrowser } from "./rules-browser.js";
+import { installSourceAccessAdministration } from "./source-access-admin.js";
+import { installSourceAdministration } from "./source-admin.js";
+import { installSourceNormalization } from "./source-normalization.js";
+import { installSourceRevisionReview } from "./source-revision-review.js";
 import { alertNode, clear, describeError, element } from "./ui.js";
 
 const root = document.getElementById("tool-root");
@@ -24,6 +31,13 @@ try {
     ]);
 
     const app = new RulesAuthoringApp(root, api, hostContext, session, campaigns);
+    installResolvedRulesBrowser(app);
+    installConceptSourceAuthoring(app);
+    installSourceNormalization(app);
+    installSourceRevisionReview(app);
+    installSourceAdministration(app);
+    installSourceAccessAdministration(app);
+    installCampaignBaselineAuthoring(app);
     await app.render();
 } catch (error) {
     console.error("Rules Core failed to initialize.", error);
