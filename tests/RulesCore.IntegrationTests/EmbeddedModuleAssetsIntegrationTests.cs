@@ -35,6 +35,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("getCampaignResolvedRule", api, StringComparison.Ordinal);
         Assert.Contains("getSourceRevisionUpdates", api, StringComparison.Ordinal);
         Assert.Contains("previewSourceRevisionUpdate", api, StringComparison.Ordinal);
+        Assert.Contains("adoptLatestSourceRevision", api, StringComparison.Ordinal);
         Assert.Contains("saveGlobalDecision", api, StringComparison.Ordinal);
         Assert.Contains("searchSourceEntities", api, StringComparison.Ordinal);
         Assert.Contains("createGlobalConcept", api, StringComparison.Ordinal);
@@ -93,6 +94,8 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("Nothing migrates automatically", sourceRevisionReview, StringComparison.Ordinal);
         Assert.Contains("Preview update", sourceRevisionReview, StringComparison.Ordinal);
         Assert.Contains("Open rule editor", sourceRevisionReview, StringComparison.Ordinal);
+        Assert.Contains("Adopt latest source revision", sourceRevisionReview, StringComparison.Ordinal);
+        Assert.Contains("does not publish the rule", sourceRevisionReview, StringComparison.Ordinal);
 
         var sourceAdmin = await GetAssetAsync(client, "/source-admin.js", "javascript");
         Assert.Contains("Source Administration", sourceAdmin, StringComparison.Ordinal);
