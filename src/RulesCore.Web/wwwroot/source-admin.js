@@ -59,12 +59,12 @@ async function renderSourceAdministration(app, container) {
         sectionHeading("Work, release, and game edition"),
         releaseControls.row,
         element("div", { className: "alert alert-secondary py-2 small" },
-            "Use the current canonical game-edition labels (for example 5e and 5.5e). Legacy 2014/2024 labels remain accepted by the backend for older imported datasets and are normalized to 5e/5.5e. The release key identifies this source release; it is not the D&D edition."),
+            "Use the current canonical game-edition labels (for example 5e and 5.5e). Legacy 2014/2024 labels remain accepted by the backend for older imported datasets and are normalized to 5e/5.5e. The release key identifies this source release; it is not the D&D edition. If one physical JSON file aggregates multiple 5e.tools source codes, use the optional source-code filter to import each logical work/release separately from the same document."),
         sectionHeading("Source document"),
         element("div", { className: "mb-3" },
             element("label", { className: "form-label fw-semibold", text: "5e.tools-shaped JSON" }),
             json,
-            element("div", { className: "form-text", text: "Complete entity objects are preserved in immutable Source Layer revisions. Reimporting identical content is idempotent." })));
+            element("div", { className: "form-text", text: "Complete selected entity objects are preserved in immutable Source Layer revisions. Reimporting identical content is idempotent. Preview reports mixed source-code aggregates before anything is persisted." })));
 
     const previewButton = element("button", { type: "button", className: "btn btn-outline-primary me-2", text: "Preview import" });
     const importButton = element("button", { type: "submit", className: "btn btn-primary", text: "Import source document", disabled: true });
@@ -150,7 +150,8 @@ function buildPayload(packageControls, releaseControls, json) {
         json: rawJson,
         gameEdition: releaseControls.gameEdition.value || null,
         releaseKind: releaseControls.releaseKind.value || null,
-        publicationDate: releaseControls.publicationDate.value || null
+        publicationDate: releaseControls.publicationDate.value || null,
+        includedSourceCodes: parseSourceCodes(releaseControls.sourceCodes.value)
     };
 
     for (const name of ["packageKey", "packageDisplayName", "provider", "workKey", "workDisplayName", "editionKey", "editionDisplayName"]) {
@@ -184,7 +185,9 @@ function releaseFields() {
     const releaseKind = selectField("Release kind", RELEASE_KINDS, "col-lg-3", value => value || "Not specified");
     const publicationDate = element("input", { type: "date", className: "form-control" });
     const dateGroup = element("div", { className: "col-lg-3" }, element("label", { className: "form-label fw-semibold", text: "Publication date" }), publicationDate);
-    row.append(workKey.group, workDisplayName.group, releaseKey.group, releaseDisplayName.group, gameEdition.group, releaseKind.group, dateGroup);
+    const sourceCodes = textField("Source-code filter", "SRD51", "col-lg-3", false);
+    sourceCodes.group.append(element("div", { className: "form-text", text: "Optional, comma-separated. Filters a mixed aggregate without modifying the submitted JSON." }));
+    row.append(workKey.group, workDisplayName.group, releaseKey.group, releaseDisplayName.group, gameEdition.group, releaseKind.group, dateGroup, sourceCodes.group);
     return {
         row,
         workKey: workKey.input,
@@ -193,7 +196,8 @@ function releaseFields() {
         releaseDisplayName: releaseDisplayName.input,
         gameEdition: gameEdition.select,
         releaseKind: releaseKind.select,
-        publicationDate
+        publicationDate,
+        sourceCodes: sourceCodes.input
     };
 }
 
@@ -208,6 +212,11 @@ function selectField(label, values, columnClass, display) {
     for (const value of values) select.append(element("option", { value, text: display(value) }));
     const group = element("div", { className: columnClass }, element("label", { className: "form-label fw-semibold", text: label }), select);
     return { group, select };
+}
+
+function parseSourceCodes(value) {
+    const values = value.split(",").map(code => code.trim()).filter(Boolean);
+    return values.length ? [...new Set(values)] : null;
 }
 
 function sectionHeading(text) { return element("h4", { className: "h6 text-body-secondary text-uppercase mt-1 mb-2", text }); }
