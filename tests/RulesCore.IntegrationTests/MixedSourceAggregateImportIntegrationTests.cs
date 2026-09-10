@@ -1,5 +1,6 @@
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
@@ -182,10 +183,11 @@ public sealed class MixedSourceAggregateImportIntegrationTests
                 Assert.Contains(works, value => value.Key == "srd-5-2-1");
 
                 var srd52AttackId = srd52Import.Entities.Single(value => value.Name == "Attack").EntityId;
-                var raw = await db.SourceEntityRevisions
+                var rawJson = await db.SourceEntityRevisions
                     .Where(value => value.SourceEntityId == srd52AttackId)
                     .Select(value => value.RawJson)
                     .SingleAsync();
+                using var raw = JsonDocument.Parse(rawJson);
                 Assert.Equal("SRD52", raw.RootElement.GetProperty("source").GetString());
                 Assert.Equal(
                     "Moving Between Attacks",
