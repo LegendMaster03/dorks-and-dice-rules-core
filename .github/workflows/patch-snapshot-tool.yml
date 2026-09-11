@@ -20,19 +20,19 @@ jobs:
 
           path = Path('tools/RulesCore.SourceSnapshotGenerator/Program.cs')
           text = path.read_text()
-          if '!item.TryGetProperty("name", out var nameValue)' not in text:
-              pattern = r'if \(item\.ValueKind != JsonValueKind\.Object\)\s*\{\s*continue;\s*\}'
-              replacement = '''if (item.ValueKind != JsonValueKind.Object
+          pattern = r'if \(item\.ValueKind != JsonValueKind\.Object\)\s*\{\s*continue;\s*\}'
+          replacement = '''if (item.ValueKind != JsonValueKind.Object
                     || !item.TryGetProperty("name", out var nameValue)
                     || nameValue.ValueKind != JsonValueKind.String
                     || string.IsNullOrWhiteSpace(nameValue.GetString()))
                 {
                     continue;
                 }'''
-              text, count = re.subn(pattern, replacement, text, count=1)
-              if count != 1:
-                  raise SystemExit('snapshot entity filter was not found')
+          text, count = re.subn(pattern, replacement, text, count=1)
+          if count == 1:
               path.write_text(text)
+          elif 'item.ValueKind != JsonValueKind.Object\n                    || !item.TryGetProperty("name", out var nameValue)' not in text:
+              raise SystemExit('snapshot entity filter was not found')
       - name: Commit patch
         shell: bash
         run: |
