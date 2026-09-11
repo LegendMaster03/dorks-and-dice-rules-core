@@ -47,7 +47,7 @@ async function renderRulesBrowser(app, container) {
         element("h3", { className: "h5 mb-1", text: "Rules browser" }),
         element("p", {
             className: "text-body-secondary mb-0",
-            text: "Browse published rules that this account may access. Campaign views show the last published campaign ruleset, not unpublished DM work."
+            text: "Browse published global rules without signing in. Signed-in campaign members may also browse published campaign rules they can access."
         }));
     container.append(heading);
 
@@ -151,7 +151,7 @@ function renderCatalog(app, container, results, catalog, scopeValue) {
     if (!catalog.rules?.length) {
         results.append(alertNode(
             "secondary",
-            "No published rules accessible to this account match the current filters."));
+            "No published rules available to you match the current filters."));
         return;
     }
 
@@ -230,8 +230,8 @@ async function renderRuleDetail(app, container, summary, scopeValue) {
 
     try {
         const resolved = scopeValue === "global"
-            ? await app.api.getResolvedGlobalRule(summary.conceptKey)
-            : await app.api.getResolvedCampaignRule(
+            ? await app.api.getGlobalResolvedRule(summary.conceptKey)
+            : await app.api.getCampaignResolvedRule(
                 scopeValue.slice("campaign:".length),
                 summary.conceptKey);
         loading.remove();
