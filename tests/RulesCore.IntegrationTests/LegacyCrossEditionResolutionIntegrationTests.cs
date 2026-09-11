@@ -38,7 +38,8 @@ public sealed class LegacyCrossEditionResolutionIntegrationTests
                     <html><body>
                     <h1>Feats</h1>
                     <h2>Power Attack [General]</h2>
-                    <p>3e rule text: trade attack bonus for damage.</p>
+                    <p><strong>Prerequisite:</strong> Str 13.</p>
+                    <p><strong>Benefit:</strong> 3e rule text: trade attack bonus for damage.</p>
                     </body></html>
                     """,
                 "https://www.dragon.ee/30srd/feats.htm",
@@ -52,7 +53,9 @@ public sealed class LegacyCrossEditionResolutionIntegrationTests
 
                     ### Power Attack <small>[General]</small>
 
-                    3.5e rule text: subtract from melee attack rolls and add to melee damage rolls.
+                    **Prerequisite:** Str 13.
+
+                    **Benefit:** 3.5e rule text: subtract from melee attack rolls and add to melee damage rolls.
                     """,
                 "https://example.test/basic-rules-and-legal/feats.md",
                 "SRD35",
