@@ -435,6 +435,21 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         var campaignDecision = entry.CampaignRuleDecision;
         var baselineRuleset = latestRevision.BaselineSelection.RulesetRevision;
 
+        IReadOnlyList<ResolvedRuleContributionView> globalContributions = [];
+        if (campaignDecision?.DecisionKind != CampaignRuleDecisionKinds.SelectSource)
+        {
+            var contributionResolution = await RuleContributionResolution.ResolveAsync(
+                dbContext,
+                globalDecision.Id,
+                normalizedUserId,
+                cancellationToken);
+            if (!contributionResolution.Accessible)
+            {
+                return null;
+            }
+            globalContributions = contributionResolution.Contributions;
+        }
+
         using var sourceDocument = JsonDocument.Parse(sourceRevision.RawJson);
         var resolvedDocument = sourceDocument.RootElement.Clone();
         if (campaignDecision?.DecisionKind != CampaignRuleDecisionKinds.SelectSource)
@@ -477,6 +492,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             globalDecision.PatchFingerprint,
             globalMergePatch,
             globalStructuredPatch,
+            globalContributions,
             campaignDecision?.Id,
             campaignDecision?.DecisionNumber,
             campaignDecision?.DecisionKind ?? CampaignRuleDecisionKinds.InheritGlobal,
