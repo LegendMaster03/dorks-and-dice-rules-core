@@ -2,6 +2,7 @@ import { RulesCoreApi, loadToolHostContext } from "./api.js";
 import { RulesAuthoringApp } from "./authoring.js";
 import { installCampaignBaselineAuthoring } from "./campaign-baseline-authoring.js";
 import { installConceptSourceAuthoring } from "./concept-source-authoring.js";
+import { installHostedSourceAuthoring } from "./hosted-source-authoring.js";
 import { installResolvedRulesBrowser } from "./rules-browser.js";
 import { installSourceAccessAdministration } from "./source-access-admin.js";
 import { installSourceAcquisitionAdministration } from "./source-acquisition-admin.js";
@@ -28,6 +29,7 @@ try {
     installSourceNormalization(app);
     installSourceRevisionReview(app);
     installSourceVersioning(app);
+    installHostedSourceAuthoring(app);
     installSourceAdministration(app);
     installSourceAccessAdministration(app);
     installSourceAcquisitionAdministration(app);
