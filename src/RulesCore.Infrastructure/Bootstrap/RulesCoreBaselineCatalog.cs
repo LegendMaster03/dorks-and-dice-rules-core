@@ -47,8 +47,22 @@ internal static class RulesCoreBaselineCatalog
             [])
     ];
 
-    public static readonly IReadOnlyList<SrdPdfAuthoritySeed> SrdPdfAuthorities =
+    public static readonly IReadOnlyList<SrdAuthoritySeed> SrdAuthorities =
     [
+        new(
+            "wotc-srd-ogl",
+            "srd-3e",
+            "original",
+            "https://web.archive.org/web/20080209011829/http://www.opengamingfoundation.org/srd.html",
+            "text/html",
+            "Archived SRD 3.0 distribution index. This historical corpus listing, rather than the Dragon.ee HTML representation, defines 3e corpus membership for the baseline."),
+        new(
+            "wotc-srd-ogl",
+            "srd-3-5e",
+            "original",
+            "https://web.archive.org/web/20160328013113/http://www.wizards.com/d20/files/v35/SRD.zip",
+            "application/zip",
+            "Archived official Wizards Revised 3.5 SRD distribution. This archive, rather than the Markdown conversion, defines 3.5e corpus membership."),
         new(
             "wotc-srd-cc",
             "srd-5-1",
@@ -173,7 +187,7 @@ internal sealed record SourceWorkSeed(
     string? ReleaseKind,
     DateOnly? PublicationDate);
 
-internal sealed record SrdPdfAuthoritySeed(
+internal sealed record SrdAuthoritySeed(
     string PackageKey,
     string WorkKey,
     string EditionKey,
