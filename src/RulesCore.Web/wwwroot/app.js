@@ -7,6 +7,7 @@ import { installResolvedRulesBrowser } from "./rules-browser.js";
 import { installSourceAccessAdministration } from "./source-access-admin.js";
 import { installSourceAcquisitionAdministration } from "./source-acquisition-admin.js";
 import { installSourceAdministration } from "./source-admin.js";
+import { installSourceLibrary } from "./source-library.js";
 import { installSourceNormalization } from "./source-normalization.js";
 import { installSourceRevisionReview } from "./source-revision-review.js";
 import { installSourceVersioning } from "./source-versioning.js";
@@ -41,6 +42,7 @@ try {
     installSourceAccessAdministration(app);
     installSourceAcquisitionAdministration(app);
     installCampaignBaselineAuthoring(app);
+    installSourceLibrary(app);
     await app.render();
 } catch (error) {
     console.error("Rules Core failed to initialize.", error);
