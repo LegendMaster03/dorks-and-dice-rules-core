@@ -204,7 +204,7 @@ public static partial class LegacySrdDocumentInspector
             ? indexUri.AbsolutePath
             : indexUri.AbsolutePath[..(indexUri.AbsolutePath.LastIndexOf('/') + 1)];
 
-        return HtmlHref.Matches(html ?? string.Empty)
+        var references = HtmlHref.Matches(html ?? string.Empty)
             .Select(match => match.Groups["double"].Success
                 ? match.Groups["double"].Value
                 : match.Groups["single"].Success
@@ -227,6 +227,8 @@ public static partial class LegacySrdDocumentInspector
             .DistinctBy(value => value.AbsoluteUri, StringComparer.OrdinalIgnoreCase)
             .OrderBy(value => value.AbsoluteUri, StringComparer.OrdinalIgnoreCase)
             .ToArray();
+
+        return EnforceReviewedThreeECorpus(indexUri, references);
     }
 
 }
