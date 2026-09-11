@@ -7,12 +7,49 @@ namespace RulesCore.Infrastructure.Bootstrap;
 internal static class BuiltInSrdHostedSources
 {
     private const string RawRoot = "https://raw.githubusercontent.com/CoolFireGiant/hewnhero-srd/main/data/";
+    private const string ThreeFiveGitHubRoot = "https://github.com/olimot/srd-v3.5-md/tree/main/";
 
     public static readonly IReadOnlyList<BuiltInHostedSourceSeed> Definitions =
     [
         new(
+            "builtin-wotc-srd-3e",
+            BuildLegacy(
+                displayName: "3e SRD public corpus",
+                workKey: "srd-3e",
+                workDisplayName: "System Reference Document 3e",
+                editionDisplayName: "3e SRD",
+                gameEdition: "3e",
+                sourceCode: "SRD3",
+                resources:
+                [
+                    new HostedSourceResourceRequest(
+                        HostedSourceResourceKinds.HtmlIndex,
+                        "https://www.dragon.ee/30srd/")
+                ],
+                note: "Corpus membership follows the archived 3.0 SRD distribution. Dragon.ee is used only as a surviving HTML representation of that public OGL corpus. SRD3 is a Rules Core normalization code, not a historical Wizards source code.")),
+        new(
+            "builtin-wotc-srd-3-5e",
+            BuildLegacy(
+                displayName: "3.5e SRD public corpus",
+                workKey: "srd-3-5e",
+                workDisplayName: "System Reference Document 3.5e",
+                editionDisplayName: "3.5e SRD",
+                gameEdition: "3.5e",
+                sourceCode: "SRD35",
+                resources:
+                [
+                    MarkdownTree("basic-rules-and-legal"),
+                    MarkdownTree("divine"),
+                    MarkdownTree("epic"),
+                    MarkdownTree("magic-items"),
+                    MarkdownTree("monsters"),
+                    MarkdownTree("psionics"),
+                    MarkdownTree("spells")
+                ],
+                note: "Corpus membership follows the archived official Wizards Revised 3.5 SRD distribution. olimot/srd-v3.5-md is used only as a Markdown representation. SRD35 is a Rules Core normalization code, not a historical Wizards source code.")),
+        new(
             "builtin-wotc-srd-5-1",
-            Build(
+            BuildCreativeCommons(
                 displayName: "SRD 5.1 public corpus",
                 workKey: "srd-5-1",
                 workDisplayName: "System Reference Document 5.1",
@@ -30,7 +67,7 @@ internal static class BuiltInSrdHostedSources
                 note: "Corpus membership was manually reviewed against the official Wizards SRD 5.1 PDF. CoolFireGiant/hewnhero-srd is used only as the structured representation. Aggregate backgrounds, races, and feats are additionally constrained by the checked-in official SRD membership catalog.")),
         new(
             "builtin-wotc-srd-5-2-1",
-            Build(
+            BuildCreativeCommons(
                 displayName: "SRD 5.2.1 public corpus",
                 workKey: "srd-5-2-1",
                 workDisplayName: "System Reference Document 5.2.1",
@@ -52,7 +89,7 @@ internal static class BuiltInSrdHostedSources
         ISourceImportService importer,
         CancellationToken cancellationToken)
     {
-        var service = new HostedSourceService(dbContext, importer);
+        var service = new LegacyAwareHostedSourceService(dbContext, importer);
         var existing = await service.ListAsync(includeDisabled: true, cancellationToken);
         var keys = existing.Select(value => value.Key).ToHashSet(StringComparer.Ordinal);
 
@@ -76,7 +113,36 @@ internal static class BuiltInSrdHostedSources
         return Definitions.Count;
     }
 
-    private static SetHostedSourceDefinitionRequest Build(
+    private static SetHostedSourceDefinitionRequest BuildLegacy(
+        string displayName,
+        string workKey,
+        string workDisplayName,
+        string editionDisplayName,
+        string gameEdition,
+        string sourceCode,
+        IReadOnlyList<HostedSourceResourceRequest> resources,
+        string note) =>
+        new(
+            DisplayName: displayName,
+            FormatKind: HostedSourceFormatKinds.LegacySrdText,
+            PackageKey: "wotc-srd-ogl",
+            PackageDisplayName: "Wizards of the Coast SRD (OGL)",
+            Provider: "Wizards of the Coast",
+            License: "OGL-1.0a",
+            IsPublic: true,
+            WorkKey: workKey,
+            WorkDisplayName: workDisplayName,
+            EditionKey: "original",
+            EditionDisplayName: editionDisplayName,
+            GameEdition: gameEdition,
+            ReleaseKind: "srd",
+            PublicationDate: null,
+            IncludedSourceCodes: [sourceCode],
+            Resources: resources,
+            IsEnabled: true,
+            Note: note);
+
+    private static SetHostedSourceDefinitionRequest BuildCreativeCommons(
         string displayName,
         string workKey,
         string workDisplayName,
@@ -140,6 +206,9 @@ internal static class BuiltInSrdHostedSources
 
     private static HostedSourceResourceRequest Index(string path) =>
         new(HostedSourceResourceKinds.JsonIndex, RawRoot + path);
+
+    private static HostedSourceResourceRequest MarkdownTree(string path) =>
+        new(HostedSourceResourceKinds.GitHubTree, ThreeFiveGitHubRoot + path);
 }
 
 internal sealed record BuiltInHostedSourceSeed(
