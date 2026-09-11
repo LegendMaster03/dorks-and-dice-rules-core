@@ -126,12 +126,46 @@ public sealed class LegacySrdDocumentInspectorTests
 
         var references = LegacySrdDocumentInspector.ResolveHtmlIndexReferences(
             html,
-            new Uri("https://www.dragon.ee/30srd/"));
+            new Uri("https://example.test/30srd/"));
 
         Assert.Equal(2, references.Count);
-        Assert.Contains(references, value => value.AbsoluteUri == "https://www.dragon.ee/30srd/feats.htm");
+        Assert.Contains(references, value => value.AbsoluteUri == "https://example.test/30srd/feats.htm");
         Assert.Contains(references, value => value.AbsoluteUri.StartsWith(
-            "https://www.dragon.ee/30srd/spells/spellsa.html",
+            "https://example.test/30srd/spells/spellsa.html",
             StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void ReviewedThreeECorpusRequiresExactDocumentManifest()
+    {
+        var html = string.Join(
+            '\n',
+            LegacySrdDocumentInspector.ReviewedThreeEDocumentNames
+                .Select(name => $"<a href=\"{name}\">{name}</a>"));
+
+        var references = LegacySrdDocumentInspector.ResolveHtmlIndexReferences(
+            html,
+            new Uri(LegacySrdDocumentInspector.ReviewedThreeEIndexUri));
+
+        Assert.Equal(139, references.Count);
+        Assert.Equal(
+            LegacySrdDocumentInspector.ReviewedThreeEDocumentNames,
+            references.Select(value => Path.GetFileName(value.AbsolutePath)).ToArray());
+
+        var missingOne = string.Join(
+            '\n',
+            LegacySrdDocumentInspector.ReviewedThreeEDocumentNames
+                .Skip(1)
+                .Select(name => $"<a href=\"{name}\">{name}</a>"));
+        Assert.Throws<InvalidDataException>(() =>
+            LegacySrdDocumentInspector.ResolveHtmlIndexReferences(
+                missingOne,
+                new Uri(LegacySrdDocumentInspector.ReviewedThreeEIndexUri)));
+
+        var withUnexpected = html + "\n<a href=\"unreviewed.htm\">unreviewed.htm</a>";
+        Assert.Throws<InvalidDataException>(() =>
+            LegacySrdDocumentInspector.ResolveHtmlIndexReferences(
+                withUnexpected,
+                new Uri(LegacySrdDocumentInspector.ReviewedThreeEIndexUri)));
     }
 }
