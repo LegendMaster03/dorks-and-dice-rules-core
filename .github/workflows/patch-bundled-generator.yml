@@ -19,15 +19,10 @@ jobs:
 
           path = Path('.github/workflows/generate-bundled-srds.yml')
           text = path.read_text()
-          needle = '''              string? uniqueId = entityType switch
-              {
-                  "classFeature" => JoinIdentity('''
-          replacement = '''              string? uniqueId = entityType switch
-              {
-                  "deity" => JoinIdentity(item, "pantheon"),
-                  "classFeature" => JoinIdentity('''
+          needle = '"classFeature" => JoinIdentity('
+          replacement = '"deity" => JoinIdentity(item, "pantheon"),\n                  "classFeature" => JoinIdentity('
           if needle not in text:
-              raise SystemExit('generator identity switch was not found')
+              raise SystemExit('generator classFeature identity case was not found')
           path.write_text(text.replace(needle, replacement, 1))
           Path('.github/workflows/patch-bundled-generator.yml').unlink()
       - name: Commit patch
