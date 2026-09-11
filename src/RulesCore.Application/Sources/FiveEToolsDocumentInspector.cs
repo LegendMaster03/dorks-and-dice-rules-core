@@ -58,6 +58,7 @@ public static class FiveEToolsDocumentInspector
             return json;
         }
 
+        var applyOfficialMembership = IsOfficialSrdRelease(fallbackSourceCode);
         selectedEntityCount = 0;
         using var stream = new MemoryStream();
         using (var writer = new Utf8JsonWriter(stream))
@@ -82,10 +83,11 @@ public static class FiveEToolsDocumentInspector
 
                     var sourceCode = GetSourceCode(item, fallbackSourceCode);
                     if (!included.Contains(sourceCode)
-                        || !OfficialSrdMembershipCatalog.IsManuallyConfirmed(
-                            sourceCode,
-                            property.Name,
-                            item))
+                        || (applyOfficialMembership
+                            && !OfficialSrdMembershipCatalog.IsManuallyConfirmed(
+                                sourceCode,
+                                property.Name,
+                                item)))
                     {
                         continue;
                     }
@@ -136,6 +138,10 @@ public static class FiveEToolsDocumentInspector
     public static bool IsImportableArray(JsonProperty property) =>
         !property.Name.StartsWith('_')
         && property.Value.ValueKind == JsonValueKind.Array;
+
+    private static bool IsOfficialSrdRelease(string value) =>
+        string.Equals(value?.Trim(), "5.1", StringComparison.OrdinalIgnoreCase)
+        || string.Equals(value?.Trim(), "5.2.1", StringComparison.OrdinalIgnoreCase);
 
     private static int CountImportableEntities(JsonElement root)
     {
