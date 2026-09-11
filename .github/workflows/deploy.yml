@@ -65,9 +65,12 @@ jobs:
           docker rm -f dorks-and-dice-rules-core-smoketest 2>/dev/null || true
           docker run -d --name dorks-and-dice-rules-core-smoketest \
             --network dorks-and-dice-rules-core-test \
+            -e RulesCore__BootstrapBaseline=false \
             -e ConnectionStrings__RulesCore='Host=dorks-and-dice-rules-core-test-postgres;Port=5432;Database=rules_core_test;Username=rules_core_test;Password=rules_core_test' \
             dorks-and-dice-rules-core:latest
 
+          # Baseline hydration is covered by the integration suite above. The smoke test is
+          # intentionally limited to container startup/readiness so it stays fast on every deploy.
           ready=false
           for i in {1..20}; do
             health=$(docker run --rm \
@@ -125,8 +128,11 @@ jobs:
 
       - name: Verify deployed service
         run: |
+          # A deployment that introduces a new bundled corpus can spend several minutes hydrating
+          # immutable Source Layer revisions before ASP.NET starts accepting requests. Subsequent
+          # deployments skip already-present bundled works and normally become ready much faster.
           ready=false
-          for i in {1..20}; do
+          for i in {1..300}; do
             response=$(docker run --rm \
               --network dorks-and-dice-backend \
               curlimages/curl:8.12.1 \
