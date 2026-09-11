@@ -42,7 +42,9 @@ try {
     installSourceAccessAdministration(app);
     installSourceAcquisitionAdministration(app);
     installCampaignBaselineAuthoring(app);
-    installSourceLibrary(app);
+    if (hostContext.siteMode === "dorks-and-dice") {
+        installSourceLibrary(app);
+    }
     await app.render();
 } catch (error) {
     console.error("Rules Core failed to initialize.", error);
