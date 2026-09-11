@@ -5,16 +5,23 @@ public static class HostedSourceResourceKinds
     public const string DirectJson = "direct-json";
     public const string JsonIndex = "json-index";
     public const string GitHubTree = "github-tree";
+    public const string HtmlIndex = "html-index";
 
     public static bool IsSupported(string? value) =>
         string.Equals(value, DirectJson, StringComparison.Ordinal)
         || string.Equals(value, JsonIndex, StringComparison.Ordinal)
-        || string.Equals(value, GitHubTree, StringComparison.Ordinal);
+        || string.Equals(value, GitHubTree, StringComparison.Ordinal)
+        || string.Equals(value, HtmlIndex, StringComparison.Ordinal);
 }
 
 public static class HostedSourceFormatKinds
 {
     public const string FiveEToolsJson = "5etools-json";
+    public const string LegacySrdText = "legacy-srd-text";
+
+    public static bool IsSupported(string? value) =>
+        string.Equals(value, FiveEToolsJson, StringComparison.Ordinal)
+        || string.Equals(value, LegacySrdText, StringComparison.Ordinal);
 }
 
 public sealed record HostedSourceResourceRequest(
