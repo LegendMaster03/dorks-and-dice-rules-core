@@ -88,7 +88,7 @@ internal static class BuiltInSrdHostedSources
         IReadOnlyList<HostedSourceResourceRequest> editionSpecificResources,
         string note)
     {
-        var resources = CommonResources
+        var resources = GetCommonResources()
             .Concat(editionSpecificResources)
             .ToArray();
 
@@ -113,7 +113,7 @@ internal static class BuiltInSrdHostedSources
             Note: note);
     }
 
-    private static readonly IReadOnlyList<HostedSourceResourceRequest> CommonResources =
+    private static IReadOnlyList<HostedSourceResourceRequest> GetCommonResources() =>
     [
         Direct("actions.json"),
         Direct("backgrounds.json"),
