@@ -36,6 +36,7 @@ public sealed class BaselineBootstrapIntegrationTests
         await new RulesCoreSchemaInitializer(db).InitializeAsync();
         var importer = new SourceImportService(db);
         var globalRules = new GlobalRulesService(db);
+        var hostedSources = new HostedSourceService(db, importer);
         var bootstrapper = new RulesCoreBaselineBootstrapper(db, importer, globalRules);
 
         await ResetAsync(db);
@@ -49,6 +50,7 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Equal(6, first.PublishedRuleset.EntryCount);
             Assert.Equal(6, first.HouseRuleSourceEntityCount);
             Assert.Equal(2, first.SourceAuthorityReferenceCount);
+            Assert.Equal(2, first.HostedSourceDefinitionCount);
 
             var packages = await db.SourcePackages
                 .AsNoTracking()
@@ -96,6 +98,19 @@ public sealed class BaselineBootstrapIntegrationTests
                 && value.Uri == "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf"
                 && value.MediaType == "application/pdf");
 
+            var definitions = await hostedSources.ListAsync(includeDisabled: true);
+            var srd51 = Assert.Single(definitions, value => value.Key == "builtin-wotc-srd-5-1");
+            var srd52 = Assert.Single(definitions, value => value.Key == "builtin-wotc-srd-5-2-1");
+            Assert.True(srd51.IsPublic);
+            Assert.True(srd52.IsPublic);
+            Assert.Equal(new[] { "SRD51" }, srd51.IncludedSourceCodes);
+            Assert.Equal(new[] { "SRD52" }, srd52.IncludedSourceCodes);
+            Assert.Contains(srd51.Resources, value => value.Uri.EndsWith("/spells/spells-srd51.json", StringComparison.Ordinal));
+            Assert.Contains(srd52.Resources, value => value.Uri.EndsWith("/spells/spells-srd52.json", StringComparison.Ordinal));
+            Assert.Contains(srd51.Resources, value => value.Uri.EndsWith("/bestiary/bestiary-srd51.json", StringComparison.Ordinal));
+            Assert.Contains(srd52.Resources, value => value.Uri.EndsWith("/bestiary/bestiary-srd52.json", StringComparison.Ordinal));
+            Assert.Contains(srd52.Resources, value => value.Uri.EndsWith("/feats.json", StringComparison.Ordinal));
+
             var houseEntities = await db.SourceEntities
                 .AsNoTracking()
                 .Where(value => value.SourceEdition.SourceWork.SourcePackageId == housePackageId)
@@ -129,6 +144,16 @@ public sealed class BaselineBootstrapIntegrationTests
                     "Rules Lawyer retained the baseline implementation with a user-maintained note."),
                 "rules-lawyer");
 
+            var revisedSrd52 = await hostedSources.SetAsync(
+                srd52.Key,
+                ToRequest(srd52) with
+                {
+                    IsEnabled = false,
+                    Note = "Rules Lawyer intentionally disabled automatic SRD 5.2.1 refresh."
+                },
+                "rules-lawyer");
+            Assert.Equal(2, revisedSrd52.RevisionNumber);
+
             var second = await bootstrapper.EnsureAsync();
             Assert.False(second.RulesBaselineApplied);
             Assert.Null(second.PublishedRuleset);
@@ -136,6 +161,11 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Equal(2, await db.GlobalRuleDecisions.CountAsync(
                 value => value.RuleConceptId == healingConcept.Id));
             Assert.Equal(2, (await ReadAuthorityReferencesAsync(db)).Count);
+
+            var preservedSrd52 = await hostedSources.GetAsync(srd52.Id);
+            Assert.NotNull(preservedSrd52);
+            Assert.False(preservedSrd52!.IsEnabled);
+            Assert.Equal(2, preservedSrd52.RevisionNumber);
 
             var latestHealingDecision = await db.GlobalRuleDecisions
                 .AsNoTracking()
@@ -152,6 +182,27 @@ public sealed class BaselineBootstrapIntegrationTests
             await ResetAsync(db);
         }
     }
+
+    private static SetHostedSourceDefinitionRequest ToRequest(HostedSourceDefinitionView definition) =>
+        new(
+            definition.DisplayName,
+            definition.FormatKind,
+            definition.PackageKey,
+            definition.PackageDisplayName,
+            definition.Provider,
+            definition.License,
+            definition.IsPublic,
+            definition.WorkKey,
+            definition.WorkDisplayName,
+            definition.EditionKey,
+            definition.EditionDisplayName,
+            definition.GameEdition,
+            definition.ReleaseKind,
+            definition.PublicationDate,
+            definition.IncludedSourceCodes,
+            definition.Resources.Select(value => new HostedSourceResourceRequest(value.Kind, value.Uri)).ToArray(),
+            definition.IsEnabled,
+            definition.Note);
 
     private static async Task<IReadOnlyList<AuthorityReferenceRow>> ReadAuthorityReferencesAsync(
         RulesCoreDbContext db)
@@ -218,6 +269,13 @@ public sealed class BaselineBootstrapIntegrationTests
                 CONSTRAINT pk_source_edition_authority_reference PRIMARY KEY (source_edition_authority_reference_id),
                 CONSTRAINT fk_source_edition_authority_reference_edition FOREIGN KEY (source_edition_id)
                     REFERENCES source_edition(source_edition_id) ON DELETE CASCADE);
+            CREATE TABLE IF NOT EXISTS hosted_source_definition (
+                hosted_source_definition_id uuid NOT NULL,
+                definition_key varchar(200) NOT NULL,
+                created_at timestamp with time zone NOT NULL,
+                CONSTRAINT pk_hosted_source_definition PRIMARY KEY (hosted_source_definition_id));
+            DELETE FROM hosted_source_definition
+            WHERE definition_key IN ('builtin-wotc-srd-5-1', 'builtin-wotc-srd-5-2-1');
             """);
 
         db.ChangeTracker.Clear();
