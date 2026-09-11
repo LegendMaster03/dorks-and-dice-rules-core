@@ -36,7 +36,7 @@ public sealed class BaselineBootstrapIntegrationTests
         await new RulesCoreSchemaInitializer(db).InitializeAsync();
         var importer = new SourceImportService(db);
         var globalRules = new GlobalRulesService(db);
-        var hostedSources = new HostedSourceService(db, importer);
+        var hostedSources = new LegacyAwareHostedSourceService(db, importer);
         var bootstrapper = new RulesCoreBaselineBootstrapper(db, importer, globalRules);
 
         await ResetAsync(db);
@@ -49,8 +49,8 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Equal(1, first.PublishedRuleset!.RevisionNumber);
             Assert.Equal(6, first.PublishedRuleset.EntryCount);
             Assert.Equal(6, first.HouseRuleSourceEntityCount);
-            Assert.Equal(2, first.SourceAuthorityReferenceCount);
-            Assert.Equal(2, first.HostedSourceDefinitionCount);
+            Assert.Equal(4, first.SourceAuthorityReferenceCount);
+            Assert.Equal(4, first.HostedSourceDefinitionCount);
 
             var packages = await db.SourcePackages
                 .AsNoTracking()
@@ -86,7 +86,17 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Equal(new[] { "srd-5-1", "srd-5-2-1" }, ccWorks);
 
             var authorities = await ReadAuthorityReferencesAsync(db);
-            Assert.Equal(2, authorities.Count);
+            Assert.Equal(4, authorities.Count);
+            Assert.Contains(authorities, value =>
+                value.WorkKey == "srd-3e"
+                && value.EditionKey == "original"
+                && value.Uri == "https://web.archive.org/web/20080209011829/http://www.opengamingfoundation.org/srd.html"
+                && value.MediaType == "text/html");
+            Assert.Contains(authorities, value =>
+                value.WorkKey == "srd-3-5e"
+                && value.EditionKey == "original"
+                && value.Uri == "https://web.archive.org/web/20160328013113/http://www.wizards.com/d20/files/v35/SRD.zip"
+                && value.MediaType == "application/zip");
             Assert.Contains(authorities, value =>
                 value.WorkKey == "srd-5-1"
                 && value.EditionKey == "5.1"
@@ -99,8 +109,21 @@ public sealed class BaselineBootstrapIntegrationTests
                 && value.MediaType == "application/pdf");
 
             var definitions = await hostedSources.ListAsync(includeDisabled: true);
+            var srd3 = Assert.Single(definitions, value => value.Key == "builtin-wotc-srd-3e");
+            var srd35 = Assert.Single(definitions, value => value.Key == "builtin-wotc-srd-3-5e");
             var srd51 = Assert.Single(definitions, value => value.Key == "builtin-wotc-srd-5-1");
             var srd52 = Assert.Single(definitions, value => value.Key == "builtin-wotc-srd-5-2-1");
+            Assert.Equal(HostedSourceFormatKinds.LegacySrdText, srd3.FormatKind);
+            Assert.Equal(HostedSourceFormatKinds.LegacySrdText, srd35.FormatKind);
+            Assert.Equal(new[] { "SRD3" }, srd3.IncludedSourceCodes);
+            Assert.Equal(new[] { "SRD35" }, srd35.IncludedSourceCodes);
+            Assert.Single(srd3.Resources);
+            Assert.Equal(HostedSourceResourceKinds.HtmlIndex, srd3.Resources[0].Kind);
+            Assert.Equal("https://www.dragon.ee/30srd/", srd3.Resources[0].Uri);
+            Assert.Equal(7, srd35.Resources.Count);
+            Assert.All(srd35.Resources, value => Assert.Equal(HostedSourceResourceKinds.GitHubTree, value.Kind));
+            Assert.Contains(srd35.Resources, value => value.Uri.EndsWith("/basic-rules-and-legal", StringComparison.Ordinal));
+            Assert.Contains(srd35.Resources, value => value.Uri.EndsWith("/spells", StringComparison.Ordinal));
             Assert.True(srd51.IsPublic);
             Assert.True(srd52.IsPublic);
             Assert.Equal(new[] { "SRD51" }, srd51.IncludedSourceCodes);
@@ -160,7 +183,7 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Equal(1, await db.RulesetRevisions.CountAsync());
             Assert.Equal(2, await db.GlobalRuleDecisions.CountAsync(
                 value => value.RuleConceptId == healingConcept.Id));
-            Assert.Equal(2, (await ReadAuthorityReferencesAsync(db)).Count);
+            Assert.Equal(4, (await ReadAuthorityReferencesAsync(db)).Count);
 
             var preservedSrd52 = await hostedSources.GetAsync(srd52.Id);
             Assert.NotNull(preservedSrd52);
@@ -275,7 +298,11 @@ public sealed class BaselineBootstrapIntegrationTests
                 created_at timestamp with time zone NOT NULL,
                 CONSTRAINT pk_hosted_source_definition PRIMARY KEY (hosted_source_definition_id));
             DELETE FROM hosted_source_definition
-            WHERE definition_key IN ('builtin-wotc-srd-5-1', 'builtin-wotc-srd-5-2-1');
+            WHERE definition_key IN (
+                'builtin-wotc-srd-3e',
+                'builtin-wotc-srd-3-5e',
+                'builtin-wotc-srd-5-1',
+                'builtin-wotc-srd-5-2-1');
             """);
 
         db.ChangeTracker.Clear();
