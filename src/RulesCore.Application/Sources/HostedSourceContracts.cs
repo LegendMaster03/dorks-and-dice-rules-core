@@ -7,11 +7,16 @@ public static class HostedSourceResourceKinds
     public const string GitHubTree = "github-tree";
     public const string HtmlIndex = "html-index";
 
+    // Kept as the 5e.tools adapter's compatibility predicate because HostedSourceService
+    // owns that original adapter. LegacySrdText validates its resource kinds separately.
     public static bool IsSupported(string? value) =>
         string.Equals(value, DirectJson, StringComparison.Ordinal)
         || string.Equals(value, JsonIndex, StringComparison.Ordinal)
-        || string.Equals(value, GitHubTree, StringComparison.Ordinal)
-        || string.Equals(value, HtmlIndex, StringComparison.Ordinal);
+        || string.Equals(value, GitHubTree, StringComparison.Ordinal);
+
+    public static bool IsLegacySrdSupported(string? value) =>
+        string.Equals(value, HtmlIndex, StringComparison.Ordinal)
+        || string.Equals(value, GitHubTree, StringComparison.Ordinal);
 }
 
 public static class HostedSourceFormatKinds
