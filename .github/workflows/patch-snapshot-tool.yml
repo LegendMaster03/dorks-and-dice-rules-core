@@ -15,27 +15,24 @@ jobs:
       - name: Exclude unnamed metadata rows
         shell: python
         run: |
+          import re
           from pathlib import Path
 
           path = Path('tools/RulesCore.SourceSnapshotGenerator/Program.cs')
           text = path.read_text()
-          old = '''                if (item.ValueKind != JsonValueKind.Object)
-                {
-                    continue;
-                }
-
-                var normalized = AddStableIdentity(property.Name, item);'''
-          new = '''                if (item.ValueKind != JsonValueKind.Object
+          if '!item.TryGetProperty("name", out var nameValue)' not in text:
+              pattern = r'if \(item\.ValueKind != JsonValueKind\.Object\)\s*\{\s*continue;\s*\}'
+              replacement = '''if (item.ValueKind != JsonValueKind.Object
                     || !item.TryGetProperty("name", out var nameValue)
                     || nameValue.ValueKind != JsonValueKind.String
                     || string.IsNullOrWhiteSpace(nameValue.GetString()))
                 {
                     continue;
-                }
-
-                var normalized = AddStableIdentity(property.Name, item);'''
-          if old in text:
-              path.write_text(text.replace(old, new, 1))
+                }'''
+              text, count = re.subn(pattern, replacement, text, count=1)
+              if count != 1:
+                  raise SystemExit('snapshot entity filter was not found')
+              path.write_text(text)
       - name: Commit patch
         shell: bash
         run: |
