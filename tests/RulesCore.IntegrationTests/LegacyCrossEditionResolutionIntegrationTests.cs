@@ -171,6 +171,15 @@ public sealed class LegacyCrossEditionResolutionIntegrationTests
                 .GetProperty("incorporatedEdition")
                 .GetString());
 
+            var resolvedContribution = Assert.Single(resolved.Contributions);
+            Assert.Equal(threeRevisionId, resolvedContribution.SourceEntityRevisionId);
+            Assert.Equal("SRD3", resolvedContribution.SourceCode);
+            Assert.Equal("srd-3e", resolvedContribution.WorkKey);
+            Assert.Equal("3e", resolvedContribution.GameEdition);
+            Assert.Equal(
+                RuleConsolidationContributionKinds.Incorporated,
+                resolvedContribution.ContributionKind);
+
             var versioning = new SourceVersioningService(db);
             var authoring = new GlobalRulesAuthoringService(db);
             var consolidation = new RuleConsolidationService(db, authoring, versioning);
