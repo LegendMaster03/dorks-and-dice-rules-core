@@ -62,7 +62,7 @@ For 3.5e, Rules Core records the archived official Wizards Revised 3.5 SRD ZIP a
 
 For 5e and 5.5e, the official SRD PDFs remain the membership authorities while hosted JSON is a structured representation.
 
-### Pinned reviewed representations
+### Pinned and reviewed representations
 
 Git-backed built-in representations are pinned to reviewed commits rather than mutable default branches:
 
@@ -71,13 +71,13 @@ Git-backed built-in representations are pinned to reviewed commits rather than m
 
 Advancing either built-in representation is therefore a deliberate hosted-source definition change rather than an implicit consequence of an upstream push. Existing Rules Lawyer revisions are still preserved by bootstrap and are never overwritten automatically.
 
-The 3e Dragon.ee representation is not Git-backed and can not be pinned in the same way. Its imported content is nevertheless fingerprinted into immutable Source Layer revisions, while the archived SRD distribution remains the corpus-membership authority.
+The 3e Dragon.ee representation is not Git-backed, so Rules Core constrains it differently. The built-in 3e acquisition has a manually reviewed **139-document manifest**. `html-index` expansion must match that manifest exactly: a missing expected document or an unexpected new HTML document fails preview/refresh instead of silently altering the corpus. A mirror change therefore requires explicit review and an intentional manifest change before it can affect imported Source Layer revisions. Successfully imported content remains fingerprinted into immutable revisions, while the archived SRD distribution remains the corpus-membership authority.
 
 ## Remote-source safety
 
 Hosted resources must use HTTPS and can not contain embedded credentials. Before every fetch, Rules Core rejects loopback, link-local, private, carrier-grade NAT, multicast, and other non-public network addresses. Redirects are not followed; a Rules Lawyer should register the final canonical HTTPS URL instead. Individual remote documents are capped at 64 MiB, and an index/tree expansion is capped at 2,000 documents.
 
-GitHub-tree acquisition rejects truncated recursive tree responses instead of silently importing a partial corpus.
+GitHub-tree acquisition rejects truncated recursive tree responses instead of silently importing a partial corpus. Built-in reviewed manifests likewise reject corpus drift rather than silently accepting a changed document set.
 
 ## Runtime boundary
 
