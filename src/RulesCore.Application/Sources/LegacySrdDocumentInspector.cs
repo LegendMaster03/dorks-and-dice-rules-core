@@ -17,7 +17,7 @@ public static class LegacySrdDocumentInspector
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
     private static readonly Regex HtmlHref = new(
-        @"\bhref\s*=\s*(?:\"(?<double>[^\"]+)\"|'(?<single>[^']+)'|(?<bare>[^\s>]+))",
+        """\bhref\s*=\s*(?:"(?<double>[^"]+)"|'(?<single>[^']+)'|(?<bare>[^\s>]+))""",
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
     private static readonly Regex ScriptOrStyle = new(
@@ -411,7 +411,7 @@ public static class LegacySrdDocumentInspector
             .Replace('\r', '\n');
         normalized = Whitespace.Replace(normalized, " ");
         normalized = string.Join(
-            '\n',
+            "\n",
             normalized.Split('\n').Select(line => line.TrimEnd()));
         normalized = BlankLines.Replace(normalized, "\n\n");
         return normalized.Trim();
