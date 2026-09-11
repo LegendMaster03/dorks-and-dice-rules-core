@@ -274,6 +274,7 @@ static JsonElement AddStableIdentity(string entityType, JsonElement item)
 
     string? uniqueId = entityType switch
     {
+        "itemType" => JoinIdentity(item, "abbreviation"),
         "deity" => JoinIdentity(item, "pantheon"),
         "classFeature" => JoinIdentity(
             item,
