@@ -10,12 +10,13 @@ namespace RulesCore.Infrastructure.Sources;
 
 public sealed class SourceImportService(RulesCoreDbContext dbContext) : ISourceImportService
 {
-    public async Task<SourceImportResult> Import5eToolsDocumentAsync(
+    public async Task<SourceImportPreviewResult> Preview5eToolsDocumentAsync(
         Import5eToolsDocumentRequest request,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(request);
         ValidateRequest(request);
+        await SourceFrameworkStore.EnsureSchemaAsync(dbContext, cancellationToken);
 
         var packageKey = NormalizeKey(request.PackageKey);
         var workKey = NormalizeKey(request.WorkKey);
@@ -25,6 +26,165 @@ public sealed class SourceImportService(RulesCoreDbContext dbContext) : ISourceI
         {
             throw new InvalidDataException("The 5e.tools document did not contain any importable entity arrays.");
         }
+
+        var gameEdition = NormalizeGameEdition(request);
+        var releaseKind = SourceReleaseKinds.NormalizeImportLabel(request.ReleaseKind);
+        var conflicts = new List<string>();
+        var warnings = new List<string>();
+        if (gameEdition is null)
+        {
+            warnings.Add(
+                "No canonical D&D game edition could be identified. The source can still be imported, but cross-edition detection and provenance will be less informative until edition metadata is recorded.");
+        }
+
+        var package = await dbContext.SourcePackages
+            .AsNoTracking()
+            .SingleOrDefaultAsync(value => value.Key == packageKey, cancellationToken);
+        if (package is not null)
+        {
+            AddPackageConflicts(package, request, conflicts);
+        }
+
+        SourceWork? work = null;
+        if (package is not null)
+        {
+            work = await dbContext.SourceWorks
+                .AsNoTracking()
+                .SingleOrDefaultAsync(
+                    value => value.SourcePackageId == package.Id && value.Key == workKey,
+                    cancellationToken);
+            if (work is not null
+                && !string.Equals(work.DisplayName, request.WorkDisplayName.Trim(), StringComparison.Ordinal))
+            {
+                conflicts.Add(
+                    $"Source work '{workKey}' is already registered as '{work.DisplayName}', not '{request.WorkDisplayName.Trim()}'.");
+            }
+        }
+
+        SourceEdition? edition = null;
+        if (work is not null)
+        {
+            edition = await dbContext.SourceEditions
+                .AsNoTracking()
+                .SingleOrDefaultAsync(
+                    value => value.SourceWorkId == work.Id && value.Key == editionKey,
+                    cancellationToken);
+            if (edition is not null
+                && !string.Equals(edition.DisplayName, request.EditionDisplayName.Trim(), StringComparison.Ordinal))
+            {
+                conflicts.Add(
+                    $"Source release '{editionKey}' is already registered as '{edition.DisplayName}', not '{request.EditionDisplayName.Trim()}'.");
+            }
+        }
+
+        if (edition is not null)
+        {
+            var existingMetadata = await SourceFrameworkStore.GetEditionMetadataAsync(
+                dbContext,
+                edition.Id,
+                cancellationToken);
+            AddMetadataConflict(existingMetadata?.GameEdition, gameEdition, "game edition", conflicts);
+            AddMetadataConflict(existingMetadata?.ReleaseKind, releaseKind, "release kind", conflicts);
+            AddMetadataConflict(existingMetadata?.PublicationDate, request.PublicationDate, "publication date", conflicts);
+
+            gameEdition ??= existingMetadata?.GameEdition;
+            releaseKind ??= existingMetadata?.ReleaseKind;
+        }
+
+        var existingByNaturalKey = new Dictionary<string, SourceEntity>(StringComparer.Ordinal);
+        if (edition is not null)
+        {
+            var entities = await dbContext.SourceEntities
+                .AsNoTracking()
+                .Include(value => value.Revisions)
+                .Where(value => value.SourceEditionId == edition.Id)
+                .ToArrayAsync(cancellationToken);
+            existingByNaturalKey = entities.ToDictionary(value => value.NaturalKey, StringComparer.Ordinal);
+        }
+
+        var previewEntities = new List<SourceImportPreviewEntity>(parsedEntities.Count);
+        foreach (var parsed in parsedEntities)
+        {
+            if (!existingByNaturalKey.TryGetValue(parsed.NaturalKey, out var existing))
+            {
+                previewEntities.Add(new SourceImportPreviewEntity(
+                    EntityId: null,
+                    parsed.EntityType,
+                    parsed.Name,
+                    parsed.SourceCode,
+                    CurrentRevisionNumber: null,
+                    parsed.Fingerprint,
+                    SourceImportPreviewActions.NewEntity));
+                continue;
+            }
+
+            var latest = existing.Revisions
+                .OrderByDescending(value => value.RevisionNumber)
+                .FirstOrDefault();
+            if (latest is null)
+            {
+                previewEntities.Add(new SourceImportPreviewEntity(
+                    existing.Id,
+                    parsed.EntityType,
+                    parsed.Name,
+                    parsed.SourceCode,
+                    CurrentRevisionNumber: null,
+                    parsed.Fingerprint,
+                    SourceImportPreviewActions.NewRevision));
+                continue;
+            }
+
+            previewEntities.Add(new SourceImportPreviewEntity(
+                existing.Id,
+                parsed.EntityType,
+                parsed.Name,
+                parsed.SourceCode,
+                latest.RevisionNumber,
+                parsed.Fingerprint,
+                string.Equals(latest.Fingerprint, parsed.Fingerprint, StringComparison.Ordinal)
+                    ? SourceImportPreviewActions.Unchanged
+                    : SourceImportPreviewActions.NewRevision));
+        }
+
+        return new SourceImportPreviewResult(
+            packageKey,
+            request.PackageDisplayName.Trim(),
+            request.Provider.Trim(),
+            NormalizeOptional(request.License),
+            request.IsPublic,
+            workKey,
+            request.WorkDisplayName.Trim(),
+            editionKey,
+            request.EditionDisplayName.Trim(),
+            gameEdition,
+            releaseKind,
+            request.PublicationDate,
+            CanImport: conflicts.Count == 0,
+            conflicts,
+            warnings,
+            previewEntities.Count,
+            previewEntities.Count(value => value.Action == SourceImportPreviewActions.NewEntity),
+            previewEntities.Count(value => value.Action == SourceImportPreviewActions.NewRevision),
+            previewEntities.Count(value => value.Action == SourceImportPreviewActions.Unchanged),
+            previewEntities);
+    }
+
+    public async Task<SourceImportResult> Import5eToolsDocumentAsync(
+        Import5eToolsDocumentRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        var preview = await Preview5eToolsDocumentAsync(request, cancellationToken);
+        if (!preview.CanImport)
+        {
+            throw new InvalidOperationException(
+                $"Source import conflicts with existing immutable provenance: {string.Join(" ", preview.Conflicts)}");
+        }
+
+        var packageKey = preview.PackageKey;
+        var workKey = preview.WorkKey;
+        var editionKey = preview.EditionKey;
+        var parsedEntities = ParseEntities(request.Json, editionKey);
 
         await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
         var now = DateTimeOffset.UtcNow;
@@ -94,8 +254,16 @@ public sealed class SourceImportService(RulesCoreDbContext dbContext) : ISourceI
         else if (!string.Equals(edition.DisplayName, request.EditionDisplayName.Trim(), StringComparison.Ordinal))
         {
             throw new InvalidOperationException(
-                $"Source edition '{editionKey}' is already registered with a different display name.");
+                $"Source release '{editionKey}' is already registered with a different display name.");
         }
+
+        var metadata = await SourceFrameworkStore.MergeEditionMetadataAsync(
+            dbContext,
+            edition.Id,
+            preview.GameEdition,
+            preview.ReleaseKind,
+            preview.PublicationDate,
+            cancellationToken);
 
         var imported = new List<ImportedSourceEntity>(parsedEntities.Count);
         foreach (var parsed in parsedEntities)
@@ -163,7 +331,14 @@ public sealed class SourceImportService(RulesCoreDbContext dbContext) : ISourceI
         }
 
         await transaction.CommitAsync(cancellationToken);
-        return new SourceImportResult(package.Id, work.Id, edition.Id, imported);
+        return new SourceImportResult(
+            package.Id,
+            work.Id,
+            edition.Id,
+            imported,
+            metadata.GameEdition,
+            metadata.ReleaseKind,
+            metadata.PublicationDate);
     }
 
     private static IReadOnlyList<ParsedSourceEntity> ParseEntities(string json, string editionKey)
@@ -235,6 +410,23 @@ public sealed class SourceImportService(RulesCoreDbContext dbContext) : ISourceI
         return parsed;
     }
 
+    private static string? NormalizeGameEdition(Import5eToolsDocumentRequest request)
+    {
+        if (!string.IsNullOrWhiteSpace(request.GameEdition))
+        {
+            return DndEditionCatalog.NormalizeImportLabel(request.GameEdition);
+        }
+
+        foreach (var candidate in new[] { request.EditionKey, request.EditionDisplayName })
+        {
+            if (DndEditionCatalog.TryParse(candidate, out var edition))
+            {
+                return DndEditionCatalog.GetCanonicalLabel(edition);
+            }
+        }
+        return null;
+    }
+
     private static string? GetIdentitySuffix(JsonElement entity)
     {
         foreach (var key in new[] { "uniqueId", "id" })
@@ -303,6 +495,54 @@ public sealed class SourceImportService(RulesCoreDbContext dbContext) : ISourceI
         Require(request.EditionKey, nameof(request.EditionKey));
         Require(request.EditionDisplayName, nameof(request.EditionDisplayName));
         Require(request.Json, nameof(request.Json));
+    }
+
+    private static void AddPackageConflicts(
+        SourcePackage package,
+        Import5eToolsDocumentRequest request,
+        ICollection<string> conflicts)
+    {
+        if (!string.Equals(package.DisplayName, request.PackageDisplayName.Trim(), StringComparison.Ordinal))
+        {
+            conflicts.Add($"Source package '{package.Key}' already has display name '{package.DisplayName}'.");
+        }
+        if (!string.Equals(package.Provider, request.Provider.Trim(), StringComparison.Ordinal))
+        {
+            conflicts.Add($"Source package '{package.Key}' already has provider '{package.Provider}'.");
+        }
+        if (!string.Equals(package.License, NormalizeOptional(request.License), StringComparison.Ordinal))
+        {
+            conflicts.Add($"Source package '{package.Key}' already has different license metadata.");
+        }
+        if (package.IsPublic != request.IsPublic)
+        {
+            conflicts.Add($"Source package '{package.Key}' already has different public/restricted visibility.");
+        }
+    }
+
+    private static void AddMetadataConflict(
+        string? existing,
+        string? requested,
+        string label,
+        ICollection<string> conflicts)
+    {
+        if (existing is not null && requested is not null
+            && !string.Equals(existing, requested, StringComparison.Ordinal))
+        {
+            conflicts.Add($"Source release already records {label} '{existing}', not '{requested}'.");
+        }
+    }
+
+    private static void AddMetadataConflict(
+        DateOnly? existing,
+        DateOnly? requested,
+        string label,
+        ICollection<string> conflicts)
+    {
+        if (existing.HasValue && requested.HasValue && existing.Value != requested.Value)
+        {
+            conflicts.Add($"Source release already records {label} '{existing:yyyy-MM-dd}', not '{requested:yyyy-MM-dd}'.");
+        }
     }
 
     private static void Require(string value, string parameterName)

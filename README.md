@@ -43,9 +43,11 @@ The source read API is access-aware:
 
 Anonymous/direct requests see only public packages. Hosted requests redeem the main site's one-time Tool authentication ticket and use the resulting stable user ID to include private packages for which Rules Core stores an explicit `user_source_grant`. Missing and inaccessible private entities both return not-found behavior.
 
-Source ingestion is exposed through `POST /api/source-admin/import` only to effective `Dev` users while the site is in `dorks-and-dice` mode. Importing a restricted package does not automatically grant the importing Dev access to that package. The Dev may explicitly grant or revoke only the current authenticated account through the Source Administration package catalog; the target user ID is always derived from the redeemed Tool Host identity. Arbitrary other-user grant mutation and acquisition tracking are not exposed yet.
+Source ingestion is exposed through `POST /api/source-admin/import` only to effective `Dev` users while the site is in `dorks-and-dice` mode. Importing a restricted package does not automatically grant the importing Dev access to that package. The Dev may explicitly grant or revoke only the current authenticated account through the Source Administration package catalog; the target user ID is always derived from the redeemed Tool Host identity. Arbitrary other-user grant mutation is not exposed.
 
-See `docs/source-layer.md` and `docs/source-administration.md` for persistence, fingerprinting, provenance, access boundaries, Dev-only ingestion, and explicit current-account source grants.
+Source Administration also records current-account acquisition provenance separately from authorization. A Dev can append how the signed-in account obtained an imported package and can void a mistaken record without deleting history. Recording or voiding an acquisition never creates, deletes, or changes `user_source_grant`, and acquisition records are not treated as verified ownership or entitlement.
+
+See `docs/source-layer.md`, `docs/source-administration.md`, and `docs/source-acquisitions.md` for persistence, fingerprinting, provenance, access boundaries, Dev-only ingestion, acquisition history, and explicit current-account source grants.
 
 ## Global Rules Layer
 

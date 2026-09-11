@@ -23,10 +23,13 @@ public static class SourceRevisionReviewEndpointExtensions
             }
 
             var review = new SourceRevisionReviewService(dbContext);
-            httpContext.Response.Headers.CacheControl = "no-store";
-            return Results.Ok(await review.GetPendingAsync(
+            var rejection = new SourceRevisionRejectionService(dbContext);
+            var pending = await review.GetPendingAsync(
                 authenticationContext!.User.Id,
-                cancellationToken));
+                cancellationToken);
+            var visible = await rejection.FilterRejectedAsync(pending, cancellationToken);
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(visible);
         });
 
         app.MapGet("/api/global/rules/source-updates/{conceptId:guid}/preview", async (
@@ -46,9 +49,19 @@ public static class SourceRevisionReviewEndpointExtensions
             try
             {
                 var review = new SourceRevisionReviewService(dbContext);
+                var rejection = new SourceRevisionRejectionService(dbContext);
+                var pending = await review.GetPendingAsync(
+                    authenticationContext!.User.Id,
+                    cancellationToken);
+                var visible = await rejection.FilterRejectedAsync(pending, cancellationToken);
+                if (!visible.Any(value => value.RuleConceptId == conceptId))
+                {
+                    return Results.NotFound();
+                }
+
                 var preview = await review.PreviewAsync(
                     conceptId,
-                    authenticationContext!.User.Id,
+                    authenticationContext.User.Id,
                     cancellationToken);
                 if (preview is null)
                 {
@@ -113,6 +126,57 @@ public static class SourceRevisionReviewEndpointExtensions
             {
                 return Results.Problem(
                     title: "Source revision adoption conflict",
+                    detail: exception.Message,
+                    statusCode: StatusCodes.Status409Conflict);
+            }
+        });
+
+        app.MapPost("/api/global/rules/source-updates/{conceptId:guid}/reject", async (
+            Guid conceptId,
+            RejectLatestSourceRevisionRequest request,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireGlobalRulesAuthority(
+                httpContext,
+                out var authenticationContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            try
+            {
+                var rejection = new SourceRevisionRejectionService(dbContext);
+                var rejected = await rejection.RejectLatestAsync(
+                    conceptId,
+                    request,
+                    authenticationContext!.User.Id,
+                    cancellationToken);
+                if (rejected is null)
+                {
+                    return Results.NotFound();
+                }
+
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(rejected);
+            }
+            catch (ArgumentException exception)
+            {
+                return Results.Problem(
+                    title: "Invalid source revision rejection request",
+                    detail: exception.Message,
+                    statusCode: StatusCodes.Status400BadRequest);
+            }
+            catch (KeyNotFoundException)
+            {
+                return Results.NotFound();
+            }
+            catch (InvalidOperationException exception)
+            {
+                return Results.Problem(
+                    title: "Source revision rejection conflict",
                     detail: exception.Message,
                     statusCode: StatusCodes.Status409Conflict);
             }

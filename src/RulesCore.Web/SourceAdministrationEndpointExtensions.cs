@@ -10,15 +10,13 @@ public static class SourceAdministrationEndpointExtensions
 {
     public static void MapSourceAdministrationEndpoints(this WebApplication app)
     {
-        app.MapPost("/api/source-admin/import", async (
-            Import5eToolsDocumentRequest request,
+        app.MapPost("/api/source-admin/import/preview", async (
+            SourceAdminImportRequest request,
             HttpContext httpContext,
             ISourceImportService importer,
             CancellationToken cancellationToken) =>
         {
-            var authorizationFailure = RequireSourceAdministrationAuthority(
-                httpContext,
-                out _);
+            var authorizationFailure = RequireSourceAdministrationAuthority(httpContext, out _);
             if (authorizationFailure is not null)
             {
                 return authorizationFailure;
@@ -26,9 +24,53 @@ public static class SourceAdministrationEndpointExtensions
 
             try
             {
+                var preparation = SourceAdminImportPartitioner.Prepare(request);
+                var preview = await importer.Preview5eToolsDocumentAsync(
+                    preparation.LogicalRequest,
+                    cancellationToken);
+                if (preparation.Warnings.Count > 0)
+                {
+                    preview = preview with
+                    {
+                        Warnings = preview.Warnings.Concat(preparation.Warnings).ToArray()
+                    };
+                }
+
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(preview);
+            }
+            catch (ArgumentException exception)
+            {
+                return InvalidImport(exception.Message);
+            }
+            catch (InvalidDataException exception)
+            {
+                return InvalidImport(exception.Message);
+            }
+            catch (JsonException exception)
+            {
+                return InvalidImport(exception.Message);
+            }
+        });
+
+        app.MapPost("/api/source-admin/import", async (
+            SourceAdminImportRequest request,
+            HttpContext httpContext,
+            ISourceImportService importer,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireSourceAdministrationAuthority(httpContext, out _);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            try
+            {
+                var preparation = SourceAdminImportPartitioner.Prepare(request);
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(await importer.Import5eToolsDocumentAsync(
-                    request,
+                    preparation.LogicalRequest,
                     cancellationToken));
             }
             catch (ArgumentException exception)

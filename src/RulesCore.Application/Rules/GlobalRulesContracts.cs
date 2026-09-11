@@ -14,7 +14,8 @@ public sealed record SetGlobalRuleDecisionRequest(
     Guid SourceEntityRevisionId,
     string? Note,
     JsonElement? MergePatch = null,
-    RuleStructuredPatchRequest? StructuredPatch = null);
+    RuleStructuredPatchRequest? StructuredPatch = null,
+    IReadOnlyList<RuleConsolidationContributionRequest>? Contributions = null);
 
 public sealed record RuleMutationResult<T>(
     T Value,
