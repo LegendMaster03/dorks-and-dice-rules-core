@@ -158,22 +158,6 @@ public sealed class RulesCoreBaselineBootstrapper(
 
     private async Task<int> EnsureAuthorityReferencesAsync(CancellationToken cancellationToken)
     {
-        await dbContext.Database.ExecuteSqlRawAsync("""
-            CREATE TABLE IF NOT EXISTS source_edition_authority_reference (
-                source_edition_authority_reference_id uuid NOT NULL,
-                source_edition_id uuid NOT NULL,
-                authority_kind varchar(80) NOT NULL,
-                uri varchar(2000) NOT NULL,
-                media_type varchar(200) NOT NULL,
-                note varchar(2000) NULL,
-                created_at timestamp with time zone NOT NULL,
-                CONSTRAINT pk_source_edition_authority_reference PRIMARY KEY (source_edition_authority_reference_id),
-                CONSTRAINT fk_source_edition_authority_reference_edition FOREIGN KEY (source_edition_id)
-                    REFERENCES source_edition(source_edition_id) ON DELETE CASCADE);
-            CREATE UNIQUE INDEX IF NOT EXISTS ux_source_edition_authority_reference_identity
-                ON source_edition_authority_reference(source_edition_id, authority_kind, uri);
-            """, cancellationToken);
-
         foreach (var seed in RulesCoreBaselineCatalog.SrdAuthorities)
         {
             var editionId = await (
