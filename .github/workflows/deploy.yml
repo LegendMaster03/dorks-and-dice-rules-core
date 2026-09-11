@@ -50,6 +50,7 @@ jobs:
             -e HOME=/tmp \
             -e DOTNET_CLI_HOME=/tmp/dotnet \
             -e NUGET_PACKAGES=/tmp/nuget \
+            -e RulesCore__BootstrapBaseline=false \
             -e ConnectionStrings__RulesCore='Host=dorks-and-dice-rules-core-test-postgres;Port=5432;Database=rules_core_test;Username=rules_core_test;Password=rules_core_test' \
             -v "$PWD:/src" \
             -w /src \

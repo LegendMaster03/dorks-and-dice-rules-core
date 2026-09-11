@@ -28,6 +28,7 @@ jobs:
             src/RulesCore.Web/wwwroot/ui.js \
             src/RulesCore.Web/wwwroot/authoring.js \
             src/RulesCore.Web/wwwroot/rules-browser.js \
+            src/RulesCore.Web/wwwroot/source-library.js \
             src/RulesCore.Web/wwwroot/concept-source-authoring.js \
             src/RulesCore.Web/wwwroot/source-normalization.js \
             src/RulesCore.Web/wwwroot/source-revision-review.js \
@@ -84,6 +85,21 @@ jobs:
           ]) {
               if (authoring.includes(incompatible)) {
                   throw new Error(`Rules Lawyer browser contract contains incompatible field '${incompatible}'.`);
+              }
+          }
+
+          const library = fs.readFileSync(
+              "./src/RulesCore.Web/wwwroot/source-library.js",
+              "utf8");
+          for (const required of [
+              "builtin-wotc-srd-",
+              "refreshHostedSource",
+              "entityType: \"monster\"",
+              "/api/sources/entities/",
+              "Copy beta payload"
+          ]) {
+              if (!library.includes(required)) {
+                  throw new Error(`Source Library browser contract is missing '${required}'.`);
               }
           }
           NODE
