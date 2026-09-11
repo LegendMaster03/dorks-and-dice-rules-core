@@ -10,13 +10,14 @@ On startup, after the core schema initializer has created the Source Layer table
 
 1. ensures the built-in source package/work/release identities exist;
 2. records corpus-membership authority references for the 3e, 3.5e, 5.1, and 5.2.1 SRDs;
-3. registers four public persistent hosted-source definitions used to acquire parseable SRD representations;
-4. imports the local immutable Dorks & Dice baseline-rule source document;
-5. on a fresh Rules Layer only, creates the settled baseline concepts/decisions and publishes the first global ruleset.
+3. hydrates reviewed bundled snapshots of all four canonical SRDs into the public immutable Source Layer when they are not already present;
+4. registers four persistent hosted-source definitions as Advanced maintenance metadata for deliberate upstream comparison/rebuild work;
+5. imports the local immutable Dorks & Dice baseline-rule source document;
+6. on a fresh Rules Layer only, creates the settled baseline concepts/decisions and publishes the first global ruleset.
 
 The `source_edition_authority_reference` table is owned by the core Source Layer schema initializer. Bootstrap only inserts the built-in authority records; it does not create Source Layer tables.
 
-Startup does **not** fetch any remote SRD corpus. Remote URLs are persistent acquisition definitions; a Rules Lawyer can preview and refresh them through the Hosted Sources workflow. Runtime rule reads therefore never require the representation host or authority archive to be online.
+Startup does **not** fetch any remote SRD corpus. The reviewed 3e, 3.5e, 5.1, and 5.2.1 snapshots are embedded in the Rules Core build and hydrated locally. They are public Source Layer material immediately after baseline bootstrap, including for anonymous consumers. Runtime source/rule reads therefore never require Dragon.ee, GitHub, or an authority archive to be online.
 
 A conflicting built-in package/work/release identity stops startup instead of silently changing provenance. Existing hosted-source definition revisions are not replaced by bootstrap, so a Rules Lawyer can deliberately disable or revise a built-in acquisition definition.
 
@@ -95,13 +96,13 @@ The 3e and 3.5e definitions are public definitions under canonical package `wotc
 
 Git-backed representation URLs are pinned to reviewed commits. Updating those mirrors requires a deliberate hosted-source definition revision. The mutable 3e mirror is instead constrained by the reviewed 139-document manifest described above. Bootstrap never overwrites a later Rules Lawyer revision.
 
-All four definitions are acquisition metadata only until explicitly previewed/refreshed. Bootstrap does not hydrate their remote content.
+The hosted definitions are Advanced maintenance metadata only. Normal Library availability comes from the embedded reviewed snapshots, not from previewing or refreshing these definitions. A maintainer can deliberately compare/rebuild a future snapshot from the pinned upstream representations without making ordinary users depend on those hosts.
 
 ## Built-in source families
 
 ### D&D 3e and 3.5e SRDs
 
-Rules Core registers and can acquire the public Wizards of the Coast SRDs under package `wotc-srd-ogl`:
+Rules Core ships and hydrates the public Wizards of the Coast SRDs under package `wotc-srd-ogl`:
 
 - `srd-3e` / 3e / normalized source `SRD3`;
 - `srd-3-5e` / 3.5e / normalized source `SRD35`.
@@ -110,7 +111,7 @@ Both are normalized into ordinary immutable Source Layer entities, so the Rules 
 
 ### D&D 5e and 5.5e SRDs
 
-Rules Core registers the Wizards SRDs under package `wotc-srd-cc`:
+Rules Core ships and hydrates the Wizards SRDs under package `wotc-srd-cc`:
 
 - `srd-5-1` / release `5.1` / game edition `5e`;
 - `srd-5-2-1` / release `5.2.1` / game edition `5.5e`.
@@ -170,4 +171,4 @@ The regression suite explicitly verifies that an unauthenticated client can list
 
 ## Validation policy
 
-Normal historical integration tests run with `RulesCore__BootstrapBaseline=false` so their isolated assumptions remain stable. Dedicated tests verify source identities, Source Layer ownership of authority-reference schema, all four authority references, all four persistent SRD definitions, the reviewed 139-document 3e manifest, manual 5e/5.5e membership constraints, legacy HTML/Markdown normalization, false-positive resistance on real legacy corpus structures, 3e/3.5e hosted refresh behavior, advisory cross-edition normalization, explicit cross-edition adjudication and consolidation, resolved contribution provenance, contribution-aware restricted-source access, initial global publication, repeat-bootstrap behavior, preservation of Rules Lawyer edits, and anonymous public access.
+Normal historical integration tests run with `RulesCore__BootstrapBaseline=false` so their isolated assumptions remain stable. Dedicated tests verify source identities, Source Layer ownership of authority-reference schema, all four authority references, all four bundled SRD snapshots and persistent maintenance definitions, anonymous bundled-source visibility, repeat-bootstrap idempotence, the reviewed 139-document 3e manifest, manual 5e/5.5e membership constraints, legacy HTML/Markdown normalization, false-positive resistance on real legacy corpus structures, 3e/3.5e hosted refresh behavior, advisory cross-edition normalization, explicit cross-edition adjudication and consolidation, resolved contribution provenance, contribution-aware restricted-source access, initial global publication, repeat-bootstrap behavior, preservation of Rules Lawyer edits, and anonymous public access.

@@ -7,11 +7,63 @@ import {
     describeError,
     element,
     formatDate,
-    setButtonBusy
 } from "./ui.js";
 
 const DORKS_MODE = "dorks-and-dice";
-const BUILT_IN_PREFIX = "builtin-wotc-srd-";
+const BUNDLED_SRDS = [
+    {
+        includedSourceCodes: ["SRD3"],
+        packageKey: "wotc-srd-ogl",
+        packageDisplayName: "Wizards of the Coast SRD (OGL)",
+        workKey: "srd-3e",
+        workDisplayName: "System Reference Document 3e",
+        editionKey: "original",
+        editionDisplayName: "3e SRD",
+        gameEdition: "3e",
+        provider: "Wizards of the Coast",
+        license: "OGL-1.0a",
+        note: "Reviewed 3e SRD snapshot bundled with Rules Core. The archived SRD distribution remains the corpus-membership authority."
+    },
+    {
+        includedSourceCodes: ["SRD35"],
+        packageKey: "wotc-srd-ogl",
+        packageDisplayName: "Wizards of the Coast SRD (OGL)",
+        workKey: "srd-3-5e",
+        workDisplayName: "System Reference Document 3.5e",
+        editionKey: "original",
+        editionDisplayName: "3.5e SRD",
+        gameEdition: "3.5e",
+        provider: "Wizards of the Coast",
+        license: "OGL-1.0a",
+        note: "Reviewed 3.5e SRD snapshot bundled with Rules Core from the pinned representation."
+    },
+    {
+        includedSourceCodes: ["SRD51"],
+        packageKey: "wotc-srd-cc",
+        packageDisplayName: "Wizards of the Coast SRD (Creative Commons)",
+        workKey: "srd-5-1",
+        workDisplayName: "System Reference Document 5.1",
+        editionKey: "5.1",
+        editionDisplayName: "SRD 5.1",
+        gameEdition: "5e",
+        provider: "Wizards of the Coast",
+        license: "CC-BY-4.0",
+        note: "Reviewed SRD 5.1 snapshot bundled with Rules Core."
+    },
+    {
+        includedSourceCodes: ["SRD52"],
+        packageKey: "wotc-srd-cc",
+        packageDisplayName: "Wizards of the Coast SRD (Creative Commons)",
+        workKey: "srd-5-2-1",
+        workDisplayName: "System Reference Document 5.2.1",
+        editionKey: "5.2.1",
+        editionDisplayName: "SRD 5.2.1",
+        gameEdition: "5.5e",
+        provider: "Wizards of the Coast",
+        license: "CC-BY-4.0",
+        note: "Reviewed SRD 5.2.1 snapshot bundled with Rules Core."
+    }
+];
 const SOURCE_LIMIT = 200;
 const ENTITY_TYPES = [
     ["", "All types"],
@@ -132,32 +184,12 @@ async function renderSourceLibrary(app, container) {
                 element("h3", { className: "h4 mb-1", text: "Rules Library" }),
                 element("p", {
                     className: "text-body-secondary mb-0",
-                    text: "Source material lives here before Rules Lawyer adjudication. Importing an SRD does not automatically make it the table rule; it makes the source available for browsing, normalization, and review."
+                    text: "Canonical SRDs are bundled with Rules Core and available here before Rules Lawyer adjudication. Browsing a source does not make it the table rule; publication remains an explicit decision."
                 })),
             badge("Source Layer", "primary")));
     container.append(intro);
 
-    let builtIns = [];
-    if (app.canManageHostedSources) {
-        try {
-            builtIns = (await app.api.getHostedSources(true))
-                .filter(value => value.key?.startsWith(BUILT_IN_PREFIX))
-                .sort(compareBuiltIns);
-        } catch (error) {
-            container.append(alertNode("warning", `Built-in source status could not load: ${describeError(error)}`));
-        }
-    }
-
-    if (app.canManageHostedSources) {
-        await renderBuiltInSources(app, container, builtIns);
-    } else {
-        container.append(element("div", { className: "card card-body mb-3" },
-            element("h4", { className: "h5 mb-1", text: "Public source library" }),
-            element("p", {
-                className: "text-body-secondary mb-0",
-                text: "Browse source material that has already been imported. Rules Lawyer accounts can also import or refresh the built-in SRDs from this page."
-            })));
-    }
+    await renderBuiltInSources(app, container, BUNDLED_SRDS);
 
     await renderSourceBrowser(app, container);
 }
@@ -169,20 +201,12 @@ async function renderBuiltInSources(app, container, definitions) {
     });
     heading.append(
         element("div", {},
-            element("h4", { className: "h5 mb-1", text: "Built-in SRDs" }),
+            element("h4", { className: "h5 mb-1", text: "Bundled SRDs" }),
             element("p", {
                 className: "text-body-secondary small mb-0",
-                text: "These are canonical acquisition definitions. Ready means source entities are present locally; the application never depends on the remote host at runtime."
+                text: "These reviewed snapshots ship with Rules Core and are hydrated into the public immutable Source Layer during baseline bootstrap. No account, import action, or remote host is required to use them."
             })));
     section.append(heading);
-
-    if (!definitions.length) {
-        section.append(alertNode(
-            "warning",
-            "No built-in SRD definitions are registered. On a current deployment this usually indicates baseline bootstrap has not run successfully."));
-        container.append(section);
-        return;
-    }
 
     const stateHolder = element("div", { className: "rules-core-source-grid" });
     section.append(stateHolder);
@@ -193,25 +217,17 @@ async function renderBuiltInSources(app, container, definitions) {
     const detectedMonsterCount = states.reduce((sum, value) => sum + value.monsterCount, 0);
     const monsterCountCapped = states.some(value => value.monsterCapped);
 
-    const controls = element("div", { className: "rules-core-library-summary card card-body mb-3" });
-    const importAll = element("button", {
-        type: "button",
-        className: "btn btn-primary",
-        text: readyCount ? "Refresh all built-in SRDs" : "Import all built-in SRDs"
-    });
-    importAll.addEventListener("click", async () => refreshAllBuiltIns(app, container, definitions, importAll));
-    controls.append(
+    const summary = element("div", { className: "rules-core-library-summary card card-body mb-3" });
+    summary.append(
         element("div", { className: "rules-core-metrics" },
-            metric("Built-in SRDs", String(definitions.length)),
-            metric("Ready locally", `${readyCount}/${definitions.length}`),
+            metric("Bundled SRDs", String(definitions.length)),
+            metric("Available locally", `${readyCount}/${definitions.length}`),
             metric("Detected monsters", `${detectedMonsterCount}${monsterCountCapped ? "+" : ""}`)),
-        element("div", { className: "d-flex flex-wrap gap-2 align-items-center" },
-            importAll,
-            element("span", {
-                className: "small text-body-secondary",
-                text: "For a quick Block Initiative beta, importing SRD 5.1 or 5.2.1 first is enough to exercise structured monster records."
-            })));
-    section.insertBefore(controls, stateHolder);
+        element("span", {
+            className: "small text-body-secondary",
+            text: "Upstream comparison and maintenance controls remain under Advanced; normal library use is entirely local."
+        }));
+    section.insertBefore(summary, stateHolder);
 
     clear(stateHolder);
     for (const state of states) {
@@ -272,20 +288,22 @@ function renderSourceCard(app, container, state) {
             element("div", { className: "small text-body-secondary", text: definition.workDisplayName })),
         state.error
             ? badge("Status error", "danger")
-            : !definition.isEnabled
-                ? badge("Disabled", "secondary")
-                : state.ready
-                    ? badge("Ready", "success")
-                    : badge("Not imported", "warning"));
+            : state.ready
+                ? badge("Bundled", "success")
+                : badge("Bundle unavailable", "danger"));
     card.append(titleRow);
 
     card.append(element("div", { className: "rules-core-source-card-stats" },
         metric("Entities", countLabel(state.entityCount, state.entityCapped)),
         metric("Monsters", countLabel(state.monsterCount, state.monsterCapped)),
-        metric("Last import", state.latestImportedAt ? formatDate(state.latestImportedAt) : "Never")));
+        metric("Loaded", state.latestImportedAt ? formatDate(state.latestImportedAt) : "Unavailable")));
 
     if (state.error) {
         card.append(alertNode("warning", describeError(state.error)));
+    } else if (!state.ready) {
+        card.append(alertNode(
+            "danger",
+            "This bundled SRD is missing from the local Source Layer. Baseline bootstrap should hydrate it automatically; there is no user import action."));
     }
 
     const actions = element("div", { className: "d-flex flex-wrap gap-2 mt-3" });
@@ -313,23 +331,7 @@ function renderSourceCard(app, container, state) {
         document.getElementById("rules-core-source-browser")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
 
-    const preview = element("button", {
-        type: "button",
-        className: "btn btn-sm btn-outline-secondary",
-        text: "Preview live"
-    });
-    preview.disabled = !definition.isEnabled;
-    preview.addEventListener("click", async () => previewDefinition(app, container, definition, preview));
-
-    const refresh = element("button", {
-        type: "button",
-        className: "btn btn-sm btn-primary",
-        text: state.ready ? "Refresh" : "Import"
-    });
-    refresh.disabled = !definition.isEnabled;
-    refresh.addEventListener("click", async () => refreshDefinition(app, container, definition, refresh));
-
-    actions.append(browse, monsters, preview, refresh);
+    actions.append(browse, monsters);
     card.append(actions);
 
     const details = element("details", { className: "mt-3 small" });
@@ -341,77 +343,11 @@ function renderSourceCard(app, container, state) {
                 ["Package", definition.packageDisplayName],
                 ["Provider", definition.provider],
                 ["License", definition.license ?? "—"],
-                ["Acquisition format", definition.formatKind],
-                ["Definition revision", `#${definition.revisionNumber}`]
+                ["Availability", "Bundled with Rules Core"]
             ]),
             element("p", { className: "text-body-secondary mb-0", text: definition.note ?? "" })));
     card.append(details);
     return card;
-}
-
-async function previewDefinition(app, container, definition, button) {
-    setButtonBusy(button, true, "Previewing…");
-    try {
-        const response = await app.api.previewHostedSource(definition.id);
-        app.libraryNotice = {
-            kind: response.preview.canImport ? "success" : "warning",
-            message: `${definition.editionDisplayName}: ${response.documents.length} remote document(s), ${response.preview.entityCount} detected entities, ${response.preview.newEntityCount} new, ${response.preview.newRevisionCount} changed, ${response.preview.unchangedCount} unchanged.`
-        };
-    } catch (error) {
-        app.libraryNotice = { kind: "danger", message: `${definition.editionDisplayName}: ${describeError(error)}` };
-    } finally {
-        setButtonBusy(button, false);
-    }
-    await renderSourceLibrary(app, container);
-}
-
-async function refreshDefinition(app, container, definition, button) {
-    setButtonBusy(button, true, "Importing…");
-    try {
-        const response = await app.api.refreshHostedSource(definition.id);
-        const created = response.import.entities.filter(value => value.createdRevision).length;
-        const monsters = response.import.entities.filter(value => value.entityType === "monster").length;
-        app.libraryNotice = {
-            kind: "success",
-            message: `${definition.editionDisplayName}: processed ${response.import.entities.length} entities from ${response.documents.length} document(s); ${created} immutable revision(s) created and ${monsters} monster record(s) detected in this refresh.`
-        };
-    } catch (error) {
-        app.libraryNotice = { kind: "danger", message: `${definition.editionDisplayName}: ${describeError(error)}` };
-    } finally {
-        setButtonBusy(button, false);
-    }
-    await renderSourceLibrary(app, container);
-}
-
-async function refreshAllBuiltIns(app, container, definitions, button) {
-    setButtonBusy(button, true, "Importing SRDs…");
-    const failures = [];
-    let processed = 0;
-    let monsters = 0;
-    try {
-        for (const definition of definitions.filter(value => value.isEnabled)) {
-            button.textContent = `Importing ${definition.editionDisplayName}…`;
-            try {
-                const response = await app.api.refreshHostedSource(definition.id);
-                processed += response.import.entities.length;
-                monsters += response.import.entities.filter(value => value.entityType === "monster").length;
-            } catch (error) {
-                failures.push(`${definition.editionDisplayName}: ${describeError(error)}`);
-            }
-        }
-        app.libraryNotice = failures.length
-            ? {
-                kind: "warning",
-                message: `Built-in SRD refresh finished with ${failures.length} failure(s). ${processed} entities were processed and ${monsters} monster records were detected. ${failures.join(" ")}`
-            }
-            : {
-                kind: "success",
-                message: `Built-in SRD refresh complete: ${processed} entities processed and ${monsters} monster records detected.`
-            };
-    } finally {
-        setButtonBusy(button, false);
-    }
-    await renderSourceLibrary(app, container);
 }
 
 async function renderSourceBrowser(app, container) {
@@ -422,7 +358,7 @@ async function renderSourceBrowser(app, container) {
     section.append(
         element("div", { className: "d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3" },
             element("div", {},
-                element("h4", { className: "h5 mb-1", text: "Browse imported source material" }),
+                element("h4", { className: "h5 mb-1", text: "Browse source material" }),
                 element("p", {
                     className: "text-body-secondary mb-0",
                     text: "This is the immutable Source Layer, not the published ruleset. Monster records can be inspected here before any cross-edition adjudication."
@@ -484,8 +420,8 @@ async function renderBrowserResults(app, container) {
             container.append(alertNode(
                 "secondary",
                 app.libraryFilters.entityType === "monster"
-                    ? "No imported monster entities match these filters. Import an SRD above, then search again."
-                    : "No imported source entities match these filters."));
+                    ? "No monster entities match these filters."
+                    : "No source entities match these filters."));
             return;
         }
 
@@ -772,10 +708,6 @@ function matchesDefinition(entity, definition) {
         && entity.editionKey === definition.editionKey;
 }
 
-function compareBuiltIns(left, right) {
-    const order = new Map([["3e", 30], ["3.5e", 35], ["5e", 50], ["5.5e", 55]]);
-    return (order.get(left.gameEdition) ?? 999) - (order.get(right.gameEdition) ?? 999);
-}
 
 function countLabel(count, capped) {
     return `${count}${capped ? "+" : ""}`;
@@ -801,7 +733,7 @@ function prependRulesLawyerWorkflow(app, container) {
                 element("h3", { className: "h5 mb-1", text: "Rules Lawyer workflow" }),
                 element("div", { className: "text-body-secondary small", text: "Source material stays separate until you explicitly bind, decide, and publish." })),
             element("div", { className: "rules-core-workflow-steps" },
-                workflowStep("1", "Sources", "Import and inspect", async () => { app.activeView = "library"; await app.render(); }),
+                workflowStep("1", "Sources", "Browse and inspect", async () => { app.activeView = "library"; await app.render(); }),
                 workflowStep("2", "Normalize", "Review suggestions"),
                 workflowStep("3", "Decide", "Select or consolidate"),
                 workflowStep("4", "Publish", "Create global revision"))));

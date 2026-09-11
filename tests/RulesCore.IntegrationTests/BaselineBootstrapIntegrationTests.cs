@@ -62,6 +62,16 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Equal("OGL-1.0a", packages.Single(value => value.Key == "wotc-srd-ogl").License);
             Assert.True(packages.Single(value => value.Key == "wotc-srd-cc").IsPublic);
             Assert.Equal("CC-BY-4.0", packages.Single(value => value.Key == "wotc-srd-cc").License);
+
+    var anonymousSourceSearch = new SourceEntitySearchService(db);
+    foreach (var sourceCode in new[] { "SRD3", "SRD35", "SRD51", "SRD52" })
+    {
+        var visible = await anonymousSourceSearch.SearchAccessibleAsync(
+            userId: null,
+            query: sourceCode,
+            limit: 1);
+        Assert.NotEmpty(visible);
+    }
             Assert.True(packages.Single(value => value.Key == "loot-tavern-free").IsPublic);
             Assert.False(packages.Single(value => value.Key == "loot-tavern-licensed").IsPublic);
 
@@ -177,7 +187,9 @@ public sealed class BaselineBootstrapIntegrationTests
                 "rules-lawyer");
             Assert.Equal(2, revisedSrd52.RevisionNumber);
 
+            var sourceRevisionCountBeforeRepeat = await db.SourceEntityRevisions.CountAsync();
             var second = await bootstrapper.EnsureAsync();
+            Assert.Equal(sourceRevisionCountBeforeRepeat, await db.SourceEntityRevisions.CountAsync());
             Assert.False(second.RulesBaselineApplied);
             Assert.Null(second.PublishedRuleset);
             Assert.Equal(1, await db.RulesetRevisions.CountAsync());
