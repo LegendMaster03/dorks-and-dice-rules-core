@@ -217,6 +217,7 @@ public sealed class BaselineBootstrapIntegrationTests
                     REFERENCES source_edition(source_edition_id) ON DELETE CASCADE);
             """);
 
+        db.ChangeTracker.Clear();
         var packages = await db.SourcePackages
             .Where(value => BuiltInPackageKeys.Contains(value.Key))
             .ToArrayAsync();
