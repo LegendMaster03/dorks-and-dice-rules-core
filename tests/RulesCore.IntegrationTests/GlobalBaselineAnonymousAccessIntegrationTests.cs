@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RulesCore.Infrastructure.Bootstrap;
 using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.IntegrationTests;
 
@@ -89,6 +90,9 @@ public sealed class GlobalBaselineAnonymousAccessIntegrationTests
 
     private static async Task ResetAsync(RulesCoreDbContext db)
     {
+        _ = await new HostedSourceService(db, new SourceImportService(db))
+            .ListAsync(includeDisabled: true);
+
         await db.CampaignRulesetRevisionEntries.ExecuteDeleteAsync();
         await db.CampaignRulesetRevisions.ExecuteDeleteAsync();
         await db.CampaignRuleDecisions.ExecuteDeleteAsync();
