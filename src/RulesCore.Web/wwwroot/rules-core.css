@@ -22,3 +22,197 @@
 .rules-core-app details > summary {
     cursor: pointer;
 }
+
+.rules-core-header {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.rules-core-eyebrow {
+    margin-bottom: .2rem;
+    color: var(--bs-secondary-color);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.rules-core-nav-shell {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+    padding: .65rem .75rem;
+    border: 1px solid var(--bs-border-color);
+    border-top: 0;
+    border-bottom-left-radius: var(--bs-border-radius);
+    border-bottom-right-radius: var(--bs-border-radius);
+    background: var(--bs-body-bg);
+}
+
+.rules-core-nav-primary {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.rules-core-advanced-nav {
+    position: relative;
+}
+
+.rules-core-advanced-nav > summary {
+    padding: .4rem .75rem;
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    color: var(--bs-secondary-color);
+    list-style: none;
+    user-select: none;
+}
+
+.rules-core-advanced-nav > summary::-webkit-details-marker {
+    display: none;
+}
+
+.rules-core-advanced-actions {
+    position: absolute;
+    z-index: 20;
+    right: 0;
+    display: grid;
+    width: min(22rem, 85vw);
+    gap: .4rem;
+    margin-top: .4rem;
+    padding: .6rem;
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    background: var(--bs-body-bg);
+    box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .16);
+}
+
+.rules-core-library-hero {
+    background: linear-gradient(135deg, color-mix(in srgb, var(--bs-primary) 7%, var(--bs-body-bg)), var(--bs-body-bg));
+}
+
+.rules-core-library-summary {
+    display: grid;
+    gap: 1rem;
+}
+
+.rules-core-source-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 1rem;
+}
+
+.rules-core-source-card {
+    min-width: 0;
+}
+
+.rules-core-source-card-stats,
+.rules-core-metrics,
+.rules-core-stat-grid,
+.rules-core-ability-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: .65rem;
+}
+
+.rules-core-metric {
+    min-width: 0;
+    padding: .65rem .75rem;
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    background: var(--bs-tertiary-bg);
+}
+
+.rules-core-metric-value {
+    overflow: hidden;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+}
+
+.rules-core-metric-label {
+    color: var(--bs-secondary-color);
+    font-size: .75rem;
+}
+
+.rules-core-monster-card {
+    border-color: color-mix(in srgb, var(--bs-success) 45%, var(--bs-border-color));
+}
+
+.rules-core-workflow-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.rules-core-workflow-step {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    min-width: 9.5rem;
+    padding: .45rem .6rem;
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    background: var(--bs-tertiary-bg);
+    color: inherit;
+    text-align: left;
+}
+
+button.rules-core-workflow-step {
+    appearance: none;
+}
+
+.rules-core-workflow-step-action:hover {
+    border-color: var(--bs-primary);
+}
+
+.rules-core-workflow-number {
+    display: inline-grid;
+    flex: 0 0 auto;
+    width: 1.55rem;
+    height: 1.55rem;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--bs-primary);
+    color: white;
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+.rules-core-workflow-step small {
+    display: block;
+    color: var(--bs-secondary-color);
+    font-size: .68rem;
+}
+
+@media (max-width: 767.98px) {
+    .rules-core-nav-shell {
+        align-items: stretch;
+    }
+
+    .rules-core-nav-primary {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+    }
+
+    .rules-core-nav-primary .btn {
+        width: 100%;
+    }
+
+    .rules-core-advanced-nav {
+        width: 100%;
+    }
+
+    .rules-core-advanced-nav > summary {
+        text-align: center;
+    }
+
+    .rules-core-advanced-actions {
+        right: auto;
+        left: 0;
+        width: 100%;
+    }
+}
