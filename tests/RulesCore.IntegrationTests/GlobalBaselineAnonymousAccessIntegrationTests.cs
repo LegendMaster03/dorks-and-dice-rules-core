@@ -116,7 +116,11 @@ public sealed class GlobalBaselineAnonymousAccessIntegrationTests
                 CONSTRAINT fk_source_edition_authority_reference_edition FOREIGN KEY (source_edition_id)
                     REFERENCES source_edition(source_edition_id) ON DELETE CASCADE);
             DELETE FROM hosted_source_definition
-            WHERE definition_key IN ('builtin-wotc-srd-5-1', 'builtin-wotc-srd-5-2-1');
+            WHERE definition_key IN (
+                'builtin-wotc-srd-3e',
+                'builtin-wotc-srd-3-5e',
+                'builtin-wotc-srd-5-1',
+                'builtin-wotc-srd-5-2-1');
             """);
 
         db.ChangeTracker.Clear();
