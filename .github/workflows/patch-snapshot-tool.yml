@@ -16,16 +16,10 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-
           path = Path('tools/RulesCore.SourceSnapshotGenerator/Program.cs')
           text = path.read_text()
-          old = '''    string? uniqueId = entityType switch
-    {
-        "deity" => JoinIdentity(item, "pantheon"),'''
-          new = '''    string? uniqueId = entityType switch
-    {
-        "itemType" => JoinIdentity(item, "abbreviation"),
-        "deity" => JoinIdentity(item, "pantheon"),'''
+          old = '    string? uniqueId = entityType switch\n    {\n        "deity" => JoinIdentity(item, "pantheon"),'
+          new = '    string? uniqueId = entityType switch\n    {\n        "itemType" => JoinIdentity(item, "abbreviation"),\n        "deity" => JoinIdentity(item, "pantheon"),'
           if new not in text:
               if old not in text:
                   raise SystemExit('snapshot identity switch was not found')
