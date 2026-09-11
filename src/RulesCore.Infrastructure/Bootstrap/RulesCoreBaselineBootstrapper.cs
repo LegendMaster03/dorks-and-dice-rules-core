@@ -174,7 +174,7 @@ public sealed class RulesCoreBaselineBootstrapper(
                 ON source_edition_authority_reference(source_edition_id, authority_kind, uri);
             """, cancellationToken);
 
-        foreach (var seed in RulesCoreBaselineCatalog.SrdPdfAuthorities)
+        foreach (var seed in RulesCoreBaselineCatalog.SrdAuthorities)
         {
             var editionId = await (
                 from edition in dbContext.SourceEditions.AsNoTracking()
@@ -235,7 +235,7 @@ public sealed class RulesCoreBaselineBootstrapper(
             }
         }
 
-        return RulesCoreBaselineCatalog.SrdPdfAuthorities.Count;
+        return RulesCoreBaselineCatalog.SrdAuthorities.Count;
     }
 
     private async Task<PublishedRulesetRevisionView?> EnsureRulesBaselineAsync(
