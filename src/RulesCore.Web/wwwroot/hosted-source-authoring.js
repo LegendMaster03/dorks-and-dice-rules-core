@@ -9,7 +9,8 @@ import {
 
 const RULES_LAWYER_ROLE = "Rules Lawyer";
 const DORKS_MODE = "dorks-and-dice";
-const RESOURCE_KINDS = ["direct-json", "json-index", "github-tree"];
+const FORMAT_KINDS = ["5etools-json", "legacy-srd-text"];
+const RESOURCE_KINDS = ["direct-json", "json-index", "github-tree", "html-index"];
 const GAME_EDITIONS = ["", "1e", "2e", "3e", "3.5e", "4e", "5e", "5.5e"];
 const RELEASE_KINDS = ["", "published", "playtest", "preview", "errata", "srd", "third-party", "other"];
 
@@ -51,10 +52,11 @@ function buildEditor(app, result) {
     const card = element("div", { className: "card card-body mb-3" });
     const form = element("form");
     const definitionKey = textField("Definition key", "5etools-srd51", "col-lg-3", true);
-    const displayName = textField("Display name", "5e.tools SRD 5.1", "col-lg-3", true);
-    const packageKey = textField("Package key", "wotc-srd", "col-lg-3", true);
+    const displayName = textField("Display name", "SRD 5.1 public corpus", "col-lg-3", true);
+    const formatKind = selectField("Import format", FORMAT_KINDS, "col-lg-3", value => value);
+    const packageKey = textField("Package key", "wotc-srd-cc", "col-lg-3", true);
     const packageDisplayName = textField("Package display name", "Wizards SRD", "col-lg-3", true);
-    const provider = textField("Provider", "5e.tools", "col-lg-3", true);
+    const provider = textField("Provider", "Wizards of the Coast", "col-lg-3", true);
     const license = textField("License", "CC-BY-4.0", "col-lg-3", false);
     const workKey = textField("Work key", "srd-5-1", "col-lg-3", true);
     const workDisplayName = textField("Work display name", "System Reference Document 5.1", "col-lg-3", true);
@@ -67,7 +69,7 @@ function buildEditor(app, result) {
     const resources = element("textarea", {
         className: "form-control font-monospace",
         rows: 7,
-        placeholder: "direct-json | https://5e.tools/data/feats.json\njson-index | https://5e.tools/data/spells/index.json\ngithub-tree | https://github.com/5etools-mirror-3/5etools-src/tree/main/data",
+        placeholder: "direct-json | https://example.test/data/feats.json\njson-index | https://example.test/data/spells/index.json\ngithub-tree | https://github.com/example/repo/tree/main/data\nhtml-index | https://example.test/legacy-srd/",
         attributes: { required: "required", spellcheck: "false" }
     });
     const note = element("textarea", { className: "form-control", rows: 2, placeholder: "Optional provenance or maintenance note" });
@@ -78,8 +80,9 @@ function buildEditor(app, result) {
 
     form.append(
         sectionHeading("Identity"),
-        element("div", { className: "row g-3 mb-3" }, definitionKey.group, displayName.group, packageKey.group, packageDisplayName.group),
+        element("div", { className: "row g-3 mb-3" }, definitionKey.group, displayName.group, formatKind.group, packageKey.group),
         element("div", { className: "row g-3 mb-4" },
+            packageDisplayName.group,
             provider.group,
             license.group,
             checkboxGroup("Public source", isPublic),
@@ -95,7 +98,7 @@ function buildEditor(app, result) {
         element("div", { className: "mb-3" },
             element("label", { className: "form-label fw-semibold", text: "Resources" }),
             resources,
-            element("div", { className: "form-text", text: "One resource per line as kind | HTTPS URL. direct-json fetches one document, json-index follows .json references, and github-tree enumerates JSON files beneath a public GitHub tree URL. Source-code filters keep mixed 5e.tools aggregates attached to the correct logical release." })),
+            element("div", { className: "form-text", text: "One resource per line as kind | HTTPS URL. 5etools-json supports direct-json, json-index, and github-tree. legacy-srd-text supports html-index and github-tree; legacy GitHub trees enumerate Markdown files. Source-code filters partition 5e.tools aggregates; legacy SRDs use one Rules Core normalization label such as SRD3 or SRD35." })),
         element("div", { className: "mb-3" }, element("label", { className: "form-label fw-semibold", text: "Note" }), note));
 
     const saveButton = element("button", { type: "submit", className: "btn btn-primary me-2", text: "Save hosted source" });
@@ -112,7 +115,7 @@ function buildEditor(app, result) {
             if (!key) throw new Error("Definition key is required.");
             const payload = {
                 displayName: required(displayName.input, "Display name"),
-                formatKind: "5etools-json",
+                formatKind: formatKind.select.value,
                 packageKey: required(packageKey.input, "Package key"),
                 packageDisplayName: required(packageDisplayName.input, "Package display name"),
                 provider: required(provider.input, "Provider"),
@@ -126,7 +129,7 @@ function buildEditor(app, result) {
                 releaseKind: releaseKind.select.value || null,
                 publicationDate: publicationDate.value || null,
                 includedSourceCodes: parseSourceCodes(sourceCodes.input.value),
-                resources: parseResources(resources.value),
+                resources: parseResources(resources.value, formatKind.select.value),
                 isEnabled: isEnabled.checked,
                 note: note.value.trim() || null
             };
@@ -146,6 +149,7 @@ function buildEditor(app, result) {
 
     function reset() {
         form.reset();
+        formatKind.select.value = "5etools-json";
         isPublic.checked = true;
         isEnabled.checked = true;
         definitionKey.input.readOnly = false;
@@ -155,6 +159,7 @@ function buildEditor(app, result) {
         definitionKey.input.value = definition.key;
         definitionKey.input.readOnly = true;
         displayName.input.value = definition.displayName;
+        formatKind.select.value = definition.formatKind ?? "5etools-json";
         packageKey.input.value = definition.packageKey;
         packageDisplayName.input.value = definition.packageDisplayName;
         provider.input.value = definition.provider;
@@ -237,7 +242,7 @@ async function renderCatalog(app, container, editor, result) {
                 element("div", {},
                     element("div", { className: "fw-semibold", text: definition.displayName }),
                     element("div", { className: "small text-body-secondary", text: `${definition.key} · definition revision ${definition.revisionNumber} · ${definition.packageKey}/${definition.workKey}/${definition.editionKey}` }),
-                    element("div", { className: "small text-body-secondary", text: `${(definition.includedSourceCodes ?? []).join(", ") || "all source codes"} · ${(definition.resources ?? []).length} root resource(s)` }),
+                    element("div", { className: "small text-body-secondary", text: `${definition.formatKind} · ${(definition.includedSourceCodes ?? []).join(", ") || "all source codes"} · ${(definition.resources ?? []).length} root resource(s)` }),
                     element("div", { className: "d-flex gap-2 mt-1" },
                         badge(definition.isEnabled ? "Enabled" : "Disabled", definition.isEnabled ? "success" : "secondary"),
                         badge(definition.isPublic ? "Public" : "Restricted", definition.isPublic ? "success" : "warning"))),
@@ -247,13 +252,17 @@ async function renderCatalog(app, container, editor, result) {
     container.append(card);
 }
 
-function parseResources(value) {
+function parseResources(value, formatKind) {
+    const allowedKinds = formatKind === "legacy-srd-text"
+        ? ["html-index", "github-tree"]
+        : ["direct-json", "json-index", "github-tree"];
     const resources = value.split(/\r?\n/).map(line => line.trim()).filter(Boolean).map(line => {
         const separator = line.indexOf("|");
         if (separator < 0) throw new Error(`Resource '${line}' must use kind | HTTPS URL.`);
         const kind = line.slice(0, separator).trim();
         const uri = line.slice(separator + 1).trim();
         if (!RESOURCE_KINDS.includes(kind)) throw new Error(`Unsupported resource kind '${kind}'.`);
+        if (!allowedKinds.includes(kind)) throw new Error(`Resource kind '${kind}' is not valid for ${formatKind}.`);
         if (!uri) throw new Error("Hosted resource URL can not be blank.");
         return { kind, uri };
     });
