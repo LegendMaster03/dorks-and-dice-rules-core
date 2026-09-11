@@ -12,4 +12,8 @@
     <ProjectReference Include="../RulesCore.Application/RulesCore.Application.csproj" />
     <ProjectReference Include="../RulesCore.Domain/RulesCore.Domain.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="BundledSources/*.json" />
+  </ItemGroup>
 </Project>
