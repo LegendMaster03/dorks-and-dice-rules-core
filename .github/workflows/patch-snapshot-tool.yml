@@ -1,0 +1,51 @@
+name: Patch Snapshot Tool
+
+on:
+  push:
+    branches: [ "fix/bundle-canonical-srds" ]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exclude unnamed metadata rows
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('tools/RulesCore.SourceSnapshotGenerator/Program.cs')
+          text = path.read_text()
+          old = '''                if (item.ValueKind != JsonValueKind.Object)
+                {
+                    continue;
+                }
+
+                var normalized = AddStableIdentity(property.Name, item);'''
+          new = '''                if (item.ValueKind != JsonValueKind.Object
+                    || !item.TryGetProperty("name", out var nameValue)
+                    || nameValue.ValueKind != JsonValueKind.String
+                    || string.IsNullOrWhiteSpace(nameValue.GetString()))
+                {
+                    continue;
+                }
+
+                var normalized = AddStableIdentity(property.Name, item);'''
+          if old in text:
+              path.write_text(text.replace(old, new, 1))
+      - name: Commit patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/RulesCore.SourceSnapshotGenerator/Program.cs
+          if git diff --cached --quiet; then
+            echo "Patch already applied."
+            exit 0
+          fi
+          git commit -m "Ignore non-entity metadata in SRD snapshots"
+          git push origin HEAD:fix/bundle-canonical-srds
