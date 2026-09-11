@@ -63,9 +63,13 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.True(packages.Single(value => value.Key == "loot-tavern-free").IsPublic);
             Assert.False(packages.Single(value => value.Key == "loot-tavern-licensed").IsPublic);
 
+            var oglPackageId = packages.Single(value => value.Key == "wotc-srd-ogl").Id;
+            var ccPackageId = packages.Single(value => value.Key == "wotc-srd-cc").Id;
+            var housePackageId = packages.Single(value => value.Key == "dorks-and-dice-baseline").Id;
+
             var oglWorks = await db.SourceWorks
                 .AsNoTracking()
-                .Where(value => value.SourcePackageId == packages.Single(package => package.Key == "wotc-srd-ogl").Id)
+                .Where(value => value.SourcePackageId == oglPackageId)
                 .Select(value => value.Key)
                 .OrderBy(value => value)
                 .ToArrayAsync();
@@ -73,7 +77,7 @@ public sealed class BaselineBootstrapIntegrationTests
 
             var ccWorks = await db.SourceWorks
                 .AsNoTracking()
-                .Where(value => value.SourcePackageId == packages.Single(package => package.Key == "wotc-srd-cc").Id)
+                .Where(value => value.SourcePackageId == ccPackageId)
                 .Select(value => value.Key)
                 .OrderBy(value => value)
                 .ToArrayAsync();
@@ -92,10 +96,9 @@ public sealed class BaselineBootstrapIntegrationTests
                 && value.Uri == "https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf"
                 && value.MediaType == "application/pdf");
 
-            var housePackage = packages.Single(value => value.Key == "dorks-and-dice-baseline");
             var houseEntities = await db.SourceEntities
                 .AsNoTracking()
-                .Where(value => value.SourceEdition.SourceWork.SourcePackageId == housePackage.Id)
+                .Where(value => value.SourceEdition.SourceWork.SourcePackageId == housePackageId)
                 .OrderBy(value => value.Name)
                 .ToArrayAsync();
             Assert.Equal(6, houseEntities.Length);
