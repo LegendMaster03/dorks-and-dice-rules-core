@@ -6,7 +6,7 @@ Rules Core initializes a deterministic global baseline after the database schema
 
 `RulesCore:BootstrapBaseline` defaults to `true`.
 
-On startup, the baseline bootstrapper:
+On startup, after the core schema initializer has created the Source Layer tables, the baseline bootstrapper:
 
 1. ensures the built-in source package/work/release identities exist;
 2. records corpus-membership authority references for the 3e, 3.5e, 5.1, and 5.2.1 SRDs;
