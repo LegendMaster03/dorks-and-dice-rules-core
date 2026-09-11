@@ -50,6 +50,7 @@ public sealed class LegacySrdDocumentInspectorTests
             Conjuration (Creation) [Acid]
 
             **Level:** Sor/Wiz 2
+            **Components:** V, S, M
             """;
         var spellJson = LegacySrdDocumentInspector.ConvertToCanonicalJson(
             spells,
