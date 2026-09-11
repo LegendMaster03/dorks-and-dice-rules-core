@@ -127,7 +127,7 @@ public static class LegacySrdDocumentInspector
             throw new ArgumentException("HTML index URI must be absolute.", nameof(indexUri));
         }
 
-        var prefix = indexUri.AbsolutePath.EndsWith('/', StringComparison.Ordinal)
+        var prefix = indexUri.AbsolutePath.EndsWith("/", StringComparison.Ordinal)
             ? indexUri.AbsolutePath
             : indexUri.AbsolutePath[..(indexUri.AbsolutePath.LastIndexOf('/') + 1)];
 
@@ -139,8 +139,8 @@ public static class LegacySrdDocumentInspector
                     : match.Groups["bare"].Value)
             .Select(WebUtility.HtmlDecode)
             .Where(value => !string.IsNullOrWhiteSpace(value))
-            .Select(value => value.Trim())
-            .Where(value => !value.StartsWith('#')
+            .Select(value => value!.Trim())
+            .Where(value => !value.StartsWith("#", StringComparison.Ordinal)
                 && !value.StartsWith("mailto:", StringComparison.OrdinalIgnoreCase)
                 && !value.StartsWith("javascript:", StringComparison.OrdinalIgnoreCase))
             .Select(value => Uri.TryCreate(indexUri, value, out var resolved) ? resolved : null)
@@ -181,7 +181,7 @@ public static class LegacySrdDocumentInspector
                 }
             }
 
-            var body = NormalizeText(markdown[match.Index + match.Length..end]);
+            var body = NormalizeText(markdown[(match.Index + match.Length)..end]);
             entities.Add(CreateEntity(
                 InferEntityType(uri, name, level),
                 name,
@@ -232,7 +232,7 @@ public static class LegacySrdDocumentInspector
                 uri,
                 level,
                 index,
-                HtmlToText(html[match.Index + match.Length..end])));
+                HtmlToText(html[(match.Index + match.Length)..end])));
         }
 
         if (IsMonsterDocument(uri))
