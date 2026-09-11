@@ -14,6 +14,8 @@ On startup, the baseline bootstrapper:
 4. imports the local immutable Dorks & Dice baseline-rule source document;
 5. on a fresh Rules Layer only, creates the settled baseline concepts/decisions and publishes the first global ruleset.
 
+The `source_edition_authority_reference` table is owned by the core Source Layer schema initializer. Bootstrap only inserts the built-in authority records; it does not create Source Layer tables.
+
 Startup does **not** fetch any remote SRD corpus. Remote URLs are persistent acquisition definitions; a Rules Lawyer can preview and refresh them through the Hosted Sources workflow. Runtime rule reads therefore never require the representation host or authority archive to be online.
 
 A conflicting built-in package/work/release identity stops startup instead of silently changing provenance. Existing hosted-source definition revisions are not replaced by bootstrap, so a Rules Lawyer can deliberately disable or revise a built-in acquisition definition.
@@ -29,7 +31,7 @@ Rules Core separates **corpus membership authority** from the **representation p
 - Hosted format: `legacy-srd-text` using `html-index` expansion.
 - Normalized source label: `SRD3`.
 
-The Dragon.ee mirror is used because the original 3.0 distribution is no longer a convenient live structured source. It does not replace the archived distribution as the statement of what belongs to the SRD. The representation is not Git-backed; every successful import is still fingerprinted into immutable source revisions.
+The Dragon.ee mirror is used because the original 3.0 distribution is no longer a convenient live structured source. It does not replace the archived distribution as the statement of what belongs to the SRD. Because the mirror is mutable rather than Git-backed, Rules Core also carries a manually reviewed **139-document manifest** for the built-in 3e representation. Preview/refresh must resolve exactly that reviewed document set; missing or unexpected HTML documents fail acquisition so mirror drift can not silently change corpus membership. Updating the manifest therefore requires an explicit source review. Every successfully imported document is still fingerprinted into immutable source revisions.
 
 ### 3.5e
 
@@ -91,7 +93,7 @@ Fresh installations register:
 
 The 3e and 3.5e definitions are public definitions under canonical package `wotc-srd-ogl` with `OGL-1.0a` provenance. The 5.1 and 5.2.1 definitions are public definitions under `wotc-srd-cc` with `CC-BY-4.0` provenance.
 
-Git-backed representation URLs are pinned to reviewed commits. Updating those mirrors requires a deliberate hosted-source definition revision. Bootstrap never overwrites a later Rules Lawyer revision.
+Git-backed representation URLs are pinned to reviewed commits. Updating those mirrors requires a deliberate hosted-source definition revision. The mutable 3e mirror is instead constrained by the reviewed 139-document manifest described above. Bootstrap never overwrites a later Rules Lawyer revision.
 
 All four definitions are acquisition metadata only until explicitly previewed/refreshed. Bootstrap does not hydrate their remote content.
 
@@ -137,7 +139,11 @@ The resolver integration suite exercises explicit adjudication with `Power Attac
 5. the Rules Lawyer explicitly switches the decision to the 3e revision and republishes;
 6. anonymous resolution then returns the 3e document with `SRD3` and `srd-3e` provenance.
 
-This validates the resolution pipeline without prematurely encoding a general rule such as “newest edition wins.” Future additive/consolidated behavior remains an explicit Rules Lawyer decision.
+The same suite also exercises explicit additive consolidation. A 3.5e revision can be selected as the base while the reviewed 3e revision is recorded as an `incorporated` contribution and a structured/merge patch records the adjudicated hybrid result. Published `ResolvedRuleView` responses expose those contributing revisions with their package/work/release/source-code provenance and contribution notes, rather than losing provenance after publication.
+
+Contribution access is part of rule access. A consumer can resolve a published rule only when the selected base source **and every contribution actually applied by that global decision** are accessible to that consumer. A public base therefore does not leak a restricted incorporated source. Campaign rules that inherit or patch the global decision retain the same contribution requirements; a campaign `select-source` replacement that does not use the global contribution does not inherit that unused restriction.
+
+This validates the resolution and consolidation pipeline without encoding a general rule such as “newest edition wins.” Cross-edition inclusion remains an explicit Rules Lawyer decision.
 
 ## Dorks & Dice adjudicated baseline
 
@@ -156,10 +162,12 @@ Unresolved class/prestige progression, feat cadence, BAB/skill-rank/save prerequ
 
 ## Anonymous global access
 
-Global public sources and published global rules do not require authentication. The source and rules APIs resolve with a nullable user ID; public packages are returned when that ID is null. Authentication/grants are required only for restricted packages or campaign-specific state.
+Global public sources and published global rules do not require authentication. The source and rules APIs resolve with a nullable user ID; public packages are returned when that ID is null. Authentication/grants are required for restricted packages or campaign-specific state.
 
-The regression suite explicitly verifies that an unauthenticated client can list the public source packages and resolve published global rules while restricted packages remain hidden.
+For consolidated rules, public visibility is evaluated across the entire applied provenance set, not only the base source revision. If any incorporated/referenced contribution is restricted, anonymous resolution is denied and authenticated consumers must hold the appropriate grant. This prevents a public patched document from becoming an accidental redistribution path for restricted source material.
+
+The regression suite explicitly verifies that an unauthenticated client can list the public source packages and resolve published global rules while restricted packages and restricted-contribution consolidations remain hidden.
 
 ## Validation policy
 
-Normal historical integration tests run with `RulesCore__BootstrapBaseline=false` so their isolated assumptions remain stable. Dedicated tests verify source identities, all four authority references, all four persistent SRD definitions, manual 5e/5.5e membership constraints, legacy HTML/Markdown normalization, false-positive resistance on real legacy corpus structures, 3e/3.5e hosted refresh behavior, advisory cross-edition normalization, explicit cross-edition adjudication, initial global publication, repeat-bootstrap behavior, preservation of Rules Lawyer edits, and anonymous public access.
+Normal historical integration tests run with `RulesCore__BootstrapBaseline=false` so their isolated assumptions remain stable. Dedicated tests verify source identities, Source Layer ownership of authority-reference schema, all four authority references, all four persistent SRD definitions, the reviewed 139-document 3e manifest, manual 5e/5.5e membership constraints, legacy HTML/Markdown normalization, false-positive resistance on real legacy corpus structures, 3e/3.5e hosted refresh behavior, advisory cross-edition normalization, explicit cross-edition adjudication and consolidation, resolved contribution provenance, contribution-aware restricted-source access, initial global publication, repeat-bootstrap behavior, preservation of Rules Lawyer edits, and anonymous public access.
