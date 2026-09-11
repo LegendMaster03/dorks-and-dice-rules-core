@@ -1,6 +1,7 @@
 name: Run Bundled SRD Snapshot Tool
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "fix/bundle-canonical-srds" ]
 
