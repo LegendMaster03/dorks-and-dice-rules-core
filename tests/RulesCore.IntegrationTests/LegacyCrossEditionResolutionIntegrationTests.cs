@@ -189,9 +189,9 @@ public sealed class LegacyCrossEditionResolutionIntegrationTests
     }
 
     private static async Task<(
-        SourceImportEntityResult ThreeEntity,
+        ImportedSourceEntity ThreeEntity,
         Guid ThreeRevisionId,
-        SourceImportEntityResult ThreeFiveEntity,
+        ImportedSourceEntity ThreeFiveEntity,
         Guid ThreeFiveRevisionId)> ImportPowerAttackPairAsync(
         RulesCoreDbContext db,
         SourceImportService importer,
