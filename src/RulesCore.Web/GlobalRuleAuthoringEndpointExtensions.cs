@@ -10,6 +10,7 @@ public static class GlobalRuleAuthoringEndpointExtensions
         // Program currently composes database-backed endpoint families through this extension.
         // Each family still owns its own authorization boundary.
         app.MapSourceAdministrationEndpoints();
+        app.MapHostedSourceEndpoints();
         app.MapSourceAcquisitionEndpoints();
         app.MapSourceNormalizationEndpoints();
         app.MapSourceVersioningEndpoints();

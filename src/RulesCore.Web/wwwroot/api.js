@@ -28,6 +28,24 @@ export class RulesCoreApi {
     getSession() { return requestJson(`${this.hostApiBaseUrl}/session`, { method: "GET" }); }
     getCampaigns() { return requestJson(`${this.hostApiBaseUrl}/campaigns`, { method: "GET" }); }
 
+    async getOptionalSession() {
+        try {
+            return await this.getSession();
+        } catch (error) {
+            if (isAnonymousAccessError(error)) return null;
+            throw error;
+        }
+    }
+
+    async getOptionalCampaigns() {
+        try {
+            return await this.getCampaigns();
+        } catch (error) {
+            if (isAnonymousAccessError(error)) return [];
+            throw error;
+        }
+    }
+
     searchSourceEntities({ entityType = null, query = null, limit = 100 } = {}) {
         const parameters = new URLSearchParams();
         if (entityType) parameters.set("entityType", entityType);
@@ -42,6 +60,33 @@ export class RulesCoreApi {
 
     importSourceDocument(payload) {
         return this.backend("/api/source-admin/import", { method: "POST", body: payload });
+    }
+
+    findHostedSourceMatches(payload) {
+        return this.backend("/api/source-admin/import/hosted-matches", { method: "POST", body: payload });
+    }
+
+    getHostedSources(includeDisabled = true) {
+        return this.backend(`/api/global/rules/hosted-sources?includeDisabled=${includeDisabled ? "true" : "false"}`);
+    }
+
+    getHostedSource(definitionId) {
+        return this.backend(`/api/global/rules/hosted-sources/${encodeURIComponent(definitionId)}`);
+    }
+
+    setHostedSource(definitionKey, payload) {
+        return this.backend(`/api/global/rules/hosted-sources/${encodeURIComponent(definitionKey)}`, {
+            method: "PUT",
+            body: payload
+        });
+    }
+
+    previewHostedSource(definitionId) {
+        return this.backend(`/api/global/rules/hosted-sources/${encodeURIComponent(definitionId)}/preview`, { method: "POST" });
+    }
+
+    refreshHostedSource(definitionId) {
+        return this.backend(`/api/global/rules/hosted-sources/${encodeURIComponent(definitionId)}/refresh`, { method: "POST" });
     }
 
     getSourceAdministrationPackages() { return this.backend("/api/source-admin/packages"); }
@@ -190,6 +235,11 @@ function catalogParameters(entityType, query, limit) {
     if (query) parameters.set("q", query);
     parameters.set("limit", String(limit));
     return parameters;
+}
+
+function isAnonymousAccessError(error) {
+    return error instanceof RulesCoreHttpError
+        && (error.status === 401 || error.status === 403);
 }
 
 async function requestJson(url, options = {}) {

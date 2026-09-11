@@ -70,6 +70,7 @@ public sealed record ResolvedCampaignRuleView(
     string? GlobalPatchFingerprint,
     JsonElement? GlobalMergePatch,
     JsonElement? GlobalStructuredPatch,
+    IReadOnlyList<ResolvedRuleContributionView> GlobalContributions,
     Guid? CampaignRuleDecisionId,
     int? CampaignDecisionNumber,
     string EffectiveDecisionKind,

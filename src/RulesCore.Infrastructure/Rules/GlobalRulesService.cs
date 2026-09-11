@@ -348,6 +348,15 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         var package = work.SourcePackage;
         var decision = entry.GlobalRuleDecision;
         var concept = entry.RuleConcept;
+        var contributionResolution = await RuleContributionResolution.ResolveAsync(
+            dbContext,
+            decision.Id,
+            normalizedUserId,
+            cancellationToken);
+        if (!contributionResolution.Accessible)
+        {
+            return null;
+        }
 
         using var sourceDocument = JsonDocument.Parse(sourceRevision.RawJson);
         var resolvedDocument = ApplyDecisionPatch(
@@ -388,6 +397,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             work.DisplayName,
             edition.Key,
             edition.DisplayName,
+            contributionResolution.Contributions,
             resolvedDocument);
     }
 

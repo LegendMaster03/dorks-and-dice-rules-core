@@ -61,6 +61,23 @@ public sealed record PublishedRulesetRevisionView(
     int EntryCount,
     bool CreatedRevision);
 
+public sealed record ResolvedRuleContributionView(
+    Guid SourceEntityRevisionId,
+    int SourceRevisionNumber,
+    string SourceFingerprint,
+    Guid SourceEntityId,
+    string SourceEntityName,
+    string SourceCode,
+    string PackageKey,
+    string PackageDisplayName,
+    string WorkKey,
+    string WorkDisplayName,
+    string EditionKey,
+    string EditionDisplayName,
+    string? GameEdition,
+    string ContributionKind,
+    string? Note);
+
 public sealed record ResolvedRuleView(
     Guid RuleConceptId,
     string ConceptKey,
@@ -88,6 +105,7 @@ public sealed record ResolvedRuleView(
     string WorkDisplayName,
     string EditionKey,
     string EditionDisplayName,
+    IReadOnlyList<ResolvedRuleContributionView> Contributions,
     JsonElement Document);
 
 public interface IGlobalRulesService

@@ -1,5 +1,3 @@
-using System.Text;
-using System.Text.Json;
 using RulesCore.Application.Sources;
 
 namespace RulesCore.Web;
@@ -36,18 +34,18 @@ public static class SourceAdminImportPartitioner
             throw new ArgumentException("Source JSON can not be blank.", nameof(request));
         }
 
-        using var document = JsonDocument.Parse(request.Json);
-        if (document.RootElement.ValueKind != JsonValueKind.Object)
-        {
-            throw new InvalidDataException("A 5e.tools source document must have a JSON object root.");
-        }
-
-        var available = DiscoverSourceCodes(document.RootElement, request.EditionKey);
-        var included = NormalizeSourceCodes(request.IncludedSourceCodes);
+        var available = FiveEToolsDocumentInspector.DiscoverSourceCodes(
+            request.Json,
+            request.EditionKey);
+        var includedSet = FiveEToolsDocumentInspector.NormalizeSourceCodes(
+            request.IncludedSourceCodes);
+        var included = includedSet
+            .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
         var warnings = new List<string>();
         string logicalJson;
 
-        if (included.Count == 0)
+        if (included.Length == 0)
         {
             logicalJson = request.Json;
             if (available.Count > 1)
@@ -67,8 +65,8 @@ public static class SourceAdminImportPartitioner
                     $"The requested source-code filter contains codes not present in this document: {string.Join(", ", missing)}.");
             }
 
-            logicalJson = FilterDocument(
-                document.RootElement,
+            logicalJson = FiveEToolsDocumentInspector.FilterBySourceCodes(
+                request.Json,
                 request.EditionKey,
                 included,
                 out var selectedEntityCount);
@@ -102,98 +100,10 @@ public static class SourceAdminImportPartitioner
             warnings);
     }
 
-    private static IReadOnlyList<string> DiscoverSourceCodes(JsonElement root, string editionKey)
-    {
-        var codes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        foreach (var property in root.EnumerateObject())
-        {
-            if (property.Name.StartsWith('_') || property.Value.ValueKind != JsonValueKind.Array)
-            {
-                continue;
-            }
-
-            foreach (var item in property.Value.EnumerateArray())
-            {
-                if (item.ValueKind != JsonValueKind.Object)
-                {
-                    continue;
-                }
-
-                codes.Add(GetSourceCode(item, editionKey));
-            }
-        }
-
-        return codes.OrderBy(value => value, StringComparer.OrdinalIgnoreCase).ToArray();
-    }
-
-    private static IReadOnlyList<string> NormalizeSourceCodes(IReadOnlyList<string>? values)
-    {
-        if (values is null || values.Count == 0)
-        {
-            return Array.Empty<string>();
-        }
-
-        return values
-            .Where(value => !string.IsNullOrWhiteSpace(value))
-            .Select(value => value.Trim())
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
-            .ToArray();
-    }
-
-    private static string FilterDocument(
-        JsonElement root,
-        string editionKey,
-        IReadOnlyList<string> included,
-        out int selectedEntityCount)
-    {
-        var includedSet = included.ToHashSet(StringComparer.OrdinalIgnoreCase);
-        selectedEntityCount = 0;
-        using var stream = new MemoryStream();
-        using (var writer = new Utf8JsonWriter(stream))
-        {
-            writer.WriteStartObject();
-            foreach (var property in root.EnumerateObject())
-            {
-                writer.WritePropertyName(property.Name);
-                if (property.Name.StartsWith('_') || property.Value.ValueKind != JsonValueKind.Array)
-                {
-                    property.Value.WriteTo(writer);
-                    continue;
-                }
-
-                writer.WriteStartArray();
-                foreach (var item in property.Value.EnumerateArray())
-                {
-                    if (item.ValueKind == JsonValueKind.Object
-                        && includedSet.Contains(GetSourceCode(item, editionKey)))
-                    {
-                        item.WriteTo(writer);
-                        selectedEntityCount++;
-                    }
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-
-        return Encoding.UTF8.GetString(stream.ToArray());
-    }
-
-    private static string GetSourceCode(JsonElement item, string editionKey)
-    {
-        if (item.TryGetProperty("source", out var sourceElement)
-            && sourceElement.ValueKind == JsonValueKind.String
-            && !string.IsNullOrWhiteSpace(sourceElement.GetString()))
-        {
-            return sourceElement.GetString()!.Trim();
-        }
-
-        if (string.IsNullOrWhiteSpace(editionKey))
-        {
-            throw new InvalidDataException(
-                "An entity without an explicit source code requires a non-blank release key for source partitioning.");
-        }
-        return editionKey.Trim();
-    }
+    public static IReadOnlyList<string> InspectSourceCodes(
+        string json,
+        string? fallbackSourceCode = null) =>
+        FiveEToolsDocumentInspector.DiscoverSourceCodes(
+            json,
+            fallbackSourceCode ?? "uploaded-document");
 }

@@ -35,9 +35,58 @@ jobs:
             src/RulesCore.Web/wwwroot/source-admin.js \
             src/RulesCore.Web/wwwroot/source-access-admin.js \
             src/RulesCore.Web/wwwroot/source-acquisition-admin.js \
+            src/RulesCore.Web/wwwroot/hosted-source-authoring.js \
             src/RulesCore.Web/wwwroot/campaign-baseline-authoring.js; do
             node --input-type=module --check < "$file"
           done
+
+          node --input-type=module <<'NODE'
+          import fs from "node:fs";
+          import { RulesCoreApi } from "./src/RulesCore.Web/wwwroot/api.js";
+
+          const api = new RulesCoreApi({ apiBaseUrl: "https://rules-core.test/tool" });
+          if (typeof api.getGlobalResolvedRule !== "function"
+              || typeof api.getCampaignResolvedRule !== "function") {
+              throw new Error("Rules Browser resolved-rule API contract is incomplete.");
+          }
+
+          globalThis.fetch = async () => new Response(
+              JSON.stringify({ title: "Authentication required" }),
+              { status: 401, headers: { "Content-Type": "application/json" } });
+
+          if (await api.getOptionalSession() !== null) {
+              throw new Error("Anonymous session lookup must resolve to null.");
+          }
+          const campaigns = await api.getOptionalCampaigns();
+          if (!Array.isArray(campaigns) || campaigns.length !== 0) {
+              throw new Error("Anonymous campaign lookup must resolve to an empty array.");
+          }
+
+          const authoring = fs.readFileSync(
+              "./src/RulesCore.Web/wwwroot/authoring.js",
+              "utf8");
+          for (const required of [
+              "detail.concept.id",
+              "detail.accessibleSources",
+              "sourceEntityRevisionId",
+              "payload.mergePatch",
+              "payload.structuredPatch"
+          ]) {
+              if (!authoring.includes(required)) {
+                  throw new Error(`Rules Lawyer browser contract is missing '${required}'.`);
+              }
+          }
+          for (const incompatible of [
+              "selectedSourceEntityRevisionId",
+              "patchOperations",
+              "manualDocument",
+              "detail.candidates"
+          ]) {
+              if (authoring.includes(incompatible)) {
+                  throw new Error(`Rules Lawyer browser contract contains incompatible field '${incompatible}'.`);
+              }
+          }
+          NODE
 
       - name: Start disposable PostgreSQL
         run: |
@@ -70,6 +119,7 @@ jobs:
       - name: Test
         env:
           ConnectionStrings__RulesCore: Host=127.0.0.1;Port=55432;Database=rules_core_test;Username=rules_core_test;Password=rules_core_test
+          RulesCore__BootstrapBaseline: "false"
         run: dotnet test dorks-and-dice-rules-core.slnx --configuration Release --no-restore
 
       - name: Cleanup disposable PostgreSQL

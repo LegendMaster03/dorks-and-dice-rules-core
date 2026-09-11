@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Hosting;
 using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
+using RulesCore.Infrastructure.Bootstrap;
 using RulesCore.Infrastructure.Hosting;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Rules;
@@ -12,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("RulesCore");
 var hasDatabase = !string.IsNullOrWhiteSpace(connectionString);
+var bootstrapBaseline = builder.Configuration.GetValue("RulesCore:BootstrapBaseline", true);
 if (hasDatabase)
 {
     builder.Services.AddDbContext<RulesCoreDbContext>(options => options.UseNpgsql(connectionString));
@@ -25,6 +27,7 @@ if (hasDatabase)
     builder.Services.AddScoped<IRulePatchPreviewService, RulePatchPreviewService>();
     builder.Services.AddScoped<IGlobalRulesAuthoringService, GlobalRulesAuthoringService>();
     builder.Services.AddScoped<ICampaignRulesAuthoringService, CampaignRulesAuthoringService>();
+    builder.Services.AddScoped<IRulesCoreBaselineBootstrapper, RulesCoreBaselineBootstrapper>();
 }
 
 var toolHostBaseUrl = builder.Configuration["ToolHost:BaseUrl"];
@@ -60,6 +63,11 @@ if (hasDatabase)
     await using var scope = app.Services.CreateAsyncScope();
     var initializer = scope.ServiceProvider.GetRequiredService<IRulesCoreSchemaInitializer>();
     await initializer.InitializeAsync();
+    if (bootstrapBaseline)
+    {
+        var bootstrapper = scope.ServiceProvider.GetRequiredService<IRulesCoreBaselineBootstrapper>();
+        await bootstrapper.EnsureAsync();
+    }
 }
 
 app.UseMiddleware<HostedToolAuthenticationMiddleware>();

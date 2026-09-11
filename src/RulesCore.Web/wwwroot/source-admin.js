@@ -40,7 +40,7 @@ async function renderSourceAdministration(app, container) {
     clear(container);
     container.append(element("div", { className: "card card-body mb-3" },
         element("h3", { className: "h5 mb-1", text: "Source administration" }),
-        element("p", { className: "text-body-secondary mb-0", text: "Preview, validate, and import immutable 5e.tools-shaped source documents. Source identity and D&D edition are recorded separately; import is a Dev control-plane operation, not Rules Lawyer authority." })));
+        element("p", { className: "text-body-secondary mb-0", text: "Preview, validate, and import immutable 5e.tools-shaped source documents. Source identity and D&D edition are recorded separately; import is a Dev control-plane operation. Before an uploaded copy is accepted, Rules Core checks whether its selected source-code partition is already covered by a Rules Lawyer-managed canonical hosted source." })));
 
     const formCard = element("div", { className: "card card-body" });
     const form = element("form");
@@ -64,7 +64,7 @@ async function renderSourceAdministration(app, container) {
         element("div", { className: "mb-3" },
             element("label", { className: "form-label fw-semibold", text: "5e.tools-shaped JSON" }),
             json,
-            element("div", { className: "form-text", text: "Complete selected entity objects are preserved in immutable Source Layer revisions. Reimporting identical content is idempotent. Preview reports mixed source-code aggregates before anything is persisted." })));
+            element("div", { className: "form-text", text: "Complete selected entity objects are preserved in immutable Source Layer revisions. Reimporting identical content is idempotent. If the selected source is already registered as a canonical hosted source, Rules Core redirects the normal workflow to that definition instead of silently storing another submitted copy." })));
 
     const previewButton = element("button", { type: "button", className: "btn btn-outline-primary me-2", text: "Preview import" });
     const importButton = element("button", { type: "submit", className: "btn btn-primary", text: "Import source document", disabled: true });
@@ -74,6 +74,7 @@ async function renderSourceAdministration(app, container) {
     container.append(formCard);
 
     let approvedSnapshot = null;
+    let manualHostedOverride = false;
     const controls = [...form.querySelectorAll("input, select, textarea")];
     for (const control of controls) {
         control.addEventListener("input", () => invalidatePreview());
@@ -82,6 +83,7 @@ async function renderSourceAdministration(app, container) {
 
     function invalidatePreview() {
         approvedSnapshot = null;
+        manualHostedOverride = false;
         importButton.disabled = true;
     }
 
@@ -90,8 +92,31 @@ async function renderSourceAdministration(app, container) {
         setButtonBusy(previewButton, true, "Previewing…");
         try {
             const payload = buildPayload(packageControls, releaseControls, json);
+            const hosted = await app.api.findHostedSourceMatches({
+                json: payload.json,
+                fallbackSourceCode: payload.editionKey,
+                includedSourceCodes: payload.includedSourceCodes
+            });
+
+            if (hosted.fullyCovered && hosted.matches.length && !manualHostedOverride) {
+                approvedSnapshot = null;
+                importButton.disabled = true;
+                result.replaceChildren(renderHostedMatchCard(
+                    app,
+                    hosted,
+                    true,
+                    () => {
+                        manualHostedOverride = true;
+                        previewButton.click();
+                    }));
+                return;
+            }
+
             const preview = await app.api.previewSourceDocument(payload);
             renderPreviewResult(result, preview);
+            if (hosted.matches.length) {
+                result.prepend(renderHostedMatchCard(app, hosted, false));
+            }
             if (preview.canImport) {
                 approvedSnapshot = JSON.stringify(payload);
                 importButton.disabled = false;
@@ -120,6 +145,7 @@ async function renderSourceAdministration(app, container) {
             setButtonBusy(importButton, true, "Importing…");
             const imported = await app.api.importSourceDocument(payload);
             approvedSnapshot = null;
+            manualHostedOverride = false;
             importButton.disabled = true;
             renderImportResult(result, imported, payload.isPublic);
         } catch (error) {
@@ -220,6 +246,41 @@ function parseSourceCodes(value) {
 }
 
 function sectionHeading(text) { return element("h4", { className: "h6 text-body-secondary text-uppercase mt-1 mb-2", text }); }
+
+function renderHostedMatchCard(app, hosted, blocked, overrideAction = null) {
+    const card = element("div", { className: "card card-body border-warning mb-3" },
+        element("div", { className: "d-flex flex-wrap gap-2 align-items-center mb-2" },
+            element("h4", { className: "h6 mb-0", text: blocked ? "Canonical hosted source found" : "Hosted source overlap found" }),
+            badge(hosted.fullyCovered ? "Fully covered" : "Partial coverage", "warning")),
+        element("p", { className: "mb-2", text: blocked
+            ? `The selected source-code partition (${hosted.sourceCodes.join(", ")}) is already covered by a registered live source. The default workflow uses that canonical link instead of storing another submitted copy.`
+            : `Some selected source codes (${hosted.sourceCodes.join(", ")}) overlap registered live sources. Review the overlap before intentionally importing another copy.` }));
+
+    const list = element("div", { className: "list-group list-group-flush mb-2" });
+    for (const match of hosted.matches) {
+        list.append(element("div", { className: "list-group-item px-0 py-2" },
+            element("div", { className: "fw-semibold", text: match.displayName }),
+            element("div", { className: "small text-body-secondary", text: `${match.definitionKey} · definition revision ${match.revisionNumber} · ${match.packageKey}/${match.workKey}/${match.editionKey} · matches ${match.matchedSourceCodes.join(", ")}` })));
+    }
+    card.append(list);
+
+    const actions = element("div", { className: "d-flex flex-wrap gap-2" });
+    if (app.canManageHostedSources) {
+        const hostedButton = element("button", { type: "button", className: "btn btn-sm btn-primary", text: "Open Hosted Sources" });
+        hostedButton.addEventListener("click", async () => {
+            app.activeView = "hosted-sources";
+            await app.render();
+        });
+        actions.append(hostedButton);
+    }
+    if (blocked && overrideAction) {
+        const overrideButton = element("button", { type: "button", className: "btn btn-sm btn-outline-warning", text: "Preview submitted copy anyway" });
+        overrideButton.addEventListener("click", overrideAction);
+        actions.append(overrideButton);
+    }
+    if (actions.childNodes.length) card.append(actions);
+    return card;
+}
 
 function renderPreviewResult(container, preview) {
     const card = element("div", { className: `card card-body ${preview.canImport ? "border-success" : "border-danger"}` });
