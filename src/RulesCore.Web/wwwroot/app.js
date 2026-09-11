@@ -26,7 +26,11 @@ try {
         api.getOptionalSession(),
         api.getOptionalCampaigns()
     ]);
-    const app = new RulesAuthoringApp(root, api, hostContext, session, campaigns);
+    const effectiveSession = session ?? {
+        user: { displayName: "Guest" },
+        globalRoles: []
+    };
+    const app = new RulesAuthoringApp(root, api, hostContext, effectiveSession, campaigns);
     installResolvedRulesBrowser(app);
     installConceptSourceAuthoring(app);
     installSourceNormalization(app);
