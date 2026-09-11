@@ -222,10 +222,13 @@ void WriteSnapshot(string fileName, string fallbackSourceCode, IEnumerable<strin
 
             foreach (var item in property.Value.EnumerateArray())
             {
-                if (item.ValueKind != JsonValueKind.Object)
-                {
-                    continue;
-                }
+                if (item.ValueKind != JsonValueKind.Object
+          || !item.TryGetProperty("name", out var nameValue)
+          || nameValue.ValueKind != JsonValueKind.String
+          || string.IsNullOrWhiteSpace(nameValue.GetString()))
+      {
+          continue;
+      }
 
                 var normalized = AddStableIdentity(property.Name, item);
                 var canonical = Canonicalize(normalized);
