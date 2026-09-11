@@ -1,5 +1,6 @@
-using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Sources;
+using RulesCore.Infrastructure.Persistence;
 
 namespace RulesCore.Infrastructure.Bootstrap;
 
@@ -14,12 +15,24 @@ internal static class BundledSrdSnapshots
     ];
 
     public static async Task<IReadOnlyList<SourceImportResult>> EnsureAsync(
+        RulesCoreDbContext dbContext,
         ISourceImportService importer,
         CancellationToken cancellationToken = default)
     {
         var imported = new List<SourceImportResult>(Definitions.Count);
         foreach (var snapshot in Definitions)
         {
+            var alreadyAvailable = await dbContext.SourceEntities
+                .AsNoTracking()
+                .AnyAsync(value =>
+                    value.SourceEdition.SourceWork.SourcePackage.Key == snapshot.PackageKey
+                    && value.SourceEdition.SourceWork.Key == snapshot.WorkKey,
+                    cancellationToken);
+            if (alreadyAvailable)
+            {
+                continue;
+            }
+
             var package = RulesCoreBaselineCatalog.SourcePackages.Single(value =>
                 string.Equals(value.Key, snapshot.PackageKey, StringComparison.Ordinal));
             var work = package.Works.Single(value =>
