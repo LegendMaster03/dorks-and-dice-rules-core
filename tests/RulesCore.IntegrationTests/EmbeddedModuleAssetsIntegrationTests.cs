@@ -55,7 +55,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
 
         var rulesBrowser = await GetAssetAsync(client, "/rules-browser.js", "javascript");
         Assert.Contains("Rules Browser", rulesBrowser, StringComparison.Ordinal);
-        Assert.Contains("Browse published rules that this account may access", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Browse published global rules without signing in", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Resolved rule document", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Campaign override", rulesBrowser, StringComparison.Ordinal);
 
