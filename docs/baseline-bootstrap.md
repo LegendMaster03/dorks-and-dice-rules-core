@@ -9,17 +9,40 @@ Rules Core initializes a small deterministic baseline after the database schema 
 On startup, the baseline bootstrapper:
 
 1. ensures the built-in source package/work/release identities exist;
-2. registers missing built-in hosted-source definitions without fetching them;
+2. records the official PDF authority for SRD 5.1 and SRD 5.2.1;
 3. imports the local immutable Dorks & Dice baseline-rule source document;
 4. on a fresh Rules Layer only, creates the settled baseline concepts/decisions and publishes the first global ruleset.
 
-The bootstrapper does **not** make network requests. Hosted SRD content is fetched only when a Rules Lawyer explicitly previews or refreshes a hosted source.
+The bootstrapper makes **no network requests**. In particular, it does not hydrate an SRD corpus merely because a third-party JSON representation claims that an entry belongs to the SRD.
 
 Existing immutable source identities must match the built-in metadata. A conflicting package/work/release identity stops startup rather than silently changing provenance.
 
-Existing hosted-source definitions are never rewritten by bootstrap. If a Rules Lawyer edits or disables a built-in definition, later starts preserve that revision.
+The rules baseline is conservative. If the database already contains a published ruleset, a non-baseline concept, or a non-bootstrap global decision, startup imports the baseline source document but does not create or publish decisions over the existing Rules Layer.
 
-The rules baseline is also conservative. If the database already contains a published ruleset, a non-baseline concept, or a non-bootstrap global decision, startup imports the baseline source document but does not create or publish decisions over the existing Rules Layer.
+## PDF authority and structured representations
+
+For 5e and 5.5e, the official SRD PDF is the corpus-membership authority. A structured JSON representation may be used later for convenient field-level ingestion, but it does not decide what content belongs to the SRD.
+
+Rules Core records these authority documents on fresh databases:
+
+- SRD 5.1: `https://media.wizards.com/2023/downloads/dnd/SRD_CC_v5.1.pdf`
+- SRD 5.2.1: `https://media.dndbeyond.com/compendium-images/srd/5.2/SRD_CC_v5.2.1.pdf`
+
+The authority link is attached to the logical source release, not to an individual downloaded copy. The expected ingestion workflow is:
+
+```text
+official PDF
+-> extract/review a versioned membership manifest
+-> acquire a structured representation
+-> admit only entities represented by the PDF manifest
+-> validate duplicates/ambiguities
+-> preview
+-> import immutable source revisions
+```
+
+This specifically prevents a 5e.tools/repack-specific source code, `srd` flag, page number, or malformed `reprintedAs` field from silently expanding or shrinking the canonical SRD corpus.
+
+The PDF also resolves the previously observed SRD 5.2.1 feat ambiguity at the conceptual level: `Magic Initiate` is explicitly present in the official feat section. A duplicate `Magic Initiate|SRD52` in a structured repack is therefore a representation defect to resolve, not a reason to omit the official feat from the SRD corpus.
 
 ## Built-in source families
 
@@ -30,7 +53,7 @@ Rules Core registers the public Wizards of the Coast SRD identities under packag
 - `srd-3e` / 3e;
 - `srd-3-5e` / 3.5e.
 
-No live source URL is guessed. A structured acquisition representation will be attached when a source/adapter has been deliberately selected and validated.
+No live mirror is guessed. Their source documents/adapters will be attached only after a deliberate source-selection and validation pass.
 
 ### D&D 5e SRD 5.1 and 5.5e SRD 5.2.1
 
@@ -39,13 +62,7 @@ Rules Core registers the Wizards SRDs under package `wotc-srd-cc` with `CC-BY-4.
 - `srd-5-1` / release `5.1` / game edition `5e`;
 - `srd-5-2-1` / release `5.2.1` / game edition `5.5e`.
 
-The built-in hosted acquisition definitions use the public `CoolFireGiant/hewnhero-srd` SRD-only 5e.tools-shaped representation. That repository identifies its entries as `SRD51` and `SRD52` and attributes the game text to Wizards of the Coast under CC BY 4.0. The representation is acquisition provenance; it does not replace Wizards as the canonical source provider.
-
-The hosted definitions cover actions, backgrounds, bestiary, classes, conditions/diseases, deities, equipment/items, languages, magic variants, objects, optional features, races/species, senses, skills, spells, tables, traps/hazards, variant rules, and vehicles.
-
-SRD 5.1 also includes `feats.json`. SRD 5.2.1 currently **does not**. The current upstream SRD-only representation contains two `Magic Initiate|SRD52` records with the same durable natural identity. One is internally contradictory/self-referential. Rules Core therefore quarantines that source family rather than adding page number to identity, dropping one record, or guessing which record should win.
-
-The full 5e.tools data repository is not used as the public baseline corpus because its current entity records commonly retain original book source codes such as `PHB`, `DMG`, `XPHB`, or `XDMG` and separately mark SRD membership with `srd` / `srd52` flags. A source-code-only filter can not prove that an arbitrary full-data record belongs to the Creative Commons SRD corpus.
+The official PDFs above are persisted as `membership-authority` references. Structured corpus hydration is intentionally not automatic until a PDF-derived manifest has been generated and reviewed.
 
 ### Loot Tavern
 
@@ -76,10 +93,8 @@ The bootstrap intentionally does not encode unresolved class/prestige progressio
 Normal integration tests run with `RulesCore__BootstrapBaseline=false` so their historical isolated assumptions remain valid. `BaselineBootstrapIntegrationTests` invokes the bootstrapper directly and verifies:
 
 - built-in source packages and edition families;
-- hosted SRD 5.1/5.2.1 registrations without network hydration;
-- SRD 5.2.1 feat quarantine;
+- official SRD 5.1 and 5.2.1 PDF authority references;
 - the six deterministic house-rule source entities;
 - initial global baseline publication;
 - repeat-bootstrap idempotence;
-- preservation of a Rules Lawyer's hosted-definition edit;
 - preservation of a later user-authored global decision.

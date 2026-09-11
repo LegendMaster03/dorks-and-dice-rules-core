@@ -1,3 +1,4 @@
+using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
@@ -16,7 +17,7 @@ public interface IRulesCoreBaselineBootstrapper
 
 public sealed record RulesCoreBaselineBootstrapResult(
     int SourcePackageCount,
-    int HostedSourceDefinitionCount,
+    int SourceAuthorityReferenceCount,
     int HouseRuleSourceEntityCount,
     bool RulesBaselineApplied,
     PublishedRulesetRevisionView? PublishedRuleset);
@@ -27,6 +28,8 @@ public sealed class RulesCoreBaselineBootstrapper(
     IGlobalRulesService globalRules)
     : IRulesCoreBaselineBootstrapper
 {
+    private const string AuthorityKind = "membership-authority";
+
     public async Task<RulesCoreBaselineBootstrapResult> EnsureAsync(
         CancellationToken cancellationToken = default)
     {
@@ -37,7 +40,7 @@ public sealed class RulesCoreBaselineBootstrapper(
             await EnsurePackageAsync(package, cancellationToken);
         }
 
-        var hostedSourceCount = await EnsureHostedSourcesAsync(cancellationToken);
+        var authorityReferenceCount = await EnsureAuthorityReferencesAsync(cancellationToken);
         var houseRuleImport = await importer.Import5eToolsDocumentAsync(
             RulesCoreBaselineCatalog.CreateHouseRuleImportRequest(),
             cancellationToken);
@@ -48,7 +51,7 @@ public sealed class RulesCoreBaselineBootstrapper(
 
         return new RulesCoreBaselineBootstrapResult(
             RulesCoreBaselineCatalog.SourcePackages.Count,
-            hostedSourceCount,
+            authorityReferenceCount,
             houseRuleImport.Entities.Count,
             publishedRuleset is not null,
             publishedRuleset);
@@ -147,32 +150,86 @@ public sealed class RulesCoreBaselineBootstrapper(
         }
     }
 
-    private async Task<int> EnsureHostedSourcesAsync(CancellationToken cancellationToken)
+    private async Task<int> EnsureAuthorityReferencesAsync(CancellationToken cancellationToken)
     {
-        var service = new HostedSourceService(dbContext, importer);
-        var existing = await service.ListAsync(
-            includeDisabled: true,
-            cancellationToken);
-        var existingKeys = existing
-            .Select(value => value.Key)
-            .ToHashSet(StringComparer.Ordinal);
+        await dbContext.Database.ExecuteSqlRawAsync("""
+            CREATE TABLE IF NOT EXISTS source_edition_authority_reference (
+                source_edition_authority_reference_id uuid NOT NULL,
+                source_edition_id uuid NOT NULL,
+                authority_kind varchar(80) NOT NULL,
+                uri varchar(2000) NOT NULL,
+                media_type varchar(200) NOT NULL,
+                note varchar(2000) NULL,
+                created_at timestamp with time zone NOT NULL,
+                CONSTRAINT pk_source_edition_authority_reference PRIMARY KEY (source_edition_authority_reference_id),
+                CONSTRAINT fk_source_edition_authority_reference_edition FOREIGN KEY (source_edition_id)
+                    REFERENCES source_edition(source_edition_id) ON DELETE CASCADE);
+            CREATE UNIQUE INDEX IF NOT EXISTS ux_source_edition_authority_reference_identity
+                ON source_edition_authority_reference(source_edition_id, authority_kind, uri);
+            """, cancellationToken);
 
-        foreach (var seed in RulesCoreBaselineCatalog.HostedSources)
+        foreach (var seed in RulesCoreBaselineCatalog.SrdPdfAuthorities)
         {
-            if (existingKeys.Contains(seed.Key))
+            var editionId = await (
+                from edition in dbContext.SourceEditions.AsNoTracking()
+                join work in dbContext.SourceWorks.AsNoTracking()
+                    on edition.SourceWorkId equals work.Id
+                join package in dbContext.SourcePackages.AsNoTracking()
+                    on work.SourcePackageId equals package.Id
+                where package.Key == seed.PackageKey
+                    && work.Key == seed.WorkKey
+                    && edition.Key == seed.EditionKey
+                select edition.Id)
+                .SingleAsync(cancellationToken);
+
+            var connection = dbContext.Database.GetDbConnection();
+            var openedHere = connection.State != System.Data.ConnectionState.Open;
+            if (openedHere)
             {
-                continue;
+                await connection.OpenAsync(cancellationToken);
             }
 
-            await service.SetAsync(
-                seed.Key,
-                seed.Request,
-                RulesCoreBaselineCatalog.BootstrapActor,
-                cancellationToken);
-            existingKeys.Add(seed.Key);
+            try
+            {
+                await using var command = connection.CreateCommand();
+                command.CommandText = """
+                    INSERT INTO source_edition_authority_reference (
+                        source_edition_authority_reference_id,
+                        source_edition_id,
+                        authority_kind,
+                        uri,
+                        media_type,
+                        note,
+                        created_at)
+                    VALUES (
+                        @id,
+                        @edition_id,
+                        @authority_kind,
+                        @uri,
+                        @media_type,
+                        @note,
+                        @created_at)
+                    ON CONFLICT (source_edition_id, authority_kind, uri) DO NOTHING;
+                    """;
+                AddParameter(command, "@id", Guid.NewGuid());
+                AddParameter(command, "@edition_id", editionId);
+                AddParameter(command, "@authority_kind", AuthorityKind);
+                AddParameter(command, "@uri", seed.Uri);
+                AddParameter(command, "@media_type", seed.MediaType);
+                AddParameter(command, "@note", seed.Note);
+                AddParameter(command, "@created_at", DateTimeOffset.UtcNow);
+                await command.ExecuteNonQueryAsync(cancellationToken);
+            }
+            finally
+            {
+                if (openedHere)
+                {
+                    await connection.CloseAsync();
+                }
+            }
         }
 
-        return RulesCoreBaselineCatalog.HostedSources.Count;
+        return RulesCoreBaselineCatalog.SrdPdfAuthorities.Count;
     }
 
     private async Task<PublishedRulesetRevisionView?> EnsureRulesBaselineAsync(
@@ -271,5 +328,13 @@ public sealed class RulesCoreBaselineBootstrapper(
             throw new InvalidOperationException(
                 $"Built-in source package '{seed.Key}' already exists with different immutable metadata.");
         }
+    }
+
+    private static void AddParameter(DbCommand command, string name, object? value)
+    {
+        var parameter = command.CreateParameter();
+        parameter.ParameterName = name;
+        parameter.Value = value ?? DBNull.Value;
+        command.Parameters.Add(parameter);
     }
 }
