@@ -34,7 +34,7 @@ public static class HostedSourceEndpointExtensions
                 return authorizationFailure;
             }
 
-            var service = new HostedSourceService(dbContext, importer);
+            var service = new LegacyAwareHostedSourceService(dbContext, importer);
             httpContext.Response.Headers.CacheControl = "no-store";
             return Results.Ok(await service.ListAsync(includeDisabled ?? true, cancellationToken));
         });
@@ -54,7 +54,7 @@ public static class HostedSourceEndpointExtensions
 
             try
             {
-                var service = new HostedSourceService(dbContext, importer);
+                var service = new LegacyAwareHostedSourceService(dbContext, importer);
                 var definition = await service.GetAsync(definitionId, cancellationToken);
                 if (definition is null)
                 {
@@ -87,7 +87,7 @@ public static class HostedSourceEndpointExtensions
 
             try
             {
-                var service = new HostedSourceService(dbContext, importer);
+                var service = new LegacyAwareHostedSourceService(dbContext, importer);
                 var definition = await service.SetAsync(
                     definitionKey,
                     request,
@@ -125,7 +125,7 @@ public static class HostedSourceEndpointExtensions
 
             try
             {
-                var service = new HostedSourceService(dbContext, importer);
+                var service = new LegacyAwareHostedSourceService(dbContext, importer);
                 var preview = await service.PreviewAsync(definitionId, cancellationToken);
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(preview);
@@ -175,7 +175,7 @@ public static class HostedSourceEndpointExtensions
 
             try
             {
-                var service = new HostedSourceService(dbContext, importer);
+                var service = new LegacyAwareHostedSourceService(dbContext, importer);
                 var refreshed = await service.RefreshAsync(definitionId, cancellationToken);
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(refreshed);
@@ -245,7 +245,7 @@ public static class HostedSourceEndpointExtensions
                     }
                 }
 
-                var service = new HostedSourceService(dbContext, importer);
+                var service = new LegacyAwareHostedSourceService(dbContext, importer);
                 var matches = await service.FindMatchesAsync(sourceCodes, cancellationToken);
                 var covered = matches
                     .SelectMany(value => value.MatchedSourceCodes)
