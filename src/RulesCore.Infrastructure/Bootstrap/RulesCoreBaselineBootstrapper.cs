@@ -42,6 +42,10 @@ public sealed class RulesCoreBaselineBootstrapper(
         }
 
         var authorityReferenceCount = await EnsureAuthorityReferencesAsync(cancellationToken);
+        _ = await BundledSrdSnapshots.EnsureAsync(
+            dbContext,
+            importer,
+            cancellationToken);
         var hostedSourceDefinitionCount = await BuiltInSrdHostedSources.EnsureAsync(
             dbContext,
             importer,
