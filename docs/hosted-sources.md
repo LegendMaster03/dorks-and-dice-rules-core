@@ -71,7 +71,7 @@ Git-backed built-in representations are pinned to reviewed commits rather than m
 
 Advancing either built-in representation is therefore a deliberate hosted-source definition change rather than an implicit consequence of an upstream push. Existing Rules Lawyer revisions are still preserved by bootstrap and are never overwritten automatically.
 
-The 3e Dragon.ee representation is not Git-backed, so Rules Core constrains it differently. The built-in 3e acquisition has a manually reviewed **139-document manifest**. `html-index` expansion must match that manifest exactly: a missing expected document or an unexpected new HTML document fails preview/refresh instead of silently altering the corpus. A mirror change therefore requires explicit review and an intentional manifest change before it can affect imported Source Layer revisions. Successfully imported content remains fingerprinted into immutable revisions, while the archived SRD distribution remains the corpus-membership authority.
+The 3e Dragon.ee representation is not Git-backed, so Rules Core constrains it differently. The built-in 3e acquisition has a manually reviewed **139-document manifest**. `html-index` expansion must match that manifest exactly: a missing expected document or an unexpected new HTML document fails preview/refresh instead of silently altering the corpus. A mirror change therefore requires explicit review and an intentional manifest change before it can affect imported Source Layer revisions. The manifest is a representation-integrity boundary; the archived SRD distribution remains the corpus-membership authority. Successfully imported content is fingerprinted into immutable revisions.
 
 ## Remote-source safety
 
