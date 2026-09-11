@@ -75,12 +75,23 @@ public static class FiveEToolsDocumentInspector
                 writer.WriteStartArray();
                 foreach (var item in property.Value.EnumerateArray())
                 {
-                    if (item.ValueKind == JsonValueKind.Object
-                        && included.Contains(GetSourceCode(item, fallbackSourceCode)))
+                    if (item.ValueKind != JsonValueKind.Object)
                     {
-                        item.WriteTo(writer);
-                        selectedEntityCount++;
+                        continue;
                     }
+
+                    var sourceCode = GetSourceCode(item, fallbackSourceCode);
+                    if (!included.Contains(sourceCode)
+                        || !OfficialSrdMembershipCatalog.IsManuallyConfirmed(
+                            sourceCode,
+                            property.Name,
+                            item))
+                    {
+                        continue;
+                    }
+
+                    item.WriteTo(writer);
+                    selectedEntityCount++;
                 }
                 writer.WriteEndArray();
             }
