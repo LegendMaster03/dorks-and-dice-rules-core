@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace RulesCore.Application.Sources;
 
-public static class LegacySrdDocumentInspector
+public static partial class LegacySrdDocumentInspector
 {
     private static readonly Regex MarkdownHeading = new(
         @"(?m)^(?<marks>#{1,6})[ \t]+(?<name>[^\r\n]+?)[ \t]*#*[ \t]*(?:\r?\n|$)",
@@ -212,7 +212,7 @@ public static class LegacySrdDocumentInspector
                     : match.Groups["bare"].Value)
             .Select(WebUtility.HtmlDecode)
             .Where(value => !string.IsNullOrWhiteSpace(value))
-            .Select(value => value.Trim())
+            .Select(value => value!.Trim())
             .Where(value => !value.StartsWith("#", StringComparison.Ordinal)
                 && !value.StartsWith("mailto:", StringComparison.OrdinalIgnoreCase)
                 && !value.StartsWith("javascript:", StringComparison.OrdinalIgnoreCase))
@@ -229,8 +229,4 @@ public static class LegacySrdDocumentInspector
             .ToArray();
     }
 
-    private static List<LegacyEntity> ParseMarkdown(string markdown, Uri uri, string sourceCode)
-    {
-        var matches = MarkdownHeading.Matches(markdown).Cast<Match>().ToArray();
-        var entities = new List<LegacyEntity>();
-        for (var index = 0; index < SECB1
+}
