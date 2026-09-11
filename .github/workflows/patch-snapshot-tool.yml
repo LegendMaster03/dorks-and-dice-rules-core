@@ -12,27 +12,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Exclude unnamed metadata rows
+      - name: Add stable item-type identity
         shell: python
         run: |
-          import re
           from pathlib import Path
 
           path = Path('tools/RulesCore.SourceSnapshotGenerator/Program.cs')
           text = path.read_text()
-          pattern = r'if \(item\.ValueKind != JsonValueKind\.Object\)\s*\{\s*continue;\s*\}'
-          replacement = '''if (item.ValueKind != JsonValueKind.Object
-                    || !item.TryGetProperty("name", out var nameValue)
-                    || nameValue.ValueKind != JsonValueKind.String
-                    || string.IsNullOrWhiteSpace(nameValue.GetString()))
-                {
-                    continue;
-                }'''
-          text, count = re.subn(pattern, replacement, text, count=1)
-          if count == 1:
-              path.write_text(text)
-          elif 'item.ValueKind != JsonValueKind.Object\n                    || !item.TryGetProperty("name", out var nameValue)' not in text:
-              raise SystemExit('snapshot entity filter was not found')
+          old = '''    string? uniqueId = entityType switch
+    {
+        "deity" => JoinIdentity(item, "pantheon"),'''
+          new = '''    string? uniqueId = entityType switch
+    {
+        "itemType" => JoinIdentity(item, "abbreviation"),
+        "deity" => JoinIdentity(item, "pantheon"),'''
+          if new not in text:
+              if old not in text:
+                  raise SystemExit('snapshot identity switch was not found')
+              path.write_text(text.replace(old, new, 1))
       - name: Commit patch
         shell: bash
         run: |
@@ -44,5 +41,5 @@ jobs:
             echo "Patch already applied."
             exit 0
           fi
-          git commit -m "Ignore non-entity metadata in SRD snapshots"
+          git commit -m "Disambiguate bundled SRD item types"
           git push origin HEAD:fix/bundle-canonical-srds
