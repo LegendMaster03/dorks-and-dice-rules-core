@@ -32,10 +32,10 @@ jobs:
             src/RulesCore.Web/wwwroot/source-normalization.js \
             src/RulesCore.Web/wwwroot/source-revision-review.js \
             src/RulesCore.Web/wwwroot/source-versioning.js \
-            src/RulesCore.Web/wwwroot/hosted-source-authoring.js \
             src/RulesCore.Web/wwwroot/source-admin.js \
             src/RulesCore.Web/wwwroot/source-access-admin.js \
             src/RulesCore.Web/wwwroot/source-acquisition-admin.js \
+            src/RulesCore.Web/wwwroot/hosted-source-authoring.js \
             src/RulesCore.Web/wwwroot/campaign-baseline-authoring.js; do
             node --input-type=module --check < "$file"
           done
@@ -71,6 +71,7 @@ jobs:
       - name: Test
         env:
           ConnectionStrings__RulesCore: Host=127.0.0.1;Port=55432;Database=rules_core_test;Username=rules_core_test;Password=rules_core_test
+          RulesCore__BootstrapBaseline: "false"
         run: dotnet test dorks-and-dice-rules-core.slnx --configuration Release --no-restore
 
       - name: Cleanup disposable PostgreSQL
