@@ -40,6 +40,28 @@ jobs:
             node --input-type=module --check < "$file"
           done
 
+          node --input-type=module <<'NODE'
+          import { RulesCoreApi } from "./src/RulesCore.Web/wwwroot/api.js";
+
+          const api = new RulesCoreApi({ apiBaseUrl: "https://rules-core.test/tool" });
+          if (typeof api.getGlobalResolvedRule !== "function"
+              || typeof api.getCampaignResolvedRule !== "function") {
+              throw new Error("Rules Browser resolved-rule API contract is incomplete.");
+          }
+
+          globalThis.fetch = async () => new Response(
+              JSON.stringify({ title: "Authentication required" }),
+              { status: 401, headers: { "Content-Type": "application/json" } });
+
+          if (await api.getOptionalSession() !== null) {
+              throw new Error("Anonymous session lookup must resolve to null.");
+          }
+          const campaigns = await api.getOptionalCampaigns();
+          if (!Array.isArray(campaigns) || campaigns.length !== 0) {
+              throw new Error("Anonymous campaign lookup must resolve to an empty array.");
+          }
+          NODE
+
       - name: Start disposable PostgreSQL
         run: |
           docker rm -f dorks-and-dice-rules-core-validate-postgres 2>/dev/null || true
