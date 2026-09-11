@@ -132,7 +132,7 @@ jobs:
           # immutable Source Layer revisions before ASP.NET starts accepting requests. Subsequent
           # deployments skip already-present bundled works and normally become ready much faster.
           ready=false
-          for i in {1..300}; do
+          for i in {1..900}; do
             response=$(docker run --rm \
               --network dorks-and-dice-backend \
               curlimages/curl:8.12.1 \
