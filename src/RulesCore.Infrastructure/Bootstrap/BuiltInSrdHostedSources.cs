@@ -6,8 +6,10 @@ namespace RulesCore.Infrastructure.Bootstrap;
 
 internal static class BuiltInSrdHostedSources
 {
-    private const string RawRoot = "https://raw.githubusercontent.com/CoolFireGiant/hewnhero-srd/main/data/";
-    private const string ThreeFiveGitHubRoot = "https://github.com/olimot/srd-v3.5-md/tree/main/";
+    private const string HewnHeroRevision = "d06d1dadee357857767b1e4da985df6609509bcf";
+    private const string ThreeFiveRevision = "c7f30a0ce11a579f75456746f278a4c75f67b4c1";
+    private const string RawRoot = $"https://raw.githubusercontent.com/CoolFireGiant/hewnhero-srd/{HewnHeroRevision}/data/";
+    private const string ThreeFiveGitHubRoot = $"https://github.com/olimot/srd-v3.5-md/tree/{ThreeFiveRevision}/";
 
     public static readonly IReadOnlyList<BuiltInHostedSourceSeed> Definitions =
     [
@@ -46,7 +48,7 @@ internal static class BuiltInSrdHostedSources
                     MarkdownTree("psionics"),
                     MarkdownTree("spells")
                 ],
-                note: "Corpus membership follows the archived official Wizards Revised 3.5 SRD distribution. olimot/srd-v3.5-md is used only as a Markdown representation. SRD35 is a Rules Core normalization code, not a historical Wizards source code.")),
+                note: $"Corpus membership follows the archived official Wizards Revised 3.5 SRD distribution. olimot/srd-v3.5-md at reviewed commit {ThreeFiveRevision} is used only as a Markdown representation. SRD35 is a Rules Core normalization code, not a historical Wizards source code.")),
         new(
             "builtin-wotc-srd-5-1",
             BuildCreativeCommons(
@@ -64,7 +66,7 @@ internal static class BuiltInSrdHostedSources
                     Direct("spells/spells-srd51.json"),
                     Direct("deities.json")
                 ],
-                note: "Corpus membership was manually reviewed against the official Wizards SRD 5.1 PDF. CoolFireGiant/hewnhero-srd is used only as the structured representation. Aggregate backgrounds, races, and feats are additionally constrained by the checked-in official SRD membership catalog.")),
+                note: $"Corpus membership was manually reviewed against the official Wizards SRD 5.1 PDF. CoolFireGiant/hewnhero-srd at reviewed commit {HewnHeroRevision} is used only as the structured representation. Aggregate backgrounds, races, and feats are additionally constrained by the checked-in official SRD membership catalog.")),
         new(
             "builtin-wotc-srd-5-2-1",
             BuildCreativeCommons(
@@ -81,7 +83,7 @@ internal static class BuiltInSrdHostedSources
                     Direct("bestiary/bestiary-srd52.json"),
                     Direct("spells/spells-srd52.json")
                 ],
-                note: "Corpus membership was manually reviewed against the official SRD 5.2.1 PDF. CoolFireGiant/hewnhero-srd is used only as the structured representation. Aggregate backgrounds, species, and feats are constrained by the checked-in official SRD membership catalog; this also selects the PDF-confirmed 2024 Magic Initiate record instead of the malformed duplicate."))
+                note: $"Corpus membership was manually reviewed against the official SRD 5.2.1 PDF. CoolFireGiant/hewnhero-srd at reviewed commit {HewnHeroRevision} is used only as the structured representation. Aggregate backgrounds, species, and feats are constrained by the checked-in official SRD membership catalog; this also selects the PDF-confirmed 2024 Magic Initiate record instead of the malformed duplicate."))
     ];
 
     public static async Task<int> EnsureAsync(

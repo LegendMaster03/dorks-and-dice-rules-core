@@ -1,12 +1,12 @@
 # Hosted source definitions
 
-Hosted source definitions let Rules Core use a canonical live location for commonly imported source material instead of accepting and retaining another submitted copy every time a user encounters the same upstream dataset.
+Hosted source definitions let Rules Core use a canonical remote representation for commonly imported source material instead of accepting and retaining another submitted copy every time a user encounters the same upstream dataset.
 
 ## Authority and lifecycle
 
-A user with the global **Rules Lawyer** role can create and revise hosted source definitions, preview the current remote material, and refresh it into the Source Layer. Definition changes are append-only: saving changed configuration creates a new definition revision, while saving identical configuration is idempotent.
+A user with the global **Rules Lawyer** role can create and revise hosted source definitions, preview the configured remote material, and refresh it into the Source Layer. Definition changes are append-only: saving changed configuration creates a new definition revision, while saving identical configuration is idempotent.
 
-Refreshing a hosted source does **not** make resolved rules depend on the remote server. Rules Core fetches the current remote documents, normalizes them through the definition's import adapter, and passes the resulting entities through the normal immutable Source Layer importer. Identical entities remain unchanged; changed entities receive a new immutable source revision.
+Refreshing a hosted source does **not** make resolved rules depend on the remote server. Rules Core fetches the configured documents, normalizes them through the definition's import adapter, and passes the resulting entities through the normal immutable Source Layer importer. Identical entities remain unchanged; changed entities receive a new immutable source revision.
 
 The Dev-only manual 5e.tools source-import workflow checks the selected source-code partition against enabled hosted definitions before previewing an uploaded/pasted JSON copy. When registered 5e.tools hosted definitions fully cover the selected partition, the UI stops the normal manual-import path and points the user to the canonical hosted source. A deliberate manual override remains available for curated exceptions. Legacy SRD text definitions are acquired through their hosted definitions rather than matched against pasted 5e.tools JSON.
 
@@ -31,7 +31,9 @@ The 3e/3.5e adapter normalizes historical HTML or Markdown into the same canonic
 - `html-index` — an HTTPS index page whose same-host, same-corpus `.htm`/`.html` links are expanded and parsed. This is used for the surviving Dragon.ee 3.0 SRD representation;
 - `github-tree` — a public GitHub tree whose Markdown blobs beneath the configured path are enumerated and parsed. This is used for the `olimot/srd-v3.5-md` representation.
 
-Legacy parsing preserves each document URI and heading/body provenance, assigns deterministic normalized identities, and classifies resolver-relevant entities such as classes, prestige classes, NPC classes, races, skills, feats, spells, monsters, and magic items where the source structure supports that classification. Other headings remain generic `rule` entities rather than being discarded.
+Legacy parsing preserves each document URI and heading/body provenance and assigns deterministic normalized identities. Classification is deliberately conservative. A heading is promoted to a resolver-facing entity family only when the source structure supplies evidence for that interpretation. Current recognized families include classes, prestige classes, NPC classes, races, skills, feats, spells, psionic powers, divine domains, salient divine abilities, monsters, and magic items. Uncertain material remains a generic `rule` entity rather than being discarded or guessed.
+
+The classifier also normalizes obvious source-presentation differences needed for cross-edition matching, such as plural 3.5e race headings (`Dwarves` -> `Dwarf`) and skill headings that append an ability/key descriptor (`Heal (Wis)` -> `Heal`). These transformations affect the normalized entity name only; the original heading and document URI remain in the immutable source revision.
 
 The legacy adapter uses normalized source labels `SRD3` and `SRD35`. These are Rules Core labels for partitioning and provenance; they are not claimed to be historical Wizards source codes.
 
@@ -58,7 +60,18 @@ For 3e, Rules Core records the archived SRD 3.0 distribution index as the member
 
 For 3.5e, Rules Core records the archived official Wizards Revised 3.5 SRD ZIP as the membership authority and uses `olimot/srd-v3.5-md` only as the Markdown representation.
 
-For 5e and 5.5e, the official SRD PDFs remain the membership authorities while the hosted JSON is a structured representation.
+For 5e and 5.5e, the official SRD PDFs remain the membership authorities while hosted JSON is a structured representation.
+
+### Pinned reviewed representations
+
+Git-backed built-in representations are pinned to reviewed commits rather than mutable default branches:
+
+- 3.5e `olimot/srd-v3.5-md`: `c7f30a0ce11a579f75456746f278a4c75f67b4c1`;
+- 5e/5.5e `CoolFireGiant/hewnhero-srd`: `d06d1dadee357857767b1e4da985df6609509bcf`.
+
+Advancing either built-in representation is therefore a deliberate hosted-source definition change rather than an implicit consequence of an upstream push. Existing Rules Lawyer revisions are still preserved by bootstrap and are never overwritten automatically.
+
+The 3e Dragon.ee representation is not Git-backed and can not be pinned in the same way. Its imported content is nevertheless fingerprinted into immutable Source Layer revisions, while the archived SRD distribution remains the corpus-membership authority.
 
 ## Remote-source safety
 

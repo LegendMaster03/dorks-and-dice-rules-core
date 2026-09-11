@@ -1,6 +1,6 @@
 # Built-in source and rules baseline
 
-Rules Core initializes a deterministic global baseline after the database schema is ready. Source registration, source acquisition, and Rules Layer adjudication remain separate so provenance is not collapsed into house rules.
+Rules Core initializes a deterministic global baseline after the database schema is ready. Source registration, source acquisition, normalization, and Rules Layer adjudication remain separate so provenance is not collapsed into house rules.
 
 ## Startup behavior
 
@@ -29,22 +29,24 @@ Rules Core separates **corpus membership authority** from the **representation p
 - Hosted format: `legacy-srd-text` using `html-index` expansion.
 - Normalized source label: `SRD3`.
 
-The Dragon.ee mirror is used because the original 3.0 distribution is no longer a convenient live structured source. It does not replace the archived distribution as the statement of what belongs to the SRD.
+The Dragon.ee mirror is used because the original 3.0 distribution is no longer a convenient live structured source. It does not replace the archived distribution as the statement of what belongs to the SRD. The representation is not Git-backed; every successful import is still fingerprinted into immutable source revisions.
 
 ### 3.5e
 
 - Membership authority: archived official Wizards Revised 3.5 SRD ZIP at `https://web.archive.org/web/20160328013113/http://www.wizards.com/d20/files/v35/SRD.zip`.
-- Parseable representation: `https://github.com/olimot/srd-v3.5-md`.
+- Parseable representation: `olimot/srd-v3.5-md` at reviewed commit `c7f30a0ce11a579f75456746f278a4c75f67b4c1`.
 - Hosted format: `legacy-srd-text` using explicit `github-tree` roots for `basic-rules-and-legal`, `divine`, `epic`, `magic-items`, `monsters`, `psionics`, and `spells`.
 - Normalized source label: `SRD35`.
 
 `SRD3` and `SRD35` are Rules Core normalization labels. They are not represented as historical Wizards source codes.
 
-The legacy adapter converts HTML/Markdown headings and stat-block structures into the same canonical entity documents accepted by `ISourceImportService`. It assigns deterministic normalized identities and preserves the original document URI, heading, and body. Recognized entity families include classes, prestige classes, NPC classes, races, skills, feats, spells, monsters, and magic items where the source structure provides a reliable distinction. Remaining material is retained as generic `rule` entities rather than discarded.
+The legacy adapter converts HTML/Markdown into the same canonical entity documents accepted by `ISourceImportService`. It assigns deterministic normalized identities and preserves the original document URI, heading, and body. Classification is evidence-based rather than path-only: spell and power signatures, feat benefits, monster stat-block fields, item price summaries, class/race identity, and domain/ability structure prevent section headings from becoming false entities. Recognized families include classes, prestige classes, NPC classes, races, skills, feats, spells, psionic powers, divine domains, salient divine abilities, monsters, and magic items. Remaining material is retained as generic `rule` entities rather than discarded.
+
+Obvious presentation-only differences are normalized for advisory concept matching. Examples include `Dwarves` -> `Dwarf` and `Heal (Wis)` -> `Heal`; the original source heading remains preserved in the revision.
 
 ### 5e and 5.5e
 
-For 5e and 5.5e, the official SRD PDF is the corpus-membership authority. Structured JSON is only the field-level representation used by the importer.
+For 5e and 5.5e, the official SRD PDF is the corpus-membership authority. Structured JSON is only the field-level representation used by the importer. The built-in JSON representation is pinned to reviewed `CoolFireGiant/hewnhero-srd` commit `d06d1dadee357857767b1e4da985df6609509bcf`.
 
 Rules Core persists these authority references:
 
@@ -89,6 +91,8 @@ Fresh installations register:
 
 The 3e and 3.5e definitions are public definitions under canonical package `wotc-srd-ogl` with `OGL-1.0a` provenance. The 5.1 and 5.2.1 definitions are public definitions under `wotc-srd-cc` with `CC-BY-4.0` provenance.
 
+Git-backed representation URLs are pinned to reviewed commits. Updating those mirrors requires a deliberate hosted-source definition revision. Bootstrap never overwrites a later Rules Lawyer revision.
+
 All four definitions are acquisition metadata only until explicitly previewed/refreshed. Bootstrap does not hydrate their remote content.
 
 ## Built-in source families
@@ -118,11 +122,13 @@ The source registry separates Loot Tavern into two package families:
 
 No specific Loot Tavern work is fabricated during bootstrap. A release is attached to the appropriate package only after its own availability and redistribution/direct-link terms are known.
 
-## Cross-edition resolution
+## Cross-edition normalization and resolution
 
 Importing multiple editions does not create automatic edition precedence. Same-name entities remain distinct source entities with their own package/work/release provenance until the Rules Layer binds them to a concept and a Rules Lawyer adjudicates the selection or consolidation.
 
-The integration suite now exercises this directly with `Power Attack`:
+Normalization is advisory. When two safely normalized source entities produce the same concept key, accepting the suggestions can bind both sources to one concept, but it creates no global decision and publishes nothing. This is covered with a 3e `Dwarf` / 3.5e `Dwarves` integration test.
+
+The resolver integration suite exercises explicit adjudication with `Power Attack`:
 
 1. a 3e `Power Attack` source entity and a 3.5e `Power Attack` source entity are imported under their respective SRD works;
 2. both are bound to one rule concept;
@@ -156,4 +162,4 @@ The regression suite explicitly verifies that an unauthenticated client can list
 
 ## Validation policy
 
-Normal historical integration tests run with `RulesCore__BootstrapBaseline=false` so their isolated assumptions remain stable. Dedicated tests verify source identities, all four authority references, all four persistent SRD definitions, manual 5e/5.5e membership constraints, legacy HTML/Markdown normalization, 3e/3.5e hosted refresh behavior, explicit cross-edition adjudication, initial global publication, repeat-bootstrap behavior, preservation of Rules Lawyer edits, and anonymous public access.
+Normal historical integration tests run with `RulesCore__BootstrapBaseline=false` so their isolated assumptions remain stable. Dedicated tests verify source identities, all four authority references, all four persistent SRD definitions, manual 5e/5.5e membership constraints, legacy HTML/Markdown normalization, false-positive resistance on real legacy corpus structures, 3e/3.5e hosted refresh behavior, advisory cross-edition normalization, explicit cross-edition adjudication, initial global publication, repeat-bootstrap behavior, preservation of Rules Lawyer edits, and anonymous public access.
