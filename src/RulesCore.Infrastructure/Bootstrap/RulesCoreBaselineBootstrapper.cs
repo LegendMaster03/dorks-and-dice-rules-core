@@ -18,6 +18,7 @@ public interface IRulesCoreBaselineBootstrapper
 public sealed record RulesCoreBaselineBootstrapResult(
     int SourcePackageCount,
     int SourceAuthorityReferenceCount,
+    int HostedSourceDefinitionCount,
     int HouseRuleSourceEntityCount,
     bool RulesBaselineApplied,
     PublishedRulesetRevisionView? PublishedRuleset);
@@ -41,6 +42,10 @@ public sealed class RulesCoreBaselineBootstrapper(
         }
 
         var authorityReferenceCount = await EnsureAuthorityReferencesAsync(cancellationToken);
+        var hostedSourceDefinitionCount = await BuiltInSrdHostedSources.EnsureAsync(
+            dbContext,
+            importer,
+            cancellationToken);
         var houseRuleImport = await importer.Import5eToolsDocumentAsync(
             RulesCoreBaselineCatalog.CreateHouseRuleImportRequest(),
             cancellationToken);
@@ -52,6 +57,7 @@ public sealed class RulesCoreBaselineBootstrapper(
         return new RulesCoreBaselineBootstrapResult(
             RulesCoreBaselineCatalog.SourcePackages.Count,
             authorityReferenceCount,
+            hostedSourceDefinitionCount,
             houseRuleImport.Entities.Count,
             publishedRuleset is not null,
             publishedRuleset);
