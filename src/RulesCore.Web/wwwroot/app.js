@@ -22,7 +22,10 @@ root.append(element("div", { className: "card card-body text-body-secondary", te
 try {
     const hostContext = await loadToolHostContext(root);
     const api = new RulesCoreApi(hostContext);
-    const [session, campaigns] = await Promise.all([api.getSession(), api.getCampaigns()]);
+    const [session, campaigns] = await Promise.all([
+        api.getOptionalSession(),
+        api.getOptionalCampaigns()
+    ]);
     const app = new RulesAuthoringApp(root, api, hostContext, session, campaigns);
     installResolvedRulesBrowser(app);
     installConceptSourceAuthoring(app);
