@@ -41,6 +41,7 @@ jobs:
           done
 
           node --input-type=module <<'NODE'
+          import fs from "node:fs";
           import { RulesCoreApi } from "./src/RulesCore.Web/wwwroot/api.js";
 
           const api = new RulesCoreApi({ apiBaseUrl: "https://rules-core.test/tool" });
@@ -59,6 +60,31 @@ jobs:
           const campaigns = await api.getOptionalCampaigns();
           if (!Array.isArray(campaigns) || campaigns.length !== 0) {
               throw new Error("Anonymous campaign lookup must resolve to an empty array.");
+          }
+
+          const authoring = fs.readFileSync(
+              "./src/RulesCore.Web/wwwroot/authoring.js",
+              "utf8");
+          for (const required of [
+              "detail.concept.id",
+              "detail.accessibleSources",
+              "sourceEntityRevisionId",
+              "payload.mergePatch",
+              "payload.structuredPatch"
+          ]) {
+              if (!authoring.includes(required)) {
+                  throw new Error(`Rules Lawyer browser contract is missing '${required}'.`);
+              }
+          }
+          for (const incompatible of [
+              "selectedSourceEntityRevisionId",
+              "patchOperations",
+              "manualDocument",
+              "detail.candidates"
+          ]) {
+              if (authoring.includes(incompatible)) {
+                  throw new Error(`Rules Lawyer browser contract contains incompatible field '${incompatible}'.`);
+              }
           }
           NODE
 
