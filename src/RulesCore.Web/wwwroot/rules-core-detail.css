@@ -1,0 +1,84 @@
+.rules-core-generated-page-lead {
+    margin-bottom: 1.1rem;
+    padding: .1rem 0 .25rem;
+}
+
+.rules-core-generated-page-lead h2 {
+    margin: 0 0 .3rem;
+    font-size: clamp(1.45rem, 1.8vw, 1.85rem);
+    font-weight: 760;
+    letter-spacing: -.025em;
+}
+
+.rules-core-generated-page-lead p {
+    max-width: 60rem;
+    margin: 0;
+    font-size: .93rem;
+    line-height: 1.5;
+}
+
+.rules-core-tool-disclosure {
+    margin-bottom: .8rem;
+    border: 1px solid var(--rules-core-border);
+    border-radius: .78rem;
+    background: var(--rules-core-surface);
+    overflow: clip;
+}
+
+.rules-core-tool-disclosure > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .8rem .9rem;
+    list-style: none;
+    user-select: none;
+}
+
+.rules-core-tool-disclosure > summary::-webkit-details-marker {
+    display: none;
+}
+
+.rules-core-tool-disclosure > summary:hover {
+    background: var(--rules-core-surface-subtle);
+}
+
+.rules-core-tool-disclosure > summary strong,
+.rules-core-tool-disclosure > summary small {
+    display: block;
+}
+
+.rules-core-tool-disclosure > summary strong {
+    font-size: .86rem;
+}
+
+.rules-core-tool-disclosure > summary small {
+    margin-top: .08rem;
+    color: var(--bs-secondary-color);
+    font-size: .72rem;
+}
+
+.rules-core-disclosure-cue {
+    flex: 0 0 auto;
+    color: var(--bs-primary);
+    font-size: .72rem;
+    font-weight: 700;
+}
+
+.rules-core-tool-disclosure > .card {
+    margin: 0 !important;
+    border: 0 !important;
+    border-top: 1px solid var(--rules-core-border) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.rules-core-idle-state {
+    padding: .8rem .9rem;
+    border: 1px dashed var(--rules-core-border);
+    border-radius: .68rem;
+    background: var(--rules-core-surface-subtle);
+    color: var(--bs-secondary-color);
+    font-size: .82rem;
+    line-height: 1.45;
+}

@@ -86,7 +86,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
             "/source-normalization.js",
             "javascript");
         Assert.Contains("Normalize imported sources", sourceNormalization, StringComparison.Ordinal);
-        Assert.Contains("Suggestions never apply automatically", sourceNormalization, StringComparison.Ordinal);
+        Assert.Contains("mechanically identical cross-edition rules may then resolve automatically", sourceNormalization, StringComparison.Ordinal);
         Assert.Contains("Create + bind", sourceNormalization, StringComparison.Ordinal);
         Assert.Contains("Bind to concept", sourceNormalization, StringComparison.Ordinal);
 

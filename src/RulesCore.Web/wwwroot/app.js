@@ -11,12 +11,13 @@ import { installSourceLibrary } from "./source-library.js";
 import { installSourceNormalization } from "./source-normalization.js";
 import { installSourceRevisionReview } from "./source-revision-review.js";
 import { installSourceVersioning } from "./source-versioning.js";
+import { installRulesCoreUx } from "./ux-shell.js";
 import { alertNode, clear, describeError, element } from "./ui.js";
 
 const root = document.getElementById("tool-root");
 if (!root) throw new Error("Rules Core could not find the Dorks & Dice tool root.");
 
-installStylesheet();
+installStylesheets();
 clear(root);
 root.append(element("div", { className: "card card-body text-body-secondary", text: "Loading Rules Core…" }));
 
@@ -45,6 +46,7 @@ try {
     if (hostContext.siteMode === "dorks-and-dice") {
         installSourceLibrary(app);
     }
+    installRulesCoreUx(app);
     await app.render();
 } catch (error) {
     console.error("Rules Core failed to initialize.", error);
@@ -54,12 +56,16 @@ try {
         alertNode("danger", describeError(error))));
 }
 
-function installStylesheet() {
-    const id = "rules-core-module-styles";
-    if (document.getElementById(id)) return;
-    const link = document.createElement("link");
-    link.id = id;
-    link.rel = "stylesheet";
-    link.href = new URL("./rules-core.css", import.meta.url).href;
-    document.head.append(link);
+function installStylesheets() {
+    for (const [id, filename] of [
+        ["rules-core-module-styles", "./rules-core.css"],
+        ["rules-core-detail-styles", "./rules-core-detail.css"]
+    ]) {
+        if (document.getElementById(id)) continue;
+        const link = document.createElement("link");
+        link.id = id;
+        link.rel = "stylesheet";
+        link.href = new URL(filename, import.meta.url).href;
+        document.head.append(link);
+    }
 }
