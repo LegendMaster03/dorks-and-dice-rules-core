@@ -1,9 +1,10 @@
 name: Deploy Rules Core
-run-name: Deploy ${{ github.ref_name }} at ${{ github.sha }}
+run-name: Deploy ${{ github.event.workflow_run.head_branch || github.ref_name }} at ${{ github.event.workflow_run.head_sha || github.sha }}
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: [ "Validate Rules Core" ]
+    types: [ completed ]
   workflow_dispatch:
 
 concurrency:
@@ -12,11 +13,25 @@ concurrency:
 
 jobs:
   deploy:
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref_name == 'main') ||
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.event == 'push' &&
+       github.event.workflow_run.head_branch == 'main' &&
+       github.event.workflow_run.conclusion == 'success')
     runs-on: [self-hosted, dorks-and-dice-rules-core]
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
 
-      - name: Start disposable PostgreSQL
+      - name: Build image
+        timeout-minutes: 10
+        run: docker build -t dorks-and-dice-rules-core:latest -f src/RulesCore.Web/Dockerfile .
+
+      - name: Start smoke-test PostgreSQL
+        timeout-minutes: 2
         run: |
           docker rm -f dorks-and-dice-rules-core-test-postgres 2>/dev/null || true
           docker network create dorks-and-dice-rules-core-test 2>/dev/null || true
@@ -42,25 +57,8 @@ jobs:
             exit 1
           fi
 
-      - name: Run tests
-        run: |
-          docker run --rm \
-            --user "$(id -u):$(id -g)" \
-            --network dorks-and-dice-rules-core-test \
-            -e HOME=/tmp \
-            -e DOTNET_CLI_HOME=/tmp/dotnet \
-            -e NUGET_PACKAGES=/tmp/nuget \
-            -e RulesCore__BootstrapBaseline=false \
-            -e ConnectionStrings__RulesCore='Host=dorks-and-dice-rules-core-test-postgres;Port=5432;Database=rules_core_test;Username=rules_core_test;Password=rules_core_test' \
-            -v "$PWD:/src" \
-            -w /src \
-            mcr.microsoft.com/dotnet/sdk:10.0 \
-            dotnet test dorks-and-dice-rules-core.slnx --configuration Release
-
-      - name: Build image
-        run: docker build -t dorks-and-dice-rules-core:latest -f src/RulesCore.Web/Dockerfile .
-
       - name: Smoke test container
+        timeout-minutes: 5
         run: |
           docker rm -f dorks-and-dice-rules-core-smoketest 2>/dev/null || true
           docker run -d --name dorks-and-dice-rules-core-smoketest \
@@ -69,8 +67,8 @@ jobs:
             -e ConnectionStrings__RulesCore='Host=dorks-and-dice-rules-core-test-postgres;Port=5432;Database=rules_core_test;Username=rules_core_test;Password=rules_core_test' \
             dorks-and-dice-rules-core:latest
 
-          # Baseline hydration is covered by the integration suite above. The smoke test is
-          # intentionally limited to container startup/readiness so it stays fast on every deploy.
+          # Full tests already passed in Validate Rules Core. The deployment runner only
+          # verifies that the built image starts and becomes ready against PostgreSQL.
           ready=false
           for i in {1..20}; do
             health=$(docker run --rm \
@@ -95,14 +93,16 @@ jobs:
             exit 1
           fi
 
-      - name: Cleanup test infrastructure
+      - name: Cleanup smoke-test infrastructure
         if: always()
+        timeout-minutes: 3
         run: |
           docker rm -f dorks-and-dice-rules-core-smoketest 2>/dev/null || true
           docker rm -f dorks-and-dice-rules-core-test-postgres 2>/dev/null || true
           docker network rm dorks-and-dice-rules-core-test 2>/dev/null || true
 
       - name: Deploy
+        timeout-minutes: 5
         run: |
           ENV_FILE=/mnt/HDDs/www/dorks-and-dice-rules-core/.env
           if [ ! -f "$ENV_FILE" ]; then
@@ -116,8 +116,6 @@ jobs:
             -f docker-compose.yml \
             config >/dev/null
 
-          # The first automated deployment replaces the manually-created bootstrap container.
-          # Subsequent deployments recreate the Compose-managed container with the same name.
           docker rm -f dorks-and-dice-rules-core 2>/dev/null || true
 
           docker compose \
@@ -127,6 +125,7 @@ jobs:
             up -d --force-recreate --remove-orphans
 
       - name: Verify deployed service
+        timeout-minutes: 16
         run: |
           # A deployment that introduces a new bundled corpus can spend several minutes hydrating
           # immutable Source Layer revisions before ASP.NET starts accepting requests. Subsequent
