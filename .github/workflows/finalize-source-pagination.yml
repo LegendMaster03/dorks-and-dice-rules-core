@@ -19,115 +19,84 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
 
-          # Remove duplicate UI insertions left by the earlier one-shot patch race.
+          # Remove duplicate page-size declarations regardless of how many race-insertions occurred.
           path = Path('src/RulesCore.Web/wwwroot/source-library.js')
           text = path.read_text()
-          duplicate = 'const SOURCE_PAGE_SIZE = 100;\nconst SOURCE_PAGE_SIZE = 100;\n'
-          if duplicate in text:
-              text = text.replace(duplicate, 'const SOURCE_PAGE_SIZE = 100;\n', 1)
+          text = re.sub(
+              r'(const SOURCE_PAGE_SIZE = 100;\n)(?:const SOURCE_PAGE_SIZE = 100;\n)+',
+              r'\1',
+              text,
+              count=1)
           if text.count('const SOURCE_PAGE_SIZE = 100;') != 1:
               raise SystemExit('Unexpected SOURCE_PAGE_SIZE declaration count')
           path.write_text(text)
 
+          # Keep exactly one auto-resolution notice block using brace-aware line removal.
           path = Path('src/RulesCore.Web/wwwroot/source-versioning.js')
-          text = path.read_text()
-          block = '''    if (model.latestDecision?.note?.startsWith("Auto-resolved:")) {
-              card.append(alertNode(
-                  "success",
-                  "Automatically resolved: the bound editions have the same rule-bearing content. Publication remains a separate action."));
-          }
-          '''
-          doubled = block + block
-          if doubled in text:
-              text = text.replace(doubled, block, 1)
-          if text.count('Automatically resolved: the bound editions have the same rule-bearing content.') != 1:
+          lines = path.read_text().splitlines(keepends=True)
+          marker = 'if (model.latestDecision?.note?.startsWith("Auto-resolved:")) {'
+          output = []
+          seen = 0
+          i = 0
+          while i < len(lines):
+              if lines[i].strip() == marker:
+                  seen += 1
+                  if seen > 1:
+                      depth = 0
+                      while i < len(lines):
+                          depth += lines[i].count('{') - lines[i].count('}')
+                          i += 1
+                          if depth == 0:
+                              break
+                      continue
+              output.append(lines[i])
+              i += 1
+          text = ''.join(output)
+          if seen < 1 or text.count('Automatically resolved: the bound editions have the same rule-bearing content.') != 1:
               raise SystemExit('Unexpected auto-resolution alert count')
           path.write_text(text)
 
-          # Ensure every ordinary concept/source binding attempts conservative no-change resolution.
+          # Make direct global source binding participate in the same conservative resolver.
           path = Path('src/RulesCore.Infrastructure/Rules/GlobalRulesService.cs')
           text = path.read_text()
-          old_existing = '''        if (existing is not null)
-          {
-              return new RuleMutationResult<RuleConceptSourceBindingView>(
-                  ToView(existing),
-                  Created: false);
-          }
-          '''
-          new_existing = '''        if (existing is not null)
-          {
-              await RuleAutoResolutionService.TryResolveAsync(
-                  dbContext,
-                  ruleConceptId,
-                  actor,
-                  cancellationToken);
-              return new RuleMutationResult<RuleConceptSourceBindingView>(
-                  ToView(existing),
-                  Created: false);
-          }
-          '''
-          if old_existing in text:
-              text = text.replace(old_existing, new_existing, 1)
-          elif new_existing not in text:
-              raise SystemExit('GlobalRulesService existing-binding insertion point not found')
+          method_start = text.index('    public async Task<RuleMutationResult<RuleConceptSourceBindingView>> BindSourceEntityAsync(')
+          method_end = text.index('    public async Task<RuleMutationResult<GlobalRuleDecisionView>> SetDecisionAsync(', method_start)
+          method = text[method_start:method_end]
 
-          old_new = '''        dbContext.RuleConceptSourceBindings.Add(binding);
-          await dbContext.SaveChangesAsync(cancellationToken);
+          existing_old = '''        if (existing is not null)\n        {\n            return new RuleMutationResult<RuleConceptSourceBindingView>(\n'''
+          existing_new = '''        if (existing is not null)\n        {\n            await RuleAutoResolutionService.TryResolveAsync(\n                dbContext,\n                ruleConceptId,\n                actor,\n                cancellationToken);\n            return new RuleMutationResult<RuleConceptSourceBindingView>(\n'''
+          if existing_old in method:
+              method = method.replace(existing_old, existing_new, 1)
+          elif 'await RuleAutoResolutionService.TryResolveAsync(' not in method:
+              raise SystemExit('Existing-binding auto-resolution insertion point not found')
 
-          return new RuleMutationResult<RuleConceptSourceBindingView>(
-              ToView(binding),
-              Created: true);
-          '''
-          new_new = '''        dbContext.RuleConceptSourceBindings.Add(binding);
-          await dbContext.SaveChangesAsync(cancellationToken);
-          await RuleAutoResolutionService.TryResolveAsync(
-              dbContext,
-              ruleConceptId,
-              actor,
-              cancellationToken);
+          save_old = '''        dbContext.RuleConceptSourceBindings.Add(binding);\n        await dbContext.SaveChangesAsync(cancellationToken);\n\n        return new RuleMutationResult<RuleConceptSourceBindingView>(\n'''
+          save_new = '''        dbContext.RuleConceptSourceBindings.Add(binding);\n        await dbContext.SaveChangesAsync(cancellationToken);\n        await RuleAutoResolutionService.TryResolveAsync(\n            dbContext,\n            ruleConceptId,\n            actor,\n            cancellationToken);\n\n        return new RuleMutationResult<RuleConceptSourceBindingView>(\n'''
+          if save_old in method:
+              method = method.replace(save_old, save_new, 1)
+          elif method.count('await RuleAutoResolutionService.TryResolveAsync(') < 2:
+              raise SystemExit('New-binding auto-resolution insertion point not found')
 
-          return new RuleMutationResult<RuleConceptSourceBindingView>(
-              ToView(binding),
-              Created: true);
-          '''
-          if old_new in text:
-              text = text.replace(old_new, new_new, 1)
-          elif new_new not in text:
-              raise SystemExit('GlobalRulesService new-binding insertion point not found')
+          text = text[:method_start] + method + text[method_end:]
           path.write_text(text)
 
-          # The direct binding path now performs the first auto-resolution attempt itself.
+          # Direct binding now creates the initial automatic decision; the explicit helper call is only the idempotence check.
           path = Path('tests/RulesCore.IntegrationTests/SourcePagingAndAutoResolutionIntegrationTests.cs')
           text = path.read_text()
-          old = '''            var unchangedResolution = await RuleAutoResolutionService.TryResolveAsync(
-                  db,
-                  unchangedConcept.Id,
-                  "rules-lawyer");
-              Assert.True(unchangedResolution.Eligible);
-              Assert.True(unchangedResolution.Applied);
-              Assert.NotNull(unchangedResolution.DecisionId);
-
-              var unchangedDecision = await db.GlobalRuleDecisions
-                  .AsNoTracking()
-                  .SingleAsync(value => value.RuleConceptId == unchangedConcept.Id);
-              Assert.Equal(RuleDecisionKinds.SelectSource, unchangedDecision.DecisionKind);
-              Assert.StartsWith("Auto-resolved:", unchangedDecision.Note);
-
-              var repeatedResolution = await RuleAutoResolutionService.TryResolveAsync(
-          '''
-          new = '''            var unchangedDecision = await db.GlobalRuleDecisions
-                  .AsNoTracking()
-                  .SingleAsync(value => value.RuleConceptId == unchangedConcept.Id);
-              Assert.Equal("select-source", unchangedDecision.DecisionKind);
-              Assert.StartsWith("Auto-resolved:", unchangedDecision.Note);
-
-              var repeatedResolution = await RuleAutoResolutionService.TryResolveAsync(
-          '''
-          if old in text:
-              text = text.replace(old, new, 1)
-          elif new not in text:
-              raise SystemExit('Auto-resolution integration-test insertion point not found')
+          start_marker = '''            var unchangedResolution = await RuleAutoResolutionService.TryResolveAsync(\n'''
+          end_marker = '''            var unchangedDecision = await db.GlobalRuleDecisions\n'''
+          if start_marker in text:
+              start = text.index(start_marker)
+              end = text.index(end_marker, start)
+              text = text[:start] + text[end:]
+          text = text.replace(
+              'Assert.Equal(RuleDecisionKinds.SelectSource, unchangedDecision.DecisionKind);',
+              'Assert.Equal("select-source", unchangedDecision.DecisionKind);',
+              1)
+          if 'var unchangedResolution =' in text or 'RuleDecisionKinds.SelectSource' in text:
+              raise SystemExit('Auto-resolution test cleanup did not complete')
           path.write_text(text)
           PY
 
