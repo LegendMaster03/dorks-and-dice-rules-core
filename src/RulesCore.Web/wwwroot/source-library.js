@@ -66,6 +66,7 @@ const BUNDLED_SRDS = [
 ];
 const SOURCE_LIMIT = 200;
 const SOURCE_PAGE_SIZE = 100;
+const SOURCE_PAGE_SIZE = 100;
 const ENTITY_TYPES = [
     ["", "All types"],
     ["monster", "Monsters"],
