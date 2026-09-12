@@ -26,7 +26,6 @@ export function installSourceNormalization(app) {
         const card = createNormalizationCard(app, container);
         const insertionPoint = container.children[2] ?? null;
         container.insertBefore(card, insertionPoint);
-        await card.loadCandidates();
     };
 }
 
@@ -40,7 +39,7 @@ function createNormalizationCard(app, container) {
             element("h3", { className: "h5 mb-1", text: "Normalize imported sources" }),
             element("p", {
                 className: "text-body-secondary mb-0",
-                text: "Review deterministic concept suggestions for accessible source entities that are not bound yet. Suggestions never apply automatically."
+                text: "Review deterministic concept suggestions for accessible source entities that are not bound yet. Binding remains deliberate; mechanically identical cross-edition rules may then resolve automatically."
             })),
         badge("Rules Lawyer review", "primary"));
     card.append(heading);
@@ -60,11 +59,15 @@ function createNormalizationCard(app, container) {
 
     card.append(element("div", {
         className: "small text-body-secondary mb-3",
-        text: "The suggested key is derived only from entity type and name. Accepting a suggestion creates or reuses that stable concept and binds this source entity; it does not create a rule decision or publish anything."
+        text: "The suggested key is derived only from entity type and name. Accepting creates or reuses that stable concept and binds this source. If that completes a mechanically identical cross-edition set, Rules Core may record an automatic no-change decision; publication remains explicit."
     }));
 
     const status = element("div");
     const results = element("div");
+    results.append(element("div", {
+        className: "rules-core-idle-state",
+        text: "Search by rule name, source, edition, or entity type when you are ready to review normalization suggestions."
+    }));
     card.append(status, results);
 
     let page = 0;
