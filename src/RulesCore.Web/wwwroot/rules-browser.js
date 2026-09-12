@@ -152,7 +152,7 @@ function renderCatalog(app, container, results, catalog, scopeValue, page, hasNe
     summary.append(definitionList([
         ["Published revision", revisionLabel],
         ["Published", formatDate(catalog.publishedAt)],
-        ["Accessible rules", String(catalog.rules?.length ?? 0)]
+        ["Rules on this page", String(catalog.rules?.length ?? 0)]
     ]));
     results.append(summary);
 
