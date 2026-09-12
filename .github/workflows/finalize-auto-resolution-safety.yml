@@ -1,0 +1,54 @@
+name: Finalize Auto Resolution Safety
+
+on:
+  push:
+    branches: [ "fix/source-library-pagination" ]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/source-library-pagination
+      - name: Apply stale-resolution safeguards
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('src/RulesCore.Infrastructure/Rules/GlobalRulesService.cs')
+          text = path.read_text()
+          old = '''        if (currentDecisions.Length == 0)\n        {\n            throw new InvalidOperationException("There are no global rule decisions to publish.");\n        }\n\n        var fingerprint = ComputeRulesetFingerprint(currentDecisions);\n'''
+          new = '''        if (currentDecisions.Length == 0)\n        {\n            throw new InvalidOperationException("There are no global rule decisions to publish.");\n        }\n\n        foreach (var decision in currentDecisions.Where(RuleAutoResolutionService.IsAutomaticDecision))\n        {\n            if (!await RuleAutoResolutionService.IsCurrentAutomaticDecisionAsync(\n                dbContext,\n                decision,\n                actor,\n                cancellationToken))\n            {\n                throw new InvalidOperationException(\n                    $"Automatic resolution for rule concept '{decision.RuleConcept.Key}' is no longer current because a bound source now differs or can not be verified. Review the concept before publishing.");\n            }\n        }\n\n        var fingerprint = ComputeRulesetFingerprint(currentDecisions);\n'''
+          if old in text:
+              text = text.replace(old, new, 1)
+          elif new not in text:
+              raise SystemExit('Publish stale-resolution insertion point not found')
+          path.write_text(text)
+
+          path = Path('tests/RulesCore.IntegrationTests/SourcePagingAndAutoResolutionIntegrationTests.cs')
+          text = path.read_text()
+          marker = '''            Assert.Equal(1, await db.GlobalRuleDecisions.CountAsync(\n                value => value.RuleConceptId == unchangedConcept.Id));\n\n            var changedConcept = (await rules.CreateConceptAsync(\n'''
+          replacement = '''            Assert.Equal(1, await db.GlobalRuleDecisions.CountAsync(\n                value => value.RuleConceptId == unchangedConcept.Id));\n\n            await importer.Import5eToolsDocumentAsync(AutoResolutionRequest(\n                newPackageKey,\n                "New edition fixture",\n                "new-work",\n                "New edition",\n                "new-release",\n                "5.5e",\n                $"NEW{token}",\n                new DateOnly(2024, 9, 17),\n                unchangedText: "You gain a +1 bonus to the attack roll.",\n                changedText: "You gain advantage on the attack roll."));\n\n            Assert.False(await RuleAutoResolutionService.IsCurrentAutomaticDecisionAsync(\n                db,\n                unchangedDecision,\n                "rules-lawyer"));\n\n            var authoring = new GlobalRulesAuthoringService(db);\n            var staleConcept = await authoring.GetConceptAsync(\n                unchangedConcept.Id,\n                "rules-lawyer");\n            Assert.NotNull(staleConcept);\n            Assert.Null(staleConcept!.LatestDecision);\n            Assert.True(staleConcept.HasUnpublishedChanges);\n\n            var publishError = await Assert.ThrowsAsync<InvalidOperationException>(\n                () => rules.PublishAsync("rules-lawyer"));\n            Assert.Contains("no longer current", publishError.Message, StringComparison.OrdinalIgnoreCase);\n\n            var changedConcept = (await rules.CreateConceptAsync(\n'''
+          if marker in text:
+              text = text.replace(marker, replacement, 1)
+          elif replacement not in text:
+              raise SystemExit('Stale automatic-resolution test insertion point not found')
+          path.write_text(text)
+          PY
+
+          git diff --check
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add \
+            src/RulesCore.Infrastructure/Rules/GlobalRulesService.cs \
+            tests/RulesCore.IntegrationTests/SourcePagingAndAutoResolutionIntegrationTests.cs
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Guard publication against stale automatic rulings"
+          git push origin HEAD:fix/source-library-pagination
