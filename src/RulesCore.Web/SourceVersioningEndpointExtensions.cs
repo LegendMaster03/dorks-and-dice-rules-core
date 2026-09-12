@@ -66,6 +66,13 @@ public static class SourceVersioningEndpointExtensions
                 {
                     return Results.NotFound();
                 }
+
+                await RuleAutoResolutionService.TryResolveAsync(
+                    dbContext,
+                    request.RuleConceptId,
+                    authenticationContext.User.Id,
+                    cancellationToken);
+
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(result);
             }
