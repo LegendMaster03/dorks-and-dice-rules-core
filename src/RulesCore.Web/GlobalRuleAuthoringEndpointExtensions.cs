@@ -12,6 +12,7 @@ public static class GlobalRuleAuthoringEndpointExtensions
         app.MapSourceAdministrationEndpoints();
         app.MapHostedSourceEndpoints();
         app.MapSourceAcquisitionEndpoints();
+        app.MapSourceBrowserEndpoints();
         app.MapSourceNormalizationEndpoints();
         app.MapSourceVersioningEndpoints();
         app.MapResolvedRulesCatalogEndpoints();
