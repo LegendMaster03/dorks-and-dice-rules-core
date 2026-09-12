@@ -17,7 +17,7 @@ import { alertNode, clear, describeError, element } from "./ui.js";
 const root = document.getElementById("tool-root");
 if (!root) throw new Error("Rules Core could not find the Dorks & Dice tool root.");
 
-installStylesheet();
+installStylesheets();
 clear(root);
 root.append(element("div", { className: "card card-body text-body-secondary", text: "Loading Rules Core…" }));
 
@@ -56,12 +56,16 @@ try {
         alertNode("danger", describeError(error))));
 }
 
-function installStylesheet() {
-    const id = "rules-core-module-styles";
-    if (document.getElementById(id)) return;
-    const link = document.createElement("link");
-    link.id = id;
-    link.rel = "stylesheet";
-    link.href = new URL("./rules-core.css", import.meta.url).href;
-    document.head.append(link);
+function installStylesheets() {
+    for (const [id, filename] of [
+        ["rules-core-module-styles", "./rules-core.css"],
+        ["rules-core-detail-styles", "./rules-core-detail.css"]
+    ]) {
+        if (document.getElementById(id)) continue;
+        const link = document.createElement("link");
+        link.id = id;
+        link.rel = "stylesheet";
+        link.href = new URL(filename, import.meta.url).href;
+        document.head.append(link);
+    }
 }
