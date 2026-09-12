@@ -1,0 +1,146 @@
+name: Finalize Source Pagination
+
+on:
+  push:
+    branches: [ "fix/source-library-pagination" ]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/source-library-pagination
+      - name: Finalize changes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          # Remove duplicate UI insertions left by the earlier one-shot patch race.
+          path = Path('src/RulesCore.Web/wwwroot/source-library.js')
+          text = path.read_text()
+          duplicate = 'const SOURCE_PAGE_SIZE = 100;\nconst SOURCE_PAGE_SIZE = 100;\n'
+          if duplicate in text:
+              text = text.replace(duplicate, 'const SOURCE_PAGE_SIZE = 100;\n', 1)
+          if text.count('const SOURCE_PAGE_SIZE = 100;') != 1:
+              raise SystemExit('Unexpected SOURCE_PAGE_SIZE declaration count')
+          path.write_text(text)
+
+          path = Path('src/RulesCore.Web/wwwroot/source-versioning.js')
+          text = path.read_text()
+          block = '''    if (model.latestDecision?.note?.startsWith("Auto-resolved:")) {
+              card.append(alertNode(
+                  "success",
+                  "Automatically resolved: the bound editions have the same rule-bearing content. Publication remains a separate action."));
+          }
+          '''
+          doubled = block + block
+          if doubled in text:
+              text = text.replace(doubled, block, 1)
+          if text.count('Automatically resolved: the bound editions have the same rule-bearing content.') != 1:
+              raise SystemExit('Unexpected auto-resolution alert count')
+          path.write_text(text)
+
+          # Ensure every ordinary concept/source binding attempts conservative no-change resolution.
+          path = Path('src/RulesCore.Infrastructure/Rules/GlobalRulesService.cs')
+          text = path.read_text()
+          old_existing = '''        if (existing is not null)
+          {
+              return new RuleMutationResult<RuleConceptSourceBindingView>(
+                  ToView(existing),
+                  Created: false);
+          }
+          '''
+          new_existing = '''        if (existing is not null)
+          {
+              await RuleAutoResolutionService.TryResolveAsync(
+                  dbContext,
+                  ruleConceptId,
+                  actor,
+                  cancellationToken);
+              return new RuleMutationResult<RuleConceptSourceBindingView>(
+                  ToView(existing),
+                  Created: false);
+          }
+          '''
+          if old_existing in text:
+              text = text.replace(old_existing, new_existing, 1)
+          elif new_existing not in text:
+              raise SystemExit('GlobalRulesService existing-binding insertion point not found')
+
+          old_new = '''        dbContext.RuleConceptSourceBindings.Add(binding);
+          await dbContext.SaveChangesAsync(cancellationToken);
+
+          return new RuleMutationResult<RuleConceptSourceBindingView>(
+              ToView(binding),
+              Created: true);
+          '''
+          new_new = '''        dbContext.RuleConceptSourceBindings.Add(binding);
+          await dbContext.SaveChangesAsync(cancellationToken);
+          await RuleAutoResolutionService.TryResolveAsync(
+              dbContext,
+              ruleConceptId,
+              actor,
+              cancellationToken);
+
+          return new RuleMutationResult<RuleConceptSourceBindingView>(
+              ToView(binding),
+              Created: true);
+          '''
+          if old_new in text:
+              text = text.replace(old_new, new_new, 1)
+          elif new_new not in text:
+              raise SystemExit('GlobalRulesService new-binding insertion point not found')
+          path.write_text(text)
+
+          # The direct binding path now performs the first auto-resolution attempt itself.
+          path = Path('tests/RulesCore.IntegrationTests/SourcePagingAndAutoResolutionIntegrationTests.cs')
+          text = path.read_text()
+          old = '''            var unchangedResolution = await RuleAutoResolutionService.TryResolveAsync(
+                  db,
+                  unchangedConcept.Id,
+                  "rules-lawyer");
+              Assert.True(unchangedResolution.Eligible);
+              Assert.True(unchangedResolution.Applied);
+              Assert.NotNull(unchangedResolution.DecisionId);
+
+              var unchangedDecision = await db.GlobalRuleDecisions
+                  .AsNoTracking()
+                  .SingleAsync(value => value.RuleConceptId == unchangedConcept.Id);
+              Assert.Equal(RuleDecisionKinds.SelectSource, unchangedDecision.DecisionKind);
+              Assert.StartsWith("Auto-resolved:", unchangedDecision.Note);
+
+              var repeatedResolution = await RuleAutoResolutionService.TryResolveAsync(
+          '''
+          new = '''            var unchangedDecision = await db.GlobalRuleDecisions
+                  .AsNoTracking()
+                  .SingleAsync(value => value.RuleConceptId == unchangedConcept.Id);
+              Assert.Equal("select-source", unchangedDecision.DecisionKind);
+              Assert.StartsWith("Auto-resolved:", unchangedDecision.Note);
+
+              var repeatedResolution = await RuleAutoResolutionService.TryResolveAsync(
+          '''
+          if old in text:
+              text = text.replace(old, new, 1)
+          elif new not in text:
+              raise SystemExit('Auto-resolution integration-test insertion point not found')
+          path.write_text(text)
+          PY
+
+          git diff --check
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add \
+            src/RulesCore.Web/wwwroot/source-library.js \
+            src/RulesCore.Web/wwwroot/source-versioning.js \
+            src/RulesCore.Infrastructure/Rules/GlobalRulesService.cs \
+            tests/RulesCore.IntegrationTests/SourcePagingAndAutoResolutionIntegrationTests.cs
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Finalize source paging and unchanged-rule resolution"
+          git push origin HEAD:fix/source-library-pagination
