@@ -5,7 +5,9 @@ import {
     describeError,
     element,
     formatJson,
-    setButtonBusy
+    setButtonBusy,
+    DEFAULT_PAGE_SIZE,
+    paginationControls
 } from "./ui.js";
 
 const RULES_LAWYER_ROLE = "Rules Lawyer";
@@ -77,23 +79,40 @@ async function renderVersionReview(app, container) {
     searchCard.append(form, results);
     container.append(searchCard);
 
-    form.addEventListener("submit", async event => {
-        event.preventDefault();
+    let page = 0;
+    const load = async (resetPage = false) => {
+        if (resetPage) page = 0;
         results.replaceChildren(element("div", { className: "text-body-secondary", text: "Searching…" }));
         try {
-            const sources = await app.api.searchSourceEntities({
+            const requested = await app.api.searchSourceEntityPage({
                 entityType: type.value.trim() || null,
                 query: query.value.trim() || null,
-                limit: 100
+                limit: DEFAULT_PAGE_SIZE + 1,
+                offset: page * DEFAULT_PAGE_SIZE
             });
-            renderSourceSearchResults(app, results, sources);
+            const hasNext = requested.length > DEFAULT_PAGE_SIZE;
+            const sources = requested.slice(0, DEFAULT_PAGE_SIZE);
+            if (!sources.length && page > 0) {
+                page -= 1;
+                await load(false);
+                return;
+            }
+            renderSourceSearchResults(app, results, sources, page, hasNext, async nextPage => {
+                page = nextPage;
+                await load(false);
+            });
         } catch (error) {
             results.replaceChildren(alertNode("danger", describeError(error)));
         }
+    };
+
+    form.addEventListener("submit", async event => {
+        event.preventDefault();
+        await load(true);
     });
 }
 
-function renderSourceSearchResults(app, container, sources) {
+function renderSourceSearchResults(app, container, sources, page, hasNext, onPage) {
     clear(container);
     if (!sources.length) {
         container.append(alertNode("secondary", "No accessible source entities matched."));
@@ -115,7 +134,14 @@ function renderSourceSearchResults(app, container, sources) {
             }));
         list.append(row);
     }
-    container.append(list);
+    container.append(
+        list,
+        paginationControls({
+            page,
+            itemCount: sources.length,
+            hasNext,
+            onPage
+        }));
 }
 
 async function renderDetection(app, container, sourceEntityId) {

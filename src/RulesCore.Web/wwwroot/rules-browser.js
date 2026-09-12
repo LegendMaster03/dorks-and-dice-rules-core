@@ -7,7 +7,9 @@ import {
     describeError,
     element,
     formatDate,
-    setButtonBusy
+    setButtonBusy,
+    DEFAULT_PAGE_SIZE,
+    paginationControls
 } from "./ui.js";
 
 const DORKS_MODE = "dorks-and-dice";
@@ -15,6 +17,8 @@ const DORKS_MODE = "dorks-and-dice";
 export function installResolvedRulesBrowser(app) {
     app.canBrowseRules = app.hostContext.siteMode === DORKS_MODE;
     app.browserScope = "global";
+    app.browserPage = 0;
+    app.browserFilters = { entityType: "", query: "" };
 
     if (app.canBrowseRules && app.activeView === "none") {
         app.activeView = "browse";
@@ -72,6 +76,8 @@ async function renderRulesBrowser(app, container) {
 
     const type = inputGroup("Entity type", "spell, skill, class…", "col-lg-2");
     const query = inputGroup("Search", "Rule, source, package, edition…", "col-lg-5");
+    type.input.value = app.browserFilters.entityType;
+    query.input.value = app.browserFilters.query;
     const actionColumn = element("div", { className: "col-lg-2 d-grid" });
     const search = element("button", {
         type: "button",
@@ -87,23 +93,34 @@ async function renderRulesBrowser(app, container) {
     const results = element("div");
     container.append(status, results);
 
-    const load = async () => {
+    const load = async (resetPage = false) => {
+        if (resetPage) app.browserPage = 0;
         status.replaceChildren();
         results.replaceChildren();
         app.browserScope = scope.value;
+        app.browserFilters = { entityType: type.input.value.trim(), query: query.input.value.trim() };
         setButtonBusy(search, true, "Loading…");
         try {
             const filters = {
-                entityType: type.input.value.trim() || null,
-                query: query.input.value.trim() || null,
-                limit: 200
+                entityType: app.browserFilters.entityType || null,
+                query: app.browserFilters.query || null,
+                limit: DEFAULT_PAGE_SIZE + 1,
+                offset: app.browserPage * DEFAULT_PAGE_SIZE
             };
-            const catalog = scope.value === "global"
+            const requested = scope.value === "global"
                 ? await app.api.getGlobalRulesCatalog(filters)
-                : await app.api.getCampaignRulesCatalog(
-                    scope.value.slice("campaign:".length),
-                    filters);
-            renderCatalog(app, container, results, catalog, scope.value);
+                : await app.api.getCampaignRulesCatalog(scope.value.slice("campaign:".length), filters);
+            const hasNext = (requested.rules?.length ?? 0) > DEFAULT_PAGE_SIZE;
+            const catalog = { ...requested, rules: (requested.rules ?? []).slice(0, DEFAULT_PAGE_SIZE) };
+            if (!catalog.rules.length && app.browserPage > 0) {
+                app.browserPage -= 1;
+                await load(false);
+                return;
+            }
+            renderCatalog(app, container, results, catalog, scope.value, app.browserPage, hasNext, async nextPage => {
+                app.browserPage = nextPage;
+                await load(false);
+            });
         } catch (error) {
             status.replaceChildren(alertNode("danger", describeError(error)));
         } finally {
@@ -111,21 +128,21 @@ async function renderRulesBrowser(app, container) {
         }
     };
 
-    scope.addEventListener("change", load);
-    search.addEventListener("click", load);
+    scope.addEventListener("change", () => load(true));
+    search.addEventListener("click", () => load(true));
     for (const input of [type.input, query.input]) {
         input.addEventListener("keydown", event => {
             if (event.key === "Enter") {
                 event.preventDefault();
-                load();
+                load(true);
             }
         });
     }
 
-    await load();
+    await load(false);
 }
 
-function renderCatalog(app, container, results, catalog, scopeValue) {
+function renderCatalog(app, container, results, catalog, scopeValue, page, hasNext, onPage) {
     results.replaceChildren();
 
     const summary = element("div", { className: "card card-body mb-3" });
@@ -209,8 +226,9 @@ function renderCatalog(app, container, results, catalog, scopeValue) {
     }
 
     table.append(head, body);
-    results.append(element("div", { className: "card" },
-        element("div", { className: "table-responsive" }, table)));
+    results.append(
+        element("div", { className: "card" }, element("div", { className: "table-responsive" }, table)),
+        paginationControls({ page, itemCount: catalog.rules.length, hasNext, onPage }));
 }
 
 async function renderRuleDetail(app, container, summary, scopeValue) {

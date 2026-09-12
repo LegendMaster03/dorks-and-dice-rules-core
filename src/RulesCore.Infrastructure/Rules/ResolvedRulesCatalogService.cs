@@ -8,14 +8,24 @@ namespace RulesCore.Infrastructure.Rules;
 public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
     : IResolvedRulesCatalogService
 {
-    public async Task<ResolvedRulesCatalogView> GetGlobalAsync(
+    public Task<ResolvedRulesCatalogView> GetGlobalAsync(
         string? userId,
         string? entityType = null,
         string? query = null,
         int limit = 200,
+        CancellationToken cancellationToken = default) =>
+        GetGlobalPageAsync(userId, entityType, query, limit, 0, cancellationToken);
+
+    public async Task<ResolvedRulesCatalogView> GetGlobalPageAsync(
+        string? userId,
+        string? entityType = null,
+        string? query = null,
+        int limit = 200,
+        int offset = 0,
         CancellationToken cancellationToken = default)
     {
         ValidateLimit(limit);
+        ValidateOffset(offset);
         var normalizedUserId = NormalizeOptionalUserId(userId);
         var normalizedEntityType = NormalizeOptional(entityType)?.ToLowerInvariant();
         var normalizedQuery = NormalizeOptional(query)?.ToLowerInvariant();
@@ -59,6 +69,8 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             .OrderBy(value => value.RuleConcept.EntityType)
             .ThenBy(value => value.RuleConcept.DisplayName)
             .ThenBy(value => value.RuleConcept.Key)
+            .ThenBy(value => value.RuleConceptId)
+            .Skip(offset)
             .Select(value => new ResolvedRuleCatalogItemView(
                 value.RuleConceptId,
                 value.RuleConcept.Key,
@@ -86,16 +98,27 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             rules);
     }
 
-    public async Task<ResolvedRulesCatalogView> GetCampaignAsync(
+    public Task<ResolvedRulesCatalogView> GetCampaignAsync(
         Guid campaignId,
         string userId,
         string? entityType = null,
         string? query = null,
         int limit = 200,
+        CancellationToken cancellationToken = default) =>
+        GetCampaignPageAsync(campaignId, userId, entityType, query, limit, 0, cancellationToken);
+
+    public async Task<ResolvedRulesCatalogView> GetCampaignPageAsync(
+        Guid campaignId,
+        string userId,
+        string? entityType = null,
+        string? query = null,
+        int limit = 200,
+        int offset = 0,
         CancellationToken cancellationToken = default)
     {
         RequireGuid(campaignId, nameof(campaignId));
         ValidateLimit(limit);
+        ValidateOffset(offset);
         var normalizedUserId = RequireUserId(userId);
         var normalizedEntityType = NormalizeOptional(entityType)?.ToLowerInvariant();
         var normalizedQuery = NormalizeOptional(query)?.ToLowerInvariant();
@@ -139,6 +162,8 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             .OrderBy(value => value.RuleConcept.EntityType)
             .ThenBy(value => value.RuleConcept.DisplayName)
             .ThenBy(value => value.RuleConcept.Key)
+            .ThenBy(value => value.RuleConceptId)
+            .Skip(offset)
             .Select(value => new ResolvedRuleCatalogItemView(
                 value.RuleConceptId,
                 value.RuleConcept.Key,
@@ -174,6 +199,14 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
         if (limit is < 1 or > 500)
         {
             throw new ArgumentOutOfRangeException(nameof(limit), "Limit must be between 1 and 500.");
+        }
+    }
+
+    private static void ValidateOffset(int offset)
+    {
+        if (offset < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(offset), "Offset can not be negative.");
         }
     }
 

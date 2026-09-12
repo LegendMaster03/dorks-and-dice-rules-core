@@ -12,17 +12,30 @@ namespace RulesCore.Infrastructure.Rules;
 public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
     : ISourceNormalizationService
 {
-    public async Task<IReadOnlyList<SourceNormalizationCandidateView>> GetCandidatesAsync(
+    public Task<IReadOnlyList<SourceNormalizationCandidateView>> GetCandidatesAsync(
         string userId,
         string? entityType = null,
         string? query = null,
         int limit = 100,
+        CancellationToken cancellationToken = default) =>
+        GetCandidatesPageAsync(userId, entityType, query, limit, 0, cancellationToken);
+
+    public async Task<IReadOnlyList<SourceNormalizationCandidateView>> GetCandidatesPageAsync(
+        string userId,
+        string? entityType = null,
+        string? query = null,
+        int limit = 100,
+        int offset = 0,
         CancellationToken cancellationToken = default)
     {
         var normalizedUserId = RequireUserId(userId);
         if (limit is < 1 or > 200)
         {
             throw new ArgumentOutOfRangeException(nameof(limit), "Limit must be between 1 and 200.");
+        }
+        if (offset < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(offset), "Offset can not be negative.");
         }
 
         var normalizedEntityType = NormalizeOptional(entityType)?.ToLowerInvariant();
@@ -57,6 +70,8 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
             .OrderBy(value => value.EntityType)
             .ThenBy(value => value.Name)
             .ThenBy(value => value.SourceCode)
+            .ThenBy(value => value.Id)
+            .Skip(offset)
             .Select(value => new CandidateSource(
                 value.Id,
                 value.EntityType,

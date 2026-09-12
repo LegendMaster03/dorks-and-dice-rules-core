@@ -40,6 +40,14 @@ public interface ISourceNormalizationService
         int limit = 100,
         CancellationToken cancellationToken = default);
 
+    Task<IReadOnlyList<SourceNormalizationCandidateView>> GetCandidatesPageAsync(
+        string userId,
+        string? entityType = null,
+        string? query = null,
+        int limit = 100,
+        int offset = 0,
+        CancellationToken cancellationToken = default);
+
     Task<AcceptedSourceNormalizationView?> AcceptAsync(
         Guid sourceEntityId,
         string userId,

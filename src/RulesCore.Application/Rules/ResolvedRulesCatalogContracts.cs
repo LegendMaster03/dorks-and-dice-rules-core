@@ -33,11 +33,28 @@ public interface IResolvedRulesCatalogService
         int limit = 200,
         CancellationToken cancellationToken = default);
 
+    Task<ResolvedRulesCatalogView> GetGlobalPageAsync(
+        string? userId,
+        string? entityType = null,
+        string? query = null,
+        int limit = 200,
+        int offset = 0,
+        CancellationToken cancellationToken = default);
+
     Task<ResolvedRulesCatalogView> GetCampaignAsync(
         Guid campaignId,
         string userId,
         string? entityType = null,
         string? query = null,
         int limit = 200,
+        CancellationToken cancellationToken = default);
+
+    Task<ResolvedRulesCatalogView> GetCampaignPageAsync(
+        Guid campaignId,
+        string userId,
+        string? entityType = null,
+        string? query = null,
+        int limit = 200,
+        int offset = 0,
         CancellationToken cancellationToken = default);
 }

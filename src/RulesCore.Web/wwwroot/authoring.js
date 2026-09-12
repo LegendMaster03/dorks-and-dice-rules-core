@@ -8,7 +8,9 @@ import {
     element,
     formatDate,
     formatJson,
-    setButtonBusy
+    setButtonBusy,
+    DEFAULT_PAGE_SIZE,
+    paginationControls
 } from "./ui.js";
 
 const RULES_LAWYER_ROLE = "Rules Lawyer";
@@ -28,6 +30,8 @@ export class RulesAuthoringApp {
         this.canEditCampaign = hostContext.siteMode === DORKS_MODE && this.dmCampaigns.length > 0;
         this.activeView = this.canEditGlobal ? "global" : (this.canEditCampaign ? "campaign" : "none");
         this.activeCampaignId = this.dmCampaigns[0]?.id ?? null;
+        this.globalPage = 0;
+        this.campaignPage = 0;
     }
 
     async render() {
@@ -163,8 +167,12 @@ export class RulesAuthoringApp {
         }
         head.append(headRow);
 
+        const totalGlobalPages = Math.max(1, Math.ceil(overview.concepts.length / DEFAULT_PAGE_SIZE));
+        this.globalPage = Math.min(Math.max(0, this.globalPage), totalGlobalPages - 1);
+        const globalConcepts = overview.concepts.slice(this.globalPage * DEFAULT_PAGE_SIZE, (this.globalPage + 1) * DEFAULT_PAGE_SIZE);
+
         const body = element("tbody");
-        for (const concept of overview.concepts) {
+        for (const concept of globalConcepts) {
             const row = element("tr");
             const nameCell = element("td");
             nameCell.append(
@@ -204,8 +212,14 @@ export class RulesAuthoringApp {
         }
 
         table.append(head, body);
-        container.append(element("div", { className: "card" },
-            element("div", { className: "table-responsive" }, table)));
+        container.append(
+            element("div", { className: "card" }, element("div", { className: "table-responsive" }, table)),
+            paginationControls({
+                page: this.globalPage,
+                itemCount: globalConcepts.length,
+                hasNext: this.globalPage + 1 < totalGlobalPages,
+                onPage: async page => { this.globalPage = page; await this.renderGlobalOverview(container); }
+            }));
     }
 
     async renderGlobalConcept(container, conceptId) {
@@ -306,9 +320,13 @@ export class RulesAuthoringApp {
             headRow.append(element("th", { text }));
         }
         head.append(headRow);
+        const totalCampaignPages = Math.max(1, Math.ceil(overview.concepts.length / DEFAULT_PAGE_SIZE));
+        this.campaignPage = Math.min(Math.max(0, this.campaignPage), totalCampaignPages - 1);
+        const campaignConcepts = overview.concepts.slice(this.campaignPage * DEFAULT_PAGE_SIZE, (this.campaignPage + 1) * DEFAULT_PAGE_SIZE);
+
         const body = element("tbody");
 
-        for (const concept of overview.concepts) {
+        for (const concept of campaignConcepts) {
             const row = element("tr");
             const nameCell = element("td");
             nameCell.append(
@@ -343,8 +361,14 @@ export class RulesAuthoringApp {
         }
 
         table.append(head, body);
-        container.append(element("div", { className: "card" },
-            element("div", { className: "table-responsive" }, table)));
+        container.append(
+            element("div", { className: "card" }, element("div", { className: "table-responsive" }, table)),
+            paginationControls({
+                page: this.campaignPage,
+                itemCount: campaignConcepts.length,
+                hasNext: this.campaignPage + 1 < totalCampaignPages,
+                onPage: async page => { this.campaignPage = page; await this.renderCampaignOverview(container); }
+            }));
     }
 
     renderCampaignSelector(container) {
@@ -353,6 +377,7 @@ export class RulesAuthoringApp {
             ariaLabel: "Campaign",
             onChange: async event => {
                 this.activeCampaignId = event.currentTarget.value;
+                this.campaignPage = 0;
                 await this.renderCampaignOverview(container);
             }
         });

@@ -13,6 +13,7 @@ public static class ResolvedRulesCatalogEndpointExtensions
             string? entityType,
             string? q,
             int? limit,
+            int? offset,
             HttpContext httpContext,
             RulesCoreDbContext dbContext,
             CancellationToken cancellationToken) =>
@@ -24,11 +25,12 @@ public static class ResolvedRulesCatalogEndpointExtensions
                     .User.Id;
                 var catalog = new ResolvedRulesCatalogService(dbContext);
                 httpContext.Response.Headers.CacheControl = "no-store";
-                return Results.Ok(await catalog.GetGlobalAsync(
+                return Results.Ok(await catalog.GetGlobalPageAsync(
                     userId,
                     entityType,
                     q,
                     limit ?? 200,
+                    offset ?? 0,
                     cancellationToken));
             }
             catch (ArgumentException exception)
@@ -42,6 +44,7 @@ public static class ResolvedRulesCatalogEndpointExtensions
             string? entityType,
             string? q,
             int? limit,
+            int? offset,
             HttpContext httpContext,
             RulesCoreDbContext dbContext,
             CancellationToken cancellationToken) =>
@@ -59,12 +62,13 @@ public static class ResolvedRulesCatalogEndpointExtensions
             {
                 var catalog = new ResolvedRulesCatalogService(dbContext);
                 httpContext.Response.Headers.CacheControl = "no-store";
-                return Results.Ok(await catalog.GetCampaignAsync(
+                return Results.Ok(await catalog.GetCampaignPageAsync(
                     campaignId,
                     authenticationContext!.User.Id,
                     entityType,
                     q,
                     limit ?? 200,
+                    offset ?? 0,
                     cancellationToken));
             }
             catch (ArgumentException exception)

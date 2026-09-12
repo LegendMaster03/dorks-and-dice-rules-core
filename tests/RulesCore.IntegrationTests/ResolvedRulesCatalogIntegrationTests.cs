@@ -148,6 +148,27 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 Assert.Contains(catalog.Rules, value => value.ConceptKey == privateConceptKey);
             }
 
+            using (var firstPageRequest = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/rules?q={token}&limit=1&offset=0",
+                       "granted-ticket"))
+            using (var firstPageResponse = await client.SendAsync(firstPageRequest))
+            using (var secondPageRequest = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/rules?q={token}&limit=1&offset=1",
+                       "granted-ticket"))
+            using (var secondPageResponse = await client.SendAsync(secondPageRequest))
+            {
+                Assert.Equal(HttpStatusCode.OK, firstPageResponse.StatusCode);
+                Assert.Equal(HttpStatusCode.OK, secondPageResponse.StatusCode);
+                var firstPage = (await firstPageResponse.Content.ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
+                var secondPage = (await secondPageResponse.Content.ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
+                var first = Assert.Single(firstPage.Rules);
+                var second = Assert.Single(secondPage.Rules);
+                Assert.NotEqual(first.RuleConceptId, second.RuleConceptId);
+                Assert.Equal(new[] { publicConceptKey, privateConceptKey }.OrderBy(value => value), new[] { first.ConceptKey, second.ConceptKey }.OrderBy(value => value));
+            }
+
             using (var ungrantedRequest = HostedRequest(
                        HttpMethod.Get,
                        $"/api/rules?q={token}",
@@ -192,6 +213,24 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 Assert.Equal(campaignId, catalog.CampaignId);
                 Assert.Equal(2, catalog.Rules.Count);
                 Assert.All(catalog.Rules, value => Assert.False(value.HasCampaignOverride));
+            }
+
+            using (var campaignFirstPageRequest = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/campaigns/{campaignId}/rules?q={token}&limit=1&offset=0",
+                       "player-granted-ticket"))
+            using (var campaignFirstPageResponse = await client.SendAsync(campaignFirstPageRequest))
+            using (var campaignSecondPageRequest = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/campaigns/{campaignId}/rules?q={token}&limit=1&offset=1",
+                       "player-granted-ticket"))
+            using (var campaignSecondPageResponse = await client.SendAsync(campaignSecondPageRequest))
+            {
+                Assert.Equal(HttpStatusCode.OK, campaignFirstPageResponse.StatusCode);
+                Assert.Equal(HttpStatusCode.OK, campaignSecondPageResponse.StatusCode);
+                var firstPage = (await campaignFirstPageResponse.Content.ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
+                var secondPage = (await campaignSecondPageResponse.Content.ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
+                Assert.NotEqual(Assert.Single(firstPage.Rules).RuleConceptId, Assert.Single(secondPage.Rules).RuleConceptId);
             }
 
             using (var playerUngrantedRequest = HostedRequest(

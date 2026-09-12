@@ -4,7 +4,9 @@ import {
     describeError,
     element,
     formatDate,
-    setButtonBusy
+    setButtonBusy,
+    DEFAULT_PAGE_SIZE,
+    paginationControls
 } from "./ui.js";
 
 export function installConceptSourceAuthoring(app) {
@@ -131,17 +133,30 @@ async function createSourceBindingCard(app, container, detail) {
     const results = element("div");
     card.append(status, results);
 
-    const runSearch = async () => {
+    let page = 0;
+    const runSearch = async (resetPage = false) => {
+        if (resetPage) page = 0;
         status.replaceChildren();
         results.replaceChildren();
         setButtonBusy(searchButton, true, "Searching…");
         try {
-            const sources = await app.api.searchSourceEntities({
+            const requested = await app.api.searchSourceEntityPage({
                 entityType: type.input.value.trim() || null,
                 query: query.input.value.trim() || null,
-                limit: 100
+                limit: DEFAULT_PAGE_SIZE + 1,
+                offset: page * DEFAULT_PAGE_SIZE
             });
-            renderSourceResults(app, container, detail, results, sources);
+            const hasNext = requested.length > DEFAULT_PAGE_SIZE;
+            const sources = requested.slice(0, DEFAULT_PAGE_SIZE);
+            if (!sources.length && page > 0) {
+                page -= 1;
+                await runSearch(false);
+                return;
+            }
+            renderSourceResults(app, container, detail, results, sources, page, hasNext, async nextPage => {
+                page = nextPage;
+                await runSearch(false);
+            });
         } catch (error) {
             status.replaceChildren(alertNode("danger", describeError(error)));
         } finally {
@@ -149,19 +164,19 @@ async function createSourceBindingCard(app, container, detail) {
         }
     };
 
-    searchButton.addEventListener("click", runSearch);
+    searchButton.addEventListener("click", () => runSearch(true));
     query.input.addEventListener("keydown", event => {
         if (event.key === "Enter") {
             event.preventDefault();
-            runSearch();
+            runSearch(true);
         }
     });
 
-    await runSearch();
+    await runSearch(true);
     return card;
 }
 
-function renderSourceResults(app, container, detail, results, sources) {
+function renderSourceResults(app, container, detail, results, sources, page, hasNext, onPage) {
     const boundEntityIds = new Set(detail.bindings.map(binding => binding.sourceEntityId));
     if (!sources.length) {
         results.append(alertNode(
@@ -228,7 +243,9 @@ function renderSourceResults(app, container, detail, results, sources) {
     }
 
     table.append(head, body);
-    results.append(element("div", { className: "table-responsive" }, table));
+    results.append(
+        element("div", { className: "table-responsive" }, table),
+        paginationControls({ page, itemCount: sources.length, hasNext, onPage }));
 }
 
 function inputGroup(label, placeholder, columnClass) {

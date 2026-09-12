@@ -132,6 +132,28 @@ public sealed class SourceNormalizationIntegrationTests
                 Assert.Equal(HttpStatusCode.NotFound, ungrantedAcceptResponse.StatusCode);
             }
 
+            using (var firstPageRequest = HostedRequest(
+                       HttpMethod.Get,
+                       "/api/global/rules/normalization/candidates?entityType=skill&q=Arcana&limit=1&offset=0",
+                       "rules-lawyer-ticket"))
+            using (var firstPageResponse = await client.SendAsync(firstPageRequest))
+            using (var secondPageRequest = HostedRequest(
+                       HttpMethod.Get,
+                       "/api/global/rules/normalization/candidates?entityType=skill&q=Arcana&limit=1&offset=1",
+                       "rules-lawyer-ticket"))
+            using (var secondPageResponse = await client.SendAsync(secondPageRequest))
+            {
+                Assert.Equal(HttpStatusCode.OK, firstPageResponse.StatusCode);
+                Assert.Equal(HttpStatusCode.OK, secondPageResponse.StatusCode);
+                var firstPage = (await firstPageResponse.Content.ReadFromJsonAsync<IReadOnlyList<SourceNormalizationCandidateView>>())!;
+                var secondPage = (await secondPageResponse.Content.ReadFromJsonAsync<IReadOnlyList<SourceNormalizationCandidateView>>())!;
+                var first = Assert.Single(firstPage);
+                var second = Assert.Single(secondPage);
+                Assert.NotEqual(first.SourceEntityId, second.SourceEntityId);
+                Assert.Contains(first.SourceEntityId, new[] { public2014EntityId, public2024EntityId });
+                Assert.Contains(second.SourceEntityId, new[] { public2014EntityId, public2024EntityId });
+            }
+
             IReadOnlyList<SourceNormalizationCandidateView> arcanaCandidates;
             using (var candidatesRequest = HostedRequest(
                        HttpMethod.Get,

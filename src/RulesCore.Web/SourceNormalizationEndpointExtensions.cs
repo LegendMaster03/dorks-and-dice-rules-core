@@ -13,6 +13,7 @@ public static class SourceNormalizationEndpointExtensions
             string? entityType,
             string? q,
             int? limit,
+            int? offset,
             HttpContext httpContext,
             RulesCoreDbContext dbContext,
             CancellationToken cancellationToken) =>
@@ -29,11 +30,12 @@ public static class SourceNormalizationEndpointExtensions
             {
                 var normalization = new SourceNormalizationService(dbContext);
                 httpContext.Response.Headers.CacheControl = "no-store";
-                return Results.Ok(await normalization.GetCandidatesAsync(
+                return Results.Ok(await normalization.GetCandidatesPageAsync(
                     authenticationContext!.User.Id,
                     entityType,
                     q,
                     limit ?? 100,
+                    offset ?? 0,
                     cancellationToken));
             }
             catch (ArgumentException exception)
