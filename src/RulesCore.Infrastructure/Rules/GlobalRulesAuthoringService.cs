@@ -12,7 +12,7 @@ public sealed class GlobalRulesAuthoringService(RulesCoreDbContext dbContext)
         string userId,
         CancellationToken cancellationToken = default)
     {
-        _ = RequireUserId(userId);
+        var normalizedUserId = RequireUserId(userId);
 
         var concepts = await dbContext.RuleConcepts
             .AsNoTracking()
@@ -33,6 +33,24 @@ public sealed class GlobalRulesAuthoringService(RulesCoreDbContext dbContext)
         var latestDecisions = decisions
             .GroupBy(value => value.RuleConceptId)
             .ToDictionary(group => group.Key, group => group.First());
+        var staleAutomaticConceptIds = new HashSet<Guid>();
+        foreach (var pair in latestDecisions.ToArray())
+        {
+            if (!RuleAutoResolutionService.IsAutomaticDecision(pair.Value))
+            {
+                continue;
+            }
+
+            if (!await RuleAutoResolutionService.IsCurrentAutomaticDecisionAsync(
+                dbContext,
+                pair.Value,
+                normalizedUserId,
+                cancellationToken))
+            {
+                latestDecisions.Remove(pair.Key);
+                staleAutomaticConceptIds.Add(pair.Key);
+            }
+        }
 
         var latestPublished = await dbContext.RulesetRevisions
             .AsNoTracking()
@@ -65,8 +83,8 @@ public sealed class GlobalRulesAuthoringService(RulesCoreDbContext dbContext)
                 latestDecisions.TryGetValue(concept.Id, out var latestDecision);
                 publishedDecisionIds.TryGetValue(concept.Id, out var publishedDecisionId);
                 Guid? publishedId = publishedDecisionId == Guid.Empty ? null : publishedDecisionId;
-                var hasUnpublishedChanges = latestDecision is not null
-                    && publishedId != latestDecision.Id;
+                var hasUnpublishedChanges = staleAutomaticConceptIds.Contains(concept.Id)
+                    || (latestDecision is not null && publishedId != latestDecision.Id);
 
                 return new GlobalRuleAuthoringConceptSummaryView(
                     concept.Id,
@@ -123,6 +141,17 @@ public sealed class GlobalRulesAuthoringService(RulesCoreDbContext dbContext)
             .Where(value => value.RuleConceptId == ruleConceptId)
             .OrderByDescending(value => value.DecisionNumber)
             .FirstOrDefaultAsync(cancellationToken);
+        var staleAutomaticDecision = latestDecision is not null
+            && RuleAutoResolutionService.IsAutomaticDecision(latestDecision)
+            && !await RuleAutoResolutionService.IsCurrentAutomaticDecisionAsync(
+                dbContext,
+                latestDecision,
+                normalizedUserId,
+                cancellationToken);
+        if (staleAutomaticDecision)
+        {
+            latestDecision = null;
+        }
 
         var latestPublished = await dbContext.RulesetRevisions
             .AsNoTracking()
@@ -193,7 +222,8 @@ public sealed class GlobalRulesAuthoringService(RulesCoreDbContext dbContext)
             latestDecision is null ? null : ToView(latestDecision),
             publishedDecisionId,
             latestPublished?.RevisionNumber,
-            latestDecision is not null && publishedDecisionId != latestDecision.Id);
+            staleAutomaticDecision
+                || (latestDecision is not null && publishedDecisionId != latestDecision.Id));
     }
 
     private static RuleConceptView ToView(RuleConcept concept) =>
