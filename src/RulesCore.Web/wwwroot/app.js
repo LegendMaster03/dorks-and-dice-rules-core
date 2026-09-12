@@ -11,6 +11,7 @@ import { installSourceLibrary } from "./source-library.js";
 import { installSourceNormalization } from "./source-normalization.js";
 import { installSourceRevisionReview } from "./source-revision-review.js";
 import { installSourceVersioning } from "./source-versioning.js";
+import { installRulesCoreUx } from "./ux-shell.js";
 import { alertNode, clear, describeError, element } from "./ui.js";
 
 const root = document.getElementById("tool-root");
@@ -45,6 +46,7 @@ try {
     if (hostContext.siteMode === "dorks-and-dice") {
         installSourceLibrary(app);
     }
+    installRulesCoreUx(app);
     await app.render();
 } catch (error) {
     console.error("Rules Core failed to initialize.", error);
