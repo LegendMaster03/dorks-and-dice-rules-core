@@ -216,11 +216,6 @@ function renderConsolidationCard(app, model, container, conceptId) {
             "success",
             "Automatically resolved: the bound editions have the same rule-bearing content. Publication remains a separate action."));
     }
-    if (model.latestDecision?.note?.startsWith("Auto-resolved:")) {
-        card.append(alertNode(
-            "success",
-            "Automatically resolved: the bound editions have the same rule-bearing content. Publication remains a separate action."));
-    }
     if (model.restrictedBindingCount > 0) {
         card.append(alertNode("warning", `${model.restrictedBindingCount} bound source implementation(s) are hidden because this account lacks source access.`));
     }

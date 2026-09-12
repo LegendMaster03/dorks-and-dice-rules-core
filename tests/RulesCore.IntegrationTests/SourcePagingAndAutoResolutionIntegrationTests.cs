@@ -121,18 +121,10 @@ public sealed class SourcePagingAndAutoResolutionIntegrationTests
                 new BindRuleConceptSourceRequest(newUnchanged.EntityId),
                 "rules-lawyer");
 
-            var unchangedResolution = await RuleAutoResolutionService.TryResolveAsync(
-                db,
-                unchangedConcept.Id,
-                "rules-lawyer");
-            Assert.True(unchangedResolution.Eligible);
-            Assert.True(unchangedResolution.Applied);
-            Assert.NotNull(unchangedResolution.DecisionId);
-
             var unchangedDecision = await db.GlobalRuleDecisions
                 .AsNoTracking()
                 .SingleAsync(value => value.RuleConceptId == unchangedConcept.Id);
-            Assert.Equal(RuleDecisionKinds.SelectSource, unchangedDecision.DecisionKind);
+            Assert.Equal("select-source", unchangedDecision.DecisionKind);
             Assert.StartsWith("Auto-resolved:", unchangedDecision.Note);
 
             var repeatedResolution = await RuleAutoResolutionService.TryResolveAsync(

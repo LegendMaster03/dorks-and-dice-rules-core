@@ -84,6 +84,11 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
                 cancellationToken);
         if (existing is not null)
         {
+            await RuleAutoResolutionService.TryResolveAsync(
+                dbContext,
+                ruleConceptId,
+                actor,
+                cancellationToken);
             return new RuleMutationResult<RuleConceptSourceBindingView>(
                 ToView(existing),
                 Created: false);
@@ -99,6 +104,11 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         };
         dbContext.RuleConceptSourceBindings.Add(binding);
         await dbContext.SaveChangesAsync(cancellationToken);
+        await RuleAutoResolutionService.TryResolveAsync(
+            dbContext,
+            ruleConceptId,
+            actor,
+            cancellationToken);
 
         return new RuleMutationResult<RuleConceptSourceBindingView>(
             ToView(binding),
