@@ -71,6 +71,18 @@ public static class OfficialSrdMembershipCatalog
         string entityType,
         JsonElement entity)
     {
+        // The reviewed SRD 5.2.1 structured mirror contains a small number of legacy 2014
+        // representations whose source field was rewritten to SRD52. The official 5.2.1 PDF
+        // confirms the 2024 representation instead, so an explicit classic marker is a mirror
+        // artifact rather than a second durable SRD52 entity.
+        if (string.Equals(sourceCode, "SRD52", StringComparison.OrdinalIgnoreCase)
+            && entity.TryGetProperty("edition", out var edition)
+            && edition.ValueKind == JsonValueKind.String
+            && string.Equals(edition.GetString()?.Trim(), "classic", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
         if (!NamesBySourceAndType.TryGetValue(sourceCode, out var byType)
             || !byType.TryGetValue(entityType, out var names))
         {

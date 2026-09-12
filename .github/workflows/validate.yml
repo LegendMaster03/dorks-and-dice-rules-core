@@ -92,14 +92,29 @@ jobs:
               "./src/RulesCore.Web/wwwroot/source-library.js",
               "utf8");
           for (const required of [
-              "builtin-wotc-srd-",
-              "refreshHostedSource",
+              "BUNDLED_SRDS",
+              "SRD3",
+              "SRD35",
+              "SRD51",
+              "SRD52",
+              "No account, import action, or remote host is required",
+              "Availability\", \"Bundled with Rules Core",
               "entityType: \"monster\"",
               "/api/sources/entities/",
               "Copy beta payload"
           ]) {
               if (!library.includes(required)) {
                   throw new Error(`Source Library browser contract is missing '${required}'.`);
+              }
+          }
+          for (const incompatible of [
+              "refreshHostedSource",
+              "previewHostedSource",
+              "Import all built-in SRDs",
+              "Preview live"
+          ]) {
+              if (library.includes(incompatible)) {
+                  throw new Error(`Normal Source Library still contains acquisition control '${incompatible}'.`);
               }
           }
           NODE

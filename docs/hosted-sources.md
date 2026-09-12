@@ -81,6 +81,8 @@ GitHub-tree acquisition rejects truncated recursive tree responses instead of si
 
 ## Runtime boundary
 
-Hosted-source resolution is an acquisition operation, not a runtime dependency. Startup registers definitions and authority metadata but performs no remote fetch. A Rules Lawyer explicitly previews or refreshes a hosted definition; the resulting normalized entities are then stored as immutable Source Layer revisions. Rules resolution reads those local revisions and continues to work when the representation host is unavailable.
+Hosted-source resolution is an acquisition/maintenance operation, not a runtime dependency. The four canonical Wizards SRDs are different from ordinary hosted sources: reviewed snapshots are embedded in Rules Core and baseline bootstrap hydrates them into the public immutable Source Layer without any remote fetch. Anonymous and signed-in consumers therefore use the same local canonical source data immediately after deployment.
+
+The corresponding hosted definitions remain available under Advanced for deliberate maintainer comparison or snapshot-rebuild work. A Rules Lawyer can still preview or refresh other hosted definitions into immutable Source Layer revisions, but normal Library use never requires a remote host.
 
 The 3e/3.5e adapter deliberately converges on the same `ISourceImportService` used by 5e/5.5e. The resolver therefore does not have separate legacy-edition logic: edition choice remains Rules Lawyer adjudication over ordinary source entities and revisions.

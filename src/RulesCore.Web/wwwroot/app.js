@@ -28,7 +28,7 @@ try {
         api.getOptionalCampaigns()
     ]);
     const effectiveSession = session ?? {
-        user: { displayName: "Guest" },
+        user: null,
         globalRoles: []
     };
     const app = new RulesAuthoringApp(root, api, hostContext, effectiveSession, campaigns);

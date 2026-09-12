@@ -55,6 +55,40 @@ public sealed class OfficialSrdMembershipCatalogTests
     }
 
     [Fact]
+    public void Srd52FilterRejectsLegacyClassicMirrorRecord()
+    {
+        const string json = """
+            {
+              "baseitem": [
+                {
+                  "name": "Musket",
+                  "source": "SRD52",
+                  "edition": "classic",
+                  "type": "R"
+                },
+                {
+                  "name": "Musket",
+                  "source": "SRD52",
+                  "edition": "one",
+                  "type": "R|SRD52"
+                }
+              ]
+            }
+            """;
+
+        var filtered = FiveEToolsDocumentInspector.FilterBySourceCodes(
+            json,
+            "5.2.1",
+            ["SRD52"],
+            out var count);
+
+        Assert.Equal(1, count);
+        using var document = JsonDocument.Parse(filtered);
+        var musket = Assert.Single(document.RootElement.GetProperty("baseitem").EnumerateArray());
+        Assert.Equal("one", musket.GetProperty("edition").GetString());
+    }
+
+    [Fact]
     public void Srd51ManualSectionsMatchOfficialPdfMembership()
     {
         Assert.Equal(
