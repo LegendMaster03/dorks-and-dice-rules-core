@@ -65,6 +65,7 @@ const BUNDLED_SRDS = [
     }
 ];
 const SOURCE_LIMIT = 200;
+const SOURCE_PAGE_SIZE = 100;
 const ENTITY_TYPES = [
     ["", "All types"],
     ["monster", "Monsters"],
@@ -85,7 +86,7 @@ const ENTITY_TYPES = [
 
 export function installSourceLibrary(app) {
     app.canBrowseSourceLibrary = app.hostContext.siteMode === DORKS_MODE;
-    app.libraryFilters = { entityType: "", query: "" };
+    app.libraryFilters = { entityType: "", query: "", page: 0 };
     app.libraryNotice = null;
 
     if (app.canBrowseSourceLibrary) {
@@ -314,7 +315,7 @@ function renderSourceCard(app, container, state) {
     });
     browse.disabled = !state.ready;
     browse.addEventListener("click", async () => {
-        app.libraryFilters = { entityType: "", query: state.sourceCode };
+        app.libraryFilters = { entityType: "", query: state.sourceCode, page: 0 };
         await renderSourceLibrary(app, container);
         document.getElementById("rules-core-source-browser")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
@@ -326,7 +327,7 @@ function renderSourceCard(app, container, state) {
     });
     monsters.disabled = !state.monsterCount;
     monsters.addEventListener("click", async () => {
-        app.libraryFilters = { entityType: "monster", query: state.sourceCode };
+        app.libraryFilters = { entityType: "monster", query: state.sourceCode, page: 0 };
         await renderSourceLibrary(app, container);
         document.getElementById("rules-core-source-browser")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
@@ -394,12 +395,12 @@ async function renderSourceBrowser(app, container) {
 
     form.addEventListener("submit", async event => {
         event.preventDefault();
-        app.libraryFilters = { entityType: type.value, query: query.value.trim() };
+        app.libraryFilters = { entityType: type.value, query: query.value.trim(), page: 0 };
         await renderBrowserResults(app, results);
     });
     monstersButton.addEventListener("click", async () => {
         type.value = "monster";
-        app.libraryFilters = { entityType: "monster", query: query.value.trim() };
+        app.libraryFilters = { entityType: "monster", query: query.value.trim(), page: 0 };
         await renderBrowserResults(app, results);
     });
 
@@ -410,11 +411,23 @@ async function renderBrowserResults(app, container) {
     clear(container);
     container.append(element("div", { className: "text-body-secondary", text: "Loading source entities…" }));
     try {
-        const entities = await app.api.searchSourceEntities({
+        const page = Math.max(0, app.libraryFilters.page ?? 0);
+        const offset = page * SOURCE_PAGE_SIZE;
+        const requested = await app.api.searchSourceEntityPage({
             entityType: app.libraryFilters.entityType || null,
             query: app.libraryFilters.query || null,
-            limit: 100
+            limit: SOURCE_PAGE_SIZE + 1,
+            offset
         });
+        const hasNext = requested.length > SOURCE_PAGE_SIZE;
+        const entities = requested.slice(0, SOURCE_PAGE_SIZE);
+
+        if (!entities.length && page > 0) {
+            app.libraryFilters.page = page - 1;
+            await renderBrowserResults(app, container);
+            return;
+        }
+
         clear(container);
         if (!entities.length) {
             container.append(alertNode(
@@ -454,9 +467,49 @@ async function renderBrowserResults(app, container) {
                 element("td", { className: "text-end" }, open)));
         }
         table.append(head, body);
+
+        const previous = element("button", {
+            type: "button",
+            className: "btn btn-sm btn-outline-secondary",
+            text: "← Previous"
+        });
+        previous.disabled = page === 0;
+        previous.addEventListener("click", async () => {
+            app.libraryFilters.page = Math.max(0, page - 1);
+            await renderBrowserResults(app, container);
+            document.getElementById("rules-core-source-browser")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        const next = element("button", {
+            type: "button",
+            className: "btn btn-sm btn-outline-secondary",
+            text: "Next →"
+        });
+        next.disabled = !hasNext;
+        next.addEventListener("click", async () => {
+            app.libraryFilters.page = page + 1;
+            await renderBrowserResults(app, container);
+            document.getElementById("rules-core-source-browser")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        const firstResult = offset + 1;
+        const lastResult = offset + entities.length;
+        const navigation = element("div", {
+            className: "d-flex flex-wrap justify-content-between align-items-center gap-2 mt-3"
+        },
+            element("div", {
+                className: "small text-body-secondary",
+                text: `Showing ${firstResult}–${lastResult} · Page ${page + 1}`
+            }),
+            element("div", { className: "d-flex gap-2" }, previous, next));
+
         container.append(
-            element("div", { className: "small text-body-secondary mb-2", text: `${entities.length}${entities.length === 100 ? "+" : ""} result(s)` }),
-            element("div", { className: "table-responsive" }, table));
+            element("div", {
+                className: "small text-body-secondary mb-2",
+                text: `Showing ${firstResult}–${lastResult}${hasNext ? "+" : ""} matching result(s)`
+            }),
+            element("div", { className: "table-responsive" }, table),
+            navigation);
     } catch (error) {
         clear(container);
         container.append(alertNode("danger", describeError(error)));
