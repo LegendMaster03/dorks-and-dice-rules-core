@@ -26,6 +26,7 @@ jobs:
             src/RulesCore.Web/wwwroot/app.js \
             src/RulesCore.Web/wwwroot/api.js \
             src/RulesCore.Web/wwwroot/ui.js \
+            src/RulesCore.Web/wwwroot/ux-shell.js \
             src/RulesCore.Web/wwwroot/authoring.js \
             src/RulesCore.Web/wwwroot/rules-browser.js \
             src/RulesCore.Web/wwwroot/source-library.js \
@@ -62,6 +63,26 @@ jobs:
           const campaigns = await api.getOptionalCampaigns();
           if (!Array.isArray(campaigns) || campaigns.length !== 0) {
               throw new Error("Anonymous campaign lookup must resolve to an empty array.");
+          }
+
+          const appModule = fs.readFileSync(
+              "./src/RulesCore.Web/wwwroot/app.js",
+              "utf8");
+          const uxShell = fs.readFileSync(
+              "./src/RulesCore.Web/wwwroot/ux-shell.js",
+              "utf8");
+          for (const required of [
+              "installRulesCoreUx",
+              "rules-core-topbar",
+              "rules-core-nav-shell",
+              "rules-core-main",
+              "Cross-version",
+              "Maintenance"
+          ]) {
+              const source = required === "installRulesCoreUx" ? appModule : uxShell;
+              if (!source.includes(required)) {
+                  throw new Error(`Rules Core UX shell contract is missing '${required}'.`);
+              }
           }
 
           const authoring = fs.readFileSync(
