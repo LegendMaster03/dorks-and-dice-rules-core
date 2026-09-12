@@ -271,6 +271,19 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             throw new InvalidOperationException("There are no global rule decisions to publish.");
         }
 
+        foreach (var decision in currentDecisions.Where(RuleAutoResolutionService.IsAutomaticDecision))
+        {
+            if (!await RuleAutoResolutionService.IsCurrentAutomaticDecisionAsync(
+                dbContext,
+                decision,
+                actor,
+                cancellationToken))
+            {
+                throw new InvalidOperationException(
+                    $"Automatic resolution for rule concept '{decision.RuleConcept.Key}' is no longer current because a bound source now differs or can not be verified. Review the concept before publishing.");
+            }
+        }
+
         var fingerprint = ComputeRulesetFingerprint(currentDecisions);
         var latestRevision = await dbContext.RulesetRevisions
             .AsNoTracking()

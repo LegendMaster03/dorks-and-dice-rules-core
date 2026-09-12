@@ -136,6 +136,35 @@ public sealed class SourcePagingAndAutoResolutionIntegrationTests
             Assert.Equal(1, await db.GlobalRuleDecisions.CountAsync(
                 value => value.RuleConceptId == unchangedConcept.Id));
 
+            await importer.Import5eToolsDocumentAsync(AutoResolutionRequest(
+                newPackageKey,
+                "New edition fixture",
+                "new-work",
+                "New edition",
+                "new-release",
+                "5.5e",
+                $"NEW{token}",
+                new DateOnly(2024, 9, 17),
+                unchangedText: "You gain a +1 bonus to the attack roll.",
+                changedText: "You gain advantage on the attack roll."));
+
+            Assert.False(await RuleAutoResolutionService.IsCurrentAutomaticDecisionAsync(
+                db,
+                unchangedDecision,
+                "rules-lawyer"));
+
+            var authoring = new GlobalRulesAuthoringService(db);
+            var staleConcept = await authoring.GetConceptAsync(
+                unchangedConcept.Id,
+                "rules-lawyer");
+            Assert.NotNull(staleConcept);
+            Assert.Null(staleConcept!.LatestDecision);
+            Assert.True(staleConcept.HasUnpublishedChanges);
+
+            var publishError = await Assert.ThrowsAsync<InvalidOperationException>(
+                () => rules.PublishAsync("rules-lawyer"));
+            Assert.Contains("no longer current", publishError.Message, StringComparison.OrdinalIgnoreCase);
+
             var changedConcept = (await rules.CreateConceptAsync(
                 new CreateRuleConceptRequest(changedConceptKey, "feat", "Changed Rule"),
                 "rules-lawyer")).Value;
