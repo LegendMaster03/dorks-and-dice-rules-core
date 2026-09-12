@@ -42,7 +42,9 @@ After a source implementation is deliberately bound to a concept, Rules Core che
 
 If every bound latest implementation is mechanically identical and the concept has no prior ruling, Rules Core automatically creates an append-only `select-source` global decision. The newest publication is used as the representative base only because the rule content is identical; the other equivalent revisions are recorded as reviewed reference provenance. Publication remains a separate explicit action.
 
-If an existing exact-source decision already resolves equivalent content, it is retained without creating decision churn. Existing patched/manual rulings are never replaced automatically. Any rule-bearing difference, inaccessible bound source, missing edition metadata, or other ambiguity leaves the concept for normal manual adjudication.
+Automatic decisions are revalidated against the current latest revision of every bound implementation. If a later import or newly bound edition introduces a rule-bearing difference, the earlier automatic decision remains in append-only history but is no longer treated as the current ruling in authoring. Publication is blocked until a Rules Lawyer makes a new manual decision. If another equivalent implementation is added instead, Rules Core can append a refreshed automatic decision so its provenance covers the current comparison set.
+
+If an existing exact-source manual decision already resolves equivalent content, it is retained without creating decision churn. Existing patched/manual rulings are never replaced automatically. Any rule-bearing difference, inaccessible bound source, missing edition metadata, or other ambiguity leaves the concept for normal manual adjudication.
 
 This is intentionally conservative: false negatives create extra review work, while false positives could silently change table rules.
 
