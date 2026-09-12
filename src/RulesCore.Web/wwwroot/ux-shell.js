@@ -196,7 +196,19 @@ function observeInPlaceNavigation(app, container) {
         scheduled = true;
         queueMicrotask(() => {
             scheduled = false;
-            if (container.isConnected) enhanceRenderedView(app, container);
+            if (!container.isConnected) return;
+
+            // Presentation enhancement itself can change child nodes (for example, textContent).
+            // Disconnect while enhancing so those idempotent presentation changes do not
+            // recursively schedule the observer and starve the UI thread.
+            observer.disconnect();
+            try {
+                enhanceRenderedView(app, container);
+            } finally {
+                if (container.isConnected) {
+                    observer.observe(container, { childList: true, subtree: true });
+                }
+            }
         });
     });
     observer.observe(container, { childList: true, subtree: true });
@@ -250,8 +262,9 @@ function updateRulesLawyerWorkflowCopy(container) {
     const workflow = container.querySelector(".rules-core-workflow");
     if (!workflow) return;
     const description = workflow.querySelector(".text-body-secondary.small");
-    if (description) {
-        description.textContent = "Source material stays separate until you deliberately bind it. Unchanged editions may resolve automatically; publication remains explicit.";
+    const copy = "Source material stays separate until you deliberately bind it. Unchanged editions may resolve automatically; publication remains explicit.";
+    if (description && description.textContent !== copy) {
+        description.textContent = copy;
     }
 }
 
