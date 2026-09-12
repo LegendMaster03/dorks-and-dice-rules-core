@@ -211,6 +211,11 @@ function renderConsolidationCard(app, model, container, conceptId) {
         element("h3", { className: "h5 mb-1", text: "Version comparison and consolidation" }),
         element("p", { className: "text-body-secondary", text: "Compare every accessible implementation bound to this concept. Choose one exact revision as the base, then record any other revisions deliberately incorporated or reviewed. Saving creates an append-only decision; publication remains separate." }));
 
+    if (model.latestDecision?.note?.startsWith("Auto-resolved:")) {
+        card.append(alertNode(
+            "success",
+            "Automatically resolved: the bound editions have the same rule-bearing content. Publication remains a separate action."));
+    }
     if (model.restrictedBindingCount > 0) {
         card.append(alertNode("warning", `${model.restrictedBindingCount} bound source implementation(s) are hidden because this account lacks source access.`));
     }

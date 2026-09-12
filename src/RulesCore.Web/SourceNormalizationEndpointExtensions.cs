@@ -68,6 +68,12 @@ public static class SourceNormalizationEndpointExtensions
                     return Results.NotFound();
                 }
 
+                await RuleAutoResolutionService.TryResolveAsync(
+                    dbContext,
+                    result.Concept.Id,
+                    authenticationContext.User.Id,
+                    cancellationToken);
+
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(result);
             }

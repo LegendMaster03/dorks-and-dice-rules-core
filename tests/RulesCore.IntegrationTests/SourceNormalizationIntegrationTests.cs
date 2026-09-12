@@ -260,7 +260,7 @@ public sealed class SourceNormalizationIntegrationTests
                 Assert.Equal(1, await db.RuleConcepts.CountAsync(value => value.Key == "skill.arcana"));
                 Assert.Equal(2, await db.RuleConceptSourceBindings.CountAsync(
                     value => value.RuleConceptId == firstAccepted.Concept.Id));
-                Assert.Equal(0, await db.GlobalRuleDecisions.CountAsync(
+                Assert.Equal(1, await db.GlobalRuleDecisions.CountAsync(
                     value => value.RuleConceptId == firstAccepted.Concept.Id));
                 Assert.Equal(0, await db.RulesetRevisionEntries.CountAsync(
                     value => value.RuleConceptId == firstAccepted.Concept.Id));

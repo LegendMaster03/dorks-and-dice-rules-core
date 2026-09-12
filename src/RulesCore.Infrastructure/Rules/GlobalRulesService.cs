@@ -84,6 +84,11 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
                 cancellationToken);
         if (existing is not null)
         {
+            await RuleAutoResolutionService.TryResolveAsync(
+                dbContext,
+                ruleConceptId,
+                actor,
+                cancellationToken);
             return new RuleMutationResult<RuleConceptSourceBindingView>(
                 ToView(existing),
                 Created: false);
@@ -99,6 +104,11 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         };
         dbContext.RuleConceptSourceBindings.Add(binding);
         await dbContext.SaveChangesAsync(cancellationToken);
+        await RuleAutoResolutionService.TryResolveAsync(
+            dbContext,
+            ruleConceptId,
+            actor,
+            cancellationToken);
 
         return new RuleMutationResult<RuleConceptSourceBindingView>(
             ToView(binding),
@@ -259,6 +269,19 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         if (currentDecisions.Length == 0)
         {
             throw new InvalidOperationException("There are no global rule decisions to publish.");
+        }
+
+        foreach (var decision in currentDecisions.Where(RuleAutoResolutionService.IsAutomaticDecision))
+        {
+            if (!await RuleAutoResolutionService.IsCurrentAutomaticDecisionAsync(
+                dbContext,
+                decision,
+                actor,
+                cancellationToken))
+            {
+                throw new InvalidOperationException(
+                    $"Automatic resolution for rule concept '{decision.RuleConcept.Key}' is no longer current because a bound source now differs or can not be verified. Review the concept before publishing.");
+            }
         }
 
         var fingerprint = ComputeRulesetFingerprint(currentDecisions);
