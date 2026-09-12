@@ -19,7 +19,7 @@ public static class SourceBrowserEndpointExtensions
                 .GetAuthenticationContext(httpContext)?
                 .User.Id;
             httpContext.Response.Headers.CacheControl = "no-store";
-            return Results.Ok(await search.SearchAccessibleAsync(
+            return Results.Ok(await search.SearchAccessiblePageAsync(
                 userId,
                 entityType,
                 q,
