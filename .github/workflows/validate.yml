@@ -47,8 +47,9 @@ jobs:
 
           const api = new RulesCoreApi({ apiBaseUrl: "https://rules-core.test/tool" });
           if (typeof api.getGlobalResolvedRule !== "function"
-              || typeof api.getCampaignResolvedRule !== "function") {
-              throw new Error("Rules Browser resolved-rule API contract is incomplete.");
+              || typeof api.getCampaignResolvedRule !== "function"
+              || typeof api.searchSourceEntityPage !== "function") {
+              throw new Error("Rules Browser/source paging API contract is incomplete.");
           }
 
           globalThis.fetch = async () => new Response(
@@ -101,7 +102,10 @@ jobs:
               "Availability\", \"Bundled with Rules Core",
               "entityType: \"monster\"",
               "/api/sources/entities/",
-              "Copy beta payload"
+              "Copy beta payload",
+              "searchSourceEntityPage",
+              "← Previous",
+              "Next →"
           ]) {
               if (!library.includes(required)) {
                   throw new Error(`Source Library browser contract is missing '${required}'.`);
@@ -116,6 +120,13 @@ jobs:
               if (library.includes(incompatible)) {
                   throw new Error(`Normal Source Library still contains acquisition control '${incompatible}'.`);
               }
+          }
+
+          const versioning = fs.readFileSync(
+              "./src/RulesCore.Web/wwwroot/source-versioning.js",
+              "utf8");
+          if (!versioning.includes("Automatically resolved: the bound editions have the same rule-bearing content")) {
+              throw new Error("Version-review UI does not surface automatic no-change resolution.");
           }
           NODE
 
