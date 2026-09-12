@@ -69,6 +69,7 @@ const SECONDARY_RULES_LAWYER_TOOLS = new Map([
 ]);
 
 export function installRulesCoreUx(app) {
+    installPresentationOrdering(app);
     app.renderHeader = () => renderWorkspaceHeader(app);
     app.renderNavigation = () => renderWorkspaceNavigation(app);
 
@@ -79,6 +80,43 @@ export function installRulesCoreUx(app) {
         await renderActiveView(container);
         enhanceRenderedView(app, container);
     };
+}
+
+function installPresentationOrdering(app) {
+    const getGlobalOverview = app.api.getGlobalAuthoringOverview.bind(app.api);
+    app.api.getGlobalAuthoringOverview = async () => {
+        const overview = await getGlobalOverview();
+        return {
+            ...overview,
+            concepts: [...(overview.concepts ?? [])].sort(compareGlobalConcepts)
+        };
+    };
+
+    const getCampaignOverview = app.api.getCampaignAuthoringOverview.bind(app.api);
+    app.api.getCampaignAuthoringOverview = async campaignId => {
+        const overview = await getCampaignOverview(campaignId);
+        return {
+            ...overview,
+            concepts: [...(overview.concepts ?? [])].sort(compareCampaignConcepts)
+        };
+    };
+}
+
+function compareGlobalConcepts(left, right) {
+    const priority = concept => {
+        if (!concept.latestDecisionId) return 0;
+        if (concept.hasUnpublishedChanges) return 1;
+        return 2;
+    };
+    return priority(left) - priority(right)
+        || String(left.entityType ?? "").localeCompare(String(right.entityType ?? ""))
+        || String(left.displayName ?? "").localeCompare(String(right.displayName ?? ""));
+}
+
+function compareCampaignConcepts(left, right) {
+    const priority = concept => concept.hasUnpublishedOverrideChange ? 0 : 1;
+    return priority(left) - priority(right)
+        || String(left.displayName ?? "").localeCompare(String(right.displayName ?? ""));
 }
 
 function renderWorkspaceHeader(app) {
@@ -155,7 +193,14 @@ function enhanceRenderedView(app, container) {
     }
 
     if (app.activeView === "global") {
+        updateRulesLawyerWorkflowCopy(container);
         wrapSecondaryRulesLawyerTools(container);
+    }
+
+    if (app.activeView === "browse") {
+        const accessibleRulesLabel = Array.from(container.querySelectorAll("dt"))
+            .find(node => node.textContent?.trim() === "Accessible rules");
+        if (accessibleRulesLabel) accessibleRulesLabel.textContent = "Rules on this page";
     }
 
     container.querySelectorAll(":scope > .card").forEach(card => {
@@ -189,6 +234,15 @@ function pageLead(meta) {
         element("div", { className: "rules-core-eyebrow", text: meta.eyebrow }),
         element("h2", { text: meta.title }),
         element("p", { className: "text-body-secondary", text: meta.description }));
+}
+
+function updateRulesLawyerWorkflowCopy(container) {
+    const workflow = container.querySelector(".rules-core-workflow");
+    if (!workflow) return;
+    const description = workflow.querySelector(".text-body-secondary.small");
+    if (description) {
+        description.textContent = "Source material stays separate until you deliberately bind it. Unchanged editions may resolve automatically; publication remains explicit.";
+    }
 }
 
 function wrapSecondaryRulesLawyerTools(container) {
