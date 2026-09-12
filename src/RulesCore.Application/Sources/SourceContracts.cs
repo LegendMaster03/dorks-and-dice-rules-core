@@ -142,6 +142,13 @@ public interface ISourceEntitySearchService
         string? entityType = null,
         string? query = null,
         int limit = 100,
+        CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyList<SourceEntitySummary>> SearchAccessiblePageAsync(
+        string? userId,
+        string? entityType = null,
+        string? query = null,
+        int limit = 100,
         int offset = 0,
         CancellationToken cancellationToken = default);
 }
