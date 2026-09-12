@@ -75,10 +75,12 @@ export function installRulesCoreUx(app) {
 
     const renderActiveView = app.renderActiveView.bind(app);
     app.renderActiveView = async container => {
+        app.uxMutationObserver?.disconnect();
         container.classList.add("rules-core-main");
         container.dataset.rulesView = app.activeView ?? "unknown";
         await renderActiveView(container);
         enhanceRenderedView(app, container);
+        app.uxMutationObserver = observeInPlaceNavigation(app, container);
     };
 }
 
@@ -187,20 +189,28 @@ function navItem(app, item) {
         element("span", { className: "rules-core-nav-item-description", text: item.description }));
 }
 
+function observeInPlaceNavigation(app, container) {
+    let scheduled = false;
+    const observer = new MutationObserver(() => {
+        if (scheduled || !container.isConnected) return;
+        scheduled = true;
+        queueMicrotask(() => {
+            scheduled = false;
+            if (container.isConnected) enhanceRenderedView(app, container);
+        });
+    });
+    observer.observe(container, { childList: true, subtree: true });
+    return observer;
+}
+
 function enhanceRenderedView(app, container) {
-    if (VIEW_META[app.activeView]) {
+    if (VIEW_META[app.activeView] && !container.querySelector(":scope > .rules-core-generated-page-lead")) {
         container.prepend(pageLead(VIEW_META[app.activeView]));
     }
 
     if (app.activeView === "global") {
         updateRulesLawyerWorkflowCopy(container);
         wrapSecondaryRulesLawyerTools(container);
-    }
-
-    if (app.activeView === "browse") {
-        const accessibleRulesLabel = Array.from(container.querySelectorAll("dt"))
-            .find(node => node.textContent?.trim() === "Accessible rules");
-        if (accessibleRulesLabel) accessibleRulesLabel.textContent = "Rules on this page";
     }
 
     container.querySelectorAll(":scope > .card").forEach(card => {
