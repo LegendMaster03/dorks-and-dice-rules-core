@@ -34,6 +34,40 @@ const NAV_GROUPS = [
 const VIEW_LABELS = new Map(
     NAV_GROUPS.flatMap(group => group.items.map(item => [item.view, item.label])));
 
+const VIEW_META = {
+    global: {
+        eyebrow: "Rules Layer",
+        title: "Rules Lawyer",
+        description: "Turn reviewed source material into explicit table rules. Decisions remain draft until you publish a global revision."
+    },
+    campaign: {
+        eyebrow: "Campaign Layer",
+        title: "Campaign Rules",
+        description: "Choose the campaign baseline, review inherited rules, and publish only the overrides this campaign needs."
+    },
+    "hosted-sources": {
+        eyebrow: "Maintenance",
+        title: "Hosted Sources",
+        description: "Maintain upstream source definitions and compare them with the locally available Source Layer."
+    },
+    "source-admin": {
+        eyebrow: "Maintenance",
+        title: "Source Administration",
+        description: "Manage manual imports, source access, and acquisition records without changing published rules."
+    }
+};
+
+const SECONDARY_RULES_LAWYER_TOOLS = new Map([
+    ["Normalize imported sources", {
+        title: "Normalize imported sources",
+        description: "Review unbound source entities and create or reuse stable rule concepts."
+    }],
+    ["Create rule concept", {
+        title: "Create a rule concept manually",
+        description: "Use this when no imported source can establish the concept identity you need."
+    }]
+]);
+
 export function installRulesCoreUx(app) {
     app.renderHeader = () => renderWorkspaceHeader(app);
     app.renderNavigation = () => renderWorkspaceNavigation(app);
@@ -50,10 +84,13 @@ export function installRulesCoreUx(app) {
 function renderWorkspaceHeader(app) {
     const header = element("header", { className: "rules-core-topbar" });
     const brand = element("div", { className: "rules-core-brand" });
+    const brandContext = app.hostContext.siteMode === "dorks-and-dice"
+        ? "DORKS & DICE"
+        : "RULES WORKSPACE";
     brand.append(
         element("div", { className: "rules-core-brand-mark", text: "R" }),
         element("div", {},
-            element("div", { className: "rules-core-eyebrow", text: "DORKS & DICE" }),
+            element("div", { className: "rules-core-eyebrow", text: brandContext }),
             element("div", { className: "rules-core-brand-title", text: "Rules Core" })));
 
     const context = element("div", { className: "rules-core-context" });
@@ -113,6 +150,14 @@ function navItem(app, item) {
 }
 
 function enhanceRenderedView(app, container) {
+    if (VIEW_META[app.activeView]) {
+        container.prepend(pageLead(VIEW_META[app.activeView]));
+    }
+
+    if (app.activeView === "global") {
+        wrapSecondaryRulesLawyerTools(container);
+    }
+
     container.querySelectorAll(":scope > .card").forEach(card => {
         card.classList.add("rules-core-panel");
     });
@@ -137,4 +182,40 @@ function enhanceRenderedView(app, container) {
     container.querySelectorAll(".alert").forEach(alert => {
         alert.classList.add("rules-core-alert");
     });
+}
+
+function pageLead(meta) {
+    return element("section", { className: "rules-core-generated-page-lead" },
+        element("div", { className: "rules-core-eyebrow", text: meta.eyebrow }),
+        element("h2", { text: meta.title }),
+        element("p", { className: "text-body-secondary", text: meta.description }));
+}
+
+function wrapSecondaryRulesLawyerTools(container) {
+    for (const [heading, metadata] of SECONDARY_RULES_LAWYER_TOOLS) {
+        const card = findDirectCardByHeading(container, heading);
+        if (!card || card.parentElement?.classList.contains("rules-core-tool-disclosure")) continue;
+
+        const disclosure = element("details", { className: "rules-core-tool-disclosure" });
+        const summary = element("summary", {},
+            element("span", {},
+                element("strong", { text: metadata.title }),
+                element("small", { text: metadata.description })),
+            element("span", { className: "rules-core-disclosure-cue", text: "Open" }));
+        card.classList.remove("mb-3");
+        card.parentNode.insertBefore(disclosure, card);
+        disclosure.append(summary, card);
+        disclosure.addEventListener("toggle", () => {
+            const cue = disclosure.querySelector(".rules-core-disclosure-cue");
+            if (cue) cue.textContent = disclosure.open ? "Close" : "Open";
+        });
+    }
+}
+
+function findDirectCardByHeading(container, heading) {
+    return Array.from(container.children).find(child => {
+        if (!child.classList?.contains("card")) return false;
+        const title = child.querySelector("h3, h4, h5");
+        return title?.textContent?.trim() === heading;
+    }) ?? null;
 }
