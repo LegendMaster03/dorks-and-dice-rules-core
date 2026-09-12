@@ -73,15 +73,33 @@ jobs:
               "utf8");
           for (const required of [
               "installRulesCoreUx",
+              "rules-core-detail.css"
+          ]) {
+              if (!appModule.includes(required)) {
+                  throw new Error(`Rules Core app shell is missing '${required}'.`);
+              }
+          }
+          for (const required of [
               "rules-core-topbar",
               "rules-core-nav-shell",
               "rules-core-main",
               "Cross-version",
-              "Maintenance"
+              "Maintenance",
+              "MutationObserver",
+              "rules-core-tool-disclosure",
+              "getGlobalAuthoringOverview",
+              "hasUnpublishedOverrideChange"
           ]) {
-              const source = required === "installRulesCoreUx" ? appModule : uxShell;
-              if (!source.includes(required)) {
+              if (!uxShell.includes(required)) {
                   throw new Error(`Rules Core UX shell contract is missing '${required}'.`);
+              }
+          }
+          for (const stylesheet of [
+              "./src/RulesCore.Web/wwwroot/rules-core.css",
+              "./src/RulesCore.Web/wwwroot/rules-core-detail.css"
+          ]) {
+              if (!fs.existsSync(stylesheet)) {
+                  throw new Error(`Rules Core stylesheet '${stylesheet}' is missing.`);
               }
           }
 
@@ -108,6 +126,29 @@ jobs:
               if (authoring.includes(incompatible)) {
                   throw new Error(`Rules Lawyer browser contract contains incompatible field '${incompatible}'.`);
               }
+          }
+
+          const normalization = fs.readFileSync(
+              "./src/RulesCore.Web/wwwroot/source-normalization.js",
+              "utf8");
+          for (const required of [
+              "rules-core-idle-state",
+              "mechanically identical cross-edition rules may then resolve automatically",
+              "publication remains explicit"
+          ]) {
+              if (!normalization.includes(required)) {
+                  throw new Error(`Normalization UX contract is missing '${required}'.`);
+              }
+          }
+          if (normalization.includes("await card.loadCandidates();")) {
+              throw new Error("Normalization suggestions must not eagerly load when Rules Lawyer opens.");
+          }
+
+          const rulesBrowser = fs.readFileSync(
+              "./src/RulesCore.Web/wwwroot/rules-browser.js",
+              "utf8");
+          if (!rulesBrowser.includes("Rules on this page")) {
+              throw new Error("Published Rules must distinguish a page count from a total count.");
           }
 
           const library = fs.readFileSync(
