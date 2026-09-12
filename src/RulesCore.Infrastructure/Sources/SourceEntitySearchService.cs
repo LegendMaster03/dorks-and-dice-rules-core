@@ -13,12 +13,14 @@ public sealed class SourceEntitySearchService(RulesCoreDbContext dbContext) : IS
         string? entityType = null,
         string? query = null,
         int limit = 100,
+        int offset = 0,
         CancellationToken cancellationToken = default)
     {
         var normalizedUserId = NormalizeOptional(userId);
         var normalizedEntityType = NormalizeOptional(entityType);
         var normalizedQuery = NormalizeOptional(query);
         var effectiveLimit = Math.Clamp(limit, 1, MaximumLimit);
+        var effectiveOffset = Math.Max(offset, 0);
 
         var sourceEntities = dbContext.SourceEntities
             .AsNoTracking()
@@ -54,6 +56,8 @@ public sealed class SourceEntitySearchService(RulesCoreDbContext dbContext) : IS
             .OrderBy(value => value.Name)
             .ThenBy(value => value.SourceEdition.DisplayName)
             .ThenBy(value => value.SourceCode)
+            .ThenBy(value => value.Id)
+            .Skip(effectiveOffset)
             .Take(effectiveLimit)
             .ToArrayAsync(cancellationToken);
 
