@@ -54,6 +54,15 @@ export class RulesCoreApi {
         return this.backend(`/api/sources/entities?${parameters.toString()}`);
     }
 
+    searchSourceEntityPage({ entityType = null, query = null, limit = 100, offset = 0 } = {}) {
+        const parameters = new URLSearchParams();
+        if (entityType) parameters.set("entityType", entityType);
+        if (query) parameters.set("q", query);
+        parameters.set("limit", String(limit));
+        parameters.set("offset", String(Math.max(0, offset)));
+        return this.backend(`/api/sources/entities/page?${parameters.toString()}`);
+    }
+
     previewSourceDocument(payload) {
         return this.backend("/api/source-admin/import/preview", { method: "POST", body: payload });
     }
