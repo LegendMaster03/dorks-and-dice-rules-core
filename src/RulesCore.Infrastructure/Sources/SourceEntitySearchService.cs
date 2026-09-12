@@ -8,7 +8,21 @@ public sealed class SourceEntitySearchService(RulesCoreDbContext dbContext) : IS
 {
     private const int MaximumLimit = 200;
 
-    public async Task<IReadOnlyList<SourceEntitySummary>> SearchAccessibleAsync(
+    public Task<IReadOnlyList<SourceEntitySummary>> SearchAccessibleAsync(
+        string? userId,
+        string? entityType = null,
+        string? query = null,
+        int limit = 100,
+        CancellationToken cancellationToken = default) =>
+        SearchAccessiblePageAsync(
+            userId,
+            entityType,
+            query,
+            limit,
+            offset: 0,
+            cancellationToken);
+
+    public async Task<IReadOnlyList<SourceEntitySummary>> SearchAccessiblePageAsync(
         string? userId,
         string? entityType = null,
         string? query = null,
