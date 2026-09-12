@@ -4,7 +4,9 @@ import {
     describeError,
     element,
     formatDate,
-    setButtonBusy
+    setButtonBusy,
+    DEFAULT_PAGE_SIZE,
+    paginationControls
 } from "./ui.js";
 
 export function installSourceNormalization(app) {
@@ -65,17 +67,30 @@ function createNormalizationCard(app, container) {
     const results = element("div");
     card.append(status, results);
 
-    const loadCandidates = async () => {
+    let page = 0;
+    const loadCandidates = async (resetPage = false) => {
+        if (resetPage) page = 0;
         status.replaceChildren();
         results.replaceChildren();
         setButtonBusy(searchButton, true, "Loading…");
         try {
-            const candidates = await app.api.getSourceNormalizationCandidates({
+            const requested = await app.api.getSourceNormalizationCandidates({
                 entityType: type.input.value.trim() || null,
                 query: query.input.value.trim() || null,
-                limit: 100
+                limit: DEFAULT_PAGE_SIZE + 1,
+                offset: page * DEFAULT_PAGE_SIZE
             });
-            renderCandidates(app, container, results, candidates);
+            const hasNext = requested.length > DEFAULT_PAGE_SIZE;
+            const candidates = requested.slice(0, DEFAULT_PAGE_SIZE);
+            if (!candidates.length && page > 0) {
+                page -= 1;
+                await loadCandidates(false);
+                return;
+            }
+            renderCandidates(app, container, results, candidates, page, hasNext, async nextPage => {
+                page = nextPage;
+                await loadCandidates(false);
+            });
         } catch (error) {
             status.replaceChildren(alertNode("danger", describeError(error)));
         } finally {
@@ -83,25 +98,25 @@ function createNormalizationCard(app, container) {
         }
     };
 
-    searchButton.addEventListener("click", loadCandidates);
+    searchButton.addEventListener("click", () => loadCandidates(true));
     query.input.addEventListener("keydown", event => {
         if (event.key === "Enter") {
             event.preventDefault();
-            loadCandidates();
+            loadCandidates(true);
         }
     });
     type.input.addEventListener("keydown", event => {
         if (event.key === "Enter") {
             event.preventDefault();
-            loadCandidates();
+            loadCandidates(true);
         }
     });
 
-    card.loadCandidates = loadCandidates;
+    card.loadCandidates = () => loadCandidates(true);
     return card;
 }
 
-function renderCandidates(app, container, results, candidates) {
+function renderCandidates(app, container, results, candidates, page, hasNext, onPage) {
     if (!candidates.length) {
         results.append(alertNode(
             "secondary",
@@ -186,7 +201,9 @@ function renderCandidates(app, container, results, candidates) {
     }
 
     table.append(head, body);
-    results.append(element("div", { className: "table-responsive" }, table));
+    results.append(
+        element("div", { className: "table-responsive" }, table),
+        paginationControls({ page, itemCount: candidates.length, hasNext, onPage }));
 }
 
 function suggestionBadge(kind) {

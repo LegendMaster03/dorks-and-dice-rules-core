@@ -118,11 +118,12 @@ export class RulesCoreApi {
         return this.backend(`/api/source-admin/acquisitions/${encodeURIComponent(sourceAcquisitionId)}/void`, { method: "POST", body: payload });
     }
 
-    getSourceNormalizationCandidates({ entityType = null, query = null, limit = 100 } = {}) {
+    getSourceNormalizationCandidates({ entityType = null, query = null, limit = 100, offset = 0 } = {}) {
         const parameters = new URLSearchParams();
         if (entityType) parameters.set("entityType", entityType);
         if (query) parameters.set("q", query);
         parameters.set("limit", String(limit));
+        parameters.set("offset", String(Math.max(0, offset)));
         return this.backend(`/api/global/rules/normalization/candidates?${parameters.toString()}`);
     }
 
@@ -219,13 +220,13 @@ export class RulesCoreApi {
         });
     }
 
-    getGlobalRulesCatalog({ entityType = null, query = null, limit = 200 } = {}) {
-        const parameters = catalogParameters(entityType, query, limit);
+    getGlobalRulesCatalog({ entityType = null, query = null, limit = 200, offset = 0 } = {}) {
+        const parameters = catalogParameters(entityType, query, limit, offset);
         return this.backend(`/api/rules?${parameters.toString()}`);
     }
 
-    getCampaignRulesCatalog(campaignId, { entityType = null, query = null, limit = 200 } = {}) {
-        const parameters = catalogParameters(entityType, query, limit);
+    getCampaignRulesCatalog(campaignId, { entityType = null, query = null, limit = 200, offset = 0 } = {}) {
+        const parameters = catalogParameters(entityType, query, limit, offset);
         return this.backend(`/api/campaigns/${encodeURIComponent(campaignId)}/rules?${parameters.toString()}`);
     }
 
@@ -238,11 +239,12 @@ export class RulesCoreApi {
     }
 }
 
-function catalogParameters(entityType, query, limit) {
+function catalogParameters(entityType, query, limit, offset = 0) {
     const parameters = new URLSearchParams();
     if (entityType) parameters.set("entityType", entityType);
     if (query) parameters.set("q", query);
     parameters.set("limit", String(limit));
+    parameters.set("offset", String(Math.max(0, offset)));
     return parameters;
 }
 

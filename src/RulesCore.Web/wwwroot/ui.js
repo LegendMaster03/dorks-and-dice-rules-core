@@ -116,6 +116,42 @@ export function setButtonBusy(button, busy, busyText = "Working…") {
     button.textContent = busy ? busyText : button.dataset.idleText;
 }
 
+export const DEFAULT_PAGE_SIZE = 100;
+
+export function paginationControls({
+    page = 0,
+    pageSize = DEFAULT_PAGE_SIZE,
+    itemCount = 0,
+    hasNext = false,
+    onPage
+}) {
+    const currentPage = Math.max(0, page);
+    const first = itemCount > 0 ? (currentPage * pageSize) + 1 : 0;
+    const last = (currentPage * pageSize) + itemCount;
+    const previous = element("button", {
+        type: "button",
+        className: "btn btn-sm btn-outline-secondary",
+        text: "← Previous",
+        disabled: currentPage === 0,
+        onClick: async () => onPage?.(Math.max(0, currentPage - 1))
+    });
+    const next = element("button", {
+        type: "button",
+        className: "btn btn-sm btn-outline-secondary",
+        text: "Next →",
+        disabled: !hasNext,
+        onClick: async () => onPage?.(currentPage + 1)
+    });
+    const range = itemCount > 0
+        ? `Showing ${first}–${last}${hasNext ? "+" : ""} · Page ${currentPage + 1}`
+        : `Page ${currentPage + 1}`;
+    return element("div", {
+        className: "d-flex flex-wrap justify-content-between align-items-center gap-2 mt-3"
+    },
+        element("div", { className: "small text-body-secondary", text: range }),
+        element("div", { className: "d-flex gap-2" }, previous, next));
+}
+
 export function describeError(error) {
     if (!error) {
         return "An unknown error occurred.";
