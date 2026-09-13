@@ -34,8 +34,6 @@ internal static class RuleContributionResolution
         var revisions = await dbContext.SourceEntityRevisions
             .AsNoTracking()
             .Include(value => value.SourceEntity)
-                .ThenInclude(value => value.SourceEdition)
-                .ThenInclude(value => value.SourceWork)
                 .ThenInclude(value => value.SourcePackage)
                 .ThenInclude(value => value.UserGrants)
             .Where(value => revisionIds.Contains(value.Id))
@@ -52,33 +50,27 @@ internal static class RuleContributionResolution
         {
             var revision = byId[contribution.SourceEntityRevisionId];
             var source = revision.SourceEntity;
-            var edition = source.SourceEdition;
-            var work = edition.SourceWork;
-            var package = work.SourcePackage;
+            var package = source.SourcePackage;
             if (!package.IsPublic
                 && (userId is null || !package.UserGrants.Any(grant => grant.UserId == userId)))
             {
                 return new RuleContributionResolutionResult(false, []);
             }
 
-            var metadata = await SourceFrameworkStore.GetEditionMetadataAsync(
-                dbContext,
-                edition.Id,
-                cancellationToken);
             views.Add(new ResolvedRuleContributionView(
                 revision.Id,
                 revision.RevisionNumber,
                 revision.Fingerprint,
                 source.Id,
                 source.Name,
-                source.SourceCode,
+                source.SourceCode ?? string.Empty,
                 package.Key,
                 package.DisplayName,
-                work.Key,
-                work.DisplayName,
-                edition.Key,
-                edition.DisplayName,
-                metadata?.GameEdition,
+                package.Key,
+                package.DisplayName,
+                source.FormatKey,
+                source.FormatKey,
+                GameEdition: null,
                 contribution.ContributionKind,
                 contribution.Note));
         }
