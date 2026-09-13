@@ -35,10 +35,11 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
                 DROP TABLE IF EXISTS source_entity_occurrence_binding CASCADE;
                 DROP TABLE IF EXISTS canonical_source_occurrence CASCADE;
                 DROP TABLE IF EXISTS canonical_publication_alias CASCADE;
-                DROP TABLE IF EXISTS canonical_publication CASCADE;
                 DROP TABLE IF EXISTS canonical_publication_evidence_conflict CASCADE;
                 DROP TABLE IF EXISTS canonical_publication_publisher_evidence CASCADE;
                 DROP TABLE IF EXISTS source_representation_publication CASCADE;
+                DROP TABLE IF EXISTS source_representation_entity CASCADE;
+                DROP TABLE IF EXISTS canonical_publication CASCADE;
                 DROP TABLE IF EXISTS source_entity_revision CASCADE;
                 DROP TABLE IF EXISTS source_entity CASCADE;
                 DROP TABLE IF EXISTS source_representation CASCADE;
@@ -123,6 +124,25 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
         CREATE INDEX IF NOT EXISTS ix_source_entity_revision_representation
             ON source_entity_revision(source_representation_id);
 
+        CREATE TABLE IF NOT EXISTS source_representation_entity (
+            source_representation_entity_id uuid NOT NULL,
+            source_representation_id uuid NOT NULL,
+            source_entity_id uuid NOT NULL,
+            source_entity_revision_id uuid NOT NULL,
+            locator_key varchar(500) NULL,
+            created_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_source_representation_entity PRIMARY KEY (source_representation_entity_id),
+            CONSTRAINT fk_source_representation_entity_representation FOREIGN KEY (source_representation_id)
+                REFERENCES source_representation(source_representation_id) ON DELETE CASCADE,
+            CONSTRAINT fk_source_representation_entity_entity FOREIGN KEY (source_entity_id)
+                REFERENCES source_entity(source_entity_id) ON DELETE CASCADE,
+            CONSTRAINT fk_source_representation_entity_revision FOREIGN KEY (source_entity_revision_id)
+                REFERENCES source_entity_revision(source_entity_revision_id) ON DELETE CASCADE);
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_source_representation_entity_identity
+            ON source_representation_entity(source_representation_id, source_entity_id);
+        CREATE INDEX IF NOT EXISTS ix_source_representation_entity_revision
+            ON source_representation_entity(source_entity_revision_id);
+
         CREATE TABLE IF NOT EXISTS user_source_grant (
             user_source_grant_id uuid NOT NULL,
             source_package_id uuid NOT NULL,
@@ -135,6 +155,110 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
             ON user_source_grant(user_id, source_package_id);
         CREATE INDEX IF NOT EXISTS ix_user_source_grant_package
             ON user_source_grant(source_package_id);
+
+        CREATE TABLE IF NOT EXISTS canonical_publication (
+            canonical_publication_id uuid NOT NULL,
+            canonical_key varchar(300) NOT NULL,
+            display_name varchar(500) NOT NULL,
+            publisher varchar(300) NULL,
+            game_edition varchar(40) NULL,
+            publication_date date NULL,
+            bibliographic_fingerprint varchar(64) NOT NULL,
+            created_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_canonical_publication PRIMARY KEY (canonical_publication_id));
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_canonical_publication_key
+            ON canonical_publication(canonical_key);
+        CREATE INDEX IF NOT EXISTS ix_canonical_publication_bibliographic_fingerprint
+            ON canonical_publication(bibliographic_fingerprint);
+
+        CREATE TABLE IF NOT EXISTS canonical_publication_alias (
+            canonical_publication_alias_id uuid NOT NULL,
+            canonical_publication_id uuid NOT NULL,
+            alias_scheme varchar(100) NOT NULL,
+            alias_value varchar(500) NOT NULL,
+            created_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_canonical_publication_alias PRIMARY KEY (canonical_publication_alias_id),
+            CONSTRAINT fk_canonical_publication_alias_publication FOREIGN KEY (canonical_publication_id)
+                REFERENCES canonical_publication(canonical_publication_id) ON DELETE CASCADE);
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_canonical_publication_alias_identity
+            ON canonical_publication_alias(alias_scheme, alias_value);
+        CREATE INDEX IF NOT EXISTS ix_canonical_publication_alias_publication
+            ON canonical_publication_alias(canonical_publication_id);
+
+        CREATE TABLE IF NOT EXISTS canonical_source_occurrence (
+            canonical_source_occurrence_id uuid NOT NULL,
+            canonical_publication_id uuid NOT NULL,
+            occurrence_key varchar(1000) NOT NULL,
+            entity_type varchar(120) NOT NULL,
+            display_name varchar(500) NOT NULL,
+            created_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_canonical_source_occurrence PRIMARY KEY (canonical_source_occurrence_id),
+            CONSTRAINT fk_canonical_source_occurrence_publication FOREIGN KEY (canonical_publication_id)
+                REFERENCES canonical_publication(canonical_publication_id) ON DELETE CASCADE);
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_canonical_source_occurrence_identity
+            ON canonical_source_occurrence(canonical_publication_id, occurrence_key);
+
+        CREATE TABLE IF NOT EXISTS source_entity_occurrence_binding (
+            source_entity_occurrence_binding_id uuid NOT NULL,
+            source_entity_id uuid NOT NULL,
+            canonical_source_occurrence_id uuid NOT NULL,
+            semantic_fingerprint varchar(64) NOT NULL,
+            locator_key varchar(500) NULL,
+            match_kind varchar(100) NOT NULL,
+            confidence double precision NOT NULL,
+            created_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_source_entity_occurrence_binding PRIMARY KEY (source_entity_occurrence_binding_id),
+            CONSTRAINT fk_source_entity_occurrence_binding_entity FOREIGN KEY (source_entity_id)
+                REFERENCES source_entity(source_entity_id) ON DELETE CASCADE,
+            CONSTRAINT fk_source_entity_occurrence_binding_occurrence FOREIGN KEY (canonical_source_occurrence_id)
+                REFERENCES canonical_source_occurrence(canonical_source_occurrence_id) ON DELETE CASCADE,
+            CONSTRAINT ck_source_entity_occurrence_binding_confidence CHECK (confidence >= 0 AND confidence <= 1));
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_source_entity_occurrence_binding_entity
+            ON source_entity_occurrence_binding(source_entity_id);
+        CREATE INDEX IF NOT EXISTS ix_source_entity_occurrence_binding_occurrence
+            ON source_entity_occurrence_binding(canonical_source_occurrence_id);
+        CREATE INDEX IF NOT EXISTS ix_source_entity_occurrence_binding_semantic_fingerprint
+            ON source_entity_occurrence_binding(semantic_fingerprint);
+
+        CREATE TABLE IF NOT EXISTS source_representation_publication (
+            source_representation_publication_id uuid NOT NULL,
+            source_representation_id uuid NOT NULL,
+            canonical_publication_id uuid NOT NULL,
+            local_key varchar(500) NOT NULL,
+            created_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_source_representation_publication PRIMARY KEY (source_representation_publication_id),
+            CONSTRAINT fk_source_representation_publication_representation FOREIGN KEY (source_representation_id)
+                REFERENCES source_representation(source_representation_id) ON DELETE CASCADE,
+            CONSTRAINT fk_source_representation_publication_canonical FOREIGN KEY (canonical_publication_id)
+                REFERENCES canonical_publication(canonical_publication_id) ON DELETE RESTRICT);
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_source_representation_publication_identity
+            ON source_representation_publication(source_representation_id, local_key);
+        CREATE INDEX IF NOT EXISTS ix_source_representation_publication_canonical
+            ON source_representation_publication(canonical_publication_id);
+
+        CREATE TABLE IF NOT EXISTS canonical_publication_evidence_conflict (
+            canonical_publication_evidence_conflict_id uuid NOT NULL,
+            canonical_publication_id uuid NOT NULL,
+            source_entity_id uuid NULL,
+            source_representation_id uuid NULL,
+            field_name varchar(80) NOT NULL,
+            canonical_value varchar(1000) NULL,
+            observed_value varchar(1000) NULL,
+            recorded_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_canonical_publication_evidence_conflict PRIMARY KEY (canonical_publication_evidence_conflict_id),
+            CONSTRAINT fk_canonical_publication_evidence_conflict_publication FOREIGN KEY (canonical_publication_id)
+                REFERENCES canonical_publication(canonical_publication_id) ON DELETE CASCADE,
+            CONSTRAINT fk_canonical_publication_evidence_conflict_source_entity FOREIGN KEY (source_entity_id)
+                REFERENCES source_entity(source_entity_id) ON DELETE CASCADE,
+            CONSTRAINT fk_canonical_publication_evidence_conflict_representation FOREIGN KEY (source_representation_id)
+                REFERENCES source_representation(source_representation_id) ON DELETE CASCADE);
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_canonical_publication_evidence_conflict_observation
+            ON canonical_publication_evidence_conflict(canonical_publication_id, source_entity_id, field_name);
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_canonical_publication_evidence_conflict_representation_observation
+            ON canonical_publication_evidence_conflict(canonical_publication_id, source_representation_id, field_name)
+            WHERE source_representation_id IS NOT NULL;
+        CREATE INDEX IF NOT EXISTS ix_canonical_publication_evidence_conflict_publication
+            ON canonical_publication_evidence_conflict(canonical_publication_id);
 
         CREATE TABLE IF NOT EXISTS rule_concept (
             rule_concept_id uuid NOT NULL,
