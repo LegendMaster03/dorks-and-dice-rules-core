@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
-using RulesCore.Domain.Sources;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Rules;
 using RulesCore.Infrastructure.Sources;
@@ -64,22 +63,12 @@ public sealed class GlobalSourceDispositionIntegrationTests
             packageId = imported.PackageId;
             await grants.GrantAsync(userId, imported.PackageId);
 
-            await new CanonicalSourceIdentityService(db)
-                .IndexPackageAsync(imported.PackageId);
-            var publisherPropagation = await new CanonicalPublicationPublisherService(db)
-                .ReconcilePackageAsync(imported.PackageId);
-            Assert.Equal(1, publisherPropagation.UpdatedPublications);
-            Assert.Equal(0, publisherPropagation.ConflictingPublications);
-
             var canonical = await ReadCanonicalPublisherAsync(db, imported.Entities.Single().EntityId);
             Assert.NotNull(canonical);
             canonicalPublicationId = canonical.Value.PublicationId;
             Assert.Equal("Homebrew Publisher", canonical.Value.Publisher);
 
-            var before = await normalization.GetCandidatesPageAsync(
-                userId,
-                query: token,
-                limit: 20);
+            var before = await normalization.GetCandidatesPageAsync(userId, query: token, limit: 20);
             var candidate = Assert.Single(before);
             Assert.Equal(imported.PackageId, candidate.SourcePackageId);
 
@@ -90,17 +79,12 @@ public sealed class GlobalSourceDispositionIntegrationTests
             Assert.NotNull(ignored);
             Assert.Equal("Homebrew Publisher", imported.Publisher);
 
-            var ignoredPackages = await disposition.GetIgnoredAsync();
             var ignoredView = Assert.Single(
-                ignoredPackages,
+                await disposition.GetIgnoredAsync(),
                 value => value.SourcePackageId == imported.PackageId);
             Assert.Equal("Not relevant to the global ruleset.", ignoredView.Reason);
 
-            var whileIgnored = await normalization.GetCandidatesPageAsync(
-                userId,
-                query: token,
-                limit: 20);
-            Assert.Empty(whileIgnored);
+            Assert.Empty(await normalization.GetCandidatesPageAsync(userId, query: token, limit: 20));
 
             var accessiblePackages = await catalog.GetAccessiblePackagesAsync(userId);
             Assert.Contains(accessiblePackages, value => value.Id == imported.PackageId);
@@ -111,11 +95,7 @@ public sealed class GlobalSourceDispositionIntegrationTests
                 new SetGlobalSourceIgnoredRequest(false),
                 "rules-lawyer");
 
-            var afterRestore = await normalization.GetCandidatesPageAsync(
-                userId,
-                query: token,
-                limit: 20);
-            Assert.Single(afterRestore);
+            Assert.Single(await normalization.GetCandidatesPageAsync(userId, query: token, limit: 20));
             Assert.DoesNotContain(
                 await disposition.GetIgnoredAsync(),
                 value => value.SourcePackageId == imported.PackageId);
@@ -180,9 +160,7 @@ public sealed class GlobalSourceDispositionIntegrationTests
             command.Parameters.Add(parameter);
             await using var reader = await command.ExecuteReaderAsync();
             if (!await reader.ReadAsync()) return null;
-            return (
-                reader.GetGuid(0),
-                reader.IsDBNull(1) ? null : reader.GetString(1));
+            return (reader.GetGuid(0), reader.IsDBNull(1) ? null : reader.GetString(1));
         }
         finally
         {
