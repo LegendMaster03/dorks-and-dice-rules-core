@@ -33,6 +33,7 @@ jobs:
             src/RulesCore.Web/wwwroot/scope-control.js \
             src/RulesCore.Web/wwwroot/semantic-comparison.js \
             src/RulesCore.Web/wwwroot/source-library.js \
+            src/RulesCore.Web/wwwroot/source-add.js \
             src/RulesCore.Web/wwwroot/concept-source-authoring.js \
             src/RulesCore.Web/wwwroot/source-normalization.js \
             src/RulesCore.Web/wwwroot/source-revision-review.js \
@@ -52,8 +53,11 @@ jobs:
           const api = new RulesCoreApi({ apiBaseUrl: "https://rules-core.test/tool" });
           if (typeof api.getGlobalResolvedRule !== "function"
               || typeof api.getCampaignResolvedRule !== "function"
-              || typeof api.searchSourceEntityPage !== "function") {
-              throw new Error("Rules Browser/source paging API contract is incomplete.");
+              || typeof api.searchSourceEntityPage !== "function"
+              || typeof api.addCurrentUserSource !== "function"
+              || typeof api.getCurrentUserSources !== "function"
+              || typeof api.refreshCurrentUserSource !== "function") {
+              throw new Error("Rules Browser/source paging/self-service source API contract is incomplete.");
           }
 
           globalThis.fetch = async () => new Response(
@@ -76,6 +80,7 @@ jobs:
               "utf8");
           for (const required of [
               "installRulesCoreUx",
+              "installSourceAdd",
               "rules-core-detail.css"
           ]) {
               if (!appModule.includes(required)) {
@@ -184,6 +189,22 @@ jobs:
           ]) {
               if (library.includes(incompatible)) {
                   throw new Error(`Normal Source Library still contains acquisition control '${incompatible}'.`);
+              }
+          }
+
+          const sourceAdd = fs.readFileSync(
+              "./src/RulesCore.Web/wwwroot/source-add.js",
+              "utf8");
+          for (const required of [
+              "Add Source",
+              "Upload file",
+              "Web source",
+              "5etools-mirror-3/5etools-src/tree/main/data",
+              "addCurrentUserSource",
+              "refreshCurrentUserSource"
+          ]) {
+              if (!sourceAdd.includes(required)) {
+                  throw new Error(`Self-service source workflow is missing '${required}'.`);
               }
           }
 
