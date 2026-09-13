@@ -26,13 +26,15 @@ For a `new-concept` candidate, acceptance creates the stable Rules Layer concept
 
 A conflicting suggestion is rejected. The Rules Lawyer can instead use the existing manual concept/source-binding workflow when the deterministic name-based suggestion is not appropriate.
 
-Acceptance deliberately does **not** create a global rule decision and does **not** publish a ruleset revision. Normalization answers only which source implementations correspond to a stable concept. Adjudication still occurs separately through preview, decision, and publication.
+Acceptance does not infer equivalence from the normalization suggestion itself and never publishes a ruleset revision. After the deliberate binding is recorded, Rules Core may run its separate conservative compatibility check across the latest bound editions. That check can create an automatic global decision only when the bound implementations are mechanically identical or when one complete source revision is a non-destructive semantic superset of every other bound edition. Publication remains explicit.
 
 ## Cross-edition behavior
 
 The workflow is useful for common names repeated across editions. If a 2014 `Arcana` entity is accepted first, Rules Core can create `skill.arcana`. A later accessible 2024 `Arcana` entity then proposes the existing `skill.arcana` concept rather than another concept.
 
-This is still a suggestion, not an automatic merge. The Rules Lawyer must accept each binding. Differently named implementations, exceptional cases, aliases, split concepts, or entities that should map elsewhere remain available through manual authoring.
+This is still a binding suggestion, not an automatic source association. The Rules Lawyer must accept each binding. Only after those deliberate bindings exist may the compatibility resolver compare the exact source revisions. Mechanically identical implementations can auto-resolve. A purely additive/subtractive difference can also auto-resolve when one complete implementation is a semantic superset of all others; for example, if a newer monster merely adds an ability, the newer source can be selected, while if the newer monster merely omits an otherwise compatible older ability, the older superset can be selected instead.
+
+If shared values conflict, text changes, entries are replaced or reordered, or neither source contains all compatible rule-bearing content from the others, the concept remains for manual adjudication. Differently named implementations, exceptional cases, aliases, split concepts, or entities that should map elsewhere also remain available through manual authoring.
 
 ## Authorization and source access
 
@@ -47,13 +49,16 @@ The candidate endpoint returns descriptive source metadata but not the raw sourc
 
 ## Design boundary
 
-Normalization is intentionally conservative:
+Normalization and automatic compatibility resolution are intentionally conservative:
 
 - no bulk automatic acceptance;
-- no content-similarity matching;
-- no semantic inference from descriptions or mechanics;
+- no automatic concept binding;
+- no content-similarity binding;
 - no mutation of Source Layer records;
-- no automatic decision or publication;
-- no silent resolution of key conflicts.
+- no automatic publication;
+- no generic JSON union across conflicting versions;
+- no replacement of an existing manual or patched ruling;
+- no silent resolution of key conflicts;
+- an automatic decision is allowed only after deliberate binding and deterministic verification that the bound revisions are identical or that one exact revision is a non-destructive semantic superset of all the others.
 
 Future normalization helpers may offer aliases or richer similarity suggestions, but they must remain explainable and reviewable rather than becoming an implicit source of truth.
