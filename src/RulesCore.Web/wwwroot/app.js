@@ -1,5 +1,6 @@
 import { RulesCoreApi, loadToolHostContext } from "./api.js";
 import { RulesAuthoringApp } from "./authoring.js";
+import { installToolNavigation } from "./browser-navigation.js";
 import { installCampaignBaselineAuthoring } from "./campaign-baseline-authoring.js";
 import { installConceptSourceAuthoring } from "./concept-source-authoring.js";
 import { installHostedSourceAuthoring } from "./hosted-source-authoring.js";
@@ -36,6 +37,7 @@ try {
         globalRoles: []
     };
     const app = new RulesAuthoringApp(root, api, hostContext, effectiveSession, campaigns);
+    installToolNavigation(app);
     installResolvedRulesBrowser(app);
     installAdjudicationScopeControl(app);
     installSemanticComparison(app);
@@ -53,6 +55,7 @@ try {
         installSourceAdd(app);
     }
     installRulesCoreUx(app);
+    await app.applyToolRoute(app.currentToolRoute(), { render: false });
     await app.render();
 } catch (error) {
     console.error("Rules Core failed to initialize.", error);
@@ -65,7 +68,8 @@ try {
 function installStylesheets() {
     for (const [id, filename] of [
         ["rules-core-module-styles", "./rules-core.css"],
-        ["rules-core-detail-styles", "./rules-core-detail.css"]
+        ["rules-core-detail-styles", "./rules-core-detail.css"],
+        ["rules-core-library-styles", "./rules-core-library.css"]
     ]) {
         if (document.getElementById(id)) continue;
         const link = document.createElement("link");

@@ -63,6 +63,28 @@ export class RulesCoreApi {
         return this.backend(`/api/sources/entities/page?${parameters.toString()}`);
     }
 
+    getSourceLibraryPublications() {
+        return this.backend("/api/sources/library/publications");
+    }
+
+    getSourceLibraryPublication(publicationId) {
+        return this.backend(`/api/sources/library/publications/${encodeURIComponent(publicationId)}`);
+    }
+
+    getSourceLibraryEntityPage({ publicationId = null, entityType = null, query = null, limit = 100, offset = 0 } = {}) {
+        const parameters = new URLSearchParams();
+        if (publicationId) parameters.set("publicationId", publicationId);
+        if (entityType) parameters.set("entityType", entityType);
+        if (query) parameters.set("q", query);
+        parameters.set("limit", String(limit));
+        parameters.set("offset", String(Math.max(0, offset)));
+        return this.backend(`/api/sources/library/entities/page?${parameters.toString()}`);
+    }
+
+    getSourceLibraryEntity(publicationId, entityId) {
+        return this.backend(`/api/sources/library/publications/${encodeURIComponent(publicationId)}/entities/${encodeURIComponent(entityId)}`);
+    }
+
     getCurrentUserSources() { return this.backend("/api/sources/current-user"); }
 
     addCurrentUserSource(payload) {

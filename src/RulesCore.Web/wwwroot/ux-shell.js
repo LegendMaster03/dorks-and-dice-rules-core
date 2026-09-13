@@ -4,8 +4,8 @@ const NAV_GROUPS = [
     {
         label: "Explore",
         items: [
-            { label: "Library", view: "library", capability: "canBrowseSourceLibrary", description: "Source material" },
-            { label: "Published Rules", view: "browse", capability: "canBrowseRules", description: "Table-ready rules" }
+            { label: "Rules Library", view: "library", route: "/library", capability: "canBrowseSourceLibrary", description: "Source publications" },
+            { label: "Published Rules", view: "browse", route: "/published", capability: "canBrowseRules", description: "Table-ready rules" }
         ]
     },
     {
@@ -113,16 +113,12 @@ function installExplicitRenderLifecycle(app) {
 
 function wrapInPlaceViewRender(app, methodName) {
     const render = app[methodName]?.bind(app);
-    if (!render) {
-        return;
-    }
+    if (!render) return;
 
     app[methodName] = async (...args) => {
         const result = await render(...args);
         const container = args[0];
-        if (container && app.uxActiveRenderDepth === 0) {
-            app.presentRenderedView(container);
-        }
+        if (container && app.uxActiveRenderDepth === 0) app.presentRenderedView(container);
         return result;
     };
 }
@@ -131,19 +127,13 @@ function installPresentationOrdering(app) {
     const getGlobalOverview = app.api.getGlobalAuthoringOverview.bind(app.api);
     app.api.getGlobalAuthoringOverview = async () => {
         const overview = await getGlobalOverview();
-        return {
-            ...overview,
-            concepts: [...(overview.concepts ?? [])].sort(compareGlobalConcepts)
-        };
+        return { ...overview, concepts: [...(overview.concepts ?? [])].sort(compareGlobalConcepts) };
     };
 
     const getCampaignOverview = app.api.getCampaignAuthoringOverview.bind(app.api);
     app.api.getCampaignAuthoringOverview = async campaignId => {
         const overview = await getCampaignOverview(campaignId);
-        return {
-            ...overview,
-            concepts: [...(overview.concepts ?? [])].sort(compareCampaignConcepts)
-        };
+        return { ...overview, concepts: [...(overview.concepts ?? [])].sort(compareCampaignConcepts) };
     };
 }
 
@@ -167,9 +157,7 @@ function compareCampaignConcepts(left, right) {
 function renderWorkspaceHeader(app) {
     const header = element("header", { className: "rules-core-topbar" });
     const brand = element("div", { className: "rules-core-brand" });
-    const brandContext = app.hostContext.siteMode === "dorks-and-dice"
-        ? "DORKS & DICE"
-        : "RULES WORKSPACE";
+    const brandContext = app.hostContext.siteMode === "dorks-and-dice" ? "DORKS & DICE" : "RULES WORKSPACE";
     brand.append(
         element("div", { className: "rules-core-brand-mark", text: "R" }),
         element("div", {},
@@ -192,10 +180,7 @@ function renderWorkspaceHeader(app) {
 }
 
 function renderWorkspaceNavigation(app) {
-    const nav = element("nav", {
-        className: "rules-core-nav-shell",
-        ariaLabel: "Rules Core workspace"
-    });
+    const nav = element("nav", { className: "rules-core-nav-shell", ariaLabel: "Rules Core workspace" });
     const groups = element("div", { className: "rules-core-nav-groups" });
 
     for (const groupDefinition of NAV_GROUPS) {
@@ -223,6 +208,10 @@ function navItem(app, item) {
         className: `rules-core-nav-item${active ? " is-active" : ""}`,
         attributes: active ? { "aria-current": "page" } : {},
         onClick: async () => {
+            if (item.route && app.navigateToolRoute) {
+                await app.navigateToolRoute(item.route);
+                return;
+            }
             if (app.activeView === item.view) return;
             app.activeView = item.view;
             await app.render();
@@ -244,15 +233,7 @@ export function enhanceRenderedView(app, container) {
         wrapSecondaryRulesLawyerTools(container);
     }
 
-    container.querySelectorAll(":scope > .card").forEach(card => {
-        card.classList.add("rules-core-panel");
-    });
-
-    const firstCard = container.querySelector(":scope > .card");
-    if (firstCard && ["library", "browse", "version-review"].includes(app.activeView)) {
-        firstCard.classList.add("rules-core-page-lead");
-    }
-
+    container.querySelectorAll(":scope > .card").forEach(card => card.classList.add("rules-core-panel"));
     enhanceRenderedFragment(container);
     return container;
 }
@@ -269,9 +250,7 @@ function updateRulesLawyerWorkflowCopy(container) {
     if (!workflow) return;
     const description = workflow.querySelector(".text-body-secondary.small");
     const copy = "Source material stays separate until you deliberately bind it. Unchanged editions may resolve automatically; publication remains explicit.";
-    if (description && description.textContent !== copy) {
-        description.textContent = copy;
-    }
+    if (description && description.textContent !== copy) description.textContent = copy;
 }
 
 function wrapSecondaryRulesLawyerTools(container) {
@@ -281,9 +260,7 @@ function wrapSecondaryRulesLawyerTools(container) {
 
         const disclosure = element("details", { className: "rules-core-tool-disclosure" });
         const summary = element("summary", {},
-            element("span", {},
-                element("strong", { text: metadata.title }),
-                element("small", { text: metadata.description })),
+            element("span", {}, element("strong", { text: metadata.title }), element("small", { text: metadata.description })),
             element("span", { className: "rules-core-disclosure-cue", text: "Open" }));
         card.classList.remove("mb-3");
         card.parentNode.insertBefore(disclosure, card);
