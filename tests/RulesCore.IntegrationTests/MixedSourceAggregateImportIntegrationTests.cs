@@ -194,7 +194,10 @@ public sealed class MixedSourceAggregateImportIntegrationTests
 
     private static HttpRequestMessage HostedJsonRequest<T>(HttpMethod method, string path, string ticket, T body)
     {
-        var request = new HttpRequestMessage(method, path, JsonContent.Create(body));
+        var request = new HttpRequestMessage(method, path)
+        {
+            Content = JsonContent.Create(body)
+        };
         request.Headers.Add(ToolHostAuthenticationHeaders.Ticket, ticket);
         request.Headers.Add(ToolHostAuthenticationHeaders.IntrospectionPath, IntrospectionPath);
         return request;
