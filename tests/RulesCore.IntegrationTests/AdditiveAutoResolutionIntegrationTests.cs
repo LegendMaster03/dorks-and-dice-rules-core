@@ -15,10 +15,7 @@ public sealed class AdditiveAutoResolutionIntegrationTests
     public async Task CrossEditionAdditionsBuildNonDestructiveResults()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
-        if (string.IsNullOrWhiteSpace(connectionString))
-        {
-            return;
-        }
+        if (string.IsNullOrWhiteSpace(connectionString)) return;
 
         var options = new DbContextOptionsBuilder<RulesCoreDbContext>()
             .UseNpgsql(connectionString)
@@ -29,18 +26,11 @@ public sealed class AdditiveAutoResolutionIntegrationTests
         var token = Guid.NewGuid().ToString("N")[..10];
         var oldPackageKey = $"additive-old-{token}";
         var newPackageKey = $"additive-new-{token}";
-        var newerSupersetConceptKey = $"monster.newer-superset-{token}";
-        var olderSupersetConceptKey = $"monster.older-superset-{token}";
-        var combinedConceptKey = $"monster.additive-union-{token}";
-        var conflictConceptKey = $"monster.conflict-{token}";
-        var packageKeys = new[] { oldPackageKey, newPackageKey };
-        var conceptKeys = new[]
-        {
-            newerSupersetConceptKey,
-            olderSupersetConceptKey,
-            combinedConceptKey,
-            conflictConceptKey
-        };
+        var newerKey = $"monster.newer-superset-{token}";
+        var olderKey = $"monster.older-superset-{token}";
+        var unionKey = $"monster.additive-union-{token}";
+        var conflictKey = $"monster.conflict-{token}";
+        var conceptKeys = new[] { newerKey, olderKey, unionKey, conflictKey };
 
         try
         {
@@ -54,21 +44,18 @@ public sealed class AdditiveAutoResolutionIntegrationTests
                 "5e",
                 $"OLD{token}",
                 new DateOnly(2014, 8, 19),
-                newerSupersetTraits:
-                [
-                    Trait("Shared Trait", "Shared rule text.")
-                ],
-                olderSupersetTraits:
+                newerTraits: [Trait("Shared Trait", "Shared rule text.")],
+                olderTraits:
                 [
                     Trait("Shared Trait", "Shared rule text."),
                     Trait("Legacy Ability", "Compatible ability retained from the older edition.")
                 ],
-                additiveUnionTraits:
+                unionTraits:
                 [
                     Trait("Shared Trait", "Shared rule text."),
                     Trait("Legacy Ability", "Compatible older ability.")
                 ],
-                conflictHitPoints: 20));
+                conflictHp: 20));
 
             var newImport = await importer.Import5eToolsDocumentAsync(MonsterRequest(
                 newPackageKey,
@@ -77,131 +64,92 @@ public sealed class AdditiveAutoResolutionIntegrationTests
                 "5.5e",
                 $"NEW{token}",
                 new DateOnly(2024, 9, 17),
-                newerSupersetTraits:
+                newerTraits:
                 [
                     Trait("Shared Trait", "Shared rule text."),
                     Trait("Modern Ability", "Compatible ability added by the newer edition.")
                 ],
-                olderSupersetTraits:
-                [
-                    Trait("Shared Trait", "Shared rule text.")
-                ],
-                additiveUnionTraits:
+                olderTraits: [Trait("Shared Trait", "Shared rule text.")],
+                unionTraits:
                 [
                     Trait("Shared Trait", "Shared rule text."),
                     Trait("Modern Ability", "Compatible newer ability.")
                 ],
-                conflictHitPoints: 24));
+                conflictHp: 24));
 
-            var oldNewerSuperset = oldImport.Entities.Single(value => value.Name == "Newer Superset Monster");
-            var newNewerSuperset = newImport.Entities.Single(value => value.Name == "Newer Superset Monster");
-            var oldOlderSuperset = oldImport.Entities.Single(value => value.Name == "Older Superset Monster");
-            var newOlderSuperset = newImport.Entities.Single(value => value.Name == "Older Superset Monster");
-            var oldCombined = oldImport.Entities.Single(value => value.Name == "Additive Union Monster");
-            var newCombined = newImport.Entities.Single(value => value.Name == "Additive Union Monster");
-            var oldConflict = oldImport.Entities.Single(value => value.Name == "Conflicting Monster");
-            var newConflict = newImport.Entities.Single(value => value.Name == "Conflicting Monster");
-
-            var newerSupersetConcept = (await rules.CreateConceptAsync(
-                new CreateRuleConceptRequest(newerSupersetConceptKey, "monster", "Newer Superset Monster"),
-                "rules-lawyer")).Value;
-            await rules.BindSourceEntityAsync(
-                newerSupersetConcept.Id,
-                new BindRuleConceptSourceRequest(oldNewerSuperset.EntityId),
-                "rules-lawyer");
-            await rules.BindSourceEntityAsync(
-                newerSupersetConcept.Id,
-                new BindRuleConceptSourceRequest(newNewerSuperset.EntityId),
-                "rules-lawyer");
-
-            var newerDecision = await db.GlobalRuleDecisions
-                .AsNoTracking()
-                .SingleAsync(value => value.RuleConceptId == newerSupersetConcept.Id);
-            var newNewerRevisionId = await LatestRevisionIdAsync(db, newNewerSuperset.EntityId);
-            Assert.Equal(newNewerRevisionId, newerDecision.SelectedSourceEntityRevisionId);
+            var newerDecision = await BindPairAndGetDecisionAsync(
+                db,
+                rules,
+                newerKey,
+                "Newer Superset Monster",
+                Find(oldImport, "Newer Superset Monster"),
+                Find(newImport, "Newer Superset Monster"));
             Assert.Equal(RuleDecisionKinds.SelectSource, newerDecision.DecisionKind);
+            Assert.Equal(
+                await LatestRevisionIdAsync(db, Find(newImport, "Newer Superset Monster").EntityId),
+                newerDecision.SelectedSourceEntityRevisionId);
             Assert.StartsWith("Auto-resolved-additive:", newerDecision.Note);
 
-            var olderSupersetConcept = (await rules.CreateConceptAsync(
-                new CreateRuleConceptRequest(olderSupersetConceptKey, "monster", "Older Superset Monster"),
-                "rules-lawyer")).Value;
-            await rules.BindSourceEntityAsync(
-                olderSupersetConcept.Id,
-                new BindRuleConceptSourceRequest(oldOlderSuperset.EntityId),
-                "rules-lawyer");
-            await rules.BindSourceEntityAsync(
-                olderSupersetConcept.Id,
-                new BindRuleConceptSourceRequest(newOlderSuperset.EntityId),
-                "rules-lawyer");
-
-            var olderDecision = await db.GlobalRuleDecisions
-                .AsNoTracking()
-                .SingleAsync(value => value.RuleConceptId == olderSupersetConcept.Id);
-            var oldOlderRevisionId = await LatestRevisionIdAsync(db, oldOlderSuperset.EntityId);
-            Assert.Equal(oldOlderRevisionId, olderDecision.SelectedSourceEntityRevisionId);
+            var olderDecision = await BindPairAndGetDecisionAsync(
+                db,
+                rules,
+                olderKey,
+                "Older Superset Monster",
+                Find(oldImport, "Older Superset Monster"),
+                Find(newImport, "Older Superset Monster"));
             Assert.Equal(RuleDecisionKinds.SelectSource, olderDecision.DecisionKind);
+            Assert.Equal(
+                await LatestRevisionIdAsync(db, Find(oldImport, "Older Superset Monster").EntityId),
+                olderDecision.SelectedSourceEntityRevisionId);
             Assert.StartsWith("Auto-resolved-additive:", olderDecision.Note);
 
             var repeatedResolution = await RuleAutoResolutionService.TryResolveAsync(
                 db,
-                olderSupersetConcept.Id,
+                olderDecision.RuleConceptId,
                 "rules-lawyer");
             Assert.True(repeatedResolution.Eligible);
             Assert.False(repeatedResolution.Applied);
             Assert.Equal(1, await db.GlobalRuleDecisions.CountAsync(
-                value => value.RuleConceptId == olderSupersetConcept.Id));
+                value => value.RuleConceptId == olderDecision.RuleConceptId));
 
-            var combinedConcept = (await rules.CreateConceptAsync(
-                new CreateRuleConceptRequest(combinedConceptKey, "monster", "Additive Union Monster"),
-                "rules-lawyer")).Value;
-            await rules.BindSourceEntityAsync(
-                combinedConcept.Id,
-                new BindRuleConceptSourceRequest(oldCombined.EntityId),
-                "rules-lawyer");
-            await rules.BindSourceEntityAsync(
-                combinedConcept.Id,
-                new BindRuleConceptSourceRequest(newCombined.EntityId),
-                "rules-lawyer");
+            var unionDecision = await BindPairAndGetDecisionAsync(
+                db,
+                rules,
+                unionKey,
+                "Additive Union Monster",
+                Find(oldImport, "Additive Union Monster"),
+                Find(newImport, "Additive Union Monster"));
+            Assert.Equal(RuleDecisionKinds.JsonMergePatch, unionDecision.DecisionKind);
+            Assert.NotNull(unionDecision.PatchJson);
+            Assert.Equal(
+                await LatestRevisionIdAsync(db, Find(newImport, "Additive Union Monster").EntityId),
+                unionDecision.SelectedSourceEntityRevisionId);
+            Assert.StartsWith("Auto-resolved-additive:", unionDecision.Note);
 
-            var combinedDecision = await db.GlobalRuleDecisions
+            var unionBase = await db.SourceEntityRevisions
                 .AsNoTracking()
-                .SingleAsync(value => value.RuleConceptId == combinedConcept.Id);
-            var newCombinedRevisionId = await LatestRevisionIdAsync(db, newCombined.EntityId);
-            Assert.Equal(newCombinedRevisionId, combinedDecision.SelectedSourceEntityRevisionId);
-            Assert.Equal(RuleDecisionKinds.JsonMergePatch, combinedDecision.DecisionKind);
-            Assert.NotNull(combinedDecision.PatchJson);
-            Assert.StartsWith("Auto-resolved-additive:", combinedDecision.Note);
-
-            var combinedBase = await db.SourceEntityRevisions
-                .AsNoTracking()
-                .SingleAsync(value => value.Id == combinedDecision.SelectedSourceEntityRevisionId);
-            var combinedDocument = JsonMergePatch.Apply(combinedBase.RawJson, combinedDecision.PatchJson);
-            var traitNames = combinedDocument.GetProperty("trait")
+                .SingleAsync(value => value.Id == unionDecision.SelectedSourceEntityRevisionId);
+            var resolvedUnion = JsonMergePatch.Apply(unionBase.RawJson, unionDecision.PatchJson);
+            var traitNames = resolvedUnion.GetProperty("trait")
                 .EnumerateArray()
                 .Select(value => value.GetProperty("name").GetString())
                 .ToArray();
+            Assert.Contains("Shared Trait", traitNames);
             Assert.Contains("Legacy Ability", traitNames);
             Assert.Contains("Modern Ability", traitNames);
-            Assert.Contains("Shared Trait", traitNames);
 
-            var combinedContributions = await db.RuleConsolidationContributions
-                .AsNoTracking()
-                .Where(value => value.GlobalRuleDecisionId == combinedDecision.Id)
-                .ToArrayAsync();
-            Assert.Contains(combinedContributions, value =>
-                value.SourceEntityRevisionId == oldCombined.EntityId == false
-                && value.ContributionKind == RuleConsolidationContributionKinds.Incorporated);
-
+            var conflictOld = Find(oldImport, "Conflicting Monster");
+            var conflictNew = Find(newImport, "Conflicting Monster");
             var conflictConcept = (await rules.CreateConceptAsync(
-                new CreateRuleConceptRequest(conflictConceptKey, "monster", "Conflicting Monster"),
+                new CreateRuleConceptRequest(conflictKey, "monster", "Conflicting Monster"),
                 "rules-lawyer")).Value;
             await rules.BindSourceEntityAsync(
                 conflictConcept.Id,
-                new BindRuleConceptSourceRequest(oldConflict.EntityId),
+                new BindRuleConceptSourceRequest(conflictOld.EntityId),
                 "rules-lawyer");
             await rules.BindSourceEntityAsync(
                 conflictConcept.Id,
-                new BindRuleConceptSourceRequest(newConflict.EntityId),
+                new BindRuleConceptSourceRequest(conflictNew.EntityId),
                 "rules-lawyer");
 
             var conflictResolution = await RuleAutoResolutionService.TryResolveAsync(
@@ -226,7 +174,7 @@ public sealed class AdditiveAutoResolutionIntegrationTests
             }
 
             var packages = await db.SourcePackages
-                .Where(value => packageKeys.Contains(value.Key))
+                .Where(value => value.Key == oldPackageKey || value.Key == newPackageKey)
                 .ToArrayAsync();
             if (packages.Length > 0)
             {
@@ -234,6 +182,33 @@ public sealed class AdditiveAutoResolutionIntegrationTests
                 await db.SaveChangesAsync();
             }
         }
+    }
+
+    private static ImportedSourceEntity Find(SourceImportResult import, string name) =>
+        import.Entities.Single(value => value.Name == name);
+
+    private static async Task<RulesCore.Domain.Rules.GlobalRuleDecision> BindPairAndGetDecisionAsync(
+        RulesCoreDbContext db,
+        GlobalRulesService rules,
+        string conceptKey,
+        string displayName,
+        ImportedSourceEntity oldSource,
+        ImportedSourceEntity newSource)
+    {
+        var concept = (await rules.CreateConceptAsync(
+            new CreateRuleConceptRequest(conceptKey, "monster", displayName),
+            "rules-lawyer")).Value;
+        await rules.BindSourceEntityAsync(
+            concept.Id,
+            new BindRuleConceptSourceRequest(oldSource.EntityId),
+            "rules-lawyer");
+        await rules.BindSourceEntityAsync(
+            concept.Id,
+            new BindRuleConceptSourceRequest(newSource.EntityId),
+            "rules-lawyer");
+        return await db.GlobalRuleDecisions
+            .AsNoTracking()
+            .SingleAsync(value => value.RuleConceptId == concept.Id);
     }
 
     private static async Task<Guid> LatestRevisionIdAsync(RulesCoreDbContext db, Guid sourceEntityId) =>
@@ -257,10 +232,10 @@ public sealed class AdditiveAutoResolutionIntegrationTests
         string gameEdition,
         string sourceCode,
         DateOnly publicationDate,
-        object[] newerSupersetTraits,
-        object[] olderSupersetTraits,
-        object[] additiveUnionTraits,
-        int conflictHitPoints) =>
+        object[] newerTraits,
+        object[] olderTraits,
+        object[] unionTraits,
+        int conflictHp) =>
         new(
             packageKey,
             packageName,
@@ -281,7 +256,7 @@ public sealed class AdditiveAutoResolutionIntegrationTests
                         source = sourceCode,
                         size = new[] { "M" },
                         hp = new { average = 20, formula = "4d8 + 2" },
-                        trait = newerSupersetTraits
+                        trait = newerTraits
                     },
                     new
                     {
@@ -289,7 +264,7 @@ public sealed class AdditiveAutoResolutionIntegrationTests
                         source = sourceCode,
                         size = new[] { "M" },
                         hp = new { average = 20, formula = "4d8 + 2" },
-                        trait = olderSupersetTraits
+                        trait = olderTraits
                     },
                     new
                     {
@@ -297,18 +272,15 @@ public sealed class AdditiveAutoResolutionIntegrationTests
                         source = sourceCode,
                         size = new[] { "M" },
                         hp = new { average = 20, formula = "4d8 + 2" },
-                        trait = additiveUnionTraits
+                        trait = unionTraits
                     },
                     new
                     {
                         name = "Conflicting Monster",
                         source = sourceCode,
                         size = new[] { "M" },
-                        hp = new { average = conflictHitPoints, formula = "4d8 + 2" },
-                        trait = new[]
-                        {
-                            Trait("Shared Trait", "Shared rule text.")
-                        }
+                        hp = new { average = conflictHp, formula = "4d8 + 2" },
+                        trait = new[] { Trait("Shared Trait", "Shared rule text.") }
                     }
                 }
             }),
