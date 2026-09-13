@@ -550,7 +550,9 @@ public sealed class CanonicalSourceIdentityService(RulesCoreDbContext dbContext)
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {
-                matches.Add((ReadPublication(reader, "content-overlap", 0.92), reader.GetInt32(6)));
+                matches.Add((
+                    ReadPublication(reader, "content-overlap", 0.92),
+                    checked((int)reader.GetInt64(6))));
             }
             if (matches.Count == 0 || matches[0].Count < 3)
             {
