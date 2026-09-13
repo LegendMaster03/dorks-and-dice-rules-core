@@ -25,13 +25,21 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
         {
             throw new ArgumentException("Representation kind can not be blank.", nameof(representationKind));
         }
-        if (!await dbContext.SourceEntities.AnyAsync(value => value.Id == sourceEntityId, cancellationToken))
+
+        var sourcePackageId = await dbContext.SourceEntities
+            .AsNoTracking()
+            .Where(value => value.Id == sourceEntityId)
+            .Select(value => (Guid?)value.SourcePackageId)
+            .SingleOrDefaultAsync(cancellationToken);
+        if (sourcePackageId is null)
         {
             throw new KeyNotFoundException($"Source entity '{sourceEntityId}' does not exist.");
         }
 
+        var scopedPublicationEvidence = await new PackageScopedPublicationEvidenceService(dbContext)
+            .EnrichAsync(sourcePackageId.Value, publicationEvidence, cancellationToken);
         var publication = await new CanonicalPublicationIdentityService(dbContext)
-            .ResolveAsync(publicationEvidence, cancellationToken);
+            .ResolveAsync(scopedPublicationEvidence, cancellationToken);
 
         var semanticOccurrence = await FindUniqueSemanticOccurrenceAsync(
             publication.Id,
