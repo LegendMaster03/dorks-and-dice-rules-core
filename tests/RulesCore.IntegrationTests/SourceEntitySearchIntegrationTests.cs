@@ -111,16 +111,17 @@ public sealed class SourceEntitySearchIntegrationTests
             Assert.DoesNotContain(privatePackageKey, packageKeys);
         }
 
-        using (var editionRequest = HostedRequest(
+        using (var packageRequest = HostedRequest(
             HttpMethod.Get,
-            "/api/sources/entities?q=Private%20Search%20Edition&limit=25",
+            "/api/sources/entities?q=Private%20Search%20Package&limit=25",
             "granted-ticket"))
-        using (var editionResponse = await client.SendAsync(editionRequest))
+        using (var packageResponse = await client.SendAsync(packageRequest))
         {
-            Assert.Equal(HttpStatusCode.OK, editionResponse.StatusCode);
-            using var body = JsonDocument.Parse(await editionResponse.Content.ReadAsStringAsync());
+            Assert.Equal(HttpStatusCode.OK, packageResponse.StatusCode);
+            using var body = JsonDocument.Parse(await packageResponse.Content.ReadAsStringAsync());
             var item = Assert.Single(body.RootElement.EnumerateArray().ToArray());
             Assert.Equal(privatePackageKey, item.GetProperty("packageKey").GetString());
+            Assert.Equal("5etools-json", item.GetProperty("editionKey").GetString());
         }
 
         using (var wrongType = await client.GetAsync("/api/sources/entities?entityType=spell&q=Arcana%20Search"))
