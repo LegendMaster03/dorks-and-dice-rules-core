@@ -35,92 +35,306 @@ public sealed class SourceFormatAdapterRegistry(IEnumerable<ISourceFormatAdapter
         }
         return null;
     }
+
+    public IReadOnlyList<NormalizedSourceRepresentation> TryReadMany(
+        IReadOnlyList<SourceRepresentationArtifact> artifacts)
+    {
+        ArgumentNullException.ThrowIfNull(artifacts);
+        if (artifacts.Count == 0)
+        {
+            return [];
+        }
+
+        var resolved = new Dictionary<string, NormalizedSourceRepresentation>(StringComparer.Ordinal);
+        foreach (var adapter in adapters)
+        {
+            var candidates = artifacts
+                .Where(artifact => !resolved.ContainsKey(ArtifactKey(artifact)))
+                .Where(artifact => adapter.IsCandidate(artifact.FileName, artifact.Content))
+                .ToArray();
+            if (candidates.Length == 0)
+            {
+                continue;
+            }
+
+            if (adapter is ISourceFormatBatchAdapter batchAdapter)
+            {
+                foreach (var representation in batchAdapter.TryReadMany(candidates))
+                {
+                    resolved[ArtifactKey(representation.Artifact)] = representation;
+                }
+                continue;
+            }
+
+            foreach (var artifact in candidates)
+            {
+                var representation = adapter.TryRead(artifact);
+                if (representation is not null)
+                {
+                    resolved[ArtifactKey(artifact)] = representation;
+                }
+            }
+        }
+
+        return artifacts
+            .Select(artifact => resolved.GetValueOrDefault(ArtifactKey(artifact)))
+            .Where(representation => representation is not null)
+            .Cast<NormalizedSourceRepresentation>()
+            .ToArray();
+    }
+
+    private static string ArtifactKey(SourceRepresentationArtifact artifact) =>
+        $"{artifact.OriginIdentity}\n{artifact.FileName}";
 }
 
-public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatAdapter
+public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatBatchAdapter
 {
     public const string Format = "5etools-json";
+    private static readonly DateOnly ModernRulesThreshold = new(2024, 9, 17);
+
     public string FormatKey => Format;
 
     public bool IsCandidate(string? fileName, ReadOnlySpan<byte> content) =>
         string.Equals(Path.GetExtension(fileName ?? string.Empty), ".json", StringComparison.OrdinalIgnoreCase);
 
-    public NormalizedSourceRepresentation? TryRead(SourceRepresentationArtifact artifact)
+    public NormalizedSourceRepresentation? TryRead(SourceRepresentationArtifact artifact) =>
+        TryReadCore(artifact, catalog: null);
+
+    public IReadOnlyList<NormalizedSourceRepresentation> TryReadMany(
+        IReadOnlyList<SourceRepresentationArtifact> artifacts)
     {
-        if (!IsCandidate(artifact.FileName, artifact.Content) || artifact.Content.Length == 0)
-        {
-            return null;
-        }
-
-        string json;
-        try
-        {
-            json = new UTF8Encoding(false, true).GetString(artifact.Content);
-        }
-        catch (DecoderFallbackException)
-        {
-            return null;
-        }
-
-        IReadOnlyList<string> sourceCodes;
-        try
-        {
-            sourceCodes = FiveEToolsDocumentInspector.DiscoverSourceCodes(
-                json,
-                FiveEToolsDocumentInspector.AccountSourceFallbackCode);
-        }
-        catch (Exception exception) when (exception is JsonException or InvalidDataException or ArgumentException)
-        {
-            return null;
-        }
-        if (sourceCodes.Count == 0)
-        {
-            return null;
-        }
-
-        var publications = new List<NormalizedSourcePublication>();
-        foreach (var sourceCode in sourceCodes)
-        {
-            var filtered = FiveEToolsDocumentInspector.FilterBySourceCodes(
-                json,
-                FiveEToolsDocumentInspector.AccountSourceFallbackCode,
-                [sourceCode],
-                out var selectedEntityCount);
-            if (selectedEntityCount == 0)
-            {
-                continue;
-            }
-
-            using var document = JsonDocument.Parse(filtered);
-            var records = ReadRecords(document.RootElement, sourceCode);
-            if (records.Count == 0)
-            {
-                continue;
-            }
-
-            var publication = ReadPublicationEvidence(document.RootElement, sourceCode);
-            publications.Add(new NormalizedSourcePublication(
-                LocalKey: sourceCode,
-                DisplayName: publication.Title ?? sourceCode,
-                Records: records,
-                Publisher: publication.Publisher,
-                GameEdition: null,
-                PublicationDate: publication.PublicationDate,
-                ExternalIdentifiers: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-                {
-                    ["5etools-source-code"] = sourceCode
-                }));
-        }
-
-        return publications.Count == 0
-            ? null
-            : new NormalizedSourceRepresentation(Format, artifact, publications);
+        ArgumentNullException.ThrowIfNull(artifacts);
+        var catalog = CorpusCatalog.Build(artifacts);
+        return artifacts
+            .Select(artifact => TryReadCore(artifact, catalog))
+            .Where(representation => representation is not null)
+            .Cast<NormalizedSourceRepresentation>()
+            .ToArray();
     }
 
-    private static IReadOnlyList<NormalizedSourceRecord> ReadRecords(JsonElement root, string sourceCode)
+    private static NormalizedSourceRepresentation? TryReadCore(
+        SourceRepresentationArtifact artifact,
+        CorpusCatalog? catalog)
+    {
+        if (!IsJson(artifact) || artifact.Content.Length == 0)
+        {
+            return null;
+        }
+
+        var schemaId = FiveEToolsSchemaContract.GetSiteSchemaId(artifact.FileName);
+        if (FiveEToolsSchemaContract.IsUnderDataTree(artifact.FileName) && schemaId is null)
+        {
+            return null;
+        }
+
+        JsonDocument document;
+        try
+        {
+            document = JsonDocument.Parse(artifact.Content);
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
+
+        using (document)
+        {
+            if (document.RootElement.ValueKind != JsonValueKind.Object)
+            {
+                return null;
+            }
+
+            var registry = TryReadCorpusRegistry(artifact, document.RootElement, schemaId);
+            if (registry is not null)
+            {
+                return registry;
+            }
+
+            var corpus = TryReadCorpusContent(artifact, document.RootElement, schemaId, catalog);
+            if (corpus is not null)
+            {
+                return corpus;
+            }
+
+            var records = ReadNativeRecords(document.RootElement);
+            if (records.Count == 0)
+            {
+                return null;
+            }
+
+            var publications = ReadPublicationEvidence(document.RootElement, records);
+            return new NormalizedSourceRepresentation(
+                Format,
+                artifact,
+                records,
+                publications,
+                JsonSerializer.Serialize(new
+                {
+                    schemaFamily = schemaId is null
+                        ? document.RootElement.TryGetProperty("_meta", out _) ? "5etools-homebrew" : "5etools-json"
+                        : "5etools-site",
+                    schemaId,
+                    nativeRecordCount = records.Count,
+                    semantics = "native-records-with-independent-publication-evidence"
+                }));
+        }
+    }
+
+    private static NormalizedSourceRepresentation? TryReadCorpusRegistry(
+        SourceRepresentationArtifact artifact,
+        JsonElement root,
+        string? schemaId)
+    {
+        var fileName = Path.GetFileName(artifact.FileName);
+        var corpusType = string.Equals(schemaId, "books.json", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(fileName, "books.json", StringComparison.OrdinalIgnoreCase)
+                ? "book"
+                : string.Equals(schemaId, "adventures.json", StringComparison.OrdinalIgnoreCase)
+                  || string.Equals(fileName, "adventures.json", StringComparison.OrdinalIgnoreCase)
+                    ? "adventure"
+                    : null;
+        if (corpusType is null
+            || !root.TryGetProperty(corpusType, out var items)
+            || items.ValueKind != JsonValueKind.Array)
+        {
+            return null;
+        }
+
+        var rows = ReadCorpusRows(corpusType, items);
+        if (rows.Count == 0)
+        {
+            return null;
+        }
+
+        var records = rows.Select(row => new NormalizedSourceRecord(
+            EntityType: row.CorpusType,
+            Name: row.Title,
+            SourceCode: row.SourceCode,
+            NativeKey: $"{row.CorpusType}|corpus|{row.CorpusId}",
+            RawJson: row.RawJson,
+            PublicationLocalKey: row.PublicationLocalKey,
+            NativeIdentityJson: JsonSerializer.Serialize(new
+            {
+                corpusType = row.CorpusType,
+                id = row.CorpusId,
+                source = row.SourceCode,
+                parentSource = row.ParentSource,
+                edition = row.NativeEdition
+            }))).ToArray();
+
+        var publications = rows.Select(row => new NormalizedSourcePublication(
+            LocalKey: row.PublicationLocalKey,
+            DisplayName: row.Title,
+            Publisher: row.Publisher,
+            GameEdition: row.GameEdition,
+            PublicationDate: row.Published,
+            ExternalIdentifiers: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                ["5etools-corpus-id"] = row.CorpusId,
+                ["5etools-source-code"] = row.SourceCode
+            })).ToArray();
+
+        return new NormalizedSourceRepresentation(
+            Format,
+            artifact,
+            records,
+            publications,
+            JsonSerializer.Serialize(new
+            {
+                schemaFamily = "5etools-site-corpus-registry",
+                schemaId,
+                corpusType,
+                corpusCount = rows.Count,
+                semantics = "corpus-id-source-parentSource-preserved-independently"
+            }));
+    }
+
+    private static NormalizedSourceRepresentation? TryReadCorpusContent(
+        SourceRepresentationArtifact artifact,
+        JsonElement root,
+        string? schemaId,
+        CorpusCatalog? catalog)
+    {
+        if (!root.TryGetProperty("data", out var data) || data.ValueKind != JsonValueKind.Array)
+        {
+            return null;
+        }
+
+        if (!TryGetCorpusBodyIdentity(artifact.FileName, catalog, out var corpusType, out var corpusId)
+            || catalog is null
+            || !catalog.TryGetCorpus(corpusType, corpusId, out var corpus))
+        {
+            return null;
+        }
+
+        var records = new List<NormalizedSourceRecord>();
+        var ordinal = 0;
+        foreach (var item in data.EnumerateArray())
+        {
+            if (item.ValueKind != JsonValueKind.Object)
+            {
+                continue;
+            }
+
+            var name = ReadString(item, "name") ?? $"Section {ordinal + 1}";
+            var explicitId = ReadIdentityValue(item);
+            var nativeKey = $"{corpusType}|{corpusId}|{explicitId ?? $"section-{ordinal:D5}"}";
+            records.Add(new NormalizedSourceRecord(
+                EntityType: $"{corpusType}-section",
+                Name: name,
+                SourceCode: corpus.SourceCode,
+                NativeKey: nativeKey,
+                RawJson: item.GetRawText(),
+                LocatorKey: ReadPageLocator(item),
+                PublicationLocalKey: corpus.PublicationLocalKey,
+                NativeIdentityJson: JsonSerializer.Serialize(new
+                {
+                    corpusType,
+                    corpusId,
+                    source = corpus.SourceCode,
+                    parentSource = corpus.ParentSource,
+                    id = explicitId,
+                    ordinal
+                })));
+            ordinal++;
+        }
+
+        if (records.Count == 0)
+        {
+            return null;
+        }
+
+        return new NormalizedSourceRepresentation(
+            Format,
+            artifact,
+            records,
+            [new NormalizedSourcePublication(
+                corpus.PublicationLocalKey,
+                corpus.Title,
+                corpus.Publisher,
+                corpus.GameEdition,
+                corpus.Published,
+                new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                {
+                    ["5etools-corpus-id"] = corpus.CorpusId,
+                    ["5etools-source-code"] = corpus.SourceCode
+                })],
+            JsonSerializer.Serialize(new
+            {
+                schemaFamily = "5etools-site-corpus-content",
+                schemaId,
+                corpusType,
+                corpusId,
+                source = corpus.SourceCode,
+                parentSource = corpus.ParentSource
+            }));
+    }
+
+    private static IReadOnlyList<NormalizedSourceRecord> ReadNativeRecords(JsonElement root)
     {
         var records = new List<NormalizedSourceRecord>();
-        var naturalKeys = new HashSet<string>(StringComparer.Ordinal);
+        var duplicateCounts = new Dictionary<string, int>(StringComparer.Ordinal);
+
         foreach (var property in root.EnumerateObject())
         {
             if (!FiveEToolsDocumentInspector.IsImportableArray(property))
@@ -139,80 +353,198 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatAdapter
                 }
 
                 var name = nameValue.GetString()!.Trim();
-                var identitySuffix = ReadIdentitySuffix(item);
-                var naturalKey = NormalizeKey($"{property.Name}|{sourceCode}|{name}|{identitySuffix}");
-                if (!naturalKeys.Add(naturalKey))
+                var sourceCode = FiveEToolsDocumentInspector.GetSourceCode(
+                    item,
+                    FiveEToolsDocumentInspector.AccountSourceFallbackCode);
+                var explicitIdentity = ReadIdentityValue(item);
+                var baseKey = $"{property.Name}|{sourceCode}|{name}|{explicitIdentity ?? string.Empty}";
+                duplicateCounts.TryGetValue(baseKey, out var duplicateOrdinal);
+                duplicateCounts[baseKey] = duplicateOrdinal + 1;
+                var nativeKey = duplicateOrdinal == 0 ? baseKey : $"{baseKey}|duplicate-{duplicateOrdinal}";
+                var publicationLocalKey = $"source:{sourceCode}";
+
+                records.Add(new NormalizedSourceRecord(
+                    EntityType: property.Name,
+                    Name: name,
+                    SourceCode: sourceCode,
+                    NativeKey: nativeKey,
+                    RawJson: item.GetRawText(),
+                    LocatorKey: ReadPageLocator(item),
+                    PublicationLocalKey: publicationLocalKey,
+                    NativeIdentityJson: JsonSerializer.Serialize(new
+                    {
+                        source = sourceCode,
+                        id = ReadRawIdentity(item, "id"),
+                        uniqueId = ReadRawIdentity(item, "uniqueId"),
+                        parentSource = ReadString(item, "parentSource"),
+                        edition = ReadString(item, "edition")
+                    })));
+            }
+        }
+
+        return records;
+    }
+
+    private static IReadOnlyList<NormalizedSourcePublication> ReadPublicationEvidence(
+        JsonElement root,
+        IReadOnlyList<NormalizedSourceRecord> records)
+    {
+        var evidence = new Dictionary<string, NormalizedSourcePublication>(StringComparer.OrdinalIgnoreCase);
+        var metaEdition = root.TryGetProperty("_meta", out var meta) && meta.ValueKind == JsonValueKind.Object
+            ? MapEdition(ReadString(meta, "edition"))
+            : null;
+
+        if (root.TryGetProperty("_meta", out meta)
+            && meta.ValueKind == JsonValueKind.Object
+            && meta.TryGetProperty("sources", out var sources)
+            && sources.ValueKind == JsonValueKind.Array)
+        {
+            foreach (var source in sources.EnumerateArray())
+            {
+                if (source.ValueKind != JsonValueKind.Object)
                 {
                     continue;
                 }
 
-                records.Add(new NormalizedSourceRecord(
-                    property.Name,
-                    name,
-                    sourceCode,
-                    naturalKey,
-                    item.GetRawText(),
-                    ReadPageLocator(item)));
+                var sourceCode = ReadString(source, "json");
+                if (sourceCode is null)
+                {
+                    continue;
+                }
+
+                evidence[$"source:{sourceCode}"] = new NormalizedSourcePublication(
+                    $"source:{sourceCode}",
+                    ReadString(source, "full") ?? sourceCode,
+                    GameEdition: metaEdition,
+                    PublicationDate: ParseDate(ReadString(source, "dateReleased")),
+                    ExternalIdentifiers: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                    {
+                        ["5etools-source-code"] = sourceCode
+                    });
             }
         }
-        return records;
-    }
 
-    private static (string? Title, string? Publisher, DateOnly? PublicationDate) ReadPublicationEvidence(
-        JsonElement root,
-        string sourceCode)
-    {
-        foreach (var type in new[] { "book", "adventure" })
+        foreach (var record in records)
         {
-            if (!root.TryGetProperty(type, out var values) || values.ValueKind != JsonValueKind.Array)
+            if (record.PublicationLocalKey is null || record.SourceCode is null || evidence.ContainsKey(record.PublicationLocalKey))
             {
                 continue;
             }
 
-            foreach (var item in values.EnumerateArray())
-            {
-                if (item.ValueKind != JsonValueKind.Object)
+            evidence[record.PublicationLocalKey] = new NormalizedSourcePublication(
+                record.PublicationLocalKey,
+                record.SourceCode,
+                GameEdition: metaEdition,
+                ExternalIdentifiers: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
                 {
-                    continue;
-                }
-                var itemSource = FiveEToolsDocumentInspector.GetSourceCode(item, sourceCode);
-                if (!string.Equals(itemSource, sourceCode, StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-
-                // 5e.tools can model a child adventure as its own navigation entry while the
-                // actual printed source remains the parent book. FRAiF-TLLoL, for example, has
-                // source FRAiF and parentSource FRAiF. Its title is not bibliographic evidence
-                // that the FRAiF publication itself is named "The Lost Library of Lethchauntos".
-                var itemId = ReadString(item, "id");
-                var parentSource = ReadString(item, "parentSource");
-                if (!string.IsNullOrWhiteSpace(parentSource)
-                    || (!string.IsNullOrWhiteSpace(itemId)
-                        && !string.Equals(itemId, sourceCode, StringComparison.OrdinalIgnoreCase)))
-                {
-                    continue;
-                }
-
-                var title = ReadString(item, "name");
-                var publisher = ReadString(item, "publisher");
-                DateOnly? date = null;
-                var published = ReadString(item, "published");
-                if (published is not null
-                    && DateOnly.TryParseExact(
-                        published,
-                        "yyyy-MM-dd",
-                        CultureInfo.InvariantCulture,
-                        DateTimeStyles.None,
-                        out var parsed))
-                {
-                    date = parsed;
-                }
-                return (title, publisher, date);
-            }
+                    ["5etools-source-code"] = record.SourceCode
+                });
         }
-        return (null, null, null);
+
+        return evidence.Values.ToArray();
     }
+
+    private static IReadOnlyList<CorpusMetadata> ReadCorpusRows(string corpusType, JsonElement items)
+    {
+        var rows = new List<CorpusMetadata>();
+        foreach (var item in items.EnumerateArray())
+        {
+            if (item.ValueKind != JsonValueKind.Object)
+            {
+                continue;
+            }
+
+            var id = ReadString(item, "id");
+            var sourceCode = ReadString(item, "source");
+            var title = ReadString(item, "name");
+            if (id is null || sourceCode is null || title is null)
+            {
+                continue;
+            }
+
+            var published = ParseDate(ReadString(item, "published"));
+            var nativeEdition = ReadString(item, "edition");
+            rows.Add(new CorpusMetadata(
+                corpusType,
+                id,
+                sourceCode,
+                title,
+                ReadString(item, "parentSource"),
+                ReadString(item, "publisher"),
+                nativeEdition,
+                MapEdition(nativeEdition) ?? InferEdition(published),
+                published,
+                item.GetRawText()));
+        }
+        return rows;
+    }
+
+    private static bool TryGetCorpusBodyIdentity(
+        string fileName,
+        CorpusCatalog? catalog,
+        out string corpusType,
+        out string corpusId)
+    {
+        if (FiveEToolsSchemaContract.TryGetCorpusBodyIdentity(fileName, out corpusType, out corpusId))
+        {
+            return true;
+        }
+
+        corpusType = string.Empty;
+        corpusId = string.Empty;
+        if (catalog is null)
+        {
+            return false;
+        }
+
+        var baseName = Path.GetFileNameWithoutExtension(fileName);
+        foreach (var candidate in new[] { (Type: "book", Prefix: "book-"), (Type: "adventure", Prefix: "adventure-") })
+        {
+            if (!baseName.StartsWith(candidate.Prefix, StringComparison.OrdinalIgnoreCase)
+                || baseName.Length <= candidate.Prefix.Length)
+            {
+                continue;
+            }
+
+            var id = baseName[candidate.Prefix.Length..];
+            if (!catalog.TryGetCorpus(candidate.Type, id, out _))
+            {
+                continue;
+            }
+
+            corpusType = candidate.Type;
+            corpusId = id;
+            return true;
+        }
+
+        return false;
+    }
+
+    private static bool IsJson(SourceRepresentationArtifact artifact) =>
+        string.Equals(Path.GetExtension(artifact.FileName), ".json", StringComparison.OrdinalIgnoreCase);
+
+    private static string? MapEdition(string? edition) =>
+        string.Equals(edition, "one", StringComparison.OrdinalIgnoreCase)
+            ? "5.5e"
+            : string.Equals(edition, "classic", StringComparison.OrdinalIgnoreCase)
+                ? "5e"
+                : null;
+
+    private static string? InferEdition(DateOnly? publicationDate) =>
+        publicationDate.HasValue
+            ? publicationDate.Value < ModernRulesThreshold ? "5e" : "5.5e"
+            : null;
+
+    private static DateOnly? ParseDate(string? value) =>
+        value is not null
+        && DateOnly.TryParseExact(
+            value,
+            "yyyy-MM-dd",
+            CultureInfo.InvariantCulture,
+            DateTimeStyles.None,
+            out var parsed)
+            ? parsed
+            : null;
 
     private static string? ReadString(JsonElement root, string propertyName) =>
         root.TryGetProperty(propertyName, out var value)
@@ -221,7 +553,21 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatAdapter
             ? value.GetString()!.Trim()
             : null;
 
-    private static string ReadIdentitySuffix(JsonElement item)
+    private static object? ReadRawIdentity(JsonElement item, string propertyName)
+    {
+        if (!item.TryGetProperty(propertyName, out var value))
+        {
+            return null;
+        }
+        return value.ValueKind switch
+        {
+            JsonValueKind.String => value.GetString(),
+            JsonValueKind.Number => value.GetRawText(),
+            _ => value.GetRawText()
+        };
+    }
+
+    private static string? ReadIdentityValue(JsonElement item)
     {
         foreach (var propertyName in new[] { "uniqueId", "id" })
         {
@@ -238,7 +584,7 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatAdapter
                 return value.GetRawText();
             }
         }
-        return string.Empty;
+        return null;
     }
 
     private static string? ReadPageLocator(JsonElement item)
@@ -255,27 +601,72 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatAdapter
         };
     }
 
-    private static string NormalizeKey(string value)
+    private sealed record CorpusMetadata(
+        string CorpusType,
+        string CorpusId,
+        string SourceCode,
+        string Title,
+        string? ParentSource,
+        string? Publisher,
+        string? NativeEdition,
+        string? GameEdition,
+        DateOnly? Published,
+        string RawJson)
     {
-        var builder = new StringBuilder(value.Length);
-        var separator = false;
-        foreach (var character in value.Trim().ToLowerInvariant())
+        public string PublicationLocalKey => $"corpus:{CorpusType}:{CorpusId}";
+    }
+
+    private sealed class CorpusCatalog
+    {
+        private readonly Dictionary<string, CorpusMetadata> byCorpus;
+
+        private CorpusCatalog(Dictionary<string, CorpusMetadata> byCorpus)
         {
-            if (char.IsLetterOrDigit(character))
-            {
-                if (separator && builder.Length > 0)
-                {
-                    builder.Append('-');
-                }
-                builder.Append(character);
-                separator = false;
-            }
-            else
-            {
-                separator = true;
-            }
+            this.byCorpus = byCorpus;
         }
-        return builder.ToString();
+
+        public static CorpusCatalog Build(IReadOnlyList<SourceRepresentationArtifact> artifacts)
+        {
+            var byCorpus = new Dictionary<string, CorpusMetadata>(StringComparer.OrdinalIgnoreCase);
+            foreach (var artifact in artifacts)
+            {
+                var fileName = Path.GetFileName(artifact.FileName);
+                var corpusType = string.Equals(fileName, "books.json", StringComparison.OrdinalIgnoreCase)
+                    ? "book"
+                    : string.Equals(fileName, "adventures.json", StringComparison.OrdinalIgnoreCase)
+                        ? "adventure"
+                        : null;
+                if (corpusType is null || artifact.Content.Length == 0)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    using var document = JsonDocument.Parse(artifact.Content);
+                    if (document.RootElement.ValueKind != JsonValueKind.Object
+                        || !document.RootElement.TryGetProperty(corpusType, out var items)
+                        || items.ValueKind != JsonValueKind.Array)
+                    {
+                        continue;
+                    }
+
+                    foreach (var row in ReadCorpusRows(corpusType, items))
+                    {
+                        byCorpus.TryAdd(Key(row.CorpusType, row.CorpusId), row);
+                    }
+                }
+                catch (JsonException)
+                {
+                }
+            }
+            return new CorpusCatalog(byCorpus);
+        }
+
+        public bool TryGetCorpus(string corpusType, string corpusId, out CorpusMetadata metadata) =>
+            byCorpus.TryGetValue(Key(corpusType, corpusId), out metadata!);
+
+        private static string Key(string corpusType, string corpusId) => $"{corpusType}:{corpusId}";
     }
 }
 
@@ -342,7 +733,7 @@ public sealed partial class PdfSourceFormatAdapter : ISourceFormatAdapter
                 EntityType: "source-fragment",
                 Name: $"Page {page.Number}",
                 SourceCode: localKey,
-                NaturalKey: $"source-fragment|page-{page.Number}",
+                NativeKey: $"source-fragment|page-{page.Number}",
                 RawJson: JsonSerializer.Serialize(new
                 {
                     kind = "source-fragment",
@@ -351,8 +742,13 @@ public sealed partial class PdfSourceFormatAdapter : ISourceFormatAdapter
                     text = page.Text,
                     extraction = "pdf-text-layer"
                 }),
-                LocatorKey: $"page:{page.Number}"))
-                .ToArray();
+                LocatorKey: $"page:{page.Number}",
+                PublicationLocalKey: localKey,
+                NativeIdentityJson: JsonSerializer.Serialize(new
+                {
+                    page = page.Number,
+                    extraction = "pdf-text-layer"
+                }))).ToArray();
 
             var metadataJson = JsonSerializer.Serialize(new
             {
@@ -366,10 +762,10 @@ public sealed partial class PdfSourceFormatAdapter : ISourceFormatAdapter
             return new NormalizedSourceRepresentation(
                 Format,
                 artifact,
+                records,
                 [new NormalizedSourcePublication(
                     localKey,
                     title,
-                    records,
                     publisher,
                     gameEdition,
                     publicationDate,
