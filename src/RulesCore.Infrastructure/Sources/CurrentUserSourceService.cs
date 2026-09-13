@@ -199,7 +199,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             }
         }
 
-        if (packageId is null || publicationKeys.Count == 0)
+        if (packageId is null || entityCount == 0)
         {
             throw new InvalidDataException(
                 kind == CurrentUserSourceKinds.Web
@@ -325,7 +325,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
                 $"The GitHub tree contains {paths.Length} candidate source files beneath the selected path; the maximum is {MaxResolvedDocuments}.");
         }
 
-        var results = new List<NormalizedSourceRepresentation>();
+        var artifacts = new List<SourceRepresentationArtifact>(paths.Length);
         foreach (var path in paths)
         {
             var rawUri = BuildGitHubRawUri(tree, path);
@@ -339,19 +339,15 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
                 continue;
             }
 
-            var artifact = new SourceRepresentationArtifact(
+            artifacts.Add(new SourceRepresentationArtifact(
                 Path.GetFileName(path),
                 fetched.Bytes,
                 $"web:{NormalizeWebOrigin(sourceUri)}#{path}",
                 rawUri.AbsoluteUri,
-                fetched.MediaType);
-            var representation = adapters.TryRead(artifact);
-            if (representation is not null)
-            {
-                results.Add(representation);
-            }
+                fetched.MediaType));
         }
 
+        var results = adapters.TryReadMany(artifacts);
         if (results.Count == 0)
         {
             throw new InvalidDataException("The Web source did not contain any compatible files.");
