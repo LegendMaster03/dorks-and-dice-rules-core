@@ -19,26 +19,20 @@ public sealed class MixedSourceAggregateImportIntegrationTests
     private const string IntrospectionPath = "/tool-host/rules-core/api/introspect";
 
     [Fact]
-    public async Task MixedSourceAggregateCanBePartitionedIntoDistinctLogicalReleases()
+    public async Task MixedSourceAggregateCanBePartitionedIntoPackageOwnedNativeEntities()
     {
-        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
-        if (string.IsNullOrWhiteSpace(connectionString))
-        {
-            return;
-        }
+        if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore"))) return;
 
         var authenticationClient = new FakeToolHostAuthenticationClient(new Dictionary<string, ToolHostAuthenticationContext>
         {
             ["dev-ticket"] = Context("aggregate-import-dev", ["Dev"])
         });
-
         await using var factory = CreateFactory(authenticationClient);
         using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
 
         var token = Guid.NewGuid().ToString("N")[..10];
         var packageKey = $"aggregate-source-{token}";
         Guid packageId = Guid.Empty;
-
         const string aggregateJson = """
             {
               "_meta": { "sources": ["SRD51", "SRD52"] },
@@ -58,11 +52,7 @@ public sealed class MixedSourceAggregateImportIntegrationTests
                   "time": [{ "number": 1, "unit": "action" }],
                   "entries": [
                     "Updated attack text.",
-                    {
-                      "type": "entries",
-                      "name": "Moving Between Attacks",
-                      "entries": ["Nested rule text."]
-                    }
+                    { "type": "entries", "name": "Moving Between Attacks", "entries": ["Nested rule text."] }
                   ]
                 },
                 {
@@ -78,64 +68,22 @@ public sealed class MixedSourceAggregateImportIntegrationTests
 
         try
         {
-            var unfiltered = Request(
-                packageKey,
-                token,
-                "aggregate-probe",
-                "Aggregate probe",
-                "mixed",
-                "Mixed aggregate",
-                "5e",
-                aggregateJson,
-                includedSourceCodes: null);
-            using (var request = HostedJsonRequest(
-                       HttpMethod.Post,
-                       "/api/source-admin/import/preview",
-                       "dev-ticket",
-                       unfiltered))
+            var unfiltered = Request(packageKey, token, "aggregate-probe", "Aggregate probe", "mixed",
+                "Mixed aggregate", "5e", aggregateJson, null);
+            using (var request = HostedJsonRequest(HttpMethod.Post, "/api/source-admin/import/preview", "dev-ticket", unfiltered))
             using (var response = await client.SendAsync(request))
             {
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 var preview = (await response.Content.ReadFromJsonAsync<SourceImportPreviewResult>())!;
                 Assert.Equal(3, preview.EntityCount);
-                Assert.Contains(
-                    preview.Warnings,
-                    value => value.Contains("multiple source codes", StringComparison.OrdinalIgnoreCase));
+                Assert.Contains(preview.Warnings, value =>
+                    value.Contains("multiple source codes", StringComparison.OrdinalIgnoreCase));
             }
 
-            var srd51 = Request(
-                packageKey,
-                token,
-                "srd-5-1",
-                "System Reference Document 5.1",
-                "original",
-                "SRD 5.1 release",
-                "5e",
-                aggregateJson,
-                ["srd51"]);
-            using (var request = HostedJsonRequest(
-                       HttpMethod.Post,
-                       "/api/source-admin/import/preview",
-                       "dev-ticket",
-                       srd51))
-            using (var response = await client.SendAsync(request))
-            {
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-                var preview = (await response.Content.ReadFromJsonAsync<SourceImportPreviewResult>())!;
-                var entity = Assert.Single(preview.Entities);
-                Assert.Equal("Attack", entity.Name);
-                Assert.Equal("SRD51", entity.SourceCode);
-                Assert.Contains(
-                    preview.Warnings,
-                    value => value.Contains("partition active", StringComparison.OrdinalIgnoreCase));
-            }
-
+            var srd51 = Request(packageKey, token, "srd-5-1", "System Reference Document 5.1", "original",
+                "SRD 5.1 release", "5e", aggregateJson, ["srd51"]);
             SourceImportResult srd51Import;
-            using (var request = HostedJsonRequest(
-                       HttpMethod.Post,
-                       "/api/source-admin/import",
-                       "dev-ticket",
-                       srd51))
+            using (var request = HostedJsonRequest(HttpMethod.Post, "/api/source-admin/import", "dev-ticket", srd51))
             using (var response = await client.SendAsync(request))
             {
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -145,22 +93,10 @@ public sealed class MixedSourceAggregateImportIntegrationTests
                 Assert.Equal("SRD51", Assert.Single(srd51Import.Entities).SourceCode);
             }
 
-            var srd52 = Request(
-                packageKey,
-                token,
-                "srd-5-2-1",
-                "System Reference Document 5.2.1",
-                "current",
-                "SRD 5.2.1 release",
-                "5.5e",
-                aggregateJson,
-                ["SRD52"]);
+            var srd52 = Request(packageKey, token, "srd-5-2-1", "System Reference Document 5.2.1", "current",
+                "SRD 5.2.1 release", "5.5e", aggregateJson, ["SRD52"]);
             SourceImportResult srd52Import;
-            using (var request = HostedJsonRequest(
-                       HttpMethod.Post,
-                       "/api/source-admin/import",
-                       "dev-ticket",
-                       srd52))
+            using (var request = HostedJsonRequest(HttpMethod.Post, "/api/source-admin/import", "dev-ticket", srd52))
             using (var response = await client.SendAsync(request))
             {
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -174,13 +110,16 @@ public sealed class MixedSourceAggregateImportIntegrationTests
             await using (var scope = factory.Services.CreateAsyncScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
-                var works = await db.SourceWorks
+                var codes = await db.SourceEntities
                     .Where(value => value.SourcePackageId == packageId)
-                    .OrderBy(value => value.Key)
+                    .Select(value => value.SourceCode)
+                    .Distinct()
+                    .OrderBy(value => value)
                     .ToArrayAsync();
-                Assert.Equal(2, works.Length);
-                Assert.Contains(works, value => value.Key == "srd-5-1");
-                Assert.Contains(works, value => value.Key == "srd-5-2-1");
+                Assert.Contains("SRD51", codes);
+                Assert.Contains("SRD52", codes);
+                Assert.All(await db.SourceEntities.Where(value => value.SourcePackageId == packageId).ToArrayAsync(),
+                    value => Assert.False(string.IsNullOrWhiteSpace(value.NativeKey)));
 
                 var srd52AttackId = srd52Import.Entities.Single(value => value.Name == "Attack").EntityId;
                 var rawJson = await db.SourceEntityRevisions
@@ -189,26 +128,13 @@ public sealed class MixedSourceAggregateImportIntegrationTests
                     .SingleAsync();
                 using var raw = JsonDocument.Parse(rawJson);
                 Assert.Equal("SRD52", raw.RootElement.GetProperty("source").GetString());
-                Assert.Equal(
-                    "Moving Between Attacks",
+                Assert.Equal("Moving Between Attacks",
                     raw.RootElement.GetProperty("entries")[1].GetProperty("name").GetString());
             }
 
-            var missingFilter = Request(
-                packageKey,
-                token,
-                "unused",
-                "Unused",
-                "unused",
-                "Unused",
-                "5e",
-                aggregateJson,
-                ["DOES-NOT-EXIST"]);
-            using (var request = HostedJsonRequest(
-                       HttpMethod.Post,
-                       "/api/source-admin/import/preview",
-                       "dev-ticket",
-                       missingFilter))
+            var missingFilter = Request(packageKey, token, "unused", "Unused", "unused", "Unused", "5e",
+                aggregateJson, ["DOES-NOT-EXIST"]);
+            using (var request = HostedJsonRequest(HttpMethod.Post, "/api/source-admin/import/preview", "dev-ticket", missingFilter))
             using (var response = await client.SendAsync(request))
             {
                 Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -256,8 +182,7 @@ public sealed class MixedSourceAggregateImportIntegrationTests
             new DateOnly(2025, 5, 1),
             includedSourceCodes);
 
-    private static WebApplicationFactory<Program> CreateFactory(
-        IToolHostAuthenticationClient authenticationClient) =>
+    private static WebApplicationFactory<Program> CreateFactory(IToolHostAuthenticationClient authenticationClient) =>
         new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
         {
             builder.ConfigureTestServices(services =>
@@ -267,33 +192,19 @@ public sealed class MixedSourceAggregateImportIntegrationTests
             });
         });
 
-    private static HttpRequestMessage HostedJsonRequest<T>(
-        HttpMethod method,
-        string path,
-        string ticket,
-        T body)
+    private static HttpRequestMessage HostedJsonRequest<T>(HttpMethod method, string path, string ticket, T body)
     {
-        var request = new HttpRequestMessage(method, path);
+        var request = new HttpRequestMessage(method, path, JsonContent.Create(body));
         request.Headers.Add(ToolHostAuthenticationHeaders.Ticket, ticket);
         request.Headers.Add(ToolHostAuthenticationHeaders.IntrospectionPath, IntrospectionPath);
-        request.Content = JsonContent.Create(body);
         return request;
     }
 
-    private static ToolHostAuthenticationContext Context(
-        string userId,
-        IReadOnlyList<string> globalRoles) =>
-        new(
-            ContractVersion: 1,
-            ToolSlug: "rules-core",
-            SiteMode: "dorks-and-dice",
-            User: new ToolHostUserContext(userId, userId),
-            GlobalRoles: globalRoles,
-            Campaigns: []);
+    private static ToolHostAuthenticationContext Context(string userId, IReadOnlyList<string> globalRoles) =>
+        new(1, "rules-core", "dorks-and-dice", new ToolHostUserContext(userId, userId), globalRoles, []);
 
     private sealed class FakeToolHostAuthenticationClient(
-        IReadOnlyDictionary<string, ToolHostAuthenticationContext> contexts)
-        : IToolHostAuthenticationClient
+        IReadOnlyDictionary<string, ToolHostAuthenticationContext> contexts) : IToolHostAuthenticationClient
     {
         public Task<ToolHostAuthenticationContext?> RedeemAsync(
             string ticket,
@@ -301,9 +212,7 @@ public sealed class MixedSourceAggregateImportIntegrationTests
             CancellationToken cancellationToken = default)
         {
             if (!string.Equals(introspectionPath, IntrospectionPath, StringComparison.Ordinal))
-            {
                 return Task.FromResult<ToolHostAuthenticationContext?>(null);
-            }
             contexts.TryGetValue(ticket, out var context);
             return Task.FromResult(context);
         }
