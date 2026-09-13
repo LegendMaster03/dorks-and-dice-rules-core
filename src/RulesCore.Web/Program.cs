@@ -19,6 +19,10 @@ if (hasDatabase)
     builder.Services.AddDbContext<RulesCoreDbContext>(options => options.UseNpgsql(connectionString));
     builder.Services.AddScoped<IRulesCoreSchemaInitializer, RulesCoreSchemaInitializer>();
     builder.Services.AddScoped<ISourceImportService, SourceImportService>();
+    builder.Services.AddScoped<INormalizedSourceImportService, NormalizedSourceImportService>();
+    builder.Services.AddSingleton<ISourceFormatAdapter, FiveEToolsSourceFormatAdapter>();
+    builder.Services.AddSingleton<ISourceFormatAdapter, PdfSourceFormatAdapter>();
+    builder.Services.AddSingleton<ISourceFormatAdapterRegistry, SourceFormatAdapterRegistry>();
     builder.Services.AddScoped<ISourceCatalogService, SourceCatalogService>();
     builder.Services.AddScoped<ISourceEntitySearchService, SourceEntitySearchService>();
     builder.Services.AddScoped<ISourceGrantService, SourceGrantService>();
@@ -28,6 +32,7 @@ if (hasDatabase)
     builder.Services.AddScoped<IGlobalRulesAuthoringService, GlobalRulesAuthoringService>();
     builder.Services.AddScoped<ICampaignRulesAuthoringService, CampaignRulesAuthoringService>();
     builder.Services.AddScoped<IRulesCoreBaselineBootstrapper, RulesCoreBaselineBootstrapper>();
+    builder.Services.AddHostedService<CurrentUserSourceRefreshBackground>();
 }
 
 var toolHostBaseUrl = builder.Configuration["ToolHost:BaseUrl"];
