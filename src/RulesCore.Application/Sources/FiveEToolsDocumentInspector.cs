@@ -7,6 +7,65 @@ public static class FiveEToolsDocumentInspector
 {
     public const string AccountSourceFallbackCode = "user-source";
 
+    // These are native 5e.tools entity families, based on the upstream site/homebrew schema
+    // families. Generic arrays such as "data" are deliberately excluded; corpus bodies are
+    // handled separately by the corpus adapter once their book/adventure identity is known.
+    private static readonly HashSet<string> KnownEntityArrays = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "action",
+        "adventure",
+        "background",
+        "baseitem",
+        "bastion",
+        "book",
+        "boon",
+        "card",
+        "charoption",
+        "citation",
+        "class",
+        "classFeature",
+        "condition",
+        "cult",
+        "deck",
+        "deity",
+        "disease",
+        "encounter",
+        "facility",
+        "feat",
+        "hazard",
+        "item",
+        "itemEntry",
+        "itemGroup",
+        "language",
+        "legendaryGroup",
+        "magicvariant",
+        "monster",
+        "monsterFluff",
+        "name",
+        "object",
+        "optionalfeature",
+        "psionic",
+        "quickref",
+        "race",
+        "raceFluff",
+        "recipe",
+        "reward",
+        "sense",
+        "skill",
+        "spell",
+        "spellFluff",
+        "status",
+        "subclass",
+        "subclassFeature",
+        "subrace",
+        "table",
+        "tableGroup",
+        "trap",
+        "variantrule",
+        "vehicle",
+        "vehicleUpgrade"
+    };
+
     public static IReadOnlyList<string> DiscoverSourceCodes(
         string json,
         string fallbackSourceCode)
@@ -152,7 +211,7 @@ public static class FiveEToolsDocumentInspector
     }
 
     public static bool IsImportableArray(JsonProperty property) =>
-        !property.Name.StartsWith('_')
+        KnownEntityArrays.Contains(property.Name)
         && property.Value.ValueKind == JsonValueKind.Array;
 
     private static bool TryGetExplicitSourceCode(JsonElement item, out string sourceCode)
