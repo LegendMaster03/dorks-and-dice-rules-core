@@ -5,6 +5,8 @@ namespace RulesCore.Application.Sources;
 
 public static class FiveEToolsDocumentInspector
 {
+    public const string AccountSourceFallbackCode = "user-source";
+
     public static IReadOnlyList<string> DiscoverSourceCodes(
         string json,
         string fallbackSourceCode)
@@ -17,6 +19,7 @@ public static class FiveEToolsDocumentInspector
         using var document = JsonDocument.Parse(json);
         EnsureObjectRoot(document.RootElement);
 
+        var requireExplicitSource = RequiresExplicitSource(fallbackSourceCode);
         var codes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var property in document.RootElement.EnumerateObject())
         {
@@ -27,7 +30,16 @@ public static class FiveEToolsDocumentInspector
 
             foreach (var item in property.Value.EnumerateArray())
             {
-                if (item.ValueKind == JsonValueKind.Object)
+                if (item.ValueKind != JsonValueKind.Object)
+                {
+                    continue;
+                }
+
+                if (TryGetExplicitSourceCode(item, out var sourceCode))
+                {
+                    codes.Add(sourceCode);
+                }
+                else if (!requireExplicitSource)
                 {
                     codes.Add(GetSourceCode(item, fallbackSourceCode));
                 }
@@ -59,6 +71,7 @@ public static class FiveEToolsDocumentInspector
         }
 
         var applyOfficialMembership = IsOfficialSrdRelease(fallbackSourceCode);
+        var requireExplicitSource = RequiresExplicitSource(fallbackSourceCode);
         selectedEntityCount = 0;
         using var stream = new MemoryStream();
         using (var writer = new Utf8JsonWriter(stream))
@@ -77,6 +90,11 @@ public static class FiveEToolsDocumentInspector
                 foreach (var item in property.Value.EnumerateArray())
                 {
                     if (item.ValueKind != JsonValueKind.Object)
+                    {
+                        continue;
+                    }
+
+                    if (requireExplicitSource && !TryGetExplicitSourceCode(item, out _))
                     {
                         continue;
                     }
@@ -119,11 +137,9 @@ public static class FiveEToolsDocumentInspector
 
     public static string GetSourceCode(JsonElement item, string fallbackSourceCode)
     {
-        if (item.TryGetProperty("source", out var sourceElement)
-            && sourceElement.ValueKind == JsonValueKind.String
-            && !string.IsNullOrWhiteSpace(sourceElement.GetString()))
+        if (TryGetExplicitSourceCode(item, out var sourceCode))
         {
-            return sourceElement.GetString()!.Trim();
+            return sourceCode;
         }
 
         if (string.IsNullOrWhiteSpace(fallbackSourceCode))
@@ -138,6 +154,23 @@ public static class FiveEToolsDocumentInspector
     public static bool IsImportableArray(JsonProperty property) =>
         !property.Name.StartsWith('_')
         && property.Value.ValueKind == JsonValueKind.Array;
+
+    private static bool TryGetExplicitSourceCode(JsonElement item, out string sourceCode)
+    {
+        sourceCode = string.Empty;
+        if (!item.TryGetProperty("source", out var sourceElement)
+            || sourceElement.ValueKind != JsonValueKind.String
+            || string.IsNullOrWhiteSpace(sourceElement.GetString()))
+        {
+            return false;
+        }
+
+        sourceCode = sourceElement.GetString()!.Trim();
+        return true;
+    }
+
+    private static bool RequiresExplicitSource(string value) =>
+        string.Equals(value?.Trim(), AccountSourceFallbackCode, StringComparison.OrdinalIgnoreCase);
 
     private static bool IsOfficialSrdRelease(string value) =>
         string.Equals(value?.Trim(), "5.1", StringComparison.OrdinalIgnoreCase)
