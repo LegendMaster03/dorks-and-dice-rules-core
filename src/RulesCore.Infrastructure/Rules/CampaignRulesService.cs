@@ -22,30 +22,21 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         RequireGuid(request.RulesetRevisionId, nameof(request.RulesetRevisionId));
         var actor = RequireText(actorUserId, nameof(actorUserId), 200);
 
-        await using var transaction = await dbContext.Database.BeginTransactionAsync(
-            IsolationLevel.Serializable,
-            cancellationToken);
-
+        await using var transaction = await dbContext.Database.BeginTransactionAsync(IsolationLevel.Serializable, cancellationToken);
         var rulesetRevision = await dbContext.RulesetRevisions
             .AsNoTracking()
-            .SingleOrDefaultAsync(value => value.Id == request.RulesetRevisionId, cancellationToken);
-        if (rulesetRevision is null)
-        {
-            throw new KeyNotFoundException(
-                $"Global ruleset revision '{request.RulesetRevisionId}' does not exist.");
-        }
+            .SingleOrDefaultAsync(value => value.Id == request.RulesetRevisionId, cancellationToken)
+            ?? throw new KeyNotFoundException($"Global ruleset revision '{request.RulesetRevisionId}' does not exist.");
 
         var latestSelection = await dbContext.CampaignRulesetSelections
             .AsNoTracking()
             .Where(value => value.CampaignId == campaignId)
             .OrderByDescending(value => value.SelectionNumber)
             .FirstOrDefaultAsync(cancellationToken);
-
-        if (latestSelection is not null
-            && latestSelection.RulesetRevisionId == rulesetRevision.Id)
+        if (latestSelection is not null && latestSelection.RulesetRevisionId == rulesetRevision.Id)
         {
             await transaction.CommitAsync(cancellationToken);
-            return ToView(latestSelection, rulesetRevision, created: false);
+            return ToView(latestSelection, rulesetRevision, false);
         }
 
         var selection = new CampaignRulesetSelection
@@ -60,8 +51,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         dbContext.CampaignRulesetSelections.Add(selection);
         await dbContext.SaveChangesAsync(cancellationToken);
         await transaction.CommitAsync(cancellationToken);
-
-        return ToView(selection, rulesetRevision, created: true);
+        return ToView(selection, rulesetRevision, true);
     }
 
     public async Task<CampaignRuleDecisionView> SetDecisionAsync(
@@ -75,21 +65,14 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         RequireGuid(campaignId, nameof(campaignId));
         RequireGuid(ruleConceptId, nameof(ruleConceptId));
         var actor = RequireText(actorUserId, nameof(actorUserId), 200);
-        var decisionKind = RequireText(request.DecisionKind, nameof(request.DecisionKind), 80)
-            .ToLowerInvariant();
+        var decisionKind = RequireText(request.DecisionKind, nameof(request.DecisionKind), 80).ToLowerInvariant();
         if (!CampaignRuleDecisionKinds.All.Contains(decisionKind))
         {
-            throw new ArgumentException(
-                $"Unsupported campaign rule decision kind '{request.DecisionKind}'.",
-                nameof(request.DecisionKind));
+            throw new ArgumentException($"Unsupported campaign rule decision kind '{request.DecisionKind}'.", nameof(request.DecisionKind));
         }
-
         var note = NormalizeOptional(request.Note, 2000, nameof(request.Note));
 
-        await using var transaction = await dbContext.Database.BeginTransactionAsync(
-            IsolationLevel.Serializable,
-            cancellationToken);
-
+        await using var transaction = await dbContext.Database.BeginTransactionAsync(IsolationLevel.Serializable, cancellationToken);
         var baseline = await dbContext.CampaignRulesetSelections
             .AsNoTracking()
             .Where(value => value.CampaignId == campaignId)
@@ -101,13 +84,9 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
                 "The campaign must deliberately select a published global ruleset revision before creating overrides.");
         }
 
-        var baselineContainsConcept = await dbContext.RulesetRevisionEntries
-            .AsNoTracking()
-            .AnyAsync(
-                value => value.RulesetRevisionId == baseline.RulesetRevisionId
-                    && value.RuleConceptId == ruleConceptId,
-                cancellationToken);
-        if (!baselineContainsConcept)
+        if (!await dbContext.RulesetRevisionEntries.AsNoTracking().AnyAsync(
+                value => value.RulesetRevisionId == baseline.RulesetRevisionId && value.RuleConceptId == ruleConceptId,
+                cancellationToken))
         {
             throw new KeyNotFoundException(
                 $"Rule concept '{ruleConceptId}' does not exist in the campaign's selected global ruleset revision.");
@@ -116,40 +95,25 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         Guid? selectedSourceEntityRevisionId = null;
         NormalizedJsonMergePatch? mergePatch = null;
         NormalizedJsonRulePatch? structuredPatch = null;
-
         if (decisionKind == CampaignRuleDecisionKinds.SelectSource)
         {
             if (request.SourceEntityRevisionId is null || request.SourceEntityRevisionId == Guid.Empty)
             {
                 throw new ArgumentException(
-                    "A source entity revision is required for a select-source campaign decision.",
-                    nameof(request.SourceEntityRevisionId));
+                    "A source entity revision is required for a select-source campaign decision.", nameof(request.SourceEntityRevisionId));
             }
             RejectPatches(request, decisionKind);
-
             var sourceRevision = await dbContext.SourceEntityRevisions
                 .AsNoTracking()
-                .SingleOrDefaultAsync(
-                    value => value.Id == request.SourceEntityRevisionId.Value,
-                    cancellationToken);
-            if (sourceRevision is null)
-            {
-                throw new KeyNotFoundException(
-                    $"Source entity revision '{request.SourceEntityRevisionId}' does not exist.");
-            }
-
-            var sourceIsBound = await dbContext.RuleConceptSourceBindings
-                .AsNoTracking()
-                .AnyAsync(
-                    value => value.RuleConceptId == ruleConceptId
-                        && value.SourceEntityId == sourceRevision.SourceEntityId,
-                    cancellationToken);
-            if (!sourceIsBound)
+                .SingleOrDefaultAsync(value => value.Id == request.SourceEntityRevisionId.Value, cancellationToken)
+                ?? throw new KeyNotFoundException($"Source entity revision '{request.SourceEntityRevisionId}' does not exist.");
+            if (!await dbContext.RuleConceptSourceBindings.AsNoTracking().AnyAsync(
+                    value => value.RuleConceptId == ruleConceptId && value.SourceEntityId == sourceRevision.SourceEntityId,
+                    cancellationToken))
             {
                 throw new InvalidOperationException(
                     "The selected source revision belongs to an entity that is not bound to this rule concept.");
             }
-
             selectedSourceEntityRevisionId = sourceRevision.Id;
         }
         else if (decisionKind == CampaignRuleDecisionKinds.InheritGlobal)
@@ -157,8 +121,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             if (request.SourceEntityRevisionId is not null)
             {
                 throw new ArgumentException(
-                    "An inherit-global campaign decision can not select a source entity revision.",
-                    nameof(request.SourceEntityRevisionId));
+                    "An inherit-global campaign decision can not select a source entity revision.", nameof(request.SourceEntityRevisionId));
             }
             RejectPatches(request, decisionKind);
         }
@@ -172,15 +135,12 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             }
             if (!request.MergePatch.HasValue)
             {
-                throw new ArgumentException(
-                    "A merge patch is required for a json-merge-patch campaign decision.",
-                    nameof(request.MergePatch));
+                throw new ArgumentException("A merge patch is required for a json-merge-patch campaign decision.", nameof(request.MergePatch));
             }
             if (request.StructuredPatch is not null)
             {
                 throw new ArgumentException(
-                    "A json-merge-patch campaign decision can not include a structured rule patch.",
-                    nameof(request.StructuredPatch));
+                    "A json-merge-patch campaign decision can not include a structured rule patch.", nameof(request.StructuredPatch));
             }
             mergePatch = JsonMergePatch.Normalize(request.MergePatch.Value);
         }
@@ -195,14 +155,12 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             if (request.MergePatch.HasValue)
             {
                 throw new ArgumentException(
-                    "A json-rule-patch campaign decision can not include a legacy merge patch field.",
-                    nameof(request.MergePatch));
+                    "A json-rule-patch campaign decision can not include a legacy merge patch field.", nameof(request.MergePatch));
             }
             structuredPatch = request.StructuredPatch is not null
                 ? JsonRulePatch.Normalize(request.StructuredPatch)
                 : throw new ArgumentException(
-                    "A structured patch is required for a json-rule-patch campaign decision.",
-                    nameof(request.StructuredPatch));
+                    "A structured patch is required for a json-rule-patch campaign decision.", nameof(request.StructuredPatch));
         }
 
         var patchJson = structuredPatch?.Json ?? mergePatch?.Json;
@@ -212,7 +170,6 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             .Where(value => value.CampaignId == campaignId && value.RuleConceptId == ruleConceptId)
             .OrderByDescending(value => value.DecisionNumber)
             .FirstOrDefaultAsync(cancellationToken);
-
         if (latestDecision is not null
             && string.Equals(latestDecision.DecisionKind, decisionKind, StringComparison.Ordinal)
             && latestDecision.SelectedSourceEntityRevisionId == selectedSourceEntityRevisionId
@@ -220,7 +177,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             && string.Equals(latestDecision.Note, note, StringComparison.Ordinal))
         {
             await transaction.CommitAsync(cancellationToken);
-            return ToView(latestDecision, created: false);
+            return ToView(latestDecision, false);
         }
 
         var decision = new CampaignRuleDecision
@@ -240,8 +197,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         dbContext.CampaignRuleDecisions.Add(decision);
         await dbContext.SaveChangesAsync(cancellationToken);
         await transaction.CommitAsync(cancellationToken);
-
-        return ToView(decision, created: true);
+        return ToView(decision, true);
     }
 
     public async Task<PublishedCampaignRulesetRevisionView> PublishAsync(
@@ -251,10 +207,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
     {
         RequireGuid(campaignId, nameof(campaignId));
         var actor = RequireText(actorUserId, nameof(actorUserId), 200);
-
-        await using var transaction = await dbContext.Database.BeginTransactionAsync(
-            IsolationLevel.Serializable,
-            cancellationToken);
+        await using var transaction = await dbContext.Database.BeginTransactionAsync(IsolationLevel.Serializable, cancellationToken);
 
         var baselineSelection = await dbContext.CampaignRulesetSelections
             .AsNoTracking()
@@ -287,19 +240,15 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             .ToArrayAsync(cancellationToken);
         var latestDecisionByConcept = allCampaignDecisions
             .GroupBy(value => value.RuleConceptId)
-            .ToDictionary(
-                group => group.Key,
-                group => group.OrderByDescending(value => value.DecisionNumber).First());
+            .ToDictionary(group => group.Key, group => group.OrderByDescending(value => value.DecisionNumber).First());
 
         var effectiveEntries = new List<EffectiveCampaignEntry>(baselineEntries.Length);
         foreach (var baselineEntry in baselineEntries)
         {
             latestDecisionByConcept.TryGetValue(baselineEntry.RuleConceptId, out var campaignDecision);
-
             Guid effectiveSourceRevisionId;
             string effectiveSourceFingerprint;
-            if (campaignDecision is not null
-                && campaignDecision.DecisionKind == CampaignRuleDecisionKinds.SelectSource)
+            if (campaignDecision is not null && campaignDecision.DecisionKind == CampaignRuleDecisionKinds.SelectSource)
             {
                 var sourceRevision = campaignDecision.SelectedSourceEntityRevision
                     ?? throw new InvalidOperationException(
@@ -312,36 +261,22 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
                 effectiveSourceRevisionId = baselineEntry.SourceEntityRevisionId;
                 effectiveSourceFingerprint = baselineEntry.SourceEntityRevision.Fingerprint;
             }
-
             effectiveEntries.Add(new EffectiveCampaignEntry(
-                baselineEntry,
-                campaignDecision,
-                effectiveSourceRevisionId,
-                effectiveSourceFingerprint));
+                baselineEntry, campaignDecision, effectiveSourceRevisionId, effectiveSourceFingerprint));
         }
 
-        var fingerprint = ComputeCampaignRulesetFingerprint(
-            baselineSelection,
-            effectiveEntries);
+        var fingerprint = ComputeCampaignRulesetFingerprint(baselineSelection, effectiveEntries);
         var latestRevision = await dbContext.CampaignRulesetRevisions
             .AsNoTracking()
             .Where(value => value.CampaignId == campaignId)
             .OrderByDescending(value => value.RevisionNumber)
             .FirstOrDefaultAsync(cancellationToken);
-
-        if (latestRevision is not null
-            && string.Equals(latestRevision.Fingerprint, fingerprint, StringComparison.Ordinal))
+        if (latestRevision is not null && string.Equals(latestRevision.Fingerprint, fingerprint, StringComparison.Ordinal))
         {
-            var entryCount = await dbContext.CampaignRulesetRevisionEntries
-                .CountAsync(
-                    value => value.CampaignRulesetRevisionId == latestRevision.Id,
-                    cancellationToken);
+            var entryCount = await dbContext.CampaignRulesetRevisionEntries.CountAsync(
+                value => value.CampaignRulesetRevisionId == latestRevision.Id, cancellationToken);
             await transaction.CommitAsync(cancellationToken);
-            return ToView(
-                latestRevision,
-                baselineSelection,
-                entryCount,
-                createdRevision: false);
+            return ToView(latestRevision, baselineSelection, entryCount, false);
         }
 
         var revision = new CampaignRulesetRevision
@@ -355,7 +290,6 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             PublishedAt = DateTimeOffset.UtcNow
         };
         dbContext.CampaignRulesetRevisions.Add(revision);
-
         foreach (var effectiveEntry in effectiveEntries)
         {
             dbContext.CampaignRulesetRevisionEntries.Add(new CampaignRulesetRevisionEntry
@@ -368,15 +302,9 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
                 SourceEntityRevisionId = effectiveEntry.SourceEntityRevisionId
             });
         }
-
         await dbContext.SaveChangesAsync(cancellationToken);
         await transaction.CommitAsync(cancellationToken);
-
-        return ToView(
-            revision,
-            baselineSelection,
-            effectiveEntries.Count,
-            createdRevision: true);
+        return ToView(revision, baselineSelection, effectiveEntries.Count, true);
     }
 
     public async Task<ResolvedCampaignRuleView?> ResolveLatestAsync(
@@ -396,10 +324,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             .Where(value => value.CampaignId == campaignId)
             .OrderByDescending(value => value.RevisionNumber)
             .FirstOrDefaultAsync(cancellationToken);
-        if (latestRevision is null)
-        {
-            return null;
-        }
+        if (latestRevision is null) return null;
 
         var entry = await dbContext.CampaignRulesetRevisionEntries
             .AsNoTracking()
@@ -409,27 +334,20 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             .Include(value => value.CampaignRuleDecision)
             .Include(value => value.SourceEntityRevision)
                 .ThenInclude(value => value.SourceEntity)
-                .ThenInclude(value => value.SourceEdition)
-                .ThenInclude(value => value.SourceWork)
                 .ThenInclude(value => value.SourcePackage)
             .SingleOrDefaultAsync(
                 value => value.CampaignRulesetRevisionId == latestRevision.Id
                     && value.RuleConcept.Key == key
-                    && (value.SourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.IsPublic
+                    && (value.SourceEntityRevision.SourceEntity.SourcePackage.IsPublic
                         || (normalizedUserId != null
-                            && value.SourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.UserGrants
+                            && value.SourceEntityRevision.SourceEntity.SourcePackage.UserGrants
                                 .Any(grant => grant.UserId == normalizedUserId))),
                 cancellationToken);
-        if (entry is null)
-        {
-            return null;
-        }
+        if (entry is null) return null;
 
         var sourceRevision = entry.SourceEntityRevision;
         var sourceEntity = sourceRevision.SourceEntity;
-        var edition = sourceEntity.SourceEdition;
-        var work = edition.SourceWork;
-        var package = work.SourcePackage;
+        var package = sourceEntity.SourcePackage;
         var concept = entry.RuleConcept;
         var globalDecision = entry.BaselineRulesetRevisionEntry.GlobalRuleDecision;
         var campaignDecision = entry.CampaignRuleDecision;
@@ -439,14 +357,8 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         if (campaignDecision?.DecisionKind != CampaignRuleDecisionKinds.SelectSource)
         {
             var contributionResolution = await RuleContributionResolution.ResolveAsync(
-                dbContext,
-                globalDecision.Id,
-                normalizedUserId,
-                cancellationToken);
-            if (!contributionResolution.Accessible)
-            {
-                return null;
-            }
+                dbContext, globalDecision.Id, normalizedUserId, cancellationToken);
+            if (!contributionResolution.Accessible) return null;
             globalContributions = contributionResolution.Contributions;
         }
 
@@ -462,17 +374,13 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         }
 
         var globalMergePatch = globalDecision.DecisionKind == RuleDecisionKinds.JsonMergePatch
-            ? JsonMergePatch.ParsePatch(globalDecision.PatchJson)
-            : (JsonElement?)null;
+            ? JsonMergePatch.ParsePatch(globalDecision.PatchJson) : (JsonElement?)null;
         var globalStructuredPatch = globalDecision.DecisionKind == RuleDecisionKinds.JsonRulePatch
-            ? JsonRulePatch.ParsePatch(globalDecision.PatchJson)
-            : (JsonElement?)null;
+            ? JsonRulePatch.ParsePatch(globalDecision.PatchJson) : (JsonElement?)null;
         var campaignMergePatch = campaignDecision?.DecisionKind == CampaignRuleDecisionKinds.JsonMergePatch
-            ? JsonMergePatch.ParsePatch(campaignDecision.PatchJson)
-            : (JsonElement?)null;
+            ? JsonMergePatch.ParsePatch(campaignDecision.PatchJson) : (JsonElement?)null;
         var campaignStructuredPatch = campaignDecision?.DecisionKind == CampaignRuleDecisionKinds.JsonRulePatch
-            ? JsonRulePatch.ParsePatch(campaignDecision.PatchJson)
-            : (JsonElement?)null;
+            ? JsonRulePatch.ParsePatch(campaignDecision.PatchJson) : (JsonElement?)null;
 
         return new ResolvedCampaignRuleView(
             campaignId,
@@ -505,45 +413,40 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             sourceRevision.RevisionNumber,
             sourceRevision.Fingerprint,
             sourceEntity.Name,
-            sourceEntity.SourceCode,
+            sourceEntity.SourceCode ?? string.Empty,
             package.Key,
             package.DisplayName,
-            work.Key,
-            work.DisplayName,
-            edition.Key,
-            edition.DisplayName,
+            package.Key,
+            package.DisplayName,
+            sourceEntity.FormatKey,
+            sourceEntity.FormatKey,
             resolvedDocument);
     }
 
-    private static JsonElement ApplyGlobalPatch(JsonElement source, GlobalRuleDecision decision) =>
-        decision.DecisionKind switch
-        {
-            RuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(source, decision.PatchJson),
-            RuleDecisionKinds.JsonRulePatch => JsonRulePatch.Apply(source, decision.PatchJson),
-            _ => source.Clone()
-        };
+    private static JsonElement ApplyGlobalPatch(JsonElement source, GlobalRuleDecision decision) => decision.DecisionKind switch
+    {
+        RuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(source, decision.PatchJson),
+        RuleDecisionKinds.JsonRulePatch => JsonRulePatch.Apply(source, decision.PatchJson),
+        _ => source.Clone()
+    };
 
-    private static JsonElement ApplyCampaignPatch(JsonElement source, CampaignRuleDecision decision) =>
-        decision.DecisionKind switch
-        {
-            CampaignRuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(source, decision.PatchJson),
-            CampaignRuleDecisionKinds.JsonRulePatch => JsonRulePatch.Apply(source, decision.PatchJson),
-            _ => source.Clone()
-        };
+    private static JsonElement ApplyCampaignPatch(JsonElement source, CampaignRuleDecision decision) => decision.DecisionKind switch
+    {
+        CampaignRuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(source, decision.PatchJson),
+        CampaignRuleDecisionKinds.JsonRulePatch => JsonRulePatch.Apply(source, decision.PatchJson),
+        _ => source.Clone()
+    };
 
     private static void RejectPatches(SetCampaignRuleDecisionRequest request, string decisionKind)
     {
         if (request.MergePatch.HasValue)
         {
-            throw new ArgumentException(
-                $"A {decisionKind} campaign decision can not include a merge patch.",
-                nameof(request.MergePatch));
+            throw new ArgumentException($"A {decisionKind} campaign decision can not include a merge patch.", nameof(request.MergePatch));
         }
         if (request.StructuredPatch is not null)
         {
             throw new ArgumentException(
-                $"A {decisionKind} campaign decision can not include a structured rule patch.",
-                nameof(request.StructuredPatch));
+                $"A {decisionKind} campaign decision can not include a structured rule patch.", nameof(request.StructuredPatch));
         }
     }
 
@@ -551,41 +454,20 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         CampaignRulesetSelection selection,
         RulesetRevision rulesetRevision,
         bool created) =>
-        new(
-            selection.Id,
-            selection.CampaignId,
-            selection.SelectionNumber,
-            rulesetRevision.Id,
-            rulesetRevision.RevisionNumber,
-            rulesetRevision.Fingerprint,
-            selection.SelectedByUserId,
-            selection.SelectedAt,
-            created);
+        new(selection.Id, selection.CampaignId, selection.SelectionNumber, rulesetRevision.Id,
+            rulesetRevision.RevisionNumber, rulesetRevision.Fingerprint, selection.SelectedByUserId,
+            selection.SelectedAt, created);
 
-    private static CampaignRuleDecisionView ToView(
-        CampaignRuleDecision decision,
-        bool created)
+    private static CampaignRuleDecisionView ToView(CampaignRuleDecision decision, bool created)
     {
         var mergePatch = decision.DecisionKind == CampaignRuleDecisionKinds.JsonMergePatch
-            ? JsonMergePatch.ParsePatch(decision.PatchJson)
-            : (JsonElement?)null;
+            ? JsonMergePatch.ParsePatch(decision.PatchJson) : (JsonElement?)null;
         var structuredPatch = decision.DecisionKind == CampaignRuleDecisionKinds.JsonRulePatch
-            ? JsonRulePatch.ParsePatch(decision.PatchJson)
-            : (JsonElement?)null;
+            ? JsonRulePatch.ParsePatch(decision.PatchJson) : (JsonElement?)null;
         return new CampaignRuleDecisionView(
-            decision.Id,
-            decision.CampaignId,
-            decision.RuleConceptId,
-            decision.DecisionNumber,
-            decision.DecisionKind,
-            decision.SelectedSourceEntityRevisionId,
-            decision.PatchFingerprint,
-            mergePatch,
-            structuredPatch,
-            decision.Note,
-            decision.CreatedByUserId,
-            decision.CreatedAt,
-            created);
+            decision.Id, decision.CampaignId, decision.RuleConceptId, decision.DecisionNumber,
+            decision.DecisionKind, decision.SelectedSourceEntityRevisionId, decision.PatchFingerprint,
+            mergePatch, structuredPatch, decision.Note, decision.CreatedByUserId, decision.CreatedAt, created);
     }
 
     private static PublishedCampaignRulesetRevisionView ToView(
@@ -593,19 +475,10 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         CampaignRulesetSelection baselineSelection,
         int entryCount,
         bool createdRevision) =>
-        new(
-            revision.Id,
-            revision.CampaignId,
-            revision.RevisionNumber,
-            revision.Fingerprint,
-            baselineSelection.Id,
-            baselineSelection.RulesetRevision.Id,
-            baselineSelection.RulesetRevision.RevisionNumber,
-            baselineSelection.RulesetRevision.Fingerprint,
-            revision.PublishedByUserId,
-            revision.PublishedAt,
-            entryCount,
-            createdRevision);
+        new(revision.Id, revision.CampaignId, revision.RevisionNumber, revision.Fingerprint,
+            baselineSelection.Id, baselineSelection.RulesetRevision.Id, baselineSelection.RulesetRevision.RevisionNumber,
+            baselineSelection.RulesetRevision.Fingerprint, revision.PublishedByUserId, revision.PublishedAt,
+            entryCount, createdRevision);
 
     private static string ComputeCampaignRulesetFingerprint(
         CampaignRulesetSelection baselineSelection,
@@ -613,13 +486,9 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
     {
         var lines = new List<string>
         {
-            string.Join(
-                '\u001f',
-                baselineSelection.Id.ToString("D"),
-                baselineSelection.RulesetRevisionId.ToString("D"),
+            string.Join('\u001f', baselineSelection.Id.ToString("D"), baselineSelection.RulesetRevisionId.ToString("D"),
                 baselineSelection.RulesetRevision.Fingerprint)
         };
-
         lines.AddRange(entries
             .OrderBy(value => value.BaselineEntry.RuleConcept.Key, StringComparer.Ordinal)
             .Select(value => string.Join(
@@ -632,48 +501,33 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
                 value.CampaignDecision?.Note ?? string.Empty,
                 value.SourceEntityRevisionId.ToString("D"),
                 value.SourceFingerprint)));
-
-        var canonical = string.Join('\n', lines);
-        return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(canonical))).ToLowerInvariant();
+        return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(string.Join('\n', lines)))).ToLowerInvariant();
     }
 
     private static void RequireGuid(Guid value, string parameterName)
     {
-        if (value == Guid.Empty)
-        {
-            throw new ArgumentException("Value can not be an empty GUID.", parameterName);
-        }
+        if (value == Guid.Empty) throw new ArgumentException("Value can not be an empty GUID.", parameterName);
     }
 
     private static string RequireText(string value, string parameterName, int maxLength)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("Value can not be blank.", parameterName);
-        }
-
+        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Value can not be blank.", parameterName);
         var normalized = value.Trim();
         if (normalized.Length > maxLength)
         {
             throw new ArgumentException($"Value can not exceed {maxLength} characters.", parameterName);
         }
-
         return normalized;
     }
 
     private static string? NormalizeOptional(string? value, int maxLength, string parameterName)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return null;
-        }
-
+        if (string.IsNullOrWhiteSpace(value)) return null;
         var normalized = value.Trim();
         if (normalized.Length > maxLength)
         {
             throw new ArgumentException($"Value can not exceed {maxLength} characters.", parameterName);
         }
-
         return normalized;
     }
 
