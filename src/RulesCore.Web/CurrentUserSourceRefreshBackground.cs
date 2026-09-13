@@ -1,61 +1,54 @@
+using Microsoft.Extensions.Hosting;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.Web;
 
-internal static class CurrentUserSourceRefreshBackground
+internal sealed class CurrentUserSourceRefreshBackground(
+    IServiceScopeFactory scopeFactory,
+    ILogger<CurrentUserSourceRefreshBackground> logger)
+    : BackgroundService
 {
-    private static int started;
-
-    public static void Start(WebApplication app)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        if (Interlocked.Exchange(ref started, 1) != 0)
+        try
         {
-            return;
-        }
-
-        var stopping = app.Lifetime.ApplicationStopping;
-        _ = Task.Run(async () =>
-        {
-            try
+            await Task.Delay(TimeSpan.FromMinutes(10), stoppingToken);
+            while (!stoppingToken.IsCancellationRequested)
             {
-                await Task.Delay(TimeSpan.FromMinutes(10), stopping);
-                while (!stopping.IsCancellationRequested)
+                try
                 {
-                    try
-                    {
-                        await using var scope = app.Services.CreateAsyncScope();
-                        var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
-                        var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
-                        var grants = scope.ServiceProvider.GetRequiredService<ISourceGrantService>();
-                        var refresh = new CurrentUserWebSourceRefreshService(
-                            dbContext,
-                            importer,
-                            grants);
-                        await refresh.RefreshDueAsync(stopping);
+                    await using var scope = scopeFactory.CreateAsyncScope();
+                    var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+                    var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
+                    var grants = scope.ServiceProvider.GetRequiredService<ISourceGrantService>();
+                    var refresh = new CurrentUserWebSourceRefreshService(
+                        dbContext,
+                        importer,
+                        grants);
+                    await refresh.RefreshDueAsync(stoppingToken);
 
-                        var identity = new CanonicalSourceIdentityService(dbContext);
-                        await identity.IndexUnboundAsync(stopping);
-                    }
-                    catch (OperationCanceledException) when (stopping.IsCancellationRequested)
-                    {
-                        break;
-                    }
-                    catch (Exception exception)
-                    {
-                        app.Logger.LogError(
-                            exception,
-                            "Automatic Rules Core Web source refresh failed.");
-                    }
-
-                    await Task.Delay(TimeSpan.FromHours(1), stopping);
+                    var identity = new CanonicalSourceIdentityService(dbContext);
+                    await identity.IndexUnboundAsync(stoppingToken);
                 }
+                catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
+                {
+                    break;
+                }
+                catch (Exception exception)
+                {
+                    logger.LogError(
+                        exception,
+                        "Automatic Rules Core Web source refresh failed.");
+                }
+
+                await Task.Delay(TimeSpan.FromHours(1), stoppingToken);
             }
-            catch (OperationCanceledException) when (stopping.IsCancellationRequested)
-            {
-                // Normal application shutdown.
-            }
-        }, stopping);
+        }
+        catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
+        {
+            // Normal application shutdown.
+        }
     }
 }
