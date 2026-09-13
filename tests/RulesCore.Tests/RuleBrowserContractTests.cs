@@ -93,6 +93,26 @@ public sealed class RuleBrowserContractTests
             new RuleAdjudicationScopeRequest(RuleAdjudicationScopeKinds.Campaign, playerCampaignId)));
     }
 
+    [Fact]
+    public void EmptyCampaignMembershipLeavesCampaignAuthorityUnavailable()
+    {
+        var context = new ToolHostAuthenticationContext(
+            ContractVersion: 1,
+            ToolSlug: "rules-core",
+            SiteMode: RulesAuthority.DorksAndDiceMode,
+            User: new ToolHostUserContext("rules-lawyer", "Rules Lawyer"),
+            GlobalRoles: [RulesAuthority.RulesLawyerRole],
+            Campaigns: []);
+        var unknownCampaignId = Guid.NewGuid();
+
+        Assert.True(RulesAuthority.CanEditGlobalRules(context));
+        Assert.False(RulesAuthority.CanAccessCampaignRules(context, unknownCampaignId));
+        Assert.False(RulesAuthority.CanEditCampaignRules(context, unknownCampaignId));
+        Assert.False(RulesAuthority.CanEditScope(
+            context,
+            new RuleAdjudicationScopeRequest(RuleAdjudicationScopeKinds.Campaign, unknownCampaignId)));
+    }
+
     private static ToolHostAuthenticationContext Context(
         Guid campaignId,
         string role) =>
