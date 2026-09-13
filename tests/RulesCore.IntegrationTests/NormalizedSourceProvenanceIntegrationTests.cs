@@ -95,11 +95,46 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
             Assert.Equal("Original Press", firstPublisher);
             Assert.Equal("Conflicting Press", secondPublisher);
 
+            var secondRepresentationId = await ReadRepresentationIdAsync(db, second.PackageId);
             var conflict = await ReadPublisherConflictAsync(
                 db,
                 firstPublication.CanonicalPublicationId);
+            Assert.Equal(secondRepresentationId, conflict.SourceRepresentationId);
+            Assert.Null(conflict.SourceEntityId);
             Assert.Equal("Original Press", conflict.CanonicalValue);
             Assert.Equal("Conflicting Press", conflict.ObservedValue);
+        }
+    }
+
+    [Fact]
+    public async Task LateRepresentationFailureRollsBackEntireNormalizedImport()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null)
+        {
+            return;
+        }
+        await using (db)
+        {
+            var importer = new NormalizedSourceImportService(db);
+            var packageKey = $"atomic-{Guid.NewGuid():N}";
+            var request = BuildImport(
+                packageKey,
+                "Atomic Press",
+                "9798675309018",
+                "atomic-rule");
+            var invalidRequest = request with
+            {
+                Representation = request.Representation with
+                {
+                    FormatKey = new string('x', 81)
+                }
+            };
+
+            await Assert.ThrowsAsync<ArgumentException>(() => importer.ImportAsync(invalidRequest));
+
+            db.ChangeTracker.Clear();
+            Assert.False(await db.SourcePackages.AnyAsync(value => value.Key == packageKey));
         }
     }
 
@@ -198,6 +233,39 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
         }
     }
 
+    private static async Task<Guid> ReadRepresentationIdAsync(
+        RulesCoreDbContext db,
+        Guid packageId)
+    {
+        var connection = db.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere)
+        {
+            await connection.OpenAsync();
+        }
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT source_representation_id
+                FROM source_representation
+                WHERE source_package_id = @package_id
+                ORDER BY imported_at DESC
+                LIMIT 1;
+                """;
+            AddParameter(command, "@package_id", packageId);
+            return (Guid)(await command.ExecuteScalarAsync()
+                ?? throw new InvalidOperationException("Representation was not stored."));
+        }
+        finally
+        {
+            if (openedHere)
+            {
+                await connection.CloseAsync();
+            }
+        }
+    }
+
     private static async Task<string?> ReadCanonicalPublisherAsync(
         RulesCoreDbContext db,
         Guid publicationId) =>
@@ -242,7 +310,11 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
         }
     }
 
-    private static async Task<(string? CanonicalValue, string? ObservedValue)> ReadPublisherConflictAsync(
+    private static async Task<(
+        Guid? SourceRepresentationId,
+        Guid? SourceEntityId,
+        string? CanonicalValue,
+        string? ObservedValue)> ReadPublisherConflictAsync(
         RulesCoreDbContext db,
         Guid publicationId)
     {
@@ -256,7 +328,7 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
         {
             await using var command = connection.CreateCommand();
             command.CommandText = """
-                SELECT canonical_value, observed_value
+                SELECT source_representation_id, source_entity_id, canonical_value, observed_value
                 FROM canonical_publication_evidence_conflict
                 WHERE canonical_publication_id = @publication_id
                     AND field_name = 'publisher'
@@ -267,8 +339,10 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
             await using var reader = await command.ExecuteReaderAsync();
             Assert.True(await reader.ReadAsync());
             return (
-                reader.IsDBNull(0) ? null : reader.GetString(0),
-                reader.IsDBNull(1) ? null : reader.GetString(1));
+                reader.IsDBNull(0) ? null : reader.GetGuid(0),
+                reader.IsDBNull(1) ? null : reader.GetGuid(1),
+                reader.IsDBNull(2) ? null : reader.GetString(2),
+                reader.IsDBNull(3) ? null : reader.GetString(3));
         }
         finally
         {

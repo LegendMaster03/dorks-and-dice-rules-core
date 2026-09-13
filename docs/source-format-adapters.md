@@ -32,6 +32,8 @@ The normal current-user path is now:
 
 Each imported artifact is retained separately in `source_representation`, including its format, origin identity, file name, source URL when applicable, media type, SHA-256, byte length, original bytes, adapter metadata, and import time. `source_representation_publication` records which canonical publication a particular representation was associated with.
 
+Normalized import is transactional across Source Layer persistence, representation storage, canonical publication/occurrence association, publication-evidence reconciliation, and representation-publication linking. A late failure in any of those stages rolls back the import rather than leaving a partially imported package.
+
 ## Adapter responsibilities
 
 Each source-format adapter converts one physical representation into Source Layer material. The adapter is responsible for:
@@ -68,7 +70,7 @@ OCR is not implemented in this slice. Scan-only PDFs with no usable text layer a
 
 Publisher evidence is stored on the source edition produced by the adapter and is also supplied to canonical publication reconciliation.
 
-When canonical identity is established by stronger evidence such as an ISBN alias, later missing canonical publisher/date/edition fields may be filled from the new representation. Conflicting non-null evidence is not silently overwritten. The canonical value is retained and the observation is recorded in `canonical_publication_evidence_conflict`, linked to the source entity that supplied the conflicting evidence.
+When canonical identity is established by stronger evidence such as an ISBN alias, later missing canonical publisher/date/edition fields may be filled from the new representation. Conflicting non-null evidence is not silently overwritten. The canonical value is retained and the observation is recorded in `canonical_publication_evidence_conflict`, linked to the physical `source_representation` that supplied the conflicting publication-level evidence. Legacy conflict rows that predate representation-scoped provenance may remain linked to a source entity; new observations are representation-scoped.
 
 ## Relationship to structured representations
 

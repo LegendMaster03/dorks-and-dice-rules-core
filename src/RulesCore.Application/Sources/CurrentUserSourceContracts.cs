@@ -12,6 +12,20 @@ public static class CurrentUserSourceKinds
         || string.Equals(value, Web, StringComparison.Ordinal);
 }
 
+public static class CurrentUserSourceImportJobOperations
+{
+    public const string Add = "add";
+    public const string Refresh = "refresh";
+}
+
+public static class CurrentUserSourceImportJobStatuses
+{
+    public const string Queued = "queued";
+    public const string Running = "running";
+    public const string Completed = "completed";
+    public const string Failed = "failed";
+}
+
 public sealed record AddCurrentUserSourceRequest
 {
     public AddCurrentUserSourceRequest()
@@ -96,6 +110,19 @@ public sealed record CurrentUserSourceView(
     IReadOnlyList<string> SourceCodes,
     DateTimeOffset AddedAt,
     DateTimeOffset RefreshedAt);
+
+public sealed record CurrentUserSourceImportJobView(
+    Guid Id,
+    string Operation,
+    string Kind,
+    string DisplayName,
+    string? Url,
+    string Status,
+    Guid? CurrentUserSourceId,
+    string? Error,
+    DateTimeOffset CreatedAt,
+    DateTimeOffset? StartedAt,
+    DateTimeOffset? CompletedAt);
 
 public interface ICurrentUserSourceService
 {

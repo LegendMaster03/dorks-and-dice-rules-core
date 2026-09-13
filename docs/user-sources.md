@@ -13,7 +13,9 @@ The user chooses one of two source types:
 
 That is the complete normal user workflow.
 
-Rules Core validates compatibility before importing anything. If an uploaded file is not compatible, the request returns an error. If a Web source contains no compatible files beneath the selected source location, the request returns an error rather than creating an empty source.
+Uploaded files are validated and imported in the request because they are already local to Rules Core. Web sources are queued as durable import jobs and processed by the hosted background coordinator. This prevents a large repository tree from being tied to the browser/reverse-proxy request timeout. The Add Source card shows queued, importing, and failed Web-source jobs and updates while the page remains open; the user may leave the page while a job continues.
+
+Rules Core validates compatibility before committing imported source content. If an uploaded file is not compatible, the request returns an error. If a queued Web source resolves no compatible files beneath the selected source location, the job fails and the Add Source card reports the compatibility error rather than creating an empty source.
 
 Compatibility is intentionally the contract instead of JSON itself. The current adapter registry supports:
 
@@ -47,7 +49,7 @@ Scan-only PDFs are not currently compatible because OCR is not implemented in th
 
 ## Web-source safety
 
-Web sources must use HTTPS and can not contain embedded credentials. Rules Core rejects loopback, private, link-local, carrier-grade NAT, multicast, and other non-public destinations. Redirects are not followed. GitHub tree sources are enumerated beneath the selected tree path. Files that are not compatible with a supported source format are ignored while resolving the tree; if none are compatible, the Web source is rejected.
+Web sources must use HTTPS and can not contain embedded credentials. Rules Core rejects loopback, private, link-local, carrier-grade NAT, multicast, and other non-public destinations. Redirects are not followed. GitHub tree sources are enumerated beneath the selected tree path. Files that are not compatible with a supported source format are ignored while resolving the tree; if none are compatible, the Web-source import job fails without creating an empty user source.
 
 For a GitHub tree, candidate files currently include supported structured JSON and PDF representations. A valid but unsupported document is not considered compatible merely because it can be downloaded.
 
@@ -55,7 +57,7 @@ For a GitHub tree, candidate files currently include supported structured JSON a
 
 An uploaded file is an immutable snapshot. To use a newer file, add the newer file.
 
-A Web source is checked automatically once it is due for a check **24 hours after the previous check**. The hosted background coordinator scans for due sources hourly, so a normally running instance checks a source approximately every 24–25 hours. The user-facing **Refresh** action remains available and performs an immediate check.
+A Web source is checked automatically once it is due for a check **24 hours after the previous check**. The hosted background coordinator scans for due sources hourly, so a normally running instance checks a source approximately every 24–25 hours. The user-facing **Refresh** action queues a refresh through the same background coordinator so large sources are not constrained by an interactive request timeout.
 
 A check is deliberately cheaper than a content pull when the upstream provider exposes a stable version signal:
 

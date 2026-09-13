@@ -34,6 +34,26 @@ public static class CurrentUserSourceEndpointExtensions
                 cancellationToken));
         });
 
+        app.MapGet("/api/sources/current-user/import-jobs", async (
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireSignedInDorksAndDiceAccount(
+                httpContext,
+                out var authenticationContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            var jobs = new CurrentUserSourceImportJobService(dbContext);
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(await jobs.ListAsync(
+                authenticationContext!.User.Id,
+                cancellationToken));
+        });
+
         app.MapPost("/api/sources/current-user", async (
             AddCurrentUserSourceRequest request,
             HttpContext httpContext,
@@ -52,25 +72,27 @@ public static class CurrentUserSourceEndpointExtensions
 
             try
             {
+                if (string.Equals(
+                        request.Kind?.Trim(),
+                        CurrentUserSourceKinds.Web,
+                        StringComparison.OrdinalIgnoreCase))
+                {
+                    var jobs = new CurrentUserSourceImportJobService(dbContext);
+                    var job = await jobs.QueueWebAddAsync(
+                        authenticationContext!.User.Id,
+                        request.Url,
+                        cancellationToken);
+                    httpContext.Response.Headers.CacheControl = "no-store";
+                    return Results.Accepted(
+                        $"/api/sources/current-user/import-jobs/{job.Id}",
+                        job);
+                }
+
                 var service = new CurrentUserSourceService(dbContext, importer, grants);
                 var source = await service.AddAsync(
                     authenticationContext!.User.Id,
                     request,
                     cancellationToken);
-
-                if (string.Equals(source.Kind, CurrentUserSourceKinds.Web, StringComparison.Ordinal)
-                    && !string.IsNullOrWhiteSpace(source.Url))
-                {
-                    var refresh = new CurrentUserWebSourceRefreshService(
-                        dbContext,
-                        importer,
-                        grants);
-                    await refresh.RecordInitialVersionAsync(
-                        source.Id,
-                        source.Url,
-                        cancellationToken);
-                }
-
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(source);
             }
@@ -106,8 +128,6 @@ public static class CurrentUserSourceEndpointExtensions
             Guid currentUserSourceId,
             HttpContext httpContext,
             RulesCoreDbContext dbContext,
-            ISourceImportService importer,
-            ISourceGrantService grants,
             CancellationToken cancellationToken) =>
         {
             var authorizationFailure = RequireSignedInDorksAndDiceAccount(
@@ -120,39 +140,24 @@ public static class CurrentUserSourceEndpointExtensions
 
             try
             {
-                var refresh = new CurrentUserWebSourceRefreshService(
-                    dbContext,
-                    importer,
-                    grants);
-                var source = await refresh.RefreshOneAsync(
+                var jobs = new CurrentUserSourceImportJobService(dbContext);
+                var job = await jobs.QueueRefreshAsync(
                     authenticationContext!.User.Id,
                     currentUserSourceId,
                     cancellationToken);
-                if (source is null)
+                if (job is null)
                 {
                     return Results.NotFound();
                 }
+
                 httpContext.Response.Headers.CacheControl = "no-store";
-                return Results.Ok(source);
+                return Results.Accepted(
+                    $"/api/sources/current-user/import-jobs/{job.Id}",
+                    job);
             }
             catch (ArgumentException exception)
             {
                 return InvalidSource(exception.Message);
-            }
-            catch (InvalidDataException exception)
-            {
-                return InvalidSource(exception.Message);
-            }
-            catch (JsonException exception)
-            {
-                return InvalidSource(exception.Message);
-            }
-            catch (HttpRequestException exception)
-            {
-                return Results.Problem(
-                    title: "Web source unavailable",
-                    detail: exception.Message,
-                    statusCode: StatusCodes.Status502BadGateway);
             }
             catch (InvalidOperationException exception)
             {
