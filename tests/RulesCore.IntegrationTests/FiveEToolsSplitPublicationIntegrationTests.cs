@@ -12,129 +12,107 @@ namespace RulesCore.IntegrationTests;
 public sealed class FiveEToolsSplitPublicationIntegrationTests
 {
     [Fact]
-    public async Task RichTitleThenSourceCodeFallbackDoesNotFailSplitPublicationImport()
+    public async Task RichCorpusMetadataAndLaterSourceRecordsReuseTheSamePublicationWhenIdentityIsUnambiguous()
     {
         var db = await OpenDatabaseAsync();
-        if (db is null)
-        {
-            return;
-        }
+        if (db is null) return;
         await using (db)
         {
             var adapter = new FiveEToolsSourceFormatAdapter();
             var importer = new NormalizedSourceImportService(db);
             var packageKey = $"split-bgdia-{Guid.NewGuid():N}";
 
-            var metadataRepresentation = RequireRepresentation(adapter.TryRead(
-                Artifact(
-                    "adventures.json",
-                    """
+            var metadata = RequireRepresentation(adapter.TryRead(Artifact(
+                "adventures.json",
+                """
+                {
+                  "adventure": [
                     {
-                      "adventure": [
-                        {
-                          "name": "Baldur's Gate: Descent Into Avernus",
-                          "id": "BGDIA",
-                          "source": "BGDIA",
-                          "published": "2019-09-17"
-                        }
-                      ]
+                      "name": "Baldur's Gate: Descent Into Avernus",
+                      "id": "BGDIA",
+                      "source": "BGDIA",
+                      "published": "2019-09-17"
                     }
-                    """)));
-            var entityRepresentation = RequireRepresentation(adapter.TryRead(
-                Artifact(
-                    "bestiary-bgdia.json",
-                    """
+                  ]
+                }
+                """)));
+            var entities = RequireRepresentation(adapter.TryRead(Artifact(
+                "bestiary-bgdia.json",
+                """
+                {
+                  "monster": [
                     {
-                      "monster": [
-                        {
-                          "name": "Amrik Vanthampur",
-                          "source": "BGDIA",
-                          "ac": [12],
-                          "hp": { "average": 66, "formula": "12d8 + 12" }
-                        }
-                      ]
+                      "name": "Amrik Vanthampur",
+                      "source": "BGDIA",
+                      "ac": [12],
+                      "hp": { "average": 66, "formula": "12d8 + 12" }
                     }
-                    """)));
+                  ]
+                }
+                """)));
 
-            var first = await ImportAsync(importer, packageKey, metadataRepresentation);
-            var second = await ImportAsync(importer, packageKey, entityRepresentation);
-
+            var first = await ImportAsync(importer, packageKey, metadata);
+            var second = await ImportAsync(importer, packageKey, entities);
             var firstPublication = Assert.Single(first.Publications);
             var secondPublication = Assert.Single(second.Publications);
+
             Assert.Equal(first.PackageId, second.PackageId);
-            Assert.Equal(firstPublication.WorkId, secondPublication.WorkId);
             Assert.Equal(firstPublication.CanonicalPublicationId, secondPublication.CanonicalPublicationId);
-            Assert.Equal("Baldur's Gate: Descent Into Avernus", secondPublication.DisplayName);
-            Assert.Equal(
-                "Baldur's Gate: Descent Into Avernus",
-                await ReadWorkDisplayNameAsync(db, firstPublication.WorkId));
             Assert.Equal(
                 "Baldur's Gate: Descent Into Avernus",
                 await ReadCanonicalDisplayNameAsync(db, firstPublication.CanonicalPublicationId));
+            Assert.Equal(2, await db.SourceEntities.CountAsync(value => value.SourcePackageId == first.PackageId));
         }
     }
 
     [Fact]
-    public async Task SourceCodeFallbackIsUpgradedWhenPublicationMetadataArrivesLater()
+    public async Task SourceCodeFallbackIsUpgradedWhenRichCorpusMetadataArrivesLater()
     {
         var db = await OpenDatabaseAsync();
-        if (db is null)
-        {
-            return;
-        }
+        if (db is null) return;
         await using (db)
         {
             var adapter = new FiveEToolsSourceFormatAdapter();
             var importer = new NormalizedSourceImportService(db);
             var packageKey = $"split-phb-{Guid.NewGuid():N}";
 
-            var entityRepresentation = RequireRepresentation(adapter.TryRead(
-                Artifact(
-                    "bestiary-phb.json",
-                    """
+            var entityRepresentation = RequireRepresentation(adapter.TryRead(Artifact(
+                "bestiary-phb.json",
+                """
+                {
+                  "monster": [
                     {
-                      "monster": [
-                        {
-                          "name": "Example Creature",
-                          "source": "PHB",
-                          "ac": [10],
-                          "hp": { "average": 4, "formula": "1d8" }
-                        }
-                      ]
+                      "name": "Example Creature",
+                      "source": "PHB",
+                      "ac": [10],
+                      "hp": { "average": 4, "formula": "1d8" }
                     }
-                    """)));
-            var metadataRepresentation = RequireRepresentation(adapter.TryRead(
-                Artifact(
-                    "books.json",
-                    """
+                  ]
+                }
+                """)));
+            var metadataRepresentation = RequireRepresentation(adapter.TryRead(Artifact(
+                "books.json",
+                """
+                {
+                  "book": [
                     {
-                      "book": [
-                        {
-                          "name": "Player's Handbook (2014)",
-                          "id": "PHB",
-                          "source": "PHB",
-                          "published": "2014-08-19"
-                        }
-                      ]
+                      "name": "Player's Handbook (2014)",
+                      "id": "PHB",
+                      "source": "PHB",
+                      "published": "2014-08-19"
                     }
-                    """)));
+                  ]
+                }
+                """)));
 
             var first = await ImportAsync(importer, packageKey, entityRepresentation);
             var firstPublication = Assert.Single(first.Publications);
-            Assert.Equal("PHB", firstPublication.DisplayName);
-            Assert.Equal(
-                "PHB",
-                await ReadCanonicalDisplayNameAsync(db, firstPublication.CanonicalPublicationId));
+            Assert.Equal("PHB", await ReadCanonicalDisplayNameAsync(db, firstPublication.CanonicalPublicationId));
 
             var second = await ImportAsync(importer, packageKey, metadataRepresentation);
             var secondPublication = Assert.Single(second.Publications);
 
-            Assert.Equal(firstPublication.WorkId, secondPublication.WorkId);
             Assert.Equal(firstPublication.CanonicalPublicationId, secondPublication.CanonicalPublicationId);
-            Assert.Equal("Player's Handbook (2014)", secondPublication.DisplayName);
-            Assert.Equal(
-                "Player's Handbook (2014)",
-                await ReadWorkDisplayNameAsync(db, firstPublication.WorkId));
             Assert.Equal(
                 "Player's Handbook (2014)",
                 await ReadCanonicalDisplayNameAsync(db, firstPublication.CanonicalPublicationId));
@@ -142,128 +120,109 @@ public sealed class FiveEToolsSplitPublicationIntegrationTests
     }
 
     [Fact]
-    public async Task ChildAdventureMetadataDoesNotRenameParentPublication()
+    public async Task ChildAdventureAndParentBookRemainDistinctWhenTheyShareSourceCode()
     {
         var db = await OpenDatabaseAsync();
-        if (db is null)
-        {
-            return;
-        }
+        if (db is null) return;
         await using (db)
         {
             var adapter = new FiveEToolsSourceFormatAdapter();
             var importer = new NormalizedSourceImportService(db);
             var packageKey = $"split-fraif-{Guid.NewGuid():N}";
 
-            var childAdventureRepresentation = RequireRepresentation(adapter.TryRead(
-                Artifact(
-                    "adventures.json",
-                    """
+            var childRepresentation = RequireRepresentation(adapter.TryRead(Artifact(
+                "adventures.json",
+                """
+                {
+                  "adventure": [
                     {
-                      "adventure": [
-                        {
-                          "name": "The Lost Library of Lethchauntos",
-                          "id": "FRAiF-TLLoL",
-                          "source": "FRAiF",
-                          "parentSource": "FRAiF",
-                          "published": "2025-11-11"
-                        }
-                      ]
+                      "name": "The Lost Library of Lethchauntos",
+                      "id": "FRAiF-TLLoL",
+                      "source": "FRAiF",
+                      "parentSource": "FRAiF",
+                      "published": "2025-11-11"
                     }
-                    """)));
-            var parentBookRepresentation = RequireRepresentation(adapter.TryRead(
-                Artifact(
-                    "books.json",
-                    """
+                  ]
+                }
+                """)));
+            var parentRepresentation = RequireRepresentation(adapter.TryRead(Artifact(
+                "books.json",
+                """
+                {
+                  "book": [
                     {
-                      "book": [
-                        {
-                          "name": "Forgotten Realms: Adventures in Faerûn",
-                          "id": "FRAiF",
-                          "source": "FRAiF",
-                          "published": "2025-11-11"
-                        }
-                      ]
+                      "name": "Forgotten Realms: Adventures in Faerûn",
+                      "id": "FRAiF",
+                      "source": "FRAiF",
+                      "published": "2025-11-11"
                     }
-                    """)));
+                  ]
+                }
+                """)));
 
-            var child = await ImportAsync(importer, packageKey, childAdventureRepresentation);
-            var childPublication = Assert.Single(child.Publications);
-            Assert.Equal("FRAiF", childPublication.DisplayName);
+            var child = Assert.Single((await ImportAsync(importer, packageKey, childRepresentation)).Publications);
+            var parent = Assert.Single((await ImportAsync(importer, packageKey, parentRepresentation)).Publications);
 
-            var parent = await ImportAsync(importer, packageKey, parentBookRepresentation);
-            var parentPublication = Assert.Single(parent.Publications);
-
-            Assert.Equal(childPublication.WorkId, parentPublication.WorkId);
-            Assert.Equal(childPublication.CanonicalPublicationId, parentPublication.CanonicalPublicationId);
-            Assert.Equal("Forgotten Realms: Adventures in Faerûn", parentPublication.DisplayName);
+            Assert.NotEqual(child.CanonicalPublicationId, parent.CanonicalPublicationId);
+            Assert.Equal(
+                "The Lost Library of Lethchauntos",
+                await ReadCanonicalDisplayNameAsync(db, child.CanonicalPublicationId));
             Assert.Equal(
                 "Forgotten Realms: Adventures in Faerûn",
-                await ReadWorkDisplayNameAsync(db, parentPublication.WorkId));
-            Assert.Equal(
-                "Forgotten Realms: Adventures in Faerûn",
-                await ReadCanonicalDisplayNameAsync(db, parentPublication.CanonicalPublicationId));
+                await ReadCanonicalDisplayNameAsync(db, parent.CanonicalPublicationId));
         }
     }
 
     [Fact]
-    public async Task DifferentRichTitlesForSamePackageLocalKeyStillConflict()
+    public async Task ContextualSourceCodeDoesNotGloballyMergeDifferentRichPublications()
     {
         var db = await OpenDatabaseAsync();
-        if (db is null)
-        {
-            return;
-        }
+        if (db is null) return;
         await using (db)
         {
             var importer = new NormalizedSourceImportService(db);
-            var packageKey = $"split-conflict-{Guid.NewGuid():N}";
-            var first = Representation(
-                "shared-code",
-                "First Real Title",
-                "first.json",
-                "First Rule");
-            var second = Representation(
-                "shared-code",
-                "Different Real Title",
-                "second.json",
-                "Second Rule");
+            var packageKey = $"split-contextual-{Guid.NewGuid():N}";
 
-            await ImportAsync(importer, packageKey, first);
-            var exception = await Assert.ThrowsAsync<InvalidOperationException>(
-                () => ImportAsync(importer, packageKey, second));
+            var first = await ImportAsync(importer, packageKey, Representation(
+                "shared-code", "First Real Title", "first.json", "First Rule"));
+            var second = await ImportAsync(importer, packageKey, Representation(
+                "shared-code", "Different Real Title", "second.json", "Second Rule"));
 
-            Assert.Contains("already registered as 'First Real Title'", exception.Message, StringComparison.Ordinal);
+            Assert.NotEqual(
+                Assert.Single(first.Publications).CanonicalPublicationId,
+                Assert.Single(second.Publications).CanonicalPublicationId);
         }
     }
 
     private static SourceRepresentationArtifact Artifact(string fileName, string json) =>
-        new(
-            fileName,
-            Encoding.UTF8.GetBytes(json),
-            $"test:{Guid.NewGuid():N}");
+        new(fileName, Encoding.UTF8.GetBytes(json), $"test:{Guid.NewGuid():N}");
 
     private static NormalizedSourceRepresentation Representation(
         string localKey,
         string displayName,
         string fileName,
-        string ruleName) =>
-        new(
+        string ruleName)
+    {
+        var record = new NormalizedSourceRecord(
+            "rule",
+            ruleName,
+            localKey,
+            $"rule|{localKey}|{ruleName}",
+            $"{{\"name\":\"{ruleName}\",\"source\":\"{localKey}\"}}",
+            PublicationLocalKey: localKey);
+        var publication = new NormalizedSourcePublication(
+            localKey,
+            displayName,
+            ExternalIdentifiers: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                ["5etools-source-code"] = localKey
+            });
+        return new NormalizedSourceRepresentation(
             FiveEToolsSourceFormatAdapter.Format,
             Artifact(fileName, "{}"),
-            [new NormalizedSourcePublication(
-                localKey,
-                displayName,
-                [new NormalizedSourceRecord(
-                    "rule",
-                    ruleName,
-                    localKey,
-                    $"rule|{localKey}|{ruleName}",
-                    $"{{\"name\":\"{ruleName}\",\"source\":\"{localKey}\"}}")],
-                ExternalIdentifiers: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-                {
-                    ["5etools-source-code"] = localKey
-                })]);
+            [record],
+            [publication]);
+    }
 
     private static NormalizedSourceRepresentation RequireRepresentation(
         NormalizedSourceRepresentation? representation)
@@ -287,23 +246,12 @@ public sealed class FiveEToolsSplitPublicationIntegrationTests
     private static async Task<RulesCoreDbContext?> OpenDatabaseAsync()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
-        if (string.IsNullOrWhiteSpace(connectionString))
-        {
-            return null;
-        }
-        var options = new DbContextOptionsBuilder<RulesCoreDbContext>()
-            .UseNpgsql(connectionString)
-            .Options;
-        var db = new RulesCoreDbContext(options);
+        if (string.IsNullOrWhiteSpace(connectionString)) return null;
+        var db = new RulesCoreDbContext(
+            new DbContextOptionsBuilder<RulesCoreDbContext>().UseNpgsql(connectionString).Options);
         await new RulesCoreSchemaInitializer(db).InitializeAsync();
         return db;
     }
-
-    private static Task<string?> ReadWorkDisplayNameAsync(RulesCoreDbContext db, Guid workId) =>
-        ReadScalarStringAsync(
-            db,
-            "SELECT display_name FROM source_work WHERE source_work_id = @id;",
-            workId);
 
     private static Task<string?> ReadCanonicalDisplayNameAsync(
         RulesCoreDbContext db,
@@ -320,10 +268,7 @@ public sealed class FiveEToolsSplitPublicationIntegrationTests
     {
         var connection = db.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync();
-        }
+        if (openedHere) await connection.OpenAsync();
         try
         {
             await using var command = connection.CreateCommand();
@@ -334,10 +279,7 @@ public sealed class FiveEToolsSplitPublicationIntegrationTests
         }
         finally
         {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
+            if (openedHere) await connection.CloseAsync();
         }
     }
 
