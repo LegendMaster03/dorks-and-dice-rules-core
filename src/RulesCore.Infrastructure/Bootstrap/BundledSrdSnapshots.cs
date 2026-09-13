@@ -25,8 +25,8 @@ internal static class BundledSrdSnapshots
             var alreadyAvailable = await dbContext.SourceEntities
                 .AsNoTracking()
                 .AnyAsync(value =>
-                    value.SourceEdition.SourceWork.SourcePackage.Key == snapshot.PackageKey
-                    && value.SourceEdition.SourceWork.Key == snapshot.WorkKey,
+                    value.SourcePackage.Key == snapshot.PackageKey
+                    && value.NativeKey.Contains(snapshot.WorkKey),
                     cancellationToken);
             if (alreadyAvailable)
             {
