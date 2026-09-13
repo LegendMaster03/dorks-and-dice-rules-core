@@ -7,9 +7,11 @@ public sealed class RuleBrowserAssetTests
     {
         var content = ReadWebAsset("rules-browser.js");
 
-        Assert.Contains("toolRoute", content, StringComparison.Ordinal);
-        Assert.Contains("toolBasePath", content, StringComparison.Ordinal);
-        Assert.Contains("browserLink", content, StringComparison.Ordinal);
+        Assert.Contains("registerToolRouteHandler", content, StringComparison.Ordinal);
+        Assert.Contains("navigateToolRoute", content, StringComparison.Ordinal);
+        Assert.Contains("browserLink?.toolRelativePath", content, StringComparison.Ordinal);
+        Assert.Contains("routeParts", content, StringComparison.Ordinal);
+        Assert.Contains("withQuery", content, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -17,9 +19,10 @@ public sealed class RuleBrowserAssetTests
     {
         var content = ReadWebAsset("rule-renderers.js");
 
-        Assert.Contains("[\"monster\", renderMonster]", content, StringComparison.Ordinal);
+        Assert.Contains("renderers.set(type, renderMonster)", content, StringComparison.Ordinal);
         Assert.Contains("Legendary Actions", content, StringComparison.Ordinal);
         Assert.Contains("Saving Throws", content, StringComparison.Ordinal);
+        Assert.Contains("Chaos Threshold", content, StringComparison.Ordinal);
     }
 
     private static string ReadWebAsset(string filename)

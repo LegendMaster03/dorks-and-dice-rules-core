@@ -66,18 +66,18 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("5etools-mirror-3/5etools-src/tree/main/data", sourceAdd, StringComparison.Ordinal);
 
         var rulesBrowser = await GetAssetAsync(client, "/rules-browser.js", "javascript");
-        Assert.Contains("Rules Browser", rulesBrowser, StringComparison.Ordinal);
-        Assert.Contains("Browse the published resolved ruleset", rulesBrowser, StringComparison.Ordinal);
-        Assert.Contains("browserLink", rulesBrowser, StringComparison.Ordinal);
-        Assert.Contains("toolRoute", rulesBrowser, StringComparison.Ordinal);
-        Assert.Contains("toolBasePath", rulesBrowser, StringComparison.Ordinal);
-        Assert.Contains("Campaign override", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Published Rules", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Browse the resolved rules your table has deliberately published", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("browserLink?.toolRelativePath", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("navigateToolRoute", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("routeParts", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Campaign overlay", rulesBrowser, StringComparison.Ordinal);
 
         var renderers = await GetAssetAsync(client, "/rule-renderers.js", "javascript");
-        Assert.Contains("[\"monster\", renderMonster]", renderers, StringComparison.Ordinal);
+        Assert.Contains("renderers.set(type, renderMonster)", renderers, StringComparison.Ordinal);
         Assert.Contains("Legendary Actions", renderers, StringComparison.Ordinal);
         Assert.Contains("Saving Throws", renderers, StringComparison.Ordinal);
-        Assert.Contains("Normalized rule document", renderers, StringComparison.Ordinal);
+        Assert.Contains("Raw immutable source document", renderers, StringComparison.Ordinal);
 
         var scopeControl = await GetAssetAsync(client, "/scope-control.js", "javascript");
         Assert.Contains("Adjudication scope", scopeControl, StringComparison.Ordinal);
