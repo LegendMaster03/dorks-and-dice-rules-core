@@ -32,7 +32,6 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
 
         var publication = await new CanonicalPublicationIdentityService(dbContext)
             .ResolveAsync(publicationEvidence, cancellationToken);
-        var occurrenceIdentity = new CanonicalSourceIdentityService(dbContext);
 
         var semanticOccurrence = await FindUniqueSemanticOccurrenceAsync(
             publication.Id,
@@ -40,10 +39,7 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             cancellationToken);
 
         var occurrenceId = semanticOccurrence
-            ?? await occurrenceIdentity.ResolveOccurrenceAsync(
-                publication.Id,
-                occurrenceEvidence,
-                cancellationToken);
+            ?? await ResolveOccurrenceAsync(publication.Id, occurrenceEvidence, cancellationToken);
         var occurrenceMatchKind = semanticOccurrence.HasValue
             ? "semantic-fingerprint"
             : "identity-key";
@@ -63,6 +59,82 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             publication.MatchKind,
             occurrenceMatchKind,
             Math.Min(publication.Confidence, confidence));
+    }
+
+    private async Task<Guid> ResolveOccurrenceAsync(
+        Guid publicationId,
+        CanonicalSourceOccurrenceEvidence evidence,
+        CancellationToken cancellationToken)
+    {
+        var occurrenceKey = CanonicalSourceIdentity.OccurrenceKey(evidence.EntityType, evidence.Name);
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere)
+        {
+            await connection.OpenAsync(cancellationToken);
+        }
+
+        try
+        {
+            await using (var read = connection.CreateCommand())
+            {
+                read.CommandText = """
+                    SELECT canonical_source_occurrence_id
+                    FROM canonical_source_occurrence
+                    WHERE canonical_publication_id = @publication_id
+                        AND occurrence_key = @occurrence_key;
+                    """;
+                AddParameter(read, "@publication_id", publicationId);
+                AddParameter(read, "@occurrence_key", occurrenceKey);
+                var existing = await read.ExecuteScalarAsync(cancellationToken);
+                if (existing is Guid existingId)
+                {
+                    return existingId;
+                }
+            }
+
+            var id = Guid.NewGuid();
+            await using (var insert = connection.CreateCommand())
+            {
+                insert.CommandText = """
+                    INSERT INTO canonical_source_occurrence (
+                        canonical_source_occurrence_id,
+                        canonical_publication_id,
+                        occurrence_key,
+                        entity_type,
+                        display_name,
+                        created_at)
+                    VALUES (@id, @publication_id, @occurrence_key, @entity_type, @display_name, @created_at)
+                    ON CONFLICT (canonical_publication_id, occurrence_key) DO NOTHING;
+                    """;
+                AddParameter(insert, "@id", id);
+                AddParameter(insert, "@publication_id", publicationId);
+                AddParameter(insert, "@occurrence_key", occurrenceKey);
+                AddParameter(insert, "@entity_type", evidence.EntityType.Trim());
+                AddParameter(insert, "@display_name", evidence.Name.Trim());
+                AddParameter(insert, "@created_at", DateTimeOffset.UtcNow);
+                await insert.ExecuteNonQueryAsync(cancellationToken);
+            }
+
+            await using var reread = connection.CreateCommand();
+            reread.CommandText = """
+                SELECT canonical_source_occurrence_id
+                FROM canonical_source_occurrence
+                WHERE canonical_publication_id = @publication_id
+                    AND occurrence_key = @occurrence_key;
+                """;
+            AddParameter(reread, "@publication_id", publicationId);
+            AddParameter(reread, "@occurrence_key", occurrenceKey);
+            return (Guid)(await reread.ExecuteScalarAsync(cancellationToken)
+                ?? throw new InvalidOperationException("Canonical occurrence was not readable after creation."));
+        }
+        finally
+        {
+            if (openedHere)
+            {
+                await connection.CloseAsync();
+            }
+        }
     }
 
     private async Task<Guid?> FindUniqueSemanticOccurrenceAsync(
@@ -183,15 +255,8 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
                     match_kind,
                     confidence,
                     created_at)
-                VALUES (
-                    @id,
-                    @source_entity_id,
-                    @occurrence_id,
-                    @semantic_fingerprint,
-                    @locator_key,
-                    @match_kind,
-                    @confidence,
-                    @created_at);
+                VALUES (@id, @source_entity_id, @occurrence_id, @semantic_fingerprint,
+                        @locator_key, @match_kind, @confidence, @created_at);
                 """;
             AddParameter(command, "@id", Guid.NewGuid());
             AddParameter(command, "@source_entity_id", sourceEntityId);
