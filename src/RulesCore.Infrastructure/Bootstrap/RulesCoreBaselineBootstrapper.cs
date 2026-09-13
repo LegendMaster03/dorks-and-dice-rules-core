@@ -34,8 +34,6 @@ public sealed class RulesCoreBaselineBootstrapper(
     public async Task<RulesCoreBaselineBootstrapResult> EnsureAsync(
         CancellationToken cancellationToken = default)
     {
-        await SourceFrameworkStore.EnsureSchemaAsync(dbContext, cancellationToken);
-
         foreach (var package in RulesCoreBaselineCatalog.SourcePackages)
         {
             await EnsurePackageAsync(package, cancellationToken);
@@ -71,7 +69,6 @@ public sealed class RulesCoreBaselineBootstrapper(
         SourcePackageSeed seed,
         CancellationToken cancellationToken)
     {
-        var now = DateTimeOffset.UtcNow;
         var package = await dbContext.SourcePackages
             .SingleOrDefaultAsync(value => value.Key == seed.Key, cancellationToken);
         if (package is null)
@@ -84,96 +81,25 @@ public sealed class RulesCoreBaselineBootstrapper(
                 Provider = seed.Provider,
                 License = seed.License,
                 IsPublic = seed.IsPublic,
-                CreatedAt = now
+                CreatedAt = DateTimeOffset.UtcNow
             };
             dbContext.SourcePackages.Add(package);
             await dbContext.SaveChangesAsync(cancellationToken);
-        }
-        else
-        {
-            EnsurePackageMatches(package, seed);
+            return;
         }
 
-        foreach (var workSeed in seed.Works)
-        {
-            var work = await dbContext.SourceWorks
-                .SingleOrDefaultAsync(
-                    value => value.SourcePackageId == package.Id
-                        && value.Key == workSeed.Key,
-                    cancellationToken);
-            if (work is null)
-            {
-                work = new SourceWork
-                {
-                    Id = Guid.NewGuid(),
-                    SourcePackageId = package.Id,
-                    Key = workSeed.Key,
-                    DisplayName = workSeed.DisplayName,
-                    CreatedAt = now
-                };
-                dbContext.SourceWorks.Add(work);
-                await dbContext.SaveChangesAsync(cancellationToken);
-            }
-            else if (!string.Equals(
-                         work.DisplayName,
-                         workSeed.DisplayName,
-                         StringComparison.Ordinal))
-            {
-                throw new InvalidOperationException(
-                    $"Built-in source work '{seed.Key}/{workSeed.Key}' already exists with different immutable metadata.");
-            }
-
-            var edition = await dbContext.SourceEditions
-                .SingleOrDefaultAsync(
-                    value => value.SourceWorkId == work.Id
-                        && value.Key == workSeed.EditionKey,
-                    cancellationToken);
-            if (edition is null)
-            {
-                edition = new SourceEdition
-                {
-                    Id = Guid.NewGuid(),
-                    SourceWorkId = work.Id,
-                    Key = workSeed.EditionKey,
-                    DisplayName = workSeed.EditionDisplayName,
-                    CreatedAt = now
-                };
-                dbContext.SourceEditions.Add(edition);
-                await dbContext.SaveChangesAsync(cancellationToken);
-            }
-            else if (!string.Equals(
-                         edition.DisplayName,
-                         workSeed.EditionDisplayName,
-                         StringComparison.Ordinal))
-            {
-                throw new InvalidOperationException(
-                    $"Built-in source release '{seed.Key}/{workSeed.Key}/{workSeed.EditionKey}' already exists with different immutable metadata.");
-            }
-
-            await SourceFrameworkStore.MergeEditionMetadataAsync(
-                dbContext,
-                edition.Id,
-                workSeed.GameEdition,
-                workSeed.ReleaseKind,
-                workSeed.PublicationDate,
-                cancellationToken);
-        }
+        EnsurePackageMatches(package, seed);
     }
 
     private async Task<int> EnsureAuthorityReferencesAsync(CancellationToken cancellationToken)
     {
+        await EnsureAuthoritySchemaAsync(cancellationToken);
         foreach (var seed in RulesCoreBaselineCatalog.SrdAuthorities)
         {
-            var editionId = await (
-                from edition in dbContext.SourceEditions.AsNoTracking()
-                join work in dbContext.SourceWorks.AsNoTracking()
-                    on edition.SourceWorkId equals work.Id
-                join package in dbContext.SourcePackages.AsNoTracking()
-                    on work.SourcePackageId equals package.Id
-                where package.Key == seed.PackageKey
-                    && work.Key == seed.WorkKey
-                    && edition.Key == seed.EditionKey
-                select edition.Id)
+            var packageId = await dbContext.SourcePackages
+                .AsNoTracking()
+                .Where(value => value.Key == seed.PackageKey)
+                .Select(value => value.Id)
                 .SingleAsync(cancellationToken);
 
             var connection = dbContext.Database.GetDbConnection();
@@ -187,9 +113,10 @@ public sealed class RulesCoreBaselineBootstrapper(
             {
                 await using var command = connection.CreateCommand();
                 command.CommandText = """
-                    INSERT INTO source_edition_authority_reference (
-                        source_edition_authority_reference_id,
-                        source_edition_id,
+                    INSERT INTO source_package_authority_reference (
+                        source_package_authority_reference_id,
+                        source_package_id,
+                        publication_key,
                         authority_kind,
                         uri,
                         media_type,
@@ -197,16 +124,18 @@ public sealed class RulesCoreBaselineBootstrapper(
                         created_at)
                     VALUES (
                         @id,
-                        @edition_id,
+                        @package_id,
+                        @publication_key,
                         @authority_kind,
                         @uri,
                         @media_type,
                         @note,
                         @created_at)
-                    ON CONFLICT (source_edition_id, authority_kind, uri) DO NOTHING;
+                    ON CONFLICT (source_package_id, publication_key, authority_kind, uri) DO NOTHING;
                     """;
                 AddParameter(command, "@id", Guid.NewGuid());
-                AddParameter(command, "@edition_id", editionId);
+                AddParameter(command, "@package_id", packageId);
+                AddParameter(command, "@publication_key", seed.WorkKey);
                 AddParameter(command, "@authority_kind", AuthorityKind);
                 AddParameter(command, "@uri", seed.Uri);
                 AddParameter(command, "@media_type", seed.MediaType);
@@ -225,6 +154,26 @@ public sealed class RulesCoreBaselineBootstrapper(
 
         return RulesCoreBaselineCatalog.SrdAuthorities.Count;
     }
+
+    private Task EnsureAuthoritySchemaAsync(CancellationToken cancellationToken) =>
+        dbContext.Database.ExecuteSqlRawAsync(
+            """
+            CREATE TABLE IF NOT EXISTS source_package_authority_reference (
+                source_package_authority_reference_id uuid NOT NULL,
+                source_package_id uuid NOT NULL,
+                publication_key varchar(200) NOT NULL,
+                authority_kind varchar(80) NOT NULL,
+                uri varchar(2000) NOT NULL,
+                media_type varchar(200) NOT NULL,
+                note varchar(2000) NULL,
+                created_at timestamp with time zone NOT NULL,
+                CONSTRAINT pk_source_package_authority_reference PRIMARY KEY (source_package_authority_reference_id),
+                CONSTRAINT fk_source_package_authority_reference_package FOREIGN KEY (source_package_id)
+                    REFERENCES source_package(source_package_id) ON DELETE CASCADE);
+            CREATE UNIQUE INDEX IF NOT EXISTS ux_source_package_authority_reference_identity
+                ON source_package_authority_reference(source_package_id, publication_key, authority_kind, uri);
+            """,
+            cancellationToken);
 
     private async Task<PublishedRulesetRevisionView?> EnsureRulesBaselineAsync(
         SourceImportResult houseRuleImport,
