@@ -460,7 +460,7 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
 
     private static string RequireUserId(string value)
     {
-        if (string.IsNullOrWhiteSpace(userId: value)) throw new ArgumentException("User ID can not be blank.", nameof(value));
+        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("User ID can not be blank.", nameof(value));
         var normalized = value.Trim();
         if (normalized.Length > 200) throw new ArgumentException("User ID can not exceed 200 characters.", nameof(value));
         return normalized;
