@@ -24,10 +24,12 @@ public sealed class CanonicalPublicationPublisherService(RulesCoreDbContext dbCo
         // Canonical identity must be indexed before publisher reconciliation; this service
         // intentionally does not create canonical publications on its own.
         await SourcePublisherStore.EnsureSchemaAsync(dbContext, cancellationToken);
+        var publicationMetadata = await new FiveEToolsPublicationMetadataReconciliationService(dbContext)
+            .ReconcilePackageAsync(sourcePackageId, cancellationToken);
 
         var candidates = await ReadCandidatesAsync(sourcePackageId, cancellationToken);
-        var updated = 0;
-        var conflicts = 0;
+        var updated = publicationMetadata.UpdatedPublications;
+        var conflicts = publicationMetadata.ConflictingPublications;
         foreach (var candidate in candidates)
         {
             if (candidate.Publisher is null)
@@ -113,7 +115,7 @@ public sealed class CanonicalPublicationPublisherService(RulesCoreDbContext dbCo
                     reader.GetString(1),
                     reader.IsDBNull(2) ? null : reader.GetString(2),
                     reader.IsDBNull(3) ? null : reader.GetString(3),
-                    reader.IsDBNull(4) ? null : DateOnly.FromDateTime(reader.GetDateTime(4)),
+                    reader.IsDBNull(4) ? null : reader.GetFieldValue<DateOnly>(4),
                     reader.GetString(5)));
             }
             return rows;
