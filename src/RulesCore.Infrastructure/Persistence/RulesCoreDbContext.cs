@@ -7,8 +7,7 @@ namespace RulesCore.Infrastructure.Persistence;
 public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> options) : DbContext(options)
 {
     public DbSet<SourcePackage> SourcePackages => Set<SourcePackage>();
-    public DbSet<SourceWork> SourceWorks => Set<SourceWork>();
-    public DbSet<SourceEdition> SourceEditions => Set<SourceEdition>();
+    public DbSet<SourceRepresentation> SourceRepresentations => Set<SourceRepresentation>();
     public DbSet<SourceEntity> SourceEntities => Set<SourceEntity>();
     public DbSet<SourceEntityRevision> SourceEntityRevisions => Set<SourceEntityRevision>();
     public DbSet<UserSourceGrant> UserSourceGrants => Set<UserSourceGrant>();
@@ -38,40 +37,36 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
             entity.HasIndex(value => value.Key).IsUnique().HasDatabaseName("ux_source_package_key");
         });
 
-        modelBuilder.Entity<SourceWork>(entity =>
+        modelBuilder.Entity<SourceRepresentation>(entity =>
         {
-            entity.ToTable("source_work");
-            entity.HasKey(value => value.Id).HasName("pk_source_work");
-            entity.Property(value => value.Id).HasColumnName("source_work_id");
+            entity.ToTable("source_representation");
+            entity.HasKey(value => value.Id).HasName("pk_source_representation");
+            entity.Property(value => value.Id).HasColumnName("source_representation_id");
             entity.Property(value => value.SourcePackageId).HasColumnName("source_package_id");
-            entity.Property(value => value.Key).HasColumnName("work_key").HasMaxLength(200);
-            entity.Property(value => value.DisplayName).HasColumnName("display_name").HasMaxLength(300);
-            entity.Property(value => value.CreatedAt).HasColumnName("created_at");
-            entity.HasIndex(value => new { value.SourcePackageId, value.Key })
+            entity.Property(value => value.PreviousSourceRepresentationId).HasColumnName("previous_source_representation_id");
+            entity.Property(value => value.FormatKey).HasColumnName("format_key").HasMaxLength(80);
+            entity.Property(value => value.OriginIdentity).HasColumnName("origin_identity").HasMaxLength(2000);
+            entity.Property(value => value.FileName).HasColumnName("file_name").HasMaxLength(500);
+            entity.Property(value => value.SourceUri).HasColumnName("source_uri").HasMaxLength(2000);
+            entity.Property(value => value.MediaType).HasColumnName("media_type").HasMaxLength(200);
+            entity.Property(value => value.ContentSha256).HasColumnName("content_sha256").HasMaxLength(64);
+            entity.Property(value => value.ContentLength).HasColumnName("content_length");
+            entity.Property(value => value.ContentBytes).HasColumnName("content_bytes").HasColumnType("bytea");
+            entity.Property(value => value.MetadataJson).HasColumnName("metadata_json").HasColumnType("jsonb");
+            entity.Property(value => value.ImportedAt).HasColumnName("imported_at");
+            entity.HasIndex(value => new { value.SourcePackageId, value.OriginIdentity, value.ContentSha256 })
                 .IsUnique()
-                .HasDatabaseName("ux_source_work_package_key");
+                .HasDatabaseName("ux_source_representation_identity");
+            entity.HasIndex(value => new { value.SourcePackageId, value.OriginIdentity, value.ImportedAt })
+                .HasDatabaseName("ix_source_representation_origin_history");
             entity.HasOne(value => value.SourcePackage)
-                .WithMany(value => value.Works)
+                .WithMany(value => value.Representations)
                 .HasForeignKey(value => value.SourcePackageId)
                 .OnDelete(DeleteBehavior.Cascade);
-        });
-
-        modelBuilder.Entity<SourceEdition>(entity =>
-        {
-            entity.ToTable("source_edition");
-            entity.HasKey(value => value.Id).HasName("pk_source_edition");
-            entity.Property(value => value.Id).HasColumnName("source_edition_id");
-            entity.Property(value => value.SourceWorkId).HasColumnName("source_work_id");
-            entity.Property(value => value.Key).HasColumnName("edition_key").HasMaxLength(200);
-            entity.Property(value => value.DisplayName).HasColumnName("display_name").HasMaxLength(300);
-            entity.Property(value => value.CreatedAt).HasColumnName("created_at");
-            entity.HasIndex(value => new { value.SourceWorkId, value.Key })
-                .IsUnique()
-                .HasDatabaseName("ux_source_edition_work_key");
-            entity.HasOne(value => value.SourceWork)
-                .WithMany(value => value.Editions)
-                .HasForeignKey(value => value.SourceWorkId)
-                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(value => value.PreviousSourceRepresentation)
+                .WithMany(value => value.SupersedingRepresentations)
+                .HasForeignKey(value => value.PreviousSourceRepresentationId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
         modelBuilder.Entity<SourceEntity>(entity =>
@@ -79,18 +74,20 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
             entity.ToTable("source_entity");
             entity.HasKey(value => value.Id).HasName("pk_source_entity");
             entity.Property(value => value.Id).HasColumnName("source_entity_id");
-            entity.Property(value => value.SourceEditionId).HasColumnName("source_edition_id");
+            entity.Property(value => value.SourcePackageId).HasColumnName("source_package_id");
+            entity.Property(value => value.FormatKey).HasColumnName("format_key").HasMaxLength(80);
             entity.Property(value => value.EntityType).HasColumnName("entity_type").HasMaxLength(120);
             entity.Property(value => value.Name).HasColumnName("entity_name").HasMaxLength(300);
             entity.Property(value => value.SourceCode).HasColumnName("source_code").HasMaxLength(120);
-            entity.Property(value => value.NaturalKey).HasColumnName("natural_key").HasMaxLength(800);
+            entity.Property(value => value.NativeKey).HasColumnName("native_key").HasMaxLength(1000);
+            entity.Property(value => value.NativeIdentityJson).HasColumnName("native_identity_json").HasColumnType("jsonb");
             entity.Property(value => value.CreatedAt).HasColumnName("created_at");
-            entity.HasIndex(value => new { value.SourceEditionId, value.NaturalKey })
+            entity.HasIndex(value => new { value.SourcePackageId, value.FormatKey, value.NativeKey })
                 .IsUnique()
-                .HasDatabaseName("ux_source_entity_edition_natural_key");
-            entity.HasOne(value => value.SourceEdition)
+                .HasDatabaseName("ux_source_entity_package_native_key");
+            entity.HasOne(value => value.SourcePackage)
                 .WithMany(value => value.Entities)
-                .HasForeignKey(value => value.SourceEditionId)
+                .HasForeignKey(value => value.SourcePackageId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -100,18 +97,25 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
             entity.HasKey(value => value.Id).HasName("pk_source_entity_revision");
             entity.Property(value => value.Id).HasColumnName("source_entity_revision_id");
             entity.Property(value => value.SourceEntityId).HasColumnName("source_entity_id");
+            entity.Property(value => value.SourceRepresentationId).HasColumnName("source_representation_id");
             entity.Property(value => value.RevisionNumber).HasColumnName("revision_number");
             entity.Property(value => value.Fingerprint).HasColumnName("fingerprint").HasMaxLength(64);
             entity.Property(value => value.RawJson).HasColumnName("raw_json").HasColumnType("jsonb");
+            entity.Property(value => value.LocatorKey).HasColumnName("locator_key").HasMaxLength(500);
             entity.Property(value => value.ImportedAt).HasColumnName("imported_at");
             entity.HasIndex(value => new { value.SourceEntityId, value.RevisionNumber })
                 .IsUnique()
                 .HasDatabaseName("ux_source_entity_revision_number");
             entity.HasIndex(value => value.Fingerprint).HasDatabaseName("ix_source_entity_revision_fingerprint");
+            entity.HasIndex(value => value.SourceRepresentationId).HasDatabaseName("ix_source_entity_revision_representation");
             entity.HasOne(value => value.SourceEntity)
                 .WithMany(value => value.Revisions)
                 .HasForeignKey(value => value.SourceEntityId)
                 .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(value => value.SourceRepresentation)
+                .WithMany(value => value.EntityRevisions)
+                .HasForeignKey(value => value.SourceRepresentationId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
         modelBuilder.Entity<UserSourceGrant>(entity =>
