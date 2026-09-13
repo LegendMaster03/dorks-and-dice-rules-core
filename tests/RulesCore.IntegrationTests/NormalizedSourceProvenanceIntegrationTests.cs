@@ -17,10 +17,7 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
     public async Task CurrentUserPdfUploadUsesByteSafeAdapterPipelineAndOnlyGrantsUploader()
     {
         var db = await OpenDatabaseAsync();
-        if (db is null)
-        {
-            return;
-        }
+        if (db is null) return;
         await using (db)
         {
             var legacyImporter = new SourceImportService(db);
@@ -53,56 +50,40 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
             Assert.Contains(ownerPackages, value => value.Id == added.SourcePackageId);
             Assert.DoesNotContain(otherPackages, value => value.Id == added.SourcePackageId);
 
-            var storedBytes = await ReadRepresentationBytesAsync(db, added.SourcePackageId);
-            Assert.Equal(bytes, storedBytes);
+            Assert.Equal(bytes, await ReadRepresentationBytesAsync(db, added.SourcePackageId));
         }
     }
 
     [Fact]
-    public async Task ConflictingPublisherEvidenceIsRetainedWithoutOverwritingCanonicalPublisher()
+    public async Task ConflictingPublisherEvidenceIsRecordedWithoutOverwritingCanonicalPublisher()
     {
         var db = await OpenDatabaseAsync();
-        if (db is null)
-        {
-            return;
-        }
+        if (db is null) return;
         await using (db)
         {
             var importer = new NormalizedSourceImportService(db);
             const string isbn = "9798675309001";
             var first = await importer.ImportAsync(BuildImport(
-                $"publisher-a-{Guid.NewGuid():N}",
-                "Original Press",
-                isbn,
-                "rule-a"));
+                $"publisher-a-{Guid.NewGuid():N}", "Original Press", isbn, "rule-a"));
             var second = await importer.ImportAsync(BuildImport(
-                $"publisher-b-{Guid.NewGuid():N}",
-                "Conflicting Press",
-                isbn,
-                "rule-b"));
+                $"publisher-b-{Guid.NewGuid():N}", "Conflicting Press", isbn, "rule-b"));
 
             var firstPublication = Assert.Single(first.Publications);
             var secondPublication = Assert.Single(second.Publications);
             Assert.Equal(firstPublication.CanonicalPublicationId, secondPublication.CanonicalPublicationId);
-
-            var canonicalPublisher = await ReadCanonicalPublisherAsync(
-                db,
-                firstPublication.CanonicalPublicationId);
-            Assert.Equal("Original Press", canonicalPublisher);
-
-            var firstPublisher = await ReadEditionPublisherAsync(db, firstPublication.EditionId);
-            var secondPublisher = await ReadEditionPublisherAsync(db, secondPublication.EditionId);
-            Assert.Equal("Original Press", firstPublisher);
-            Assert.Equal("Conflicting Press", secondPublisher);
+            Assert.Equal(
+                "Original Press",
+                await ReadCanonicalPublisherAsync(db, firstPublication.CanonicalPublicationId));
 
             var secondRepresentationId = await ReadRepresentationIdAsync(db, second.PackageId);
-            var conflict = await ReadPublisherConflictAsync(
-                db,
-                firstPublication.CanonicalPublicationId);
+            var conflict = await ReadPublisherConflictAsync(db, firstPublication.CanonicalPublicationId);
             Assert.Equal(secondRepresentationId, conflict.SourceRepresentationId);
-            Assert.Null(conflict.SourceEntityId);
             Assert.Equal("Original Press", conflict.CanonicalValue);
             Assert.Equal("Conflicting Press", conflict.ObservedValue);
+
+            Assert.NotEqual(first.PackageId, second.PackageId);
+            Assert.Equal(1, await db.SourceRepresentations.CountAsync(value => value.SourcePackageId == first.PackageId));
+            Assert.Equal(1, await db.SourceRepresentations.CountAsync(value => value.SourcePackageId == second.PackageId));
         }
     }
 
@@ -110,29 +91,18 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
     public async Task LateRepresentationFailureRollsBackEntireNormalizedImport()
     {
         var db = await OpenDatabaseAsync();
-        if (db is null)
-        {
-            return;
-        }
+        if (db is null) return;
         await using (db)
         {
             var importer = new NormalizedSourceImportService(db);
             var packageKey = $"atomic-{Guid.NewGuid():N}";
-            var request = BuildImport(
-                packageKey,
-                "Atomic Press",
-                "9798675309018",
-                "atomic-rule");
+            var request = BuildImport(packageKey, "Atomic Press", "9798675309018", "atomic-rule");
             var invalidRequest = request with
             {
-                Representation = request.Representation with
-                {
-                    FormatKey = new string('x', 81)
-                }
+                Representation = request.Representation with { FormatKey = new string('x', 81) }
             };
 
             await Assert.ThrowsAsync<ArgumentException>(() => importer.ImportAsync(invalidRequest));
-
             db.ChangeTracker.Clear();
             Assert.False(await db.SourcePackages.AnyAsync(value => value.Key == packageKey));
         }
@@ -144,19 +114,21 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
         string isbn,
         string ruleName)
     {
+        var localKey = "same-publication";
         var artifact = new SourceRepresentationArtifact(
             $"{packageKey}.json",
             "{}"u8.ToArray(),
             $"test:{Guid.NewGuid():N}");
+        var record = new NormalizedSourceRecord(
+            "rule",
+            ruleName,
+            localKey,
+            $"same-publication|{ruleName}",
+            $"{{\"name\":\"{ruleName}\",\"text\":\"mechanic {ruleName}\"}}",
+            PublicationLocalKey: localKey);
         var publication = new NormalizedSourcePublication(
-            "same-publication",
+            localKey,
             "Shared Publication",
-            [new NormalizedSourceRecord(
-                "rule",
-                ruleName,
-                "same-publication",
-                $"same-publication|{ruleName}",
-                $"{{\"name\":\"{ruleName}\",\"text\":\"mechanic {ruleName}\"}}")],
             Publisher: publisher,
             ExternalIdentifiers: new Dictionary<string, string> { ["isbn"] = isbn });
         return new ImportNormalizedSourceRequest(
@@ -168,20 +140,16 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
             new NormalizedSourceRepresentation(
                 FiveEToolsSourceFormatAdapter.Format,
                 artifact,
+                [record],
                 [publication]));
     }
 
     private static async Task<RulesCoreDbContext?> OpenDatabaseAsync()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
-        if (string.IsNullOrWhiteSpace(connectionString))
-        {
-            return null;
-        }
-        var options = new DbContextOptionsBuilder<RulesCoreDbContext>()
-            .UseNpgsql(connectionString)
-            .Options;
-        var db = new RulesCoreDbContext(options);
+        if (string.IsNullOrWhiteSpace(connectionString)) return null;
+        var db = new RulesCoreDbContext(
+            new DbContextOptionsBuilder<RulesCoreDbContext>().UseNpgsql(connectionString).Options);
         await new RulesCoreSchemaInitializer(db).InitializeAsync();
         return db;
     }
@@ -200,135 +168,65 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
         return builder.Build();
     }
 
-    private static async Task<byte[]> ReadRepresentationBytesAsync(
-        RulesCoreDbContext db,
-        Guid packageId)
+    private static Task<byte[]> ReadRepresentationBytesAsync(RulesCoreDbContext db, Guid packageId) =>
+        ReadScalarAsync<byte[]>(db,
+            "SELECT content_bytes FROM source_representation WHERE source_package_id = @id ORDER BY imported_at DESC LIMIT 1;",
+            packageId);
+
+    private static Task<Guid> ReadRepresentationIdAsync(RulesCoreDbContext db, Guid packageId) =>
+        ReadScalarAsync<Guid>(db,
+            "SELECT source_representation_id FROM source_representation WHERE source_package_id = @id ORDER BY imported_at DESC LIMIT 1;",
+            packageId);
+
+    private static async Task<string?> ReadCanonicalPublisherAsync(RulesCoreDbContext db, Guid publicationId)
     {
         var connection = db.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync();
-        }
+        if (openedHere) await connection.OpenAsync();
         try
         {
             await using var command = connection.CreateCommand();
-            command.CommandText = """
-                SELECT content_bytes
-                FROM source_representation
-                WHERE source_package_id = @package_id
-                ORDER BY imported_at DESC
-                LIMIT 1;
-                """;
-            AddParameter(command, "@package_id", packageId);
-            return (byte[])(await command.ExecuteScalarAsync()
-                ?? throw new InvalidOperationException("Representation was not stored."));
+            command.CommandText = "SELECT publisher FROM canonical_publication WHERE canonical_publication_id = @id;";
+            AddParameter(command, "@id", publicationId);
+            var result = await command.ExecuteScalarAsync();
+            return result is null or DBNull ? null : (string)result;
         }
         finally
         {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
+            if (openedHere) await connection.CloseAsync();
         }
     }
 
-    private static async Task<Guid> ReadRepresentationIdAsync(
-        RulesCoreDbContext db,
-        Guid packageId)
+    private static async Task<T> ReadScalarAsync<T>(RulesCoreDbContext db, string sql, Guid id)
     {
         var connection = db.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync();
-        }
-        try
-        {
-            await using var command = connection.CreateCommand();
-            command.CommandText = """
-                SELECT source_representation_id
-                FROM source_representation
-                WHERE source_package_id = @package_id
-                ORDER BY imported_at DESC
-                LIMIT 1;
-                """;
-            AddParameter(command, "@package_id", packageId);
-            return (Guid)(await command.ExecuteScalarAsync()
-                ?? throw new InvalidOperationException("Representation was not stored."));
-        }
-        finally
-        {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
-        }
-    }
-
-    private static async Task<string?> ReadCanonicalPublisherAsync(
-        RulesCoreDbContext db,
-        Guid publicationId) =>
-        await ReadScalarStringAsync(
-            db,
-            "SELECT publisher FROM canonical_publication WHERE canonical_publication_id = @id;",
-            publicationId);
-
-    private static async Task<string?> ReadEditionPublisherAsync(
-        RulesCoreDbContext db,
-        Guid editionId) =>
-        await ReadScalarStringAsync(
-            db,
-            "SELECT publisher FROM source_edition_metadata WHERE source_edition_id = @id;",
-            editionId);
-
-    private static async Task<string?> ReadScalarStringAsync(
-        RulesCoreDbContext db,
-        string sql,
-        Guid id)
-    {
-        var connection = db.Database.GetDbConnection();
-        var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync();
-        }
+        if (openedHere) await connection.OpenAsync();
         try
         {
             await using var command = connection.CreateCommand();
             command.CommandText = sql;
             AddParameter(command, "@id", id);
-            var value = await command.ExecuteScalarAsync();
-            return value is null or DBNull ? null : (string)value;
+            return (T)(await command.ExecuteScalarAsync()
+                ?? throw new InvalidOperationException("Expected stored value was not found."));
         }
         finally
         {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
+            if (openedHere) await connection.CloseAsync();
         }
     }
 
-    private static async Task<(
-        Guid? SourceRepresentationId,
-        Guid? SourceEntityId,
-        string? CanonicalValue,
-        string? ObservedValue)> ReadPublisherConflictAsync(
-        RulesCoreDbContext db,
-        Guid publicationId)
+    private static async Task<(Guid? SourceRepresentationId, string? CanonicalValue, string? ObservedValue)>
+        ReadPublisherConflictAsync(RulesCoreDbContext db, Guid publicationId)
     {
         var connection = db.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync();
-        }
+        if (openedHere) await connection.OpenAsync();
         try
         {
             await using var command = connection.CreateCommand();
             command.CommandText = """
-                SELECT source_representation_id, source_entity_id, canonical_value, observed_value
+                SELECT source_representation_id, canonical_value, observed_value
                 FROM canonical_publication_evidence_conflict
                 WHERE canonical_publication_id = @publication_id
                     AND field_name = 'publisher'
@@ -340,16 +238,12 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
             Assert.True(await reader.ReadAsync());
             return (
                 reader.IsDBNull(0) ? null : reader.GetGuid(0),
-                reader.IsDBNull(1) ? null : reader.GetGuid(1),
-                reader.IsDBNull(2) ? null : reader.GetString(2),
-                reader.IsDBNull(3) ? null : reader.GetString(3));
+                reader.IsDBNull(1) ? null : reader.GetString(1),
+                reader.IsDBNull(2) ? null : reader.GetString(2));
         }
         finally
         {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
+            if (openedHere) await connection.CloseAsync();
         }
     }
 
