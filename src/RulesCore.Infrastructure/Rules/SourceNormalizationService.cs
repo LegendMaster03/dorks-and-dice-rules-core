@@ -38,12 +38,15 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
             throw new ArgumentOutOfRangeException(nameof(offset), "Offset can not be negative.");
         }
 
+        await GlobalSourceDispositionService.EnsureSchemaAsync(dbContext, cancellationToken);
+        var ignoredPackageIds = await GetIgnoredPackageIdsAsync(cancellationToken);
         var normalizedEntityType = NormalizeOptional(entityType)?.ToLowerInvariant();
         var normalizedQuery = NormalizeOptional(query)?.ToLowerInvariant();
 
         var sourceQuery = dbContext.SourceEntities
             .AsNoTracking()
             .Where(value => value.Revisions.Any())
+            .Where(value => !ignoredPackageIds.Contains(value.SourceEdition.SourceWork.SourcePackageId))
             .Where(value => !dbContext.RuleConceptSourceBindings
                 .Any(binding => binding.SourceEntityId == value.Id))
             .Where(value => value.SourceEdition.SourceWork.SourcePackage.IsPublic
@@ -85,6 +88,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
                     .OrderByDescending(revision => revision.RevisionNumber)
                     .Select(revision => revision.ImportedAt)
                     .First(),
+                value.SourceEdition.SourceWork.SourcePackage.Id,
                 value.SourceEdition.SourceWork.SourcePackage.Key,
                 value.SourceEdition.SourceWork.SourcePackage.DisplayName,
                 value.SourceEdition.SourceWork.Key,
@@ -129,6 +133,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
                 value.Source.SourceCode,
                 value.Source.LatestRevisionNumber,
                 value.Source.LatestImportedAt,
+                value.Source.PackageId,
                 value.Source.PackageKey,
                 value.Source.PackageDisplayName,
                 value.Source.WorkKey,
@@ -150,6 +155,9 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         RequireGuid(sourceEntityId, nameof(sourceEntityId));
         var normalizedUserId = RequireUserId(userId);
 
+        await GlobalSourceDispositionService.EnsureSchemaAsync(dbContext, cancellationToken);
+        var ignoredPackageIds = await GetIgnoredPackageIdsAsync(cancellationToken);
+
         await using var transaction = await dbContext.Database.BeginTransactionAsync(
             IsolationLevel.Serializable,
             cancellationToken);
@@ -158,6 +166,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
             .AsNoTracking()
             .SingleOrDefaultAsync(
                 value => value.Id == sourceEntityId
+                    && !ignoredPackageIds.Contains(value.SourceEdition.SourceWork.SourcePackageId)
                     && (value.SourceEdition.SourceWork.SourcePackage.IsPublic
                         || value.SourceEdition.SourceWork.SourcePackage.UserGrants
                             .Any(grant => grant.UserId == normalizedUserId)),
@@ -251,6 +260,39 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
             nameSegment = StableFallback(name, availableNameLength);
         }
         return $"{typeSegment}.{nameSegment}";
+    }
+
+    private async Task<Guid[]> GetIgnoredPackageIdsAsync(CancellationToken cancellationToken)
+    {
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere)
+        {
+            await connection.OpenAsync(cancellationToken);
+        }
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT source_package_id
+                FROM global_source_disposition
+                WHERE restored_at IS NULL;
+                """;
+            var ids = new List<Guid>();
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                ids.Add(reader.GetGuid(0));
+            }
+            return ids.ToArray();
+        }
+        finally
+        {
+            if (openedHere)
+            {
+                await connection.CloseAsync();
+            }
+        }
     }
 
     private static string Slugify(string value, string fallbackPrefix)
@@ -359,6 +401,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         string SourceCode,
         int LatestRevisionNumber,
         DateTimeOffset LatestImportedAt,
+        Guid PackageId,
         string PackageKey,
         string PackageDisplayName,
         string WorkKey,
