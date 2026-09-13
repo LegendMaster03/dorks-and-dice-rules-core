@@ -70,8 +70,6 @@ public sealed class SourceRevisionRejectionService(RulesCoreDbContext dbContext)
             .Include(value => value.RuleConcept)
             .Include(value => value.SelectedSourceEntityRevision)
                 .ThenInclude(value => value.SourceEntity)
-                .ThenInclude(value => value.SourceEdition)
-                .ThenInclude(value => value.SourceWork)
                 .ThenInclude(value => value.SourcePackage)
                 .ThenInclude(value => value.UserGrants)
             .Where(value => value.RuleConceptId == ruleConceptId)
@@ -88,8 +86,7 @@ public sealed class SourceRevisionRejectionService(RulesCoreDbContext dbContext)
                 "The global rule decision changed after this source update was reviewed. Reload the review before rejecting a source revision.");
         }
 
-        var package = current.SelectedSourceEntityRevision
-            .SourceEntity.SourceEdition.SourceWork.SourcePackage;
+        var package = current.SelectedSourceEntityRevision.SourceEntity.SourcePackage;
         if (!package.IsPublic && !package.UserGrants.Any(grant => grant.UserId == actor))
         {
             await transaction.RollbackAsync(cancellationToken);
@@ -196,11 +193,7 @@ public sealed class SourceRevisionRejectionService(RulesCoreDbContext dbContext)
             AddParameter(command, "@decision_id", decisionId);
             AddParameter(command, "@revision_id", revisionId);
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            if (!await reader.ReadAsync(cancellationToken))
-            {
-                return null;
-            }
-            return Read(reader);
+            return await reader.ReadAsync(cancellationToken) ? Read(reader) : null;
         }
         finally
         {
@@ -252,13 +245,8 @@ public sealed class SourceRevisionRejectionService(RulesCoreDbContext dbContext)
     }
 
     private static StoredSourceRevisionRejection Read(DbDataReader reader) => new(
-        reader.GetGuid(0),
-        reader.GetGuid(1),
-        reader.GetGuid(2),
-        reader.GetString(3),
-        reader.GetString(4),
-        reader.GetString(5),
-        reader.GetFieldValue<DateTimeOffset>(6));
+        reader.GetGuid(0), reader.GetGuid(1), reader.GetGuid(2), reader.GetString(3),
+        reader.GetString(4), reader.GetString(5), reader.GetFieldValue<DateTimeOffset>(6));
 
     private static SourceRevisionRejectionView ToView(
         StoredSourceRevisionRejection value,
@@ -266,24 +254,13 @@ public sealed class SourceRevisionRejectionService(RulesCoreDbContext dbContext)
         string conceptKey,
         int revisionNumber,
         bool created) => new(
-            value.Id,
-            ruleConceptId,
-            conceptKey,
-            value.GlobalRuleDecisionId,
-            value.SourceEntityRevisionId,
-            revisionNumber,
-            value.SourceFingerprint,
-            value.Reason,
-            value.CreatedByUserId,
-            value.CreatedAt,
-            created);
+            value.Id, ruleConceptId, conceptKey, value.GlobalRuleDecisionId,
+            value.SourceEntityRevisionId, revisionNumber, value.SourceFingerprint,
+            value.Reason, value.CreatedByUserId, value.CreatedAt, created);
 
     private static async Task<bool> EnsureOpenAsync(DbConnection connection, CancellationToken cancellationToken)
     {
-        if (connection.State == ConnectionState.Open)
-        {
-            return false;
-        }
+        if (connection.State == ConnectionState.Open) return false;
         await connection.OpenAsync(cancellationToken);
         return true;
     }
@@ -306,53 +283,33 @@ public sealed class SourceRevisionRejectionService(RulesCoreDbContext dbContext)
 
     private static void RequireGuid(Guid value, string parameterName)
     {
-        if (value == Guid.Empty)
-        {
-            throw new ArgumentException("Value can not be an empty GUID.", parameterName);
-        }
+        if (value == Guid.Empty) throw new ArgumentException("Value can not be an empty GUID.", parameterName);
     }
 
     private static string RequireUserId(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("Value can not be blank.", nameof(value));
-        }
+        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Value can not be blank.", nameof(value));
         var normalized = value.Trim();
-        if (normalized.Length > 200)
-        {
-            throw new ArgumentException("Value can not exceed 200 characters.", nameof(value));
-        }
+        if (normalized.Length > 200) throw new ArgumentException("Value can not exceed 200 characters.", nameof(value));
         return normalized;
     }
 
     private static string RequireFingerprint(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("Expected source fingerprint can not be blank.", nameof(value));
-        }
+        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Expected source fingerprint can not be blank.", nameof(value));
         var normalized = value.Trim().ToLowerInvariant();
         if (normalized.Length != 64 || normalized.Any(character => !Uri.IsHexDigit(character)))
         {
-            throw new ArgumentException(
-                "Expected source fingerprint must be a 64-character SHA-256 hexadecimal value.",
-                nameof(value));
+            throw new ArgumentException("Expected source fingerprint must be a 64-character SHA-256 hexadecimal value.", nameof(value));
         }
         return normalized;
     }
 
     private static string RequireReason(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("A source revision rejection reason is required.", nameof(value));
-        }
+        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("A source revision rejection reason is required.", nameof(value));
         var normalized = value.Trim();
-        if (normalized.Length > 2000)
-        {
-            throw new ArgumentException("A source revision rejection reason can not exceed 2000 characters.", nameof(value));
-        }
+        if (normalized.Length > 2000) throw new ArgumentException("A source revision rejection reason can not exceed 2000 characters.", nameof(value));
         return normalized;
     }
 
