@@ -25,7 +25,7 @@ public sealed class SourceLibraryBrowserIntegrationTests
         Assert.Equal("/library/11111111-1111-1111-1111-111111111111/monsters/22222222-2222-2222-2222-222222222222", entity.ToolRelativePath);
         Assert.Equal("source-entity:22222222-2222-2222-2222-222222222222", entity.RouteIdentity);
         Assert.Contains("/types/customRuleType", unknown.ToolRelativePath, StringComparison.Ordinal);
-        Assert.DoesNotStartWith("/monsters/", entity.ToolRelativePath, StringComparison.Ordinal);
+        Assert.False(entity.ToolRelativePath.StartsWith("/monsters/", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -117,7 +117,9 @@ public sealed class SourceLibraryBrowserIntegrationTests
             var anonymousPublications = await browser.GetPublicationsAsync(null);
             var ownerPublications = await browser.GetPublicationsAsync(owner);
 
-            var publicPublication = Assert.Single(anonymousPublications.Where(value => value.PublicationId == publicImport.EditionId));
+            var publicPublication = Assert.Single(
+                anonymousPublications,
+                value => value.PublicationId == publicImport.EditionId);
             Assert.Equal("Rules Library Test Book", publicPublication.DisplayName);
             Assert.Equal(2, publicPublication.EntityCount);
             Assert.Contains(publicPublication.Categories, value => value.EntityType == "monster" && value.Count == 1);
