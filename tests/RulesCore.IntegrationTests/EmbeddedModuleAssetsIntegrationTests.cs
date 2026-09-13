@@ -23,6 +23,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("./semantic-comparison.js", app, StringComparison.Ordinal);
         Assert.Contains("./campaign-baseline-authoring.js", app, StringComparison.Ordinal);
         Assert.Contains("./concept-source-authoring.js", app, StringComparison.Ordinal);
+        Assert.Contains("./source-add.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-access-admin.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-acquisition-admin.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-admin.js", app, StringComparison.Ordinal);
@@ -36,6 +37,9 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("getCampaignRulesCatalog", api, StringComparison.Ordinal);
         Assert.Contains("getGlobalResolvedRule", api, StringComparison.Ordinal);
         Assert.Contains("getCampaignResolvedRule", api, StringComparison.Ordinal);
+        Assert.Contains("getCurrentUserSources", api, StringComparison.Ordinal);
+        Assert.Contains("addCurrentUserSource", api, StringComparison.Ordinal);
+        Assert.Contains("refreshCurrentUserSource", api, StringComparison.Ordinal);
         Assert.Contains("getSourceRevisionUpdates", api, StringComparison.Ordinal);
         Assert.Contains("previewSourceRevisionUpdate", api, StringComparison.Ordinal);
         Assert.Contains("adoptLatestSourceRevision", api, StringComparison.Ordinal);
@@ -54,6 +58,12 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("acceptSourceNormalization", api, StringComparison.Ordinal);
         Assert.Contains("getCampaignBaselineCandidates", api, StringComparison.Ordinal);
         Assert.Contains("previewCampaignBaseline", api, StringComparison.Ordinal);
+
+        var sourceAdd = await GetAssetAsync(client, "/source-add.js", "javascript");
+        Assert.Contains("Add Source", sourceAdd, StringComparison.Ordinal);
+        Assert.Contains("Upload file", sourceAdd, StringComparison.Ordinal);
+        Assert.Contains("Web source", sourceAdd, StringComparison.Ordinal);
+        Assert.Contains("5etools-mirror-3/5etools-src/tree/main/data", sourceAdd, StringComparison.Ordinal);
 
         var rulesBrowser = await GetAssetAsync(client, "/rules-browser.js", "javascript");
         Assert.Contains("Rules Browser", rulesBrowser, StringComparison.Ordinal);
