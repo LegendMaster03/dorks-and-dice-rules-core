@@ -69,7 +69,7 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
         await using (db)
         {
             var importer = new NormalizedSourceImportService(db);
-            const string isbn = "9780306406157";
+            const string isbn = "9798675309001";
             var first = await importer.ImportAsync(BuildImport(
                 $"publisher-a-{Guid.NewGuid():N}",
                 "Original Press",
