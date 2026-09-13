@@ -38,8 +38,10 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
                 userId,
                 new AddCurrentUserSourceRequest(
                     CurrentUserSourceKinds.Upload,
-                    FileName: "uploaded-homebrew.pdf",
-                    ContentBase64: Convert.ToBase64String(bytes)));
+                    FileName: "uploaded-homebrew.pdf")
+                {
+                    ContentBase64 = Convert.ToBase64String(bytes)
+                });
 
             Assert.Equal(CurrentUserSourceKinds.Upload, added.Kind);
             Assert.True(added.EntityCount >= 1);
