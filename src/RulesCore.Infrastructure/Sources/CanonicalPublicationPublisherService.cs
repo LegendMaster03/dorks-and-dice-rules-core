@@ -1,6 +1,7 @@
 using System.Data;
 using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
+using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
 
 namespace RulesCore.Infrastructure.Sources;
@@ -36,9 +37,16 @@ public sealed class CanonicalPublicationPublisherService(RulesCoreDbContext dbCo
 
             if (candidate.CanonicalPublisher is null)
             {
+                var fingerprint = CanonicalSourceIdentity.BibliographicFingerprint(
+                    new CanonicalPublicationEvidence(
+                        candidate.DisplayName,
+                        candidate.Publisher,
+                        candidate.GameEdition,
+                        candidate.PublicationDate));
                 updated += await SetPublisherIfMissingAsync(
                     candidate.CanonicalPublicationId,
                     candidate.Publisher,
+                    fingerprint,
                     cancellationToken);
                 continue;
             }
@@ -72,7 +80,10 @@ public sealed class CanonicalPublicationPublisherService(RulesCoreDbContext dbCo
             command.CommandText = """
                 SELECT DISTINCT
                     occurrence.canonical_publication_id,
+                    publication.display_name,
                     publication.publisher,
+                    publication.game_edition,
+                    publication.publication_date,
                     metadata.publisher
                 FROM source_entity entity
                 JOIN source_edition edition
@@ -99,8 +110,11 @@ public sealed class CanonicalPublicationPublisherService(RulesCoreDbContext dbCo
             {
                 rows.Add(new PublisherCandidate(
                     reader.GetGuid(0),
-                    reader.IsDBNull(1) ? null : reader.GetString(1),
-                    reader.GetString(2)));
+                    reader.GetString(1),
+                    reader.IsDBNull(2) ? null : reader.GetString(2),
+                    reader.IsDBNull(3) ? null : reader.GetString(3),
+                    reader.IsDBNull(4) ? null : DateOnly.FromDateTime(reader.GetDateTime(4)),
+                    reader.GetString(5)));
             }
             return rows;
         }
@@ -116,6 +130,7 @@ public sealed class CanonicalPublicationPublisherService(RulesCoreDbContext dbCo
     private async Task<int> SetPublisherIfMissingAsync(
         Guid canonicalPublicationId,
         string publisher,
+        string bibliographicFingerprint,
         CancellationToken cancellationToken)
     {
         var connection = dbContext.Database.GetDbConnection();
@@ -130,11 +145,13 @@ public sealed class CanonicalPublicationPublisherService(RulesCoreDbContext dbCo
             await using var command = connection.CreateCommand();
             command.CommandText = """
                 UPDATE canonical_publication
-                SET publisher = @publisher
+                SET publisher = @publisher,
+                    bibliographic_fingerprint = @bibliographic_fingerprint
                 WHERE canonical_publication_id = @publication_id
                     AND publisher IS NULL;
                 """;
             AddParameter(command, "@publisher", publisher);
+            AddParameter(command, "@bibliographic_fingerprint", bibliographicFingerprint);
             AddParameter(command, "@publication_id", canonicalPublicationId);
             return await command.ExecuteNonQueryAsync(cancellationToken);
         }
@@ -157,6 +174,9 @@ public sealed class CanonicalPublicationPublisherService(RulesCoreDbContext dbCo
 
     private sealed record PublisherCandidate(
         Guid CanonicalPublicationId,
+        string DisplayName,
         string? CanonicalPublisher,
+        string? GameEdition,
+        DateOnly? PublicationDate,
         string? Publisher);
 }
