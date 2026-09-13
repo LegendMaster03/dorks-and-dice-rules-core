@@ -28,9 +28,6 @@ internal sealed class CurrentUserSourceRefreshBackground(
                         importer,
                         grants);
                     await refresh.RefreshDueAsync(stoppingToken);
-
-                    var identity = new CanonicalSourceIdentityService(dbContext);
-                    await identity.IndexUnboundAsync(stoppingToken);
                 }
                 catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
                 {
