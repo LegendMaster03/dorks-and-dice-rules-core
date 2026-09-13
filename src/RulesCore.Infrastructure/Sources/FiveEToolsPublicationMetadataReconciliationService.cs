@@ -23,7 +23,6 @@ public sealed class FiveEToolsPublicationMetadataReconciliationService(RulesCore
             throw new ArgumentException("Source package ID can not be empty.", nameof(sourcePackageId));
         }
 
-        await SourceFrameworkStore.EnsureSchemaAsync(dbContext, cancellationToken);
         var rows = await ReadMetadataEntitiesAsync(sourcePackageId, cancellationToken);
         var updated = 0;
         var conflicts = 0;
@@ -42,40 +41,6 @@ public sealed class FiveEToolsPublicationMetadataReconciliationService(RulesCore
             if (observation is null)
             {
                 continue;
-            }
-
-            if (observation.PublicationDate is DateOnly publicationDate)
-            {
-                try
-                {
-                    await SourceFrameworkStore.MergeEditionMetadataAsync(
-                        dbContext,
-                        row.SourceEditionId,
-                        gameEdition: null,
-                        releaseKind: null,
-                        publicationDate,
-                        cancellationToken);
-                }
-                catch (InvalidOperationException)
-                {
-                    conflicts++;
-                }
-            }
-
-            if (!string.IsNullOrWhiteSpace(observation.Publisher))
-            {
-                try
-                {
-                    await SourcePublisherStore.MergePublisherAsync(
-                        dbContext,
-                        row.SourceEditionId,
-                        observation.Publisher,
-                        cancellationToken);
-                }
-                catch (InvalidOperationException)
-                {
-                    conflicts++;
-                }
             }
 
             var outcome = await ReconcileCanonicalPublicationAsync(
@@ -106,9 +71,8 @@ public sealed class FiveEToolsPublicationMetadataReconciliationService(RulesCore
             command.CommandText = """
                 SELECT
                     entity.source_entity_id,
-                    entity.source_edition_id,
-                    entity.source_code,
-                    work.display_name,
+                    COALESCE(entity.source_code, ''),
+                    entity.entity_name,
                     revision.raw_json::text,
                     publication.canonical_publication_id,
                     publication.display_name,
@@ -116,10 +80,6 @@ public sealed class FiveEToolsPublicationMetadataReconciliationService(RulesCore
                     publication.game_edition,
                     publication.publication_date
                 FROM source_entity entity
-                JOIN source_edition edition
-                    ON edition.source_edition_id = entity.source_edition_id
-                JOIN source_work work
-                    ON work.source_work_id = edition.source_work_id
                 JOIN LATERAL (
                     SELECT raw_json
                     FROM source_entity_revision candidate
@@ -132,7 +92,7 @@ public sealed class FiveEToolsPublicationMetadataReconciliationService(RulesCore
                     ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
                 JOIN canonical_publication publication
                     ON publication.canonical_publication_id = occurrence.canonical_publication_id
-                WHERE work.source_package_id = @package_id
+                WHERE entity.source_package_id = @package_id
                     AND lower(entity.entity_type) IN ('book', 'adventure')
                 ORDER BY entity.source_code, entity.source_entity_id;
                 """;
@@ -144,15 +104,14 @@ public sealed class FiveEToolsPublicationMetadataReconciliationService(RulesCore
             {
                 rows.Add(new MetadataEntityRow(
                     reader.GetGuid(0),
-                    reader.GetGuid(1),
+                    reader.GetString(1),
                     reader.GetString(2),
                     reader.GetString(3),
-                    reader.GetString(4),
-                    reader.GetGuid(5),
-                    reader.GetString(6),
+                    reader.GetGuid(4),
+                    reader.GetString(5),
+                    reader.IsDBNull(6) ? null : reader.GetString(6),
                     reader.IsDBNull(7) ? null : reader.GetString(7),
-                    reader.IsDBNull(8) ? null : reader.GetString(8),
-                    reader.IsDBNull(9) ? null : reader.GetFieldValue<DateOnly>(9)));
+                    reader.IsDBNull(8) ? null : reader.GetFieldValue<DateOnly>(8)));
             }
             return rows;
         }
@@ -177,15 +136,15 @@ public sealed class FiveEToolsPublicationMetadataReconciliationService(RulesCore
                 StringComparison.Ordinal)
             || string.Equals(
                 CanonicalSourceIdentity.NormalizeIdentityPart(row.CanonicalDisplayName),
-                CanonicalSourceIdentity.NormalizeIdentityPart(row.WorkDisplayName),
+                CanonicalSourceIdentity.NormalizeIdentityPart(row.EntityName),
                 StringComparison.Ordinal);
         if (canUpgradeTitle && !string.IsNullOrWhiteSpace(observation.Title))
         {
             title = observation.Title;
         }
 
-        var publisher = row.CanonicalPublisher;
         var conflict = false;
+        var publisher = row.CanonicalPublisher;
         if (publisher is null && !string.IsNullOrWhiteSpace(observation.Publisher))
         {
             publisher = observation.Publisher;
@@ -193,6 +152,18 @@ public sealed class FiveEToolsPublicationMetadataReconciliationService(RulesCore
         else if (publisher is not null
                  && observation.Publisher is not null
                  && !string.Equals(publisher, observation.Publisher, StringComparison.Ordinal))
+        {
+            conflict = true;
+        }
+
+        var gameEdition = row.CanonicalGameEdition;
+        if (gameEdition is null && observation.GameEdition is not null)
+        {
+            gameEdition = observation.GameEdition;
+        }
+        else if (gameEdition is not null
+                 && observation.GameEdition is not null
+                 && !string.Equals(gameEdition, observation.GameEdition, StringComparison.Ordinal))
         {
             conflict = true;
         }
@@ -211,6 +182,7 @@ public sealed class FiveEToolsPublicationMetadataReconciliationService(RulesCore
 
         var changed = !string.Equals(title, row.CanonicalDisplayName, StringComparison.Ordinal)
             || !string.Equals(publisher, row.CanonicalPublisher, StringComparison.Ordinal)
+            || !string.Equals(gameEdition, row.CanonicalGameEdition, StringComparison.Ordinal)
             || publicationDate != row.CanonicalPublicationDate;
         if (!changed)
         {
@@ -221,7 +193,7 @@ public sealed class FiveEToolsPublicationMetadataReconciliationService(RulesCore
             new CanonicalPublicationEvidence(
                 title,
                 publisher,
-                row.GameEdition,
+                gameEdition,
                 publicationDate));
 
         var connection = dbContext.Database.GetDbConnection();
@@ -238,12 +210,14 @@ public sealed class FiveEToolsPublicationMetadataReconciliationService(RulesCore
                 UPDATE canonical_publication
                 SET display_name = @display_name,
                     publisher = @publisher,
+                    game_edition = @game_edition,
                     publication_date = @publication_date,
                     bibliographic_fingerprint = @bibliographic_fingerprint
                 WHERE canonical_publication_id = @publication_id;
                 """;
             AddParameter(command, "@display_name", title);
             AddNullableParameter(command, "@publisher", publisher);
+            AddNullableParameter(command, "@game_edition", gameEdition);
             AddNullableParameter(command, "@publication_date", publicationDate);
             AddParameter(command, "@bibliographic_fingerprint", fingerprint);
             AddParameter(command, "@publication_id", row.CanonicalPublicationId);
@@ -275,6 +249,7 @@ public sealed class FiveEToolsPublicationMetadataReconciliationService(RulesCore
         }
 
         var publisher = ReadString(root, "publisher");
+        var gameEdition = MapEdition(ReadString(root, "edition"));
         var published = ReadString(root, "published");
         DateOnly? publicationDate = null;
         if (published is not null
@@ -288,8 +263,15 @@ public sealed class FiveEToolsPublicationMetadataReconciliationService(RulesCore
             publicationDate = parsedDate;
         }
 
-        return new PublicationObservation(title, publisher, publicationDate);
+        return new PublicationObservation(title, publisher, gameEdition, publicationDate);
     }
+
+    private static string? MapEdition(string? edition) =>
+        string.Equals(edition, "classic", StringComparison.OrdinalIgnoreCase)
+            ? "5e"
+            : string.Equals(edition, "one", StringComparison.OrdinalIgnoreCase)
+                ? "5.5e"
+                : null;
 
     private static string? ReadString(JsonElement root, string propertyName)
     {
@@ -320,19 +302,19 @@ public sealed class FiveEToolsPublicationMetadataReconciliationService(RulesCore
 
     private sealed record MetadataEntityRow(
         Guid SourceEntityId,
-        Guid SourceEditionId,
         string SourceCode,
-        string WorkDisplayName,
+        string EntityName,
         string RawJson,
         Guid CanonicalPublicationId,
         string CanonicalDisplayName,
         string? CanonicalPublisher,
-        string? GameEdition,
+        string? CanonicalGameEdition,
         DateOnly? CanonicalPublicationDate);
 
     private sealed record PublicationObservation(
         string Title,
         string? Publisher,
+        string? GameEdition,
         DateOnly? PublicationDate);
 
     private sealed record CanonicalReconciliationOutcome(bool Updated, bool Conflict);
