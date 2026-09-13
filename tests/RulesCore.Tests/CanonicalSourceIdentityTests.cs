@@ -5,7 +5,7 @@ namespace RulesCore.Tests;
 public sealed class CanonicalSourceIdentityTests
 {
     [Fact]
-    public void SemanticFingerprintIgnoresTopLevelSourceProvenance()
+    public void SemanticFingerprintIgnoresTopLevelIdentityAndSourceProvenance()
     {
         const string first = """
             {
@@ -24,7 +24,7 @@ public sealed class CanonicalSourceIdentityTests
               "school": "V",
               "entries": ["A bright streak flashes..."],
               "level": 3,
-              "name": "Fireball"
+              "name": "OCR title variation"
             }
             """;
 
@@ -76,5 +76,12 @@ public sealed class CanonicalSourceIdentityTests
         string expected)
     {
         Assert.Equal(expected, CanonicalSourceIdentity.OccurrenceKey(entityType, name));
+    }
+
+    [Fact]
+    public void AutomaticWebSourceCheckIntervalIsOneDay()
+    {
+        Assert.Equal(TimeSpan.FromHours(24),
+            RulesCore.Infrastructure.Sources.CurrentUserWebSourceRefreshService.RefreshInterval);
     }
 }
