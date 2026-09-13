@@ -15,7 +15,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
         try
         {
             await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
-            var nextRefreshSweep = DateTimeOffset.UtcNow;
+            var nextRefreshSweep = DateTimeOffset.UtcNow.AddMinutes(10);
 
             while (!stoppingToken.IsCancellationRequested)
             {
