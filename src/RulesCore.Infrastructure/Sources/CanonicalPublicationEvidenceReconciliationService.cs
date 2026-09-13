@@ -33,6 +33,12 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
             ?? throw new KeyNotFoundException($"Canonical publication '{canonicalPublicationId}' was not found.");
 
         var conflicts = new List<string>();
+        var observedDisplayName = Normalize(evidence.DisplayName) ?? current.DisplayName;
+        var displayName = MergeDisplayName(
+            current.DisplayName,
+            observedDisplayName,
+            evidence.Aliases,
+            conflicts);
         var publisher = Merge("publisher", current.Publisher, Normalize(evidence.Publisher), conflicts);
         var gameEdition = Merge("game-edition", current.GameEdition, Normalize(evidence.GameEdition), conflicts);
         var publicationDate = MergeDate(current.PublicationDate, evidence.PublicationDate, conflicts);
@@ -41,6 +47,7 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
         {
             var canonicalValue = field switch
             {
+                "display-name" => current.DisplayName,
                 "publisher" => current.Publisher,
                 "game-edition" => current.GameEdition,
                 "publication-date" => current.PublicationDate?.ToString("yyyy-MM-dd"),
@@ -48,6 +55,7 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
             };
             var observedValue = field switch
             {
+                "display-name" => observedDisplayName,
                 "publisher" => Normalize(evidence.Publisher),
                 "game-edition" => Normalize(evidence.GameEdition),
                 "publication-date" => evidence.PublicationDate?.ToString("yyyy-MM-dd"),
@@ -62,20 +70,23 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
                 cancellationToken);
         }
 
-        var updated = !string.Equals(publisher, current.Publisher, StringComparison.Ordinal)
+        var updated = !string.Equals(displayName, current.DisplayName, StringComparison.Ordinal)
+            || !string.Equals(publisher, current.Publisher, StringComparison.Ordinal)
             || !string.Equals(gameEdition, current.GameEdition, StringComparison.Ordinal)
             || publicationDate != current.PublicationDate;
         if (updated)
         {
             var fingerprint = CanonicalSourceIdentity.BibliographicFingerprint(
                 new CanonicalPublicationEvidence(
-                    current.DisplayName,
+                    displayName,
                     publisher,
                     gameEdition,
                     publicationDate,
-                    OccurrenceFingerprints: evidence.OccurrenceFingerprints));
+                    evidence.Aliases,
+                    evidence.OccurrenceFingerprints));
             await UpdatePublicationAsync(
                 canonicalPublicationId,
+                displayName,
                 publisher,
                 gameEdition,
                 publicationDate,
@@ -127,6 +138,7 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
 
     private async Task UpdatePublicationAsync(
         Guid publicationId,
+        string displayName,
         string? publisher,
         string? gameEdition,
         DateOnly? publicationDate,
@@ -144,12 +156,14 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
             await using var command = connection.CreateCommand();
             command.CommandText = """
                 UPDATE canonical_publication
-                SET publisher = @publisher,
+                SET display_name = @display_name,
+                    publisher = @publisher,
                     game_edition = @game_edition,
                     publication_date = @publication_date,
                     bibliographic_fingerprint = @fingerprint
                 WHERE canonical_publication_id = @id;
                 """;
+            AddParameter(command, "@display_name", displayName);
             AddNullableParameter(command, "@publisher", publisher);
             AddNullableParameter(command, "@game_edition", gameEdition);
             AddNullableParameter(command, "@publication_date", publicationDate);
@@ -221,6 +235,50 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
 
     private Task EnsureSchemaAsync(CancellationToken cancellationToken) =>
         dbContext.Database.ExecuteSqlRawAsync(SchemaSql, cancellationToken);
+
+    private static string MergeDisplayName(
+        string canonical,
+        string observed,
+        IReadOnlyDictionary<string, string>? aliases,
+        ICollection<string> conflicts)
+    {
+        if (string.Equals(canonical, observed, StringComparison.Ordinal))
+        {
+            return canonical;
+        }
+
+        var canonicalIsAliasFallback = IsAliasFallback(canonical, aliases);
+        var observedIsAliasFallback = IsAliasFallback(observed, aliases);
+        if (canonicalIsAliasFallback && !observedIsAliasFallback)
+        {
+            return observed;
+        }
+        if (!canonicalIsAliasFallback && observedIsAliasFallback)
+        {
+            return canonical;
+        }
+
+        conflicts.Add("display-name");
+        return canonical;
+    }
+
+    private static bool IsAliasFallback(
+        string displayName,
+        IReadOnlyDictionary<string, string>? aliases)
+    {
+        if (aliases is null || aliases.Count == 0)
+        {
+            return false;
+        }
+
+        var normalizedDisplayName = CanonicalSourceIdentity.NormalizeIdentityPart(displayName);
+        return aliases.Values
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Any(value => string.Equals(
+                normalizedDisplayName,
+                CanonicalSourceIdentity.NormalizeIdentityPart(value),
+                StringComparison.Ordinal));
+    }
 
     private static string? Merge(
         string field,

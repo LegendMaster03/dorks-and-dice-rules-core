@@ -63,6 +63,10 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
             foreach (var publication in request.Representation.Publications)
             {
                 var localKey = Require(publication.LocalKey, nameof(publication.LocalKey), 500);
+                var requestedDisplayName = Require(
+                    publication.DisplayName,
+                    nameof(publication.DisplayName),
+                    300);
                 var workKey = NormalizeKey($"publication-{localKey}", 200);
                 var work = await dbContext.SourceWorks.SingleOrDefaultAsync(
                     value => value.SourcePackageId == package.Id && value.Key == workKey,
@@ -74,16 +78,36 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
                         Id = Guid.NewGuid(),
                         SourcePackageId = package.Id,
                         Key = workKey,
-                        DisplayName = Require(publication.DisplayName, nameof(publication.DisplayName), 300),
+                        DisplayName = requestedDisplayName,
                         CreatedAt = now
                     };
                     dbContext.SourceWorks.Add(work);
                     await dbContext.SaveChangesAsync(cancellationToken);
                 }
-                else if (!string.Equals(work.DisplayName, publication.DisplayName.Trim(), StringComparison.Ordinal))
+                else if (!string.Equals(work.DisplayName, requestedDisplayName, StringComparison.Ordinal))
                 {
-                    throw new InvalidOperationException(
-                        $"Source publication '{workKey}' is already registered as '{work.DisplayName}', not '{publication.DisplayName.Trim()}'.");
+                    var existingIsFallback = IsFallbackPublicationDisplayName(work.DisplayName, localKey);
+                    var requestedIsFallback = IsFallbackPublicationDisplayName(requestedDisplayName, localKey);
+                    if (requestedIsFallback)
+                    {
+                        // Split source corpora such as 5e.tools repeat the same source code in
+                        // many representation files. Files without publication metadata can only
+                        // report that code as their title, so preserve any richer title already
+                        // learned for the package-owned work.
+                    }
+                    else if (existingIsFallback)
+                    {
+                        // Metadata may arrive after entity files (for example, books.json follows
+                        // some bestiary files). Upgrade the package-owned work once a real title is
+                        // observed rather than treating the earlier source-code fallback as immutable.
+                        work.DisplayName = requestedDisplayName;
+                        await dbContext.SaveChangesAsync(cancellationToken);
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException(
+                            $"Source publication '{workKey}' is already registered as '{work.DisplayName}', not '{requestedDisplayName}'.");
+                    }
                 }
 
                 var edition = await dbContext.SourceEditions.SingleOrDefaultAsync(
@@ -181,7 +205,12 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
                     importedForPublication.Add((imported, normalizedRecord));
                 }
 
-                persisted.Add(new PersistedPublication(publication, work.Id, edition.Id, importedForPublication));
+                persisted.Add(new PersistedPublication(
+                    publication,
+                    work.Id,
+                    edition.Id,
+                    work.DisplayName,
+                    importedForPublication));
             }
 
             var representationId = await StoreRepresentationAsync(
@@ -248,7 +277,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
                     publication.WorkId,
                     publication.EditionId,
                     canonicalPublicationId.Value,
-                    publication.Publication.DisplayName,
+                    publication.WorkDisplayName,
                     publication.Entities.Count));
             }
 
@@ -455,6 +484,12 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
         }
     }
 
+    private static bool IsFallbackPublicationDisplayName(string displayName, string localKey) =>
+        string.Equals(
+            CanonicalSourceIdentity.NormalizeIdentityPart(displayName),
+            CanonicalSourceIdentity.NormalizeIdentityPart(localKey),
+            StringComparison.Ordinal);
+
     private static string Require(string value, string parameterName, int maxLength)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -531,6 +566,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
         NormalizedSourcePublication Publication,
         Guid WorkId,
         Guid EditionId,
+        string WorkDisplayName,
         IReadOnlyList<(ImportedSourceEntity Entity, NormalizedSourceRecord Record)> Entities);
 
     private const string RepresentationSchemaSql = """
