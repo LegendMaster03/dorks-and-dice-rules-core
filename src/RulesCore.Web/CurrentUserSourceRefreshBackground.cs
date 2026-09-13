@@ -69,6 +69,12 @@ internal sealed class CurrentUserSourceRefreshBackground(
                         "Queued Web source refresh did not identify the source to refresh.");
                 }
 
+                await jobs.UpdateProgressAsync(
+                    job.Id,
+                    new CurrentUserSourceImportProgress(
+                        "checking",
+                        Detail: "Checking the upstream source version"),
+                    stoppingToken);
                 var refresh = new CurrentUserWebSourceRefreshService(
                     dbContext,
                     importer,
@@ -85,10 +91,19 @@ internal sealed class CurrentUserSourceRefreshBackground(
             }
             else
             {
+                var sourceUri = new Uri(job.Url, UriKind.Absolute);
+                using var httpClient = new HttpClient(new CurrentUserSourceProgressHttpHandler(
+                    sourceUri,
+                    (progress, cancellationToken) =>
+                        jobs.UpdateProgressAsync(job.Id, progress, cancellationToken)))
+                {
+                    Timeout = TimeSpan.FromMinutes(2)
+                };
                 var sourceService = new CurrentUserSourceService(
                     dbContext,
                     importer,
-                    grants);
+                    grants,
+                    httpClient);
                 source = await sourceService.AddAsync(
                     job.UserId,
                     new AddCurrentUserSourceRequest(
@@ -96,6 +111,12 @@ internal sealed class CurrentUserSourceRefreshBackground(
                         Url: job.Url),
                     stoppingToken);
 
+                await jobs.UpdateProgressAsync(
+                    job.Id,
+                    new CurrentUserSourceImportProgress(
+                        "finalizing",
+                        Detail: "Recording source registration and upstream version"),
+                    stoppingToken);
                 var refresh = new CurrentUserWebSourceRefreshService(
                     dbContext,
                     importer,
