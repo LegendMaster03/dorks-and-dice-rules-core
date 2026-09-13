@@ -44,6 +44,66 @@ public static class SourceNormalizationEndpointExtensions
             }
         });
 
+        app.MapGet("/api/global/rules/normalization/ignored-packages", async (
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireGlobalRulesAuthority(
+                httpContext,
+                out _);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(await new GlobalSourceDispositionService(dbContext)
+                .GetIgnoredAsync(cancellationToken));
+        });
+
+        app.MapPut("/api/global/rules/normalization/packages/{sourcePackageId:guid}/ignored", async (
+            Guid sourcePackageId,
+            SetGlobalSourceIgnoredRequest request,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireGlobalRulesAuthority(
+                httpContext,
+                out var authenticationContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            try
+            {
+                var disposition = new GlobalSourceDispositionService(dbContext);
+                var result = await disposition.SetIgnoredAsync(
+                    sourcePackageId,
+                    request,
+                    authenticationContext!.User.Id,
+                    cancellationToken);
+                if (request.Ignored && result is null)
+                {
+                    return Results.NotFound();
+                }
+
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(new
+                {
+                    sourcePackageId,
+                    ignored = request.Ignored,
+                    value = result
+                });
+            }
+            catch (ArgumentException exception)
+            {
+                return InvalidRequest(exception.Message);
+            }
+        });
+
         app.MapPost("/api/global/rules/normalization/entities/{sourceEntityId:guid}/accept", async (
             Guid sourceEntityId,
             HttpContext httpContext,
