@@ -189,8 +189,8 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
 
             if (canonicalPublicationId is null)
             {
-                canonicalPublicationId = (await new CanonicalSourceIdentityService(dbContext)
-                    .ResolvePublicationAsync(evidence, cancellationToken)).Id;
+                canonicalPublicationId = (await new CanonicalPublicationIdentityService(dbContext)
+                    .ResolveAsync(evidence, cancellationToken)).Id;
             }
 
             await new CanonicalPublicationEvidenceReconciliationService(dbContext).ReconcileAsync(
