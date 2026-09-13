@@ -8,6 +8,7 @@ import { installAdjudicationScopeControl } from "./scope-control.js";
 import { installSemanticComparison } from "./semantic-comparison.js";
 import { installSourceAccessAdministration } from "./source-access-admin.js";
 import { installSourceAcquisitionAdministration } from "./source-acquisition-admin.js";
+import { installSourceAdd } from "./source-add.js";
 import { installSourceAdministration } from "./source-admin.js";
 import { installSourceLibrary } from "./source-library.js";
 import { installSourceNormalization } from "./source-normalization.js";
@@ -49,6 +50,7 @@ try {
     installCampaignBaselineAuthoring(app);
     if (hostContext.siteMode === "dorks-and-dice") {
         installSourceLibrary(app);
+        installSourceAdd(app);
     }
     installRulesCoreUx(app);
     await app.render();
