@@ -10,15 +10,16 @@ public sealed record SourceRepresentationArtifact(
 public sealed record NormalizedSourceRecord(
     string EntityType,
     string Name,
-    string SourceCode,
-    string NaturalKey,
+    string? SourceCode,
+    string NativeKey,
     string RawJson,
-    string? LocatorKey = null);
+    string? LocatorKey = null,
+    string? PublicationLocalKey = null,
+    string? NativeIdentityJson = null);
 
 public sealed record NormalizedSourcePublication(
     string LocalKey,
     string DisplayName,
-    IReadOnlyList<NormalizedSourceRecord> Records,
     string? Publisher = null,
     string? GameEdition = null,
     DateOnly? PublicationDate = null,
@@ -27,7 +28,8 @@ public sealed record NormalizedSourcePublication(
 public sealed record NormalizedSourceRepresentation(
     string FormatKey,
     SourceRepresentationArtifact Artifact,
-    IReadOnlyList<NormalizedSourcePublication> Publications,
+    IReadOnlyList<NormalizedSourceRecord> Records,
+    IReadOnlyList<NormalizedSourcePublication>? Publications = null,
     string? MetadataJson = null);
 
 public interface ISourceFormatAdapter
@@ -39,11 +41,20 @@ public interface ISourceFormatAdapter
     NormalizedSourceRepresentation? TryRead(SourceRepresentationArtifact artifact);
 }
 
+public interface ISourceFormatBatchAdapter : ISourceFormatAdapter
+{
+    IReadOnlyList<NormalizedSourceRepresentation> TryReadMany(
+        IReadOnlyList<SourceRepresentationArtifact> artifacts);
+}
+
 public interface ISourceFormatAdapterRegistry
 {
     bool IsCandidateFileName(string? fileName);
 
     NormalizedSourceRepresentation? TryRead(SourceRepresentationArtifact artifact);
+
+    IReadOnlyList<NormalizedSourceRepresentation> TryReadMany(
+        IReadOnlyList<SourceRepresentationArtifact> artifacts);
 }
 
 public sealed record ImportNormalizedSourceRequest(
@@ -55,9 +66,8 @@ public sealed record ImportNormalizedSourceRequest(
     NormalizedSourceRepresentation Representation);
 
 public sealed record ImportedNormalizedPublication(
-    Guid WorkId,
-    Guid EditionId,
     Guid CanonicalPublicationId,
+    string LocalKey,
     string DisplayName,
     int EntityCount);
 
