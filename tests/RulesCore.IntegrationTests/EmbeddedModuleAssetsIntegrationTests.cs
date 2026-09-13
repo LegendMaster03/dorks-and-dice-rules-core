@@ -67,7 +67,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("[\"monster\", renderMonster]", renderers, StringComparison.Ordinal);
         Assert.Contains("Legendary Actions", renderers, StringComparison.Ordinal);
         Assert.Contains("Saving Throws", renderers, StringComparison.Ordinal);
-        Assert.Contains("Resolved rule JSON", renderers, StringComparison.Ordinal);
+        Assert.Contains("Normalized rule document", renderers, StringComparison.Ordinal);
 
         var scopeControl = await GetAssetAsync(client, "/scope-control.js", "javascript");
         Assert.Contains("Adjudication scope", scopeControl, StringComparison.Ordinal);
