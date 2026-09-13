@@ -13,6 +13,43 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
         dbContext.Database.ExecuteSqlRawAsync(PostgresSourceSchema, cancellationToken);
 
     private const string PostgresSourceSchema = """
+        DO $$
+        BEGIN
+            IF EXISTS (
+                SELECT 1
+                FROM information_schema.columns
+                WHERE table_schema = current_schema()
+                  AND table_name = 'source_entity'
+                  AND column_name = 'source_edition_id')
+            THEN
+                DROP TABLE IF EXISTS campaign_ruleset_revision_entry CASCADE;
+                DROP TABLE IF EXISTS campaign_ruleset_revision CASCADE;
+                DROP TABLE IF EXISTS campaign_rule_decision CASCADE;
+                DROP TABLE IF EXISTS campaign_ruleset_selection CASCADE;
+                DROP TABLE IF EXISTS ruleset_revision_entry CASCADE;
+                DROP TABLE IF EXISTS ruleset_revision CASCADE;
+                DROP TABLE IF EXISTS global_rule_decision CASCADE;
+                DROP TABLE IF EXISTS rule_concept_source_binding CASCADE;
+                DROP TABLE IF EXISTS rule_concept CASCADE;
+                DROP TABLE IF EXISTS user_source_grant CASCADE;
+                DROP TABLE IF EXISTS source_entity_occurrence_binding CASCADE;
+                DROP TABLE IF EXISTS canonical_source_occurrence CASCADE;
+                DROP TABLE IF EXISTS canonical_publication_alias CASCADE;
+                DROP TABLE IF EXISTS canonical_publication CASCADE;
+                DROP TABLE IF EXISTS canonical_publication_evidence_conflict CASCADE;
+                DROP TABLE IF EXISTS canonical_publication_publisher_evidence CASCADE;
+                DROP TABLE IF EXISTS source_representation_publication CASCADE;
+                DROP TABLE IF EXISTS source_entity_revision CASCADE;
+                DROP TABLE IF EXISTS source_entity CASCADE;
+                DROP TABLE IF EXISTS source_representation CASCADE;
+                DROP TABLE IF EXISTS source_edition_authority_reference CASCADE;
+                DROP TABLE IF EXISTS source_edition_metadata CASCADE;
+                DROP TABLE IF EXISTS source_edition CASCADE;
+                DROP TABLE IF EXISTS source_work CASCADE;
+                DROP TABLE IF EXISTS source_package CASCADE;
+            END IF;
+        END $$;
+
         CREATE TABLE IF NOT EXISTS source_package (
             source_package_id uuid NOT NULL,
             package_key varchar(200) NOT NULL,
@@ -25,72 +62,66 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
         CREATE UNIQUE INDEX IF NOT EXISTS ux_source_package_key
             ON source_package(package_key);
 
-        CREATE TABLE IF NOT EXISTS source_work (
-            source_work_id uuid NOT NULL,
+        CREATE TABLE IF NOT EXISTS source_representation (
+            source_representation_id uuid NOT NULL,
             source_package_id uuid NOT NULL,
-            work_key varchar(200) NOT NULL,
-            display_name varchar(300) NOT NULL,
-            created_at timestamp with time zone NOT NULL,
-            CONSTRAINT pk_source_work PRIMARY KEY (source_work_id),
-            CONSTRAINT fk_source_work_package FOREIGN KEY (source_package_id)
-                REFERENCES source_package(source_package_id) ON DELETE CASCADE);
-        CREATE UNIQUE INDEX IF NOT EXISTS ux_source_work_package_key
-            ON source_work(source_package_id, work_key);
-
-        CREATE TABLE IF NOT EXISTS source_edition (
-            source_edition_id uuid NOT NULL,
-            source_work_id uuid NOT NULL,
-            edition_key varchar(200) NOT NULL,
-            display_name varchar(300) NOT NULL,
-            created_at timestamp with time zone NOT NULL,
-            CONSTRAINT pk_source_edition PRIMARY KEY (source_edition_id),
-            CONSTRAINT fk_source_edition_work FOREIGN KEY (source_work_id)
-                REFERENCES source_work(source_work_id) ON DELETE CASCADE);
-        CREATE UNIQUE INDEX IF NOT EXISTS ux_source_edition_work_key
-            ON source_edition(source_work_id, edition_key);
-
-        CREATE TABLE IF NOT EXISTS source_edition_authority_reference (
-            source_edition_authority_reference_id uuid NOT NULL,
-            source_edition_id uuid NOT NULL,
-            authority_kind varchar(80) NOT NULL,
-            uri varchar(2000) NOT NULL,
-            media_type varchar(200) NOT NULL,
-            note varchar(2000) NULL,
-            created_at timestamp with time zone NOT NULL,
-            CONSTRAINT pk_source_edition_authority_reference PRIMARY KEY (source_edition_authority_reference_id),
-            CONSTRAINT fk_source_edition_authority_reference_edition FOREIGN KEY (source_edition_id)
-                REFERENCES source_edition(source_edition_id) ON DELETE CASCADE);
-        CREATE UNIQUE INDEX IF NOT EXISTS ux_source_edition_authority_reference_identity
-            ON source_edition_authority_reference(source_edition_id, authority_kind, uri);
+            previous_source_representation_id uuid NULL,
+            format_key varchar(80) NOT NULL,
+            origin_identity varchar(2000) NOT NULL,
+            file_name varchar(500) NOT NULL,
+            source_uri varchar(2000) NULL,
+            media_type varchar(200) NULL,
+            content_sha256 varchar(64) NOT NULL,
+            content_length bigint NOT NULL,
+            content_bytes bytea NOT NULL,
+            metadata_json jsonb NOT NULL,
+            imported_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_source_representation PRIMARY KEY (source_representation_id),
+            CONSTRAINT fk_source_representation_package FOREIGN KEY (source_package_id)
+                REFERENCES source_package(source_package_id) ON DELETE CASCADE,
+            CONSTRAINT fk_source_representation_previous FOREIGN KEY (previous_source_representation_id)
+                REFERENCES source_representation(source_representation_id));
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_source_representation_identity
+            ON source_representation(source_package_id, origin_identity, content_sha256);
+        CREATE INDEX IF NOT EXISTS ix_source_representation_origin_history
+            ON source_representation(source_package_id, origin_identity, imported_at DESC);
 
         CREATE TABLE IF NOT EXISTS source_entity (
             source_entity_id uuid NOT NULL,
-            source_edition_id uuid NOT NULL,
+            source_package_id uuid NOT NULL,
+            format_key varchar(80) NOT NULL,
             entity_type varchar(120) NOT NULL,
             entity_name varchar(300) NOT NULL,
-            source_code varchar(120) NOT NULL,
-            natural_key varchar(800) NOT NULL,
+            source_code varchar(120) NULL,
+            native_key varchar(1000) NOT NULL,
+            native_identity_json jsonb NOT NULL,
             created_at timestamp with time zone NOT NULL,
             CONSTRAINT pk_source_entity PRIMARY KEY (source_entity_id),
-            CONSTRAINT fk_source_entity_edition FOREIGN KEY (source_edition_id)
-                REFERENCES source_edition(source_edition_id) ON DELETE CASCADE);
-        CREATE UNIQUE INDEX IF NOT EXISTS ux_source_entity_edition_natural_key
-            ON source_entity(source_edition_id, natural_key);
+            CONSTRAINT fk_source_entity_package FOREIGN KEY (source_package_id)
+                REFERENCES source_package(source_package_id) ON DELETE CASCADE);
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_source_entity_package_native_key
+            ON source_entity(source_package_id, format_key, native_key);
 
         CREATE TABLE IF NOT EXISTS source_entity_revision (
             source_entity_revision_id uuid NOT NULL,
             source_entity_id uuid NOT NULL,
+            source_representation_id uuid NOT NULL,
             revision_number integer NOT NULL,
             fingerprint varchar(64) NOT NULL,
             raw_json jsonb NOT NULL,
+            locator_key varchar(500) NULL,
             imported_at timestamp with time zone NOT NULL,
             CONSTRAINT pk_source_entity_revision PRIMARY KEY (source_entity_revision_id),
             CONSTRAINT fk_source_entity_revision_entity FOREIGN KEY (source_entity_id)
-                REFERENCES source_entity(source_entity_id) ON DELETE CASCADE);
+                REFERENCES source_entity(source_entity_id) ON DELETE CASCADE,
+            CONSTRAINT fk_source_entity_revision_representation FOREIGN KEY (source_representation_id)
+                REFERENCES source_representation(source_representation_id));
         CREATE UNIQUE INDEX IF NOT EXISTS ux_source_entity_revision_number
             ON source_entity_revision(source_entity_id, revision_number);
         CREATE INDEX IF NOT EXISTS ix_source_entity_revision_fingerprint
             ON source_entity_revision(fingerprint);
+        CREATE INDEX IF NOT EXISTS ix_source_entity_revision_representation
+            ON source_entity_revision(source_representation_id);
 
         CREATE TABLE IF NOT EXISTS user_source_grant (
             user_source_grant_id uuid NOT NULL,
