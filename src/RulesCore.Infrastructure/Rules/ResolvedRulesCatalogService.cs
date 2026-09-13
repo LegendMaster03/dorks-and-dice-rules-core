@@ -43,9 +43,9 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
         var entries = dbContext.RulesetRevisionEntries
             .AsNoTracking()
             .Where(value => value.RulesetRevisionId == revision.Id)
-            .Where(value => value.SourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.IsPublic
+            .Where(value => value.SourceEntityRevision.SourceEntity.SourcePackage.IsPublic
                 || (normalizedUserId != null
-                    && value.SourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.UserGrants
+                    && value.SourceEntityRevision.SourceEntity.SourcePackage.UserGrants
                         .Any(grant => grant.UserId == normalizedUserId)));
 
         if (normalizedEntityType is not null)
@@ -59,10 +59,10 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 value.RuleConcept.DisplayName.ToLower().Contains(normalizedQuery)
                 || value.RuleConcept.Key.ToLower().Contains(normalizedQuery)
                 || value.SourceEntityRevision.SourceEntity.Name.ToLower().Contains(normalizedQuery)
-                || value.SourceEntityRevision.SourceEntity.SourceCode.ToLower().Contains(normalizedQuery)
-                || value.SourceEntityRevision.SourceEntity.SourceEdition.DisplayName.ToLower().Contains(normalizedQuery)
-                || value.SourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.DisplayName
-                    .ToLower().Contains(normalizedQuery));
+                || (value.SourceEntityRevision.SourceEntity.SourceCode != null
+                    && value.SourceEntityRevision.SourceEntity.SourceCode.ToLower().Contains(normalizedQuery))
+                || value.SourceEntityRevision.SourceEntity.FormatKey.ToLower().Contains(normalizedQuery)
+                || value.SourceEntityRevision.SourceEntity.SourcePackage.DisplayName.ToLower().Contains(normalizedQuery));
         }
 
         var rules = await entries
@@ -82,11 +82,11 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 value.SourceEntityRevisionId,
                 value.SourceEntityRevision.RevisionNumber,
                 value.SourceEntityRevision.SourceEntity.Name,
-                value.SourceEntityRevision.SourceEntity.SourceCode,
-                value.SourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.Key,
-                value.SourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.DisplayName,
-                value.SourceEntityRevision.SourceEntity.SourceEdition.Key,
-                value.SourceEntityRevision.SourceEntity.SourceEdition.DisplayName))
+                value.SourceEntityRevision.SourceEntity.SourceCode ?? string.Empty,
+                value.SourceEntityRevision.SourceEntity.SourcePackage.Key,
+                value.SourceEntityRevision.SourceEntity.SourcePackage.DisplayName,
+                value.SourceEntityRevision.SourceEntity.FormatKey,
+                value.SourceEntityRevision.SourceEntity.FormatKey))
             .Take(limit)
             .ToArrayAsync(cancellationToken);
 
@@ -137,8 +137,8 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
         var entries = dbContext.CampaignRulesetRevisionEntries
             .AsNoTracking()
             .Where(value => value.CampaignRulesetRevisionId == revision.Id)
-            .Where(value => value.SourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.IsPublic
-                || value.SourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.UserGrants
+            .Where(value => value.SourceEntityRevision.SourceEntity.SourcePackage.IsPublic
+                || value.SourceEntityRevision.SourceEntity.SourcePackage.UserGrants
                     .Any(grant => grant.UserId == normalizedUserId));
 
         if (normalizedEntityType is not null)
@@ -152,10 +152,10 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 value.RuleConcept.DisplayName.ToLower().Contains(normalizedQuery)
                 || value.RuleConcept.Key.ToLower().Contains(normalizedQuery)
                 || value.SourceEntityRevision.SourceEntity.Name.ToLower().Contains(normalizedQuery)
-                || value.SourceEntityRevision.SourceEntity.SourceCode.ToLower().Contains(normalizedQuery)
-                || value.SourceEntityRevision.SourceEntity.SourceEdition.DisplayName.ToLower().Contains(normalizedQuery)
-                || value.SourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.DisplayName
-                    .ToLower().Contains(normalizedQuery));
+                || (value.SourceEntityRevision.SourceEntity.SourceCode != null
+                    && value.SourceEntityRevision.SourceEntity.SourceCode.ToLower().Contains(normalizedQuery))
+                || value.SourceEntityRevision.SourceEntity.FormatKey.ToLower().Contains(normalizedQuery)
+                || value.SourceEntityRevision.SourceEntity.SourcePackage.DisplayName.ToLower().Contains(normalizedQuery));
         }
 
         var rules = await entries
@@ -178,11 +178,11 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 value.SourceEntityRevisionId,
                 value.SourceEntityRevision.RevisionNumber,
                 value.SourceEntityRevision.SourceEntity.Name,
-                value.SourceEntityRevision.SourceEntity.SourceCode,
-                value.SourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.Key,
-                value.SourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.DisplayName,
-                value.SourceEntityRevision.SourceEntity.SourceEdition.Key,
-                value.SourceEntityRevision.SourceEntity.SourceEdition.DisplayName))
+                value.SourceEntityRevision.SourceEntity.SourceCode ?? string.Empty,
+                value.SourceEntityRevision.SourceEntity.SourcePackage.Key,
+                value.SourceEntityRevision.SourceEntity.SourcePackage.DisplayName,
+                value.SourceEntityRevision.SourceEntity.FormatKey,
+                value.SourceEntityRevision.SourceEntity.FormatKey))
             .Take(limit)
             .ToArrayAsync(cancellationToken);
 
