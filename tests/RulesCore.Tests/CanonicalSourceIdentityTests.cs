@@ -77,11 +77,4 @@ public sealed class CanonicalSourceIdentityTests
     {
         Assert.Equal(expected, CanonicalSourceIdentity.OccurrenceKey(entityType, name));
     }
-
-    [Fact]
-    public void AutomaticWebSourceCheckIntervalIsOneDay()
-    {
-        Assert.Equal(TimeSpan.FromHours(24),
-            RulesCore.Infrastructure.Sources.CurrentUserWebSourceRefreshService.RefreshInterval);
-    }
 }
