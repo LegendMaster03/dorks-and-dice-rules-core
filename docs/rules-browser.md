@@ -32,6 +32,8 @@ The catalog returns stable rule identity, browser link target, effective decisio
 
 ## Campaign catalog and baseline
 
+Campaign lifecycle is owned outside Rules Core. Rules Core does not create campaigns, accept join requests, issue invitations, or assign DM/Player membership. Those responsibilities belong to the Dorks & Dice campaign/account framework and are not yet implemented in the current stack. Until the Tool Host can supply campaign memberships, campaign-scoped Rules Core functionality remains dormant while the global browser and global Rules Lawyer workflow continue to operate normally.
+
 `GET /api/campaigns/{campaignId}/rules` returns the latest **published** campaign ruleset. It never reflects an unpublished baseline selection or unpublished campaign decision.
 
 Campaign catalog access requires normal campaign membership from the Dorks & Dice Tool Host context. Members may browse the campaign's published rules even when they can not adjudicate that campaign. Nonmembers receive not-found behavior and anonymous requests are unauthorized.
@@ -72,6 +74,10 @@ The workspace exposes a persistent adjudication scope control when the account h
 - a campaign scope appears as an adjudication target only when the current account has the campaign-scoped `DM` role;
 - in this architecture, that `DM` role is the campaign owner authority;
 - campaign Players remain in browse mode for that campaign.
+
+A user can hold these roles simultaneously across different scopes. For example, one account may be a global Rules Lawyer, DM of multiple campaigns, and Player in another campaign. Campaign authority is therefore always evaluated against the specific campaign ID and never inferred from a user-wide `DM` state.
+
+If the host supplies no campaign memberships, Rules Core exposes no campaign browse or adjudication scopes and does not synthesize campaign authority. Global access continues independently.
 
 Server endpoints independently authorize the requested scope. UI selection is never an authorization boundary.
 
