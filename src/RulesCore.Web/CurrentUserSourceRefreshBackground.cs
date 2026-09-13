@@ -4,58 +4,59 @@ using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.Web;
 
-internal static class CurrentUserSourceRefreshBackground
+internal sealed class CurrentUserSourceRefreshBackground(
+    IServiceScopeFactory scopeFactory,
+    ILogger<CurrentUserSourceRefreshBackground> logger)
+    : BackgroundService
 {
-    private static int started;
+    private static readonly TimeSpan InitialDelay = TimeSpan.FromMinutes(10);
+    private static readonly TimeSpan ScanInterval = TimeSpan.FromHours(1);
 
-    public static void Start(WebApplication app)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        if (Interlocked.Exchange(ref started, 1) != 0)
+        try
         {
-            return;
+            await Task.Delay(InitialDelay, stoppingToken);
+            using var timer = new PeriodicTimer(ScanInterval);
+            do
+            {
+                await RunOnceAsync(stoppingToken);
+            }
+            while (await timer.WaitForNextTickAsync(stoppingToken));
         }
-
-        var stopping = app.Lifetime.ApplicationStopping;
-        _ = Task.Run(async () =>
+        catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
         {
-            try
-            {
-                await Task.Delay(TimeSpan.FromMinutes(10), stopping);
-                while (!stopping.IsCancellationRequested)
-                {
-                    try
-                    {
-                        await using var scope = app.Services.CreateAsyncScope();
-                        var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
-                        var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
-                        var grants = scope.ServiceProvider.GetRequiredService<ISourceGrantService>();
-                        var refresh = new CurrentUserWebSourceRefreshService(
-                            dbContext,
-                            importer,
-                            grants);
-                        await refresh.RefreshDueAsync(stopping);
+            // Normal application shutdown.
+        }
+    }
 
-                        var identity = new CanonicalSourceIdentityService(dbContext);
-                        await identity.IndexUnboundAsync(stopping);
-                    }
-                    catch (OperationCanceledException) when (stopping.IsCancellationRequested)
-                    {
-                        break;
-                    }
-                    catch (Exception exception)
-                    {
-                        app.Logger.LogError(
-                            exception,
-                            "Automatic Rules Core Web source refresh failed.");
-                    }
+    private async Task RunOnceAsync(CancellationToken cancellationToken)
+    {
+        try
+        {
+            await using var scope = scopeFactory.CreateAsyncScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
+            var grants = scope.ServiceProvider.GetRequiredService<ISourceGrantService>();
+            var refresh = new CurrentUserWebSourceRefreshService(
+                dbContext,
+                importer,
+                grants);
 
-                    await Task.Delay(TimeSpan.FromHours(1), stopping);
-                }
-            }
-            catch (OperationCanceledException) when (stopping.IsCancellationRequested)
-            {
-                // Normal application shutdown.
-            }
-        }, stopping);
+            await refresh.RefreshDueAsync(cancellationToken);
+
+            var identity = new CanonicalSourceIdentityService(dbContext);
+            await identity.IndexUnboundAsync(cancellationToken);
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+            throw;
+        }
+        catch (Exception exception)
+        {
+            logger.LogError(
+                exception,
+                "Automatic Rules Core Web source refresh failed.");
+        }
     }
 }
