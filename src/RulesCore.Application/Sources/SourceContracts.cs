@@ -47,7 +47,6 @@ public sealed record SourceImportPreviewResult(
     string? GameEdition,
     string? ReleaseKind,
     DateOnly? PublicationDate,
-    string? Publisher,
     bool CanImport,
     IReadOnlyList<string> Conflicts,
     IReadOnlyList<string> Warnings,
@@ -55,7 +54,8 @@ public sealed record SourceImportPreviewResult(
     int NewEntityCount,
     int NewRevisionCount,
     int UnchangedCount,
-    IReadOnlyList<SourceImportPreviewEntity> Entities);
+    IReadOnlyList<SourceImportPreviewEntity> Entities,
+    string? Publisher = null);
 
 public sealed record ImportedSourceEntity(
     Guid EntityId,
