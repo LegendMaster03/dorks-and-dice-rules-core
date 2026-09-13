@@ -68,8 +68,6 @@ public sealed record ImportedSourceEntity(
 
 public sealed record SourceImportResult(
     Guid PackageId,
-    Guid WorkId,
-    Guid EditionId,
     IReadOnlyList<ImportedSourceEntity> Entities,
     string? GameEdition = null,
     string? ReleaseKind = null,
