@@ -55,6 +55,44 @@ public sealed class RuleBrowserContractTests
             new RuleAdjudicationScopeRequest(RuleAdjudicationScopeKinds.Campaign, campaignId)));
     }
 
+    [Fact]
+    public void GlobalAndCampaignAuthorityAreEvaluatedIndependentlyPerScope()
+    {
+        var firstDmCampaignId = Guid.NewGuid();
+        var secondDmCampaignId = Guid.NewGuid();
+        var playerCampaignId = Guid.NewGuid();
+        var context = new ToolHostAuthenticationContext(
+            ContractVersion: 1,
+            ToolSlug: "rules-core",
+            SiteMode: RulesAuthority.DorksAndDiceMode,
+            User: new ToolHostUserContext("mixed-user", "Mixed User"),
+            GlobalRoles: [RulesAuthority.RulesLawyerRole],
+            Campaigns:
+            [
+                new ToolHostCampaignContext(firstDmCampaignId, "First DM Campaign", RulesAuthority.CampaignDmRole),
+                new ToolHostCampaignContext(secondDmCampaignId, "Second DM Campaign", RulesAuthority.CampaignDmRole),
+                new ToolHostCampaignContext(playerCampaignId, "Player Campaign", "Player")
+            ]);
+
+        Assert.True(RulesAuthority.CanEditGlobalRules(context));
+        Assert.True(RulesAuthority.CanEditCampaignRules(context, firstDmCampaignId));
+        Assert.True(RulesAuthority.CanEditCampaignRules(context, secondDmCampaignId));
+        Assert.False(RulesAuthority.CanEditCampaignRules(context, playerCampaignId));
+
+        Assert.True(RulesAuthority.CanEditScope(
+            context,
+            new RuleAdjudicationScopeRequest(RuleAdjudicationScopeKinds.Global, null)));
+        Assert.True(RulesAuthority.CanEditScope(
+            context,
+            new RuleAdjudicationScopeRequest(RuleAdjudicationScopeKinds.Campaign, firstDmCampaignId)));
+        Assert.True(RulesAuthority.CanEditScope(
+            context,
+            new RuleAdjudicationScopeRequest(RuleAdjudicationScopeKinds.Campaign, secondDmCampaignId)));
+        Assert.False(RulesAuthority.CanEditScope(
+            context,
+            new RuleAdjudicationScopeRequest(RuleAdjudicationScopeKinds.Campaign, playerCampaignId)));
+    }
+
     private static ToolHostAuthenticationContext Context(
         Guid campaignId,
         string role) =>
