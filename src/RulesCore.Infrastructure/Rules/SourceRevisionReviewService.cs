@@ -22,8 +22,6 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
             .Include(value => value.RuleConcept)
             .Include(value => value.SelectedSourceEntityRevision)
                 .ThenInclude(value => value.SourceEntity)
-                .ThenInclude(value => value.SourceEdition)
-                .ThenInclude(value => value.SourceWork)
                 .ThenInclude(value => value.SourcePackage)
                 .ThenInclude(value => value.UserGrants)
             .OrderBy(value => value.RuleConceptId)
@@ -35,16 +33,11 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
             .Select(group => group.First())
             .Where(decision =>
             {
-                var package = decision.SelectedSourceEntityRevision
-                    .SourceEntity.SourceEdition.SourceWork.SourcePackage;
-                return package.IsPublic
-                    || package.UserGrants.Any(grant => grant.UserId == normalizedUserId);
+                var package = decision.SelectedSourceEntityRevision.SourceEntity.SourcePackage;
+                return package.IsPublic || package.UserGrants.Any(grant => grant.UserId == normalizedUserId);
             })
             .ToArray();
-        if (latestDecisions.Length == 0)
-        {
-            return [];
-        }
+        if (latestDecisions.Length == 0) return [];
 
         var sourceEntityIds = latestDecisions
             .Select(value => value.SelectedSourceEntityRevision.SourceEntityId)
@@ -67,14 +60,9 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
                 var source = selected.SourceEntity;
                 var sourceRevisions = revisionsByEntity[source.Id];
                 var latest = sourceRevisions[0];
-                if (latest.RevisionNumber <= selected.RevisionNumber)
-                {
-                    return null;
-                }
+                if (latest.RevisionNumber <= selected.RevisionNumber) return null;
 
-                var edition = source.SourceEdition;
-                var work = edition.SourceWork;
-                var package = work.SourcePackage;
+                var package = source.SourcePackage;
                 return new SourceRevisionReviewItemView(
                     decision.RuleConceptId,
                     decision.RuleConcept.Key,
@@ -85,11 +73,11 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
                     decision.DecisionKind,
                     source.Id,
                     source.Name,
-                    source.SourceCode,
+                    source.SourceCode ?? string.Empty,
                     package.Key,
                     package.DisplayName,
-                    edition.Key,
-                    edition.DisplayName,
+                    source.FormatKey,
+                    source.FormatKey,
                     selected.Id,
                     selected.RevisionNumber,
                     selected.Fingerprint,
@@ -117,10 +105,7 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
         var normalizedUserId = RequireUserId(userId);
         var pending = await GetPendingAsync(normalizedUserId, cancellationToken);
         var update = pending.SingleOrDefault(value => value.RuleConceptId == ruleConceptId);
-        if (update is null)
-        {
-            return null;
-        }
+        if (update is null) return null;
 
         var decision = await dbContext.GlobalRuleDecisions
             .AsNoTracking()
@@ -131,39 +116,26 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
                 || value.Id == update.LatestSourceEntityRevisionId)
             .ToDictionaryAsync(value => value.Id, cancellationToken);
 
-        using var selectedSource = JsonDocument.Parse(
-            revisions[update.SelectedSourceEntityRevisionId].RawJson);
-        var currentResolved = ApplyDecision(
-            selectedSource.RootElement,
-            decision.DecisionKind,
-            decision.PatchJson);
+        using var selectedSource = JsonDocument.Parse(revisions[update.SelectedSourceEntityRevisionId].RawJson);
+        var currentResolved = ApplyDecision(selectedSource.RootElement, decision.DecisionKind, decision.PatchJson);
 
-        using var latestSource = JsonDocument.Parse(
-            revisions[update.LatestSourceEntityRevisionId].RawJson);
+        using var latestSource = JsonDocument.Parse(revisions[update.LatestSourceEntityRevisionId].RawJson);
         try
         {
-            var candidateResolved = ApplyDecision(
-                latestSource.RootElement,
-                decision.DecisionKind,
-                decision.PatchJson);
+            var candidateResolved = ApplyDecision(latestSource.RootElement, decision.DecisionKind, decision.PatchJson);
             return new SourceRevisionReviewPreviewView(
-                update,
-                PatchCompatible: true,
-                CompatibilityMessage: null,
-                currentResolved,
-                candidateResolved,
+                update, true, null, currentResolved, candidateResolved,
                 JsonDocumentDiff.Compare(currentResolved, candidateResolved));
         }
         catch (Exception exception) when (IsPatchCompatibilityFailure(exception))
         {
             return new SourceRevisionReviewPreviewView(
                 update,
-                PatchCompatible: false,
-                CompatibilityMessage:
-                    $"The existing {decision.DecisionKind} decision can not be applied to source revision #{update.LatestRevisionNumber}: {exception.Message}",
+                false,
+                $"The existing {decision.DecisionKind} decision can not be applied to source revision #{update.LatestRevisionNumber}: {exception.Message}",
                 currentResolved,
-                CandidateResolvedDocument: null,
-                Changes: []);
+                null,
+                []);
         }
     }
 
@@ -181,17 +153,13 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
         var expectedFingerprint = RequireFingerprint(request.ExpectedLatestFingerprint);
         await SourceFrameworkStore.EnsureSchemaAsync(dbContext, cancellationToken);
 
-        await using var transaction = await dbContext.Database.BeginTransactionAsync(
-            IsolationLevel.Serializable,
-            cancellationToken);
+        await using var transaction = await dbContext.Database.BeginTransactionAsync(IsolationLevel.Serializable, cancellationToken);
 
         var current = await dbContext.GlobalRuleDecisions
             .AsNoTracking()
             .Include(value => value.RuleConcept)
             .Include(value => value.SelectedSourceEntityRevision)
                 .ThenInclude(value => value.SourceEntity)
-                .ThenInclude(value => value.SourceEdition)
-                .ThenInclude(value => value.SourceWork)
                 .ThenInclude(value => value.SourcePackage)
                 .ThenInclude(value => value.UserGrants)
             .Where(value => value.RuleConceptId == ruleConceptId)
@@ -201,15 +169,13 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
         {
             throw new KeyNotFoundException($"Rule concept '{ruleConceptId}' has no global rule decision.");
         }
-
         if (current.Id != request.ExpectedGlobalRuleDecisionId)
         {
             throw new InvalidOperationException(
                 "The global rule decision changed after this source update was reviewed. Reload the review before adopting a source revision.");
         }
 
-        var package = current.SelectedSourceEntityRevision
-            .SourceEntity.SourceEdition.SourceWork.SourcePackage;
+        var package = current.SelectedSourceEntityRevision.SourceEntity.SourcePackage;
         if (!package.IsPublic && !package.UserGrants.Any(grant => grant.UserId == actor))
         {
             await transaction.RollbackAsync(cancellationToken);
@@ -221,13 +187,10 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
             .Where(value => value.SourceEntityId == current.SelectedSourceEntityRevision.SourceEntityId)
             .OrderByDescending(value => value.RevisionNumber)
             .FirstAsync(cancellationToken);
-
         if (latestRevision.RevisionNumber <= current.SelectedSourceEntityRevision.RevisionNumber)
         {
-            throw new InvalidOperationException(
-                "This global rule decision no longer has a newer source revision to adopt.");
+            throw new InvalidOperationException("This global rule decision no longer has a newer source revision to adopt.");
         }
-
         if (latestRevision.Id != request.ExpectedLatestSourceEntityRevisionId
             || !string.Equals(latestRevision.Fingerprint, expectedFingerprint, StringComparison.Ordinal))
         {
@@ -239,10 +202,7 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
         {
             try
             {
-                _ = ApplyDecision(
-                    latestSource.RootElement,
-                    current.DecisionKind,
-                    current.PatchJson);
+                _ = ApplyDecision(latestSource.RootElement, current.DecisionKind, current.PatchJson);
             }
             catch (Exception exception) when (IsPatchCompatibilityFailure(exception))
             {
@@ -267,12 +227,7 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
         };
         dbContext.GlobalRuleDecisions.Add(adopted);
         await dbContext.SaveChangesAsync(cancellationToken);
-        await SourceFrameworkStore.CopyDecisionContributionsAsync(
-            dbContext,
-            current.Id,
-            adopted.Id,
-            actor,
-            cancellationToken);
+        await SourceFrameworkStore.CopyDecisionContributionsAsync(dbContext, current.Id, adopted.Id, actor, cancellationToken);
         await transaction.CommitAsync(cancellationToken);
 
         return new AdoptedSourceRevisionView(
@@ -290,13 +245,10 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
             adopted.Note,
             adopted.CreatedByUserId,
             adopted.CreatedAt,
-            RequiresPublication: true);
+            true);
     }
 
-    private static JsonElement ApplyDecision(
-        JsonElement source,
-        string decisionKind,
-        string? patchJson) => decisionKind switch
+    private static JsonElement ApplyDecision(JsonElement source, string decisionKind, string? patchJson) => decisionKind switch
     {
         RuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(source, patchJson),
         RuleDecisionKinds.JsonRulePatch => JsonRulePatch.Apply(source, patchJson),
@@ -304,49 +256,29 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
     };
 
     private static bool IsPatchCompatibilityFailure(Exception exception) =>
-        exception is ArgumentException
-            or InvalidOperationException
-            or InvalidDataException
-            or JsonException
-            or KeyNotFoundException;
+        exception is ArgumentException or InvalidOperationException or InvalidDataException or JsonException or KeyNotFoundException;
 
     private static void RequireGuid(Guid value, string parameterName)
     {
-        if (value == Guid.Empty)
-        {
-            throw new ArgumentException("Value can not be an empty GUID.", parameterName);
-        }
+        if (value == Guid.Empty) throw new ArgumentException("Value can not be an empty GUID.", parameterName);
     }
 
     private static string RequireFingerprint(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("Expected source fingerprint can not be blank.", nameof(value));
-        }
-
+        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Expected source fingerprint can not be blank.", nameof(value));
         var normalized = value.Trim().ToLowerInvariant();
         if (normalized.Length != 64 || normalized.Any(character => !Uri.IsHexDigit(character)))
         {
-            throw new ArgumentException(
-                "Expected source fingerprint must be a 64-character SHA-256 hexadecimal value.",
-                nameof(value));
+            throw new ArgumentException("Expected source fingerprint must be a 64-character SHA-256 hexadecimal value.", nameof(value));
         }
         return normalized;
     }
 
     private static string RequireUserId(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("Value can not be blank.", nameof(value));
-        }
-
+        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Value can not be blank.", nameof(value));
         var normalized = value.Trim();
-        if (normalized.Length > 200)
-        {
-            throw new ArgumentException("Value can not exceed 200 characters.", nameof(value));
-        }
+        if (normalized.Length > 200) throw new ArgumentException("Value can not exceed 200 characters.", nameof(value));
         return normalized;
     }
 }
