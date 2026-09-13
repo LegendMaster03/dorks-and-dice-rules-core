@@ -1,6 +1,6 @@
 # Account sources
 
-The normal source workflow is deliberately simple. Source-package identity, work/release records, source-code partitioning, grants, and immutable revision handling are backend concerns and are not exposed as prerequisites to an ordinary account.
+The normal source workflow is deliberately simple. Source-package identity, canonical publication identity, work/release records, source-code partitioning, grants, and immutable revision handling are backend concerns and are not exposed as prerequisites to an ordinary account.
 
 ## Add Source
 
@@ -21,14 +21,15 @@ Rules Core then performs the internal work automatically:
 
 1. validates and reads the submitted source;
 2. discovers the contained source identities required by the compatible format;
-3. partitions an aggregate corpus by source code internally so unrelated publications are not assigned one logical work identity;
+3. partitions an aggregate corpus by source code internally so unrelated publications are not assigned one representation-specific work identity;
 4. imports complete entity objects into immutable Source Layer revisions;
-5. creates a restricted source package for the account's added source;
-6. grants that signed-in account access to the package;
-7. records the user-facing source registration so it can be listed later;
-8. for a Web source, remembers the URL so the source can be refreshed.
+5. derives canonical publication and source-occurrence identities separately from the representation that supplied them;
+6. creates a restricted source package for the account's added source;
+7. grants that signed-in account access to the package;
+8. records the user-facing source registration so it can be listed later;
+9. for a Web source, remembers the URL and upstream version information so it can be checked for updates.
 
-Another account does not receive access merely because one account added a source. Adding a source also does not grant Dev, Rules Lawyer, campaign DM, or any other mutation authority.
+Another account does not receive access merely because one account added a source. Canonical identity metadata does not grant access to source content. Adding a source also does not grant Dev, Rules Lawyer, campaign DM, or any other mutation authority.
 
 ## Web-source safety
 
@@ -40,7 +41,25 @@ The current compatibility implementation considers 5e.tools-shaped JSON entity f
 
 An uploaded file is an immutable snapshot. To use a newer file, add the newer file.
 
-A Web source retains its URL and can be refreshed. Refreshing re-reads the source and imports only the resulting immutable revisions; existing Source Layer history is not overwritten. A refresh that no longer resolves any compatible files fails instead of replacing the source with an empty import.
+A Web source is checked automatically once it is due for a check **24 hours after the previous check**. The background coordinator scans for due sources hourly, so a normally running instance checks a source approximately every 24–25 hours. The user-facing **Refresh** action remains available and performs an immediate check.
+
+A check is deliberately cheaper than a content pull when the upstream provider exposes a stable version signal:
+
+- GitHub tree sources are checked against the referenced branch/tag/commit's current commit SHA.
+- Other Web sources use HTTP `ETag` and/or `Last-Modified` metadata when the server provides them.
+- If the upstream version is unchanged, Rules Core records the check without downloading and re-importing the source corpus.
+- If the version changed, Rules Core resolves the compatible files again and imports the resulting immutable revisions.
+- If the server exposes no usable version metadata, Rules Core performs a full source read when the check is due; unchanged entity fingerprints still do not create new Source Layer revisions.
+
+Registrations that use the same Web source URL share the upstream version probe during an automatic check. Access and import records remain account-specific even when the URL or canonical material is shared.
+
+A refresh that no longer resolves any compatible files fails instead of replacing the source with an empty import. A transient refresh failure is recorded for that registration and does not delete the last successfully imported material.
+
+## Canonical identity does not bypass access
+
+Account imports are the content-availability boundary. A source package and its grant record why a particular account may read a particular imported representation. Canonical publication and occurrence records contain identity metadata and fingerprints, not a second globally readable copy of restricted source content.
+
+If two accounts independently add representations that Rules Core recognizes as the same publication, their source packages, source entities, and grants remain separate. They may point to the same canonical publication and canonical source occurrence, but one account's grant never gives the other account access to the first account's source representation.
 
 ## Advanced administration remains separate
 
