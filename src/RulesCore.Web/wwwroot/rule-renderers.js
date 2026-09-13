@@ -21,19 +21,39 @@ export const renderResolvedRule = renderRuleDocument;
 
 export function projectMonster(document) {
     const legacy = legacyFieldMap(document?.body);
+    const hitDice = firstValue(document?.hp?.formula, legacy.get("Hit Dice"));
     const abilities = {};
     for (const [key, legacyLabel] of [["STR", "Str"], ["DEX", "Dex"], ["CON", "Con"], ["INT", "Int"], ["WIS", "Wis"], ["CHA", "Cha"]]) {
         abilities[key] = numberValue(document?.[key.toLowerCase()]) ?? numberValue(legacy.get(legacyLabel));
     }
 
     return {
+        size: firstValue(formatValue(document?.size), valueBeforeComma(legacy.get("Size and Type") ?? legacy.get("SizeAndType"))),
+        creatureType: firstValue(formatCreatureType(document?.type), valueAfterSize(legacy.get("Size and Type") ?? legacy.get("SizeAndType"))),
+        alignment: firstValue(formatValue(document?.alignment), legacy.get("Alignment")),
         armorClass: firstValue(formatArmorClass(document?.ac), legacy.get("Armor Class"), legacy.get("AC")),
-        hitPoints: firstValue(formatHitPoints(document?.hp), legacy.get("Hit Points"), legacy.get("HP")),
-        hitDice: firstValue(document?.hp?.formula, legacy.get("Hit Dice")),
+        touchArmorClass: firstValue(formatValue(document?.touchAc ?? document?.touchAC), legacy.get("Touch AC")),
+        flatFootedArmorClass: firstValue(formatValue(document?.flatFootedAc ?? document?.flatFootedAC), legacy.get("Flat-Footed AC")),
+        hitPoints: firstValue(formatHitPoints(document?.hp), legacy.get("Hit Points"), hitPointsFromHitDice(hitDice)),
+        hitDice,
         initiative: firstValue(formatValue(document?.initiative), formatValue(document?.init), legacy.get("Initiative"), legacy.get("Init"), abilityModifier(abilities.DEX)),
         speed: firstValue(formatSpeed(document?.speed), legacy.get("Speed")),
         challengeRating: firstValue(formatChallenge(document?.cr), legacy.get("Challenge Rating"), legacy.get("CR")),
+        experience: firstValue(formatValue(document?.xp), legacy.get("XP")),
         proficiencyBonus: firstValue(formatSigned(document?.pb), formatSigned(document?.proficiencyBonus)),
+        baseAttack: firstValue(formatValue(document?.baseAttack ?? document?.bab), legacy.get("Base Attack"), legacy.get("Base Atk")),
+        grapple: firstValue(formatValue(document?.grapple), legacy.get("Grapple")),
+        spaceReach: firstValue(formatValue(document?.spaceReach), legacy.get("Space/Reach")),
+        fortitude: firstValue(formatValue(document?.fort), legacy.get("Fort"), legacy.get("Fortitude")),
+        reflex: firstValue(formatValue(document?.ref), legacy.get("Ref"), legacy.get("Reflex")),
+        will: firstValue(formatValue(document?.will), legacy.get("Will")),
+        specialAttacks: firstValue(formatValue(document?.specialAttacks), legacy.get("Special Attacks")),
+        specialQualities: firstValue(formatValue(document?.specialQualities), legacy.get("Special Qualities")),
+        environment: firstValue(formatValue(document?.environment), legacy.get("Environment")),
+        organization: firstValue(formatValue(document?.organization), legacy.get("Organization")),
+        treasure: firstValue(formatValue(document?.treasure), legacy.get("Treasure")),
+        advancement: firstValue(formatValue(document?.advancement), legacy.get("Advancement")),
+        levelAdjustment: firstValue(formatValue(document?.levelAdjustment), legacy.get("Level Adjustment")),
         abilities
     };
 }
@@ -43,15 +63,20 @@ function renderMonster(document, options) {
     const stats = projectMonster(document);
     const kaiju = projectKaiju(document);
 
+    const identity = [stats.size, stats.creatureType, stats.alignment].filter(Boolean).join(" · ");
+    if (identity) root.append(element("div", { className: "rules-core-monster-identity", text: identity }));
+
     const header = element("section", { className: "rules-core-dnd-block rules-core-monster-summary" });
+    const primaryStats = [
+        ["Armor Class", stats.armorClass],
+        kaiju ? ["Chaos Threshold", kaiju.chaosThreshold] : ["Hit Points", stats.hitPoints],
+        ["Hit Dice", stats.hitDice],
+        ["Initiative", stats.initiative],
+        ["Speed", stats.speed],
+        ["Challenge", stats.challengeRating]
+    ];
     header.append(
-        element("div", { className: "rules-core-stat-line" },
-            stat("Armor Class", stats.armorClass),
-            stat("Hit Points", stats.hitPoints),
-            stat("Hit Dice", stats.hitDice),
-            stat("Initiative", stats.initiative),
-            stat("Speed", stats.speed),
-            stat("Challenge", stats.challengeRating)),
+        element("div", { className: "rules-core-stat-line" }, primaryStats.map(([label, value]) => stat(label, value))),
         abilityRow(stats.abilities));
     root.append(header);
 
@@ -64,9 +89,29 @@ function renderMonster(document, options) {
         ["Condition Immunities", formatValue(document?.conditionImmune)],
         ["Senses", formatValue(document?.senses)],
         ["Languages", formatValue(document?.languages)],
+        ["Experience", stats.experience],
         ["Proficiency Bonus", stats.proficiencyBonus]
     ]);
     if (defenses.length) root.append(infoSection("Defenses & Senses", defenses));
+
+    const legacyCombat = compactPairs([
+        ["Touch AC", stats.touchArmorClass],
+        ["Flat-Footed AC", stats.flatFootedArmorClass],
+        ["Base Attack", stats.baseAttack],
+        ["Grapple", stats.grapple],
+        ["Space / Reach", stats.spaceReach],
+        ["Fortitude", stats.fortitude],
+        ["Reflex", stats.reflex],
+        ["Will", stats.will],
+        ["Special Attacks", stats.specialAttacks],
+        ["Special Qualities", stats.specialQualities],
+        ["Environment", stats.environment],
+        ["Organization", stats.organization],
+        ["Treasure", stats.treasure],
+        ["Advancement", stats.advancement],
+        ["Level Adjustment", stats.levelAdjustment]
+    ]);
+    if (legacyCombat.length) root.append(infoSection("Edition-specific statistics", legacyCombat));
 
     if (kaiju) root.append(renderKaiju(kaiju));
 
@@ -77,7 +122,8 @@ function renderMonster(document, options) {
         ["bonus", "Bonus Actions"],
         ["reaction", "Reactions"],
         ["legendary", "Legendary Actions"],
-        ["mythic", "Mythic Actions"]
+        ["mythic", "Mythic Actions"],
+        ["special", "Special Abilities"]
     ]);
     appendLegacyBody(root, document, options);
     return root;
@@ -92,11 +138,17 @@ function renderSpell(document, options) {
         ["Range", formatValue(document?.range)],
         ["Components", formatValue(document?.components)],
         ["Duration", formatValue(document?.duration)],
-        ["Classes", formatValue(document?.classes)],
+        ["Classes / Lists", formatValue(document?.classes ?? document?.classList)],
         ["Saving Throw", formatValue(document?.savingThrow)],
-        ["Attack", formatValue(document?.spellAttack)]
+        ["Attack", formatValue(document?.spellAttack)],
+        ["Power Points", formatValue(document?.powerPoints)]
     ])));
     appendEntryBody(root, document);
+    if (document?.entriesHigherLevel) {
+        root.append(element("section", { className: "rules-core-dnd-section" },
+            element("h4", { text: "At Higher Levels" }),
+            richParagraphs(formatRuleText(document.entriesHigherLevel))));
+    }
     appendLegacyBody(root, document, options);
     return root;
 }
@@ -110,6 +162,9 @@ function renderItem(document, options) {
         ["Armor Class", formatValue(document?.ac)],
         ["Damage", formatValue(document?.dmg1 ?? document?.damage)],
         ["Properties", formatValue(document?.property)],
+        ["Charges", formatValue(document?.charges)],
+        ["Recharge", formatValue(document?.recharge)],
+        ["Activation", formatValue(document?.activation)],
         ["Weight", formatValue(document?.weight)],
         ["Value", formatValue(document?.value ?? document?.price)]
     ])));
@@ -123,6 +178,7 @@ function renderFeat(document, options) {
     const prerequisites = formatValue(document?.prerequisite ?? document?.prerequisites);
     if (prerequisites) root.append(callout("Prerequisites", prerequisites));
     appendEntryBody(root, document);
+    if (Array.isArray(document?.features)) root.append(renderNamedEntries("Features", document.features));
     appendLegacyBody(root, document, options);
     return root;
 }
@@ -135,10 +191,13 @@ function renderClassLike(document, options) {
         ["Saving Throws", formatValue(document?.proficiency ?? document?.savingThrows)],
         ["Armor Training", formatValue(document?.armorProficiencies)],
         ["Weapon Proficiencies", formatValue(document?.weaponProficiencies)],
+        ["Skills", formatValue(document?.skillProficiencies ?? document?.skills)],
         ["Spellcasting Ability", formatValue(document?.spellcastingAbility)],
         ["Requirements", formatValue(document?.requirements ?? document?.prerequisite)]
     ]);
     if (details.length) root.append(infoSection("Class details", details));
+    const progression = renderProgressionTable(document);
+    if (progression) root.append(progression);
     appendNamedSections(root, document, [
         ["classFeatures", "Class Features"],
         ["subclassFeatures", "Subclass Features"],
@@ -156,7 +215,8 @@ function renderSpeciesLike(document, options) {
         ["Size", formatValue(document?.size)],
         ["Speed", formatSpeed(document?.speed)],
         ["Languages", formatValue(document?.languageProficiencies ?? document?.languages)],
-        ["Ability Scores", formatValue(document?.ability)]
+        ["Ability Scores", formatValue(document?.ability)],
+        ["Lineage / Subrace", formatValue(document?.lineage ?? document?.subrace)]
     ]);
     if (details.length) root.append(infoSection("Ancestry details", details));
     appendEntryBody(root, document);
@@ -165,7 +225,7 @@ function renderSpeciesLike(document, options) {
 }
 
 function renderCondition(document, options) {
-    const root = element("article", { className: "rules-core-rule-renderer rules-core-reading-view" });
+    const root = element("article", { className: "rules-core-rule-renderer rules-core-reading-view rules-core-condition" });
     appendEntryBody(root, document);
     appendLegacyBody(root, document, options);
     return root;
@@ -185,28 +245,79 @@ function projectKaiju(document) {
     const explicit = document?.kaiju === true
         || document?.isKaiju === true
         || String(document?.rulesVariant ?? "").toLowerCase().includes("kaiju")
-        || String(document?.statBlockType ?? "").toLowerCase().includes("kaiju");
-    const vulnerableAreas = document?.vulnerableAreas ?? document?.vulnerableArea ?? document?.weakPoints;
-    const thresholds = document?.thresholds ?? document?.damageThresholds ?? document?.stateThresholds;
-    const states = document?.states ?? document?.behaviorStates ?? document?.phases;
-    const kaijuActions = document?.kaijuActions ?? document?.colossalActions;
-    if (!explicit && !vulnerableAreas && !thresholds && !states && !kaijuActions) return null;
-    return { vulnerableAreas, thresholds, states, actions: kaijuActions };
+        || String(document?.statBlockType ?? "").toLowerCase().includes("kaiju")
+        || String(document?.type?.tags ?? "").toLowerCase().includes("kaiju");
+    const chaosThreshold = document?.chaosThreshold ?? document?.chaos ?? document?.kaiju?.chaosThreshold;
+    const vulnerableAreas = document?.vulnerableAreas ?? document?.vulnerableArea ?? document?.weakPoints ?? document?.kaiju?.vulnerableAreas;
+    const behaviors = document?.behaviors ?? document?.behaviours ?? document?.behaviorStates ?? document?.states ?? document?.phases ?? document?.kaiju?.behaviors;
+    const finishingBlow = document?.finishingBlow ?? document?.kaiju?.finishingBlow;
+    const deathRattle = document?.deathRattle ?? document?.kaiju?.deathRattle;
+    const milestones = document?.xpMilestones ?? document?.milestones ?? document?.kaiju?.xpMilestones;
+    const kaijuActions = document?.kaijuActions ?? document?.colossalActions ?? document?.kaiju?.actions;
+    if (!explicit && chaosThreshold === undefined && !vulnerableAreas && !behaviors && !finishingBlow && !deathRattle && !milestones && !kaijuActions) return null;
+    return { chaosThreshold: formatValue(chaosThreshold), vulnerableAreas, behaviors, finishingBlow, deathRattle, milestones, actions: kaijuActions };
 }
 
 function renderKaiju(kaiju) {
     const section = element("section", { className: "rules-core-dnd-section rules-core-kaiju-variant" });
     section.append(
         element("div", { className: "rules-core-section-heading" },
-            element("h4", { text: "Kaiju Fighting" }),
-            element("span", { className: "badge text-bg-warning", text: "Variant" })));
-    const pairs = compactPairs([
-        ["Vulnerable Areas", formatValue(kaiju.vulnerableAreas)],
-        ["Thresholds", formatValue(kaiju.thresholds)],
-        ["States / Phases", formatValue(kaiju.states)]
+            element("h4", { text: "Kaiju Battle Structure" }),
+            element("span", { className: "badge text-bg-warning", text: "Kaiju" })));
+
+    const summary = compactPairs([
+        ["Chaos Threshold", kaiju.chaosThreshold],
+        ["Finishing Blow", formatValue(kaiju.finishingBlow)],
+        ["Death Rattle", formatValue(kaiju.deathRattle)]
     ]);
-    if (pairs.length) section.append(definitionList(pairs));
+    if (summary.length) section.append(definitionList(summary));
+
+    if (kaiju.vulnerableAreas) section.append(renderStructuredTable("Vulnerable Areas", kaiju.vulnerableAreas, ["name", "specialTraits", "cr", "ac", "hp"]));
+    if (kaiju.behaviors) section.append(renderStructuredTable("Behaviors", kaiju.behaviors, ["name", "trigger", "effect", "gainedFeatures", "lostFeatures"]));
+    if (kaiju.milestones) section.append(renderStructuredTable("XP Milestones", kaiju.milestones, ["criteria", "xp", "value"]));
     if (Array.isArray(kaiju.actions) && kaiju.actions.length) section.append(renderNamedEntries("Kaiju Actions", kaiju.actions));
+    return section;
+}
+
+function renderStructuredTable(title, value, preferredKeys) {
+    const wrap = element("div", { className: "rules-core-structured-table" });
+    wrap.append(element("h5", { text: title }));
+    const rows = Array.isArray(value)
+        ? value
+        : value && typeof value === "object"
+            ? Object.entries(value).map(([name, row]) => row && typeof row === "object" ? { name, ...row } : { name, value: row })
+            : [{ value }];
+    if (!rows.length) return wrap;
+    const objects = rows.map(row => row && typeof row === "object" ? row : { value: row });
+    const keys = preferredKeys.filter(key => objects.some(row => row[key] !== undefined));
+    for (const key of Object.keys(objects[0] ?? {})) if (!keys.includes(key)) keys.push(key);
+    const table = element("table", { className: "table table-sm align-middle mb-0" });
+    table.append(element("thead", {}, element("tr", {}, keys.map(key => element("th", { text: humanize(key) }))));
+    const body = element("tbody");
+    for (const row of objects) body.append(element("tr", {}, keys.map(key => element("td", { text: formatValue(row[key]) ?? "—" }))));
+    table.append(body);
+    wrap.append(element("div", { className: "table-responsive" }, table));
+    return wrap;
+}
+
+function renderProgressionTable(document) {
+    const groups = Array.isArray(document?.classTableGroups) ? document.classTableGroups : [];
+    if (!groups.length && !Array.isArray(document?.progression)) return null;
+    const section = element("section", { className: "rules-core-dnd-section" });
+    section.append(element("h4", { text: "Progression" }));
+    if (groups.length) {
+        for (const group of groups) {
+            const labels = group?.colLabels ?? group?.columns ?? [];
+            const rows = group?.rows ?? group?.data ?? [];
+            if (!Array.isArray(rows) || !rows.length) continue;
+            const table = element("table", { className: "table table-sm align-middle mb-3" });
+            if (labels.length) table.append(element("thead", {}, element("tr", {}, labels.map(label => element("th", { text: formatRuleText(label) }))));
+            table.append(element("tbody", {}, rows.map(row => element("tr", {}, (Array.isArray(row) ? row : Object.values(row ?? {})).map(cell => element("td", { text: formatRuleText(cell) }))))));
+            section.append(element("div", { className: "table-responsive" }, table));
+        }
+    } else {
+        section.append(renderStructuredTable("", document.progression, []));
+    }
     return section;
 }
 
@@ -239,9 +350,7 @@ function renderNamedEntries(title, entries) {
     section.append(element("h4", { text: title }));
     for (const entry of entries) {
         const block = element("div", { className: "rules-core-rule-entry" });
-        if (entry && typeof entry === "object" && !Array.isArray(entry) && entry.name) {
-            block.append(element("h5", { text: entry.name }));
-        }
+        if (entry && typeof entry === "object" && !Array.isArray(entry) && entry.name) block.append(element("h5", { text: entry.name }));
         const text = formatRuleText(entry?.entries ?? entry?.entry ?? entry);
         if (text) block.append(richParagraphs(text));
         section.append(block);
@@ -257,9 +366,7 @@ function infoSection(title, pairs) {
 }
 
 function callout(label, value) {
-    return element("div", { className: "rules-core-rule-callout" },
-        element("strong", { text: `${label}. ` }),
-        value);
+    return element("div", { className: "rules-core-rule-callout" }, element("strong", { text: `${label}. ` }), value);
 }
 
 function abilityRow(abilities) {
@@ -269,10 +376,7 @@ function abilityRow(abilities) {
         const modifier = typeof score === "number" ? Math.floor((score - 10) / 2) : null;
         row.append(element("div", { className: "rules-core-ability" },
             element("span", { className: "rules-core-ability-name", text: key }),
-            element("span", {
-                className: "rules-core-ability-value",
-                text: score === null || score === undefined ? "—" : `${score} (${signed(modifier)})`
-            })));
+            element("span", { className: "rules-core-ability-value", text: score === null || score === undefined ? "—" : `${score} (${signed(modifier)})` })));
     }
     return row;
 }
@@ -285,18 +389,17 @@ function stat(label, value) {
 
 function richParagraphs(text) {
     const fragment = element("div", { className: "rules-core-prose" });
-    for (const paragraph of String(text).split(/\n{2,}/).map(value => value.trim()).filter(Boolean)) {
-        fragment.append(element("p", { text: paragraph }));
-    }
+    for (const paragraph of String(text).split(/\n{2,}/).map(value => value.trim()).filter(Boolean)) fragment.append(element("p", { text: paragraph }));
     return fragment;
 }
 
 function legacyFieldMap(body) {
     const text = stripMarkup(body);
     const labels = [
-        "Armor Class", "Hit Points", "Hit Dice", "Initiative", "Challenge Rating",
-        "SizeAndType", "Size and Type", "Speed", "AC", "HP", "Init", "CR",
-        "Str", "Dex", "Con", "Int", "Wis", "Cha"
+        "Armor Class", "Touch AC", "Flat-Footed AC", "Hit Points", "Hit Dice", "Initiative", "Challenge Rating",
+        "Base Attack", "Base Atk", "Grapple", "Space/Reach", "Fortitude", "Fort", "Reflex", "Ref", "Will",
+        "Special Attacks", "Special Qualities", "Environment", "Organization", "Treasure", "Advancement", "Level Adjustment",
+        "SizeAndType", "Size and Type", "Alignment", "Speed", "AC", "Init", "CR", "XP", "Str", "Dex", "Con", "Int", "Wis", "Cha"
     ];
     const positions = [];
     const lower = text.toLowerCase();
@@ -326,8 +429,20 @@ function legacyFieldMap(body) {
     return result;
 }
 
+function hitPointsFromHitDice(value) {
+    const text = String(value ?? "");
+    const lower = text.toLowerCase();
+    const hpIndex = lower.lastIndexOf(" hp");
+    if (hpIndex < 0) return null;
+    const open = text.lastIndexOf("(", hpIndex);
+    if (open < 0) return null;
+    const candidate = text.slice(open + 1, hpIndex).trim();
+    return /^\d+$/.test(candidate) ? candidate : null;
+}
+
 function stripMarkup(value) {
     if (!value || typeof value !== "string") return "";
+    if (!value.includes("<")) return value.replace(/\r/g, "").replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim();
     const wrapper = document.createElement("div");
     wrapper.innerHTML = value
         .replace(/<\/(?:p|div|tr|td|th|li|h[1-6])>/gi, "\n")
@@ -340,12 +455,18 @@ function stripMarkup(value) {
         .trim();
 }
 
-function isWordChar(character) {
-    return /[a-z0-9]/i.test(character ?? "");
-}
+function isWordChar(character) { return /[a-z0-9]/i.test(character ?? ""); }
+function compactPairs(values) { return values.filter(([, value]) => value !== null && value !== undefined && value !== ""); }
 
-function compactPairs(values) {
-    return values.filter(([, value]) => value !== null && value !== undefined && value !== "");
+function formatCreatureType(value) {
+    if (!value) return null;
+    if (typeof value === "string") return value;
+    if (typeof value === "object") {
+        const base = value.type ?? value.name;
+        const tags = formatValue(value.tags);
+        return [base, tags].filter(Boolean).join(" (").replace(/\($/, "") + (base && tags ? ")" : "");
+    }
+    return formatValue(value);
 }
 
 function formatArmorClass(value) {
@@ -428,13 +549,23 @@ function abilityModifier(score) {
     return `${signed(Math.floor((score - 10) / 2))} (DEX)`;
 }
 
-function signed(value) {
-    return `${value >= 0 ? "+" : ""}${value}`;
+function valueBeforeComma(value) {
+    if (!value) return null;
+    const text = String(value);
+    const comma = text.indexOf(",");
+    return comma >= 0 ? text.slice(0, comma).trim().split(" ")[0] : null;
 }
 
-function firstValue(...values) {
-    return values.find(value => value !== null && value !== undefined && value !== "") ?? null;
+function valueAfterSize(value) {
+    if (!value) return null;
+    const text = String(value).trim();
+    const firstSpace = text.indexOf(" ");
+    if (firstSpace < 0) return text;
+    return text.slice(firstSpace + 1).split(",", 1)[0].trim();
 }
+
+function signed(value) { return `${value >= 0 ? "+" : ""}${value}`; }
+function firstValue(...values) { return values.find(value => value !== null && value !== undefined && value !== "") ?? null; }
 
 function humanize(value) {
     return String(value ?? "")

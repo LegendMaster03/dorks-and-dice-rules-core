@@ -16,22 +16,17 @@ export function installSourceAdd(app) {
     const renderActiveView = app.renderActiveView.bind(app);
     app.renderActiveView = async container => {
         await renderActiveView(container);
-        if (app.activeView !== "library") return;
+        if (app.activeView !== "library" || app.libraryRoute?.kind !== "index") return;
 
         const card = await buildAddSourceCard(app);
         const libraryLead = container.querySelector(":scope > .rules-core-library-hero");
-        if (libraryLead) {
-            libraryLead.after(card);
-        } else {
-            container.prepend(card);
-        }
+        if (libraryLead) libraryLead.after(card);
+        else container.prepend(card);
     };
 }
 
 async function buildAddSourceCard(app) {
-    const card = element("section", {
-        className: "card card-body mb-3 rules-core-panel rules-core-add-source"
-    });
+    const card = element("section", { className: "card card-body mb-3 rules-core-panel rules-core-add-source" });
     card.append(element("div", { className: "mb-3" },
         element("h4", { className: "h5 mb-1", text: "Add Source" }),
         element("p", {
@@ -40,21 +35,9 @@ async function buildAddSourceCard(app) {
         })));
 
     let currentKind = "web";
-    const webMode = element("button", {
-        type: "button",
-        className: "btn btn-sm btn-outline-secondary",
-        text: "Web source"
-    });
-    const uploadMode = element("button", {
-        type: "button",
-        className: "btn btn-sm btn-outline-secondary",
-        text: "Upload file"
-    });
-    const modeGroup = element("div", {
-        className: "btn-group mb-3",
-        role: "group",
-        ariaLabel: "Source type"
-    }, webMode, uploadMode);
+    const webMode = element("button", { type: "button", className: "btn btn-sm btn-outline-secondary", text: "Web source" });
+    const uploadMode = element("button", { type: "button", className: "btn btn-sm btn-outline-secondary", text: "Upload file" });
+    const modeGroup = element("div", { className: "btn-group mb-3", role: "group", ariaLabel: "Source type" }, webMode, uploadMode);
 
     const form = element("form", { className: "row g-2 align-items-end" });
     const url = element("input", {
@@ -63,22 +46,13 @@ async function buildAddSourceCard(app) {
         placeholder: "https://github.com/5etools-mirror-3/5etools-src/tree/main/data"
     });
     const urlGroup = element("div", { className: "col-md-9" },
-        element("label", { className: "form-label fw-semibold", text: "Web source URL" }),
-        url);
+        element("label", { className: "form-label fw-semibold", text: "Web source URL" }), url);
 
-    const file = element("input", {
-        type: "file",
-        className: "form-control"
-    });
+    const file = element("input", { type: "file", className: "form-control" });
     const fileGroup = element("div", { className: "col-md-9 d-none" },
-        element("label", { className: "form-label fw-semibold", text: "Source file" }),
-        file);
+        element("label", { className: "form-label fw-semibold", text: "Source file" }), file);
 
-    const addButton = element("button", {
-        type: "submit",
-        className: "btn btn-primary w-100",
-        text: "Add source"
-    });
+    const addButton = element("button", { type: "submit", className: "btn btn-primary w-100", text: "Add source" });
     const actionGroup = element("div", { className: "col-md-3" }, addButton);
     const result = element("div", { className: "mt-3" });
     const existing = element("div", { className: "mt-2" });
@@ -124,13 +98,9 @@ async function buildAddSourceCard(app) {
 
             const added = await app.api.addCurrentUserSource(payload);
             if (added?.status === "queued" || added?.status === "running") {
-                result.replaceChildren(alertNode(
-                    "info",
-                    `${added.displayName} is queued for import. You can leave this page; Rules Core will continue processing it in the background.`));
+                result.replaceChildren(alertNode("info", `${added.displayName} is queued for import. You can leave this page; Rules Core will continue processing it in the background.`));
             } else {
-                result.replaceChildren(alertNode(
-                    "success",
-                    `${added.displayName} added. ${added.sourceCodeCount} publication(s), ${added.entityCount} source record(s) are now available to your account.`));
+                result.replaceChildren(alertNode("success", `${added.displayName} added. ${added.sourceCodeCount} publication(s), ${added.entityCount} source record(s) are now available to your account.`));
             }
             if (currentKind === "upload") file.value = "";
             await renderExistingSources(app, existing, result);
@@ -172,55 +142,34 @@ async function renderExistingSources(app, container, result) {
             for (const job of visibleJobs) {
                 const running = job.status === "running";
                 const failed = job.status === "failed";
-                const label = failed
-                    ? "Import failed"
-                    : running
-                        ? "Importing"
-                        : "Queued";
+                const label = failed ? "Import failed" : running ? "Importing" : "Queued";
                 const metadata = job.operation === "refresh" ? "Web source refresh" : "Web source";
                 activity.append(element("div", {
                     className: "d-flex flex-wrap justify-content-between align-items-start gap-2 py-2 border-top"
                 },
                 element("div", { className: "flex-grow-1" },
                     element("div", { className: "fw-semibold", text: job.displayName }),
-                    element("div", {
-                        className: "small text-body-secondary text-break",
-                        text: `${metadata} · ${job.url ?? ""}`
-                    }),
-                    failed && job.error
-                        ? element("div", { className: "small text-danger mt-1", text: job.error })
-                        : null),
-                element("span", {
-                    className: failed ? "badge text-bg-danger" : "badge text-bg-secondary",
-                    text: label
-                })));
+                    element("div", { className: "small text-body-secondary text-break", text: `${metadata} · ${job.url ?? ""}` }),
+                    failed && job.error ? element("div", { className: "small text-danger mt-1", text: job.error }) : null),
+                element("span", { className: failed ? "badge text-bg-danger" : "badge text-bg-secondary", text: label })));
             }
             container.append(activity);
         }
 
         if (sources.length) {
             const details = element("details", { className: "mt-2" });
-            details.append(element("summary", {
-                className: "fw-semibold",
-                text: `Your added sources (${sources.length})`
-            }));
+            details.append(element("summary", { className: "fw-semibold", text: `Your added sources (${sources.length})` }));
             const list = element("div", { className: "list-group list-group-flush mt-2" });
             for (const source of sources) {
                 const actions = element("div", { className: "d-flex gap-2 align-items-start" });
                 if (source.kind === "web") {
-                    const refresh = element("button", {
-                        type: "button",
-                        className: "btn btn-sm btn-outline-primary",
-                        text: "Refresh"
-                    });
+                    const refresh = element("button", { type: "button", className: "btn btn-sm btn-outline-primary", text: "Refresh" });
                     refresh.addEventListener("click", async () => {
                         result.replaceChildren();
                         setButtonBusy(refresh, true, "Queueing…");
                         try {
                             const job = await app.api.refreshCurrentUserSource(source.id);
-                            result.replaceChildren(alertNode(
-                                "info",
-                                `${job.displayName} refresh queued. Rules Core will continue processing it in the background.`));
+                            result.replaceChildren(alertNode("info", `${job.displayName} refresh queued. Rules Core will continue processing it in the background.`));
                             await renderExistingSources(app, container, result);
                         } catch (error) {
                             result.replaceChildren(alertNode("danger", describeError(error)));
@@ -242,18 +191,14 @@ async function renderExistingSources(app, container, result) {
                         element("div", {},
                             element("div", { className: "fw-semibold", text: source.displayName }),
                             element("div", { className: "small text-body-secondary", text: metadata }),
-                            source.url
-                                ? element("div", { className: "small text-break text-body-secondary", text: source.url })
-                                : null),
+                            source.url ? element("div", { className: "small text-break text-body-secondary", text: source.url }) : null),
                         actions)));
             }
             details.append(list);
             container.append(details);
         }
 
-        if (jobs.some(job => job.status === "queued" || job.status === "running")) {
-            scheduleImportPoll(app, container, result);
-        }
+        if (jobs.some(job => job.status === "queued" || job.status === "running")) scheduleImportPoll(app, container, result);
     } catch (error) {
         container.replaceChildren(alertNode("warning", `Added sources could not be loaded: ${describeError(error)}`));
     }

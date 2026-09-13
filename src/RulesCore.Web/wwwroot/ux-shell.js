@@ -234,6 +234,10 @@ export function enhanceRenderedView(app, container) {
     }
 
     container.querySelectorAll(":scope > .card").forEach(card => card.classList.add("rules-core-panel"));
+    const firstCard = container.querySelector(":scope > .card");
+    if (firstCard && ["library", "browse", "version-review"].includes(app.activeView)) {
+        firstCard.classList.add("rules-core-page-lead");
+    }
     enhanceRenderedFragment(container);
     return container;
 }

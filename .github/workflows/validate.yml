@@ -27,6 +27,7 @@ jobs:
             src/RulesCore.Web/wwwroot/api.js \
             src/RulesCore.Web/wwwroot/ui.js \
             src/RulesCore.Web/wwwroot/ux-shell.js \
+            src/RulesCore.Web/wwwroot/browser-navigation.js \
             src/RulesCore.Web/wwwroot/authoring.js \
             src/RulesCore.Web/wwwroot/rules-browser.js \
             src/RulesCore.Web/wwwroot/rule-renderers.js \
@@ -43,7 +44,8 @@ jobs:
             src/RulesCore.Web/wwwroot/source-acquisition-admin.js \
             src/RulesCore.Web/wwwroot/hosted-source-authoring.js \
             src/RulesCore.Web/wwwroot/campaign-baseline-authoring.js \
-            tools/validate-render-lifecycle.mjs; do
+            tools/validate-render-lifecycle.mjs \
+            tools/validate-browser-ui.mjs; do
             node --input-type=module --check < "$file"
           done
 
@@ -52,19 +54,26 @@ jobs:
           import { RulesCoreApi } from "./src/RulesCore.Web/wwwroot/api.js";
 
           const api = new RulesCoreApi({ apiBaseUrl: "https://rules-core.test/tool" });
-          if (typeof api.getGlobalResolvedRule !== "function"
-              || typeof api.getCampaignResolvedRule !== "function"
-              || typeof api.searchSourceEntityPage !== "function"
-              || typeof api.addCurrentUserSource !== "function"
-              || typeof api.getCurrentUserSources !== "function"
-              || typeof api.refreshCurrentUserSource !== "function") {
-              throw new Error("Rules Browser/source paging/self-service source API contract is incomplete.");
+          for (const method of [
+              "getGlobalResolvedRule",
+              "getCampaignResolvedRule",
+              "searchSourceEntityPage",
+              "getSourceLibraryPublications",
+              "getSourceLibraryPublication",
+              "getSourceLibraryEntityPage",
+              "getSourceLibraryEntity",
+              "addCurrentUserSource",
+              "getCurrentUserSources",
+              "refreshCurrentUserSource"
+          ]) {
+              if (typeof api[method] !== "function") {
+                  throw new Error(`Rules Core API contract is missing '${method}'.`);
+              }
           }
 
           globalThis.fetch = async () => new Response(
               JSON.stringify({ title: "Authentication required" }),
               { status: 401, headers: { "Content-Type": "application/json" } });
-
           if (await api.getOptionalSession() !== null) {
               throw new Error("Anonymous session lookup must resolve to null.");
           }
@@ -73,25 +82,23 @@ jobs:
               throw new Error("Anonymous campaign lookup must resolve to an empty array.");
           }
 
-          const appModule = fs.readFileSync(
-              "./src/RulesCore.Web/wwwroot/app.js",
-              "utf8");
-          const uxShell = fs.readFileSync(
-              "./src/RulesCore.Web/wwwroot/ux-shell.js",
-              "utf8");
-          const uiModule = fs.readFileSync(
-              "./src/RulesCore.Web/wwwroot/ui.js",
-              "utf8");
+          const appModule = fs.readFileSync("./src/RulesCore.Web/wwwroot/app.js", "utf8");
           for (const required of [
               "installRulesCoreUx",
+              "installToolNavigation",
               "installSourceAdd",
-              "rules-core-detail.css"
+              "rules-core-detail.css",
+              "rules-core-library.css"
           ]) {
               if (!appModule.includes(required)) {
                   throw new Error(`Rules Core app shell is missing '${required}'.`);
               }
           }
+
+          const uxShell = fs.readFileSync("./src/RulesCore.Web/wwwroot/ux-shell.js", "utf8");
           for (const required of [
+              "Rules Library",
+              "Published Rules",
               "rules-core-topbar",
               "rules-core-nav-shell",
               "rules-core-main",
@@ -112,6 +119,8 @@ jobs:
           if (uxShell.includes("MutationObserver")) {
               throw new Error("Rules Core-owned DOM must not use MutationObserver as its render lifecycle.");
           }
+
+          const uiModule = fs.readFileSync("./src/RulesCore.Web/wwwroot/ui.js", "utf8");
           for (const required of [
               "enhanceRenderedFragment",
               "applyPresentationClasses",
@@ -122,18 +131,18 @@ jobs:
                   throw new Error(`Rules Core fragment presentation contract is missing '${required}'.`);
               }
           }
+
           for (const stylesheet of [
               "./src/RulesCore.Web/wwwroot/rules-core.css",
-              "./src/RulesCore.Web/wwwroot/rules-core-detail.css"
+              "./src/RulesCore.Web/wwwroot/rules-core-detail.css",
+              "./src/RulesCore.Web/wwwroot/rules-core-library.css"
           ]) {
               if (!fs.existsSync(stylesheet)) {
                   throw new Error(`Rules Core stylesheet '${stylesheet}' is missing.`);
               }
           }
 
-          const authoring = fs.readFileSync(
-              "./src/RulesCore.Web/wwwroot/authoring.js",
-              "utf8");
+          const authoring = fs.readFileSync("./src/RulesCore.Web/wwwroot/authoring.js", "utf8");
           for (const required of [
               "detail.concept.id",
               "detail.accessibleSources",
@@ -156,9 +165,7 @@ jobs:
               }
           }
 
-          const normalization = fs.readFileSync(
-              "./src/RulesCore.Web/wwwroot/source-normalization.js",
-              "utf8");
+          const normalization = fs.readFileSync("./src/RulesCore.Web/wwwroot/source-normalization.js", "utf8");
           for (const required of [
               "rules-core-idle-state",
               "mechanically identical cross-edition rules may then resolve automatically",
@@ -172,71 +179,43 @@ jobs:
               throw new Error("Normalization suggestions must not eagerly load when Rules Lawyer opens.");
           }
 
-          const rulesBrowser = fs.readFileSync(
-              "./src/RulesCore.Web/wwwroot/rules-browser.js",
-              "utf8");
-          if (!rulesBrowser.includes("Rules on this page")) {
-              throw new Error("Published Rules must distinguish a page count from a total count.");
-          }
-
-          const library = fs.readFileSync(
-              "./src/RulesCore.Web/wwwroot/source-library.js",
-              "utf8");
-          for (const required of [
-              "BUNDLED_SRDS",
-              "SRD3",
-              "SRD35",
-              "SRD51",
-              "SRD52",
-              "No account, import action, or remote host is required",
-              "Availability\", \"Bundled with Rules Core",
-              "entityType: \"monster\"",
-              "/api/sources/entities/",
+          const library = fs.readFileSync("./src/RulesCore.Web/wwwroot/source-library.js", "utf8");
+          for (const forbidden of [
+              "Monster beta",
+              "Beta integration surface",
+              "Monster detected",
+              "Detected monster stats",
               "Copy beta payload",
-              "searchSourceEntityPage",
-              "← Previous",
-              "Next →"
+              "API discovery"
           ]) {
-              if (!library.includes(required)) {
-                  throw new Error(`Source Library browser contract is missing '${required}'.`);
-              }
-          }
-          for (const incompatible of [
-              "refreshHostedSource",
-              "previewHostedSource",
-              "Import all built-in SRDs",
-              "Preview live"
-          ]) {
-              if (library.includes(incompatible)) {
-                  throw new Error(`Normal Source Library still contains acquisition control '${incompatible}'.`);
+              if (library.includes(forbidden)) {
+                  throw new Error(`Normal Source Library contains development UI '${forbidden}'.`);
               }
           }
 
-          const sourceAdd = fs.readFileSync(
-              "./src/RulesCore.Web/wwwroot/source-add.js",
-              "utf8");
+          const sourceAdd = fs.readFileSync("./src/RulesCore.Web/wwwroot/source-add.js", "utf8");
           for (const required of [
               "Add Source",
               "Upload file",
               "Web source",
               "5etools-mirror-3/5etools-src/tree/main/data",
               "addCurrentUserSource",
-              "refreshCurrentUserSource"
+              "refreshCurrentUserSource",
+              "app.libraryRoute?.kind !== \"index\""
           ]) {
               if (!sourceAdd.includes(required)) {
                   throw new Error(`Self-service source workflow is missing '${required}'.`);
               }
           }
 
-          const versioning = fs.readFileSync(
-              "./src/RulesCore.Web/wwwroot/source-versioning.js",
-              "utf8");
+          const versioning = fs.readFileSync("./src/RulesCore.Web/wwwroot/source-versioning.js", "utf8");
           if (!versioning.includes("Automatically resolved: the bound editions have the same rule-bearing content")) {
               throw new Error("Version-review UI does not surface automatic no-change resolution.");
           }
           NODE
 
           node tools/validate-render-lifecycle.mjs
+          node tools/validate-browser-ui.mjs
 
       - name: Start disposable PostgreSQL
         run: |
