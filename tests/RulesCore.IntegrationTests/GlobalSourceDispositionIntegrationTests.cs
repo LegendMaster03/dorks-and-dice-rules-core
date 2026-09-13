@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
+using RulesCore.Domain.Sources;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Rules;
 using RulesCore.Infrastructure.Sources;
