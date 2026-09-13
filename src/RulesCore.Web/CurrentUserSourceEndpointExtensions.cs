@@ -62,6 +62,8 @@ public static class CurrentUserSourceEndpointExtensions
 
                 await new CanonicalSourceIdentityService(dbContext)
                     .IndexPackageAsync(source.SourcePackageId, cancellationToken);
+                await new CanonicalPublicationPublisherService(dbContext)
+                    .ReconcilePackageAsync(source.SourcePackageId, cancellationToken);
 
                 if (string.Equals(source.Kind, CurrentUserSourceKinds.Web, StringComparison.Ordinal)
                     && !string.IsNullOrWhiteSpace(source.Url))
@@ -137,6 +139,8 @@ public static class CurrentUserSourceEndpointExtensions
                 {
                     return Results.NotFound();
                 }
+                await new CanonicalPublicationPublisherService(dbContext)
+                    .ReconcilePackageAsync(source.SourcePackageId, cancellationToken);
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(source);
             }
