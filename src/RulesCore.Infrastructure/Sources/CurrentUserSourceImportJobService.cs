@@ -83,6 +83,11 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
                     status,
                     current_user_source_id,
                     error_message,
+                    progress_stage,
+                    progress_current,
+                    progress_total,
+                    progress_detail,
+                    progress_updated_at,
                     created_at,
                     started_at,
                     completed_at
@@ -137,7 +142,12 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
                 SET status = 'running',
                     started_at = @started_at,
                     completed_at = NULL,
-                    error_message = NULL
+                    error_message = NULL,
+                    progress_stage = 'starting',
+                    progress_current = NULL,
+                    progress_total = NULL,
+                    progress_detail = 'Starting Web source import',
+                    progress_updated_at = @started_at
                 FROM next_job
                 WHERE job.current_user_source_import_job_id = next_job.current_user_source_import_job_id
                 RETURNING
@@ -160,6 +170,66 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
                 reader.GetString(2),
                 reader.GetString(3),
                 reader.IsDBNull(4) ? null : reader.GetGuid(4));
+        }
+        finally
+        {
+            if (openedHere)
+            {
+                await connection.CloseAsync();
+            }
+        }
+    }
+
+    public async Task UpdateProgressAsync(
+        Guid jobId,
+        CurrentUserSourceImportProgress progress,
+        CancellationToken cancellationToken = default)
+    {
+        if (jobId == Guid.Empty)
+        {
+            throw new ArgumentException("Job ID can not be empty.", nameof(jobId));
+        }
+        ArgumentNullException.ThrowIfNull(progress);
+        var stage = Require(progress.Stage, nameof(progress.Stage), 40);
+        if (progress.Current is < 0 || progress.Total is < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(progress), "Progress counts can not be negative.");
+        }
+        if (progress.Current is not null
+            && progress.Total is not null
+            && progress.Current > progress.Total)
+        {
+            throw new ArgumentException("Progress current can not exceed progress total.", nameof(progress));
+        }
+
+        await EnsureSchemaAsync(cancellationToken);
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere)
+        {
+            await connection.OpenAsync(cancellationToken);
+        }
+
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                UPDATE current_user_source_import_job
+                SET progress_stage = @stage,
+                    progress_current = @current,
+                    progress_total = @total,
+                    progress_detail = @detail,
+                    progress_updated_at = @updated_at
+                WHERE current_user_source_import_job_id = @id
+                    AND status = 'running';
+                """;
+            AddParameter(command, "@stage", stage);
+            AddNullableParameter(command, "@current", progress.Current);
+            AddNullableParameter(command, "@total", progress.Total);
+            AddNullableParameter(command, "@detail", NormalizeOptional(progress.Detail, 500));
+            AddParameter(command, "@updated_at", DateTimeOffset.UtcNow);
+            AddParameter(command, "@id", jobId);
+            await command.ExecuteNonQueryAsync(cancellationToken);
         }
         finally
         {
@@ -234,6 +304,11 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
                     origin_key,
                     status,
                     current_user_source_id,
+                    progress_stage,
+                    progress_current,
+                    progress_total,
+                    progress_detail,
+                    progress_updated_at,
                     created_at)
                 VALUES (
                     @id,
@@ -245,6 +320,11 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
                     @origin_key,
                     'queued',
                     @current_user_source_id,
+                    'queued',
+                    0,
+                    NULL,
+                    'Waiting for background importer',
+                    @created_at,
                     @created_at)
                 ON CONFLICT (user_id, operation, origin_key)
                     WHERE status IN ('queued', 'running')
@@ -263,6 +343,11 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
                     status,
                     current_user_source_id,
                     error_message,
+                    progress_stage,
+                    progress_current,
+                    progress_total,
+                    progress_detail,
+                    progress_updated_at,
                     created_at,
                     started_at,
                     completed_at;
@@ -315,6 +400,12 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
                 SET status = @status,
                     current_user_source_id = COALESCE(@current_user_source_id, current_user_source_id),
                     error_message = @error_message,
+                    progress_stage = @status,
+                    progress_detail = CASE
+                        WHEN @status = 'completed' THEN 'Import completed'
+                        ELSE progress_detail
+                    END,
+                    progress_updated_at = @completed_at,
                     completed_at = @completed_at
                 WHERE current_user_source_import_job_id = @id;
                 """;
@@ -392,6 +483,21 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
             reader.IsDBNull(reader.GetOrdinal("error_message"))
                 ? null
                 : reader.GetString(reader.GetOrdinal("error_message")),
+            reader.IsDBNull(reader.GetOrdinal("progress_stage"))
+                ? null
+                : reader.GetString(reader.GetOrdinal("progress_stage")),
+            reader.IsDBNull(reader.GetOrdinal("progress_current"))
+                ? null
+                : reader.GetInt32(reader.GetOrdinal("progress_current")),
+            reader.IsDBNull(reader.GetOrdinal("progress_total"))
+                ? null
+                : reader.GetInt32(reader.GetOrdinal("progress_total")),
+            reader.IsDBNull(reader.GetOrdinal("progress_detail"))
+                ? null
+                : reader.GetString(reader.GetOrdinal("progress_detail")),
+            reader.IsDBNull(reader.GetOrdinal("progress_updated_at"))
+                ? null
+                : reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("progress_updated_at")),
             reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("created_at")),
             reader.IsDBNull(reader.GetOrdinal("started_at"))
                 ? null
@@ -453,6 +559,34 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         return normalized;
     }
 
+    private static string Require(string value, string parameterName, int maxLength)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException("Value can not be blank.", parameterName);
+        }
+        var normalized = value.Trim();
+        if (normalized.Length > maxLength)
+        {
+            throw new ArgumentException($"Value can not exceed {maxLength} characters.", parameterName);
+        }
+        return normalized;
+    }
+
+    private static string? NormalizeOptional(string? value, int maxLength)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+        var normalized = value.Trim();
+        if (normalized.Length > maxLength)
+        {
+            normalized = normalized[..maxLength];
+        }
+        return normalized;
+    }
+
     private static string Fingerprint(byte[] value) =>
         Convert.ToHexString(SHA256.HashData(value)).ToLowerInvariant();
 
@@ -484,6 +618,11 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
             status varchar(20) NOT NULL,
             current_user_source_id uuid NULL,
             error_message varchar(1000) NULL,
+            progress_stage varchar(40) NULL,
+            progress_current integer NULL,
+            progress_total integer NULL,
+            progress_detail varchar(500) NULL,
+            progress_updated_at timestamp with time zone NULL,
             created_at timestamp with time zone NOT NULL,
             started_at timestamp with time zone NULL,
             completed_at timestamp with time zone NULL,
@@ -491,6 +630,16 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
             CONSTRAINT ck_current_user_source_import_job_operation CHECK (operation IN ('add', 'refresh')),
             CONSTRAINT ck_current_user_source_import_job_kind CHECK (source_kind = 'web'),
             CONSTRAINT ck_current_user_source_import_job_status CHECK (status IN ('queued', 'running', 'completed', 'failed')));
+        ALTER TABLE current_user_source_import_job
+            ADD COLUMN IF NOT EXISTS progress_stage varchar(40) NULL;
+        ALTER TABLE current_user_source_import_job
+            ADD COLUMN IF NOT EXISTS progress_current integer NULL;
+        ALTER TABLE current_user_source_import_job
+            ADD COLUMN IF NOT EXISTS progress_total integer NULL;
+        ALTER TABLE current_user_source_import_job
+            ADD COLUMN IF NOT EXISTS progress_detail varchar(500) NULL;
+        ALTER TABLE current_user_source_import_job
+            ADD COLUMN IF NOT EXISTS progress_updated_at timestamp with time zone NULL;
         CREATE INDEX IF NOT EXISTS ix_current_user_source_import_job_user_created
             ON current_user_source_import_job(user_id, created_at DESC);
         CREATE INDEX IF NOT EXISTS ix_current_user_source_import_job_queue

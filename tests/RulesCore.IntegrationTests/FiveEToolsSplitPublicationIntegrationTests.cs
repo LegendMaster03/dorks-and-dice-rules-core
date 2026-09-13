@@ -142,6 +142,71 @@ public sealed class FiveEToolsSplitPublicationIntegrationTests
     }
 
     [Fact]
+    public async Task ChildAdventureMetadataDoesNotRenameParentPublication()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null)
+        {
+            return;
+        }
+        await using (db)
+        {
+            var adapter = new FiveEToolsSourceFormatAdapter();
+            var importer = new NormalizedSourceImportService(db);
+            var packageKey = $"split-fraif-{Guid.NewGuid():N}";
+
+            var childAdventureRepresentation = RequireRepresentation(adapter.TryRead(
+                Artifact(
+                    "adventures.json",
+                    """
+                    {
+                      "adventure": [
+                        {
+                          "name": "The Lost Library of Lethchauntos",
+                          "id": "FRAiF-TLLoL",
+                          "source": "FRAiF",
+                          "parentSource": "FRAiF",
+                          "published": "2025-11-11"
+                        }
+                      ]
+                    }
+                    """)));
+            var parentBookRepresentation = RequireRepresentation(adapter.TryRead(
+                Artifact(
+                    "books.json",
+                    """
+                    {
+                      "book": [
+                        {
+                          "name": "Forgotten Realms: Adventures in Faerûn",
+                          "id": "FRAiF",
+                          "source": "FRAiF",
+                          "published": "2025-11-11"
+                        }
+                      ]
+                    }
+                    """)));
+
+            var child = await ImportAsync(importer, packageKey, childAdventureRepresentation);
+            var childPublication = Assert.Single(child.Publications);
+            Assert.Equal("FRAiF", childPublication.DisplayName);
+
+            var parent = await ImportAsync(importer, packageKey, parentBookRepresentation);
+            var parentPublication = Assert.Single(parent.Publications);
+
+            Assert.Equal(childPublication.WorkId, parentPublication.WorkId);
+            Assert.Equal(childPublication.CanonicalPublicationId, parentPublication.CanonicalPublicationId);
+            Assert.Equal("Forgotten Realms: Adventures in Faerûn", parentPublication.DisplayName);
+            Assert.Equal(
+                "Forgotten Realms: Adventures in Faerûn",
+                await ReadWorkDisplayNameAsync(db, parentPublication.WorkId));
+            Assert.Equal(
+                "Forgotten Realms: Adventures in Faerûn",
+                await ReadCanonicalDisplayNameAsync(db, parentPublication.CanonicalPublicationId));
+        }
+    }
+
+    [Fact]
     public async Task DifferentRichTitlesForSamePackageLocalKeyStillConflict()
     {
         var db = await OpenDatabaseAsync();

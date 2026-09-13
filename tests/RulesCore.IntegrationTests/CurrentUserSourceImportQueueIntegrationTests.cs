@@ -75,6 +75,11 @@ public sealed class CurrentUserSourceImportQueueIntegrationTests
             Assert.Equal(RegressionSourceUrl, job.Url);
             Assert.Null(job.CurrentUserSourceId);
             Assert.Null(job.Error);
+            Assert.Equal("queued", job.ProgressStage);
+            Assert.Equal(0, job.ProgressCurrent);
+            Assert.Null(job.ProgressTotal);
+            Assert.Equal("Waiting for background importer", job.ProgressDetail);
+            Assert.NotNull(job.ProgressUpdatedAt);
 
             using var listRequest = HostedRequest(
                 HttpMethod.Get,
@@ -83,7 +88,12 @@ public sealed class CurrentUserSourceImportQueueIntegrationTests
             using var listResponse = await client.SendAsync(listRequest);
             Assert.Equal(HttpStatusCode.OK, listResponse.StatusCode);
             var jobs = await listResponse.Content.ReadFromJsonAsync<CurrentUserSourceImportJobView[]>();
-            Assert.Contains(jobs!, value => value.Id == job.Id);
+            var listed = Assert.Single(jobs!, value => value.Id == job.Id);
+            Assert.Equal(job.ProgressStage, listed.ProgressStage);
+            Assert.Equal(job.ProgressCurrent, listed.ProgressCurrent);
+            Assert.Equal(job.ProgressTotal, listed.ProgressTotal);
+            Assert.Equal(job.ProgressDetail, listed.ProgressDetail);
+            Assert.Equal(job.ProgressUpdatedAt, listed.ProgressUpdatedAt);
         }
         finally
         {

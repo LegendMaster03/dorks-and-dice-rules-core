@@ -181,6 +181,19 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatAdapter
                     continue;
                 }
 
+                // 5e.tools can model a child adventure as its own navigation entry while the
+                // actual printed source remains the parent book. FRAiF-TLLoL, for example, has
+                // source FRAiF and parentSource FRAiF. Its title is not bibliographic evidence
+                // that the FRAiF publication itself is named "The Lost Library of Lethchauntos".
+                var itemId = ReadString(item, "id");
+                var parentSource = ReadString(item, "parentSource");
+                if (!string.IsNullOrWhiteSpace(parentSource)
+                    || (!string.IsNullOrWhiteSpace(itemId)
+                        && !string.Equals(itemId, sourceCode, StringComparison.OrdinalIgnoreCase)))
+                {
+                    continue;
+                }
+
                 var title = ReadString(item, "name");
                 var publisher = ReadString(item, "publisher");
                 DateOnly? date = null;
