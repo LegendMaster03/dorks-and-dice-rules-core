@@ -46,11 +46,11 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         var sourceQuery = dbContext.SourceEntities
             .AsNoTracking()
             .Where(value => value.Revisions.Any())
-            .Where(value => !ignoredPackageIds.Contains(value.SourceEdition.SourceWork.SourcePackageId))
+            .Where(value => !ignoredPackageIds.Contains(value.SourcePackageId))
             .Where(value => !dbContext.RuleConceptSourceBindings
                 .Any(binding => binding.SourceEntityId == value.Id))
-            .Where(value => value.SourceEdition.SourceWork.SourcePackage.IsPublic
-                || value.SourceEdition.SourceWork.SourcePackage.UserGrants
+            .Where(value => value.SourcePackage.IsPublic
+                || value.SourcePackage.UserGrants
                     .Any(grant => grant.UserId == normalizedUserId));
 
         if (normalizedEntityType is not null)
@@ -63,10 +63,9 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         {
             sourceQuery = sourceQuery.Where(value =>
                 value.Name.ToLower().Contains(normalizedQuery)
-                || value.SourceCode.ToLower().Contains(normalizedQuery)
-                || value.SourceEdition.DisplayName.ToLower().Contains(normalizedQuery)
-                || value.SourceEdition.SourceWork.DisplayName.ToLower().Contains(normalizedQuery)
-                || value.SourceEdition.SourceWork.SourcePackage.DisplayName.ToLower().Contains(normalizedQuery));
+                || (value.SourceCode != null && value.SourceCode.ToLower().Contains(normalizedQuery))
+                || value.FormatKey.ToLower().Contains(normalizedQuery)
+                || value.SourcePackage.DisplayName.ToLower().Contains(normalizedQuery));
         }
 
         var sources = await sourceQuery
@@ -79,7 +78,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
                 value.Id,
                 value.EntityType,
                 value.Name,
-                value.SourceCode,
+                value.SourceCode ?? string.Empty,
                 value.Revisions
                     .OrderByDescending(revision => revision.RevisionNumber)
                     .Select(revision => revision.RevisionNumber)
@@ -88,13 +87,13 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
                     .OrderByDescending(revision => revision.RevisionNumber)
                     .Select(revision => revision.ImportedAt)
                     .First(),
-                value.SourceEdition.SourceWork.SourcePackage.Id,
-                value.SourceEdition.SourceWork.SourcePackage.Key,
-                value.SourceEdition.SourceWork.SourcePackage.DisplayName,
-                value.SourceEdition.SourceWork.Key,
-                value.SourceEdition.SourceWork.DisplayName,
-                value.SourceEdition.Key,
-                value.SourceEdition.DisplayName))
+                value.SourcePackage.Id,
+                value.SourcePackage.Key,
+                value.SourcePackage.DisplayName,
+                value.SourcePackage.Key,
+                value.SourcePackage.DisplayName,
+                value.FormatKey,
+                value.FormatKey))
             .Take(limit)
             .ToArrayAsync(cancellationToken);
 
@@ -166,9 +165,9 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
             .AsNoTracking()
             .SingleOrDefaultAsync(
                 value => value.Id == sourceEntityId
-                    && !ignoredPackageIds.Contains(value.SourceEdition.SourceWork.SourcePackageId)
-                    && (value.SourceEdition.SourceWork.SourcePackage.IsPublic
-                        || value.SourceEdition.SourceWork.SourcePackage.UserGrants
+                    && !ignoredPackageIds.Contains(value.SourcePackageId)
+                    && (value.SourcePackage.IsPublic
+                        || value.SourcePackage.UserGrants
                             .Any(grant => grant.UserId == normalizedUserId)),
                 cancellationToken);
         if (source is null)
