@@ -91,6 +91,27 @@ internal sealed class CurrentUserSourceRefreshBackground(
             }
             else
             {
+                await jobs.UpdateProgressAsync(
+                    job.Id,
+                    new CurrentUserSourceImportProgress(
+                        "preparing",
+                        Detail: "Preparing a clean import attempt"),
+                    stoppingToken);
+                var cleanup = new IncompleteCurrentUserSourceImportCleanupService(dbContext);
+                var resetPartial = await cleanup.CleanupWebAddAsync(
+                    job.UserId,
+                    job.Url,
+                    stoppingToken);
+                if (resetPartial)
+                {
+                    await jobs.UpdateProgressAsync(
+                        job.Id,
+                        new CurrentUserSourceImportProgress(
+                            "preparing",
+                            Detail: "Removed incomplete data from the previous failed attempt"),
+                        stoppingToken);
+                }
+
                 var sourceUri = new Uri(job.Url, UriKind.Absolute);
                 using var httpClient = new HttpClient(new CurrentUserSourceProgressHttpHandler(
                     sourceUri,
@@ -152,6 +173,28 @@ internal sealed class CurrentUserSourceRefreshBackground(
                     var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
                     var jobs = new CurrentUserSourceImportJobService(dbContext);
                     await jobs.FailAsync(job.Id, exception, stoppingToken);
+
+                    if (string.Equals(
+                            job.Operation,
+                            CurrentUserSourceImportJobOperations.Add,
+                            StringComparison.Ordinal))
+                    {
+                        try
+                        {
+                            var cleanup = new IncompleteCurrentUserSourceImportCleanupService(dbContext);
+                            await cleanup.CleanupWebAddAsync(
+                                job.UserId,
+                                job.Url,
+                                stoppingToken);
+                        }
+                        catch (Exception cleanupException)
+                        {
+                            logger.LogWarning(
+                                cleanupException,
+                                "Rules Core could not clean incomplete Web source data for failed job {JobId}; the next retry will attempt cleanup again.",
+                                job.Id);
+                        }
+                    }
                 }
                 catch (Exception recordException)
                 {
