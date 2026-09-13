@@ -32,7 +32,11 @@ public sealed record AddCurrentUserSourceRequest
 
     public string Kind { get; init; } = string.Empty;
     public string? FileName { get; init; }
+
+    // Legacy/text transport retained for compatibility with existing callers and tests.
+    // New browser uploads use ContentBase64 so binary-compatible format adapters can be added.
     public string? Content { get; init; }
+    public string? ContentBase64 { get; init; }
     public string? Url { get; init; }
 
     [JsonIgnore]
@@ -40,18 +44,40 @@ public sealed record AddCurrentUserSourceRequest
     {
         get
         {
-            if (Content is null)
+            CompatibleCurrentUserSourceDocument? compatibleDocument;
+            if (ContentBase64 is not null)
             {
-                return null;
-            }
+                byte[] bytes;
+                try
+                {
+                    bytes = Convert.FromBase64String(ContentBase64);
+                }
+                catch (FormatException exception)
+                {
+                    throw new InvalidDataException(
+                        "The uploaded file content is not valid Base64.",
+                        exception);
+                }
 
-            if (!CurrentUserSourceCompatibility.TryRead(
-                    FileName,
-                    Content,
-                    out var compatibleDocument))
+                if (!CurrentUserSourceCompatibility.TryRead(
+                        FileName,
+                        bytes,
+                        out compatibleDocument))
+                {
+                    throw new InvalidDataException(
+                        "The uploaded file is not compatible with Rules Core.");
+                }
+            }
+            else
             {
-                throw new InvalidDataException(
-                    "The uploaded file is not compatible with Rules Core.");
+                if (!CurrentUserSourceCompatibility.TryRead(
+                        FileName,
+                        Content,
+                        out compatibleDocument))
+                {
+                    throw new InvalidDataException(
+                        "The uploaded file is not compatible with Rules Core.");
+                }
             }
 
             return compatibleDocument!.ImportDocument;
