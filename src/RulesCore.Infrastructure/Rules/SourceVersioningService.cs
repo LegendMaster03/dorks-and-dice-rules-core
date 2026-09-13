@@ -238,7 +238,7 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
             entity.FormatKey,
             entity.FormatKey,
             metadata?.GameEdition,
-            null,
+            metadata?.ReleaseKind,
             metadata?.PublicationDate,
             concepts);
     }
@@ -460,7 +460,7 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
 
     private static string RequireUserId(string value)
     {
-        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("User ID can not be blank.", nameof(value));
+        if (string.IsNullOrWhiteSpace(userId: value)) throw new ArgumentException("User ID can not be blank.", nameof(value));
         var normalized = value.Trim();
         if (normalized.Length > 200) throw new ArgumentException("User ID can not exceed 200 characters.", nameof(value));
         return normalized;
@@ -480,7 +480,10 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
     }
 }
 
-internal sealed record CanonicalPublicationMetadata(string GameEdition, DateOnly? PublicationDate);
+internal sealed record CanonicalPublicationMetadata(
+    string GameEdition,
+    string? ReleaseKind,
+    DateOnly? PublicationDate);
 
 internal static class CanonicalPublicationMetadataReader
 {
@@ -489,6 +492,10 @@ internal static class CanonicalPublicationMetadataReader
         Guid sourceEntityId,
         CancellationToken cancellationToken)
     {
+        await dbContext.Database.ExecuteSqlRawAsync(
+            "ALTER TABLE canonical_publication ADD COLUMN IF NOT EXISTS release_kind varchar(40) NULL;",
+            cancellationToken);
+
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
         if (openedHere) await connection.OpenAsync(cancellationToken);
@@ -496,7 +503,7 @@ internal static class CanonicalPublicationMetadataReader
         {
             await using var command = connection.CreateCommand();
             command.CommandText = """
-                SELECT DISTINCT publication.game_edition, publication.publication_date
+                SELECT DISTINCT publication.game_edition, publication.release_kind, publication.publication_date
                 FROM source_entity_occurrence_binding binding
                 JOIN canonical_source_occurrence occurrence
                     ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
@@ -512,7 +519,8 @@ internal static class CanonicalPublicationMetadataReader
             {
                 values.Add(new CanonicalPublicationMetadata(
                     reader.GetString(0),
-                    reader.IsDBNull(1) ? null : reader.GetFieldValue<DateOnly>(1)));
+                    reader.IsDBNull(1) ? null : reader.GetString(1),
+                    reader.IsDBNull(2) ? null : reader.GetFieldValue<DateOnly>(2)));
             }
             var editions = values.Select(value => value.GameEdition).Distinct(StringComparer.Ordinal).ToArray();
             if (editions.Length != 1) return null;
@@ -597,7 +605,7 @@ public sealed class RuleConsolidationService(
                 source.FormatKey,
                 source.FormatKey,
                 metadata?.GameEdition,
-                null,
+                metadata?.ReleaseKind,
                 metadata?.PublicationDate,
                 revisions));
         }
