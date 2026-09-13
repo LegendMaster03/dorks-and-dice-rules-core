@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace RulesCore.Application.Sources;
 
 public static class CurrentUserSourceKinds
@@ -10,11 +12,52 @@ public static class CurrentUserSourceKinds
         || string.Equals(value, Web, StringComparison.Ordinal);
 }
 
-public sealed record AddCurrentUserSourceRequest(
-    string Kind,
-    string? FileName = null,
-    string? Json = null,
-    string? Url = null);
+public sealed record AddCurrentUserSourceRequest
+{
+    public AddCurrentUserSourceRequest()
+    {
+    }
+
+    public AddCurrentUserSourceRequest(
+        string Kind,
+        string? FileName = null,
+        string? Json = null,
+        string? Url = null)
+    {
+        this.Kind = Kind;
+        this.FileName = FileName;
+        Content = Json;
+        this.Url = Url;
+    }
+
+    public string Kind { get; init; } = string.Empty;
+    public string? FileName { get; init; }
+    public string? Content { get; init; }
+    public string? Url { get; init; }
+
+    [JsonIgnore]
+    public string? Json
+    {
+        get
+        {
+            if (Content is null)
+            {
+                return null;
+            }
+
+            if (!CurrentUserSourceCompatibility.TryRead(
+                    FileName,
+                    Content,
+                    out var compatibleDocument))
+            {
+                throw new InvalidDataException(
+                    "The uploaded file is not compatible with Rules Core.");
+            }
+
+            return compatibleDocument!.ImportDocument;
+        }
+    }
+}
 
 public sealed record CurrentUserSourceView(
     Guid Id,

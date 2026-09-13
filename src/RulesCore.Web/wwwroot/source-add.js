@@ -30,7 +30,7 @@ async function buildAddSourceCard(app) {
         element("h4", { className: "h5 mb-1", text: "Add Source" }),
         element("p", {
             className: "text-body-secondary mb-0",
-            text: "Add a 5e.tools source for your account. Choose a file or a web source; Rules Core handles the internal source metadata and source-code partitioning."
+            text: "Add a compatible source for your account. Choose a file or a web source; Rules Core handles compatibility checks, internal source metadata, and source-code partitioning."
         })),
     badge("Your account", "secondary"));
     card.append(heading);
@@ -54,8 +54,7 @@ async function buildAddSourceCard(app) {
 
     const file = element("input", {
         type: "file",
-        className: "form-control",
-        attributes: { accept: ".json,application/json" }
+        className: "form-control"
     });
     const fileGroup = element("div", { className: "col-md-7 d-none" },
         element("label", { className: "form-label fw-semibold", text: "Source file" }),
@@ -95,11 +94,11 @@ async function buildAddSourceCard(app) {
                 payload = { kind: "web", url: value };
             } else {
                 const selected = file.files?.[0];
-                if (!selected) throw new Error("Select a JSON source file.");
+                if (!selected) throw new Error("Select a source file.");
                 payload = {
                     kind: "upload",
                     fileName: selected.name,
-                    json: await selected.text()
+                    content: await selected.text()
                 };
             }
 

@@ -8,15 +8,19 @@ Any signed-in Dorks & Dice account can add source material from the Rules Librar
 
 The user chooses one of two source types:
 
-- **Upload file** — select a 5e.tools-shaped JSON file and choose **Add source**.
+- **Upload file** — select a source file and choose **Add source**.
 - **Web source** — paste an HTTPS source URL and choose **Add source**. GitHub tree URLs are supported, including a source such as `https://github.com/5etools-mirror-3/5etools-src/tree/main/data`.
 
 That is the complete normal user workflow.
 
+Rules Core validates compatibility before importing anything. If an uploaded file is not compatible, the request returns an error. If a Web source contains no compatible files beneath the selected source location, the request returns an error rather than creating an empty source.
+
+Compatibility is intentionally the contract instead of JSON itself. The current compatibility implementation supports the existing 5e.tools-shaped JSON entity format. Additional source formats can be added later without changing the user-facing **Upload file** and **Web source** workflow.
+
 Rules Core then performs the internal work automatically:
 
 1. validates and reads the submitted source;
-2. discovers the contained 5e.tools source codes;
+2. discovers the contained source identities required by the compatible format;
 3. partitions an aggregate corpus by source code internally so unrelated publications are not assigned one logical work identity;
 4. imports complete entity objects into immutable Source Layer revisions;
 5. creates a restricted source package for the account's added source;
@@ -28,13 +32,15 @@ Another account does not receive access merely because one account added a sourc
 
 ## Web-source safety
 
-Web sources must use HTTPS and can not contain embedded credentials. Rules Core rejects loopback, private, link-local, carrier-grade NAT, multicast, and other non-public destinations. Redirects are not followed. GitHub tree sources are enumerated beneath the selected tree path and JSON files that are not usable 5e.tools entity documents are ignored.
+Web sources must use HTTPS and can not contain embedded credentials. Rules Core rejects loopback, private, link-local, carrier-grade NAT, multicast, and other non-public destinations. Redirects are not followed. GitHub tree sources are enumerated beneath the selected tree path. Files that are not compatible with a supported source format are ignored while resolving the tree; if none are compatible, the Web source is rejected.
+
+The current compatibility implementation considers 5e.tools-shaped JSON entity files. Narrative book/adventure JSON and other JSON documents that do not contain compatible entities are not treated as compatible source files merely because they are valid JSON.
 
 ## Upload snapshots and Web source refresh
 
 An uploaded file is an immutable snapshot. To use a newer file, add the newer file.
 
-A Web source retains its URL and can be refreshed. Refreshing re-reads the source and imports only the resulting immutable revisions; existing Source Layer history is not overwritten.
+A Web source retains its URL and can be refreshed. Refreshing re-reads the source and imports only the resulting immutable revisions; existing Source Layer history is not overwritten. A refresh that no longer resolves any compatible files fails instead of replacing the source with an empty import.
 
 ## Advanced administration remains separate
 
