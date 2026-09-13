@@ -36,21 +36,39 @@ Version detection is advisory. It may use confirmed concept bindings, confirmed 
 
 Detection by itself does not create concepts, bind sources, create lineage, make a rule decision, or publish anything automatically. A Rules Lawyer must first confirm that implementations belong to the same concept.
 
-## Automatic no-change resolution
+## Automatic compatible resolution
 
-After a source implementation is deliberately bound to a concept, Rules Core checks whether the latest accessible implementations span multiple D&D editions and contain exactly the same rule-bearing JSON. The comparison canonicalizes object-property ordering and ignores only top-level identity/provenance markers such as name, source code, page, edition flags, basic-rules flags, and reprint/reference metadata.
+After a source implementation is deliberately bound to a concept, Rules Core checks whether the latest accessible implementations span multiple D&D editions and are mechanically compatible. The comparison canonicalizes object-property ordering and ignores only top-level identity/provenance markers such as name, source code, page, edition flags, basic-rules flags, and reprint/reference metadata.
 
-If every bound latest implementation is mechanically identical and the concept has no prior ruling, Rules Core automatically creates an append-only `select-source` global decision. The newest publication is used as the representative base only because the rule content is identical; the other equivalent revisions are recorded as reviewed reference provenance. Publication remains a separate explicit action.
+Two automatic cases are allowed:
 
-Automatic decisions are revalidated against the current latest revision of every bound implementation. If a later import or newly bound edition introduces a rule-bearing difference, the earlier automatic decision remains in append-only history but is no longer treated as the current ruling in authoring. Publication is blocked until a Rules Lawyer makes a new manual decision. If another equivalent implementation is added instead, Rules Core can append a refreshed automatic decision so its provenance covers the current comparison set.
+1. **No-change:** every bound implementation contains exactly the same rule-bearing content.
+2. **Non-destructive additive:** the bound implementations can be combined without replacing or contradicting any shared rule-bearing value. Shared scalar values must match exactly. Object properties may be added. Named array entries, such as monster traits or actions, may be added or omitted so long as entries with the same identity remain compatible and shared ordering is not contradictory. Anonymous or ambiguous array changes remain manual.
 
-If an existing exact-source manual decision already resolves equivalent content, it is retained without creating decision churn. Existing patched/manual rulings are never replaced automatically. Any rule-bearing difference, inaccessible bound source, missing edition metadata, or other ambiguity leaves the concept for normal manual adjudication.
+The additive case covers all of these common patterns:
+
+- a newer monster is otherwise unchanged and adds an ability;
+- a newer monster is otherwise unchanged and omits an older compatible ability, in which case the omission does not destructively remove that ability from the Dorks & Dice result;
+- the older version contains ability A while the newer version contains ability B, with all shared mechanics unchanged, in which case the resolved result can retain both A and B.
+
+This is not a generic JSON union. A changed number, rewritten text, changed same-named ability, incompatible type change, conflicting array order, or other replacement is a conflict and requires manual adjudication.
+
+When compatible implementations qualify, Rules Core creates an append-only automatic global decision:
+
+- if an exact bound source revision already contains the complete compatible result, Rules Core records a normal `select-source` decision for that revision, even when the complete revision is the older edition;
+- if no one source contains the complete compatible result, Rules Core selects the preferred source revision as the base and records a deterministic `json-merge-patch` containing only the verified additive result.
+
+Source revisions that actually contribute compatible content to an automatic additive merge are recorded as `incorporated`; revisions that were reviewed but add nothing beyond the selected base are recorded as `reference`. Publication remains a separate explicit action.
+
+Automatic decisions are revalidated against the current latest revision of every bound implementation. If a later import or newly bound edition introduces a conflict, the earlier automatic decision remains in append-only history but is no longer treated as the current ruling in authoring. Publication is blocked until the concept is resolved again. If the comparison remains identical or additively compatible, Rules Core can append a refreshed automatic decision whose provenance covers the current comparison set.
+
+An existing manual or patched ruling is never replaced automatically. An existing exact-source manual decision may be retained without decision churn only when that exact source already contains the complete compatible result. Inaccessible bound sources, missing edition metadata, conflicting values, or other ambiguity leave the concept for normal manual adjudication.
 
 This is intentionally conservative: false negatives create extra review work, while false positives could silently change table rules.
 
 ## Manual consolidation
 
-When implementations differ, a consolidation workspace presents every source implementation bound to a concept, including accessible immutable revisions and confirmed lineage. A Rules Lawyer selects one exact source revision as the base and can use the existing merge/structured patch system to construct the Dorks & Dice result.
+When implementations differ beyond the safe compatible cases, a consolidation workspace presents every source implementation bound to a concept, including accessible immutable revisions and confirmed lineage. A Rules Lawyer selects one exact source revision as the base and can use the existing merge/structured patch system to construct the Dorks & Dice result.
 
 Additional source revisions can be recorded as:
 
@@ -63,4 +81,4 @@ The resulting decision remains append-only and is not live until the normal glob
 
 ## Source access
 
-Every source-backed comparison, contribution, lineage authoring operation, detected-version binding, and automatic no-change check independently enforces Rules Core source access. Rules Lawyer authority does not grant access to restricted source content.
+Every source-backed comparison, contribution, lineage authoring operation, detected-version binding, and automatic compatibility check independently enforces Rules Core source access. Rules Lawyer authority does not grant access to restricted source content.
