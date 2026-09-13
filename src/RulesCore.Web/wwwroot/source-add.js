@@ -30,7 +30,7 @@ async function buildAddSourceCard(app) {
         element("h4", { className: "h5 mb-1", text: "Add Source" }),
         element("p", {
             className: "text-body-secondary mb-0",
-            text: "Add a compatible source for your account. Choose a file or a web source; Rules Core handles compatibility checks, internal source metadata, and source-code partitioning."
+            text: "Add a compatible source for your account. Choose a file or a Web source; Rules Core handles format detection, publication identity, and provenance."
         })),
     badge("Your account", "secondary"));
     card.append(heading);
@@ -105,7 +105,7 @@ async function buildAddSourceCard(app) {
             const added = await app.api.addCurrentUserSource(payload);
             result.replaceChildren(alertNode(
                 "success",
-                `${added.displayName} added. ${added.sourceCodeCount} source code(s), ${added.entityCount} entities are now available to your account.`));
+                `${added.displayName} added. ${added.sourceCodeCount} publication(s), ${added.entityCount} source record(s) are now available to your account.`));
             if (kind.value === "upload") file.value = "";
             await renderExistingSources(app, existing, result);
         } catch (error) {
@@ -156,7 +156,7 @@ async function renderExistingSources(app, container, result) {
                         const refreshed = await app.api.refreshCurrentUserSource(source.id);
                         result.replaceChildren(alertNode(
                             "success",
-                            `${refreshed.displayName} refreshed. ${refreshed.entityCount} entities processed.`));
+                            `${refreshed.displayName} refreshed. ${refreshed.entityCount} source record(s) processed.`));
                         await renderExistingSources(app, container, result);
                     } catch (error) {
                         result.replaceChildren(alertNode("danger", describeError(error)));
@@ -169,8 +169,8 @@ async function renderExistingSources(app, container, result) {
 
             const metadata = [
                 source.kind === "web" ? "Web source" : "Uploaded file",
-                `${source.sourceCodeCount} source code(s)`,
-                `${source.entityCount} entities`,
+                `${source.sourceCodeCount} publication(s)`,
+                `${source.entityCount} source record(s)`,
                 `updated ${formatDate(source.refreshedAt)}`
             ].join(" · ");
             list.append(element("div", { className: "list-group-item px-0" },
