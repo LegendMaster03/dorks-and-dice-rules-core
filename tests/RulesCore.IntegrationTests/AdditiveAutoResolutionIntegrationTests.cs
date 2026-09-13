@@ -2,6 +2,7 @@ using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
+using RulesCore.Domain.Rules;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Rules;
 using RulesCore.Infrastructure.Sources;
@@ -187,7 +188,7 @@ public sealed class AdditiveAutoResolutionIntegrationTests
     private static ImportedSourceEntity Find(SourceImportResult import, string name) =>
         import.Entities.Single(value => value.Name == name);
 
-    private static async Task<RulesCore.Domain.Rules.GlobalRuleDecision> BindPairAndGetDecisionAsync(
+    private static async Task<GlobalRuleDecision> BindPairAndGetDecisionAsync(
         RulesCoreDbContext db,
         GlobalRulesService rules,
         string conceptKey,
