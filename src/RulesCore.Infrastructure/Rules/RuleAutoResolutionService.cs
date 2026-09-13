@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
 using RulesCore.Domain.Rules;
@@ -22,13 +23,20 @@ public static class RuleAutoResolutionService
     private const string NoChangeAutoResolutionNote =
         "Auto-resolved: no rule-bearing content changed across the bound editions.";
     private const string AdditiveAutoResolutionNote =
-        "Auto-resolved-additive: bound editions differ only by non-destructive additions; the semantic superset was selected.";
+        "Auto-resolved-additive: bound editions were combined using only non-destructive compatible additions.";
 
-    public static bool IsAutomaticDecision(GlobalRuleDecision decision) =>
-        string.Equals(decision.DecisionKind, RuleDecisionKinds.SelectSource, StringComparison.Ordinal)
-        && decision.PatchFingerprint is null
-        && (decision.Note?.StartsWith("Auto-resolved:", StringComparison.Ordinal) == true
-            || decision.Note?.StartsWith("Auto-resolved-additive:", StringComparison.Ordinal) == true);
+    public static bool IsAutomaticDecision(GlobalRuleDecision decision)
+    {
+        if (decision.Note?.StartsWith("Auto-resolved:", StringComparison.Ordinal) == true)
+        {
+            return string.Equals(decision.DecisionKind, RuleDecisionKinds.SelectSource, StringComparison.Ordinal)
+                && decision.PatchFingerprint is null;
+        }
+
+        return decision.Note?.StartsWith("Auto-resolved-additive:", StringComparison.Ordinal) == true
+            && (string.Equals(decision.DecisionKind, RuleDecisionKinds.SelectSource, StringComparison.Ordinal)
+                || string.Equals(decision.DecisionKind, RuleDecisionKinds.JsonMergePatch, StringComparison.Ordinal));
+    }
 
     public static async Task<bool> IsCurrentAutomaticDecisionAsync(
         RulesCoreDbContext dbContext,
@@ -47,21 +55,14 @@ public static class RuleAutoResolutionService
             decision.RuleConceptId,
             actorUserId,
             cancellationToken);
-        if (!evaluation.Eligible || evaluation.SelectedSemanticFingerprint is null)
+        if (!evaluation.Eligible || evaluation.SelectedRevisionId is null)
         {
             return false;
         }
 
-        var selectedRevision = await dbContext.SourceEntityRevisions
-            .AsNoTracking()
-            .SingleOrDefaultAsync(
-                value => value.Id == decision.SelectedSourceEntityRevisionId,
-                cancellationToken);
-        return selectedRevision is not null
-            && string.Equals(
-                ComputeSemanticFingerprint(selectedRevision.RawJson),
-                evaluation.SelectedSemanticFingerprint,
-                StringComparison.Ordinal);
+        return decision.SelectedSourceEntityRevisionId == evaluation.SelectedRevisionId.Value
+            && string.Equals(decision.DecisionKind, evaluation.DecisionKind, StringComparison.Ordinal)
+            && string.Equals(decision.PatchFingerprint, evaluation.PatchFingerprint, StringComparison.Ordinal);
     }
 
     public static async Task<RuleAutoResolutionResult> TryResolveAsync(
@@ -76,27 +77,21 @@ public static class RuleAutoResolutionService
             actorUserId,
             cancellationToken);
         if (!evaluation.Eligible
-            || evaluation.SelectedSemanticFingerprint is null
             || evaluation.SelectedRevisionId is null
+            || evaluation.ResolvedSemanticFingerprint is null
             || evaluation.Contexts.Count == 0)
         {
             return NotEligible(evaluation.Reason);
         }
 
         var actor = RequireActor(actorUserId);
-        var semanticFingerprint = evaluation.SelectedSemanticFingerprint;
         var contexts = evaluation.Contexts;
         var baseContext = contexts.Single(value => value.Revision.Id == evaluation.SelectedRevisionId.Value);
         var contributions = contexts
             .Where(value => value.Revision.Id != baseContext.Revision.Id)
             .OrderBy(value => value.Metadata.GameEdition, StringComparer.Ordinal)
             .ThenBy(value => value.Source.SourceCode, StringComparer.Ordinal)
-            .Select(value => new RuleConsolidationContributionRequest(
-                value.Revision.Id,
-                RuleConsolidationContributionKinds.Reference,
-                string.Equals(value.SemanticFingerprint, semanticFingerprint, StringComparison.Ordinal)
-                    ? "Automatically reviewed as mechanically identical to the selected source revision."
-                    : "Automatically reviewed as a non-destructive semantic subset of the selected source revision."))
+            .Select(value => BuildContribution(baseContext, value, evaluation.Mode))
             .ToArray();
 
         var latestDecision = await dbContext.GlobalRuleDecisions
@@ -107,7 +102,8 @@ public static class RuleAutoResolutionService
         if (latestDecision is not null && !IsAutomaticDecision(latestDecision))
         {
             if (!string.Equals(latestDecision.DecisionKind, RuleDecisionKinds.SelectSource, StringComparison.Ordinal)
-                || latestDecision.PatchFingerprint is not null)
+                || latestDecision.PatchFingerprint is not null
+                || evaluation.PatchFingerprint is not null)
             {
                 return NotEligible(
                     "An existing manual or patched decision is authoritative and will not be replaced automatically.");
@@ -121,7 +117,7 @@ public static class RuleAutoResolutionService
             if (selectedRevision is not null
                 && string.Equals(
                     ComputeSemanticFingerprint(selectedRevision.RawJson),
-                    semanticFingerprint,
+                    evaluation.ResolvedSemanticFingerprint,
                     StringComparison.Ordinal))
             {
                 return new RuleAutoResolutionResult(
@@ -130,12 +126,19 @@ public static class RuleAutoResolutionService
                     latestDecision.Id,
                     latestDecision.DecisionNumber,
                     evaluation.Mode == AdditiveMode
-                        ? "The existing exact-source decision already selects the non-destructive semantic superset."
+                        ? "The existing exact-source decision already contains the complete non-destructive additive result."
                         : "The existing exact-source decision already resolves the unchanged cross-edition rule.");
             }
 
             return NotEligible(
                 "The current manual decision selects mechanically different content and requires manual review.");
+        }
+
+        JsonElement? mergePatch = null;
+        if (!string.IsNullOrWhiteSpace(evaluation.MergePatchJson))
+        {
+            using var patchDocument = JsonDocument.Parse(evaluation.MergePatchJson);
+            mergePatch = patchDocument.RootElement.Clone();
         }
 
         var rules = new GlobalRulesService(dbContext);
@@ -146,6 +149,7 @@ public static class RuleAutoResolutionService
                 evaluation.Mode == AdditiveMode
                     ? AdditiveAutoResolutionNote
                     : NoChangeAutoResolutionNote,
+                MergePatch: mergePatch,
                 Contributions: contributions),
             actor,
             cancellationToken);
@@ -157,7 +161,9 @@ public static class RuleAutoResolutionService
             decision.Value.DecisionNumber,
             decision.Created
                 ? evaluation.Mode == AdditiveMode
-                    ? "Non-destructive additive cross-edition differences were resolved automatically by selecting the semantic superset."
+                    ? evaluation.PatchFingerprint is null
+                        ? "A complete compatible source implementation was selected automatically."
+                        : "Compatible cross-edition additions were combined automatically without removing rule-bearing content."
                     : "Equivalent cross-edition source implementations were resolved automatically."
                 : evaluation.Mode == AdditiveMode
                     ? "The additive cross-edition decision was already current."
@@ -166,6 +172,39 @@ public static class RuleAutoResolutionService
 
     internal static string ComputeSemanticFingerprint(string rawJson) =>
         RuleSemanticCompatibility.ComputeFingerprint(rawJson);
+
+    private static RuleConsolidationContributionRequest BuildContribution(
+        SourceContext baseContext,
+        SourceContext contribution,
+        string? mode)
+    {
+        if (mode != AdditiveMode)
+        {
+            return new RuleConsolidationContributionRequest(
+                contribution.Revision.Id,
+                RuleConsolidationContributionKinds.Reference,
+                "Automatically reviewed as mechanically identical to the selected source revision.");
+        }
+
+        var pairMerge = RuleSemanticCompatibility.TryCreateAdditiveUnion(
+            baseContext.Revision.RawJson,
+            [contribution.Revision.RawJson]);
+        var contributesContent = pairMerge.Compatible
+            && pairMerge.MergedJson is not null
+            && !string.Equals(
+                ComputeSemanticFingerprint(pairMerge.MergedJson),
+                baseContext.SemanticFingerprint,
+                StringComparison.Ordinal);
+
+        return new RuleConsolidationContributionRequest(
+            contribution.Revision.Id,
+            contributesContent
+                ? RuleConsolidationContributionKinds.Incorporated
+                : RuleConsolidationContributionKinds.Reference,
+            contributesContent
+                ? "Automatically incorporated compatible rule-bearing additions from this source revision."
+                : "Automatically reviewed as compatible context that does not add beyond the selected base revision.");
+    }
 
     private static async Task<AutoResolutionEvaluation> EvaluateAsync(
         RulesCoreDbContext dbContext,
@@ -263,29 +302,80 @@ public static class RuleAutoResolutionService
                 contexts,
                 representative.Revision.Id,
                 representative.SemanticFingerprint,
+                RuleDecisionKinds.SelectSource,
+                null,
+                null,
                 IdenticalMode);
         }
 
-        var supersets = contexts
-            .Where(candidate => contexts.All(other =>
-                other.Revision.Id == candidate.Revision.Id
-                || RuleSemanticCompatibility.IsSubset(
-                    other.Revision.RawJson,
-                    candidate.Revision.RawJson)))
+        var preferredBase = SelectRepresentativeContext(contexts);
+        var mergeOrder = contexts
+            .Where(value => value.Revision.Id != preferredBase.Revision.Id)
+            .OrderByDescending(value => value.Metadata.PublicationDate ?? DateOnly.MinValue)
+            .ThenByDescending(value => value.Metadata.GameEdition, StringComparer.Ordinal)
+            .ThenBy(value => value.Source.SourceCode, StringComparer.Ordinal)
+            .ThenBy(value => value.Source.Id)
+            .Select(value => value.Revision.RawJson)
             .ToArray();
-        if (supersets.Length == 0)
+        var additiveMerge = RuleSemanticCompatibility.TryCreateAdditiveUnion(
+            preferredBase.Revision.RawJson,
+            mergeOrder);
+        if (!additiveMerge.Compatible || additiveMerge.MergedJson is null)
         {
             return NotEligibleEvaluation(
-                "The bound editions contain conflicting or non-additive rule-bearing differences and require manual adjudication.");
+                $"{additiveMerge.Reason} Manual adjudication is required.");
         }
 
-        var additiveRepresentative = SelectRepresentativeContext(supersets);
+        var resolvedFingerprint = ComputeSemanticFingerprint(additiveMerge.MergedJson);
+        var exactCompleteSources = contexts
+            .Where(value => string.Equals(
+                value.SemanticFingerprint,
+                resolvedFingerprint,
+                StringComparison.Ordinal))
+            .ToArray();
+        if (exactCompleteSources.Length > 0)
+        {
+            var completeSource = SelectRepresentativeContext(exactCompleteSources);
+            return new AutoResolutionEvaluation(
+                Eligible: true,
+                "The bound editions differ only by compatible additions or omissions, and one exact source revision contains the complete additive result.",
+                contexts,
+                completeSource.Revision.Id,
+                resolvedFingerprint,
+                RuleDecisionKinds.SelectSource,
+                null,
+                null,
+                AdditiveMode);
+        }
+
+        NormalizedJsonMergePatch? patch;
+        try
+        {
+            patch = RuleSemanticCompatibility.CreateAdditivePatch(
+                preferredBase.Revision.RawJson,
+                additiveMerge.MergedJson);
+        }
+        catch (InvalidOperationException exception)
+        {
+            return NotEligibleEvaluation(
+                $"{exception.Message} Manual adjudication is required.");
+        }
+
+        if (patch is null)
+        {
+            return NotEligibleEvaluation(
+                "The additive comparison did not produce a stable source or patch. Manual adjudication is required.");
+        }
+
         return new AutoResolutionEvaluation(
             Eligible: true,
-            "The bound editions differ only by non-destructive additions; one source is a semantic superset of every other bound edition.",
+            "The bound editions differ only by compatible non-destructive additions and can be represented as an additive merge over the preferred source revision.",
             contexts,
-            additiveRepresentative.Revision.Id,
-            additiveRepresentative.SemanticFingerprint,
+            preferredBase.Revision.Id,
+            resolvedFingerprint,
+            RuleDecisionKinds.JsonMergePatch,
+            patch.Json,
+            patch.Fingerprint,
             AdditiveMode);
     }
 
@@ -310,14 +400,17 @@ public static class RuleAutoResolutionService
         new(false, false, null, null, reason);
 
     private static AutoResolutionEvaluation NotEligibleEvaluation(string reason) =>
-        new(false, reason, [], null, null, null);
+        new(false, reason, [], null, null, null, null, null, null);
 
     private sealed record AutoResolutionEvaluation(
         bool Eligible,
         string Reason,
         IReadOnlyList<SourceContext> Contexts,
         Guid? SelectedRevisionId,
-        string? SelectedSemanticFingerprint,
+        string? ResolvedSemanticFingerprint,
+        string? DecisionKind,
+        string? MergePatchJson,
+        string? PatchFingerprint,
         string? Mode);
 
     private sealed record SourceContext(
