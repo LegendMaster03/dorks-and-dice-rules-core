@@ -126,7 +126,7 @@ async function buildAddSourceCard(app) {
             if (added?.status === "queued" || added?.status === "running") {
                 result.replaceChildren(alertNode(
                     "info",
-                    `${added.displayName} is queued for import. You can leave this page; Rules Core will continue processing it in the background.`));
+                    `${added.displayName} is queued for import. Progress will appear below and Rules Core will continue processing it if you leave this page.`));
             } else {
                 result.replaceChildren(alertNode(
                     "success",
@@ -187,6 +187,7 @@ async function renderExistingSources(app, container, result) {
                         className: "small text-body-secondary text-break",
                         text: `${metadata} · ${job.url ?? ""}`
                     }),
+                    !failed ? buildProgressView(job) : null,
                     failed && job.error
                         ? element("div", { className: "small text-danger mt-1", text: job.error })
                         : null),
@@ -220,7 +221,7 @@ async function renderExistingSources(app, container, result) {
                             const job = await app.api.refreshCurrentUserSource(source.id);
                             result.replaceChildren(alertNode(
                                 "info",
-                                `${job.displayName} refresh queued. Rules Core will continue processing it in the background.`));
+                                `${job.displayName} refresh queued. Progress will appear above while Rules Core processes it.`));
                             await renderExistingSources(app, container, result);
                         } catch (error) {
                             result.replaceChildren(alertNode("danger", describeError(error)));
@@ -256,6 +257,59 @@ async function renderExistingSources(app, container, result) {
         }
     } catch (error) {
         container.replaceChildren(alertNode("warning", `Added sources could not be loaded: ${describeError(error)}`));
+    }
+}
+
+function buildProgressView(job) {
+    const stage = progressStageLabel(job.progressStage, job.status);
+    const current = Number.isInteger(job.progressCurrent) ? job.progressCurrent : null;
+    const total = Number.isInteger(job.progressTotal) && job.progressTotal > 0
+        ? job.progressTotal
+        : null;
+    const hasMeasuredProgress = current !== null && total !== null;
+    const summary = hasMeasuredProgress
+        ? `${stage} · ${current} of ${total} files`
+        : stage;
+    const wrapper = element("div", { className: "mt-2" },
+        element("div", { className: "small fw-semibold", text: summary }));
+
+    const progress = element("div", { className: "progress mt-1", role: "progressbar" });
+    const bar = element("div", {
+        className: hasMeasuredProgress
+            ? "progress-bar"
+            : "progress-bar progress-bar-striped progress-bar-animated"
+    });
+    if (hasMeasuredProgress) {
+        const percent = Math.max(0, Math.min(100, Math.round((current / total) * 100)));
+        bar.style.width = `${percent}%`;
+        progress.setAttribute("aria-valuenow", String(percent));
+        progress.setAttribute("aria-valuemin", "0");
+        progress.setAttribute("aria-valuemax", "100");
+    } else {
+        bar.style.width = "100%";
+    }
+    progress.append(bar);
+    wrapper.append(progress);
+
+    if (job.progressDetail) {
+        wrapper.append(element("div", {
+            className: "small text-body-secondary text-break mt-1",
+            text: job.progressDetail
+        }));
+    }
+    return wrapper;
+}
+
+function progressStageLabel(stage, status) {
+    switch (stage) {
+        case "queued": return "Waiting for background importer";
+        case "starting": return "Starting import";
+        case "discovering": return "Discovering source files";
+        case "downloading": return "Downloading source files";
+        case "importing": return "Importing source data";
+        case "checking": return "Checking upstream source";
+        case "finalizing": return "Finalizing import";
+        default: return status === "queued" ? "Waiting for background importer" : "Processing source";
     }
 }
 
