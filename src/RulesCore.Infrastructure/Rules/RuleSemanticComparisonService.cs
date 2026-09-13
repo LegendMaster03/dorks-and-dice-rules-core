@@ -44,16 +44,14 @@ public sealed class RuleSemanticComparisonService(RulesCoreDbContext dbContext)
         var revisions = await dbContext.SourceEntityRevisions
             .AsNoTracking()
             .Include(value => value.SourceEntity)
-                .ThenInclude(value => value.SourceEdition)
-                .ThenInclude(value => value.SourceWork)
                 .ThenInclude(value => value.SourcePackage)
                 .ThenInclude(value => value.UserGrants)
             .Where(value => revisionIds.Contains(value.Id)
                 && dbContext.RuleConceptSourceBindings.Any(binding =>
                     binding.RuleConceptId == request.RuleConceptId
                     && binding.SourceEntityId == value.SourceEntityId)
-                && (value.SourceEntity.SourceEdition.SourceWork.SourcePackage.IsPublic
-                    || value.SourceEntity.SourceEdition.SourceWork.SourcePackage.UserGrants
+                && (value.SourceEntity.SourcePackage.IsPublic
+                    || value.SourceEntity.SourcePackage.UserGrants
                         .Any(grant => grant.UserId == userId)))
             .ToArrayAsync(cancellationToken);
 
@@ -96,9 +94,7 @@ public sealed class RuleSemanticComparisonService(RulesCoreDbContext dbContext)
             compatibleCount,
             contradictionCount,
             compatibility.Compatible,
-            compatibility.Compatible
-                ? compatibility.Reason
-                : compatibility.Reason,
+            compatibility.Reason,
             differences);
     }
 
