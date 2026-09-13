@@ -66,7 +66,7 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
             entity.HasOne(value => value.PreviousSourceRepresentation)
                 .WithMany(value => value.SupersedingRepresentations)
                 .HasForeignKey(value => value.PreviousSourceRepresentationId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<SourceEntity>(entity =>
@@ -115,7 +115,7 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
             entity.HasOne(value => value.SourceRepresentation)
                 .WithMany(value => value.EntityRevisions)
                 .HasForeignKey(value => value.SourceRepresentationId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<UserSourceGrant>(entity =>
