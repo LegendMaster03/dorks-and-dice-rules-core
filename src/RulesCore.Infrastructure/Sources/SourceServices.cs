@@ -140,6 +140,18 @@ public sealed class SourceImportService(RulesCoreDbContext dbContext) : ISourceI
                 representation),
             cancellationToken);
 
+        if (preview.ReleaseKind is not null)
+        {
+            var releaseKinds = new CanonicalPublicationReleaseKindService(dbContext);
+            foreach (var publication in imported.Publications)
+            {
+                await releaseKinds.MergeAsync(
+                    publication.CanonicalPublicationId,
+                    preview.ReleaseKind,
+                    cancellationToken);
+            }
+        }
+
         return new SourceImportResult(
             imported.PackageId,
             imported.Entities,
