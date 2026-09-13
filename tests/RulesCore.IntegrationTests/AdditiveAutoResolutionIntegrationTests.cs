@@ -12,7 +12,7 @@ namespace RulesCore.IntegrationTests;
 public sealed class AdditiveAutoResolutionIntegrationTests
 {
     [Fact]
-    public async Task CrossEditionAdditionsSelectTheNonDestructiveSemanticSuperset()
+    public async Task CrossEditionAdditionsBuildNonDestructiveResults()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
         if (string.IsNullOrWhiteSpace(connectionString))
@@ -31,12 +31,14 @@ public sealed class AdditiveAutoResolutionIntegrationTests
         var newPackageKey = $"additive-new-{token}";
         var newerSupersetConceptKey = $"monster.newer-superset-{token}";
         var olderSupersetConceptKey = $"monster.older-superset-{token}";
+        var combinedConceptKey = $"monster.additive-union-{token}";
         var conflictConceptKey = $"monster.conflict-{token}";
         var packageKeys = new[] { oldPackageKey, newPackageKey };
         var conceptKeys = new[]
         {
             newerSupersetConceptKey,
             olderSupersetConceptKey,
+            combinedConceptKey,
             conflictConceptKey
         };
 
@@ -61,6 +63,11 @@ public sealed class AdditiveAutoResolutionIntegrationTests
                     Trait("Shared Trait", "Shared rule text."),
                     Trait("Legacy Ability", "Compatible ability retained from the older edition.")
                 ],
+                additiveUnionTraits:
+                [
+                    Trait("Shared Trait", "Shared rule text."),
+                    Trait("Legacy Ability", "Compatible older ability.")
+                ],
                 conflictHitPoints: 20));
 
             var newImport = await importer.Import5eToolsDocumentAsync(MonsterRequest(
@@ -79,12 +86,19 @@ public sealed class AdditiveAutoResolutionIntegrationTests
                 [
                     Trait("Shared Trait", "Shared rule text.")
                 ],
+                additiveUnionTraits:
+                [
+                    Trait("Shared Trait", "Shared rule text."),
+                    Trait("Modern Ability", "Compatible newer ability.")
+                ],
                 conflictHitPoints: 24));
 
             var oldNewerSuperset = oldImport.Entities.Single(value => value.Name == "Newer Superset Monster");
             var newNewerSuperset = newImport.Entities.Single(value => value.Name == "Newer Superset Monster");
             var oldOlderSuperset = oldImport.Entities.Single(value => value.Name == "Older Superset Monster");
             var newOlderSuperset = newImport.Entities.Single(value => value.Name == "Older Superset Monster");
+            var oldCombined = oldImport.Entities.Single(value => value.Name == "Additive Union Monster");
+            var newCombined = newImport.Entities.Single(value => value.Name == "Additive Union Monster");
             var oldConflict = oldImport.Entities.Single(value => value.Name == "Conflicting Monster");
             var newConflict = newImport.Entities.Single(value => value.Name == "Conflicting Monster");
 
@@ -106,7 +120,7 @@ public sealed class AdditiveAutoResolutionIntegrationTests
             var newNewerRevisionId = await LatestRevisionIdAsync(db, newNewerSuperset.EntityId);
             Assert.Equal(newNewerRevisionId, newerDecision.SelectedSourceEntityRevisionId);
             Assert.Equal(RuleDecisionKinds.SelectSource, newerDecision.DecisionKind);
-            Assert.Contains("non-destructive additions", newerDecision.Note, StringComparison.OrdinalIgnoreCase);
+            Assert.StartsWith("Auto-resolved-additive:", newerDecision.Note);
 
             var olderSupersetConcept = (await rules.CreateConceptAsync(
                 new CreateRuleConceptRequest(olderSupersetConceptKey, "monster", "Older Superset Monster"),
@@ -125,7 +139,8 @@ public sealed class AdditiveAutoResolutionIntegrationTests
                 .SingleAsync(value => value.RuleConceptId == olderSupersetConcept.Id);
             var oldOlderRevisionId = await LatestRevisionIdAsync(db, oldOlderSuperset.EntityId);
             Assert.Equal(oldOlderRevisionId, olderDecision.SelectedSourceEntityRevisionId);
-            Assert.Contains("non-destructive additions", olderDecision.Note, StringComparison.OrdinalIgnoreCase);
+            Assert.Equal(RuleDecisionKinds.SelectSource, olderDecision.DecisionKind);
+            Assert.StartsWith("Auto-resolved-additive:", olderDecision.Note);
 
             var repeatedResolution = await RuleAutoResolutionService.TryResolveAsync(
                 db,
@@ -135,6 +150,47 @@ public sealed class AdditiveAutoResolutionIntegrationTests
             Assert.False(repeatedResolution.Applied);
             Assert.Equal(1, await db.GlobalRuleDecisions.CountAsync(
                 value => value.RuleConceptId == olderSupersetConcept.Id));
+
+            var combinedConcept = (await rules.CreateConceptAsync(
+                new CreateRuleConceptRequest(combinedConceptKey, "monster", "Additive Union Monster"),
+                "rules-lawyer")).Value;
+            await rules.BindSourceEntityAsync(
+                combinedConcept.Id,
+                new BindRuleConceptSourceRequest(oldCombined.EntityId),
+                "rules-lawyer");
+            await rules.BindSourceEntityAsync(
+                combinedConcept.Id,
+                new BindRuleConceptSourceRequest(newCombined.EntityId),
+                "rules-lawyer");
+
+            var combinedDecision = await db.GlobalRuleDecisions
+                .AsNoTracking()
+                .SingleAsync(value => value.RuleConceptId == combinedConcept.Id);
+            var newCombinedRevisionId = await LatestRevisionIdAsync(db, newCombined.EntityId);
+            Assert.Equal(newCombinedRevisionId, combinedDecision.SelectedSourceEntityRevisionId);
+            Assert.Equal(RuleDecisionKinds.JsonMergePatch, combinedDecision.DecisionKind);
+            Assert.NotNull(combinedDecision.PatchJson);
+            Assert.StartsWith("Auto-resolved-additive:", combinedDecision.Note);
+
+            var combinedBase = await db.SourceEntityRevisions
+                .AsNoTracking()
+                .SingleAsync(value => value.Id == combinedDecision.SelectedSourceEntityRevisionId);
+            var combinedDocument = JsonMergePatch.Apply(combinedBase.RawJson, combinedDecision.PatchJson);
+            var traitNames = combinedDocument.GetProperty("trait")
+                .EnumerateArray()
+                .Select(value => value.GetProperty("name").GetString())
+                .ToArray();
+            Assert.Contains("Legacy Ability", traitNames);
+            Assert.Contains("Modern Ability", traitNames);
+            Assert.Contains("Shared Trait", traitNames);
+
+            var combinedContributions = await db.RuleConsolidationContributions
+                .AsNoTracking()
+                .Where(value => value.GlobalRuleDecisionId == combinedDecision.Id)
+                .ToArrayAsync();
+            Assert.Contains(combinedContributions, value =>
+                value.SourceEntityRevisionId == oldCombined.EntityId == false
+                && value.ContributionKind == RuleConsolidationContributionKinds.Incorporated);
 
             var conflictConcept = (await rules.CreateConceptAsync(
                 new CreateRuleConceptRequest(conflictConceptKey, "monster", "Conflicting Monster"),
@@ -203,6 +259,7 @@ public sealed class AdditiveAutoResolutionIntegrationTests
         DateOnly publicationDate,
         object[] newerSupersetTraits,
         object[] olderSupersetTraits,
+        object[] additiveUnionTraits,
         int conflictHitPoints) =>
         new(
             packageKey,
@@ -233,6 +290,14 @@ public sealed class AdditiveAutoResolutionIntegrationTests
                         size = new[] { "M" },
                         hp = new { average = 20, formula = "4d8 + 2" },
                         trait = olderSupersetTraits
+                    },
+                    new
+                    {
+                        name = "Additive Union Monster",
+                        source = sourceCode,
+                        size = new[] { "M" },
+                        hp = new { average = 20, formula = "4d8 + 2" },
+                        trait = additiveUnionTraits
                     },
                     new
                     {
