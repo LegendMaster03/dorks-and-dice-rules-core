@@ -61,8 +61,8 @@ public sealed class LegacyCrossEditionResolutionIntegrationTests
             var resolvedThreeFive = await globalRules.ResolveLatestAsync(conceptKey, null);
             Assert.NotNull(resolvedThreeFive);
             Assert.Equal("SRD35", resolvedThreeFive!.SourceCode);
-            Assert.Equal("srd-3-5e", resolvedThreeFive.WorkKey);
-            Assert.Equal("3.5e SRD", resolvedThreeFive.EditionDisplayName);
+            Assert.Equal(packageKey, resolvedThreeFive.WorkKey);
+            Assert.Equal("5etools-json", resolvedThreeFive.EditionDisplayName);
             Assert.Contains(
                 "3.5e rule text",
                 resolvedThreeFive.Document.GetProperty("body").GetString(),
@@ -80,8 +80,8 @@ public sealed class LegacyCrossEditionResolutionIntegrationTests
             var resolvedThree = await globalRules.ResolveLatestAsync(conceptKey, null);
             Assert.NotNull(resolvedThree);
             Assert.Equal("SRD3", resolvedThree!.SourceCode);
-            Assert.Equal("srd-3e", resolvedThree.WorkKey);
-            Assert.Equal("3e SRD", resolvedThree.EditionDisplayName);
+            Assert.Equal(packageKey, resolvedThree.WorkKey);
+            Assert.Equal("5etools-json", resolvedThree.EditionDisplayName);
             Assert.Contains(
                 "3e rule text",
                 resolvedThree.Document.GetProperty("body").GetString(),
@@ -174,7 +174,7 @@ public sealed class LegacyCrossEditionResolutionIntegrationTests
             var resolvedContribution = Assert.Single(resolved.Contributions);
             Assert.Equal(threeRevisionId, resolvedContribution.SourceEntityRevisionId);
             Assert.Equal("SRD3", resolvedContribution.SourceCode);
-            Assert.Equal("srd-3e", resolvedContribution.WorkKey);
+            Assert.Equal(packageKey, resolvedContribution.WorkKey);
             Assert.Equal("3e", resolvedContribution.GameEdition);
             Assert.Equal(
                 RuleConsolidationContributionKinds.Incorporated,
