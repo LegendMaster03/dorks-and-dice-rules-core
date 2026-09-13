@@ -20,7 +20,8 @@ The UI must preserve the Source Layer / Rules Layer boundary:
 - Source material is evidence and provenance, not automatically the table rule.
 - Binding a source is deliberate.
 - Mechanically identical cross-edition implementations may auto-resolve after deliberate binding.
-- Mechanical differences require adjudication.
+- A purely additive/subtractive edition difference may also auto-resolve when one complete implementation is a non-destructive semantic superset of every other bound edition.
+- Conflicting or non-additive mechanical differences require adjudication.
 - Publication is always explicit.
 - Campaign rules inherit from a selected published global baseline unless overridden.
 
