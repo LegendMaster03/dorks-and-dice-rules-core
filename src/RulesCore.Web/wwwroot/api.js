@@ -63,6 +63,16 @@ export class RulesCoreApi {
         return this.backend(`/api/sources/entities/page?${parameters.toString()}`);
     }
 
+    getCurrentUserSources() { return this.backend("/api/sources/current-user"); }
+
+    addCurrentUserSource(payload) {
+        return this.backend("/api/sources/current-user", { method: "POST", body: payload });
+    }
+
+    refreshCurrentUserSource(currentUserSourceId) {
+        return this.backend(`/api/sources/current-user/${encodeURIComponent(currentUserSourceId)}/refresh`, { method: "POST" });
+    }
+
     previewSourceDocument(payload) {
         return this.backend("/api/source-admin/import/preview", { method: "POST", body: payload });
     }
