@@ -39,7 +39,7 @@ function createNormalizationCard(app, container) {
             element("h3", { className: "h5 mb-1", text: "Normalize imported sources" }),
             element("p", {
                 className: "text-body-secondary mb-0",
-                text: "Review deterministic concept suggestions for accessible source entities that are not bound yet. Binding remains deliberate; mechanically identical or non-destructive additive cross-edition rules may then resolve automatically."
+                text: "Review deterministic concept suggestions for accessible source entities that are not bound yet. Binding remains deliberate; mechanically identical cross-edition rules may then resolve automatically, as may non-destructive additive variants when one bound implementation is a semantic superset."
             })),
         badge("Rules Lawyer review", "primary"));
     card.append(heading);
