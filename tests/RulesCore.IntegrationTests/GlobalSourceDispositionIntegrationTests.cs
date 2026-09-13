@@ -1,3 +1,4 @@
+using System.Data;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +31,7 @@ public sealed class GlobalSourceDispositionIntegrationTests
         var packageKey = $"ignored-homebrew-{token}";
         var userId = $"ignore-user-{token}";
         Guid? packageId = null;
+        Guid? canonicalPublicationId = null;
 
         try
         {
@@ -60,6 +62,18 @@ public sealed class GlobalSourceDispositionIntegrationTests
                 Publisher: "Homebrew Publisher"));
             packageId = imported.PackageId;
             await grants.GrantAsync(userId, imported.PackageId);
+
+            await new CanonicalSourceIdentityService(db)
+                .IndexPackageAsync(imported.PackageId);
+            var publisherPropagation = await new CanonicalPublicationPublisherService(db)
+                .ReconcilePackageAsync(imported.PackageId);
+            Assert.Equal(1, publisherPropagation.UpdatedPublications);
+            Assert.Equal(0, publisherPropagation.ConflictingPublications);
+
+            var canonical = await ReadCanonicalPublisherAsync(db, imported.Entities.Single().EntityId);
+            Assert.NotNull(canonical);
+            canonicalPublicationId = canonical.Value.PublicationId;
+            Assert.Equal("Homebrew Publisher", canonical.Value.Publisher);
 
             var before = await normalization.GetCandidatesPageAsync(
                 userId,
@@ -116,6 +130,62 @@ public sealed class GlobalSourceDispositionIntegrationTests
                     await db.SaveChangesAsync();
                 }
             }
+
+            if (canonicalPublicationId is Guid publicationId)
+            {
+                var connection = db.Database.GetDbConnection();
+                var openedHere = connection.State != ConnectionState.Open;
+                if (openedHere) await connection.OpenAsync();
+                try
+                {
+                    await using var command = connection.CreateCommand();
+                    command.CommandText = "DELETE FROM canonical_publication WHERE canonical_publication_id = @id;";
+                    var parameter = command.CreateParameter();
+                    parameter.ParameterName = "@id";
+                    parameter.Value = publicationId;
+                    command.Parameters.Add(parameter);
+                    await command.ExecuteNonQueryAsync();
+                }
+                finally
+                {
+                    if (openedHere) await connection.CloseAsync();
+                }
+            }
+        }
+    }
+
+    private static async Task<(Guid PublicationId, string? Publisher)?> ReadCanonicalPublisherAsync(
+        RulesCoreDbContext db,
+        Guid sourceEntityId)
+    {
+        var connection = db.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync();
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT publication.canonical_publication_id, publication.publisher
+                FROM source_entity_occurrence_binding binding
+                JOIN canonical_source_occurrence occurrence
+                    ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
+                JOIN canonical_publication publication
+                    ON publication.canonical_publication_id = occurrence.canonical_publication_id
+                WHERE binding.source_entity_id = @entity_id;
+                """;
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = "@entity_id";
+            parameter.Value = sourceEntityId;
+            command.Parameters.Add(parameter);
+            await using var reader = await command.ExecuteReaderAsync();
+            if (!await reader.ReadAsync()) return null;
+            return (
+                reader.GetGuid(0),
+                reader.IsDBNull(1) ? null : reader.GetString(1));
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
         }
     }
 }
