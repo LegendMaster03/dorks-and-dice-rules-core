@@ -18,26 +18,52 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
     private static readonly HttpClient SharedHttpClient = CreateSharedHttpClient();
 
     private readonly RulesCoreDbContext dbContext;
-    private readonly ISourceImportService importer;
+    private readonly INormalizedSourceImportService importer;
+    private readonly ISourceFormatAdapterRegistry adapters;
     private readonly ISourceGrantService grants;
     private readonly HttpClient httpClient;
 
+    // Compatibility constructor retained for existing integration/bootstrap callers while
+    // current-user ingestion moves to the normalized adapter pipeline.
     public CurrentUserSourceService(
         RulesCoreDbContext dbContext,
-        ISourceImportService importer,
+        ISourceImportService legacyImporter,
         ISourceGrantService grants)
-        : this(dbContext, importer, grants, SharedHttpClient)
+        : this(
+            dbContext,
+            new NormalizedSourceImportService(dbContext),
+            CreateDefaultRegistry(),
+            grants,
+            SharedHttpClient)
     {
+        _ = legacyImporter;
     }
 
     public CurrentUserSourceService(
         RulesCoreDbContext dbContext,
-        ISourceImportService importer,
+        ISourceImportService legacyImporter,
+        ISourceGrantService grants,
+        HttpClient httpClient)
+        : this(
+            dbContext,
+            new NormalizedSourceImportService(dbContext),
+            CreateDefaultRegistry(),
+            grants,
+            httpClient)
+    {
+        _ = legacyImporter;
+    }
+
+    public CurrentUserSourceService(
+        RulesCoreDbContext dbContext,
+        INormalizedSourceImportService importer,
+        ISourceFormatAdapterRegistry adapters,
         ISourceGrantService grants,
         HttpClient httpClient)
     {
         this.dbContext = dbContext;
         this.importer = importer;
+        this.adapters = adapters;
         this.grants = grants;
         this.httpClient = httpClient;
     }
@@ -101,88 +127,84 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         var userId = RequireUserId(currentUserId);
         var kind = NormalizeKind(request.Kind);
 
-        string aggregateJson;
         string displayName;
         string? sourceUrl;
         string originIdentity;
         string provider;
+        IReadOnlyList<NormalizedSourceRepresentation> representations;
 
         if (kind == CurrentUserSourceKinds.Upload)
         {
-            aggregateJson = RequireJson(request.Json);
-            var fileName = NormalizeOptional(request.FileName, 500) ?? "Uploaded source.json";
+            var bytes = ReadUploadBytes(request);
+            var fileName = NormalizeOptional(request.FileName, 500)
+                ?? (request.Content is not null ? "Uploaded source.json" : "Uploaded source");
+            var hash = Fingerprint(bytes);
+            var artifact = new SourceRepresentationArtifact(
+                fileName,
+                bytes,
+                $"upload:{hash}",
+                MediaType: null);
+            var representation = adapters.TryRead(artifact)
+                ?? throw new InvalidDataException("The uploaded file is not compatible with Rules Core.");
+            representations = [representation];
             displayName = fileName;
             sourceUrl = null;
-            originIdentity = $"upload:{Fingerprint(aggregateJson)}";
+            originIdentity = artifact.OriginIdentity;
             provider = "user-upload";
         }
         else
         {
             var uri = RequireWebSourceUri(request.Url);
-            aggregateJson = await ResolveWebSourceAsync(uri, cancellationToken);
+            representations = await ResolveWebSourceAsync(uri, cancellationToken);
+            if (representations.Count == 0)
+            {
+                throw new InvalidDataException("The Web source did not contain any compatible files.");
+            }
             displayName = WebSourceDisplayName(uri);
             sourceUrl = uri.AbsoluteUri;
-            originIdentity = $"web:{sourceUrl}";
+            originIdentity = $"web:{NormalizeWebOrigin(uri)}";
             provider = uri.Host;
         }
 
-        var sourceCodes = FiveEToolsDocumentInspector.DiscoverSourceCodes(
-            aggregateJson,
-            "user-source");
-        if (sourceCodes.Count == 0)
-        {
-            throw new InvalidDataException("The source did not contain any importable 5e.tools entities.");
-        }
-
-        var originKey = Fingerprint(originIdentity);
-        var packageKey = $"user-source-{Fingerprint($"{userId}\n{originIdentity}")[..24]}";
+        var originKey = Fingerprint(Encoding.UTF8.GetBytes(originIdentity));
+        var packageKey = $"user-source-{Fingerprint(Encoding.UTF8.GetBytes($"{userId}\n{originIdentity}"))[..24]}";
         var packageDisplayName = kind == CurrentUserSourceKinds.Web
             ? $"Web source {sourceUrl}"
             : $"Uploaded source {originKey[..12]}";
 
         Guid? packageId = null;
         var entityCount = 0;
-        foreach (var sourceCode in sourceCodes)
+        var publicationKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var representation in representations)
         {
-            var filtered = FiveEToolsDocumentInspector.FilterBySourceCodes(
-                aggregateJson,
-                "user-source",
-                [sourceCode],
-                out var selectedEntityCount);
-            if (selectedEntityCount == 0)
-            {
-                continue;
-            }
-
-            var workKey = $"source-{NormalizeKeyPart(sourceCode)}";
-            var imported = await importer.Import5eToolsDocumentAsync(
-                new Import5eToolsDocumentRequest(
+            var imported = await importer.ImportAsync(
+                new ImportNormalizedSourceRequest(
                     packageKey,
                     packageDisplayName,
                     provider,
                     License: null,
                     IsPublic: false,
-                    workKey,
-                    sourceCode,
-                    EditionKey: "current",
-                    EditionDisplayName: "Current source",
-                    filtered,
-                    GameEdition: null,
-                    ReleaseKind: SourceReleaseKinds.Other,
-                    PublicationDate: null),
+                    representation),
                 cancellationToken);
-
             packageId ??= imported.PackageId;
             if (packageId != imported.PackageId)
             {
-                throw new InvalidOperationException("One added source unexpectedly resolved to multiple source packages.");
+                throw new InvalidOperationException(
+                    "One added source unexpectedly resolved to multiple source packages.");
             }
             entityCount += imported.Entities.Count;
+            foreach (var key in imported.SourceCodes)
+            {
+                publicationKeys.Add(key);
+            }
         }
 
-        if (packageId is null)
+        if (packageId is null || publicationKeys.Count == 0)
         {
-            throw new InvalidDataException("The source did not contain any importable 5e.tools entities.");
+            throw new InvalidDataException(
+                kind == CurrentUserSourceKinds.Web
+                    ? "The Web source did not contain any compatible files."
+                    : "The uploaded file is not compatible with Rules Core.");
         }
 
         await grants.GrantAsync(userId, packageId.Value, cancellationToken);
@@ -194,7 +216,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             sourceUrl,
             packageId.Value,
             originKey,
-            sourceCodes,
+            publicationKeys.OrderBy(value => value, StringComparer.OrdinalIgnoreCase).ToArray(),
             entityCount,
             cancellationToken);
     }
@@ -219,13 +241,153 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         if (!string.Equals(existing.Kind, CurrentUserSourceKinds.Web, StringComparison.Ordinal)
             || string.IsNullOrWhiteSpace(existing.Url))
         {
-            throw new InvalidOperationException("Uploaded files are immutable snapshots and can not be refreshed. Upload the newer file as a source instead.");
+            throw new InvalidOperationException(
+                "Uploaded files are immutable snapshots and can not be refreshed. Upload the newer file as a source instead.");
         }
 
         return await AddAsync(
             userId,
             new AddCurrentUserSourceRequest(CurrentUserSourceKinds.Web, Url: existing.Url),
             cancellationToken);
+    }
+
+    private async Task<IReadOnlyList<NormalizedSourceRepresentation>> ResolveWebSourceAsync(
+        Uri uri,
+        CancellationToken cancellationToken)
+    {
+        if (string.Equals(uri.Host, "github.com", StringComparison.OrdinalIgnoreCase)
+            && uri.AbsolutePath.Contains("/tree/", StringComparison.OrdinalIgnoreCase))
+        {
+            return await ResolveGitHubTreeAsync(uri, cancellationToken);
+        }
+
+        var fetched = await FetchBytesAsync(uri, cancellationToken);
+        var fileName = Path.GetFileName(uri.AbsolutePath);
+        if (string.IsNullOrWhiteSpace(fileName))
+        {
+            fileName = "web-source";
+        }
+        var artifact = new SourceRepresentationArtifact(
+            fileName,
+            fetched.Bytes,
+            $"web:{NormalizeWebOrigin(uri)}",
+            uri.AbsoluteUri,
+            fetched.MediaType);
+        var representation = adapters.TryRead(artifact);
+        return representation is null ? [] : [representation];
+    }
+
+    private async Task<IReadOnlyList<NormalizedSourceRepresentation>> ResolveGitHubTreeAsync(
+        Uri sourceUri,
+        CancellationToken cancellationToken)
+    {
+        var tree = ParseGitHubTreeUri(sourceUri);
+        var treeApiUri = new Uri(
+            $"https://api.github.com/repos/{Uri.EscapeDataString(tree.Owner)}/{Uri.EscapeDataString(tree.Repository)}/git/trees/{Uri.EscapeDataString(tree.Reference)}?recursive=1");
+        var treeBytes = await FetchBytesAsync(treeApiUri, cancellationToken);
+        using var treeDocument = JsonDocument.Parse(treeBytes.Bytes);
+        if (treeDocument.RootElement.TryGetProperty("truncated", out var truncated)
+            && truncated.ValueKind == JsonValueKind.True)
+        {
+            throw new InvalidDataException(
+                "GitHub truncated the repository tree. Use a narrower Web-source URL instead of importing an incomplete tree.");
+        }
+        if (!treeDocument.RootElement.TryGetProperty("tree", out var entries)
+            || entries.ValueKind != JsonValueKind.Array)
+        {
+            throw new InvalidDataException("GitHub tree response did not contain a tree array.");
+        }
+
+        var prefix = tree.Path.Trim('/');
+        var paths = entries.EnumerateArray()
+            .Where(entry =>
+                entry.TryGetProperty("type", out var type)
+                && type.ValueKind == JsonValueKind.String
+                && string.Equals(type.GetString(), "blob", StringComparison.Ordinal)
+                && entry.TryGetProperty("path", out var path)
+                && path.ValueKind == JsonValueKind.String)
+            .Select(entry => entry.GetProperty("path").GetString()!)
+            .Where(path =>
+                (string.IsNullOrEmpty(prefix)
+                    || string.Equals(path, prefix, StringComparison.Ordinal)
+                    || path.StartsWith(prefix + "/", StringComparison.Ordinal))
+                && adapters.IsCandidateFileName(path))
+            .OrderBy(path => path, StringComparer.Ordinal)
+            .ToArray();
+
+        if (paths.Length == 0)
+        {
+            throw new InvalidDataException("The Web source did not contain any compatible files.");
+        }
+        if (paths.Length > MaxResolvedDocuments)
+        {
+            throw new InvalidDataException(
+                $"The GitHub tree contains {paths.Length} candidate source files beneath the selected path; the maximum is {MaxResolvedDocuments}.");
+        }
+
+        var results = new List<NormalizedSourceRepresentation>();
+        foreach (var path in paths)
+        {
+            var rawUri = BuildGitHubRawUri(tree, path);
+            FetchedDocument fetched;
+            try
+            {
+                fetched = await FetchBytesAsync(rawUri, cancellationToken);
+            }
+            catch (HttpRequestException)
+            {
+                continue;
+            }
+
+            var artifact = new SourceRepresentationArtifact(
+                Path.GetFileName(path),
+                fetched.Bytes,
+                $"web:{NormalizeWebOrigin(sourceUri)}#{path}",
+                rawUri.AbsoluteUri,
+                fetched.MediaType);
+            var representation = adapters.TryRead(artifact);
+            if (representation is not null)
+            {
+                results.Add(representation);
+            }
+        }
+
+        if (results.Count == 0)
+        {
+            throw new InvalidDataException("The Web source did not contain any compatible files.");
+        }
+        return results;
+    }
+
+    private async Task<FetchedDocument> FetchBytesAsync(Uri uri, CancellationToken cancellationToken)
+    {
+        await EnsureRemoteUriSafeAsync(uri, cancellationToken);
+        using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+        request.Headers.Accept.ParseAdd("application/pdf, application/json;q=0.9, text/json;q=0.8, */*;q=0.1");
+        request.Headers.UserAgent.ParseAdd("dorks-and-dice-rules-core/1.0");
+        using var response = await httpClient.SendAsync(
+            request,
+            HttpCompletionOption.ResponseHeadersRead,
+            cancellationToken);
+        if ((int)response.StatusCode is >= 300 and < 400)
+        {
+            throw new HttpRequestException(
+                $"Web source '{uri}' redirected to another location. Add the final HTTPS URL instead.");
+        }
+        response.EnsureSuccessStatusCode();
+        if (response.Content.Headers.ContentLength is > MaxRemoteDocumentBytes)
+        {
+            throw new InvalidDataException(
+                $"Web source '{uri}' exceeds the {MaxRemoteDocumentBytes / (1024 * 1024)} MiB per-document limit.");
+        }
+
+        var bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
+        if (bytes.LongLength > MaxRemoteDocumentBytes)
+        {
+            throw new InvalidDataException(
+                $"Web source '{uri}' exceeds the {MaxRemoteDocumentBytes / (1024 * 1024)} MiB per-document limit.");
+        }
+        return new FetchedDocument(bytes, response.Content.Headers.ContentType?.MediaType);
     }
 
     private async Task<CurrentUserSourceView> UpsertRegistrationAsync(
@@ -235,12 +397,12 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         string? sourceUrl,
         Guid packageId,
         string originKey,
-        IReadOnlyList<string> sourceCodes,
+        IReadOnlyList<string> publicationKeys,
         int entityCount,
         CancellationToken cancellationToken)
     {
         var now = DateTimeOffset.UtcNow;
-        var sourceCodesJson = JsonSerializer.Serialize(sourceCodes);
+        var sourceCodesJson = JsonSerializer.Serialize(publicationKeys);
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
         if (openedHere)
@@ -324,194 +486,34 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         }
     }
 
-    private async Task<string> ResolveWebSourceAsync(
-        Uri uri,
-        CancellationToken cancellationToken)
-    {
-        if (string.Equals(uri.Host, "github.com", StringComparison.OrdinalIgnoreCase)
-            && uri.AbsolutePath.Contains("/tree/", StringComparison.OrdinalIgnoreCase))
-        {
-            return await ResolveGitHubTreeAsync(uri, cancellationToken);
-        }
-
-        var json = await FetchTextAsync(uri, cancellationToken);
-        _ = FiveEToolsDocumentInspector.DiscoverSourceCodes(json, "user-source");
-        return json;
-    }
-
-    private async Task<string> ResolveGitHubTreeAsync(
-        Uri sourceUri,
-        CancellationToken cancellationToken)
-    {
-        var tree = ParseGitHubTreeUri(sourceUri);
-        var treeApiUri = new Uri(
-            $"https://api.github.com/repos/{Uri.EscapeDataString(tree.Owner)}/{Uri.EscapeDataString(tree.Repository)}/git/trees/{Uri.EscapeDataString(tree.Reference)}?recursive=1");
-        var treeJson = await FetchTextAsync(treeApiUri, cancellationToken);
-        using var treeDocument = JsonDocument.Parse(treeJson);
-        if (treeDocument.RootElement.TryGetProperty("truncated", out var truncated)
-            && truncated.ValueKind == JsonValueKind.True)
-        {
-            throw new InvalidDataException(
-                "GitHub truncated the repository tree. Use a narrower web-source URL instead of importing an incomplete tree.");
-        }
-        if (!treeDocument.RootElement.TryGetProperty("tree", out var entries)
-            || entries.ValueKind != JsonValueKind.Array)
-        {
-            throw new InvalidDataException("GitHub tree response did not contain a tree array.");
-        }
-
-        var prefix = tree.Path.Trim('/');
-        var paths = entries.EnumerateArray()
-            .Where(entry =>
-                entry.TryGetProperty("type", out var type)
-                && type.ValueKind == JsonValueKind.String
-                && string.Equals(type.GetString(), "blob", StringComparison.Ordinal)
-                && entry.TryGetProperty("path", out var path)
-                && path.ValueKind == JsonValueKind.String)
-            .Select(entry => entry.GetProperty("path").GetString()!)
-            .Where(path =>
-                path.EndsWith(".json", StringComparison.OrdinalIgnoreCase)
-                && (string.IsNullOrEmpty(prefix)
-                    || string.Equals(path, prefix, StringComparison.Ordinal)
-                    || path.StartsWith(prefix + "/", StringComparison.Ordinal)))
-            .OrderBy(path => path, StringComparer.Ordinal)
-            .ToArray();
-        if (paths.Length == 0)
-        {
-            throw new InvalidDataException("The GitHub tree does not contain JSON documents beneath the selected path.");
-        }
-        if (paths.Length > MaxResolvedDocuments)
-        {
-            throw new InvalidDataException(
-                $"The GitHub tree contains {paths.Length} JSON documents beneath the selected path; the maximum is {MaxResolvedDocuments}.");
-        }
-
-        var documents = new List<string>();
-        foreach (var path in paths)
-        {
-            var rawUri = BuildGitHubRawUri(tree, path);
-            var json = await FetchTextAsync(rawUri, cancellationToken);
-            try
-            {
-                using var document = JsonDocument.Parse(json);
-                if (HasImportableEntities(document.RootElement))
-                {
-                    documents.Add(json);
-                }
-            }
-            catch (JsonException)
-            {
-                // A broad 5e.tools data tree may contain JSON files that are not entity documents.
-                // Those files do not make the source unusable.
-            }
-        }
-
-        if (documents.Count == 0)
-        {
-            throw new InvalidDataException("The web source did not contain any importable 5e.tools entity documents.");
-        }
-        return BuildAggregateJson(documents);
-    }
-
-    private async Task<string> FetchTextAsync(Uri uri, CancellationToken cancellationToken)
-    {
-        await EnsureRemoteUriSafeAsync(uri, cancellationToken);
-        using var request = new HttpRequestMessage(HttpMethod.Get, uri);
-        request.Headers.Accept.ParseAdd("application/json, text/json;q=0.9, */*;q=0.1");
-        request.Headers.UserAgent.ParseAdd("dorks-and-dice-rules-core/1.0");
-        using var response = await httpClient.SendAsync(
-            request,
-            HttpCompletionOption.ResponseHeadersRead,
-            cancellationToken);
-        if ((int)response.StatusCode is >= 300 and < 400)
-        {
-            throw new HttpRequestException(
-                $"Web source '{uri}' redirected to another location. Add the final HTTPS URL instead.");
-        }
-        response.EnsureSuccessStatusCode();
-        if (response.Content.Headers.ContentLength is > MaxRemoteDocumentBytes)
-        {
-            throw new InvalidDataException(
-                $"Web source '{uri}' exceeds the {MaxRemoteDocumentBytes / (1024 * 1024)} MiB per-document limit.");
-        }
-
-        var bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
-        if (bytes.LongLength > MaxRemoteDocumentBytes)
-        {
-            throw new InvalidDataException(
-                $"Web source '{uri}' exceeds the {MaxRemoteDocumentBytes / (1024 * 1024)} MiB per-document limit.");
-        }
-        return Encoding.UTF8.GetString(bytes);
-    }
-
-    private static bool HasImportableEntities(JsonElement root)
-    {
-        if (root.ValueKind != JsonValueKind.Object)
-        {
-            return false;
-        }
-        foreach (var property in root.EnumerateObject())
-        {
-            if (!FiveEToolsDocumentInspector.IsImportableArray(property))
-            {
-                continue;
-            }
-            if (property.Value.EnumerateArray().Any(item => item.ValueKind == JsonValueKind.Object))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static string BuildAggregateJson(IReadOnlyList<string> documents)
-    {
-        var buckets = new SortedDictionary<string, List<JsonElement>>(StringComparer.Ordinal);
-        foreach (var json in documents)
-        {
-            using var document = JsonDocument.Parse(json);
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (!FiveEToolsDocumentInspector.IsImportableArray(property))
-                {
-                    continue;
-                }
-                if (!buckets.TryGetValue(property.Name, out var items))
-                {
-                    items = [];
-                    buckets[property.Name] = items;
-                }
-                foreach (var item in property.Value.EnumerateArray())
-                {
-                    if (item.ValueKind == JsonValueKind.Object)
-                    {
-                        items.Add(item.Clone());
-                    }
-                }
-            }
-        }
-
-        using var stream = new MemoryStream();
-        using (var writer = new Utf8JsonWriter(stream))
-        {
-            writer.WriteStartObject();
-            foreach (var bucket in buckets)
-            {
-                writer.WritePropertyName(bucket.Key);
-                writer.WriteStartArray();
-                foreach (var item in bucket.Value)
-                {
-                    item.WriteTo(writer);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-        return Encoding.UTF8.GetString(stream.ToArray());
-    }
-
     private Task EnsureSchemaAsync(CancellationToken cancellationToken) =>
         dbContext.Database.ExecuteSqlRawAsync(CurrentUserSourceSchemaSql, cancellationToken);
+
+    private static byte[] ReadUploadBytes(AddCurrentUserSourceRequest request)
+    {
+        if (!string.IsNullOrWhiteSpace(request.ContentBase64))
+        {
+            try
+            {
+                var bytes = Convert.FromBase64String(request.ContentBase64);
+                if (bytes.Length == 0)
+                {
+                    throw new InvalidDataException("Uploaded source file can not be empty.");
+                }
+                return bytes;
+            }
+            catch (FormatException exception)
+            {
+                throw new InvalidDataException("The uploaded file content is not valid Base64.", exception);
+            }
+        }
+
+        if (!string.IsNullOrWhiteSpace(request.Content))
+        {
+            return Encoding.UTF8.GetBytes(request.Content);
+        }
+        throw new InvalidDataException("Uploaded source file can not be empty.");
+    }
 
     private static CurrentUserSourceView ReadView(DbDataReader reader)
     {
@@ -529,6 +531,12 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("added_at")),
             reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("refreshed_at")));
     }
+
+    private static ISourceFormatAdapterRegistry CreateDefaultRegistry() =>
+        new SourceFormatAdapterRegistry([
+            new FiveEToolsSourceFormatAdapter(),
+            new PdfSourceFormatAdapter()
+        ]);
 
     private static Uri RequireWebSourceUri(string? value)
     {
@@ -558,7 +566,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             || !string.Equals(segments[2], "tree", StringComparison.OrdinalIgnoreCase))
         {
             throw new ArgumentException(
-                "A GitHub web source must use https://github.com/{owner}/{repository}/tree/{ref}/{optional-path}.");
+                "A GitHub Web source must use https://github.com/{owner}/{repository}/tree/{ref}/{optional-path}.");
         }
         return new GitHubTreeLocation(
             segments[0],
@@ -574,9 +582,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             $"https://raw.githubusercontent.com/{Uri.EscapeDataString(tree.Owner)}/{Uri.EscapeDataString(tree.Repository)}/{Uri.EscapeDataString(tree.Reference)}/{escapedPath}");
     }
 
-    private static async Task EnsureRemoteUriSafeAsync(
-        Uri uri,
-        CancellationToken cancellationToken)
+    private static async Task EnsureRemoteUriSafeAsync(Uri uri, CancellationToken cancellationToken)
     {
         if (IPAddress.TryParse(uri.DnsSafeHost, out var literal))
         {
@@ -655,6 +661,16 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         return uri.Host + uri.AbsolutePath.TrimEnd('/');
     }
 
+    private static string NormalizeWebOrigin(Uri uri)
+    {
+        var builder = new UriBuilder(uri)
+        {
+            Host = uri.Host.ToLowerInvariant(),
+            Fragment = string.Empty
+        };
+        return builder.Uri.AbsoluteUri;
+    }
+
     private static string NormalizeKind(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -683,16 +699,6 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         return normalized;
     }
 
-    private static string RequireJson(string? value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("Uploaded source file can not be empty.", nameof(value));
-        }
-        _ = FiveEToolsDocumentInspector.DiscoverSourceCodes(value, "user-source");
-        return value;
-    }
-
     private static string? NormalizeOptional(string? value, int maxLength)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -703,30 +709,8 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         return normalized.Length <= maxLength ? normalized : normalized[..maxLength];
     }
 
-    private static string NormalizeKeyPart(string value)
-    {
-        var builder = new StringBuilder(value.Length);
-        var lastWasDash = false;
-        foreach (var character in value.Trim().ToLowerInvariant())
-        {
-            var allowed = char.IsLetterOrDigit(character);
-            if (allowed)
-            {
-                builder.Append(character);
-                lastWasDash = false;
-            }
-            else if (!lastWasDash)
-            {
-                builder.Append('-');
-                lastWasDash = true;
-            }
-        }
-        var normalized = builder.ToString().Trim('-');
-        return string.IsNullOrEmpty(normalized) ? Fingerprint(value)[..12] : normalized;
-    }
-
-    private static string Fingerprint(string value) =>
-        Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(value))).ToLowerInvariant();
+    private static string Fingerprint(byte[] value) =>
+        Convert.ToHexString(SHA256.HashData(value)).ToLowerInvariant();
 
     private static HttpClient CreateSharedHttpClient() => new(new SocketsHttpHandler
     {
@@ -765,6 +749,8 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         string Reference,
         string Path);
 
+    private sealed record FetchedDocument(byte[] Bytes, string? MediaType);
+
     private const string CurrentUserSourceSchemaSql = """
         CREATE TABLE IF NOT EXISTS current_user_source (
             current_user_source_id uuid NOT NULL,
@@ -786,5 +772,14 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             ON current_user_source(user_id, origin_key);
         CREATE INDEX IF NOT EXISTS ix_current_user_source_user
             ON current_user_source(user_id, added_at DESC);
+        ALTER TABLE current_user_source
+            ADD COLUMN IF NOT EXISTS upstream_version varchar(500) NULL;
+        ALTER TABLE current_user_source
+            ADD COLUMN IF NOT EXISTS last_checked_at timestamp with time zone NULL;
+        ALTER TABLE current_user_source
+            ADD COLUMN IF NOT EXISTS last_refresh_error varchar(1000) NULL;
+        CREATE INDEX IF NOT EXISTS ix_current_user_source_due_web_refresh
+            ON current_user_source(last_checked_at)
+            WHERE source_kind = 'web';
         """;
 }
