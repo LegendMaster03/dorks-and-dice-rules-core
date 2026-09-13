@@ -175,12 +175,10 @@ public sealed class GlobalRulesAuthoringService(RulesCoreDbContext dbContext)
             : await dbContext.SourceEntities
                 .AsNoTracking()
                 .Include(value => value.Revisions)
-                .Include(value => value.SourceEdition)
-                    .ThenInclude(value => value.SourceWork)
-                    .ThenInclude(value => value.SourcePackage)
+                .Include(value => value.SourcePackage)
                 .Where(value => boundSourceIds.Contains(value.Id)
-                    && (value.SourceEdition.SourceWork.SourcePackage.IsPublic
-                        || value.SourceEdition.SourceWork.SourcePackage.UserGrants
+                    && (value.SourcePackage.IsPublic
+                        || value.SourcePackage.UserGrants
                             .Any(grant => grant.UserId == normalizedUserId)))
                 .OrderBy(value => value.Name)
                 .ThenBy(value => value.SourceCode)
@@ -189,20 +187,18 @@ public sealed class GlobalRulesAuthoringService(RulesCoreDbContext dbContext)
         var sourceViews = accessibleSources
             .Select(source =>
             {
-                var edition = source.SourceEdition;
-                var work = edition.SourceWork;
-                var package = work.SourcePackage;
+                var package = source.SourcePackage;
                 return new GlobalRuleAuthoringSourceView(
                     source.Id,
                     source.EntityType,
                     source.Name,
-                    source.SourceCode,
+                    source.SourceCode ?? string.Empty,
                     package.Key,
                     package.DisplayName,
-                    work.Key,
-                    work.DisplayName,
-                    edition.Key,
-                    edition.DisplayName,
+                    package.Key,
+                    package.DisplayName,
+                    source.FormatKey,
+                    source.FormatKey,
                     source.Revisions
                         .OrderByDescending(value => value.RevisionNumber)
                         .Select(value => new GlobalRuleAuthoringSourceRevisionView(
