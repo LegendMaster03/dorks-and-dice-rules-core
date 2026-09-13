@@ -26,9 +26,8 @@ public sealed class SourceFormatAdapterIntegrationTests
                 "This paragraph is readable source material."
             ],
             ["A second page must remain available even when it is not classified."]);
-        var adapter = new PdfSourceFormatAdapter();
 
-        var result = adapter.TryRead(new SourceRepresentationArtifact(
+        var result = new PdfSourceFormatAdapter().TryRead(new SourceRepresentationArtifact(
             "third-party-compendium.pdf",
             bytes,
             "upload:test-pdf"));
@@ -53,7 +52,7 @@ public sealed class SourceFormatAdapterIntegrationTests
     public void PdfAdapterRejectsPdfWithoutUsableTextLayer()
     {
         var builder = new PdfDocumentBuilder();
-        builder.AddPage(PageSize.A4);
+        builder.AddPage(595, 842);
         var bytes = builder.Build();
 
         var result = new PdfSourceFormatAdapter().TryRead(new SourceRepresentationArtifact(
@@ -83,16 +82,15 @@ public sealed class SourceFormatAdapterIntegrationTests
                     "Clockwork creatures use the following optional rules."
                 ],
                 ["This page is intentionally left as generic source evidence."]);
-            var representation = Assert.NotNull(new PdfSourceFormatAdapter().TryRead(
+            var representation = RequireNotNull(new PdfSourceFormatAdapter().TryRead(
                 new SourceRepresentationArtifact(
                     "clockwork-bestiary.pdf",
                     bytes,
                     $"upload:{Guid.NewGuid():N}")));
-            var packageKey = $"pdf-new-{Guid.NewGuid():N}";
 
             var imported = await new NormalizedSourceImportService(db).ImportAsync(
                 new ImportNormalizedSourceRequest(
-                    packageKey,
+                    $"pdf-new-{Guid.NewGuid():N}",
                     "Clockwork Bestiary upload",
                     "user-upload",
                     License: null,
@@ -124,9 +122,8 @@ public sealed class SourceFormatAdapterIntegrationTests
         await using (db)
         {
             var importer = new NormalizedSourceImportService(db);
-            var aggregatePackageKey = $"aggregate-{Guid.NewGuid():N}";
             var aggregate = await importer.ImportAsync(new ImportNormalizedSourceRequest(
-                aggregatePackageKey,
+                $"aggregate-{Guid.NewGuid():N}",
                 "Aggregate structured source",
                 "test-structured",
                 License: null,
@@ -139,22 +136,12 @@ public sealed class SourceFormatAdapterIntegrationTests
                         $"test:{Guid.NewGuid():N}"),
                     [
                         Publication(
-                            "known-book",
-                            "Known Book",
-                            "Known Press",
-                            "9781402894626",
-                            "spell",
-                            "Shared Rule",
-                            "known-book|shared-rule",
+                            "known-book", "Known Book", "Known Press", "9781402894626",
+                            "spell", "Shared Rule", "known-book|shared-rule",
                             "{\"name\":\"Shared Rule\",\"effect\":\"same mechanic\"}"),
                         Publication(
-                            "unrelated-book",
-                            "Unrelated Book",
-                            "Other Press",
-                            "9781234567897",
-                            "spell",
-                            "Unrelated Rule",
-                            "unrelated-book|rule",
+                            "unrelated-book", "Unrelated Book", "Other Press", "9781234567897",
+                            "spell", "Unrelated Rule", "unrelated-book|rule",
                             "{\"name\":\"Unrelated Rule\",\"effect\":\"unrelated\"}")
                     ])));
             await new SourceGrantService(db).GrantAsync("account-a", aggregate.PackageId);
@@ -166,7 +153,7 @@ public sealed class SourceFormatAdapterIntegrationTests
                     "ISBN: 978-1-4028-9462-6",
                     "This PDF is a separate physical representation."
                 ]);
-            var pdfRepresentation = Assert.NotNull(new PdfSourceFormatAdapter().TryRead(
+            var pdfRepresentation = RequireNotNull(new PdfSourceFormatAdapter().TryRead(
                 new SourceRepresentationArtifact(
                     "known-book.pdf",
                     pdfBytes,
@@ -188,11 +175,7 @@ public sealed class SourceFormatAdapterIntegrationTests
             Assert.Contains(accountBCatalog, value => value.Id == pdfImport.PackageId);
             Assert.DoesNotContain(accountBCatalog, value => value.Id == aggregate.PackageId);
             Assert.False(await new SourceGrantService(db).HasGrantAsync("account-b", aggregate.PackageId));
-
-            var representations = await CountRepresentationsAsync(
-                db,
-                aggregateKnown.CanonicalPublicationId);
-            Assert.True(representations >= 2);
+            Assert.True(await CountRepresentationsAsync(db, aggregateKnown.CanonicalPublicationId) >= 2);
         }
     }
 
@@ -208,12 +191,10 @@ public sealed class SourceFormatAdapterIntegrationTests
         {
             var importer = new NormalizedSourceImportService(db);
             var first = await ImportPdfAsync(
-                db,
                 importer,
                 "Echoes",
                 BuildPdf(["Title: Echoes", "Rule text unique to the first publication."]));
             var second = await ImportPdfAsync(
-                db,
                 importer,
                 "Echoes",
                 BuildPdf(["Title: Echoes", "Completely different rules from another publication."]));
@@ -222,6 +203,12 @@ public sealed class SourceFormatAdapterIntegrationTests
                 Assert.Single(first.Publications).CanonicalPublicationId,
                 Assert.Single(second.Publications).CanonicalPublicationId);
         }
+    }
+
+    private static T RequireNotNull<T>(T? value) where T : class
+    {
+        Assert.NotNull(value);
+        return value!;
     }
 
     private static NormalizedSourcePublication Publication(
@@ -241,12 +228,11 @@ public sealed class SourceFormatAdapterIntegrationTests
             ExternalIdentifiers: new Dictionary<string, string> { ["isbn"] = isbn });
 
     private static async Task<NormalizedSourceImportResult> ImportPdfAsync(
-        RulesCoreDbContext db,
         NormalizedSourceImportService importer,
         string displayName,
         byte[] bytes)
     {
-        var representation = Assert.NotNull(new PdfSourceFormatAdapter().TryRead(
+        var representation = RequireNotNull(new PdfSourceFormatAdapter().TryRead(
             new SourceRepresentationArtifact(
                 $"{displayName}.pdf",
                 bytes,
@@ -281,7 +267,7 @@ public sealed class SourceFormatAdapterIntegrationTests
         var font = builder.AddStandard14Font(Standard14Font.Helvetica);
         foreach (var lines in pages)
         {
-            var page = builder.AddPage(PageSize.A4);
+            var page = builder.AddPage(595, 842);
             var y = 760d;
             foreach (var line in lines)
             {
