@@ -29,7 +29,11 @@ jobs:
             src/RulesCore.Web/wwwroot/ux-shell.js \
             src/RulesCore.Web/wwwroot/authoring.js \
             src/RulesCore.Web/wwwroot/rules-browser.js \
+            src/RulesCore.Web/wwwroot/rule-renderers.js \
+            src/RulesCore.Web/wwwroot/scope-control.js \
+            src/RulesCore.Web/wwwroot/semantic-comparison.js \
             src/RulesCore.Web/wwwroot/source-library.js \
+            src/RulesCore.Web/wwwroot/source-add.js \
             src/RulesCore.Web/wwwroot/concept-source-authoring.js \
             src/RulesCore.Web/wwwroot/source-normalization.js \
             src/RulesCore.Web/wwwroot/source-revision-review.js \
@@ -38,7 +42,8 @@ jobs:
             src/RulesCore.Web/wwwroot/source-access-admin.js \
             src/RulesCore.Web/wwwroot/source-acquisition-admin.js \
             src/RulesCore.Web/wwwroot/hosted-source-authoring.js \
-            src/RulesCore.Web/wwwroot/campaign-baseline-authoring.js; do
+            src/RulesCore.Web/wwwroot/campaign-baseline-authoring.js \
+            tools/validate-render-lifecycle.mjs; do
             node --input-type=module --check < "$file"
           done
 
@@ -49,8 +54,11 @@ jobs:
           const api = new RulesCoreApi({ apiBaseUrl: "https://rules-core.test/tool" });
           if (typeof api.getGlobalResolvedRule !== "function"
               || typeof api.getCampaignResolvedRule !== "function"
-              || typeof api.searchSourceEntityPage !== "function") {
-              throw new Error("Rules Browser/source paging API contract is incomplete.");
+              || typeof api.searchSourceEntityPage !== "function"
+              || typeof api.addCurrentUserSource !== "function"
+              || typeof api.getCurrentUserSources !== "function"
+              || typeof api.refreshCurrentUserSource !== "function") {
+              throw new Error("Rules Browser/source paging/self-service source API contract is incomplete.");
           }
 
           globalThis.fetch = async () => new Response(
@@ -71,8 +79,12 @@ jobs:
           const uxShell = fs.readFileSync(
               "./src/RulesCore.Web/wwwroot/ux-shell.js",
               "utf8");
+          const uiModule = fs.readFileSync(
+              "./src/RulesCore.Web/wwwroot/ui.js",
+              "utf8");
           for (const required of [
               "installRulesCoreUx",
+              "installSourceAdd",
               "rules-core-detail.css"
           ]) {
               if (!appModule.includes(required)) {
@@ -85,13 +97,29 @@ jobs:
               "rules-core-main",
               "Cross-version",
               "Maintenance",
-              "MutationObserver",
+              "presentRenderedView",
+              "presentRenderedFragment",
+              "uxActiveRenderDepth",
+              "wrapInPlaceViewRender",
               "rules-core-tool-disclosure",
               "getGlobalAuthoringOverview",
               "hasUnpublishedOverrideChange"
           ]) {
               if (!uxShell.includes(required)) {
                   throw new Error(`Rules Core UX shell contract is missing '${required}'.`);
+              }
+          }
+          if (uxShell.includes("MutationObserver")) {
+              throw new Error("Rules Core-owned DOM must not use MutationObserver as its render lifecycle.");
+          }
+          for (const required of [
+              "enhanceRenderedFragment",
+              "applyPresentationClasses",
+              "rules-core-table-wrap",
+              "rules-core-alert"
+          ]) {
+              if (!uiModule.includes(required)) {
+                  throw new Error(`Rules Core fragment presentation contract is missing '${required}'.`);
               }
           }
           for (const stylesheet of [
@@ -184,6 +212,22 @@ jobs:
               }
           }
 
+          const sourceAdd = fs.readFileSync(
+              "./src/RulesCore.Web/wwwroot/source-add.js",
+              "utf8");
+          for (const required of [
+              "Add Source",
+              "Upload file",
+              "Web source",
+              "5etools-mirror-3/5etools-src/tree/main/data",
+              "addCurrentUserSource",
+              "refreshCurrentUserSource"
+          ]) {
+              if (!sourceAdd.includes(required)) {
+                  throw new Error(`Self-service source workflow is missing '${required}'.`);
+              }
+          }
+
           const versioning = fs.readFileSync(
               "./src/RulesCore.Web/wwwroot/source-versioning.js",
               "utf8");
@@ -191,6 +235,8 @@ jobs:
               throw new Error("Version-review UI does not surface automatic no-change resolution.");
           }
           NODE
+
+          node tools/validate-render-lifecycle.mjs
 
       - name: Start disposable PostgreSQL
         run: |

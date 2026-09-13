@@ -17,6 +17,7 @@ public sealed class SourceImportService(RulesCoreDbContext dbContext) : ISourceI
         ArgumentNullException.ThrowIfNull(request);
         ValidateRequest(request);
         await SourceFrameworkStore.EnsureSchemaAsync(dbContext, cancellationToken);
+        await SourcePublisherStore.EnsureSchemaAsync(dbContext, cancellationToken);
 
         var packageKey = NormalizeKey(request.PackageKey);
         var workKey = NormalizeKey(request.WorkKey);
@@ -29,6 +30,12 @@ public sealed class SourceImportService(RulesCoreDbContext dbContext) : ISourceI
 
         var gameEdition = NormalizeGameEdition(request);
         var releaseKind = SourceReleaseKinds.NormalizeImportLabel(request.ReleaseKind);
+        var publisher = NormalizeOptional(request.Publisher);
+        if (publisher?.Length > 300)
+        {
+            throw new ArgumentException("Publisher can not exceed 300 characters.", nameof(request.Publisher));
+        }
+
         var conflicts = new List<string>();
         var warnings = new List<string>();
         if (gameEdition is null)
@@ -83,12 +90,18 @@ public sealed class SourceImportService(RulesCoreDbContext dbContext) : ISourceI
                 dbContext,
                 edition.Id,
                 cancellationToken);
+            var existingPublisher = await SourcePublisherStore.GetPublisherAsync(
+                dbContext,
+                edition.Id,
+                cancellationToken);
             AddMetadataConflict(existingMetadata?.GameEdition, gameEdition, "game edition", conflicts);
             AddMetadataConflict(existingMetadata?.ReleaseKind, releaseKind, "release kind", conflicts);
             AddMetadataConflict(existingMetadata?.PublicationDate, request.PublicationDate, "publication date", conflicts);
+            AddMetadataConflict(existingPublisher, publisher, "publisher", conflicts);
 
             gameEdition ??= existingMetadata?.GameEdition;
             releaseKind ??= existingMetadata?.ReleaseKind;
+            publisher ??= existingPublisher;
         }
 
         var existingByNaturalKey = new Dictionary<string, SourceEntity>(StringComparer.Ordinal);
@@ -166,7 +179,8 @@ public sealed class SourceImportService(RulesCoreDbContext dbContext) : ISourceI
             previewEntities.Count(value => value.Action == SourceImportPreviewActions.NewEntity),
             previewEntities.Count(value => value.Action == SourceImportPreviewActions.NewRevision),
             previewEntities.Count(value => value.Action == SourceImportPreviewActions.Unchanged),
-            previewEntities);
+            previewEntities,
+            Publisher: publisher);
     }
 
     public async Task<SourceImportResult> Import5eToolsDocumentAsync(
@@ -264,6 +278,11 @@ public sealed class SourceImportService(RulesCoreDbContext dbContext) : ISourceI
             preview.ReleaseKind,
             preview.PublicationDate,
             cancellationToken);
+        var publisher = await SourcePublisherStore.MergePublisherAsync(
+            dbContext,
+            edition.Id,
+            preview.Publisher,
+            cancellationToken);
 
         var imported = new List<ImportedSourceEntity>(parsedEntities.Count);
         foreach (var parsed in parsedEntities)
@@ -338,7 +357,8 @@ public sealed class SourceImportService(RulesCoreDbContext dbContext) : ISourceI
             imported,
             metadata.GameEdition,
             metadata.ReleaseKind,
-            metadata.PublicationDate);
+            metadata.PublicationDate,
+            publisher);
     }
 
     private static IReadOnlyList<ParsedSourceEntity> ParseEntities(string json, string editionKey)

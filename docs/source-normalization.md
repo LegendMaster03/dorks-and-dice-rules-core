@@ -2,6 +2,8 @@
 
 Imported Source Layer entities are not automatically treated as the same rule merely because they have similar names. Rules Core keeps source identity separate from Rules Layer concept identity and requires a Rules Lawyer to confirm normalization.
 
+Canonical source identity is an earlier, different operation. Two representation-specific source entities may be recognized as the same **occurrence in the same publication** without creating or changing a Dorks & Dice rule concept. For example, a 5e.tools entity and a PDF-derived entity can point to one canonical PHB occurrence while remaining separate gated source records. That source-level association does not imply that an SRD occurrence, a later-edition occurrence, or a third-party occurrence is the same Rules Layer concept.
+
 ## Purpose
 
 The normalization workflow reduces repetitive concept creation and source binding without turning heuristics into authoritative rules decisions. It operates only on source entities the current user may independently access and that do not already have a Rules Layer binding.
@@ -32,7 +34,7 @@ Acceptance does not infer equivalence from the normalization suggestion itself a
 
 The workflow is useful for common names repeated across editions. If a 2014 `Arcana` entity is accepted first, Rules Core can create `skill.arcana`. A later accessible 2024 `Arcana` entity then proposes the existing `skill.arcana` concept rather than another concept.
 
-This is still a binding suggestion, not an automatic source association. The Rules Lawyer must accept each binding. Only after those deliberate bindings exist may the compatibility resolver compare the exact source revisions.
+This is still a binding suggestion, not an automatic Rules Layer association. Canonical source-occurrence matching only deduplicates representations of the same occurrence in the same publication; it does not cross this boundary. The Rules Lawyer must accept each Rules Layer binding. Only after those deliberate bindings exist may the compatibility resolver compare the exact source revisions.
 
 Mechanically identical implementations can auto-resolve. Purely additive/subtractive differences can also auto-resolve when shared rule-bearing values do not conflict. If one exact source already contains the complete compatible result, Rules Core selects that source. If neither source is complete alone—for example, the older monster contains ability A while the newer monster drops A but adds compatible ability B—Rules Core may create a deterministic additive patch whose resolved result retains both A and B.
 
@@ -49,13 +51,15 @@ A Rules Lawyer without a grant does not receive a restricted source as a candida
 
 The candidate endpoint returns descriptive source metadata but not the raw source document. It still enforces source access because even restricted package/entity names and provenance must not leak through Rules Layer convenience APIs.
 
+Canonical publication/occurrence tables do not weaken this rule. They are internal identity indexes, not a source-content API and not a substitute for package grants.
+
 ## Design boundary
 
 Normalization and automatic compatibility resolution are intentionally conservative:
 
 - no bulk automatic acceptance;
 - no automatic concept binding;
-- no content-similarity binding;
+- no content-similarity binding into Rules Layer concepts;
 - no mutation of Source Layer records;
 - no automatic publication;
 - no blind JSON union across conflicting or ambiguous versions;

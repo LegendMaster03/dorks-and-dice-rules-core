@@ -106,7 +106,10 @@ public sealed record ResolvedRuleView(
     string EditionKey,
     string EditionDisplayName,
     IReadOnlyList<ResolvedRuleContributionView> Contributions,
-    JsonElement Document);
+    JsonElement Document)
+{
+    public RuleLinkTargetView BrowserLink => RuleBrowserRoutes.ForConcept(EntityType, ConceptKey);
+}
 
 public interface IGlobalRulesService
 {

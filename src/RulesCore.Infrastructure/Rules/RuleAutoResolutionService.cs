@@ -243,16 +243,29 @@ public static class RuleAutoResolutionService
         {
             return NotEligibleEvaluation("One or more bound source implementations no longer exist.");
         }
-        if (sources.Any(value =>
+
+        var ignoredPackageIds = (await new GlobalSourceDispositionService(dbContext)
+                .GetIgnoredPackageIdsAsync(cancellationToken))
+            .ToHashSet();
+        var activeSources = sources
+            .Where(value => !ignoredPackageIds.Contains(value.SourceEdition.SourceWork.SourcePackageId))
+            .ToArray();
+        if (activeSources.Length < 2)
+        {
+            return NotEligibleEvaluation(
+                "At least two non-ignored bound source implementations are required for automatic global resolution.");
+        }
+
+        if (activeSources.Any(value =>
             !value.SourceEdition.SourceWork.SourcePackage.IsPublic
             && !value.SourceEdition.SourceWork.SourcePackage.UserGrants.Any(grant => grant.UserId == actor)))
         {
             return NotEligibleEvaluation(
-                "The current account can not inspect every bound source implementation.");
+                "The current account can not inspect every non-ignored bound source implementation.");
         }
 
-        var contexts = new List<SourceContext>(sources.Length);
-        foreach (var source in sources)
+        var contexts = new List<SourceContext>(activeSources.Length);
+        foreach (var source in activeSources)
         {
             var latest = source.Revisions
                 .OrderByDescending(value => value.RevisionNumber)
@@ -260,7 +273,7 @@ public static class RuleAutoResolutionService
             if (latest is null)
             {
                 return NotEligibleEvaluation(
-                    "Every bound source implementation must have an immutable revision.");
+                    "Every non-ignored bound source implementation must have an immutable revision.");
             }
 
             var metadata = await SourceFrameworkStore.GetEditionMetadataAsync(
@@ -270,7 +283,7 @@ public static class RuleAutoResolutionService
             if (string.IsNullOrWhiteSpace(metadata?.GameEdition))
             {
                 return NotEligibleEvaluation(
-                    "Every bound source implementation must identify its D&D edition.");
+                    "Every non-ignored bound source implementation must identify its D&D edition.");
             }
 
             contexts.Add(new SourceContext(

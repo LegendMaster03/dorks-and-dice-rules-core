@@ -90,7 +90,10 @@ public sealed record ResolvedCampaignRuleView(
     string WorkDisplayName,
     string EditionKey,
     string EditionDisplayName,
-    JsonElement Document);
+    JsonElement Document)
+{
+    public RuleLinkTargetView BrowserLink => RuleBrowserRoutes.ForConcept(EntityType, ConceptKey);
+}
 
 public interface ICampaignRulesService
 {

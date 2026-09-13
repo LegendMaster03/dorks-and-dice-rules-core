@@ -1,4 +1,4 @@
-import { element } from "./ui.js";
+import { element, enhanceRenderedFragment } from "./ui.js";
 
 const NAV_GROUPS = [
     {
@@ -68,19 +68,62 @@ const SECONDARY_RULES_LAWYER_TOOLS = new Map([
     }]
 ]);
 
+const IN_PLACE_VIEW_METHODS = [
+    "renderGlobalOverview",
+    "renderGlobalConcept",
+    "renderCampaignOverview",
+    "renderCampaignConcept"
+];
+
 export function installRulesCoreUx(app) {
     installPresentationOrdering(app);
     app.renderHeader = () => renderWorkspaceHeader(app);
     app.renderNavigation = () => renderWorkspaceNavigation(app);
+    app.presentRenderedFragment = container => enhanceRenderedFragment(container);
+    app.presentRenderedView = container => enhanceRenderedView(app, container);
+    installExplicitRenderLifecycle(app);
+}
+
+function installExplicitRenderLifecycle(app) {
+    app.uxActiveRenderDepth = 0;
+
+    for (const methodName of IN_PLACE_VIEW_METHODS) {
+        wrapInPlaceViewRender(app, methodName);
+    }
 
     const renderActiveView = app.renderActiveView.bind(app);
     app.renderActiveView = async container => {
-        app.uxMutationObserver?.disconnect();
         container.classList.add("rules-core-main");
         container.dataset.rulesView = app.activeView ?? "unknown";
-        await renderActiveView(container);
-        enhanceRenderedView(app, container);
-        app.uxMutationObserver = observeInPlaceNavigation(app, container);
+
+        app.uxActiveRenderDepth += 1;
+        let result;
+        try {
+            result = await renderActiveView(container);
+        } finally {
+            app.uxActiveRenderDepth -= 1;
+        }
+
+        if (app.uxActiveRenderDepth === 0) {
+            app.presentRenderedView(container);
+        }
+        return result;
+    };
+}
+
+function wrapInPlaceViewRender(app, methodName) {
+    const render = app[methodName]?.bind(app);
+    if (!render) {
+        return;
+    }
+
+    app[methodName] = async (...args) => {
+        const result = await render(...args);
+        const container = args[0];
+        if (container && app.uxActiveRenderDepth === 0) {
+            app.presentRenderedView(container);
+        }
+        return result;
     };
 }
 
@@ -189,33 +232,9 @@ function navItem(app, item) {
         element("span", { className: "rules-core-nav-item-description", text: item.description }));
 }
 
-function observeInPlaceNavigation(app, container) {
-    let scheduled = false;
-    const observer = new MutationObserver(() => {
-        if (scheduled || !container.isConnected) return;
-        scheduled = true;
-        queueMicrotask(() => {
-            scheduled = false;
-            if (!container.isConnected) return;
+export function enhanceRenderedView(app, container) {
+    enhanceRenderedFragment(container);
 
-            // Presentation enhancement itself can change child nodes (for example, textContent).
-            // Disconnect while enhancing so those idempotent presentation changes do not
-            // recursively schedule the observer and starve the UI thread.
-            observer.disconnect();
-            try {
-                enhanceRenderedView(app, container);
-            } finally {
-                if (container.isConnected) {
-                    observer.observe(container, { childList: true, subtree: true });
-                }
-            }
-        });
-    });
-    observer.observe(container, { childList: true, subtree: true });
-    return observer;
-}
-
-function enhanceRenderedView(app, container) {
     if (VIEW_META[app.activeView] && !container.querySelector(":scope > .rules-core-generated-page-lead")) {
         container.prepend(pageLead(VIEW_META[app.activeView]));
     }
@@ -234,21 +253,8 @@ function enhanceRenderedView(app, container) {
         firstCard.classList.add("rules-core-page-lead");
     }
 
-    container.querySelectorAll(".table-responsive").forEach(tableWrap => {
-        tableWrap.classList.add("rules-core-table-wrap");
-    });
-    container.querySelectorAll("table").forEach(table => {
-        table.classList.add("rules-core-table");
-    });
-    container.querySelectorAll(".list-group").forEach(list => {
-        list.classList.add("rules-core-list");
-    });
-    container.querySelectorAll("form").forEach(form => {
-        form.classList.add("rules-core-form");
-    });
-    container.querySelectorAll(".alert").forEach(alert => {
-        alert.classList.add("rules-core-alert");
-    });
+    enhanceRenderedFragment(container);
+    return container;
 }
 
 function pageLead(meta) {

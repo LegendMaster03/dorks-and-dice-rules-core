@@ -4,8 +4,11 @@ import { installCampaignBaselineAuthoring } from "./campaign-baseline-authoring.
 import { installConceptSourceAuthoring } from "./concept-source-authoring.js";
 import { installHostedSourceAuthoring } from "./hosted-source-authoring.js";
 import { installResolvedRulesBrowser } from "./rules-browser.js";
+import { installAdjudicationScopeControl } from "./scope-control.js";
+import { installSemanticComparison } from "./semantic-comparison.js";
 import { installSourceAccessAdministration } from "./source-access-admin.js";
 import { installSourceAcquisitionAdministration } from "./source-acquisition-admin.js";
+import { installSourceAdd } from "./source-add.js";
 import { installSourceAdministration } from "./source-admin.js";
 import { installSourceLibrary } from "./source-library.js";
 import { installSourceNormalization } from "./source-normalization.js";
@@ -34,6 +37,8 @@ try {
     };
     const app = new RulesAuthoringApp(root, api, hostContext, effectiveSession, campaigns);
     installResolvedRulesBrowser(app);
+    installAdjudicationScopeControl(app);
+    installSemanticComparison(app);
     installConceptSourceAuthoring(app);
     installSourceNormalization(app);
     installSourceRevisionReview(app);
@@ -45,6 +50,7 @@ try {
     installCampaignBaselineAuthoring(app);
     if (hostContext.siteMode === "dorks-and-dice") {
         installSourceLibrary(app);
+        installSourceAdd(app);
     }
     installRulesCoreUx(app);
     await app.render();

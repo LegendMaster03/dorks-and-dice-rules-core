@@ -22,7 +22,10 @@ public sealed record ResolvedRuleCatalogItemView(
     string PackageKey,
     string PackageDisplayName,
     string EditionKey,
-    string EditionDisplayName);
+    string EditionDisplayName)
+{
+    public RuleLinkTargetView BrowserLink => RuleBrowserRoutes.ForConcept(EntityType, ConceptKey);
+}
 
 public interface IResolvedRulesCatalogService
 {

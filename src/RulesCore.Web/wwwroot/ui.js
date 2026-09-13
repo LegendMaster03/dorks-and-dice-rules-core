@@ -60,7 +60,20 @@ export function element(tagName, options = {}, ...children) {
     }
 
     appendChildren(node, children);
+    enhanceRenderedFragment(node);
     return node;
+}
+
+export function enhanceRenderedFragment(root) {
+    if (!root) {
+        return root;
+    }
+
+    applyPresentationClasses(root);
+    for (const child of root.children ?? []) {
+        enhanceRenderedFragment(child);
+    }
+    return root;
 }
 
 export function clear(node) {
@@ -160,6 +173,29 @@ export function describeError(error) {
         return `${error.message} (HTTP ${error.status})`;
     }
     return error.message ?? String(error);
+}
+
+function applyPresentationClasses(node) {
+    if (!node.classList) {
+        return;
+    }
+
+    const tagName = String(node.tagName ?? "").toLowerCase();
+    if (tagName === "table") {
+        node.classList.add("rules-core-table");
+    }
+    if (tagName === "form") {
+        node.classList.add("rules-core-form");
+    }
+    if (node.classList.contains("table-responsive")) {
+        node.classList.add("rules-core-table-wrap");
+    }
+    if (node.classList.contains("list-group")) {
+        node.classList.add("rules-core-list");
+    }
+    if (node.classList.contains("alert")) {
+        node.classList.add("rules-core-alert");
+    }
 }
 
 function appendChildren(parent, children) {

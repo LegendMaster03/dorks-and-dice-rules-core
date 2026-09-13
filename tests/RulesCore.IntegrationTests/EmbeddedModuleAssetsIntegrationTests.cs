@@ -19,8 +19,11 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("./api.js", app, StringComparison.Ordinal);
         Assert.Contains("./authoring.js", app, StringComparison.Ordinal);
         Assert.Contains("./rules-browser.js", app, StringComparison.Ordinal);
+        Assert.Contains("./scope-control.js", app, StringComparison.Ordinal);
+        Assert.Contains("./semantic-comparison.js", app, StringComparison.Ordinal);
         Assert.Contains("./campaign-baseline-authoring.js", app, StringComparison.Ordinal);
         Assert.Contains("./concept-source-authoring.js", app, StringComparison.Ordinal);
+        Assert.Contains("./source-add.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-access-admin.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-acquisition-admin.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-admin.js", app, StringComparison.Ordinal);
@@ -34,6 +37,9 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("getCampaignRulesCatalog", api, StringComparison.Ordinal);
         Assert.Contains("getGlobalResolvedRule", api, StringComparison.Ordinal);
         Assert.Contains("getCampaignResolvedRule", api, StringComparison.Ordinal);
+        Assert.Contains("getCurrentUserSources", api, StringComparison.Ordinal);
+        Assert.Contains("addCurrentUserSource", api, StringComparison.Ordinal);
+        Assert.Contains("refreshCurrentUserSource", api, StringComparison.Ordinal);
         Assert.Contains("getSourceRevisionUpdates", api, StringComparison.Ordinal);
         Assert.Contains("previewSourceRevisionUpdate", api, StringComparison.Ordinal);
         Assert.Contains("adoptLatestSourceRevision", api, StringComparison.Ordinal);
@@ -53,11 +59,33 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("getCampaignBaselineCandidates", api, StringComparison.Ordinal);
         Assert.Contains("previewCampaignBaseline", api, StringComparison.Ordinal);
 
+        var sourceAdd = await GetAssetAsync(client, "/source-add.js", "javascript");
+        Assert.Contains("Add Source", sourceAdd, StringComparison.Ordinal);
+        Assert.Contains("Upload file", sourceAdd, StringComparison.Ordinal);
+        Assert.Contains("Web source", sourceAdd, StringComparison.Ordinal);
+        Assert.Contains("5etools-mirror-3/5etools-src/tree/main/data", sourceAdd, StringComparison.Ordinal);
+
         var rulesBrowser = await GetAssetAsync(client, "/rules-browser.js", "javascript");
         Assert.Contains("Rules Browser", rulesBrowser, StringComparison.Ordinal);
-        Assert.Contains("Browse published global rules without signing in", rulesBrowser, StringComparison.Ordinal);
-        Assert.Contains("Resolved rule document", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Browse the published resolved ruleset", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("browserLink", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("toolRoute", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("toolBasePath", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Campaign override", rulesBrowser, StringComparison.Ordinal);
+
+        var renderers = await GetAssetAsync(client, "/rule-renderers.js", "javascript");
+        Assert.Contains("[\"monster\", renderMonster]", renderers, StringComparison.Ordinal);
+        Assert.Contains("Legendary Actions", renderers, StringComparison.Ordinal);
+        Assert.Contains("Saving Throws", renderers, StringComparison.Ordinal);
+        Assert.Contains("Normalized rule document", renderers, StringComparison.Ordinal);
+
+        var scopeControl = await GetAssetAsync(client, "/scope-control.js", "javascript");
+        Assert.Contains("Adjudication scope", scopeControl, StringComparison.Ordinal);
+        Assert.Contains("CAMPAIGN_DM_ROLE = \"DM\"", scopeControl, StringComparison.Ordinal);
+
+        var semanticComparison = await GetAssetAsync(client, "/semantic-comparison.js", "javascript");
+        Assert.Contains("Semantic comparison", semanticComparison, StringComparison.Ordinal);
+        Assert.Contains("/api/workspace/comparison", semanticComparison, StringComparison.Ordinal);
 
         var authoring = await GetAssetAsync(client, "/authoring.js", "javascript");
         Assert.Contains("Global Rules", authoring, StringComparison.Ordinal);
