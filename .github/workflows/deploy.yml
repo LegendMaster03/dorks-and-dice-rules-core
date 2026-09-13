@@ -42,18 +42,29 @@ jobs:
             -e POSTGRES_PASSWORD=rules_core_test \
             postgres:18
 
-          ready=false
+          # A fresh official PostgreSQL container briefly runs a temporary server during
+          # initialization. Wait past that handoff, then require several consecutive SQL
+          # queries to succeed against the final server before launching Rules Core.
+          sleep 10
+          consecutive=0
           for i in {1..30}; do
-            if docker exec dorks-and-dice-rules-core-test-postgres \
-              pg_isready -U rules_core_test -d rules_core_test; then
-              ready=true
-              break
+            result=$(docker exec dorks-and-dice-rules-core-test-postgres \
+              psql -v ON_ERROR_STOP=1 -U rules_core_test -d rules_core_test -tAc 'SELECT 1' \
+              2>/dev/null || true)
+            if [ "$(echo "$result" | tr -d '[:space:]')" = "1" ]; then
+              consecutive=$((consecutive + 1))
+              if [ "$consecutive" -ge 3 ]; then
+                break
+              fi
+            else
+              consecutive=0
             fi
             sleep 1
           done
 
-          if [ "$ready" != "true" ]; then
-            docker logs dorks-and-dice-rules-core-test-postgres
+          if [ "$consecutive" -lt 3 ]; then
+            echo "Smoke-test PostgreSQL did not become stably query-ready."
+            docker logs dorks-and-dice-rules-core-test-postgres || true
             exit 1
           fi
 
@@ -71,6 +82,12 @@ jobs:
           # verifies that the built image starts and becomes ready against PostgreSQL.
           ready=false
           for i in {1..20}; do
+            if [ "$(docker inspect -f '{{.State.Running}}' dorks-and-dice-rules-core-smoketest 2>/dev/null)" != "true" ]; then
+              echo "Rules Core smoke-test container exited before becoming ready."
+              docker logs dorks-and-dice-rules-core-smoketest || true
+              exit 1
+            fi
+
             health=$(docker run --rm \
               --network dorks-and-dice-rules-core-test \
               curlimages/curl:8.12.1 \
