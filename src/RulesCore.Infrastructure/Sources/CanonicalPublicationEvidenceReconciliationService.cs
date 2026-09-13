@@ -14,7 +14,7 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
 {
     public async Task<CanonicalPublicationEvidenceReconciliationResult> ReconcileAsync(
         Guid canonicalPublicationId,
-        Guid sourceRepresentationId,
+        Guid sourceEntityId,
         CanonicalPublicationEvidence evidence,
         CancellationToken cancellationToken = default)
     {
@@ -22,9 +22,9 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
         {
             throw new ArgumentException("Canonical publication ID can not be empty.", nameof(canonicalPublicationId));
         }
-        if (sourceRepresentationId == Guid.Empty)
+        if (sourceEntityId == Guid.Empty)
         {
-            throw new ArgumentException("Source representation ID can not be empty.", nameof(sourceRepresentationId));
+            throw new ArgumentException("Source entity ID can not be empty.", nameof(sourceEntityId));
         }
         ArgumentNullException.ThrowIfNull(evidence);
 
@@ -33,20 +33,9 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
             ?? throw new KeyNotFoundException($"Canonical publication '{canonicalPublicationId}' was not found.");
 
         var conflicts = new List<string>();
-        var publisher = Merge(
-            "publisher",
-            current.Publisher,
-            Normalize(evidence.Publisher),
-            conflicts);
-        var gameEdition = Merge(
-            "game-edition",
-            current.GameEdition,
-            Normalize(evidence.GameEdition),
-            conflicts);
-        var publicationDate = MergeDate(
-            current.PublicationDate,
-            evidence.PublicationDate,
-            conflicts);
+        var publisher = Merge("publisher", current.Publisher, Normalize(evidence.Publisher), conflicts);
+        var gameEdition = Merge("game-edition", current.GameEdition, Normalize(evidence.GameEdition), conflicts);
+        var publicationDate = MergeDate(current.PublicationDate, evidence.PublicationDate, conflicts);
 
         foreach (var field in conflicts)
         {
@@ -66,7 +55,7 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
             };
             await RecordConflictAsync(
                 canonicalPublicationId,
-                sourceRepresentationId,
+                sourceEntityId,
                 field,
                 canonicalValue,
                 observedValue,
@@ -179,7 +168,7 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
 
     private async Task RecordConflictAsync(
         Guid publicationId,
-        Guid representationId,
+        Guid sourceEntityId,
         string field,
         string? canonicalValue,
         string? observedValue,
@@ -198,14 +187,14 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
                 INSERT INTO canonical_publication_evidence_conflict (
                     canonical_publication_evidence_conflict_id,
                     canonical_publication_id,
-                    source_representation_id,
+                    source_entity_id,
                     field_name,
                     canonical_value,
                     observed_value,
                     recorded_at)
-                VALUES (@id, @publication_id, @representation_id, @field_name,
+                VALUES (@id, @publication_id, @source_entity_id, @field_name,
                         @canonical_value, @observed_value, @recorded_at)
-                ON CONFLICT (canonical_publication_id, source_representation_id, field_name)
+                ON CONFLICT (canonical_publication_id, source_entity_id, field_name)
                 DO UPDATE SET
                     canonical_value = EXCLUDED.canonical_value,
                     observed_value = EXCLUDED.observed_value,
@@ -213,7 +202,7 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
                 """;
             AddParameter(command, "@id", Guid.NewGuid());
             AddParameter(command, "@publication_id", publicationId);
-            AddParameter(command, "@representation_id", representationId);
+            AddParameter(command, "@source_entity_id", sourceEntityId);
             AddParameter(command, "@field_name", field);
             AddNullableParameter(command, "@canonical_value", canonicalValue);
             AddNullableParameter(command, "@observed_value", observedValue);
@@ -294,7 +283,7 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
         CREATE TABLE IF NOT EXISTS canonical_publication_evidence_conflict (
             canonical_publication_evidence_conflict_id uuid NOT NULL,
             canonical_publication_id uuid NOT NULL,
-            source_representation_id uuid NOT NULL,
+            source_entity_id uuid NOT NULL,
             field_name varchar(80) NOT NULL,
             canonical_value varchar(1000) NULL,
             observed_value varchar(1000) NULL,
@@ -302,10 +291,10 @@ public sealed class CanonicalPublicationEvidenceReconciliationService(RulesCoreD
             CONSTRAINT pk_canonical_publication_evidence_conflict PRIMARY KEY (canonical_publication_evidence_conflict_id),
             CONSTRAINT fk_canonical_publication_evidence_conflict_publication FOREIGN KEY (canonical_publication_id)
                 REFERENCES canonical_publication(canonical_publication_id) ON DELETE CASCADE,
-            CONSTRAINT fk_canonical_publication_evidence_conflict_representation FOREIGN KEY (source_representation_id)
-                REFERENCES source_representation(source_representation_id) ON DELETE CASCADE);
+            CONSTRAINT fk_canonical_publication_evidence_conflict_source_entity FOREIGN KEY (source_entity_id)
+                REFERENCES source_entity(source_entity_id) ON DELETE CASCADE);
         CREATE UNIQUE INDEX IF NOT EXISTS ux_canonical_publication_evidence_conflict_observation
-            ON canonical_publication_evidence_conflict(canonical_publication_id, source_representation_id, field_name);
+            ON canonical_publication_evidence_conflict(canonical_publication_id, source_entity_id, field_name);
         CREATE INDEX IF NOT EXISTS ix_canonical_publication_evidence_conflict_publication
             ON canonical_publication_evidence_conflict(canonical_publication_id);
         """;
