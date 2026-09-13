@@ -76,14 +76,36 @@ public static class CanonicalSourceIdentity
     public static string BibliographicFingerprint(CanonicalPublicationEvidence evidence)
     {
         ArgumentNullException.ThrowIfNull(evidence);
-        var value = string.Join('\n', new[]
+        var publisher = NormalizeIdentityPart(evidence.Publisher ?? string.Empty);
+        var title = NormalizeIdentityPart(evidence.DisplayName);
+        var gameEdition = NormalizeIdentityPart(evidence.GameEdition ?? string.Empty);
+        var publicationDate = evidence.PublicationDate?.ToString("yyyy-MM-dd") ?? string.Empty;
+
+        // A title by itself is not strong enough evidence to merge publications. When no
+        // publisher, system/edition, or publication date is known, include stable content
+        // evidence so same-titled but different works remain distinct until reviewed.
+        var sparseContentIdentity = string.Empty;
+        if (string.IsNullOrEmpty(publisher)
+            && string.IsNullOrEmpty(gameEdition)
+            && string.IsNullOrEmpty(publicationDate))
         {
-            NormalizeIdentityPart(evidence.Publisher ?? string.Empty),
-            NormalizeIdentityPart(evidence.DisplayName),
-            NormalizeIdentityPart(evidence.GameEdition ?? string.Empty),
-            evidence.PublicationDate?.ToString("yyyy-MM-dd") ?? string.Empty
-        });
-        return Fingerprint(value);
+            sparseContentIdentity = string.Join(
+                '|',
+                (evidence.OccurrenceFingerprints ?? [])
+                    .Where(value => !string.IsNullOrWhiteSpace(value))
+                    .Select(value => value.Trim().ToLowerInvariant())
+                    .Distinct(StringComparer.Ordinal)
+                    .OrderBy(value => value, StringComparer.Ordinal));
+        }
+
+        return Fingerprint(string.Join('\n', new[]
+        {
+            publisher,
+            title,
+            gameEdition,
+            publicationDate,
+            sparseContentIdentity
+        }));
     }
 
     public static string OccurrenceKey(string entityType, string name, string? identitySuffix = null)
