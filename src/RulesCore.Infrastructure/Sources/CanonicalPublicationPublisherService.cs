@@ -20,8 +20,9 @@ public sealed class CanonicalPublicationPublisherService(RulesCoreDbContext dbCo
             throw new ArgumentException("Source package ID can not be empty.", nameof(sourcePackageId));
         }
 
+        // Canonical identity must be indexed before publisher reconciliation; this service
+        // intentionally does not create canonical publications on its own.
         await SourcePublisherStore.EnsureSchemaAsync(dbContext, cancellationToken);
-        await new CanonicalSourceIdentityService(dbContext).EnsureSchemaForExternalUseAsync(cancellationToken);
 
         var candidates = await ReadCandidatesAsync(sourcePackageId, cancellationToken);
         var updated = 0;
