@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 
 namespace RulesCore.Application.Sources;
@@ -22,6 +23,30 @@ public static class CurrentUserSourceCompatibility
 
         var extension = Path.GetExtension(fileName.Trim());
         return SupportedFileExtensions.Contains(extension, StringComparer.OrdinalIgnoreCase);
+    }
+
+    public static bool TryRead(
+        string? fileName,
+        ReadOnlySpan<byte> content,
+        out CompatibleCurrentUserSourceDocument? document)
+    {
+        document = null;
+        if (!IsCandidateFileName(fileName) || content.IsEmpty)
+        {
+            return false;
+        }
+
+        try
+        {
+            var text = new UTF8Encoding(
+                encoderShouldEmitUTF8Identifier: false,
+                throwOnInvalidBytes: true).GetString(content);
+            return TryRead(fileName, text, out document);
+        }
+        catch (DecoderFallbackException)
+        {
+            return false;
+        }
     }
 
     public static bool TryRead(
