@@ -22,23 +22,23 @@ internal static class BundledSrdSnapshots
         var imported = new List<SourceImportResult>(Definitions.Count);
         foreach (var snapshot in Definitions)
         {
-            var alreadyAvailable = await dbContext.SourceEntities
+            var package = RulesCoreBaselineCatalog.SourcePackages.Single(value =>
+                string.Equals(value.Key, snapshot.PackageKey, StringComparison.Ordinal));
+            var work = package.Works.Single(value =>
+                string.Equals(value.Key, snapshot.WorkKey, StringComparison.Ordinal));
+            var expectedOriginIdentity = $"admin:{package.Key}:{work.Key}:{work.EditionKey}";
+            var alreadyAvailable = await dbContext.SourceRepresentations
                 .AsNoTracking()
                 .AnyAsync(value =>
                     value.SourcePackage.Key == snapshot.PackageKey
-                    && value.NativeKey.Contains(snapshot.WorkKey),
+                    && value.OriginIdentity == expectedOriginIdentity,
                     cancellationToken);
             if (alreadyAvailable)
             {
                 continue;
             }
 
-            var package = RulesCoreBaselineCatalog.SourcePackages.Single(value =>
-                string.Equals(value.Key, snapshot.PackageKey, StringComparison.Ordinal));
-            var work = package.Works.Single(value =>
-                string.Equals(value.Key, snapshot.WorkKey, StringComparison.Ordinal));
             var json = await LoadAsync(snapshot.FileName, cancellationToken);
-
             imported.Add(await importer.Import5eToolsDocumentAsync(
                 new Import5eToolsDocumentRequest(
                     PackageKey: package.Key,
