@@ -40,7 +40,7 @@ function createNormalizationCard(app, container) {
             element("h3", { className: "h5 mb-1", text: "Normalize imported sources" }),
             element("p", {
                 className: "text-body-secondary mb-0",
-                text: "Review deterministic concept suggestions for accessible source entities that are not bound yet. Large or irrelevant source packages can be ignored for global rules work without deleting them or changing the uploader's access."
+                text: "Review deterministic concept suggestions for accessible source entities that are not bound yet. Binding remains deliberate; mechanically identical cross-edition rules may then resolve automatically, while publication remains explicit. Large or irrelevant source packages can be ignored for global rules work without deleting them or changing the uploader's access."
             })),
         badge("Rules Lawyer review", "primary"));
     card.append(heading);
@@ -63,7 +63,7 @@ function createNormalizationCard(app, container) {
 
     card.append(element("div", {
         className: "small text-body-secondary mb-3",
-        text: "The suggested key is derived only from entity type and name. Accepting creates or reuses that stable concept and binds this source. Ignoring applies to the entire source package for global review; it does not revoke the user's source grant or remove Source Layer data."
+        text: "The suggested key is derived only from entity type and name. Accepting creates or reuses that stable concept and binds this source. Mechanically identical cross-edition rules may then resolve automatically, and publication remains explicit. Ignoring applies to the entire source package for global review; it does not revoke the user's source grant or remove Source Layer data."
     }));
 
     const status = element("div");
@@ -145,7 +145,7 @@ function createNormalizationCard(app, container) {
             renderCandidates(app, container, results, candidates, page, hasNext, async nextPage => {
                 page = nextPage;
                 await loadCandidates(false);
-            }, async sourcePackageId => {
+            }, async () => {
                 await loadIgnoredPackages();
                 await loadCandidates(true);
             });
@@ -268,7 +268,7 @@ function renderCandidates(app, container, results, candidates, page, hasNext, on
             setButtonBusy(ignore, true, "Ignoring…");
             try {
                 await setPackageIgnored(app, candidate.sourcePackageId, true);
-                await onIgnored(candidate.sourcePackageId);
+                await onIgnored();
             } catch (error) {
                 window.alert(describeError(error));
                 setButtonBusy(ignore, false);
