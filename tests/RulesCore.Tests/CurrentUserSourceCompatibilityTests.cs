@@ -1,29 +1,82 @@
+using System.Text;
 using RulesCore.Application.Sources;
 
 namespace RulesCore.Tests;
 
 public sealed class CurrentUserSourceCompatibilityTests
 {
+    private const string CompatibleContent = """
+        {
+          "skill": [
+            { "name": "Arcana", "source": "PHB", "ability": "int" }
+          ]
+        }
+        """;
+
     [Fact]
     public void FiveEToolsEntityJsonIsCompatible()
     {
-        const string content = """
-            {
-              "skill": [
-                { "name": "Arcana", "source": "PHB", "ability": "int" }
-              ]
-            }
-            """;
-
         var compatible = CurrentUserSourceCompatibility.TryRead(
             "skills.json",
-            content,
+            CompatibleContent,
             out var document);
 
         Assert.True(compatible);
         Assert.NotNull(document);
         Assert.Equal(CurrentUserSourceCompatibility.FiveEToolsJsonFormat, document.FormatKey);
         Assert.Contains("PHB", document.SourceCodes);
+    }
+
+    [Fact]
+    public void FiveEToolsEntityJsonBytesAreCompatible()
+    {
+        var compatible = CurrentUserSourceCompatibility.TryRead(
+            "skills.json",
+            Encoding.UTF8.GetBytes(CompatibleContent),
+            out var document);
+
+        Assert.True(compatible);
+        Assert.NotNull(document);
+        Assert.Equal(CompatibleContent, document.ImportDocument);
+        Assert.Contains("PHB", document.SourceCodes);
+    }
+
+    [Fact]
+    public void InvalidUtf8BytesAreNotCompatible()
+    {
+        byte[] content = [0xFF, 0xFE, 0xFA, 0xFB];
+
+        Assert.False(CurrentUserSourceCompatibility.TryRead(
+            "skills.json",
+            content,
+            out var document));
+        Assert.Null(document);
+    }
+
+    [Fact]
+    public void Base64UploadRequestUsesCompatibilityBoundary()
+    {
+        var request = new AddCurrentUserSourceRequest
+        {
+            Kind = CurrentUserSourceKinds.Upload,
+            FileName = "skills.json",
+            ContentBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(CompatibleContent))
+        };
+
+        Assert.Equal(CompatibleContent, request.Json);
+    }
+
+    [Fact]
+    public void InvalidBase64UploadIsRejected()
+    {
+        var request = new AddCurrentUserSourceRequest
+        {
+            Kind = CurrentUserSourceKinds.Upload,
+            FileName = "skills.json",
+            ContentBase64 = "not-base64!"
+        };
+
+        Assert.Throws<InvalidDataException>(() => _ = request.Json);
     }
 
     [Theory]
@@ -42,17 +95,9 @@ public sealed class CurrentUserSourceCompatibilityTests
     [Fact]
     public void SupportedContentWithUnsupportedFileTypeIsNotCompatible()
     {
-        const string content = """
-            {
-              "skill": [
-                { "name": "Arcana", "source": "PHB", "ability": "int" }
-              ]
-            }
-            """;
-
         Assert.False(CurrentUserSourceCompatibility.TryRead(
             "skills.txt",
-            content,
+            CompatibleContent,
             out var document));
         Assert.Null(document);
     }
