@@ -5,6 +5,7 @@ using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Rules;
+using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.IntegrationTests;
 
@@ -75,7 +76,9 @@ public sealed class GlobalSourceDispositionIntegrationTests
             Assert.Equal("Homebrew Publisher", imported.Publisher);
 
             var ignoredPackages = await disposition.GetIgnoredAsync();
-            var ignoredView = Assert.Single(ignoredPackages.Where(value => value.SourcePackageId == imported.PackageId));
+            var ignoredView = Assert.Single(
+                ignoredPackages,
+                value => value.SourcePackageId == imported.PackageId);
             Assert.Equal("Not relevant to the global ruleset.", ignoredView.Reason);
 
             var whileIgnored = await normalization.GetCandidatesPageAsync(
