@@ -98,7 +98,7 @@ async function buildAddSourceCard(app) {
                 payload = {
                     kind: "upload",
                     fileName: selected.name,
-                    content: await selected.text()
+                    contentBase64: arrayBufferToBase64(await selected.arrayBuffer())
                 };
             }
 
@@ -117,6 +117,16 @@ async function buildAddSourceCard(app) {
 
     await renderExistingSources(app, existing, result);
     return card;
+}
+
+function arrayBufferToBase64(buffer) {
+    const bytes = new Uint8Array(buffer);
+    const chunkSize = 0x8000;
+    let binary = "";
+    for (let offset = 0; offset < bytes.length; offset += chunkSize) {
+        binary += String.fromCharCode(...bytes.subarray(offset, offset + chunkSize));
+    }
+    return btoa(binary);
 }
 
 async function renderExistingSources(app, container, result) {
