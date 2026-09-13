@@ -2,10 +2,13 @@ using System.Net;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using RulesCore.Application.Hosting;
 using RulesCore.Application.Sources;
+using RulesCore.Infrastructure.Persistence;
 
 namespace RulesCore.IntegrationTests;
 
@@ -36,6 +39,7 @@ public sealed class CurrentUserSourceImportQueueIntegrationTests
             builder.ConfigureTestServices(services =>
             {
                 services.RemoveAll<IToolHostAuthenticationClient>();
+                services.RemoveAll<IHostedService>();
                 services.AddSingleton<IToolHostAuthenticationClient>(authenticationClient);
             });
         });
@@ -44,31 +48,43 @@ public sealed class CurrentUserSourceImportQueueIntegrationTests
             AllowAutoRedirect = false
         });
 
-        using var request = HostedRequest(HttpMethod.Post, "/api/sources/current-user", "web-import-ticket");
-        request.Content = JsonContent.Create(new AddCurrentUserSourceRequest(
-            CurrentUserSourceKinds.Web,
-            Url: RegressionSourceUrl));
+        try
+        {
+            using var request = HostedRequest(HttpMethod.Post, "/api/sources/current-user", "web-import-ticket");
+            request.Content = JsonContent.Create(new AddCurrentUserSourceRequest(
+                CurrentUserSourceKinds.Web,
+                Url: RegressionSourceUrl));
 
-        using var response = await client.SendAsync(request);
-        Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
+            using var response = await client.SendAsync(request);
+            Assert.Equal(HttpStatusCode.Accepted, response.StatusCode);
 
-        var job = await response.Content.ReadFromJsonAsync<CurrentUserSourceImportJobView>();
-        Assert.NotNull(job);
-        Assert.Equal(CurrentUserSourceImportJobOperations.Add, job.Operation);
-        Assert.Equal(CurrentUserSourceKinds.Web, job.Kind);
-        Assert.Equal(CurrentUserSourceImportJobStatuses.Queued, job.Status);
-        Assert.Equal(RegressionSourceUrl, job.Url);
-        Assert.Null(job.CurrentUserSourceId);
-        Assert.Null(job.Error);
+            var job = await response.Content.ReadFromJsonAsync<CurrentUserSourceImportJobView>();
+            Assert.NotNull(job);
+            Assert.Equal(CurrentUserSourceImportJobOperations.Add, job.Operation);
+            Assert.Equal(CurrentUserSourceKinds.Web, job.Kind);
+            Assert.Equal(CurrentUserSourceImportJobStatuses.Queued, job.Status);
+            Assert.Equal(RegressionSourceUrl, job.Url);
+            Assert.Null(job.CurrentUserSourceId);
+            Assert.Null(job.Error);
 
-        using var listRequest = HostedRequest(
-            HttpMethod.Get,
-            "/api/sources/current-user/import-jobs",
-            "web-import-ticket");
-        using var listResponse = await client.SendAsync(listRequest);
-        Assert.Equal(HttpStatusCode.OK, listResponse.StatusCode);
-        var jobs = await listResponse.Content.ReadFromJsonAsync<CurrentUserSourceImportJobView[]>();
-        Assert.Contains(jobs!, value => value.Id == job.Id);
+            using var listRequest = HostedRequest(
+                HttpMethod.Get,
+                "/api/sources/current-user/import-jobs",
+                "web-import-ticket");
+            using var listResponse = await client.SendAsync(listRequest);
+            Assert.Equal(HttpStatusCode.OK, listResponse.StatusCode);
+            var jobs = await listResponse.Content.ReadFromJsonAsync<CurrentUserSourceImportJobView[]>();
+            Assert.Contains(jobs!, value => value.Id == job.Id);
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            var db = cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            await db.Database.ExecuteSqlInterpolatedAsync($$"""
+                DELETE FROM current_user_source_import_job
+                WHERE user_id = {{userId}};
+                """);
+        }
     }
 
     private static HttpRequestMessage HostedRequest(HttpMethod method, string path, string ticket)
