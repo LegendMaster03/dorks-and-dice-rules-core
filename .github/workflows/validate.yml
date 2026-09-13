@@ -29,6 +29,9 @@ jobs:
             src/RulesCore.Web/wwwroot/ux-shell.js \
             src/RulesCore.Web/wwwroot/authoring.js \
             src/RulesCore.Web/wwwroot/rules-browser.js \
+            src/RulesCore.Web/wwwroot/rule-renderers.js \
+            src/RulesCore.Web/wwwroot/scope-control.js \
+            src/RulesCore.Web/wwwroot/semantic-comparison.js \
             src/RulesCore.Web/wwwroot/source-library.js \
             src/RulesCore.Web/wwwroot/concept-source-authoring.js \
             src/RulesCore.Web/wwwroot/source-normalization.js \

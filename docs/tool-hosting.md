@@ -1,6 +1,6 @@
 # Dorks & Dice Tool Host integration
 
-This repository follows the Tool hosting contract implemented by `dorks-and-dice-site`.
+This repository follows the Tool Host contract implemented by `dorks-and-dice-site`.
 
 ## Existing host behavior
 
@@ -17,6 +17,17 @@ Important transport constraints from the current host:
 - `/tool-host/{slug}/context` provides host context; authenticated host APIs expose session/campaign reads.
 
 Because WebSocket proxying is not part of the contract, Rules Core does not use Blazor Server for its hosted UI. The integration target is an ES module at `/app.js`, with standard HTTP APIs behind explicit authentication contracts.
+
+## Embedded route ownership
+
+The Tool Host owns the site mount point and Rules Core owns route state beneath that mount point. Current host context exposes both values explicitly:
+
+- `toolBasePath`, for example `/tools/rules-core`;
+- `toolRoute`, for example `/monsters/ancient-red-dragon`.
+
+Rules Core consumes `toolRoute` as application route state and uses `toolBasePath` only when constructing a browser navigation target. It does not hard-code the site's MVC route or assume the mount path will never change.
+
+Rules Core API responses that identify browser-visible rules expose a `browserLink` containing the `rules-core` tool slug, a tool-relative path, and the stable Rules Layer route identity. Other tools should give that link target back to Tool Host/navigation code instead of independently rebuilding `/tools/rules-core/...` URLs.
 
 ## Hosted backend authentication
 
@@ -42,7 +53,7 @@ The redeemed context contains:
 - stable user ID and display name;
 - active site mode;
 - effective global roles;
-- enabled campaign memberships and their campaign-scoped roles.
+- enabled campaign memberships and their campaign-scoped role.
 
 The context is attached to the current request and projected into an ASP.NET `ClaimsPrincipal` for future policy use. `GET /api/integration/session` exists as an authenticated integration diagnostic and returns 401 when the request did not arrive with a successfully redeemed Tool Host ticket.
 
@@ -57,10 +68,9 @@ The source API applies both open-content and grant rules:
 - public packages are readable anonymously;
 - private packages are readable only when the redeemed user has an explicit Rules Core source grant;
 - missing and inaccessible entities both return not-found behavior;
-- a `Rules Lawyer` global role does not create a source grant;
 - a source grant does not create Rules Lawyer or campaign authority.
 
-Grant mutation is currently an internal application service. No public grant-management or source-import write endpoint is exposed yet.
+The same check applies to resolved-rule provenance, semantic source comparisons, and the pinned global baseline shown in campaign scope. Campaign authority can not be used to disclose a restricted source document.
 
 ## Global rules authority
 
@@ -68,36 +78,35 @@ Global Rules Layer mutation is authorized from the redeemed host context. The re
 
 ## Campaign rules authority
 
-Campaign Rules Layer reads and writes use the campaign memberships supplied by the host. Rules Core does not maintain a duplicate campaign-membership database.
+Campaign Rules Layer reads and writes use campaign context supplied by the host. Rules Core does not maintain a duplicate campaign-membership database.
 
 - Campaign reads require `dorks-and-dice` mode and explicit membership in the requested enabled campaign.
 - An authenticated nonmember receives not-found behavior.
-- Campaign mutations additionally require the campaign-scoped `DM` role.
-- A campaign Player may read the published campaign ruleset but receives forbidden on campaign mutations.
-- Source-content grants remain independent from campaign membership and DM authority.
+- The campaign-scoped `DM` role represents the campaign owner and authorizes campaign Rules Layer mutation.
+- A campaign `Player` may browse published campaign rules but can not adjudicate or publish campaign rules.
+- Campaign authority never implies global Rules Lawyer authority.
+- Source-content grants remain independent from campaign authority.
 
-The campaign ID accepted by Rules Core is therefore only meaningful when it is present in the redeemed Tool Host context.
+In this architecture, “campaign owner” and “campaign DM” are the same authority concept. Rules Core therefore consumes the existing Tool Host `DM` role directly rather than defining a second ownership or adjudication capability.
+
+## Scope contract
+
+Rules Core models adjudication scope explicitly as either global or campaign-with-ID. The model is extensible rather than being encoded as two unrelated UI tabs.
+
+`GET /api/workspace/scopes` reports which scopes the current identity may browse and adjudicate. The persistent workspace scope control is a convenience projection of this authority; it is not an authorization boundary.
+
+Requests that perform scoped semantic comparison include the requested scope in the request body, and the backend independently verifies it. Existing global and campaign mutation APIs also carry scope in their endpoint identity (`/api/global/...` versus `/api/campaigns/{campaignId}/...`) and reauthorize on every request. No mutation determines its destination solely from ambient client state.
 
 ## Rules Core endpoints
 
-Current endpoints include:
+Relevant browser/workspace endpoints include:
 
-- `GET /health` - application liveness.
-- `GET /ready` - PostgreSQL-aware readiness.
-- `GET /app.js` - Embedded Module entry point.
-- `GET /` - standalone service metadata.
-- `GET /api` - API-surface metadata.
-- `GET /api/integration/session` - redeemed hosted identity context; requires a valid Tool Host ticket.
-- `GET /api/sources` - public packages plus private packages granted to the hosted identity.
-- `GET /api/sources/entities/{entityId}` - latest accessible source revision with provenance.
-- `GET /api/rules/{conceptKey}` - latest published global resolved rule.
-- `POST /api/global/rules/concepts` - create a global rule concept.
-- `POST /api/global/rules/concepts/{conceptId}/bindings` - bind a source entity to a concept.
-- `PUT /api/global/rules/concepts/{conceptId}/decision` - append/select the current global source decision.
-- `POST /api/global/rules/publish` - publish an immutable global ruleset revision.
-- `PUT /api/campaigns/{campaignId}/rules/baseline` - deliberately select a published global baseline for a campaign.
-- `PUT /api/campaigns/{campaignId}/rules/concepts/{conceptId}/decision` - append a campaign override or return-to-baseline decision.
-- `POST /api/campaigns/{campaignId}/rules/publish` - publish an immutable campaign ruleset revision.
-- `GET /api/campaigns/{campaignId}/rules/{conceptKey}` - resolve a rule from the latest published campaign ruleset.
+- `GET /api/rules` - published global catalog with stable browser link targets.
+- `GET /api/rules/{conceptKey}` - published global resolved rule with browser link target.
+- `GET /api/campaigns/{campaignId}/rules` - published effective campaign catalog.
+- `GET /api/campaigns/{campaignId}/rules/{conceptKey}` - published effective campaign rule.
+- `GET /api/campaigns/{campaignId}/rules/{conceptKey}/global-baseline` - exact published global baseline pinned by that campaign publication, subject to independent source access.
+- `GET /api/workspace/scopes` - browse/adjudication scopes available to the current identity.
+- `POST /api/workspace/comparison` - scope-authorized semantic comparison of two accessible source revisions bound to one concept.
 
-Future integration work can add richer service-to-service operations, but the identity and campaign authority boundary remains the main Dorks & Dice host while restricted source authorization remains owned by Rules Core.
+Existing global and campaign authoring/publication endpoints remain unchanged in their persistence semantics. Publication remains explicit and append-only.
