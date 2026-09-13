@@ -38,6 +38,9 @@ public sealed class CurrentUserSourceIntegrationTests
                   "skill": [
                     { "name": "Private Arcana", "source": "BOOKA", "ability": "int" },
                     { "name": "Private Survival", "source": "BOOKB", "ability": "wis" }
+                  ],
+                  "data": [
+                    { "type": "section", "name": "Introduction", "entries": ["Narrative book content without an entity source code."] }
                   ]
                 }
                 """);
@@ -68,6 +71,7 @@ public sealed class CurrentUserSourceIntegrationTests
             Assert.Equal(2, added.EntityCount);
             Assert.Contains("BOOKA", added.SourceCodes);
             Assert.Contains("BOOKB", added.SourceCodes);
+            Assert.DoesNotContain(FiveEToolsDocumentInspector.AccountSourceFallbackCode, added.SourceCodes);
         }
 
         try
