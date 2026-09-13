@@ -33,19 +33,19 @@ public sealed class SourceFormatAdapterIntegrationTests
             "upload:test-pdf"));
 
         Assert.NotNull(result);
-        Assert.Equal(PdfSourceFormatAdapter.Format, result.FormatKey);
-        var publication = Assert.Single(result.Publications);
+        Assert.Equal(PdfSourceFormatAdapter.Format, result!.FormatKey);
+        var publication = Assert.Single(result.Publications!);
         Assert.Equal("Third Party Compendium", publication.DisplayName);
         Assert.Equal("Example Press", publication.Publisher);
         Assert.Equal("D&D 5e", publication.GameEdition);
         Assert.Equal(new DateOnly(2026, 5, 1), publication.PublicationDate);
         Assert.Equal("9781402894626", publication.ExternalIdentifiers!["isbn"]);
-        Assert.Equal(2, publication.Records.Count);
-        Assert.All(publication.Records, record => Assert.Equal("source-fragment", record.EntityType));
-        Assert.Equal("page:1", publication.Records[0].LocatorKey);
-        Assert.Equal("page:2", publication.Records[1].LocatorKey);
-        Assert.Contains("readable source material", publication.Records[0].RawJson, StringComparison.Ordinal);
-        Assert.Contains("second page", publication.Records[1].RawJson, StringComparison.Ordinal);
+        Assert.Equal(2, result.Records.Count);
+        Assert.All(result.Records, record => Assert.Equal("source-fragment", record.EntityType));
+        Assert.Equal("page:1", result.Records[0].LocatorKey);
+        Assert.Equal("page:2", result.Records[1].LocatorKey);
+        Assert.Contains("readable source material", result.Records[0].RawJson, StringComparison.Ordinal);
+        Assert.Contains("second page", result.Records[1].RawJson, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -67,10 +67,7 @@ public sealed class SourceFormatAdapterIntegrationTests
     public async Task NewThirdPartyPdfEstablishesPublicationAndPreservesRepresentationBytes()
     {
         var db = await OpenDatabaseAsync();
-        if (db is null)
-        {
-            return;
-        }
+        if (db is null) return;
         await using (db)
         {
             var bytes = BuildPdf(
@@ -106,8 +103,7 @@ public sealed class SourceFormatAdapterIntegrationTests
             Assert.Equal(PdfSourceFormatAdapter.Format, stored.FormatKey);
             Assert.Equal(bytes, stored.Bytes);
             Assert.Equal(bytes.LongLength, stored.Length);
-            Assert.Equal(2, await db.SourceEntities.CountAsync(
-                value => value.SourceEdition.SourceWork.SourcePackageId == imported.PackageId));
+            Assert.Equal(2, await db.SourceEntities.CountAsync(value => value.SourcePackageId == imported.PackageId));
         }
     }
 
@@ -115,10 +111,7 @@ public sealed class SourceFormatAdapterIntegrationTests
     public async Task MatchingPdfUsesExistingCanonicalPublicationWithoutSharingPackageGrant()
     {
         var db = await OpenDatabaseAsync();
-        if (db is null)
-        {
-            return;
-        }
+        if (db is null) return;
         await using (db)
         {
             var importer = new NormalizedSourceImportService(db);
@@ -128,22 +121,7 @@ public sealed class SourceFormatAdapterIntegrationTests
                 "test-structured",
                 License: null,
                 IsPublic: false,
-                new NormalizedSourceRepresentation(
-                    FiveEToolsSourceFormatAdapter.Format,
-                    new SourceRepresentationArtifact(
-                        "aggregate.json",
-                        "{}"u8.ToArray(),
-                        $"test:{Guid.NewGuid():N}"),
-                    [
-                        Publication(
-                            "known-book", "Known Book", "Known Press", "9781402894626",
-                            "spell", "Shared Rule", "known-book|shared-rule",
-                            "{\"name\":\"Shared Rule\",\"effect\":\"same mechanic\"}"),
-                        Publication(
-                            "unrelated-book", "Unrelated Book", "Other Press", "9781234567897",
-                            "spell", "Unrelated Rule", "unrelated-book|rule",
-                            "{\"name\":\"Unrelated Rule\",\"effect\":\"unrelated\"}")
-                    ])));
+                StructuredRepresentation()));
             await new SourceGrantService(db).GrantAsync("account-a", aggregate.PackageId);
 
             var pdfBytes = BuildPdf(
@@ -183,10 +161,7 @@ public sealed class SourceFormatAdapterIntegrationTests
     public async Task SameTitleWithoutStrongEvidenceDoesNotSilentlyMergeDifferentPdfContent()
     {
         var db = await OpenDatabaseAsync();
-        if (db is null)
-        {
-            return;
-        }
+        if (db is null) return;
         await using (db)
         {
             var importer = new NormalizedSourceImportService(db);
@@ -205,27 +180,55 @@ public sealed class SourceFormatAdapterIntegrationTests
         }
     }
 
-    private static T RequireNotNull<T>(T? value) where T : class
+    private static NormalizedSourceRepresentation StructuredRepresentation()
     {
-        Assert.NotNull(value);
-        return value!;
+        var artifact = new SourceRepresentationArtifact(
+            "aggregate.json",
+            "{}"u8.ToArray(),
+            $"test:{Guid.NewGuid():N}");
+        var records = new[]
+        {
+            Record("known-book", "spell", "Shared Rule", "known-book|shared-rule",
+                "{\"name\":\"Shared Rule\",\"effect\":\"same mechanic\"}"),
+            Record("unrelated-book", "spell", "Unrelated Rule", "unrelated-book|rule",
+                "{\"name\":\"Unrelated Rule\",\"effect\":\"unrelated\"}")
+        };
+        var publications = new[]
+        {
+            Publication("known-book", "Known Book", "Known Press", "9781402894626"),
+            Publication("unrelated-book", "Unrelated Book", "Other Press", "9781234567897")
+        };
+        return new NormalizedSourceRepresentation(
+            FiveEToolsSourceFormatAdapter.Format,
+            artifact,
+            records,
+            publications);
     }
+
+    private static NormalizedSourceRecord Record(
+        string publicationKey,
+        string entityType,
+        string name,
+        string nativeKey,
+        string rawJson) =>
+        new(entityType, name, publicationKey, nativeKey, rawJson, PublicationLocalKey: publicationKey);
 
     private static NormalizedSourcePublication Publication(
         string key,
         string title,
         string publisher,
-        string isbn,
-        string entityType,
-        string name,
-        string naturalKey,
-        string rawJson) =>
+        string isbn) =>
         new(
             key,
             title,
-            [new NormalizedSourceRecord(entityType, name, key, naturalKey, rawJson)],
             Publisher: publisher,
             ExternalIdentifiers: new Dictionary<string, string> { ["isbn"] = isbn });
+
+    private static T RequireNotNull<T>(T? value) where T : class
+    {
+        Assert.NotNull(value);
+        return value!;
+    }
 
     private static async Task<NormalizedSourceImportResult> ImportPdfAsync(
         NormalizedSourceImportService importer,
@@ -249,14 +252,9 @@ public sealed class SourceFormatAdapterIntegrationTests
     private static async Task<RulesCoreDbContext?> OpenDatabaseAsync()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
-        if (string.IsNullOrWhiteSpace(connectionString))
-        {
-            return null;
-        }
-        var options = new DbContextOptionsBuilder<RulesCoreDbContext>()
-            .UseNpgsql(connectionString)
-            .Options;
-        var db = new RulesCoreDbContext(options);
+        if (string.IsNullOrWhiteSpace(connectionString)) return null;
+        var db = new RulesCoreDbContext(
+            new DbContextOptionsBuilder<RulesCoreDbContext>().UseNpgsql(connectionString).Options);
         await new RulesCoreSchemaInitializer(db).InitializeAsync();
         return db;
     }
@@ -284,10 +282,7 @@ public sealed class SourceFormatAdapterIntegrationTests
     {
         var connection = db.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync();
-        }
+        if (openedHere) await connection.OpenAsync();
         try
         {
             await using var command = connection.CreateCommand();
@@ -305,23 +300,15 @@ public sealed class SourceFormatAdapterIntegrationTests
         }
         finally
         {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
+            if (openedHere) await connection.CloseAsync();
         }
     }
 
-    private static async Task<int> CountRepresentationsAsync(
-        RulesCoreDbContext db,
-        Guid canonicalPublicationId)
+    private static async Task<int> CountRepresentationsAsync(RulesCoreDbContext db, Guid canonicalPublicationId)
     {
         var connection = db.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync();
-        }
+        if (openedHere) await connection.OpenAsync();
         try
         {
             await using var command = connection.CreateCommand();
@@ -335,10 +322,7 @@ public sealed class SourceFormatAdapterIntegrationTests
         }
         finally
         {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
+            if (openedHere) await connection.CloseAsync();
         }
     }
 
