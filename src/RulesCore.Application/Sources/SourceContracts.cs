@@ -15,7 +15,8 @@ public sealed record Import5eToolsDocumentRequest(
     string Json,
     string? GameEdition = null,
     string? ReleaseKind = null,
-    DateOnly? PublicationDate = null);
+    DateOnly? PublicationDate = null,
+    string? Publisher = null);
 
 public static class SourceImportPreviewActions
 {
@@ -46,6 +47,7 @@ public sealed record SourceImportPreviewResult(
     string? GameEdition,
     string? ReleaseKind,
     DateOnly? PublicationDate,
+    string? Publisher,
     bool CanImport,
     IReadOnlyList<string> Conflicts,
     IReadOnlyList<string> Warnings,
@@ -71,7 +73,8 @@ public sealed record SourceImportResult(
     IReadOnlyList<ImportedSourceEntity> Entities,
     string? GameEdition = null,
     string? ReleaseKind = null,
-    DateOnly? PublicationDate = null);
+    DateOnly? PublicationDate = null,
+    string? Publisher = null);
 
 public sealed record SourcePackageSummary(
     Guid Id,
