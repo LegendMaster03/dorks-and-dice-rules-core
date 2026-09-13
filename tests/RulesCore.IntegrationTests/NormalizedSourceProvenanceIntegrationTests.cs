@@ -209,7 +209,7 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
         Guid editionId) =>
         await ReadScalarStringAsync(
             db,
-            "SELECT publisher FROM source_edition_publisher WHERE source_edition_id = @id;",
+            "SELECT publisher FROM source_edition_metadata WHERE source_edition_id = @id;",
             editionId);
 
     private static async Task<string?> ReadScalarStringAsync(
