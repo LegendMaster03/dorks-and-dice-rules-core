@@ -39,7 +39,16 @@ public sealed class CurrentUserSourceImportQueueIntegrationTests
             builder.ConfigureTestServices(services =>
             {
                 services.RemoveAll<IToolHostAuthenticationClient>();
-                services.RemoveAll<IHostedService>();
+                var sourceWorker = services.SingleOrDefault(descriptor =>
+                    descriptor.ServiceType == typeof(IHostedService)
+                    && string.Equals(
+                        descriptor.ImplementationType?.Name,
+                        "CurrentUserSourceRefreshBackground",
+                        StringComparison.Ordinal));
+                if (sourceWorker is not null)
+                {
+                    services.Remove(sourceWorker);
+                }
                 services.AddSingleton<IToolHostAuthenticationClient>(authenticationClient);
             });
         });
