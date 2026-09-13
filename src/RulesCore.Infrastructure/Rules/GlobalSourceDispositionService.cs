@@ -62,6 +62,43 @@ public sealed class GlobalSourceDispositionService(RulesCoreDbContext dbContext)
         }
     }
 
+    public async Task<Guid[]> GetIgnoredPackageIdsAsync(
+        CancellationToken cancellationToken = default)
+    {
+        await EnsureSchemaAsync(cancellationToken);
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere)
+        {
+            await connection.OpenAsync(cancellationToken);
+        }
+
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT source_package_id
+                FROM global_source_disposition
+                WHERE restored_at IS NULL
+                ORDER BY source_package_id;
+                """;
+            var ids = new List<Guid>();
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                ids.Add(reader.GetGuid(0));
+            }
+            return ids.ToArray();
+        }
+        finally
+        {
+            if (openedHere)
+            {
+                await connection.CloseAsync();
+            }
+        }
+    }
+
     public async Task<GlobalIgnoredSourceView?> SetIgnoredAsync(
         Guid sourcePackageId,
         SetGlobalSourceIgnoredRequest request,
@@ -168,34 +205,7 @@ public sealed class GlobalSourceDispositionService(RulesCoreDbContext dbContext)
         Guid sourcePackageId,
         CancellationToken cancellationToken = default)
     {
-        await EnsureSchemaAsync(cancellationToken);
-        var connection = dbContext.Database.GetDbConnection();
-        var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync(cancellationToken);
-        }
-
-        try
-        {
-            await using var command = connection.CreateCommand();
-            command.CommandText = """
-                SELECT EXISTS (
-                    SELECT 1
-                    FROM global_source_disposition
-                    WHERE source_package_id = @source_package_id
-                        AND restored_at IS NULL);
-                """;
-            AddParameter(command, "@source_package_id", sourcePackageId);
-            return (bool)(await command.ExecuteScalarAsync(cancellationToken) ?? false);
-        }
-        finally
-        {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
-        }
+        return (await GetIgnoredPackageIdsAsync(cancellationToken)).Contains(sourcePackageId);
     }
 
     public static Task EnsureSchemaAsync(
