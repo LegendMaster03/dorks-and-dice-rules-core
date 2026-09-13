@@ -12,8 +12,6 @@ public static class CurrentUserSourceEndpointExtensions
 
     public static void MapCurrentUserSourceEndpoints(this WebApplication app)
     {
-        CurrentUserSourceRefreshBackground.Start(app);
-
         app.MapGet("/api/sources/current-user", async (
             HttpContext httpContext,
             RulesCoreDbContext dbContext,
@@ -59,11 +57,6 @@ public static class CurrentUserSourceEndpointExtensions
                     authenticationContext!.User.Id,
                     request,
                     cancellationToken);
-
-                await new CanonicalSourceIdentityService(dbContext)
-                    .IndexPackageAsync(source.SourcePackageId, cancellationToken);
-                await new CanonicalPublicationPublisherService(dbContext)
-                    .ReconcilePackageAsync(source.SourcePackageId, cancellationToken);
 
                 if (string.Equals(source.Kind, CurrentUserSourceKinds.Web, StringComparison.Ordinal)
                     && !string.IsNullOrWhiteSpace(source.Url))
@@ -139,8 +132,6 @@ public static class CurrentUserSourceEndpointExtensions
                 {
                     return Results.NotFound();
                 }
-                await new CanonicalPublicationPublisherService(dbContext)
-                    .ReconcilePackageAsync(source.SourcePackageId, cancellationToken);
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(source);
             }
