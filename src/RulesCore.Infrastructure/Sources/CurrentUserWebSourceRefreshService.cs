@@ -113,8 +113,9 @@ public sealed class CurrentUserWebSourceRefreshService
             return null;
         }
 
-        await new CanonicalSourceIdentityService(dbContext)
-            .IndexPackageAsync(refreshed.SourcePackageId, cancellationToken);
+        // CurrentUserSourceService routes refreshes through the normalized format adapter
+        // pipeline, which performs canonical publication/occurrence association itself.
+        // Do not invoke the legacy 5e.tools package indexer here.
         await MarkCheckedAsync(
             [registration.Id],
             probe.Known ? probe.Token : null,
@@ -182,8 +183,6 @@ public sealed class CurrentUserWebSourceRefreshService
                         cancellationToken);
                     if (refreshed is not null)
                     {
-                        await new CanonicalSourceIdentityService(dbContext)
-                            .IndexPackageAsync(refreshed.SourcePackageId, cancellationToken);
                         refreshedCount++;
                     }
                     await MarkCheckedAsync(
