@@ -1,19 +1,18 @@
 import { codeBlock, definitionList, element } from "./ui.js";
 
-const rendererRegistry = new Map();
-
-for (const type of ["monster"]) rendererRegistry.set(type, renderMonster);
-for (const type of ["spell"]) rendererRegistry.set(type, renderSpell);
-for (const type of ["item"]) rendererRegistry.set(type, renderItem);
-for (const type of ["feat"]) rendererRegistry.set(type, renderFeat);
-for (const type of ["class", "subclass", "classFeature", "subclassFeature", "prestigeClass", "npcClass"]) rendererRegistry.set(type, renderClassLike);
-for (const type of ["race", "species"]) rendererRegistry.set(type, renderSpeciesLike);
-for (const type of ["condition"]) rendererRegistry.set(type, renderCondition);
-for (const type of ["skill", "domain", "power", "divineAbility", "houseRule", "rule", "source-fragment"]) rendererRegistry.set(type, renderRulesDocument);
+const renderers = new Map();
+for (const type of ["monster"]) renderers.set(type, renderMonster);
+for (const type of ["spell", "power"]) renderers.set(type, renderSpellLike);
+for (const type of ["item"]) renderers.set(type, renderItem);
+for (const type of ["feat", "divineAbility"]) renderers.set(type, renderFeatLike);
+for (const type of ["class", "subclass", "classFeature", "subclassFeature", "prestigeClass", "npcClass"]) renderers.set(type, renderClassLike);
+for (const type of ["race", "species"]) renderers.set(type, renderSpeciesLike);
+for (const type of ["condition"]) renderers.set(type, renderCondition);
+for (const type of ["skill", "domain", "houseRule", "rule", "source-fragment"]) renderers.set(type, renderRulesDocument);
 
 export function renderRuleDocument(entityType, document, options = {}) {
-    const normalizedType = String(entityType ?? "").trim();
-    const renderer = rendererRegistry.get(normalizedType) ?? rendererRegistry.get(normalizedType.toLowerCase()) ?? renderRulesDocument;
+    const type = String(entityType ?? "").trim();
+    const renderer = renderers.get(type) ?? renderers.get(type.toLowerCase()) ?? renderRulesDocument;
     return renderer(document ?? {}, options);
 }
 
@@ -22,18 +21,22 @@ export const renderResolvedRule = renderRuleDocument;
 export function projectMonster(document) {
     const legacy = legacyFieldMap(document?.body);
     const hitDice = firstValue(document?.hp?.formula, legacy.get("Hit Dice"));
+    const legacyArmorClass = legacy.get("Armor Class") ?? legacy.get("AC");
+    const baseAttackGrapple = splitSlashPair(legacy.get("Base Attack/Grapple"));
+    const sizeAndType = legacy.get("Size and Type") ?? legacy.get("SizeAndType");
     const abilities = {};
+
     for (const [key, legacyLabel] of [["STR", "Str"], ["DEX", "Dex"], ["CON", "Con"], ["INT", "Int"], ["WIS", "Wis"], ["CHA", "Cha"]]) {
         abilities[key] = numberValue(document?.[key.toLowerCase()]) ?? numberValue(legacy.get(legacyLabel));
     }
 
     return {
-        size: firstValue(formatValue(document?.size), valueBeforeComma(legacy.get("Size and Type") ?? legacy.get("SizeAndType"))),
-        creatureType: firstValue(formatCreatureType(document?.type), valueAfterSize(legacy.get("Size and Type") ?? legacy.get("SizeAndType"))),
+        size: firstValue(formatValue(document?.size), firstToken(sizeAndType)),
+        creatureType: firstValue(formatCreatureType(document?.type), typeFromLegacy(sizeAndType)),
         alignment: firstValue(formatValue(document?.alignment), legacy.get("Alignment")),
-        armorClass: firstValue(formatArmorClass(document?.ac), legacy.get("Armor Class"), legacy.get("AC")),
-        touchArmorClass: firstValue(formatValue(document?.touchAc ?? document?.touchAC), legacy.get("Touch AC")),
-        flatFootedArmorClass: firstValue(formatValue(document?.flatFootedAc ?? document?.flatFootedAC), legacy.get("Flat-Footed AC")),
+        armorClass: firstValue(formatArmorClass(document?.ac), legacyArmorClass),
+        touchArmorClass: firstValue(formatValue(document?.touchAc ?? document?.touchAC), legacy.get("Touch AC"), inlineArmorClass(legacyArmorClass, "touch")),
+        flatFootedArmorClass: firstValue(formatValue(document?.flatFootedAc ?? document?.flatFootedAC), legacy.get("Flat-Footed AC"), inlineArmorClass(legacyArmorClass, "flat-footed")),
         hitPoints: firstValue(formatHitPoints(document?.hp), legacy.get("Hit Points"), hitPointsFromHitDice(hitDice)),
         hitDice,
         initiative: firstValue(formatValue(document?.initiative), formatValue(document?.init), legacy.get("Initiative"), legacy.get("Init"), abilityModifier(abilities.DEX)),
@@ -41,8 +44,8 @@ export function projectMonster(document) {
         challengeRating: firstValue(formatChallenge(document?.cr), legacy.get("Challenge Rating"), legacy.get("CR")),
         experience: firstValue(formatValue(document?.xp), legacy.get("XP")),
         proficiencyBonus: firstValue(formatSigned(document?.pb), formatSigned(document?.proficiencyBonus)),
-        baseAttack: firstValue(formatValue(document?.baseAttack ?? document?.bab), legacy.get("Base Attack"), legacy.get("Base Atk")),
-        grapple: firstValue(formatValue(document?.grapple), legacy.get("Grapple")),
+        baseAttack: firstValue(formatValue(document?.baseAttack ?? document?.bab), legacy.get("Base Attack"), legacy.get("Base Atk"), baseAttackGrapple[0]),
+        grapple: firstValue(formatValue(document?.grapple), legacy.get("Grapple"), baseAttackGrapple[1]),
         spaceReach: firstValue(formatValue(document?.spaceReach), legacy.get("Space/Reach")),
         fortitude: firstValue(formatValue(document?.fort), legacy.get("Fort"), legacy.get("Fortitude")),
         reflex: firstValue(formatValue(document?.ref), legacy.get("Ref"), legacy.get("Reflex")),
@@ -62,12 +65,10 @@ function renderMonster(document, options) {
     const root = element("div", { className: "rules-core-rule-renderer rules-core-monster-sheet" });
     const stats = projectMonster(document);
     const kaiju = projectKaiju(document);
-
     const identity = [stats.size, stats.creatureType, stats.alignment].filter(Boolean).join(" · ");
     if (identity) root.append(element("div", { className: "rules-core-monster-identity", text: identity }));
 
-    const header = element("section", { className: "rules-core-dnd-block rules-core-monster-summary" });
-    const primaryStats = [
+    const primary = [
         ["Armor Class", stats.armorClass],
         kaiju ? ["Chaos Threshold", kaiju.chaosThreshold] : ["Hit Points", stats.hitPoints],
         ["Hit Dice", stats.hitDice],
@@ -75,10 +76,9 @@ function renderMonster(document, options) {
         ["Speed", stats.speed],
         ["Challenge", stats.challengeRating]
     ];
-    header.append(
-        element("div", { className: "rules-core-stat-line" }, primaryStats.map(([label, value]) => stat(label, value))),
-        abilityRow(stats.abilities));
-    root.append(header);
+    root.append(element("section", { className: "rules-core-dnd-block rules-core-monster-summary" },
+        element("div", { className: "rules-core-stat-line" }, primary.map(([label, value]) => stat(label, value))),
+        abilityRow(stats.abilities)));
 
     const defenses = compactPairs([
         ["Saving Throws", formatValue(document?.save)],
@@ -94,7 +94,7 @@ function renderMonster(document, options) {
     ]);
     if (defenses.length) root.append(infoSection("Defenses & Senses", defenses));
 
-    const legacyCombat = compactPairs([
+    const editionSpecific = compactPairs([
         ["Touch AC", stats.touchArmorClass],
         ["Flat-Footed AC", stats.flatFootedArmorClass],
         ["Base Attack", stats.baseAttack],
@@ -111,8 +111,7 @@ function renderMonster(document, options) {
         ["Advancement", stats.advancement],
         ["Level Adjustment", stats.levelAdjustment]
     ]);
-    if (legacyCombat.length) root.append(infoSection("Edition-specific statistics", legacyCombat));
-
+    if (editionSpecific.length) root.append(infoSection("Edition-specific statistics", editionSpecific));
     if (kaiju) root.append(renderKaiju(kaiju));
 
     appendNamedSections(root, document, [
@@ -129,20 +128,21 @@ function renderMonster(document, options) {
     return root;
 }
 
-function renderSpell(document, options) {
-    const root = element("article", { className: "rules-core-rule-renderer rules-core-reading-view" });
-    root.append(infoSection("Spell details", compactPairs([
+function renderSpellLike(document, options) {
+    const root = readingRoot();
+    const details = compactPairs([
         ["Level", formatValue(document?.level)],
         ["School", formatValue(document?.school)],
-        ["Casting Time", formatValue(document?.time ?? document?.castingTime)],
+        ["Casting / Manifesting Time", formatValue(document?.time ?? document?.castingTime)],
         ["Range", formatValue(document?.range)],
         ["Components", formatValue(document?.components)],
         ["Duration", formatValue(document?.duration)],
         ["Classes / Lists", formatValue(document?.classes ?? document?.classList)],
         ["Saving Throw", formatValue(document?.savingThrow)],
-        ["Attack", formatValue(document?.spellAttack)],
+        ["Spell Attack", formatValue(document?.spellAttack)],
         ["Power Points", formatValue(document?.powerPoints)]
-    ])));
+    ]);
+    if (details.length) root.append(infoSection(document?.powerPoints !== undefined ? "Power details" : "Spell details", details));
     appendEntryBody(root, document);
     if (document?.entriesHigherLevel) {
         root.append(element("section", { className: "rules-core-dnd-section" },
@@ -154,8 +154,8 @@ function renderSpell(document, options) {
 }
 
 function renderItem(document, options) {
-    const root = element("article", { className: "rules-core-rule-renderer rules-core-reading-view" });
-    root.append(infoSection("Item details", compactPairs([
+    const root = readingRoot();
+    const details = compactPairs([
         ["Type", formatValue(document?.type)],
         ["Rarity", formatValue(document?.rarity)],
         ["Attunement", formatAttunement(document?.reqAttune)],
@@ -167,14 +167,15 @@ function renderItem(document, options) {
         ["Activation", formatValue(document?.activation)],
         ["Weight", formatValue(document?.weight)],
         ["Value", formatValue(document?.value ?? document?.price)]
-    ])));
+    ]);
+    if (details.length) root.append(infoSection("Item details", details));
     appendEntryBody(root, document);
     appendLegacyBody(root, document, options);
     return root;
 }
 
-function renderFeat(document, options) {
-    const root = element("article", { className: "rules-core-rule-renderer rules-core-reading-view" });
+function renderFeatLike(document, options) {
+    const root = readingRoot();
     const prerequisites = formatValue(document?.prerequisite ?? document?.prerequisites);
     if (prerequisites) root.append(callout("Prerequisites", prerequisites));
     appendEntryBody(root, document);
@@ -184,7 +185,7 @@ function renderFeat(document, options) {
 }
 
 function renderClassLike(document, options) {
-    const root = element("article", { className: "rules-core-rule-renderer rules-core-reading-view" });
+    const root = readingRoot();
     const details = compactPairs([
         ["Hit Die", formatValue(document?.hd ?? document?.hitDie)],
         ["Primary Ability", formatValue(document?.primaryAbility)],
@@ -209,7 +210,7 @@ function renderClassLike(document, options) {
 }
 
 function renderSpeciesLike(document, options) {
-    const root = element("article", { className: "rules-core-rule-renderer rules-core-reading-view" });
+    const root = readingRoot();
     const details = compactPairs([
         ["Creature Type", formatValue(document?.creatureTypes ?? document?.creatureType)],
         ["Size", formatValue(document?.size)],
@@ -232,13 +233,15 @@ function renderCondition(document, options) {
 }
 
 function renderRulesDocument(document, options) {
-    const root = element("article", { className: "rules-core-rule-renderer rules-core-reading-view" });
+    const root = readingRoot();
     appendEntryBody(root, document);
     appendLegacyBody(root, document, options);
-    if (!root.children.length) {
-        root.append(element("p", { className: "text-body-secondary", text: "This source record has no structured presentation fields." }));
-    }
+    if (!root.children.length) root.append(element("p", { className: "text-body-secondary", text: "This source record has no structured presentation fields." }));
     return root;
+}
+
+function readingRoot() {
+    return element("article", { className: "rules-core-rule-renderer rules-core-reading-view" });
 }
 
 function projectKaiju(document) {
@@ -246,24 +249,24 @@ function projectKaiju(document) {
         || document?.isKaiju === true
         || String(document?.rulesVariant ?? "").toLowerCase().includes("kaiju")
         || String(document?.statBlockType ?? "").toLowerCase().includes("kaiju")
-        || String(document?.type?.tags ?? "").toLowerCase().includes("kaiju");
-    const chaosThreshold = document?.chaosThreshold ?? document?.chaos ?? document?.kaiju?.chaosThreshold;
-    const vulnerableAreas = document?.vulnerableAreas ?? document?.vulnerableArea ?? document?.weakPoints ?? document?.kaiju?.vulnerableAreas;
-    const behaviors = document?.behaviors ?? document?.behaviours ?? document?.behaviorStates ?? document?.states ?? document?.phases ?? document?.kaiju?.behaviors;
-    const finishingBlow = document?.finishingBlow ?? document?.kaiju?.finishingBlow;
-    const deathRattle = document?.deathRattle ?? document?.kaiju?.deathRattle;
-    const milestones = document?.xpMilestones ?? document?.milestones ?? document?.kaiju?.xpMilestones;
-    const kaijuActions = document?.kaijuActions ?? document?.colossalActions ?? document?.kaiju?.actions;
-    if (!explicit && chaosThreshold === undefined && !vulnerableAreas && !behaviors && !finishingBlow && !deathRattle && !milestones && !kaijuActions) return null;
-    return { chaosThreshold: formatValue(chaosThreshold), vulnerableAreas, behaviors, finishingBlow, deathRattle, milestones, actions: kaijuActions };
+        || formatValue(document?.type?.tags)?.toLowerCase().includes("kaiju");
+    const nested = document?.kaiju && typeof document.kaiju === "object" ? document.kaiju : {};
+    const chaosThreshold = document?.chaosThreshold ?? document?.chaos ?? nested.chaosThreshold;
+    const vulnerableAreas = document?.vulnerableAreas ?? document?.vulnerableArea ?? document?.weakPoints ?? nested.vulnerableAreas;
+    const behaviors = document?.behaviors ?? document?.behaviours ?? document?.behaviorStates ?? document?.states ?? document?.phases ?? nested.behaviors;
+    const finishingBlow = document?.finishingBlow ?? nested.finishingBlow;
+    const deathRattle = document?.deathRattle ?? nested.deathRattle;
+    const milestones = document?.xpMilestones ?? document?.milestones ?? nested.xpMilestones;
+    const actions = document?.kaijuActions ?? document?.colossalActions ?? nested.actions;
+    if (!explicit && chaosThreshold === undefined && !vulnerableAreas && !behaviors && !finishingBlow && !deathRattle && !milestones && !actions) return null;
+    return { chaosThreshold: formatValue(chaosThreshold), vulnerableAreas, behaviors, finishingBlow, deathRattle, milestones, actions };
 }
 
 function renderKaiju(kaiju) {
     const section = element("section", { className: "rules-core-dnd-section rules-core-kaiju-variant" });
-    section.append(
-        element("div", { className: "rules-core-section-heading" },
-            element("h4", { text: "Kaiju Battle Structure" }),
-            element("span", { className: "badge text-bg-warning", text: "Kaiju" })));
+    section.append(element("div", { className: "rules-core-section-heading" },
+        element("h4", { text: "Kaiju Battle Structure" }),
+        element("span", { className: "badge text-bg-warning", text: "Kaiju" })));
 
     const summary = compactPairs([
         ["Chaos Threshold", kaiju.chaosThreshold],
@@ -271,7 +274,6 @@ function renderKaiju(kaiju) {
         ["Death Rattle", formatValue(kaiju.deathRattle)]
     ]);
     if (summary.length) section.append(definitionList(summary));
-
     if (kaiju.vulnerableAreas) section.append(renderStructuredTable("Vulnerable Areas", kaiju.vulnerableAreas, ["name", "specialTraits", "cr", "ac", "hp"]));
     if (kaiju.behaviors) section.append(renderStructuredTable("Behaviors", kaiju.behaviors, ["name", "trigger", "effect", "gainedFeatures", "lostFeatures"]));
     if (kaiju.milestones) section.append(renderStructuredTable("XP Milestones", kaiju.milestones, ["criteria", "xp", "value"]));
@@ -281,20 +283,30 @@ function renderKaiju(kaiju) {
 
 function renderStructuredTable(title, value, preferredKeys) {
     const wrap = element("div", { className: "rules-core-structured-table" });
-    wrap.append(element("h5", { text: title }));
+    if (title) wrap.append(element("h5", { text: title }));
     const rows = Array.isArray(value)
         ? value
         : value && typeof value === "object"
             ? Object.entries(value).map(([name, row]) => row && typeof row === "object" ? { name, ...row } : { name, value: row })
             : [{ value }];
     if (!rows.length) return wrap;
+
     const objects = rows.map(row => row && typeof row === "object" ? row : { value: row });
     const keys = preferredKeys.filter(key => objects.some(row => row[key] !== undefined));
-    for (const key of Object.keys(objects[0] ?? {})) if (!keys.includes(key)) keys.push(key);
+    for (const key of Object.keys(objects[0] ?? {})) {
+        if (!keys.includes(key)) keys.push(key);
+    }
+
     const table = element("table", { className: "table table-sm align-middle mb-0" });
-    table.append(element("thead", {}, element("tr", {}, keys.map(key => element("th", { text: humanize(key) }))));
+    const headRow = element("tr");
+    for (const key of keys) headRow.append(element("th", { text: humanize(key) }));
+    table.append(element("thead", {}, headRow));
     const body = element("tbody");
-    for (const row of objects) body.append(element("tr", {}, keys.map(key => element("td", { text: formatValue(row[key]) ?? "—" }))));
+    for (const row of objects) {
+        const tableRow = element("tr");
+        for (const key of keys) tableRow.append(element("td", { text: formatValue(row[key]) ?? "—" }));
+        body.append(tableRow);
+    }
     table.append(body);
     wrap.append(element("div", { className: "table-responsive" }, table));
     return wrap;
@@ -305,14 +317,26 @@ function renderProgressionTable(document) {
     if (!groups.length && !Array.isArray(document?.progression)) return null;
     const section = element("section", { className: "rules-core-dnd-section" });
     section.append(element("h4", { text: "Progression" }));
+
     if (groups.length) {
         for (const group of groups) {
             const labels = group?.colLabels ?? group?.columns ?? [];
             const rows = group?.rows ?? group?.data ?? [];
             if (!Array.isArray(rows) || !rows.length) continue;
             const table = element("table", { className: "table table-sm align-middle mb-3" });
-            if (labels.length) table.append(element("thead", {}, element("tr", {}, labels.map(label => element("th", { text: formatRuleText(label) }))));
-            table.append(element("tbody", {}, rows.map(row => element("tr", {}, (Array.isArray(row) ? row : Object.values(row ?? {})).map(cell => element("td", { text: formatRuleText(cell) }))))));
+            if (labels.length) {
+                const headRow = element("tr");
+                for (const label of labels) headRow.append(element("th", { text: formatRuleText(label) }));
+                table.append(element("thead", {}, headRow));
+            }
+            const body = element("tbody");
+            for (const row of rows) {
+                const values = Array.isArray(row) ? row : Object.values(row ?? {});
+                const tableRow = element("tr");
+                for (const cell of values) tableRow.append(element("td", { text: formatRuleText(cell) }));
+                body.append(tableRow);
+            }
+            table.append(body);
             section.append(element("div", { className: "table-responsive" }, table));
         }
     } else {
@@ -389,7 +413,9 @@ function stat(label, value) {
 
 function richParagraphs(text) {
     const fragment = element("div", { className: "rules-core-prose" });
-    for (const paragraph of String(text).split(/\n{2,}/).map(value => value.trim()).filter(Boolean)) fragment.append(element("p", { text: paragraph }));
+    for (const paragraph of String(text).split(/\n{2,}/).map(value => value.trim()).filter(Boolean)) {
+        fragment.append(element("p", { text: paragraph }));
+    }
     return fragment;
 }
 
@@ -397,7 +423,7 @@ function legacyFieldMap(body) {
     const text = stripMarkup(body);
     const labels = [
         "Armor Class", "Touch AC", "Flat-Footed AC", "Hit Points", "Hit Dice", "Initiative", "Challenge Rating",
-        "Base Attack", "Base Atk", "Grapple", "Space/Reach", "Fortitude", "Fort", "Reflex", "Ref", "Will",
+        "Base Attack/Grapple", "Base Attack", "Base Atk", "Grapple", "Space/Reach", "Fortitude", "Fort", "Reflex", "Ref", "Will",
         "Special Attacks", "Special Qualities", "Environment", "Organization", "Treasure", "Advancement", "Level Adjustment",
         "SizeAndType", "Size and Type", "Alignment", "Speed", "AC", "Init", "CR", "XP", "Str", "Dex", "Con", "Int", "Wis", "Cha"
     ];
@@ -440,6 +466,35 @@ function hitPointsFromHitDice(value) {
     return /^\d+$/.test(candidate) ? candidate : null;
 }
 
+function inlineArmorClass(value, label) {
+    const text = String(value ?? "");
+    const lower = text.toLowerCase();
+    const index = lower.indexOf(label.toLowerCase());
+    if (index < 0) return null;
+    const tail = text.slice(index + label.length).trim();
+    const match = tail.match(/^\s*[:=]?\s*(-?\d+)/);
+    return match?.[1] ?? null;
+}
+
+function splitSlashPair(value) {
+    const text = String(value ?? "").trim();
+    const slash = text.indexOf("/");
+    if (slash < 0) return [null, null];
+    return [text.slice(0, slash).trim() || null, text.slice(slash + 1).trim() || null];
+}
+
+function firstToken(value) {
+    const text = String(value ?? "").trim();
+    return text ? text.split(/\s+/, 1)[0] : null;
+}
+
+function typeFromLegacy(value) {
+    const text = String(value ?? "").trim();
+    if (!text) return null;
+    const words = text.split(/\s+/);
+    return words.length > 1 ? words.slice(1).join(" ").split(",", 1)[0].trim() : null;
+}
+
 function stripMarkup(value) {
     if (!value || typeof value !== "string") return "";
     if (!value.includes("<")) return value.replace(/\r/g, "").replace(/[ \t]+/g, " ").replace(/\n{3,}/g, "\n\n").trim();
@@ -461,12 +516,10 @@ function compactPairs(values) { return values.filter(([, value]) => value !== nu
 function formatCreatureType(value) {
     if (!value) return null;
     if (typeof value === "string") return value;
-    if (typeof value === "object") {
-        const base = value.type ?? value.name;
-        const tags = formatValue(value.tags);
-        return [base, tags].filter(Boolean).join(" (").replace(/\($/, "") + (base && tags ? ")" : "");
-    }
-    return formatValue(value);
+    if (typeof value !== "object") return formatValue(value);
+    const base = value.type ?? value.name ?? null;
+    const tags = formatValue(value.tags);
+    return base && tags ? `${base} (${tags})` : base ?? tags;
 }
 
 function formatArmorClass(value) {
@@ -537,31 +590,16 @@ function formatValue(value) {
 
 function numberValue(value) {
     if (typeof value === "number" && Number.isFinite(value)) return value;
-    if (typeof value === "string") {
-        const parsed = Number(value.trim());
-        return Number.isFinite(parsed) ? parsed : null;
-    }
-    return null;
+    if (typeof value !== "string") return null;
+    const match = value.trim().match(/^-?\d+(?:\.\d+)?/);
+    if (!match) return null;
+    const parsed = Number(match[0]);
+    return Number.isFinite(parsed) ? parsed : null;
 }
 
 function abilityModifier(score) {
     if (typeof score !== "number") return null;
     return `${signed(Math.floor((score - 10) / 2))} (DEX)`;
-}
-
-function valueBeforeComma(value) {
-    if (!value) return null;
-    const text = String(value);
-    const comma = text.indexOf(",");
-    return comma >= 0 ? text.slice(0, comma).trim().split(" ")[0] : null;
-}
-
-function valueAfterSize(value) {
-    if (!value) return null;
-    const text = String(value).trim();
-    const firstSpace = text.indexOf(" ");
-    if (firstSpace < 0) return text;
-    return text.slice(firstSpace + 1).split(",", 1)[0].trim();
 }
 
 function signed(value) { return `${value >= 0 ? "+" : ""}${value}`; }
