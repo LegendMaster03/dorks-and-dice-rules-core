@@ -22,12 +22,13 @@ public static class RuleAutoResolutionService
     private const string NoChangeAutoResolutionNote =
         "Auto-resolved: no rule-bearing content changed across the bound editions.";
     private const string AdditiveAutoResolutionNote =
-        "Auto-resolved: bound editions differ only by non-destructive additions; the semantic superset was selected.";
+        "Auto-resolved-additive: bound editions differ only by non-destructive additions; the semantic superset was selected.";
 
     public static bool IsAutomaticDecision(GlobalRuleDecision decision) =>
         string.Equals(decision.DecisionKind, RuleDecisionKinds.SelectSource, StringComparison.Ordinal)
         && decision.PatchFingerprint is null
-        && decision.Note?.StartsWith("Auto-resolved:", StringComparison.Ordinal) == true;
+        && (decision.Note?.StartsWith("Auto-resolved:", StringComparison.Ordinal) == true
+            || decision.Note?.StartsWith("Auto-resolved-additive:", StringComparison.Ordinal) == true);
 
     public static async Task<bool> IsCurrentAutomaticDecisionAsync(
         RulesCoreDbContext dbContext,
