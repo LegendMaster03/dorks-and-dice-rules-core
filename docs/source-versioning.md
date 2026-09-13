@@ -43,15 +43,26 @@ After a source implementation is deliberately bound to a concept, Rules Core che
 Two automatic cases are allowed:
 
 1. **No-change:** every bound implementation contains exactly the same rule-bearing content.
-2. **Non-destructive additive:** one complete source revision is a semantic superset of every other bound implementation. Shared scalar values must match exactly; object properties may be added; and array entries may be added without changing the relative order or contents of existing entries. This covers cases such as a monster version that is otherwise unchanged but adds an ability, or a newer version that removes an otherwise compatible older ability. The superset revision is retained so an omission does not destructively remove compatible content.
+2. **Non-destructive additive:** the bound implementations can be combined without replacing or contradicting any shared rule-bearing value. Shared scalar values must match exactly. Object properties may be added. Named array entries, such as monster traits or actions, may be added or omitted so long as entries with the same identity remain compatible and shared ordering is not contradictory. Anonymous or ambiguous array changes remain manual.
 
-The additive rule is intentionally a subset/superset test, not a generic union. If one edition removes one rule element while adding a different one, changes a number, rewrites text, renames an entry, reorders rule-bearing array content, or otherwise leaves neither implementation as a semantic superset of the other, Rules Core requires manual adjudication.
+The additive case covers all of these common patterns:
 
-When the bound implementations qualify, Rules Core automatically creates an append-only `select-source` global decision. For identical implementations, the newest publication is used as the representative base because the rule content is equivalent. For additive implementations, the semantic superset is selected even when it comes from the older publication. Other reviewed revisions are recorded as reference provenance. Publication remains a separate explicit action.
+- a newer monster is otherwise unchanged and adds an ability;
+- a newer monster is otherwise unchanged and omits an older compatible ability, in which case the omission does not destructively remove that ability from the Dorks & Dice result;
+- the older version contains ability A while the newer version contains ability B, with all shared mechanics unchanged, in which case the resolved result can retain both A and B.
 
-Automatic decisions are revalidated against the current latest revision of every bound implementation. If a later import or newly bound edition introduces a conflict or causes the selected revision to stop being the semantic superset, the earlier automatic decision remains in append-only history but is no longer treated as the current ruling in authoring. Publication is blocked until the concept is resolved again. If the comparison remains identical or additive, Rules Core can append a refreshed automatic decision whose provenance covers the current comparison set.
+This is not a generic JSON union. A changed number, rewritten text, changed same-named ability, incompatible type change, conflicting array order, or other replacement is a conflict and requires manual adjudication.
 
-If an existing exact-source manual decision already selects the same compatible result, it is retained without creating decision churn. Existing patched/manual rulings are never replaced automatically. Inaccessible bound sources, missing edition metadata, conflicting values, or other ambiguity leave the concept for normal manual adjudication.
+When compatible implementations qualify, Rules Core creates an append-only automatic global decision:
+
+- if an exact bound source revision already contains the complete compatible result, Rules Core records a normal `select-source` decision for that revision, even when the complete revision is the older edition;
+- if no one source contains the complete compatible result, Rules Core selects the preferred source revision as the base and records a deterministic `json-merge-patch` containing only the verified additive result.
+
+Source revisions that actually contribute compatible content to an automatic additive merge are recorded as `incorporated`; revisions that were reviewed but add nothing beyond the selected base are recorded as `reference`. Publication remains a separate explicit action.
+
+Automatic decisions are revalidated against the current latest revision of every bound implementation. If a later import or newly bound edition introduces a conflict, the earlier automatic decision remains in append-only history but is no longer treated as the current ruling in authoring. Publication is blocked until the concept is resolved again. If the comparison remains identical or additively compatible, Rules Core can append a refreshed automatic decision whose provenance covers the current comparison set.
+
+An existing manual or patched ruling is never replaced automatically. An existing exact-source manual decision may be retained without decision churn only when that exact source already contains the complete compatible result. Inaccessible bound sources, missing edition metadata, conflicting values, or other ambiguity leave the concept for normal manual adjudication.
 
 This is intentionally conservative: false negatives create extra review work, while false positives could silently change table rules.
 
