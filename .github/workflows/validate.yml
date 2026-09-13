@@ -42,7 +42,8 @@ jobs:
             src/RulesCore.Web/wwwroot/source-access-admin.js \
             src/RulesCore.Web/wwwroot/source-acquisition-admin.js \
             src/RulesCore.Web/wwwroot/hosted-source-authoring.js \
-            src/RulesCore.Web/wwwroot/campaign-baseline-authoring.js; do
+            src/RulesCore.Web/wwwroot/campaign-baseline-authoring.js \
+            tools/validate-render-lifecycle.mjs; do
             node --input-type=module --check < "$file"
           done
 
@@ -78,6 +79,9 @@ jobs:
           const uxShell = fs.readFileSync(
               "./src/RulesCore.Web/wwwroot/ux-shell.js",
               "utf8");
+          const uiModule = fs.readFileSync(
+              "./src/RulesCore.Web/wwwroot/ui.js",
+              "utf8");
           for (const required of [
               "installRulesCoreUx",
               "installSourceAdd",
@@ -93,13 +97,29 @@ jobs:
               "rules-core-main",
               "Cross-version",
               "Maintenance",
-              "MutationObserver",
+              "presentRenderedView",
+              "presentRenderedFragment",
+              "uxActiveRenderDepth",
+              "wrapInPlaceViewRender",
               "rules-core-tool-disclosure",
               "getGlobalAuthoringOverview",
               "hasUnpublishedOverrideChange"
           ]) {
               if (!uxShell.includes(required)) {
                   throw new Error(`Rules Core UX shell contract is missing '${required}'.`);
+              }
+          }
+          if (uxShell.includes("MutationObserver")) {
+              throw new Error("Rules Core-owned DOM must not use MutationObserver as its render lifecycle.");
+          }
+          for (const required of [
+              "enhanceRenderedFragment",
+              "applyPresentationClasses",
+              "rules-core-table-wrap",
+              "rules-core-alert"
+          ]) {
+              if (!uiModule.includes(required)) {
+                  throw new Error(`Rules Core fragment presentation contract is missing '${required}'.`);
               }
           }
           for (const stylesheet of [
@@ -215,6 +235,8 @@ jobs:
               throw new Error("Version-review UI does not surface automatic no-change resolution.");
           }
           NODE
+
+          node tools/validate-render-lifecycle.mjs
 
       - name: Start disposable PostgreSQL
         run: |
