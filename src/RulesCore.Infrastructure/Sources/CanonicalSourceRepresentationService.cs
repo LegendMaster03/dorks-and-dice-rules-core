@@ -30,8 +30,9 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             throw new KeyNotFoundException($"Source entity '{sourceEntityId}' does not exist.");
         }
 
-        var identity = new CanonicalSourceIdentityService(dbContext);
-        var publication = await identity.ResolvePublicationAsync(publicationEvidence, cancellationToken);
+        var publication = await new CanonicalPublicationIdentityService(dbContext)
+            .ResolveAsync(publicationEvidence, cancellationToken);
+        var occurrenceIdentity = new CanonicalSourceIdentityService(dbContext);
 
         var semanticOccurrence = await FindUniqueSemanticOccurrenceAsync(
             publication.Id,
@@ -39,7 +40,7 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             cancellationToken);
 
         var occurrenceId = semanticOccurrence
-            ?? await identity.ResolveOccurrenceAsync(
+            ?? await occurrenceIdentity.ResolveOccurrenceAsync(
                 publication.Id,
                 occurrenceEvidence,
                 cancellationToken);
