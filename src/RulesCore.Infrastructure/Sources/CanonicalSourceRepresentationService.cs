@@ -32,6 +32,12 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
 
         var identity = new CanonicalSourceIdentityService(dbContext);
         var publication = await identity.ResolvePublicationAsync(publicationEvidence, cancellationToken);
+        await new CanonicalPublicationEvidenceReconciliationService(dbContext).ReconcileAsync(
+            publication.Id,
+            sourceEntityId,
+            publicationEvidence,
+            cancellationToken);
+
         var semanticOccurrence = await FindUniqueSemanticOccurrenceAsync(
             publication.Id,
             occurrenceEvidence,
