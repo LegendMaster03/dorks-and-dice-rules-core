@@ -79,6 +79,7 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             return null;
         }
 
+        var locatorKey = NormalizeOptional(evidence.LocatorKey);
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
         if (openedHere)
@@ -89,22 +90,37 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
         try
         {
             await using var command = connection.CreateCommand();
-            command.CommandText = """
-                SELECT DISTINCT occurrence.canonical_source_occurrence_id
-                FROM canonical_source_occurrence occurrence
-                JOIN source_entity_occurrence_binding binding
-                    ON binding.canonical_source_occurrence_id = occurrence.canonical_source_occurrence_id
-                WHERE occurrence.canonical_publication_id = @publication_id
-                    AND occurrence.entity_type = @entity_type
-                    AND binding.semantic_fingerprint = @semantic_fingerprint
-                    AND (@locator_key IS NULL OR binding.locator_key = @locator_key)
-                ORDER BY occurrence.canonical_source_occurrence_id
-                LIMIT 2;
-                """;
+            command.CommandText = locatorKey is null
+                ? """
+                    SELECT DISTINCT occurrence.canonical_source_occurrence_id
+                    FROM canonical_source_occurrence occurrence
+                    JOIN source_entity_occurrence_binding binding
+                        ON binding.canonical_source_occurrence_id = occurrence.canonical_source_occurrence_id
+                    WHERE occurrence.canonical_publication_id = @publication_id
+                        AND occurrence.entity_type = @entity_type
+                        AND binding.semantic_fingerprint = @semantic_fingerprint
+                    ORDER BY occurrence.canonical_source_occurrence_id
+                    LIMIT 2;
+                    """
+                : """
+                    SELECT DISTINCT occurrence.canonical_source_occurrence_id
+                    FROM canonical_source_occurrence occurrence
+                    JOIN source_entity_occurrence_binding binding
+                        ON binding.canonical_source_occurrence_id = occurrence.canonical_source_occurrence_id
+                    WHERE occurrence.canonical_publication_id = @publication_id
+                        AND occurrence.entity_type = @entity_type
+                        AND binding.semantic_fingerprint = @semantic_fingerprint
+                        AND binding.locator_key = @locator_key
+                    ORDER BY occurrence.canonical_source_occurrence_id
+                    LIMIT 2;
+                    """;
             AddParameter(command, "@publication_id", publicationId);
             AddParameter(command, "@entity_type", evidence.EntityType.Trim());
             AddParameter(command, "@semantic_fingerprint", evidence.SemanticFingerprint.Trim().ToLowerInvariant());
-            AddNullableParameter(command, "@locator_key", NormalizeOptional(evidence.LocatorKey));
+            if (locatorKey is not null)
+            {
+                AddParameter(command, "@locator_key", locatorKey);
+            }
 
             var matches = new List<Guid>(2);
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
