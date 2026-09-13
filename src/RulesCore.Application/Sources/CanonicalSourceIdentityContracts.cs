@@ -32,6 +32,7 @@ public static class CanonicalSourceIdentity
 {
     private static readonly HashSet<string> ProvenanceProperties = new(StringComparer.OrdinalIgnoreCase)
     {
+        "name",
         "source",
         "page",
         "otherSources",
