@@ -14,6 +14,7 @@ public sealed record SourceNormalizationCandidateView(
     string SourceCode,
     int LatestRevisionNumber,
     DateTimeOffset LatestImportedAt,
+    Guid SourcePackageId,
     string PackageKey,
     string PackageDisplayName,
     string WorkKey,
