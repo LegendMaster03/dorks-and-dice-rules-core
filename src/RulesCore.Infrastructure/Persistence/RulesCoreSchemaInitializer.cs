@@ -81,7 +81,13 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
             CONSTRAINT fk_source_representation_package FOREIGN KEY (source_package_id)
                 REFERENCES source_package(source_package_id) ON DELETE CASCADE,
             CONSTRAINT fk_source_representation_previous FOREIGN KEY (previous_source_representation_id)
-                REFERENCES source_representation(source_representation_id));
+                REFERENCES source_representation(source_representation_id) ON DELETE SET NULL);
+        ALTER TABLE source_representation
+            DROP CONSTRAINT IF EXISTS fk_source_representation_previous;
+        ALTER TABLE source_representation
+            ADD CONSTRAINT fk_source_representation_previous
+            FOREIGN KEY (previous_source_representation_id)
+            REFERENCES source_representation(source_representation_id) ON DELETE SET NULL;
         CREATE UNIQUE INDEX IF NOT EXISTS ux_source_representation_identity
             ON source_representation(source_package_id, origin_identity, content_sha256);
         CREATE INDEX IF NOT EXISTS ix_source_representation_origin_history
@@ -116,7 +122,13 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
             CONSTRAINT fk_source_entity_revision_entity FOREIGN KEY (source_entity_id)
                 REFERENCES source_entity(source_entity_id) ON DELETE CASCADE,
             CONSTRAINT fk_source_entity_revision_representation FOREIGN KEY (source_representation_id)
-                REFERENCES source_representation(source_representation_id));
+                REFERENCES source_representation(source_representation_id) ON DELETE CASCADE);
+        ALTER TABLE source_entity_revision
+            DROP CONSTRAINT IF EXISTS fk_source_entity_revision_representation;
+        ALTER TABLE source_entity_revision
+            ADD CONSTRAINT fk_source_entity_revision_representation
+            FOREIGN KEY (source_representation_id)
+            REFERENCES source_representation(source_representation_id) ON DELETE CASCADE;
         CREATE UNIQUE INDEX IF NOT EXISTS ux_source_entity_revision_number
             ON source_entity_revision(source_entity_id, revision_number);
         CREATE INDEX IF NOT EXISTS ix_source_entity_revision_fingerprint
@@ -180,8 +192,14 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
             CONSTRAINT pk_canonical_publication_alias PRIMARY KEY (canonical_publication_alias_id),
             CONSTRAINT fk_canonical_publication_alias_publication FOREIGN KEY (canonical_publication_id)
                 REFERENCES canonical_publication(canonical_publication_id) ON DELETE CASCADE);
-        CREATE UNIQUE INDEX IF NOT EXISTS ux_canonical_publication_alias_identity
+        DROP INDEX IF EXISTS ux_canonical_publication_alias_identity;
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_canonical_publication_alias_publication_identity
+            ON canonical_publication_alias(canonical_publication_id, alias_scheme, alias_value);
+        CREATE INDEX IF NOT EXISTS ix_canonical_publication_alias_lookup
             ON canonical_publication_alias(alias_scheme, alias_value);
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_canonical_publication_alias_strong_identity
+            ON canonical_publication_alias(alias_scheme, alias_value)
+            WHERE alias_scheme IN ('isbn', 'isbn-10', 'isbn10', 'isbn-13', 'isbn13');
         CREATE INDEX IF NOT EXISTS ix_canonical_publication_alias_publication
             ON canonical_publication_alias(canonical_publication_id);
 
