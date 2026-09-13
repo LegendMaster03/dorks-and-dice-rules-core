@@ -36,9 +36,11 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
 
         await using (var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken))
         {
-            package = await dbContext.SourcePackages
-                .SingleOrDefaultAsync(value => value.Key == packageKey, cancellationToken)
-                ?? new SourcePackage
+            var existingPackage = await dbContext.SourcePackages
+                .SingleOrDefaultAsync(value => value.Key == packageKey, cancellationToken);
+            if (existingPackage is null)
+            {
+                package = new SourcePackage
                 {
                     Id = Guid.NewGuid(),
                     Key = packageKey,
@@ -48,15 +50,13 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
                     IsPublic = request.IsPublic,
                     CreatedAt = now
                 };
-
-            if (dbContext.Entry(package).State == EntityState.Detached)
-            {
-                EnsurePackageMatches(package, request);
+                dbContext.SourcePackages.Add(package);
+                await dbContext.SaveChangesAsync(cancellationToken);
             }
             else
             {
-                dbContext.SourcePackages.Add(package);
-                await dbContext.SaveChangesAsync(cancellationToken);
+                package = existingPackage;
+                EnsurePackageMatches(package, request);
             }
 
             foreach (var publication in request.Representation.Publications)
@@ -329,6 +329,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
         string localKey,
         CancellationToken cancellationToken)
     {
+        await EnsureRepresentationLinkSchemaAsync(cancellationToken);
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
         if (openedHere)
@@ -370,6 +371,9 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
 
     private Task EnsureRepresentationSchemaAsync(CancellationToken cancellationToken) =>
         dbContext.Database.ExecuteSqlRawAsync(RepresentationSchemaSql, cancellationToken);
+
+    private Task EnsureRepresentationLinkSchemaAsync(CancellationToken cancellationToken) =>
+        dbContext.Database.ExecuteSqlRawAsync(RepresentationLinkSchemaSql, cancellationToken);
 
     private static NormalizedSourceRecord NormalizeRecord(NormalizedSourceRecord record, string fallbackSourceCode)
     {
@@ -543,7 +547,9 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
             ON source_representation(source_package_id, origin_identity, content_sha256);
         CREATE INDEX IF NOT EXISTS ix_source_representation_package
             ON source_representation(source_package_id, imported_at DESC);
+        """;
 
+    private const string RepresentationLinkSchemaSql = """
         CREATE TABLE IF NOT EXISTS source_representation_publication (
             source_representation_publication_id uuid NOT NULL,
             source_representation_id uuid NOT NULL,
