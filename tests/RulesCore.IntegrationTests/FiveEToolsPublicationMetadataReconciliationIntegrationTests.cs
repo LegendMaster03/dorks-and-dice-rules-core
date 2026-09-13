@@ -62,8 +62,6 @@ public sealed class FiveEToolsPublicationMetadataReconciliationIntegrationTests
                 GameEdition: "5e"));
             packageId = imported.PackageId;
 
-            var identity = new CanonicalSourceIdentityService(db);
-            await identity.IndexPackageAsync(imported.PackageId);
             await new CanonicalPublicationPublisherService(db)
                 .ReconcilePackageAsync(imported.PackageId);
 
@@ -74,7 +72,7 @@ public sealed class FiveEToolsPublicationMetadataReconciliationIntegrationTests
             Assert.Equal($"Cross Format Handbook {token}", canonical.Value.DisplayName);
             Assert.Equal(new DateOnly(2014, 8, 19), canonical.Value.PublicationDate);
 
-            var resolvedWithoutFiveEToolsAlias = await identity.ResolvePublicationAsync(
+            var resolvedWithoutFiveEToolsAlias = await new CanonicalPublicationIdentityService(db).ResolveAsync(
                 new CanonicalPublicationEvidence(
                     $"Cross Format Handbook {token}",
                     Publisher: null,
@@ -130,10 +128,7 @@ public sealed class FiveEToolsPublicationMetadataReconciliationIntegrationTests
         {
             await using var command = connection.CreateCommand();
             command.CommandText = """
-                SELECT
-                    publication.canonical_publication_id,
-                    publication.display_name,
-                    publication.publication_date
+                SELECT publication.canonical_publication_id, publication.display_name, publication.publication_date
                 FROM source_entity_occurrence_binding binding
                 JOIN canonical_source_occurrence occurrence
                     ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
