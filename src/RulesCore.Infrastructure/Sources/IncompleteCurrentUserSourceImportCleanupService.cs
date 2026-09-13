@@ -37,11 +37,8 @@ public sealed class IncompleteCurrentUserSourceImportCleanupService(RulesCoreDbC
             return false;
         }
 
-        // A restricted account source is not exposed to normalization before the user's grant
-        // exists. If something nevertheless bound one of its entities into the Rules Layer,
-        // preserve the package rather than deleting a potentially referenced source graph.
         var hasRulesBindings = await dbContext.RuleConceptSourceBindings.AnyAsync(
-            value => value.SourceEntity.SourceEdition.SourceWork.SourcePackageId == package.Id,
+            value => value.SourceEntity.SourcePackageId == package.Id,
             cancellationToken);
         if (hasRulesBindings)
         {
@@ -75,10 +72,7 @@ public sealed class IncompleteCurrentUserSourceImportCleanupService(RulesCoreDbC
 
         try
         {
-            if (!await RelationExistsAsync(
-                    connection,
-                    "source_representation_publication",
-                    cancellationToken))
+            if (!await RelationExistsAsync(connection, "source_representation_publication", cancellationToken))
             {
                 return [];
             }
@@ -129,18 +123,9 @@ public sealed class IncompleteCurrentUserSourceImportCleanupService(RulesCoreDbC
         try
         {
             if (!await RelationExistsAsync(connection, "canonical_publication", cancellationToken)
-                || !await RelationExistsAsync(
-                    connection,
-                    "source_representation_publication",
-                    cancellationToken)
-                || !await RelationExistsAsync(
-                    connection,
-                    "canonical_source_occurrence",
-                    cancellationToken)
-                || !await RelationExistsAsync(
-                    connection,
-                    "source_entity_occurrence_binding",
-                    cancellationToken))
+                || !await RelationExistsAsync(connection, "source_representation_publication", cancellationToken)
+                || !await RelationExistsAsync(connection, "canonical_source_occurrence", cancellationToken)
+                || !await RelationExistsAsync(connection, "source_entity_occurrence_binding", cancellationToken))
             {
                 return;
             }
