@@ -39,14 +39,12 @@ public sealed class SourceEntitySearchService(RulesCoreDbContext dbContext) : IS
         var sourceEntities = dbContext.SourceEntities
             .AsNoTracking()
             .Include(value => value.Revisions)
-            .Include(value => value.SourceEdition)
-                .ThenInclude(value => value.SourceWork)
-                .ThenInclude(value => value.SourcePackage)
+            .Include(value => value.SourcePackage)
             .Where(value =>
                 value.Revisions.Any()
-                && (value.SourceEdition.SourceWork.SourcePackage.IsPublic
+                && (value.SourcePackage.IsPublic
                     || (normalizedUserId != null
-                        && value.SourceEdition.SourceWork.SourcePackage.UserGrants
+                        && value.SourcePackage.UserGrants
                             .Any(grant => grant.UserId == normalizedUserId))));
 
         if (normalizedEntityType is not null)
@@ -60,15 +58,14 @@ public sealed class SourceEntitySearchService(RulesCoreDbContext dbContext) : IS
             var pattern = $"%{normalizedQuery}%";
             sourceEntities = sourceEntities.Where(value =>
                 EF.Functions.ILike(value.Name, pattern)
-                || EF.Functions.ILike(value.SourceCode, pattern)
-                || EF.Functions.ILike(value.SourceEdition.DisplayName, pattern)
-                || EF.Functions.ILike(value.SourceEdition.SourceWork.DisplayName, pattern)
-                || EF.Functions.ILike(value.SourceEdition.SourceWork.SourcePackage.DisplayName, pattern));
+                || (value.SourceCode != null && EF.Functions.ILike(value.SourceCode, pattern))
+                || EF.Functions.ILike(value.NativeKey, pattern)
+                || EF.Functions.ILike(value.SourcePackage.DisplayName, pattern));
         }
 
         var entities = await sourceEntities
             .OrderBy(value => value.Name)
-            .ThenBy(value => value.SourceEdition.DisplayName)
+            .ThenBy(value => value.FormatKey)
             .ThenBy(value => value.SourceCode)
             .ThenBy(value => value.Id)
             .Skip(effectiveOffset)
@@ -81,23 +78,21 @@ public sealed class SourceEntitySearchService(RulesCoreDbContext dbContext) : IS
                 var revision = value.Revisions
                     .OrderByDescending(candidate => candidate.RevisionNumber)
                     .First();
-                var edition = value.SourceEdition;
-                var work = edition.SourceWork;
-                var package = work.SourcePackage;
+                var package = value.SourcePackage;
                 return new SourceEntitySummary(
                     value.Id,
                     value.EntityType,
                     value.Name,
-                    value.SourceCode,
+                    value.SourceCode ?? string.Empty,
                     revision.RevisionNumber,
                     revision.Fingerprint,
                     revision.ImportedAt,
                     package.Key,
                     package.DisplayName,
-                    work.Key,
-                    work.DisplayName,
-                    edition.Key,
-                    edition.DisplayName);
+                    package.Key,
+                    package.DisplayName,
+                    value.FormatKey,
+                    value.FormatKey);
             })
             .ToArray();
     }
