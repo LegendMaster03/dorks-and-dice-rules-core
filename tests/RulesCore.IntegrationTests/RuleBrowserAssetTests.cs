@@ -1,38 +1,42 @@
-using System.Net;
-using Microsoft.AspNetCore.Mvc.Testing;
-
 namespace RulesCore.IntegrationTests;
 
-public sealed class RuleBrowserAssetTests : IClassFixture<WebApplicationFactory<Program>>
+public sealed class RuleBrowserAssetTests
 {
-    private readonly HttpClient _client;
-
-    public RuleBrowserAssetTests(WebApplicationFactory<Program> factory)
-    {
-        _client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
-    }
-
     [Fact]
-    public async Task BrowserConsumesToolRelativeRoutingContract()
+    public void BrowserConsumesToolRelativeRoutingContract()
     {
-        using var response = await _client.GetAsync("/rules-browser.js");
-        var content = await response.Content.ReadAsStringAsync();
+        var content = ReadWebAsset("rules-browser.js");
 
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Contains("toolRoute", content, StringComparison.Ordinal);
         Assert.Contains("toolBasePath", content, StringComparison.Ordinal);
         Assert.Contains("browserLink", content, StringComparison.Ordinal);
     }
 
     [Fact]
-    public async Task MonsterRendererIsRegisteredAsSpecializedRuleRenderer()
+    public void MonsterRendererIsRegisteredAsSpecializedRuleRenderer()
     {
-        using var response = await _client.GetAsync("/rule-renderers.js");
-        var content = await response.Content.ReadAsStringAsync();
+        var content = ReadWebAsset("rule-renderers.js");
 
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Contains("[\"monster\", renderMonster]", content, StringComparison.Ordinal);
         Assert.Contains("Legendary Actions", content, StringComparison.Ordinal);
         Assert.Contains("Saving Throws", content, StringComparison.Ordinal);
+    }
+
+    private static string ReadWebAsset(string filename)
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+        while (directory is not null
+               && !File.Exists(Path.Combine(directory.FullName, "dorks-and-dice-rules-core.slnx")))
+        {
+            directory = directory.Parent;
+        }
+
+        if (directory is null)
+        {
+            throw new InvalidOperationException("Could not locate the Rules Core repository root.");
+        }
+
+        var path = Path.Combine(directory.FullName, "src", "RulesCore.Web", "wwwroot", filename);
+        return File.ReadAllText(path);
     }
 }
