@@ -111,6 +111,12 @@ public sealed record CurrentUserSourceView(
     DateTimeOffset AddedAt,
     DateTimeOffset RefreshedAt);
 
+public sealed record CurrentUserSourceImportProgress(
+    string Stage,
+    int? Current = null,
+    int? Total = null,
+    string? Detail = null);
+
 public sealed record CurrentUserSourceImportJobView(
     Guid Id,
     string Operation,
@@ -120,6 +126,11 @@ public sealed record CurrentUserSourceImportJobView(
     string Status,
     Guid? CurrentUserSourceId,
     string? Error,
+    string? ProgressStage,
+    int? ProgressCurrent,
+    int? ProgressTotal,
+    string? ProgressDetail,
+    DateTimeOffset? ProgressUpdatedAt,
     DateTimeOffset CreatedAt,
     DateTimeOffset? StartedAt,
     DateTimeOffset? CompletedAt);
