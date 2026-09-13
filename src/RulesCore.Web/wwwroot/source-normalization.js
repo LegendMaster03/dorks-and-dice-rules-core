@@ -39,7 +39,7 @@ function createNormalizationCard(app, container) {
             element("h3", { className: "h5 mb-1", text: "Normalize imported sources" }),
             element("p", {
                 className: "text-body-secondary mb-0",
-                text: "Review deterministic concept suggestions for accessible source entities that are not bound yet. Binding remains deliberate; mechanically identical cross-edition rules may then resolve automatically, as may non-destructive additive variants when one bound implementation is a semantic superset."
+                text: "Review deterministic concept suggestions for accessible source entities that are not bound yet. Binding remains deliberate; mechanically identical cross-edition rules may then resolve automatically, as may compatible additive variants that can be combined without replacing shared rule content."
             })),
         badge("Rules Lawyer review", "primary"));
     card.append(heading);
@@ -59,7 +59,7 @@ function createNormalizationCard(app, container) {
 
     card.append(element("div", {
         className: "small text-body-secondary mb-3",
-        text: "The suggested key is derived only from entity type and name. Accepting creates or reuses that stable concept and binds this source. If that completes a mechanically compatible cross-edition set, Rules Core may record an automatic decision when implementations are identical or one is a non-destructive semantic superset; publication remains explicit."
+        text: "The suggested key is derived only from entity type and name. Accepting creates or reuses that stable concept and binds this source. If that completes a mechanically compatible cross-edition set, Rules Core may record an automatic decision for identical content or a verified non-destructive additive combination; publication remains explicit."
     }));
 
     const status = element("div");
