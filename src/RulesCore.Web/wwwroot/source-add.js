@@ -32,7 +32,7 @@ async function buildAddSourceCard(app) {
     const card = element("section", {
         className: "card card-body mb-3 rules-core-panel rules-core-add-source"
     });
-    card.append(element("div", { className: "rules-core-add-source-heading" },
+    card.append(element("div", { className: "mb-3" },
         element("h4", { className: "h5 mb-1", text: "Add Source" }),
         element("p", {
             className: "small text-body-secondary mb-0",
@@ -51,18 +51,18 @@ async function buildAddSourceCard(app) {
         text: "Upload file"
     });
     const modeGroup = element("div", {
-        className: "btn-group rules-core-add-source-modes",
+        className: "btn-group mb-3",
         role: "group",
         ariaLabel: "Source type"
     }, webMode, uploadMode);
 
-    const form = element("form", { className: "rules-core-add-source-form" });
+    const form = element("form", { className: "row g-2 align-items-end" });
     const url = element("input", {
         type: "url",
         className: "form-control",
         placeholder: "https://github.com/5etools-mirror-3/5etools-src/tree/main/data"
     });
-    const urlGroup = element("div", { className: "rules-core-add-source-input" },
+    const urlGroup = element("div", { className: "col-md-9" },
         element("label", { className: "form-label fw-semibold", text: "Web source URL" }),
         url);
 
@@ -70,19 +70,20 @@ async function buildAddSourceCard(app) {
         type: "file",
         className: "form-control"
     });
-    const fileGroup = element("div", { className: "rules-core-add-source-input d-none" },
+    const fileGroup = element("div", { className: "col-md-9 d-none" },
         element("label", { className: "form-label fw-semibold", text: "Source file" }),
         file);
 
     const addButton = element("button", {
         type: "submit",
-        className: "btn btn-primary rules-core-add-source-action",
+        className: "btn btn-primary w-100",
         text: "Add source"
     });
-    const result = element("div", { className: "rules-core-add-source-result" });
-    const existing = element("div", { className: "rules-core-add-source-existing" });
+    const actionGroup = element("div", { className: "col-md-3" }, addButton);
+    const result = element("div", { className: "mt-3" });
+    const existing = element("div", { className: "mt-2" });
 
-    form.append(urlGroup, fileGroup, addButton);
+    form.append(urlGroup, fileGroup, actionGroup);
     card.append(modeGroup, form, result, existing);
 
     function updateKind(kind) {
@@ -166,8 +167,8 @@ async function renderExistingSources(app, container, result) {
         if (!sources.length && !visibleJobs.length) return;
 
         if (visibleJobs.length) {
-            const activity = element("div", { className: "rules-core-source-import-activity" },
-                element("div", { className: "small fw-semibold mb-2", text: "Import activity" }));
+            const activity = element("div", { className: "border rounded p-2" },
+                element("div", { className: "small fw-semibold mb-1", text: "Import activity" }));
             for (const job of visibleJobs) {
                 const running = job.status === "running";
                 const failed = job.status === "failed";
@@ -178,9 +179,9 @@ async function renderExistingSources(app, container, result) {
                         : "Queued";
                 const metadata = job.operation === "refresh" ? "Web source refresh" : "Web source";
                 activity.append(element("div", {
-                    className: `rules-core-source-import-job${failed ? " is-failed" : ""}`
+                    className: "d-flex flex-wrap justify-content-between align-items-start gap-2 py-2 border-top"
                 },
-                element("div", {},
+                element("div", { className: "flex-grow-1" },
                     element("div", { className: "fw-semibold", text: job.displayName }),
                     element("div", {
                         className: "small text-body-secondary text-break",
