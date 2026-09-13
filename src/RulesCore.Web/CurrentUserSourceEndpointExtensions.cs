@@ -12,6 +12,8 @@ public static class CurrentUserSourceEndpointExtensions
 
     public static void MapCurrentUserSourceEndpoints(this WebApplication app)
     {
+        CurrentUserSourceRefreshBackground.Start(app);
+
         app.MapGet("/api/sources/current-user", async (
             HttpContext httpContext,
             RulesCoreDbContext dbContext,
