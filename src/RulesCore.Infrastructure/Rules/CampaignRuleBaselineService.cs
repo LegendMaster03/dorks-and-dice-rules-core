@@ -47,8 +47,6 @@ public sealed class CampaignRuleBaselineService(RulesCoreDbContext dbContext)
             .Include(value => value.GlobalRuleDecision)
                 .ThenInclude(value => value.SelectedSourceEntityRevision)
                 .ThenInclude(value => value.SourceEntity)
-                .ThenInclude(value => value.SourceEdition)
-                .ThenInclude(value => value.SourceWork)
                 .ThenInclude(value => value.SourcePackage)
                 .ThenInclude(value => value.UserGrants)
             .SingleOrDefaultAsync(
@@ -63,9 +61,7 @@ public sealed class CampaignRuleBaselineService(RulesCoreDbContext dbContext)
         var decision = entry.GlobalRuleDecision;
         var revision = decision.SelectedSourceEntityRevision;
         var source = revision.SourceEntity;
-        var edition = source.SourceEdition;
-        var work = edition.SourceWork;
-        var package = work.SourcePackage;
+        var package = source.SourcePackage;
         if (!package.IsPublic && !package.UserGrants.Any(grant => grant.UserId == userId))
         {
             return null;
@@ -106,9 +102,9 @@ public sealed class CampaignRuleBaselineService(RulesCoreDbContext dbContext)
             revision.Id,
             revision.RevisionNumber,
             source.Name,
-            source.SourceCode,
+            source.SourceCode ?? string.Empty,
             package.DisplayName,
-            edition.DisplayName,
+            source.FormatKey,
             contributionResolution.Contributions,
             document);
     }
