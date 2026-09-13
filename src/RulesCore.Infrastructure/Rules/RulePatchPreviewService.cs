@@ -101,14 +101,12 @@ public sealed class RulePatchPreviewService(RulesCoreDbContext dbContext) : IRul
             .Include(value => value.GlobalRuleDecision)
             .Include(value => value.SourceEntityRevision)
                 .ThenInclude(value => value.SourceEntity)
-                .ThenInclude(value => value.SourceEdition)
-                .ThenInclude(value => value.SourceWork)
                 .ThenInclude(value => value.SourcePackage)
             .SingleOrDefaultAsync(
                 value => value.RulesetRevisionId == baseline.RulesetRevisionId
                     && value.RuleConceptId == ruleConceptId
-                    && (value.SourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.IsPublic
-                        || value.SourceEntityRevision.SourceEntity.SourceEdition.SourceWork.SourcePackage.UserGrants
+                    && (value.SourceEntityRevision.SourceEntity.SourcePackage.IsPublic
+                        || value.SourceEntityRevision.SourceEntity.SourcePackage.UserGrants
                             .Any(grant => grant.UserId == normalizedUserId)),
                 cancellationToken);
         if (baselineEntry is null)
@@ -361,13 +359,11 @@ public sealed class RulePatchPreviewService(RulesCoreDbContext dbContext) : IRul
         await dbContext.SourceEntityRevisions
             .AsNoTracking()
             .Include(value => value.SourceEntity)
-                .ThenInclude(value => value.SourceEdition)
-                .ThenInclude(value => value.SourceWork)
                 .ThenInclude(value => value.SourcePackage)
             .SingleOrDefaultAsync(
                 value => value.Id == sourceEntityRevisionId
-                    && (value.SourceEntity.SourceEdition.SourceWork.SourcePackage.IsPublic
-                        || value.SourceEntity.SourceEdition.SourceWork.SourcePackage.UserGrants
+                    && (value.SourceEntity.SourcePackage.IsPublic
+                        || value.SourceEntity.SourcePackage.UserGrants
                             .Any(grant => grant.UserId == userId)),
                 cancellationToken);
 
