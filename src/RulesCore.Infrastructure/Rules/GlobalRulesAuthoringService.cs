@@ -13,6 +13,7 @@ public sealed class GlobalRulesAuthoringService(RulesCoreDbContext dbContext)
         CancellationToken cancellationToken = default)
     {
         var normalizedUserId = RequireUserId(userId);
+        await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
 
         var concepts = await dbContext.RuleConcepts
             .AsNoTracking()
@@ -118,6 +119,7 @@ public sealed class GlobalRulesAuthoringService(RulesCoreDbContext dbContext)
             throw new ArgumentException("Value can not be an empty GUID.", nameof(ruleConceptId));
         }
         var normalizedUserId = RequireUserId(userId);
+        await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
 
         var concept = await dbContext.RuleConcepts
             .AsNoTracking()
@@ -169,20 +171,29 @@ public sealed class GlobalRulesAuthoringService(RulesCoreDbContext dbContext)
                 .SingleOrDefaultAsync(cancellationToken);
         }
 
-        var boundSourceIds = bindings.Select(value => value.SourceEntityId).ToArray();
-        var accessibleSources = boundSourceIds.Length == 0
+        var accessibleSourceIds = await CanonicalRuleBindingStore.GetAccessibleSourceEntityIdsForConceptAsync(
+            dbContext,
+            ruleConceptId,
+            normalizedUserId,
+            cancellationToken);
+        var accessibleSources = accessibleSourceIds.Count == 0
             ? []
             : await dbContext.SourceEntities
                 .AsNoTracking()
                 .Include(value => value.Revisions)
                 .Include(value => value.SourcePackage)
-                .Where(value => boundSourceIds.Contains(value.Id)
-                    && (value.SourcePackage.IsPublic
-                        || value.SourcePackage.UserGrants
-                            .Any(grant => grant.UserId == normalizedUserId)))
+                .Where(value => accessibleSourceIds.Contains(value.Id))
                 .OrderBy(value => value.Name)
                 .ThenBy(value => value.SourceCode)
+                .ThenBy(value => value.Id)
                 .ToArrayAsync(cancellationToken);
+
+        var canonicalBySource = await CanonicalRuleBindingStore.GetCanonicalEntityIdsAsync(
+            dbContext,
+            accessibleSources.Select(value => value.Id).ToArray(),
+            cancellationToken);
+        var visibleCanonicalIds = canonicalBySource.Values.ToHashSet();
+        var restrictedBindingCount = bindings.Count(value => !visibleCanonicalIds.Contains(value.CanonicalEntityId));
 
         var sourceViews = accessibleSources
             .Select(source =>
@@ -214,7 +225,7 @@ public sealed class GlobalRulesAuthoringService(RulesCoreDbContext dbContext)
             ToView(concept),
             bindings.Select(ToView).ToArray(),
             sourceViews,
-            bindings.Length - sourceViews.Length,
+            restrictedBindingCount,
             latestDecision is null ? null : ToView(latestDecision),
             publishedDecisionId,
             latestPublished?.RevisionNumber,
@@ -235,9 +246,10 @@ public sealed class GlobalRulesAuthoringService(RulesCoreDbContext dbContext)
         new(
             binding.Id,
             binding.RuleConceptId,
-            binding.SourceEntityId,
+            binding.CanonicalEntityId,
             binding.CreatedByUserId,
-            binding.CreatedAt);
+            binding.CreatedAt,
+            binding.SourceEntityId);
 
     private static GlobalRuleDecisionView ToView(GlobalRuleDecision decision)
     {
