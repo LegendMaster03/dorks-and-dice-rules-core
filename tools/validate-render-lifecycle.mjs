@@ -190,7 +190,11 @@ ui.enhanceRenderedFragment(fragment);
 ui.enhanceRenderedFragment(fragment);
 assert(fragment.querySelector("table").className === fragmentSnapshot, "repeated fragment enhancement must settle");
 
-const app = { activeView: "global" };
+const app = {
+    activeView: "global",
+    activeCampaignId: "11111111-1111-1111-1111-111111111111",
+    hostContext: { siteMode: "dorks-and-dice" }
+};
 const container = ui.element("div", {},
     ui.element("div", { className: "rules-core-workflow" },
         ui.element("div", { className: "text-body-secondary small", text: "Old workflow copy" })),
@@ -224,6 +228,12 @@ ux.enhanceRenderedView(app, container);
 ux.enhanceRenderedView(app, container);
 assert(container.querySelectorAll(":scope > .rules-core-generated-page-lead").length === 1,
     "switching views must apply one idempotent generated page lead");
+const campaignSiteLink = container.querySelector(".rules-core-campaign-site-link");
+assert(campaignSiteLink, "campaign view must link back to the native Dorks & Dice campaign UI");
+assert(campaignSiteLink.attributes.get("href") === `/campaigns/${app.activeCampaignId}`,
+    "campaign link must target the active campaign details route");
+assert(campaignSiteLink.attributes.get("target") === "_top",
+    "campaign link must leave the embedded tool surface when necessary");
 
 const lifecycleApp = {
     hostContext: { siteMode: "dorks-and-dice" },
