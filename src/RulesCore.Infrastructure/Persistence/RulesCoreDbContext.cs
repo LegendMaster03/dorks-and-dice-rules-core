@@ -156,12 +156,13 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
             entity.HasKey(value => value.Id).HasName("pk_rule_concept_source_binding");
             entity.Property(value => value.Id).HasColumnName("rule_concept_source_binding_id");
             entity.Property(value => value.RuleConceptId).HasColumnName("rule_concept_id");
+            entity.Property(value => value.CanonicalEntityId).HasColumnName("canonical_entity_id");
             entity.Property(value => value.SourceEntityId).HasColumnName("source_entity_id");
             entity.Property(value => value.CreatedByUserId).HasColumnName("created_by_user_id").HasMaxLength(200);
             entity.Property(value => value.CreatedAt).HasColumnName("created_at");
-            entity.HasIndex(value => new { value.RuleConceptId, value.SourceEntityId })
+            entity.HasIndex(value => new { value.RuleConceptId, value.CanonicalEntityId })
                 .IsUnique()
-                .HasDatabaseName("ux_rule_concept_source_binding_concept_entity");
+                .HasDatabaseName("ux_rule_concept_source_binding_concept_canonical_entity");
             entity.HasOne(value => value.RuleConcept)
                 .WithMany(value => value.SourceBindings)
                 .HasForeignKey(value => value.RuleConceptId)
@@ -169,7 +170,7 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
             entity.HasOne(value => value.SourceEntity)
                 .WithMany()
                 .HasForeignKey(value => value.SourceEntityId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<GlobalRuleDecision>(entity =>
