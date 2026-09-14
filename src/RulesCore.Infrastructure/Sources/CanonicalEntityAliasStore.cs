@@ -164,19 +164,7 @@ public sealed class CanonicalEntityAliasStore(RulesCoreDbContext dbContext)
         if (openedHere) await connection.OpenAsync(cancellationToken);
         try
         {
-            await using var command = connection.CreateCommand();
-            command.CommandText = """
-                SELECT canonical_entity_id
-                FROM canonical_entity_alias
-                WHERE alias_scheme = @alias_scheme
-                    AND alias_value = @alias_value
-                    AND semantic_fingerprint = @semantic_fingerprint;
-                """;
-            AddParameter(command, "@alias_scheme", scheme);
-            AddParameter(command, "@alias_value", value);
-            AddParameter(command, "@semantic_fingerprint", fingerprint);
-            var result = await command.ExecuteScalarAsync(cancellationToken);
-            return result is Guid id ? id : null;
+            return await ResolveCoreAsync(connection, scheme, value, fingerprint, cancellationToken);
         }
         finally
         {
@@ -191,23 +179,64 @@ public sealed class CanonicalEntityAliasStore(RulesCoreDbContext dbContext)
     {
         if (aliases is null || aliases.Count == 0) return null;
 
-        Guid? resolved = null;
-        foreach (var alias in aliases.OrderBy(value => value.Key, StringComparer.Ordinal))
+        var fingerprint = NormalizeFingerprint(semanticFingerprint);
+        var normalizedAliases = aliases
+            .OrderBy(value => value.Key, StringComparer.Ordinal)
+            .Select(value => new KeyValuePair<string, string>(
+                NormalizeScheme(value.Key),
+                Require(value.Value, nameof(aliases), 1000)))
+            .ToArray();
+
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync(cancellationToken);
+        try
         {
-            var candidate = await ResolveAsync(
-                alias.Key,
-                alias.Value,
-                semanticFingerprint,
-                cancellationToken);
-            if (!candidate.HasValue) continue;
-            if (resolved.HasValue && resolved.Value != candidate.Value)
+            Guid? resolved = null;
+            foreach (var alias in normalizedAliases)
             {
-                throw new InvalidOperationException(
-                    "Trusted source-lineage aliases for one source record resolve to conflicting canonical entities.");
+                var candidate = await ResolveCoreAsync(
+                    connection,
+                    alias.Key,
+                    alias.Value,
+                    fingerprint,
+                    cancellationToken);
+                if (!candidate.HasValue) continue;
+                if (resolved.HasValue && resolved.Value != candidate.Value)
+                {
+                    throw new InvalidOperationException(
+                        "Trusted source-lineage aliases for one source record resolve to conflicting canonical entities.");
+                }
+                resolved = candidate;
             }
-            resolved = candidate;
+            return resolved;
         }
-        return resolved;
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
+    private static async Task<Guid?> ResolveCoreAsync(
+        DbConnection connection,
+        string scheme,
+        string value,
+        string fingerprint,
+        CancellationToken cancellationToken)
+    {
+        await using var command = connection.CreateCommand();
+        command.CommandText = """
+            SELECT canonical_entity_id
+            FROM canonical_entity_alias
+            WHERE alias_scheme = @alias_scheme
+                AND alias_value = @alias_value
+                AND semantic_fingerprint = @semantic_fingerprint;
+            """;
+        AddParameter(command, "@alias_scheme", scheme);
+        AddParameter(command, "@alias_value", value);
+        AddParameter(command, "@semantic_fingerprint", fingerprint);
+        var result = await command.ExecuteScalarAsync(cancellationToken);
+        return result is Guid id ? id : null;
     }
 
     private static string NormalizeScheme(string value)

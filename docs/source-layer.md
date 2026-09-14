@@ -1,138 +1,136 @@
 # Source Layer
 
-The Source Layer is the immutable record of what imported source material says before any Dorks & Dice adjudication, merging, or campaign decision is applied.
+The Source Layer is the immutable record of imported source material before Dorks & Dice adjudication, merging, or campaign decisions are applied.
+
+The current persistence model is package-native. `SourceWork` and `SourceEdition` are not Source Layer persistence concepts.
 
 ## Persistence model
 
-The current implementation stores source representation identities plus independent user grants in PostgreSQL:
+Rules Core stores four different kinds of information separately:
 
-1. `source_package` - an imported package and its distribution metadata.
-2. `source_work` - a work contained by the package.
-3. `source_edition` - an edition/release of that work, including optional game-edition, publication-date, release-kind, and publisher provenance.
-4. `source_entity` - a source-specific entity identity within an edition.
-5. `source_entity_revision` - immutable JSON revisions of that entity.
-6. `user_source_grant` - a stable Dorks & Dice user ID's permission to access a restricted package.
+### Access-scoped source material
 
-Package, work, and edition keys are normalized at the application boundary. Source entity identity is based on the imported format's source-specific identity. For the current 5e.tools adapter, that is the array/property name plus source code, entity name, and an upstream `uniqueId`/`id` when one is present. The database ID is the local persistent identifier; the natural key and revision fingerprint provide stable representation identity.
+- `source_package` identifies one imported or bundled package and its distribution metadata.
+- `source_representation` stores one immutable physical representation of that package: format, origin identity, file name, source URI when applicable, media type, SHA-256, byte length, original bytes, adapter metadata, import time, and predecessor representation when the same moving origin changes.
+- `source_entity` identifies a native entity inside a package by `(package, format, native key)`.
+- `source_entity_revision` stores immutable revisions of that native entity. Its raw JSON is the lossless adapter record, not a canonical Dorks & Dice rule document.
+- `source_representation_entity` records which entity revision occurred in a particular physical representation.
+- `user_source_grant` determines which stable Dorks & Dice user IDs may read a restricted package.
 
-Source grants deliberately do not contain global or campaign roles. They answer only whether a specific site identity may access a specific restricted source package.
+Package access is the authorization boundary for source content. A private entity or revision never becomes public merely because Rules Core recognizes what it is.
 
-Acquisition provenance is stored separately from these identities and grants. `source_acquisition` records how the current account says it obtained a package, while `source_acquisition_revocation` marks an acquisition record void without deleting history. Acquisition records never create or remove `user_source_grant`; see `docs/source-acquisitions.md`.
+### Canonical publication identity
 
-## Canonical publication and occurrence identity
+- `canonical_publication` identifies an underlying publication independent of representation format.
+- `canonical_publication_alias` stores publication identifiers and aliases with scheme-specific uniqueness rules.
+- `source_representation_publication` records which canonical publication a physical representation supplied evidence for.
+- publication evidence conflicts retain provenance rather than silently replacing an established value.
 
-Representation identity is not the same as publication identity. Rules Core maintains a format-neutral identity index above imported source records:
+A 5e.tools `source` code, corpus `id`, `parentSource`, ISBN, PDF bibliographic field, or PCGen source label is evidence about publication identity; none is a substitute for the physical source representation.
 
-- `canonical_publication` identifies the underlying publication independent of whether it arrived from 5e.tools, an uploaded file, or a future PDF adapter.
-- `canonical_publication_alias` records format/provider identifiers such as a 5e.tools source code.
-- `canonical_source_occurrence` identifies one rule-bearing occurrence inside one canonical publication.
-- `source_entity_occurrence_binding` associates a representation-specific source entity with that canonical occurrence and records the match method, confidence, locator, and semantic fingerprint.
+### Canonical entity identity
 
-Canonical identity metadata is not source content and does not bypass source grants. Two users can therefore provide different representations that resolve to the same publication or occurrence while the underlying source records remain independently gated.
+- `canonical_entity` identifies a rule-bearing entity independently of the package that supplied it.
+- `canonical_entity_relationship` records directed semantic relationships such as `revision`, `reprint`, `rename`, and `variant` instead of forcing all related material into one identity.
+- `canonical_entity_alias` stores developer-confirmed strong source-lineage aliases. Alias identity includes the source-specific semantic fingerprint so a later mechanical revision of the same upstream key can map to a different canonical entity.
+- `canonical_source_occurrence` identifies the occurrence of a canonical entity in one canonical publication.
+- `source_entity_occurrence_binding` links an exact source-entity revision to a canonical occurrence and records its source-specific semantic fingerprint, locator, match method, and confidence.
 
-Exact aliases and exact bibliographic evidence can resolve a publication directly. A representation that lacks a provider-specific alias can also resolve against a unique body of exact semantic occurrence fingerprints. Ambiguous or approximate evidence does not silently merge publications. This is especially important for future PDF/OCR adapters.
+Canonical identity is global identity metadata, not global source content. **Rules Core may globally know the identity of non-SRD material without globally providing that material.**
 
-Canonical source identity also remains separate from Rules Layer concepts. Recognizing two representations as the same occurrence in the same publication does not decide that another edition, SRD occurrence, or third-party variant is the same Dorks & Dice rule concept. Rules Layer binding/adjudication remains deliberate.
+### Rules Layer identity
 
-## Publisher provenance
+Rules concepts bind to canonical entities rather than directly to private package entities. An exact `source_entity_revision` is still retained where a decision needs reproducibility and provenance.
 
-Publisher is first-class provenance when it is available from the source or adapter. It is stored on source-release metadata and propagated into the canonical publication when that canonical publication does not already have publisher metadata.
+A directed `revision` relationship extends a concept to later revisions of its bound canonical entity. `variant`, `reprint`, and `rename` relationships do not automatically extend that binding. Runtime resolution still requires an accessible source implementation; canonical identity never bypasses `user_source_grant`.
 
-Publisher conflicts are not overwritten automatically. A conflicting publisher observation is preserved as a reconciliation conflict for review rather than silently changing canonical publication identity. An adapter that can not reliably identify a publisher leaves the value unset; Rules Core does not assume that every source in a mixed repository has the same publisher.
+## Native identity and revisions
+
+A source entity's native identity is defined by its adapter. The database ID is local persistence identity; the adapter's `NativeKey` and `NativeIdentityJson` preserve the source-specific identity needed to recognize the entity again.
+
+`source_entity_revision.fingerprint` is computed from canonicalized **raw adapter JSON**. This makes physical/native source revision history lossless and idempotent:
+
+- reimporting equivalent raw JSON does not create a fake revision;
+- changed raw source data creates the next immutable revision;
+- the same unchanged revision can be linked to a newer physical representation without being duplicated.
+
+Adapters may also provide `SemanticJson`. That document is used only for canonical mechanical comparison. It does not replace `RawJson`, does not determine the immutable source revision fingerprint, and is not written back into the source material. This distinction lets an adapter retain page numbers, source-path metadata, comments, and other provenance without treating provenance movement as a rules change.
+
+When one native source entity changes mechanically, Rules Core creates or resolves the new canonical entity and records an explicit directed `revision` relationship from the prior canonical entity. A provenance-only revision with unchanged semantic content retains the same canonical entity.
 
 ## Lossless 5e.tools ingestion
 
-`ISourceImportService` accepts a 5e.tools-shaped JSON document representing one logical work/release import. Top-level entity arrays are imported without projecting the entity into a fixed application schema. The complete entity object is stored as PostgreSQL `jsonb`, so fields unknown to Rules Core survive ingestion and can be returned later.
+5e.tools is a native structured representation, not an intermediate schema that must be reduced into work/edition rows.
 
-Physical upstream data files do not have to match Rules Core's logical work/release boundary one-to-one. Some 5e.tools-shaped distributions aggregate several item-level source codes in one JSON file. Source Administration and the normal Add Source workflow can partition such an aggregate by `source` code before invoking `ISourceImportService`, allowing the same physical document to feed separate work/release imports without rewriting the selected entity objects. An unfiltered mixed-source preview emits a provenance warning. See `docs/source-administration.md`.
+The adapter preserves the complete entity JSON and native identity fields, including unknown fields. Corpus metadata preserves `id`, `source`, and `parentSource` independently. A child adventure and parent publication can therefore legitimately share one source code without being collapsed.
 
-Each entity also receives a SHA-256 fingerprint computed from a canonical JSON representation. Object property ordering does not affect the fingerprint. Array ordering remains significant. Reimporting semantically identical JSON is idempotent; changed content creates the next immutable revision instead of updating an existing revision.
+The known edition markers are translated only at the publication-evidence boundary:
 
-Source package/work/edition registration metadata is immutable after first registration under a given key. A subsequent import using the same key with conflicting registration metadata is rejected rather than rewriting source provenance.
+- `classic` -> `5e`
+- `one` -> `5.5e`
+
+5e.tools source ingestion does not create a global mirror of the upstream corpus. Public bundled SRDs are app content; non-SRD imports remain package-scoped to the accounts that imported them.
+
+## PDF sources
+
+A readable PDF is retained as its original byte representation. Text extraction produces source fragments with page provenance; canonical matching happens after the representation has been accepted and stored.
+
+A PDF does not need an existing canonical publication, 5e.tools source code, or matching rule concept to be ingestible. Scan-only PDFs still require a future OCR adapter.
+
+## PCGen 3.x sources
+
+PCGen `.pcc` and `.lst` files are native structured 3.x sources.
+
+The PCGen adapter preserves campaign metadata, raw list lines, duplicate and unknown tags, native paths, and line locators. Supported single-line rule families receive semantic projections. Operations such as `.COPY=`, `.MOD`, and `.FORGET`, and unsupported multi-line families, are retained as source evidence rather than guessed into complete rules.
+
+Only artifacts whose actual source URI proves they came from the `PCGen/pcgen` or `PCGen/pcgen-newsources` GitHub repositories are eligible to present trusted PCGen lineage aliases. A local `.lst` upload or another repository using PCGen syntax does not receive that trust merely because its format looks correct.
+
+Strong aliases are not created by name matching. They are registered only after canonical identity has been confirmed by bootstrap/reconciliation evidence. Once registered, a later import from that trusted lineage can reuse the canonical entity ID without gaining access to another user's source package.
 
 ## Normal account Add Source workflow
 
-A signed-in Dorks & Dice account uses one normal workflow rather than the administrative provenance controls:
+A signed-in Dorks & Dice account uses the normal workflow:
 
 1. Choose **Add Source**.
 2. Choose **Upload file** or **Web source**.
-3. Select the file or paste the HTTPS URL.
-4. Choose **Add source**.
+3. Supply the file or HTTPS source URL.
+4. Rules Core detects compatible representations, imports them into one private package, and grants that account access.
 
-The backend performs compatibility detection, internal source partitioning, import, and the current account's source grant. Users do not have to create package/work/release identities or perform a separate acquisition/grant workflow.
+Current adapters include 5e.tools JSON, text-readable PDF, and PCGen `.pcc`/`.lst` data. Compatibility is determined by adapters, not by a blanket extension allowlist.
 
-Compatibility is the contract, not JSON. The first implemented file format is compatible 5e.tools JSON, but the Add Source API/UI is intended to accept additional format adapters. An uploaded file that no registered adapter can read is rejected as an invalid source. A Web source can contain unrelated/incompatible files, but it is rejected if no compatible files are found.
+Uploaded files are immutable snapshots. Web sources are moving registrations and re-enter the same adapter/import pipeline when refreshed.
 
-Web sources are refreshable registrations. Rules Core checks the upstream version approximately once per 24 hours and does a full pull/re-import only when the upstream identity changed or no reliable version token can be established. GitHub tree sources use the upstream commit identity; other Web sources use available HTTP version metadata. Registrations for the same URL share the version probe. Manual refresh remains available.
+GitHub tree imports enumerate compatible files and preserve each fetched file as its own source representation. A failed incomplete Web import can be cleaned and retried without converting private source content into shared canonical content.
 
-Uploaded files are immutable snapshots. Adding a newer local file creates/updates through another explicit upload rather than periodically reading a path on the user's computer.
+## Web refresh
 
-## Read API boundary
+Moving Web sources keep per-account registrations while version checks may be shared by normalized URL. GitHub trees use commit identity; other HTTP sources use `ETag` and/or `Last-Modified` when available.
 
-The read endpoints are:
+The refresh worker is an ASP.NET hosted background service. It performs explicit queued imports and periodic refresh sweeps; it does not use detached fire-and-forget process work.
 
-- `GET /api/sources` - lists packages accessible in the current request context.
-- `GET /api/sources/entities` - searches source entities the current request context may access.
-- `GET /api/sources/entities/{entityId}` - returns the latest accessible source entity revision with package/work/edition provenance and the preserved source document.
+## Read boundary
 
-Anonymous/direct requests can access only packages explicitly marked public. When a request arrives through the authenticated Dorks & Dice Tool gateway, Rules Core redeems the host-issued ticket to obtain the stable user ID and includes restricted packages having a matching `user_source_grant`.
+The ordinary read endpoints remain source-access scoped:
 
-A restricted entity without a grant returns the same not-found result as a missing entity. Restricted entities are likewise omitted from search results. This prevents the ordinary source API from becoming an oracle for restricted package contents or entity existence.
+- `GET /api/sources` lists packages accessible to the current request.
+- `GET /api/sources/entities` searches only accessible source entities.
+- `GET /api/sources/entities/{entityId}` returns the latest accessible revision and its preserved source document.
 
-## Source grants
+Anonymous requests see only public packages. Authenticated requests add restricted packages having a matching `user_source_grant`. A restricted entity without a grant behaves as not found and is omitted from search results.
 
-`ISourceGrantService` provides idempotent grant, revoke, and grant-check operations inside the application boundary. A grant is keyed by `(user_id, source_package_id)` and is deleted when revoked. Package deletion cascades to its grants.
+Canonical publication/entity tables are not an alternate source-content API.
 
-The normal Add Source workflow creates the current account's grant automatically for its restricted imported package. The separate Source Administration grant controls remain an advanced/maintenance surface rather than a required end-user step.
+## Source grants, acquisition, and disposition
 
-The authenticated Source Administration workflow exposes a deliberately narrow grant-management surface for effective `Dev` users in Dorks & Dice mode:
+These axes remain independent:
 
-- `GET /api/source-admin/packages` lists package-level control-plane metadata and whether the current authenticated account has a grant.
-- `POST /api/source-admin/packages/{sourcePackageId}/current-user-grant` grants the current authenticated account access to a restricted package.
-- `DELETE /api/source-admin/packages/{sourcePackageId}/current-user-grant` revokes that current-account grant.
+- source grants authorize reading restricted package content;
+- acquisition records describe how the current account says it obtained material and never grant access;
+- global source disposition determines whether an otherwise accessible package participates in global Rules Lawyer normalization/automatic adjudication;
+- Dorks & Dice roles determine who may use administrative or Rules Lawyer controls.
 
-The browser never supplies the target user ID. Rules Core derives it from the redeemed Tool Host identity. Arbitrary other-user grant mutation remains outside this slice.
+Ignoring a package for global rules does not delete its representations, entities, revisions, grants, or canonical identities. Revoking a grant does not rewrite acquisition history. Canonical recognition does not broaden either authorization boundary.
 
-## Global Rules Lawyer source disposition
+## Development database policy
 
-A source can be valid and useful to its uploader while being irrelevant to the shared global ruleset. Global `Rules Lawyer` accounts can therefore mark an entire source package **ignored for global rules**.
-
-Ignoring a package:
-
-- does not delete the package, works, editions, entities, revisions, or canonical identity;
-- does not revoke any user's source grant;
-- does not remove it from the uploader's Source Library;
-- removes its unbound entities from global normalization candidates;
-- excludes it from new automatic global cross-edition resolution;
-- does not silently rewrite an existing manual decision or published ruleset revision.
-
-The disposition is reversible. Restoring the package makes it eligible for global review again. Package-level disposition is intentional so a Rules Lawyer can suppress a large irrelevant homebrew collection without reviewing thousands of entities individually.
-
-This disposition is a global Rules Layer concern, not a statement that the user's content is invalid. Campaign-specific inclusion/exclusion can remain a separate concern when campaign source policy is built.
-
-## Acquisition provenance
-
-Acquisition history is intentionally distinct from source grants. Effective `Dev` users in Dorks & Dice mode can list, append, and void only the current authenticated account's acquisition records through the Source Administration API.
-
-Recording a physical copy, digital copy, subscription, licensed access, or other acquisition is a self-recorded provenance statement. Rules Core does not currently verify receipts, ownership, subscription status, or external-provider entitlement, so this data is never consumed as an authorization decision.
-
-A void operation preserves the original acquisition and appends a separate revocation record. It does not revoke a source grant. Conversely, source-grant mutation does not alter acquisition history.
-
-## Authorization axes
-
-The authorization boundaries remain independent:
-
-- Dorks & Dice determines whether an identity may administer source imports/provenance or adjudicate/change global or campaign rules.
-- Rules Core source grants determine whether that identity may read a restricted source.
-- Source acquisition records describe provenance only and are not evidence that grants access.
-- Global source disposition determines whether an otherwise accessible package participates in global Rules Lawyer normalization/automatic adjudication; it does not determine source access.
-
-A user can therefore be a Rules Lawyer without access to a restricted source, have access to that source without being a Rules Lawyer, or upload a source that remains useful privately even after a Rules Lawyer ignores it for the global ruleset.
-
-## Administrative import boundary
-
-There is no unauthenticated source-import endpoint. Advanced `POST /api/source-admin/import` remains available only through a redeemed Tool Host identity with effective `Dev` authority while the site is in `dorks-and-dice` mode.
-
-That administrative import authority is a control-plane permission, not an entitlement decision. It coexists with the normal authenticated **Add Source** workflow, which is intentionally narrower and automatically associates the imported restricted material with the signed-in account.
-
-The Source Administration UI exposes package/work/edition provenance, visibility, optional aggregate source-code partitioning, 5e.tools-shaped JSON ingestion, current-account acquisition history, and current-account grant controls while leaving Rules Layer concept creation and adjudication as separate explicit operations. See `docs/source-administration.md` for the administrative workflow.
+During the current pre-production refactor, source/rules persistence is rebuildable. The implementation does not retain `SourceWork`/`SourceEdition` merely to preserve development-only database state. Schema currentization exists to keep feature-branch development databases usable while the branch is under active construction; the target fresh schema is the package/representation/entity/canonical model documented here.

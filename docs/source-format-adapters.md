@@ -1,112 +1,162 @@
 # Source Format Adapters
 
-Rules Core does not assume that structured datasets such as 5e.tools are the first or authoritative representation of a publication.
+Rules Core treats a physical source representation and canonical recognition as separate concerns. A compatible file can be imported even when Rules Core has never seen its publication or rules content before.
 
-A source file can be the first time Rules Core has encountered both the publication and the rules content it contains. This is expected for third-party material, including publications that are absent from 5e.tools or only partially represented there.
+The normal pipeline is:
 
-## Core rule
+`physical bytes -> ISourceFormatAdapter -> lossless normalized records/publication evidence -> Source Layer persistence -> canonical reconciliation -> optional Rules Layer binding`
 
-Source ingestion and cross-representation entitlement are separate concerns.
+Canonical reconciliation is downstream of ingestion. Failure to identify a canonical publication/entity does not make otherwise valid source material invalid.
 
-A compatible source is ingestible even when:
+## Implemented adapters
 
-- no canonical publication already exists;
-- no 5e.tools source code is known;
-- no structured representation of the publication exists;
-- no matching source entity or rule concept exists yet.
+The current adapter set is:
 
-When another representation already exists, canonical identity may link the two representations. That linkage is deduplication/provenance evidence; it is not a prerequisite for accepting the new source and it never grants access to another package.
-
-## Implemented ingestion pipeline
-
-The normal current-user path is now:
-
-`bytes -> ISourceFormatAdapter -> normalized publication/records -> Source Layer -> canonical reconciliation`
-
-`ISourceFormatAdapterRegistry` selects a compatible adapter. The first implemented adapters are:
-
-- `FiveEToolsSourceFormatAdapter` for the existing 5e.tools-shaped JSON entity format;
+- `FiveEToolsSourceFormatAdapter` for native 5e.tools-shaped JSON;
+- `PcGenSourceFormatAdapter` for PCGen `.pcc` and `.lst` 3.x data;
 - `PdfSourceFormatAdapter` for PDFs with a usable text layer.
 
-`INormalizedSourceImportService` persists adapter output independently of the physical input format. The older `ISourceImportService` remains for existing bundled/administrative 5e.tools import paths; it is no longer the fundamental current-user Add Source model.
+The registry is format-oriented rather than edition-oriented. Future 3.x Web translators, OCR, RTF, or other structured inputs should enter through the same normalized contract instead of adding another persistence hierarchy.
 
-Each imported artifact is retained separately in `source_representation`, including its format, origin identity, file name, source URL when applicable, media type, SHA-256, byte length, original bytes, adapter metadata, and import time. `source_representation_publication` records which canonical publication a particular representation was associated with.
+## Representation contract
 
-Normalized import is transactional across Source Layer persistence, representation storage, canonical publication/occurrence association, publication-evidence reconciliation, and representation-publication linking. A late failure in any of those stages rolls back the import rather than leaving a partially imported package.
+Each accepted physical artifact becomes an immutable `source_representation` containing its original bytes and representation-level provenance. Adapter output uses two independent evidence channels:
+
+### Source records
+
+`NormalizedSourceRecord` supplies:
+
+- source entity type and display name;
+- source/provider code when the format has one;
+- stable native key;
+- complete `RawJson` representing what the adapter retained from the source;
+- locator and publication-local evidence when known;
+- `NativeIdentityJson` for source-specific identity metadata;
+- optional `SemanticJson` for rule-bearing comparison;
+- optional strong canonical aliases when a trusted source lineage has been established.
+
+`RawJson` is the immutable Source Layer body. Its canonicalized SHA-256 determines whether a new source-entity revision is required.
+
+`SemanticJson` is optional comparison input only. It allows an adapter to exclude provenance-only fields such as page numbers, repository paths, or source metadata from canonical mechanical comparison while leaving those fields intact in `RawJson`. It never rewrites the source body or changes its revision fingerprint.
+
+### Publication evidence
+
+`NormalizedSourcePublication` supplies bibliographic evidence independently from source records: local publication key, title, publisher, D&D edition, exact date when actually known, and external identifiers.
+
+Publication evidence is reconciled into `canonical_publication`. There is no persisted `SourceWork` or `SourceEdition` parent for imported entities.
 
 ## Adapter responsibilities
 
-Each source-format adapter converts one physical representation into Source Layer material. The adapter is responsible for:
+An adapter should:
 
-1. validating that it can read the supplied representation;
-2. preserving enough provenance to identify the physical source and its extraction method;
-3. extracting publication-level evidence such as title, publisher, edition, publication date, identifiers, or format-specific aliases when available;
-4. extracting source entities or source fragments without inventing unsupported mechanics;
-5. retaining unclassified material that is useful source evidence instead of silently dropping it;
-6. producing stable local identities and fingerprints so reimport is idempotent;
-7. allowing canonical publication and occurrence matching to happen after ingestion.
+1. reject material it can not read safely;
+2. retain the original physical representation through the common Source Layer;
+3. preserve native identity and provenance rather than inventing Dorks & Dice identities;
+4. extract publication evidence only when the source actually supports it;
+5. emit the most specific rule entity boundary it can establish confidently;
+6. retain unsupported or ambiguous material as source evidence rather than silently dropping or guessing it;
+7. provide stable native keys so reimport is deterministic;
+8. use `SemanticJson` only when it can make mechanical comparison more representation-neutral without losing the raw source;
+9. leave canonical matching to the downstream resolver.
 
-An adapter must not require a pre-existing canonical publication or source code.
+An adapter must not require a pre-existing canonical publication, 5e.tools source code, rule concept, or another user's representation.
 
-## PDF behavior
+## 5e.tools
 
-A text-readable PDF is a first-class source representation, not merely proof that the account owns another representation.
+5e.tools is handled as a native structured representation, not as an interchange format that must be flattened.
 
-The first-pass PDF adapter:
+The adapter preserves complete accepted entity objects, including unknown fields. Native identity evidence such as `source`, `id`, `uniqueId`, corpus `id`, `parentSource`, `_meta`, and edition hints retain their upstream meanings.
 
-1. reads the PDF text layer with PdfPig;
-2. rejects a PDF when no usable page text can be extracted;
-3. extracts explicit publication evidence when available, including PDF title metadata, labeled title/publisher/system/publication-date fields, and ISBN;
-4. establishes a new canonical publication when no sufficiently strong existing identity matches;
-5. retains every readable page as a `source-fragment` with its original page number and extraction provenance;
-6. associates a later representation with an existing canonical publication only when canonical identity evidence is sufficiently strong;
-7. preserves the original PDF bytes and representation metadata regardless of whether canonical deduplication succeeds.
+Corpus registry identity and source code are intentionally separate. A parent publication and child adventure can therefore share a `source` value while retaining distinct corpus identities.
 
-The adapter intentionally does not infer monsters, spells, feats, or other mechanical entity types from weak layout/text cues. Generic fragments are valid Source Layer records and can be classified more specifically by later extraction work without rewriting the original source evidence.
+Known native edition projection is limited to publication evidence:
 
-OCR is not implemented in this slice. Scan-only PDFs with no usable text layer are therefore incompatible for now.
+- `classic` -> `5e`
+- `one` -> `5.5e`
 
-## Publisher provenance and conflicts
+That projection does not alter the stored native JSON.
 
-Publisher evidence is stored on the source edition produced by the adapter and is also supplied to canonical publication reconciliation.
+The 5e.tools detector uses known entity-array/schema families rather than accepting arbitrary JSON arrays. Generic JSON documents are not automatically treated as 5e.tools.
 
-When canonical identity is established by stronger evidence such as an ISBN alias, later missing canonical publisher/date/edition fields may be filled from the new representation. Conflicting non-null evidence is not silently overwritten. The canonical value is retained and the observation is recorded in `canonical_publication_evidence_conflict`, linked to the physical `source_representation` that supplied the conflicting publication-level evidence. Legacy conflict rows that predate representation-scoped provenance may remain linked to a source entity; new observations are representation-scoped.
+## PCGen
 
-## Relationship to structured representations
+PCGen is the first persistent 3.x structured translator.
 
-A structured representation such as 5e.tools can provide higher-quality entity boundaries than a PDF, but it is only another source representation.
+### PCC files
 
-If Rules Core determines that a PDF publication and a 5e.tools publication are the same canonical publication:
+`.pcc` files preserve campaign metadata and references. Relevant fields include campaign/key, game mode, publisher, long/short source names, source date, and referenced LST families.
 
-- both source packages remain distinct provenance records;
-- their source entities may bind to the same canonical publication/occurrences when evidence supports that match;
-- the uploader's PDF grant does not automatically become a grant to an unrelated multi-publication package;
-- canonical identity itself does not confer source access.
+Game-mode projection currently recognizes 3e and 35e as `3e` and `3.5e`. An exact `yyyy-MM-dd` source date can become canonical publication-date evidence. A partial source date such as `2003-07` remains preserved raw metadata and is not converted into an invented exact day.
 
-This prevents a PDF for one book from granting every book contained in a broad 5e.tools package.
+### LST files
 
-## Source entity granularity
+Supported single-line families are translated to native records with stable keys and line locators. Raw lines, duplicate tags, unknown tags, and source metadata remain available in `RawJson`.
 
-Adapters emit the most specific source entity that can be identified safely. Preferred future PDF classifications include monster/stat block, spell, feat, class/subclass feature, species/race feature, item, condition, explicit rules section, table, or another mechanically meaningful block.
+`SemanticJson` removes source/provenance tags such as `SOURCEPAGE` from mechanical comparison while retaining mechanical tags and descriptions.
 
-When the adapter can not establish one of those boundaries confidently, it emits a generic source fragment carrying at least publication evidence, page number or equivalent locator, extracted text, a stable fragment identity, and extraction provenance.
+A direct book-local PCC reference can provide publication context for an LST file. A shared list referenced by multiple publications may provide entity-family information but remains publication-unassociated when ownership is ambiguous.
 
-## Canonical identity
+PCGen operations such as `.COPY=`, `.MOD`, and `.FORGET` are preserved as `pcgen-operation` records rather than being guessed into standalone complete rules. Unsupported/multi-line families are preserved as `pcgen-fragment` evidence until a translator can model their semantics correctly.
 
-Canonical publication identity is representation-neutral. The first encountered representation can establish the canonical publication. Later representations add aliases and corroborating bibliographic/content evidence rather than replacing the first source.
+### Trusted PCGen lineage
 
-Exact external aliases such as ISBN or a representation-specific source identifier are strongest evidence. Bibliographic matching uses title plus available publisher/system/date evidence. Sparse title-only evidence is deliberately content-disambiguated so two unrelated same-titled publications are not silently merged. Ambiguous evidence remains parallel source material for later review.
+PCGen syntax alone is not a strong canonical identity signal. A local upload or unrelated repository can use the same format.
 
-Canonical source occurrences remain separate from Rules Layer concepts. Same-named rules across publications or editions are not automatically treated as one Dorks & Dice semantic rule.
+Only an artifact whose actual source URI proves it came from the official `PCGen/pcgen` or `PCGen/pcgen-newsources` GitHub repositories may present trusted PCGen lineage aliases to canonical reconciliation.
+
+Even then, the alias is useful only after the bootstrap/reconciliation process has confirmed what canonical entity that source-specific identity represents. Rules Core does not globally merge entities merely because their names match.
+
+Strong canonical entity aliases are versioned by source-lineage scheme, native alias value, and the source-specific semantic fingerprint. This allows the same upstream native key to identify a later mechanical revision without incorrectly collapsing the revision back into the earlier canonical entity.
+
+## PDF
+
+A text-readable PDF is a first-class physical representation. The adapter:
+
+- retains the original PDF bytes;
+- extracts the text layer with PdfPig;
+- rejects scan-only files that provide no usable text;
+- extracts explicit publication evidence such as metadata title, labeled publisher/system/date values, and ISBN when present;
+- retains each readable page as a source fragment with page provenance;
+- does not infer monsters, spells, feats, or other entity types from weak layout cues.
+
+A generic source fragment is valid Source Layer content. Later extraction improvements can add better translated entities without rewriting the original PDF representation.
+
+OCR is not implemented in the current adapter.
+
+## Canonical publication reconciliation
+
+Canonical publication identity is representation-neutral. Strong identifiers such as ISBN can resolve directly. Source-specific identifiers are interpreted according to their scheme. Contextual aliases such as a 5e.tools source code or `PHB` are not globally unique and require corroborating context.
+
+Bibliographic evidence can fill previously missing canonical metadata. Conflicting established metadata is not silently overwritten; the observation is recorded with representation provenance for review.
+
+Sparse title-only evidence does not force a merge. Content overlap is used only under guarded conditions and ambiguous candidates remain separate.
+
+## Canonical entity reconciliation
+
+Exact semantic fingerprints can reuse canonical entities across representations when the comparison documents are structurally equivalent.
+
+Different source formats may legitimately encode the same rule with different semantic structures. Rules Core therefore does not require every exact representation of one canonical entity to share one fingerprint. Cross-format reuse with different fingerprints requires a strong, bootstrap-confirmed source-lineage alias rather than name-only matching.
+
+Mechanical changes in one native source lineage remain explicit revisions. A strong alias can not be used to collapse a mechanically changed source revision into its prior canonical entity.
+
+Canonical occurrences remain publication-specific. Reprint/revision/rename/variant relationships remain explicit rather than being inferred solely from matching names.
 
 ## Access model
 
-The access grant created by a private upload applies to the uploaded source package. This is sufficient for a previously unknown PDF to become usable immediately.
+Source packages and their representations/entities/revisions remain access-scoped. Canonical publications, entities, aliases, occurrences, fingerprints, and relationship records are shared recognition metadata only.
 
-Canonical publication and occurrence records are identity/provenance metadata. They do not make restricted source content globally readable and do not broaden a package grant to another account or another aggregate package.
+A user who uploads a private representation does not grant another user access to that representation. A later independent import may reuse the same canonical IDs while remaining separately stored and separately granted.
 
-## Web refresh
+## Web-source behavior
 
-Moving Web sources retain independent account registrations while sharing a version probe by normalized URL during each automatic refresh pass. GitHub tree sources use commit SHA; other HTTP sources use `ETag` and/or `Last-Modified` when available. A full source pull is performed only when the version changed or no usable version signal exists.
+A Web source re-enters the same adapter pipeline on refresh. GitHub tree sources enumerate candidate files, fetch each physical artifact separately, and use the batch-adapter path when a format needs cross-file context such as PCGen PCC-to-LST references or 5e.tools corpus metadata.
 
-The refresh coordinator is an ASP.NET hosted `BackgroundService`, not fire-and-forget process work. It scans hourly for registrations whose previous check is at least 24 hours old. Manual Refresh remains available. Refresh re-enters the same normalized adapter pipeline and does not run the legacy 5e.tools canonical indexer afterward.
+GitHub tree version checks use commit identity. Other HTTP sources use available `ETag`/`Last-Modified` metadata. A full re-import is skipped when the upstream version has not changed.
+
+The refresh worker is an ASP.NET hosted service and queued import processor; there is no detached fire-and-forget import path.
+
+## 3.x bootstrap boundary
+
+The eventual 3e/3.5e bootstrap is a developer seeding workflow built on the same persistent adapters and canonical resolver used by normal imports. It is not a separate global source-content database.
+
+The workbench may classify candidate pairs as exact identity, reprint, 3.0-to-3.5 revision, rename, variant, source-data error, parser error, or unresolved. Confirmed exact identities can register strong source-lineage aliases. Only canonical identity/matching knowledge becomes shared globally; non-SRD source bodies remain governed by their packages and grants.

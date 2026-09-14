@@ -33,6 +33,24 @@ internal static class RulesCoreCurrentSchema
         CREATE INDEX IF NOT EXISTS ix_canonical_entity_semantic_fingerprint
             ON canonical_entity(semantic_fingerprint);
 
+        CREATE TABLE IF NOT EXISTS canonical_entity_alias (
+            canonical_entity_alias_id uuid NOT NULL,
+            canonical_entity_id uuid NOT NULL,
+            alias_scheme varchar(100) NOT NULL,
+            alias_value varchar(1000) NOT NULL,
+            semantic_fingerprint varchar(64) NOT NULL,
+            evidence_kind varchar(100) NOT NULL,
+            confidence double precision NOT NULL,
+            created_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_canonical_entity_alias PRIMARY KEY (canonical_entity_alias_id),
+            CONSTRAINT fk_canonical_entity_alias_entity FOREIGN KEY (canonical_entity_id)
+                REFERENCES canonical_entity(canonical_entity_id) ON DELETE CASCADE,
+            CONSTRAINT ck_canonical_entity_alias_confidence CHECK (confidence >= 0 AND confidence <= 1));
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_canonical_entity_alias_identity
+            ON canonical_entity_alias(alias_scheme, alias_value, semantic_fingerprint);
+        CREATE INDEX IF NOT EXISTS ix_canonical_entity_alias_entity
+            ON canonical_entity_alias(canonical_entity_id);
+
         CREATE TABLE IF NOT EXISTS canonical_entity_relationship (
             canonical_entity_relationship_id uuid NOT NULL,
             from_canonical_entity_id uuid NOT NULL,
@@ -54,6 +72,9 @@ internal static class RulesCoreCurrentSchema
             ON canonical_entity_relationship(from_canonical_entity_id, to_canonical_entity_id, relationship_kind);
         CREATE INDEX IF NOT EXISTS ix_canonical_entity_relationship_to
             ON canonical_entity_relationship(to_canonical_entity_id, relationship_kind);
+
+        ALTER TABLE canonical_publication
+            ADD COLUMN IF NOT EXISTS release_kind varchar(40) NULL;
 
         ALTER TABLE canonical_source_occurrence
             ADD COLUMN IF NOT EXISTS canonical_entity_id uuid NULL;
