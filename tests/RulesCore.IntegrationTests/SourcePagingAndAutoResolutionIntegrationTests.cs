@@ -53,7 +53,7 @@ public sealed class SourcePagingAndAutoResolutionIntegrationTests
                 "Paging release",
                 JsonSerializer.Serialize(new
                 {
-                    rule = new[]
+                    feat = new[]
                     {
                         new { name = "Alpha", source = $"PAGE{token}" },
                         new { name = "Bravo", source = $"PAGE{token}" },
