@@ -39,7 +39,11 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         }
 
         await GlobalSourceDispositionService.EnsureSchemaAsync(dbContext, cancellationToken);
+        await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
         var ignoredPackageIds = await GetIgnoredPackageIdsAsync(cancellationToken);
+        var alreadyBoundSourceIds = await CanonicalRuleBindingStore.GetSourceEntityIdsWithAnyRuleBindingAsync(
+            dbContext,
+            cancellationToken);
         var normalizedEntityType = NormalizeOptional(entityType)?.ToLowerInvariant();
         var normalizedQuery = NormalizeOptional(query)?.ToLowerInvariant();
 
@@ -47,8 +51,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
             .AsNoTracking()
             .Where(value => value.Revisions.Any())
             .Where(value => !ignoredPackageIds.Contains(value.SourcePackageId))
-            .Where(value => !dbContext.RuleConceptSourceBindings
-                .Any(binding => binding.SourceEntityId == value.Id))
+            .Where(value => !alreadyBoundSourceIds.Contains(value.Id))
             .Where(value => value.SourcePackage.IsPublic
                 || value.SourcePackage.UserGrants
                     .Any(grant => grant.UserId == normalizedUserId));
@@ -155,6 +158,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         var normalizedUserId = RequireUserId(userId);
 
         await GlobalSourceDispositionService.EnsureSchemaAsync(dbContext, cancellationToken);
+        await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
         var ignoredPackageIds = await GetIgnoredPackageIdsAsync(cancellationToken);
 
         await using var transaction = await dbContext.Database.BeginTransactionAsync(
@@ -176,12 +180,16 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
             return null;
         }
 
+        var canonicalEntityId = await CanonicalRuleBindingStore.GetCanonicalEntityIdAsync(
+            dbContext,
+            sourceEntityId,
+            cancellationToken);
         var suggestedKey = BuildSuggestedConceptKey(source.EntityType, source.Name);
         var normalizedEntityType = NormalizeEntityType(source.EntityType);
         var existingBindings = await dbContext.RuleConceptSourceBindings
             .AsNoTracking()
             .Include(value => value.RuleConcept)
-            .Where(value => value.SourceEntityId == sourceEntityId)
+            .Where(value => value.CanonicalEntityId == canonicalEntityId)
             .ToArrayAsync(cancellationToken);
 
         if (existingBindings.Length > 0)
@@ -191,7 +199,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
             if (matching is null)
             {
                 throw new InvalidOperationException(
-                    "This source entity is already bound to a different rule concept. Review it manually instead of accepting the automatic suggestion.");
+                    "This canonical source entity is already bound to a different rule concept. Review it manually instead of accepting the automatic suggestion.");
             }
 
             await transaction.CommitAsync(cancellationToken);
@@ -229,6 +237,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         {
             Id = Guid.NewGuid(),
             RuleConceptId = concept.Id,
+            CanonicalEntityId = canonicalEntityId,
             SourceEntityId = source.Id,
             CreatedByUserId = normalizedUserId,
             CreatedAt = DateTimeOffset.UtcNow,
@@ -349,9 +358,10 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         new(
             binding.Id,
             binding.RuleConceptId,
-            binding.SourceEntityId,
+            binding.CanonicalEntityId,
             binding.CreatedByUserId,
-            binding.CreatedAt);
+            binding.CreatedAt,
+            binding.SourceEntityId);
 
     private static string NormalizeEntityType(string value)
     {
