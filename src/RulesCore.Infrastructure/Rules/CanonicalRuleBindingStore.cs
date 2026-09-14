@@ -149,6 +149,36 @@ internal static class CanonicalRuleBindingStore
         }
     }
 
+    public static async Task<IReadOnlySet<Guid>> GetSourceEntityIdsWithAnyRuleBindingAsync(
+        RulesCoreDbContext dbContext,
+        CancellationToken cancellationToken = default)
+    {
+        await EnsureSchemaAsync(dbContext, cancellationToken);
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync(cancellationToken);
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT DISTINCT source_binding.source_entity_id
+                FROM rule_concept_source_binding rule_binding
+                JOIN canonical_source_occurrence occurrence
+                    ON occurrence.canonical_entity_id = rule_binding.canonical_entity_id
+                JOIN source_entity_occurrence_binding source_binding
+                    ON source_binding.canonical_source_occurrence_id = occurrence.canonical_source_occurrence_id;
+                """;
+            var ids = new HashSet<Guid>();
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken)) ids.Add(reader.GetGuid(0));
+            return ids;
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
     public static async Task<bool> IsSourceEntityBoundAsync(
         RulesCoreDbContext dbContext,
         Guid ruleConceptId,
@@ -285,6 +315,7 @@ internal static class CanonicalRuleBindingStore
                     REFERENCES canonical_entity(canonical_entity_id) ON DELETE RESTRICT;
             END IF;
         END $$;
+        DROP INDEX IF EXISTS ux_rule_concept_source_binding_concept_entity;
         CREATE UNIQUE INDEX IF NOT EXISTS ux_rule_concept_source_binding_concept_canonical_entity
             ON rule_concept_source_binding(rule_concept_id, canonical_entity_id);
         """;
