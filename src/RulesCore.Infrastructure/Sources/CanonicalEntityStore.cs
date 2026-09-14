@@ -247,5 +247,39 @@ internal sealed class CanonicalEntityStore(RulesCoreDbContext dbContext)
         END $$;
         CREATE INDEX IF NOT EXISTS ix_canonical_source_occurrence_entity
             ON canonical_source_occurrence(canonical_entity_id);
+
+        ALTER TABLE source_entity_occurrence_binding
+            ADD COLUMN IF NOT EXISTS source_entity_revision_id uuid NULL;
+        UPDATE source_entity_occurrence_binding binding
+        SET source_entity_revision_id = (
+            SELECT revision.source_entity_revision_id
+            FROM source_entity_revision revision
+            WHERE revision.source_entity_id = binding.source_entity_id
+            ORDER BY revision.revision_number DESC
+            LIMIT 1)
+        WHERE binding.source_entity_revision_id IS NULL;
+        DELETE FROM source_entity_occurrence_binding
+        WHERE source_entity_revision_id IS NULL;
+        DROP INDEX IF EXISTS ux_source_entity_occurrence_binding_entity;
+        DO $$
+        BEGIN
+            IF NOT EXISTS (
+                SELECT 1
+                FROM pg_constraint
+                WHERE conname = 'fk_source_entity_occurrence_binding_revision'
+                  AND conrelid = 'source_entity_occurrence_binding'::regclass)
+            THEN
+                ALTER TABLE source_entity_occurrence_binding
+                    ADD CONSTRAINT fk_source_entity_occurrence_binding_revision
+                    FOREIGN KEY (source_entity_revision_id)
+                    REFERENCES source_entity_revision(source_entity_revision_id) ON DELETE CASCADE;
+            END IF;
+        END $$;
+        ALTER TABLE source_entity_occurrence_binding
+            ALTER COLUMN source_entity_revision_id SET NOT NULL;
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_source_entity_occurrence_binding_revision
+            ON source_entity_occurrence_binding(source_entity_revision_id);
+        CREATE INDEX IF NOT EXISTS ix_source_entity_occurrence_binding_entity
+            ON source_entity_occurrence_binding(source_entity_id);
         """;
 }
