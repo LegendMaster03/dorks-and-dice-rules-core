@@ -139,6 +139,8 @@ internal static class RulesCoreCurrentSchema
             END IF;
         END $$;
         DROP INDEX IF EXISTS ux_rule_concept_source_binding_concept_entity;
+        CREATE INDEX IF NOT EXISTS ux_rule_concept_source_binding_concept_entity
+            ON rule_concept_source_binding(rule_concept_id, source_entity_id);
         CREATE UNIQUE INDEX IF NOT EXISTS ux_rule_concept_source_binding_concept_canonical_entity
             ON rule_concept_source_binding(rule_concept_id, canonical_entity_id);
 
