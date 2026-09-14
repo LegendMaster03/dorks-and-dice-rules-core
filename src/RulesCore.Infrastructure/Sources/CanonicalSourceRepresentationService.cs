@@ -200,6 +200,12 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             confidence,
             cancellationToken);
 
+        await SeedTrustedAliasesAsync(
+            canonicalEntityId,
+            canonicalAliases,
+            normalizedFingerprint,
+            cancellationToken);
+
         return new CanonicalSourceAssociationView(
             publication,
             occurrenceId,
@@ -519,6 +525,36 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             {
                 await connection.CloseAsync();
             }
+        }
+    }
+
+    private async Task SeedTrustedAliasesAsync(
+        Guid canonicalEntityId,
+        IReadOnlyDictionary<string, string>? canonicalAliases,
+        string semanticFingerprint,
+        CancellationToken cancellationToken)
+    {
+        if (canonicalAliases is null || canonicalAliases.Count == 0)
+        {
+            return;
+        }
+
+        var aliases = new CanonicalEntityAliasStore(dbContext);
+        foreach (var alias in canonicalAliases.OrderBy(value => value.Key, StringComparer.Ordinal))
+        {
+            if (!TrustedSourceLineageRegistry.IsRegisteredScheme(alias.Key))
+            {
+                continue;
+            }
+
+            await aliases.RegisterAsync(
+                canonicalEntityId,
+                alias.Key,
+                alias.Value,
+                semanticFingerprint,
+                "trusted-lineage-first-import",
+                1.0,
+                cancellationToken);
         }
     }
 
