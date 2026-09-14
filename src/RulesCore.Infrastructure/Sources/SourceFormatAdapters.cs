@@ -162,7 +162,11 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatBatchAdapter
                 return null;
             }
 
-            var publications = ReadPublicationEvidence(document.RootElement, records);
+            var publications = ReadPublicationEvidence(
+                document.RootElement,
+                records,
+                catalog,
+                AllowsBareSourcePublicationFallback(artifact));
             return new NormalizedSourceRepresentation(
                 Format,
                 artifact,
@@ -222,17 +226,7 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatBatchAdapter
                 edition = row.NativeEdition
             }))).ToArray();
 
-        var publications = rows.Select(row => new NormalizedSourcePublication(
-            LocalKey: row.PublicationLocalKey,
-            DisplayName: row.Title,
-            Publisher: row.Publisher,
-            GameEdition: row.GameEdition,
-            PublicationDate: row.Published,
-            ExternalIdentifiers: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-            {
-                ["5etools-corpus-id"] = row.CorpusId,
-                ["5etools-source-code"] = row.SourceCode
-            })).ToArray();
+        var publications = rows.Select(row => PublicationFromCorpus(row)).ToArray();
 
         return new NormalizedSourceRepresentation(
             Format,
@@ -308,17 +302,7 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatBatchAdapter
             Format,
             artifact,
             records,
-            [new NormalizedSourcePublication(
-                corpus.PublicationLocalKey,
-                corpus.Title,
-                corpus.Publisher,
-                corpus.GameEdition,
-                corpus.Published,
-                new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-                {
-                    ["5etools-corpus-id"] = corpus.CorpusId,
-                    ["5etools-source-code"] = corpus.SourceCode
-                })],
+            [PublicationFromCorpus(corpus)],
             JsonSerializer.Serialize(new
             {
                 schemaFamily = "5etools-site-corpus-content",
@@ -387,7 +371,9 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatBatchAdapter
 
     private static IReadOnlyList<NormalizedSourcePublication> ReadPublicationEvidence(
         JsonElement root,
-        IReadOnlyList<NormalizedSourceRecord> records)
+        IReadOnlyList<NormalizedSourceRecord> records,
+        CorpusCatalog? catalog,
+        bool allowBareSourceFallback)
     {
         var evidence = new Dictionary<string, NormalizedSourcePublication>(StringComparer.OrdinalIgnoreCase);
         var metaEdition = root.TryGetProperty("_meta", out var meta) && meta.ValueKind == JsonValueKind.Object
@@ -424,25 +410,59 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatBatchAdapter
             }
         }
 
-        foreach (var record in records)
+        foreach (var sourceCode in records
+                     .Select(value => value.SourceCode)
+                     .Where(value => !string.IsNullOrWhiteSpace(value))
+                     .Cast<string>()
+                     .Distinct(StringComparer.OrdinalIgnoreCase))
         {
-            if (record.PublicationLocalKey is null || record.SourceCode is null || evidence.ContainsKey(record.PublicationLocalKey))
+            var localKey = $"source:{sourceCode}";
+            if (evidence.ContainsKey(localKey))
             {
                 continue;
             }
 
-            evidence[record.PublicationLocalKey] = new NormalizedSourcePublication(
-                record.PublicationLocalKey,
-                record.SourceCode,
+            if (catalog is not null && catalog.TryGetUniqueBySourceCode(sourceCode, out var corpus))
+            {
+                evidence[localKey] = PublicationFromCorpus(corpus, localKey);
+                continue;
+            }
+
+            if (!allowBareSourceFallback)
+            {
+                continue;
+            }
+
+            evidence[localKey] = new NormalizedSourcePublication(
+                localKey,
+                sourceCode,
                 GameEdition: metaEdition,
                 ExternalIdentifiers: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
                 {
-                    ["5etools-source-code"] = record.SourceCode
+                    ["5etools-source-code"] = sourceCode
                 });
         }
 
         return evidence.Values.ToArray();
     }
+
+    private static NormalizedSourcePublication PublicationFromCorpus(
+        CorpusMetadata row,
+        string? localKey = null) =>
+        new(
+            LocalKey: localKey ?? row.PublicationLocalKey,
+            DisplayName: row.Title,
+            Publisher: row.Publisher,
+            GameEdition: row.GameEdition,
+            PublicationDate: row.Published,
+            ExternalIdentifiers: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+            {
+                ["5etools-corpus-id"] = row.CorpusId,
+                ["5etools-source-code"] = row.SourceCode
+            });
+
+    private static bool AllowsBareSourcePublicationFallback(SourceRepresentationArtifact artifact) =>
+        artifact.OriginIdentity.StartsWith("admin:", StringComparison.OrdinalIgnoreCase);
 
     private static IReadOnlyList<CorpusMetadata> ReadCorpusRows(string corpusType, JsonElement items)
     {
@@ -665,6 +685,22 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatBatchAdapter
 
         public bool TryGetCorpus(string corpusType, string corpusId, out CorpusMetadata metadata) =>
             byCorpus.TryGetValue(Key(corpusType, corpusId), out metadata!);
+
+        public bool TryGetUniqueBySourceCode(string sourceCode, out CorpusMetadata metadata)
+        {
+            var matches = byCorpus.Values
+                .Where(value => string.Equals(value.SourceCode, sourceCode, StringComparison.OrdinalIgnoreCase))
+                .Take(2)
+                .ToArray();
+            if (matches.Length == 1)
+            {
+                metadata = matches[0];
+                return true;
+            }
+
+            metadata = null!;
+            return false;
+        }
 
         private static string Key(string corpusType, string corpusId) => $"{corpusType}:{corpusId}";
     }

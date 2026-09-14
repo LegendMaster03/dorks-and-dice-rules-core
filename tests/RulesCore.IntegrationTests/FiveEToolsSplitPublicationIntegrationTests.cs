@@ -12,7 +12,7 @@ namespace RulesCore.IntegrationTests;
 public sealed class FiveEToolsSplitPublicationIntegrationTests
 {
     [Fact]
-    public async Task RichCorpusMetadataAndLaterSourceRecordsReuseTheSamePublicationWhenIdentityIsUnambiguous()
+    public async Task RichCorpusMetadataAndGenericRecordsReuseTheSamePublicationWhenIdentityIsUnambiguous()
     {
         var db = await OpenDatabaseAsync();
         if (db is null) return;
@@ -21,8 +21,7 @@ public sealed class FiveEToolsSplitPublicationIntegrationTests
             var adapter = new FiveEToolsSourceFormatAdapter();
             var importer = new NormalizedSourceImportService(db);
             var packageKey = $"split-bgdia-{Guid.NewGuid():N}";
-
-            var metadata = RequireRepresentation(adapter.TryRead(Artifact(
+            var metadataArtifact = Artifact(
                 "adventures.json",
                 """
                 {
@@ -35,8 +34,8 @@ public sealed class FiveEToolsSplitPublicationIntegrationTests
                     }
                   ]
                 }
-                """)));
-            var entities = RequireRepresentation(adapter.TryRead(Artifact(
+                """);
+            var entityArtifact = Artifact(
                 "bestiary-bgdia.json",
                 """
                 {
@@ -49,7 +48,12 @@ public sealed class FiveEToolsSplitPublicationIntegrationTests
                     }
                   ]
                 }
-                """)));
+                """);
+
+            var batch = adapter.TryReadMany([metadataArtifact, entityArtifact]);
+            var metadata = RepresentationFor(batch, "adventures.json");
+            var entities = RepresentationFor(batch, "bestiary-bgdia.json");
+            Assert.Equal("BGDIA", Assert.Single(entities.Publications!).ExternalIdentifiers!["5etools-corpus-id"]);
 
             var first = await ImportAsync(importer, packageKey, metadata);
             var second = await ImportAsync(importer, packageKey, entities);
@@ -66,7 +70,32 @@ public sealed class FiveEToolsSplitPublicationIntegrationTests
     }
 
     [Fact]
-    public async Task SourceCodeFallbackIsUpgradedWhenRichCorpusMetadataArrivesLater()
+    public void BareSourceCodeDoesNotCreatePublicationEvidenceForUserOrNeutralImports()
+    {
+        var adapter = new FiveEToolsSourceFormatAdapter();
+        var representation = RequireRepresentation(adapter.TryRead(Artifact(
+            "bestiary-phb.json",
+            """
+            {
+              "monster": [
+                {
+                  "name": "Example Creature",
+                  "source": "PHB",
+                  "ac": [10],
+                  "hp": { "average": 4, "formula": "1d8" }
+                }
+              ]
+            }
+            """)));
+
+        Assert.Empty(representation.Publications ?? []);
+        var record = Assert.Single(representation.Records);
+        Assert.Equal("PHB", record.SourceCode);
+        Assert.Equal("source:PHB", record.PublicationLocalKey);
+    }
+
+    [Fact]
+    public async Task UniqueCorpusMetadataAssociatesGenericRecordsDuringBatchRead()
     {
         var db = await OpenDatabaseAsync();
         if (db is null) return;
@@ -75,22 +104,7 @@ public sealed class FiveEToolsSplitPublicationIntegrationTests
             var adapter = new FiveEToolsSourceFormatAdapter();
             var importer = new NormalizedSourceImportService(db);
             var packageKey = $"split-phb-{Guid.NewGuid():N}";
-
-            var entityRepresentation = RequireRepresentation(adapter.TryRead(Artifact(
-                "bestiary-phb.json",
-                """
-                {
-                  "monster": [
-                    {
-                      "name": "Example Creature",
-                      "source": "PHB",
-                      "ac": [10],
-                      "hp": { "average": 4, "formula": "1d8" }
-                    }
-                  ]
-                }
-                """)));
-            var metadataRepresentation = RequireRepresentation(adapter.TryRead(Artifact(
+            var metadataArtifact = Artifact(
                 "books.json",
                 """
                 {
@@ -103,19 +117,34 @@ public sealed class FiveEToolsSplitPublicationIntegrationTests
                     }
                   ]
                 }
-                """)));
+                """);
+            var entityArtifact = Artifact(
+                "bestiary-phb.json",
+                """
+                {
+                  "monster": [
+                    {
+                      "name": "Example Creature",
+                      "source": "PHB",
+                      "ac": [10],
+                      "hp": { "average": 4, "formula": "1d8" }
+                    }
+                  ]
+                }
+                """);
 
-            var first = await ImportAsync(importer, packageKey, entityRepresentation);
-            var firstPublication = Assert.Single(first.Publications);
-            Assert.Equal("PHB", await ReadCanonicalDisplayNameAsync(db, firstPublication.CanonicalPublicationId));
+            var batch = adapter.TryReadMany([metadataArtifact, entityArtifact]);
+            var metadata = RepresentationFor(batch, "books.json");
+            var entities = RepresentationFor(batch, "bestiary-phb.json");
+            var inferredPublication = Assert.Single(entities.Publications!);
+            Assert.Equal("Player's Handbook (2014)", inferredPublication.DisplayName);
+            Assert.Equal("PHB", inferredPublication.ExternalIdentifiers!["5etools-corpus-id"]);
 
-            var second = await ImportAsync(importer, packageKey, metadataRepresentation);
-            var secondPublication = Assert.Single(second.Publications);
-
-            Assert.Equal(firstPublication.CanonicalPublicationId, secondPublication.CanonicalPublicationId);
+            var first = await ImportAsync(importer, packageKey, metadata);
+            var second = await ImportAsync(importer, packageKey, entities);
             Assert.Equal(
-                "Player's Handbook (2014)",
-                await ReadCanonicalDisplayNameAsync(db, firstPublication.CanonicalPublicationId));
+                Assert.Single(first.Publications).CanonicalPublicationId,
+                Assert.Single(second.Publications).CanonicalPublicationId);
         }
     }
 
@@ -174,6 +203,60 @@ public sealed class FiveEToolsSplitPublicationIntegrationTests
     }
 
     [Fact]
+    public void AmbiguousSharedSourceCodeDoesNotGuessBetweenCorpusEntries()
+    {
+        var adapter = new FiveEToolsSourceFormatAdapter();
+        var parentArtifact = Artifact(
+            "books.json",
+            """
+            {
+              "book": [
+                {
+                  "name": "Forgotten Realms: Adventures in Faerûn",
+                  "id": "FRAiF",
+                  "source": "FRAiF",
+                  "published": "2025-11-11"
+                }
+              ]
+            }
+            """);
+        var childArtifact = Artifact(
+            "adventures.json",
+            """
+            {
+              "adventure": [
+                {
+                  "name": "The Lost Library of Lethchauntos",
+                  "id": "FRAiF-TLLoL",
+                  "source": "FRAiF",
+                  "parentSource": "FRAiF",
+                  "published": "2025-11-11"
+                }
+              ]
+            }
+            """);
+        var genericArtifact = Artifact(
+            "bestiary-fraif.json",
+            """
+            {
+              "monster": [
+                {
+                  "name": "Shared Source Creature",
+                  "source": "FRAiF",
+                  "ac": [10],
+                  "hp": { "average": 4, "formula": "1d8" }
+                }
+              ]
+            }
+            """);
+
+        var batch = adapter.TryReadMany([parentArtifact, childArtifact, genericArtifact]);
+        var generic = RepresentationFor(batch, "bestiary-fraif.json");
+        Assert.Empty(generic.Publications ?? []);
+        Assert.Equal("FRAiF", Assert.Single(generic.Records).SourceCode);
+    }
+
+    [Fact]
     public async Task ContextualSourceCodeDoesNotGloballyMergeDifferentRichPublications()
     {
         var db = await OpenDatabaseAsync();
@@ -196,6 +279,14 @@ public sealed class FiveEToolsSplitPublicationIntegrationTests
 
     private static SourceRepresentationArtifact Artifact(string fileName, string json) =>
         new(fileName, Encoding.UTF8.GetBytes(json), $"test:{Guid.NewGuid():N}");
+
+    private static NormalizedSourceRepresentation RepresentationFor(
+        IReadOnlyList<NormalizedSourceRepresentation> representations,
+        string fileName) =>
+        Assert.Single(representations, value => string.Equals(
+            Path.GetFileName(value.Artifact.FileName),
+            fileName,
+            StringComparison.OrdinalIgnoreCase));
 
     private static NormalizedSourceRepresentation Representation(
         string localKey,

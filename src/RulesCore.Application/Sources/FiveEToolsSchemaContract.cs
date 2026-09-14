@@ -72,6 +72,11 @@ public static class FiveEToolsSchemaContract
         corpusType = string.Empty;
         corpusId = string.Empty;
 
+        if (string.IsNullOrWhiteSpace(filePath))
+        {
+            return false;
+        }
+
         var schemaId = GetSiteSchemaId(filePath);
         var prefix = schemaId switch
         {
