@@ -72,6 +72,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         }
         var note = NormalizeOptional(request.Note, 2000, nameof(request.Note));
 
+        await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
         await using var transaction = await dbContext.Database.BeginTransactionAsync(IsolationLevel.Serializable, cancellationToken);
         var baseline = await dbContext.CampaignRulesetSelections
             .AsNoTracking()
@@ -105,14 +106,25 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             RejectPatches(request, decisionKind);
             var sourceRevision = await dbContext.SourceEntityRevisions
                 .AsNoTracking()
+                .Include(value => value.SourceEntity)
+                    .ThenInclude(value => value.SourcePackage)
+                    .ThenInclude(value => value.UserGrants)
                 .SingleOrDefaultAsync(value => value.Id == request.SourceEntityRevisionId.Value, cancellationToken)
                 ?? throw new KeyNotFoundException($"Source entity revision '{request.SourceEntityRevisionId}' does not exist.");
-            if (!await dbContext.RuleConceptSourceBindings.AsNoTracking().AnyAsync(
-                    value => value.RuleConceptId == ruleConceptId && value.SourceEntityId == sourceRevision.SourceEntityId,
+            var package = sourceRevision.SourceEntity.SourcePackage;
+            if (!package.IsPublic && !package.UserGrants.Any(grant => grant.UserId == actor))
+            {
+                throw new InvalidOperationException(
+                    "The selected source revision is not accessible to the current campaign author.");
+            }
+            if (!await CanonicalRuleBindingStore.IsSourceEntityBoundAsync(
+                    dbContext,
+                    ruleConceptId,
+                    sourceRevision.SourceEntityId,
                     cancellationToken))
             {
                 throw new InvalidOperationException(
-                    "The selected source revision belongs to an entity that is not bound to this rule concept.");
+                    "The selected source revision belongs to a canonical entity that is not bound to this rule concept.");
             }
             selectedSourceEntityRevisionId = sourceRevision.Id;
         }
@@ -332,20 +344,20 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             .Include(value => value.BaselineRulesetRevisionEntry)
                 .ThenInclude(value => value.GlobalRuleDecision)
             .Include(value => value.CampaignRuleDecision)
-            .Include(value => value.SourceEntityRevision)
-                .ThenInclude(value => value.SourceEntity)
-                .ThenInclude(value => value.SourcePackage)
             .SingleOrDefaultAsync(
                 value => value.CampaignRulesetRevisionId == latestRevision.Id
-                    && value.RuleConcept.Key == key
-                    && (value.SourceEntityRevision.SourceEntity.SourcePackage.IsPublic
-                        || (normalizedUserId != null
-                            && value.SourceEntityRevision.SourceEntity.SourcePackage.UserGrants
-                                .Any(grant => grant.UserId == normalizedUserId))),
+                    && value.RuleConcept.Key == key,
                 cancellationToken);
         if (entry is null) return null;
 
-        var sourceRevision = entry.SourceEntityRevision;
+        var sourceRevision = await AccessibleCanonicalSourceResolver.ResolveRevisionAsync(
+            dbContext,
+            entry.RuleConceptId,
+            entry.SourceEntityRevisionId,
+            normalizedUserId,
+            cancellationToken);
+        if (sourceRevision is null) return null;
+
         var sourceEntity = sourceRevision.SourceEntity;
         var package = sourceEntity.SourcePackage;
         var concept = entry.RuleConcept;
