@@ -181,6 +181,10 @@ public sealed class CanonicalSourceIdentityIntegrationTests
             var extracted = await importer.ImportAsync(Request(extractedKey, extractedRepresentation));
             var extractedEntity = Assert.Single(extracted.Entities);
             Assert.Null(await ReadCanonicalBindingAsync(db, extractedEntity.EntityId));
+            var extractedRevisionId = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == extractedEntity.EntityId)
+                .Select(value => value.Id)
+                .SingleAsync();
 
             var occurrenceFingerprints = new[]
             {
@@ -190,6 +194,7 @@ public sealed class CanonicalSourceIdentityIntegrationTests
             };
             var association = await new CanonicalSourceRepresentationService(db).AssociateSourceEntityAsync(
                 extractedEntity.EntityId,
+                extractedRevisionId,
                 new CanonicalPublicationEvidence(
                     "OCR did not recover the canonical title",
                     GameEdition: "5e",
@@ -303,7 +308,11 @@ public sealed class CanonicalSourceIdentityIntegrationTests
                 FROM source_entity_occurrence_binding binding
                 JOIN canonical_source_occurrence occurrence
                     ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
-                WHERE binding.source_entity_id = @entity_id;
+                JOIN source_entity_revision revision
+                    ON revision.source_entity_revision_id = binding.source_entity_revision_id
+                WHERE binding.source_entity_id = @entity_id
+                ORDER BY revision.revision_number DESC
+                LIMIT 1;
                 """;
             AddParameter(command, "@entity_id", sourceEntityId);
             await using var reader = await command.ExecuteReaderAsync();
