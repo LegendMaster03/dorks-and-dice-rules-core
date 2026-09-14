@@ -1,5 +1,3 @@
-using System.Data;
-using System.Data.Common;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
@@ -192,16 +190,27 @@ public static class RuleAutoResolutionService
         }
         var actor = RequireActor(actorUserId);
         await SourceFrameworkStore.EnsureSchemaAsync(dbContext, cancellationToken);
+        await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
 
-        var sourceIds = await dbContext.RuleConceptSourceBindings
+        var boundCanonicalEntityIds = await dbContext.RuleConceptSourceBindings
             .AsNoTracking()
             .Where(value => value.RuleConceptId == ruleConceptId)
-            .Select(value => value.SourceEntityId)
+            .Select(value => value.CanonicalEntityId)
             .Distinct()
             .ToArrayAsync(cancellationToken);
-        if (sourceIds.Length < 2)
+        if (boundCanonicalEntityIds.Length == 0)
         {
-            return NotEligibleEvaluation("At least two bound source implementations are required.");
+            return NotEligibleEvaluation("At least one canonical rule entity must be bound to the concept.");
+        }
+
+        var accessibleSourceIds = await CanonicalRuleBindingStore.GetAccessibleSourceEntityIdsForConceptAsync(
+            dbContext,
+            ruleConceptId,
+            actor,
+            cancellationToken);
+        if (accessibleSourceIds.Count == 0)
+        {
+            return NotEligibleEvaluation("The current account can not inspect any source implementation for the bound canonical rule entities.");
         }
 
         var sources = await dbContext.SourceEntities
@@ -209,12 +218,8 @@ public static class RuleAutoResolutionService
             .Include(value => value.Revisions)
             .Include(value => value.SourcePackage)
                 .ThenInclude(value => value.UserGrants)
-            .Where(value => sourceIds.Contains(value.Id))
+            .Where(value => accessibleSourceIds.Contains(value.Id))
             .ToArrayAsync(cancellationToken);
-        if (sources.Length != sourceIds.Length)
-        {
-            return NotEligibleEvaluation("One or more bound source implementations no longer exist.");
-        }
 
         var ignoredPackageIds = (await new GlobalSourceDispositionService(dbContext)
                 .GetIgnoredPackageIdsAsync(cancellationToken))
@@ -222,37 +227,59 @@ public static class RuleAutoResolutionService
         var activeSources = sources
             .Where(value => !ignoredPackageIds.Contains(value.SourcePackageId))
             .ToArray();
-        if (activeSources.Length < 2)
+        if (activeSources.Length == 0)
         {
-            return NotEligibleEvaluation("At least two non-ignored bound source implementations are required for automatic global resolution.");
+            return NotEligibleEvaluation("No accessible non-ignored source implementations remain for automatic global resolution.");
         }
 
-        if (activeSources.Any(value =>
-            !value.SourcePackage.IsPublic
-            && !value.SourcePackage.UserGrants.Any(grant => grant.UserId == actor)))
-        {
-            return NotEligibleEvaluation("The current account can not inspect every non-ignored bound source implementation.");
-        }
-
-        var contexts = new List<SourceContext>(activeSources.Length);
+        var canonicalBySource = await CanonicalRuleBindingStore.GetCanonicalEntityIdsAsync(
+            dbContext,
+            activeSources.Select(value => value.Id).ToArray(),
+            cancellationToken);
+        var allContexts = new List<SourceContext>(activeSources.Length);
         foreach (var source in activeSources)
         {
+            if (!canonicalBySource.TryGetValue(source.Id, out var canonicalEntityId)
+                || !boundCanonicalEntityIds.Contains(canonicalEntityId))
+            {
+                continue;
+            }
+
             var latest = source.Revisions.OrderByDescending(value => value.RevisionNumber).FirstOrDefault();
             if (latest is null)
             {
-                return NotEligibleEvaluation("Every non-ignored bound source implementation must have an immutable revision.");
+                continue;
             }
 
-            var metadata = await GetCanonicalPublicationMetadataAsync(dbContext, source.Id, cancellationToken);
+            var metadata = await CanonicalPublicationMetadataReader.ReadAsync(dbContext, source.Id, cancellationToken);
             if (metadata is null || string.IsNullOrWhiteSpace(metadata.GameEdition))
             {
-                return NotEligibleEvaluation(
-                    "Every non-ignored bound source implementation must resolve to unambiguous canonical publication edition evidence.");
+                continue;
             }
 
-            contexts.Add(new SourceContext(source, latest, metadata, ComputeSemanticFingerprint(latest.RawJson)));
+            allContexts.Add(new SourceContext(
+                canonicalEntityId,
+                source,
+                latest,
+                metadata,
+                ComputeSemanticFingerprint(latest.RawJson)));
         }
 
+        foreach (var canonicalEntityId in boundCanonicalEntityIds)
+        {
+            if (!allContexts.Any(value => value.CanonicalEntityId == canonicalEntityId))
+            {
+                return NotEligibleEvaluation(
+                    "The current account can not inspect an active representation for every canonical entity bound to this rule concept.");
+            }
+        }
+
+        var contexts = allContexts
+            .GroupBy(value => new { value.CanonicalEntityId, value.Metadata.GameEdition })
+            .Select(group => SelectRepresentativeContext(group))
+            .OrderBy(value => value.Metadata.GameEdition, StringComparer.Ordinal)
+            .ThenBy(value => value.CanonicalEntityId)
+            .ToArray();
         if (contexts.Select(value => value.Metadata.GameEdition).Distinct(StringComparer.Ordinal).Count() < 2)
         {
             return NotEligibleEvaluation("Auto-resolution only applies to comparisons spanning multiple editions.");
@@ -335,67 +362,15 @@ public static class RuleAutoResolutionService
             AdditiveMode);
     }
 
-    private static async Task<CanonicalPublicationMetadata?> GetCanonicalPublicationMetadataAsync(
-        RulesCoreDbContext dbContext,
-        Guid sourceEntityId,
-        CancellationToken cancellationToken)
-    {
-        var connection = dbContext.Database.GetDbConnection();
-        var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere) await connection.OpenAsync(cancellationToken);
-        try
-        {
-            await using var command = connection.CreateCommand();
-            command.CommandText = """
-                SELECT DISTINCT publication.game_edition, publication.publication_date
-                FROM source_entity_occurrence_binding binding
-                JOIN canonical_source_occurrence occurrence
-                    ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
-                JOIN canonical_publication publication
-                    ON publication.canonical_publication_id = occurrence.canonical_publication_id
-                WHERE binding.source_entity_id = @source_entity_id
-                    AND publication.game_edition IS NOT NULL;
-                """;
-            AddParameter(command, "@source_entity_id", sourceEntityId);
-            var values = new List<CanonicalPublicationMetadata>();
-            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            while (await reader.ReadAsync(cancellationToken))
-            {
-                values.Add(new CanonicalPublicationMetadata(
-                    reader.GetString(0),
-                    reader.IsDBNull(1) ? null : reader.GetFieldValue<DateOnly>(1)));
-            }
-            var editions = values.Select(value => value.GameEdition).Distinct(StringComparer.Ordinal).ToArray();
-            if (editions.Length != 1) return null;
-            return values
-                .OrderByDescending(value => value.PublicationDate ?? DateOnly.MinValue)
-                .First();
-        }
-        catch (DbException)
-        {
-            return null;
-        }
-        finally
-        {
-            if (openedHere) await connection.CloseAsync();
-        }
-    }
-
     private static SourceContext SelectRepresentativeContext(IEnumerable<SourceContext> contexts) =>
         contexts
             .OrderByDescending(value => value.Metadata.PublicationDate ?? DateOnly.MinValue)
             .ThenByDescending(value => value.Metadata.GameEdition, StringComparer.Ordinal)
+            .ThenByDescending(value => value.Revision.RevisionNumber)
+            .ThenByDescending(value => value.Revision.ImportedAt)
             .ThenBy(value => value.Source.SourceCode, StringComparer.Ordinal)
             .ThenBy(value => value.Source.Id)
             .First();
-
-    private static void AddParameter(DbCommand command, string name, object value)
-    {
-        var parameter = command.CreateParameter();
-        parameter.ParameterName = name;
-        parameter.Value = value;
-        command.Parameters.Add(parameter);
-    }
 
     private static string RequireActor(string value)
     {
@@ -418,9 +393,8 @@ public static class RuleAutoResolutionService
         string? PatchFingerprint,
         string? Mode);
 
-    private sealed record CanonicalPublicationMetadata(string GameEdition, DateOnly? PublicationDate);
-
     private sealed record SourceContext(
+        Guid CanonicalEntityId,
         SourceEntity Source,
         SourceEntityRevision Revision,
         CanonicalPublicationMetadata Metadata,
