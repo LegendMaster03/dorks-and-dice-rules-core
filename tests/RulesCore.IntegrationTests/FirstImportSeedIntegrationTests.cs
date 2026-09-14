@@ -57,6 +57,19 @@ public sealed class FirstImportSeedIntegrationTests
             var sourceUri = $"https://raw.githubusercontent.com/5etools-mirror-3/5etools-src/main/data/spells/seed-{token}.json";
             var json = JsonSerializer.Serialize(new
             {
+                _meta = new
+                {
+                    edition = "classic",
+                    sources = new[]
+                    {
+                        new
+                        {
+                            json = sourceCode,
+                            full = $"Seed Publication {token}",
+                            dateReleased = "2014-08-19"
+                        }
+                    }
+                },
                 spell = new[]
                 {
                     new
