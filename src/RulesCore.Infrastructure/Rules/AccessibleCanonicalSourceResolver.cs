@@ -38,29 +38,16 @@ internal static class AccessibleCanonicalSourceResolver
             return snapshot;
         }
 
-        var snapshotCanonicalEntityId = await CanonicalRuleBindingStore.GetCanonicalEntityIdAsync(
+        var snapshotCanonicalEntityId = await CanonicalRuleBindingStore.GetCanonicalEntityIdForRevisionAsync(
             dbContext,
-            snapshot.SourceEntityId,
+            snapshot.Id,
             cancellationToken);
-        var accessibleSourceIds = await CanonicalRuleBindingStore.GetAccessibleSourceEntityIdsForConceptAsync(
+        var candidateRevisionIds = await CanonicalRuleBindingStore.GetAccessibleRevisionIdsForCanonicalEntityAsync(
             dbContext,
-            ruleConceptId,
+            snapshotCanonicalEntityId,
             normalizedUserId,
             cancellationToken);
-        if (accessibleSourceIds.Count == 0)
-        {
-            return null;
-        }
-
-        var canonicalBySource = await CanonicalRuleBindingStore.GetCanonicalEntityIdsAsync(
-            dbContext,
-            accessibleSourceIds,
-            cancellationToken);
-        var equivalentSourceIds = canonicalBySource
-            .Where(value => value.Value == snapshotCanonicalEntityId)
-            .Select(value => value.Key)
-            .ToArray();
-        if (equivalentSourceIds.Length == 0)
+        if (candidateRevisionIds.Count == 0)
         {
             return null;
         }
@@ -71,9 +58,9 @@ internal static class AccessibleCanonicalSourceResolver
             .Include(value => value.SourceEntity)
                 .ThenInclude(value => value.SourcePackage)
                 .ThenInclude(value => value.UserGrants)
-            .Where(value => equivalentSourceIds.Contains(value.SourceEntityId))
-            .OrderByDescending(value => value.RevisionNumber)
-            .ThenByDescending(value => value.ImportedAt)
+            .Where(value => candidateRevisionIds.Contains(value.Id))
+            .OrderByDescending(value => value.ImportedAt)
+            .ThenByDescending(value => value.RevisionNumber)
             .ToArrayAsync(cancellationToken);
 
         return candidates.FirstOrDefault(value =>
