@@ -108,7 +108,7 @@ public sealed class SourceNormalizationIntegrationTests
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 var accepted = (await response.Content.ReadFromJsonAsync<AcceptedSourceNormalizationView>())!;
                 Assert.False(accepted.CreatedConcept);
-                Assert.True(accepted.CreatedBinding);
+                Assert.False(accepted.CreatedBinding);
                 Assert.Equal(firstAccepted.Concept.Id, accepted.Concept.Id);
             }
 
@@ -124,7 +124,7 @@ public sealed class SourceNormalizationIntegrationTests
 
             await using var verificationScope = factory.Services.CreateAsyncScope();
             var db = verificationScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
-            Assert.Equal(2, await db.RuleConceptSourceBindings.CountAsync(
+            Assert.Equal(1, await db.RuleConceptSourceBindings.CountAsync(
                 value => value.RuleConceptId == firstAccepted.Concept.Id));
             Assert.True(await db.SourceEntities.AnyAsync(value =>
                 value.Id == public2014EntityId && value.SourcePackageId != Guid.Empty));

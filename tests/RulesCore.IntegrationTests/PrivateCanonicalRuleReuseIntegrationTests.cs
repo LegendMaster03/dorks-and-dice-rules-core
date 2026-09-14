@@ -132,14 +132,10 @@ public sealed class PrivateCanonicalRuleReuseIntegrationTests
                     .ExecuteDeleteAsync();
             }
 
-            var packages = await db.SourcePackages
+            db.ChangeTracker.Clear();
+            await db.SourcePackages
                 .Where(value => value.Key == packageAKey || value.Key == packageBKey)
-                .ToArrayAsync();
-            if (packages.Length > 0)
-            {
-                db.SourcePackages.RemoveRange(packages);
-                await db.SaveChangesAsync();
-            }
+                .ExecuteDeleteAsync();
         }
     }
 

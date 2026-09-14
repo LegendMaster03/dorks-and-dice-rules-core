@@ -85,6 +85,7 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                     .Select(value => value.Id)
                     .SingleAsync();
 
+                await grants.GrantAsync("rules-lawyer", privatePackageId);
                 await grants.GrantAsync("granted-reader", privatePackageId);
                 await grants.GrantAsync("player-granted", privatePackageId);
 

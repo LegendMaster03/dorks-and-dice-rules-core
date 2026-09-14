@@ -312,6 +312,25 @@ public sealed class GlobalRulesLayerIntegrationTests
                        new SetGlobalRuleDecisionRequest(sourceRevisionId, "Select restricted implementation metadata.")))
             using (var decisionResponse = await client.SendAsync(decisionRequest))
             {
+                Assert.Equal(HttpStatusCode.Conflict, decisionResponse.StatusCode);
+            }
+
+            await using (var scope = factory.Services.CreateAsyncScope())
+            {
+                var grants = scope.ServiceProvider.GetRequiredService<ISourceGrantService>();
+                await grants.GrantAsync("rules-lawyer", packageId);
+                await grants.GrantAsync("granted-reader", packageId);
+                Assert.True(await grants.HasGrantAsync("rules-lawyer", packageId));
+                Assert.True(await grants.HasGrantAsync("granted-reader", packageId));
+            }
+
+            using (var decisionRequest = HostedJsonRequest(
+                       HttpMethod.Put,
+                       $"/api/global/rules/concepts/{concept.Id}/decision",
+                       "lawyer-ticket",
+                       new SetGlobalRuleDecisionRequest(sourceRevisionId, "Select restricted implementation metadata.")))
+            using (var decisionResponse = await client.SendAsync(decisionRequest))
+            {
                 Assert.Equal(HttpStatusCode.OK, decisionResponse.StatusCode);
             }
 
@@ -324,19 +343,12 @@ public sealed class GlobalRulesLayerIntegrationTests
             using (var lawyerRead = HostedRequest(HttpMethod.Get, $"/api/rules/{conceptKey}", "lawyer-ticket"))
             using (var lawyerReadResponse = await client.SendAsync(lawyerRead))
             {
-                Assert.Equal(HttpStatusCode.NotFound, lawyerReadResponse.StatusCode);
+                Assert.Equal(HttpStatusCode.OK, lawyerReadResponse.StatusCode);
             }
 
             using (var anonymousReadResponse = await client.GetAsync($"/api/rules/{conceptKey}"))
             {
                 Assert.Equal(HttpStatusCode.NotFound, anonymousReadResponse.StatusCode);
-            }
-
-            await using (var scope = factory.Services.CreateAsyncScope())
-            {
-                var grants = scope.ServiceProvider.GetRequiredService<ISourceGrantService>();
-                await grants.GrantAsync("granted-reader", packageId);
-                Assert.True(await grants.HasGrantAsync("granted-reader", packageId));
             }
 
             using (var readerRead = HostedRequest(HttpMethod.Get, $"/api/rules/{conceptKey}", "reader-ticket"))

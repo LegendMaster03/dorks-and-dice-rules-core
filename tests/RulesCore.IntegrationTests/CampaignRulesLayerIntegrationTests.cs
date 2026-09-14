@@ -430,6 +430,7 @@ public sealed class CampaignRulesLayerIntegrationTests
                     conceptId,
                     new BindRuleConceptSourceRequest(sourceEntityId),
                     "rules-lawyer");
+                await grants.GrantAsync("rules-lawyer", packageId);
                 await globalRules.SetDecisionAsync(
                     conceptId,
                     new SetGlobalRuleDecisionRequest(sourceRevisionId, "Restricted global source."),
