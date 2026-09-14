@@ -200,7 +200,7 @@ public sealed class SourceNormalizationIntegrationTests
             .Select(value => value.Id)
             .ToArrayAsync();
         var conceptIds = await db.RuleConceptSourceBindings
-            .Where(value => sourceEntityIds.Contains(value.SourceEntityId))
+            .Where(value => value.SourceEntityId.HasValue && sourceEntityIds.Contains(value.SourceEntityId.Value))
             .Select(value => value.RuleConceptId)
             .Distinct()
             .ToArrayAsync();
@@ -208,7 +208,7 @@ public sealed class SourceNormalizationIntegrationTests
         if (sourceEntityIds.Length > 0)
         {
             await db.RuleConceptSourceBindings
-                .Where(value => sourceEntityIds.Contains(value.SourceEntityId))
+                .Where(value => value.SourceEntityId.HasValue && sourceEntityIds.Contains(value.SourceEntityId.Value))
                 .ExecuteDeleteAsync();
         }
         if (conceptIds.Length > 0)
