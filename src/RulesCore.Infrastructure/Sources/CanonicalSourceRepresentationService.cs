@@ -41,17 +41,49 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
         var publication = await new CanonicalPublicationIdentityService(dbContext)
             .ResolveAsync(scopedPublicationEvidence, cancellationToken);
 
+        var canonicalEntities = new CanonicalEntityStore(dbContext);
+        await canonicalEntities.EnsureSchemaAsync(cancellationToken);
         var semanticOccurrence = await FindUniqueSemanticOccurrenceAsync(
             publication.Id,
             occurrenceEvidence,
             cancellationToken);
 
-        var occurrenceId = semanticOccurrence
-            ?? await ResolveOccurrenceAsync(publication.Id, occurrenceEvidence, cancellationToken);
-        var occurrenceMatchKind = semanticOccurrence.HasValue
-            ? "semantic-fingerprint"
-            : "identity-key";
-        var confidence = semanticOccurrence.HasValue ? 0.99 : 1.0;
+        Guid occurrenceId;
+        string occurrenceMatchKind;
+        double confidence;
+        if (semanticOccurrence is not null)
+        {
+            occurrenceId = semanticOccurrence.OccurrenceId;
+            if (!semanticOccurrence.CanonicalEntityId.HasValue)
+            {
+                var legacyEntity = await canonicalEntities.ResolveAsync(
+                    occurrenceEvidence with
+                    {
+                        EntityType = semanticOccurrence.EntityType,
+                        Name = semanticOccurrence.DisplayName
+                    },
+                    cancellationToken);
+                await SetOccurrenceCanonicalEntityAsync(
+                    occurrenceId,
+                    legacyEntity.Id,
+                    cancellationToken);
+            }
+            occurrenceMatchKind = "semantic-fingerprint";
+            confidence = 0.99;
+        }
+        else
+        {
+            var canonicalEntity = await canonicalEntities.ResolveAsync(
+                occurrenceEvidence,
+                cancellationToken);
+            occurrenceId = await ResolveOccurrenceAsync(
+                publication.Id,
+                canonicalEntity.Id,
+                occurrenceEvidence,
+                cancellationToken);
+            occurrenceMatchKind = "identity-key";
+            confidence = 1.0;
+        }
 
         await BindAsync(
             sourceEntityId,
@@ -71,10 +103,12 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
 
     private async Task<Guid> ResolveOccurrenceAsync(
         Guid publicationId,
+        Guid canonicalEntityId,
         CanonicalSourceOccurrenceEvidence evidence,
         CancellationToken cancellationToken)
     {
-        var occurrenceKey = CanonicalSourceIdentity.OccurrenceKey(evidence.EntityType, evidence.Name);
+        var locator = NormalizeOptional(evidence.LocatorKey);
+        var occurrenceKey = BuildOccurrenceKey(canonicalEntityId, locator);
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
         if (openedHere)
@@ -108,15 +142,18 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
                     INSERT INTO canonical_source_occurrence (
                         canonical_source_occurrence_id,
                         canonical_publication_id,
+                        canonical_entity_id,
                         occurrence_key,
                         entity_type,
                         display_name,
                         created_at)
-                    VALUES (@id, @publication_id, @occurrence_key, @entity_type, @display_name, @created_at)
+                    VALUES (@id, @publication_id, @canonical_entity_id, @occurrence_key,
+                            @entity_type, @display_name, @created_at)
                     ON CONFLICT (canonical_publication_id, occurrence_key) DO NOTHING;
                     """;
                 AddParameter(insert, "@id", id);
                 AddParameter(insert, "@publication_id", publicationId);
+                AddParameter(insert, "@canonical_entity_id", canonicalEntityId);
                 AddParameter(insert, "@occurrence_key", occurrenceKey);
                 AddParameter(insert, "@entity_type", evidence.EntityType.Trim());
                 AddParameter(insert, "@display_name", evidence.Name.Trim());
@@ -145,7 +182,7 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
         }
     }
 
-    private async Task<Guid?> FindUniqueSemanticOccurrenceAsync(
+    private async Task<SemanticOccurrenceMatch?> FindUniqueSemanticOccurrenceAsync(
         Guid publicationId,
         CanonicalSourceOccurrenceEvidence evidence,
         CancellationToken cancellationToken)
@@ -168,7 +205,11 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             await using var command = connection.CreateCommand();
             command.CommandText = locatorKey is null
                 ? """
-                    SELECT DISTINCT occurrence.canonical_source_occurrence_id
+                    SELECT DISTINCT
+                        occurrence.canonical_source_occurrence_id,
+                        occurrence.canonical_entity_id,
+                        occurrence.entity_type,
+                        occurrence.display_name
                     FROM canonical_source_occurrence occurrence
                     JOIN source_entity_occurrence_binding binding
                         ON binding.canonical_source_occurrence_id = occurrence.canonical_source_occurrence_id
@@ -179,7 +220,11 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
                     LIMIT 2;
                     """
                 : """
-                    SELECT DISTINCT occurrence.canonical_source_occurrence_id
+                    SELECT DISTINCT
+                        occurrence.canonical_source_occurrence_id,
+                        occurrence.canonical_entity_id,
+                        occurrence.entity_type,
+                        occurrence.display_name
                     FROM canonical_source_occurrence occurrence
                     JOIN source_entity_occurrence_binding binding
                         ON binding.canonical_source_occurrence_id = occurrence.canonical_source_occurrence_id
@@ -198,13 +243,51 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
                 AddParameter(command, "@locator_key", locatorKey);
             }
 
-            var matches = new List<Guid>(2);
+            var matches = new List<SemanticOccurrenceMatch>(2);
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {
-                matches.Add(reader.GetGuid(0));
+                matches.Add(new SemanticOccurrenceMatch(
+                    reader.GetGuid(0),
+                    reader.IsDBNull(1) ? null : reader.GetGuid(1),
+                    reader.GetString(2),
+                    reader.GetString(3)));
             }
             return matches.Count == 1 ? matches[0] : null;
+        }
+        finally
+        {
+            if (openedHere)
+            {
+                await connection.CloseAsync();
+            }
+        }
+    }
+
+    private async Task SetOccurrenceCanonicalEntityAsync(
+        Guid occurrenceId,
+        Guid canonicalEntityId,
+        CancellationToken cancellationToken)
+    {
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere)
+        {
+            await connection.OpenAsync(cancellationToken);
+        }
+
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                UPDATE canonical_source_occurrence
+                SET canonical_entity_id = @canonical_entity_id
+                WHERE canonical_source_occurrence_id = @occurrence_id
+                    AND canonical_entity_id IS NULL;
+                """;
+            AddParameter(command, "@canonical_entity_id", canonicalEntityId);
+            AddParameter(command, "@occurrence_id", occurrenceId);
+            await command.ExecuteNonQueryAsync(cancellationToken);
         }
         finally
         {
@@ -285,6 +368,14 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
         }
     }
 
+    private static string BuildOccurrenceKey(Guid canonicalEntityId, string? locatorKey)
+    {
+        var locator = string.IsNullOrWhiteSpace(locatorKey)
+            ? "primary"
+            : CanonicalSourceIdentity.Fingerprint(locatorKey.Trim().ToLowerInvariant())[..20];
+        return $"entity:{canonicalEntityId:N}:locator:{locator}";
+    }
+
     private static string NormalizeRepresentationKind(string value)
     {
         var normalized = CanonicalSourceIdentity.NormalizeIdentityPart(value);
@@ -313,4 +404,10 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
         parameter.Value = value ?? DBNull.Value;
         command.Parameters.Add(parameter);
     }
+
+    private sealed record SemanticOccurrenceMatch(
+        Guid OccurrenceId,
+        Guid? CanonicalEntityId,
+        string EntityType,
+        string DisplayName);
 }
