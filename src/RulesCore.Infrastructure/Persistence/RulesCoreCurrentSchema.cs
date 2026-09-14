@@ -65,6 +65,8 @@ internal static class RulesCoreCurrentSchema
         DELETE FROM source_entity_occurrence_binding
         WHERE source_entity_revision_id IS NULL;
         DROP INDEX IF EXISTS ux_source_entity_occurrence_binding_entity;
+        CREATE INDEX IF NOT EXISTS ux_source_entity_occurrence_binding_entity
+            ON source_entity_occurrence_binding(source_entity_id);
         CREATE INDEX IF NOT EXISTS ix_source_entity_occurrence_binding_entity
             ON source_entity_occurrence_binding(source_entity_id);
         DO $$
