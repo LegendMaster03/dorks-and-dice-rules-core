@@ -98,6 +98,8 @@ That projection does not alter the stored native JSON.
 
 The 5e.tools detector uses known entity-array/schema families rather than accepting arbitrary JSON arrays. Generic JSON documents are not automatically treated as 5e.tools.
 
+The normal Web-source workflow recognizes `5etools-mirror-3/5etools-src` as a trusted 5e.tools lineage. Its first successful import seeds reusable canonical identity aliases from the resolved source-native key and mechanical fingerprint. The trust applies to identity metadata only; it does not make an importing user's package or source body public.
+
 ## PCGen
 
 PCGen is the first persistent 3.x structured source translator.
@@ -134,7 +136,7 @@ PCGen syntax alone is not a strong canonical identity signal. A local upload or 
 
 Only an artifact whose actual source URI proves it came from the official `PCGen/pcgen` or `PCGen/pcgen-newsources` GitHub repositories may present trusted PCGen lineage aliases to canonical reconciliation.
 
-Even then, the alias is useful only after the bootstrap/reconciliation process has confirmed what canonical entity that source-specific identity represents. Rules Core does not globally merge entities merely because their names match.
+On the first successful import from a registered trusted PCGen lineage, Rules Core persists the resolved canonical identity as shared recognition metadata keyed by lineage scheme, source-native key, and translated mechanical fingerprint. Later independent imports can reuse that identity through a strong alias without gaining access to the first user's representation.
 
 Trusted alias eligibility requires translated `ContentJson`, not the deprecated generic `SemanticJson` projection. Strong canonical entity aliases are versioned by source-lineage scheme, native alias value, and the translated mechanical fingerprint. This allows the same upstream native key to identify a later mechanical revision without incorrectly collapsing the revision back into the earlier canonical entity.
 
@@ -189,8 +191,16 @@ GitHub tree version checks use commit identity. Other HTTP sources use available
 
 The refresh worker is an ASP.NET hosted service and queued import processor; there is no detached fire-and-forget import path.
 
-## 3.x bootstrap boundary
+## First-import seeding boundary
 
-The eventual 3e/3.5e bootstrap is a developer seeding workflow built on the same persistent adapters, translator, and canonical resolver used by normal imports. It is not a separate global source-content database and does not require Rules Core to maintain a mirror of PCGen.
+There is no separate developer seeding workflow for normal 3e, 3.5e, 5e, or 5.5e source ingestion. **Add Source** is the seeding interface.
 
-The same principle applies to 5e/5.5e source seeding: the special import capability establishes source access and recognition while ordinary persistence remains package-scoped. CI relies on deterministic local fixtures rather than live upstream repositories.
+When the first import from a registered trusted source lineage successfully resolves a source entity, Rules Core stores a canonical alias keyed by the trusted lineage, the source-native key, and the translated mechanical fingerprint. That shared alias is identity/reconciliation metadata only. The imported `SourcePackage`, physical representation, native bytes, and account grant remain package-scoped exactly as they are for any later import.
+
+A later independent import of the same trusted source projection can therefore reuse the seeded canonical identity without repeating the initial identity establishment. If the same native key later carries mechanically different content, the changed fingerprint prevents it from being silently collapsed into the earlier canonical entity.
+
+Local uploads and unregistered repositories do not seed trusted-lineage aliases merely because they use PCGen or 5e.tools syntax. Manual bootstrap reconciliation remains available for relationships or identity decisions that require independent review rather than automatic exact source-lineage seeding.
+
+The built-in SRD snapshots are a separate public baseline concern: startup may hydrate those reviewed bundled representations without changing the first-import behavior for user-added trusted source lineages.
+
+CI uses deterministic local fixtures rather than live upstream repositories.
