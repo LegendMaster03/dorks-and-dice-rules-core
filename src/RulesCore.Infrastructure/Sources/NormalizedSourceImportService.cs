@@ -1,5 +1,4 @@
 using System.Data;
-using System.Data.Common;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -19,20 +18,18 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
     {
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(request.Representation);
+        var packageKey = NormalizeKey(request.PackageKey);
+        var packageDisplayName = Require(request.PackageDisplayName, nameof(request.PackageDisplayName), 300);
+        var provider = Require(request.Provider, nameof(request.Provider), 200);
+        var license = NormalizeOptional(request.License, 300);
+        var formatKey = Require(request.Representation.FormatKey, nameof(request.Representation.FormatKey), 80);
         if (request.Representation.Records.Count == 0)
         {
-            throw new InvalidDataException("The source did not contain any compatible source records.");
+            throw new InvalidDataException("The normalized source representation did not contain any source records.");
         }
 
-        await EnsureSupplementalSchemaAsync(cancellationToken);
-
-        var packageKey = NormalizeKey(request.PackageKey, 200);
-        var now = DateTimeOffset.UtcNow;
-        var allImportedEntities = new List<ImportedSourceEntity>();
-        var persisted = new List<(SourceEntity Entity, SourceEntityRevision Revision, NormalizedSourceRecord Record)>();
-        var importedPublications = new List<ImportedNormalizedPublication>();
-
-        await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
+        await new RulesCoreSchemaInitializer(dbContext).InitializeAsync(cancellationToken);
+        await using var transaction = await dbContext.Database.BeginTransactionAsync(IsolationLevel.Serializable, cancellationToken);
 
         var package = await dbContext.SourcePackages
             .SingleOrDefaultAsync(value => value.Key == packageKey, cancellationToken);
@@ -42,58 +39,58 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
             {
                 Id = Guid.NewGuid(),
                 Key = packageKey,
-                DisplayName = Require(request.PackageDisplayName, nameof(request.PackageDisplayName), 300),
-                Provider = Require(request.Provider, nameof(request.Provider), 200),
-                License = NormalizeOptional(request.License, 300),
+                DisplayName = packageDisplayName,
+                Provider = provider,
+                License = license,
                 IsPublic = request.IsPublic,
-                CreatedAt = now
+                CreatedAt = DateTimeOffset.UtcNow
             };
             dbContext.SourcePackages.Add(package);
             await dbContext.SaveChangesAsync(cancellationToken);
         }
         else
         {
-            EnsurePackageMatches(package, request);
+            EnsurePackageMatches(package, packageDisplayName, provider, license, request.IsPublic);
         }
 
         var representation = await StoreRepresentationAsync(
             package.Id,
             request.Representation,
+            formatKey,
             cancellationToken);
+
+        var allImportedEntities = new List<ImportedSourceEntity>();
+        var importedPublications = new List<ImportedNormalizedPublication>();
+        var persisted = new List<(SourceEntity Entity, SourceEntityRevision Revision, NormalizedSourceRecord Record)>();
 
         foreach (var record in request.Representation.Records)
         {
             var normalized = NormalizeRecord(record);
             var entity = await dbContext.SourceEntities.SingleOrDefaultAsync(
                 value => value.SourcePackageId == package.Id
-                    && value.FormatKey == request.Representation.FormatKey
+                    && value.FormatKey == formatKey
                     && value.NativeKey == normalized.NativeKey,
                 cancellationToken);
-
             if (entity is null)
             {
                 entity = new SourceEntity
                 {
                     Id = Guid.NewGuid(),
                     SourcePackageId = package.Id,
-                    FormatKey = Require(request.Representation.FormatKey, nameof(request.Representation.FormatKey), 80),
+                    FormatKey = formatKey,
                     EntityType = normalized.EntityType,
                     Name = normalized.Name,
                     SourceCode = normalized.SourceCode,
                     NativeKey = normalized.NativeKey,
-                    NativeIdentityJson = normalized.NativeIdentityJson ?? "{}",
-                    CreatedAt = now
+                    NativeIdentityJson = normalized.NativeIdentityJson,
+                    CreatedAt = DateTimeOffset.UtcNow
                 };
                 dbContext.SourceEntities.Add(entity);
                 await dbContext.SaveChangesAsync(cancellationToken);
             }
-            else if (!string.Equals(entity.EntityType, normalized.EntityType, StringComparison.Ordinal)
-                     || !string.Equals(entity.Name, normalized.Name, StringComparison.Ordinal)
-                     || !string.Equals(entity.SourceCode, normalized.SourceCode, StringComparison.Ordinal)
-                     || !JsonEquivalent(entity.NativeIdentityJson, normalized.NativeIdentityJson ?? "{}"))
+            else
             {
-                throw new InvalidOperationException(
-                    $"Native source record '{normalized.NativeKey}' conflicts with an existing immutable source identity.");
+                EnsureEntityIdentityMatches(entity, normalized);
             }
 
             var fingerprint = CanonicalJsonFingerprint(normalized.RawJson);
@@ -171,6 +168,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
                 var association = await new CanonicalSourceRepresentationService(dbContext)
                     .AssociateSourceEntityAsync(
                         value.Entity.Id,
+                        value.Revision.Id,
                         evidence,
                         new CanonicalSourceOccurrenceEvidence(
                             value.Record.EntityType,
@@ -228,17 +226,27 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
 
     private async Task<SourceRepresentation> StoreRepresentationAsync(
         Guid packageId,
-        NormalizedSourceRepresentation representation,
+        NormalizedSourceRepresentation normalized,
+        string formatKey,
         CancellationToken cancellationToken)
     {
-        var artifact = representation.Artifact;
-        var hash = Convert.ToHexString(SHA256.HashData(artifact.Content)).ToLowerInvariant();
+        var artifact = normalized.Artifact ?? throw new ArgumentException(
+            "Normalized source representation artifact can not be null.", nameof(normalized));
+        var fileName = Require(artifact.FileName, nameof(artifact.FileName), 500);
         var originIdentity = Require(artifact.OriginIdentity, nameof(artifact.OriginIdentity), 2000);
-        var existing = await dbContext.SourceRepresentations.SingleOrDefaultAsync(
-            value => value.SourcePackageId == packageId
-                && value.OriginIdentity == originIdentity
-                && value.ContentSha256 == hash,
-            cancellationToken);
+        ArgumentNullException.ThrowIfNull(artifact.Content);
+        if (artifact.Content.Length == 0)
+        {
+            throw new InvalidDataException("Source representation content can not be empty.");
+        }
+
+        var contentHash = Convert.ToHexString(SHA256.HashData(artifact.Content)).ToLowerInvariant();
+        var existing = await dbContext.SourceRepresentations
+            .SingleOrDefaultAsync(
+                value => value.SourcePackageId == packageId
+                    && value.OriginIdentity == originIdentity
+                    && value.ContentSha256 == contentHash,
+                cancellationToken);
         if (existing is not null)
         {
             return existing;
@@ -247,119 +255,78 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
         var previous = await dbContext.SourceRepresentations
             .Where(value => value.SourcePackageId == packageId && value.OriginIdentity == originIdentity)
             .OrderByDescending(value => value.ImportedAt)
+            .ThenByDescending(value => value.Id)
             .FirstOrDefaultAsync(cancellationToken);
-
-        var stored = new SourceRepresentation
+        var metadataJson = NormalizeMetadataJson(normalized.MetadataJson);
+        var representation = new SourceRepresentation
         {
             Id = Guid.NewGuid(),
             SourcePackageId = packageId,
             PreviousSourceRepresentationId = previous?.Id,
-            FormatKey = Require(representation.FormatKey, nameof(representation.FormatKey), 80),
+            FormatKey = formatKey,
             OriginIdentity = originIdentity,
-            FileName = Require(artifact.FileName, nameof(artifact.FileName), 500),
+            FileName = fileName,
             SourceUri = NormalizeOptional(artifact.SourceUri, 2000),
             MediaType = NormalizeOptional(artifact.MediaType, 200),
-            ContentSha256 = hash,
+            ContentSha256 = contentHash,
             ContentLength = artifact.Content.LongLength,
-            ContentBytes = artifact.Content,
-            MetadataJson = NormalizeJson(representation.MetadataJson ?? "{}", nameof(representation.MetadataJson)),
+            ContentBytes = artifact.Content.ToArray(),
+            MetadataJson = metadataJson,
             ImportedAt = DateTimeOffset.UtcNow
         };
-        dbContext.SourceRepresentations.Add(stored);
+        dbContext.SourceRepresentations.Add(representation);
         await dbContext.SaveChangesAsync(cancellationToken);
-        return stored;
+        return representation;
     }
 
     private async Task LinkRepresentationEntityAsync(
-        Guid representationId,
-        Guid entityId,
-        Guid revisionId,
+        Guid sourceRepresentationId,
+        Guid sourceEntityId,
+        Guid sourceEntityRevisionId,
         string? locatorKey,
         CancellationToken cancellationToken)
     {
-        var connection = dbContext.Database.GetDbConnection();
-        var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync(cancellationToken);
-        }
-        try
-        {
-            await using var command = connection.CreateCommand();
-            command.CommandText = """
-                INSERT INTO source_representation_entity (
-                    source_representation_entity_id,
-                    source_representation_id,
-                    source_entity_id,
-                    source_entity_revision_id,
-                    locator_key,
-                    created_at)
-                VALUES (@id, @representation_id, @entity_id, @revision_id, @locator_key, @created_at)
-                ON CONFLICT (source_representation_id, source_entity_id) DO UPDATE SET
-                    source_entity_revision_id = EXCLUDED.source_entity_revision_id,
-                    locator_key = EXCLUDED.locator_key;
-                """;
-            AddParameter(command, "@id", Guid.NewGuid());
-            AddParameter(command, "@representation_id", representationId);
-            AddParameter(command, "@entity_id", entityId);
-            AddParameter(command, "@revision_id", revisionId);
-            AddNullableParameter(command, "@locator_key", NormalizeOptional(locatorKey, 500));
-            AddParameter(command, "@created_at", DateTimeOffset.UtcNow);
-            await command.ExecuteNonQueryAsync(cancellationToken);
-        }
-        finally
-        {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
-        }
+        await dbContext.Database.ExecuteSqlInterpolatedAsync($$"""
+            INSERT INTO source_representation_entity (
+                source_representation_entity_id,
+                source_representation_id,
+                source_entity_id,
+                source_entity_revision_id,
+                locator_key,
+                created_at)
+            VALUES (
+                {{Guid.NewGuid()}},
+                {{sourceRepresentationId}},
+                {{sourceEntityId}},
+                {{sourceEntityRevisionId}},
+                {{locatorKey}},
+                {{DateTimeOffset.UtcNow}})
+            ON CONFLICT (source_representation_id, source_entity_id) DO NOTHING;
+            """, cancellationToken);
     }
 
     private async Task LinkRepresentationPublicationAsync(
-        Guid representationId,
+        Guid sourceRepresentationId,
         Guid canonicalPublicationId,
         string localKey,
         CancellationToken cancellationToken)
     {
-        var connection = dbContext.Database.GetDbConnection();
-        var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync(cancellationToken);
-        }
-        try
-        {
-            await using var command = connection.CreateCommand();
-            command.CommandText = """
-                INSERT INTO source_representation_publication (
-                    source_representation_publication_id,
-                    source_representation_id,
-                    canonical_publication_id,
-                    local_key,
-                    created_at)
-                VALUES (@id, @representation_id, @publication_id, @local_key, @created_at)
-                ON CONFLICT (source_representation_id, local_key) DO UPDATE SET
-                    canonical_publication_id = EXCLUDED.canonical_publication_id;
-                """;
-            AddParameter(command, "@id", Guid.NewGuid());
-            AddParameter(command, "@representation_id", representationId);
-            AddParameter(command, "@publication_id", canonicalPublicationId);
-            AddParameter(command, "@local_key", Require(localKey, nameof(localKey), 500));
-            AddParameter(command, "@created_at", DateTimeOffset.UtcNow);
-            await command.ExecuteNonQueryAsync(cancellationToken);
-        }
-        finally
-        {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
-        }
+        await dbContext.Database.ExecuteSqlInterpolatedAsync($$"""
+            INSERT INTO source_representation_publication (
+                source_representation_publication_id,
+                source_representation_id,
+                canonical_publication_id,
+                local_key,
+                created_at)
+            VALUES (
+                {{Guid.NewGuid()}},
+                {{sourceRepresentationId}},
+                {{canonicalPublicationId}},
+                {{localKey}},
+                {{DateTimeOffset.UtcNow}})
+            ON CONFLICT (source_representation_id, local_key) DO NOTHING;
+            """, cancellationToken);
     }
-
-    private Task EnsureSupplementalSchemaAsync(CancellationToken cancellationToken) =>
-        dbContext.Database.ExecuteSqlRawAsync(SupplementalSchemaSql, cancellationToken);
 
     private static NormalizedSourceRecord NormalizeRecord(NormalizedSourceRecord record)
     {
@@ -367,8 +334,10 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
         var name = Require(record.Name, nameof(record.Name), 300);
         var sourceCode = NormalizeOptional(record.SourceCode, 120);
         var nativeKey = Require(record.NativeKey, nameof(record.NativeKey), 1000);
-        var rawJson = NormalizeJson(record.RawJson, nameof(record.RawJson));
-        var nativeIdentityJson = NormalizeJson(record.NativeIdentityJson ?? "{}", nameof(record.NativeIdentityJson));
+        var rawJson = RequireJsonObject(record.RawJson, nameof(record.RawJson));
+        var locatorKey = NormalizeOptional(record.LocatorKey, 500);
+        var publicationLocalKey = NormalizeOptional(record.PublicationLocalKey, 500);
+        var nativeIdentityJson = NormalizeIdentityJson(record.NativeIdentityJson);
         return record with
         {
             EntityType = entityType,
@@ -376,24 +345,40 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
             SourceCode = sourceCode,
             NativeKey = nativeKey,
             RawJson = rawJson,
-            LocatorKey = NormalizeOptional(record.LocatorKey, 500),
-            PublicationLocalKey = NormalizeOptional(record.PublicationLocalKey, 500),
+            LocatorKey = locatorKey,
+            PublicationLocalKey = publicationLocalKey,
             NativeIdentityJson = nativeIdentityJson
         };
     }
 
-    private static string NormalizeJson(string json, string parameterName)
+    private static void EnsureEntityIdentityMatches(SourceEntity entity, NormalizedSourceRecord record)
     {
-        if (string.IsNullOrWhiteSpace(json))
+        if (!string.Equals(entity.EntityType, record.EntityType, StringComparison.Ordinal)
+            || !string.Equals(entity.Name, record.Name, StringComparison.Ordinal)
+            || !string.Equals(entity.SourceCode, record.SourceCode, StringComparison.Ordinal)
+            || !JsonEquivalent(entity.NativeIdentityJson, record.NativeIdentityJson))
         {
-            throw new InvalidDataException($"{parameterName} JSON can not be blank.");
+            throw new InvalidOperationException(
+                $"Source entity native identity '{entity.NativeKey}' changed immutable identity metadata across representations.");
         }
-        using var document = JsonDocument.Parse(json);
-        return document.RootElement.GetRawText();
     }
 
-    private static bool JsonEquivalent(string left, string right) =>
-        string.Equals(CanonicalJsonFingerprint(left), CanonicalJsonFingerprint(right), StringComparison.Ordinal);
+    private static void EnsurePackageMatches(
+        SourcePackage package,
+        string displayName,
+        string provider,
+        string? license,
+        bool isPublic)
+    {
+        if (!string.Equals(package.DisplayName, displayName, StringComparison.Ordinal)
+            || !string.Equals(package.Provider, provider, StringComparison.Ordinal)
+            || !string.Equals(package.License, license, StringComparison.Ordinal)
+            || package.IsPublic != isPublic)
+        {
+            throw new InvalidOperationException(
+                $"Source package '{package.Key}' already exists with different immutable metadata.");
+        }
+    }
 
     private static string CanonicalJsonFingerprint(string json)
     {
@@ -421,10 +406,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
                 break;
             case JsonValueKind.Array:
                 writer.WriteStartArray();
-                foreach (var child in element.EnumerateArray())
-                {
-                    WriteCanonical(writer, child);
-                }
+                foreach (var child in element.EnumerateArray()) WriteCanonical(writer, child);
                 writer.WriteEndArray();
                 break;
             default:
@@ -433,16 +415,72 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
         }
     }
 
-    private static void EnsurePackageMatches(SourcePackage package, ImportNormalizedSourceRequest request)
+    private static string RequireJsonObject(string value, string parameterName)
     {
-        if (!string.Equals(package.DisplayName, request.PackageDisplayName.Trim(), StringComparison.Ordinal)
-            || !string.Equals(package.Provider, request.Provider.Trim(), StringComparison.Ordinal)
-            || !string.Equals(package.License, NormalizeOptional(request.License, 300), StringComparison.Ordinal)
-            || package.IsPublic != request.IsPublic)
+        if (string.IsNullOrWhiteSpace(value))
         {
-            throw new InvalidOperationException(
-                $"Source package '{package.Key}' is already registered with different immutable metadata.");
+            throw new ArgumentException("JSON value can not be blank.", parameterName);
         }
+        using var document = JsonDocument.Parse(value);
+        if (document.RootElement.ValueKind != JsonValueKind.Object)
+        {
+            throw new InvalidDataException("A source entity document must be a JSON object.");
+        }
+        return document.RootElement.GetRawText();
+    }
+
+    private static string NormalizeIdentityJson(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return "{}";
+        using var document = JsonDocument.Parse(value);
+        if (document.RootElement.ValueKind != JsonValueKind.Object)
+        {
+            throw new InvalidDataException("Native source identity metadata must be a JSON object.");
+        }
+        return document.RootElement.GetRawText();
+    }
+
+    private static string NormalizeMetadataJson(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return "{}";
+        using var document = JsonDocument.Parse(value);
+        if (document.RootElement.ValueKind != JsonValueKind.Object)
+        {
+            throw new InvalidDataException("Source representation metadata must be a JSON object.");
+        }
+        return document.RootElement.GetRawText();
+    }
+
+    private static bool JsonEquivalent(string left, string right)
+    {
+        using var leftDocument = JsonDocument.Parse(left);
+        using var rightDocument = JsonDocument.Parse(right);
+        return JsonElement.DeepEquals(leftDocument.RootElement, rightDocument.RootElement);
+    }
+
+    private static string NormalizeKey(string value)
+    {
+        var builder = new StringBuilder(value.Length);
+        var pendingSeparator = false;
+        foreach (var character in value.Trim().ToLowerInvariant())
+        {
+            if (char.IsLetterOrDigit(character))
+            {
+                if (pendingSeparator && builder.Length > 0) builder.Append('-');
+                builder.Append(character);
+                pendingSeparator = false;
+            }
+            else
+            {
+                pendingSeparator = true;
+            }
+        }
+        var normalized = builder.ToString().Trim('-');
+        if (string.IsNullOrEmpty(normalized))
+        {
+            throw new ArgumentException("A source key must contain at least one letter or number.", nameof(value));
+        }
+        return normalized.Length <= 200 ? normalized : normalized[..200].TrimEnd('-');
     }
 
     private static string Require(string value, string parameterName, int maxLength)
@@ -459,98 +497,14 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
         return normalized;
     }
 
-    private static string NormalizeKey(string value, int maxLength)
-    {
-        var builder = new StringBuilder(value.Length);
-        var separator = false;
-        foreach (var character in value.Trim().ToLowerInvariant())
-        {
-            if (char.IsLetterOrDigit(character))
-            {
-                if (separator && builder.Length > 0)
-                {
-                    builder.Append('-');
-                }
-                builder.Append(character);
-                separator = false;
-            }
-            else
-            {
-                separator = true;
-            }
-        }
-        var normalized = builder.ToString().Trim('-');
-        if (string.IsNullOrEmpty(normalized))
-        {
-            normalized = CanonicalSourceIdentity.Fingerprint(value)[..24];
-        }
-        return normalized.Length <= maxLength ? normalized : normalized[..maxLength].TrimEnd('-');
-    }
-
     private static string? NormalizeOptional(string? value, int maxLength)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return null;
-        }
+        if (string.IsNullOrWhiteSpace(value)) return null;
         var normalized = value.Trim();
         if (normalized.Length > maxLength)
         {
-            throw new ArgumentException($"Value can not exceed {maxLength} characters.", nameof(value));
+            throw new ArgumentException($"Value can not exceed {maxLength} characters.");
         }
         return normalized;
     }
-
-    private static void AddParameter(DbCommand command, string name, object value)
-    {
-        var parameter = command.CreateParameter();
-        parameter.ParameterName = name;
-        parameter.Value = value;
-        command.Parameters.Add(parameter);
-    }
-
-    private static void AddNullableParameter(DbCommand command, string name, object? value)
-    {
-        var parameter = command.CreateParameter();
-        parameter.ParameterName = name;
-        parameter.Value = value ?? DBNull.Value;
-        command.Parameters.Add(parameter);
-    }
-
-    private const string SupplementalSchemaSql = """
-        CREATE TABLE IF NOT EXISTS source_representation_entity (
-            source_representation_entity_id uuid NOT NULL,
-            source_representation_id uuid NOT NULL,
-            source_entity_id uuid NOT NULL,
-            source_entity_revision_id uuid NOT NULL,
-            locator_key varchar(500) NULL,
-            created_at timestamp with time zone NOT NULL,
-            CONSTRAINT pk_source_representation_entity PRIMARY KEY (source_representation_entity_id),
-            CONSTRAINT fk_source_representation_entity_representation FOREIGN KEY (source_representation_id)
-                REFERENCES source_representation(source_representation_id) ON DELETE CASCADE,
-            CONSTRAINT fk_source_representation_entity_entity FOREIGN KEY (source_entity_id)
-                REFERENCES source_entity(source_entity_id) ON DELETE CASCADE,
-            CONSTRAINT fk_source_representation_entity_revision FOREIGN KEY (source_entity_revision_id)
-                REFERENCES source_entity_revision(source_entity_revision_id) ON DELETE CASCADE);
-        CREATE UNIQUE INDEX IF NOT EXISTS ux_source_representation_entity_identity
-            ON source_representation_entity(source_representation_id, source_entity_id);
-        CREATE INDEX IF NOT EXISTS ix_source_representation_entity_revision
-            ON source_representation_entity(source_entity_revision_id);
-
-        CREATE TABLE IF NOT EXISTS source_representation_publication (
-            source_representation_publication_id uuid NOT NULL,
-            source_representation_id uuid NOT NULL,
-            canonical_publication_id uuid NOT NULL,
-            local_key varchar(500) NOT NULL,
-            created_at timestamp with time zone NOT NULL,
-            CONSTRAINT pk_source_representation_publication PRIMARY KEY (source_representation_publication_id),
-            CONSTRAINT fk_source_representation_publication_representation FOREIGN KEY (source_representation_id)
-                REFERENCES source_representation(source_representation_id) ON DELETE CASCADE,
-            CONSTRAINT fk_source_representation_publication_canonical FOREIGN KEY (canonical_publication_id)
-                REFERENCES canonical_publication(canonical_publication_id) ON DELETE RESTRICT);
-        CREATE UNIQUE INDEX IF NOT EXISTS ux_source_representation_publication_identity
-            ON source_representation_publication(source_representation_id, local_key);
-        CREATE INDEX IF NOT EXISTS ix_source_representation_publication_canonical
-            ON source_representation_publication(canonical_publication_id);
-        """;
 }
