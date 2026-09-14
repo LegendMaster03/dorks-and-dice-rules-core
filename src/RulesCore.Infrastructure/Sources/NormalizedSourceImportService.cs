@@ -150,7 +150,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
                     StringComparison.OrdinalIgnoreCase))
                 .ToArray();
             var fingerprints = records
-                .Select(value => CanonicalSourceIdentity.SemanticFingerprint(value.Record.RawJson))
+                .Select(value => CanonicalSourceIdentity.SemanticFingerprint(SemanticDocument(value.Record)))
                 .Distinct(StringComparer.Ordinal)
                 .ToArray();
             var evidence = new CanonicalPublicationEvidence(
@@ -173,7 +173,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
                             value.Record.EntityType,
                             value.Record.Name,
                             value.Record.LocatorKey,
-                            CanonicalSourceIdentity.SemanticFingerprint(value.Record.RawJson)),
+                            CanonicalSourceIdentity.SemanticFingerprint(SemanticDocument(value.Record))),
                         request.Representation.FormatKey,
                         cancellationToken);
                 canonicalPublicationId ??= association.Publication.Id;
@@ -337,6 +337,9 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
         var locatorKey = NormalizeOptional(record.LocatorKey, 500);
         var publicationLocalKey = NormalizeOptional(record.PublicationLocalKey, 500);
         var nativeIdentityJson = NormalizeIdentityJson(record.NativeIdentityJson);
+        var semanticJson = string.IsNullOrWhiteSpace(record.SemanticJson)
+            ? null
+            : RequireJsonObject(record.SemanticJson, nameof(record.SemanticJson));
         return record with
         {
             EntityType = entityType,
@@ -346,9 +349,13 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
             RawJson = rawJson,
             LocatorKey = locatorKey,
             PublicationLocalKey = publicationLocalKey,
-            NativeIdentityJson = nativeIdentityJson
+            NativeIdentityJson = nativeIdentityJson,
+            SemanticJson = semanticJson
         };
     }
+
+    private static string SemanticDocument(NormalizedSourceRecord record) =>
+        string.IsNullOrWhiteSpace(record.SemanticJson) ? record.RawJson : record.SemanticJson;
 
     private static void EnsureEntityIdentityMatches(SourceEntity entity, NormalizedSourceRecord record)
     {

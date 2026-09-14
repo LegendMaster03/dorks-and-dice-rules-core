@@ -15,7 +15,8 @@ public sealed record NormalizedSourceRecord(
     string RawJson,
     string? LocatorKey = null,
     string? PublicationLocalKey = null,
-    string NativeIdentityJson = "{}");
+    string NativeIdentityJson = "{}",
+    string? SemanticJson = null);
 
 public sealed record NormalizedSourcePublication(
     string LocalKey,
