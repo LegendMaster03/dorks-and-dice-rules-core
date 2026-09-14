@@ -322,7 +322,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             dbContext, decision.Id, normalizedUserId, cancellationToken);
         if (!contributionResolution.Accessible) return null;
 
-        using var sourceDocument = JsonDocument.Parse(sourceRevision.RawJson);
+        using var sourceDocument = JsonDocument.Parse(sourceRevision.GetMechanicalContentJson());
         var resolvedDocument = ApplyDecisionPatch(sourceDocument.RootElement, decision.DecisionKind, decision.PatchJson);
         var mergePatch = decision.DecisionKind == RuleDecisionKinds.JsonMergePatch
             ? JsonMergePatch.ParsePatch(decision.PatchJson) : (JsonElement?)null;

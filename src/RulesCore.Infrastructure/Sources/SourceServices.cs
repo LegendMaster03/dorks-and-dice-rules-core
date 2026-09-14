@@ -377,7 +377,7 @@ public sealed class SourceCatalogService(RulesCoreDbContext dbContext) : ISource
             return null;
         }
 
-        using var document = JsonDocument.Parse(revision.RawJson);
+        using var document = JsonDocument.Parse(revision.GetMechanicalContentJson());
         var package = entity.SourcePackage;
         return new SourceEntityView(
             entity.Id,
