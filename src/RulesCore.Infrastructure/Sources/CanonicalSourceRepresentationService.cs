@@ -14,7 +14,8 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
         CanonicalPublicationEvidence publicationEvidence,
         CanonicalSourceOccurrenceEvidence occurrenceEvidence,
         string representationKind,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        IReadOnlyDictionary<string, string>? canonicalAliases = null)
     {
         if (sourceEntityId == Guid.Empty)
         {
@@ -61,16 +62,69 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             sourceEntityId,
             sourceEntityRevisionId,
             cancellationToken);
+        var normalizedFingerprint = occurrenceEvidence.SemanticFingerprint.Trim().ToLowerInvariant();
+        var aliasedCanonicalEntityId = await new CanonicalEntityAliasStore(dbContext)
+            .ResolveAnyAsync(canonicalAliases, normalizedFingerprint, cancellationToken);
         var semanticOccurrence = await FindUniqueSemanticOccurrenceAsync(
             publication.Id,
             occurrenceEvidence,
             cancellationToken);
 
+        if (aliasedCanonicalEntityId.HasValue && priorAssociation is not null)
+        {
+            var sameSourceSemantics = string.Equals(
+                priorAssociation.SemanticFingerprint,
+                normalizedFingerprint,
+                StringComparison.Ordinal);
+            if (sameSourceSemantics && priorAssociation.CanonicalEntityId != aliasedCanonicalEntityId.Value)
+            {
+                throw new InvalidOperationException(
+                    "A trusted canonical alias can not move an unchanged source revision to a different canonical entity.");
+            }
+            if (!sameSourceSemantics && priorAssociation.CanonicalEntityId == aliasedCanonicalEntityId.Value)
+            {
+                throw new InvalidOperationException(
+                    "A trusted canonical alias can not collapse a mechanically changed source revision into its prior canonical entity.");
+            }
+        }
+        if (aliasedCanonicalEntityId.HasValue
+            && semanticOccurrence?.CanonicalEntityId is Guid semanticCanonicalEntityId
+            && semanticCanonicalEntityId != aliasedCanonicalEntityId.Value)
+        {
+            throw new InvalidOperationException(
+                "Trusted source-lineage identity conflicts with an existing exact semantic occurrence.");
+        }
+
         Guid occurrenceId;
         Guid canonicalEntityId;
         string occurrenceMatchKind;
         double confidence;
-        if (semanticOccurrence is not null)
+        if (aliasedCanonicalEntityId.HasValue)
+        {
+            canonicalEntityId = aliasedCanonicalEntityId.Value;
+            if (semanticOccurrence is not null)
+            {
+                occurrenceId = semanticOccurrence.OccurrenceId;
+                if (!semanticOccurrence.CanonicalEntityId.HasValue)
+                {
+                    await SetOccurrenceCanonicalEntityAsync(
+                        occurrenceId,
+                        canonicalEntityId,
+                        cancellationToken);
+                }
+            }
+            else
+            {
+                occurrenceId = await ResolveOccurrenceAsync(
+                    publication.Id,
+                    canonicalEntityId,
+                    occurrenceEvidence,
+                    cancellationToken);
+            }
+            occurrenceMatchKind = "strong-alias";
+            confidence = 1.0;
+        }
+        else if (semanticOccurrence is not null)
         {
             occurrenceId = semanticOccurrence.OccurrenceId;
             if (!semanticOccurrence.CanonicalEntityId.HasValue)
@@ -97,7 +151,6 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
         }
         else
         {
-            var normalizedFingerprint = occurrenceEvidence.SemanticFingerprint.Trim().ToLowerInvariant();
             var inheritedCanonicalEntityId = priorAssociation is not null
                 && string.Equals(
                     priorAssociation.SemanticFingerprint,
@@ -127,7 +180,7 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             && priorAssociation.CanonicalEntityId != canonicalEntityId
             && !string.Equals(
                 priorAssociation.SemanticFingerprint,
-                occurrenceEvidence.SemanticFingerprint.Trim().ToLowerInvariant(),
+                normalizedFingerprint,
                 StringComparison.Ordinal))
         {
             await new CanonicalEntityRelationshipStore(dbContext).RelateRevisionAsync(

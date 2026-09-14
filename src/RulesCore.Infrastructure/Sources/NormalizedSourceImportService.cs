@@ -64,7 +64,9 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
 
         foreach (var record in request.Representation.Records)
         {
-            var normalized = NormalizeRecord(record);
+            var normalized = TrustedCanonicalAliasPolicy.Apply(
+                request.Representation,
+                NormalizeRecord(record));
             var entity = await dbContext.SourceEntities.SingleOrDefaultAsync(
                 value => value.SourcePackageId == package.Id
                     && value.FormatKey == formatKey
@@ -164,6 +166,8 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
             Guid? canonicalPublicationId = null;
             foreach (var value in records)
             {
+                var semanticFingerprint = CanonicalSourceIdentity.SemanticFingerprint(
+                    SemanticDocument(value.Record));
                 var association = await new CanonicalSourceRepresentationService(dbContext)
                     .AssociateSourceEntityAsync(
                         value.Entity.Id,
@@ -173,9 +177,10 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
                             value.Record.EntityType,
                             value.Record.Name,
                             value.Record.LocatorKey,
-                            CanonicalSourceIdentity.SemanticFingerprint(SemanticDocument(value.Record))),
+                            semanticFingerprint),
                         request.Representation.FormatKey,
-                        cancellationToken);
+                        cancellationToken,
+                        value.Record.CanonicalAliases);
                 canonicalPublicationId ??= association.Publication.Id;
                 if (canonicalPublicationId != association.Publication.Id)
                 {
@@ -340,6 +345,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
         var semanticJson = string.IsNullOrWhiteSpace(record.SemanticJson)
             ? null
             : RequireJsonObject(record.SemanticJson, nameof(record.SemanticJson));
+        var canonicalAliases = NormalizeCanonicalAliases(record.CanonicalAliases);
         return record with
         {
             EntityType = entityType,
@@ -350,8 +356,26 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
             LocatorKey = locatorKey,
             PublicationLocalKey = publicationLocalKey,
             NativeIdentityJson = nativeIdentityJson,
-            SemanticJson = semanticJson
+            SemanticJson = semanticJson,
+            CanonicalAliases = canonicalAliases
         };
+    }
+
+    private static IReadOnlyDictionary<string, string>? NormalizeCanonicalAliases(
+        IReadOnlyDictionary<string, string>? aliases)
+    {
+        if (aliases is null || aliases.Count == 0) return null;
+        var normalized = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var alias in aliases)
+        {
+            var scheme = Require(alias.Key, "Canonical alias scheme", 100);
+            var value = Require(alias.Value, "Canonical alias value", 1000);
+            if (!normalized.TryAdd(scheme, value))
+            {
+                throw new InvalidDataException($"Duplicate canonical alias scheme '{scheme}'.");
+            }
+        }
+        return normalized;
     }
 
     private static string SemanticDocument(NormalizedSourceRecord record) =>

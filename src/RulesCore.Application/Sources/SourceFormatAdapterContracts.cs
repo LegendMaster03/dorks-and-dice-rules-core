@@ -16,7 +16,8 @@ public sealed record NormalizedSourceRecord(
     string? LocatorKey = null,
     string? PublicationLocalKey = null,
     string NativeIdentityJson = "{}",
-    string? SemanticJson = null);
+    string? SemanticJson = null,
+    IReadOnlyDictionary<string, string>? CanonicalAliases = null);
 
 public sealed record NormalizedSourcePublication(
     string LocalKey,
