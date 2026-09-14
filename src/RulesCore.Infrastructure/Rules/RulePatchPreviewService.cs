@@ -34,16 +34,14 @@ public sealed class RulePatchPreviewService(RulesCoreDbContext dbContext) : IRul
             return null;
         }
 
-        var sourceIsBound = await dbContext.RuleConceptSourceBindings
-            .AsNoTracking()
-            .AnyAsync(
-                value => value.RuleConceptId == ruleConceptId
-                    && value.SourceEntityId == sourceRevision.SourceEntityId,
-                cancellationToken);
-        if (!sourceIsBound)
+        if (!await CanonicalRuleBindingStore.IsSourceEntityBoundAsync(
+                dbContext,
+                ruleConceptId,
+                sourceRevision.SourceEntityId,
+                cancellationToken))
         {
             throw new InvalidOperationException(
-                "The selected source revision belongs to an entity that is not bound to this rule concept.");
+                "The selected source revision belongs to a canonical entity that is not bound to this rule concept.");
         }
 
         var candidate = NormalizeGlobalCandidate(request);
@@ -226,16 +224,14 @@ public sealed class RulePatchPreviewService(RulesCoreDbContext dbContext) : IRul
                         InaccessibleSource: true);
                 }
 
-                var sourceIsBound = await dbContext.RuleConceptSourceBindings
-                    .AsNoTracking()
-                    .AnyAsync(
-                        value => value.RuleConceptId == ruleConceptId
-                            && value.SourceEntityId == sourceRevision.SourceEntityId,
-                        cancellationToken);
-                if (!sourceIsBound)
+                if (!await CanonicalRuleBindingStore.IsSourceEntityBoundAsync(
+                        dbContext,
+                        ruleConceptId,
+                        sourceRevision.SourceEntityId,
+                        cancellationToken))
                 {
                     throw new InvalidOperationException(
-                        "The selected source revision belongs to an entity that is not bound to this rule concept.");
+                        "The selected source revision belongs to a canonical entity that is not bound to this rule concept.");
                 }
 
                 return new CampaignCandidate(
