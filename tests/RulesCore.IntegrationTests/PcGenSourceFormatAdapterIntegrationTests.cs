@@ -26,9 +26,9 @@ public sealed class PcGenSourceFormatAdapterIntegrationTests
         var spells = Artifact(
             "data/35e/example/spells/example_spells.lst",
             """
-            SOURCELONG:Example Revised Rulebook	SOURCESHORT:EX35
-            Arc Spark	TYPE:Arcane	SCHOOL:Evocation	CUSTOMTAG:One	CUSTOMTAG:Two	DESC:A line Rules Core must preserve.
-            Arc Spark	TYPE:Arcane	VARIANT:Greater	DESC:A second same-named native entry.
+            SOURCELONG:Example Revised Rulebook\tSOURCESHORT:EX35
+            Arc Spark\tTYPE:Arcane\tSCHOOL:Evocation\tCUSTOMTAG:One\tCUSTOMTAG:Two\tDESC:A line Rules Core must preserve.
+            Arc Spark\tTYPE:Arcane\tVARIANT:Greater\tDESC:A second same-named native entry.
             """);
 
         var representations = adapter.TryReadMany([campaign, spells]);
@@ -59,8 +59,8 @@ public sealed class PcGenSourceFormatAdapterIntegrationTests
             parsed.RootElement.GetProperty("rawLine").GetString());
         var customTags = parsed.RootElement.GetProperty("segments")
             .EnumerateArray()
-            .Where(value => value.GetProperty("tag").GetString() == "CUSTOMTAG")
-            .Select(value => value.GetProperty("value").GetString())
+            .Where(value => value.GetProperty("Tag").GetString() == "CUSTOMTAG")
+            .Select(value => value.GetProperty("Value").GetString())
             .ToArray();
         Assert.Equal(["One", "Two"], customTags);
     }
@@ -184,7 +184,7 @@ public sealed class PcGenSourceFormatAdapterIntegrationTests
             "data/35e/example/operations_skills.lst",
             """
             Camel.COPY=Camel (Old Nag)
-            Balance.MOD	BONUS:SKILL|Balance|1
+            Balance.MOD\tBONUS:SKILL|Balance|1
             Knowledge (Local).FORGET
             """);
 
@@ -231,8 +231,8 @@ public sealed class PcGenSourceFormatAdapterIntegrationTests
         var classes = Artifact(
             "data/35e/example/example_classes.lst",
             """
-            CLASS:Example Class	HD:8	TYPE:Base.PC
-            CLASS:Example Class	STARTSKILLPTS:4
+            CLASS:Example Class\tHD:8\tTYPE:Base.PC
+            CLASS:Example Class\tSTARTSKILLPTS:4
             """);
 
         var representation = adapter.TryReadMany([campaign, classes])
