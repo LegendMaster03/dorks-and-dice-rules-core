@@ -369,6 +369,7 @@ internal static class CanonicalRuleBindingStore
     {
         var parameter = command.CreateParameter();
         parameter.ParameterName = name;
+        parameter.DbType = DbType.String;
         parameter.Value = value ?? DBNull.Value;
         command.Parameters.Add(parameter);
     }

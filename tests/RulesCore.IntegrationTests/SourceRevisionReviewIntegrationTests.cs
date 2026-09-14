@@ -141,6 +141,7 @@ public sealed class SourceRevisionReviewIntegrationTests
                     power: 1,
                     entries: ["secret"]));
                 await grants.GrantAsync("source-reviewer", privateImport.PackageId);
+                await grants.GrantAsync("seed-rules-lawyer", privateImport.PackageId);
                 var privateEntityId = privateImport.Entities.Single().EntityId;
                 var privateRevision1 = await LatestRevisionIdAsync(db, privateEntityId);
                 privateConceptId = (await rules.CreateConceptAsync(
