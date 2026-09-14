@@ -21,6 +21,7 @@ if (hasDatabase)
     builder.Services.AddScoped<ISourceImportService, SourceImportService>();
     builder.Services.AddScoped<INormalizedSourceImportService, NormalizedSourceImportService>();
     builder.Services.AddSingleton<ISourceFormatAdapter, FiveEToolsSourceFormatAdapter>();
+    builder.Services.AddSingleton<ISourceFormatAdapter, PcGenSourceFormatAdapter>();
     builder.Services.AddSingleton<ISourceFormatAdapter, PdfSourceFormatAdapter>();
     builder.Services.AddSingleton<ISourceFormatAdapterRegistry, SourceFormatAdapterRegistry>();
     builder.Services.AddScoped<ISourceCatalogService, SourceCatalogService>();
