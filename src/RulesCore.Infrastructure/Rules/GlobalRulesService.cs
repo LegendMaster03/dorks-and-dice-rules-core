@@ -307,20 +307,20 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             .AsNoTracking()
             .Include(value => value.RuleConcept)
             .Include(value => value.GlobalRuleDecision)
-            .Include(value => value.SourceEntityRevision)
-                .ThenInclude(value => value.SourceEntity)
-                .ThenInclude(value => value.SourcePackage)
             .SingleOrDefaultAsync(
                 value => value.RulesetRevisionId == latestRevision.Id
-                    && value.RuleConcept.Key == key
-                    && (value.SourceEntityRevision.SourceEntity.SourcePackage.IsPublic
-                        || (normalizedUserId != null
-                            && value.SourceEntityRevision.SourceEntity.SourcePackage.UserGrants
-                                .Any(grant => grant.UserId == normalizedUserId))),
+                    && value.RuleConcept.Key == key,
                 cancellationToken);
         if (entry is null) return null;
 
-        var sourceRevision = entry.SourceEntityRevision;
+        var sourceRevision = await AccessibleCanonicalSourceResolver.ResolveRevisionAsync(
+            dbContext,
+            entry.RuleConceptId,
+            entry.SourceEntityRevisionId,
+            normalizedUserId,
+            cancellationToken);
+        if (sourceRevision is null) return null;
+
         var sourceEntity = sourceRevision.SourceEntity;
         var package = sourceEntity.SourcePackage;
         var decision = entry.GlobalRuleDecision;
