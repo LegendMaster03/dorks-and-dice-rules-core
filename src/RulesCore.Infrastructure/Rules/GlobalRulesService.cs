@@ -59,20 +59,39 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
     {
         ArgumentNullException.ThrowIfNull(request);
         var actor = RequireActor(actorUserId);
-        if (!await dbContext.RuleConcepts.AnyAsync(value => value.Id == ruleConceptId, cancellationToken))
-        {
-            throw new KeyNotFoundException($"Rule concept '{ruleConceptId}' does not exist.");
-        }
+        await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
+
+        var concept = await dbContext.RuleConcepts
+            .AsNoTracking()
+            .SingleOrDefaultAsync(value => value.Id == ruleConceptId, cancellationToken)
+            ?? throw new KeyNotFoundException($"Rule concept '{ruleConceptId}' does not exist.");
 
         var sourceEntity = await dbContext.SourceEntities
             .AsNoTracking()
+            .Include(value => value.SourcePackage)
+                .ThenInclude(value => value.UserGrants)
             .SingleOrDefaultAsync(value => value.Id == request.SourceEntityId, cancellationToken)
             ?? throw new KeyNotFoundException($"Source entity '{request.SourceEntityId}' does not exist.");
+        if (!sourceEntity.SourcePackage.IsPublic
+            && !sourceEntity.SourcePackage.UserGrants.Any(value => value.UserId == actor))
+        {
+            throw new InvalidOperationException("The selected source entity is not accessible to the current Rules Lawyer.");
+        }
+        if (!string.Equals(concept.EntityType, sourceEntity.EntityType, StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException(
+                $"Source entity type '{sourceEntity.EntityType}' can not be bound to rule concept type '{concept.EntityType}'.");
+        }
 
+        var canonicalEntityId = await CanonicalRuleBindingStore.GetCanonicalEntityIdAsync(
+            dbContext,
+            sourceEntity.Id,
+            cancellationToken);
         var existing = await dbContext.RuleConceptSourceBindings
             .AsNoTracking()
             .SingleOrDefaultAsync(
-                value => value.RuleConceptId == ruleConceptId && value.SourceEntityId == sourceEntity.Id,
+                value => value.RuleConceptId == ruleConceptId
+                    && value.CanonicalEntityId == canonicalEntityId,
                 cancellationToken);
         if (existing is not null)
         {
@@ -84,6 +103,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         {
             Id = Guid.NewGuid(),
             RuleConceptId = ruleConceptId,
+            CanonicalEntityId = canonicalEntityId,
             SourceEntityId = sourceEntity.Id,
             CreatedByUserId = actor,
             CreatedAt = DateTimeOffset.UtcNow
@@ -125,6 +145,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         var contributionFingerprint = SourceFrameworkStore.ComputeContributionFingerprint(contributions);
 
         await SourceFrameworkStore.EnsureSchemaAsync(dbContext, cancellationToken);
+        await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
         await using var transaction = await dbContext.Database.BeginTransactionAsync(IsolationLevel.Serializable, cancellationToken);
 
         if (!await dbContext.RuleConcepts.AnyAsync(value => value.Id == ruleConceptId, cancellationToken))
@@ -134,15 +155,24 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
 
         var sourceRevision = await dbContext.SourceEntityRevisions
             .Include(value => value.SourceEntity)
+                .ThenInclude(value => value.SourcePackage)
+                .ThenInclude(value => value.UserGrants)
             .SingleOrDefaultAsync(value => value.Id == request.SourceEntityRevisionId, cancellationToken)
             ?? throw new KeyNotFoundException($"Source entity revision '{request.SourceEntityRevisionId}' does not exist.");
+        var sourcePackage = sourceRevision.SourceEntity.SourcePackage;
+        if (!sourcePackage.IsPublic && !sourcePackage.UserGrants.Any(value => value.UserId == actor))
+        {
+            throw new InvalidOperationException("The selected source revision is not accessible to the current Rules Lawyer.");
+        }
 
-        if (!await dbContext.RuleConceptSourceBindings.AnyAsync(
-                value => value.RuleConceptId == ruleConceptId && value.SourceEntityId == sourceRevision.SourceEntityId,
+        if (!await CanonicalRuleBindingStore.IsSourceEntityBoundAsync(
+                dbContext,
+                ruleConceptId,
+                sourceRevision.SourceEntityId,
                 cancellationToken))
         {
             throw new InvalidOperationException(
-                "The selected source revision belongs to an entity that is not bound to this rule concept.");
+                "The selected source revision belongs to a canonical entity that is not bound to this rule concept.");
         }
 
         await ValidateContributionsAsync(ruleConceptId, contributions, actor, cancellationToken);
@@ -359,19 +389,16 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
                 "One or more consolidation source revisions do not exist or are no longer available.");
         }
 
-        var sourceEntityIds = revisions.Select(value => value.SourceEntityId).Distinct().ToArray();
-        var boundSet = (await dbContext.RuleConceptSourceBindings
-            .AsNoTracking()
-            .Where(value => value.RuleConceptId == ruleConceptId && sourceEntityIds.Contains(value.SourceEntityId))
-            .Select(value => value.SourceEntityId)
-            .ToArrayAsync(cancellationToken)).ToHashSet();
-
         foreach (var revision in revisions)
         {
-            if (!boundSet.Contains(revision.SourceEntityId))
+            if (!await CanonicalRuleBindingStore.IsSourceEntityBoundAsync(
+                    dbContext,
+                    ruleConceptId,
+                    revision.SourceEntityId,
+                    cancellationToken))
             {
                 throw new InvalidOperationException(
-                    "Every consolidation contribution must come from a source entity bound to this rule concept.");
+                    "Every consolidation contribution must come from a canonical entity bound to this rule concept.");
             }
             var package = revision.SourceEntity.SourcePackage;
             if (!package.IsPublic && !package.UserGrants.Any(grant => grant.UserId == actorUserId))
@@ -393,7 +420,13 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         new(concept.Id, concept.Key, concept.EntityType, concept.DisplayName, concept.CreatedByUserId, concept.CreatedAt);
 
     private static RuleConceptSourceBindingView ToView(RuleConceptSourceBinding binding) =>
-        new(binding.Id, binding.RuleConceptId, binding.SourceEntityId, binding.CreatedByUserId, binding.CreatedAt);
+        new(
+            binding.Id,
+            binding.RuleConceptId,
+            binding.CanonicalEntityId,
+            binding.CreatedByUserId,
+            binding.CreatedAt,
+            binding.SourceEntityId);
 
     private static GlobalRuleDecisionView ToView(GlobalRuleDecision decision)
     {
