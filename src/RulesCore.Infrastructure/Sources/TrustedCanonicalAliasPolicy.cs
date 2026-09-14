@@ -11,7 +11,7 @@ internal static class TrustedCanonicalAliasPolicy
         ArgumentNullException.ThrowIfNull(representation);
         ArgumentNullException.ThrowIfNull(record);
 
-        if (string.IsNullOrWhiteSpace(record.SemanticJson)
+        if (string.IsNullOrWhiteSpace(record.ContentJson)
             || !TrustedSourceLineageRegistry.TryResolveScheme(
                 representation.FormatKey,
                 representation.Artifact.SourceUri,

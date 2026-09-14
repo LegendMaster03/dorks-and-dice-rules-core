@@ -282,7 +282,7 @@ internal static class RulesCoreContentTranslation
             // PCGen descriptions can contain conditional suffixes separated by pipes.
             // Preserve those source expressions under _rulesCore even though the full
             // string is also retained as readable entry text.
-            if (!description.Value.Contains('|', StringComparison.Ordinal))
+            if (!description.Value.Contains('|'))
             {
                 mapped.Add(description.Index);
             }
@@ -606,26 +606,24 @@ internal static class RulesCoreContentTranslation
             .OrderBy(value => value.Index)
             .ToArray();
 
-        var entityTypeChanged = !string.Equals(
-            nativeEntityType,
-            normalizedEntityType,
-            StringComparison.OrdinalIgnoreCase);
-        if (string.IsNullOrWhiteSpace(edition) && unmapped.Length == 0 && !entityTypeChanged)
+        var context = new JsonObject
         {
-            return;
-        }
-
-        var extension = new JsonObject();
+            ["sourceFormat"] = PcGenSourceFormatAdapter.Format,
+            ["nativeEntityType"] = nativeEntityType
+        };
         if (!string.IsNullOrWhiteSpace(edition))
         {
-            extension["edition"] = edition;
+            context["edition"] = edition;
+        }
+        if (!string.Equals(nativeEntityType, normalizedEntityType, StringComparison.OrdinalIgnoreCase))
+        {
+            context["translatedEntityType"] = normalizedEntityType;
         }
 
-        var pcgen = new JsonObject();
-        if (entityTypeChanged)
+        var extension = new JsonObject
         {
-            pcgen["nativeEntityType"] = nativeEntityType;
-        }
+            ["context"] = context
+        };
         if (unmapped.Length > 0)
         {
             var segmentsJson = new JsonArray();
@@ -637,11 +635,10 @@ internal static class RulesCoreContentTranslation
                     ["value"] = segment.Value
                 });
             }
-            pcgen["unmappedSegments"] = segmentsJson;
-        }
-        if (pcgen.Count > 0)
-        {
-            extension["pcgen"] = pcgen;
+            extension["pcgen"] = new JsonObject
+            {
+                ["unmappedSegments"] = segmentsJson
+            };
         }
 
         content["_rulesCore"] = extension;

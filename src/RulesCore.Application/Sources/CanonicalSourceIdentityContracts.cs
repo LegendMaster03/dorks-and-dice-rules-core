@@ -1,6 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using RulesCore.Domain.Sources;
 
 namespace RulesCore.Application.Sources;
 
@@ -130,7 +131,8 @@ public static class CanonicalSourceIdentity
             throw new ArgumentException("Source occurrence document can not be blank.", nameof(document));
         }
 
-        using var parsed = JsonDocument.Parse(document);
+        var mechanicalDocument = RulesMechanicalContent.ForRules(document);
+        using var parsed = JsonDocument.Parse(mechanicalDocument);
         using var stream = new MemoryStream();
         using (var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = false }))
         {

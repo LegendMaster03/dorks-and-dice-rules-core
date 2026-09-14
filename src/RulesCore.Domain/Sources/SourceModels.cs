@@ -1,3 +1,5 @@
+using System.Text.Json.Nodes;
+
 namespace RulesCore.Domain.Sources;
 
 public sealed class SourcePackage
@@ -69,7 +71,41 @@ public sealed class SourceEntityRevision
     public SourceRepresentation SourceRepresentation { get; set; } = null!;
 
     public string GetMechanicalContentJson() =>
-        string.IsNullOrWhiteSpace(ContentJson) ? RawJson : ContentJson;
+        RulesMechanicalContent.ForRules(
+            string.IsNullOrWhiteSpace(ContentJson) ? RawJson : ContentJson);
+}
+
+/// <summary>
+/// Produces the rule-bearing view of translated mechanical content. Rules Core translation
+/// context remains persisted in ContentJson for inspection, but source-format/edition context
+/// must not make otherwise identical mechanics compare as different rules.
+/// </summary>
+public static class RulesMechanicalContent
+{
+    public static string ForRules(string json)
+    {
+        if (string.IsNullOrWhiteSpace(json))
+        {
+            throw new ArgumentException("Mechanical content JSON can not be blank.", nameof(json));
+        }
+
+        var root = JsonNode.Parse(json) as JsonObject
+            ?? throw new InvalidDataException("Mechanical content must have a JSON object root.");
+        if (root["_rulesCore"] is not JsonObject extension
+            || !extension.ContainsKey("context"))
+        {
+            return json;
+        }
+
+        var normalized = (JsonObject)root.DeepClone();
+        var normalizedExtension = (JsonObject)normalized["_rulesCore"]!;
+        normalizedExtension.Remove("context");
+        if (normalizedExtension.Count == 0)
+        {
+            normalized.Remove("_rulesCore");
+        }
+        return normalized.ToJsonString();
+    }
 }
 
 public sealed class UserSourceGrant

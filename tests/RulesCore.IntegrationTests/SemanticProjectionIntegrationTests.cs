@@ -122,7 +122,11 @@ public sealed class MechanicalContentIntegrationTests
             AssertFamilyFields(pcgen["item"], "name", "source", "entries", "weight", "value");
 
             Assert.True(five["monster"].TryGetProperty("futureUpstreamField", out _));
-            Assert.Equal("3.5e", pcgen["monster"].GetProperty("_rulesCore").GetProperty("edition").GetString());
+            var monsterContext = pcgen["monster"].GetProperty("_rulesCore").GetProperty("context");
+            Assert.Equal("3.5e", monsterContext.GetProperty("edition").GetString());
+            Assert.Equal(PcGenSourceFormatAdapter.Format, monsterContext.GetProperty("sourceFormat").GetString());
+            Assert.Equal("race", monsterContext.GetProperty("nativeEntityType").GetString());
+            Assert.Equal("monster", monsterContext.GetProperty("translatedEntityType").GetString());
             Assert.Equal(1500, pcgen["item"].GetProperty("value").GetInt32());
             Assert.False(pcgen["monster"].TryGetProperty("str", out _));
             Assert.False(pcgen["monster"].TryGetProperty("dex", out _));
@@ -145,9 +149,11 @@ public sealed class MechanicalContentIntegrationTests
                 value.GetProperty("tag").GetString() == "MONSTERCLASS"
                 && value.GetProperty("value").GetString() == "Humanoid:1");
 
-            var featExtension = pcgen["feat"].GetProperty("_rulesCore").GetProperty("pcgen");
-            Assert.Equal("ability", featExtension.GetProperty("nativeEntityType").GetString());
-            var featUnmapped = featExtension.GetProperty("unmappedSegments");
+            var featExtension = pcgen["feat"].GetProperty("_rulesCore");
+            Assert.Equal(
+                "ability",
+                featExtension.GetProperty("context").GetProperty("nativeEntityType").GetString());
+            var featUnmapped = featExtension.GetProperty("pcgen").GetProperty("unmappedSegments");
             Assert.Contains(featUnmapped.EnumerateArray(), value =>
                 value.GetProperty("tag").GetString() == "PREMULT"
                 && value.GetProperty("value").GetString() == "1,[PRESTAT:1,STR=13]");
@@ -168,13 +174,27 @@ public sealed class MechanicalContentIntegrationTests
             Assert.Equal("feat", featSource.EntityType);
             Assert.StartsWith("pcgen|ability|", featSource.NativeKey, StringComparison.Ordinal);
 
-            var pcgenRaw = await db.SourceEntityRevisions
+            var featRevision = await db.SourceEntityRevisions
                 .AsNoTracking()
-                .Where(value => value.SourceEntity.SourcePackage.Key == pcgenPackage && value.SourceEntity.EntityType == "feat")
-                .Select(value => value.RawJson)
-                .SingleAsync();
+                .Include(value => value.SourceEntity)
+                    .ThenInclude(value => value.SourcePackage)
+                .SingleAsync(value =>
+                    value.SourceEntity.SourcePackage.Key == pcgenPackage
+                    && value.SourceEntity.EntityType == "feat");
+            using var mechanicalFeat = JsonDocument.Parse(featRevision.GetMechanicalContentJson());
+            var mechanicalExtension = mechanicalFeat.RootElement.GetProperty("_rulesCore");
+            Assert.False(mechanicalExtension.TryGetProperty("context", out _));
+            Assert.True(mechanicalExtension.TryGetProperty("pcgen", out _));
+
+            var pcgenRaw = featRevision.RawJson;
             Assert.Contains("PREMULT", pcgenRaw, StringComparison.Ordinal);
             Assert.Contains("segments", pcgenRaw, StringComparison.Ordinal);
+
+            var bareFingerprint = CanonicalSourceIdentity.SemanticFingerprint(
+                "{\"name\":\"Context Test\",\"entries\":[\"Same mechanic.\"]}");
+            var contextualFingerprint = CanonicalSourceIdentity.SemanticFingerprint(
+                "{\"name\":\"Context Test\",\"entries\":[\"Same mechanic.\"],\"_rulesCore\":{\"context\":{\"edition\":\"3.5e\",\"sourceFormat\":\"pcgen-data\"}}}");
+            Assert.Equal(bareFingerprint, contextualFingerprint);
         }
         finally
         {
