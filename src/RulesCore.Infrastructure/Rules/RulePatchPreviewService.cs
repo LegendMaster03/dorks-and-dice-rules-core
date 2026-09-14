@@ -45,7 +45,7 @@ public sealed class RulePatchPreviewService(RulesCoreDbContext dbContext) : IRul
         }
 
         var candidate = NormalizeGlobalCandidate(request);
-        using var sourceDocument = JsonDocument.Parse(sourceRevision.RawJson);
+        using var sourceDocument = JsonDocument.Parse(sourceRevision.GetMechanicalContentJson());
         var baseDocument = sourceDocument.RootElement.Clone();
         var previewDocument = ApplyCandidate(
             baseDocument,
@@ -127,7 +127,7 @@ public sealed class RulePatchPreviewService(RulesCoreDbContext dbContext) : IRul
         var concept = baselineEntry.RuleConcept;
         var globalDecision = baselineEntry.GlobalRuleDecision;
         var baselineSourceRevision = baselineEntry.SourceEntityRevision;
-        using var baselineSourceDocument = JsonDocument.Parse(baselineSourceRevision.RawJson);
+        using var baselineSourceDocument = JsonDocument.Parse(baselineSourceRevision.GetMechanicalContentJson());
         var baseDocument = ApplyCandidate(
             baselineSourceDocument.RootElement,
             globalDecision.DecisionKind,
@@ -150,7 +150,7 @@ public sealed class RulePatchPreviewService(RulesCoreDbContext dbContext) : IRul
             var selectedRevision = candidate.SelectedSourceRevision
                 ?? throw new InvalidOperationException(
                     "A select-source preview is missing its selected source revision.");
-            using var selectedDocument = JsonDocument.Parse(selectedRevision.RawJson);
+            using var selectedDocument = JsonDocument.Parse(selectedRevision.GetMechanicalContentJson());
             previewDocument = selectedDocument.RootElement.Clone();
             effectiveSourceRevisionId = selectedRevision.Id;
         }

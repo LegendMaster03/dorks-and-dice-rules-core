@@ -116,10 +116,12 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
                 || value.Id == update.LatestSourceEntityRevisionId)
             .ToDictionaryAsync(value => value.Id, cancellationToken);
 
-        using var selectedSource = JsonDocument.Parse(revisions[update.SelectedSourceEntityRevisionId].RawJson);
+        using var selectedSource = JsonDocument.Parse(
+            revisions[update.SelectedSourceEntityRevisionId].GetMechanicalContentJson());
         var currentResolved = ApplyDecision(selectedSource.RootElement, decision.DecisionKind, decision.PatchJson);
 
-        using var latestSource = JsonDocument.Parse(revisions[update.LatestSourceEntityRevisionId].RawJson);
+        using var latestSource = JsonDocument.Parse(
+            revisions[update.LatestSourceEntityRevisionId].GetMechanicalContentJson());
         try
         {
             var candidateResolved = ApplyDecision(latestSource.RootElement, decision.DecisionKind, decision.PatchJson);
@@ -198,7 +200,7 @@ public sealed class SourceRevisionReviewService(RulesCoreDbContext dbContext)
                 "The source entity changed after this update was reviewed. Reload the review before adopting a source revision.");
         }
 
-        using (var latestSource = JsonDocument.Parse(latestRevision.RawJson))
+        using (var latestSource = JsonDocument.Parse(latestRevision.GetMechanicalContentJson()))
         {
             try
             {

@@ -77,7 +77,7 @@ public sealed class CampaignRuleBaselineService(RulesCoreDbContext dbContext)
             return null;
         }
 
-        using var sourceDocument = JsonDocument.Parse(revision.RawJson);
+        using var sourceDocument = JsonDocument.Parse(revision.GetMechanicalContentJson());
         var document = decision.DecisionKind switch
         {
             RuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(sourceDocument.RootElement, decision.PatchJson),

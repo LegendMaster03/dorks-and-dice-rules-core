@@ -98,7 +98,10 @@ public static class RuleAutoResolutionService
                 .AsNoTracking()
                 .SingleOrDefaultAsync(value => value.Id == latestDecision.SelectedSourceEntityRevisionId, cancellationToken);
             if (selectedRevision is not null
-                && string.Equals(ComputeSemanticFingerprint(selectedRevision.RawJson), evaluation.ResolvedSemanticFingerprint, StringComparison.Ordinal))
+                && string.Equals(
+                    ComputeSemanticFingerprint(selectedRevision.GetMechanicalContentJson()),
+                    evaluation.ResolvedSemanticFingerprint,
+                    StringComparison.Ordinal))
             {
                 return new RuleAutoResolutionResult(
                     true, false, latestDecision.Id, latestDecision.DecisionNumber,
@@ -144,8 +147,8 @@ public static class RuleAutoResolutionService
                     : "The equivalent cross-edition decision was already current.");
     }
 
-    internal static string ComputeSemanticFingerprint(string rawJson) =>
-        RuleSemanticCompatibility.ComputeFingerprint(rawJson);
+    internal static string ComputeSemanticFingerprint(string contentJson) =>
+        RuleSemanticCompatibility.ComputeFingerprint(contentJson);
 
     private static RuleConsolidationContributionRequest BuildContribution(
         SourceContext baseContext,
@@ -161,8 +164,8 @@ public static class RuleAutoResolutionService
         }
 
         var pairMerge = RuleSemanticCompatibility.TryCreateAdditiveUnion(
-            baseContext.Revision.RawJson,
-            [contribution.Revision.RawJson]);
+            baseContext.Revision.GetMechanicalContentJson(),
+            [contribution.Revision.GetMechanicalContentJson()]);
         var contributesContent = pairMerge.Compatible
             && pairMerge.MergedJson is not null
             && !string.Equals(
@@ -268,7 +271,7 @@ public static class RuleAutoResolutionService
                 source,
                 latest,
                 metadata,
-                ComputeSemanticFingerprint(latest.RawJson)));
+                ComputeSemanticFingerprint(latest.GetMechanicalContentJson())));
         }
 
         foreach (var rootCanonicalEntityId in boundCanonicalEntityIds)
@@ -315,9 +318,10 @@ public static class RuleAutoResolutionService
             .ThenByDescending(value => value.Metadata.GameEdition, StringComparer.Ordinal)
             .ThenBy(value => value.Source.SourceCode, StringComparer.Ordinal)
             .ThenBy(value => value.Source.Id)
-            .Select(value => value.Revision.RawJson)
+            .Select(value => value.Revision.GetMechanicalContentJson())
             .ToArray();
-        var additiveMerge = RuleSemanticCompatibility.TryCreateAdditiveUnion(preferredBase.Revision.RawJson, mergeOrder);
+        var preferredBaseJson = preferredBase.Revision.GetMechanicalContentJson();
+        var additiveMerge = RuleSemanticCompatibility.TryCreateAdditiveUnion(preferredBaseJson, mergeOrder);
         if (!additiveMerge.Compatible || additiveMerge.MergedJson is null)
         {
             return NotEligibleEvaluation($"{additiveMerge.Reason} Manual adjudication is required.");
@@ -345,7 +349,7 @@ public static class RuleAutoResolutionService
         NormalizedJsonMergePatch? patch;
         try
         {
-            patch = RuleSemanticCompatibility.CreateAdditivePatch(preferredBase.Revision.RawJson, additiveMerge.MergedJson);
+            patch = RuleSemanticCompatibility.CreateAdditivePatch(preferredBaseJson, additiveMerge.MergedJson);
         }
         catch (InvalidOperationException exception)
         {

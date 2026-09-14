@@ -72,8 +72,10 @@ public sealed class RuleSemanticComparisonService(RulesCoreDbContext dbContext)
 
         var left = revisions.Single(value => value.Id == request.LeftSourceEntityRevisionId);
         var right = revisions.Single(value => value.Id == request.RightSourceEntityRevisionId);
-        using var leftDocument = JsonDocument.Parse(left.RawJson);
-        using var rightDocument = JsonDocument.Parse(right.RawJson);
+        var leftJson = left.GetMechanicalContentJson();
+        var rightJson = right.GetMechanicalContentJson();
+        using var leftDocument = JsonDocument.Parse(leftJson);
+        using var rightDocument = JsonDocument.Parse(rightJson);
 
         var differences = new List<RuleSemanticDifferenceView>();
         var unchangedCount = 0;
@@ -85,9 +87,7 @@ public sealed class RuleSemanticComparisonService(RulesCoreDbContext dbContext)
             differences,
             ref unchangedCount);
 
-        var compatibility = RuleSemanticCompatibility.TryCreateAdditiveUnion(
-            left.RawJson,
-            [right.RawJson]);
+        var compatibility = RuleSemanticCompatibility.TryCreateAdditiveUnion(leftJson, [rightJson]);
         var metadataCount = differences.Count(value => value.Kind == RuleSemanticDifferenceKinds.MetadataOnly);
         var contradictionCount = differences.Count(value => value.RequiresDecision);
         var compatibleCount = differences.Count(value =>
