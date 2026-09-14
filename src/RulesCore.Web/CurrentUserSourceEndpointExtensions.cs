@@ -54,6 +54,62 @@ public static class CurrentUserSourceEndpointExtensions
                 cancellationToken));
         });
 
+        app.MapGet("/api/sources/current-user/{currentUserSourceId:guid}/reconciliation-issues", async (
+            Guid currentUserSourceId,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireSignedInDorksAndDiceAccount(
+                httpContext,
+                out var authenticationContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            var issues = await new SourceReconciliationIssueService(dbContext)
+                .ListForCurrentUserSourceAsync(
+                    authenticationContext!.User.Id,
+                    currentUserSourceId,
+                    cancellationToken);
+            if (issues is null)
+            {
+                return Results.NotFound();
+            }
+
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(issues);
+        });
+
+        app.MapGet("/api/sources/current-user/import-jobs/{importJobId:guid}/reconciliation-issues", async (
+            Guid importJobId,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireSignedInDorksAndDiceAccount(
+                httpContext,
+                out var authenticationContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            var issues = await new SourceReconciliationIssueService(dbContext)
+                .ListForCurrentUserImportJobAsync(
+                    authenticationContext!.User.Id,
+                    importJobId,
+                    cancellationToken);
+            if (issues is null)
+            {
+                return Results.NotFound();
+            }
+
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(issues);
+        });
+
         app.MapPost("/api/sources/current-user", async (
             AddCurrentUserSourceRequest request,
             HttpContext httpContext,

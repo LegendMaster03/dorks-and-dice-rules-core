@@ -57,6 +57,8 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
             request.Representation,
             formatKey,
             cancellationToken);
+        var reconciliationIssueService = new SourceReconciliationIssueService(dbContext);
+        await reconciliationIssueService.EnsureSchemaAsync(cancellationToken);
 
         var allImportedEntities = new List<ImportedSourceEntity>();
         var importedPublications = new List<ImportedNormalizedPublication>();
@@ -211,6 +213,10 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
                     canonicalPublicationId.Value,
                     publication.LocalKey,
                     cancellationToken);
+                await reconciliationIssueService.ResolveAsync(
+                    representation.Id,
+                    publication.LocalKey,
+                    cancellationToken);
 
                 importedPublications.Add(new ImportedNormalizedPublication(
                     canonicalPublicationId.Value,
@@ -223,12 +229,17 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
             {
                 await transaction.RollbackToSavepointAsync(savepointName, cancellationToken);
                 await transaction.ReleaseSavepointAsync(savepointName, cancellationToken);
-                reconciliationIssues.Add(new NormalizedSourceReconciliationIssue(
+                var issue = new NormalizedSourceReconciliationIssue(
                     NormalizedSourceReconciliationIssueKinds.CanonicalIdentityConflict,
                     publication.LocalKey,
                     publication.DisplayName,
                     records.Select(value => value.Entity.Id).Distinct().ToArray(),
-                    exception.Message));
+                    exception.Message);
+                reconciliationIssues.Add(issue);
+                await reconciliationIssueService.RecordAsync(
+                    representation.Id,
+                    issue,
+                    cancellationToken);
             }
         }
 

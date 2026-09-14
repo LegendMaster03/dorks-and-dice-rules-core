@@ -139,11 +139,13 @@ Different source formats may legitimately encode the same rule with different se
 
 Mechanical changes in one native source lineage remain explicit revisions. A strong alias can not be used to collapse a mechanically changed source revision into its prior canonical entity.
 
+Canonical reconciliation conflicts are isolated from native ingestion. A valid `SourcePackage`, `SourceRepresentation`, `SourceEntity`, and `SourceEntityRevision` remain committed when one publication group can not be reconciled safely. The conflict is persisted as representation-scoped `source_reconciliation_issue` metadata and returned by the normalized import result. Current-user source and completed import-job APIs expose only issues reachable through that user's own source registration. A corrected retry resolves the active issue across that representation lineage without fabricating another source revision. Database failures, malformed input, and immutable native-identity violations still abort the import.
+
 Canonical occurrences remain publication-specific. Reprint/revision/rename/variant relationships remain explicit rather than being inferred solely from matching names.
 
 ## Access model
 
-Source packages and their representations/entities/revisions remain access-scoped. Canonical publications, entities, aliases, occurrences, fingerprints, and relationship records are shared recognition metadata only.
+Source packages and their representations/entities/revisions remain access-scoped. Canonical publications, entities, aliases, occurrences, fingerprints, relationship records, and reconciliation issues are shared recognition metadata only.
 
 A user who uploads a private representation does not grant another user access to that representation. A later independent import may reuse the same canonical IDs while remaining separately stored and separately granted.
 
@@ -159,4 +161,4 @@ The refresh worker is an ASP.NET hosted service and queued import processor; the
 
 The eventual 3e/3.5e bootstrap is a developer seeding workflow built on the same persistent adapters and canonical resolver used by normal imports. It is not a separate global source-content database.
 
-The workbench may classify candidate pairs as exact identity, reprint, 3.0-to-3.5 revision, rename, variant, source-data error, parser error, or unresolved. Confirmed exact identities can register strong source-lineage aliases. Only canonical identity/matching knowledge becomes shared globally; non-SRD source bodies remain governed by their packages and grants.
+The workbench may classify candidate pairs as exact identity, corroborated exact identity, reprint, revision, rename, variant, same-name different entity, bad source data, parser error, or unresolved. Fully confirmed exact identities register strong source-lineage aliases. Fully confirmed reprint/revision/rename/variant decisions register the candidate lineage alias and persist a directed canonical relationship from predecessor/base to candidate. Partial classifications remain review state until the canonical endpoints are independently confirmed. Only canonical identity/matching knowledge becomes shared globally; non-SRD source bodies remain governed by their packages and grants.
