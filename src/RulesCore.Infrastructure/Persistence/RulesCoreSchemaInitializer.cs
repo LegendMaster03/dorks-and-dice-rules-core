@@ -9,8 +9,11 @@ public interface IRulesCoreSchemaInitializer
 
 public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : IRulesCoreSchemaInitializer
 {
-    public Task InitializeAsync(CancellationToken cancellationToken = default) =>
-        dbContext.Database.ExecuteSqlRawAsync(PostgresSourceSchema, cancellationToken);
+    public async Task InitializeAsync(CancellationToken cancellationToken = default)
+    {
+        await dbContext.Database.ExecuteSqlRawAsync(PostgresSourceSchema, cancellationToken);
+        await RulesCoreCurrentSchema.ApplyAsync(dbContext, cancellationToken);
+    }
 
     private const string PostgresSourceSchema = """
         DO $$

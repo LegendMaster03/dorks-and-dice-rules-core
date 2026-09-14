@@ -38,7 +38,9 @@ public sealed class IncompleteCurrentUserSourceImportCleanupService(RulesCoreDbC
         }
 
         var hasRulesBindings = await dbContext.RuleConceptSourceBindings.AnyAsync(
-            value => value.SourceEntity.SourcePackageId == package.Id,
+            value => value.SourceEntityId.HasValue
+                && value.SourceEntity != null
+                && value.SourceEntity.SourcePackageId == package.Id,
             cancellationToken);
         if (hasRulesBindings)
         {
