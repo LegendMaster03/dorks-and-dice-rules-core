@@ -90,6 +90,7 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             var inheritedCanonicalEntityId = await FindPriorCanonicalEntityIdAsync(
                 sourceEntityId,
                 sourceEntityRevisionId,
+                occurrenceEvidence.SemanticFingerprint,
                 cancellationToken);
             var canonicalEntity = inheritedCanonicalEntityId.HasValue
                 ? await canonicalEntities.ReadAsync(inheritedCanonicalEntityId.Value, cancellationToken)
@@ -105,7 +106,7 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             occurrenceMatchKind = inheritedCanonicalEntityId.HasValue
                 ? "source-revision-lineage"
                 : "identity-key";
-            confidence = inheritedCanonicalEntityId.HasValue ? 1.0 : 1.0;
+            confidence = 1.0;
         }
 
         await BindAsync(
@@ -291,8 +292,10 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
     private async Task<Guid?> FindPriorCanonicalEntityIdAsync(
         Guid sourceEntityId,
         Guid currentRevisionId,
+        string semanticFingerprint,
         CancellationToken cancellationToken)
     {
+        var normalizedFingerprint = semanticFingerprint.Trim().ToLowerInvariant();
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
         if (openedHere)
@@ -312,12 +315,14 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
                     ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
                 WHERE revision.source_entity_id = @source_entity_id
                     AND revision.source_entity_revision_id <> @current_revision_id
+                    AND binding.semantic_fingerprint = @semantic_fingerprint
                     AND occurrence.canonical_entity_id IS NOT NULL
                 ORDER BY revision.revision_number DESC
                 LIMIT 1;
                 """;
             AddParameter(command, "@source_entity_id", sourceEntityId);
             AddParameter(command, "@current_revision_id", currentRevisionId);
+            AddParameter(command, "@semantic_fingerprint", normalizedFingerprint);
             var value = await command.ExecuteScalarAsync(cancellationToken);
             return value is Guid id ? id : null;
         }
