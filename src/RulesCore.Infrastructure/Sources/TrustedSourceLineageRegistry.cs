@@ -24,7 +24,13 @@ internal static class TrustedSourceLineageRegistry
             PcGenSourceFormatAdapter.Format,
             "raw.githubusercontent.com",
             "PCGen",
-            "pcgen-newsources")
+            "pcgen-newsources"),
+        new(
+            "5etools-mirror-3-5etools-src",
+            FiveEToolsSourceFormatAdapter.Format,
+            "raw.githubusercontent.com",
+            "5etools-mirror-3",
+            "5etools-src")
     ];
 
     public static bool IsRegisteredScheme(string aliasScheme)
