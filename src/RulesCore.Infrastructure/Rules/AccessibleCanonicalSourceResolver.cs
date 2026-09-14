@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using RulesCore.Application.Sources;
 using RulesCore.Domain.Sources;
 using RulesCore.Infrastructure.Persistence;
 
@@ -52,7 +51,6 @@ internal static class AccessibleCanonicalSourceResolver
             return null;
         }
 
-        var semanticFingerprint = CanonicalSourceIdentity.SemanticFingerprint(snapshot.RawJson);
         var candidates = await dbContext.SourceEntityRevisions
             .AsNoTracking()
             .Include(value => value.SourceEntity)
@@ -64,11 +62,7 @@ internal static class AccessibleCanonicalSourceResolver
             .ToArrayAsync(cancellationToken);
 
         return candidates.FirstOrDefault(value =>
-            IsAccessible(value.SourceEntity.SourcePackage, normalizedUserId)
-            && string.Equals(
-                CanonicalSourceIdentity.SemanticFingerprint(value.RawJson),
-                semanticFingerprint,
-                StringComparison.Ordinal));
+            IsAccessible(value.SourceEntity.SourcePackage, normalizedUserId));
     }
 
     private static bool IsAccessible(SourcePackage package, string? userId) =>
