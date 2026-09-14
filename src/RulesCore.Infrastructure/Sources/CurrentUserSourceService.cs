@@ -531,6 +531,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
     private static ISourceFormatAdapterRegistry CreateDefaultRegistry() =>
         new SourceFormatAdapterRegistry([
             new FiveEToolsSourceFormatAdapter(),
+            new PcGenSourceFormatAdapter(),
             new PdfSourceFormatAdapter()
         ]);
 
