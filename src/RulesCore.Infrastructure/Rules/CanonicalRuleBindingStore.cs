@@ -13,6 +13,7 @@ internal static class CanonicalRuleBindingStore
         CancellationToken cancellationToken = default)
     {
         await new CanonicalEntityStore(dbContext).EnsureSchemaAsync(cancellationToken);
+        await new CanonicalEntityRelationshipStore(dbContext).EnsureSchemaAsync(cancellationToken);
         await dbContext.Database.ExecuteSqlRawAsync(SchemaSql, cancellationToken);
     }
 
@@ -154,6 +155,17 @@ internal static class CanonicalRuleBindingStore
         {
             await using var command = connection.CreateCommand();
             command.CommandText = """
+                WITH RECURSIVE concept_entities(canonical_entity_id) AS (
+                    SELECT canonical_entity_id
+                    FROM rule_concept_source_binding
+                    WHERE rule_concept_id = @concept_id
+                    UNION
+                    SELECT relationship.to_canonical_entity_id
+                    FROM canonical_entity_relationship relationship
+                    JOIN concept_entities parent
+                        ON parent.canonical_entity_id = relationship.from_canonical_entity_id
+                    WHERE relationship.relationship_kind = 'revision'
+                )
                 SELECT DISTINCT source.source_entity_id
                 FROM source_entity source
                 JOIN (
@@ -168,18 +180,16 @@ internal static class CanonicalRuleBindingStore
                     ON source_binding.source_entity_revision_id = latest.source_entity_revision_id
                 JOIN canonical_source_occurrence occurrence
                     ON occurrence.canonical_source_occurrence_id = source_binding.canonical_source_occurrence_id
-                JOIN rule_concept_source_binding rule_binding
-                    ON rule_binding.canonical_entity_id = occurrence.canonical_entity_id
+                JOIN concept_entities concept_entity
+                    ON concept_entity.canonical_entity_id = occurrence.canonical_entity_id
                 JOIN source_package package
                     ON package.source_package_id = source.source_package_id
-                WHERE rule_binding.rule_concept_id = @concept_id
-                    AND (
-                        package.is_public
-                        OR (@user_id IS NOT NULL AND EXISTS (
-                            SELECT 1
-                            FROM user_source_grant grant_row
-                            WHERE grant_row.source_package_id = package.source_package_id
-                                AND grant_row.user_id = @user_id)))
+                WHERE package.is_public
+                    OR (@user_id IS NOT NULL AND EXISTS (
+                        SELECT 1
+                        FROM user_source_grant grant_row
+                        WHERE grant_row.source_package_id = package.source_package_id
+                            AND grant_row.user_id = @user_id))
                 ORDER BY source.source_entity_id;
                 """;
             AddParameter(command, "@concept_id", ruleConceptId);
@@ -256,10 +266,20 @@ internal static class CanonicalRuleBindingStore
         {
             await using var command = connection.CreateCommand();
             command.CommandText = """
+                WITH RECURSIVE bound_entities(canonical_entity_id) AS (
+                    SELECT DISTINCT canonical_entity_id
+                    FROM rule_concept_source_binding
+                    UNION
+                    SELECT relationship.to_canonical_entity_id
+                    FROM canonical_entity_relationship relationship
+                    JOIN bound_entities parent
+                        ON parent.canonical_entity_id = relationship.from_canonical_entity_id
+                    WHERE relationship.relationship_kind = 'revision'
+                )
                 SELECT DISTINCT source_binding.source_entity_id
-                FROM rule_concept_source_binding rule_binding
+                FROM bound_entities bound
                 JOIN canonical_source_occurrence occurrence
-                    ON occurrence.canonical_entity_id = rule_binding.canonical_entity_id
+                    ON occurrence.canonical_entity_id = bound.canonical_entity_id
                 JOIN source_entity_occurrence_binding source_binding
                     ON source_binding.canonical_source_occurrence_id = occurrence.canonical_source_occurrence_id;
                 """;
@@ -310,38 +330,96 @@ internal static class CanonicalRuleBindingStore
             return new Dictionary<Guid, IReadOnlyList<Guid>>();
         }
 
+        await EnsureSchemaAsync(dbContext, cancellationToken);
         var canonicalIds = canonicalBySource.Values.Distinct().ToArray();
-        var bindings = await dbContext.RuleConceptSourceBindings
-            .AsNoTracking()
-            .Where(value => canonicalIds.Contains(value.CanonicalEntityId))
-            .Select(value => new { value.CanonicalEntityId, value.RuleConceptId })
-            .ToArrayAsync(cancellationToken);
-        var conceptIdsByCanonical = bindings
-            .GroupBy(value => value.CanonicalEntityId)
-            .ToDictionary(
-                group => group.Key,
-                group => (IReadOnlyList<Guid>)group
-                    .Select(value => value.RuleConceptId)
-                    .Distinct()
-                    .OrderBy(value => value)
-                    .ToArray());
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync(cancellationToken);
+        try
+        {
+            await using var command = connection.CreateCommand();
+            var placeholders = AddGuidList(command, "canonical", canonicalIds);
+            command.CommandText = $"""
+                WITH RECURSIVE concept_entities(rule_concept_id, canonical_entity_id) AS (
+                    SELECT rule_concept_id, canonical_entity_id
+                    FROM rule_concept_source_binding
+                    UNION
+                    SELECT parent.rule_concept_id, relationship.to_canonical_entity_id
+                    FROM canonical_entity_relationship relationship
+                    JOIN concept_entities parent
+                        ON parent.canonical_entity_id = relationship.from_canonical_entity_id
+                    WHERE relationship.relationship_kind = 'revision'
+                )
+                SELECT canonical_entity_id, rule_concept_id
+                FROM concept_entities
+                WHERE canonical_entity_id IN ({string.Join(", ", placeholders)})
+                ORDER BY canonical_entity_id, rule_concept_id;
+                """;
+            var conceptIdsByCanonical = new Dictionary<Guid, List<Guid>>();
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                var canonicalId = reader.GetGuid(0);
+                var conceptId = reader.GetGuid(1);
+                if (!conceptIdsByCanonical.TryGetValue(canonicalId, out var list))
+                {
+                    list = [];
+                    conceptIdsByCanonical[canonicalId] = list;
+                }
+                if (!list.Contains(conceptId)) list.Add(conceptId);
+            }
 
-        return canonicalBySource.ToDictionary(
-            pair => pair.Key,
-            pair => conceptIdsByCanonical.GetValueOrDefault(pair.Value, Array.Empty<Guid>()));
+            return canonicalBySource.ToDictionary(
+                pair => pair.Key,
+                pair => (IReadOnlyList<Guid>)(conceptIdsByCanonical.TryGetValue(pair.Value, out var list)
+                    ? list.OrderBy(value => value).ToArray()
+                    : Array.Empty<Guid>()));
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
     }
 
     private static async Task<bool> IsCanonicalEntityBoundAsync(
         RulesCoreDbContext dbContext,
         Guid ruleConceptId,
         Guid canonicalEntityId,
-        CancellationToken cancellationToken) =>
-        await dbContext.RuleConceptSourceBindings
-            .AsNoTracking()
-            .AnyAsync(
-                value => value.RuleConceptId == ruleConceptId
-                    && value.CanonicalEntityId == canonicalEntityId,
-                cancellationToken);
+        CancellationToken cancellationToken)
+    {
+        await EnsureSchemaAsync(dbContext, cancellationToken);
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync(cancellationToken);
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                WITH RECURSIVE concept_entities(canonical_entity_id) AS (
+                    SELECT canonical_entity_id
+                    FROM rule_concept_source_binding
+                    WHERE rule_concept_id = @concept_id
+                    UNION
+                    SELECT relationship.to_canonical_entity_id
+                    FROM canonical_entity_relationship relationship
+                    JOIN concept_entities parent
+                        ON parent.canonical_entity_id = relationship.from_canonical_entity_id
+                    WHERE relationship.relationship_kind = 'revision'
+                )
+                SELECT EXISTS (
+                    SELECT 1
+                    FROM concept_entities
+                    WHERE canonical_entity_id = @canonical_entity_id);
+                """;
+            AddParameter(command, "@concept_id", ruleConceptId);
+            AddParameter(command, "@canonical_entity_id", canonicalEntityId);
+            return (bool)(await command.ExecuteScalarAsync(cancellationToken) ?? false);
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
 
     private static string[] AddGuidList(DbCommand command, string prefix, IReadOnlyList<Guid> values)
     {

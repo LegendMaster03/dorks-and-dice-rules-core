@@ -33,6 +33,28 @@ internal static class RulesCoreCurrentSchema
         CREATE INDEX IF NOT EXISTS ix_canonical_entity_semantic_fingerprint
             ON canonical_entity(semantic_fingerprint);
 
+        CREATE TABLE IF NOT EXISTS canonical_entity_relationship (
+            canonical_entity_relationship_id uuid NOT NULL,
+            from_canonical_entity_id uuid NOT NULL,
+            to_canonical_entity_id uuid NOT NULL,
+            relationship_kind varchar(40) NOT NULL,
+            evidence_kind varchar(100) NOT NULL,
+            confidence double precision NOT NULL,
+            created_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_canonical_entity_relationship PRIMARY KEY (canonical_entity_relationship_id),
+            CONSTRAINT fk_canonical_entity_relationship_from FOREIGN KEY (from_canonical_entity_id)
+                REFERENCES canonical_entity(canonical_entity_id) ON DELETE CASCADE,
+            CONSTRAINT fk_canonical_entity_relationship_to FOREIGN KEY (to_canonical_entity_id)
+                REFERENCES canonical_entity(canonical_entity_id) ON DELETE CASCADE,
+            CONSTRAINT ck_canonical_entity_relationship_distinct CHECK (from_canonical_entity_id <> to_canonical_entity_id),
+            CONSTRAINT ck_canonical_entity_relationship_kind CHECK (
+                relationship_kind IN ('revision', 'reprint', 'rename', 'variant')),
+            CONSTRAINT ck_canonical_entity_relationship_confidence CHECK (confidence >= 0 AND confidence <= 1));
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_canonical_entity_relationship_identity
+            ON canonical_entity_relationship(from_canonical_entity_id, to_canonical_entity_id, relationship_kind);
+        CREATE INDEX IF NOT EXISTS ix_canonical_entity_relationship_to
+            ON canonical_entity_relationship(to_canonical_entity_id, relationship_kind);
+
         ALTER TABLE canonical_source_occurrence
             ADD COLUMN IF NOT EXISTS canonical_entity_id uuid NULL;
         DO $$

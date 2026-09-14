@@ -57,12 +57,17 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
 
         var canonicalEntities = new CanonicalEntityStore(dbContext);
         await canonicalEntities.EnsureSchemaAsync(cancellationToken);
+        var priorAssociation = await FindPriorCanonicalAssociationAsync(
+            sourceEntityId,
+            sourceEntityRevisionId,
+            cancellationToken);
         var semanticOccurrence = await FindUniqueSemanticOccurrenceAsync(
             publication.Id,
             occurrenceEvidence,
             cancellationToken);
 
         Guid occurrenceId;
+        Guid canonicalEntityId;
         string occurrenceMatchKind;
         double confidence;
         if (semanticOccurrence is not null)
@@ -77,36 +82,60 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
                         Name = semanticOccurrence.DisplayName
                     },
                     cancellationToken);
+                canonicalEntityId = legacyEntity.Id;
                 await SetOccurrenceCanonicalEntityAsync(
                     occurrenceId,
-                    legacyEntity.Id,
+                    canonicalEntityId,
                     cancellationToken);
+            }
+            else
+            {
+                canonicalEntityId = semanticOccurrence.CanonicalEntityId.Value;
             }
             occurrenceMatchKind = "semantic-fingerprint";
             confidence = 0.99;
         }
         else
         {
-            var inheritedCanonicalEntityId = await FindPriorCanonicalEntityIdAsync(
-                sourceEntityId,
-                sourceEntityRevisionId,
-                occurrenceEvidence.SemanticFingerprint,
-                cancellationToken);
+            var normalizedFingerprint = occurrenceEvidence.SemanticFingerprint.Trim().ToLowerInvariant();
+            var inheritedCanonicalEntityId = priorAssociation is not null
+                && string.Equals(
+                    priorAssociation.SemanticFingerprint,
+                    normalizedFingerprint,
+                    StringComparison.Ordinal)
+                ? priorAssociation.CanonicalEntityId
+                : (Guid?)null;
             var canonicalEntity = inheritedCanonicalEntityId.HasValue
                 ? await canonicalEntities.ReadAsync(inheritedCanonicalEntityId.Value, cancellationToken)
                     ?? throw new InvalidOperationException(
                         $"Canonical entity '{inheritedCanonicalEntityId.Value}' referenced by source history no longer exists.")
                 : await canonicalEntities.ResolveAsync(occurrenceEvidence, cancellationToken);
+            canonicalEntityId = canonicalEntity.Id;
 
             occurrenceId = await ResolveOccurrenceAsync(
                 publication.Id,
-                canonicalEntity.Id,
+                canonicalEntityId,
                 occurrenceEvidence,
                 cancellationToken);
             occurrenceMatchKind = inheritedCanonicalEntityId.HasValue
                 ? "source-revision-lineage"
                 : "identity-key";
             confidence = 1.0;
+        }
+
+        if (priorAssociation is not null
+            && priorAssociation.CanonicalEntityId != canonicalEntityId
+            && !string.Equals(
+                priorAssociation.SemanticFingerprint,
+                occurrenceEvidence.SemanticFingerprint.Trim().ToLowerInvariant(),
+                StringComparison.Ordinal))
+        {
+            await new CanonicalEntityRelationshipStore(dbContext).RelateRevisionAsync(
+                priorAssociation.CanonicalEntityId,
+                canonicalEntityId,
+                "source-revision-lineage",
+                1.0,
+                cancellationToken);
         }
 
         await BindAsync(
@@ -289,13 +318,11 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
         }
     }
 
-    private async Task<Guid?> FindPriorCanonicalEntityIdAsync(
+    private async Task<PriorCanonicalAssociation?> FindPriorCanonicalAssociationAsync(
         Guid sourceEntityId,
         Guid currentRevisionId,
-        string semanticFingerprint,
         CancellationToken cancellationToken)
     {
-        var normalizedFingerprint = semanticFingerprint.Trim().ToLowerInvariant();
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
         if (openedHere)
@@ -307,7 +334,7 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
         {
             await using var command = connection.CreateCommand();
             command.CommandText = """
-                SELECT occurrence.canonical_entity_id
+                SELECT occurrence.canonical_entity_id, binding.semantic_fingerprint
                 FROM source_entity_revision revision
                 JOIN source_entity_occurrence_binding binding
                     ON binding.source_entity_revision_id = revision.source_entity_revision_id
@@ -315,16 +342,16 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
                     ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
                 WHERE revision.source_entity_id = @source_entity_id
                     AND revision.source_entity_revision_id <> @current_revision_id
-                    AND binding.semantic_fingerprint = @semantic_fingerprint
                     AND occurrence.canonical_entity_id IS NOT NULL
                 ORDER BY revision.revision_number DESC
                 LIMIT 1;
                 """;
             AddParameter(command, "@source_entity_id", sourceEntityId);
             AddParameter(command, "@current_revision_id", currentRevisionId);
-            AddParameter(command, "@semantic_fingerprint", normalizedFingerprint);
-            var value = await command.ExecuteScalarAsync(cancellationToken);
-            return value is Guid id ? id : null;
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            return await reader.ReadAsync(cancellationToken)
+                ? new PriorCanonicalAssociation(reader.GetGuid(0), reader.GetString(1))
+                : null;
         }
         finally
         {
@@ -484,4 +511,8 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
         Guid? CanonicalEntityId,
         string EntityType,
         string DisplayName);
+
+    private sealed record PriorCanonicalAssociation(
+        Guid CanonicalEntityId,
+        string SemanticFingerprint);
 }

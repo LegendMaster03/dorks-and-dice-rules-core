@@ -2,8 +2,10 @@ using System.Data;
 using System.Data.Common;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Rules;
 using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.IntegrationTests;
@@ -39,11 +41,12 @@ public sealed class CanonicalRevisionIdentityIntegrationTests
             Assert.NotEqual(bindings[0].OccurrenceId, bindings[1].OccurrenceId);
             Assert.Equal(bindings[0].SemanticFingerprint, bindings[1].SemanticFingerprint);
             Assert.EndsWith(":source-revision-lineage", bindings[1].MatchKind, StringComparison.Ordinal);
+            Assert.Empty(await ReadRelationshipsAsync(db, bindings[0].CanonicalEntityId, bindings[1].CanonicalEntityId));
         }
     }
 
     [Fact]
-    public async Task MechanicallyChangedRevisionDoesNotInheritPriorCanonicalEntity()
+    public async Task MechanicallyChangedRevisionCreatesExplicitRevisionRelationship()
     {
         var db = await OpenDatabaseAsync();
         if (db is null) return;
@@ -70,6 +73,101 @@ public sealed class CanonicalRevisionIdentityIntegrationTests
             Assert.NotEqual(bindings[0].CanonicalEntityId, bindings[1].CanonicalEntityId);
             Assert.NotEqual(bindings[0].OccurrenceId, bindings[1].OccurrenceId);
             Assert.EndsWith(":identity-key", bindings[1].MatchKind, StringComparison.Ordinal);
+
+            var relationship = Assert.Single(await ReadRelationshipsAsync(
+                db,
+                bindings[0].CanonicalEntityId,
+                bindings[1].CanonicalEntityId));
+            Assert.Equal("revision", relationship.Kind);
+            Assert.Equal("source-revision-lineage", relationship.EvidenceKind);
+            Assert.Equal(1.0, relationship.Confidence);
+        }
+    }
+
+    [Fact]
+    public async Task VariantRelationshipDoesNotExtendRuleConceptBinding()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var packageKey = $"canonical-variant-{token}";
+            var importer = new NormalizedSourceImportService(db);
+            var actor = $"variant-actor-{token}";
+            Guid conceptId = Guid.Empty;
+
+            try
+            {
+                var first = await importer.ImportAsync(Request(
+                    packageKey,
+                    token,
+                    "{\"name\":\"Variant Rule\",\"source\":\"VAR\",\"page\":30,\"effect\":\"Gain a +2 bonus.\"}",
+                    "page:30",
+                    isPublic: true));
+                var sourceEntityId = Assert.Single(first.Entities).EntityId;
+
+                var rules = new GlobalRulesService(db);
+                var concept = (await rules.CreateConceptAsync(
+                    new CreateRuleConceptRequest($"variant-{token}", "rule", $"Variant Rule {token}"),
+                    actor)).Value;
+                conceptId = concept.Id;
+                await rules.BindSourceEntityAsync(
+                    concept.Id,
+                    new BindRuleConceptSourceRequest(sourceEntityId),
+                    actor);
+
+                await importer.ImportAsync(Request(
+                    packageKey,
+                    token,
+                    "{\"name\":\"Variant Rule\",\"source\":\"VAR\",\"page\":30,\"effect\":\"Gain a +3 bonus.\"}",
+                    "page:30",
+                    isPublic: true));
+
+                var bindings = await ReadBindingsAsync(db, packageKey);
+                Assert.Equal(2, bindings.Count);
+                Assert.NotEqual(bindings[0].CanonicalEntityId, bindings[1].CanonicalEntityId);
+                var revisionRelationship = Assert.Single(await ReadRelationshipsAsync(
+                    db,
+                    bindings[0].CanonicalEntityId,
+                    bindings[1].CanonicalEntityId));
+                Assert.Equal("revision", revisionRelationship.Kind);
+
+                await SetRelationshipKindAsync(
+                    db,
+                    bindings[0].CanonicalEntityId,
+                    bindings[1].CanonicalEntityId,
+                    "variant");
+
+                var revision2Id = await db.SourceEntityRevisions
+                    .Where(value => value.SourceEntityId == sourceEntityId && value.RevisionNumber == 2)
+                    .Select(value => value.Id)
+                    .SingleAsync();
+                var exception = await Assert.ThrowsAsync<InvalidOperationException>(() =>
+                    rules.SetDecisionAsync(
+                        concept.Id,
+                        new SetGlobalRuleDecisionRequest(revision2Id, "Variants require an explicit Rules binding."),
+                        actor));
+                Assert.Contains("not bound to this rule concept", exception.Message, StringComparison.Ordinal);
+            }
+            finally
+            {
+                if (conceptId != Guid.Empty)
+                {
+                    await db.GlobalRuleDecisions
+                        .Where(value => value.RuleConceptId == conceptId)
+                        .ExecuteDeleteAsync();
+                    await db.RuleConceptSourceBindings
+                        .Where(value => value.RuleConceptId == conceptId)
+                        .ExecuteDeleteAsync();
+                    await db.RuleConcepts
+                        .Where(value => value.Id == conceptId)
+                        .ExecuteDeleteAsync();
+                }
+                await db.SourcePackages
+                    .Where(value => value.Key == packageKey)
+                    .ExecuteDeleteAsync();
+            }
         }
     }
 
@@ -77,15 +175,18 @@ public sealed class CanonicalRevisionIdentityIntegrationTests
         string packageKey,
         string token,
         string rawJson,
-        string locator)
+        string locator,
+        bool isPublic = false)
     {
         var publicationKey = $"publication-{token}";
+        var isLineage = rawJson.Contains("Lineage Rule", StringComparison.Ordinal);
+        var isVariant = rawJson.Contains("Variant Rule", StringComparison.Ordinal);
         return new ImportNormalizedSourceRequest(
             packageKey,
             $"Canonical revision package {token}",
             "integration-test",
             License: "test-only",
-            IsPublic: false,
+            IsPublic: isPublic,
             new NormalizedSourceRepresentation(
                 FiveEToolsSourceFormatAdapter.Format,
                 new SourceRepresentationArtifact(
@@ -94,8 +195,8 @@ public sealed class CanonicalRevisionIdentityIntegrationTests
                     $"integration:canonical-revision:{token}"),
                 [new NormalizedSourceRecord(
                     "rule",
-                    rawJson.Contains("Lineage Rule", StringComparison.Ordinal) ? "Lineage Rule" : "Revision Rule",
-                    rawJson.Contains("\"LIN\"", StringComparison.Ordinal) ? "LIN" : "REV",
+                    isLineage ? "Lineage Rule" : isVariant ? "Variant Rule" : "Revision Rule",
+                    isLineage ? "LIN" : isVariant ? "VAR" : "REV",
                     NativeKey: $"rule|{token}",
                     RawJson: rawJson,
                     LocatorKey: locator,
@@ -161,6 +262,72 @@ public sealed class CanonicalRevisionIdentityIntegrationTests
         }
     }
 
+    private static async Task<IReadOnlyList<RelationshipRow>> ReadRelationshipsAsync(
+        RulesCoreDbContext db,
+        Guid fromCanonicalEntityId,
+        Guid toCanonicalEntityId)
+    {
+        var connection = db.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync();
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT relationship_kind, evidence_kind, confidence
+                FROM canonical_entity_relationship
+                WHERE from_canonical_entity_id = @from_id
+                    AND to_canonical_entity_id = @to_id
+                ORDER BY relationship_kind;
+                """;
+            AddParameter(command, "@from_id", fromCanonicalEntityId);
+            AddParameter(command, "@to_id", toCanonicalEntityId);
+            var rows = new List<RelationshipRow>();
+            await using var reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                rows.Add(new RelationshipRow(
+                    reader.GetString(0),
+                    reader.GetString(1),
+                    reader.GetDouble(2)));
+            }
+            return rows;
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
+    private static async Task SetRelationshipKindAsync(
+        RulesCoreDbContext db,
+        Guid fromCanonicalEntityId,
+        Guid toCanonicalEntityId,
+        string kind)
+    {
+        var connection = db.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync();
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                UPDATE canonical_entity_relationship
+                SET relationship_kind = @kind
+                WHERE from_canonical_entity_id = @from_id
+                    AND to_canonical_entity_id = @to_id;
+                """;
+            AddParameter(command, "@kind", kind);
+            AddParameter(command, "@from_id", fromCanonicalEntityId);
+            AddParameter(command, "@to_id", toCanonicalEntityId);
+            Assert.Equal(1, await command.ExecuteNonQueryAsync());
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
     private static async Task<RulesCoreDbContext?> OpenDatabaseAsync()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
@@ -185,4 +352,9 @@ public sealed class CanonicalRevisionIdentityIntegrationTests
         Guid OccurrenceId,
         string SemanticFingerprint,
         string MatchKind);
+
+    private sealed record RelationshipRow(
+        string Kind,
+        string EvidenceKind,
+        double Confidence);
 }
