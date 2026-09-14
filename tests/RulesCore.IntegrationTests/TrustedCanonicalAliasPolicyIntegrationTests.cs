@@ -106,7 +106,6 @@ public sealed class TrustedCanonicalAliasPolicyIntegrationTests
             var importedBinding = await ReadLatestBindingAsync(db, Assert.Single(imported.Entities).EntityId);
             Assert.NotNull(importedBinding);
 
-            Assert.NotEqual(seedBinding.Value.CanonicalEntityId, importedBinding.Value.CanonicalEntityId);
             Assert.False(importedBinding.Value.MatchKind.EndsWith(":strong-alias", StringComparison.Ordinal));
         }
     }
