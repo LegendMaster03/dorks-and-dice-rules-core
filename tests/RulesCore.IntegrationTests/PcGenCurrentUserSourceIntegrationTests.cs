@@ -38,10 +38,11 @@ public sealed class PcGenCurrentUserSourceIntegrationTests
             });
         });
         using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
-        var pcGen = """
-            SOURCELONG:Representative 3.5 Source\tSOURCESHORT:R35
-            Arc Spark\tTYPE:Arcane\tSCHOOL:Evocation\tDESC:Representative source text.
-            """;
+        var pcGen = string.Join('\n',
+        [
+            "SOURCELONG:Representative 3.5 Source\tSOURCESHORT:R35",
+            "Arc Spark\tTYPE:Arcane\tSCHOOL:Evocation\tDESC:Representative source text."
+        ]);
         var payload = new AddCurrentUserSourceRequest(
             CurrentUserSourceKinds.Upload,
             FileName: "representative_spells.lst",

@@ -25,11 +25,12 @@ public sealed class PcGenSourceFormatAdapterIntegrationTests
             """);
         var spells = Artifact(
             "data/35e/example/spells/example_spells.lst",
-            """
-            SOURCELONG:Example Revised Rulebook\tSOURCESHORT:EX35
-            Arc Spark\tTYPE:Arcane\tSCHOOL:Evocation\tCUSTOMTAG:One\tCUSTOMTAG:Two\tDESC:A line Rules Core must preserve.
-            Arc Spark\tTYPE:Arcane\tVARIANT:Greater\tDESC:A second same-named native entry.
-            """);
+            string.Join('\n',
+            [
+                "SOURCELONG:Example Revised Rulebook\tSOURCESHORT:EX35",
+                "Arc Spark\tTYPE:Arcane\tSCHOOL:Evocation\tCUSTOMTAG:One\tCUSTOMTAG:Two\tDESC:A line Rules Core must preserve.",
+                "Arc Spark\tTYPE:Arcane\tVARIANT:Greater\tDESC:A second same-named native entry."
+            ]));
 
         var representations = adapter.TryReadMany([campaign, spells]);
 
@@ -182,11 +183,12 @@ public sealed class PcGenSourceFormatAdapterIntegrationTests
             """);
         var list = Artifact(
             "data/35e/example/operations_skills.lst",
-            """
-            Camel.COPY=Camel (Old Nag)
-            Balance.MOD\tBONUS:SKILL|Balance|1
-            Knowledge (Local).FORGET
-            """);
+            string.Join('\n',
+            [
+                "Camel.COPY=Camel (Old Nag)",
+                "Balance.MOD\tBONUS:SKILL|Balance|1",
+                "Knowledge (Local).FORGET"
+            ]));
 
         var representation = adapter.TryReadMany([campaign, list])
             .Single(value => value.Artifact.FileName == "operations_skills.lst");
@@ -230,10 +232,11 @@ public sealed class PcGenSourceFormatAdapterIntegrationTests
             """);
         var classes = Artifact(
             "data/35e/example/example_classes.lst",
-            """
-            CLASS:Example Class\tHD:8\tTYPE:Base.PC
-            CLASS:Example Class\tSTARTSKILLPTS:4
-            """);
+            string.Join('\n',
+            [
+                "CLASS:Example Class\tHD:8\tTYPE:Base.PC",
+                "CLASS:Example Class\tSTARTSKILLPTS:4"
+            ]));
 
         var representation = adapter.TryReadMany([campaign, classes])
             .Single(value => value.Artifact.FileName == "example_classes.lst");
