@@ -60,6 +60,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
 
         var allImportedEntities = new List<ImportedSourceEntity>();
         var importedPublications = new List<ImportedNormalizedPublication>();
+        var reconciliationIssues = new List<NormalizedSourceReconciliationIssue>();
         var persisted = new List<(SourceEntity Entity, SourceEntityRevision Revision, NormalizedSourceRecord Record)>();
 
         foreach (var record in request.Representation.Records)
@@ -143,6 +144,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
             .Select(group => group.Single())
             .ToDictionary(value => value.LocalKey, StringComparer.OrdinalIgnoreCase);
 
+        var publicationIndex = 0;
         foreach (var publication in publicationEvidence.Values)
         {
             var records = persisted
@@ -162,55 +164,72 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
                 publication.PublicationDate,
                 publication.ExternalIdentifiers,
                 fingerprints);
+            var savepointName = $"canonical_reconciliation_{publicationIndex++}";
+            await transaction.CreateSavepointAsync(savepointName, cancellationToken);
 
-            Guid? canonicalPublicationId = null;
-            foreach (var value in records)
+            try
             {
-                var semanticFingerprint = CanonicalSourceIdentity.SemanticFingerprint(
-                    SemanticDocument(value.Record));
-                var association = await new CanonicalSourceRepresentationService(dbContext)
-                    .AssociateSourceEntityAsync(
-                        value.Entity.Id,
-                        value.Revision.Id,
-                        evidence,
-                        new CanonicalSourceOccurrenceEvidence(
-                            value.Record.EntityType,
-                            value.Record.Name,
-                            value.Record.LocatorKey,
-                            semanticFingerprint),
-                        request.Representation.FormatKey,
-                        cancellationToken,
-                        value.Record.CanonicalAliases);
-                canonicalPublicationId ??= association.Publication.Id;
-                if (canonicalPublicationId != association.Publication.Id)
+                Guid? canonicalPublicationId = null;
+                foreach (var value in records)
                 {
-                    throw new InvalidOperationException(
-                        "One publication-evidence group unexpectedly resolved to multiple canonical publications.");
+                    var semanticFingerprint = CanonicalSourceIdentity.SemanticFingerprint(
+                        SemanticDocument(value.Record));
+                    var association = await new CanonicalSourceRepresentationService(dbContext)
+                        .AssociateSourceEntityAsync(
+                            value.Entity.Id,
+                            value.Revision.Id,
+                            evidence,
+                            new CanonicalSourceOccurrenceEvidence(
+                                value.Record.EntityType,
+                                value.Record.Name,
+                                value.Record.LocatorKey,
+                                semanticFingerprint),
+                            request.Representation.FormatKey,
+                            cancellationToken,
+                            value.Record.CanonicalAliases);
+                    canonicalPublicationId ??= association.Publication.Id;
+                    if (canonicalPublicationId != association.Publication.Id)
+                    {
+                        throw new CanonicalReconciliationConflictException(
+                            "One publication-evidence group unexpectedly resolved to multiple canonical publications.");
+                    }
                 }
-            }
 
-            if (canonicalPublicationId is null)
+                if (canonicalPublicationId is null)
+                {
+                    canonicalPublicationId = (await new CanonicalPublicationIdentityService(dbContext)
+                        .ResolveAsync(evidence, cancellationToken)).Id;
+                }
+
+                await new CanonicalPublicationEvidenceReconciliationService(dbContext).ReconcileAsync(
+                    canonicalPublicationId.Value,
+                    representation.Id,
+                    evidence,
+                    cancellationToken);
+                await LinkRepresentationPublicationAsync(
+                    representation.Id,
+                    canonicalPublicationId.Value,
+                    publication.LocalKey,
+                    cancellationToken);
+
+                importedPublications.Add(new ImportedNormalizedPublication(
+                    canonicalPublicationId.Value,
+                    publication.LocalKey,
+                    publication.DisplayName,
+                    records.Length));
+                await transaction.ReleaseSavepointAsync(savepointName, cancellationToken);
+            }
+            catch (CanonicalReconciliationConflictException exception)
             {
-                canonicalPublicationId = (await new CanonicalPublicationIdentityService(dbContext)
-                    .ResolveAsync(evidence, cancellationToken)).Id;
+                await transaction.RollbackToSavepointAsync(savepointName, cancellationToken);
+                await transaction.ReleaseSavepointAsync(savepointName, cancellationToken);
+                reconciliationIssues.Add(new NormalizedSourceReconciliationIssue(
+                    NormalizedSourceReconciliationIssueKinds.CanonicalIdentityConflict,
+                    publication.LocalKey,
+                    publication.DisplayName,
+                    records.Select(value => value.Entity.Id).Distinct().ToArray(),
+                    exception.Message));
             }
-
-            await new CanonicalPublicationEvidenceReconciliationService(dbContext).ReconcileAsync(
-                canonicalPublicationId.Value,
-                representation.Id,
-                evidence,
-                cancellationToken);
-            await LinkRepresentationPublicationAsync(
-                representation.Id,
-                canonicalPublicationId.Value,
-                publication.LocalKey,
-                cancellationToken);
-
-            importedPublications.Add(new ImportedNormalizedPublication(
-                canonicalPublicationId.Value,
-                publication.LocalKey,
-                publication.DisplayName,
-                records.Length));
         }
 
         await transaction.CommitAsync(cancellationToken);
@@ -225,7 +244,10 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
                 .Cast<string>()
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
-                .ToArray());
+                .ToArray())
+        {
+            ReconciliationIssues = reconciliationIssues
+        };
     }
 
     private async Task<SourceRepresentation> StoreRepresentationAsync(

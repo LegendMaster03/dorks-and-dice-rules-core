@@ -74,6 +74,7 @@ public sealed class CanonicalEntityAliasIntegrationTests
             Assert.NotEqual(firstBinding.Value.SemanticFingerprint, secondBinding.Value.SemanticFingerprint);
             Assert.Equal(firstBinding.Value.CanonicalEntityId, secondBinding.Value.CanonicalEntityId);
             Assert.EndsWith(":strong-alias", secondBinding.Value.MatchKind, StringComparison.Ordinal);
+            Assert.Empty(second.ReconciliationIssues);
         }
     }
 
@@ -134,7 +135,7 @@ public sealed class CanonicalEntityAliasIntegrationTests
     }
 
     [Fact]
-    public async Task StrongAliasCanNotCollapseMechanicalRevisionIntoPriorCanonicalEntity()
+    public async Task CanonicalConflictPreservesNativeRevisionAndCanReconcileOnRetry()
     {
         var db = await OpenDatabaseAsync();
         if (db is null) return;
@@ -144,8 +145,10 @@ public sealed class CanonicalEntityAliasIntegrationTests
             var importer = new NormalizedSourceImportService(db);
             var packageKey = $"alias-revision-{token}";
             var name = $"Revision Alias Rule {token}";
+            var originIdentity = $"test:{packageKey}";
             var firstSemantic = "{\"effect\":\"Gain a +2 bonus.\"}";
             var secondSemantic = "{\"effect\":\"Gain a +3 bonus.\"}";
+            const string secondRaw = "{\"effect\":\"Gain a +3 bonus.\",\"page\":1}";
 
             var first = await importer.ImportAsync(Request(
                 packageKey,
@@ -154,8 +157,9 @@ public sealed class CanonicalEntityAliasIntegrationTests
                 "stable-native-key",
                 "{\"effect\":\"Gain a +2 bonus.\",\"page\":1}",
                 firstSemantic,
-                originIdentity: $"test:{packageKey}"));
-            var firstBinding = await ReadLatestBindingAsync(db, Assert.Single(first.Entities).EntityId);
+                originIdentity: originIdentity));
+            var firstEntity = Assert.Single(first.Entities);
+            var firstBinding = await ReadLatestBindingAsync(db, firstEntity.EntityId);
             Assert.NotNull(firstBinding);
 
             var scheme = $"revision-{token}";
@@ -169,17 +173,62 @@ public sealed class CanonicalEntityAliasIntegrationTests
                 "deliberately-invalid-collapse-fixture",
                 1.0);
 
-            var exception = await Assert.ThrowsAsync<InvalidOperationException>(() =>
-                importer.ImportAsync(Request(
-                    packageKey,
-                    "fixture-revision-format",
-                    name,
-                    "stable-native-key",
-                    "{\"effect\":\"Gain a +3 bonus.\",\"page\":1}",
-                    secondSemantic,
-                    new Dictionary<string, string> { [scheme] = aliasValue },
-                    originIdentity: $"test:{packageKey}")));
-            Assert.Contains("can not collapse", exception.Message, StringComparison.Ordinal);
+            var conflicted = await importer.ImportAsync(Request(
+                packageKey,
+                "fixture-revision-format",
+                name,
+                "stable-native-key",
+                secondRaw,
+                secondSemantic,
+                new Dictionary<string, string> { [scheme] = aliasValue },
+                originIdentity));
+
+            var conflictedEntity = Assert.Single(conflicted.Entities);
+            Assert.Equal(firstEntity.EntityId, conflictedEntity.EntityId);
+            Assert.True(conflictedEntity.CreatedRevision);
+            Assert.Equal(2, conflictedEntity.RevisionNumber);
+            Assert.Empty(conflicted.Publications);
+            var issue = Assert.Single(conflicted.ReconciliationIssues);
+            Assert.Equal(NormalizedSourceReconciliationIssueKinds.CanonicalIdentityConflict, issue.Kind);
+            Assert.Equal("canonical-alias-book", issue.PublicationLocalKey);
+            Assert.Equal("Canonical Alias Fixture Book", issue.PublicationDisplayName);
+            Assert.Contains(firstEntity.EntityId, issue.SourceEntityIds);
+            Assert.Contains("can not collapse", issue.Message, StringComparison.Ordinal);
+
+            var secondRevisionId = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == firstEntity.EntityId && value.RevisionNumber == 2)
+                .Select(value => value.Id)
+                .SingleAsync();
+            Assert.Null(await ReadBindingForRevisionAsync(db, secondRevisionId));
+            Assert.Equal(2, await db.SourceRepresentations.CountAsync(
+                value => value.SourcePackageId == first.PackageId));
+            Assert.Equal(2, await db.SourceEntityRevisions.CountAsync(
+                value => value.SourceEntityId == firstEntity.EntityId));
+
+            var retried = await importer.ImportAsync(Request(
+                packageKey,
+                "fixture-revision-format",
+                name,
+                "stable-native-key",
+                secondRaw,
+                secondSemantic,
+                aliases: null,
+                originIdentity));
+
+            var retriedEntity = Assert.Single(retried.Entities);
+            Assert.Equal(firstEntity.EntityId, retriedEntity.EntityId);
+            Assert.False(retriedEntity.CreatedRevision);
+            Assert.Equal(2, retriedEntity.RevisionNumber);
+            Assert.Empty(retried.ReconciliationIssues);
+            Assert.Single(retried.Publications);
+            Assert.Equal(2, await db.SourceRepresentations.CountAsync(
+                value => value.SourcePackageId == first.PackageId));
+            Assert.Equal(2, await db.SourceEntityRevisions.CountAsync(
+                value => value.SourceEntityId == firstEntity.EntityId));
+
+            var secondBinding = await ReadBindingForRevisionAsync(db, secondRevisionId);
+            Assert.NotNull(secondBinding);
+            Assert.NotEqual(firstBinding.Value.CanonicalEntityId, secondBinding.Value.CanonicalEntityId);
         }
     }
 
@@ -251,6 +300,37 @@ public sealed class CanonicalEntityAliasIntegrationTests
                 LIMIT 1;
                 """;
             AddParameter(command, "@source_entity_id", sourceEntityId);
+            await using var reader = await command.ExecuteReaderAsync();
+            return await reader.ReadAsync()
+                ? (reader.GetGuid(0), reader.GetString(1), reader.GetString(2))
+                : null;
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
+    private static async Task<(Guid CanonicalEntityId, string SemanticFingerprint, string MatchKind)?> ReadBindingForRevisionAsync(
+        RulesCoreDbContext db,
+        Guid sourceEntityRevisionId)
+    {
+        var connection = db.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync();
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT occurrence.canonical_entity_id, binding.semantic_fingerprint, binding.match_kind
+                FROM source_entity_occurrence_binding binding
+                JOIN canonical_source_occurrence occurrence
+                    ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
+                WHERE binding.source_entity_revision_id = @revision_id
+                    AND occurrence.canonical_entity_id IS NOT NULL
+                LIMIT 1;
+                """;
+            AddParameter(command, "@revision_id", sourceEntityRevisionId);
             await using var reader = await command.ExecuteReaderAsync();
             return await reader.ReadAsync()
                 ? (reader.GetGuid(0), reader.GetString(1), reader.GetString(2))

@@ -73,11 +73,26 @@ public sealed record ImportedNormalizedPublication(
     string DisplayName,
     int EntityCount);
 
+public static class NormalizedSourceReconciliationIssueKinds
+{
+    public const string CanonicalIdentityConflict = "canonical-identity-conflict";
+}
+
+public sealed record NormalizedSourceReconciliationIssue(
+    string Kind,
+    string PublicationLocalKey,
+    string PublicationDisplayName,
+    IReadOnlyList<Guid> SourceEntityIds,
+    string Message);
+
 public sealed record NormalizedSourceImportResult(
     Guid PackageId,
     IReadOnlyList<ImportedNormalizedPublication> Publications,
     IReadOnlyList<ImportedSourceEntity> Entities,
-    IReadOnlyList<string> SourceCodes);
+    IReadOnlyList<string> SourceCodes)
+{
+    public IReadOnlyList<NormalizedSourceReconciliationIssue> ReconciliationIssues { get; init; } = [];
+}
 
 public interface INormalizedSourceImportService
 {

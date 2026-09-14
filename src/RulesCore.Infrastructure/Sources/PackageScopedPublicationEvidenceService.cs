@@ -116,10 +116,6 @@ internal sealed class PackageScopedPublicationEvidenceService(RulesCoreDbContext
             }
             return results;
         }
-        catch (DbException)
-        {
-            return [];
-        }
         finally
         {
             if (openedHere)

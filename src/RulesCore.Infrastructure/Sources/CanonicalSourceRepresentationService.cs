@@ -78,12 +78,12 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
                 StringComparison.Ordinal);
             if (sameSourceSemantics && priorAssociation.CanonicalEntityId != aliasedCanonicalEntityId.Value)
             {
-                throw new InvalidOperationException(
+                throw new CanonicalReconciliationConflictException(
                     "A trusted canonical alias can not move an unchanged source revision to a different canonical entity.");
             }
             if (!sameSourceSemantics && priorAssociation.CanonicalEntityId == aliasedCanonicalEntityId.Value)
             {
-                throw new InvalidOperationException(
+                throw new CanonicalReconciliationConflictException(
                     "A trusted canonical alias can not collapse a mechanically changed source revision into its prior canonical entity.");
             }
         }
@@ -91,7 +91,7 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             && semanticOccurrence?.CanonicalEntityId is Guid semanticCanonicalEntityId
             && semanticCanonicalEntityId != aliasedCanonicalEntityId.Value)
         {
-            throw new InvalidOperationException(
+            throw new CanonicalReconciliationConflictException(
                 "Trusted source-lineage identity conflicts with an existing exact semantic occurrence.");
         }
 

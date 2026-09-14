@@ -204,7 +204,7 @@ public sealed class CanonicalEntityAliasStore(RulesCoreDbContext dbContext)
                 if (!candidate.HasValue) continue;
                 if (resolved.HasValue && resolved.Value != candidate.Value)
                 {
-                    throw new InvalidOperationException(
+                    throw new CanonicalReconciliationConflictException(
                         "Trusted source-lineage aliases for one source record resolve to conflicting canonical entities.");
                 }
                 resolved = candidate;
