@@ -51,6 +51,45 @@ internal static class RulesCoreCurrentSchema
         CREATE INDEX IF NOT EXISTS ix_canonical_entity_alias_entity
             ON canonical_entity_alias(canonical_entity_id);
 
+        CREATE TABLE IF NOT EXISTS canonical_bootstrap_reconciliation (
+            canonical_bootstrap_reconciliation_id uuid NOT NULL,
+            alias_scheme varchar(100) NOT NULL,
+            alias_value varchar(1000) NOT NULL,
+            semantic_fingerprint varchar(64) NOT NULL,
+            classification varchar(80) NOT NULL,
+            canonical_entity_id uuid NULL,
+            related_canonical_entity_id uuid NULL,
+            evidence_kind varchar(100) NOT NULL,
+            confidence double precision NOT NULL,
+            notes varchar(2000) NULL,
+            decided_by varchar(200) NOT NULL,
+            created_at timestamp with time zone NOT NULL,
+            updated_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_canonical_bootstrap_reconciliation PRIMARY KEY (canonical_bootstrap_reconciliation_id),
+            CONSTRAINT fk_canonical_bootstrap_reconciliation_entity FOREIGN KEY (canonical_entity_id)
+                REFERENCES canonical_entity(canonical_entity_id) ON DELETE CASCADE,
+            CONSTRAINT fk_canonical_bootstrap_reconciliation_related_entity FOREIGN KEY (related_canonical_entity_id)
+                REFERENCES canonical_entity(canonical_entity_id) ON DELETE CASCADE,
+            CONSTRAINT ck_canonical_bootstrap_reconciliation_classification CHECK (
+                classification IN (
+                    'exact-identity',
+                    'corroborated-exact-identity',
+                    'reprint',
+                    'revision',
+                    'rename',
+                    'variant',
+                    'same-name-different-entity',
+                    'bad-source-data',
+                    'parser-error',
+                    'unresolved')),
+            CONSTRAINT ck_canonical_bootstrap_reconciliation_confidence CHECK (confidence >= 0 AND confidence <= 1));
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_canonical_bootstrap_reconciliation_identity
+            ON canonical_bootstrap_reconciliation(alias_scheme, alias_value, semantic_fingerprint);
+        CREATE INDEX IF NOT EXISTS ix_canonical_bootstrap_reconciliation_entity
+            ON canonical_bootstrap_reconciliation(canonical_entity_id);
+        CREATE INDEX IF NOT EXISTS ix_canonical_bootstrap_reconciliation_related_entity
+            ON canonical_bootstrap_reconciliation(related_canonical_entity_id);
+
         CREATE TABLE IF NOT EXISTS canonical_entity_relationship (
             canonical_entity_relationship_id uuid NOT NULL,
             from_canonical_entity_id uuid NOT NULL,
