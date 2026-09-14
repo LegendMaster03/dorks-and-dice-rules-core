@@ -31,12 +31,17 @@ public sealed class RuleConceptSourceBinding
 {
     public Guid Id { get; set; }
     public Guid RuleConceptId { get; set; }
-    public Guid SourceEntityId { get; set; }
+    public Guid CanonicalEntityId { get; set; }
+
+    // Transitional provenance only. CanonicalEntityId is the binding identity. This may become
+    // null when the source package used to create the binding is removed.
+    public Guid? SourceEntityId { get; set; }
+
     public string CreatedByUserId { get; set; } = string.Empty;
     public DateTimeOffset CreatedAt { get; set; }
 
     public RuleConcept RuleConcept { get; set; } = null!;
-    public SourceEntity SourceEntity { get; set; } = null!;
+    public SourceEntity? SourceEntity { get; set; }
 }
 
 public sealed class GlobalRuleDecision
