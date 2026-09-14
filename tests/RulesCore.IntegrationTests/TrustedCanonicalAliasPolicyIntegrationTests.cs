@@ -141,8 +141,10 @@ public sealed class TrustedCanonicalAliasPolicyIntegrationTests
                     NativeKey: nativeKey,
                     RawJson: rawJson,
                     LocatorKey: "entry:1",
-                    PublicationLocalKey: publicationKey,
-                    SemanticJson: semanticJson)],
+                    PublicationLocalKey: publicationKey)
+                {
+                    ContentJson = semanticJson
+                }],
                 [new NormalizedSourcePublication(
                     publicationKey,
                     "Trusted Alias Fixture Book",

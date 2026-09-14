@@ -263,8 +263,10 @@ public sealed class CanonicalEntityAliasIntegrationTests
                     RawJson: rawJson,
                     LocatorKey: "entry:1",
                     PublicationLocalKey: publicationKey,
-                    SemanticJson: semanticJson,
-                    CanonicalAliases: aliases)],
+                    CanonicalAliases: aliases)
+                {
+                    ContentJson = semanticJson
+                }],
                 [new NormalizedSourcePublication(
                     publicationKey,
                     "Canonical Alias Fixture Book",

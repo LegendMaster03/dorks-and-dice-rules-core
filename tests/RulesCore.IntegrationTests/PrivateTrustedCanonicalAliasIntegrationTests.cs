@@ -145,13 +145,18 @@ public sealed class PrivateTrustedCanonicalAliasIntegrationTests
             var resolvedForB = await rules.ResolveLatestAsync(conceptKey, userB);
             Assert.NotNull(resolvedForB);
             Assert.Equal(entityB.EntityId, resolvedForB!.SourceEntityId);
-            Assert.Equal("user-b-own-copy", resolvedForB.Document.GetProperty("pcgenMarker").GetString());
+            Assert.Equal("feat", resolvedForB.Document.GetProperty("entityType").GetString());
+            Assert.Equal(
+                "COMBAT|DAMAGE|2",
+                resolvedForB.Document.GetProperty("segments")[0].GetProperty("Value").GetString());
             Assert.False(resolvedForB.Document.TryGetProperty("privateMarker", out _));
+            Assert.False(resolvedForB.Document.TryGetProperty("pcgenMarker", out _));
 
             var resolvedForA = await rules.ResolveLatestAsync(conceptKey, userA);
             Assert.NotNull(resolvedForA);
             Assert.Equal(entityA.EntityId, resolvedForA!.SourceEntityId);
-            Assert.Equal("user-a-private-copy", resolvedForA.Document.GetProperty("privateMarker").GetString());
+            Assert.Equal(2, resolvedForA.Document.GetProperty("mechanic").GetProperty("bonus").GetInt32());
+            Assert.False(resolvedForA.Document.TryGetProperty("privateMarker", out _));
             Assert.False(resolvedForA.Document.TryGetProperty("pcgenMarker", out _));
         }
         finally
@@ -216,8 +221,10 @@ public sealed class PrivateTrustedCanonicalAliasIntegrationTests
                     NativeKey: nativeKey,
                     RawJson: rawJson,
                     LocatorKey: "entry:1",
-                    PublicationLocalKey: publicationKey,
-                    SemanticJson: semanticJson)],
+                    PublicationLocalKey: publicationKey)
+                {
+                    ContentJson = semanticJson
+                }],
                 [new NormalizedSourcePublication(
                     publicationKey,
                     $"Private Trusted Alias Publication {entityName}",
