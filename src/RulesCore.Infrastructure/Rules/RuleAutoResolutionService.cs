@@ -203,6 +203,12 @@ public static class RuleAutoResolutionService
             return NotEligibleEvaluation("At least one canonical rule entity must be bound to the concept.");
         }
 
+        var revisionClosures = await new CanonicalEntityRevisionClosureStore(dbContext)
+            .ReadAsync(boundCanonicalEntityIds, cancellationToken);
+        var allowedCanonicalEntityIds = revisionClosures.Values
+            .SelectMany(value => value)
+            .ToHashSet();
+
         var accessibleSourceIds = await CanonicalRuleBindingStore.GetAccessibleSourceEntityIdsForConceptAsync(
             dbContext,
             ruleConceptId,
@@ -240,7 +246,7 @@ public static class RuleAutoResolutionService
         foreach (var source in activeSources)
         {
             if (!canonicalBySource.TryGetValue(source.Id, out var canonicalEntityId)
-                || !boundCanonicalEntityIds.Contains(canonicalEntityId))
+                || !allowedCanonicalEntityIds.Contains(canonicalEntityId))
             {
                 continue;
             }
@@ -265,9 +271,10 @@ public static class RuleAutoResolutionService
                 ComputeSemanticFingerprint(latest.RawJson)));
         }
 
-        foreach (var canonicalEntityId in boundCanonicalEntityIds)
+        foreach (var rootCanonicalEntityId in boundCanonicalEntityIds)
         {
-            if (!allContexts.Any(value => value.CanonicalEntityId == canonicalEntityId))
+            if (!revisionClosures.TryGetValue(rootCanonicalEntityId, out var closure)
+                || !allContexts.Any(value => closure.Contains(value.CanonicalEntityId)))
             {
                 return NotEligibleEvaluation(
                     "The current account can not inspect an active representation for every canonical entity bound to this rule concept.");
