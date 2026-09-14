@@ -46,7 +46,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
 
         foreach (var record in request.Representation.Records)
         {
-            var translated = record with { ContentJson = RulesCoreContentTranslation.Translate(request.Representation, record) };
+            var translated = RulesCoreContentTranslation.TranslateRecord(request.Representation, record);
             var normalized = TrustedCanonicalAliasPolicy.Apply(request.Representation, NormalizeRecord(translated));
             var entity = await dbContext.SourceEntities.SingleOrDefaultAsync(
                 value => value.SourcePackageId == package.Id && value.FormatKey == formatKey && value.NativeKey == normalized.NativeKey,

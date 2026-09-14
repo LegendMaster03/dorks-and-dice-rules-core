@@ -7,8 +7,8 @@ namespace RulesCore.Infrastructure.Sources;
 
 /// <summary>
 /// Translates source-native records into the Rules Core mechanical content contract.
-/// The contract uses native 5e.tools entity shapes as its reference model and adds
-/// explicit Rules Core extensions when source mechanics do not have a faithful 5e.tools field.
+/// Native 5e.tools entity objects are the reference shapes. Other formats map only
+/// mechanically faithful fields and retain source-specific mechanics under _rulesCore.
 /// </summary>
 internal static class RulesCoreContentTranslation
 {
@@ -36,7 +36,7 @@ internal static class RulesCoreContentTranslation
             ["Transmutation"] = "T"
         };
 
-    private static readonly HashSet<string> MonsterTypes = new(StringComparer.OrdinalIgnoreCase)
+    private static readonly HashSet<string> FiveEMonsterTypes = new(StringComparer.OrdinalIgnoreCase)
     {
         "aberration",
         "beast",
@@ -54,7 +54,7 @@ internal static class RulesCoreContentTranslation
         "undead"
     };
 
-    public static string? Translate(
+    public static NormalizedSourceRecord TranslateRecord(
         NormalizedSourceRepresentation representation,
         NormalizedSourceRecord record)
     {
@@ -63,34 +63,49 @@ internal static class RulesCoreContentTranslation
 
         if (!string.IsNullOrWhiteSpace(record.ContentJson))
         {
-            return record.ContentJson;
+            return record;
         }
 
-        if (string.Equals(representation.FormatKey, FiveEToolsSourceFormatAdapter.Format, StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(
+                representation.FormatKey,
+                FiveEToolsSourceFormatAdapter.Format,
+                StringComparison.OrdinalIgnoreCase))
         {
-            // Native 5e.tools content is already the reference mechanical representation.
-            // Do not deserialize into a narrower DTO; unknown/future upstream fields must survive.
-            return record.RawJson;
+            // Native 5e.tools content already is the reference mechanical representation.
+            // Never deserialize it into a narrower DTO; unknown/future fields must survive.
+            return record with { ContentJson = record.RawJson };
         }
 
-        if (!string.Equals(representation.FormatKey, PcGenSourceFormatAdapter.Format, StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(
+                representation.FormatKey,
+                PcGenSourceFormatAdapter.Format,
+                StringComparison.OrdinalIgnoreCase)
+            || record.EntityType.StartsWith("pcgen-", StringComparison.OrdinalIgnoreCase))
         {
-            return null;
+            return record;
         }
 
-        return TranslatePcGen(representation, record);
+        var native = TryReadPcGenRecord(record.RawJson);
+        if (native is null)
+        {
+            return record;
+        }
+
+        var entityType = NormalizePcGenEntityType(record.EntityType, native.Path, native.Segments);
+        var normalizedRecord = string.Equals(entityType, record.EntityType, StringComparison.Ordinal)
+            ? record
+            : record with { EntityType = entityType };
+        var contentJson = TranslatePcGen(
+            representation,
+            normalizedRecord,
+            record.EntityType,
+            native.Segments);
+        return normalizedRecord with { ContentJson = contentJson };
     }
 
-    private static string? TranslatePcGen(
-        NormalizedSourceRepresentation representation,
-        NormalizedSourceRecord record)
+    private static PcGenNativeRecord? TryReadPcGenRecord(string rawJson)
     {
-        if (record.EntityType.StartsWith("pcgen-", StringComparison.OrdinalIgnoreCase))
-        {
-            return null;
-        }
-
-        using var native = JsonDocument.Parse(record.RawJson);
+        using var native = JsonDocument.Parse(rawJson);
         if (native.RootElement.ValueKind != JsonValueKind.Object
             || !native.RootElement.TryGetProperty("kind", out var kind)
             || !string.Equals(kind.GetString(), "record", StringComparison.OrdinalIgnoreCase)
@@ -106,7 +121,49 @@ internal static class RulesCoreContentTranslation
             .Where(value => value is not null)
             .Cast<PcGenSegment>()
             .ToArray();
+        var path = ReadString(native.RootElement, "path") ?? string.Empty;
+        return new PcGenNativeRecord(path, segments);
+    }
 
+    private static string NormalizePcGenEntityType(
+        string entityType,
+        string path,
+        IReadOnlyList<PcGenSegment> segments)
+    {
+        if (string.Equals(entityType, "ability", StringComparison.OrdinalIgnoreCase)
+            && All(segments, "CATEGORY").Any(value =>
+                string.Equals(value.Value, "FEAT", StringComparison.OrdinalIgnoreCase)))
+        {
+            return "feat";
+        }
+
+        if (string.Equals(entityType, "race", StringComparison.OrdinalIgnoreCase)
+            && (All(segments, "MONSTERCLASS").Any() || IsMonsterSourcePath(path)))
+        {
+            return "monster";
+        }
+
+        return entityType;
+    }
+
+    private static bool IsMonsterSourcePath(string path)
+    {
+        var segments = path.Replace('\\', '/')
+            .Split('/', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        return segments.Any(value =>
+            value.Equals("monster", StringComparison.OrdinalIgnoreCase)
+            || value.Equals("monsters", StringComparison.OrdinalIgnoreCase)
+            || value.Contains("monster_manual", StringComparison.OrdinalIgnoreCase)
+            || value.Contains("monsters_", StringComparison.OrdinalIgnoreCase)
+            || value.Contains("_monsters", StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static string TranslatePcGen(
+        NormalizedSourceRepresentation representation,
+        NormalizedSourceRecord record,
+        string nativeEntityType,
+        IReadOnlyList<PcGenSegment> segments)
+    {
         var mapped = new HashSet<int>();
         var content = new JsonObject
         {
@@ -145,6 +202,8 @@ internal static class RulesCoreContentTranslation
         AddRulesCoreExtensions(
             content,
             ResolveEdition(representation, record),
+            nativeEntityType,
+            record.EntityType,
             segments,
             mapped);
 
@@ -153,25 +212,28 @@ internal static class RulesCoreContentTranslation
 
     private static PcGenSegment? ReadSegment(JsonElement value, int ordinal)
     {
-        var tag = ReadString(value, "Tag");
+        var tag = ReadString(value, "Tag") ?? ReadString(value, "tag");
         if (tag is null)
         {
             return null;
         }
 
-        var index = value.TryGetProperty("Index", out var indexValue)
-            && indexValue.ValueKind == JsonValueKind.Number
-            && indexValue.TryGetInt32(out var explicitIndex)
+        var index = TryReadInt32(value, "Index", out var explicitIndex)
+            ? explicitIndex
+            : TryReadInt32(value, "index", out explicitIndex)
                 ? explicitIndex
                 : ordinal;
         return new PcGenSegment(
             index,
             tag.Trim(),
-            ReadString(value, "Value")?.Trim() ?? string.Empty,
-            ReadString(value, "Raw")?.Trim() ?? string.Empty);
+            (ReadString(value, "Value") ?? ReadString(value, "value") ?? string.Empty).Trim(),
+            (ReadString(value, "Raw") ?? ReadString(value, "raw") ?? string.Empty).Trim());
     }
 
-    private static void MapPage(JsonObject content, IReadOnlyList<PcGenSegment> segments, ISet<int> mapped)
+    private static void MapPage(
+        JsonObject content,
+        IReadOnlyList<PcGenSegment> segments,
+        ISet<int> mapped)
     {
         var page = Last(segments, "SOURCEPAGE");
         if (page is null)
@@ -200,7 +262,10 @@ internal static class RulesCoreContentTranslation
         mapped.Add(page.Index);
     }
 
-    private static void MapDescriptions(JsonObject content, IReadOnlyList<PcGenSegment> segments, ISet<int> mapped)
+    private static void MapDescriptions(
+        JsonObject content,
+        IReadOnlyList<PcGenSegment> segments,
+        ISet<int> mapped)
     {
         var descriptions = All(segments, "DESC")
             .Where(value => !string.IsNullOrWhiteSpace(value.Value))
@@ -214,19 +279,26 @@ internal static class RulesCoreContentTranslation
         foreach (var description in descriptions)
         {
             entries.Add(description.Value);
-            mapped.Add(description.Index);
+            // PCGen descriptions can contain conditional suffixes separated by pipes.
+            // Preserve those source expressions under _rulesCore even though the full
+            // string is also retained as readable entry text.
+            if (!description.Value.Contains('|', StringComparison.Ordinal))
+            {
+                mapped.Add(description.Index);
+            }
         }
         content["entries"] = entries;
     }
 
-    private static void MapSpell(JsonObject content, IReadOnlyList<PcGenSegment> segments, ISet<int> mapped)
+    private static void MapSpell(
+        JsonObject content,
+        IReadOnlyList<PcGenSegment> segments,
+        ISet<int> mapped)
     {
-        var level = Last(segments, "LEVEL");
-        if (level is not null
-            && int.TryParse(level.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var levelNumber))
+        if (TryGetUniqueSpellLevel(segments, out var level))
         {
-            content["level"] = levelNumber;
-            mapped.Add(level.Index);
+            content["level"] = level;
+            // CLASSES/DOMAINS remain unmapped because they also encode class/domain access.
         }
 
         var school = Last(segments, "SCHOOL");
@@ -239,30 +311,86 @@ internal static class RulesCoreContentTranslation
         var components = Last(segments, "COMPS") ?? Last(segments, "COMPONENTS");
         if (components is not null)
         {
+            var tokens = components.Value
+                .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Select(value => value.Trim())
+                .ToArray();
             var componentObject = new JsonObject();
-            var tokens = components.Value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-            foreach (var token in tokens)
+            if (tokens.Any(value => string.Equals(value, "V", StringComparison.OrdinalIgnoreCase)))
             {
-                if (string.Equals(token, "V", StringComparison.OrdinalIgnoreCase)) componentObject["v"] = true;
-                else if (string.Equals(token, "S", StringComparison.OrdinalIgnoreCase)) componentObject["s"] = true;
+                componentObject["v"] = true;
+            }
+            if (tokens.Any(value => string.Equals(value, "S", StringComparison.OrdinalIgnoreCase)))
+            {
+                componentObject["s"] = true;
             }
             if (componentObject.Count > 0)
             {
                 content["components"] = componentObject;
+            }
+            if (tokens.All(value =>
+                    string.Equals(value, "V", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(value, "S", StringComparison.OrdinalIgnoreCase)))
+            {
                 mapped.Add(components.Index);
             }
         }
 
         var duration = Last(segments, "DURATION");
-        if (duration is not null && string.Equals(duration.Value.Trim(), "Instantaneous", StringComparison.OrdinalIgnoreCase))
+        if (duration is not null
+            && string.Equals(duration.Value.Trim(), "Instantaneous", StringComparison.OrdinalIgnoreCase))
         {
             content["duration"] = new JsonArray(new JsonObject { ["type"] = "instant" });
             mapped.Add(duration.Index);
         }
     }
 
-    private static void MapFeat(JsonObject content, IReadOnlyList<PcGenSegment> segments, ISet<int> mapped)
+    private static bool TryGetUniqueSpellLevel(
+        IReadOnlyList<PcGenSegment> segments,
+        out int level)
     {
+        var levels = new HashSet<int>();
+        foreach (var segment in All(segments, "CLASSES").Concat(All(segments, "DOMAINS")))
+        {
+            foreach (var assignment in segment.Value.Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            {
+                var equals = assignment.LastIndexOf('=');
+                if (equals < 0 || equals + 1 >= assignment.Length)
+                {
+                    continue;
+                }
+                if (int.TryParse(
+                        assignment[(equals + 1)..].Trim(),
+                        NumberStyles.Integer,
+                        CultureInfo.InvariantCulture,
+                        out var candidate))
+                {
+                    levels.Add(candidate);
+                }
+            }
+        }
+
+        if (levels.Count == 1)
+        {
+            level = levels.Single();
+            return true;
+        }
+
+        level = 0;
+        return false;
+    }
+
+    private static void MapFeat(
+        JsonObject content,
+        IReadOnlyList<PcGenSegment> segments,
+        ISet<int> mapped)
+    {
+        foreach (var category in All(segments, "CATEGORY").Where(value =>
+                     string.Equals(value.Value, "FEAT", StringComparison.OrdinalIgnoreCase)))
+        {
+            mapped.Add(category.Index);
+        }
+
         var multiple = Last(segments, "MULT");
         if (multiple is not null && TryParseBoolean(multiple.Value, out var repeatable))
         {
@@ -271,7 +399,10 @@ internal static class RulesCoreContentTranslation
         }
     }
 
-    private static void MapItem(JsonObject content, IReadOnlyList<PcGenSegment> segments, ISet<int> mapped)
+    private static void MapItem(
+        JsonObject content,
+        IReadOnlyList<PcGenSegment> segments,
+        ISet<int> mapped)
     {
         var weight = Last(segments, "WT") ?? Last(segments, "WEIGHT");
         if (weight is not null
@@ -282,23 +413,20 @@ internal static class RulesCoreContentTranslation
         }
 
         var cost = Last(segments, "COST");
-        if (cost is not null && TryParseCopperValue(cost.Value, out var copperValue))
+        if (cost is not null && TryParsePcGenCostAsCopper(cost.Value, out var copperValue))
         {
             content["value"] = copperValue;
             mapped.Add(cost.Index);
         }
     }
 
-    private static void MapRace(JsonObject content, IReadOnlyList<PcGenSegment> segments, ISet<int> mapped)
+    private static void MapRace(
+        JsonObject content,
+        IReadOnlyList<PcGenSegment> segments,
+        ISet<int> mapped)
     {
         MapSize(content, segments, mapped);
-
-        var move = Last(segments, "MOVE") ?? Last(segments, "SPEED");
-        if (move is not null && TryParseLeadingNumber(move.Value, out var speed))
-        {
-            content["speed"] = speed;
-            mapped.Add(move.Index);
-        }
+        MapRaceWalkSpeed(content, segments, mapped);
 
         var abilityBonuses = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
         foreach (var bonus in All(segments, "BONUS"))
@@ -327,63 +455,32 @@ internal static class RulesCoreContentTranslation
         }
     }
 
-    private static void MapMonster(JsonObject content, IReadOnlyList<PcGenSegment> segments, ISet<int> mapped)
+    private static void MapMonster(
+        JsonObject content,
+        IReadOnlyList<PcGenSegment> segments,
+        ISet<int> mapped)
     {
         MapSize(content, segments, mapped);
 
-        var type = Last(segments, "TYPE");
+        var type = Last(segments, "RACETYPE") ?? Last(segments, "TYPE");
         if (type is not null)
         {
             var normalized = type.Value.Trim().ToLowerInvariant();
-            if (MonsterTypes.Contains(normalized))
+            if (FiveEMonsterTypes.Contains(normalized))
             {
                 content["type"] = normalized;
                 mapped.Add(type.Index);
             }
         }
 
-        foreach (var ability in new[] { "STR", "DEX", "CON", "INT", "WIS", "CHA" })
+        var movement = Last(segments, "MOVE") ?? Last(segments, "SPEED");
+        if (movement is not null && TryParseMonsterSpeed(movement.Value, out var speed, out var complete))
         {
-            var segment = Last(segments, ability);
-            if (segment is null
-                || !int.TryParse(segment.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var score))
+            content["speed"] = speed;
+            if (complete)
             {
-                continue;
+                mapped.Add(movement.Index);
             }
-            content[ability.ToLowerInvariant()] = score;
-            mapped.Add(segment.Index);
-        }
-
-        var armorClass = Last(segments, "AC");
-        if (armorClass is not null && TryParseLeadingNumber(armorClass.Value, out var ac))
-        {
-            content["ac"] = new JsonArray(ac);
-            mapped.Add(armorClass.Index);
-        }
-
-        var hpValue = Last(segments, "HP");
-        var hitDice = Last(segments, "HD");
-        var hp = new JsonObject();
-        if (hpValue is not null && TryParseLeadingNumber(hpValue.Value, out var averageHp))
-        {
-            hp["average"] = averageHp;
-            mapped.Add(hpValue.Index);
-        }
-        if (hitDice is not null && LooksLikeDiceFormula(hitDice.Value))
-        {
-            hp["formula"] = hitDice.Value.Trim();
-            mapped.Add(hitDice.Index);
-        }
-        if (hp.Count > 0)
-        {
-            content["hp"] = hp;
-        }
-
-        var move = Last(segments, "MOVE") ?? Last(segments, "SPEED");
-        if (move is not null && TryParseLeadingNumber(move.Value, out var speed))
-        {
-            content["speed"] = new JsonObject { ["walk"] = speed };
-            mapped.Add(move.Index);
         }
 
         var challengeRating = Last(segments, "CR");
@@ -392,9 +489,17 @@ internal static class RulesCoreContentTranslation
             content["cr"] = challengeRating.Value.Trim();
             mapped.Add(challengeRating.Index);
         }
+
+        // PCGen 3.x monster race records normally contain racial ability bonuses,
+        // natural-armor bonuses, and MONSTERCLASS racial-HD declarations rather than
+        // final ability scores, total AC, or a ready-made HP formula. Those values are
+        // deliberately left in _rulesCore instead of being misrepresented as 5e fields.
     }
 
-    private static void MapSize(JsonObject content, IReadOnlyList<PcGenSegment> segments, ISet<int> mapped)
+    private static void MapSize(
+        JsonObject content,
+        IReadOnlyList<PcGenSegment> segments,
+        ISet<int> mapped)
     {
         var size = Last(segments, "SIZE");
         if (size is null)
@@ -410,21 +515,102 @@ internal static class RulesCoreContentTranslation
         }
     }
 
+    private static void MapRaceWalkSpeed(
+        JsonObject content,
+        IReadOnlyList<PcGenSegment> segments,
+        ISet<int> mapped)
+    {
+        var movement = Last(segments, "MOVE") ?? Last(segments, "SPEED");
+        if (movement is null)
+        {
+            return;
+        }
+
+        var tokens = movement.Value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        if (tokens.Length < 2)
+        {
+            return;
+        }
+
+        int? walk = null;
+        var complete = tokens.Length % 2 == 0;
+        for (var index = 0; index + 1 < tokens.Length; index += 2)
+        {
+            if (!int.TryParse(tokens[index + 1], NumberStyles.Integer, CultureInfo.InvariantCulture, out var distance))
+            {
+                complete = false;
+                continue;
+            }
+            if (string.Equals(tokens[index], "Walk", StringComparison.OrdinalIgnoreCase))
+            {
+                walk = distance;
+            }
+        }
+
+        if (walk.HasValue)
+        {
+            content["speed"] = walk.Value;
+        }
+        if (complete && tokens.Length == 2 && walk.HasValue)
+        {
+            mapped.Add(movement.Index);
+        }
+    }
+
+    private static bool TryParseMonsterSpeed(
+        string value,
+        out JsonObject speed,
+        out bool complete)
+    {
+        speed = new JsonObject();
+        var tokens = value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        complete = tokens.Length > 0 && tokens.Length % 2 == 0;
+        for (var index = 0; index + 1 < tokens.Length; index += 2)
+        {
+            if (!int.TryParse(tokens[index + 1], NumberStyles.Integer, CultureInfo.InvariantCulture, out var distance))
+            {
+                complete = false;
+                continue;
+            }
+
+            var key = tokens[index].Trim().ToLowerInvariant() switch
+            {
+                "walk" => "walk",
+                "fly" => "fly",
+                "swim" => "swim",
+                "climb" => "climb",
+                "burrow" => "burrow",
+                _ => null
+            };
+            if (key is null)
+            {
+                complete = false;
+                continue;
+            }
+            speed[key] = distance;
+        }
+        return speed.Count > 0;
+    }
+
     private static void AddRulesCoreExtensions(
         JsonObject content,
         string? edition,
+        string nativeEntityType,
+        string normalizedEntityType,
         IReadOnlyList<PcGenSegment> segments,
         ISet<int> mapped)
     {
         var unmapped = segments
             .Where(value => !mapped.Contains(value.Index))
             .Where(value => !SourceOnlyPcGenTags.Contains(value.Tag))
-            .OrderBy(value => value.Tag, StringComparer.OrdinalIgnoreCase)
-            .ThenBy(value => value.Value, StringComparer.Ordinal)
-            .ThenBy(value => value.Raw, StringComparer.Ordinal)
+            .OrderBy(value => value.Index)
             .ToArray();
 
-        if (string.IsNullOrWhiteSpace(edition) && unmapped.Length == 0)
+        var entityTypeChanged = !string.Equals(
+            nativeEntityType,
+            normalizedEntityType,
+            StringComparison.OrdinalIgnoreCase);
+        if (string.IsNullOrWhiteSpace(edition) && unmapped.Length == 0 && !entityTypeChanged)
         {
             return;
         }
@@ -435,6 +621,11 @@ internal static class RulesCoreContentTranslation
             extension["edition"] = edition;
         }
 
+        var pcgen = new JsonObject();
+        if (entityTypeChanged)
+        {
+            pcgen["nativeEntityType"] = nativeEntityType;
+        }
         if (unmapped.Length > 0)
         {
             var segmentsJson = new JsonArray();
@@ -446,10 +637,11 @@ internal static class RulesCoreContentTranslation
                     ["value"] = segment.Value
                 });
             }
-            extension["pcgen"] = new JsonObject
-            {
-                ["unmappedSegments"] = segmentsJson
-            };
+            pcgen["unmappedSegments"] = segmentsJson;
+        }
+        if (pcgen.Count > 0)
+        {
+            extension["pcgen"] = pcgen;
         }
 
         content["_rulesCore"] = extension;
@@ -472,36 +664,7 @@ internal static class RulesCoreContentTranslation
             ?.GameEdition;
     }
 
-    private static PcGenSegment? Last(IReadOnlyList<PcGenSegment> segments, string tag) =>
-        segments.LastOrDefault(value => string.Equals(value.Tag, tag, StringComparison.OrdinalIgnoreCase));
-
-    private static IEnumerable<PcGenSegment> All(IReadOnlyList<PcGenSegment> segments, string tag) =>
-        segments.Where(value => string.Equals(value.Tag, tag, StringComparison.OrdinalIgnoreCase));
-
-    private static string? ReadString(JsonElement value, string propertyName) =>
-        value.TryGetProperty(propertyName, out var property) && property.ValueKind == JsonValueKind.String
-            ? property.GetString()
-            : null;
-
-    private static bool TryParseBoolean(string value, out bool result)
-    {
-        if (string.Equals(value.Trim(), "YES", StringComparison.OrdinalIgnoreCase)
-            || string.Equals(value.Trim(), "TRUE", StringComparison.OrdinalIgnoreCase))
-        {
-            result = true;
-            return true;
-        }
-        if (string.Equals(value.Trim(), "NO", StringComparison.OrdinalIgnoreCase)
-            || string.Equals(value.Trim(), "FALSE", StringComparison.OrdinalIgnoreCase))
-        {
-            result = false;
-            return true;
-        }
-        result = false;
-        return false;
-    }
-
-    private static bool TryParseCopperValue(string value, out int copperValue)
+    private static bool TryParsePcGenCostAsCopper(string value, out int copperValue)
     {
         copperValue = 0;
         var parts = value.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
@@ -511,8 +674,9 @@ internal static class RulesCoreContentTranslation
             return false;
         }
 
+        // PCGen's EQUIPMENT COST tag is denominated in gold pieces when no unit is present.
         var multiplier = parts.Length == 1
-            ? 1m
+            ? 100m
             : parts[1].ToLowerInvariant() switch
             {
                 "cp" => 1m,
@@ -535,20 +699,22 @@ internal static class RulesCoreContentTranslation
         return true;
     }
 
-    private static bool TryParseLeadingNumber(string value, out int number)
+    private static bool TryParseBoolean(string value, out bool result)
     {
-        number = 0;
-        var token = new string(value.Trim().TakeWhile(character => char.IsDigit(character) || character == '-' || character == '+').ToArray());
-        return int.TryParse(token, NumberStyles.Integer, CultureInfo.InvariantCulture, out number);
-    }
-
-    private static bool LooksLikeDiceFormula(string value)
-    {
-        var normalized = value.Trim();
-        var d = normalized.IndexOf('d', StringComparison.OrdinalIgnoreCase);
-        return d > 0
-            && normalized[..d].All(char.IsDigit)
-            && normalized[(d + 1)..].TakeWhile(char.IsDigit).Any();
+        if (string.Equals(value.Trim(), "YES", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(value.Trim(), "TRUE", StringComparison.OrdinalIgnoreCase))
+        {
+            result = true;
+            return true;
+        }
+        if (string.Equals(value.Trim(), "NO", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(value.Trim(), "FALSE", StringComparison.OrdinalIgnoreCase))
+        {
+            result = false;
+            return true;
+        }
+        result = false;
+        return false;
     }
 
     private static bool IsAbility(string value) =>
@@ -558,6 +724,27 @@ internal static class RulesCoreContentTranslation
         || value.Equals("INT", StringComparison.OrdinalIgnoreCase)
         || value.Equals("WIS", StringComparison.OrdinalIgnoreCase)
         || value.Equals("CHA", StringComparison.OrdinalIgnoreCase);
+
+    private static PcGenSegment? Last(IReadOnlyList<PcGenSegment> segments, string tag) =>
+        segments.LastOrDefault(value => string.Equals(value.Tag, tag, StringComparison.OrdinalIgnoreCase));
+
+    private static IEnumerable<PcGenSegment> All(IReadOnlyList<PcGenSegment> segments, string tag) =>
+        segments.Where(value => string.Equals(value.Tag, tag, StringComparison.OrdinalIgnoreCase));
+
+    private static string? ReadString(JsonElement value, string propertyName) =>
+        value.TryGetProperty(propertyName, out var property) && property.ValueKind == JsonValueKind.String
+            ? property.GetString()
+            : null;
+
+    private static bool TryReadInt32(JsonElement value, string propertyName, out int result)
+    {
+        result = 0;
+        return value.TryGetProperty(propertyName, out var property)
+            && property.ValueKind == JsonValueKind.Number
+            && property.TryGetInt32(out result);
+    }
+
+    private sealed record PcGenNativeRecord(string Path, IReadOnlyList<PcGenSegment> Segments);
 
     private sealed record PcGenSegment(int Index, string Tag, string Value, string Raw);
 }

@@ -74,7 +74,7 @@ public sealed class MechanicalContentIntegrationTests
     }
 
     [Fact]
-    public async Task FiveEToolsAndPcGenExposeCommonMechanicalFamilyShapes()
+    public async Task FiveEToolsAndRepresentativePcGenRecordsExposeFaithfulFamilyShapes()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
         if (string.IsNullOrWhiteSpace(connectionString)) return;
@@ -112,8 +112,8 @@ public sealed class MechanicalContentIntegrationTests
             Assert.Equal(new[] { "feat", "item", "monster", "spell" }, five.Keys.Order().ToArray());
             Assert.Equal(new[] { "feat", "item", "monster", "spell" }, pcgen.Keys.Order().ToArray());
 
-            AssertFamilyFields(five["monster"], "name", "source", "size", "type", "ac", "hp", "speed", "str", "dex", "cr");
-            AssertFamilyFields(pcgen["monster"], "name", "source", "size", "type", "ac", "hp", "speed", "str", "dex", "cr");
+            AssertFamilyFields(five["monster"], "name", "source", "size", "type", "speed", "cr", "entries");
+            AssertFamilyFields(pcgen["monster"], "name", "source", "size", "type", "speed", "cr", "entries");
             AssertFamilyFields(five["spell"], "name", "source", "level", "school", "entries");
             AssertFamilyFields(pcgen["spell"], "name", "source", "level", "school", "entries");
             AssertFamilyFields(five["feat"], "name", "source", "entries", "repeatable");
@@ -123,10 +123,50 @@ public sealed class MechanicalContentIntegrationTests
 
             Assert.True(five["monster"].TryGetProperty("futureUpstreamField", out _));
             Assert.Equal("3.5e", pcgen["monster"].GetProperty("_rulesCore").GetProperty("edition").GetString());
-            var unmapped = pcgen["feat"].GetProperty("_rulesCore").GetProperty("pcgen").GetProperty("unmappedSegments");
-            Assert.Contains(unmapped.EnumerateArray(), value =>
+            Assert.Equal(1500, pcgen["item"].GetProperty("value").GetInt32());
+            Assert.False(pcgen["monster"].TryGetProperty("str", out _));
+            Assert.False(pcgen["monster"].TryGetProperty("dex", out _));
+            Assert.False(pcgen["monster"].TryGetProperty("ac", out _));
+            Assert.False(pcgen["monster"].TryGetProperty("hp", out _));
+
+            var monsterUnmapped = pcgen["monster"]
+                .GetProperty("_rulesCore")
+                .GetProperty("pcgen")
+                .GetProperty("unmappedSegments")
+                .EnumerateArray()
+                .ToArray();
+            Assert.Contains(monsterUnmapped, value =>
+                value.GetProperty("tag").GetString() == "BONUS"
+                && value.GetProperty("value").GetString() == "STAT|STR|-2");
+            Assert.Contains(monsterUnmapped, value =>
+                value.GetProperty("tag").GetString() == "BONUS"
+                && value.GetProperty("value").GetString() == "COMBAT|AC|1|TYPE=NaturalArmor");
+            Assert.Contains(monsterUnmapped, value =>
+                value.GetProperty("tag").GetString() == "MONSTERCLASS"
+                && value.GetProperty("value").GetString() == "Humanoid:1");
+
+            var featExtension = pcgen["feat"].GetProperty("_rulesCore").GetProperty("pcgen");
+            Assert.Equal("ability", featExtension.GetProperty("nativeEntityType").GetString());
+            var featUnmapped = featExtension.GetProperty("unmappedSegments");
+            Assert.Contains(featUnmapped.EnumerateArray(), value =>
                 value.GetProperty("tag").GetString() == "PREMULT"
                 && value.GetProperty("value").GetString() == "1,[PRESTAT:1,STR=13]");
+
+            var monsterSource = await db.SourceEntities
+                .AsNoTracking()
+                .SingleAsync(value =>
+                    value.SourcePackage.Key == pcgenPackage
+                    && value.Name == "PCGen Goblin");
+            Assert.Equal("monster", monsterSource.EntityType);
+            Assert.StartsWith("pcgen|race|", monsterSource.NativeKey, StringComparison.Ordinal);
+
+            var featSource = await db.SourceEntities
+                .AsNoTracking()
+                .SingleAsync(value =>
+                    value.SourcePackage.Key == pcgenPackage
+                    && value.Name == "PCGen Training");
+            Assert.Equal("feat", featSource.EntityType);
+            Assert.StartsWith("pcgen|ability|", featSource.NativeKey, StringComparison.Ordinal);
 
             var pcgenRaw = await db.SourceEntityRevisions
                 .AsNoTracking()
@@ -192,7 +232,7 @@ public sealed class MechanicalContentIntegrationTests
         var records = new[]
         {
             Native("monster", "Reference Goblin", "MM", $"monster|{token}",
-                "{\"name\":\"Reference Goblin\",\"source\":\"MM\",\"size\":[\"S\"],\"type\":\"humanoid\",\"ac\":[15],\"hp\":{\"average\":7,\"formula\":\"2d6\"},\"speed\":{\"walk\":30},\"str\":8,\"dex\":14,\"con\":10,\"int\":10,\"wis\":8,\"cha\":8,\"cr\":\"1/4\",\"futureUpstreamField\":{\"preserved\":true}}"),
+                "{\"name\":\"Reference Goblin\",\"source\":\"MM\",\"size\":[\"S\"],\"type\":\"humanoid\",\"ac\":[15],\"hp\":{\"average\":7,\"formula\":\"2d6\"},\"speed\":{\"walk\":30},\"str\":8,\"dex\":14,\"con\":10,\"int\":10,\"wis\":8,\"cha\":8,\"cr\":\"1/4\",\"entries\":[\"A reference creature.\"],\"futureUpstreamField\":{\"preserved\":true}}"),
             Native("spell", "Reference Spark", "PHB", $"spell|{token}",
                 "{\"name\":\"Reference Spark\",\"source\":\"PHB\",\"level\":1,\"school\":\"V\",\"entries\":[\"A reference spell.\"]}"),
             Native("feat", "Reference Training", "PHB", $"feat|{token}",
@@ -217,14 +257,41 @@ public sealed class MechanicalContentIntegrationTests
         const string publicationKey = "pcgen-35e-fixture";
         var records = new[]
         {
-            PcGen("monster", "PCGen Goblin", "3XTEST", $"pcgen|monster|{token}", publicationKey,
-                new[] { Seg("SIZE", "S"), Seg("TYPE", "Humanoid"), Seg("AC", "15"), Seg("HP", "7"), Seg("HD", "2d6"), Seg("MOVE", "30"), Seg("STR", "8"), Seg("DEX", "14"), Seg("CON", "10"), Seg("INT", "10"), Seg("WIS", "8"), Seg("CHA", "8"), Seg("CR", "1/4"), Seg("DESC", "A translated creature.") }),
-            PcGen("spell", "PCGen Spark", "3XTEST", $"pcgen|spell|{token}", publicationKey,
-                new[] { Seg("LEVEL", "1"), Seg("SCHOOL", "Evocation"), Seg("COMPS", "V,S"), Seg("DURATION", "Instantaneous"), Seg("DESC", "A translated spell.") }),
-            PcGen("feat", "PCGen Training", "3XTEST", $"pcgen|feat|{token}", publicationKey,
-                new[] { Seg("MULT", "YES"), Seg("PREMULT", "1,[PRESTAT:1,STR=13]"), Seg("DESC", "A translated feat.") }),
-            PcGen("item", "PCGen Blade", "3XTEST", $"pcgen|item|{token}", publicationKey,
-                new[] { Seg("WT", "3"), Seg("COST", "15 gp"), Seg("DESC", "A translated item.") })
+            PcGen("race", "PCGen Goblin", "3XTEST", $"pcgen|race|{token}", publicationKey, "data/35e/example/monsters/example_races.lst",
+                new[]
+                {
+                    Seg("SIZE", "S"),
+                    Seg("MOVE", "Walk,30"),
+                    Seg("BONUS", "COMBAT|AC|1|TYPE=NaturalArmor"),
+                    Seg("BONUS", "STAT|STR|-2"),
+                    Seg("BONUS", "STAT|DEX|4"),
+                    Seg("MONSTERCLASS", "Humanoid:1"),
+                    Seg("RACETYPE", "Humanoid"),
+                    Seg("TYPE", "Humanoid"),
+                    Seg("CR", "1/4"),
+                    Seg("DESC", "A translated creature.")
+                }),
+            PcGen("spell", "PCGen Spark", "3XTEST", $"pcgen|spell|{token}", publicationKey, "data/35e/example/example_spells.lst",
+                new[]
+                {
+                    Seg("TYPE", "Arcane"),
+                    Seg("CLASSES", "Sorcerer,Wizard=1"),
+                    Seg("SCHOOL", "Evocation"),
+                    Seg("COMPS", "V, S"),
+                    Seg("DURATION", "Instantaneous"),
+                    Seg("DESC", "A translated spell.")
+                }),
+            PcGen("ability", "PCGen Training", "3XTEST", $"pcgen|ability|{token}", publicationKey, "data/35e/example/example_feats.lst",
+                new[]
+                {
+                    Seg("CATEGORY", "FEAT"),
+                    Seg("TYPE", "General"),
+                    Seg("MULT", "YES"),
+                    Seg("PREMULT", "1,[PRESTAT:1,STR=13]"),
+                    Seg("DESC", "A translated feat.")
+                }),
+            PcGen("item", "PCGen Blade", "3XTEST", $"pcgen|item|{token}", publicationKey, "data/35e/example/example_equip.lst",
+                new[] { Seg("TYPE", "Weapon.Melee"), Seg("WT", "3"), Seg("COST", "15"), Seg("DESC", "A translated item.") })
         };
         return new NormalizedSourceRepresentation(
             PcGenSourceFormatAdapter.Format,
@@ -247,6 +314,7 @@ public sealed class MechanicalContentIntegrationTests
         string source,
         string nativeKey,
         string publicationKey,
+        string path,
         IReadOnlyList<(string Tag, string Value)> segments)
     {
         var jsonSegments = segments.Select((value, index) => new
@@ -265,7 +333,7 @@ public sealed class MechanicalContentIntegrationTests
             {
                 format = PcGenSourceFormatAdapter.Format,
                 kind = "record",
-                path = $"data/35e/{type}.lst",
+                path,
                 lineNumber = 1,
                 rawLine = name,
                 name,
