@@ -243,6 +243,9 @@ export function enhanceRenderedView(app, container) {
         updateRulesLawyerWorkflowCopy(container);
         wrapSecondaryRulesLawyerTools(container);
     }
+    if (app.activeView === "campaign") {
+        addCampaignSiteLink(app, container);
+    }
 
     container.querySelectorAll(":scope > .card").forEach(card => {
         card.classList.add("rules-core-panel");
@@ -262,6 +265,22 @@ function pageLead(meta) {
         element("div", { className: "rules-core-eyebrow", text: meta.eyebrow }),
         element("h2", { text: meta.title }),
         element("p", { className: "text-body-secondary", text: meta.description }));
+}
+
+function addCampaignSiteLink(app, container) {
+    if (app.hostContext?.siteMode !== "dorks-and-dice") return;
+    const lead = container.querySelector(":scope > .rules-core-generated-page-lead");
+    if (!lead || lead.querySelector(".rules-core-campaign-site-link")) return;
+
+    const campaignId = app.activeCampaignId;
+    const href = campaignId
+        ? `/campaigns/${encodeURIComponent(campaignId)}`
+        : "/campaigns";
+    lead.append(element("a", {
+        className: "btn btn-sm btn-outline-primary rules-core-campaign-site-link",
+        text: campaignId ? "Open campaign" : "Campaigns",
+        attributes: { href, target: "_top" }
+    }));
 }
 
 function updateRulesLawyerWorkflowCopy(container) {
