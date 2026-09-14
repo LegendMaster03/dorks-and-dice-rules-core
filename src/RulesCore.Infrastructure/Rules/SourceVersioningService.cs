@@ -29,6 +29,7 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
         RequireGuid(sourceEntityId, nameof(sourceEntityId));
         var actor = RequireUserId(userId);
         await SourceFrameworkStore.EnsureSchemaAsync(dbContext, cancellationToken);
+        await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
 
         var source = await AccessibleSources(actor).SingleOrDefaultAsync(value => value.Id == sourceEntityId, cancellationToken);
         if (source is null) return null;
@@ -41,25 +42,31 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
             .ToArrayAsync(cancellationToken);
 
         var allIds = candidates.Select(value => value.Id).Append(source.Id).ToArray();
-        var bindings = await dbContext.RuleConceptSourceBindings
-            .AsNoTracking()
-            .Include(value => value.RuleConcept)
-            .Where(value => allIds.Contains(value.SourceEntityId))
-            .ToArrayAsync(cancellationToken);
-        var bindingsBySource = bindings
-            .GroupBy(value => value.SourceEntityId)
-            .ToDictionary(
-                group => group.Key,
-                group => (IReadOnlyList<RuleConceptReferenceView>)group
-                    .Select(value => new RuleConceptReferenceView(
-                        value.RuleConcept.Id, value.RuleConcept.Key, value.RuleConcept.EntityType, value.RuleConcept.DisplayName))
-                    .OrderBy(value => value.Key, StringComparer.Ordinal)
-                    .ToArray());
+        var conceptIdsBySource = await CanonicalRuleBindingStore.GetConceptIdsBySourceEntityAsync(
+            dbContext,
+            allIds,
+            cancellationToken);
+        var conceptIds = conceptIdsBySource.Values.SelectMany(value => value).Distinct().ToArray();
+        var conceptById = conceptIds.Length == 0
+            ? new Dictionary<Guid, RulesCore.Domain.Rules.RuleConcept>()
+            : await dbContext.RuleConcepts
+                .AsNoTracking()
+                .Where(value => conceptIds.Contains(value.Id))
+                .ToDictionaryAsync(value => value.Id, cancellationToken);
+        var bindingsBySource = allIds.ToDictionary(
+            id => id,
+            id => (IReadOnlyList<RuleConceptReferenceView>)conceptIdsBySource
+                .GetValueOrDefault(id, Array.Empty<Guid>())
+                .Where(conceptById.ContainsKey)
+                .Select(conceptId => conceptById[conceptId])
+                .Select(value => new RuleConceptReferenceView(
+                    value.Id, value.Key, value.EntityType, value.DisplayName))
+                .OrderBy(value => value.Key, StringComparer.Ordinal)
+                .ToArray());
 
         var lineage = await SourceFrameworkStore.GetLineageForSourcesAsync(
             dbContext, allIds, includeVoided: false, cancellationToken);
-        bindingsBySource.TryGetValue(source.Id, out var sourceConcepts);
-        sourceConcepts ??= [];
+        var sourceConcepts = bindingsBySource.GetValueOrDefault(source.Id, []);
         var sourceMetadata = await CanonicalPublicationMetadataReader.ReadAsync(dbContext, source.Id, cancellationToken);
         var sourceView = ToEntityView(source, sourceConcepts, sourceMetadata);
         var sourceLatest = Latest(source);
@@ -67,8 +74,7 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
         var scored = new List<SourceVersionCandidateView>();
         foreach (var candidate in candidates)
         {
-            bindingsBySource.TryGetValue(candidate.Id, out var candidateConcepts);
-            candidateConcepts ??= [];
+            var candidateConcepts = bindingsBySource.GetValueOrDefault(candidate.Id, []);
             var candidateMetadata = await CanonicalPublicationMetadataReader.ReadAsync(dbContext, candidate.Id, cancellationToken);
             var reasons = new List<string>();
             var confidence = ScoreCandidate(
@@ -99,6 +105,7 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
         RequireGuid(ruleConceptId, nameof(ruleConceptId));
         var actor = RequireUserId(actorUserId);
         await SourceFrameworkStore.EnsureSchemaAsync(dbContext, cancellationToken);
+        await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
 
         var source = await AccessibleSources(actor).SingleOrDefaultAsync(value => value.Id == sourceEntityId, cancellationToken);
         if (source is null) return null;
@@ -110,8 +117,13 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
                 $"Source entity type '{source.EntityType}' can not be bound to concept type '{concept.EntityType}'.");
         }
 
+        var canonicalEntityId = await CanonicalRuleBindingStore.GetCanonicalEntityIdAsync(
+            dbContext,
+            source.Id,
+            cancellationToken);
         var existing = await dbContext.RuleConceptSourceBindings.AsNoTracking().SingleOrDefaultAsync(
-            value => value.RuleConceptId == concept.Id && value.SourceEntityId == source.Id, cancellationToken);
+            value => value.RuleConceptId == concept.Id && value.CanonicalEntityId == canonicalEntityId,
+            cancellationToken);
         if (existing is not null)
         {
             return new RuleMutationResult<RuleConceptSourceBindingView>(ToView(existing), false);
@@ -121,6 +133,7 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
         {
             Id = Guid.NewGuid(),
             RuleConceptId = concept.Id,
+            CanonicalEntityId = canonicalEntityId,
             SourceEntityId = source.Id,
             CreatedByUserId = actor,
             CreatedAt = DateTimeOffset.UtcNow
@@ -262,7 +275,7 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
 
         var sourceConceptIds = sourceConcepts.Select(value => value.Id).ToHashSet();
         var sameConcept = candidateConcepts.Any(value => sourceConceptIds.Contains(value.Id));
-        if (sameConcept) reasons.Add("Both implementations are already bound to the same rule concept.");
+        if (sameConcept) reasons.Add("Both implementations are already bound to the same rule concept through canonical identity.");
 
         var score = directLineage || sameConcept ? 100 : 5;
         var sourceName = NormalizeComparable(source.Name);
@@ -440,7 +453,13 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
         entity.Revisions.OrderByDescending(value => value.RevisionNumber).First();
 
     private static RuleConceptSourceBindingView ToView(RulesCore.Domain.Rules.RuleConceptSourceBinding binding) =>
-        new(binding.Id, binding.RuleConceptId, binding.SourceEntityId, binding.CreatedByUserId, binding.CreatedAt);
+        new(
+            binding.Id,
+            binding.RuleConceptId,
+            binding.CanonicalEntityId,
+            binding.CreatedByUserId,
+            binding.CreatedAt,
+            binding.SourceEntityId);
 
     private static SourceLineageView ToView(StoredSourceLineage lineage) =>
         new(lineage.Id, lineage.FromSourceEntityId, lineage.ToSourceEntityId, lineage.RelationshipKind,
@@ -560,23 +579,28 @@ public sealed class RuleConsolidationService(
         if (string.IsNullOrWhiteSpace(userId)) throw new ArgumentException("User ID can not be blank.", nameof(userId));
         var actor = userId.Trim();
         await SourceFrameworkStore.EnsureSchemaAsync(dbContext, cancellationToken);
+        await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
 
         var detail = await authoring.GetConceptAsync(ruleConceptId, actor, cancellationToken);
         if (detail is null) return null;
 
-        var sources = await dbContext.SourceEntities
-            .AsNoTracking()
-            .Include(value => value.Revisions)
-            .Include(value => value.SourcePackage)
-                .ThenInclude(value => value.UserGrants)
-            .Where(value =>
-                dbContext.RuleConceptSourceBindings.Any(binding =>
-                    binding.RuleConceptId == ruleConceptId && binding.SourceEntityId == value.Id)
-                && (value.SourcePackage.IsPublic
-                    || value.SourcePackage.UserGrants.Any(grant => grant.UserId == actor)))
-            .OrderBy(value => value.Name)
-            .ThenBy(value => value.SourceCode)
-            .ToArrayAsync(cancellationToken);
+        var sourceIds = await CanonicalRuleBindingStore.GetAccessibleSourceEntityIdsForConceptAsync(
+            dbContext,
+            ruleConceptId,
+            actor,
+            cancellationToken);
+        var sources = sourceIds.Count == 0
+            ? []
+            : await dbContext.SourceEntities
+                .AsNoTracking()
+                .Include(value => value.Revisions)
+                .Include(value => value.SourcePackage)
+                    .ThenInclude(value => value.UserGrants)
+                .Where(value => sourceIds.Contains(value.Id))
+                .OrderBy(value => value.Name)
+                .ThenBy(value => value.SourceCode)
+                .ThenBy(value => value.Id)
+                .ToArrayAsync(cancellationToken);
 
         var sourceViews = new List<RuleConsolidationSourceView>(sources.Length);
         var revisionLookup = new Dictionary<Guid, (SourceEntity Source, SourceEntityRevision Revision, CanonicalPublicationMetadata? Metadata)>();
@@ -610,7 +634,6 @@ public sealed class RuleConsolidationService(
                 revisions));
         }
 
-        var sourceIds = sources.Select(value => value.Id).ToArray();
         var lineage = await versioning.GetActiveLineageForSourcesAsync(sourceIds, actor, cancellationToken);
         var contributions = new List<RuleConsolidationContributionView>();
         if (detail.LatestDecision is not null)
