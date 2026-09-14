@@ -295,6 +295,7 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
             }
         }
 
+        // Native references are provenance/version evidence and must be read from RawJson.
         if (ContainsExplicitReference(sourceRevision.RawJson, candidate.Name, candidate.SourceCode ?? string.Empty)
             || ContainsExplicitReference(candidateRevision.RawJson, source.Name, source.SourceCode ?? string.Empty))
         {
@@ -302,19 +303,23 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
             reasons.Add("Explicit source metadata references the other implementation.");
         }
 
-        var shapeSimilarity = Jaccard(ExtractShape(sourceRevision.RawJson), ExtractShape(candidateRevision.RawJson));
+        // Shape/content similarity is a mechanical heuristic. Comparing native wrapper formats
+        // here would measure serialization differences instead of rule similarity.
+        var sourceMechanicalJson = sourceRevision.GetMechanicalContentJson();
+        var candidateMechanicalJson = candidateRevision.GetMechanicalContentJson();
+        var shapeSimilarity = Jaccard(ExtractShape(sourceMechanicalJson), ExtractShape(candidateMechanicalJson));
         if (shapeSimilarity >= 0.4)
         {
             score += (int)Math.Round(shapeSimilarity * 10d);
-            reasons.Add($"Document-shape similarity {shapeSimilarity:P0}.");
+            reasons.Add($"Mechanical-shape similarity {shapeSimilarity:P0}.");
         }
 
         var contentSimilarity = Jaccard(
-            ExtractContentTokens(sourceRevision.RawJson), ExtractContentTokens(candidateRevision.RawJson));
+            ExtractContentTokens(sourceMechanicalJson), ExtractContentTokens(candidateMechanicalJson));
         if (contentSimilarity >= 0.15)
         {
             score += (int)Math.Round(contentSimilarity * 25d);
-            reasons.Add($"Source-text token similarity {contentSimilarity:P0}.");
+            reasons.Add($"Mechanical-content token similarity {contentSimilarity:P0}.");
         }
 
         if (sourceMetadata?.GameEdition is not null
@@ -365,9 +370,9 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
         }
     }
 
-    private static HashSet<string> ExtractShape(string rawJson)
+    private static HashSet<string> ExtractShape(string documentJson)
     {
-        using var document = JsonDocument.Parse(rawJson);
+        using var document = JsonDocument.Parse(documentJson);
         return document.RootElement.ValueKind != JsonValueKind.Object
             ? []
             : document.RootElement.EnumerateObject()
@@ -376,9 +381,9 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
                 .ToHashSet(StringComparer.Ordinal);
     }
 
-    private static HashSet<string> ExtractContentTokens(string rawJson)
+    private static HashSet<string> ExtractContentTokens(string documentJson)
     {
-        using var document = JsonDocument.Parse(rawJson);
+        using var document = JsonDocument.Parse(documentJson);
         var tokens = new HashSet<string>(StringComparer.Ordinal);
         CollectContentTokens(document.RootElement, tokens, null);
         return tokens;
@@ -611,7 +616,7 @@ public sealed class RuleConsolidationService(
             var revisions = new List<RuleConsolidationSourceRevisionView>();
             foreach (var revision in source.Revisions.OrderByDescending(value => value.RevisionNumber))
             {
-                using var document = JsonDocument.Parse(revision.RawJson);
+                using var document = JsonDocument.Parse(revision.GetMechanicalContentJson());
                 revisions.Add(new RuleConsolidationSourceRevisionView(
                     revision.Id, revision.RevisionNumber, revision.Fingerprint, revision.ImportedAt, document.RootElement.Clone()));
                 revisionLookup[revision.Id] = (source, revision, metadata);
