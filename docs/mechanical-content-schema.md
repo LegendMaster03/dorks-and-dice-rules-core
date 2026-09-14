@@ -68,30 +68,58 @@ Translation may add a Rules Core extension only when Rules Core itself needs add
 
 PCGen remains source-native evidence. PCC/LST parsing preserves campaign metadata, publication context, source names, publisher/date evidence, game modes, file references, native keys, operations, raw tag/value segments, and unsupported fragments.
 
-Recognized PCGen mechanical records are translated into the applicable 5e.tools-derived family shape. Current mappings intentionally cover only defensible equivalences. Examples include:
+Recognized PCGen mechanical records are translated into the applicable 5e.tools-derived family shape. The translator is based on actual PCGen 3e/3.5e conventions rather than synthetic 5e-style tags.
 
-- PCGen spell level, school, descriptions, simple verbal/somatic components, and instantaneous duration into spell-family fields;
-- feat description and repeatability into feat-family fields;
-- equipment weight/cost/description into item-family fields;
-- race size, speed, and direct ability bonuses into race-family fields;
-- creature size/type, abilities, AC, HP/hit dice, speed, CR, and description into bestiary-family fields when the source record supplies those values in a form that can be represented faithfully.
+Current classification rules include:
 
-A 3.x rule is not converted into a false 5e mechanic merely to fill a familiar field. Unmapped edition-specific mechanics are retained under the explicit `_rulesCore` extension namespace. For PCGen records the current extension shape is:
+- a PCGen `ABILITY` record whose `CATEGORY` is `FEAT` translates as a feat while retaining its `pcgen|ability|...` native key;
+- a PCGen `RACE` record with `MONSTERCLASS`, or a race record in a strongly identified monster source path, translates as a monster while retaining its `pcgen|race|...` native key;
+- ordinary playable race records remain races.
+
+Current field mappings intentionally cover only defensible equivalences:
+
+- spell level is derived from actual `CLASSES`/`DOMAINS` assignments only when those assignments agree on one level; class/domain access itself remains preserved as PCGen-specific mechanics;
+- recognized spell school, simple verbal/somatic components, instantaneous duration, and descriptions map to spell-family fields;
+- feat description and `MULT` repeatability map to feat-family fields, while prerequisites and other 3.x expressions remain source-specific;
+- equipment weight maps directly, and PCGen `COST` is interpreted according to PCGen semantics: a bare numeric cost is gold pieces and is converted to the 5e.tools copper-piece `value` representation;
+- ordinary race size, walk speed, and racial `BONUS:STAT` modifiers can map to race-family equivalents when faithful;
+- monster size, recognized creature type, supported movement modes, CR, and descriptions can map directly.
+
+PCGen monster race records normally encode **racial modifiers and racial hit-die declarations**, not a final 5e-style stat block. For example, `BONUS:STAT|STR|16`, `BONUS:COMBAT|AC|7|TYPE=NaturalArmor`, and `MONSTERCLASS:Aberration:8` do not by themselves establish the final Strength score, total AC, or HP formula. Rules Core therefore does not fabricate `str`, `ac`, or `hp` from those values. They remain preserved under the Rules Core extension until a translator has enough surrounding 3.x rules context to derive a faithful result.
+
+## Rules Core extension namespace
+
+A 3.x rule is not converted into a false 5e mechanic merely to fill a familiar field. Source-specific context and unmapped mechanics are separated inside `_rulesCore`:
 
 ```json
 {
   "_rulesCore": {
-    "edition": "3.5e",
+    "context": {
+      "edition": "3.5e",
+      "sourceFormat": "pcgen-data",
+      "nativeEntityType": "race",
+      "translatedEntityType": "monster"
+    },
     "pcgen": {
       "unmappedSegments": [
-        { "tag": "PREMULT", "value": "..." }
+        { "tag": "MONSTERCLASS", "value": "Aberration:8" }
       ]
     }
   }
 }
 ```
 
+`_rulesCore.context` is translation/provenance context. It is persisted in `ContentJson` for inspection but is removed by `SourceEntityRevision.GetMechanicalContentJson()` before semantic comparison, additive resolution, patching, or resolved-rule output. It therefore does not make otherwise identical mechanics compare as different rules.
+
+`_rulesCore.pcgen.unmappedSegments` is different: those values represent mechanics that have not been translated into a faithful 5e.tools field. They remain in the rule-bearing view and therefore participate in canonical semantic fingerprints and Rules Layer compatibility decisions.
+
 The extension is subordinate to the complete `RawJson`; it is not a replacement 3.x ontology. Unsupported source fragments and operations remain separate source evidence until a translator can construct a legitimate mechanical entity.
+
+## Legacy SemanticJson field
+
+`NormalizedSourceRecord.SemanticJson` is retained temporarily for compatibility with the earlier adapter contract, but it is not the mechanical content contract and no longer drives canonical semantic fingerprints, Rules Layer comparison, patching, resolved output, or trusted-lineage alias eligibility. New translation work must use `ContentJson`.
+
+The old PCGen `{name, entityType, segments}` projection is therefore not a target representation. It may be removed once the compatibility surface no longer needs the legacy property.
 
 ## PDF boundary
 
@@ -119,7 +147,7 @@ Canonical metadata never grants access to a private source representation. Rules
 
 Code must choose the representation based on intent.
 
-Mechanical consumers normally use `SourceEntityRevision.GetMechanicalContentJson()`, which returns translated `ContentJson` when present and falls back to `RawJson` for legacy/native records that have no translation. This includes:
+Mechanical consumers normally use `SourceEntityRevision.GetMechanicalContentJson()`. It starts from translated `ContentJson` when present, falls back to `RawJson` for legacy/native records with no translation, and removes non-mechanical Rules Core translation context. This includes:
 
 - semantic comparison and compatibility;
 - automatic cross-edition resolution;

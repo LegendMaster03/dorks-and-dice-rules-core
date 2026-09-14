@@ -18,6 +18,8 @@ The current adapter set is:
 - `PcGenSourceFormatAdapter` for PCGen `.pcc` and `.lst` 3.x data;
 - `PdfSourceFormatAdapter` for PDFs with a usable text layer.
 
+All three are registered in the normal web-host `ISourceFormatAdapterRegistry`; PCGen is not a bootstrap-only parser.
+
 The registry is format-oriented rather than edition-oriented. This does not imply that the mechanical content schema is format-neutral. Source ingestion is format-neutral; translated mechanical content uses the 5e.tools family model as the reference schema.
 
 ## Representation contract
@@ -44,11 +46,15 @@ Each accepted physical artifact becomes an immutable `source_representation` con
 
 For ordinary native 5e.tools entities, this translation is identity-preserving: the complete native entity object is the mechanical body, including unknown upstream fields.
 
-For recognized PCGen entities, translation produces the applicable spell, feat, item, race/species, creature, or other family shape. Mechanics that have no faithful 5e.tools equivalent are preserved under an explicit `_rulesCore` extension rather than discarded or forced into an unrelated field.
+For recognized PCGen entities, translation produces the applicable spell, feat, item, race/species, monster, or other family shape. Mechanics that have no faithful 5e.tools equivalent are preserved under an explicit `_rulesCore` extension rather than discarded or forced into an unrelated field.
+
+`_rulesCore.context` stores translation context such as edition, source format, and the original PCGen family. It is persisted but excluded from the rule-bearing view returned by `GetMechanicalContentJson()`. `_rulesCore.pcgen.unmappedSegments` remains rule-bearing because it contains mechanics that have not yet been translated faithfully.
 
 PDF fragments and unsupported source records may legitimately have no `ContentJson` at all.
 
 A translation-only change does not create a new native revision. Native revision history remains a history of source-native content.
+
+`NormalizedSourceRecord.SemanticJson` remains only as a temporary legacy compatibility field. It is not the current mechanical representation and does not control canonical fingerprints, Rules Layer compatibility, or trusted-lineage alias eligibility.
 
 ### Publication evidence
 
@@ -102,11 +108,21 @@ PCGen is the first persistent 3.x structured source translator.
 
 Game-mode projection currently recognizes 3e and 35e as `3e` and `3.5e`. An exact `yyyy-MM-dd` source date can become canonical publication-date evidence. A partial source date such as `2003-07` remains preserved raw metadata and is not converted into an invented exact day.
 
+PCC reference tags identify the native PCGen family, but translation can refine that family using strong record evidence. In particular, official 3.x data commonly carries feats through `ABILITY` files with `CATEGORY:FEAT`, and monster definitions through `RACE` files in monster source sets.
+
 ### LST files
 
 Supported single-line families are parsed into source-native records with stable keys and line locators. Raw lines, duplicate tags, unknown tags, source metadata, and unsupported fragments remain available in `RawJson`.
 
 Recognized records are then translated into the same family-shaped `ContentJson` contract used by native 5e.tools content. The translator maps only mechanics with a defensible equivalent and stores unmapped 3.x-specific material under `_rulesCore.pcgen.unmappedSegments`.
+
+The current translator follows actual PCGen conventions:
+
+- `ABILITY` + `CATEGORY:FEAT` becomes the feat family without changing the native key;
+- monster `RACE` records are recognized from `MONSTERCLASS` or strong monster-source path evidence;
+- spell level is derived from `CLASSES`/`DOMAINS` only when the assignments identify one unambiguous level;
+- bare numeric equipment `COST` is gold pieces in PCGen and is converted to the 5e.tools copper-piece value representation;
+- monster racial `BONUS:STAT`, natural-armor bonuses, and `MONSTERCLASS` racial hit-die declarations are preserved as 3.x mechanics instead of being misrepresented as final 5e ability scores, total AC, or HP.
 
 A direct book-local PCC reference can provide publication context for an LST file. A shared list referenced by multiple publications may provide entity-family information but remains publication-unassociated when ownership is ambiguous.
 
@@ -120,7 +136,7 @@ Only an artifact whose actual source URI proves it came from the official `PCGen
 
 Even then, the alias is useful only after the bootstrap/reconciliation process has confirmed what canonical entity that source-specific identity represents. Rules Core does not globally merge entities merely because their names match.
 
-Strong canonical entity aliases are versioned by source-lineage scheme, native alias value, and the translated mechanical fingerprint. This allows the same upstream native key to identify a later mechanical revision without incorrectly collapsing the revision back into the earlier canonical entity.
+Trusted alias eligibility requires translated `ContentJson`, not the deprecated generic `SemanticJson` projection. Strong canonical entity aliases are versioned by source-lineage scheme, native alias value, and the translated mechanical fingerprint. This allows the same upstream native key to identify a later mechanical revision without incorrectly collapsing the revision back into the earlier canonical entity.
 
 ## PDF
 
@@ -149,7 +165,7 @@ Sparse title-only evidence does not force a merge. Content overlap is used only 
 
 Canonical identity remains separate from both native representation and mechanical translation. Different packages and representations can retain independent access and native revision history while resolving to the same canonical entity.
 
-Translated mechanical fingerprints can contribute to exact-identity reconciliation, but they do not by themselves override strong conflicting source identity evidence. Cross-format reuse with different mechanical fingerprints requires trusted lineage/reconciliation evidence rather than name-only matching.
+Translated mechanical fingerprints can contribute to exact-identity reconciliation, but translation context such as source format or edition is excluded from the rule-bearing comparison. Unmapped source mechanics remain significant. Cross-format reuse with different mechanical fingerprints requires trusted lineage/reconciliation evidence rather than name-only matching.
 
 Mechanical changes in one native source lineage remain explicit relationships or revisions as appropriate. A strong alias can not be used to collapse a mechanically changed source revision into its prior canonical entity.
 
@@ -178,5 +194,3 @@ The refresh worker is an ASP.NET hosted service and queued import processor; the
 The eventual 3e/3.5e bootstrap is a developer seeding workflow built on the same persistent adapters, translator, and canonical resolver used by normal imports. It is not a separate global source-content database and does not require Rules Core to maintain a mirror of PCGen.
 
 The same principle applies to 5e/5.5e source seeding: the special import capability establishes source access and recognition while ordinary persistence remains package-scoped. CI relies on deterministic local fixtures rather than live upstream repositories.
-
-The workbench may classify candidate pairs as exact identity, corroborated exact identity, reprint, revision, rename, variant, same-name different entity, bad source data, parser error, or unresolved. Fully confirmed exact identities register strong source-lineage aliases. Fully confirmed reprint/revision/rename/variant decisions register the candidate lineage alias and persist a directed canonical relationship from predecessor/base to candidate. Partial classifications remain review state until the canonical endpoints are independently confirmed.
