@@ -35,6 +35,7 @@ public sealed class RuleSemanticComparisonService(RulesCoreDbContext dbContext)
             throw new ArgumentException("User ID can not be blank.", nameof(userId));
         }
 
+        await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
         var revisionIds = new[]
         {
             request.LeftSourceEntityRevisionId,
@@ -47,9 +48,6 @@ public sealed class RuleSemanticComparisonService(RulesCoreDbContext dbContext)
                 .ThenInclude(value => value.SourcePackage)
                 .ThenInclude(value => value.UserGrants)
             .Where(value => revisionIds.Contains(value.Id)
-                && dbContext.RuleConceptSourceBindings.Any(binding =>
-                    binding.RuleConceptId == request.RuleConceptId
-                    && binding.SourceEntityId == value.SourceEntityId)
                 && (value.SourceEntity.SourcePackage.IsPublic
                     || value.SourceEntity.SourcePackage.UserGrants
                         .Any(grant => grant.UserId == userId)))
@@ -58,6 +56,18 @@ public sealed class RuleSemanticComparisonService(RulesCoreDbContext dbContext)
         if (revisions.Length != revisionIds.Distinct().Count())
         {
             return null;
+        }
+
+        foreach (var revision in revisions)
+        {
+            if (!await CanonicalRuleBindingStore.IsSourceEntityBoundAsync(
+                    dbContext,
+                    request.RuleConceptId,
+                    revision.SourceEntityId,
+                    cancellationToken))
+            {
+                return null;
+            }
         }
 
         var left = revisions.Single(value => value.Id == request.LeftSourceEntityRevisionId);
