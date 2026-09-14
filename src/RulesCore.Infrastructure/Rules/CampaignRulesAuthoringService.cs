@@ -115,6 +115,7 @@ public sealed class CampaignRulesAuthoringService(RulesCoreDbContext dbContext)
         RequireGuid(campaignId, nameof(campaignId));
         RequireGuid(ruleConceptId, nameof(ruleConceptId));
         var normalizedUserId = RequireUserId(userId);
+        await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
 
         var selectedBaseline = await dbContext.CampaignRulesetSelections
             .AsNoTracking()
@@ -164,20 +165,28 @@ public sealed class CampaignRulesAuthoringService(RulesCoreDbContext dbContext)
                 .SingleOrDefaultAsync(cancellationToken);
         }
 
-        var boundSourceIds = bindings.Select(value => value.SourceEntityId).ToArray();
-        var accessibleSources = boundSourceIds.Length == 0
+        var accessibleSourceIds = await CanonicalRuleBindingStore.GetAccessibleSourceEntityIdsForConceptAsync(
+            dbContext,
+            ruleConceptId,
+            normalizedUserId,
+            cancellationToken);
+        var accessibleSources = accessibleSourceIds.Count == 0
             ? []
             : await dbContext.SourceEntities
                 .AsNoTracking()
                 .Include(value => value.Revisions)
                 .Include(value => value.SourcePackage)
-                .Where(value => boundSourceIds.Contains(value.Id)
-                    && (value.SourcePackage.IsPublic
-                        || value.SourcePackage.UserGrants.Any(grant => grant.UserId == normalizedUserId)))
+                .Where(value => accessibleSourceIds.Contains(value.Id))
                 .OrderBy(value => value.Name)
                 .ThenBy(value => value.SourceCode)
+                .ThenBy(value => value.Id)
                 .ToArrayAsync(cancellationToken);
 
+        var canonicalByAccessibleSource = await CanonicalRuleBindingStore.GetCanonicalEntityIdsAsync(
+            dbContext,
+            accessibleSourceIds,
+            cancellationToken);
+        var accessibleCanonicalCount = canonicalByAccessibleSource.Values.Distinct().Count();
         var sourceViews = accessibleSources.Select(ToSourceView).ToArray();
         var hasUnpublishedBaseline = latestPublished is null || latestPublished.BaselineSelectionId != selectedBaseline.Id;
         var hasUnpublishedOverride = latestCampaignDecision is not null && publishedCampaignDecisionId != latestCampaignDecision.Id;
@@ -189,7 +198,7 @@ public sealed class CampaignRulesAuthoringService(RulesCoreDbContext dbContext)
             ToView(baselineEntry.GlobalRuleDecision),
             bindings.Select(ToView).ToArray(),
             sourceViews,
-            bindings.Length - sourceViews.Length,
+            Math.Max(0, bindings.Length - accessibleCanonicalCount),
             latestCampaignDecision is null ? null : ToView(latestCampaignDecision),
             publishedCampaignDecisionId,
             latestPublished?.RevisionNumber,
@@ -210,7 +219,13 @@ public sealed class CampaignRulesAuthoringService(RulesCoreDbContext dbContext)
         new(concept.Id, concept.Key, concept.EntityType, concept.DisplayName, concept.CreatedByUserId, concept.CreatedAt);
 
     private static RuleConceptSourceBindingView ToView(RuleConceptSourceBinding binding) =>
-        new(binding.Id, binding.RuleConceptId, binding.SourceEntityId, binding.CreatedByUserId, binding.CreatedAt);
+        new(
+            binding.Id,
+            binding.RuleConceptId,
+            binding.CanonicalEntityId,
+            binding.CreatedByUserId,
+            binding.CreatedAt,
+            binding.SourceEntityId);
 
     private static GlobalRuleDecisionView ToView(GlobalRuleDecision decision)
     {
