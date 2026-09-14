@@ -61,7 +61,7 @@ public sealed class PcGenSourceFormatAdapterIntegrationTests
         var customTags = parsed.RootElement.GetProperty("segments")
             .EnumerateArray()
             .Where(value => value.GetProperty("Tag").GetString() == "CUSTOMTAG")
-            .Select(value => value.GetProperty("Value").GetString())
+            .Select(value => value.GetProperty("Value").GetString()!)
             .ToArray();
         Assert.Equal(["One", "Two"], customTags);
     }
