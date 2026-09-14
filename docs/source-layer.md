@@ -35,6 +35,7 @@ A 5e.tools `source` code, corpus `id`, `parentSource`, ISBN, PDF bibliographic f
 - `canonical_entity_alias` stores developer-confirmed strong source-lineage aliases. Alias identity includes the source-specific semantic fingerprint so a later mechanical revision of the same upstream key can map to a different canonical entity.
 - `canonical_source_occurrence` identifies the occurrence of a canonical entity in one canonical publication.
 - `source_entity_occurrence_binding` links an exact source-entity revision to a canonical occurrence and records its source-specific semantic fingerprint, locator, match method, and confidence.
+- `source_reconciliation_issue` records canonical reconciliation conflicts against the immutable source representation that produced them. These rows contain recognition metadata only; they do not contain a replacement source body or grant package access.
 
 Canonical identity is global identity metadata, not global source content. **Rules Core may globally know the identity of non-SRD material without globally providing that material.**
 
@@ -100,6 +101,8 @@ Current adapters include 5e.tools JSON, text-readable PDF, and PCGen `.pcc`/`.ls
 
 Uploaded files are immutable snapshots. Web sources are moving registrations and re-enter the same adapter/import pipeline when refreshed.
 
+Canonical reconciliation is downstream of valid source ingestion. If canonical identity evidence conflicts, Rules Core keeps the imported representation and native entity revision, records a reconciliation issue, and exposes that issue only through an owning user's source registration. A corrected retry resolves the active issue across that representation lineage without fabricating another source revision.
+
 GitHub tree imports enumerate compatible files and preserve each fetched file as its own source representation. A failed incomplete Web import can be cleaned and retried without converting private source content into shared canonical content.
 
 ## Web refresh
@@ -118,7 +121,7 @@ The ordinary read endpoints remain source-access scoped:
 
 Anonymous requests see only public packages. Authenticated requests add restricted packages having a matching `user_source_grant`. A restricted entity without a grant behaves as not found and is omitted from search results.
 
-Canonical publication/entity tables are not an alternate source-content API.
+Canonical publication/entity tables are not an alternate source-content API. Reconciliation issue reads are likewise scoped through the caller's current-user source registration rather than exposed as a global source-content endpoint.
 
 ## Source grants, acquisition, and disposition
 

@@ -64,6 +64,15 @@ export class RulesCoreApi {
     }
 
     getCurrentUserSources() { return this.backend("/api/sources/current-user"); }
+    getCurrentUserSourceImportJobs() { return this.backend("/api/sources/current-user/import-jobs"); }
+
+    getCurrentUserSourceReconciliationIssues(currentUserSourceId) {
+        return this.backend(`/api/sources/current-user/${encodeURIComponent(currentUserSourceId)}/reconciliation-issues`);
+    }
+
+    getCurrentUserSourceImportJobReconciliationIssues(importJobId) {
+        return this.backend(`/api/sources/current-user/import-jobs/${encodeURIComponent(importJobId)}/reconciliation-issues`);
+    }
 
     addCurrentUserSource(payload) {
         return this.backend("/api/sources/current-user", { method: "POST", body: payload });

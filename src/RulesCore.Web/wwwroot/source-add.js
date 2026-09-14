@@ -128,9 +128,15 @@ async function buildAddSourceCard(app) {
                     "info",
                     `${added.displayName} is queued for import. Progress will appear below and Rules Core will continue processing it if you leave this page.`));
             } else {
+                const issues = added?.id
+                    ? await loadReconciliationIssues(() =>
+                        app.api.getCurrentUserSourceReconciliationIssues(added.id))
+                    : [];
                 result.replaceChildren(alertNode(
-                    "success",
-                    `${added.displayName} added. ${added.sourceCodeCount} publication(s), ${added.entityCount} source record(s) are now available to your account.`));
+                    issues.length ? "warning" : "success",
+                    issues.length
+                        ? `${added.displayName} added. Its source material is available, but ${issues.length} canonical reconciliation issue${issues.length === 1 ? "" : "s"} need review.`
+                        : `${added.displayName} added. ${added.sourceCodeCount} publication(s), ${added.entityCount} source record(s) are now available to your account.`));
             }
             if (currentKind === "upload") file.value = "";
             await renderExistingSources(app, existing, result);
@@ -159,11 +165,19 @@ async function renderExistingSources(app, container, result) {
     try {
         const [sources, jobs] = await Promise.all([
             app.api.getCurrentUserSources(),
-            app.api.backend("/api/sources/current-user/import-jobs")
+            app.api.getCurrentUserSourceImportJobs()
         ]);
+        const sourceIssues = new Map(await Promise.all(sources.map(async source => [
+            source.id,
+            await loadReconciliationIssues(() =>
+                app.api.getCurrentUserSourceReconciliationIssues(source.id))
+        ])));
+
         container.replaceChildren();
 
-        const visibleJobs = jobs.filter(job => job.status !== "completed");
+        const visibleJobs = jobs.filter(job =>
+            job.status !== "completed"
+            || (sourceIssues.get(job.currentUserSourceId)?.length ?? 0) > 0);
         if (!sources.length && !visibleJobs.length) return;
 
         if (visibleJobs.length) {
@@ -171,12 +185,17 @@ async function renderExistingSources(app, container, result) {
                 element("div", { className: "small fw-semibold mb-1", text: "Import activity" }));
             for (const job of visibleJobs) {
                 const running = job.status === "running";
+                const queued = job.status === "queued";
                 const failed = job.status === "failed";
+                const reconciliationIssues = sourceIssues.get(job.currentUserSourceId) ?? [];
+                const needsReview = job.status === "completed" && reconciliationIssues.length > 0;
                 const label = failed
                     ? "Import failed"
-                    : running
-                        ? "Importing"
-                        : "Queued";
+                    : needsReview
+                        ? "Needs reconciliation"
+                        : running
+                            ? "Importing"
+                            : "Queued";
                 const metadata = job.operation === "refresh" ? "Web source refresh" : "Web source";
                 activity.append(element("div", {
                     className: "d-flex flex-wrap justify-content-between align-items-start gap-2 py-2 border-top"
@@ -187,12 +206,21 @@ async function renderExistingSources(app, container, result) {
                         className: "small text-body-secondary text-break",
                         text: `${metadata} · ${job.url ?? ""}`
                     }),
-                    !failed ? buildProgressView(job) : null,
+                    running || queued ? buildProgressView(job) : null,
                     failed && job.error
                         ? element("div", { className: "small text-danger mt-1", text: job.error })
+                        : null,
+                    needsReview
+                        ? buildReconciliationIssueView(
+                            reconciliationIssues,
+                            "Import completed and the source material is available. Rules Core could not safely reconcile some canonical identities automatically.")
                         : null),
                 element("span", {
-                    className: failed ? "badge text-bg-danger" : "badge text-bg-secondary",
+                    className: failed
+                        ? "badge text-bg-danger"
+                        : needsReview
+                            ? "badge text-bg-warning"
+                            : "badge text-bg-secondary",
                     text: label
                 })));
             }
@@ -207,6 +235,7 @@ async function renderExistingSources(app, container, result) {
             }));
             const list = element("div", { className: "list-group list-group-flush mt-2" });
             for (const source of sources) {
+                const reconciliationIssues = sourceIssues.get(source.id) ?? [];
                 const actions = element("div", { className: "d-flex gap-2 align-items-start" });
                 if (source.kind === "web") {
                     const refresh = element("button", {
@@ -240,11 +269,16 @@ async function renderExistingSources(app, container, result) {
                 ].join(" · ");
                 list.append(element("div", { className: "list-group-item px-0" },
                     element("div", { className: "d-flex flex-wrap justify-content-between gap-3" },
-                        element("div", {},
+                        element("div", { className: "flex-grow-1" },
                             element("div", { className: "fw-semibold", text: source.displayName }),
                             element("div", { className: "small text-body-secondary", text: metadata }),
                             source.url
                                 ? element("div", { className: "small text-break text-body-secondary", text: source.url })
+                                : null,
+                            reconciliationIssues.length
+                                ? buildReconciliationIssueView(
+                                    reconciliationIssues,
+                                    "The imported source remains available. These conflicts affect canonical recognition only and do not discard the source representation.")
                                 : null),
                         actions)));
             }
@@ -258,6 +292,44 @@ async function renderExistingSources(app, container, result) {
     } catch (error) {
         container.replaceChildren(alertNode("warning", `Added sources could not be loaded: ${describeError(error)}`));
     }
+}
+
+async function loadReconciliationIssues(load) {
+    try {
+        const issues = await load();
+        return Array.isArray(issues) ? issues : [];
+    } catch (error) {
+        if (error?.status === 404) return [];
+        throw error;
+    }
+}
+
+function buildReconciliationIssueView(issues, explanation) {
+    const wrapper = element("div", {
+        className: "alert alert-warning py-2 px-3 mt-2 mb-0",
+        attributes: { role: "status" }
+    },
+    element("div", {
+        className: "small fw-semibold",
+        text: `${issues.length} canonical reconciliation issue${issues.length === 1 ? "" : "s"}`
+    }),
+    element("div", { className: "small", text: explanation }));
+
+    const details = element("details", { className: "small mt-1" },
+        element("summary", { text: "Show reconciliation details" }));
+    const list = element("ul", { className: "mb-0 mt-1 ps-3" });
+    for (const issue of issues) {
+        const publication = issue.publicationDisplayName
+            || issue.publicationLocalKey
+            || "Publication";
+        list.append(element("li", {
+            className: "mb-1",
+            text: `${publication}: ${issue.message || "Canonical identity could not be reconciled automatically."}`
+        }));
+    }
+    details.append(list);
+    wrapper.append(details);
+    return wrapper;
 }
 
 function buildProgressView(job) {

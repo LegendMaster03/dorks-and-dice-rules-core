@@ -57,6 +57,9 @@ jobs:
               || typeof api.searchSourceEntityPage !== "function"
               || typeof api.addCurrentUserSource !== "function"
               || typeof api.getCurrentUserSources !== "function"
+              || typeof api.getCurrentUserSourceImportJobs !== "function"
+              || typeof api.getCurrentUserSourceReconciliationIssues !== "function"
+              || typeof api.getCurrentUserSourceImportJobReconciliationIssues !== "function"
               || typeof api.refreshCurrentUserSource !== "function") {
               throw new Error("Rules Browser/source paging/self-service source API contract is incomplete.");
           }
@@ -221,7 +224,12 @@ jobs:
               "Web source",
               "5etools-mirror-3/5etools-src/tree/main/data",
               "addCurrentUserSource",
-              "refreshCurrentUserSource"
+              "refreshCurrentUserSource",
+              "getCurrentUserSourceImportJobs",
+              "getCurrentUserSourceReconciliationIssues",
+              "Needs reconciliation",
+              "Show reconciliation details",
+              "source material is available"
           ]) {
               if (!sourceAdd.includes(required)) {
                   throw new Error(`Self-service source workflow is missing '${required}'.`);
