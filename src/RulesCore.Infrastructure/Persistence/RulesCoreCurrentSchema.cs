@@ -15,6 +15,9 @@ internal static class RulesCoreCurrentSchema
         dbContext.Database.ExecuteSqlRawAsync(PostgresCurrentSchema, cancellationToken);
 
     private const string PostgresCurrentSchema = """
+        ALTER TABLE source_entity_revision
+            ADD COLUMN IF NOT EXISTS content_json jsonb NULL;
+
         CREATE TABLE IF NOT EXISTS canonical_entity (
             canonical_entity_id uuid NOT NULL,
             canonical_key varchar(300) NOT NULL,

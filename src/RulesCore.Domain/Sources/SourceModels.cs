@@ -61,11 +61,15 @@ public sealed class SourceEntityRevision
     public int RevisionNumber { get; set; }
     public string Fingerprint { get; set; } = string.Empty;
     public string RawJson { get; set; } = string.Empty;
+    public string? ContentJson { get; set; }
     public string? LocatorKey { get; set; }
     public DateTimeOffset ImportedAt { get; set; }
 
     public SourceEntity SourceEntity { get; set; } = null!;
     public SourceRepresentation SourceRepresentation { get; set; } = null!;
+
+    public string GetMechanicalContentJson() =>
+        string.IsNullOrWhiteSpace(ContentJson) ? RawJson : ContentJson;
 }
 
 public sealed class UserSourceGrant

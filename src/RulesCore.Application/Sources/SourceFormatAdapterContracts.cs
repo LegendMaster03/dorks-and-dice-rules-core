@@ -17,7 +17,14 @@ public sealed record NormalizedSourceRecord(
     string? PublicationLocalKey = null,
     string NativeIdentityJson = "{}",
     string? SemanticJson = null,
-    IReadOnlyDictionary<string, string>? CanonicalAliases = null);
+    IReadOnlyDictionary<string, string>? CanonicalAliases = null)
+{
+    /// <summary>
+    /// Rules Core mechanical content using the 5e.tools-derived reference schema.
+    /// RawJson remains the immutable source-native representation.
+    /// </summary>
+    public string? ContentJson { get; init; }
+}
 
 public sealed record NormalizedSourcePublication(
     string LocalKey,

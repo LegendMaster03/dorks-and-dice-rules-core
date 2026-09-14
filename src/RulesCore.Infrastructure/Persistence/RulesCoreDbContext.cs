@@ -101,6 +101,7 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
             entity.Property(value => value.RevisionNumber).HasColumnName("revision_number");
             entity.Property(value => value.Fingerprint).HasColumnName("fingerprint").HasMaxLength(64);
             entity.Property(value => value.RawJson).HasColumnName("raw_json").HasColumnType("jsonb");
+            entity.Property(value => value.ContentJson).HasColumnName("content_json").HasColumnType("jsonb");
             entity.Property(value => value.LocatorKey).HasColumnName("locator_key").HasMaxLength(500);
             entity.Property(value => value.ImportedAt).HasColumnName("imported_at");
             entity.HasIndex(value => new { value.SourceEntityId, value.RevisionNumber })
