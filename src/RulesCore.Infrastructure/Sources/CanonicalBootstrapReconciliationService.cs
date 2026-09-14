@@ -35,7 +35,8 @@ public sealed class CanonicalBootstrapReconciliationService(RulesCoreDbContext d
                 current.Classification,
                 CanonicalBootstrapReconciliationClassifications.Unresolved,
                 StringComparison.Ordinal)
-            && !SameOutcome(current, normalized))
+            && !SameOutcome(current, normalized)
+            && !CanRefineRelationshipOutcome(current, normalized))
         {
             throw new InvalidOperationException(
                 "A finalized bootstrap reconciliation can not be silently replaced. " +
@@ -45,7 +46,7 @@ public sealed class CanonicalBootstrapReconciliationService(RulesCoreDbContext d
         await ValidateCanonicalEntityAsync(normalized.CanonicalEntityId, cancellationToken);
         await ValidateCanonicalEntityAsync(normalized.RelatedCanonicalEntityId, cancellationToken);
 
-        if (CanonicalBootstrapReconciliationClassifications.RegistersTrustedAlias(normalized.Classification))
+        if (CanonicalBootstrapReconciliationClassifications.RegistersExactIdentityAlias(normalized.Classification))
         {
             if (!normalized.CanonicalEntityId.HasValue)
             {
@@ -66,15 +67,26 @@ public sealed class CanonicalBootstrapReconciliationService(RulesCoreDbContext d
                     nameof(request));
             }
 
-            await new CanonicalEntityAliasStore(dbContext).RegisterAsync(
+            await RegisterTrustedAliasAsync(normalized, cancellationToken);
+        }
+        else if (CanonicalBootstrapReconciliationClassifications.DefinesCanonicalRelationship(normalized.Classification)
+                 && normalized.Confidence == 1.0)
+        {
+            if (!normalized.CanonicalEntityId.HasValue || !normalized.RelatedCanonicalEntityId.HasValue)
+            {
+                throw new ArgumentException(
+                    "A fully confirmed bootstrap relationship requires both the classified canonical entity " +
+                    "and its predecessor/base canonical entity.",
+                    nameof(request));
+            }
+
+            await RegisterTrustedAliasAsync(normalized, cancellationToken);
+            await new CanonicalEntityRelationshipStore(dbContext).RelateAsync(
+                normalized.RelatedCanonicalEntityId.Value,
                 normalized.CanonicalEntityId.Value,
-                normalized.AliasScheme,
-                normalized.AliasValue,
-                normalized.SemanticFingerprint,
-                normalized.Classification == CanonicalBootstrapReconciliationClassifications.ExactIdentity
-                    ? "bootstrap-confirmed-exact-identity"
-                    : "bootstrap-confirmed-corroborated-identity",
-                1.0,
+                normalized.Classification,
+                normalized.EvidenceKind,
+                normalized.Confidence,
                 cancellationToken);
         }
 
@@ -174,6 +186,20 @@ public sealed class CanonicalBootstrapReconciliationService(RulesCoreDbContext d
         }
     }
 
+    private async Task RegisterTrustedAliasAsync(
+        NormalizedRequest normalized,
+        CancellationToken cancellationToken)
+    {
+        await new CanonicalEntityAliasStore(dbContext).RegisterAsync(
+            normalized.CanonicalEntityId!.Value,
+            normalized.AliasScheme,
+            normalized.AliasValue,
+            normalized.SemanticFingerprint,
+            $"bootstrap-confirmed-{normalized.Classification}",
+            1.0,
+            cancellationToken);
+    }
+
     private async Task ValidateCanonicalEntityAsync(
         Guid? canonicalEntityId,
         CancellationToken cancellationToken)
@@ -254,6 +280,23 @@ public sealed class CanonicalBootstrapReconciliationService(RulesCoreDbContext d
         string.Equals(current.Classification, requested.Classification, StringComparison.Ordinal)
         && current.CanonicalEntityId == requested.CanonicalEntityId
         && current.RelatedCanonicalEntityId == requested.RelatedCanonicalEntityId;
+
+    private static bool CanRefineRelationshipOutcome(
+        CanonicalBootstrapReconciliationView current,
+        NormalizedRequest requested)
+    {
+        if (!string.Equals(current.Classification, requested.Classification, StringComparison.Ordinal)
+            || !CanonicalBootstrapReconciliationClassifications.DefinesCanonicalRelationship(current.Classification))
+        {
+            return false;
+        }
+
+        var canonicalCompatible = !current.CanonicalEntityId.HasValue
+            || current.CanonicalEntityId == requested.CanonicalEntityId;
+        var relatedCompatible = !current.RelatedCanonicalEntityId.HasValue
+            || current.RelatedCanonicalEntityId == requested.RelatedCanonicalEntityId;
+        return canonicalCompatible && relatedCompatible;
+    }
 
     private static NormalizedRequest Normalize(RecordCanonicalBootstrapReconciliationRequest request)
     {

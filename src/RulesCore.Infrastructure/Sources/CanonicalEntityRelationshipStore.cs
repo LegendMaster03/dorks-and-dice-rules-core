@@ -11,6 +11,16 @@ internal static class CanonicalEntityRelationshipKinds
     public const string Reprint = "reprint";
     public const string Rename = "rename";
     public const string Variant = "variant";
+
+    private static readonly HashSet<string> Known = new(StringComparer.Ordinal)
+    {
+        Revision,
+        Reprint,
+        Rename,
+        Variant
+    };
+
+    public static bool IsKnown(string relationshipKind) => Known.Contains(relationshipKind);
 }
 
 internal sealed class CanonicalEntityRelationshipStore(RulesCoreDbContext dbContext)
@@ -18,9 +28,24 @@ internal sealed class CanonicalEntityRelationshipStore(RulesCoreDbContext dbCont
     public Task EnsureSchemaAsync(CancellationToken cancellationToken = default) =>
         dbContext.Database.ExecuteSqlRawAsync(SchemaSql, cancellationToken);
 
-    public async Task RelateRevisionAsync(
+    public Task RelateRevisionAsync(
         Guid fromCanonicalEntityId,
         Guid toCanonicalEntityId,
+        string evidenceKind,
+        double confidence,
+        CancellationToken cancellationToken = default) =>
+        RelateAsync(
+            fromCanonicalEntityId,
+            toCanonicalEntityId,
+            CanonicalEntityRelationshipKinds.Revision,
+            evidenceKind,
+            confidence,
+            cancellationToken);
+
+    public async Task RelateAsync(
+        Guid fromCanonicalEntityId,
+        Guid toCanonicalEntityId,
+        string relationshipKind,
         string evidenceKind,
         double confidence,
         CancellationToken cancellationToken = default)
@@ -31,7 +56,14 @@ internal sealed class CanonicalEntityRelationshipStore(RulesCoreDbContext dbCont
         }
         if (fromCanonicalEntityId == toCanonicalEntityId)
         {
-            return;
+            throw new ArgumentException("Canonical entity relationship endpoints must be distinct.");
+        }
+        if (string.IsNullOrWhiteSpace(relationshipKind)
+            || !CanonicalEntityRelationshipKinds.IsKnown(relationshipKind.Trim()))
+        {
+            throw new ArgumentException(
+                $"Unknown canonical entity relationship kind '{relationshipKind}'.",
+                nameof(relationshipKind));
         }
         if (string.IsNullOrWhiteSpace(evidenceKind))
         {
@@ -42,6 +74,7 @@ internal sealed class CanonicalEntityRelationshipStore(RulesCoreDbContext dbCont
             throw new ArgumentOutOfRangeException(nameof(confidence));
         }
 
+        var normalizedRelationshipKind = relationshipKind.Trim();
         await EnsureSchemaAsync(cancellationToken);
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
@@ -66,7 +99,7 @@ internal sealed class CanonicalEntityRelationshipStore(RulesCoreDbContext dbCont
             AddParameter(command, "@id", Guid.NewGuid());
             AddParameter(command, "@from_id", fromCanonicalEntityId);
             AddParameter(command, "@to_id", toCanonicalEntityId);
-            AddParameter(command, "@relationship_kind", CanonicalEntityRelationshipKinds.Revision);
+            AddParameter(command, "@relationship_kind", normalizedRelationshipKind);
             AddParameter(command, "@evidence_kind", evidenceKind.Trim());
             AddParameter(command, "@confidence", confidence);
             AddParameter(command, "@created_at", DateTimeOffset.UtcNow);

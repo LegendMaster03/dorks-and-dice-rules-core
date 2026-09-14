@@ -75,7 +75,7 @@ public sealed class CanonicalBootstrapReconciliationIntegrationTests
     }
 
     [Fact]
-    public async Task NonExactClassificationsPersistWithoutCreatingTrustedAliases()
+    public async Task NonExactClassificationsPersistWithoutCreatingUnconfirmedTrustedAliases()
     {
         var db = await OpenDatabaseAsync();
         if (db is null) return;
@@ -118,6 +118,135 @@ public sealed class CanonicalBootstrapReconciliationIntegrationTests
                     aliasValue,
                     fingerprint));
             }
+        }
+    }
+
+    [Theory]
+    [InlineData(CanonicalBootstrapReconciliationClassifications.Reprint)]
+    [InlineData(CanonicalBootstrapReconciliationClassifications.Revision)]
+    [InlineData(CanonicalBootstrapReconciliationClassifications.Rename)]
+    [InlineData(CanonicalBootstrapReconciliationClassifications.Variant)]
+    public async Task ConfirmedRelationshipSeedsCandidateAliasAndDirectedCanonicalRelationship(
+        string classification)
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var baseToken = $"{token}-base";
+            var candidateToken = $"{token}-candidate";
+            var importer = new NormalizedSourceImportService(db);
+            var baseImport = await importer.ImportAsync(SeedRequest(baseToken));
+            var candidateImport = await importer.ImportAsync(SeedRequest(candidateToken));
+            var baseCanonicalEntityId = await CanonicalEntityIdAsync(
+                db,
+                Assert.Single(baseImport.Entities).EntityId);
+            var candidateCanonicalEntityId = await CanonicalEntityIdAsync(
+                db,
+                Assert.Single(candidateImport.Entities).EntityId);
+            Assert.NotEqual(baseCanonicalEntityId, candidateCanonicalEntityId);
+
+            var aliasValue = $"pcgen|{classification}|{token}|candidate";
+            var fingerprint = CanonicalSourceIdentity.SemanticFingerprint(SeedJson(candidateToken));
+            var service = new CanonicalBootstrapReconciliationService(db);
+            var recorded = await service.RecordAsync(new RecordCanonicalBootstrapReconciliationRequest(
+                "pcgen-org-pcgen",
+                aliasValue,
+                fingerprint,
+                classification,
+                candidateCanonicalEntityId,
+                baseCanonicalEntityId,
+                "manual-bootstrap-confirmation",
+                1.0,
+                "integration-test"));
+
+            Assert.Equal(candidateCanonicalEntityId, recorded.CanonicalEntityId);
+            Assert.Equal(baseCanonicalEntityId, recorded.RelatedCanonicalEntityId);
+            Assert.Equal(
+                candidateCanonicalEntityId,
+                await new CanonicalEntityAliasStore(db).ResolveAsync(
+                    "pcgen-org-pcgen",
+                    aliasValue,
+                    fingerprint));
+
+            var relationship = await ReadRelationshipAsync(
+                db,
+                baseCanonicalEntityId,
+                candidateCanonicalEntityId,
+                classification);
+            Assert.NotNull(relationship);
+            Assert.Equal("manual-bootstrap-confirmation", relationship.Value.EvidenceKind);
+            Assert.Equal(1.0, relationship.Value.Confidence);
+            Assert.Null(await ReadRelationshipAsync(
+                db,
+                candidateCanonicalEntityId,
+                baseCanonicalEntityId,
+                classification));
+        }
+    }
+
+    [Fact]
+    public async Task RelationshipClassificationCanBeCompletedWithoutReclassification()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var baseToken = $"{token}-base";
+            var candidateToken = $"{token}-candidate";
+            var importer = new NormalizedSourceImportService(db);
+            var baseImport = await importer.ImportAsync(SeedRequest(baseToken));
+            var candidateImport = await importer.ImportAsync(SeedRequest(candidateToken));
+            var baseCanonicalEntityId = await CanonicalEntityIdAsync(
+                db,
+                Assert.Single(baseImport.Entities).EntityId);
+            var candidateCanonicalEntityId = await CanonicalEntityIdAsync(
+                db,
+                Assert.Single(candidateImport.Entities).EntityId);
+            var aliasValue = $"pcgen|revision|pending|{token}";
+            var fingerprint = CanonicalSourceIdentity.SemanticFingerprint(SeedJson(candidateToken));
+            var service = new CanonicalBootstrapReconciliationService(db);
+
+            var classified = await service.RecordAsync(new RecordCanonicalBootstrapReconciliationRequest(
+                "pcgen-org-pcgen-newsources",
+                aliasValue,
+                fingerprint,
+                CanonicalBootstrapReconciliationClassifications.Revision,
+                CanonicalEntityId: null,
+                RelatedCanonicalEntityId: null,
+                "bootstrap-review",
+                0.75,
+                "integration-test",
+                "Classification confirmed; endpoints still being reconciled."));
+
+            var completed = await service.RecordAsync(new RecordCanonicalBootstrapReconciliationRequest(
+                "pcgen-org-pcgen-newsources",
+                aliasValue,
+                fingerprint,
+                CanonicalBootstrapReconciliationClassifications.Revision,
+                candidateCanonicalEntityId,
+                baseCanonicalEntityId,
+                "bootstrap-review",
+                1.0,
+                "integration-test",
+                "Canonical endpoints independently confirmed."));
+
+            Assert.Equal(classified.Id, completed.Id);
+            Assert.Equal(candidateCanonicalEntityId, completed.CanonicalEntityId);
+            Assert.Equal(baseCanonicalEntityId, completed.RelatedCanonicalEntityId);
+            Assert.Equal(
+                candidateCanonicalEntityId,
+                await new CanonicalEntityAliasStore(db).ResolveAsync(
+                    "pcgen-org-pcgen-newsources",
+                    aliasValue,
+                    fingerprint));
+            Assert.NotNull(await ReadRelationshipAsync(
+                db,
+                baseCanonicalEntityId,
+                candidateCanonicalEntityId,
+                CanonicalBootstrapReconciliationClassifications.Revision));
         }
     }
 
@@ -192,12 +321,7 @@ public sealed class CanonicalBootstrapReconciliationIntegrationTests
 
     private static ImportNormalizedSourceRequest SeedRequest(string token)
     {
-        var name = $"Bootstrap Seed {token}";
-        var rawJson = JsonSerializer.Serialize(new
-        {
-            name,
-            effect = "Gain a +2 bootstrap fixture bonus."
-        });
+        var rawJson = SeedJson(token);
         const string publicationKey = "bootstrap-seed-publication";
         return new ImportNormalizedSourceRequest(
             $"bootstrap-seed-{token}",
@@ -213,7 +337,7 @@ public sealed class CanonicalBootstrapReconciliationIntegrationTests
                     $"integration:bootstrap:{token}"),
                 [new NormalizedSourceRecord(
                     "feat",
-                    name,
+                    $"Bootstrap Seed {token}",
                     SourceCode: "BOOT",
                     NativeKey: $"bootstrap|feat|{token}",
                     RawJson: rawJson,
@@ -226,6 +350,13 @@ public sealed class CanonicalBootstrapReconciliationIntegrationTests
                     Publisher: "Integration Test Press",
                     GameEdition: "3.5e")])) ;
     }
+
+    private static string SeedJson(string token) =>
+        JsonSerializer.Serialize(new
+        {
+            name = $"Bootstrap Seed {token}",
+            effect = "Gain a +2 bootstrap fixture bonus."
+        });
 
     private static async Task<Guid> CanonicalEntityIdAsync(RulesCoreDbContext db, Guid sourceEntityId)
     {
@@ -248,6 +379,39 @@ public sealed class CanonicalBootstrapReconciliationIntegrationTests
             AddParameter(command, "@source_entity_id", sourceEntityId);
             return (Guid)(await command.ExecuteScalarAsync()
                 ?? throw new InvalidOperationException("Seed source entity did not receive a canonical identity."));
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
+    private static async Task<(string EvidenceKind, double Confidence)?> ReadRelationshipAsync(
+        RulesCoreDbContext db,
+        Guid fromCanonicalEntityId,
+        Guid toCanonicalEntityId,
+        string relationshipKind)
+    {
+        var connection = db.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync();
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT evidence_kind, confidence
+                FROM canonical_entity_relationship
+                WHERE from_canonical_entity_id = @from_id
+                    AND to_canonical_entity_id = @to_id
+                    AND relationship_kind = @relationship_kind;
+                """;
+            AddParameter(command, "@from_id", fromCanonicalEntityId);
+            AddParameter(command, "@to_id", toCanonicalEntityId);
+            AddParameter(command, "@relationship_kind", relationshipKind);
+            await using var reader = await command.ExecuteReaderAsync();
+            return await reader.ReadAsync()
+                ? (reader.GetString(0), reader.GetDouble(1))
+                : null;
         }
         finally
         {

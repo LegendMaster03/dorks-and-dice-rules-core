@@ -29,8 +29,11 @@ public static class CanonicalBootstrapReconciliationClassifications
 
     public static bool IsKnown(string classification) => Known.Contains(classification);
 
-    public static bool RegistersTrustedAlias(string classification) =>
+    public static bool RegistersExactIdentityAlias(string classification) =>
         classification is ExactIdentity or CorroboratedExactIdentity;
+
+    public static bool DefinesCanonicalRelationship(string classification) =>
+        classification is Reprint or Revision or Rename or Variant;
 }
 
 public sealed record RecordCanonicalBootstrapReconciliationRequest(
