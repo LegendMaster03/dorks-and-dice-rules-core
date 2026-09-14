@@ -70,7 +70,7 @@ public sealed class PcGenCurrentUserSourceIntegrationTests
         searchRequest.Headers.Add(ToolHostAuthenticationHeaders.IntrospectionPath, IntrospectionPath);
         using var searchResponse = await client.SendAsync(searchRequest);
         Assert.Equal(HttpStatusCode.OK, searchResponse.StatusCode);
-        var entities = await searchResponse.Content.ReadFromJsonAsync<List<SourceEntitySearchResult>>();
+        var entities = await searchResponse.Content.ReadFromJsonAsync<List<SourceEntitySummary>>();
         Assert.NotNull(entities);
         var spell = Assert.Single(entities, value => value.Name == "Arc Spark");
         Assert.Equal("spell", spell.EntityType);
