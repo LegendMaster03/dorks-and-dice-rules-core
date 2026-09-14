@@ -15,7 +15,7 @@ The pre-import framework now provides:
 - aggregate-file partitioning where a physical upstream file contains multiple logical publications/source codes;
 - advisory detection of likely cross-source/cross-edition versions of the same conceptual rule;
 - explicit, reviewable source lineage including branching and merging histories;
-- trusted source-lineage aliases for bootstrap-confirmed exact identity across different semantic projections;
+- trusted source-lineage aliases seeded automatically by the first successful import from a registered trusted lineage, while reviewed reconciliation remains available for relationships and ambiguous identity;
 - canonical reconciliation conflicts isolated from otherwise valid Source Layer persistence;
 - manual binding of implementations to stable Rules Layer concepts;
 - multi-version comparison/consolidation with exact source revisions;
@@ -95,7 +95,7 @@ Before using a source family for broad ingestion, verify all of the following:
 - Stable native keys do not depend on page numbers, transient paths, property order, or Dorks & Dice rulings unless the source format itself makes those values identity-defining.
 - Publication evidence distinguishes strong identifiers from contextual aliases.
 - Exact semantic matching excludes only fields that are safely non-mechanical for that adapter.
-- Trusted source-lineage aliases are emitted only for an actually trusted lineage and only after bootstrap confirmation establishes their canonical meaning.
+- Trusted source-lineage aliases are emitted only when the actual source URI establishes a registered trusted lineage; the first successful import may seed exact identity for that lineage, while cross-projection relationships and ambiguous cases remain explicit review decisions.
 - Mechanical revisions remain distinct canonical entities when appropriate and record explicit relationships.
 - A canonical conflict produces an explicit reconciliation issue rather than rolling back valid Source Layer data.
 - Retrying the same bytes after reconciliation does not create another representation or revision.
