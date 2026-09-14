@@ -28,7 +28,6 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext)
             throw new InvalidDataException("The normalized source representation did not contain any source records.");
         }
 
-        await new RulesCoreSchemaInitializer(dbContext).InitializeAsync(cancellationToken);
         await using var transaction = await dbContext.Database.BeginTransactionAsync(IsolationLevel.Serializable, cancellationToken);
 
         var package = await dbContext.SourcePackages
