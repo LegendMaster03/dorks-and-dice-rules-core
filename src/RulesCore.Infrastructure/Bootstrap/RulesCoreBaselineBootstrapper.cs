@@ -48,9 +48,7 @@ public sealed class RulesCoreBaselineBootstrapper(
             dbContext,
             importer,
             cancellationToken);
-        var houseRuleImport = await importer.Import5eToolsDocumentAsync(
-            RulesCoreBaselineCatalog.CreateHouseRuleImportRequest(),
-            cancellationToken);
+        var houseRuleImport = await ImportHouseRulesAsync(cancellationToken);
 
         var publishedRuleset = await EnsureRulesBaselineAsync(
             houseRuleImport,
@@ -153,6 +151,37 @@ public sealed class RulesCoreBaselineBootstrapper(
         }
 
         return RulesCoreBaselineCatalog.SrdAuthorities.Count;
+    }
+
+    private async Task<SourceImportResult> ImportHouseRulesAsync(CancellationToken cancellationToken)
+    {
+        var request = RulesCoreBaselineCatalog.CreateHouseRuleImportRequest();
+        var representation = RulesCoreBaselineSourceAdapter.Read(request);
+        var imported = await new NormalizedSourceImportService(dbContext).ImportAsync(
+            new ImportNormalizedSourceRequest(
+                request.PackageKey,
+                request.PackageDisplayName,
+                request.Provider,
+                request.License,
+                request.IsPublic,
+                representation),
+            cancellationToken);
+
+        foreach (var publication in imported.Publications)
+        {
+            await new CanonicalPublicationReleaseKindService(dbContext).MergeAsync(
+                publication.CanonicalPublicationId,
+                request.ReleaseKind,
+                cancellationToken);
+        }
+
+        return new SourceImportResult(
+            imported.PackageId,
+            imported.Entities,
+            request.GameEdition,
+            SourceReleaseKinds.NormalizeImportLabel(request.ReleaseKind),
+            request.PublicationDate,
+            request.Publisher ?? request.Provider);
     }
 
     private Task EnsureAuthoritySchemaAsync(CancellationToken cancellationToken) =>
