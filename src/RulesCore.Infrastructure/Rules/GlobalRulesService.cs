@@ -68,15 +68,8 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
 
         var sourceEntity = await dbContext.SourceEntities
             .AsNoTracking()
-            .Include(value => value.SourcePackage)
-                .ThenInclude(value => value.UserGrants)
             .SingleOrDefaultAsync(value => value.Id == request.SourceEntityId, cancellationToken)
             ?? throw new KeyNotFoundException($"Source entity '{request.SourceEntityId}' does not exist.");
-        if (!sourceEntity.SourcePackage.IsPublic
-            && !sourceEntity.SourcePackage.UserGrants.Any(value => value.UserId == actor))
-        {
-            throw new InvalidOperationException("The selected source entity is not accessible to the current Rules Lawyer.");
-        }
         if (!string.Equals(concept.EntityType, sourceEntity.EntityType, StringComparison.OrdinalIgnoreCase))
         {
             throw new InvalidOperationException(
@@ -165,10 +158,10 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             throw new InvalidOperationException("The selected source revision is not accessible to the current Rules Lawyer.");
         }
 
-        if (!await CanonicalRuleBindingStore.IsSourceEntityBoundAsync(
+        if (!await CanonicalRuleBindingStore.IsSourceEntityRevisionBoundAsync(
                 dbContext,
                 ruleConceptId,
-                sourceRevision.SourceEntityId,
+                sourceRevision.Id,
                 cancellationToken))
         {
             throw new InvalidOperationException(
@@ -391,10 +384,10 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
 
         foreach (var revision in revisions)
         {
-            if (!await CanonicalRuleBindingStore.IsSourceEntityBoundAsync(
+            if (!await CanonicalRuleBindingStore.IsSourceEntityRevisionBoundAsync(
                     dbContext,
                     ruleConceptId,
-                    revision.SourceEntityId,
+                    revision.Id,
                     cancellationToken))
             {
                 throw new InvalidOperationException(
