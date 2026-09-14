@@ -32,9 +32,10 @@ public sealed record RuleConceptView(
 public sealed record RuleConceptSourceBindingView(
     Guid Id,
     Guid RuleConceptId,
-    Guid SourceEntityId,
+    Guid CanonicalEntityId,
     string CreatedByUserId,
-    DateTimeOffset CreatedAt);
+    DateTimeOffset CreatedAt,
+    Guid? SourceEntityId = null);
 
 public sealed record GlobalRuleDecisionView(
     Guid Id,
