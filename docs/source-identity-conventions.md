@@ -1,10 +1,10 @@
 # Source identity conventions
 
-Rules Core separates D&D edition identity, publication/release identity, imported representation identity, and Rules Layer concept identity. These conventions should be followed before bulk source ingestion so durable source keys do not encode accidental assumptions.
+Rules Core separates four concerns that must not be collapsed into one identifier: D&D game edition, imported Source Layer identity, canonical source recognition, and Dorks & Dice Rules Layer concepts.
 
 ## Canonical D&D edition labels
 
-Rules Core uses the current Wizards/D&D Beyond labels in authoring and resolved provenance:
+Rules Core uses these canonical labels in authoring and resolved provenance:
 
 - `1e`
 - `2e`
@@ -14,101 +14,149 @@ Rules Core uses the current Wizards/D&D Beyond labels in authoring and resolved 
 - `5e`
 - `5.5e`
 
-For current fifth-edition-family material, `5e` identifies the rules originally labeled by year as the 2014 rules, while `5.5e` identifies the updated rules originally labeled by year as the 2024 rules. Legacy import labels such as `5e-2014`, `5e 2014`, `2014`, `5e-2024`, `5e 2024`, and `2024` are accepted and normalized to the current canonical labels. Legacy aliases are import compatibility only; Rules Core should present the canonical labels after ingestion.
+For the fifth-edition family, `5e` identifies the rules originally labeled by year as the 2014 rules, while `5.5e` identifies the updated rules originally labeled by year as the 2024 rules. Legacy import labels such as `5e-2014`, `5e 2014`, `2014`, `5e-2024`, `5e 2024`, and `2024` may be normalized at compatibility boundaries, but persisted/resolved edition metadata should use the canonical labels.
 
-A publication year remains useful metadata. It is not itself the D&D edition identity.
+Publication year is metadata. It is not itself a D&D edition identity.
 
-## Representation provenance and canonical identity
+## Persisted Source Layer identity
 
-Two distinct identity systems coexist deliberately.
+The current persisted Source Layer is:
 
-The existing Source Layer hierarchy records the imported **representation** and its access boundary:
+```text
+SourcePackage
+  |- SourceRepresentation
+  `- SourceEntity -> SourceEntityRevision -> SourceRepresentation
+```
 
-`SourcePackage -> SourceWork -> SourceEdition -> SourceEntity -> SourceEntityRevision`
+There is no persisted `SourceWork` or `SourceEdition` parent in the current model.
 
-A package is still the distribution/access boundary. Account-added packages remain separate even when two users independently supply the same publication. The package-owned work/release hierarchy therefore preserves the provenance of what was actually imported and from where.
+`SourcePackage` is the distribution and access boundary. It carries provider, license, visibility, and per-user grants. Independent user imports remain independent packages even when canonical recognition later determines that they represent the same publication.
 
-Above those representation-specific records, Rules Core now maintains format-independent identity:
+`SourceRepresentation` is an immutable physical artifact/version. It stores the original bytes, format key, origin identity, optional source URI/media type, content hash, representation metadata, import time, and optional predecessor representation. Two identical reimports of the same origin/content reuse the stored representation rather than fabricating another physical version.
 
-`CanonicalPublication -> CanonicalSourceOccurrence`
+`SourceEntity` is one stable source-native identity within a package and format. `NativeKey` and `NativeIdentityJson` preserve the identity supplied or deterministically derived by the adapter. They must not encode a Dorks & Dice adjudication.
 
-A representation-specific `SourceEntity` can be associated with a canonical occurrence. Canonical identity records contain descriptive identity metadata, aliases, locators, confidence, and fingerprints; they do not contain a globally readable replacement for the restricted source document and do not grant source access.
+`SourceEntityRevision` is an immutable observed body of the same `SourceEntity`. A changed representation of the same native source identity creates another revision; an unchanged reimport does not. A later publication, a different upstream native identity, or a different rule variant must not be forced into the revision chain merely because its display name matches.
 
-This distinction allows, for example, a 5e.tools representation of the *Player's Handbook* and a later compatible PDF-derived representation of that same book to remain separate imports while being recognized as representations of the same canonical publication and source occurrences.
+Legacy compatibility APIs still expose fields such as `WorkKey`, `WorkDisplayName`, `EditionKey`, and `EditionDisplayName`. Those values may contribute to artifact origin/provenance and bootstrap catalog organization, but they are not persisted Source Layer parents and must not be treated as cross-format canonical IDs.
 
-## Source package, work, edition/release, entity, and revision
+## Canonical recognition
 
-`SourcePackage` is the distribution/access boundary. It carries provider, license, and public/restricted access metadata. A package may contain one or more works. An account-specific import package can coexist with another package representing the same real-world publication.
+Shared recognition metadata is deliberately separate from Source Layer storage and grants:
 
-`SourceWork` is the publication identity **within that imported representation**: a book, article, SRD, third-party publication, or comparable source work as supplied by the package. Do not use one giant work merely because several publications share a brand such as Unearthed Arcana. Cross-package sameness is represented by canonical publication identity rather than by forcing unrelated packages to share one SourceWork row.
+```text
+CanonicalPublication
+  `- CanonicalSourceOccurrence -> CanonicalEntity
 
-`SourceEdition` is a particular release/version of a representation-specific work. It can record a canonical D&D game edition, release kind, and publication date independently from its release key/display name. An errata-integrated release, revised printing, or separately versioned release of the same publication may therefore remain under one work without becoming the same source entity revision as another publication.
+CanonicalEntityAlias
+CanonicalEntityRelationship
+```
 
-`SourceEntity` is one rule-bearing item as it appears in one imported source release.
+`CanonicalPublication` identifies a real publication independently of import package, user, file format, or physical representation.
 
-`SourceEntityRevision` is an immutable revision of that same representation-specific source identity in Rules Core. It is used when the representation of the same source entity changes, such as an upstream correction or changed reimport. It is **not** the mechanism for representing a later UA article, later book, or later D&D edition.
+`CanonicalEntity` identifies a rule-bearing entity when Rules Core has sufficient evidence that representation-specific records refer to the same thing.
 
-`CanonicalPublication` identifies the real publication independently of import package or file format.
+`CanonicalSourceOccurrence` identifies the occurrence of a canonical entity within a canonical publication. The same canonical entity may therefore occur in multiple publications without collapsing those publication-specific occurrences.
 
-`CanonicalSourceOccurrence` identifies one rule-bearing occurrence within a canonical publication. It is still distinct from a Dorks & Dice `RuleConcept`: the same conceptual rule may occur in several publications and editions.
+`CanonicalEntityAlias` records strong trusted source-lineage identity. Entity aliases are keyed by alias scheme, native alias value, and source-specific semantic fingerprint. Including the semantic fingerprint permits the same upstream native key to identify a later mechanical revision without collapsing that revision into the old canonical entity.
+
+`CanonicalEntityRelationship` records explicit relationships such as revision or variant history between distinct canonical entities. Relationship direction is predecessor/base to later/related entity.
+
+Canonical records are recognition metadata only. They do not contain a globally readable replacement for a restricted source document and they do not grant package access.
 
 ## Canonical publication matching
 
-Format adapters emit evidence rather than choosing database IDs directly. Rules Core resolves that evidence conservatively in this order:
+Adapters emit publication evidence; they do not choose canonical database IDs directly. Matching is conservative.
 
-1. a strong format/provider alias, such as an exact 5e.tools source code already associated with a canonical publication;
-2. an exact normalized bibliographic fingerprint derived from publication title, publisher, game edition, and publication date, when it is unambiguous;
-3. exact overlap among already known rule-bearing occurrence fingerprints, requiring at least three matching occurrences and a unique best publication;
-4. otherwise a new canonical publication is created rather than guessing.
+Current high-level precedence is:
 
-The alias is evidence from a representation, not the canonical identity itself. This prevents the database from making 5e.tools-specific identifiers the permanent cross-format key.
+1. exact globally strong bibliographic identifiers, including ISBN schemes;
+2. exact normalized bibliographic identity when it resolves unambiguously;
+3. source-specific publication aliases such as trusted 5e.tools corpus/book/adventure identifiers when their metadata is compatible;
+4. contextual aliases only when additional title/edition/publisher/date context disambiguates them;
+5. exact occurrence-fingerprint overlap only when at least three known occurrences identify a unique best publication;
+6. otherwise create a new canonical publication rather than guessing.
 
-## Canonical source-occurrence matching
+A bare contextual source code such as `PHB` is not globally unique proof of publication identity. A representation-specific alias remains evidence about a publication; it does not become the canonical identity itself.
 
-Within a known canonical publication, entity type plus normalized name supplies the normal occurrence identity. Representation-specific metadata such as source code, page field encoding, import IDs, and JSON property ordering does not define the canonical occurrence.
+Publication evidence may enrich missing canonical metadata. Conflicting established metadata is recorded as evidence conflict with representation provenance rather than silently overwriting the canonical value.
 
-Adapters can also supply a semantic fingerprint that excludes top-level display/provenance markers such as name, source code, page, edition flags, and representation IDs. When an adapter can not reproduce the same display name but produces an exact semantic fingerprint, Rules Core can associate it with an existing occurrence only when that fingerprint resolves uniquely within the same publication and entity type. A locator such as a page can further constrain the match.
+## Canonical entity and occurrence matching
 
-Ambiguous semantic matches do not collapse occurrences automatically. Approximate OCR/text similarity is not treated as proof of identity.
+Entity matching distinguishes representation equality from rule identity.
 
-## Future PDF adapter
+Within a canonical publication, an exact semantic fingerprint can identify an existing occurrence when the match is unique for the entity type and, when supplied, locator. Representation-specific fields such as source code, page encoding, repository path, and JSON property order should not create false mechanical differences when an adapter can safely exclude them through `SemanticJson`.
 
-PDF support does not require changing Add Source or the canonical identity model. A future PDF adapter should perform this pipeline:
+Different formats can legitimately encode the same rule with different semantic structures. Exact semantic fingerprint equality is therefore not required when a bootstrap-confirmed trusted source-lineage alias establishes exact canonical identity. Name-only similarity is not sufficient for that merge.
 
-`uploaded artifact -> publication evidence -> extracted source occurrences -> canonical association`
+For revisions of one source-native entity:
 
-For a digitally generated PDF, publication evidence may include title, publisher, ISBN/product identifiers, copyright/publication date, edition, printing/revision markers, and page coordinates. Extracted rules then produce the same format-neutral occurrence evidence used by structured importers.
+- unchanged semantics inherit the prior canonical entity;
+- changed mechanics normally create a distinct canonical entity and an explicit revision relationship;
+- a trusted alias can not move an unchanged revision to an unrelated canonical entity;
+- a trusted alias can not collapse a mechanically changed revision back into its prior canonical entity;
+- conflicting trusted aliases or a trusted alias that contradicts an existing exact semantic occurrence are reconciliation conflicts rather than reasons to corrupt Source Layer identity.
 
-For a scanned PDF, OCR can provide candidate text but introduces uncertainty. Exact bibliographic identifiers or exact structured occurrence fingerprints may still permit an automatic association. Fuzzy/OCR-only matches should remain review candidates rather than silently merging source identity.
+## Reconciliation failure boundary
 
-The PDF adapter's responsibility ends at source identity and extraction. It does not decide that two occurrences from different publications are the same Dorks & Dice rule concept; that remains the Rules Layer normalization/adjudication workflow.
+Source ingestion and canonical recognition are separate validity boundaries.
+
+A valid package, physical representation, source entity, and source revision remain valid even if canonical reconciliation for their publication group produces a recognized identity conflict. Normalized ingestion isolates canonical reconciliation with a transaction savepoint, rolls back only the affected canonical changes, commits the Source Layer import, and returns a `canonical-identity-conflict` reconciliation issue.
+
+The same immutable bytes can be retried after the identity evidence is corrected. The existing representation and source revision are reused rather than creating fake physical versions or revisions.
+
+This recovery behavior is intentionally narrow. Database failures, malformed input, missing integrity dependencies, and immutable package/native-identity violations still fail the import normally.
+
+## PDF identity
+
+PDF support is implemented for documents with a usable text layer. The PDF adapter preserves the original bytes, extracts readable pages as source fragments, and extracts explicit bibliographic evidence such as labeled title/publisher/system/date values and ISBN when present.
+
+Scan-only PDFs are currently rejected because OCR is not implemented. Weak layout cues or approximate text similarity are not used to guess a spell, feat, monster, or canonical identity.
+
+A later richer PDF/OCR extractor can add better source records while continuing to use the same representation and canonical identity boundaries.
+
+## PCGen and trusted source lineage
+
+PCGen syntax by itself is not proof of canonical identity. A local `.pcc` or `.lst` file can use the same syntax as the official PCGen repositories.
+
+Only artifacts whose source URI establishes the configured trusted PCGen lineage may emit the corresponding strong canonical aliases. Even then, bootstrap/reconciliation must first confirm which canonical entity a lineage alias represents. The globally reusable result is identity knowledge, not PCGen source content.
 
 ## Access boundary
 
-Canonicalization must never broaden source access. Source grants continue to be evaluated against the representation-specific `SourcePackage`. Two representations can point to the same canonical publication/occurrence while remaining independently restricted.
+Canonicalization must never broaden source access. Access is evaluated against `SourcePackage`.
 
-A user who supplied representation A does not gain access to representation B merely because both are recognized as the same publication. Likewise, another user does not gain content access merely because Rules Core already knows the canonical publication metadata or fingerprints.
+Two representations may point to the same `CanonicalPublication`, `CanonicalEntity`, or `CanonicalSourceOccurrence` while their bytes, source entities, revisions, and grants remain completely separate. A user who supplied representation A does not gain representation B merely because both share canonical recognition.
+
+At runtime, a published rule whose selected revision is inaccessible may substitute another revision that the requesting user can access when both revisions resolve to the same canonical entity. The returned document must come from the requesting user's accessible package, not from the inaccessible snapshot.
+
+## Rules Layer identity
+
+A canonical source entity is still not a Dorks & Dice `RuleConcept`.
+
+Canonical recognition answers whether source records are the same entity or how distinct entities are historically related. The Rules Layer answers which implementations Dorks & Dice considers one conceptual rule and how those implementations are selected, consolidated, modified, or overridden.
+
+This separation permits, for example, a 3e implementation, a 3.5e revision, a later reprint, and a campaign-specific house variation to retain correct source history without forcing any of them into one source identity.
 
 ## Unearthed Arcana
 
-Unearthed Arcana is source/publication provenance, not a D&D edition. It has appeared in different forms across D&D history. Do not infer `playtest` merely from the words `Unearthed Arcana`: some uses of the name are published books, while other uses are playtest/preview material.
+Unearthed Arcana is publication/source provenance, not a D&D edition. It has referred to published books as well as playtest/preview material across D&D history. Do not infer `playtest` solely from the name.
 
-Each actual publication/release receives its own normal source identity and explicit release metadata. Historical/developmental relationships among the contained rules are represented through source lineage.
+Each actual publication receives normal source/canonical identity. Historical relationships among contained entities are represented explicitly rather than inferred from the publication brand.
 
-## Stable key guidance
+## Stable-key guidance
 
-Keys should identify source objects, not encode a Dorks & Dice ruling. Prefer short stable source identifiers that can survive a later change in display wording.
+Keys should identify source-native or acquisition objects, not encode a Dorks & Dice ruling. Prefer stable values that survive display-name changes.
 
 Examples:
 
 ```text
-package: wotc-srd
-work:    srd-5-1
-release: original
+package:        wotc-srd-cc
+origin:         bundled:srd-5-1
+native key:     spell|SRD51|acid-arrow
 
-package: wotc-ua
-work:    ua-example-article
-release: 2017-04
+package:        user-source-<stable-origin-hash>
+origin:         web:<normalized-origin>#path/to/file
+native key:     <adapter-defined stable identity>
 ```
 
-These are examples of representation-specific key shape rather than mandatory cross-format names. Canonical publication identity is resolved separately. The important constraints are stable identity, explicit provenance, separation between imported representation and real publication identity, and separation between source history and Rules Layer adjudication.
+The exact key shape is adapter-specific. The important constraints are stable native identity, explicit physical provenance, canonical recognition independent of package access, and Rules Layer adjudication independent of source identity.

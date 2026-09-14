@@ -2,18 +2,28 @@
 
 ## Purpose
 
-Rules Core is a separately deployable Tool. It owns rules content, source normalization, Rules Layer decisions, source-access grants, ruleset revisions, and rule resolution. The main Dorks & Dice site owns account identity, global site roles, campaign membership/authority, site-mode resolution, and Tool registration/routing.
+Rules Core is a separately deployable Dorks & Dice Tool. It owns source ingestion and storage, canonical source recognition, Rules Layer decisions, source-access grants, ruleset revisions, and rule resolution. The main Dorks & Dice site owns account identity, global site roles, campaign membership and authority, site-mode resolution, and Tool registration/routing.
+
+The central architectural boundary is that **source material is preserved independently from canonical recognition and independently from Rules Layer adjudication**.
 
 ## Content pipeline
 
 ```text
-immutable source material
+physical source bytes
         |
         v
-normalized 5e.tools-compatible entities
+format adapter
         |
         v
-content identity / revision registry
+normalized source records + publication evidence
+        |
+        v
+immutable Source Layer persistence
+(SourcePackage / SourceRepresentation / SourceEntity / SourceEntityRevision)
+        |
+        v
+canonical recognition
+(CanonicalPublication / CanonicalEntity / CanonicalSourceOccurrence)
         |
         v
 Rules Layer adjudication
@@ -28,51 +38,77 @@ campaign Rules Layer overrides
 resolved rules API
 ```
 
-The internal rule-document format is a lossless 5e.tools-compatible superset. Dorks & Dice-specific rule semantics should be namespaced rather than replacing upstream fields. Application state such as permissions, grants, adjudication workflow, and campaign overrides remains relational data rather than being embedded into source documents.
+Adapter output is a persistence boundary, not a universal source-document format. Each adapter may preserve its native source in a representation-appropriate `RawJson` projection while the original bytes remain immutable in `SourceRepresentation.ContentBytes`. `SemanticJson` is optional comparison evidence and never replaces the stored source body.
+
+Current persistent adapters include native 5e.tools-shaped JSON, PCGen 3.x PCC/LST data, and text-readable PDFs. New formats enter through the same adapter-neutral contract rather than adding another source hierarchy.
+
+## Source Layer
+
+The persisted Source Layer is intentionally small:
+
+- `SourcePackage` is the distribution and access boundary. It carries provider, license, visibility, and user grants.
+- `SourceRepresentation` is one immutable physical artifact/version, including original bytes, format, origin identity, URI/media metadata, content hash, and optional predecessor representation.
+- `SourceEntity` is one stable source-native identity within a package and format. Its `NativeKey` and `NativeIdentityJson` preserve source-specific identity rather than a Dorks & Dice ruling.
+- `SourceEntityRevision` is an immutable observed body for that source entity and points to the physical representation that supplied it.
+
+There is no persisted `SourceWork` or `SourceEdition` parent in the current model. Older `WorkKey`, `EditionKey`, and related request fields remain only on compatibility import surfaces and bootstrap catalog inputs; they must not be treated as durable database identity.
+
+A valid source import does not depend on prior canonical recognition. When canonical reconciliation encounters a recognized identity conflict, Rules Core preserves the already-valid package, representation, entity, and revision, rolls back only the affected canonical-reconciliation group, and returns an explicit reconciliation issue. Database failures, malformed input, and immutable native-identity violations still fail the import.
+
+## Canonical recognition
+
+Canonical records are shared recognition metadata above the access-scoped Source Layer:
+
+- `CanonicalPublication` identifies a real publication independently of package or file format.
+- `CanonicalEntity` identifies a rule-bearing entity across representations when there is sufficient evidence of identity.
+- `CanonicalSourceOccurrence` records an entity occurrence within a canonical publication.
+- canonical aliases and relationships record strong source-lineage evidence and explicit revision/reprint/rename/variant history.
+
+Canonical IDs, fingerprints, aliases, and relationship records do not contain a globally readable substitute for restricted source text and do not grant access to any `SourcePackage`.
+
+Exact semantic evidence may associate equivalent representations automatically. Different formats may encode the same mechanics differently, so a bootstrap-confirmed trusted source-lineage alias may also associate different semantic projections with one canonical entity. Mechanical changes remain distinct canonical entities with explicit relationships rather than being collapsed by name.
 
 ## Source and access boundaries
 
-Open/distributable sources can be built into Rules Core where their licenses permit it. Non-open material enters at a user's direction through supported connections or imports. Storage may be content-addressed and globally deduplicated, but access grants remain per user.
+Open/distributable sources may be bundled or imported where their licenses permit it. Restricted material enters at a user's direction through supported imports/connections and remains package-scoped.
 
 Core invariant:
 
-> Deduplication may share storage. It must never share permission.
+> Recognition may be shared. Permission must not be shared.
 
-Content identity is independent of acquisition method. A PDF, 5e.tools record, structured JSON import, or other supported representation can resolve to the same source work/entity/revision without requiring repeated Rules Lawyer adjudication.
+Two users may independently import representations of the same publication and reuse the same canonical publication/entity identities while retaining separate packages, bytes, source entities, revisions, and grants. Runtime substitution may use an accessible representation of the same canonical entity, but it must never expose another user's inaccessible representation.
 
 ## Rules Layers
 
-1. **Source Layer** - immutable representations of what each source says.
-2. **Global Rules Layer** - Dorks & Dice decisions curated by users with the Dorks-mode `Rules Lawyer` authority.
-3. **Campaign Rules Layer** - campaign-specific decisions/overrides controlled by the campaign's authorized DM/editor.
-4. **Resolved Rules** - generated effective rules for a user/campaign/source-access context.
+1. **Source Layer** — immutable representations of what each source says.
+2. **Canonical recognition** — shared evidence that source-specific records represent the same publication/entity or have an explicit historical relationship.
+3. **Global Rules Layer** — Dorks & Dice decisions curated by users with the Dorks-mode `Rules Lawyer` authority.
+4. **Campaign Rules Layer** — campaign-specific decisions/overrides controlled by the campaign's authorized DM/editor.
+5. **Resolved Rules** — generated effective rules for a user/campaign/source-access context.
 
-Global and campaign edit authority is separate from source-content access. A Rules Lawyer may be able to adjudicate metadata about an implementation without automatically gaining access to restricted source text.
+A `RuleConcept` is deliberately separate from canonical source identity. Canonical recognition answers what source objects are; the Rules Layer answers how Dorks & Dice uses them. A Rules Lawyer may bind multiple canonical/source implementations to one concept, select one, consolidate several, or record an explicit override without rewriting source history.
 
 ## Authorization axes
 
-Rules Core must answer two independent questions for each relevant operation:
+Rules Core must answer two independent questions for every relevant operation:
 
 - **May this identity make this change?** Global Rules Lawyer authority or campaign-scoped authority comes from Dorks & Dice.
-- **May this identity access this source content?** Source grants are enforced by Rules Core.
+- **May this identity access this source content?** Source grants are enforced by Rules Core against `SourcePackage`.
 
-UI visibility is not an authorization boundary. API endpoints must enforce both requirements independently.
+UI visibility is not an authorization boundary. API and runtime resolution paths enforce both requirements independently.
 
 ## Database and runtime storage
 
-Rules Core uses an external PostgreSQL database running independently of the application container, normally on the same TrueNAS server. Large/raw source artifacts and cache payloads may use deployment-owned content-addressed storage outside Git while PostgreSQL stores relational metadata, fingerprints, permissions, revisions, and normalized JSONB entities.
+Rules Core uses external PostgreSQL. The current Source Layer stores original representation bytes in `source_representation` together with hashes and provenance, while relational tables store package access, source-native identities and revisions, canonical recognition metadata, Rules Layer decisions, and published rulesets.
 
-## First implementation milestone
+Storage implementation may evolve later, including content-addressed backing storage, without changing the access invariant: deduplicating bytes must never imply deduplicating grants or exposing another package's representation.
 
-The first vertical slice will prove:
+## Bootstrap and maintenance
 
-1. source package registration;
-2. one lossless 5e.tools-shaped entity;
-3. stable content identity/fingerprint;
-4. a Rules Layer decision;
-5. a published ruleset revision;
-6. resolved API output with provenance;
-7. global/campaign authorization hooks;
-8. per-user source-access enforcement.
+Baseline bootstrap hydrates reviewed public SRD snapshots and the Dorks & Dice house-rule baseline without requiring a live upstream host at runtime. Hosted-source definitions and authority references remain maintenance/acquisition metadata; they do not replace immutable Source Layer representations or canonical identity.
 
-The first real source corpus remains intentionally limited to representative SRD abilities, skills, and sizes before broader ingestion.
+The 3e/3.5e developer reconciliation workflow uses the same persistent adapters and canonical stores as normal imports. Its reusable output is canonical identity knowledge, not a global cache of restricted source bodies.
+
+## Frontend boundary
+
+The frontend is intentionally downstream of these contracts. Application-owned DOM uses the explicit render lifecycle documented in `frontend-render-lifecycle.md`. Backend source, canonical, and Rules Layer contracts should stabilize before the deferred UI pass is updated to expose new reconciliation and source-model behavior.

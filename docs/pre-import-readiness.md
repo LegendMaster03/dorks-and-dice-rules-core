@@ -1,93 +1,108 @@
 # Pre-import readiness checklist
 
-Before broad rule ingestion, Rules Core should prove the workflow on a deliberately small representative corpus.
+Before broad rule ingestion, Rules Core should prove the workflow on representative real and synthetic sources without weakening native source identity to accommodate malformed upstream data.
 
-## Framework status
+## Current framework status
 
-As of September 10, 2026, the pre-import framework path is implemented and covered by integration tests on `feature/pre-import-source-consolidation`.
-
-The framework now provides:
+The pre-import framework now provides:
 
 - non-persisting import preview showing new entities, unchanged entities, and new immutable revisions;
+- adapter-neutral ingestion into `SourcePackage`, `SourceRepresentation`, `SourceEntity`, and `SourceEntityRevision`;
 - canonical D&D edition metadata with compatibility aliases for older 2014/2024 labels;
-- stable source identity conventions separating game edition, publication, release, entity, and revision;
-- aggregate-file partitioning by item-level 5e.tools source code before a logical work/release import;
+- format-independent `CanonicalPublication`, `CanonicalEntity`, and `CanonicalSourceOccurrence` recognition;
+- byte-preserving source representations for structured files and text-readable PDFs;
+- 5e.tools, PCGen 3.x, and PDF adapters behind one normalized source contract;
+- aggregate-file partitioning where a physical upstream file contains multiple logical publications/source codes;
 - advisory detection of likely cross-source/cross-edition versions of the same conceptual rule;
 - explicit, reviewable source lineage including branching and merging histories;
-- manual binding of detected implementations to stable rule concepts;
-- a multi-version consolidation workspace with exact source documents/revisions;
-- contribution provenance identifying which additional source revisions were incorporated or reviewed;
+- trusted source-lineage aliases for bootstrap-confirmed exact identity across different semantic projections;
+- canonical reconciliation conflicts isolated from otherwise valid Source Layer persistence;
+- manual binding of implementations to stable Rules Layer concepts;
+- multi-version comparison/consolidation with exact source revisions;
+- contribution provenance identifying which source revisions were incorporated or reviewed;
 - preview -> save -> publish separation and independent restricted-source access checks;
 - explicit source-revision adoption after review;
-- append-only deliberate source-revision rejection scoped to the exact global decision and reviewed source revision.
+- append-only deliberate source-revision rejection scoped to the exact global decision and reviewed revision;
+- runtime substitution through an accessible representation of the same canonical entity without exposing another user's private source.
 
-The main framework tests are:
+The older `WorkKey`/`EditionKey` compatibility fields may still appear on legacy import and maintenance request contracts, but there is no persisted `SourceWork` or `SourceEdition` hierarchy in the current Source Layer.
 
-- `SourceVersioningAndImportPreviewIntegrationTests`, covering import preview, alias normalization, version detection, manual binding, lineage, consolidation, provenance, and immutable source revisions;
-- `SourceRevisionRejectionIntegrationTests`, covering deliberate rejection, idempotence, stale review tokens, decision-scoped suppression, and resurfacing after a newer decision or source revision;
-- `MixedSourceAggregateImportIntegrationTests`, covering partitioning one physical aggregate into separate logical source releases while preserving complete selected entity objects;
-- `PreImportRepresentativeLifecycleIntegrationTests`, covering the complete connected workflow from source preview through campaign resolution and later source-revision review;
-- `RealSrdImportPilotIntegrationTests`, exercising the ingestion and version-detection boundary with attributed CC-BY SRD 5.1/5.2.1 action data.
+## Representative lifecycle
 
-## Representative framework corpus
+The synthetic representative lifecycle exercises these behaviors:
 
-The synthetic representative lifecycle corpus intentionally exercises the five required behaviors:
+1. Stable re-preview/re-import remains unchanged.
+2. A renamed/reworked implementation across source families remains explicit rather than being merged by name.
+3. UA/playtest and later published implementations can be related without treating publication brand as identity.
+4. A changed source body for the same native identity creates a new immutable `SourceEntityRevision`.
+5. Structured array/list consolidation carries through global and campaign publication with contribution provenance.
+6. A recognized canonical-identity conflict can leave the native representation/entity/revision intact for later reconciliation.
+7. Retrying the same immutable bytes after correcting reconciliation evidence reuses the existing representation/revision rather than fabricating another version.
 
-1. A stable re-preview/re-import path that remains unchanged.
-2. A renamed/reworked implementation across the 5e and 5.5e source families.
-3. A UA/playtest implementation explicitly related to a later published implementation.
-4. A selected source entity reimported with changed content, producing a new immutable `SourceEntityRevision` rather than new lineage.
-5. A source rule containing an array/list that is consolidated with a structured array patch and then carried through global and campaign publication.
-
-The integration path executes:
+The connected workflow is:
 
 ```text
-import preview
--> import
+preview source
+-> import immutable representation/entities/revisions
+-> reconcile publication/entity identity
 -> inspect source provenance
--> detect likely versions
--> confirm concept bindings and lineage
+-> detect likely versions/relationships
+-> confirm Rules Layer bindings
 -> compare implementations
--> manually consolidate
+-> manually consolidate or select
 -> preview the resolved rule
 -> save the append-only decision
 -> publish a global ruleset
--> browse the resolved global rule
+-> resolve with source-access enforcement
 -> select a campaign baseline
--> create one campaign variation
--> publish the campaign ruleset
--> resolve the campaign rule
--> reimport a changed source entity
--> review and deliberately reject the new source revision
+-> create/publish a campaign variation
+-> reimport changed native source content
+-> review, adopt, or deliberately reject the new source revision
 ```
 
-The rejection path is used in the representative lifecycle because adoption already has independent integration coverage. Rejection changes only review provenance; it does not alter or publish the Rules Layer.
+Canonical reconciliation is deliberately downstream of Source Layer validity. A reconciliation issue should block the affected canonical association from being treated as settled; it should not erase valid source bytes or native revision history.
 
 ## Real SRD pilot
 
-The first real-data pilot uses the `Attack` action records from SRD 5.1 (`SRD51`) and SRD 5.2.1 (`SRD52`) in the SRD-only `CoolFireGiant/hewnhero-srd` 5e.tools-shaped data pack. The two-record fixture and its CC-BY attribution are stored under `tests/RulesCore.IntegrationTests/Fixtures/real-srd/`.
+The original real-data pilot used `Attack` action records from SRD 5.1 (`SRD51`) and SRD 5.2.1 (`SRD52`) in the SRD-only `CoolFireGiant/hewnhero-srd` 5e.tools-shaped data pack. The fixture demonstrated that Rules Core can:
 
-The pilot proves that Rules Core can:
+- partition one physical aggregate by item-level source code;
+- preserve nested 5e.tools arrays/objects and inline reference tags in immutable source revisions;
+- preserve explicit `reprintedAs` provenance;
+- retain changed implementations as distinct source identities rather than forcing them into one revision chain;
+- detect a later implementation as a high-confidence cross-edition candidate without automatically binding it to a Rules Layer concept.
 
-- partition one physical aggregate by item-level source code into separate 5e and 5.5e logical source releases;
-- preserve actual nested 5e.tools arrays/objects and inline reference tags in immutable source revisions;
-- preserve explicit `reprintedAs` provenance from the older implementation;
-- retain the two versions as distinct source entities rather than revisions of one source identity;
-- detect the later implementation as a high-confidence cross-edition candidate without automatically binding it to a concept;
-- pass the complete browser, PostgreSQL integration, .NET, and container validation workflow with the real fixture.
-
-The pilot also exposed why a physical upstream file can not be assumed to equal one Rules Core source release. Source Administration now warns on an unfiltered aggregate containing multiple source codes and can explicitly partition the same submitted JSON by `IncludedSourceCodes`.
+Subsequent adapter work generalized this boundary beyond 5e.tools. The same Source Layer/canonical architecture now accepts PCGen 3.x data and text-readable PDFs without translating either into a fake 5e.tools document model.
 
 ## Upstream data-quality boundary
 
-A later inspection of the same unofficial SRD-only repack found at least one ambiguous feat identity: two `Magic Initiate` records are labeled `SRD52`, while the first is page 168 and carries a self-referential `reprintedAs: Magic Initiate|SRD52`; the second is the current 2024/SRD52 form on page 201. This would correctly trigger Rules Core's existing duplicate natural-identity rejection for a broad unfiltered feat import.
+The SRD pilot exposed why upstream convenience datasets must not define durable identity policy. One unofficial aggregate contained two `Magic Initiate` records labeled `SRD52`, including a malformed/self-referential provenance entry.
 
-Rules Core must not weaken durable source identity to accommodate that malformed provenance. In particular, page number should not be added to source identity merely to make the unofficial repack importable: a page change is publication metadata and could incorrectly turn a source revision into a new entity.
+Rules Core must not make page number part of native identity merely to import such a dataset. Page movement is provenance/location information and can occur without creating a new source identity.
 
-Before broad ingestion, source data should therefore be validated for duplicate natural identities and contradictory/self-referential version metadata. When an upstream distribution is internally ambiguous, ingestion should stop for review or use a corrected/licensable source representation rather than guessing an identity split.
+The same rule applies to other adapters:
+
+- duplicate native keys with contradictory identity evidence require review;
+- source-specific aliases are not globally trusted merely because their syntax looks familiar;
+- parser uncertainty must remain parser/source evidence rather than becoming a guessed canonical merge;
+- malformed provenance should be corrected, isolated, or explicitly reconciled rather than silently normalized away.
+
+## Reconciliation readiness
+
+Before using a source family for broad ingestion, verify all of the following:
+
+- The adapter preserves the original physical bytes and enough native metadata to reproduce identity decisions.
+- Stable native keys do not depend on page numbers, transient paths, property order, or Dorks & Dice rulings unless the source format itself makes those values identity-defining.
+- Publication evidence distinguishes strong identifiers from contextual aliases.
+- Exact semantic matching excludes only fields that are safely non-mechanical for that adapter.
+- Trusted source-lineage aliases are emitted only for an actually trusted lineage and only after bootstrap confirmation establishes their canonical meaning.
+- Mechanical revisions remain distinct canonical entities when appropriate and record explicit relationships.
+- A canonical conflict produces an explicit reconciliation issue rather than rolling back valid Source Layer data.
+- Retrying the same bytes after reconciliation does not create another representation or revision.
+- Package grants remain independent even when canonical IDs are shared.
 
 ## Broad-ingestion decision
 
-The framework and first real-data pilot no longer expose a structural blocker. Broad ingestion can begin incrementally without adding more speculative framework abstractions first.
+The framework no longer has a structural blocker requiring another speculative source hierarchy before broad ingestion. Ingestion should continue incrementally by source family/entity type so real-data assumptions remain visible.
 
-The next ingestion phase should remain staged by source family/entity type so that new real-data assumptions are visible early. Each candidate corpus should first run through preview and identity/provenance validation; duplicate identities or contradictory lineage hints should be treated as source-data review items, not silently normalized away.
+Each corpus should first pass adapter/native-identity validation, canonical reconciliation, and access-boundary tests. Duplicate identities, contradictory lineage hints, parser errors, and ambiguous relationships are review items. They should not be resolved by weakening durable identity or by broadening source access.
