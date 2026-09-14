@@ -46,6 +46,7 @@ internal static class RuleContributionResolution
 
         var byId = revisions.ToDictionary(value => value.Id);
         var views = new List<ResolvedRuleContributionView>(stored.Count);
+        var metadataBySourceEntityId = new Dictionary<Guid, CanonicalPublicationMetadata?>();
         foreach (var contribution in stored)
         {
             var revision = byId[contribution.SourceEntityRevisionId];
@@ -55,6 +56,15 @@ internal static class RuleContributionResolution
                 && (userId is null || !package.UserGrants.Any(grant => grant.UserId == userId)))
             {
                 return new RuleContributionResolutionResult(false, []);
+            }
+
+            if (!metadataBySourceEntityId.TryGetValue(source.Id, out var metadata))
+            {
+                metadata = await CanonicalPublicationMetadataReader.ReadAsync(
+                    dbContext,
+                    source.Id,
+                    cancellationToken);
+                metadataBySourceEntityId[source.Id] = metadata;
             }
 
             views.Add(new ResolvedRuleContributionView(
@@ -70,7 +80,7 @@ internal static class RuleContributionResolution
                 package.DisplayName,
                 source.FormatKey,
                 source.FormatKey,
-                GameEdition: null,
+                metadata?.GameEdition,
                 contribution.ContributionKind,
                 contribution.Note));
         }
