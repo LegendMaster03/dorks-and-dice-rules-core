@@ -281,9 +281,10 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         Uri sourceUri,
         CancellationToken cancellationToken)
     {
-        var tree = ParseGitHubTreeUri(sourceUri);
+        var location = ParseGitHubTreeUri(sourceUri);
+        var snapshot = await ResolveGitHubTreeSnapshotAsync(location, cancellationToken);
         var treeApiUri = new Uri(
-            $"https://api.github.com/repos/{Uri.EscapeDataString(tree.Owner)}/{Uri.EscapeDataString(tree.Repository)}/git/trees/{Uri.EscapeDataString(tree.Reference)}?recursive=1");
+            $"https://api.github.com/repos/{Uri.EscapeDataString(snapshot.Owner)}/{Uri.EscapeDataString(snapshot.Repository)}/git/trees/{Uri.EscapeDataString(snapshot.TreeSha)}?recursive=1");
         var treeBytes = await FetchBytesAsync(treeApiUri, cancellationToken);
         using var treeDocument = JsonDocument.Parse(treeBytes.Bytes);
         if (treeDocument.RootElement.TryGetProperty("truncated", out var truncated)
@@ -298,7 +299,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             throw new InvalidDataException("GitHub tree response did not contain a tree array.");
         }
 
-        var prefix = tree.Path.Trim('/');
+        var prefix = snapshot.Path.Trim('/');
         var paths = entries.EnumerateArray()
             .Where(entry =>
                 entry.TryGetProperty("type", out var type)
@@ -328,7 +329,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         var artifacts = new List<SourceRepresentationArtifact>(paths.Length);
         foreach (var path in paths)
         {
-            var rawUri = BuildGitHubRawUri(tree, path);
+            var rawUri = BuildGitHubRawUri(snapshot, path);
             FetchedDocument fetched;
             try
             {
@@ -340,7 +341,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             }
 
             artifacts.Add(new SourceRepresentationArtifact(
-                Path.GetFileName(path),
+                path,
                 fetched.Bytes,
                 $"web:{NormalizeWebOrigin(sourceUri)}#{path}",
                 rawUri.AbsoluteUri,
@@ -353,6 +354,40 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             throw new InvalidDataException("The Web source did not contain any compatible files.");
         }
         return results;
+    }
+
+    private async Task<GitHubTreeSnapshot> ResolveGitHubTreeSnapshotAsync(
+        GitHubTreeLocation tree,
+        CancellationToken cancellationToken)
+    {
+        var commitApiUri = new Uri(
+            $"https://api.github.com/repos/{Uri.EscapeDataString(tree.Owner)}/{Uri.EscapeDataString(tree.Repository)}/commits/{Uri.EscapeDataString(tree.Reference)}");
+        var commitBytes = await FetchBytesAsync(commitApiUri, cancellationToken);
+        using var commitDocument = JsonDocument.Parse(commitBytes.Bytes);
+        var root = commitDocument.RootElement;
+        if (!root.TryGetProperty("sha", out var commitShaValue)
+            || commitShaValue.ValueKind != JsonValueKind.String
+            || string.IsNullOrWhiteSpace(commitShaValue.GetString()))
+        {
+            throw new InvalidDataException("GitHub did not return a commit identity for the Web source.");
+        }
+        if (!root.TryGetProperty("commit", out var commit)
+            || commit.ValueKind != JsonValueKind.Object
+            || !commit.TryGetProperty("tree", out var commitTree)
+            || commitTree.ValueKind != JsonValueKind.Object
+            || !commitTree.TryGetProperty("sha", out var treeShaValue)
+            || treeShaValue.ValueKind != JsonValueKind.String
+            || string.IsNullOrWhiteSpace(treeShaValue.GetString()))
+        {
+            throw new InvalidDataException("GitHub did not return a tree identity for the Web source commit.");
+        }
+
+        return new GitHubTreeSnapshot(
+            tree.Owner,
+            tree.Repository,
+            commitShaValue.GetString()!.Trim(),
+            treeShaValue.GetString()!.Trim(),
+            tree.Path);
     }
 
     private async Task<FetchedDocument> FetchBytesAsync(Uri uri, CancellationToken cancellationToken)
@@ -572,11 +607,11 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             segments.Length > 4 ? string.Join('/', segments.Skip(4)) : string.Empty);
     }
 
-    private static Uri BuildGitHubRawUri(GitHubTreeLocation tree, string path)
+    private static Uri BuildGitHubRawUri(GitHubTreeSnapshot snapshot, string path)
     {
         var escapedPath = string.Join('/', path.Split('/').Select(Uri.EscapeDataString));
         return new Uri(
-            $"https://raw.githubusercontent.com/{Uri.EscapeDataString(tree.Owner)}/{Uri.EscapeDataString(tree.Repository)}/{Uri.EscapeDataString(tree.Reference)}/{escapedPath}");
+            $"https://raw.githubusercontent.com/{Uri.EscapeDataString(snapshot.Owner)}/{Uri.EscapeDataString(snapshot.Repository)}/{Uri.EscapeDataString(snapshot.CommitSha)}/{escapedPath}");
     }
 
     private static async Task EnsureRemoteUriSafeAsync(Uri uri, CancellationToken cancellationToken)
@@ -744,6 +779,13 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         string Owner,
         string Repository,
         string Reference,
+        string Path);
+
+    private sealed record GitHubTreeSnapshot(
+        string Owner,
+        string Repository,
+        string CommitSha,
+        string TreeSha,
         string Path);
 
     private sealed record FetchedDocument(byte[] Bytes, string? MediaType);

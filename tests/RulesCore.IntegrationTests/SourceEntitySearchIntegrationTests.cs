@@ -73,6 +73,8 @@ public sealed class SourceEntitySearchIntegrationTests
             var items = body.RootElement.EnumerateArray().ToArray();
             var item = Assert.Single(items);
             Assert.Equal(publicPackageKey, item.GetProperty("packageKey").GetString());
+            Assert.Equal("search-work", item.GetProperty("workKey").GetString());
+            Assert.Equal("search-edition", item.GetProperty("editionKey").GetString());
             Assert.Equal("Arcana Search Public", item.GetProperty("name").GetString());
             Assert.False(item.TryGetProperty("document", out _));
             Assert.True(item.GetProperty("latestRevisionNumber").GetInt32() >= 1);
@@ -121,7 +123,8 @@ public sealed class SourceEntitySearchIntegrationTests
             using var body = JsonDocument.Parse(await packageResponse.Content.ReadAsStringAsync());
             var item = Assert.Single(body.RootElement.EnumerateArray().ToArray());
             Assert.Equal(privatePackageKey, item.GetProperty("packageKey").GetString());
-            Assert.Equal("5etools-json", item.GetProperty("editionKey").GetString());
+            Assert.Equal("search-work", item.GetProperty("workKey").GetString());
+            Assert.Equal("search-edition", item.GetProperty("editionKey").GetString());
         }
 
         using (var wrongType = await client.GetAsync("/api/sources/entities?entityType=spell&q=Arcana%20Search"))

@@ -38,8 +38,6 @@ public sealed class SourceEntitySearchService(RulesCoreDbContext dbContext) : IS
 
         var sourceEntities = dbContext.SourceEntities
             .AsNoTracking()
-            .Include(value => value.Revisions)
-            .Include(value => value.SourcePackage)
             .Where(value =>
                 value.Revisions.Any()
                 && (value.SourcePackage.IsPublic
@@ -63,40 +61,97 @@ public sealed class SourceEntitySearchService(RulesCoreDbContext dbContext) : IS
                 || EF.Functions.ILike(value.SourcePackage.DisplayName, pattern));
         }
 
-        var entities = await sourceEntities
+        var rows = await sourceEntities
             .OrderBy(value => value.Name)
             .ThenBy(value => value.FormatKey)
             .ThenBy(value => value.SourceCode)
             .ThenBy(value => value.Id)
             .Skip(effectiveOffset)
             .Take(effectiveLimit)
+            .Select(value => new
+            {
+                value.Id,
+                value.EntityType,
+                value.Name,
+                SourceCode = value.SourceCode ?? string.Empty,
+                value.FormatKey,
+                PackageKey = value.SourcePackage.Key,
+                PackageDisplayName = value.SourcePackage.DisplayName,
+                LatestRevision = value.Revisions
+                    .OrderByDescending(candidate => candidate.RevisionNumber)
+                    .Select(candidate => new
+                    {
+                        candidate.RevisionNumber,
+                        candidate.Fingerprint,
+                        candidate.ImportedAt,
+                        OriginIdentity = candidate.SourceRepresentation.OriginIdentity
+                    })
+                    .First()
+            })
             .ToArrayAsync(cancellationToken);
 
-        return entities
+        return rows
             .Select(value =>
             {
-                var revision = value.Revisions
-                    .OrderByDescending(candidate => candidate.RevisionNumber)
-                    .First();
-                var package = value.SourcePackage;
+                var compatibility = CompatibilityIdentity(
+                    value.PackageKey,
+                    value.PackageDisplayName,
+                    value.FormatKey,
+                    value.LatestRevision.OriginIdentity);
                 return new SourceEntitySummary(
                     value.Id,
                     value.EntityType,
                     value.Name,
-                    value.SourceCode ?? string.Empty,
-                    revision.RevisionNumber,
-                    revision.Fingerprint,
-                    revision.ImportedAt,
-                    package.Key,
-                    package.DisplayName,
-                    package.Key,
-                    package.DisplayName,
-                    value.FormatKey,
-                    value.FormatKey);
+                    value.SourceCode,
+                    value.LatestRevision.RevisionNumber,
+                    value.LatestRevision.Fingerprint,
+                    value.LatestRevision.ImportedAt,
+                    value.PackageKey,
+                    value.PackageDisplayName,
+                    compatibility.WorkKey,
+                    compatibility.WorkDisplayName,
+                    compatibility.EditionKey,
+                    compatibility.EditionDisplayName);
             })
             .ToArray();
     }
 
+    private static SourceCompatibilityIdentity CompatibilityIdentity(
+        string packageKey,
+        string packageDisplayName,
+        string formatKey,
+        string originIdentity)
+    {
+        var prefix = $"admin:{packageKey}:";
+        if (originIdentity.StartsWith(prefix, StringComparison.Ordinal))
+        {
+            var remainder = originIdentity[prefix.Length..];
+            var separator = remainder.LastIndexOf(':');
+            if (separator > 0 && separator < remainder.Length - 1)
+            {
+                var workKey = remainder[..separator];
+                var editionKey = remainder[(separator + 1)..];
+                return new SourceCompatibilityIdentity(
+                    workKey,
+                    workKey,
+                    editionKey,
+                    editionKey);
+            }
+        }
+
+        return new SourceCompatibilityIdentity(
+            packageKey,
+            packageDisplayName,
+            formatKey,
+            formatKey);
+    }
+
     private static string? NormalizeOptional(string? value) =>
         string.IsNullOrWhiteSpace(value) ? null : value.Trim();
+
+    private sealed record SourceCompatibilityIdentity(
+        string WorkKey,
+        string WorkDisplayName,
+        string EditionKey,
+        string EditionDisplayName);
 }
