@@ -21,6 +21,7 @@ public sealed class RuleBrowserAssetTests
         Assert.Contains("Legendary Actions", content, StringComparison.Ordinal);
         Assert.Contains("Ability Scores", content, StringComparison.Ordinal);
         Assert.Contains("abilityDatum(\"Save\"", content, StringComparison.Ordinal);
+        Assert.Contains("hasAbilitySaveModel", content, StringComparison.Ordinal);
     }
 
     private static string ReadWebAsset(string filename)
