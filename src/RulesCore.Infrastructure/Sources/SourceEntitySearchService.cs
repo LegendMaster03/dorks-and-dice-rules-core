@@ -38,9 +38,6 @@ public sealed class SourceEntitySearchService(RulesCoreDbContext dbContext) : IS
 
         var sourceEntities = dbContext.SourceEntities
             .AsNoTracking()
-            .Include(value => value.Revisions)
-                .ThenInclude(value => value.SourceRepresentation)
-            .Include(value => value.SourcePackage)
             .Where(value =>
                 value.Revisions.Any()
                 && (value.SourcePackage.IsPublic
@@ -64,37 +61,53 @@ public sealed class SourceEntitySearchService(RulesCoreDbContext dbContext) : IS
                 || EF.Functions.ILike(value.SourcePackage.DisplayName, pattern));
         }
 
-        var entities = await sourceEntities
+        var rows = await sourceEntities
             .OrderBy(value => value.Name)
             .ThenBy(value => value.FormatKey)
             .ThenBy(value => value.SourceCode)
             .ThenBy(value => value.Id)
             .Skip(effectiveOffset)
             .Take(effectiveLimit)
+            .Select(value => new
+            {
+                value.Id,
+                value.EntityType,
+                value.Name,
+                SourceCode = value.SourceCode ?? string.Empty,
+                value.FormatKey,
+                PackageKey = value.SourcePackage.Key,
+                PackageDisplayName = value.SourcePackage.DisplayName,
+                LatestRevision = value.Revisions
+                    .OrderByDescending(candidate => candidate.RevisionNumber)
+                    .Select(candidate => new
+                    {
+                        candidate.RevisionNumber,
+                        candidate.Fingerprint,
+                        candidate.ImportedAt,
+                        OriginIdentity = candidate.SourceRepresentation.OriginIdentity
+                    })
+                    .First()
+            })
             .ToArrayAsync(cancellationToken);
 
-        return entities
+        return rows
             .Select(value =>
             {
-                var revision = value.Revisions
-                    .OrderByDescending(candidate => candidate.RevisionNumber)
-                    .First();
-                var package = value.SourcePackage;
                 var compatibility = CompatibilityIdentity(
-                    package.Key,
-                    package.DisplayName,
+                    value.PackageKey,
+                    value.PackageDisplayName,
                     value.FormatKey,
-                    revision.SourceRepresentation.OriginIdentity);
+                    value.LatestRevision.OriginIdentity);
                 return new SourceEntitySummary(
                     value.Id,
                     value.EntityType,
                     value.Name,
-                    value.SourceCode ?? string.Empty,
-                    revision.RevisionNumber,
-                    revision.Fingerprint,
-                    revision.ImportedAt,
-                    package.Key,
-                    package.DisplayName,
+                    value.SourceCode,
+                    value.LatestRevision.RevisionNumber,
+                    value.LatestRevision.Fingerprint,
+                    value.LatestRevision.ImportedAt,
+                    value.PackageKey,
+                    value.PackageDisplayName,
                     compatibility.WorkKey,
                     compatibility.WorkDisplayName,
                     compatibility.EditionKey,
