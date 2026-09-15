@@ -20,7 +20,7 @@ Every catalog item and resolved rule exposes a `browserLink` API contract contai
 
 `routeIdentity` is the stable Rules Layer concept key. The path is derived from that identity, not mutable display text. Known families use readable paths such as `/monsters/{identity}` and `/spells/{identity}`; unrecognized entity families use `/rules/{conceptKey}`. Other Dorks & Dice tools should consume this contract rather than reconstructing Rules Core URLs.
 
-Collection routes include `/monsters`, `/spells`, `/classes`, `/feats`, `/races`, `/species`, `/items`, and `/conditions`. A direct deep link resolves independently of authoring authority and defaults to the published global rule.
+Collection routes include `/monsters`, `/spells`, `/classes`, `/feats`, `/races`, `/species`, `/items`, and `/conditions`. A direct deep link resolves independently of authoring authority and defaults to the published global rule. Initial Source Library setup preserves an incoming Rules Browser route instead of replacing it with the Library landing view. Browser back/forward navigation reparses the current tool-relative route and rerenders through the normal explicit application lifecycle.
 
 ## Global catalog
 
@@ -52,19 +52,33 @@ Source access remains independent from campaign membership and adjudication auth
 
 The browser uses a renderer registry over the common resolved-rule contract. Entity families are not forced through one presentation component.
 
-The first specialized vertical slice is **monsters**. The monster renderer projects common stat-block information from the resolved rule document, including:
+The first specialized vertical slice is **monsters**. The renderer adopts the 5.5e monster-stat-block information hierarchy as a presentation grammar while continuing to render the effective mechanical document supplied by Rules Core. It does not reinterpret source editions or perform cross-edition normalization in JavaScript.
 
-- AC, HP, hit dice, initiative, speed, and challenge rating;
-- STR, DEX, CON, INT, WIS, and CHA with modifiers;
-- saves and skills;
-- vulnerabilities, resistances, damage immunities, and condition immunities;
-- senses and languages;
+The monster presentation includes, when available:
+
+- name, size, creature type, descriptive tags, and alignment;
+- Armor Class, Hit Points, Speed, and Initiative;
+- STR, DEX, CON, INT, WIS, and CHA in a compact grid showing score, modifier, and save for every ability;
+- skills, senses, languages, Challenge Rating, XP, proficiency bonus, vulnerabilities, resistances, immunities, condition immunities, and gear;
 - traits and spellcasting;
-- actions, bonus actions, reactions, legendary actions, and mythic actions.
+- actions and bonus actions;
+- reactions, legendary actions, mythic actions, lair actions, and regional effects.
 
-Legacy normalized monster bodies retain a compatibility projection for common scalar statistics. The immutable normalized JSON remains available behind a disclosure, but it is no longer the primary monster presentation.
+Fields that do not fit those headings are not dropped. Unknown rule-bearing fields are shown as additional mechanics. Source-specific `_rulesCore.pcgen` mechanics are exposed separately, and Dorks & Dice extension mechanics remain available without being coerced into 5.5e semantics. A `legendaryGroup` or other unfamiliar structural reference is therefore still visible even when the renderer does not yet have a specialized component for it.
 
-Additional entity renderers can be registered without changing routing, publication, source authorization, or the resolved-rule API contract.
+Renderer-tag markup used by native 5e.tools content is reduced to readable display text for common attacks, hits, DCs, recharge notation, dice/damage, and entity references. That formatting does not change the underlying mechanical document.
+
+Published monster pages put the playable stat block first. Rules Layer scope, publication revision, decision information, selected source, package, notes, and consolidation contributions move into a secondary **Rule context and provenance** disclosure. Campaign overlay and pinned-baseline behavior remain unchanged.
+
+Source Library uses the same monster presentation primitives against the source entity's Rules Core mechanical document while separately exposing the exact source-native record. There is no legacy prose parser, skill conversion table, or Dexterity-to-initiative fallback in the frontend.
+
+Reusable presentation primitives introduced by this slice include the entity header, compact statistic, ability-score grid, labeled details, named rule entry, rules-text section, tags, additional-mechanics section, and expandable context/provenance disclosure. Later entity renderers can reuse those primitives without being forced into the monster layout.
+
+## Explicit render lifecycle
+
+Application-owned DOM continues to use the explicit Rules Core render lifecycle. The Rules Browser and Source Library call the existing fragment-presentation hook after their own in-place result/detail updates so shell presentation is reapplied deliberately.
+
+`MutationObserver` is not used to enhance application-owned monster, catalog, or source-detail DOM. Observer-based behavior remains reserved for genuine external boundaries.
 
 ## Adjudication scope control
 

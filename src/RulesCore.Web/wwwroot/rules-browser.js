@@ -32,19 +32,16 @@ export function installResolvedRulesBrowser(app) {
     app.browserDeepLink = null;
 
     const route = parseToolRoute(app.hostContext.toolRoute);
+    app.browserRouteRequested = Boolean(route.entityType || route.conceptKey);
     if (route.entityType) app.browserFilters.entityType = route.entityType;
     if (route.conceptKey) app.browserDeepLink = route.conceptKey;
 
-    if (app.canBrowseRules) {
-        app.activeView = "browse";
-    }
+    if (app.canBrowseRules) app.activeView = "browse";
 
     const renderNavigation = app.renderNavigation.bind(app);
     app.renderNavigation = () => {
         const nav = renderNavigation();
-        if (app.canBrowseRules) {
-            nav.prepend(app.navButton("Rules Browser", "browse"));
-        }
+        if (app.canBrowseRules) nav.prepend(app.navButton("Rules Browser", "browse"));
         return nav;
     };
 
@@ -62,32 +59,38 @@ export function installResolvedRulesBrowser(app) {
         }
         await renderActiveView(container);
     };
+
+    window.addEventListener("popstate", async () => {
+        if (!app.canBrowseRules) return;
+        const next = parseToolRoute(currentToolRoute(app));
+        app.browserFilters.entityType = next.entityType ?? "";
+        app.browserDeepLink = next.conceptKey ?? null;
+        app.activeView = next.entityType || next.conceptKey
+            ? "browse"
+            : app.canBrowseSourceLibrary
+                ? "library"
+                : "browse";
+        await app.render();
+    });
 }
 
 async function renderRulesBrowser(app, container) {
     clear(container);
-
-    const heading = element("div", { className: "card card-body mb-3" });
-    heading.append(
+    container.append(element("div", { className: "card card-body mb-3" },
         element("h3", { className: "h5 mb-1", text: "Dorks & Dice Rules" }),
         element("p", {
             className: "text-body-secondary mb-0",
             text: "Browse the published resolved ruleset. Campaign scope overlays the campaign publication on its pinned global baseline."
-        }));
-    container.append(heading);
+        })));
 
     const controls = element("div", { className: "card card-body mb-3" });
     const row = element("div", { className: "row g-2 align-items-end" });
-
     const scopeColumn = element("div", { className: "col-lg-3" });
     scopeColumn.append(element("label", { className: "form-label fw-semibold", text: "Rules scope" }));
     const scope = element("select", { className: "form-select" });
     scope.append(element("option", { value: "global", text: "Global Rules" }));
     for (const campaign of app.campaigns) {
-        scope.append(element("option", {
-            value: `campaign:${campaign.id}`,
-            text: `Campaign: ${campaign.name ?? campaign.id}`
-        }));
+        scope.append(element("option", { value: `campaign:${campaign.id}`, text: `Campaign: ${campaign.name ?? campaign.id}` }));
     }
     scope.value = app.browserScope;
     scopeColumn.append(scope);
@@ -135,6 +138,7 @@ async function renderRulesBrowser(app, container) {
                 app.browserPage = nextPage;
                 await load(false);
             });
+            app.presentRenderedFragment?.(results);
         } catch (error) {
             status.replaceChildren(alertNode("danger", describeError(error)));
         } finally {
@@ -152,24 +156,19 @@ async function renderRulesBrowser(app, container) {
             }
         });
     }
-
     await load(false);
 }
 
 function renderCatalog(app, container, results, catalog, scopeValue, page, hasNext, onPage) {
     results.replaceChildren();
-    const summary = element("div", { className: "card card-body mb-3" });
-    summary.append(definitionList([
+    results.append(element("div", { className: "card card-body mb-3" }, definitionList([
         ["Published revision", catalog.revisionNumber ? `#${catalog.revisionNumber}` : "None"],
         ["Published", formatDate(catalog.publishedAt)],
         ["Rules on this page", String(catalog.rules?.length ?? 0)]
-    ]));
-    results.append(summary);
+    ])));
 
     if (!catalog.revisionNumber) {
-        results.append(alertNode("secondary", catalog.scope === "campaign"
-            ? "This campaign has no published ruleset yet."
-            : "No global ruleset has been published yet."));
+        results.append(alertNode("secondary", catalog.scope === "campaign" ? "This campaign has no published ruleset yet." : "No global ruleset has been published yet."));
         return;
     }
     if (!catalog.rules?.length) {
@@ -248,9 +247,11 @@ async function renderRuleDetail(app, container, conceptKey, scopeValue) {
         const baseline = campaignId ? await getOptionalCampaignBaseline(app, campaignId, conceptKey) : null;
         loading.remove();
         renderResolvedDetail(app, container, resolved, baseline, campaignId !== null);
+        app.presentRenderedFragment?.(container);
     } catch (error) {
         loading.remove();
         container.append(alertNode("danger", describeError(error)));
+        app.presentRenderedFragment?.(container);
     }
 }
 
@@ -259,6 +260,49 @@ async function renderRuleDetailByKey(app, container, conceptKey, scopeValue) {
 }
 
 function renderResolvedDetail(app, container, resolved, baseline, campaignScope) {
+    const isMonster = String(resolved.entityType ?? "").toLowerCase() === "monster";
+    if (isMonster) {
+        container.append(element("section", { className: "mb-3" },
+            renderResolvedRule(resolved.entityType, resolved.document, {
+                displayName: resolved.displayName,
+                showDocument: false
+            })));
+        container.append(renderRuleContextDisclosure(resolved, campaignScope));
+    } else {
+        container.append(renderMetadata(resolved, campaignScope));
+        container.append(element("section", { className: "mb-3" },
+            element("h4", { className: "h5", text: campaignScope ? "Effective campaign rule" : "Dorks & Dice rule" }),
+            renderResolvedRule(resolved.entityType, resolved.document, { displayName: resolved.displayName })));
+    }
+
+    if (campaignScope) {
+        const campaign = element("div", { className: "card card-body mb-3" });
+        campaign.append(element("h4", { className: "h5", text: "Campaign overlay" }), definitionList([
+            ["Pinned global baseline", `#${resolved.baselineRulesetRevisionNumber}`],
+            ["Global decision", `#${resolved.globalDecisionNumber} · ${resolved.globalDecisionKind}`],
+            ["Campaign decision", resolved.campaignDecisionNumber ? `#${resolved.campaignDecisionNumber} · ${resolved.effectiveDecisionKind}` : "Inherited without campaign override"],
+            ["Campaign note", resolved.campaignDecisionNote]
+        ]));
+        container.append(campaign);
+
+        if (baseline) {
+            const details = element("details", { className: "card card-body mb-3" });
+            details.append(
+                element("summary", { className: "fw-semibold", text: `Published global baseline #${baseline.baselineRulesetRevisionNumber}` }),
+                element("div", { className: "mt-3" }, renderResolvedRule(baseline.entityType, baseline.document, {
+                    displayName: baseline.displayName,
+                    showDocument: !isMonster
+                })));
+            container.append(details);
+        } else {
+            container.append(alertNode("secondary", "The pinned global baseline is not available to this account under the independent source-access rules."));
+        }
+    }
+
+    if (!isMonster) container.append(renderProvenance(resolved));
+}
+
+function renderMetadata(resolved, campaignScope) {
     const metadata = element("div", { className: "card card-body mb-3" });
     metadata.append(
         element("div", { className: "d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3" },
@@ -273,58 +317,48 @@ function renderResolvedDetail(app, container, resolved, baseline, campaignScope)
             ["Source", `${resolved.sourceEntityName} (${resolved.sourceCode})`],
             ["Edition", resolved.editionDisplayName]
         ]));
-    container.append(metadata);
+    return metadata;
+}
 
-    container.append(element("section", { className: "mb-3" },
-        element("h4", { className: "h5", text: campaignScope ? "Effective campaign rule" : "Dorks & Dice rule" }),
-        renderResolvedRule(resolved.entityType, resolved.document)));
-
-    if (campaignScope) {
-        const campaign = element("div", { className: "card card-body mb-3" });
-        campaign.append(
-            element("h4", { className: "h5", text: "Campaign overlay" }),
-            definitionList([
-                ["Pinned global baseline", `#${resolved.baselineRulesetRevisionNumber}`],
-                ["Global decision", `#${resolved.globalDecisionNumber} · ${resolved.globalDecisionKind}`],
-                ["Campaign decision", resolved.campaignDecisionNumber ? `#${resolved.campaignDecisionNumber} · ${resolved.effectiveDecisionKind}` : "Inherited without campaign override"],
-                ["Campaign note", resolved.campaignDecisionNote]
-            ]));
-        container.append(campaign);
-
-        if (baseline) {
-            const details = element("details", { className: "card card-body mb-3" });
-            details.append(
-                element("summary", { className: "fw-semibold", text: `Published global baseline #${baseline.baselineRulesetRevisionNumber}` }),
-                element("div", { className: "mt-3" }, renderResolvedRule(baseline.entityType, baseline.document)));
-            container.append(details);
-        } else {
-            container.append(alertNode("secondary", "The pinned global baseline is not available to this account under the independent source-access rules."));
-        }
-    }
-
-    container.append(renderProvenance(resolved));
+function renderRuleContextDisclosure(resolved, campaignScope) {
+    const details = element("details", { className: "rules-core-context-disclosure" });
+    const body = element("div", { className: "rules-core-context-disclosure-body" });
+    body.append(definitionList([
+        ["Concept", resolved.conceptKey],
+        ["Scope", campaignScope ? "Campaign effective rule" : "Published global rule"],
+        ["Published revision", `#${resolved.campaignRulesetRevisionNumber ?? resolved.rulesetRevisionNumber}`],
+        ["Decision", resolved.effectiveDecisionKind ?? resolved.decisionKind],
+        ["Selected source", `${resolved.sourceEntityName} · ${resolved.editionDisplayName} · rev. ${resolved.sourceRevisionNumber}`],
+        ["Package", resolved.packageDisplayName],
+        ["Decision note", resolved.decisionNote ?? resolved.campaignDecisionNote]
+    ]));
+    appendContributions(body, resolved);
+    details.append(element("summary", { text: "Rule context and provenance" }), body);
+    return details;
 }
 
 function renderProvenance(resolved) {
     const card = element("div", { className: "card card-body mb-3" });
-    card.append(element("h4", { className: "h5", text: "Provenance" }));
-    const contributions = resolved.contributions ?? resolved.globalContributions ?? [];
-    card.append(definitionList([
+    card.append(element("h4", { className: "h5", text: "Provenance" }), definitionList([
         ["Selected source", `${resolved.sourceEntityName} · ${resolved.editionDisplayName} · rev. ${resolved.sourceRevisionNumber}`],
         ["Package", resolved.packageDisplayName],
         ["Decision note", resolved.decisionNote ?? resolved.campaignDecisionNote],
-        ["Additional contributing sources", String(contributions.length)]
+        ["Additional contributing sources", String((resolved.contributions ?? resolved.globalContributions ?? []).length)]
     ]));
-    if (contributions.length) {
-        const list = element("ul", { className: "mb-0 mt-3" });
-        for (const contribution of contributions) {
-            list.append(element("li", {},
-                element("span", { className: "fw-semibold", text: `${contribution.sourceEntityName} · ${contribution.editionDisplayName}` }),
-                ` — ${contribution.contributionKind}${contribution.note ? `: ${contribution.note}` : ""}`));
-        }
-        card.append(list);
-    }
+    appendContributions(card, resolved);
     return card;
+}
+
+function appendContributions(container, resolved) {
+    const contributions = resolved.contributions ?? resolved.globalContributions ?? [];
+    if (!contributions.length) return;
+    const list = element("ul", { className: "mb-0 mt-3" });
+    for (const contribution of contributions) {
+        list.append(element("li", {},
+            element("span", { className: "fw-semibold", text: `${contribution.sourceEntityName} · ${contribution.editionDisplayName}` }),
+            ` — ${contribution.contributionKind}${contribution.note ? `: ${contribution.note}` : ""}`));
+    }
+    container.append(list);
 }
 
 async function getOptionalCampaignBaseline(app, campaignId, conceptKey) {
@@ -340,17 +374,19 @@ function parseToolRoute(toolRoute) {
     if (!toolRoute || toolRoute === "/") return {};
     const path = String(toolRoute).split(/[?#]/, 1)[0];
     const segments = path.replace(/^\/+|\/+$/g, "").split("/").filter(Boolean);
-    if (segments.length === 1 && ROUTE_FAMILIES.has(segments[0])) {
-        return { entityType: ROUTE_FAMILIES.get(segments[0]) };
-    }
+    if (segments.length === 1 && ROUTE_FAMILIES.has(segments[0])) return { entityType: ROUTE_FAMILIES.get(segments[0]) };
     if (segments.length === 2 && ROUTE_FAMILIES.has(segments[0])) {
         const entityType = ROUTE_FAMILIES.get(segments[0]);
         return { entityType, conceptKey: `${entityType}.${decodeURIComponent(segments[1])}` };
     }
-    if (segments.length === 2 && segments[0] === "rules") {
-        return { conceptKey: decodeURIComponent(segments[1]) };
-    }
+    if (segments.length === 2 && segments[0] === "rules") return { conceptKey: decodeURIComponent(segments[1]) };
     return {};
+}
+
+function currentToolRoute(app) {
+    const base = (app.hostContext.toolBasePath ?? "/tools/rules-core").replace(/\/$/, "");
+    const path = window.location.pathname;
+    return path.startsWith(base) ? path.slice(base.length) || "/" : "/";
 }
 
 function browserHref(app, toolRelativePath) {
