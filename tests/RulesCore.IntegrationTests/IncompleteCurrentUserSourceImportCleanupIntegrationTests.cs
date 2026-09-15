@@ -16,7 +16,7 @@ public sealed class IncompleteCurrentUserSourceImportCleanupIntegrationTests
         "https://github.com/5etools-mirror-3/5etools-src/tree/main/data";
 
     [Fact]
-    public async Task RetryRemovesUngrantedPartialPackageAndItsOrphanCanonicalMetadata()
+    public async Task RetryRemovesPartialPackageWithOrphanGrantAndItsCanonicalMetadata()
     {
         var db = await OpenDatabaseAsync();
         if (db is null) return;
@@ -39,13 +39,16 @@ public sealed class IncompleteCurrentUserSourceImportCleanupIntegrationTests
                     "stale-child.json")));
             var stalePublication = Assert.Single(stale.Publications);
             Assert.True(await CanonicalExistsAsync(db, stalePublication.CanonicalPublicationId));
-            Assert.False(await db.UserSourceGrants.AnyAsync(value => value.SourcePackageId == stale.PackageId));
+
+            await new SourceGrantService(db).GrantAsync(userId, stale.PackageId);
+            Assert.True(await db.UserSourceGrants.AnyAsync(value => value.SourcePackageId == stale.PackageId));
 
             var removed = await new IncompleteCurrentUserSourceImportCleanupService(db)
                 .CleanupWebAddAsync(userId, SourceUrl);
 
             Assert.True(removed);
             Assert.False(await db.SourcePackages.AnyAsync(value => value.Id == stale.PackageId));
+            Assert.False(await db.UserSourceGrants.AnyAsync(value => value.SourcePackageId == stale.PackageId));
             Assert.False(await CanonicalExistsAsync(db, stalePublication.CanonicalPublicationId));
 
             var retry = await importer.ImportAsync(new ImportNormalizedSourceRequest(
