@@ -13,6 +13,17 @@ public sealed class RuleBrowserAssetTests
     }
 
     [Fact]
+    public void SourceLibraryConsumesStableEntityRoutingContract()
+    {
+        var content = ReadWebAsset("source-library.js");
+
+        Assert.Contains("/sources/", content, StringComparison.Ordinal);
+        Assert.Contains("parseSourceEntityRoute", content, StringComparison.Ordinal);
+        Assert.Contains("libraryDeepLink", content, StringComparison.Ordinal);
+        Assert.Contains("popstate", content, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void MonsterRendererIsRegisteredAsSpecializedRuleRenderer()
     {
         var content = ReadWebAsset("rule-renderers.js");

@@ -90,7 +90,11 @@ export function installSourceLibrary(app) {
     app.libraryFilters = { entityType: "", query: "", page: 0 };
     app.libraryNotice = null;
 
-    if (app.canBrowseSourceLibrary && !app.browserRouteRequested) {
+    const initialSourceRoute = parseSourceEntityRoute(app.hostContext.toolRoute);
+    app.libraryDeepLink = initialSourceRoute.entityId ?? null;
+    app.libraryRouteActive = Boolean(app.libraryDeepLink);
+
+    if (app.canBrowseSourceLibrary && (app.libraryRouteActive || !app.browserRouteRequested)) {
         app.activeView = "library";
     }
 
@@ -100,6 +104,10 @@ export function installSourceLibrary(app) {
     const renderActiveView = app.renderActiveView.bind(app);
     app.renderActiveView = async container => {
         if (app.activeView === "library") {
+            if (app.libraryDeepLink) {
+                await renderSourceEntityRoute(app, container, app.libraryDeepLink);
+                return;
+            }
             await renderSourceLibrary(app, container);
             return;
         }
@@ -109,6 +117,34 @@ export function installSourceLibrary(app) {
             prependRulesLawyerWorkflow(app, container);
         }
     };
+
+    window.addEventListener("popstate", async event => {
+        if (!app.canBrowseSourceLibrary) return;
+        const toolRoute = currentToolRoute(app);
+        const next = parseSourceEntityRoute(toolRoute);
+        if (next.entityId) {
+            event.stopImmediatePropagation();
+            app.libraryDeepLink = next.entityId;
+            app.libraryRouteActive = true;
+            app.activeView = "library";
+            await app.render();
+            return;
+        }
+
+        if (app.libraryRouteActive && isSourceLibraryRootRoute(toolRoute)) {
+            event.stopImmediatePropagation();
+            app.libraryDeepLink = null;
+            app.libraryRouteActive = false;
+            app.activeView = "library";
+            await app.render();
+            return;
+        }
+
+        if (app.libraryRouteActive) {
+            app.libraryDeepLink = null;
+            app.libraryRouteActive = false;
+        }
+    }, { capture: true });
 }
 
 function renderHeader(app) {
@@ -135,11 +171,11 @@ function renderHeader(app) {
 function renderNavigation(app) {
     const shell = element("div", { className: "rules-core-nav-shell" });
     const primary = element("div", { className: "rules-core-nav-primary" });
-    if (app.canBrowseSourceLibrary) primary.append(app.navButton("Library", "library"));
-    if (app.canBrowseRules) primary.append(app.navButton("Published Rules", "browse"));
-    if (app.canEditGlobal) primary.append(app.navButton("Rules Lawyer", "global"));
-    if (app.canReviewVersions) primary.append(app.navButton("Cross-version Review", "version-review"));
-    if (app.canEditCampaign) primary.append(app.navButton("Campaign Rules", "campaign"));
+    if (app.canBrowseSourceLibrary) primary.append(sourceAwareNavButton(app, "Library", "library"));
+    if (app.canBrowseRules) primary.append(sourceAwareNavButton(app, "Published Rules", "browse"));
+    if (app.canEditGlobal) primary.append(sourceAwareNavButton(app, "Rules Lawyer", "global"));
+    if (app.canReviewVersions) primary.append(sourceAwareNavButton(app, "Cross-version Review", "version-review"));
+    if (app.canEditCampaign) primary.append(sourceAwareNavButton(app, "Campaign Rules", "campaign"));
     shell.append(primary);
 
     if (app.canManageHostedSources || app.canAdministerSources) {
@@ -153,8 +189,20 @@ function renderNavigation(app) {
     return shell;
 }
 
-function advancedNavButton(app, label, view) {
+function sourceAwareNavButton(app, label, view) {
     const button = app.navButton(label, view);
+    button.addEventListener("click", () => {
+        if (view === "library" || app.libraryRouteActive) {
+            app.libraryDeepLink = null;
+            app.libraryRouteActive = false;
+            pushSourceToolRoute(app, "/");
+        }
+    }, { capture: true });
+    return button;
+}
+
+function advancedNavButton(app, label, view) {
+    const button = sourceAwareNavButton(app, label, view);
     button.classList.add("w-100", "text-start");
     return button;
 }
@@ -360,10 +408,29 @@ async function renderBrowserResults(app, container) {
             element("th")));
         const body = element("tbody");
         for (const entity of entities) {
-            const open = element("button", { type: "button", className: "btn btn-sm btn-outline-primary", text: entity.entityType === "monster" ? "Open stat block" : "Open" });
-            open.addEventListener("click", async () => renderSourceEntityDetail(app, container, entity.entityId));
+            const href = sourceEntityHref(app, entity.entityId);
+            const openEntity = async event => {
+                event.preventDefault();
+                app.libraryDeepLink = entity.entityId;
+                app.libraryRouteActive = true;
+                app.activeView = "library";
+                pushSourceToolRoute(app, sourceEntityRoute(entity.entityId));
+                await app.render();
+            };
+            const nameLink = element("a", {
+                className: "fw-semibold text-decoration-none",
+                text: entity.name,
+                attributes: { href },
+                onClick: openEntity
+            });
+            const open = element("a", {
+                className: "btn btn-sm btn-outline-primary",
+                text: entity.entityType === "monster" ? "Open stat block" : "Open",
+                attributes: { href },
+                onClick: openEntity
+            });
             body.append(element("tr", {},
-                element("td", {}, element("div", { className: "fw-semibold", text: entity.name }), element("div", { className: "small text-body-secondary", text: entity.sourceCode })),
+                element("td", {}, nameLink, element("div", { className: "small text-body-secondary", text: entity.sourceCode })),
                 element("td", {}, entity.entityType === "monster" ? badge("monster", "primary") : badge(entity.entityType, "secondary")),
                 element("td", {}, element("div", { text: entity.packageDisplayName }), element("div", { className: "small text-body-secondary", text: entity.sourceCode })),
                 element("td", { text: `#${entity.latestRevisionNumber}` }),
@@ -399,6 +466,26 @@ async function renderBrowserResults(app, container) {
     }
 }
 
+async function renderSourceEntityRoute(app, container, entityId) {
+    clear(container);
+    const back = element("a", {
+        className: "btn btn-sm btn-outline-secondary mb-3",
+        text: "← Back to source library",
+        attributes: { href: sourceLibraryHref(app) },
+        onClick: async event => {
+            event.preventDefault();
+            app.libraryDeepLink = null;
+            app.libraryRouteActive = false;
+            app.activeView = "library";
+            pushSourceToolRoute(app, "/");
+            await app.render();
+        }
+    });
+    const detail = element("div", { className: "rules-core-source-route-detail" });
+    container.append(back, detail);
+    await renderSourceEntityDetail(app, detail, entityId);
+}
+
 async function renderSourceEntityDetail(app, container, entityId) {
     clear(container);
     container.append(element("div", { className: "text-body-secondary", text: "Loading source entity…" }));
@@ -409,9 +496,6 @@ async function renderSourceEntityDetail(app, container, entityId) {
             app.api.backend(`/api/sources/entities/${encodedEntityId}/native`)
         ]);
         clear(container);
-        const back = element("button", { type: "button", className: "btn btn-sm btn-outline-secondary mb-3", text: "← Back to source results" });
-        back.addEventListener("click", async () => renderBrowserResults(app, container));
-        container.append(back);
 
         if (entity.entityType === "monster") {
             container.append(renderResolvedRule("monster", entity.document, {
@@ -491,6 +575,56 @@ function renderIntegrationPayloadButton(entity) {
         text: "API discovery: GET /api/sources/entities?entityType=monster&q=<name>; then GET /api/sources/entities/{entityId}."
     }));
     return row;
+}
+
+function parseSourceEntityRoute(toolRoute) {
+    if (!toolRoute) return {};
+    const path = String(toolRoute).split(/[?#]/, 1)[0];
+    const segments = path.replace(/^\/+|\/+$/g, "").split("/").filter(Boolean);
+    if (segments.length !== 2 || segments[0] !== "sources") return {};
+    let entityId;
+    try {
+        entityId = decodeURIComponent(segments[1]);
+    } catch {
+        return {};
+    }
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(entityId)
+        ? { entityId }
+        : {};
+}
+
+function sourceEntityRoute(entityId) {
+    return `/sources/${encodeURIComponent(entityId)}`;
+}
+
+function sourceEntityHref(app, entityId) {
+    return sourceToolHref(app, sourceEntityRoute(entityId));
+}
+
+function sourceLibraryHref(app) {
+    return sourceToolHref(app, "/");
+}
+
+function sourceToolHref(app, toolRelativePath) {
+    const base = app.hostContext.toolBasePath ?? "/tools/rules-core";
+    return `${base.replace(/\/$/, "")}${toolRelativePath || "/"}`;
+}
+
+function pushSourceToolRoute(app, toolRelativePath) {
+    const href = sourceToolHref(app, toolRelativePath);
+    if (window.location.pathname !== href) window.history.pushState({}, "", href);
+}
+
+function currentToolRoute(app) {
+    const base = (app.hostContext.toolBasePath ?? "/tools/rules-core").replace(/\/$/, "");
+    const path = window.location.pathname;
+    return path.startsWith(base) ? path.slice(base.length) || "/" : null;
+}
+
+function isSourceLibraryRootRoute(toolRoute) {
+    if (toolRoute === null || toolRoute === undefined) return false;
+    const path = String(toolRoute).split(/[?#]/, 1)[0];
+    return path.replace(/^\/+|\/+$/g, "") === "";
 }
 
 function matchesDefinition(entity, definition) {

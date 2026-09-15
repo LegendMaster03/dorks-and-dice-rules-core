@@ -40,6 +40,18 @@ The Source Layer API exposes both views under the same source-access rules:
 
 The native endpoint returns not-found when the source package is not accessible to the current request identity, matching the existing source-detail access boundary.
 
+## Stable source routes
+
+Source entities have a stable tool-relative browser route:
+
+`/sources/{entityId}`
+
+The Dorks & Dice Tool Host still owns the mount point. For example, with the normal `/tools/rules-core` mount, a source entity is addressable as `/tools/rules-core/sources/{entityId}`. The entity ID is the Source Layer identity; display names, source codes, and publication labels are not used as route identity.
+
+Opening a source result pushes this route and renders the same detail view used by a direct load. Browser Back and Forward restore Source Library detail/list state through the normal explicit render lifecycle. The route resolves the latest accessible revision of that source entity and does not bypass source-package access checks.
+
+Published Rules continue to use Rules Layer concept routes such as `/monsters/{identity}`. A Source Layer entity link and a Published Rules link therefore state different semantics rather than being interchangeable URLs.
+
 ## Monster presentation
 
 Source monsters and published monsters share the same structural presentation renderer. The renderer uses the compact 5.5e monster-stat-block information hierarchy without converting older-edition mechanics into 5.5e mechanics.
@@ -48,7 +60,7 @@ The primary presentation is organized as:
 
 1. name, size, creature type, descriptive tags, and alignment;
 2. Armor Class, Hit Points, Speed, and Initiative when present;
-3. all six abilities with score, modifier, and saving throw;
+3. all six abilities in compact score, modifier, and save columns;
 4. optional details such as skills, senses, languages, Challenge Rating, XP, proficiency bonus, vulnerabilities, resistances, immunities, condition immunities, and gear;
 5. traits and spellcasting;
 6. actions;
@@ -57,7 +69,7 @@ The primary presentation is organized as:
 
 Unknown rule-bearing fields are not discarded merely because they do not fit the common 5.5e headings. Additional top-level mechanics are presented under **Additional Mechanics**. Rule-bearing `_rulesCore.pcgen` values, including unmapped legacy source segments such as 3e/3.5e mechanics, are surfaced under **Source-Specific Mechanics**. Other Dorks & Dice extension mechanics are presented separately.
 
-The renderer performs display formatting only. It does not parse legacy stat-block prose, synthesize initiative from Dexterity, translate skills, or apply edition-specific semantic conversion tables. Those decisions belong in the upstream normalized mechanical model.
+The renderer performs display formatting only. It does not parse legacy stat-block prose, synthesize initiative from Dexterity, translate skills, or apply edition-specific semantic conversion tables. Ability-save fallback is used only when the mechanical document actually exposes an ability-save model; a document with no such model displays no invented six-ability saves. Those semantic decisions belong in the upstream normalized mechanical model.
 
 ## Source detail hierarchy
 
