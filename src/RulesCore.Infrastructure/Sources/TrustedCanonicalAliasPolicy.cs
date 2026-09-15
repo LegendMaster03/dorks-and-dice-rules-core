@@ -11,6 +11,10 @@ internal static class TrustedCanonicalAliasPolicy
         ArgumentNullException.ThrowIfNull(representation);
         ArgumentNullException.ThrowIfNull(record);
 
+        // Exact competency translations are an importer concern, not a trusted-lineage concern.
+        // Apply them for every supported representation before adding any source-lineage alias.
+        record = ExactCompetencyTranslationPolicy.Apply(representation, record);
+
         if (string.IsNullOrWhiteSpace(record.ContentJson)
             || !TrustedSourceLineageRegistry.TryResolveScheme(
                 representation.FormatKey,
