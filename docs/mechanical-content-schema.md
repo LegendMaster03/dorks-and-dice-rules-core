@@ -85,9 +85,9 @@ Current field mappings intentionally cover only defensible equivalences:
 - ordinary race size, walk speed, and racial `BONUS:STAT` modifiers can map to race-family equivalents when faithful;
 - monster size, recognized creature type, supported movement modes, CR, and descriptions can map directly.
 
-### Direct 3.x competency conversions
+### Direct 3.x competency translations
 
-PCGen skill records retain their source-native name, entity type, native key, `RawJson`, edition, and provenance. Translation may expose a later canonical competency only for the reviewed direct-conversion table. Each accepted conversion is also recorded under `_rulesCore.competencyConversion`; name similarity alone never creates a conversion.
+The reviewed direct mappings are importer translations, not Rules Lawyer relationships. For those mappings, Rules Core treats the older and later names as the **same competency identity**. The PCGen native key, native name, `RawJson`, edition, locator, and other source provenance remain unchanged, but the normalized `SourceEntity` name/type and translated `ContentJson` use the later competency identity before canonical reconciliation.
 
 The current direct skill-to-skill set is:
 
@@ -110,13 +110,14 @@ The following apply only when the source publication is identified as 3e/3.0:
 - `Wilderness Lore` -> `Survival`;
 - `Alchemy` -> `Alchemist's Supplies`.
 
-The reviewed direct cross-type conversions are:
+The reviewed direct cross-type translations are:
 
 - `Craft (alchemy)` -> `Alchemist's Supplies`;
-- `Forgery` -> `Forgery Kit`;
-- `Open Lock` -> `Thieves' Tools`, limited to the `open-lock` scope.
+- `Forgery` -> `Forgery Kit`.
 
-The source entity remains a source-native `skill`; cross-type conversion is expressed in translated mechanical content rather than rewriting source identity. For unscoped direct conversions, translated `ContentJson.name` is the later competency name. `Open Lock` is intentionally different: `ContentJson.name` remains `Open Lock`, while `_rulesCore.competencyConversion` records the scoped Thieves' Tools relationship. This prevents a consumer that ignores scope metadata from accidentally granting full Thieves' Tools proficiency.
+These unscoped mappings receive `_rulesCore.exactCompetencyIdentity`. Canonical semantic identity for this whitelist is based on that stable competency identity rather than edition-specific description text or source tags. Consequently, once `Deception` is bound to a Rules Layer concept, a later 3.x `Bluff` import resolves to the same canonical competency and does not require a second Rules Lawyer binding.
+
+`Open Lock` -> `Thieves' Tools` remains intentionally different. It is limited to the `open-lock` scope, so `Open Lock` remains its own normalized competency and records only the scoped relationship under `_rulesCore.competencyConversion`. This prevents an Open Lock proficiency from becoming full Thieves' Tools proficiency.
 
 `Perform` specialties are not collapsed into `Performance`. Other merged, split, partial, or category-changing relationships such as Hide/Move Silently -> Stealth, Listen/Spot -> Perception, Balance/Tumble -> Acrobatics, Climb/Jump/Swim -> Athletics, Ride, Spellcraft, Search, Disable Device, Disguise, Profession, and non-alchemy Craft specialties remain source-native until the reviewed Rules Layer competency hierarchy can represent those relationships without losing information.
 
@@ -142,6 +143,12 @@ A 3.x rule is not converted into a false 5e mechanic merely to fill a familiar f
       "targetType": "skill",
       "targetName": "Deception"
     },
+    "exactCompetencyIdentity": {
+      "version": "rules-core-exact-competency-v1",
+      "key": "skill|deception",
+      "entityType": "skill",
+      "name": "Deception"
+    },
     "pcgen": {
       "unmappedSegments": [
         { "tag": "KEYSTAT", "value": "CHA" }
@@ -151,11 +158,13 @@ A 3.x rule is not converted into a false 5e mechanic merely to fill a familiar f
 }
 ```
 
-`_rulesCore.context` is translation/provenance context. It is persisted in `ContentJson` for inspection but is removed by `SourceEntityRevision.GetMechanicalContentJson()` before semantic comparison, additive resolution, patching, or resolved-rule output. It therefore does not make otherwise identical mechanics compare as different rules.
+`_rulesCore.context` is translation/provenance context. It is persisted in `ContentJson` for inspection but is removed by `SourceEntityRevision.GetMechanicalContentJson()` before ordinary semantic comparison, additive resolution, patching, or resolved-rule output.
 
-`_rulesCore.competencyConversion` is rule-bearing. It survives `GetMechanicalContentJson()` because it defines the reviewed relationship between the source competency and the later competency, including a required scope for scoped tool conversions.
+`_rulesCore.competencyConversion` records how the source terminology translated. For an unscoped reviewed mapping it documents the exact translation; for a scoped mapping such as Open Lock it remains the rule-bearing scope relationship.
 
-`_rulesCore.pcgen.unmappedSegments` is also rule-bearing: those values represent mechanics that have not been translated into a faithful 5e.tools field. They remain in the rule-bearing view and therefore participate in canonical semantic fingerprints and Rules Layer compatibility decisions.
+`_rulesCore.exactCompetencyIdentity` is reserved importer metadata created only for the reviewed exact-translation whitelist. It is rule-bearing identity metadata and survives `GetMechanicalContentJson()`. Canonical semantic fingerprinting recognizes its versioned stable key and deliberately treats edition-specific mechanical representations of that competency as one canonical competency.
+
+`_rulesCore.pcgen.unmappedSegments` is also rule-bearing: those values represent mechanics that have not been translated into a faithful 5e.tools field. They remain in the rule-bearing view for mechanical inspection even when an exact competency identity causes canonical competency matching to ignore edition-specific differences for identity purposes.
 
 The extension is subordinate to the complete `RawJson`; it is not a replacement 3.x ontology. Unsupported source fragments and operations remain separate source evidence until a translator can construct a legitimate mechanical entity.
 
@@ -173,17 +182,11 @@ A PDF fragment becomes a monster, spell, item, feat, or other normalized mechani
 
 ## Canonical identity is separate
 
-Mechanical translation does not determine source access or collapse source-native identity.
+Mechanical translation does not determine source access or erase source-native evidence. Different packages retain independent raw records, revisions, and grants even when exact translation deliberately maps them to one canonical competency.
 
-A PCGen spell and a 5e.tools spell can have:
+For the reviewed exact competency translations, canonical identity is intentionally shared across edition-specific source representations. This is narrower than general rule reconciliation: it applies only to the explicit importer whitelist and does not make source bodies or package access global.
 
-- different packages;
-- different native keys;
-- different raw revisions;
-- different grants;
-- different translated content details;
-
-while canonical reconciliation still determines whether they represent the same canonical entity or related revision/reprint/rename/variant entities.
+For other entities, a PCGen record and a 5e.tools record can have different canonical entities or explicit revision/reprint/rename/variant relationships when their evidence requires it.
 
 Canonical metadata never grants access to a private source representation. Rules Layer bindings remain canonical-aware and access-aware.
 
