@@ -44,8 +44,15 @@ internal static class PcGenCompetencyConversions
 
     public static PcGenCompetencyConversion? Resolve(string sourceName, string? edition)
     {
+        var isThirdEdition = string.Equals(edition, "3e", StringComparison.OrdinalIgnoreCase);
+        var isThreePointFive = string.Equals(edition, "3.5e", StringComparison.OrdinalIgnoreCase);
+        if (!isThirdEdition && !isThreePointFive)
+        {
+            return null;
+        }
+
         var normalizedName = sourceName.Trim();
-        if (string.Equals(edition, "3e", StringComparison.OrdinalIgnoreCase)
+        if (isThirdEdition
             && ThirdEditionOnly.TryGetValue(normalizedName, out var thirdEdition))
         {
             return thirdEdition;
