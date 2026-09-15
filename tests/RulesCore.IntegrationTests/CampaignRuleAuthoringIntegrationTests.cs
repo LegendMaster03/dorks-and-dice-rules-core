@@ -487,7 +487,7 @@ public sealed class CampaignRuleAuthoringIntegrationTests
                 {
                   "skill": [
                     {
-                      "name": "Arcana",
+                      "name": "Authoring Skill",
                       "source": "{{sourceCode}}",
                       "ability": "int",
                       "marker": "{{marker}}"
