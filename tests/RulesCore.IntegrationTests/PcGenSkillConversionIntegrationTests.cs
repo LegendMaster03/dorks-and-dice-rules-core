@@ -1,8 +1,11 @@
+using System.Data;
+using System.Data.Common;
 using System.Text;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Rules;
 using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.IntegrationTests;
@@ -46,217 +49,324 @@ public sealed class PcGenSkillConversionIntegrationTests
     ];
 
     [Fact]
-    public async Task ApprovedDirectConversionsAreExplicitAndSourceIdentityRemainsNative()
+    public async Task ApprovedMappingsAreImporterTranslationsAndPreserveNativePcGenEvidence()
     {
-        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
-        if (string.IsNullOrWhiteSpace(connectionString)) return;
-
-        var options = new DbContextOptionsBuilder<RulesCoreDbContext>()
-            .UseNpgsql(connectionString)
-            .Options;
-        await using var db = new RulesCoreDbContext(options);
-        await new RulesCoreSchemaInitializer(db).InitializeAsync();
-
-        var token = Guid.NewGuid().ToString("N")[..12];
-        var package35 = $"pcgen-skill-conversions-35-{token}";
-        var package30 = $"pcgen-skill-conversions-30-{token}";
-        var importer = new NormalizedSourceImportService(db);
-
-        try
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
         {
-            await importer.ImportAsync(new ImportNormalizedSourceRequest(
-                package35,
-                $"PCGen 3.5 skill conversion fixture {token}",
-                "integration-test",
-                "test-only",
-                false,
-                Fixture(token, "3.5e", "35", Build35SkillNames())));
-            await importer.ImportAsync(new ImportNormalizedSourceRequest(
-                package30,
-                $"PCGen 3.0 skill conversion fixture {token}",
-                "integration-test",
-                "test-only",
-                false,
-                Fixture(token, "3e", "30", ["Pick Pocket", "Wilderness Lore", "Alchemy"])));
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var package35 = $"pcgen-skill-translation-35-{token}";
+            var package30 = $"pcgen-skill-translation-30-{token}";
+            var importer = new NormalizedSourceImportService(db);
 
-            foreach (var (source, target) in DirectSkillConversions)
+            try
             {
-                var row = await ReadSkillAsync(db, package35, source);
-                Assert.Equal("skill", row.EntityType);
-                Assert.Contains(source, row.RawJson, StringComparison.Ordinal);
-                AssertConversion(row.ContentJson, source, target, "skill", "direct-equivalence", scope: null);
-            }
+                await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                    package35,
+                    $"PCGen 3.5 skill translation fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    false,
+                    PcGenRepresentation(
+                        "35e",
+                        $"S35{token}",
+                        DirectSkillConversions.Select(value => value.Source)
+                            .Concat(DirectToolConversions.Select(value => value.Source))
+                            .Concat(["Open Lock", "Pick Pocket", "Wilderness Lore", "Alchemy"])
+                            .Concat(ExcludedDirectConversions)
+                            .Distinct(StringComparer.OrdinalIgnoreCase)
+                            .ToArray())));
 
-            foreach (var (source, target) in DirectToolConversions)
+                await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                    package30,
+                    $"PCGen 3.0 skill translation fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    false,
+                    PcGenRepresentation(
+                        "3e",
+                        $"S30{token}",
+                        ["Pick Pocket", "Wilderness Lore", "Alchemy"])));
+
+                foreach (var (source, target) in DirectSkillConversions)
+                {
+                    var row = await ReadByNativeNameAsync(db, package35, source);
+                    Assert.Equal("skill", row.EntityType);
+                    Assert.Equal(target, row.NormalizedName);
+                    AssertNativeSourceName(row.RawJson, source);
+                    AssertExactTranslation(row.ContentJson, source, "skill", target);
+                }
+
+                foreach (var (source, target) in DirectToolConversions)
+                {
+                    var row = await ReadByNativeNameAsync(db, package35, source);
+                    Assert.Equal("tool", row.EntityType);
+                    Assert.Equal(target, row.NormalizedName);
+                    AssertNativeSourceName(row.RawJson, source);
+                    AssertExactTranslation(row.ContentJson, source, "tool", target);
+                }
+
+                var openLock = await ReadByNativeNameAsync(db, package35, "Open Lock");
+                Assert.Equal("skill", openLock.EntityType);
+                Assert.Equal("Open Lock", openLock.NormalizedName);
+                using (var document = JsonDocument.Parse(openLock.ContentJson))
+                {
+                    var extension = document.RootElement.GetProperty("_rulesCore");
+                    Assert.False(extension.TryGetProperty("exactCompetencyIdentity", out _));
+                    var conversion = extension.GetProperty("competencyConversion");
+                    Assert.Equal("Thieves' Tools", conversion.GetProperty("targetName").GetString());
+                    Assert.Equal("open-lock", conversion.GetProperty("scope").GetString());
+                }
+
+                foreach (var source in ExcludedDirectConversions.Concat(["Pick Pocket", "Wilderness Lore", "Alchemy"]))
+                {
+                    var row = await ReadByNativeNameAsync(db, package35, source);
+                    Assert.Equal("skill", row.EntityType);
+                    Assert.Equal(source, row.NormalizedName);
+                    AssertNoExactTranslation(row.ContentJson);
+                }
+
+                AssertExactTranslation(
+                    (await ReadByNativeNameAsync(db, package30, "Pick Pocket")).ContentJson,
+                    "Pick Pocket",
+                    "skill",
+                    "Sleight of Hand");
+                AssertExactTranslation(
+                    (await ReadByNativeNameAsync(db, package30, "Wilderness Lore")).ContentJson,
+                    "Wilderness Lore",
+                    "skill",
+                    "Survival");
+                var alchemy = await ReadByNativeNameAsync(db, package30, "Alchemy");
+                Assert.Equal("tool", alchemy.EntityType);
+                Assert.Equal("Alchemist's Supplies", alchemy.NormalizedName);
+                AssertExactTranslation(alchemy.ContentJson, "Alchemy", "tool", "Alchemist's Supplies");
+            }
+            finally
             {
-                var row = await ReadSkillAsync(db, package35, source);
-                Assert.Equal("skill", row.EntityType);
-                Assert.Contains(source, row.RawJson, StringComparison.Ordinal);
-                AssertConversion(row.ContentJson, source, target, "tool", "direct-cross-type", scope: null);
+                await DeletePackageAsync(db, package35);
+                await DeletePackageAsync(db, package30);
             }
-
-            var openLock = await ReadSkillAsync(db, package35, "Open Lock");
-            using (var document = JsonDocument.Parse(openLock.ContentJson))
-            {
-                var root = document.RootElement;
-                Assert.Equal("Open Lock", root.GetProperty("name").GetString());
-                var conversion = root.GetProperty("_rulesCore").GetProperty("competencyConversion");
-                Assert.Equal("direct-cross-type", conversion.GetProperty("relationship").GetString());
-                Assert.Equal("skill", conversion.GetProperty("sourceType").GetString());
-                Assert.Equal("Open Lock", conversion.GetProperty("sourceName").GetString());
-                Assert.Equal("tool", conversion.GetProperty("targetType").GetString());
-                Assert.Equal("Thieves' Tools", conversion.GetProperty("targetName").GetString());
-                Assert.Equal("open-lock", conversion.GetProperty("scope").GetString());
-                Assert.True(conversion.GetProperty("mechanicalNamePreserved").GetBoolean());
-            }
-
-            foreach (var source in ExcludedDirectConversions)
-            {
-                var row = await ReadSkillAsync(db, package35, source);
-                AssertNoConversion(row.ContentJson, source);
-            }
-
-            foreach (var source in new[] { "Pick Pocket", "Wilderness Lore", "Alchemy" })
-            {
-                var row = await ReadSkillAsync(db, package35, source);
-                AssertNoConversion(row.ContentJson, source);
-            }
-
-            AssertConversion(
-                (await ReadSkillAsync(db, package30, "Pick Pocket")).ContentJson,
-                "Pick Pocket",
-                "Sleight of Hand",
-                "skill",
-                "direct-equivalence",
-                scope: null);
-            AssertConversion(
-                (await ReadSkillAsync(db, package30, "Wilderness Lore")).ContentJson,
-                "Wilderness Lore",
-                "Survival",
-                "skill",
-                "direct-equivalence",
-                scope: null);
-            AssertConversion(
-                (await ReadSkillAsync(db, package30, "Alchemy")).ContentJson,
-                "Alchemy",
-                "Alchemist's Supplies",
-                "tool",
-                "direct-cross-type",
-                scope: null);
-
-            var bluff = await db.SourceEntityRevisions
-                .AsNoTracking()
-                .Include(value => value.SourceEntity)
-                    .ThenInclude(value => value.SourcePackage)
-                .SingleAsync(value =>
-                    value.SourceEntity.SourcePackage.Key == package35
-                    && value.SourceEntity.Name == "Bluff");
-            using var mechanical = JsonDocument.Parse(bluff.GetMechanicalContentJson());
-            var mechanicalExtension = mechanical.RootElement.GetProperty("_rulesCore");
-            Assert.False(mechanicalExtension.TryGetProperty("context", out _));
-            Assert.Equal(
-                "Deception",
-                mechanicalExtension.GetProperty("competencyConversion").GetProperty("targetName").GetString());
-        }
-        finally
-        {
-            await DeletePackageAsync(db, package35);
-            await DeletePackageAsync(db, package30);
         }
     }
 
-    private static IReadOnlyList<string> Build35SkillNames() =>
-        DirectSkillConversions.Select(value => value.Source)
-            .Concat(DirectToolConversions.Select(value => value.Source))
-            .Concat(["Open Lock", "Pick Pocket", "Wilderness Lore", "Alchemy"])
-            .Concat(ExcludedDirectConversions)
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .ToArray();
+    [Fact]
+    public async Task BluffAndDeceptionShareCanonicalIdentityAndDoNotRequireSecondRulesLawyerBinding()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var fivePackage = $"exact-deception-5e-{token}";
+            var pcgenPackage = $"exact-bluff-35-{token}";
+            var importer = new NormalizedSourceImportService(db);
+            AcceptedSourceNormalizationView? accepted = null;
 
-    private static NormalizedSourceRepresentation Fixture(
-        string token,
-        string edition,
-        string suffix,
+            try
+            {
+                var fiveImport = await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                    fivePackage,
+                    $"5e Deception fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    FiveEDeceptionRepresentation(token)));
+                var fiveEntity = Assert.Single(fiveImport.Entities);
+                Assert.Equal("skill", fiveEntity.EntityType);
+                Assert.Equal("Deception", fiveEntity.Name);
+
+                var normalization = new SourceNormalizationService(db);
+                accepted = await normalization.AcceptAsync(fiveEntity.EntityId, $"rules-lawyer-{token}");
+                Assert.NotNull(accepted);
+                Assert.Equal("skill.deception", accepted!.Concept.Key);
+
+                var pcgenImport = await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                    pcgenPackage,
+                    $"3.5 Bluff fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    PcGenRepresentation("35e", $"B35{token}", ["Bluff"])));
+                var bluffEntity = Assert.Single(pcgenImport.Entities);
+                Assert.Equal("skill", bluffEntity.EntityType);
+                Assert.Equal("Deception", bluffEntity.Name);
+
+                Assert.Equal(
+                    await ReadCanonicalEntityIdAsync(db, fiveEntity.EntityId),
+                    await ReadCanonicalEntityIdAsync(db, bluffEntity.EntityId));
+
+                var candidates = await normalization.GetCandidatesAsync(
+                    $"rules-lawyer-{token}",
+                    entityType: "skill",
+                    query: "Deception",
+                    limit: 100);
+                Assert.DoesNotContain(candidates, value => value.SourceEntityId == bluffEntity.EntityId);
+
+                var bluffRow = await ReadByNativeNameAsync(db, pcgenPackage, "Bluff");
+                AssertNativeSourceName(bluffRow.RawJson, "Bluff");
+                AssertExactTranslation(bluffRow.ContentJson, "Bluff", "skill", "Deception");
+            }
+            finally
+            {
+                if (accepted?.CreatedBinding == true)
+                {
+                    var binding = await db.RuleConceptSourceBindings
+                        .SingleOrDefaultAsync(value => value.Id == accepted.Binding.Id);
+                    if (binding is not null)
+                    {
+                        db.RuleConceptSourceBindings.Remove(binding);
+                        await db.SaveChangesAsync();
+                    }
+                }
+                if (accepted?.CreatedConcept == true)
+                {
+                    var concept = await db.RuleConcepts
+                        .SingleOrDefaultAsync(value => value.Id == accepted.Concept.Id);
+                    if (concept is not null)
+                    {
+                        db.RuleConcepts.Remove(concept);
+                        await db.SaveChangesAsync();
+                    }
+                }
+                await DeletePackageAsync(db, fivePackage);
+                await DeletePackageAsync(db, pcgenPackage);
+            }
+        }
+    }
+
+    private static NormalizedSourceRepresentation PcGenRepresentation(
+        string editionPath,
+        string sourceShort,
         IReadOnlyList<string> names)
     {
-        var editionPath = edition == "3e" ? "3e" : "35e";
-        var shortCode = $"SK{suffix}{token}";
-        var lines = new List<string>
-        {
-            $"SOURCELONG:PCGen {edition} Skill Fixture {token}\tSOURCESHORT:{shortCode}"
-        };
-        lines.AddRange(names.Select(name => $"{name}\tKEYSTAT:INT"));
-        var path = $"data/{editionPath}/example/example_skills.lst";
-        var artifact = new SourceRepresentationArtifact(
-            $"skills-{suffix}-{token}.lst",
-            Encoding.UTF8.GetBytes(string.Join('\n', lines)),
-            $"test:pcgen-skill-conversions:{suffix}:{token}#{path}");
-        var representation = new PcGenSourceFormatAdapter().TryRead(artifact);
-        Assert.NotNull(representation);
-        Assert.Equal(names.Count, representation!.Records.Count);
-        Assert.All(representation.Records, record => Assert.Equal("skill", record.EntityType));
-        Assert.Equal(edition, Assert.Single(representation.Publications!).GameEdition);
-        return representation;
+        var fileName = $"data/{editionPath}/example/example_skills.lst";
+        var text = string.Join('\n',
+            new[] { $"SOURCELONG:Skill Translation Fixture {sourceShort}\tSOURCESHORT:{sourceShort}" }
+                .Concat(names.Select(name => $"{name}\tKEYSTAT:CHA")));
+        return new PcGenSourceFormatAdapter().TryRead(new SourceRepresentationArtifact(
+            fileName,
+            Encoding.UTF8.GetBytes(text),
+            $"integration:{sourceShort}#{fileName}"))
+            ?? throw new InvalidOperationException("PCGen skill fixture was not readable.");
     }
 
-    private static async Task<SkillRow> ReadSkillAsync(
+    private static NormalizedSourceRepresentation FiveEDeceptionRepresentation(string token)
+    {
+        var source = $"D5{token}";
+        var raw = JsonSerializer.Serialize(new
+        {
+            name = "Deception",
+            source,
+            entries = new[] { "A deliberately different 5e description from the 3.x Bluff record." }
+        });
+        return new NormalizedSourceRepresentation(
+            FiveEToolsSourceFormatAdapter.Format,
+            new SourceRepresentationArtifact(
+                $"skills-{token}.json",
+                Encoding.UTF8.GetBytes(raw),
+                $"integration:5e-deception:{token}"),
+            [new NormalizedSourceRecord(
+                "skill",
+                "Deception",
+                source,
+                $"skill|Deception|{source}",
+                raw,
+                PublicationLocalKey: source)],
+            [new NormalizedSourcePublication(
+                source,
+                $"5e Deception Fixture {token}",
+                "Integration Test Press",
+                "5e",
+                new DateOnly(2014, 8, 19))]);
+    }
+
+    private static async Task<SourceRow> ReadByNativeNameAsync(
         RulesCoreDbContext db,
         string packageKey,
-        string sourceName)
+        string nativeName)
     {
-        var revision = await db.SourceEntityRevisions
+        var rows = await db.SourceEntityRevisions
             .AsNoTracking()
             .Include(value => value.SourceEntity)
                 .ThenInclude(value => value.SourcePackage)
-            .SingleAsync(value =>
-                value.SourceEntity.SourcePackage.Key == packageKey
-                && value.SourceEntity.Name == sourceName);
+            .Where(value => value.SourceEntity.SourcePackage.Key == packageKey)
+            .ToArrayAsync();
+
+        var matches = rows.Where(value =>
+        {
+            using var document = JsonDocument.Parse(value.RawJson);
+            return document.RootElement.TryGetProperty("name", out var name)
+                && string.Equals(name.GetString(), nativeName, StringComparison.Ordinal);
+        }).ToArray();
+        var revision = Assert.Single(matches);
         Assert.NotNull(revision.ContentJson);
-        return new SkillRow(
+        return new SourceRow(
             revision.SourceEntity.EntityType,
+            revision.SourceEntity.Name,
             revision.RawJson,
             revision.ContentJson!);
     }
 
-    private static void AssertConversion(
+    private static void AssertNativeSourceName(string rawJson, string expected)
+    {
+        using var document = JsonDocument.Parse(rawJson);
+        Assert.Equal(expected, document.RootElement.GetProperty("name").GetString());
+    }
+
+    private static void AssertExactTranslation(
         string contentJson,
         string sourceName,
-        string targetName,
         string targetType,
-        string relationship,
-        string? scope)
+        string targetName)
     {
         using var document = JsonDocument.Parse(contentJson);
         var root = document.RootElement;
         Assert.Equal(targetName, root.GetProperty("name").GetString());
         var extension = root.GetProperty("_rulesCore");
-        var context = extension.GetProperty("context");
-        Assert.Equal(sourceName, context.GetProperty("nativeName").GetString());
-        Assert.True(context.TryGetProperty("edition", out _));
         var conversion = extension.GetProperty("competencyConversion");
-        Assert.Equal(relationship, conversion.GetProperty("relationship").GetString());
-        Assert.Equal("skill", conversion.GetProperty("sourceType").GetString());
         Assert.Equal(sourceName, conversion.GetProperty("sourceName").GetString());
         Assert.Equal(targetType, conversion.GetProperty("targetType").GetString());
         Assert.Equal(targetName, conversion.GetProperty("targetName").GetString());
-        if (scope is null)
-        {
-            Assert.False(conversion.TryGetProperty("scope", out _));
-        }
-        else
-        {
-            Assert.Equal(scope, conversion.GetProperty("scope").GetString());
-        }
+        var identity = extension.GetProperty("exactCompetencyIdentity");
+        Assert.Equal("rules-core-exact-competency-v1", identity.GetProperty("version").GetString());
+        Assert.Equal(CanonicalSourceIdentity.OccurrenceKey(targetType, targetName), identity.GetProperty("key").GetString());
     }
 
-    private static void AssertNoConversion(string contentJson, string sourceName)
+    private static void AssertNoExactTranslation(string contentJson)
     {
         using var document = JsonDocument.Parse(contentJson);
-        var root = document.RootElement;
-        Assert.Equal(sourceName, root.GetProperty("name").GetString());
-        var extension = root.GetProperty("_rulesCore");
-        Assert.False(extension.TryGetProperty("competencyConversion", out _));
-        Assert.False(extension.GetProperty("context").TryGetProperty("nativeName", out _));
+        Assert.False(document.RootElement.GetProperty("_rulesCore").TryGetProperty("exactCompetencyIdentity", out _));
+    }
+
+    private static async Task<Guid> ReadCanonicalEntityIdAsync(RulesCoreDbContext db, Guid sourceEntityId)
+    {
+        var connection = db.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync();
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT occurrence.canonical_entity_id
+                FROM source_entity_revision revision
+                JOIN source_entity_occurrence_binding binding
+                    ON binding.source_entity_revision_id = revision.source_entity_revision_id
+                JOIN canonical_source_occurrence occurrence
+                    ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
+                WHERE revision.source_entity_id = @source_entity_id
+                    AND occurrence.canonical_entity_id IS NOT NULL
+                ORDER BY revision.revision_number DESC
+                LIMIT 1;
+                """;
+            AddParameter(command, "@source_entity_id", sourceEntityId);
+            return (Guid)(await command.ExecuteScalarAsync()
+                ?? throw new InvalidOperationException("Canonical entity was not resolved."));
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
     }
 
     private static async Task DeletePackageAsync(RulesCoreDbContext db, string packageKey)
@@ -267,5 +377,27 @@ public sealed class PcGenSkillConversionIntegrationTests
         await db.SaveChangesAsync();
     }
 
-    private sealed record SkillRow(string EntityType, string RawJson, string ContentJson);
+    private static async Task<RulesCoreDbContext?> OpenDatabaseAsync()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString)) return null;
+        var db = new RulesCoreDbContext(
+            new DbContextOptionsBuilder<RulesCoreDbContext>().UseNpgsql(connectionString).Options);
+        await new RulesCoreSchemaInitializer(db).InitializeAsync();
+        return db;
+    }
+
+    private static void AddParameter(DbCommand command, string name, object value)
+    {
+        var parameter = command.CreateParameter();
+        parameter.ParameterName = name;
+        parameter.Value = value;
+        command.Parameters.Add(parameter);
+    }
+
+    private sealed record SourceRow(
+        string EntityType,
+        string NormalizedName,
+        string RawJson,
+        string ContentJson);
 }
