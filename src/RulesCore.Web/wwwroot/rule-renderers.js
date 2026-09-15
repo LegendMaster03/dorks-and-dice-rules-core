@@ -235,15 +235,18 @@ function renderAbilityGrid(document) {
     const section = element("section", { className: "rules-core-monster-section rules-core-ability-section" });
     section.append(element("h4", { className: "rules-core-monster-section-title", text: "Ability Scores" }));
     const grid = element("div", { className: "rules-core-ability-score-grid" });
-    const saves = document?.save && typeof document.save === "object" && !Array.isArray(document.save)
-        ? document.save
-        : {};
+    const hasAbilitySaveModel = document?.save && typeof document.save === "object" && !Array.isArray(document.save);
+    const saves = hasAbilitySaveModel ? document.save : null;
 
     for (const [label, key] of ABILITIES) {
         const score = finiteNumber(document?.[key]);
         const modifier = score === null ? null : Math.floor((score - 10) / 2);
         const explicitSave = saves?.[key];
-        const save = hasValue(explicitSave) ? formatSignedValue(explicitSave) : formatSignedValue(modifier);
+        const save = hasValue(explicitSave)
+            ? formatSignedValue(explicitSave)
+            : hasAbilitySaveModel
+                ? formatSignedValue(modifier)
+                : null;
         grid.append(element("div", { className: "rules-core-ability-score" },
             element("div", { className: "rules-core-ability-name", text: label }),
             element("div", { className: "rules-core-ability-score-values" },
