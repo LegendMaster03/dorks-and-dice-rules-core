@@ -31,6 +31,9 @@ public sealed record CanonicalSourceOccurrenceEvidence(
 
 public static class CanonicalSourceIdentity
 {
+    private const string ExactCompetencyIdentityVersion = "rules-core-exact-competency-v1";
+    private const string ExactCompetencyIdentityProperty = "exactCompetencyIdentity";
+
     private static readonly HashSet<string> ProvenanceProperties = new(StringComparer.OrdinalIgnoreCase)
     {
         "name",
@@ -133,6 +136,14 @@ public static class CanonicalSourceIdentity
 
         var mechanicalDocument = RulesMechanicalContent.ForRules(document);
         using var parsed = JsonDocument.Parse(mechanicalDocument);
+        if (TryReadExactCompetencyIdentity(parsed.RootElement, out var exactCompetencyKey))
+        {
+            // Reviewed competency translations deliberately make edition-specific source
+            // mechanics share one canonical competency identity. Raw/native revisions remain
+            // distinct and available for provenance and mechanical comparison.
+            return Fingerprint($"{ExactCompetencyIdentityVersion}\n{exactCompetencyKey}");
+        }
+
         using var stream = new MemoryStream();
         using (var writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = false }))
         {
@@ -143,6 +154,28 @@ public static class CanonicalSourceIdentity
 
     public static string Fingerprint(string value) =>
         Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(value))).ToLowerInvariant();
+
+    private static bool TryReadExactCompetencyIdentity(JsonElement root, out string key)
+    {
+        key = string.Empty;
+        if (root.ValueKind != JsonValueKind.Object
+            || !root.TryGetProperty("_rulesCore", out var extension)
+            || extension.ValueKind != JsonValueKind.Object
+            || !extension.TryGetProperty(ExactCompetencyIdentityProperty, out var identity)
+            || identity.ValueKind != JsonValueKind.Object
+            || !identity.TryGetProperty("version", out var version)
+            || version.ValueKind != JsonValueKind.String
+            || !string.Equals(version.GetString(), ExactCompetencyIdentityVersion, StringComparison.Ordinal)
+            || !identity.TryGetProperty("key", out var keyElement)
+            || keyElement.ValueKind != JsonValueKind.String
+            || string.IsNullOrWhiteSpace(keyElement.GetString()))
+        {
+            return false;
+        }
+
+        key = keyElement.GetString()!.Trim().ToLowerInvariant();
+        return true;
+    }
 
     private static void WriteSemanticCanonical(Utf8JsonWriter writer, JsonElement element, bool isRoot)
     {
