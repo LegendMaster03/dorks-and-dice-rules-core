@@ -2,10 +2,12 @@ using System.Data;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
 using RulesCore.Domain.Rules;
 using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.Infrastructure.Rules;
 
@@ -82,6 +84,11 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
                 value.EntityType,
                 value.Name,
                 value.SourceCode ?? string.Empty,
+                value.FormatKey,
+                value.Revisions
+                    .OrderByDescending(revision => revision.RevisionNumber)
+                    .Select(revision => revision.ContentJson)
+                    .First(),
                 value.Revisions
                     .OrderByDescending(revision => revision.RevisionNumber)
                     .Select(revision => revision.RevisionNumber)
@@ -106,10 +113,19 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         }
 
         var suggestions = sources
-            .Select(source => new
+            .Select(source =>
             {
-                Source = source,
-                Key = BuildSuggestedConceptKey(source.EntityType, source.Name)
+                var identity = ResolveSuggestedConceptIdentity(
+                    source.FormatKey,
+                    source.EntityType,
+                    source.Name,
+                    source.LatestContentJson);
+                return new
+                {
+                    Source = source,
+                    Identity = identity,
+                    Key = BuildSuggestedConceptKey(identity.EntityType, identity.Name)
+                };
             })
             .ToArray();
         var keys = suggestions.Select(value => value.Key).Distinct().ToArray();
@@ -121,7 +137,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         return suggestions.Select(value =>
         {
             concepts.TryGetValue(value.Key, out var concept);
-            var normalizedSourceType = NormalizeEntityType(value.Source.EntityType);
+            var normalizedSourceType = NormalizeEntityType(value.Identity.EntityType);
             var suggestionKind = concept is null
                 ? SourceNormalizationSuggestionKinds.NewConcept
                 : string.Equals(concept.EntityType, normalizedSourceType, StringComparison.Ordinal)
@@ -180,12 +196,23 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
             return null;
         }
 
+        var latestContentJson = await dbContext.SourceEntityRevisions
+            .AsNoTracking()
+            .Where(value => value.SourceEntityId == sourceEntityId)
+            .OrderByDescending(value => value.RevisionNumber)
+            .Select(value => value.ContentJson)
+            .FirstAsync(cancellationToken);
+        var identity = ResolveSuggestedConceptIdentity(
+            source.FormatKey,
+            source.EntityType,
+            source.Name,
+            latestContentJson);
         var canonicalEntityId = await CanonicalRuleBindingStore.GetCanonicalEntityIdAsync(
             dbContext,
             sourceEntityId,
             cancellationToken);
-        var suggestedKey = BuildSuggestedConceptKey(source.EntityType, source.Name);
-        var normalizedEntityType = NormalizeEntityType(source.EntityType);
+        var suggestedKey = BuildSuggestedConceptKey(identity.EntityType, identity.Name);
+        var normalizedEntityType = NormalizeEntityType(identity.EntityType);
         var existingBindings = await dbContext.RuleConceptSourceBindings
             .AsNoTracking()
             .Include(value => value.RuleConcept)
@@ -220,7 +247,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
                 Id = Guid.NewGuid(),
                 Key = suggestedKey,
                 EntityType = normalizedEntityType,
-                DisplayName = source.Name.Trim(),
+                DisplayName = identity.Name.Trim(),
                 CreatedByUserId = normalizedUserId,
                 CreatedAt = DateTimeOffset.UtcNow
             };
@@ -269,6 +296,62 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         }
         return $"{typeSegment}.{nameSegment}";
     }
+
+    private static SuggestedConceptIdentity ResolveSuggestedConceptIdentity(
+        string formatKey,
+        string sourceEntityType,
+        string sourceName,
+        string? contentJson)
+    {
+        var fallback = new SuggestedConceptIdentity(sourceEntityType, sourceName);
+        if (!string.Equals(formatKey, PcGenSourceFormatAdapter.Format, StringComparison.Ordinal)
+            || !string.Equals(sourceEntityType, "skill", StringComparison.OrdinalIgnoreCase)
+            || string.IsNullOrWhiteSpace(contentJson))
+        {
+            return fallback;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(contentJson);
+            if (document.RootElement.ValueKind != JsonValueKind.Object
+                || !document.RootElement.TryGetProperty("_rulesCore", out var extension)
+                || extension.ValueKind != JsonValueKind.Object
+                || !extension.TryGetProperty("competencyConversion", out var conversion)
+                || conversion.ValueKind != JsonValueKind.Object)
+            {
+                return fallback;
+            }
+
+            var relationship = ReadString(conversion, "relationship");
+            var sourceType = ReadString(conversion, "sourceType");
+            var conversionSourceName = ReadString(conversion, "sourceName");
+            var targetType = ReadString(conversion, "targetType");
+            var targetName = ReadString(conversion, "targetName");
+            var scope = ReadString(conversion, "scope");
+            if ((relationship is not "direct-equivalence" and not "direct-cross-type")
+                || !string.Equals(sourceType, "skill", StringComparison.OrdinalIgnoreCase)
+                || !string.Equals(conversionSourceName, sourceName, StringComparison.OrdinalIgnoreCase)
+                || string.IsNullOrWhiteSpace(targetType)
+                || string.IsNullOrWhiteSpace(targetName)
+                || !string.IsNullOrWhiteSpace(scope))
+            {
+                return fallback;
+            }
+
+            return new SuggestedConceptIdentity(targetType.Trim(), targetName.Trim());
+        }
+        catch (JsonException)
+        {
+            return fallback;
+        }
+    }
+
+    private static string? ReadString(JsonElement value, string propertyName) =>
+        value.TryGetProperty(propertyName, out var property)
+        && property.ValueKind == JsonValueKind.String
+            ? property.GetString()
+            : null;
 
     private async Task<Guid[]> GetIgnoredPackageIdsAsync(CancellationToken cancellationToken)
     {
@@ -403,11 +486,15 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         }
     }
 
+    private sealed record SuggestedConceptIdentity(string EntityType, string Name);
+
     private sealed record CandidateSource(
         Guid Id,
         string EntityType,
         string Name,
         string SourceCode,
+        string FormatKey,
+        string? LatestContentJson,
         int LatestRevisionNumber,
         DateTimeOffset LatestImportedAt,
         Guid PackageId,
