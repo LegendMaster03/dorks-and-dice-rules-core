@@ -107,7 +107,7 @@ public sealed class SourceLayerIntegrationTests
     }
 
     [Fact]
-    public async Task PublicReadApiReturnsLatestEntityWithProvenanceAndHidesPrivatePackages()
+    public async Task PublicReadApiReturnsMechanicalAndNativeDocumentsAndHidesPrivatePackages()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
         if (string.IsNullOrWhiteSpace(connectionString))
@@ -175,8 +175,19 @@ public sealed class SourceLayerIntegrationTests
             .GetProperty("preserved")
             .GetBoolean());
 
+        using var publicNativeResponse = await client.GetAsync($"/api/sources/entities/{publicEntityId}/native");
+        Assert.Equal(HttpStatusCode.OK, publicNativeResponse.StatusCode);
+        using var publicNativeJson = JsonDocument.Parse(await publicNativeResponse.Content.ReadAsStringAsync());
+        Assert.Equal("Investigation", publicNativeJson.RootElement.GetProperty("name").GetString());
+        Assert.True(publicNativeJson.RootElement
+            .GetProperty("unmodeled")
+            .GetProperty("preserved")
+            .GetBoolean());
+
         using var privateResponse = await client.GetAsync($"/api/sources/entities/{privateEntityId}");
         Assert.Equal(HttpStatusCode.NotFound, privateResponse.StatusCode);
+        using var privateNativeResponse = await client.GetAsync($"/api/sources/entities/{privateEntityId}/native");
+        Assert.Equal(HttpStatusCode.NotFound, privateNativeResponse.StatusCode);
 
         await using var cleanupScope = factory.Services.CreateAsyncScope();
         var db = cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();

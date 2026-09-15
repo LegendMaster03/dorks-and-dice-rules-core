@@ -8,6 +8,7 @@ import {
     element,
     formatDate,
 } from "./ui.js";
+import { renderResolvedRule } from "./rule-renderers.js";
 
 const DORKS_MODE = "dorks-and-dice";
 const BUNDLED_SRDS = [
@@ -89,7 +90,7 @@ export function installSourceLibrary(app) {
     app.libraryFilters = { entityType: "", query: "", page: 0 };
     app.libraryNotice = null;
 
-    if (app.canBrowseSourceLibrary) {
+    if (app.canBrowseSourceLibrary && !app.browserRouteRequested) {
         app.activeView = "library";
     }
 
@@ -112,10 +113,9 @@ export function installSourceLibrary(app) {
 
 function renderHeader(app) {
     const card = element("div", { className: "card card-body rules-core-header" });
-    const row = element("div", {
+    card.append(element("div", {
         className: "d-flex flex-wrap align-items-start justify-content-between gap-3"
-    });
-    row.append(
+    },
         element("div", {},
             element("div", { className: "rules-core-eyebrow", text: "DORKS & DICE RULES" }),
             element("h2", { className: "h3 mb-1", text: "Rules Core" }),
@@ -124,44 +124,32 @@ function renderHeader(app) {
                 text: "Explore source material, review cross-edition rules, and publish the rules your table actually uses."
             })),
         element("div", { className: "text-end small" },
-            element("div", {
-                className: "fw-semibold",
-                text: app.session.user?.displayName ?? "Guest"
-            }),
+            element("div", { className: "fw-semibold", text: app.session.user?.displayName ?? "Guest" }),
             element("div", {
                 className: "text-body-secondary",
                 text: app.session.user?.displayName ? "Signed in" : "Public library access"
-            })));
-    card.append(row);
+            }))));
     return card;
 }
 
 function renderNavigation(app) {
     const shell = element("div", { className: "rules-core-nav-shell" });
     const primary = element("div", { className: "rules-core-nav-primary" });
-
     if (app.canBrowseSourceLibrary) primary.append(app.navButton("Library", "library"));
     if (app.canBrowseRules) primary.append(app.navButton("Published Rules", "browse"));
     if (app.canEditGlobal) primary.append(app.navButton("Rules Lawyer", "global"));
     if (app.canReviewVersions) primary.append(app.navButton("Cross-version Review", "version-review"));
     if (app.canEditCampaign) primary.append(app.navButton("Campaign Rules", "campaign"));
-
     shell.append(primary);
 
     if (app.canManageHostedSources || app.canAdministerSources) {
         const advanced = element("details", { className: "rules-core-advanced-nav" });
-        const summary = element("summary", { text: "Advanced" });
         const actions = element("div", { className: "rules-core-advanced-actions" });
-        if (app.canManageHostedSources) {
-            actions.append(advancedNavButton(app, "Hosted source definitions", "hosted-sources"));
-        }
-        if (app.canAdministerSources) {
-            actions.append(advancedNavButton(app, "Manual source import & access", "source-admin"));
-        }
-        advanced.append(summary, actions);
+        if (app.canManageHostedSources) actions.append(advancedNavButton(app, "Hosted source definitions", "hosted-sources"));
+        if (app.canAdministerSources) actions.append(advancedNavButton(app, "Manual source import & access", "source-admin"));
+        advanced.append(element("summary", { text: "Advanced" }), actions);
         shell.append(advanced);
     }
-
     return shell;
 }
 
@@ -173,13 +161,12 @@ function advancedNavButton(app, label, view) {
 
 async function renderSourceLibrary(app, container) {
     clear(container);
-
     if (app.libraryNotice) {
         container.append(alertNode(app.libraryNotice.kind, app.libraryNotice.message));
         app.libraryNotice = null;
     }
 
-    const intro = element("div", { className: "card card-body mb-3 rules-core-library-hero" },
+    container.append(element("div", { className: "card card-body mb-3 rules-core-library-hero" },
         element("div", { className: "d-flex flex-wrap justify-content-between align-items-start gap-3" },
             element("div", {},
                 element("h3", { className: "h4 mb-1", text: "Rules Library" }),
@@ -187,27 +174,22 @@ async function renderSourceLibrary(app, container) {
                     className: "text-body-secondary mb-0",
                     text: "Canonical SRDs are bundled with Rules Core and available here before Rules Lawyer adjudication. Browsing a source does not make it the table rule; publication remains an explicit decision."
                 })),
-            badge("Source Layer", "primary")));
-    container.append(intro);
+            badge("Source Layer", "primary"))));
 
     await renderBuiltInSources(app, container, BUNDLED_SRDS);
-
     await renderSourceBrowser(app, container);
 }
 
 async function renderBuiltInSources(app, container, definitions) {
     const section = element("section", { className: "mb-3" });
-    const heading = element("div", {
+    section.append(element("div", {
         className: "d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2"
-    });
-    heading.append(
-        element("div", {},
-            element("h4", { className: "h5 mb-1", text: "Bundled SRDs" }),
-            element("p", {
-                className: "text-body-secondary small mb-0",
-                text: "These reviewed snapshots ship with Rules Core and are hydrated into the public immutable Source Layer during baseline bootstrap. No account, import action, or remote host is required to use them."
-            })));
-    section.append(heading);
+    }, element("div", {},
+        element("h4", { className: "h5 mb-1", text: "Bundled SRDs" }),
+        element("p", {
+            className: "text-body-secondary small mb-0",
+            text: "These reviewed snapshots ship with Rules Core and are hydrated into the public immutable Source Layer during baseline bootstrap. No account, import action, or remote host is required to use them."
+        }))));
 
     const stateHolder = element("div", { className: "rules-core-source-grid" });
     section.append(stateHolder);
@@ -217,9 +199,7 @@ async function renderBuiltInSources(app, container, definitions) {
     const readyCount = states.filter(value => value.ready).length;
     const detectedMonsterCount = states.reduce((sum, value) => sum + value.monsterCount, 0);
     const monsterCountCapped = states.some(value => value.monsterCapped);
-
-    const summary = element("div", { className: "rules-core-library-summary card card-body mb-3" });
-    summary.append(
+    section.insertBefore(element("div", { className: "rules-core-library-summary card card-body mb-3" },
         element("div", { className: "rules-core-metrics" },
             metric("Bundled SRDs", String(definitions.length)),
             metric("Available locally", `${readyCount}/${definitions.length}`),
@@ -227,13 +207,9 @@ async function renderBuiltInSources(app, container, definitions) {
         element("span", {
             className: "small text-body-secondary",
             text: "Upstream comparison and maintenance controls remain under Advanced; normal library use is entirely local."
-        }));
-    section.insertBefore(summary, stateHolder);
+        })), stateHolder);
 
-    clear(stateHolder);
-    for (const state of states) {
-        stateHolder.append(renderSourceCard(app, container, state));
-    }
+    for (const state of states) stateHolder.append(renderSourceCard(app, container, state));
 }
 
 async function loadDefinitionState(app, definition) {
@@ -245,11 +221,7 @@ async function loadDefinitionState(app, definition) {
         ]);
         const exactEntities = entities.filter(value => matchesDefinition(value, definition));
         const exactMonsters = monsters.filter(value => matchesDefinition(value, definition));
-        const latestImportedAt = exactEntities
-            .map(value => value.latestImportedAt)
-            .filter(Boolean)
-            .sort()
-            .at(-1) ?? null;
+        const latestImportedAt = exactEntities.map(value => value.latestImportedAt).filter(Boolean).sort().at(-1) ?? null;
         return {
             definition,
             sourceCode,
@@ -262,82 +234,43 @@ async function loadDefinitionState(app, definition) {
             error: null
         };
     } catch (error) {
-        return {
-            definition,
-            sourceCode,
-            entityCount: 0,
-            entityCapped: false,
-            monsterCount: 0,
-            monsterCapped: false,
-            latestImportedAt: null,
-            ready: false,
-            error
-        };
+        return { definition, sourceCode, entityCount: 0, entityCapped: false, monsterCount: 0, monsterCapped: false, latestImportedAt: null, ready: false, error };
     }
 }
 
 function renderSourceCard(app, container, state) {
     const definition = state.definition;
     const card = element("article", { className: "card card-body rules-core-source-card" });
-    const titleRow = element("div", {
-        className: "d-flex justify-content-between align-items-start gap-2 mb-3"
-    });
-    titleRow.append(
+    card.append(element("div", { className: "d-flex justify-content-between align-items-start gap-2 mb-3" },
         element("div", {},
             element("div", { className: "rules-core-eyebrow", text: definition.gameEdition ?? "D&D" }),
             element("h5", { className: "h5 mb-1", text: definition.editionDisplayName }),
             element("div", { className: "small text-body-secondary", text: definition.workDisplayName })),
-        state.error
-            ? badge("Status error", "danger")
-            : state.ready
-                ? badge("Bundled", "success")
-                : badge("Bundle unavailable", "danger"));
-    card.append(titleRow);
-
+        state.error ? badge("Status error", "danger") : state.ready ? badge("Bundled", "success") : badge("Bundle unavailable", "danger")));
     card.append(element("div", { className: "rules-core-source-card-stats" },
         metric("Entities", countLabel(state.entityCount, state.entityCapped)),
         metric("Monsters", countLabel(state.monsterCount, state.monsterCapped)),
         metric("Loaded", state.latestImportedAt ? formatDate(state.latestImportedAt) : "Unavailable")));
 
-    if (state.error) {
-        card.append(alertNode("warning", describeError(state.error)));
-    } else if (!state.ready) {
-        card.append(alertNode(
-            "danger",
-            "This bundled SRD is missing from the local Source Layer. Baseline bootstrap should hydrate it automatically; there is no user import action."));
-    }
+    if (state.error) card.append(alertNode("warning", describeError(state.error)));
+    else if (!state.ready) card.append(alertNode("danger", "This bundled SRD is missing from the local Source Layer. Baseline bootstrap should hydrate it automatically; there is no user import action."));
 
-    const actions = element("div", { className: "d-flex flex-wrap gap-2 mt-3" });
-    const browse = element("button", {
-        type: "button",
-        className: "btn btn-sm btn-outline-primary",
-        text: "Browse source"
-    });
-    browse.disabled = !state.ready;
+    const browse = element("button", { type: "button", className: "btn btn-sm btn-outline-primary", text: "Browse source", disabled: !state.ready });
     browse.addEventListener("click", async () => {
         app.libraryFilters = { entityType: "", query: state.sourceCode, page: 0 };
         await renderSourceLibrary(app, container);
         document.getElementById("rules-core-source-browser")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
-
-    const monsters = element("button", {
-        type: "button",
-        className: "btn btn-sm btn-outline-primary",
-        text: "Monsters"
-    });
-    monsters.disabled = !state.monsterCount;
+    const monsters = element("button", { type: "button", className: "btn btn-sm btn-outline-primary", text: "Monsters", disabled: !state.monsterCount });
     monsters.addEventListener("click", async () => {
         app.libraryFilters = { entityType: "monster", query: state.sourceCode, page: 0 };
         await renderSourceLibrary(app, container);
         document.getElementById("rules-core-source-browser")?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
-
-    actions.append(browse, monsters);
-    card.append(actions);
+    card.append(element("div", { className: "d-flex flex-wrap gap-2 mt-3" }, browse, monsters));
 
     const details = element("details", { className: "mt-3 small" });
-    details.append(
-        element("summary", { className: "text-body-secondary", text: "Source and provenance details" }),
+    details.append(element("summary", { className: "text-body-secondary", text: "Source and provenance details" }),
         element("div", { className: "pt-2" },
             definitionList([
                 ["Source code", state.sourceCode],
@@ -352,19 +285,15 @@ function renderSourceCard(app, container, state) {
 }
 
 async function renderSourceBrowser(app, container) {
-    const section = element("section", {
-        id: "rules-core-source-browser",
-        className: "card card-body"
-    });
-    section.append(
-        element("div", { className: "d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3" },
-            element("div", {},
-                element("h4", { className: "h5 mb-1", text: "Browse source material" }),
-                element("p", {
-                    className: "text-body-secondary mb-0",
-                    text: "This is the immutable Source Layer, not the published ruleset. Monster records can be inspected here before any cross-edition adjudication."
-                })),
-            badge("Beta integration surface", "secondary")));
+    const section = element("section", { id: "rules-core-source-browser", className: "card card-body" });
+    section.append(element("div", { className: "d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3" },
+        element("div", {},
+            element("h4", { className: "h5 mb-1", text: "Browse source material" }),
+            element("p", {
+                className: "text-body-secondary mb-0",
+                text: "This is the immutable Source Layer, not the published ruleset. Source-native records remain available alongside their Rules Core mechanical presentation."
+            })),
+        badge("Source Layer", "secondary")));
 
     const form = element("form", { className: "row g-2 align-items-end mb-3" });
     const type = element("select", { className: "form-select" });
@@ -373,26 +302,15 @@ async function renderSourceBrowser(app, container) {
         option.selected = value === app.libraryFilters.entityType;
         type.append(option);
     }
-    const query = element("input", {
-        type: "search",
-        className: "form-control",
-        placeholder: "Name, source code, publication, or edition",
-        value: app.libraryFilters.query
-    });
+    const query = element("input", { type: "search", className: "form-control", placeholder: "Name, source code, or package", value: app.libraryFilters.query });
     const searchButton = element("button", { type: "submit", className: "btn btn-primary w-100", text: "Search" });
-    const monstersButton = element("button", { type: "button", className: "btn btn-outline-primary w-100", text: "Monster beta" });
-
-    form.append(
-        field("Entity type", type, "col-lg-3"),
-        field("Search", query, "col-lg-6"),
-        element("div", { className: "col-lg-2" }, searchButton),
-        element("div", { className: "col-lg-1" }, monstersButton));
+    const monstersButton = element("button", { type: "button", className: "btn btn-outline-primary w-100", text: "Monsters" });
+    form.append(field("Entity type", type, "col-lg-3"), field("Search", query, "col-lg-6"), element("div", { className: "col-lg-2" }, searchButton), element("div", { className: "col-lg-1" }, monstersButton));
     section.append(form);
 
     const results = element("div");
     section.append(results);
     container.append(section);
-
     form.addEventListener("submit", async event => {
         event.preventDefault();
         app.libraryFilters = { entityType: type.value, query: query.value.trim(), page: 0 };
@@ -403,7 +321,6 @@ async function renderSourceBrowser(app, container) {
         app.libraryFilters = { entityType: "monster", query: query.value.trim(), page: 0 };
         await renderBrowserResults(app, results);
     });
-
     await renderBrowserResults(app, results);
 }
 
@@ -421,7 +338,6 @@ async function renderBrowserResults(app, container) {
         });
         const hasNext = requested.length > SOURCE_PAGE_SIZE;
         const entities = requested.slice(0, SOURCE_PAGE_SIZE);
-
         if (!entities.length && page > 0) {
             app.libraryFilters.page = page - 1;
             await renderBrowserResults(app, container);
@@ -430,11 +346,8 @@ async function renderBrowserResults(app, container) {
 
         clear(container);
         if (!entities.length) {
-            container.append(alertNode(
-                "secondary",
-                app.libraryFilters.entityType === "monster"
-                    ? "No monster entities match these filters."
-                    : "No source entities match these filters."));
+            container.append(alertNode("secondary", app.libraryFilters.entityType === "monster" ? "No monster entities match these filters." : "No source entities match these filters."));
+            presentFragment(app, container);
             return;
         }
 
@@ -442,77 +355,47 @@ async function renderBrowserResults(app, container) {
         const head = element("thead", {}, element("tr", {},
             element("th", { text: "Source entity" }),
             element("th", { text: "Type" }),
-            element("th", { text: "Publication" }),
+            element("th", { text: "Source" }),
             element("th", { text: "Revision" }),
             element("th")));
         const body = element("tbody");
         for (const entity of entities) {
-            const open = element("button", {
-                type: "button",
-                className: "btn btn-sm btn-outline-primary",
-                text: entity.entityType === "monster" ? "Inspect stats" : "Open"
-            });
+            const open = element("button", { type: "button", className: "btn btn-sm btn-outline-primary", text: entity.entityType === "monster" ? "Open stat block" : "Open" });
             open.addEventListener("click", async () => renderSourceEntityDetail(app, container, entity.entityId));
             body.append(element("tr", {},
-                element("td", {},
-                    element("div", { className: "fw-semibold", text: entity.name }),
-                    element("div", { className: "small text-body-secondary", text: entity.sourceCode })),
-                element("td", {}, entity.entityType === "monster"
-                    ? badge("monster", "primary")
-                    : badge(entity.entityType, "secondary")),
-                element("td", {},
-                    element("div", { text: entity.editionDisplayName }),
-                    element("div", { className: "small text-body-secondary", text: entity.workDisplayName })),
+                element("td", {}, element("div", { className: "fw-semibold", text: entity.name }), element("div", { className: "small text-body-secondary", text: entity.sourceCode })),
+                element("td", {}, entity.entityType === "monster" ? badge("monster", "primary") : badge(entity.entityType, "secondary")),
+                element("td", {}, element("div", { text: entity.packageDisplayName }), element("div", { className: "small text-body-secondary", text: entity.sourceCode })),
                 element("td", { text: `#${entity.latestRevisionNumber}` }),
                 element("td", { className: "text-end" }, open)));
         }
         table.append(head, body);
 
-        const previous = element("button", {
-            type: "button",
-            className: "btn btn-sm btn-outline-secondary",
-            text: "← Previous"
-        });
-        previous.disabled = page === 0;
+        const previous = element("button", { type: "button", className: "btn btn-sm btn-outline-secondary", text: "← Previous", disabled: page === 0 });
         previous.addEventListener("click", async () => {
             app.libraryFilters.page = Math.max(0, page - 1);
             await renderBrowserResults(app, container);
             document.getElementById("rules-core-source-browser")?.scrollIntoView({ behavior: "smooth", block: "start" });
         });
-
-        const next = element("button", {
-            type: "button",
-            className: "btn btn-sm btn-outline-secondary",
-            text: "Next →"
-        });
-        next.disabled = !hasNext;
+        const next = element("button", { type: "button", className: "btn btn-sm btn-outline-secondary", text: "Next →", disabled: !hasNext });
         next.addEventListener("click", async () => {
             app.libraryFilters.page = page + 1;
             await renderBrowserResults(app, container);
             document.getElementById("rules-core-source-browser")?.scrollIntoView({ behavior: "smooth", block: "start" });
         });
-
         const firstResult = offset + 1;
         const lastResult = offset + entities.length;
-        const navigation = element("div", {
-            className: "d-flex flex-wrap justify-content-between align-items-center gap-2 mt-3"
-        },
-            element("div", {
-                className: "small text-body-secondary",
-                text: `Showing ${firstResult}–${lastResult} · Page ${page + 1}`
-            }),
-            element("div", { className: "d-flex gap-2" }, previous, next));
-
         container.append(
-            element("div", {
-                className: "small text-body-secondary mb-2",
-                text: `Showing ${firstResult}–${lastResult}${hasNext ? "+" : ""} matching result(s)`
-            }),
+            element("div", { className: "small text-body-secondary mb-2", text: `Showing ${firstResult}–${lastResult}${hasNext ? "+" : ""} matching result(s)` }),
             element("div", { className: "table-responsive" }, table),
-            navigation);
+            element("div", { className: "d-flex flex-wrap justify-content-between align-items-center gap-2 mt-3" },
+                element("div", { className: "small text-body-secondary", text: `Showing ${firstResult}–${lastResult} · Page ${page + 1}` }),
+                element("div", { className: "d-flex gap-2" }, previous, next)));
+        presentFragment(app, container);
     } catch (error) {
         clear(container);
         container.append(alertNode("danger", describeError(error)));
+        presentFragment(app, container);
     }
 }
 
@@ -520,90 +403,79 @@ async function renderSourceEntityDetail(app, container, entityId) {
     clear(container);
     container.append(element("div", { className: "text-body-secondary", text: "Loading source entity…" }));
     try {
-        const entity = await app.api.backend(`/api/sources/entities/${encodeURIComponent(entityId)}`);
+        const encodedEntityId = encodeURIComponent(entityId);
+        const [entity, nativeDocument] = await Promise.all([
+            app.api.backend(`/api/sources/entities/${encodedEntityId}`),
+            app.api.backend(`/api/sources/entities/${encodedEntityId}/native`)
+        ]);
         clear(container);
         const back = element("button", { type: "button", className: "btn btn-sm btn-outline-secondary mb-3", text: "← Back to source results" });
         back.addEventListener("click", async () => renderBrowserResults(app, container));
         container.append(back);
 
-        const header = element("div", { className: "d-flex flex-wrap justify-content-between gap-3 mb-3" },
-            element("div", {},
-                element("h5", { className: "h4 mb-1", text: entity.name }),
-                element("div", { className: "text-body-secondary", text: `${entity.editionDisplayName} · ${entity.sourceCode}` })),
-            entity.entityType === "monster" ? badge("Monster detected", "success") : badge(entity.entityType, "secondary"));
-        container.append(header);
-
         if (entity.entityType === "monster") {
-            container.append(renderMonsterPanel(entity));
+            container.append(renderResolvedRule("monster", entity.document, {
+                displayName: entity.name,
+                showDocument: false
+            }));
+        } else {
+            container.append(element("div", { className: "d-flex flex-wrap justify-content-between gap-3 mb-3" },
+                element("div", {},
+                    element("h5", { className: "h4 mb-1", text: entity.name }),
+                    element("div", { className: "text-body-secondary", text: `${entity.packageDisplayName} · ${entity.sourceCode}` })),
+                badge(entity.entityType, "secondary")));
         }
 
-        const provenance = element("div", { className: "card card-body mb-3" },
-            element("h6", { className: "h6 mb-2", text: "Source provenance" }),
-            definitionList([
-                ["Entity ID", entity.entityId],
-                ["Package", `${entity.packageDisplayName} (${entity.packageKey})`],
-                ["Work", `${entity.workDisplayName} (${entity.workKey})`],
-                ["Release", `${entity.editionDisplayName} (${entity.editionKey})`],
-                ["Revision", `#${entity.revisionNumber}`],
-                ["Imported", formatDate(entity.importedAt)]
-            ]));
-        container.append(provenance);
+        const context = element("details", { className: "rules-core-context-disclosure" });
+        const contextBody = element("div", { className: "rules-core-context-disclosure-body" });
+        contextBody.append(definitionList([
+            ["Entity ID", entity.entityId],
+            ["Package", `${entity.packageDisplayName} (${entity.packageKey})`],
+            ["Source code", entity.sourceCode],
+            ["Format", entity.editionDisplayName],
+            ["Revision", `#${entity.revisionNumber}`],
+            ["Imported", formatDate(entity.importedAt)]
+        ]));
+        if (entity.entityType === "monster") contextBody.append(renderIntegrationPayloadButton(entity));
+        context.append(element("summary", { text: "Source provenance and integration details" }), contextBody);
+        container.append(context);
 
-        const raw = element("details", { className: "card card-body" });
-        raw.append(
-            element("summary", { className: "fw-semibold", text: "Raw immutable source document" }),
-            element("div", { className: "pt-3" }, codeBlock(entity.document)));
-        container.append(raw);
+        const native = element("details", { className: "card card-body mb-3" });
+        native.append(
+            element("summary", { className: "fw-semibold", text: "Source-native document" }),
+            element("p", {
+                className: "small text-body-secondary mt-3 mb-2",
+                text: "This is the immutable source-native record used for native revision identity."
+            }),
+            codeBlock(nativeDocument));
+        container.append(native);
+
+        const mechanical = element("details", { className: "card card-body" });
+        mechanical.append(
+            element("summary", { className: "fw-semibold", text: "Rules Core mechanical document" }),
+            element("p", {
+                className: "small text-body-secondary mt-3 mb-2",
+                text: "This translated rule-bearing representation drives the stat block and Rules Layer without replacing the source-native record."
+            }),
+            codeBlock(entity.document));
+        container.append(mechanical);
+        presentFragment(app, container);
     } catch (error) {
         clear(container);
         container.append(alertNode("danger", describeError(error)));
+        presentFragment(app, container);
     }
 }
 
-function renderMonsterPanel(entity) {
-    const stats = extractMonsterStats(entity.document);
+function renderIntegrationPayloadButton(entity) {
     const payload = {
         sourceEntityId: entity.entityId,
         name: entity.name,
         sourceCode: entity.sourceCode,
-        workKey: entity.workKey,
-        editionKey: entity.editionKey,
-        stats
+        revisionNumber: entity.revisionNumber,
+        document: entity.document
     };
-
-    const card = element("div", { className: "card card-body mb-3 rules-core-monster-card" });
-    card.append(
-        element("div", { className: "d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3" },
-            element("div", {},
-                element("h6", { className: "h5 mb-1", text: "Detected monster stats" }),
-                element("p", {
-                    className: "text-body-secondary mb-0",
-                    text: "Common fields are projected for Block Initiative testing. The immutable source document remains the authority."
-                })),
-            badge(stats.detectedFieldCount ? `${stats.detectedFieldCount} fields` : "Needs parser review", stats.detectedFieldCount ? "success" : "warning")));
-
-    const statGrid = element("div", { className: "rules-core-stat-grid mb-3" });
-    for (const [label, value] of [
-        ["Armor Class", stats.armorClass],
-        ["Hit Points", stats.hitPoints],
-        ["Hit Dice", stats.hitDice],
-        ["Initiative", stats.initiative],
-        ["Speed", stats.speed],
-        ["Challenge", stats.challengeRating]
-    ]) {
-        statGrid.append(metric(label, value ?? "—"));
-    }
-    card.append(statGrid);
-
-    const abilities = ["STR", "DEX", "CON", "INT", "WIS", "CHA"]
-        .map(key => [key, stats.abilities[key]])
-        .filter(([, value]) => value !== null && value !== undefined);
-    if (abilities.length) {
-        const abilityGrid = element("div", { className: "rules-core-ability-grid mb-3" });
-        for (const [label, value] of abilities) abilityGrid.append(metric(label, String(value)));
-        card.append(abilityGrid);
-    }
-
+    const row = element("div", { className: "d-flex flex-wrap align-items-center gap-2 mt-3" });
     const copy = element("button", { type: "button", className: "btn btn-sm btn-outline-primary", text: "Copy beta payload" });
     copy.addEventListener("click", async () => {
         try {
@@ -614,153 +486,17 @@ function renderMonsterPanel(entity) {
             copy.textContent = "Clipboard unavailable";
         }
     });
-    card.append(element("div", { className: "d-flex flex-wrap align-items-center gap-2" },
-        copy,
-        element("span", {
-            className: "small text-body-secondary",
-            text: "API discovery: GET /api/sources/entities?entityType=monster&q=<name>; then GET /api/sources/entities/{entityId}."
-        })));
-    return card;
-}
-
-function extractMonsterStats(document) {
-    const legacyText = normalizeLegacyBody(document?.body);
-    const armorClass = firstDefined(
-        formatArmorClass(document?.ac),
-        matchLegacy(legacyText, ["Armor Class", "AC"]));
-    const hitPoints = firstDefined(
-        formatHitPoints(document?.hp),
-        matchLegacy(legacyText, ["Hit Points", "HP"]));
-    const hitDice = firstDefined(
-        document?.hp?.formula,
-        matchLegacy(legacyText, ["Hit Dice"]));
-    const speed = firstDefined(
-        formatValue(document?.speed),
-        matchLegacy(legacyText, ["Speed"]));
-    const challengeRating = firstDefined(
-        formatChallenge(document?.cr),
-        matchLegacy(legacyText, ["Challenge Rating", "CR"]));
-    const initiative = firstDefined(
-        formatValue(document?.initiative),
-        formatValue(document?.init),
-        matchLegacy(legacyText, ["Initiative", "Init"]),
-        abilityModifier(document?.dex));
-
-    const abilities = {
-        STR: firstDefined(numberOrNull(document?.str), matchLegacyAbility(legacyText, "Str")),
-        DEX: firstDefined(numberOrNull(document?.dex), matchLegacyAbility(legacyText, "Dex")),
-        CON: firstDefined(numberOrNull(document?.con), matchLegacyAbility(legacyText, "Con")),
-        INT: firstDefined(numberOrNull(document?.int), matchLegacyAbility(legacyText, "Int")),
-        WIS: firstDefined(numberOrNull(document?.wis), matchLegacyAbility(legacyText, "Wis")),
-        CHA: firstDefined(numberOrNull(document?.cha), matchLegacyAbility(legacyText, "Cha"))
-    };
-
-    const detectedFieldCount = [armorClass, hitPoints, hitDice, initiative, speed, challengeRating]
-        .filter(value => value !== null && value !== undefined && value !== "").length
-        + Object.values(abilities).filter(value => value !== null && value !== undefined).length;
-
-    return {
-        armorClass,
-        hitPoints,
-        hitDice,
-        initiative,
-        speed,
-        challengeRating,
-        abilities,
-        detectedFieldCount
-    };
-}
-
-function normalizeLegacyBody(body) {
-    if (!body || typeof body !== "string") return "";
-    const withBreaks = body
-        .replace(/<\/(?:p|div|tr|td|th|li|h[1-6])>/gi, "\n")
-        .replace(/<br\s*\/?\s*>/gi, "\n");
-    const wrapper = document.createElement("div");
-    wrapper.innerHTML = withBreaks;
-    return (wrapper.textContent ?? "")
-        .replace(/\r/g, "")
-        .replace(/[ \t]+/g, " ")
-        .replace(/\n+/g, "\n")
-        .trim();
-}
-
-function matchLegacy(text, labels) {
-    if (!text) return null;
-    for (const label of labels) {
-        const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        const match = text.match(new RegExp(`(?:^|\\n|\\s)${escaped}\\s*:?\\s*([^\\n]+)`, "i"));
-        if (match?.[1]) {
-            return match[1]
-                .replace(/\s+(?:Armor Class|AC|Hit Points|HP|Hit Dice|Initiative|Init|Speed|Challenge Rating|CR)\s*:.*$/i, "")
-                .trim();
-        }
-    }
-    return null;
-}
-
-function matchLegacyAbility(text, label) {
-    if (!text) return null;
-    const match = text.match(new RegExp(`\\b${label}\\s*:?\\s*(-?\\d+)`, "i"));
-    return match ? Number(match[1]) : null;
-}
-
-function formatArmorClass(value) {
-    if (Array.isArray(value)) {
-        return value.map(item => typeof item === "object" && item !== null ? item.ac ?? formatValue(item) : item).join(", ");
-    }
-    return formatValue(value);
-}
-
-function formatHitPoints(value) {
-    if (value === null || value === undefined) return null;
-    if (typeof value !== "object") return String(value);
-    if (value.average !== undefined && value.formula) return `${value.average} (${value.formula})`;
-    if (value.average !== undefined) return String(value.average);
-    return formatValue(value);
-}
-
-function formatChallenge(value) {
-    if (value && typeof value === "object" && !Array.isArray(value)) {
-        return firstDefined(value.cr, value.lair, formatValue(value));
-    }
-    return formatValue(value);
-}
-
-function formatValue(value) {
-    if (value === null || value === undefined) return null;
-    if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") return String(value);
-    if (Array.isArray(value)) return value.map(formatValue).filter(Boolean).join(", ");
-    if (typeof value === "object") {
-        return Object.entries(value)
-            .filter(([, candidate]) => candidate !== false && candidate !== null && candidate !== undefined)
-            .map(([key, candidate]) => candidate === true ? key : `${key} ${formatValue(candidate)}`)
-            .join(", ");
-    }
-    return String(value);
-}
-
-function abilityModifier(value) {
-    const number = numberOrNull(value);
-    if (number === null) return null;
-    const modifier = Math.floor((number - 10) / 2);
-    return `${modifier >= 0 ? "+" : ""}${modifier} (from DEX)`;
-}
-
-function numberOrNull(value) {
-    return typeof value === "number" && Number.isFinite(value) ? value : null;
-}
-
-function firstDefined(...values) {
-    return values.find(value => value !== null && value !== undefined && value !== "") ?? null;
+    row.append(copy, element("span", {
+        className: "small text-body-secondary",
+        text: "API discovery: GET /api/sources/entities?entityType=monster&q=<name>; then GET /api/sources/entities/{entityId}."
+    }));
+    return row;
 }
 
 function matchesDefinition(entity, definition) {
     return entity.packageKey === definition.packageKey
-        && entity.workKey === definition.workKey
-        && entity.editionKey === definition.editionKey;
+        && definition.includedSourceCodes.includes(entity.sourceCode);
 }
-
 
 function countLabel(count, capped) {
     return `${count}${capped ? "+" : ""}`;
@@ -794,14 +530,14 @@ function prependRulesLawyerWorkflow(app, container) {
 }
 
 function workflowStep(number, title, description, onClick = null) {
-    const options = {
-        className: `rules-core-workflow-step${onClick ? " rules-core-workflow-step-action" : ""}`
-    };
+    const options = { className: `rules-core-workflow-step${onClick ? " rules-core-workflow-step-action" : ""}` };
     const node = element(onClick ? "button" : "div", onClick ? { ...options, type: "button" } : options,
         element("span", { className: "rules-core-workflow-number", text: number }),
-        element("span", {},
-            element("strong", { text: title }),
-            element("small", { text: description })));
+        element("span", {}, element("strong", { text: title }), element("small", { text: description })));
     if (onClick) node.addEventListener("click", onClick);
     return node;
+}
+
+function presentFragment(app, container) {
+    app.presentRenderedFragment?.(container);
 }
