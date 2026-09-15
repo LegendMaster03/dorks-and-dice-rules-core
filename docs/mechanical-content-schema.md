@@ -85,6 +85,41 @@ Current field mappings intentionally cover only defensible equivalences:
 - ordinary race size, walk speed, and racial `BONUS:STAT` modifiers can map to race-family equivalents when faithful;
 - monster size, recognized creature type, supported movement modes, CR, and descriptions can map directly.
 
+### Direct 3.x competency conversions
+
+PCGen skill records retain their source-native name, entity type, native key, `RawJson`, edition, and provenance. Translation may expose a later canonical competency only for the reviewed direct-conversion table. Each accepted conversion is also recorded under `_rulesCore.competencyConversion`; name similarity alone never creates a conversion.
+
+The current direct skill-to-skill set is:
+
+- `Bluff` -> `Deception`;
+- `Diplomacy` -> `Persuasion`;
+- `Handle Animal` -> `Animal Handling`;
+- `Heal` -> `Medicine`;
+- `Intimidate` -> `Intimidation`;
+- `Knowledge (arcana)` -> `Arcana`;
+- `Knowledge (history)` -> `History`;
+- `Knowledge (nature)` -> `Nature`;
+- `Knowledge (religion)` -> `Religion`;
+- `Sense Motive` -> `Insight`;
+- `Sleight of Hand` -> `Sleight of Hand`;
+- `Survival` -> `Survival`.
+
+The following apply only when the source publication is identified as 3e/3.0:
+
+- `Pick Pocket` -> `Sleight of Hand`;
+- `Wilderness Lore` -> `Survival`;
+- `Alchemy` -> `Alchemist's Supplies`.
+
+The reviewed direct cross-type conversions are:
+
+- `Craft (alchemy)` -> `Alchemist's Supplies`;
+- `Forgery` -> `Forgery Kit`;
+- `Open Lock` -> `Thieves' Tools`, limited to the `open-lock` scope.
+
+The source entity remains a source-native `skill`; cross-type conversion is expressed in translated mechanical content rather than rewriting source identity. For unscoped direct conversions, translated `ContentJson.name` is the later competency name. `Open Lock` is intentionally different: `ContentJson.name` remains `Open Lock`, while `_rulesCore.competencyConversion` records the scoped Thieves' Tools relationship. This prevents a consumer that ignores scope metadata from accidentally granting full Thieves' Tools proficiency.
+
+`Perform` specialties are not collapsed into `Performance`. Other merged, split, partial, or category-changing relationships such as Hide/Move Silently -> Stealth, Listen/Spot -> Perception, Balance/Tumble -> Acrobatics, Climb/Jump/Swim -> Athletics, Ride, Spellcraft, Search, Disable Device, Disguise, Profession, and non-alchemy Craft specialties remain source-native until the reviewed Rules Layer competency hierarchy can represent those relationships without losing information.
+
 PCGen monster race records normally encode **racial modifiers and racial hit-die declarations**, not a final 5e-style stat block. For example, `BONUS:STAT|STR|16`, `BONUS:COMBAT|AC|7|TYPE=NaturalArmor`, and `MONSTERCLASS:Aberration:8` do not by themselves establish the final Strength score, total AC, or HP formula. Rules Core therefore does not fabricate `str`, `ac`, or `hp` from those values. They remain preserved under the Rules Core extension until a translator has enough surrounding 3.x rules context to derive a faithful result.
 
 ## Rules Core extension namespace
@@ -97,12 +132,19 @@ A 3.x rule is not converted into a false 5e mechanic merely to fill a familiar f
     "context": {
       "edition": "3.5e",
       "sourceFormat": "pcgen-data",
-      "nativeEntityType": "race",
-      "translatedEntityType": "monster"
+      "nativeEntityType": "skill",
+      "nativeName": "Bluff"
+    },
+    "competencyConversion": {
+      "relationship": "direct-equivalence",
+      "sourceType": "skill",
+      "sourceName": "Bluff",
+      "targetType": "skill",
+      "targetName": "Deception"
     },
     "pcgen": {
       "unmappedSegments": [
-        { "tag": "MONSTERCLASS", "value": "Aberration:8" }
+        { "tag": "KEYSTAT", "value": "CHA" }
       ]
     }
   }
@@ -111,7 +153,9 @@ A 3.x rule is not converted into a false 5e mechanic merely to fill a familiar f
 
 `_rulesCore.context` is translation/provenance context. It is persisted in `ContentJson` for inspection but is removed by `SourceEntityRevision.GetMechanicalContentJson()` before semantic comparison, additive resolution, patching, or resolved-rule output. It therefore does not make otherwise identical mechanics compare as different rules.
 
-`_rulesCore.pcgen.unmappedSegments` is different: those values represent mechanics that have not been translated into a faithful 5e.tools field. They remain in the rule-bearing view and therefore participate in canonical semantic fingerprints and Rules Layer compatibility decisions.
+`_rulesCore.competencyConversion` is rule-bearing. It survives `GetMechanicalContentJson()` because it defines the reviewed relationship between the source competency and the later competency, including a required scope for scoped tool conversions.
+
+`_rulesCore.pcgen.unmappedSegments` is also rule-bearing: those values represent mechanics that have not been translated into a faithful 5e.tools field. They remain in the rule-bearing view and therefore participate in canonical semantic fingerprints and Rules Layer compatibility decisions.
 
 The extension is subordinate to the complete `RawJson`; it is not a replacement 3.x ontology. Unsupported source fragments and operations remain separate source evidence until a translator can construct a legitimate mechanical entity.
 
@@ -170,6 +214,8 @@ This distinction allows translation logic to improve without falsifying source h
 
 ## Seeding boundary
 
-5e/5.5e and 3e/3.5e bootstrap workflows use source adapters and the same translation/canonical layers as ordinary imports. Rules Core does not require or maintain a global mirror of the complete 5e.tools or PCGen corpus.
+There is no separate developer seeding path for normal 3e, 3.5e, 5e, or 5.5e source ingestion. The ordinary **Add Source** workflow is also the initial seeding workflow.
 
-A one-time developer seeding/import capability may establish source access and canonical identity knowledge. Persistent global responsibility remains source identity/provenance, access, translation, canonical relationships, and Rules Layer consumption. CI uses deterministic local fixtures and never depends on live upstream repositories.
+On the first successful import from a registered trusted source lineage, Rules Core persists reusable canonical recognition metadata. Later imports can reuse that identity knowledge without gaining access to the first user's source package or source bytes. Rules Core does not require or maintain a global mirror of the complete 5e.tools or PCGen corpus.
+
+The reviewed bundled SRD snapshots remain a separate public baseline concern. CI uses deterministic local fixtures and never depends on live upstream repositories.
