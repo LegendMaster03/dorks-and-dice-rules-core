@@ -23,7 +23,7 @@ public sealed class FirstImportSeedIntegrationTests
             var sourceUri = $"https://raw.githubusercontent.com/PCGen/pcgen/master/data/35e/wizards_of_the_coast/seed_{token}_spells.lst";
             var text = string.Join('\n',
             [
-                $"SOURCELONG:Seed Fixture {token}\tSOURCESHORT:S35{token}\tGAMEMODE:35e",
+                $"SOURCELONG:Seed Fixture {token}\tSOURCESHORT:S35{token}",
                 $"Arc Spark {token}\tTYPE:Arcane\tSCHOOL:Evocation\tDESC:Representative source text."
             ]);
 
