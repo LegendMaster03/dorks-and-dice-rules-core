@@ -39,6 +39,7 @@ public sealed class SourceEntitySearchService(RulesCoreDbContext dbContext) : IS
         var sourceEntities = dbContext.SourceEntities
             .AsNoTracking()
             .Include(value => value.Revisions)
+                .ThenInclude(value => value.SourceRepresentation)
             .Include(value => value.SourcePackage)
             .Where(value =>
                 value.Revisions.Any()
@@ -79,6 +80,11 @@ public sealed class SourceEntitySearchService(RulesCoreDbContext dbContext) : IS
                     .OrderByDescending(candidate => candidate.RevisionNumber)
                     .First();
                 var package = value.SourcePackage;
+                var compatibility = CompatibilityIdentity(
+                    package.Key,
+                    package.DisplayName,
+                    value.FormatKey,
+                    revision.SourceRepresentation.OriginIdentity);
                 return new SourceEntitySummary(
                     value.Id,
                     value.EntityType,
@@ -89,14 +95,50 @@ public sealed class SourceEntitySearchService(RulesCoreDbContext dbContext) : IS
                     revision.ImportedAt,
                     package.Key,
                     package.DisplayName,
-                    package.Key,
-                    package.DisplayName,
-                    value.FormatKey,
-                    value.FormatKey);
+                    compatibility.WorkKey,
+                    compatibility.WorkDisplayName,
+                    compatibility.EditionKey,
+                    compatibility.EditionDisplayName);
             })
             .ToArray();
     }
 
+    private static SourceCompatibilityIdentity CompatibilityIdentity(
+        string packageKey,
+        string packageDisplayName,
+        string formatKey,
+        string originIdentity)
+    {
+        var prefix = $"admin:{packageKey}:";
+        if (originIdentity.StartsWith(prefix, StringComparison.Ordinal))
+        {
+            var remainder = originIdentity[prefix.Length..];
+            var separator = remainder.LastIndexOf(':');
+            if (separator > 0 && separator < remainder.Length - 1)
+            {
+                var workKey = remainder[..separator];
+                var editionKey = remainder[(separator + 1)..];
+                return new SourceCompatibilityIdentity(
+                    workKey,
+                    workKey,
+                    editionKey,
+                    editionKey);
+            }
+        }
+
+        return new SourceCompatibilityIdentity(
+            packageKey,
+            packageDisplayName,
+            formatKey,
+            formatKey);
+    }
+
     private static string? NormalizeOptional(string? value) =>
         string.IsNullOrWhiteSpace(value) ? null : value.Trim();
+
+    private sealed record SourceCompatibilityIdentity(
+        string WorkKey,
+        string WorkDisplayName,
+        string EditionKey,
+        string EditionDisplayName);
 }
