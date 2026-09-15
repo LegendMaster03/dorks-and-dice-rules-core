@@ -70,6 +70,9 @@ public sealed class CurrentUserGitHubTreeImportIntegrationTests
                 value => value.AbsolutePath == $"/snapshot-owner/snapshot-repo/{CommitSha}/data/class/class-sorcerer.json");
             Assert.Contains(
                 handler.Requests,
+                value => value.AbsolutePath == $"/snapshot-owner/snapshot-repo/{CommitSha}/data/class/foundry.json");
+            Assert.Contains(
+                handler.Requests,
                 value => value.AbsolutePath == $"/snapshot-owner/snapshot-repo/{CommitSha}/data/generated/generated-class.json");
             Assert.DoesNotContain(
                 handler.Requests,
@@ -129,6 +132,10 @@ public sealed class CurrentUserGitHubTreeImportIntegrationTests
                           "type": "blob"
                         },
                         {
+                          "path": "data/class/foundry.json",
+                          "type": "blob"
+                        },
+                        {
                           "path": "data/generated/generated-class.json",
                           "type": "blob"
                         }
@@ -138,20 +145,17 @@ public sealed class CurrentUserGitHubTreeImportIntegrationTests
             }
 
             if (uri.Host == "raw.githubusercontent.com"
+                && uri.AbsolutePath == $"/snapshot-owner/snapshot-repo/{CommitSha}/data/class/foundry.json")
+            {
+                return Json(request, Encoding.UTF8.GetString(
+                    FiveEToolsFoundryOverlayTests.Artifact("foundry.json").Content));
+            }
+
+            if (uri.Host == "raw.githubusercontent.com"
                 && uri.AbsolutePath == $"/snapshot-owner/snapshot-repo/{CommitSha}/data/class/class-sorcerer.json")
             {
-                return Json(request, """
-                    {
-                      "class": [
-                        {
-                          "name": "Sorcerer",
-                          "source": "PHB",
-                          "edition": "classic",
-                          "page": 99
-                        }
-                      ]
-                    }
-                    """);
+                return Json(request, Encoding.UTF8.GetString(
+                    FiveEToolsFoundryOverlayTests.Artifact("class-sorcerer.json").Content));
             }
 
             if (uri.Host == "raw.githubusercontent.com"

@@ -22,6 +22,16 @@ public static class FiveEToolsSchemaContract
             return null;
         }
 
+        // Foundry companions attach VTT configuration to definitions in other
+        // files. Their class/spell/etc. arrays are partial overlays, not native
+        // entities or revisions (for example, class/foundry.json omits edition).
+        var fileName = Path.GetFileName(relative);
+        if (string.Equals(fileName, "foundry.json", StringComparison.OrdinalIgnoreCase)
+            || fileName.StartsWith("foundry-", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
         if (relative.StartsWith("generated/", StringComparison.OrdinalIgnoreCase)
             && !GeneratedAllowlist.Contains(Path.GetFileName(relative)))
         {
