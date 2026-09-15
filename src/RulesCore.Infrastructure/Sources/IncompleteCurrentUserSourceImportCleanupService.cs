@@ -30,9 +30,17 @@ public sealed class IncompleteCurrentUserSourceImportCleanupService(RulesCoreDbC
         var packageKey = $"user-source-{Fingerprint(Encoding.UTF8.GetBytes($"{userId}\n{originIdentity}"))[..24]}";
 
         var package = await dbContext.SourcePackages
-            .Include(value => value.UserGrants)
             .SingleOrDefaultAsync(value => value.Key == packageKey, cancellationToken);
-        if (package is null || package.UserGrants.Count != 0)
+        if (package is null)
+        {
+            return false;
+        }
+
+        // A completed current-user source is protected by its registration, not merely by
+        // a grant. An interrupted or failed add can leave an orphan grant behind after
+        // partially persisting package/entity state. Treat that package as incomplete so
+        // the next Add attempt starts from a clean source snapshot.
+        if (await HasCompletedRegistrationAsync(package.Id, cancellationToken))
         {
             return false;
         }
@@ -59,6 +67,43 @@ public sealed class IncompleteCurrentUserSourceImportCleanupService(RulesCoreDbC
             packageCreatedAt,
             cancellationToken);
         return true;
+    }
+
+    private async Task<bool> HasCompletedRegistrationAsync(
+        Guid packageId,
+        CancellationToken cancellationToken)
+    {
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere)
+        {
+            await connection.OpenAsync(cancellationToken);
+        }
+
+        try
+        {
+            if (!await RelationExistsAsync(connection, "current_user_source", cancellationToken))
+            {
+                return false;
+            }
+
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT EXISTS (
+                    SELECT 1
+                    FROM current_user_source
+                    WHERE source_package_id = @package_id);
+                """;
+            AddParameter(command, "@package_id", packageId);
+            return Convert.ToBoolean(await command.ExecuteScalarAsync(cancellationToken));
+        }
+        finally
+        {
+            if (openedHere)
+            {
+                await connection.CloseAsync();
+            }
+        }
     }
 
     private async Task<IReadOnlyList<Guid>> ReadCanonicalCandidatesAsync(
