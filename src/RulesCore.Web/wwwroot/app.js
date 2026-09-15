@@ -3,6 +3,7 @@ import { RulesAuthoringApp } from "./authoring.js";
 import { installCampaignBaselineAuthoring } from "./campaign-baseline-authoring.js";
 import { installConceptSourceAuthoring } from "./concept-source-authoring.js";
 import { installHostedSourceAuthoring } from "./hosted-source-authoring.js";
+import { installMechanicalRelationships } from "./mechanical-relationships.js";
 import { installResolvedRulesBrowser } from "./rules-browser.js";
 import { installAdjudicationScopeControl } from "./scope-control.js";
 import { installSemanticComparison } from "./semantic-comparison.js";
@@ -39,6 +40,7 @@ try {
     installResolvedRulesBrowser(app);
     installAdjudicationScopeControl(app);
     installSemanticComparison(app);
+    installMechanicalRelationships(app);
     installConceptSourceAuthoring(app);
     installSourceNormalization(app);
     installSourceRevisionReview(app);
