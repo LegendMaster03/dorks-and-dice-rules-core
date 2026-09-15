@@ -19,7 +19,8 @@ public sealed class RuleBrowserAssetTests
 
         Assert.Contains("[\"monster\", renderMonster]", content, StringComparison.Ordinal);
         Assert.Contains("Legendary Actions", content, StringComparison.Ordinal);
-        Assert.Contains("Saving Throws", content, StringComparison.Ordinal);
+        Assert.Contains("Ability Scores", content, StringComparison.Ordinal);
+        Assert.Contains("abilityDatum(\"Save\"", content, StringComparison.Ordinal);
     }
 
     private static string ReadWebAsset(string filename)
