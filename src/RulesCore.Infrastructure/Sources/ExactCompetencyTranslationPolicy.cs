@@ -120,6 +120,20 @@ internal static class ExactCompetencyTranslationPolicy
         };
     }
 
+    public static string CanonicalSemanticFingerprint(NormalizedSourceRecord record)
+    {
+        ArgumentNullException.ThrowIfNull(record);
+        if (TryReadExactIdentityKey(record.ContentJson, out var identityKey))
+        {
+            return CanonicalSourceIdentity.Fingerprint($"{IdentityVersion}\n{identityKey}");
+        }
+
+        var document = string.IsNullOrWhiteSpace(record.ContentJson)
+            ? record.RawJson
+            : record.ContentJson;
+        return CanonicalSourceIdentity.SemanticFingerprint(document);
+    }
+
     public static bool IsCanonicalTarget(string entityType, string name) =>
         CanonicalTargets.TryGetValue(entityType.Trim(), out var names)
         && names.Contains(name.Trim());
@@ -154,6 +168,41 @@ internal static class ExactCompetencyTranslationPolicy
         targetType = convertedType.Trim();
         targetName = convertedName.Trim();
         return true;
+    }
+
+    private static bool TryReadExactIdentityKey(string? contentJson, out string identityKey)
+    {
+        identityKey = string.Empty;
+        if (string.IsNullOrWhiteSpace(contentJson))
+        {
+            return false;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(contentJson);
+            if (document.RootElement.ValueKind != JsonValueKind.Object
+                || !document.RootElement.TryGetProperty("_rulesCore", out var extension)
+                || extension.ValueKind != JsonValueKind.Object
+                || !extension.TryGetProperty(MarkerProperty, out var identity)
+                || identity.ValueKind != JsonValueKind.Object
+                || !identity.TryGetProperty("version", out var version)
+                || version.ValueKind != JsonValueKind.String
+                || !string.Equals(version.GetString(), IdentityVersion, StringComparison.Ordinal)
+                || !identity.TryGetProperty("key", out var key)
+                || key.ValueKind != JsonValueKind.String
+                || string.IsNullOrWhiteSpace(key.GetString()))
+            {
+                return false;
+            }
+
+            identityKey = key.GetString()!.Trim();
+            return true;
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
     }
 
     private static string? ReadString(JsonObject value, string propertyName) =>
