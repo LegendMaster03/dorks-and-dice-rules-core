@@ -165,9 +165,16 @@ internal static class RulesCoreContentTranslation
         IReadOnlyList<PcGenSegment> segments)
     {
         var mapped = new HashSet<int>();
+        var edition = ResolveEdition(representation, record);
+        var competencyConversion = string.Equals(nativeEntityType, "skill", StringComparison.OrdinalIgnoreCase)
+            ? PcGenCompetencyConversions.Resolve(record.Name, edition)
+            : null;
+        var mechanicalName = competencyConversion is not null && !competencyConversion.PreserveSourceMechanicalName
+            ? competencyConversion.TargetName
+            : record.Name;
         var content = new JsonObject
         {
-            ["name"] = record.Name
+            ["name"] = mechanicalName
         };
         if (!string.IsNullOrWhiteSpace(record.SourceCode))
         {
@@ -201,9 +208,11 @@ internal static class RulesCoreContentTranslation
 
         AddRulesCoreExtensions(
             content,
-            ResolveEdition(representation, record),
+            edition,
             nativeEntityType,
             record.EntityType,
+            record.Name,
+            competencyConversion,
             segments,
             mapped);
 
@@ -597,6 +606,8 @@ internal static class RulesCoreContentTranslation
         string? edition,
         string nativeEntityType,
         string normalizedEntityType,
+        string nativeName,
+        PcGenCompetencyConversion? competencyConversion,
         IReadOnlyList<PcGenSegment> segments,
         ISet<int> mapped)
     {
@@ -619,11 +630,35 @@ internal static class RulesCoreContentTranslation
         {
             context["translatedEntityType"] = normalizedEntityType;
         }
+        if (competencyConversion is not null)
+        {
+            context["nativeName"] = nativeName;
+        }
 
         var extension = new JsonObject
         {
             ["context"] = context
         };
+        if (competencyConversion is not null)
+        {
+            var conversion = new JsonObject
+            {
+                ["relationship"] = competencyConversion.Relationship,
+                ["sourceType"] = "skill",
+                ["sourceName"] = competencyConversion.SourceName,
+                ["targetType"] = competencyConversion.TargetType,
+                ["targetName"] = competencyConversion.TargetName
+            };
+            if (!string.IsNullOrWhiteSpace(competencyConversion.Scope))
+            {
+                conversion["scope"] = competencyConversion.Scope;
+            }
+            if (competencyConversion.PreserveSourceMechanicalName)
+            {
+                conversion["mechanicalNamePreserved"] = true;
+            }
+            extension["competencyConversion"] = conversion;
+        }
         if (unmapped.Length > 0)
         {
             var segmentsJson = new JsonArray();
