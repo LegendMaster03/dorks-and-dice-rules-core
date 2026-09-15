@@ -8,6 +8,9 @@ import {
 
 const DORKS_MODE = "dorks-and-dice";
 const IMPORT_POLL_INTERVAL_MS = 2000;
+const DISMISSED_IMPORT_JOBS_STORAGE_KEY = "rules-core:dismissed-import-jobs:v1";
+const MAX_DISMISSED_IMPORT_JOBS = 100;
+const volatileDismissedImportJobIds = new Set();
 
 export function installSourceAdd(app) {
     app.canAddSource = app.hostContext.siteMode === DORKS_MODE && Boolean(app.session.user);
@@ -124,15 +127,15 @@ async function buildAddSourceCard(app) {
 
             const added = await app.api.addCurrentUserSource(payload);
             if (added?.status === "queued" || added?.status === "running") {
-                result.replaceChildren(alertNode(
+                result.replaceChildren(dismissibleAlertNode(
                     "info",
-                    `${added.displayName} is queued for import. Progress will appear below and Rules Core will continue processing it if you leave this page.`));
+                    `${added.displayName} was queued. Import activity below shows whether it is waiting, running, complete, or needs attention. Rules Core continues processing if you leave this page.`));
             } else {
                 const issues = added?.id
                     ? await loadReconciliationIssues(() =>
                         app.api.getCurrentUserSourceReconciliationIssues(added.id))
                     : [];
-                result.replaceChildren(alertNode(
+                result.replaceChildren(dismissibleAlertNode(
                     issues.length ? "warning" : "success",
                     issues.length
                         ? `${added.displayName} added. Its source material is available, but ${issues.length} canonical reconciliation issue${issues.length === 1 ? "" : "s"} need review.`
@@ -141,7 +144,7 @@ async function buildAddSourceCard(app) {
             if (currentKind === "upload") file.value = "";
             await renderExistingSources(app, existing, result);
         } catch (error) {
-            result.replaceChildren(alertNode("danger", describeError(error)));
+            result.replaceChildren(dismissibleAlertNode("danger", describeError(error)));
         } finally {
             setButtonBusy(addButton, false);
         }
@@ -149,6 +152,22 @@ async function buildAddSourceCard(app) {
 
     await renderExistingSources(app, existing, result);
     return card;
+}
+
+function dismissibleAlertNode(kind, message) {
+    const alert = element("div", {
+        className: `alert alert-${kind} alert-dismissible mb-3`,
+        attributes: { role: "alert" }
+    }, message);
+    const dismiss = element("button", {
+        type: "button",
+        className: "btn-close",
+        ariaLabel: "Dismiss notification",
+        title: "Dismiss notification"
+    });
+    dismiss.addEventListener("click", () => alert.remove());
+    alert.append(dismiss);
+    return alert;
 }
 
 function arrayBufferToBase64(buffer) {
@@ -172,57 +191,55 @@ async function renderExistingSources(app, container, result) {
             await loadReconciliationIssues(() =>
                 app.api.getCurrentUserSourceReconciliationIssues(source.id))
         ])));
+        const sourcesById = new Map(sources.map(source => [source.id, source]));
+        const dismissedJobIds = readDismissedImportJobIds(jobs);
 
         container.replaceChildren();
 
-        const visibleJobs = jobs.filter(job =>
-            job.status !== "completed"
-            || (sourceIssues.get(job.currentUserSourceId)?.length ?? 0) > 0);
+        const visibleJobs = jobs.filter(job => !dismissedJobIds.has(job.id));
         if (!sources.length && !visibleJobs.length) return;
 
         if (visibleJobs.length) {
-            const activity = element("div", { className: "border rounded p-2" },
-                element("div", { className: "small fw-semibold mb-1", text: "Import activity" }));
+            const activeJobs = visibleJobs.filter(job => !isTerminalImportJob(job));
+            const terminalJobs = visibleJobs.filter(isTerminalImportJob);
+            const attentionJobs = terminalJobs.filter(job =>
+                job.status === "failed"
+                || (sourceIssues.get(job.currentUserSourceId)?.length ?? 0) > 0);
+            const finishedJobs = terminalJobs.filter(job => !attentionJobs.includes(job));
+
+            const activity = element("div", {
+                className: "border rounded p-2",
+                attributes: { "aria-live": "polite" }
+            });
+            const headerActions = element("div", {
+                className: "d-flex flex-wrap justify-content-between align-items-start gap-2 mb-1"
+            },
+            element("div", {},
+                element("div", { className: "small fw-semibold", text: "Import activity" }),
+                element("div", {
+                    className: "small text-body-secondary",
+                    text: importActivitySummary(activeJobs.length, attentionJobs.length, finishedJobs.length)
+                })),
+            terminalJobs.length > 1
+                ? buildDismissFinishedButton(terminalJobs, app, container, result)
+                : null);
+            activity.append(
+                headerActions,
+                element("div", {
+                    className: "small text-body-secondary mb-1",
+                    text: "Dismiss hides finished notifications only. It does not cancel imports, remove sources, or erase import history."
+                }));
+
             for (const job of visibleJobs) {
-                const running = job.status === "running";
-                const queued = job.status === "queued";
-                const failed = job.status === "failed";
+                const source = sourcesById.get(job.currentUserSourceId) ?? null;
                 const reconciliationIssues = sourceIssues.get(job.currentUserSourceId) ?? [];
-                const needsReview = job.status === "completed" && reconciliationIssues.length > 0;
-                const label = failed
-                    ? "Import failed"
-                    : needsReview
-                        ? "Needs reconciliation"
-                        : running
-                            ? "Importing"
-                            : "Queued";
-                const metadata = job.operation === "refresh" ? "Web source refresh" : "Web source";
-                activity.append(element("div", {
-                    className: "d-flex flex-wrap justify-content-between align-items-start gap-2 py-2 border-top"
-                },
-                element("div", { className: "flex-grow-1" },
-                    element("div", { className: "fw-semibold", text: job.displayName }),
-                    element("div", {
-                        className: "small text-body-secondary text-break",
-                        text: `${metadata} · ${job.url ?? ""}`
-                    }),
-                    running || queued ? buildProgressView(job) : null,
-                    failed && job.error
-                        ? element("div", { className: "small text-danger mt-1", text: job.error })
-                        : null,
-                    needsReview
-                        ? buildReconciliationIssueView(
-                            reconciliationIssues,
-                            "Import completed and the source material is available. Rules Core could not safely reconcile some canonical identities automatically.")
-                        : null),
-                element("span", {
-                    className: failed
-                        ? "badge text-bg-danger"
-                        : needsReview
-                            ? "badge text-bg-warning"
-                            : "badge text-bg-secondary",
-                    text: label
-                })));
+                activity.append(buildImportJobView(
+                    job,
+                    source,
+                    reconciliationIssues,
+                    app,
+                    container,
+                    result));
             }
             container.append(activity);
         }
@@ -248,12 +265,12 @@ async function renderExistingSources(app, container, result) {
                         setButtonBusy(refresh, true, "Queueing…");
                         try {
                             const job = await app.api.refreshCurrentUserSource(source.id);
-                            result.replaceChildren(alertNode(
+                            result.replaceChildren(dismissibleAlertNode(
                                 "info",
-                                `${job.displayName} refresh queued. Progress will appear above while Rules Core processes it.`));
+                                `${job.displayName} refresh was queued. Import activity above will show when it starts, what stage it is in, and when it finishes.`));
                             await renderExistingSources(app, container, result);
                         } catch (error) {
-                            result.replaceChildren(alertNode("danger", describeError(error)));
+                            result.replaceChildren(dismissibleAlertNode("danger", describeError(error)));
                         } finally {
                             setButtonBusy(refresh, false);
                         }
@@ -291,6 +308,189 @@ async function renderExistingSources(app, container, result) {
         }
     } catch (error) {
         container.replaceChildren(alertNode("warning", `Added sources could not be loaded: ${describeError(error)}`));
+    }
+}
+
+function buildImportJobView(job, source, reconciliationIssues, app, container, result) {
+    const running = job.status === "running";
+    const queued = job.status === "queued";
+    const failed = job.status === "failed";
+    const completed = job.status === "completed";
+    const needsReview = completed && reconciliationIssues.length > 0;
+    const label = failed
+        ? "Import failed"
+        : needsReview
+            ? "Needs reconciliation"
+            : completed
+                ? "Import complete"
+                : running
+                    ? "Importing"
+                    : "Queued";
+    const badgeClass = failed
+        ? "badge text-bg-danger"
+        : needsReview
+            ? "badge text-bg-warning"
+            : completed
+                ? "badge text-bg-success"
+                : running
+                    ? "badge text-bg-primary"
+                    : "badge text-bg-secondary";
+    const metadata = job.operation === "refresh" ? "Web source refresh" : "New Web source";
+    const statusActions = element("div", {
+        className: "d-flex flex-wrap gap-2 align-items-center justify-content-end"
+    },
+    element("span", { className: badgeClass, text: label }));
+
+    if (isTerminalImportJob(job)) {
+        const dismiss = element("button", {
+            type: "button",
+            className: "btn btn-sm btn-outline-secondary",
+            text: "Dismiss",
+            title: "Hide this finished import notification"
+        });
+        dismiss.addEventListener("click", async () => {
+            rememberDismissedImportJobs([job.id]);
+            await renderExistingSources(app, container, result);
+        });
+        statusActions.append(dismiss);
+    }
+
+    return element("div", {
+        className: "d-flex flex-wrap justify-content-between align-items-start gap-2 py-2 border-top"
+    },
+    element("div", { className: "flex-grow-1" },
+        element("div", { className: "fw-semibold", text: job.displayName }),
+        element("div", {
+            className: "small text-body-secondary text-break",
+            text: `${metadata}${job.url ? ` · ${job.url}` : ""}`
+        }),
+        element("div", {
+            className: "small mt-1",
+            text: importStateExplanation(job, source, reconciliationIssues)
+        }),
+        element("div", {
+            className: "small text-body-secondary mt-1",
+            text: importTimingText(job)
+        }),
+        running || queued ? buildProgressView(job) : null,
+        failed && job.error
+            ? element("div", {
+                className: "alert alert-danger py-2 px-3 mt-2 mb-0",
+                attributes: { role: "alert" }
+            },
+            element("div", { className: "small fw-semibold", text: "Import error" }),
+            element("div", { className: "small text-break", text: job.error }))
+            : null,
+        needsReview
+            ? buildReconciliationIssueView(
+                reconciliationIssues,
+                "Import completed and the source material is available. Rules Core could not safely reconcile some canonical identities automatically.")
+            : null),
+    statusActions);
+}
+
+function importStateExplanation(job, source, reconciliationIssues) {
+    if (job.status === "queued") {
+        return "Waiting to start. The background importer has not begun this job yet. You can leave this page without losing the queued import.";
+    }
+    if (job.status === "running") {
+        return "Rules Core is processing this source in the background. You can leave this page without stopping the import.";
+    }
+    if (job.status === "failed") {
+        return job.operation === "refresh"
+            ? "The refresh stopped before completion. The previously imported source remains available; review the error below and retry when ready."
+            : "The source add stopped before completion. Review the error below and retry when ready.";
+    }
+    if (job.status === "completed" && reconciliationIssues.length > 0) {
+        return `Import finished and the source is available. ${reconciliationIssues.length} canonical reconciliation issue${reconciliationIssues.length === 1 ? "" : "s"} still need review.`;
+    }
+    if (job.status === "completed") {
+        return source
+            ? `Import finished. ${source.sourceCodeCount} publication(s) and ${source.entityCount} source record(s) are available.`
+            : "Import finished successfully and the imported source is available.";
+    }
+    return "Rules Core has recorded this import job, but its state is not recognized by this version of the interface.";
+}
+
+function importTimingText(job) {
+    const parts = [`Queued ${formatDate(job.createdAt)}`];
+    if (job.startedAt) {
+        parts.push(`Started ${formatDate(job.startedAt)}`);
+    }
+    if (job.status === "running" && job.progressUpdatedAt) {
+        parts.push(`Last update ${formatDate(job.progressUpdatedAt)}`);
+    }
+    if (job.completedAt) {
+        parts.push(`${job.status === "failed" ? "Stopped" : "Finished"} ${formatDate(job.completedAt)}`);
+    }
+    return parts.join(" · ");
+}
+
+function importActivitySummary(activeCount, attentionCount, finishedCount) {
+    const parts = [];
+    if (activeCount) parts.push(`${activeCount} active`);
+    if (attentionCount) parts.push(`${attentionCount} need${attentionCount === 1 ? "s" : ""} attention`);
+    if (finishedCount) parts.push(`${finishedCount} finished`);
+    return parts.length ? parts.join(" · ") : "No visible import notifications";
+}
+
+function buildDismissFinishedButton(terminalJobs, app, container, result) {
+    const dismiss = element("button", {
+        type: "button",
+        className: "btn btn-sm btn-outline-secondary",
+        text: "Dismiss finished",
+        title: "Hide all finished import notifications"
+    });
+    dismiss.addEventListener("click", async () => {
+        rememberDismissedImportJobs(terminalJobs.map(job => job.id));
+        await renderExistingSources(app, container, result);
+    });
+    return dismiss;
+}
+
+function isTerminalImportJob(job) {
+    return job.status === "completed" || job.status === "failed";
+}
+
+function readDismissedImportJobIds(jobs) {
+    const knownJobIds = new Set(jobs.map(job => job.id));
+    const dismissed = new Set(
+        [...volatileDismissedImportJobIds].filter(id => knownJobIds.has(id)));
+    try {
+        const stored = JSON.parse(window.localStorage.getItem(DISMISSED_IMPORT_JOBS_STORAGE_KEY) ?? "[]");
+        if (Array.isArray(stored)) {
+            for (const id of stored) {
+                if (typeof id === "string" && knownJobIds.has(id)) {
+                    dismissed.add(id);
+                }
+            }
+        }
+    } catch {
+        // Dismissal remains available for this page session when browser storage is unavailable.
+    }
+
+    replaceDismissedImportJobs(dismissed);
+    return dismissed;
+}
+
+function rememberDismissedImportJobs(jobIds) {
+    const dismissed = new Set(volatileDismissedImportJobIds);
+    for (const id of jobIds) {
+        if (typeof id === "string" && id) dismissed.add(id);
+    }
+    replaceDismissedImportJobs(dismissed);
+}
+
+function replaceDismissedImportJobs(jobIds) {
+    const retained = [...jobIds].slice(-MAX_DISMISSED_IMPORT_JOBS);
+    volatileDismissedImportJobIds.clear();
+    for (const id of retained) volatileDismissedImportJobIds.add(id);
+    try {
+        window.localStorage.setItem(
+            DISMISSED_IMPORT_JOBS_STORAGE_KEY,
+            JSON.stringify(retained));
+    } catch {
+        // Session-local dismissal still works through volatileDismissedImportJobIds.
     }
 }
 
@@ -381,6 +581,8 @@ function progressStageLabel(stage, status) {
         case "importing": return "Importing source data";
         case "checking": return "Checking upstream source";
         case "finalizing": return "Finalizing import";
+        case "completed": return "Import complete";
+        case "failed": return "Import stopped";
         default: return status === "queued" ? "Waiting for background importer" : "Processing source";
     }
 }
