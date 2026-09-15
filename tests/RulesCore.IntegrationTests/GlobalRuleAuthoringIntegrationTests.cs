@@ -334,7 +334,7 @@ public sealed class GlobalRuleAuthoringIntegrationTests
                 {
                   "skill": [
                     {
-                      "name": "Arcana",
+                      "name": "Authoring Skill",
                       "source": "{{sourceCode}}",
                       "ability": "int",
                       "marker": "{{marker}}"
