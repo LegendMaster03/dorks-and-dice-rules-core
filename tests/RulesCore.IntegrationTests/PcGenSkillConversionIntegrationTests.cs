@@ -179,56 +179,24 @@ public sealed class PcGenSkillConversionIntegrationTests
         string suffix,
         IReadOnlyList<string> names)
     {
-        var publicationKey = $"pcgen-skill-{suffix}-{token}";
-        var records = names.Select((name, index) => SkillRecord(
-            name,
-            $"pcgen|skill|{suffix}|{token}|{index}",
-            publicationKey,
-            $"data/{(edition == "3e" ? "3e" : "35e")}/example/example_skills.lst"))
-            .ToArray();
-        return new NormalizedSourceRepresentation(
-            PcGenSourceFormatAdapter.Format,
-            new SourceRepresentationArtifact(
-                $"skills-{suffix}-{token}.lst",
-                Encoding.UTF8.GetBytes("# deterministic PCGen skill fixture"),
-                $"test:pcgen-skill-conversions:{suffix}:{token}"),
-            records,
-            [new NormalizedSourcePublication(
-                publicationKey,
-                $"PCGen {edition} Skill Fixture {token}",
-                "Integration Test Press",
-                edition,
-                edition == "3e" ? new DateOnly(2001, 1, 1) : new DateOnly(2006, 1, 1))]);
-    }
-
-    private static NormalizedSourceRecord SkillRecord(
-        string name,
-        string nativeKey,
-        string publicationKey,
-        string path)
-    {
-        var segments = new[]
+        var editionPath = edition == "3e" ? "3e" : "35e";
+        var shortCode = $"SK{suffix}{token}";
+        var lines = new List<string>
         {
-            new { Index = 0, Tag = "KEYSTAT", Value = "INT", Raw = "KEYSTAT:INT" }
+            $"SOURCELONG:PCGen {edition} Skill Fixture {token}\tSOURCESHORT:{shortCode}"
         };
-        return new NormalizedSourceRecord(
-            "skill",
-            name,
-            "3XTEST",
-            nativeKey,
-            JsonSerializer.Serialize(new
-            {
-                format = PcGenSourceFormatAdapter.Format,
-                kind = "record",
-                path,
-                lineNumber = 1,
-                rawLine = name,
-                name,
-                entityType = "skill",
-                segments
-            }),
-            PublicationLocalKey: publicationKey,
-            NativeIdentityJson: JsonSerializer.Serialize(new { key = nativeKey, name }));
+        lines.AddRange(names.Select(name => $"{name}\tKEYSTAT:INT"));
+        var path = $"data/{editionPath}/example/example_skills.lst";
+        var artifact = new SourceRepresentationArtifact(
+            $"skills-{suffix}-{token}.lst",
+            Encoding.UTF8.GetBytes(string.Join('\n', lines)),
+            $"test:pcgen-skill-conversions:{suffix}:{token}#{path}");
+        var representation = new PcGenSourceFormatAdapter().TryRead(artifact);
+        Assert.NotNull(representation);
+        Assert.Equal(names.Count, representation!.Records.Count);
+        Assert.All(representation.Records, record => Assert.Equal("skill", record.EntityType));
+        Assert.Equal(edition, Assert.Single(representation.Publications!).GameEdition);
+        return representation;
     }
 
     private static async Task<SkillRow> ReadSkillAsync(
