@@ -71,7 +71,6 @@ const PRESENTATION_METADATA_FIELDS = new Set([
     "hasFluff",
     "hasFluffImages",
     "tokenUrl",
-    "legendaryGroup",
     "_copy",
     "_versions"
 ]);
@@ -320,6 +319,16 @@ function renderRulesCoreExtensions(extension) {
         }
     }
 
+    const pcgenRemaining = extension.pcgen && typeof extension.pcgen === "object" && !Array.isArray(extension.pcgen)
+        ? Object.entries(extension.pcgen)
+            .filter(([key, value]) => key !== "unmappedSegments" && hasValue(value))
+        : [];
+    if (pcgenRemaining.length) {
+        const section = renderAdditionalMechanics(pcgenRemaining);
+        section.querySelector(".rules-core-monster-section-title").textContent = "Source-Specific Mechanics";
+        sections.push(section);
+    }
+
     const remaining = Object.entries(extension)
         .filter(([key, value]) => !["context", "pcgen", "competencyConversion", "exactCompetencyIdentity"].includes(key)
             && hasValue(value));
@@ -430,9 +439,7 @@ function formatCreatureType(value) {
     if (typeof value === "string") return titleCase(value);
     if (Array.isArray(value)) return value.map(formatCreatureType).filter(Boolean).join(", ");
     if (typeof value === "object") {
-        const base = formatCreatureType(value.type) ?? formatCreatureType(value.name);
-        const tags = Array.isArray(value.tags) ? value.tags.map(formatDetailValue).filter(Boolean) : [];
-        return [base, tags.length ? `(${tags.join(", ")})` : null].filter(Boolean).join(" ") || formatDetailValue(value);
+        return formatCreatureType(value.type) ?? formatCreatureType(value.name) ?? formatDetailValue(value);
     }
     return String(value);
 }
