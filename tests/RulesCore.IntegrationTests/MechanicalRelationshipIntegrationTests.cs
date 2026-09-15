@@ -199,7 +199,6 @@ public sealed class MechanicalRelationshipIntegrationTests
 
     private static async Task DeleteRelationshipRulingsAsync(RulesCoreDbContext db, string actor)
     {
-        await new MechanicalRelationshipService(db).EnsureSchemaAsync();
         await db.Database.ExecuteSqlInterpolatedAsync($$"""
             DELETE FROM rule_mechanical_relationship_ruling
             WHERE created_by_user_id = {{actor}};

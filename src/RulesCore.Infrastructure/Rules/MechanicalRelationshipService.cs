@@ -56,7 +56,6 @@ public sealed class MechanicalRelationshipService(RulesCoreDbContext dbContext)
         var actor = RequireText(actorUserId, nameof(actorUserId), 200);
         var note = NormalizeOptional(request.Note, 2000, nameof(request.Note));
 
-        await EnsureSchemaAsync(cancellationToken);
         await using var transaction = await dbContext.Database.BeginTransactionAsync(
             IsolationLevel.Serializable,
             cancellationToken);
@@ -88,15 +87,11 @@ public sealed class MechanicalRelationshipService(RulesCoreDbContext dbContext)
             cancellationToken);
     }
 
-    public Task EnsureSchemaAsync(CancellationToken cancellationToken = default) =>
-        dbContext.Database.ExecuteSqlRawAsync(SchemaSql, cancellationToken);
-
     private async Task<MechanicalRelationshipRecommendationView> BuildRecommendationAsync(
         MechanicalRelationshipDefinition definition,
         string currentConceptKey,
         CancellationToken cancellationToken)
     {
-        await EnsureSchemaAsync(cancellationToken);
         var references = new[] { definition.Parent }
             .Concat(definition.Components)
             .ToArray();
@@ -284,21 +279,4 @@ public sealed class MechanicalRelationshipService(RulesCoreDbContext dbContext)
         parameter.Value = value;
         command.Parameters.Add(parameter);
     }
-
-    private const string SchemaSql = """
-        CREATE TABLE IF NOT EXISTS rule_mechanical_relationship_ruling (
-            rule_mechanical_relationship_ruling_id uuid NOT NULL,
-            relationship_key varchar(200) NOT NULL,
-            ruling_number integer NOT NULL,
-            resolution_kind varchar(80) NOT NULL,
-            note varchar(2000) NULL,
-            created_by_user_id varchar(200) NOT NULL,
-            created_at timestamp with time zone NOT NULL,
-            CONSTRAINT pk_rule_mechanical_relationship_ruling
-                PRIMARY KEY (rule_mechanical_relationship_ruling_id));
-        CREATE UNIQUE INDEX IF NOT EXISTS ux_rule_mechanical_relationship_ruling_number
-            ON rule_mechanical_relationship_ruling(relationship_key, ruling_number);
-        CREATE INDEX IF NOT EXISTS ix_rule_mechanical_relationship_ruling_latest
-            ON rule_mechanical_relationship_ruling(relationship_key, ruling_number DESC);
-        """;
 }

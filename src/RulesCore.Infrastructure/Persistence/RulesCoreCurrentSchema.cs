@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 namespace RulesCore.Infrastructure.Persistence;
 
 /// <summary>
-/// Brings the source/rules schema to the current canonical-identity shape during normal
-/// application initialization. Service-level schema guards remain idempotent so development
-/// databases created by older feature-branch commits can still be reopened safely.
+/// Brings the source/rules schema to the current canonical-identity and Rules Layer shape
+/// during normal application initialization. The SQL is idempotent so development databases
+/// created by older feature-branch commits can still be reopened safely.
 /// </summary>
 internal static class RulesCoreCurrentSchema
 {
@@ -246,5 +246,20 @@ internal static class RulesCoreCurrentSchema
             ON source_revision_rejection(global_rule_decision_id, source_entity_revision_id);
         CREATE INDEX IF NOT EXISTS ix_source_revision_rejection_revision
             ON source_revision_rejection(source_entity_revision_id);
+
+        CREATE TABLE IF NOT EXISTS rule_mechanical_relationship_ruling (
+            rule_mechanical_relationship_ruling_id uuid NOT NULL,
+            relationship_key varchar(200) NOT NULL,
+            ruling_number integer NOT NULL,
+            resolution_kind varchar(80) NOT NULL,
+            note varchar(2000) NULL,
+            created_by_user_id varchar(200) NOT NULL,
+            created_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_rule_mechanical_relationship_ruling
+                PRIMARY KEY (rule_mechanical_relationship_ruling_id));
+        CREATE UNIQUE INDEX IF NOT EXISTS ux_rule_mechanical_relationship_ruling_number
+            ON rule_mechanical_relationship_ruling(relationship_key, ruling_number);
+        CREATE INDEX IF NOT EXISTS ix_rule_mechanical_relationship_ruling_latest
+            ON rule_mechanical_relationship_ruling(relationship_key, ruling_number DESC);
         """;
 }

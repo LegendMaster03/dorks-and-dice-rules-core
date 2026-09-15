@@ -10,7 +10,7 @@ namespace RulesCore.IntegrationTests;
 public sealed class DeterministicSourceSchemaIntegrationTests
 {
     [Fact]
-    public async Task InitializerCreatesCurrentCanonicalSchemaWithoutServiceSideMigrations()
+    public async Task InitializerCreatesCurrentSchemaWithoutServiceSideMigrations()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
         if (string.IsNullOrWhiteSpace(connectionString)) return;
@@ -36,6 +36,7 @@ public sealed class DeterministicSourceSchemaIntegrationTests
 
             Assert.True(await RelationExistsAsync(db, "canonical_entity"));
             Assert.True(await RelationExistsAsync(db, "source_revision_rejection"));
+            Assert.True(await RelationExistsAsync(db, "rule_mechanical_relationship_ruling"));
             Assert.Equal("YES", await ColumnNullableAsync(
                 db,
                 schema,
@@ -69,6 +70,14 @@ public sealed class DeterministicSourceSchemaIntegrationTests
                 db,
                 schema,
                 "ux_rule_concept_source_binding_concept_canonical_entity"));
+            Assert.True(await IndexExistsAsync(
+                db,
+                schema,
+                "ux_rule_mechanical_relationship_ruling_number"));
+            Assert.True(await IndexExistsAsync(
+                db,
+                schema,
+                "ix_rule_mechanical_relationship_ruling_latest"));
         }
         finally
         {
