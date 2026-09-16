@@ -82,6 +82,10 @@ export class RulesCoreApi {
         return this.backend(`/api/sources/current-user/${encodeURIComponent(currentUserSourceId)}/refresh`, { method: "POST" });
     }
 
+    removeCurrentUserSource(currentUserSourceId) {
+        return this.backend(`/api/sources/current-user/${encodeURIComponent(currentUserSourceId)}`, { method: "DELETE" });
+    }
+
     previewSourceDocument(payload) {
         return this.backend("/api/source-admin/import/preview", { method: "POST", body: payload });
     }
