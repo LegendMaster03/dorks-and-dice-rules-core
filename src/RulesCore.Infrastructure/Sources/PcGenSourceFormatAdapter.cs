@@ -377,7 +377,7 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
             "pcgen-operation",
             Truncate($"{operationKind}: {display}", 300),
             sourceCode,
-            $"pcgen|operation|{CanonicalSourceIdentity.Fingerprint($"{path}\n{rawLine}")[..32]}",
+            $"pcgen|operation|{CanonicalSourceIdentity.Fingerprint($"{path}\n{lineNumber}\n{rawLine}")[..32]}",
             JsonSerializer.Serialize(new
             {
                 format = Format,
@@ -390,7 +390,7 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
                 copyName
             }),
             LocatorKey: BuildLocator(path, lineNumber),
-            NativeIdentityJson: JsonSerializer.Serialize(new { path, operation = operationKind, target, copyName }));
+            NativeIdentityJson: JsonSerializer.Serialize(new { path, lineNumber, operation = operationKind, target, copyName }));
     }
 
     private static NormalizedSourceRecord FragmentRecord(
@@ -403,7 +403,7 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
             "pcgen-fragment",
             Truncate($"PCGen fragment line {lineNumber}", 300),
             sourceCode,
-            $"pcgen|fragment|{CanonicalSourceIdentity.Fingerprint($"{path}\n{rawLine}")[..32]}",
+            $"pcgen|fragment|{CanonicalSourceIdentity.Fingerprint($"{path}\n{lineNumber}\n{rawLine}")[..32]}",
             JsonSerializer.Serialize(new
             {
                 format = Format,
