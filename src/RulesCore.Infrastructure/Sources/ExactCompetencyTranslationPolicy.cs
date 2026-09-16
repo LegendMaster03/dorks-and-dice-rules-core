@@ -7,13 +7,12 @@ namespace RulesCore.Infrastructure.Sources;
 /// <summary>
 /// Applies reviewed competency translations before SourceEntity persistence and canonical
 /// reconciliation. These mappings are identity translations, not Rules Lawyer relationships:
-/// source-native identity remains in RawJson/NativeIdentityJson while the normalized record uses
-/// the later competency name/type.
+/// source-native identity remains in RawJson/NativeIdentityJson, translated mechanics remain in
+/// ContentJson, and the cross-edition canonical identity key stays outside mechanical content.
 /// </summary>
 internal static class ExactCompetencyTranslationPolicy
 {
     public const string IdentityVersion = "rules-core-exact-competency-v1";
-    public const string MarkerProperty = "exactCompetencyIdentity";
 
     private static readonly IReadOnlyDictionary<string, HashSet<string>> CanonicalTargets =
         new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase)
@@ -47,66 +46,65 @@ internal static class ExactCompetencyTranslationPolicy
         ArgumentNullException.ThrowIfNull(representation);
         ArgumentNullException.ThrowIfNull(record);
 
-        if (string.IsNullOrWhiteSpace(record.ContentJson))
-        {
-            return record;
-        }
-
-        JsonObject? content;
-        try
-        {
-            content = JsonNode.Parse(record.ContentJson) as JsonObject;
-        }
-        catch (JsonException)
-        {
-            return record;
-        }
-        if (content is null)
-        {
-            return record;
-        }
-
-        JsonObject? extension = content["_rulesCore"] as JsonObject;
-        extension?.Remove(MarkerProperty);
-
         var targetType = record.EntityType;
         var targetName = record.Name;
-        var exact = false;
+        JsonObject? content = null;
+        JsonObject? extension = null;
 
         if (string.Equals(
                 representation.FormatKey,
                 PcGenSourceFormatAdapter.Format,
                 StringComparison.OrdinalIgnoreCase)
-            && TryReadUnscopedPcGenConversion(extension, out var convertedType, out var convertedName))
+            && !string.IsNullOrWhiteSpace(record.ContentJson))
         {
-            targetType = convertedType;
-            targetName = convertedName;
-            exact = true;
-        }
-        else if (IsCanonicalTarget(record.EntityType, record.Name))
-        {
-            exact = true;
+            try
+            {
+                content = JsonNode.Parse(record.ContentJson) as JsonObject;
+                extension = content?["_rulesCore"] as JsonObject;
+            }
+            catch (JsonException)
+            {
+                content = null;
+                extension = null;
+            }
+
+            if (TryReadUnscopedPcGenConversion(extension, out var convertedType, out var convertedName))
+            {
+                targetType = convertedType;
+                targetName = convertedName;
+            }
         }
 
-        if (!exact)
+        if (!IsCanonicalTarget(targetType, targetName))
         {
-            return extension is null
-                ? record
-                : record with { ContentJson = content.ToJsonString(new JsonSerializerOptions { WriteIndented = false }) };
+            return record;
         }
 
-        extension ??= new JsonObject();
-        content["_rulesCore"] = extension;
-        extension[MarkerProperty] = new JsonObject
+        var canonicalIdentityKey = CanonicalSourceIdentity.OccurrenceKey(targetType, targetName);
+
+        // Native 5e.tools records are already the Rules Core mechanical schema. Identity metadata
+        // must never be injected into ContentJson because doing so would make direct ingestion
+        // lossy. The canonical identity key is carried separately on the normalized record.
+        if (string.Equals(
+                representation.FormatKey,
+                FiveEToolsSourceFormatAdapter.Format,
+                StringComparison.OrdinalIgnoreCase))
         {
-            ["version"] = IdentityVersion,
-            ["key"] = CanonicalSourceIdentity.OccurrenceKey(targetType, targetName),
-            ["entityType"] = targetType,
-            ["name"] = targetName
-        };
+            return record with { CanonicalIdentityKey = canonicalIdentityKey };
+        }
+
+        if (content is null)
+        {
+            return record with
+            {
+                EntityType = targetType,
+                Name = targetName,
+                CanonicalIdentityKey = canonicalIdentityKey
+            };
+        }
 
         if (!string.Equals(targetType, record.EntityType, StringComparison.OrdinalIgnoreCase)
-            && extension["context"] is JsonObject context)
+            && extension?["context"] is JsonObject context)
         {
             context["translatedEntityType"] = targetType;
         }
@@ -116,13 +114,24 @@ internal static class ExactCompetencyTranslationPolicy
         {
             EntityType = targetType,
             Name = targetName,
-            ContentJson = content.ToJsonString(new JsonSerializerOptions { WriteIndented = false })
+            ContentJson = content.ToJsonString(new JsonSerializerOptions { WriteIndented = false }),
+            CanonicalIdentityKey = canonicalIdentityKey
         };
     }
 
     public static bool IsCanonicalTarget(string entityType, string name) =>
         CanonicalTargets.TryGetValue(entityType.Trim(), out var names)
         && names.Contains(name.Trim());
+
+    public static string CanonicalFingerprint(string canonicalIdentityKey)
+    {
+        if (string.IsNullOrWhiteSpace(canonicalIdentityKey))
+        {
+            throw new ArgumentException("Canonical identity key can not be blank.", nameof(canonicalIdentityKey));
+        }
+        return CanonicalSourceIdentity.Fingerprint(
+            $"{IdentityVersion}\n{canonicalIdentityKey.Trim().ToLowerInvariant()}");
+    }
 
     private static bool TryReadUnscopedPcGenConversion(
         JsonObject? extension,
