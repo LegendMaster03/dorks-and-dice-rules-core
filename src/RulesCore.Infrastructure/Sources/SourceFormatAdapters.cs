@@ -220,10 +220,7 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatBatchAdapter
             NativeIdentityJson: JsonSerializer.Serialize(new
             {
                 corpusType = row.CorpusType,
-                id = row.CorpusId,
-                source = row.SourceCode,
-                parentSource = row.ParentSource,
-                edition = row.NativeEdition
+                id = row.CorpusId
             }))).ToArray();
 
         var publications = rows.Select(row => PublicationFromCorpus(row)).ToArray();
@@ -272,7 +269,8 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatBatchAdapter
 
             var name = ReadString(item, "name") ?? $"Section {ordinal + 1}";
             var explicitId = ReadIdentityValue(item);
-            var nativeKey = $"{corpusType}|{corpusId}|{explicitId ?? $"section-{ordinal:D5}"}";
+            var sectionId = explicitId ?? $"section-{ordinal:D5}";
+            var nativeKey = $"{corpusType}|{corpusId}|{sectionId}";
             records.Add(new NormalizedSourceRecord(
                 EntityType: $"{corpusType}-section",
                 Name: name,
@@ -285,10 +283,7 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatBatchAdapter
                 {
                     corpusType,
                     corpusId,
-                    source = corpus.SourceCode,
-                    parentSource = corpus.ParentSource,
-                    id = explicitId,
-                    ordinal
+                    sectionId
                 })));
             ordinal++;
         }
@@ -317,7 +312,6 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatBatchAdapter
     private static IReadOnlyList<NormalizedSourceRecord> ReadNativeRecords(JsonElement root)
     {
         var records = new List<NormalizedSourceRecord>();
-        var duplicateCounts = new Dictionary<string, int>(StringComparer.Ordinal);
 
         foreach (var property in root.EnumerateObject())
         {
@@ -340,29 +334,22 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatBatchAdapter
                 var sourceCode = FiveEToolsDocumentInspector.GetSourceCode(
                     item,
                     FiveEToolsDocumentInspector.AccountSourceFallbackCode);
-                var explicitIdentity = ReadIdentityValue(item);
-                var baseKey = $"{property.Name}|{sourceCode}|{name}|{explicitIdentity ?? string.Empty}";
-                duplicateCounts.TryGetValue(baseKey, out var duplicateOrdinal);
-                duplicateCounts[baseKey] = duplicateOrdinal + 1;
-                var nativeKey = duplicateOrdinal == 0 ? baseKey : $"{baseKey}|duplicate-{duplicateOrdinal}";
+                var nativeIdentity = FiveEToolsNativeIdentity.Create(
+                    property.Name,
+                    item,
+                    name,
+                    sourceCode);
                 var publicationLocalKey = $"source:{sourceCode}";
 
                 records.Add(new NormalizedSourceRecord(
                     EntityType: property.Name,
                     Name: name,
                     SourceCode: sourceCode,
-                    NativeKey: nativeKey,
+                    NativeKey: nativeIdentity.NativeKey,
                     RawJson: item.GetRawText(),
                     LocatorKey: ReadPageLocator(item),
                     PublicationLocalKey: publicationLocalKey,
-                    NativeIdentityJson: JsonSerializer.Serialize(new
-                    {
-                        source = sourceCode,
-                        id = ReadRawIdentity(item, "id"),
-                        uniqueId = ReadRawIdentity(item, "uniqueId"),
-                        parentSource = ReadString(item, "parentSource"),
-                        edition = ReadString(item, "edition")
-                    })));
+                    NativeIdentityJson: nativeIdentity.IdentityJson));
             }
         }
 
@@ -572,20 +559,6 @@ public sealed class FiveEToolsSourceFormatAdapter : ISourceFormatBatchAdapter
         && !string.IsNullOrWhiteSpace(value.GetString())
             ? value.GetString()!.Trim()
             : null;
-
-    private static object? ReadRawIdentity(JsonElement item, string propertyName)
-    {
-        if (!item.TryGetProperty(propertyName, out var value))
-        {
-            return null;
-        }
-        return value.ValueKind switch
-        {
-            JsonValueKind.String => value.GetString(),
-            JsonValueKind.Number => value.GetRawText(),
-            _ => value.GetRawText()
-        };
-    }
 
     private static string? ReadIdentityValue(JsonElement item)
     {
