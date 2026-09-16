@@ -10,7 +10,6 @@ using RulesCore.Application.Hosting;
 using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
-using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.IntegrationTests;
 
@@ -122,17 +121,7 @@ public sealed class CurrentUserSourceRemovalLifecycleIntegrationTests
                 "user-ticket"))
             using (var response = await client.SendAsync(request))
             {
-                if (response.StatusCode != HttpStatusCode.OK)
-                {
-                    var responseBody = await response.Content.ReadAsStringAsync();
-                    await using var diagnosticScope = factory.Services.CreateAsyncScope();
-                    var diagnosticDb = diagnosticScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
-                    var diagnosticRemoval = new CurrentUserSourceRemovalService(diagnosticDb);
-                    var directResult = await diagnosticRemoval.RemoveAsync(userId, first.Id);
-                    Assert.Fail(
-                        $"DELETE returned {(int)response.StatusCode} {response.StatusCode}. " +
-                        $"Response body: {responseBody}. Direct removal returned {directResult}.");
-                }
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             }
 
             using (var request = HostedRequest(HttpMethod.Get, "/api/sources/current-user", "user-ticket"))
