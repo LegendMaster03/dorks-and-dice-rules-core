@@ -143,7 +143,11 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
             }
             else
             {
-                EnsureEntityIdentityMatches(entity!, normalized);
+                var migratedIdentity = EnsureEntityIdentityMatches(entity!, normalized);
+                if (migratedIdentity)
+                {
+                    await dbContext.SaveChangesAsync(cancellationToken);
+                }
             }
 
             var fingerprint = CanonicalJsonFingerprint(normalized.RawJson);
@@ -517,16 +521,34 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
     private static string SemanticDocument(NormalizedSourceRecord record) =>
         string.IsNullOrWhiteSpace(record.ContentJson) ? record.RawJson : record.ContentJson;
 
-    private static void EnsureEntityIdentityMatches(SourceEntity entity, NormalizedSourceRecord record)
+    private static bool EnsureEntityIdentityMatches(SourceEntity entity, NormalizedSourceRecord record)
     {
         if (!string.Equals(entity.EntityType, record.EntityType, StringComparison.Ordinal)
             || !string.Equals(entity.Name, record.Name, StringComparison.Ordinal)
-            || !string.Equals(entity.SourceCode, record.SourceCode, StringComparison.Ordinal)
-            || !JsonEquivalent(entity.NativeIdentityJson, record.NativeIdentityJson))
+            || !string.Equals(entity.SourceCode, record.SourceCode, StringComparison.Ordinal))
         {
             throw new InvalidOperationException(
                 $"Source entity native identity '{entity.NativeKey}' changed immutable identity metadata across representations.");
         }
+
+        if (JsonEquivalent(entity.NativeIdentityJson, record.NativeIdentityJson))
+        {
+            return false;
+        }
+
+        if (string.Equals(entity.FormatKey, FiveEToolsSourceFormatAdapter.Format, StringComparison.Ordinal))
+        {
+            // Before 5e.tools was established as the native Rules Core mechanical schema,
+            // the adapter incorrectly stored edition/parentSource and other non-identity
+            // metadata in NativeIdentityJson. NativeKey is the authoritative 5e.tools UID
+            // for an existing match, so correcting that historical metadata is a schema
+            // migration rather than a native source revision.
+            entity.NativeIdentityJson = record.NativeIdentityJson;
+            return true;
+        }
+
+        throw new InvalidOperationException(
+            $"Source entity native identity '{entity.NativeKey}' changed immutable identity metadata across representations.");
     }
 
     private static void EnsurePackageMatches(
