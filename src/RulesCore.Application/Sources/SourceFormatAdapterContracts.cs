@@ -72,7 +72,14 @@ public sealed record ImportNormalizedSourceRequest(
     string Provider,
     string? License,
     bool IsPublic,
-    NormalizedSourceRepresentation Representation);
+    NormalizedSourceRepresentation Representation)
+{
+    /// <summary>
+    /// Optional advisory progress sink. Implementations must treat reporting failures as
+    /// non-fatal so observability can not corrupt a source import.
+    /// </summary>
+    public Func<CurrentUserSourceImportProgress, CancellationToken, Task>? ProgressReporter { get; init; }
+}
 
 public sealed record ImportedNormalizedPublication(
     Guid CanonicalPublicationId,

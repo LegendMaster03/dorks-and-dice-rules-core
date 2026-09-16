@@ -1,4 +1,3 @@
-using System.Net.Http.Headers;
 using System.Text.Json;
 using RulesCore.Application.Sources;
 
@@ -16,6 +15,7 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
     private readonly string githubPathPrefix = ReadGitHubPathPrefix(sourceUri);
     private int downloadedCandidates;
     private int? totalCandidates;
+    private int pcGenCandidates;
 
     protected override async Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request,
@@ -47,7 +47,9 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
                     "downloading",
                     0,
                     1,
-                    Path.GetFileName(sourceUri.AbsolutePath)),
+                    Path.GetFileName(sourceUri.AbsolutePath),
+                    CurrentItem: Path.GetFileName(sourceUri.AbsolutePath),
+                    FilesDiscovered: 1),
                 cancellationToken);
         }
 
@@ -58,10 +60,7 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
         }
         catch
         {
-            if (isRawCandidate)
-            {
-                await ReportCandidateAttemptAsync(requestUri, cancellationToken);
-            }
+            if (isRawCandidate) await ReportCandidateAttemptAsync(requestUri, cancellationToken);
             throw;
         }
 
@@ -77,10 +76,12 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
         {
             await TryReportAsync(
                 new CurrentUserSourceImportProgress(
-                    "importing",
+                    "parsing",
+                    0,
                     1,
-                    1,
-                    "Normalizing and importing source content"),
+                    "Inspecting source format and parsing source records",
+                    CurrentItem: Path.GetFileName(sourceUri.AbsolutePath),
+                    FilesDiscovered: 1),
                 cancellationToken);
         }
 
@@ -98,9 +99,7 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
             .ToArray();
         var replacement = new ByteArrayContent(bytes);
         foreach (var header in copiedHeaders)
-        {
             replacement.Headers.TryAddWithoutValidation(header.Key, header.Value);
-        }
         response.Content = replacement;
         originalContent.Dispose();
 
@@ -109,47 +108,37 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
             using var document = JsonDocument.Parse(bytes);
             if (!document.RootElement.TryGetProperty("tree", out var entries)
                 || entries.ValueKind != JsonValueKind.Array)
-            {
                 return;
-            }
 
-            var count = entries.EnumerateArray().Count(entry =>
-            {
-                if (!entry.TryGetProperty("type", out var type)
-                    || type.ValueKind != JsonValueKind.String
-                    || !string.Equals(type.GetString(), "blob", StringComparison.Ordinal)
-                    || !entry.TryGetProperty("path", out var pathValue)
-                    || pathValue.ValueKind != JsonValueKind.String)
-                {
-                    return false;
-                }
+            var paths = entries.EnumerateArray()
+                .Where(entry =>
+                    entry.TryGetProperty("type", out var type)
+                    && type.ValueKind == JsonValueKind.String
+                    && string.Equals(type.GetString(), "blob", StringComparison.Ordinal)
+                    && entry.TryGetProperty("path", out var pathValue)
+                    && pathValue.ValueKind == JsonValueKind.String)
+                .Select(entry => entry.GetProperty("path").GetString()!)
+                .Where(path =>
+                    (string.IsNullOrEmpty(githubPathPrefix)
+                        || string.Equals(path, githubPathPrefix, StringComparison.Ordinal)
+                        || path.StartsWith(githubPathPrefix + "/", StringComparison.Ordinal))
+                    && IsCandidatePath(path))
+                .ToArray();
 
-                var path = pathValue.GetString()!;
-                if (!string.IsNullOrEmpty(githubPathPrefix)
-                    && !string.Equals(path, githubPathPrefix, StringComparison.Ordinal)
-                    && !path.StartsWith(githubPathPrefix + "/", StringComparison.Ordinal))
-                {
-                    return false;
-                }
-
-                var extension = Path.GetExtension(path);
-                return string.Equals(extension, ".json", StringComparison.OrdinalIgnoreCase)
-                    || string.Equals(extension, ".pdf", StringComparison.OrdinalIgnoreCase);
-            });
-
-            totalCandidates = count;
+            totalCandidates = paths.Length;
+            pcGenCandidates = paths.Count(path => IsPcGenPath(path));
             await TryReportAsync(
                 new CurrentUserSourceImportProgress(
                     "downloading",
                     0,
-                    count,
-                    count == 1 ? "1 candidate source file" : $"{count} candidate source files"),
+                    paths.Length,
+                    paths.Length == 1 ? "1 candidate source file" : $"{paths.Length} candidate source files",
+                    FilesDiscovered: paths.Length),
                 cancellationToken);
         }
         catch (JsonException)
         {
-            // The source service owns validation of the GitHub response. Progress reporting
-            // must never turn an otherwise useful server error into a different failure.
+            // Source validation owns malformed GitHub responses. Progress must remain advisory.
         }
     }
 
@@ -159,7 +148,7 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
     {
         var current = Interlocked.Increment(ref downloadedCandidates);
         var total = totalCandidates;
-        var detail = requestUri is null
+        var item = requestUri is null
             ? null
             : Uri.UnescapeDataString(requestUri.AbsolutePath.TrimStart('/'));
         await TryReportAsync(
@@ -167,15 +156,23 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
                 "downloading",
                 current,
                 total,
-                detail),
+                item,
+                CurrentItem: item,
+                FilesDiscovered: total),
             cancellationToken);
 
         if (total is > 0 && current >= total.Value)
         {
+            var detail = pcGenCandidates > 0
+                ? $"Parsing {pcGenCandidates} PCGen file{(pcGenCandidates == 1 ? string.Empty : "s")} as one source set"
+                : $"Parsing {total.Value} candidate source file{(total.Value == 1 ? string.Empty : "s")}";
             await TryReportAsync(
                 new CurrentUserSourceImportProgress(
-                    "importing",
-                    Detail: "Normalizing and importing compatible source files"),
+                    "parsing",
+                    0,
+                    total,
+                    detail,
+                    FilesDiscovered: total),
                 cancellationToken);
         }
     }
@@ -194,8 +191,7 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
         }
         catch
         {
-            // Progress is advisory. A transient status-write failure must not corrupt or abort
-            // the source import itself.
+            // Progress is advisory. A status-write failure must not abort the source import.
         }
     }
 
@@ -204,25 +200,31 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
         && string.Equals(uri.Host, "api.github.com", StringComparison.OrdinalIgnoreCase)
         && uri.AbsolutePath.Contains("/git/trees/", StringComparison.OrdinalIgnoreCase);
 
-    private static bool IsGitHubRawCandidate(Uri? uri)
+    private static bool IsGitHubRawCandidate(Uri? uri) =>
+        uri is not null
+        && string.Equals(uri.Host, "raw.githubusercontent.com", StringComparison.OrdinalIgnoreCase)
+        && IsCandidatePath(uri.AbsolutePath);
+
+    private static bool IsCandidatePath(string path)
     {
-        if (uri is null
-            || !string.Equals(uri.Host, "raw.githubusercontent.com", StringComparison.OrdinalIgnoreCase))
-        {
-            return false;
-        }
-        var extension = Path.GetExtension(uri.AbsolutePath);
+        var extension = Path.GetExtension(path);
         return string.Equals(extension, ".json", StringComparison.OrdinalIgnoreCase)
-            || string.Equals(extension, ".pdf", StringComparison.OrdinalIgnoreCase);
+            || string.Equals(extension, ".pdf", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(extension, ".pcc", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(extension, ".lst", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsPcGenPath(string path)
+    {
+        var extension = Path.GetExtension(path);
+        return string.Equals(extension, ".pcc", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(extension, ".lst", StringComparison.OrdinalIgnoreCase);
     }
 
     private static string ReadGitHubPathPrefix(Uri sourceUri)
     {
         if (!string.Equals(sourceUri.Host, "github.com", StringComparison.OrdinalIgnoreCase))
-        {
             return string.Empty;
-        }
-
         var segments = sourceUri.AbsolutePath
             .Trim('/')
             .Split('/', StringSplitOptions.RemoveEmptyEntries)
@@ -230,9 +232,7 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
             .ToArray();
         if (segments.Length <= 4
             || !string.Equals(segments[2], "tree", StringComparison.OrdinalIgnoreCase))
-        {
             return string.Empty;
-        }
         return string.Join('/', segments.Skip(4));
     }
 }

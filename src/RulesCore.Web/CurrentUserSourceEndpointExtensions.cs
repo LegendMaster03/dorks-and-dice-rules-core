@@ -223,6 +223,49 @@ public static class CurrentUserSourceEndpointExtensions
                     statusCode: StatusCodes.Status409Conflict);
             }
         });
+
+        app.MapDelete("/api/sources/current-user/{currentUserSourceId:guid}", async (
+            Guid currentUserSourceId,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            ISourceGrantService grants,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireSignedInDorksAndDiceAccount(
+                httpContext,
+                out var authenticationContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            try
+            {
+                var removal = new CurrentUserSourceRemovalService(dbContext, grants);
+                var removed = await removal.RemoveAsync(
+                    authenticationContext!.User.Id,
+                    currentUserSourceId,
+                    cancellationToken);
+                if (!removed)
+                {
+                    return Results.NotFound();
+                }
+
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(new { removed = true });
+            }
+            catch (ArgumentException exception)
+            {
+                return InvalidSource(exception.Message);
+            }
+            catch (InvalidOperationException exception)
+            {
+                return Results.Problem(
+                    title: "Source could not be removed",
+                    detail: exception.Message,
+                    statusCode: StatusCodes.Status409Conflict);
+            }
+        });
     }
 
     private static IResult? RequireSignedInDorksAndDiceAccount(

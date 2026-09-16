@@ -20,10 +20,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
             while (!stoppingToken.IsCancellationRequested)
             {
                 var processedImportJob = await ProcessNextImportJobAsync(stoppingToken);
-                if (processedImportJob)
-                {
-                    continue;
-                }
+                if (processedImportJob) continue;
 
                 if (DateTimeOffset.UtcNow >= nextRefreshSweep)
                 {
@@ -47,15 +44,33 @@ internal sealed class CurrentUserSourceRefreshBackground(
         {
             await using var scope = scopeFactory.CreateAsyncScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
-            var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
+            var legacyImporter = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
+            var normalizedImporter = scope.ServiceProvider.GetRequiredService<INormalizedSourceImportService>();
+            var adapters = scope.ServiceProvider.GetRequiredService<ISourceFormatAdapterRegistry>();
             var grants = scope.ServiceProvider.GetRequiredService<ISourceGrantService>();
             var jobs = new CurrentUserSourceImportJobService(dbContext);
 
             job = await jobs.ClaimNextAsync(stoppingToken);
-            if (job is null)
+            if (job is null) return false;
+
+            var sourceUri = new Uri(job.Url, UriKind.Absolute);
+            using var httpClient = new HttpClient(new CurrentUserSourceProgressHttpHandler(
+                sourceUri,
+                (progress, cancellationToken) =>
+                    jobs.UpdateProgressAsync(job.Id, progress, cancellationToken)))
             {
-                return false;
-            }
+                Timeout = TimeSpan.FromMinutes(2)
+            };
+            var progressImporter = new ProgressReportingNormalizedSourceImportService(
+                normalizedImporter,
+                (progress, cancellationToken) =>
+                    jobs.UpdateProgressAsync(job.Id, progress, cancellationToken));
+            var sourceService = new CurrentUserSourceService(
+                dbContext,
+                progressImporter,
+                adapters,
+                grants,
+                httpClient);
 
             CurrentUserSourceView? source;
             if (string.Equals(
@@ -73,13 +88,9 @@ internal sealed class CurrentUserSourceRefreshBackground(
                     job.Id,
                     new CurrentUserSourceImportProgress(
                         "checking",
-                        Detail: "Checking the upstream source version"),
+                        Detail: "Checking the current source registration before refresh"),
                     stoppingToken);
-                var refresh = new CurrentUserWebSourceRefreshService(
-                    dbContext,
-                    importer,
-                    grants);
-                source = await refresh.RefreshOneAsync(
+                source = await sourceService.RefreshAsync(
                     job.UserId,
                     job.CurrentUserSourceId.Value,
                     stoppingToken);
@@ -88,6 +99,24 @@ internal sealed class CurrentUserSourceRefreshBackground(
                     throw new KeyNotFoundException(
                         "The Web source was removed before its queued refresh could run.");
                 }
+
+                await jobs.UpdateProgressAsync(
+                    job.Id,
+                    new CurrentUserSourceImportProgress(
+                        "finalizing",
+                        source.EntityCount,
+                        source.EntityCount,
+                        "Recording refreshed source registration and upstream version",
+                        EntitiesPersisted: source.EntityCount),
+                    stoppingToken);
+                var refreshMetadata = new CurrentUserWebSourceRefreshService(
+                    dbContext,
+                    legacyImporter,
+                    grants);
+                await refreshMetadata.RecordInitialVersionAsync(
+                    source.Id,
+                    job.Url,
+                    stoppingToken);
             }
             else
             {
@@ -112,19 +141,6 @@ internal sealed class CurrentUserSourceRefreshBackground(
                         stoppingToken);
                 }
 
-                var sourceUri = new Uri(job.Url, UriKind.Absolute);
-                using var httpClient = new HttpClient(new CurrentUserSourceProgressHttpHandler(
-                    sourceUri,
-                    (progress, cancellationToken) =>
-                        jobs.UpdateProgressAsync(job.Id, progress, cancellationToken)))
-                {
-                    Timeout = TimeSpan.FromMinutes(2)
-                };
-                var sourceService = new CurrentUserSourceService(
-                    dbContext,
-                    importer,
-                    grants,
-                    httpClient);
                 source = await sourceService.AddAsync(
                     job.UserId,
                     new AddCurrentUserSourceRequest(
@@ -136,13 +152,16 @@ internal sealed class CurrentUserSourceRefreshBackground(
                     job.Id,
                     new CurrentUserSourceImportProgress(
                         "finalizing",
-                        Detail: "Recording source registration and upstream version"),
+                        source.EntityCount,
+                        source.EntityCount,
+                        "Recording source registration, access grant, and upstream version",
+                        EntitiesPersisted: source.EntityCount),
                     stoppingToken);
-                var refresh = new CurrentUserWebSourceRefreshService(
+                var refreshMetadata = new CurrentUserWebSourceRefreshService(
                     dbContext,
-                    importer,
+                    legacyImporter,
                     grants);
-                await refresh.RecordInitialVersionAsync(
+                await refreshMetadata.RecordInitialVersionAsync(
                     source.Id,
                     job.Url,
                     stoppingToken);
@@ -153,10 +172,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
         }
         catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
         {
-            if (job is not null)
-            {
-                await RecordInterruptedJobAsync(job.Id);
-            }
+            if (job is not null) await RecordInterruptedJobAsync(job.Id);
             throw;
         }
         catch (Exception exception)
@@ -182,10 +198,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
                         try
                         {
                             var cleanup = new IncompleteCurrentUserSourceImportCleanupService(dbContext);
-                            await cleanup.CleanupWebAddAsync(
-                                job.UserId,
-                                job.Url,
-                                stoppingToken);
+                            await cleanup.CleanupWebAddAsync(job.UserId, job.Url, stoppingToken);
                         }
                         catch (Exception cleanupException)
                         {
@@ -216,10 +229,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
             var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
             var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
             var grants = scope.ServiceProvider.GetRequiredService<ISourceGrantService>();
-            var refresh = new CurrentUserWebSourceRefreshService(
-                dbContext,
-                importer,
-                grants);
+            var refresh = new CurrentUserWebSourceRefreshService(dbContext, importer, grants);
             await refresh.RefreshDueAsync(stoppingToken);
         }
         catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
@@ -228,9 +238,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
         }
         catch (Exception exception)
         {
-            logger.LogError(
-                exception,
-                "Automatic Rules Core Web source refresh failed.");
+            logger.LogError(exception, "Automatic Rules Core Web source refresh failed.");
         }
     }
 

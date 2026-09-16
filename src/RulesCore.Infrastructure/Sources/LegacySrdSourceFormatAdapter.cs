@@ -7,9 +7,9 @@ using RulesCore.Application.Sources;
 namespace RulesCore.Infrastructure.Sources;
 
 /// <summary>
-/// Reads the reviewed 3e/3.5e SRD snapshot representation without pretending that the
-/// legacy records are native 5e.tools entities. Native evidence stays in RawJson while
-/// mechanical translation is delegated to the legacy SRD translator below.
+/// Reads the reviewed 3e/3.5e SRD maintenance snapshots as their own native format.
+/// RawJson preserves the source record exactly; ContentJson is Rules Core's mechanical
+/// translation and may evolve without creating a native source revision.
 /// </summary>
 public sealed class LegacySrdSourceFormatAdapter : ISourceFormatAdapter
 {
@@ -27,56 +27,45 @@ public sealed class LegacySrdSourceFormatAdapter : ISourceFormatAdapter
     public NormalizedSourceRepresentation? TryRead(SourceRepresentationArtifact artifact)
     {
         ArgumentNullException.ThrowIfNull(artifact);
-        if (!IsCandidate(artifact.FileName, artifact.Content) || artifact.Content.Length == 0)
-        {
+        if (artifact.Content.Length == 0 || !IsCandidate(artifact.FileName, artifact.Content))
             return null;
-        }
 
-        using JsonDocument document = JsonDocument.Parse(artifact.Content);
-        if (document.RootElement.ValueKind != JsonValueKind.Object)
-        {
-            return null;
-        }
+        using var document = JsonDocument.Parse(artifact.Content);
+        if (document.RootElement.ValueKind != JsonValueKind.Object) return null;
 
         var records = new List<NormalizedSourceRecord>();
-        var duplicateCounts = new Dictionary<string, int>(StringComparer.Ordinal);
-        foreach (var property in document.RootElement.EnumerateObject())
+        var duplicates = new Dictionary<string, int>(StringComparer.Ordinal);
+        foreach (var group in document.RootElement.EnumerateObject())
         {
-            if (property.Value.ValueKind != JsonValueKind.Array)
-            {
-                continue;
-            }
-
-            foreach (var item in property.Value.EnumerateArray())
+            if (group.Value.ValueKind != JsonValueKind.Array) continue;
+            foreach (var item in group.Value.EnumerateArray())
             {
                 if (item.ValueKind != JsonValueKind.Object
-                    || !TryReadRequiredString(item, "name", out var name)
-                    || !TryReadRequiredString(item, "source", out var source)
-                    || !TryReadRequiredString(item, "uniqueId", out var uniqueId)
-                    || !TryReadRequiredString(item, "documentUri", out _)
+                    || !TryRequiredString(item, "name", out var name)
+                    || !TryRequiredString(item, "source", out var source)
+                    || !TryRequiredString(item, "uniqueId", out var uniqueId)
+                    || !TryRequiredString(item, "documentUri", out _)
                     || !item.TryGetProperty("body", out var body)
                     || body.ValueKind != JsonValueKind.String)
                 {
                     continue;
                 }
 
-                // Preserve the native key and native identity produced by the former
-                // pseudo-5e.tools path so existing source_entity rows can be migrated in
-                // place instead of becoming duplicate source identities.
-                var baseKey = $"{property.Name}|{source}|{name}|{uniqueId}";
-                duplicateCounts.TryGetValue(baseKey, out var duplicateOrdinal);
-                duplicateCounts[baseKey] = duplicateOrdinal + 1;
+                // This key intentionally matches the former pseudo-5e.tools import so known
+                // bootstrap entities can be migrated in place without changing source IDs.
+                var baseKey = $"{group.Name}|{source}|{name}|{uniqueId}";
+                duplicates.TryGetValue(baseKey, out var duplicateOrdinal);
+                duplicates[baseKey] = duplicateOrdinal + 1;
                 var nativeKey = duplicateOrdinal == 0
                     ? baseKey
                     : $"{baseKey}|duplicate-{duplicateOrdinal}";
                 var rawJson = item.GetRawText();
-                var record = new NormalizedSourceRecord(
-                    property.Name,
+                records.Add(new NormalizedSourceRecord(
+                    group.Name,
                     name,
                     source,
                     nativeKey,
                     rawJson,
-                    LocatorKey: null,
                     PublicationLocalKey: $"source:{source}",
                     NativeIdentityJson: JsonSerializer.Serialize(new
                     {
@@ -88,20 +77,16 @@ public sealed class LegacySrdSourceFormatAdapter : ISourceFormatAdapter
                     }))
                 {
                     ContentJson = LegacySrdMechanicalTranslator.Translate(
-                        property.Name,
+                        group.Name,
                         name,
                         source,
                         rawJson,
                         InferEdition(source))
-                };
-                records.Add(record);
+                });
             }
         }
 
-        if (records.Count == 0)
-        {
-            return null;
-        }
+        if (records.Count == 0) return null;
 
         var publications = records
             .Select(value => value.SourceCode)
@@ -114,6 +99,8 @@ public sealed class LegacySrdSourceFormatAdapter : ISourceFormatAdapter
                 GameEdition: InferEdition(source),
                 ExternalIdentifiers: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
                 {
+                    // Retained because existing canonical publication evidence used this
+                    // stable source-code identifier before the format migration.
                     ["5etools-source-code"] = source
                 }))
             .ToArray();
@@ -138,10 +125,10 @@ public sealed class LegacySrdSourceFormatAdapter : ISourceFormatAdapter
         _ => null
     };
 
-    private static bool TryReadRequiredString(JsonElement value, string name, out string result)
+    private static bool TryRequiredString(JsonElement value, string propertyName, out string result)
     {
         result = string.Empty;
-        if (!value.TryGetProperty(name, out var property)
+        if (!value.TryGetProperty(propertyName, out var property)
             || property.ValueKind != JsonValueKind.String
             || string.IsNullOrWhiteSpace(property.GetString()))
         {
@@ -152,30 +139,25 @@ public sealed class LegacySrdSourceFormatAdapter : ISourceFormatAdapter
     }
 }
 
-/// <summary>
-/// Backend-only translation for reviewed legacy SRD records. The common mechanical
-/// document receives only meaning-preserving fields. 3.x-specific mechanics remain
-/// explicit beneath _rulesCore.threeX rather than being converted into fake 5e rules.
-/// </summary>
 internal static class LegacySrdMechanicalTranslator
 {
     private static readonly Regex LabelLine = new(
         @"(?m)^(?<label>[A-Za-z][A-Za-z /&()\-]{1,48}):\s*(?<value>[^\r\n]*)$",
         RegexOptions.Compiled | RegexOptions.CultureInvariant);
-    private static readonly Regex SignedNumber = new(
-        @"(?<!\w)(?<value>[+-]?\d+)(?!\w)",
-        RegexOptions.Compiled | RegexOptions.CultureInvariant);
-    private static readonly Regex HitPointsInDice = new(
-        @"^(?<formula>\d+d\d+(?:[+-]\d+)?)\s*\((?<average>\d+)\s*hp\)",
-        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
-    private static readonly Regex SpeedPart = new(
-        @"(?:(?<mode>burrow|climb|fly|swim)\s+)?(?<feet>\d+)\s*ft\.?",
-        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
     private static readonly Regex AbilityPair = new(
         @"\b(?<ability>Str|Dex|Con|Int|Wis|Cha)\s+(?<score>\d+|—|-)\b",
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
     private static readonly Regex SavePair = new(
         @"\b(?<save>Fort|Ref|Will)\s+(?<bonus>[+-]?\d+)\b",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+    private static readonly Regex SignedNumber = new(
+        @"(?<!\w)(?<value>[+-]?\d+)(?!\w)",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant);
+    private static readonly Regex HitDiceWithAverage = new(
+        @"(?<formula>\d+d\d+(?:\s*[+-]\s*\d+)?)\s*\((?<average>\d+)\s*hp\)",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+    private static readonly Regex SpeedPart = new(
+        @"(?:(?<mode>burrow|climb|fly|swim)\s+)?(?<feet>\d+)\s*ft\.?",
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
     private static readonly Regex SkillPair = new(
         @"(?<name>[A-Za-z][A-Za-z '\-()]+?)\s+(?<bonus>[+-]\d+)(?:,|$)",
@@ -192,11 +174,13 @@ internal static class LegacySrdMechanicalTranslator
             ["Gargantuan"] = "G"
         };
 
+    // Only creature types with a faithful common 5e-derived type field are mapped here.
+    // 3.x-only types such as Animal, Outsider, Monstrous Humanoid, and Vermin remain in
+    // _rulesCore.threeX.creatureType instead of being semantically rewritten.
     private static readonly HashSet<string> CommonCreatureTypes = new(StringComparer.OrdinalIgnoreCase)
     {
-        "aberration", "animal", "beast", "celestial", "construct", "dragon", "elemental",
-        "fey", "fiend", "giant", "humanoid", "monstrous humanoid", "ooze", "outsider",
-        "plant", "undead", "vermin"
+        "aberration", "beast", "celestial", "construct", "dragon", "elemental",
+        "fey", "fiend", "giant", "humanoid", "monstrosity", "ooze", "plant", "undead"
     };
 
     public static string Translate(
@@ -206,20 +190,17 @@ internal static class LegacySrdMechanicalTranslator
         string rawJson,
         string? edition)
     {
-        using var sourceDocument = JsonDocument.Parse(rawJson);
-        var root = sourceDocument.RootElement;
-        var body = ReadString(root, "body") ?? string.Empty;
+        using var document = JsonDocument.Parse(rawJson);
+        var body = ReadString(document.RootElement, "body") ?? string.Empty;
         var content = new JsonObject
         {
             ["name"] = name,
             ["source"] = sourceCode
         };
-        if (!string.IsNullOrWhiteSpace(body))
-        {
-            content["entries"] = new JsonArray(body);
-        }
+        if (!string.IsNullOrWhiteSpace(body)) content["entries"] = new JsonArray(body);
 
         var fields = ParseFields(body);
+        var threeX = new JsonObject();
         var extension = new JsonObject
         {
             ["context"] = new JsonObject
@@ -227,24 +208,14 @@ internal static class LegacySrdMechanicalTranslator
                 ["sourceFormat"] = LegacySrdSourceFormatAdapter.Format,
                 ["nativeEntityType"] = entityType,
                 ["edition"] = edition
-            }
+            },
+            ["threeX"] = threeX
         };
-        var threeX = new JsonObject();
-        extension["threeX"] = threeX;
 
-        if (IsMonster(entityType))
-        {
-            TranslateMonster(content, threeX, fields);
-        }
-        else
-        {
-            PreserveLabeledMechanics(threeX, fields);
-        }
+        if (IsMonster(entityType)) TranslateMonster(content, threeX, fields);
+        else PreserveFields(threeX, fields);
 
-        if (!string.IsNullOrWhiteSpace(body))
-        {
-            threeX["sourceBody"] = body;
-        }
+        if (!string.IsNullOrWhiteSpace(body)) threeX["sourceBody"] = body;
         content["_rulesCore"] = extension;
         return content.ToJsonString(new JsonSerializerOptions { WriteIndented = false });
     }
@@ -260,64 +231,60 @@ internal static class LegacySrdMechanicalTranslator
         }
         else
         {
-            if (TryField(fields, out var size, "Size"))
-            {
-                MapSize(content, threeX, size);
-            }
-            if (TryField(fields, out var type, "Type"))
-            {
-                MapType(content, threeX, type);
-            }
+            if (TryField(fields, out var size, "Size")) MapSize(content, threeX, size);
+            if (TryField(fields, out var type, "Type")) MapType(content, threeX, type);
+        }
+
+        CopyField(threeX, fields, "Alignment", "alignment");
+        if (TryField(fields, out var alignment, "Alignment")) content["alignment"] = new JsonArray(alignment);
+
+        if (TryField(fields, out var armorClass, "Armor Class", "AC"))
+        {
+            threeX["armorClass"] = armorClass;
+            if (TryFirstInt(armorClass, out var ac)) content["ac"] = new JsonArray(ac);
         }
 
         if (TryField(fields, out var hitDice, "Hit Dice", "Hit Die"))
         {
             threeX["hitDice"] = hitDice;
-            var hitPoints = HitPointsInDice.Match(hitDice);
-            if (hitPoints.Success
-                && int.TryParse(hitPoints.Groups["average"].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var average))
+            var match = HitDiceWithAverage.Match(hitDice);
+            if (match.Success
+                && int.TryParse(match.Groups["average"].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var hp))
             {
                 content["hp"] = new JsonObject
                 {
-                    ["average"] = average,
-                    ["formula"] = hitPoints.Groups["formula"].Value
+                    ["average"] = hp,
+                    ["formula"] = Regex.Replace(match.Groups["formula"].Value, @"\s+", string.Empty)
                 };
             }
         }
-        if (TryField(fields, out var hitPointsText, "Hit Points", "HP")
-            && TryFirstInt(hitPointsText, out var explicitHitPoints))
+        if (TryField(fields, out var explicitHpText, "Hit Points", "HP"))
         {
-            content["hp"] = new JsonObject { ["average"] = explicitHitPoints };
-            threeX["hitPoints"] = hitPointsText;
-        }
-
-        if (TryField(fields, out var armorClass, "Armor Class", "AC"))
-        {
-            threeX["armorClass"] = armorClass;
-            if (TryFirstInt(armorClass, out var armorClassValue))
-            {
-                content["ac"] = new JsonArray(armorClassValue);
-            }
+            threeX["hitPoints"] = explicitHpText;
+            if (TryFirstInt(explicitHpText, out var hp)) content["hp"] = new JsonObject { ["average"] = hp };
         }
 
         if (TryField(fields, out var initiative, "Initiative")) threeX["initiative"] = initiative;
         if (TryField(fields, out var movement, "Speed", "Movement"))
         {
             threeX["speed"] = movement;
-            var speed = ParseSpeed(movement);
-            if (speed.Count > 0) content["speed"] = speed;
+            var normalizedSpeed = ParseSpeed(movement);
+            if (normalizedSpeed.Count > 0) content["speed"] = normalizedSpeed;
         }
 
         if (TryField(fields, out var abilities, "Abilities", "Ability Scores"))
         {
             threeX["abilities"] = abilities;
-            foreach (Match match in AbilityPair.Matches(abilities))
+            MapAbilityScores(content, abilities);
+        }
+        else
+        {
+            var joined = string.Join(" ", new[]
             {
-                if (int.TryParse(match.Groups["score"].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var score))
-                {
-                    content[match.Groups["ability"].Value.ToLowerInvariant()] = score;
-                }
-            }
+                ReadField(fields, "Str"), ReadField(fields, "Dex"), ReadField(fields, "Con"),
+                ReadField(fields, "Int"), ReadField(fields, "Wis"), ReadField(fields, "Cha")
+            }.Where(value => !string.IsNullOrWhiteSpace(value)));
+            if (!string.IsNullOrWhiteSpace(joined)) MapAbilityScores(content, joined);
         }
 
         if (TryField(fields, out var saves, "Saves", "Saving Throws"))
@@ -326,41 +293,33 @@ internal static class LegacySrdMechanicalTranslator
             var saveObject = new JsonObject();
             foreach (Match match in SavePair.Matches(saves))
             {
-                if (int.TryParse(match.Groups["bonus"].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var bonus))
+                if (!int.TryParse(match.Groups["bonus"].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var bonus))
+                    continue;
+                var key = match.Groups["save"].Value.ToLowerInvariant() switch
                 {
-                    var key = match.Groups["save"].Value.ToLowerInvariant() switch
-                    {
-                        "fort" => "fortitude",
-                        "ref" => "reflex",
-                        _ => "will"
-                    };
-                    saveObject[key] = bonus;
-                }
+                    "fort" => "fortitude",
+                    "ref" => "reflex",
+                    _ => "will"
+                };
+                saveObject[key] = bonus;
             }
             if (saveObject.Count > 0) threeX["saves"] = saveObject;
         }
 
-        if (TryField(fields, out var baseAttackGrapple, "Base Attack/Grapple", "Base Attack / Grapple"))
+        if (TryField(fields, out var babGrapple, "Base Attack/Grapple", "Base Attack / Grapple"))
         {
-            threeX["baseAttackAndGrapple"] = baseAttackGrapple;
-            var values = SignedNumber.Matches(baseAttackGrapple).Select(value => value.Groups["value"].Value).ToArray();
-            if (values.Length > 0 && int.TryParse(values[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out var bab))
-                threeX["baseAttackBonus"] = bab;
-            if (values.Length > 1 && int.TryParse(values[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out var grapple))
-                threeX["grapple"] = grapple;
+            threeX["baseAttackAndGrapple"] = babGrapple;
+            var values = SignedNumber.Matches(babGrapple)
+                .Select(match => match.Groups["value"].Value)
+                .ToArray();
+            if (values.Length > 0 && TryParseInt(values[0], out var bab)) threeX["baseAttackBonus"] = bab;
+            if (values.Length > 1 && TryParseInt(values[1], out var grapple)) threeX["grapple"] = grapple;
         }
         else
         {
-            if (TryField(fields, out var babText, "Base Attack Bonus", "BAB"))
-            {
-                threeX["baseAttackBonusText"] = babText;
-                if (TryFirstSignedInt(babText, out var bab)) threeX["baseAttackBonus"] = bab;
-            }
-            if (TryField(fields, out var grappleText, "Grapple"))
-            {
-                threeX["grappleText"] = grappleText;
-                if (TryFirstSignedInt(grappleText, out var grapple)) threeX["grapple"] = grapple;
-            }
+            CopySignedField(threeX, fields, "Base Attack Bonus", "baseAttackBonus");
+            CopySignedField(threeX, fields, "BAB", "baseAttackBonus");
+            CopySignedField(threeX, fields, "Grapple", "grapple");
         }
 
         CopyField(threeX, fields, "Attack", "attack");
@@ -373,7 +332,6 @@ internal static class LegacySrdMechanicalTranslator
         CopyField(threeX, fields, "Environment", "environment");
         CopyField(threeX, fields, "Organization", "organization");
         CopyField(threeX, fields, "Treasure", "treasure");
-        CopyField(threeX, fields, "Alignment", "alignment");
         CopyField(threeX, fields, "Advancement", "advancement");
         CopyField(threeX, fields, "Level Adjustment", "levelAdjustment");
         CopyField(threeX, fields, "Spell Resistance", "spellResistance");
@@ -381,11 +339,10 @@ internal static class LegacySrdMechanicalTranslator
         CopyField(threeX, fields, "Immunities", "immunities");
         CopyField(threeX, fields, "Resistances", "resistances");
 
-        if (TryField(fields, out var challengeRating, "Challenge Rating", "CR"))
+        if (TryField(fields, out var cr, "Challenge Rating", "CR"))
         {
-            var normalized = challengeRating.Trim();
-            if (!string.IsNullOrWhiteSpace(normalized)) content["cr"] = normalized;
-            threeX["challengeRating"] = challengeRating;
+            threeX["challengeRating"] = cr;
+            content["cr"] = cr.Trim();
         }
 
         if (TryField(fields, out var skills, "Skills"))
@@ -394,10 +351,8 @@ internal static class LegacySrdMechanicalTranslator
             var skillObject = new JsonObject();
             foreach (Match match in SkillPair.Matches(skills))
             {
-                if (int.TryParse(match.Groups["bonus"].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var bonus))
-                {
+                if (TryParseInt(match.Groups["bonus"].Value, out var bonus))
                     skillObject[match.Groups["name"].Value.Trim()] = bonus;
-                }
             }
             if (skillObject.Count > 0) threeX["skills"] = skillObject;
         }
@@ -405,23 +360,41 @@ internal static class LegacySrdMechanicalTranslator
         if (TryField(fields, out var feats, "Feats"))
         {
             threeX["featsText"] = feats;
-            var values = feats.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-            if (values.Length > 0)
-            {
-                var array = new JsonArray();
-                foreach (var value in values) array.Add(value);
-                threeX["feats"] = array;
-            }
+            var featArray = new JsonArray();
+            foreach (var feat in feats.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                featArray.Add(feat);
+            if (featArray.Count > 0) threeX["feats"] = featArray;
         }
 
-        PreserveUnmappedFields(threeX, fields);
+        PreserveFields(threeX, fields);
+    }
+
+    private static IReadOnlyDictionary<string, string> ParseFields(string body)
+    {
+        var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        foreach (Match match in LabelLine.Matches(body ?? string.Empty))
+        {
+            var label = match.Groups["label"].Value.Trim();
+            var value = match.Groups["value"].Value.Trim();
+            if (!string.IsNullOrWhiteSpace(label) && !string.IsNullOrWhiteSpace(value)) result[label] = value;
+        }
+        return result;
+    }
+
+    private static void PreserveFields(JsonObject target, IReadOnlyDictionary<string, string> fields)
+    {
+        if (fields.Count == 0) return;
+        var values = new JsonObject();
+        foreach (var field in fields.OrderBy(value => value.Key, StringComparer.OrdinalIgnoreCase))
+            values[field.Key] = field.Value;
+        target["fields"] = values;
     }
 
     private static void ParseSizeAndType(JsonObject content, JsonObject threeX, string value)
     {
         threeX["sizeAndType"] = value;
         var firstSpace = value.IndexOf(' ');
-        if (firstSpace <= 0)
+        if (firstSpace < 1)
         {
             MapType(content, threeX, value);
             return;
@@ -434,10 +407,7 @@ internal static class LegacySrdMechanicalTranslator
     {
         var normalized = value.Trim();
         threeX["size"] = normalized;
-        if (SizeCodes.TryGetValue(normalized, out var code))
-        {
-            content["size"] = new JsonArray(code);
-        }
+        if (SizeCodes.TryGetValue(normalized, out var code)) content["size"] = new JsonArray(code);
     }
 
     private static void MapType(JsonObject content, JsonObject threeX, string value)
@@ -453,18 +423,12 @@ internal static class LegacySrdMechanicalTranslator
             var subtypeText = subtypeEnd > subtypeStart
                 ? normalized[(subtypeStart + 1)..subtypeEnd]
                 : normalized[(subtypeStart + 1)..];
-            var subtypes = subtypeText.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-            if (subtypes.Length > 0)
-            {
-                var array = new JsonArray();
-                foreach (var subtype in subtypes) array.Add(subtype);
-                threeX["subtypes"] = array;
-            }
+            var subtypes = new JsonArray();
+            foreach (var subtype in subtypeText.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                subtypes.Add(subtype);
+            if (subtypes.Count > 0) threeX["subtypes"] = subtypes;
         }
-        if (CommonCreatureTypes.Contains(typeName))
-        {
-            content["type"] = typeName.ToLowerInvariant();
-        }
+        if (CommonCreatureTypes.Contains(typeName)) content["type"] = typeName.ToLowerInvariant();
     }
 
     private static JsonObject ParseSpeed(string value)
@@ -472,8 +436,7 @@ internal static class LegacySrdMechanicalTranslator
         var result = new JsonObject();
         foreach (Match match in SpeedPart.Matches(value))
         {
-            if (!int.TryParse(match.Groups["feet"].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var feet))
-                continue;
+            if (!TryParseInt(match.Groups["feet"].Value, out var feet)) continue;
             var mode = match.Groups["mode"].Success
                 ? match.Groups["mode"].Value.ToLowerInvariant()
                 : "walk";
@@ -482,41 +445,43 @@ internal static class LegacySrdMechanicalTranslator
         return result;
     }
 
-    private static IReadOnlyDictionary<string, string> ParseFields(string body)
+    private static void MapAbilityScores(JsonObject content, string value)
     {
-        var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-        foreach (Match match in LabelLine.Matches(body ?? string.Empty))
+        foreach (Match match in AbilityPair.Matches(value))
         {
-            var label = match.Groups["label"].Value.Trim();
-            var value = match.Groups["value"].Value.Trim();
-            if (!string.IsNullOrWhiteSpace(label) && !string.IsNullOrWhiteSpace(value)) result[label] = value;
+            if (TryParseInt(match.Groups["score"].Value, out var score))
+                content[match.Groups["ability"].Value.ToLowerInvariant()] = score;
         }
-        return result;
     }
 
-    private static void PreserveLabeledMechanics(JsonObject threeX, IReadOnlyDictionary<string, string> fields)
+    private static void CopySignedField(
+        JsonObject target,
+        IReadOnlyDictionary<string, string> fields,
+        string sourceName,
+        string targetName)
     {
-        if (fields.Count == 0) return;
-        var values = new JsonObject();
-        foreach (var field in fields.OrderBy(value => value.Key, StringComparer.OrdinalIgnoreCase))
-            values[field.Key] = field.Value;
-        threeX["fields"] = values;
+        if (!fields.TryGetValue(sourceName, out var value) || string.IsNullOrWhiteSpace(value)) return;
+        target[$"{targetName}Text"] = value;
+        if (TryFirstSignedInt(value, out var parsed)) target[targetName] = parsed;
     }
 
-    private static void PreserveUnmappedFields(JsonObject threeX, IReadOnlyDictionary<string, string> fields)
+    private static void CopyField(
+        JsonObject target,
+        IReadOnlyDictionary<string, string> fields,
+        string sourceName,
+        string targetName)
     {
-        var preserved = new JsonObject();
-        foreach (var field in fields.OrderBy(value => value.Key, StringComparer.OrdinalIgnoreCase))
-            preserved[field.Key] = field.Value;
-        if (preserved.Count > 0) threeX["fields"] = preserved;
+        if (fields.TryGetValue(sourceName, out var value) && !string.IsNullOrWhiteSpace(value))
+            target[targetName] = value;
     }
 
-    private static void CopyField(JsonObject target, IReadOnlyDictionary<string, string> fields, string sourceName, string targetName)
-    {
-        if (fields.TryGetValue(sourceName, out var value) && !string.IsNullOrWhiteSpace(value)) target[targetName] = value;
-    }
+    private static string? ReadField(IReadOnlyDictionary<string, string> fields, string name) =>
+        fields.TryGetValue(name, out var value) ? $"{name} {value}" : null;
 
-    private static bool TryField(IReadOnlyDictionary<string, string> fields, out string value, params string[] names)
+    private static bool TryField(
+        IReadOnlyDictionary<string, string> fields,
+        out string value,
+        params string[] names)
     {
         foreach (var name in names)
         {
@@ -532,15 +497,20 @@ internal static class LegacySrdMechanicalTranslator
 
     private static bool TryFirstInt(string value, out int result)
     {
+        result = 0;
         var match = Regex.Match(value ?? string.Empty, @"\b\d+\b", RegexOptions.CultureInvariant);
-        return match.Success && int.TryParse(match.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out result);
+        return match.Success && TryParseInt(match.Value, out result);
     }
 
     private static bool TryFirstSignedInt(string value, out int result)
     {
+        result = 0;
         var match = SignedNumber.Match(value ?? string.Empty);
-        return match.Success && int.TryParse(match.Groups["value"].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out result);
+        return match.Success && TryParseInt(match.Groups["value"].Value, out result);
     }
+
+    private static bool TryParseInt(string value, out int result) =>
+        int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out result);
 
     private static bool IsMonster(string entityType) =>
         string.Equals(entityType, "monster", StringComparison.OrdinalIgnoreCase)
