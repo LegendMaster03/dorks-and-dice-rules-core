@@ -126,7 +126,7 @@ public sealed class CurrentUserSourceRemovalLifecycleIntegrationTests
 
             using (var request = HostedRequest(
                 HttpMethod.Get,
-                $"/api/sources/entities?q={Uri.EscapeDataString(entityName)}&limit=20",
+                $"/api/sources/entities?q={Uri.EscapeDataString(sourceCode)}&limit=20",
                 "user-ticket"))
             using (var response = await client.SendAsync(request))
             {
@@ -180,7 +180,7 @@ public sealed class CurrentUserSourceRemovalLifecycleIntegrationTests
 
             using (var request = HostedRequest(
                 HttpMethod.Get,
-                $"/api/sources/entities?q={Uri.EscapeDataString(entityName)}&limit=20",
+                $"/api/sources/entities?q={Uri.EscapeDataString(sourceCode)}&limit=20",
                 "user-ticket"))
             using (var response = await client.SendAsync(request))
             {
