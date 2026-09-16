@@ -88,10 +88,10 @@ internal static class BuiltInSrdHostedSources
     ];
 
     /// <summary>
-    /// Removes only the hosted-source definitions that were created by the old bootstrap
-    /// path and were never revised. The bundled normalized snapshots are now the built-in
-    /// SRD ingestion path. A Rules Lawyer-created or later-revised definition is deliberate
-    /// policy/configuration and is preserved.
+    /// Removes only the exact hosted-source definitions that were created by the old bootstrap
+    /// path and were never revised. The bundled normalized snapshots are now the built-in SRD
+    /// ingestion path. Any first-revision definition whose content differs from the historical
+    /// seed is deliberate configuration and is preserved just like a later Rules Lawyer revision.
     /// </summary>
     public static async Task<int> RetireBootstrapDefaultsAsync(
         RulesCoreDbContext dbContext,
@@ -100,18 +100,18 @@ internal static class BuiltInSrdHostedSources
     {
         var service = new LegacyAwareHostedSourceService(dbContext, importer);
         var existing = await service.ListAsync(includeDisabled: true, cancellationToken);
-        var builtInKeys = Definitions
-            .Select(value => value.Key)
-            .ToHashSet(StringComparer.Ordinal);
+        var seedsByKey = Definitions.ToDictionary(value => value.Key, StringComparer.Ordinal);
         var preserved = 0;
 
-        foreach (var definition in existing.Where(value => builtInKeys.Contains(value.Key)))
+        foreach (var definition in existing.Where(value => seedsByKey.ContainsKey(value.Key)))
         {
+            var seed = seedsByKey[definition.Key];
             var untouchedBootstrapDefault = definition.RevisionNumber == 1
                 && string.Equals(
                     definition.CreatedByUserId,
                     RulesCoreBaselineCatalog.BootstrapActor,
-                    StringComparison.Ordinal);
+                    StringComparison.Ordinal)
+                && MatchesHistoricalSeed(definition, seed.Request);
             if (!untouchedBootstrapDefault)
             {
                 preserved++;
@@ -125,6 +125,55 @@ internal static class BuiltInSrdHostedSources
         }
 
         return preserved;
+    }
+
+    private static bool MatchesHistoricalSeed(
+        HostedSourceDefinitionView definition,
+        SetHostedSourceDefinitionRequest seed)
+    {
+        if (!string.Equals(definition.DisplayName, seed.DisplayName, StringComparison.Ordinal)
+            || !string.Equals(definition.FormatKind, seed.FormatKind, StringComparison.Ordinal)
+            || !string.Equals(definition.PackageKey, seed.PackageKey, StringComparison.Ordinal)
+            || !string.Equals(definition.PackageDisplayName, seed.PackageDisplayName, StringComparison.Ordinal)
+            || !string.Equals(definition.Provider, seed.Provider, StringComparison.Ordinal)
+            || !string.Equals(definition.License, seed.License, StringComparison.Ordinal)
+            || definition.IsPublic != seed.IsPublic
+            || !string.Equals(definition.WorkKey, seed.WorkKey, StringComparison.Ordinal)
+            || !string.Equals(definition.WorkDisplayName, seed.WorkDisplayName, StringComparison.Ordinal)
+            || !string.Equals(definition.EditionKey, seed.EditionKey, StringComparison.Ordinal)
+            || !string.Equals(definition.EditionDisplayName, seed.EditionDisplayName, StringComparison.Ordinal)
+            || !string.Equals(definition.GameEdition, seed.GameEdition, StringComparison.Ordinal)
+            || !string.Equals(definition.ReleaseKind, seed.ReleaseKind, StringComparison.Ordinal)
+            || definition.PublicationDate != seed.PublicationDate
+            || definition.IsEnabled != seed.IsEnabled
+            || !string.Equals(definition.Note, seed.Note, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var seedCodes = seed.IncludedSourceCodes ?? [];
+        if (!definition.IncludedSourceCodes.SequenceEqual(seedCodes, StringComparer.Ordinal))
+        {
+            return false;
+        }
+
+        if (definition.Resources.Count != seed.Resources.Count)
+        {
+            return false;
+        }
+
+        for (var index = 0; index < definition.Resources.Count; index++)
+        {
+            var actual = definition.Resources[index];
+            var expected = seed.Resources[index];
+            if (!string.Equals(actual.Kind, expected.Kind, StringComparison.Ordinal)
+                || !string.Equals(actual.Uri, expected.Uri, StringComparison.Ordinal))
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private static SetHostedSourceDefinitionRequest BuildLegacy(
