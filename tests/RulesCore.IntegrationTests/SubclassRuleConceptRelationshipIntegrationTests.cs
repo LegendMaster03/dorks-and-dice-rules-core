@@ -106,16 +106,28 @@ public sealed class SubclassRuleConceptRelationshipIntegrationTests
                 userId: null,
                 entityType: RuleConceptEntityTypes.Subclass,
                 query: "Evocation");
-            var subclass = Assert.Single(resolved.Rules);
-            Assert.Equal(acceptedSubclass.Concept.Id, subclass.RuleConceptId);
-            Assert.Equal(RuleConceptEntityTypes.Subclass, subclass.EntityType);
+            AssertPublishedSubclassRelationship(
+                resolved,
+                acceptedSubclass.Concept.Id,
+                acceptedClass.Concept.Id);
 
-            var parent = Assert.Single(subclass.Relationships);
-            Assert.Equal(RuleConceptRelationshipKinds.ParentClass, parent.Kind);
-            Assert.Equal(acceptedClass.Concept.Id, parent.RelatedRuleConceptId);
-            Assert.Equal("class.wizard", parent.RelatedConceptKey);
-            Assert.Equal(RuleConceptEntityTypes.Class, parent.RelatedEntityType);
-            Assert.Equal("Wizard", parent.RelatedDisplayName);
+            // Simulate upgrading a database whose Class/Subclass bindings predate the explicit
+            // relationship contract. The first resolved-catalog read must reconstruct the stable
+            // relationship without asking a Rules Lawyer to re-accept the source.
+            await db.Database.ExecuteSqlRawAsync("""
+                DELETE FROM rule_concept_relationship;
+                DELETE FROM rule_concept_relationship_backfill
+                WHERE backfill_key = 'subclass-parent-v1';
+                """);
+
+            var backfilled = await catalog.GetGlobalAsync(
+                userId: null,
+                entityType: RuleConceptEntityTypes.Subclass,
+                query: "Evocation");
+            AssertPublishedSubclassRelationship(
+                backfilled,
+                acceptedSubclass.Concept.Id,
+                acceptedClass.Concept.Id);
         }
         finally
         {
@@ -231,6 +243,23 @@ public sealed class SubclassRuleConceptRelationshipIntegrationTests
     public void FirstClassAdvancementEntityTypesHaveStableApiNames(string input, string expected)
     {
         Assert.Equal(expected, RuleConceptEntityTypes.Normalize(input));
+    }
+
+    private static void AssertPublishedSubclassRelationship(
+        ResolvedRulesCatalogView resolved,
+        Guid subclassConceptId,
+        Guid classConceptId)
+    {
+        var subclass = Assert.Single(resolved.Rules);
+        Assert.Equal(subclassConceptId, subclass.RuleConceptId);
+        Assert.Equal(RuleConceptEntityTypes.Subclass, subclass.EntityType);
+
+        var parent = Assert.Single(subclass.Relationships);
+        Assert.Equal(RuleConceptRelationshipKinds.ParentClass, parent.Kind);
+        Assert.Equal(classConceptId, parent.RelatedRuleConceptId);
+        Assert.Equal("class.wizard", parent.RelatedConceptKey);
+        Assert.Equal(RuleConceptEntityTypes.Class, parent.RelatedEntityType);
+        Assert.Equal("Wizard", parent.RelatedDisplayName);
     }
 
     private static async Task ResetRulesAsync(RulesCoreDbContext db)
