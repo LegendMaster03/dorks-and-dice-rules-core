@@ -26,7 +26,7 @@ public sealed class CurrentUserSourceRemovalLifecycleIntegrationTests
         var token = Guid.NewGuid().ToString("N");
         var userId = $"source-removal-{token}";
         var sourceCode = $"REM{token[..8].ToUpperInvariant()}";
-        var entityName = $"Reusable Arcana {token[..6]}";
+        var entityName = "Arcana";
         var authenticationClient = new FakeToolHostAuthenticationClient(
             new Dictionary<string, ToolHostAuthenticationContext>
             {
