@@ -26,6 +26,7 @@ public sealed class CurrentUserSourceRemovalLifecycleIntegrationTests
         var token = Guid.NewGuid().ToString("N");
         var userId = $"source-removal-{token}";
         var sourceCode = $"REM{token[..8].ToUpperInvariant()}";
+        var entityName = $"Reusable Arcana {token[..6]}";
         var authenticationClient = new FakeToolHostAuthenticationClient(
             new Dictionary<string, ToolHostAuthenticationContext>
             {
@@ -40,7 +41,7 @@ public sealed class CurrentUserSourceRemovalLifecycleIntegrationTests
             Json: $$"""
                 {
                   "skill": [
-                    { "name": "Reusable Arcana {{token[..6]}}", "source": "{{sourceCode}}", "ability": "int" }
+                    { "name": "{{entityName}}", "source": "{{sourceCode}}", "ability": "int" }
                   ]
                 }
                 """);
@@ -67,7 +68,7 @@ public sealed class CurrentUserSourceRemovalLifecycleIntegrationTests
                 var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
                 var entity = await db.SourceEntities.SingleAsync(value =>
                     value.SourcePackageId == first.SourcePackageId
-                    && value.Name == $"Reusable Arcana {token[..6]}");
+                    && value.Name == entityName);
                 var revision = await db.SourceEntityRevisions.SingleAsync(value =>
                     value.SourceEntityId == entity.Id);
                 sourceEntityId = entity.Id;
@@ -125,13 +126,13 @@ public sealed class CurrentUserSourceRemovalLifecycleIntegrationTests
 
             using (var request = HostedRequest(
                 HttpMethod.Get,
-                $"/api/sources/entities?q={Uri.EscapeDataString($"Reusable Arcana {token[..6]}")}&limit=20",
+                $"/api/sources/entities?q={Uri.EscapeDataString(entityName)}&limit=20",
                 "user-ticket"))
             using (var response = await client.SendAsync(request))
             {
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 var entities = await response.Content.ReadFromJsonAsync<SourceEntitySummary[]>();
-                Assert.DoesNotContain(entities!, value => value.Id == sourceEntityId);
+                Assert.DoesNotContain(entities!, value => value.EntityId == sourceEntityId);
             }
 
             await using (var scope = factory.Services.CreateAsyncScope())
@@ -174,18 +175,18 @@ public sealed class CurrentUserSourceRemovalLifecycleIntegrationTests
                 Assert.True(await db.GlobalRuleDecisions.AnyAsync(value =>
                     value.Id == decisionId
                     && value.PatchFingerprint == patchFingerprint));
-                Assert.Equal($"Reusable Arcana {token[..6]}", entity.Name);
+                Assert.Equal(entityName, entity.Name);
             }
 
             using (var request = HostedRequest(
                 HttpMethod.Get,
-                $"/api/sources/entities?q={Uri.EscapeDataString($"Reusable Arcana {token[..6]}")}&limit=20",
+                $"/api/sources/entities?q={Uri.EscapeDataString(entityName)}&limit=20",
                 "user-ticket"))
             using (var response = await client.SendAsync(request))
             {
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 var entities = await response.Content.ReadFromJsonAsync<SourceEntitySummary[]>();
-                Assert.Contains(entities!, value => value.Id == sourceEntityId);
+                Assert.Contains(entities!, value => value.EntityId == sourceEntityId);
             }
         }
         finally
