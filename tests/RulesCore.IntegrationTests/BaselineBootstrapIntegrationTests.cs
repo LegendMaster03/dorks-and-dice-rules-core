@@ -13,6 +13,9 @@ public sealed class BaselineBootstrapIntegrationTests
     private static readonly string[] BuiltInPackageKeys =
     ["wotc-srd-ogl", "wotc-srd-cc", "loot-tavern-free", "loot-tavern-licensed", "dorks-and-dice-baseline"];
 
+    private static readonly string[] LegacyBuiltInHostedKeys =
+    ["builtin-wotc-srd-3e", "builtin-wotc-srd-3-5e", "builtin-wotc-srd-5-1", "builtin-wotc-srd-5-2-1"];
+
     [Fact]
     public async Task FreshDatabaseGetsPublicSrdsAndSettledRulesWithoutOverwritingLaterChanges()
     {
@@ -36,7 +39,10 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Equal(6, first.PublishedRuleset.EntryCount);
             Assert.Equal(6, first.HouseRuleSourceEntityCount);
             Assert.Equal(4, first.SourceAuthorityReferenceCount);
-            Assert.Equal(4, first.HostedSourceDefinitionCount);
+            Assert.Equal(0, first.HostedSourceDefinitionCount);
+
+            var hosted = await new HostedSourceService(db, importer).ListAsync(includeDisabled: true);
+            Assert.DoesNotContain(hosted, value => LegacyBuiltInHostedKeys.Contains(value.Key));
 
             var packages = await db.SourcePackages
                 .AsNoTracking()
@@ -109,6 +115,7 @@ public sealed class BaselineBootstrapIntegrationTests
             var second = await bootstrapper.EnsureAsync();
             Assert.False(second.RulesBaselineApplied);
             Assert.Null(second.PublishedRuleset);
+            Assert.Equal(0, second.HostedSourceDefinitionCount);
             Assert.Equal(revisionCount, await db.SourceEntityRevisions.CountAsync());
             Assert.Equal(1, await db.RulesetRevisions.CountAsync());
             Assert.Equal(2, await db.GlobalRuleDecisions.CountAsync(value => value.RuleConceptId == concept.Id));
