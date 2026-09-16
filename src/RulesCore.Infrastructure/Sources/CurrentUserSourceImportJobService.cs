@@ -68,7 +68,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
                     FROM current_user_source_import_job
                     WHERE user_id = {0}
                         AND current_user_source_id = {1}
-                        AND status IN ('queued', 'running')) AS "Value";
+                        AND status IN ('queued', 'running')) AS "Value"
                 """,
                 userId,
                 currentUserSourceId)
