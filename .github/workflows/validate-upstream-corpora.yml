@@ -19,6 +19,9 @@ jobs:
         with:
           dotnet-version: "10.0.x"
 
+      - name: Validate native 5e.tools monster rendering
+        run: node tools/validate-monster-renderer.mjs
+
       - name: Fetch pinned 5e.tools data tree
         run: |
           git clone --filter=blob:none --no-checkout --depth 1 \
