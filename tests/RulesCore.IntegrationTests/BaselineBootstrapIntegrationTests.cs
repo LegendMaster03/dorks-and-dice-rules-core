@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
@@ -36,12 +38,12 @@ public sealed class BaselineBootstrapIntegrationTests
         await ResetAsync(db);
         try
         {
-            // Simulate an installation upgraded from the old bootstrap path. This untouched
-            // bootstrap-owned definition must disappear once bundled normalized snapshots
-            // become the sole built-in SRD ingestion path.
+            // Simulate an installation upgraded from the old bootstrap path. Only an exact,
+            // untouched historical seed is stale bootstrap state and may be retired.
+            var historicalSeed = HistoricalHostedDefinition("builtin-wotc-srd-5-1");
             await hostedService.SetAsync(
                 "builtin-wotc-srd-5-1",
-                LegacyHostedDefinition("Old bootstrap default"),
+                historicalSeed,
                 BootstrapActor);
 
             var first = await bootstrapper.EnsureAsync();
@@ -123,23 +125,42 @@ public sealed class BaselineBootstrapIntegrationTests
                 new SetGlobalRuleDecisionRequest(selectedRevision, "User-maintained baseline decision."),
                 "rules-lawyer");
 
-            // A deliberate later revision under the old reserved key is policy, not stale
-            // bootstrap state. The migration must leave it intact.
-            await hostedService.SetAsync(
+            // A revision-1 definition under a reserved key is still deliberate configuration
+            // when any content differs from the historical bootstrap seed. Do not delete it
+            // merely because it was created by the old bootstrap actor.
+            var modifiedBootstrap = await hostedService.SetAsync(
                 "builtin-wotc-srd-5-1",
-                LegacyHostedDefinition("Recreated bootstrap default"),
+                historicalSeed with { Note = "Locally modified bootstrap-owned source policy" },
                 BootstrapActor);
-            var revised = await hostedService.SetAsync(
-                "builtin-wotc-srd-5-1",
-                LegacyHostedDefinition("Rules Lawyer retained source policy"),
-                "rules-lawyer");
-            Assert.Equal(2, revised.RevisionNumber);
+            Assert.Equal(1, modifiedBootstrap.RevisionNumber);
 
             var revisionCount = await db.SourceEntityRevisions.CountAsync();
             var second = await bootstrapper.EnsureAsync();
             Assert.False(second.RulesBaselineApplied);
             Assert.Null(second.PublishedRuleset);
             Assert.Equal(1, second.HostedSourceDefinitionCount);
+            Assert.Equal(revisionCount, await db.SourceEntityRevisions.CountAsync());
+            Assert.Equal(1, await db.RulesetRevisions.CountAsync());
+            Assert.Equal(2, await db.GlobalRuleDecisions.CountAsync(value => value.RuleConceptId == concept.Id));
+
+            var preservedFirstRevision = await hostedService.ListAsync(includeDisabled: true);
+            var retainedBootstrap = Assert.Single(
+                preservedFirstRevision.Where(value => value.Key == "builtin-wotc-srd-5-1"));
+            Assert.Equal(1, retainedBootstrap.RevisionNumber);
+            Assert.Equal(BootstrapActor, retainedBootstrap.CreatedByUserId);
+            Assert.Equal("Locally modified bootstrap-owned source policy", retainedBootstrap.Note);
+
+            // A later Rules Lawyer revision is also deliberate policy and must remain intact.
+            var revised = await hostedService.SetAsync(
+                "builtin-wotc-srd-5-1",
+                historicalSeed with { Note = "Rules Lawyer retained source policy" },
+                "rules-lawyer");
+            Assert.Equal(2, revised.RevisionNumber);
+
+            var third = await bootstrapper.EnsureAsync();
+            Assert.False(third.RulesBaselineApplied);
+            Assert.Null(third.PublishedRuleset);
+            Assert.Equal(1, third.HostedSourceDefinitionCount);
             Assert.Equal(revisionCount, await db.SourceEntityRevisions.CountAsync());
             Assert.Equal(1, await db.RulesetRevisions.CountAsync());
             Assert.Equal(2, await db.GlobalRuleDecisions.CountAsync(value => value.RuleConceptId == concept.Id));
@@ -156,31 +177,28 @@ public sealed class BaselineBootstrapIntegrationTests
         }
     }
 
-    private static SetHostedSourceDefinitionRequest LegacyHostedDefinition(string note) =>
-        new(
-            DisplayName: "Legacy SRD 5.1 hosted definition",
-            FormatKind: HostedSourceFormatKinds.FiveEToolsJson,
-            PackageKey: "wotc-srd-cc",
-            PackageDisplayName: "Wizards of the Coast SRD (Creative Commons)",
-            Provider: "Wizards of the Coast",
-            License: "CC-BY-4.0",
-            IsPublic: true,
-            WorkKey: "srd-5-1",
-            WorkDisplayName: "System Reference Document 5.1",
-            EditionKey: "5.1",
-            EditionDisplayName: "SRD 5.1",
-            GameEdition: "5e",
-            ReleaseKind: "srd",
-            PublicationDate: null,
-            IncludedSourceCodes: ["SRD51"],
-            Resources:
-            [
-                new HostedSourceResourceRequest(
-                    HostedSourceResourceKinds.DirectJson,
-                    "https://example.invalid/srd51.json")
-            ],
-            IsEnabled: true,
-            Note: note);
+    private static SetHostedSourceDefinitionRequest HistoricalHostedDefinition(string definitionKey)
+    {
+        var type = typeof(RulesCoreBaselineBootstrapper).Assembly.GetType(
+            "RulesCore.Infrastructure.Bootstrap.BuiltInSrdHostedSources",
+            throwOnError: true)!;
+        var field = type.GetField("Definitions", BindingFlags.Public | BindingFlags.Static)
+            ?? throw new InvalidOperationException("Historical hosted SRD definitions are unavailable.");
+        var definitions = (IEnumerable)(field.GetValue(null)
+            ?? throw new InvalidOperationException("Historical hosted SRD definitions are unavailable."));
+
+        foreach (var definition in definitions)
+        {
+            if (definition is null) continue;
+            var definitionType = definition.GetType();
+            var key = definitionType.GetProperty("Key")?.GetValue(definition) as string;
+            if (!string.Equals(key, definitionKey, StringComparison.Ordinal)) continue;
+            return (SetHostedSourceDefinitionRequest)(definitionType.GetProperty("Request")?.GetValue(definition)
+                ?? throw new InvalidOperationException($"Historical hosted source '{definitionKey}' has no request."));
+        }
+
+        throw new InvalidOperationException($"Historical hosted source '{definitionKey}' was not found.");
+    }
 
     private static async Task<int> CountAuthorityReferencesAsync(RulesCoreDbContext db)
     {
