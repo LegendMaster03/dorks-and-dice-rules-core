@@ -82,6 +82,10 @@ export class RulesCoreApi {
         return this.backend(`/api/sources/current-user/${encodeURIComponent(currentUserSourceId)}/refresh`, { method: "POST" });
     }
 
+    removeCurrentUserSource(currentUserSourceId) {
+        return this.backend(`/api/sources/current-user/${encodeURIComponent(currentUserSourceId)}`, { method: "DELETE" });
+    }
+
     previewSourceDocument(payload) {
         return this.backend("/api/source-admin/import/preview", { method: "POST", body: payload });
     }
@@ -92,6 +96,14 @@ export class RulesCoreApi {
 
     findHostedSourceMatches(payload) {
         return this.backend("/api/source-admin/import/hosted-matches", { method: "POST", body: payload });
+    }
+
+    getBundledSrds() {
+        return this.backend("/api/global/rules/bundled-srds");
+    }
+
+    reprocessBundledSrd(workKey) {
+        return this.backend(`/api/global/rules/bundled-srds/${encodeURIComponent(workKey)}/reprocess`, { method: "POST" });
     }
 
     getHostedSources(includeDisabled = true) {

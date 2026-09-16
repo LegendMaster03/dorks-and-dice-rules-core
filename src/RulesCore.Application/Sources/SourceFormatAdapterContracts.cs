@@ -24,6 +24,14 @@ public sealed record NormalizedSourceRecord(
     /// RawJson remains the immutable source-native representation.
     /// </summary>
     public string? ContentJson { get; init; }
+
+    /// <summary>
+    /// Optional backend-reviewed canonical identity override used only while reconciling source
+    /// occurrences. It is not source evidence and must never be injected into ContentJson.
+    /// This lets exact cross-edition identity translations share canonical identity while native
+    /// 5e.tools mechanical content remains lossless.
+    /// </summary>
+    public string? CanonicalIdentityKey { get; init; }
 }
 
 public sealed record NormalizedSourcePublication(
@@ -72,7 +80,14 @@ public sealed record ImportNormalizedSourceRequest(
     string Provider,
     string? License,
     bool IsPublic,
-    NormalizedSourceRepresentation Representation);
+    NormalizedSourceRepresentation Representation)
+{
+    /// <summary>
+    /// Optional advisory progress sink. Implementations must treat reporting failures as
+    /// non-fatal so observability can not corrupt a source import.
+    /// </summary>
+    public Func<CurrentUserSourceImportProgress, CancellationToken, Task>? ProgressReporter { get; init; }
+}
 
 public sealed record ImportedNormalizedPublication(
     Guid CanonicalPublicationId,

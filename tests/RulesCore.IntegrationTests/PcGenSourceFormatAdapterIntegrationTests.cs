@@ -250,6 +250,31 @@ public sealed class PcGenSourceFormatAdapterIntegrationTests
         });
     }
 
+    [Fact]
+    public void LossyCanonicalNameNormalizationDoesNotCollapseDistinctPcGenNativeObjects()
+    {
+        var adapter = new PcGenSourceFormatAdapter();
+        var list = Artifact(
+            "data/35e/example/example_abilities.lst",
+            string.Join('\n',
+            [
+                "Strength -2\tTYPE:Special Ability",
+                "Strength +2\tTYPE:Special Ability",
+                "Low light Vision\tTYPE:Special Ability",
+                "Low-Light Vision\tTYPE:Special Ability"
+            ]));
+
+        var representation = Require(adapter.TryRead(list));
+
+        Assert.Equal(4, representation.Records.Count);
+        Assert.Equal(4, representation.Records.Select(value => value.NativeKey).Distinct(StringComparer.Ordinal).Count());
+        Assert.All(representation.Records, record =>
+            Assert.Contains("|native-", record.NativeKey, StringComparison.Ordinal));
+        Assert.Equal(
+            ["Strength -2", "Strength +2", "Low light Vision", "Low-Light Vision"],
+            representation.Records.Select(value => value.Name).ToArray());
+    }
+
     private static SourceRepresentationArtifact Artifact(string path, string content) =>
         new(
             Path.GetFileName(path),

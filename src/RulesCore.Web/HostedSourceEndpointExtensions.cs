@@ -2,6 +2,7 @@ using System.Text.Json;
 using RulesCore.Application.Hosting;
 using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
+using RulesCore.Infrastructure.Bootstrap;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Sources;
 
@@ -21,6 +22,66 @@ public static class HostedSourceEndpointExtensions
 {
     public static void MapHostedSourceEndpoints(this WebApplication app)
     {
+        app.MapGet("/api/global/rules/bundled-srds", (
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext) =>
+        {
+            var authorizationFailure = RequireRulesLawyer(httpContext, out _);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(new BundledSrdMaintenanceService(dbContext).List());
+        });
+
+        app.MapPost("/api/global/rules/bundled-srds/{workKey}/reprocess", async (
+            string workKey,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireRulesLawyer(httpContext, out _);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            try
+            {
+                var reprocessed = await new BundledSrdMaintenanceService(dbContext)
+                    .ReprocessAsync(workKey, cancellationToken);
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(reprocessed);
+            }
+            catch (KeyNotFoundException)
+            {
+                return Results.NotFound();
+            }
+            catch (ArgumentException exception)
+            {
+                return BundledSrdMaintenanceFailure(
+                    "Invalid bundled SRD maintenance request",
+                    exception.Message,
+                    StatusCodes.Status400BadRequest);
+            }
+            catch (InvalidDataException exception)
+            {
+                return BundledSrdMaintenanceFailure(
+                    "Bundled SRD reprocessing failed",
+                    exception.Message,
+                    StatusCodes.Status400BadRequest);
+            }
+            catch (InvalidOperationException exception)
+            {
+                return BundledSrdMaintenanceFailure(
+                    "Bundled SRD reprocessing conflict",
+                    exception.Message,
+                    StatusCodes.Status409Conflict);
+            }
+        });
+
         app.MapGet("/api/global/rules/hosted-sources", async (
             bool? includeDisabled,
             HttpContext httpContext,
@@ -301,6 +362,15 @@ public static class HostedSourceEndpointExtensions
                 ? null
                 : Results.StatusCode(StatusCodes.Status403Forbidden);
     }
+
+    private static IResult BundledSrdMaintenanceFailure(
+        string title,
+        string detail,
+        int statusCode) =>
+        Results.Problem(
+            title: title,
+            detail: detail,
+            statusCode: statusCode);
 
     private static IResult InvalidHostedSource(string detail) =>
         Results.Problem(

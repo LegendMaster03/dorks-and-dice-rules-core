@@ -2,6 +2,7 @@ using System.Data;
 using System.Data.Common;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
@@ -10,6 +11,8 @@ namespace RulesCore.Infrastructure.Sources;
 
 public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbContext)
 {
+    private static readonly JsonSerializerOptions ProgressJsonOptions = new(JsonSerializerDefaults.Web);
+
     public async Task<CurrentUserSourceImportJobView> QueueWebAddAsync(
         string currentUserId,
         string? url,
@@ -34,19 +37,11 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
     {
         var userId = RequireUserId(currentUserId);
         if (currentUserSourceId == Guid.Empty)
-        {
             throw new ArgumentException("Source ID can not be empty.", nameof(currentUserSourceId));
-        }
 
         await EnsureSchemaAsync(cancellationToken);
-        var registration = await ReadWebRegistrationAsync(
-            userId,
-            currentUserSourceId,
-            cancellationToken);
-        if (registration is null)
-        {
-            return null;
-        }
+        var registration = await ReadWebRegistrationAsync(userId, currentUserSourceId, cancellationToken);
+        if (registration is null) return null;
 
         return await QueueAsync(
             userId,
@@ -57,6 +52,29 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
             cancellationToken);
     }
 
+    public async Task<bool> HasActiveImportAsync(
+        string currentUserId,
+        Guid currentUserSourceId,
+        CancellationToken cancellationToken = default)
+    {
+        var userId = RequireUserId(currentUserId);
+        if (currentUserSourceId == Guid.Empty)
+            throw new ArgumentException("Source ID can not be empty.", nameof(currentUserSourceId));
+        await EnsureSchemaAsync(cancellationToken);
+        return await dbContext.Database.SqlQueryRaw<bool>(
+                """
+                SELECT EXISTS (
+                    SELECT 1
+                    FROM current_user_source_import_job
+                    WHERE user_id = {0}
+                        AND current_user_source_id = {1}
+                        AND status IN ('queued', 'running')) AS "Value"
+                """,
+                userId,
+                currentUserSourceId)
+            .SingleAsync(cancellationToken);
+    }
+
     public async Task<IReadOnlyList<CurrentUserSourceImportJobView>> ListAsync(
         string currentUserId,
         CancellationToken cancellationToken = default)
@@ -65,10 +83,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         await EnsureSchemaAsync(cancellationToken);
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync(cancellationToken);
-        }
+        if (openedHere) await connection.OpenAsync(cancellationToken);
 
         try
         {
@@ -100,18 +115,12 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
 
             var results = new List<CurrentUserSourceImportJobView>();
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            while (await reader.ReadAsync(cancellationToken))
-            {
-                results.Add(ReadView(reader));
-            }
+            while (await reader.ReadAsync(cancellationToken)) results.Add(ReadView(reader));
             return results;
         }
         finally
         {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
+            if (openedHere) await connection.CloseAsync();
         }
     }
 
@@ -121,10 +130,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         await EnsureSchemaAsync(cancellationToken);
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync(cancellationToken);
-        }
+        if (openedHere) await connection.OpenAsync(cancellationToken);
 
         try
         {
@@ -159,10 +165,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
                 """;
             AddParameter(command, "@started_at", DateTimeOffset.UtcNow);
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            if (!await reader.ReadAsync(cancellationToken))
-            {
-                return null;
-            }
+            if (!await reader.ReadAsync(cancellationToken)) return null;
 
             return new ClaimedCurrentUserSourceImportJob(
                 reader.GetGuid(0),
@@ -173,10 +176,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         }
         finally
         {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
+            if (openedHere) await connection.CloseAsync();
         }
     }
 
@@ -186,29 +186,16 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         CancellationToken cancellationToken = default)
     {
         if (jobId == Guid.Empty)
-        {
             throw new ArgumentException("Job ID can not be empty.", nameof(jobId));
-        }
         ArgumentNullException.ThrowIfNull(progress);
         var stage = Require(progress.Stage, nameof(progress.Stage), 40);
-        if (progress.Current is < 0 || progress.Total is < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(progress), "Progress counts can not be negative.");
-        }
-        if (progress.Current is not null
-            && progress.Total is not null
-            && progress.Current > progress.Total)
-        {
-            throw new ArgumentException("Progress current can not exceed progress total.", nameof(progress));
-        }
+        ValidateProgress(progress);
+        var progressJson = JsonSerializer.Serialize(progress, ProgressJsonOptions);
 
         await EnsureSchemaAsync(cancellationToken);
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync(cancellationToken);
-        }
+        if (openedHere) await connection.OpenAsync(cancellationToken);
 
         try
         {
@@ -226,17 +213,14 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
             AddParameter(command, "@stage", stage);
             AddNullableParameter(command, "@current", progress.Current);
             AddNullableParameter(command, "@total", progress.Total);
-            AddNullableParameter(command, "@detail", NormalizeOptional(progress.Detail, 500));
+            AddParameter(command, "@detail", progressJson);
             AddParameter(command, "@updated_at", DateTimeOffset.UtcNow);
             AddParameter(command, "@id", jobId);
             await command.ExecuteNonQueryAsync(cancellationToken);
         }
         finally
         {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
+            if (openedHere) await connection.CloseAsync();
         }
     }
 
@@ -260,10 +244,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         var message = string.IsNullOrWhiteSpace(exception.Message)
             ? "The Web source import failed."
             : exception.Message.Trim();
-        if (message.Length > 1000)
-        {
-            message = message[..1000];
-        }
+        if (message.Length > 1000) message = message[..1000];
         return SetTerminalStateAsync(
             jobId,
             CurrentUserSourceImportJobStatuses.Failed,
@@ -285,10 +266,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         var now = DateTimeOffset.UtcNow;
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync(cancellationToken);
-        }
+        if (openedHere) await connection.OpenAsync(cancellationToken);
 
         try
         {
@@ -363,17 +341,12 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
 
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             if (!await reader.ReadAsync(cancellationToken))
-            {
                 throw new InvalidOperationException("Web source import job was not readable after it was queued.");
-            }
             return ReadView(reader);
         }
         finally
         {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
+            if (openedHere) await connection.CloseAsync();
         }
     }
 
@@ -387,10 +360,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         await EnsureSchemaAsync(cancellationToken);
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync(cancellationToken);
-        }
+        if (openedHere) await connection.OpenAsync(cancellationToken);
 
         try
         {
@@ -401,10 +371,6 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
                     current_user_source_id = COALESCE(@current_user_source_id, current_user_source_id),
                     error_message = @error_message,
                     progress_stage = @status,
-                    progress_detail = CASE
-                        WHEN @status = 'completed' THEN 'Import completed'
-                        ELSE progress_detail
-                    END,
                     progress_updated_at = @completed_at,
                     completed_at = @completed_at
                 WHERE current_user_source_import_job_id = @id;
@@ -418,10 +384,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         }
         finally
         {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
+            if (openedHere) await connection.CloseAsync();
         }
     }
 
@@ -432,10 +395,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
     {
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
-        if (openedHere)
-        {
-            await connection.OpenAsync(cancellationToken);
-        }
+        if (openedHere) await connection.OpenAsync(cancellationToken);
 
         try
         {
@@ -457,78 +417,90 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         }
         finally
         {
-            if (openedHere)
-            {
-                await connection.CloseAsync();
-            }
+            if (openedHere) await connection.CloseAsync();
         }
     }
 
     private Task EnsureSchemaAsync(CancellationToken cancellationToken) =>
         dbContext.Database.ExecuteSqlRawAsync(SchemaSql, cancellationToken);
 
-    private static CurrentUserSourceImportJobView ReadView(DbDataReader reader) =>
-        new(
+    private static CurrentUserSourceImportJobView ReadView(DbDataReader reader)
+    {
+        var rawProgress = reader.IsDBNull(reader.GetOrdinal("progress_detail"))
+            ? null
+            : reader.GetString(reader.GetOrdinal("progress_detail"));
+        CurrentUserSourceImportProgress? structured = null;
+        if (!string.IsNullOrWhiteSpace(rawProgress) && rawProgress.TrimStart().StartsWith('{'))
+        {
+            try
+            {
+                structured = JsonSerializer.Deserialize<CurrentUserSourceImportProgress>(
+                    rawProgress,
+                    ProgressJsonOptions);
+            }
+            catch (JsonException)
+            {
+                structured = null;
+            }
+        }
+
+        return new CurrentUserSourceImportJobView(
             reader.GetGuid(reader.GetOrdinal("current_user_source_import_job_id")),
             reader.GetString(reader.GetOrdinal("operation")),
             reader.GetString(reader.GetOrdinal("source_kind")),
             reader.GetString(reader.GetOrdinal("display_name")),
-            reader.IsDBNull(reader.GetOrdinal("source_url"))
-                ? null
-                : reader.GetString(reader.GetOrdinal("source_url")),
+            reader.IsDBNull(reader.GetOrdinal("source_url")) ? null : reader.GetString(reader.GetOrdinal("source_url")),
             reader.GetString(reader.GetOrdinal("status")),
-            reader.IsDBNull(reader.GetOrdinal("current_user_source_id"))
-                ? null
-                : reader.GetGuid(reader.GetOrdinal("current_user_source_id")),
-            reader.IsDBNull(reader.GetOrdinal("error_message"))
-                ? null
-                : reader.GetString(reader.GetOrdinal("error_message")),
-            reader.IsDBNull(reader.GetOrdinal("progress_stage"))
-                ? null
-                : reader.GetString(reader.GetOrdinal("progress_stage")),
-            reader.IsDBNull(reader.GetOrdinal("progress_current"))
-                ? null
-                : reader.GetInt32(reader.GetOrdinal("progress_current")),
-            reader.IsDBNull(reader.GetOrdinal("progress_total"))
-                ? null
-                : reader.GetInt32(reader.GetOrdinal("progress_total")),
-            reader.IsDBNull(reader.GetOrdinal("progress_detail"))
-                ? null
-                : reader.GetString(reader.GetOrdinal("progress_detail")),
-            reader.IsDBNull(reader.GetOrdinal("progress_updated_at"))
-                ? null
-                : reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("progress_updated_at")),
+            reader.IsDBNull(reader.GetOrdinal("current_user_source_id")) ? null : reader.GetGuid(reader.GetOrdinal("current_user_source_id")),
+            reader.IsDBNull(reader.GetOrdinal("error_message")) ? null : reader.GetString(reader.GetOrdinal("error_message")),
+            reader.IsDBNull(reader.GetOrdinal("progress_stage")) ? null : reader.GetString(reader.GetOrdinal("progress_stage")),
+            reader.IsDBNull(reader.GetOrdinal("progress_current")) ? null : reader.GetInt32(reader.GetOrdinal("progress_current")),
+            reader.IsDBNull(reader.GetOrdinal("progress_total")) ? null : reader.GetInt32(reader.GetOrdinal("progress_total")),
+            structured?.Detail ?? rawProgress,
+            reader.IsDBNull(reader.GetOrdinal("progress_updated_at")) ? null : reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("progress_updated_at")),
             reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("created_at")),
-            reader.IsDBNull(reader.GetOrdinal("started_at"))
-                ? null
-                : reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("started_at")),
-            reader.IsDBNull(reader.GetOrdinal("completed_at"))
-                ? null
-                : reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("completed_at")));
+            reader.IsDBNull(reader.GetOrdinal("started_at")) ? null : reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("started_at")),
+            reader.IsDBNull(reader.GetOrdinal("completed_at")) ? null : reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("completed_at")))
+        {
+            Progress = structured
+        };
+    }
+
+    private static void ValidateProgress(CurrentUserSourceImportProgress progress)
+    {
+        var counts = new int?[]
+        {
+            progress.Current, progress.Total, progress.FilesDiscovered, progress.CompatibleFiles,
+            progress.RecordsDiscovered, progress.RecordsTranslated, progress.EntitiesPersisted,
+            progress.NewEntities, progress.UnchangedEntities, progress.NewRevisions,
+            progress.TranslationOnlyUpdates, progress.PublicationsProcessed, progress.PublicationTotal,
+            progress.ReconciliationIssueCount, progress.RepresentationsStored, progress.RepresentationsReused
+        };
+        if (counts.Any(value => value is < 0))
+            throw new ArgumentOutOfRangeException(nameof(progress), "Progress counts can not be negative.");
+        if (progress.Current is not null && progress.Total is not null && progress.Current > progress.Total)
+            throw new ArgumentException("Progress current can not exceed progress total.", nameof(progress));
+        if (progress.PublicationsProcessed is not null
+            && progress.PublicationTotal is not null
+            && progress.PublicationsProcessed > progress.PublicationTotal)
+            throw new ArgumentException("Processed publication count can not exceed publication total.", nameof(progress));
+    }
 
     private static Uri RequireWebSourceUri(string? value)
     {
         if (!Uri.TryCreate(value?.Trim(), UriKind.Absolute, out var uri)
             || !string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
-        {
             throw new ArgumentException("Web source URL must be an absolute HTTPS URL.", nameof(value));
-        }
         if (!string.IsNullOrEmpty(uri.UserInfo)
             || string.Equals(uri.DnsSafeHost, "localhost", StringComparison.OrdinalIgnoreCase)
             || uri.AbsoluteUri.Length > 2000)
-        {
             throw new ArgumentException("Web source URL is not allowed.", nameof(value));
-        }
         return uri;
     }
 
     private static string NormalizeWebOrigin(Uri uri)
     {
-        var builder = new UriBuilder(uri)
-        {
-            Host = uri.Host.ToLowerInvariant(),
-            Fragment = string.Empty
-        };
+        var builder = new UriBuilder(uri) { Host = uri.Host.ToLowerInvariant(), Fragment = string.Empty };
         return builder.Uri.AbsoluteUri;
     }
 
@@ -537,53 +509,24 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         if (string.Equals(uri.Host, "github.com", StringComparison.OrdinalIgnoreCase))
         {
             var segments = uri.AbsolutePath.Trim('/').Split('/', StringSplitOptions.RemoveEmptyEntries);
-            if (segments.Length >= 2)
-            {
-                return $"{segments[0]}/{segments[1]}";
-            }
+            if (segments.Length >= 2) return $"{segments[0]}/{segments[1]}";
         }
         return uri.Host + uri.AbsolutePath.TrimEnd('/');
     }
 
     private static string RequireUserId(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("User ID can not be blank.", nameof(value));
-        }
+        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("User ID can not be blank.", nameof(value));
         var normalized = value.Trim();
-        if (normalized.Length > 200)
-        {
-            throw new ArgumentException("User ID can not exceed 200 characters.", nameof(value));
-        }
+        if (normalized.Length > 200) throw new ArgumentException("User ID can not exceed 200 characters.", nameof(value));
         return normalized;
     }
 
     private static string Require(string value, string parameterName, int maxLength)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new ArgumentException("Value can not be blank.", parameterName);
-        }
+        if (string.IsNullOrWhiteSpace(value)) throw new ArgumentException("Value can not be blank.", parameterName);
         var normalized = value.Trim();
-        if (normalized.Length > maxLength)
-        {
-            throw new ArgumentException($"Value can not exceed {maxLength} characters.", parameterName);
-        }
-        return normalized;
-    }
-
-    private static string? NormalizeOptional(string? value, int maxLength)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return null;
-        }
-        var normalized = value.Trim();
-        if (normalized.Length > maxLength)
-        {
-            normalized = normalized[..maxLength];
-        }
+        if (normalized.Length > maxLength) throw new ArgumentException($"Value can not exceed {maxLength} characters.", parameterName);
         return normalized;
     }
 
@@ -621,7 +564,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
             progress_stage varchar(40) NULL,
             progress_current integer NULL,
             progress_total integer NULL,
-            progress_detail varchar(500) NULL,
+            progress_detail text NULL,
             progress_updated_at timestamp with time zone NULL,
             created_at timestamp with time zone NOT NULL,
             started_at timestamp with time zone NULL,
@@ -630,16 +573,12 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
             CONSTRAINT ck_current_user_source_import_job_operation CHECK (operation IN ('add', 'refresh')),
             CONSTRAINT ck_current_user_source_import_job_kind CHECK (source_kind = 'web'),
             CONSTRAINT ck_current_user_source_import_job_status CHECK (status IN ('queued', 'running', 'completed', 'failed')));
-        ALTER TABLE current_user_source_import_job
-            ADD COLUMN IF NOT EXISTS progress_stage varchar(40) NULL;
-        ALTER TABLE current_user_source_import_job
-            ADD COLUMN IF NOT EXISTS progress_current integer NULL;
-        ALTER TABLE current_user_source_import_job
-            ADD COLUMN IF NOT EXISTS progress_total integer NULL;
-        ALTER TABLE current_user_source_import_job
-            ADD COLUMN IF NOT EXISTS progress_detail varchar(500) NULL;
-        ALTER TABLE current_user_source_import_job
-            ADD COLUMN IF NOT EXISTS progress_updated_at timestamp with time zone NULL;
+        ALTER TABLE current_user_source_import_job ADD COLUMN IF NOT EXISTS progress_stage varchar(40) NULL;
+        ALTER TABLE current_user_source_import_job ADD COLUMN IF NOT EXISTS progress_current integer NULL;
+        ALTER TABLE current_user_source_import_job ADD COLUMN IF NOT EXISTS progress_total integer NULL;
+        ALTER TABLE current_user_source_import_job ADD COLUMN IF NOT EXISTS progress_detail text NULL;
+        ALTER TABLE current_user_source_import_job ALTER COLUMN progress_detail TYPE text;
+        ALTER TABLE current_user_source_import_job ADD COLUMN IF NOT EXISTS progress_updated_at timestamp with time zone NULL;
         CREATE INDEX IF NOT EXISTS ix_current_user_source_import_job_user_created
             ON current_user_source_import_job(user_id, created_at DESC);
         CREATE INDEX IF NOT EXISTS ix_current_user_source_import_job_queue

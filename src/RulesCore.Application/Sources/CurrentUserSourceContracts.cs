@@ -111,11 +111,33 @@ public sealed record CurrentUserSourceView(
     DateTimeOffset AddedAt,
     DateTimeOffset RefreshedAt);
 
+/// <summary>
+/// Advisory import telemetry. Counters are sourced from real importer work units; they are
+/// not percentage estimates and callers must tolerate fields that are unavailable for a
+/// particular source format or phase.
+/// </summary>
 public sealed record CurrentUserSourceImportProgress(
     string Stage,
     int? Current = null,
     int? Total = null,
-    string? Detail = null);
+    string? Detail = null,
+    string? CurrentItem = null,
+    string? CurrentItemType = null,
+    string? AdapterFormat = null,
+    int? FilesDiscovered = null,
+    int? CompatibleFiles = null,
+    int? RecordsDiscovered = null,
+    int? RecordsTranslated = null,
+    int? EntitiesPersisted = null,
+    int? NewEntities = null,
+    int? UnchangedEntities = null,
+    int? NewRevisions = null,
+    int? TranslationOnlyUpdates = null,
+    int? PublicationsProcessed = null,
+    int? PublicationTotal = null,
+    int? ReconciliationIssueCount = null,
+    int? RepresentationsStored = null,
+    int? RepresentationsReused = null);
 
 public sealed record CurrentUserSourceImportJobView(
     Guid Id,
@@ -133,7 +155,10 @@ public sealed record CurrentUserSourceImportJobView(
     DateTimeOffset? ProgressUpdatedAt,
     DateTimeOffset CreatedAt,
     DateTimeOffset? StartedAt,
-    DateTimeOffset? CompletedAt);
+    DateTimeOffset? CompletedAt)
+{
+    public CurrentUserSourceImportProgress? Progress { get; init; }
+}
 
 public interface ICurrentUserSourceService
 {

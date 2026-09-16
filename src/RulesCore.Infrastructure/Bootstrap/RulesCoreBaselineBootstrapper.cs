@@ -44,7 +44,7 @@ public sealed class RulesCoreBaselineBootstrapper(
             dbContext,
             importer,
             cancellationToken);
-        var hostedSourceDefinitionCount = await BuiltInSrdHostedSources.EnsureAsync(
+        var hostedSourceDefinitionCount = await BuiltInSrdHostedSources.RetireBootstrapDefaultsAsync(
             dbContext,
             importer,
             cancellationToken);

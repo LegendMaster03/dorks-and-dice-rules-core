@@ -328,9 +328,7 @@ public sealed class PcGenSkillConversionIntegrationTests
         Assert.Equal(sourceName, conversion.GetProperty("sourceName").GetString());
         Assert.Equal(targetType, conversion.GetProperty("targetType").GetString());
         Assert.Equal(targetName, conversion.GetProperty("targetName").GetString());
-        var identity = extension.GetProperty("exactCompetencyIdentity");
-        Assert.Equal("rules-core-exact-competency-v1", identity.GetProperty("version").GetString());
-        Assert.Equal(CanonicalSourceIdentity.OccurrenceKey(targetType, targetName), identity.GetProperty("key").GetString());
+        Assert.False(extension.TryGetProperty("exactCompetencyIdentity", out _));
     }
 
     private static void AssertNoExactTranslation(string contentJson)

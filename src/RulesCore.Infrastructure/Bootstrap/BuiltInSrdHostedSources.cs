@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Sources;
@@ -83,36 +84,94 @@ internal static class BuiltInSrdHostedSources
                     Direct("bestiary/bestiary-srd52.json"),
                     Direct("spells/spells-srd52.json")
                 ],
-                note: $"Corpus membership was manually reviewed against the official SRD 5.2.1 PDF. CoolFireGiant/hewnhero-srd at reviewed commit {HewnHeroRevision} is used only as the structured representation. Aggregate backgrounds, species, and feats are constrained by the checked-in official SRD membership catalog; this also selects the PDF-confirmed 2024 Magic Initiate record instead of the malformed duplicate."))
+                note: $"Corpus membership was manually reviewed against the official Wizards SRD 5.2.1 PDF. CoolFireGiant/hewnhero-srd at reviewed commit {HewnHeroRevision} is used only as the structured representation. Aggregate backgrounds, species, and feats are constrained by the checked-in official SRD membership catalog; this also selects the PDF-confirmed 2024 Magic Initiate record instead of the malformed duplicate."))
     ];
 
-    public static async Task<int> EnsureAsync(
+    /// <summary>
+    /// Removes only the exact hosted-source definitions that were created by the old bootstrap
+    /// path and were never revised. The bundled normalized snapshots are now the built-in SRD
+    /// ingestion path. Any first-revision definition whose content differs from the historical
+    /// seed is deliberate configuration and is preserved just like a later Rules Lawyer revision.
+    /// </summary>
+    public static async Task<int> RetireBootstrapDefaultsAsync(
         RulesCoreDbContext dbContext,
         ISourceImportService importer,
         CancellationToken cancellationToken)
     {
         var service = new LegacyAwareHostedSourceService(dbContext, importer);
         var existing = await service.ListAsync(includeDisabled: true, cancellationToken);
-        var keys = existing.Select(value => value.Key).ToHashSet(StringComparer.Ordinal);
+        var seedsByKey = Definitions.ToDictionary(value => value.Key, StringComparer.Ordinal);
+        var preserved = 0;
 
-        foreach (var definition in Definitions)
+        foreach (var definition in existing.Where(value => seedsByKey.ContainsKey(value.Key)))
         {
-            if (keys.Contains(definition.Key))
+            var seed = seedsByKey[definition.Key];
+            var untouchedBootstrapDefault = definition.RevisionNumber == 1
+                && string.Equals(
+                    definition.CreatedByUserId,
+                    RulesCoreBaselineCatalog.BootstrapActor,
+                    StringComparison.Ordinal)
+                && MatchesHistoricalSeed(definition, seed.Request);
+            if (!untouchedBootstrapDefault)
             {
-                // Built-in registration is install/bootstrap behavior, not policy enforcement.
-                // A Rules Lawyer's later revisions remain authoritative and are never overwritten.
+                preserved++;
                 continue;
             }
 
-            await service.SetAsync(
-                definition.Key,
-                definition.Request,
-                RulesCoreBaselineCatalog.BootstrapActor,
-                cancellationToken);
-            keys.Add(definition.Key);
+            await dbContext.Database.ExecuteSqlInterpolatedAsync($$"""
+                DELETE FROM hosted_source_definition
+                WHERE hosted_source_definition_id = {{definition.Id}};
+                """, cancellationToken);
         }
 
-        return Definitions.Count;
+        return preserved;
+    }
+
+    private static bool MatchesHistoricalSeed(
+        HostedSourceDefinitionView definition,
+        SetHostedSourceDefinitionRequest seed)
+    {
+        if (!string.Equals(definition.DisplayName, seed.DisplayName, StringComparison.Ordinal)
+            || !string.Equals(definition.FormatKind, seed.FormatKind, StringComparison.Ordinal)
+            || !string.Equals(definition.PackageKey, seed.PackageKey, StringComparison.Ordinal)
+            || !string.Equals(definition.PackageDisplayName, seed.PackageDisplayName, StringComparison.Ordinal)
+            || !string.Equals(definition.Provider, seed.Provider, StringComparison.Ordinal)
+            || !string.Equals(definition.License, seed.License, StringComparison.Ordinal)
+            || definition.IsPublic != seed.IsPublic
+            || !string.Equals(definition.WorkKey, seed.WorkKey, StringComparison.Ordinal)
+            || !string.Equals(definition.WorkDisplayName, seed.WorkDisplayName, StringComparison.Ordinal)
+            || !string.Equals(definition.EditionKey, seed.EditionKey, StringComparison.Ordinal)
+            || !string.Equals(definition.EditionDisplayName, seed.EditionDisplayName, StringComparison.Ordinal)
+            || !string.Equals(definition.GameEdition, seed.GameEdition, StringComparison.Ordinal)
+            || !string.Equals(definition.ReleaseKind, seed.ReleaseKind, StringComparison.Ordinal)
+            || definition.PublicationDate != seed.PublicationDate
+            || definition.IsEnabled != seed.IsEnabled
+            || !string.Equals(definition.Note, seed.Note, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var seedCodes = seed.IncludedSourceCodes ?? [];
+        if (!definition.IncludedSourceCodes.SequenceEqual(seedCodes, StringComparer.Ordinal))
+        {
+            return false;
+        }
+
+        var actualResources = definition.Resources
+            .Select(value => $"{value.Kind}\n{value.Uri}")
+            .OrderBy(value => value, StringComparer.Ordinal)
+            .ToArray();
+        var expectedResources = seed.Resources
+            .Select(value =>
+            {
+                var kind = value.Kind.Trim().ToLowerInvariant();
+                var uri = new Uri(value.Uri.Trim(), UriKind.Absolute).AbsoluteUri;
+                return $"{kind}\n{uri}";
+            })
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.Ordinal)
+            .ToArray();
+        return actualResources.SequenceEqual(expectedResources, StringComparer.Ordinal);
     }
 
     private static SetHostedSourceDefinitionRequest BuildLegacy(

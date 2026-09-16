@@ -68,8 +68,10 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
         {
             if (string.Equals(Path.GetExtension(candidate.Path), ".pcc", StringComparison.OrdinalIgnoreCase))
             {
+                // Artifact paths come from Git, where path identity is case-sensitive. Do not
+                // collapse two distinct campaign files merely because their casing differs.
                 var campaign = campaigns.SingleOrDefault(value =>
-                    string.Equals(value.Path, candidate.Path, StringComparison.OrdinalIgnoreCase));
+                    string.Equals(value.Path, candidate.Path, StringComparison.Ordinal));
                 if (campaign is not null)
                 {
                     results.Add(BuildCampaignRepresentation(campaign));
@@ -80,7 +82,7 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
             var representation = BuildListRepresentation(
                 candidate,
                 references.Where(value =>
-                    string.Equals(value.TargetPath, candidate.Path, StringComparison.OrdinalIgnoreCase)).ToArray());
+                    string.Equals(value.TargetPath, candidate.Path, StringComparison.Ordinal)).ToArray());
             if (representation is not null)
             {
                 results.Add(representation);
@@ -259,6 +261,7 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
     {
         var records = new List<NormalizedSourceRecord>();
         var duplicateOrdinals = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        var nativeKeyOwners = new Dictionary<string, (int RecordIndex, string IdentityName)>(StringComparer.Ordinal);
         var lines = SplitLines(artifact.Text);
         for (var index = 0; index < lines.Length; index++)
         {
@@ -342,11 +345,32 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
             if (string.IsNullOrWhiteSpace(normalizedIdentity)) normalizedIdentity = "unnamed";
             if (normalizedIdentity.Length > 180) normalizedIdentity = normalizedIdentity[..180];
 
+            var baseNativeKey = $"pcgen|{entityType}|{CanonicalSourceIdentity.Fingerprint(artifact.Path)[..20]}|{normalizedIdentity}|{ordinal}";
+            var nativeKey = baseNativeKey;
+            if (nativeKeyOwners.TryGetValue(baseNativeKey, out var owner)
+                && !string.Equals(owner.IdentityName, identityName, StringComparison.Ordinal))
+            {
+                // NormalizeIdentityPart deliberately removes punctuation for canonical matching,
+                // but PCGen native object identity can distinguish punctuation-bearing names such
+                // as "Strength -2"/"Strength +2" and "Low light Vision"/"Low-Light Vision".
+                // Only disambiguate when that lossy normalization actually collides, preserving
+                // the historical key shape for every non-colliding PCGen record.
+                records[owner.RecordIndex] = records[owner.RecordIndex] with
+                {
+                    NativeKey = $"{baseNativeKey}|native-{CanonicalSourceIdentity.Fingerprint(owner.IdentityName)[..20]}"
+                };
+                nativeKey = $"{baseNativeKey}|native-{CanonicalSourceIdentity.Fingerprint(identityName)[..20]}";
+            }
+            else
+            {
+                nativeKeyOwners.TryAdd(baseNativeKey, (records.Count, identityName));
+            }
+
             records.Add(new NormalizedSourceRecord(
                 entityType,
                 Truncate(name, 300),
                 publication?.SourceCode,
-                $"pcgen|{entityType}|{CanonicalSourceIdentity.Fingerprint(artifact.Path)[..20]}|{normalizedIdentity}|{ordinal}",
+                nativeKey,
                 rawJson,
                 LocatorKey: BuildLocator(artifact.Path, lineNumber),
                 PublicationLocalKey: publication?.LocalKey,
@@ -375,7 +399,7 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
             "pcgen-operation",
             Truncate($"{operationKind}: {display}", 300),
             sourceCode,
-            $"pcgen|operation|{CanonicalSourceIdentity.Fingerprint($"{path}\n{rawLine}")[..32]}",
+            $"pcgen|operation|{CanonicalSourceIdentity.Fingerprint($"{path}\n{lineNumber}\n{rawLine}")[..32]}",
             JsonSerializer.Serialize(new
             {
                 format = Format,
@@ -388,7 +412,7 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
                 copyName
             }),
             LocatorKey: BuildLocator(path, lineNumber),
-            NativeIdentityJson: JsonSerializer.Serialize(new { path, operation = operationKind, target, copyName }));
+            NativeIdentityJson: JsonSerializer.Serialize(new { path, lineNumber, operation = operationKind, target, copyName }));
     }
 
     private static NormalizedSourceRecord FragmentRecord(
@@ -401,7 +425,7 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
             "pcgen-fragment",
             Truncate($"PCGen fragment line {lineNumber}", 300),
             sourceCode,
-            $"pcgen|fragment|{CanonicalSourceIdentity.Fingerprint($"{path}\n{rawLine}")[..32]}",
+            $"pcgen|fragment|{CanonicalSourceIdentity.Fingerprint($"{path}\n{lineNumber}\n{rawLine}")[..32]}",
             JsonSerializer.Serialize(new
             {
                 format = Format,
@@ -523,15 +547,21 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
             || shortValues.Count > 1
             || dateValues.Count > 1
             || webValues.Count > 1;
-        var dateRaw = dateValues.SingleOrDefault();
+        var sourceLong = SingleOrNull(longValues);
+        var sourceShort = SingleOrNull(shortValues);
+        var dateRaw = SingleOrNull(dateValues);
+        var sourceWeb = SingleOrNull(webValues);
         return new EmbeddedSourceMetadata(
-            longValues.SingleOrDefault(),
-            shortValues.SingleOrDefault(),
+            sourceLong,
+            sourceShort,
             dateRaw,
             ParseExactDate(dateRaw),
-            webValues.SingleOrDefault(),
+            sourceWeb,
             ambiguous);
     }
+
+    private static string? SingleOrNull(IReadOnlyList<string> values) =>
+        values.Count == 1 ? values[0] : null;
 
     private static IReadOnlyList<string> Values(IReadOnlyList<TaggedField> fields, string tag) =>
         fields
@@ -701,8 +731,8 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
         if (rawTarget.TrimStart().StartsWith('@')) return false;
         var directory = PathDirectory(campaignPath);
         return string.IsNullOrEmpty(directory)
-            || string.Equals(targetPath, directory, StringComparison.OrdinalIgnoreCase)
-            || targetPath.StartsWith(directory + "/", StringComparison.OrdinalIgnoreCase);
+            || string.Equals(targetPath, directory, StringComparison.Ordinal)
+            || targetPath.StartsWith(directory + "/", StringComparison.Ordinal);
     }
 
     private static string ArtifactPath(SourceRepresentationArtifact artifact)
