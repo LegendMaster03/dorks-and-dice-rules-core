@@ -1,0 +1,48 @@
+name: Validate Upstream Source Corpora
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "feature/normalized-builtins-source-lifecycle" ]
+
+concurrency:
+  group: validate-upstream-corpora-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  corpus:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Fetch pinned 5e.tools data tree
+        run: |
+          git clone --filter=blob:none --no-checkout --depth 1 \
+            https://github.com/5etools-mirror-3/5etools-src.git /tmp/5etools-src
+          git -C /tmp/5etools-src sparse-checkout set data
+          git -C /tmp/5etools-src checkout e5d052071b635f58cc8006e9727053eaf78ea8f9
+
+      - name: Fetch pinned PCGen 3e and 3.5e trees
+        run: |
+          git clone --filter=blob:none --no-checkout --depth 1 \
+            https://github.com/PCGen/pcgen.git /tmp/pcgen
+          git -C /tmp/pcgen sparse-checkout set data/3e data/35e
+          git -C /tmp/pcgen checkout 8581882eba65c4b3c5fabe73f8238f55acf932e6
+
+      - name: Restore
+        run: dotnet restore dorks-and-dice-rules-core.slnx
+
+      - name: Validate complete upstream adapter corpora
+        env:
+          RULESCORE_5ETOOLS_DATA_PATH: /tmp/5etools-src/data
+          RULESCORE_PCGEN_3E_PATH: /tmp/pcgen/data/3e
+          RULESCORE_PCGEN_35E_PATH: /tmp/pcgen/data/35e
+        run: >-
+          dotnet test tests/RulesCore.IntegrationTests/RulesCore.IntegrationTests.csproj
+          --configuration Release
+          --no-restore
+          --filter FullyQualifiedName~UpstreamCorpusAdapterAcceptanceTests
