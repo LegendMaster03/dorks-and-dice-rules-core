@@ -68,8 +68,10 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
         {
             if (string.Equals(Path.GetExtension(candidate.Path), ".pcc", StringComparison.OrdinalIgnoreCase))
             {
+                // Artifact paths come from Git, where path identity is case-sensitive. Do not
+                // collapse two distinct campaign files merely because their casing differs.
                 var campaign = campaigns.SingleOrDefault(value =>
-                    string.Equals(value.Path, candidate.Path, StringComparison.OrdinalIgnoreCase));
+                    string.Equals(value.Path, candidate.Path, StringComparison.Ordinal));
                 if (campaign is not null)
                 {
                     results.Add(BuildCampaignRepresentation(campaign));
@@ -80,7 +82,7 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
             var representation = BuildListRepresentation(
                 candidate,
                 references.Where(value =>
-                    string.Equals(value.TargetPath, candidate.Path, StringComparison.OrdinalIgnoreCase)).ToArray());
+                    string.Equals(value.TargetPath, candidate.Path, StringComparison.Ordinal)).ToArray());
             if (representation is not null)
             {
                 results.Add(representation);
@@ -707,8 +709,8 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
         if (rawTarget.TrimStart().StartsWith('@')) return false;
         var directory = PathDirectory(campaignPath);
         return string.IsNullOrEmpty(directory)
-            || string.Equals(targetPath, directory, StringComparison.OrdinalIgnoreCase)
-            || targetPath.StartsWith(directory + "/", StringComparison.OrdinalIgnoreCase);
+            || string.Equals(targetPath, directory, StringComparison.Ordinal)
+            || targetPath.StartsWith(directory + "/", StringComparison.Ordinal);
     }
 
     private static string ArtifactPath(SourceRepresentationArtifact artifact)
