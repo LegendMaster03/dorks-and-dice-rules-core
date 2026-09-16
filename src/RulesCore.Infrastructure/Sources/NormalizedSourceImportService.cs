@@ -262,7 +262,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                     StringComparison.OrdinalIgnoreCase))
                 .ToArray();
             var fingerprints = records
-                .Select(value => CanonicalSourceIdentity.SemanticFingerprint(SemanticDocument(value.Record)))
+                .Select(value => SemanticFingerprint(value.Record))
                 .Distinct(StringComparer.Ordinal)
                 .ToArray();
             var evidence = new CanonicalPublicationEvidence(
@@ -279,8 +279,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                 Guid? canonicalPublicationId = null;
                 foreach (var value in records)
                 {
-                    var semanticFingerprint = CanonicalSourceIdentity.SemanticFingerprint(
-                        SemanticDocument(value.Record));
+                    var semanticFingerprint = SemanticFingerprint(value.Record);
                     var association = await new CanonicalSourceRepresentationService(dbContext)
                         .AssociateSourceEntityAsync(
                             value.Entity.Id,
@@ -499,7 +498,8 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
             PublicationLocalKey = NormalizeOptional(record.PublicationLocalKey, 500),
             NativeIdentityJson = NormalizeIdentityJson(record.NativeIdentityJson),
             SemanticJson = semanticJson,
-            CanonicalAliases = NormalizeCanonicalAliases(record.CanonicalAliases)
+            CanonicalAliases = NormalizeCanonicalAliases(record.CanonicalAliases),
+            CanonicalIdentityKey = NormalizeOptional(record.CanonicalIdentityKey, 1000)
         };
     }
 
@@ -517,6 +517,11 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
         }
         return normalized;
     }
+
+    private static string SemanticFingerprint(NormalizedSourceRecord record) =>
+        string.IsNullOrWhiteSpace(record.CanonicalIdentityKey)
+            ? CanonicalSourceIdentity.SemanticFingerprint(SemanticDocument(record))
+            : ExactCompetencyTranslationPolicy.CanonicalFingerprint(record.CanonicalIdentityKey);
 
     private static string SemanticDocument(NormalizedSourceRecord record) =>
         string.IsNullOrWhiteSpace(record.ContentJson) ? record.RawJson : record.ContentJson;
