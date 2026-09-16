@@ -523,15 +523,21 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
             || shortValues.Count > 1
             || dateValues.Count > 1
             || webValues.Count > 1;
-        var dateRaw = dateValues.SingleOrDefault();
+        var sourceLong = SingleOrNull(longValues);
+        var sourceShort = SingleOrNull(shortValues);
+        var dateRaw = SingleOrNull(dateValues);
+        var sourceWeb = SingleOrNull(webValues);
         return new EmbeddedSourceMetadata(
-            longValues.SingleOrDefault(),
-            shortValues.SingleOrDefault(),
+            sourceLong,
+            sourceShort,
             dateRaw,
             ParseExactDate(dateRaw),
-            webValues.SingleOrDefault(),
+            sourceWeb,
             ambiguous);
     }
+
+    private static string? SingleOrNull(IReadOnlyList<string> values) =>
+        values.Count == 1 ? values[0] : null;
 
     private static IReadOnlyList<string> Values(IReadOnlyList<TaggedField> fields, string tag) =>
         fields
