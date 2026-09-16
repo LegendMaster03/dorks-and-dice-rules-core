@@ -40,6 +40,14 @@ public sealed class CurrentUserSourceRemovalLifecycleIntegrationTests
             FileName: "reusable-source.json",
             Json: $$"""
                 {
+                  "_meta": {
+                    "sources": [
+                      {
+                        "json": "{{sourceCode}}",
+                        "full": "Source removal lifecycle fixture {{token[..8]}}"
+                      }
+                    ]
+                  },
                   "skill": [
                     { "name": "{{entityName}}", "source": "{{sourceCode}}", "ability": "int" }
                   ]
