@@ -11,6 +11,8 @@ namespace RulesCore.IntegrationTests;
 /// </summary>
 public sealed class UpstreamCorpusAdapterAcceptanceTests
 {
+    private const int WebSourceDocumentLimit = 2000;
+
     [Fact]
     public void FiveEToolsDataTreeParsesWithoutNativeIdentityConflicts()
     {
@@ -23,6 +25,9 @@ public sealed class UpstreamCorpusAdapterAcceptanceTests
             path => string.Equals(Path.GetExtension(path), ".json", StringComparison.OrdinalIgnoreCase),
             "https://github.com/5etools-mirror-3/5etools-src/tree/main/data");
         Assert.NotEmpty(artifacts);
+        Assert.True(
+            artifacts.Length <= WebSourceDocumentLimit,
+            $"The pinned 5e.tools data tree contains {artifacts.Length} candidate files, exceeding the current Web-source acquisition limit of {WebSourceDocumentLimit}.");
 
         var representations = new FiveEToolsSourceFormatAdapter().TryReadMany(artifacts);
 
@@ -52,6 +57,9 @@ public sealed class UpstreamCorpusAdapterAcceptanceTests
             },
             $"https://github.com/PCGen/pcgen/tree/master/{repositoryPrefix}");
         Assert.NotEmpty(artifacts);
+        Assert.True(
+            artifacts.Length <= WebSourceDocumentLimit,
+            $"The pinned {repositoryPrefix} tree contains {artifacts.Length} candidate files, exceeding the current Web-source acquisition limit of {WebSourceDocumentLimit}.");
 
         var representations = new PcGenSourceFormatAdapter().TryReadMany(artifacts);
 
