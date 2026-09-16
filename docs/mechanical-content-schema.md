@@ -115,7 +115,7 @@ The reviewed direct cross-type translations are:
 - `Craft (alchemy)` -> `Alchemist's Supplies`;
 - `Forgery` -> `Forgery Kit`.
 
-These unscoped mappings receive `_rulesCore.exactCompetencyIdentity`. Canonical semantic identity for this whitelist is based on that stable competency identity rather than edition-specific description text or source tags. Consequently, once `Deception` is bound to a Rules Layer concept, a later 3.x `Bluff` import resolves to the same canonical competency and does not require a second Rules Lawyer binding.
+These unscoped mappings set `NormalizedSourceRecord.CanonicalIdentityKey` to a stable reviewed competency identity used only during canonical reconciliation. That identity is not source evidence and is not injected into `ContentJson`. Consequently, once `Deception` is bound to a Rules Layer concept, a later 3.x `Bluff` import can resolve to the same canonical competency without changing the source-native record or requiring a second Rules Lawyer binding.
 
 `Open Lock` -> `Thieves' Tools` remains intentionally different. It is limited to the `open-lock` scope, so `Open Lock` remains its own normalized competency and records only the scoped relationship under `_rulesCore.competencyConversion`. This prevents an Open Lock proficiency from becoming full Thieves' Tools proficiency.
 
@@ -145,12 +145,6 @@ A 3.x rule is not converted into a false 5e mechanic merely to fill a familiar f
       "targetType": "skill",
       "targetName": "Deception"
     },
-    "exactCompetencyIdentity": {
-      "version": "rules-core-exact-competency-v1",
-      "key": "skill|deception",
-      "entityType": "skill",
-      "name": "Deception"
-    },
     "pcgen": {
       "unmappedSegments": [
         { "tag": "KEYSTAT", "value": "CHA" }
@@ -164,9 +158,11 @@ A 3.x rule is not converted into a false 5e mechanic merely to fill a familiar f
 
 `_rulesCore.competencyConversion` records how the source terminology translated. For an unscoped reviewed mapping it documents the exact translation; for a scoped mapping such as Open Lock it remains the rule-bearing scope relationship.
 
-`_rulesCore.exactCompetencyIdentity` is reserved importer metadata created only for the reviewed exact-translation whitelist. It is rule-bearing identity metadata and survives `GetMechanicalContentJson()`. Canonical semantic fingerprinting recognizes its versioned stable key and deliberately treats edition-specific mechanical representations of that competency as one canonical competency.
+`NormalizedSourceRecord.CanonicalIdentityKey` carries the reviewed exact competency identity separately from mechanical content. The normalized importer uses it to derive canonical identity during reconciliation, but it is neither source evidence nor part of `ContentJson`.
 
-`_rulesCore.pcgen.unmappedSegments` is also rule-bearing: those values represent mechanics that have not been translated into a faithful 5e.tools field. They remain in the rule-bearing view for mechanical inspection even when an exact competency identity causes canonical competency matching to ignore edition-specific differences for identity purposes.
+Historical persisted content may still contain `_rulesCore.exactCompetencyIdentity` from the earlier implementation. Canonical identity readers continue to recognize that marker for backward compatibility, but current imports do not write it.
+
+`_rulesCore.pcgen.unmappedSegments` is also rule-bearing: those values represent mechanics that have not been translated into a faithful 5e.tools field. They remain in the rule-bearing view for mechanical inspection even when the separate canonical competency identity causes edition-specific representations to reconcile to the same competency.
 
 The extension is subordinate to the complete `RawJson`; it is not a replacement 3.x ontology. Unsupported source fragments and operations remain separate source evidence until a translator can construct a legitimate mechanical entity.
 
