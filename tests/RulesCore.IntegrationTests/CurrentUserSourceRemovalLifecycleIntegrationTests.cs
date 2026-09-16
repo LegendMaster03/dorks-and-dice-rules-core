@@ -93,12 +93,12 @@ public sealed class CurrentUserSourceRemovalLifecycleIntegrationTests
                         $"source-removal-{token}",
                         entity.EntityType,
                         entity.Name),
-                    "rules-lawyer-test")).Value;
+                    userId)).Value;
                 conceptId = concept.Id;
                 _ = await rules.BindSourceEntityAsync(
                     concept.Id,
                     new BindRuleConceptSourceRequest(entity.Id),
-                    "rules-lawyer-test");
+                    userId);
 
                 using var patch = JsonDocument.Parse("""
                     {"ability":"wis","retainedByRemoval":true}
@@ -109,7 +109,7 @@ public sealed class CurrentUserSourceRemovalLifecycleIntegrationTests
                         revision.Id,
                         "Removal preservation test.",
                         MergePatch: patch.RootElement.Clone()),
-                    "rules-lawyer-test")).Value;
+                    userId)).Value;
                 decisionId = decision.Id;
                 patchFingerprint = decision.PatchFingerprint;
                 Assert.False(string.IsNullOrWhiteSpace(patchFingerprint));
