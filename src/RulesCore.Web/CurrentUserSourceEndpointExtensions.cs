@@ -228,7 +228,6 @@ public static class CurrentUserSourceEndpointExtensions
             Guid currentUserSourceId,
             HttpContext httpContext,
             RulesCoreDbContext dbContext,
-            ISourceGrantService grants,
             CancellationToken cancellationToken) =>
         {
             var authorizationFailure = RequireSignedInDorksAndDiceAccount(
@@ -241,7 +240,7 @@ public static class CurrentUserSourceEndpointExtensions
 
             try
             {
-                var removal = new CurrentUserSourceRemovalService(dbContext, grants);
+                var removal = new CurrentUserSourceRemovalService(dbContext);
                 var removed = await removal.RemoveAsync(
                     authenticationContext!.User.Id,
                     currentUserSourceId,
