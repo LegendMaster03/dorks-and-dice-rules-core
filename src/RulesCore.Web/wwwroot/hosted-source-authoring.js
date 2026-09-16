@@ -38,19 +38,82 @@ export function installHostedSourceAuthoring(app) {
 async function renderHostedSources(app, container) {
     clear(container);
     container.append(element("div", { className: "card card-body mb-3" },
-        element("h3", { className: "h5 mb-1", text: "Hosted source definitions" }),
-        element("p", { className: "text-body-secondary mb-0", text: "Register canonical live source locations once. Refreshing fetches the current remote documents and writes only changed immutable Source Layer revisions; runtime rules never depend on the remote host remaining online." })));
+        element("h3", { className: "h5 mb-1", text: "Source maintenance" }),
+        element("p", { className: "text-body-secondary mb-0", text: "Reprocess bundled snapshots when Rules Core interpretation changes, or manage canonical live source locations. Bundled reprocessing and hosted refresh are deliberately separate operations." })));
 
     const result = element("div", { className: "mb-3" });
+    const bundled = await renderBundledSrdMaintenance(app, result);
     const editor = buildEditor(app, result);
     const catalog = element("div");
-    container.append(result, editor.card, catalog);
+    container.append(result, bundled, editor.card, catalog);
     await renderCatalog(app, catalog, editor, result);
+}
+
+async function renderBundledSrdMaintenance(app, result) {
+    const sources = await app.api.getBundledSrds();
+    const card = element("div", { className: "card card-body mb-3" });
+    card.append(
+        element("h3", { className: "h5 mb-1", text: "Bundled SRD maintenance" }),
+        element("p", {
+            className: "text-body-secondary mb-2",
+            text: "Reprocess uses the bundled snapshot already shipped with Rules Core and does not fetch upstream. It reruns the current adapter, mechanical translation, persistence, and canonical reconciliation against the preserved Source Layer identity."
+        }),
+        alertNode(
+            "info",
+            "Existing Source Layer identity/history and Rules Layer decisions and patches are preserved. This operation does not delete or reset rule modifications."));
+
+    if (!sources.length) {
+        card.append(alertNode("secondary", "No bundled SRD snapshots are registered."));
+        return card;
+    }
+
+    const list = element("div", { className: "list-group list-group-flush" });
+    for (const source of sources) {
+        const button = element("button", {
+            type: "button",
+            className: "btn btn-sm btn-outline-primary",
+            text: "Reprocess stored snapshot"
+        });
+        button.addEventListener("click", async () => {
+            const confirmed = window.confirm(
+                `Reprocess '${source.displayName}' from the bundled snapshot using the current Rules Core ingestion code? Existing Rules Layer decisions and patches will be preserved.`);
+            if (!confirmed) return;
+
+            result.replaceChildren();
+            setButtonBusy(button, true, "Reprocessing…");
+            try {
+                const response = await app.api.reprocessBundledSrd(source.workKey);
+                const issueText = response.reconciliationIssueCount === 1
+                    ? "1 reconciliation issue"
+                    : `${response.reconciliationIssueCount} reconciliation issues`;
+                result.replaceChildren(alertNode(
+                    response.reconciliationIssueCount ? "warning" : "success",
+                    `${response.displayName}: ${response.processedEntityCount} entities reprocessed; ${response.createdNativeRevisionCount} native source revision(s) created; ${response.preservedNativeRevisionCount} existing native revision(s) preserved; ${issueText}. Rules Layer decisions and patches were not deleted or reset.`));
+            } catch (error) {
+                result.replaceChildren(alertNode("danger", describeError(error)));
+            } finally {
+                setButtonBusy(button, false);
+            }
+        });
+
+        list.append(element("div", { className: "list-group-item px-0" },
+            element("div", { className: "d-flex flex-wrap justify-content-between gap-3 align-items-start" },
+                element("div", {},
+                    element("div", { className: "fw-semibold", text: source.displayName }),
+                    element("div", { className: "small text-body-secondary", text: `${source.packageDisplayName} · ${source.editionDisplayName}${source.gameEdition ? ` · ${source.gameEdition}` : ""}` }),
+                    element("div", { className: "small font-monospace text-body-secondary", text: `${source.workKey} · ${source.fileName}` })),
+                button)));
+    }
+    card.append(list);
+    return card;
 }
 
 function buildEditor(app, result) {
     const card = element("div", { className: "card card-body mb-3" });
     const form = element("form");
+    card.append(
+        element("h3", { className: "h5 mb-1", text: "Hosted source definitions" }),
+        element("p", { className: "text-body-secondary", text: "Register canonical live source locations once. Refreshing fetches the current remote documents and writes only changed immutable Source Layer revisions; runtime rules never depend on the remote host remaining online." }));
     const definitionKey = textField("Definition key", "5etools-srd51", "col-lg-3", true);
     const displayName = textField("Display name", "SRD 5.1 public corpus", "col-lg-3", true);
     const formatKind = selectField("Import format", FORMAT_KINDS, "col-lg-3", value => value);
