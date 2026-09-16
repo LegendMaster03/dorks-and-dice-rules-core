@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
+using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Bootstrap;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Rules;
@@ -10,6 +11,8 @@ namespace RulesCore.IntegrationTests;
 [Collection(SourceLayerPostgresCollection.Name)]
 public sealed class BaselineBootstrapIntegrationTests
 {
+    private const string BootstrapActor = "rules-core-bootstrap";
+
     private static readonly string[] BuiltInPackageKeys =
     ["wotc-srd-ogl", "wotc-srd-cc", "loot-tavern-free", "loot-tavern-licensed", "dorks-and-dice-baseline"];
 
@@ -28,10 +31,19 @@ public sealed class BaselineBootstrapIntegrationTests
         var importer = new SourceImportService(db);
         var globalRules = new GlobalRulesService(db);
         var bootstrapper = new RulesCoreBaselineBootstrapper(db, importer, globalRules);
+        var hostedService = new HostedSourceService(db, importer);
 
         await ResetAsync(db);
         try
         {
+            // Simulate an installation upgraded from the old bootstrap path. This untouched
+            // bootstrap-owned definition must disappear once bundled normalized snapshots
+            // become the sole built-in SRD ingestion path.
+            await hostedService.SetAsync(
+                "builtin-wotc-srd-5-1",
+                LegacyHostedDefinition("Old bootstrap default"),
+                BootstrapActor);
+
             var first = await bootstrapper.EnsureAsync();
             Assert.True(first.RulesBaselineApplied);
             Assert.NotNull(first.PublishedRuleset);
@@ -41,7 +53,7 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Equal(4, first.SourceAuthorityReferenceCount);
             Assert.Equal(0, first.HostedSourceDefinitionCount);
 
-            var hosted = await new HostedSourceService(db, importer).ListAsync(includeDisabled: true);
+            var hosted = await hostedService.ListAsync(includeDisabled: true);
             Assert.DoesNotContain(hosted, value => LegacyBuiltInHostedKeys.Contains(value.Key));
 
             var packages = await db.SourcePackages
@@ -111,20 +123,64 @@ public sealed class BaselineBootstrapIntegrationTests
                 new SetGlobalRuleDecisionRequest(selectedRevision, "User-maintained baseline decision."),
                 "rules-lawyer");
 
+            // A deliberate later revision under the old reserved key is policy, not stale
+            // bootstrap state. The migration must leave it intact.
+            await hostedService.SetAsync(
+                "builtin-wotc-srd-5-1",
+                LegacyHostedDefinition("Recreated bootstrap default"),
+                BootstrapActor);
+            var revised = await hostedService.SetAsync(
+                "builtin-wotc-srd-5-1",
+                LegacyHostedDefinition("Rules Lawyer retained source policy"),
+                "rules-lawyer");
+            Assert.Equal(2, revised.RevisionNumber);
+
             var revisionCount = await db.SourceEntityRevisions.CountAsync();
             var second = await bootstrapper.EnsureAsync();
             Assert.False(second.RulesBaselineApplied);
             Assert.Null(second.PublishedRuleset);
-            Assert.Equal(0, second.HostedSourceDefinitionCount);
+            Assert.Equal(1, second.HostedSourceDefinitionCount);
             Assert.Equal(revisionCount, await db.SourceEntityRevisions.CountAsync());
             Assert.Equal(1, await db.RulesetRevisions.CountAsync());
             Assert.Equal(2, await db.GlobalRuleDecisions.CountAsync(value => value.RuleConceptId == concept.Id));
+
+            var preserved = await hostedService.ListAsync(includeDisabled: true);
+            var retained = Assert.Single(preserved.Where(value => value.Key == "builtin-wotc-srd-5-1"));
+            Assert.Equal(2, retained.RevisionNumber);
+            Assert.Equal("rules-lawyer", retained.CreatedByUserId);
+            Assert.Equal("Rules Lawyer retained source policy", retained.Note);
         }
         finally
         {
             await ResetAsync(db);
         }
     }
+
+    private static SetHostedSourceDefinitionRequest LegacyHostedDefinition(string note) =>
+        new(
+            DisplayName: "Legacy SRD 5.1 hosted definition",
+            FormatKind: HostedSourceFormatKinds.FiveEToolsJson,
+            PackageKey: "wotc-srd-cc",
+            PackageDisplayName: "Wizards of the Coast SRD (Creative Commons)",
+            Provider: "Wizards of the Coast",
+            License: "CC-BY-4.0",
+            IsPublic: true,
+            WorkKey: "srd-5-1",
+            WorkDisplayName: "System Reference Document 5.1",
+            EditionKey: "5.1",
+            EditionDisplayName: "SRD 5.1",
+            GameEdition: "5e",
+            ReleaseKind: "srd",
+            PublicationDate: null,
+            IncludedSourceCodes: ["SRD51"],
+            Resources:
+            [
+                new HostedSourceResourceRequest(
+                    HostedSourceResourceKinds.DirectJson,
+                    "https://example.invalid/srd51.json")
+            ],
+            IsEnabled: true,
+            Note: note);
 
     private static async Task<int> CountAuthorityReferencesAsync(RulesCoreDbContext db)
     {
