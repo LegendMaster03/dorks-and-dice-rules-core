@@ -17,81 +17,34 @@ internal sealed record RuleConceptRelationshipReference(
 
 internal static class RuleConceptRelationshipStore
 {
-    public static Task EnsureSchemaAsync(
+    private const string SubclassParentBackfillKey = "subclass-parent-v1";
+    private const string SystemActorUserId = "rules-core-system";
+
+    public static async Task EnsureSchemaAsync(
         RulesCoreDbContext dbContext,
-        CancellationToken cancellationToken = default) =>
-        dbContext.Database.ExecuteSqlRawAsync(
-            """
-            CREATE TABLE IF NOT EXISTS rule_concept_relationship (
-                rule_concept_relationship_id uuid NOT NULL,
-                from_rule_concept_id uuid NOT NULL,
-                to_rule_concept_id uuid NOT NULL,
-                relationship_kind varchar(80) NOT NULL,
-                created_by_user_id varchar(200) NOT NULL,
-                created_at timestamp with time zone NOT NULL,
-                CONSTRAINT pk_rule_concept_relationship PRIMARY KEY (rule_concept_relationship_id),
-                CONSTRAINT fk_rule_concept_relationship_from FOREIGN KEY (from_rule_concept_id)
-                    REFERENCES rule_concept(rule_concept_id) ON DELETE CASCADE,
-                CONSTRAINT fk_rule_concept_relationship_to FOREIGN KEY (to_rule_concept_id)
-                    REFERENCES rule_concept(rule_concept_id) ON DELETE CASCADE,
-                CONSTRAINT ck_rule_concept_relationship_distinct CHECK (from_rule_concept_id <> to_rule_concept_id));
-            CREATE UNIQUE INDEX IF NOT EXISTS ux_rule_concept_relationship_identity
-                ON rule_concept_relationship(from_rule_concept_id, to_rule_concept_id, relationship_kind);
-            CREATE INDEX IF NOT EXISTS ix_rule_concept_relationship_to
-                ON rule_concept_relationship(to_rule_concept_id, relationship_kind);
-            """,
+        CancellationToken cancellationToken = default)
+    {
+        await EnsureSchemaOnlyAsync(dbContext, cancellationToken);
+        if (await HasCompletedBackfillAsync(dbContext, cancellationToken))
+        {
+            return;
+        }
+
+        await SynchronizeSubclassParentsCoreAsync(
+            dbContext,
+            SystemActorUserId,
             cancellationToken);
+        await MarkBackfillCompletedAsync(dbContext, cancellationToken);
+    }
 
     public static async Task SynchronizeSubclassParentsAsync(
         RulesCoreDbContext dbContext,
         string actorUserId,
         CancellationToken cancellationToken = default)
     {
-        await EnsureSchemaAsync(dbContext, cancellationToken);
-
-        var bindings = await ReadBoundConceptSourcesAsync(dbContext, cancellationToken);
-        var classBindings = bindings
-            .Where(value => string.Equals(
-                RuleConceptEntityTypes.Normalize(value.EntityType),
-                RuleConceptEntityTypes.Class,
-                StringComparison.Ordinal))
-            .ToArray();
-
-        foreach (var subclass in bindings.Where(value => string.Equals(
-                     RuleConceptEntityTypes.Normalize(value.EntityType),
-                     RuleConceptEntityTypes.Subclass,
-                     StringComparison.Ordinal)))
-        {
-            if (!TryReadParentClassIdentity(subclass.NativeIdentityJson, out var className, out var classSource))
-            {
-                continue;
-            }
-
-            var parentConceptIds = classBindings
-                .Where(candidate => candidate.SourcePackageId == subclass.SourcePackageId)
-                .Where(candidate => string.Equals(candidate.SourceEntityName, className, StringComparison.OrdinalIgnoreCase))
-                .Where(candidate => classSource is null
-                    || string.Equals(candidate.SourceCode, classSource, StringComparison.OrdinalIgnoreCase))
-                .Select(candidate => candidate.RuleConceptId)
-                .Distinct()
-                .ToArray();
-
-            foreach (var parentConceptId in parentConceptIds)
-            {
-                if (parentConceptId == subclass.RuleConceptId)
-                {
-                    continue;
-                }
-
-                await InsertRelationshipAsync(
-                    dbContext,
-                    subclass.RuleConceptId,
-                    parentConceptId,
-                    RuleConceptRelationshipKinds.ParentClass,
-                    actorUserId,
-                    cancellationToken);
-            }
-        }
+        await EnsureSchemaOnlyAsync(dbContext, cancellationToken);
+        await SynchronizeSubclassParentsCoreAsync(dbContext, actorUserId, cancellationToken);
+        await MarkBackfillCompletedAsync(dbContext, cancellationToken);
     }
 
     public static async Task<IReadOnlyDictionary<Guid, IReadOnlyList<RuleConceptRelationshipReference>>> GetOutgoingAsync(
@@ -202,6 +155,153 @@ internal static class RuleConceptRelationshipStore
         catch (JsonException)
         {
             return false;
+        }
+    }
+
+    private static Task EnsureSchemaOnlyAsync(
+        RulesCoreDbContext dbContext,
+        CancellationToken cancellationToken) =>
+        dbContext.Database.ExecuteSqlRawAsync(
+            """
+            CREATE TABLE IF NOT EXISTS rule_concept_relationship (
+                rule_concept_relationship_id uuid NOT NULL,
+                from_rule_concept_id uuid NOT NULL,
+                to_rule_concept_id uuid NOT NULL,
+                relationship_kind varchar(80) NOT NULL,
+                created_by_user_id varchar(200) NOT NULL,
+                created_at timestamp with time zone NOT NULL,
+                CONSTRAINT pk_rule_concept_relationship PRIMARY KEY (rule_concept_relationship_id),
+                CONSTRAINT fk_rule_concept_relationship_from FOREIGN KEY (from_rule_concept_id)
+                    REFERENCES rule_concept(rule_concept_id) ON DELETE CASCADE,
+                CONSTRAINT fk_rule_concept_relationship_to FOREIGN KEY (to_rule_concept_id)
+                    REFERENCES rule_concept(rule_concept_id) ON DELETE CASCADE,
+                CONSTRAINT ck_rule_concept_relationship_distinct CHECK (from_rule_concept_id <> to_rule_concept_id));
+            CREATE UNIQUE INDEX IF NOT EXISTS ux_rule_concept_relationship_identity
+                ON rule_concept_relationship(from_rule_concept_id, to_rule_concept_id, relationship_kind);
+            CREATE INDEX IF NOT EXISTS ix_rule_concept_relationship_to
+                ON rule_concept_relationship(to_rule_concept_id, relationship_kind);
+
+            CREATE TABLE IF NOT EXISTS rule_concept_relationship_backfill (
+                backfill_key varchar(120) NOT NULL,
+                completed_at timestamp with time zone NOT NULL,
+                CONSTRAINT pk_rule_concept_relationship_backfill PRIMARY KEY (backfill_key));
+            """,
+            cancellationToken);
+
+    private static async Task SynchronizeSubclassParentsCoreAsync(
+        RulesCoreDbContext dbContext,
+        string actorUserId,
+        CancellationToken cancellationToken)
+    {
+        var bindings = await ReadBoundConceptSourcesAsync(dbContext, cancellationToken);
+        var classBindings = bindings
+            .Where(value => string.Equals(
+                RuleConceptEntityTypes.Normalize(value.EntityType),
+                RuleConceptEntityTypes.Class,
+                StringComparison.Ordinal))
+            .ToArray();
+
+        foreach (var subclass in bindings.Where(value => string.Equals(
+                     RuleConceptEntityTypes.Normalize(value.EntityType),
+                     RuleConceptEntityTypes.Subclass,
+                     StringComparison.Ordinal)))
+        {
+            if (!TryReadParentClassIdentity(subclass.NativeIdentityJson, out var className, out var classSource))
+            {
+                continue;
+            }
+
+            var parentConceptIds = classBindings
+                .Where(candidate => candidate.SourcePackageId == subclass.SourcePackageId)
+                .Where(candidate => string.Equals(candidate.SourceEntityName, className, StringComparison.OrdinalIgnoreCase))
+                .Where(candidate => classSource is null
+                    || string.Equals(candidate.SourceCode, classSource, StringComparison.OrdinalIgnoreCase))
+                .Select(candidate => candidate.RuleConceptId)
+                .Distinct()
+                .ToArray();
+
+            foreach (var parentConceptId in parentConceptIds)
+            {
+                if (parentConceptId == subclass.RuleConceptId)
+                {
+                    continue;
+                }
+
+                await InsertRelationshipAsync(
+                    dbContext,
+                    subclass.RuleConceptId,
+                    parentConceptId,
+                    RuleConceptRelationshipKinds.ParentClass,
+                    actorUserId,
+                    cancellationToken);
+            }
+        }
+    }
+
+    private static async Task<bool> HasCompletedBackfillAsync(
+        RulesCoreDbContext dbContext,
+        CancellationToken cancellationToken)
+    {
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere)
+        {
+            await connection.OpenAsync(cancellationToken);
+        }
+
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.Transaction = dbContext.Database.CurrentTransaction?.GetDbTransaction();
+            command.CommandText = """
+                SELECT EXISTS (
+                    SELECT 1
+                    FROM rule_concept_relationship_backfill
+                    WHERE backfill_key = @key);
+                """;
+            AddParameter(command, "key", SubclassParentBackfillKey);
+            var result = await command.ExecuteScalarAsync(cancellationToken);
+            return result is true;
+        }
+        finally
+        {
+            if (openedHere)
+            {
+                await connection.CloseAsync();
+            }
+        }
+    }
+
+    private static async Task MarkBackfillCompletedAsync(
+        RulesCoreDbContext dbContext,
+        CancellationToken cancellationToken)
+    {
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere)
+        {
+            await connection.OpenAsync(cancellationToken);
+        }
+
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.Transaction = dbContext.Database.CurrentTransaction?.GetDbTransaction();
+            command.CommandText = """
+                INSERT INTO rule_concept_relationship_backfill (backfill_key, completed_at)
+                VALUES (@key, @completed)
+                ON CONFLICT (backfill_key) DO NOTHING;
+                """;
+            AddParameter(command, "key", SubclassParentBackfillKey);
+            AddParameter(command, "completed", DateTimeOffset.UtcNow);
+            await command.ExecuteNonQueryAsync(cancellationToken);
+        }
+        finally
+        {
+            if (openedHere)
+            {
+                await connection.CloseAsync();
+            }
         }
     }
 
