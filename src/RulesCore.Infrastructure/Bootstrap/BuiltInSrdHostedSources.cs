@@ -84,7 +84,7 @@ internal static class BuiltInSrdHostedSources
                     Direct("bestiary/bestiary-srd52.json"),
                     Direct("spells/spells-srd52.json")
                 ],
-                note: $"Corpus membership was manually reviewed against the official SRD 5.2.1 PDF. CoolFireGiant/hewnhero-srd at reviewed commit {HewnHeroRevision} is used only as the structured representation. Aggregate backgrounds, species, and feats are constrained by the checked-in official SRD membership catalog; this also selects the PDF-confirmed 2024 Magic Initiate record instead of the malformed duplicate."))
+                note: $"Corpus membership was manually reviewed against the official Wizards SRD 5.2.1 PDF. CoolFireGiant/hewnhero-srd at reviewed commit {HewnHeroRevision} is used only as the structured representation. Aggregate backgrounds, species, and feats are constrained by the checked-in official SRD membership catalog; this also selects the PDF-confirmed 2024 Magic Initiate record instead of the malformed duplicate."))
     ];
 
     /// <summary>
@@ -157,23 +157,21 @@ internal static class BuiltInSrdHostedSources
             return false;
         }
 
-        if (definition.Resources.Count != seed.Resources.Count)
-        {
-            return false;
-        }
-
-        for (var index = 0; index < definition.Resources.Count; index++)
-        {
-            var actual = definition.Resources[index];
-            var expected = seed.Resources[index];
-            if (!string.Equals(actual.Kind, expected.Kind, StringComparison.Ordinal)
-                || !string.Equals(actual.Uri, expected.Uri, StringComparison.Ordinal))
+        var actualResources = definition.Resources
+            .Select(value => $"{value.Kind}\n{value.Uri}")
+            .OrderBy(value => value, StringComparer.Ordinal)
+            .ToArray();
+        var expectedResources = seed.Resources
+            .Select(value =>
             {
-                return false;
-            }
-        }
-
-        return true;
+                var kind = value.Kind.Trim().ToLowerInvariant();
+                var uri = new Uri(value.Uri.Trim(), UriKind.Absolute).AbsoluteUri;
+                return $"{kind}\n{uri}";
+            })
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.Ordinal)
+            .ToArray();
+        return actualResources.SequenceEqual(expectedResources, StringComparer.Ordinal);
     }
 
     private static SetHostedSourceDefinitionRequest BuildLegacy(
