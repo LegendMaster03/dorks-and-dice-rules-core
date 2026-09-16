@@ -4,7 +4,6 @@ using RulesCore.Application.Rules;
 using RulesCore.Infrastructure.Bootstrap;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Rules;
-using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.IntegrationTests;
 
@@ -25,16 +24,12 @@ public sealed class BundledSrdMaintenanceIntegrationTests
                 .UseNpgsql(connectionString)
                 .Options);
         await new RulesCoreSchemaInitializer(db).InitializeAsync();
-        var importer = new SourceImportService(db);
         var globalRules = new GlobalRulesService(db);
-        var bootstrapper = new RulesCoreBaselineBootstrapper(db, importer, globalRules);
+        var maintenance = new BundledSrdMaintenanceService(db);
 
         await ResetAsync(db);
         try
         {
-            await bootstrapper.EnsureAsync();
-
-            var maintenance = new BundledSrdMaintenanceService(db);
             var available = maintenance.List();
             Assert.Equal(4, available.Count);
             Assert.Contains(available, value => value.WorkKey == "srd-3e");
@@ -42,8 +37,16 @@ public sealed class BundledSrdMaintenanceIntegrationTests
             Assert.Contains(available, value => value.WorkKey == "srd-5-1");
             Assert.Contains(available, value => value.WorkKey == "srd-5-2-1");
 
+            // Seed only the SRD this test needs. Running the complete baseline bootstrap here used
+            // to import all four large bundled corpora before immediately reprocessing one of
+            // them, adding several minutes to every CI run without increasing coverage of the
+            // preservation invariant being tested.
+            var seeded = await maintenance.ReprocessAsync("srd-5-1");
+            Assert.True(seeded.ProcessedEntityCount > 0);
+            Assert.True(seeded.CreatedNativeRevisionCount > 0);
+
             var sourceEntity = await db.SourceEntities
-                .Where(value => value.SourceCode == "SRD3")
+                .Where(value => value.SourceCode == "SRD51")
                 .OrderBy(value => value.EntityType)
                 .ThenBy(value => value.Name)
                 .FirstAsync();
@@ -89,7 +92,7 @@ public sealed class BundledSrdMaintenanceIntegrationTests
                 .CountAsync(value => value.SourceEntityId == sourceEntity.Id);
             var patchFingerprintBefore = decision.Value.PatchFingerprint;
 
-            var reprocessed = await maintenance.ReprocessAsync("srd-3e");
+            var reprocessed = await maintenance.ReprocessAsync("srd-5-1");
 
             Assert.True(reprocessed.ProcessedEntityCount > 0);
             Assert.Equal(0, reprocessed.CreatedNativeRevisionCount);
