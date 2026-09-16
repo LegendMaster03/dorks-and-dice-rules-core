@@ -1,4 +1,6 @@
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
@@ -10,16 +12,18 @@ internal static class BundledSrdSnapshots
 {
     public static readonly IReadOnlyList<BundledSrdSnapshotSeed> Definitions =
     [
-        new("wotc-srd-ogl", "srd-3e", "srd-3e.json"),
-        new("wotc-srd-ogl", "srd-3-5e", "srd-3-5e.json"),
-        new("wotc-srd-cc", "srd-5-1", "srd-5-1.json"),
-        new("wotc-srd-cc", "srd-5-2-1", "srd-5-2-1.json")
+        new("wotc-srd-ogl", "srd-3e", "srd-3e.json", "SRD3"),
+        new("wotc-srd-ogl", "srd-3-5e", "srd-3-5e.json", "SRD35"),
+        new("wotc-srd-cc", "srd-5-1", "srd-5-1.json", "SRD51"),
+        new("wotc-srd-cc", "srd-5-2-1", "srd-5-2-1.json", "SRD52")
     ];
 
     /// <summary>
-    /// Imports every bundled SRD through the normalized Source Layer. The legacy importer
-    /// parameter remains only to preserve the bootstrapper constructor contract while older
-    /// callers are migrated; it is deliberately not used for SRD persistence.
+    /// Ensures every bundled SRD has been hydrated through the normalized Source Layer.
+    /// Exact representations already processed by the current adapter family are skipped;
+    /// deliberate translator/schema replay remains the responsibility of ReprocessAsync.
+    /// The legacy importer parameter remains only to preserve the bootstrapper constructor
+    /// contract while older callers are migrated and is deliberately not used for SRD persistence.
     /// </summary>
     public static async Task<IReadOnlyList<NormalizedSourceImportResult>> EnsureAsync(
         RulesCoreDbContext dbContext,
@@ -30,7 +34,17 @@ internal static class BundledSrdSnapshots
         var imported = new List<NormalizedSourceImportResult>(Definitions.Count);
         foreach (var snapshot in Definitions)
         {
-            imported.Add(await ImportSnapshotAsync(dbContext, snapshot, cancellationToken));
+            var artifact = await LoadArtifactAsync(snapshot, cancellationToken);
+            if (await IsCurrentHydrationAsync(dbContext, snapshot, artifact, cancellationToken))
+            {
+                continue;
+            }
+
+            imported.Add(await ImportSnapshotAsync(
+                dbContext,
+                snapshot,
+                artifact,
+                cancellationToken));
         }
 
         return imported;
@@ -43,7 +57,7 @@ internal static class BundledSrdSnapshots
     /// semantics preserve Source Layer identity/history and Rules Layer references; translator
     /// changes can therefore update ContentJson without fabricating a native source revision.
     /// </summary>
-    internal static Task<NormalizedSourceImportResult> ReprocessAsync(
+    internal static async Task<NormalizedSourceImportResult> ReprocessAsync(
         RulesCoreDbContext dbContext,
         string workKey,
         CancellationToken cancellationToken = default)
@@ -62,40 +76,25 @@ internal static class BundledSrdSnapshots
                 $"Bundled SRD '{normalizedWorkKey}' was not found.");
         }
 
-        return ImportSnapshotAsync(dbContext, snapshot, cancellationToken);
+        var artifact = await LoadArtifactAsync(snapshot, cancellationToken);
+        return await ImportSnapshotAsync(
+            dbContext,
+            snapshot,
+            artifact,
+            cancellationToken);
     }
 
     private static async Task<NormalizedSourceImportResult> ImportSnapshotAsync(
         RulesCoreDbContext dbContext,
         BundledSrdSnapshotSeed snapshot,
+        SourceRepresentationArtifact artifact,
         CancellationToken cancellationToken)
     {
         var package = RulesCoreBaselineCatalog.SourcePackages.Single(value =>
             string.Equals(value.Key, snapshot.PackageKey, StringComparison.Ordinal));
         var work = package.Works.Single(value =>
             string.Equals(value.Key, snapshot.WorkKey, StringComparison.Ordinal));
-        var originIdentity = $"admin:{package.Key}:{work.Key}:{work.EditionKey}";
-        var json = await LoadAsync(snapshot.FileName, cancellationToken);
-        byte[] bytes;
-        try
-        {
-            // Match the old hosted/bootstrap byte representation exactly: the previous
-            // path read text then encoded UTF-8 without a BOM before normalization.
-            bytes = new UTF8Encoding(false, true).GetBytes(json);
-        }
-        catch (EncoderFallbackException exception)
-        {
-            throw new InvalidDataException(
-                $"Bundled SRD snapshot '{snapshot.FileName}' is not valid UTF-8 text.",
-                exception);
-        }
-
-        var artifact = new SourceRepresentationArtifact(
-            snapshot.FileName,
-            bytes,
-            originIdentity,
-            SourceUri: $"embedded://rules-core/{snapshot.FileName}",
-            MediaType: "application/json");
+        var originIdentity = artifact.OriginIdentity;
         var adapter = snapshot.IsLegacy
             ? (ISourceFormatAdapter)new LegacySrdSourceFormatAdapter()
             : new FiveEToolsSourceFormatAdapter();
@@ -151,6 +150,125 @@ internal static class BundledSrdSnapshots
         return result;
     }
 
+    private static async Task<bool> IsCurrentHydrationAsync(
+        RulesCoreDbContext dbContext,
+        BundledSrdSnapshotSeed snapshot,
+        SourceRepresentationArtifact artifact,
+        CancellationToken cancellationToken)
+    {
+        var packageId = await dbContext.SourcePackages
+            .AsNoTracking()
+            .Where(value => value.Key == snapshot.PackageKey)
+            .Select(value => (Guid?)value.Id)
+            .SingleOrDefaultAsync(cancellationToken);
+        if (packageId is null)
+        {
+            return false;
+        }
+
+        var expectedFormat = snapshot.IsLegacy
+            ? LegacySrdSourceFormatAdapter.Format
+            : FiveEToolsSourceFormatAdapter.Format;
+        var contentHash = Convert.ToHexString(SHA256.HashData(artifact.Content)).ToLowerInvariant();
+        var hasExactRepresentation = await dbContext.SourceRepresentations
+            .AsNoTracking()
+            .AnyAsync(value => value.SourcePackageId == packageId.Value
+                && value.OriginIdentity == artifact.OriginIdentity
+                && value.ContentSha256 == contentHash
+                && value.FormatKey == expectedFormat,
+                cancellationToken);
+        if (!hasExactRepresentation)
+        {
+            return false;
+        }
+
+        // Representation equality alone is not enough while upgrading installations from
+        // the pre-normalized bootstrap path. Probe persisted adapter-owned state so an old
+        // representation is processed once by this pipeline, while subsequent startups can
+        // avoid thousands of no-op per-record PostgreSQL round trips.
+        if (snapshot.IsLegacy)
+        {
+            var entityId = await dbContext.SourceEntities
+                .AsNoTracking()
+                .Where(value => value.SourcePackageId == packageId.Value
+                    && value.SourceCode == snapshot.SourceCode
+                    && value.FormatKey == expectedFormat)
+                .OrderByDescending(value => value.CreatedAt)
+                .Select(value => (Guid?)value.Id)
+                .FirstOrDefaultAsync(cancellationToken);
+            if (entityId is null)
+            {
+                return false;
+            }
+
+            var contentJson = await dbContext.SourceEntityRevisions
+                .AsNoTracking()
+                .Where(value => value.SourceEntityId == entityId.Value)
+                .OrderByDescending(value => value.RevisionNumber)
+                .Select(value => value.ContentJson)
+                .FirstOrDefaultAsync(cancellationToken);
+            return HasCurrentLegacyTranslation(contentJson);
+        }
+
+        var nativeIdentityJson = await dbContext.SourceEntities
+            .AsNoTracking()
+            .Where(value => value.SourcePackageId == packageId.Value
+                && value.SourceCode == snapshot.SourceCode
+                && value.FormatKey == expectedFormat)
+            .OrderByDescending(value => value.CreatedAt)
+            .Select(value => value.NativeIdentityJson)
+            .FirstOrDefaultAsync(cancellationToken);
+        return HasCurrentFiveEToolsIdentity(nativeIdentityJson);
+    }
+
+    private static bool HasCurrentLegacyTranslation(string? contentJson)
+    {
+        if (string.IsNullOrWhiteSpace(contentJson))
+        {
+            return false;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(contentJson);
+            return document.RootElement.TryGetProperty("_rulesCore", out var extension)
+                && extension.ValueKind == JsonValueKind.Object
+                && extension.TryGetProperty("context", out var context)
+                && context.ValueKind == JsonValueKind.Object
+                && context.TryGetProperty("sourceFormat", out var sourceFormat)
+                && sourceFormat.ValueKind == JsonValueKind.String
+                && string.Equals(
+                    sourceFormat.GetString(),
+                    LegacySrdSourceFormatAdapter.Format,
+                    StringComparison.Ordinal);
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
+    }
+
+    private static bool HasCurrentFiveEToolsIdentity(string? nativeIdentityJson)
+    {
+        if (string.IsNullOrWhiteSpace(nativeIdentityJson))
+        {
+            return false;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(nativeIdentityJson);
+            return document.RootElement.ValueKind == JsonValueKind.Object
+                && document.RootElement.TryGetProperty("entityType", out var entityType)
+                && entityType.ValueKind == JsonValueKind.String
+                && !string.IsNullOrWhiteSpace(entityType.GetString());
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
+    }
+
     private static async Task UpgradeLegacySnapshotIdentityAsync(
         RulesCoreDbContext dbContext,
         string packageKey,
@@ -187,6 +305,38 @@ internal static class BundledSrdSnapshots
             """, cancellationToken);
     }
 
+    private static async Task<SourceRepresentationArtifact> LoadArtifactAsync(
+        BundledSrdSnapshotSeed snapshot,
+        CancellationToken cancellationToken)
+    {
+        var package = RulesCoreBaselineCatalog.SourcePackages.Single(value =>
+            string.Equals(value.Key, snapshot.PackageKey, StringComparison.Ordinal));
+        var work = package.Works.Single(value =>
+            string.Equals(value.Key, snapshot.WorkKey, StringComparison.Ordinal));
+        var originIdentity = $"admin:{package.Key}:{work.Key}:{work.EditionKey}";
+        var json = await LoadAsync(snapshot.FileName, cancellationToken);
+        byte[] bytes;
+        try
+        {
+            // Match the old hosted/bootstrap byte representation exactly: the previous
+            // path read text then encoded UTF-8 without a BOM before normalization.
+            bytes = new UTF8Encoding(false, true).GetBytes(json);
+        }
+        catch (EncoderFallbackException exception)
+        {
+            throw new InvalidDataException(
+                $"Bundled SRD snapshot '{snapshot.FileName}' is not valid UTF-8 text.",
+                exception);
+        }
+
+        return new SourceRepresentationArtifact(
+            snapshot.FileName,
+            bytes,
+            originIdentity,
+            SourceUri: $"embedded://rules-core/{snapshot.FileName}",
+            MediaType: "application/json");
+    }
+
     private static async Task<string> LoadAsync(
         string fileName,
         CancellationToken cancellationToken)
@@ -204,7 +354,8 @@ internal static class BundledSrdSnapshots
 internal sealed record BundledSrdSnapshotSeed(
     string PackageKey,
     string WorkKey,
-    string FileName)
+    string FileName,
+    string SourceCode)
 {
     public bool IsLegacy =>
         string.Equals(WorkKey, "srd-3e", StringComparison.Ordinal)
