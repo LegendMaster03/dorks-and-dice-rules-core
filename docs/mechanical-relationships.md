@@ -1,12 +1,37 @@
-# Rules Layer mechanical relationships
+# Rules Layer relationships
 
-Rules Core keeps mechanical competency relationships separate from source provenance and canonical identity.
+Rules Core keeps relationships between rule concepts separate from source provenance and canonical identity.
 
-Canonical identity answers whether two source representations are the same competency. Mechanical relationships answer how distinct competencies participate in a rule calculation. A mechanical relationship must therefore never create a canonical alias or erase a granular source entity.
+Canonical identity answers whether two source representations are the same rule concept. Relationship metadata answers how distinct concepts are structurally or mechanically connected. A relationship must therefore never create a canonical alias or erase a distinct source entity.
+
+## Subclass parent Class
+
+A Subclass is a distinct first-class `RuleConcept` with entity type `subclass`. Its owning Class remains a separate first-class `RuleConcept` with entity type `class`.
+
+Rules Core persists the structural relationship:
+
+```text
+Subclass --parent-class--> Class
+```
+
+For 5e.tools-shaped source material, `className` and `classSource` from the source-native Subclass identity provide the evidence used to establish this relationship after both concepts are normalized. The normalized relationship is persisted between stable Rules Core concept identities; consumers do not need to reparse the source document or nested Class content.
+
+The resolved catalog exposes each relationship as `kind`, related Rule Concept ID/key, related entity type, and related display name. `parent-class` does not imply a Character level, acquisition level, prerequisite, or feature application rule. Those mechanics remain defined by source material and later progression work.
+
+Subclass concept keys include the parent Class name segment when that source-native relationship is available, for example:
+
+```text
+class.wizard
+subclass.wizard.school-of-evocation
+```
+
+This prevents same-named Subclasses belonging to different Classes from collapsing merely because their display names match.
+
+Prestige Classes are not Subclasses. They remain independent concepts with the canonical entity type `prestigeClass`; this relationship contract does not attach them to a parent Class or define their advancement semantics.
 
 ## Composite skills
 
-The first supported relationship kind is `composite-skill` with:
+The supported mechanical relationship kind is `composite-skill` with:
 
 - `composition: arithmetic-mean`;
 - `direction: components-to-parent`.

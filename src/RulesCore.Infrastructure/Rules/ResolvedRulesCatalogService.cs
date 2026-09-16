@@ -86,9 +86,12 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 value.SourceEntityRevision.SourceEntity.SourcePackage.Key,
                 value.SourceEntityRevision.SourceEntity.SourcePackage.DisplayName,
                 value.SourceEntityRevision.SourceEntity.FormatKey,
-                value.SourceEntityRevision.SourceEntity.FormatKey))
+                value.SourceEntityRevision.SourceEntity.FormatKey,
+                (IReadOnlyList<ResolvedRuleRelationshipView>)null!))
             .Take(limit)
             .ToArrayAsync(cancellationToken);
+
+        rules = await AttachRelationshipsAsync(rules, cancellationToken);
 
         return new ResolvedRulesCatalogView(
             "global",
@@ -182,9 +185,12 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 value.SourceEntityRevision.SourceEntity.SourcePackage.Key,
                 value.SourceEntityRevision.SourceEntity.SourcePackage.DisplayName,
                 value.SourceEntityRevision.SourceEntity.FormatKey,
-                value.SourceEntityRevision.SourceEntity.FormatKey))
+                value.SourceEntityRevision.SourceEntity.FormatKey,
+                (IReadOnlyList<ResolvedRuleRelationshipView>)null!))
             .Take(limit)
             .ToArrayAsync(cancellationToken);
+
+        rules = await AttachRelationshipsAsync(rules, cancellationToken);
 
         return new ResolvedRulesCatalogView(
             "campaign",
@@ -192,6 +198,36 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             revision.RevisionNumber,
             revision.PublishedAt,
             rules);
+    }
+
+    private async Task<ResolvedRuleCatalogItemView[]> AttachRelationshipsAsync(
+        IReadOnlyCollection<ResolvedRuleCatalogItemView> rules,
+        CancellationToken cancellationToken)
+    {
+        if (rules.Count == 0)
+        {
+            return [];
+        }
+
+        var relationships = await RuleConceptRelationshipStore.GetOutgoingAsync(
+            dbContext,
+            rules.Select(value => value.RuleConceptId).ToArray(),
+            cancellationToken);
+
+        return rules
+            .Select(rule => rule with
+            {
+                EntityType = RuleConceptEntityTypes.Normalize(rule.EntityType),
+                Relationships = relationships.TryGetValue(rule.RuleConceptId, out var related)
+                    ? related.Select(value => new ResolvedRuleRelationshipView(
+                        value.Kind,
+                        value.RelatedRuleConceptId,
+                        value.RelatedConceptKey,
+                        RuleConceptEntityTypes.Normalize(value.RelatedEntityType),
+                        value.RelatedDisplayName)).ToArray()
+                    : []
+            })
+            .ToArray();
     }
 
     private static void ValidateLimit(int limit)

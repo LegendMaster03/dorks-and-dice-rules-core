@@ -82,6 +82,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
                 value.EntityType,
                 value.Name,
                 value.SourceCode ?? string.Empty,
+                value.NativeIdentityJson,
                 value.Revisions
                     .OrderByDescending(revision => revision.RevisionNumber)
                     .Select(revision => revision.RevisionNumber)
@@ -109,7 +110,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
             .Select(source => new
             {
                 Source = source,
-                Key = BuildSuggestedConceptKey(source.EntityType, source.Name)
+                Key = BuildSuggestedConceptKey(source.EntityType, source.Name, source.NativeIdentityJson)
             })
             .ToArray();
         var keys = suggestions.Select(value => value.Key).Distinct().ToArray();
@@ -121,10 +122,13 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         return suggestions.Select(value =>
         {
             concepts.TryGetValue(value.Key, out var concept);
-            var normalizedSourceType = NormalizeEntityType(value.Source.EntityType);
+            var normalizedSourceType = RuleConceptEntityTypes.Normalize(value.Source.EntityType);
             var suggestionKind = concept is null
                 ? SourceNormalizationSuggestionKinds.NewConcept
-                : string.Equals(concept.EntityType, normalizedSourceType, StringComparison.Ordinal)
+                : string.Equals(
+                    RuleConceptEntityTypes.Normalize(concept.EntityType),
+                    normalizedSourceType,
+                    StringComparison.Ordinal)
                     ? SourceNormalizationSuggestionKinds.ExistingConcept
                     : SourceNormalizationSuggestionKinds.Conflict;
 
@@ -159,6 +163,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
 
         await GlobalSourceDispositionService.EnsureSchemaAsync(dbContext, cancellationToken);
         await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
+        await RuleConceptRelationshipStore.EnsureSchemaAsync(dbContext, cancellationToken);
         var ignoredPackageIds = await GetIgnoredPackageIdsAsync(cancellationToken);
 
         await using var transaction = await dbContext.Database.BeginTransactionAsync(
@@ -184,8 +189,8 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
             dbContext,
             sourceEntityId,
             cancellationToken);
-        var suggestedKey = BuildSuggestedConceptKey(source.EntityType, source.Name);
-        var normalizedEntityType = NormalizeEntityType(source.EntityType);
+        var suggestedKey = BuildSuggestedConceptKey(source.EntityType, source.Name, source.NativeIdentityJson);
+        var normalizedEntityType = RuleConceptEntityTypes.Normalize(source.EntityType);
         var existingBindings = await dbContext.RuleConceptSourceBindings
             .AsNoTracking()
             .Include(value => value.RuleConcept)
@@ -202,6 +207,10 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
                     "This canonical source entity is already bound to a different rule concept. Review it manually instead of accepting the automatic suggestion.");
             }
 
+            await RuleConceptRelationshipStore.SynchronizeSubclassParentsAsync(
+                dbContext,
+                normalizedUserId,
+                cancellationToken);
             await transaction.CommitAsync(cancellationToken);
             return new AcceptedSourceNormalizationView(
                 ToView(matching.RuleConcept),
@@ -227,7 +236,10 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
             dbContext.RuleConcepts.Add(concept);
             createdConcept = true;
         }
-        else if (!string.Equals(concept.EntityType, normalizedEntityType, StringComparison.Ordinal))
+        else if (!string.Equals(
+                     RuleConceptEntityTypes.Normalize(concept.EntityType),
+                     normalizedEntityType,
+                     StringComparison.Ordinal))
         {
             throw new InvalidOperationException(
                 $"Suggested key '{suggestedKey}' already belongs to a concept with entity type '{concept.EntityType}'. Review this source manually.");
@@ -245,6 +257,10 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         };
         dbContext.RuleConceptSourceBindings.Add(binding);
         await dbContext.SaveChangesAsync(cancellationToken);
+        await RuleConceptRelationshipStore.SynchronizeSubclassParentsAsync(
+            dbContext,
+            normalizedUserId,
+            cancellationToken);
         await transaction.CommitAsync(cancellationToken);
 
         return new AcceptedSourceNormalizationView(
@@ -254,10 +270,31 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
             CreatedBinding: true);
     }
 
-    internal static string BuildSuggestedConceptKey(string entityType, string name)
+    internal static string BuildSuggestedConceptKey(
+        string entityType,
+        string name,
+        string? nativeIdentityJson = null)
     {
-        var typeSegment = Slugify(entityType, "entity");
-        var availableNameLength = Math.Max(1, 300 - typeSegment.Length - 1);
+        var normalizedEntityType = RuleConceptEntityTypes.Normalize(entityType);
+        var typeSegment = Slugify(normalizedEntityType, "entity");
+        var prefix = $"{typeSegment}.";
+
+        if (string.Equals(normalizedEntityType, RuleConceptEntityTypes.Subclass, StringComparison.Ordinal)
+            && nativeIdentityJson is not null
+            && RuleConceptRelationshipStore.TryReadParentClassIdentity(
+                nativeIdentityJson,
+                out var parentClassName,
+                out _))
+        {
+            var parentSegment = Slugify(parentClassName, "class");
+            if (parentSegment.Length > 100)
+            {
+                parentSegment = parentSegment[..100].Trim('-');
+            }
+            prefix = $"{typeSegment}.{parentSegment}.";
+        }
+
+        var availableNameLength = Math.Max(1, 300 - prefix.Length);
         var nameSegment = Slugify(name, "item");
         if (nameSegment.Length > availableNameLength)
         {
@@ -267,7 +304,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         {
             nameSegment = StableFallback(name, availableNameLength);
         }
-        return $"{typeSegment}.{nameSegment}";
+        return $"{prefix}{nameSegment}";
     }
 
     private async Task<Guid[]> GetIgnoredPackageIdsAsync(CancellationToken cancellationToken)
@@ -349,7 +386,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         new(
             concept.Id,
             concept.Key,
-            concept.EntityType,
+            RuleConceptEntityTypes.Normalize(concept.EntityType),
             concept.DisplayName,
             concept.CreatedByUserId,
             concept.CreatedAt);
@@ -362,20 +399,6 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
             binding.CreatedByUserId,
             binding.CreatedAt,
             binding.SourceEntityId);
-
-    private static string NormalizeEntityType(string value)
-    {
-        var normalized = value.Trim().ToLowerInvariant();
-        if (normalized.Length == 0)
-        {
-            throw new InvalidOperationException("A source entity can not have a blank entity type.");
-        }
-        if (normalized.Length > 120)
-        {
-            throw new InvalidOperationException("A source entity type can not exceed 120 characters.");
-        }
-        return normalized;
-    }
 
     private static string RequireUserId(string value)
     {
@@ -408,6 +431,7 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         string EntityType,
         string Name,
         string SourceCode,
+        string NativeIdentityJson,
         int LatestRevisionNumber,
         DateTimeOffset LatestImportedAt,
         Guid PackageId,

@@ -20,7 +20,8 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         ArgumentNullException.ThrowIfNull(request);
         var actor = RequireActor(actorUserId);
         var key = NormalizeKey(request.Key, nameof(request.Key), 300);
-        var entityType = NormalizeKey(request.EntityType, nameof(request.EntityType), 120);
+        var entityType = RuleConceptEntityTypes.Normalize(
+            RequireText(request.EntityType, nameof(request.EntityType), 120));
         var displayName = RequireText(request.DisplayName, nameof(request.DisplayName), 300);
 
         var existing = await dbContext.RuleConcepts
@@ -28,7 +29,10 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             .SingleOrDefaultAsync(value => value.Key == key, cancellationToken);
         if (existing is not null)
         {
-            if (!string.Equals(existing.EntityType, entityType, StringComparison.Ordinal)
+            if (!string.Equals(
+                    RuleConceptEntityTypes.Normalize(existing.EntityType),
+                    entityType,
+                    StringComparison.Ordinal)
                 || !string.Equals(existing.DisplayName, displayName, StringComparison.Ordinal))
             {
                 throw new InvalidOperationException(
@@ -60,6 +64,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         ArgumentNullException.ThrowIfNull(request);
         var actor = RequireActor(actorUserId);
         await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
+        await RuleConceptRelationshipStore.EnsureSchemaAsync(dbContext, cancellationToken);
 
         var concept = await dbContext.RuleConcepts
             .AsNoTracking()
@@ -70,7 +75,10 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             .AsNoTracking()
             .SingleOrDefaultAsync(value => value.Id == request.SourceEntityId, cancellationToken)
             ?? throw new KeyNotFoundException($"Source entity '{request.SourceEntityId}' does not exist.");
-        if (!string.Equals(concept.EntityType, sourceEntity.EntityType, StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(
+                RuleConceptEntityTypes.Normalize(concept.EntityType),
+                RuleConceptEntityTypes.Normalize(sourceEntity.EntityType),
+                StringComparison.Ordinal))
         {
             throw new InvalidOperationException(
                 $"Source entity type '{sourceEntity.EntityType}' can not be bound to rule concept type '{concept.EntityType}'.");
@@ -89,6 +97,10 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         if (existing is not null)
         {
             await RuleAutoResolutionService.TryResolveAsync(dbContext, ruleConceptId, actor, cancellationToken);
+            await RuleConceptRelationshipStore.SynchronizeSubclassParentsAsync(
+                dbContext,
+                actor,
+                cancellationToken);
             return new RuleMutationResult<RuleConceptSourceBindingView>(ToView(existing), false);
         }
 
@@ -104,6 +116,10 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         dbContext.RuleConceptSourceBindings.Add(binding);
         await dbContext.SaveChangesAsync(cancellationToken);
         await RuleAutoResolutionService.TryResolveAsync(dbContext, ruleConceptId, actor, cancellationToken);
+        await RuleConceptRelationshipStore.SynchronizeSubclassParentsAsync(
+            dbContext,
+            actor,
+            cancellationToken);
         return new RuleMutationResult<RuleConceptSourceBindingView>(ToView(binding), true);
     }
 
@@ -332,7 +348,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         return new ResolvedRuleView(
             concept.Id,
             concept.Key,
-            concept.EntityType,
+            RuleConceptEntityTypes.Normalize(concept.EntityType),
             concept.DisplayName,
             latestRevision.RevisionNumber,
             latestRevision.Fingerprint,
@@ -410,7 +426,13 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
     };
 
     private static RuleConceptView ToView(RuleConcept concept) =>
-        new(concept.Id, concept.Key, concept.EntityType, concept.DisplayName, concept.CreatedByUserId, concept.CreatedAt);
+        new(
+            concept.Id,
+            concept.Key,
+            RuleConceptEntityTypes.Normalize(concept.EntityType),
+            concept.DisplayName,
+            concept.CreatedByUserId,
+            concept.CreatedAt);
 
     private static RuleConceptSourceBindingView ToView(RuleConceptSourceBinding binding) =>
         new(
