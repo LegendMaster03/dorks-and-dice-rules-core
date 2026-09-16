@@ -61,7 +61,9 @@ jobs:
               || typeof api.getCurrentUserSourceImportJobs !== "function"
               || typeof api.getCurrentUserSourceReconciliationIssues !== "function"
               || typeof api.getCurrentUserSourceImportJobReconciliationIssues !== "function"
-              || typeof api.refreshCurrentUserSource !== "function") {
+              || typeof api.refreshCurrentUserSource !== "function"
+              || typeof api.getBundledSrds !== "function"
+              || typeof api.reprocessBundledSrd !== "function") {
               throw new Error("Rules Browser/source paging/self-service source API contract is incomplete.");
           }
 
@@ -235,6 +237,21 @@ jobs:
           ]) {
               if (!sourceAdd.includes(required)) {
                   throw new Error(`Self-service source workflow is missing '${required}'.`);
+              }
+          }
+
+          const hostedSourceAuthoring = fs.readFileSync(
+              "./src/RulesCore.Web/wwwroot/hosted-source-authoring.js",
+              "utf8");
+          for (const required of [
+              "Bundled SRD maintenance",
+              "Reprocess stored snapshot",
+              "reprocessBundledSrd",
+              "does not fetch upstream",
+              "Rules Layer decisions and patches"
+          ]) {
+              if (!hostedSourceAuthoring.includes(required)) {
+                  throw new Error(`Rules Lawyer source-maintenance UI is missing '${required}'.`);
               }
           }
 
