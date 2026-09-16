@@ -1,7 +1,6 @@
 using System.Data;
 using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
-using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
 
 namespace RulesCore.Infrastructure.Sources;
@@ -11,9 +10,7 @@ namespace RulesCore.Infrastructure.Sources;
 /// packages, canonical identity, aliases, revisions, and Rules Layer history are retained so
 /// a later reimport can reuse established identity safely.
 /// </summary>
-public sealed class CurrentUserSourceRemovalService(
-    RulesCoreDbContext dbContext,
-    ISourceGrantService grants)
+public sealed class CurrentUserSourceRemovalService(RulesCoreDbContext dbContext)
 {
     public async Task<bool> RemoveAsync(
         string currentUserId,
@@ -37,22 +34,41 @@ public sealed class CurrentUserSourceRemovalService(
         await using var transaction = await dbContext.Database.BeginTransactionAsync(
             IsolationLevel.Serializable,
             cancellationToken);
-        var affected = await dbContext.Database.ExecuteSqlInterpolatedAsync($$"""
-            DELETE FROM current_user_source
-            WHERE current_user_source_id = {{currentUserSourceId}}
-                AND user_id = {{userId}};
-            """, cancellationToken);
-        if (affected == 0)
+        try
         {
-            await transaction.RollbackAsync(cancellationToken);
-            return false;
-        }
+            var affected = await dbContext.Database.ExecuteSqlInterpolatedAsync($$"""
+                DELETE FROM current_user_source
+                WHERE current_user_source_id = {{currentUserSourceId}}
+                    AND user_id = {{userId}};
+                """, cancellationToken);
+            if (affected == 0)
+            {
+                await transaction.RollbackAsync(cancellationToken);
+                return false;
+            }
 
-        // Revocation is intentionally idempotent. A stale/missing grant must not prevent
-        // removing the registration, and a retained package is reusable on reimport.
-        _ = await grants.RevokeAsync(userId, packageId.Value, cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
-        return true;
+            // Keep registration removal and grant revocation in one database transaction.
+            // If an unusual installation has another registration for the same package, retain
+            // the grant until the user's final registration for that package is removed.
+            await dbContext.Database.ExecuteSqlInterpolatedAsync($$"""
+                DELETE FROM user_source_grant
+                WHERE user_id = {{userId}}
+                    AND source_package_id = {{packageId.Value}}
+                    AND NOT EXISTS (
+                        SELECT 1
+                        FROM current_user_source
+                        WHERE user_id = {{userId}}
+                            AND source_package_id = {{packageId.Value}});
+                """, cancellationToken);
+
+            await transaction.CommitAsync(cancellationToken);
+            return true;
+        }
+        catch
+        {
+            await transaction.RollbackAsync(CancellationToken.None);
+            throw;
+        }
     }
 
     private async Task<Guid?> ReadPackageIdAsync(
