@@ -27,94 +27,128 @@ internal static class BundledSrdSnapshots
         CancellationToken cancellationToken = default)
     {
         _ = legacyImporter;
-        var importer = new NormalizedSourceImportService(dbContext);
-        var legacyAdapter = new LegacySrdSourceFormatAdapter();
-        var fiveEToolsAdapter = new FiveEToolsSourceFormatAdapter();
         var imported = new List<NormalizedSourceImportResult>(Definitions.Count);
-
         foreach (var snapshot in Definitions)
         {
-            var package = RulesCoreBaselineCatalog.SourcePackages.Single(value =>
-                string.Equals(value.Key, snapshot.PackageKey, StringComparison.Ordinal));
-            var work = package.Works.Single(value =>
-                string.Equals(value.Key, snapshot.WorkKey, StringComparison.Ordinal));
-            var originIdentity = $"admin:{package.Key}:{work.Key}:{work.EditionKey}";
-            var json = await LoadAsync(snapshot.FileName, cancellationToken);
-            byte[] bytes;
-            try
-            {
-                // Match the old hosted/bootstrap byte representation exactly: the previous
-                // path read text then encoded UTF-8 without a BOM before normalization.
-                bytes = new UTF8Encoding(false, true).GetBytes(json);
-            }
-            catch (EncoderFallbackException exception)
-            {
-                throw new InvalidDataException(
-                    $"Bundled SRD snapshot '{snapshot.FileName}' is not valid UTF-8 text.",
-                    exception);
-            }
-
-            var artifact = new SourceRepresentationArtifact(
-                snapshot.FileName,
-                bytes,
-                originIdentity,
-                SourceUri: $"embedded://rules-core/{snapshot.FileName}",
-                MediaType: "application/json");
-            var adapter = snapshot.IsLegacy
-                ? (ISourceFormatAdapter)legacyAdapter
-                : fiveEToolsAdapter;
-            var representation = adapter.TryRead(artifact)
-                ?? throw new InvalidDataException(
-                    $"Bundled SRD snapshot '{snapshot.FileName}' did not produce a normalized source representation.");
-
-            // The former 5e.tools import wrapper filled edition/date evidence supplied by
-            // the reviewed bootstrap catalog. Preserve the same canonical evidence while
-            // leaving source membership authority in source_package_authority_reference.
-            representation = representation with
-            {
-                Publications = (representation.Publications ?? [])
-                    .Select(value => value with
-                    {
-                        GameEdition = value.GameEdition ?? work.GameEdition,
-                        PublicationDate = value.PublicationDate ?? work.PublicationDate
-                    })
-                    .ToArray()
-            };
-
-            if (snapshot.IsLegacy)
-            {
-                await UpgradeLegacySnapshotIdentityAsync(
-                    dbContext,
-                    package.Key,
-                    originIdentity,
-                    cancellationToken);
-            }
-
-            var result = await importer.ImportAsync(
-                new ImportNormalizedSourceRequest(
-                    package.Key,
-                    package.DisplayName,
-                    package.Provider,
-                    package.License,
-                    package.IsPublic,
-                    representation),
-                cancellationToken);
-            imported.Add(result);
-
-            if (!string.IsNullOrWhiteSpace(work.ReleaseKind))
-            {
-                var releaseKinds = new CanonicalPublicationReleaseKindService(dbContext);
-                foreach (var publication in result.Publications)
-                {
-                    await releaseKinds.MergeAsync(
-                        publication.CanonicalPublicationId,
-                        work.ReleaseKind,
-                        cancellationToken);
-                }
-            }
+            imported.Add(await ImportSnapshotAsync(dbContext, snapshot, cancellationToken));
         }
 
         return imported;
+    }
+
+    /// <summary>
+    /// Re-runs one checked-in SRD representation through the current adapter, translation,
+    /// persistence, and canonical-reconciliation pipeline. This deliberately uses the same
+    /// embedded source evidence rather than fetching upstream content. Normalized import
+    /// semantics preserve Source Layer identity/history and Rules Layer references; translator
+    /// changes can therefore update ContentJson without fabricating a native source revision.
+    /// </summary>
+    internal static Task<NormalizedSourceImportResult> ReprocessAsync(
+        RulesCoreDbContext dbContext,
+        string workKey,
+        CancellationToken cancellationToken = default)
+    {
+        var normalizedWorkKey = workKey?.Trim();
+        if (string.IsNullOrWhiteSpace(normalizedWorkKey))
+        {
+            throw new ArgumentException("Bundled SRD work key is required.", nameof(workKey));
+        }
+
+        var snapshot = Definitions.SingleOrDefault(value =>
+            string.Equals(value.WorkKey, normalizedWorkKey, StringComparison.Ordinal));
+        if (snapshot is null)
+        {
+            throw new KeyNotFoundException(
+                $"Bundled SRD '{normalizedWorkKey}' was not found.");
+        }
+
+        return ImportSnapshotAsync(dbContext, snapshot, cancellationToken);
+    }
+
+    private static async Task<NormalizedSourceImportResult> ImportSnapshotAsync(
+        RulesCoreDbContext dbContext,
+        BundledSrdSnapshotSeed snapshot,
+        CancellationToken cancellationToken)
+    {
+        var package = RulesCoreBaselineCatalog.SourcePackages.Single(value =>
+            string.Equals(value.Key, snapshot.PackageKey, StringComparison.Ordinal));
+        var work = package.Works.Single(value =>
+            string.Equals(value.Key, snapshot.WorkKey, StringComparison.Ordinal));
+        var originIdentity = $"admin:{package.Key}:{work.Key}:{work.EditionKey}";
+        var json = await LoadAsync(snapshot.FileName, cancellationToken);
+        byte[] bytes;
+        try
+        {
+            // Match the old hosted/bootstrap byte representation exactly: the previous
+            // path read text then encoded UTF-8 without a BOM before normalization.
+            bytes = new UTF8Encoding(false, true).GetBytes(json);
+        }
+        catch (EncoderFallbackException exception)
+        {
+            throw new InvalidDataException(
+                $"Bundled SRD snapshot '{snapshot.FileName}' is not valid UTF-8 text.",
+                exception);
+        }
+
+        var artifact = new SourceRepresentationArtifact(
+            snapshot.FileName,
+            bytes,
+            originIdentity,
+            SourceUri: $"embedded://rules-core/{snapshot.FileName}",
+            MediaType: "application/json");
+        var adapter = snapshot.IsLegacy
+            ? (ISourceFormatAdapter)new LegacySrdSourceFormatAdapter()
+            : new FiveEToolsSourceFormatAdapter();
+        var representation = adapter.TryRead(artifact)
+            ?? throw new InvalidDataException(
+                $"Bundled SRD snapshot '{snapshot.FileName}' did not produce a normalized source representation.");
+
+        // The former 5e.tools import wrapper filled edition/date evidence supplied by
+        // the reviewed bootstrap catalog. Preserve the same canonical evidence while
+        // leaving source membership authority in source_package_authority_reference.
+        representation = representation with
+        {
+            Publications = (representation.Publications ?? [])
+                .Select(value => value with
+                {
+                    GameEdition = value.GameEdition ?? work.GameEdition,
+                    PublicationDate = value.PublicationDate ?? work.PublicationDate
+                })
+                .ToArray()
+        };
+
+        if (snapshot.IsLegacy)
+        {
+            await UpgradeLegacySnapshotIdentityAsync(
+                dbContext,
+                package.Key,
+                originIdentity,
+                cancellationToken);
+        }
+
+        var result = await new NormalizedSourceImportService(dbContext).ImportAsync(
+            new ImportNormalizedSourceRequest(
+                package.Key,
+                package.DisplayName,
+                package.Provider,
+                package.License,
+                package.IsPublic,
+                representation),
+            cancellationToken);
+
+        if (!string.IsNullOrWhiteSpace(work.ReleaseKind))
+        {
+            var releaseKinds = new CanonicalPublicationReleaseKindService(dbContext);
+            foreach (var publication in result.Publications)
+            {
+                await releaseKinds.MergeAsync(
+                    publication.CanonicalPublicationId,
+                    work.ReleaseKind,
+                    cancellationToken);
+            }
+        }
+
+        return result;
     }
 
     private static async Task UpgradeLegacySnapshotIdentityAsync(
