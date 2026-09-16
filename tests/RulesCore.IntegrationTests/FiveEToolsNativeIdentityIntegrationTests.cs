@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
@@ -128,14 +129,25 @@ public sealed class FiveEToolsNativeIdentityIntegrationTests
         var currentEntity = Assert.Single(second.Entities);
         Assert.Equal(originalEntity.EntityId, currentEntity.EntityId);
         var persisted = await db.SourceEntities.AsNoTracking().SingleAsync(value => value.Id == currentEntity.EntityId);
-        Assert.Equal(Assert.Single(currentRepresentation.Records).NativeIdentityJson, persisted.NativeIdentityJson);
+        AssertJsonEquivalent(
+            Assert.Single(currentRepresentation.Records).NativeIdentityJson,
+            persisted.NativeIdentityJson);
         Assert.DoesNotContain("edition", persisted.NativeIdentityJson, StringComparison.OrdinalIgnoreCase);
 
         var latest = await db.SourceEntityRevisions.AsNoTracking()
             .Where(value => value.SourceEntityId == currentEntity.EntityId)
             .OrderByDescending(value => value.RevisionNumber)
             .FirstAsync();
-        Assert.Equal(latest.RawJson, latest.ContentJson);
+        AssertJsonEquivalent(latest.RawJson, latest.ContentJson!);
+    }
+
+    private static void AssertJsonEquivalent(string expected, string actual)
+    {
+        using var expectedDocument = JsonDocument.Parse(expected);
+        using var actualDocument = JsonDocument.Parse(actual);
+        Assert.True(
+            JsonElement.DeepEquals(expectedDocument.RootElement, actualDocument.RootElement),
+            $"Expected JSON {expected} but found {actual}.");
     }
 
     private static SourceRepresentationArtifact Artifact(
