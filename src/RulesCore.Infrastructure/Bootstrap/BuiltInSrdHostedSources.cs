@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Sources;
@@ -86,33 +87,44 @@ internal static class BuiltInSrdHostedSources
                 note: $"Corpus membership was manually reviewed against the official SRD 5.2.1 PDF. CoolFireGiant/hewnhero-srd at reviewed commit {HewnHeroRevision} is used only as the structured representation. Aggregate backgrounds, species, and feats are constrained by the checked-in official SRD membership catalog; this also selects the PDF-confirmed 2024 Magic Initiate record instead of the malformed duplicate."))
     ];
 
-    public static async Task<int> EnsureAsync(
+    /// <summary>
+    /// Removes only the hosted-source definitions that were created by the old bootstrap
+    /// path and were never revised. The bundled normalized snapshots are now the built-in
+    /// SRD ingestion path. A Rules Lawyer-created or later-revised definition is deliberate
+    /// policy/configuration and is preserved.
+    /// </summary>
+    public static async Task<int> RetireBootstrapDefaultsAsync(
         RulesCoreDbContext dbContext,
         ISourceImportService importer,
         CancellationToken cancellationToken)
     {
         var service = new LegacyAwareHostedSourceService(dbContext, importer);
         var existing = await service.ListAsync(includeDisabled: true, cancellationToken);
-        var keys = existing.Select(value => value.Key).ToHashSet(StringComparer.Ordinal);
+        var builtInKeys = Definitions
+            .Select(value => value.Key)
+            .ToHashSet(StringComparer.Ordinal);
+        var preserved = 0;
 
-        foreach (var definition in Definitions)
+        foreach (var definition in existing.Where(value => builtInKeys.Contains(value.Key)))
         {
-            if (keys.Contains(definition.Key))
+            var untouchedBootstrapDefault = definition.RevisionNumber == 1
+                && string.Equals(
+                    definition.CreatedByUserId,
+                    RulesCoreBaselineCatalog.BootstrapActor,
+                    StringComparison.Ordinal);
+            if (!untouchedBootstrapDefault)
             {
-                // Built-in registration is install/bootstrap behavior, not policy enforcement.
-                // A Rules Lawyer's later revisions remain authoritative and are never overwritten.
+                preserved++;
                 continue;
             }
 
-            await service.SetAsync(
-                definition.Key,
-                definition.Request,
-                RulesCoreBaselineCatalog.BootstrapActor,
-                cancellationToken);
-            keys.Add(definition.Key);
+            await dbContext.Database.ExecuteSqlInterpolatedAsync($$"""
+                DELETE FROM hosted_source_definition
+                WHERE hosted_source_definition_id = {{definition.Id}};
+                """, cancellationToken);
         }
 
-        return Definitions.Count;
+        return preserved;
     }
 
     private static SetHostedSourceDefinitionRequest BuildLegacy(
