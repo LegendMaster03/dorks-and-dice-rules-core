@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Sources;
@@ -12,6 +13,12 @@ namespace RulesCore.IntegrationTests;
 public sealed class UpstreamCorpusAdapterAcceptanceTests
 {
     private const int WebSourceDocumentLimit = 2000;
+    private static readonly MethodInfo TranslateRecordMethod = RequireStaticMethod(
+        "RulesCore.Infrastructure.Sources.RulesCoreContentTranslation",
+        "TranslateRecord");
+    private static readonly MethodInfo ApplyAliasPolicyMethod = RequireStaticMethod(
+        "RulesCore.Infrastructure.Sources.TrustedCanonicalAliasPolicy",
+        "Apply");
 
     [Fact]
     public void FiveEToolsDataTreeParsesWithoutNativeIdentityConflicts()
@@ -33,7 +40,8 @@ public sealed class UpstreamCorpusAdapterAcceptanceTests
 
         Assert.NotEmpty(representations);
         Assert.All(representations, representation => Assert.NotEmpty(representation.Records));
-        AssertNativeIdentityConsistency(representations);
+        var normalized = NormalizeForImport(representations, requireLosslessNativeContent: true);
+        AssertNativeIdentityConsistency(normalized);
     }
 
     [Theory]
@@ -65,7 +73,8 @@ public sealed class UpstreamCorpusAdapterAcceptanceTests
 
         Assert.NotEmpty(representations);
         Assert.All(representations, representation => Assert.NotEmpty(representation.Records));
-        AssertNativeIdentityConsistency(representations);
+        var normalized = NormalizeForImport(representations, requireLosslessNativeContent: false);
+        AssertNativeIdentityConsistency(normalized);
     }
 
     private static SourceRepresentationArtifact[] ReadArtifacts(
@@ -93,29 +102,75 @@ public sealed class UpstreamCorpusAdapterAcceptanceTests
             .ToArray();
     }
 
-    private static void AssertNativeIdentityConsistency(
-        IReadOnlyList<NormalizedSourceRepresentation> representations)
+    private static IReadOnlyList<NormalizedSourceRecord> NormalizeForImport(
+        IReadOnlyList<NormalizedSourceRepresentation> representations,
+        bool requireLosslessNativeContent)
     {
-        var seen = new Dictionary<string, NormalizedSourceRecord>(StringComparer.Ordinal);
-        var recordCount = 0;
+        var normalized = new List<NormalizedSourceRecord>();
         foreach (var representation in representations)
         {
             foreach (var record in representation.Records)
             {
-                recordCount++;
-                if (!seen.TryAdd(record.NativeKey, record))
+                try
                 {
-                    var previous = seen[record.NativeKey];
-                    Assert.Equal(previous.EntityType, record.EntityType);
-                    Assert.Equal(previous.Name, record.Name);
-                    Assert.Equal(previous.SourceCode, record.SourceCode);
-                    Assert.True(
-                        JsonEquivalent(previous.NativeIdentityJson, record.NativeIdentityJson),
-                        $"Native key '{record.NativeKey}' resolved to conflicting identity metadata.");
+                    var translated = (NormalizedSourceRecord)(TranslateRecordMethod.Invoke(
+                        null,
+                        [representation, record])
+                        ?? throw new InvalidOperationException("Translation returned null."));
+                    var finalRecord = (NormalizedSourceRecord)(ApplyAliasPolicyMethod.Invoke(
+                        null,
+                        [representation, translated])
+                        ?? throw new InvalidOperationException("Canonical alias policy returned null."));
+
+                    if (requireLosslessNativeContent)
+                    {
+                        Assert.False(
+                            string.IsNullOrWhiteSpace(finalRecord.ContentJson),
+                            $"Native 5e.tools record '{record.NativeKey}' did not retain mechanical content.");
+                        Assert.True(
+                            JsonEquivalent(record.RawJson, finalRecord.ContentJson!),
+                            $"Native 5e.tools record '{record.NativeKey}' was altered by translation.");
+                    }
+
+                    normalized.Add(finalRecord);
+                }
+                catch (TargetInvocationException exception)
+                {
+                    throw new InvalidOperationException(
+                        $"Normalization failed for '{representation.Artifact.FileName}' record '{record.NativeKey}'.",
+                        exception.InnerException ?? exception);
                 }
             }
         }
-        Assert.True(recordCount > 0, "The upstream corpus did not produce any normalized source records.");
+        return normalized;
+    }
+
+    private static void AssertNativeIdentityConsistency(
+        IReadOnlyList<NormalizedSourceRecord> records)
+    {
+        var seen = new Dictionary<string, NormalizedSourceRecord>(StringComparer.Ordinal);
+        foreach (var record in records)
+        {
+            if (!seen.TryAdd(record.NativeKey, record))
+            {
+                var previous = seen[record.NativeKey];
+                Assert.Equal(previous.EntityType, record.EntityType);
+                Assert.Equal(previous.Name, record.Name);
+                Assert.Equal(previous.SourceCode, record.SourceCode);
+                Assert.True(
+                    JsonEquivalent(previous.NativeIdentityJson, record.NativeIdentityJson),
+                    $"Native key '{record.NativeKey}' resolved to conflicting identity metadata.");
+            }
+        }
+        Assert.NotEmpty(records);
+    }
+
+    private static MethodInfo RequireStaticMethod(string typeName, string methodName)
+    {
+        var type = typeof(PcGenSourceFormatAdapter).Assembly.GetType(typeName, throwOnError: true)
+            ?? throw new InvalidOperationException($"Type '{typeName}' was not found.");
+        return type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static)
+            ?? throw new InvalidOperationException($"Method '{typeName}.{methodName}' was not found.");
     }
 
     private static bool JsonEquivalent(string left, string right)
