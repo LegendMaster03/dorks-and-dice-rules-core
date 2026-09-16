@@ -261,6 +261,7 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
     {
         var records = new List<NormalizedSourceRecord>();
         var duplicateOrdinals = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        var nativeKeyOwners = new Dictionary<string, (int RecordIndex, string IdentityName)>(StringComparer.Ordinal);
         var lines = SplitLines(artifact.Text);
         for (var index = 0; index < lines.Length; index++)
         {
@@ -344,11 +345,32 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
             if (string.IsNullOrWhiteSpace(normalizedIdentity)) normalizedIdentity = "unnamed";
             if (normalizedIdentity.Length > 180) normalizedIdentity = normalizedIdentity[..180];
 
+            var baseNativeKey = $"pcgen|{entityType}|{CanonicalSourceIdentity.Fingerprint(artifact.Path)[..20]}|{normalizedIdentity}|{ordinal}";
+            var nativeKey = baseNativeKey;
+            if (nativeKeyOwners.TryGetValue(baseNativeKey, out var owner)
+                && !string.Equals(owner.IdentityName, identityName, StringComparison.Ordinal))
+            {
+                // NormalizeIdentityPart deliberately removes punctuation for canonical matching,
+                // but PCGen native object identity can distinguish punctuation-bearing names such
+                // as "Strength -2"/"Strength +2" and "Low light Vision"/"Low-Light Vision".
+                // Only disambiguate when that lossy normalization actually collides, preserving
+                // the historical key shape for every non-colliding PCGen record.
+                records[owner.RecordIndex] = records[owner.RecordIndex] with
+                {
+                    NativeKey = $"{baseNativeKey}|native-{CanonicalSourceIdentity.Fingerprint(owner.IdentityName)[..20]}"
+                };
+                nativeKey = $"{baseNativeKey}|native-{CanonicalSourceIdentity.Fingerprint(identityName)[..20]}";
+            }
+            else
+            {
+                nativeKeyOwners.TryAdd(baseNativeKey, (records.Count, identityName));
+            }
+
             records.Add(new NormalizedSourceRecord(
                 entityType,
                 Truncate(name, 300),
                 publication?.SourceCode,
-                $"pcgen|{entityType}|{CanonicalSourceIdentity.Fingerprint(artifact.Path)[..20]}|{normalizedIdentity}|{ordinal}",
+                nativeKey,
                 rawJson,
                 LocatorKey: BuildLocator(artifact.Path, lineNumber),
                 PublicationLocalKey: publication?.LocalKey,
