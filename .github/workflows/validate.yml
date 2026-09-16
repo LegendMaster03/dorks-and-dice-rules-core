@@ -35,6 +35,7 @@ jobs:
             src/RulesCore.Web/wwwroot/mechanical-relationships.js \
             src/RulesCore.Web/wwwroot/source-library.js \
             src/RulesCore.Web/wwwroot/source-add.js \
+            src/RulesCore.Web/wwwroot/source-removal.js \
             src/RulesCore.Web/wwwroot/concept-source-authoring.js \
             src/RulesCore.Web/wwwroot/source-normalization.js \
             src/RulesCore.Web/wwwroot/source-revision-review.js \
@@ -62,6 +63,7 @@ jobs:
               || typeof api.getCurrentUserSourceReconciliationIssues !== "function"
               || typeof api.getCurrentUserSourceImportJobReconciliationIssues !== "function"
               || typeof api.refreshCurrentUserSource !== "function"
+              || typeof api.removeCurrentUserSource !== "function"
               || typeof api.getBundledSrds !== "function"
               || typeof api.reprocessBundledSrd !== "function") {
               throw new Error("Rules Browser/source paging/self-service source API contract is incomplete.");
@@ -91,6 +93,7 @@ jobs:
           for (const required of [
               "installRulesCoreUx",
               "installSourceAdd",
+              "installSourceRemoval",
               "installMechanicalRelationships",
               "rules-core-detail.css"
           ]) {
@@ -237,6 +240,22 @@ jobs:
           ]) {
               if (!sourceAdd.includes(required)) {
                   throw new Error(`Self-service source workflow is missing '${required}'.`);
+              }
+          }
+
+          const sourceRemoval = fs.readFileSync(
+              "./src/RulesCore.Web/wwwroot/source-removal.js",
+              "utf8");
+          for (const required of [
+              "Manage source access",
+              "removeCurrentUserSource",
+              "Stored Source Layer evidence",
+              "Rules Layer decisions",
+              "active import",
+              "Re-adding the same source"
+          ]) {
+              if (!sourceRemoval.includes(required)) {
+                  throw new Error(`Self-service source removal workflow is missing '${required}'.`);
               }
           }
 
