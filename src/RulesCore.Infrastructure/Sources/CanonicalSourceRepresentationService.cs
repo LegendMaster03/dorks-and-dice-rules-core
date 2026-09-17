@@ -195,6 +195,7 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             sourceEntityId,
             sourceEntityRevisionId,
             occurrenceId,
+            canonicalEntityId,
             occurrenceEvidence,
             $"{NormalizeRepresentationKind(representationKind)}:{occurrenceMatchKind}",
             confidence,
@@ -459,11 +460,14 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
         Guid sourceEntityId,
         Guid sourceEntityRevisionId,
         Guid occurrenceId,
+        Guid canonicalEntityId,
         CanonicalSourceOccurrenceEvidence evidence,
         string matchKind,
         double confidence,
         CancellationToken cancellationToken)
     {
+        var normalizedFingerprint = evidence.SemanticFingerprint.Trim().ToLowerInvariant();
+        var locatorKey = NormalizeOptional(evidence.LocatorKey);
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
         if (openedHere)
@@ -473,24 +477,61 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
 
         try
         {
+            Guid? existingOccurrenceId = null;
+            Guid? existingCanonicalEntityId = null;
+            string? existingFingerprint = null;
             await using (var existingCommand = connection.CreateCommand())
             {
                 existingCommand.CommandText = """
-                    SELECT canonical_source_occurrence_id
-                    FROM source_entity_occurrence_binding
-                    WHERE source_entity_revision_id = @source_entity_revision_id;
+                    SELECT
+                        binding.canonical_source_occurrence_id,
+                        binding.semantic_fingerprint,
+                        occurrence.canonical_entity_id
+                    FROM source_entity_occurrence_binding binding
+                    JOIN canonical_source_occurrence occurrence
+                        ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
+                    WHERE binding.source_entity_revision_id = @source_entity_revision_id;
                     """;
                 AddParameter(existingCommand, "@source_entity_revision_id", sourceEntityRevisionId);
-                var existing = await existingCommand.ExecuteScalarAsync(cancellationToken);
-                if (existing is Guid existingOccurrenceId)
+                await using var reader = await existingCommand.ExecuteReaderAsync(cancellationToken);
+                if (await reader.ReadAsync(cancellationToken))
                 {
-                    if (existingOccurrenceId != occurrenceId)
-                    {
-                        throw new InvalidOperationException(
-                            $"Source entity revision '{sourceEntityRevisionId}' is already associated with a different canonical occurrence.");
-                    }
+                    existingOccurrenceId = reader.GetGuid(0);
+                    existingFingerprint = reader.GetString(1);
+                    existingCanonicalEntityId = reader.IsDBNull(2) ? null : reader.GetGuid(2);
+                }
+            }
+
+            if (existingOccurrenceId.HasValue)
+            {
+                if (existingOccurrenceId.Value == occurrenceId)
+                {
                     return;
                 }
+
+                if (!string.Equals(existingFingerprint, normalizedFingerprint, StringComparison.Ordinal)
+                    || existingCanonicalEntityId != canonicalEntityId)
+                {
+                    throw new CanonicalReconciliationConflictException(
+                        $"Source entity revision '{sourceEntityRevisionId}' can not move to a different canonical occurrence because its canonical entity or semantic fingerprint changed.");
+                }
+
+                await using var update = connection.CreateCommand();
+                update.CommandText = """
+                    UPDATE source_entity_occurrence_binding
+                    SET canonical_source_occurrence_id = @occurrence_id,
+                        locator_key = @locator_key,
+                        match_kind = @match_kind,
+                        confidence = @confidence
+                    WHERE source_entity_revision_id = @source_entity_revision_id;
+                    """;
+                AddParameter(update, "@occurrence_id", occurrenceId);
+                AddNullableParameter(update, "@locator_key", locatorKey);
+                AddParameter(update, "@match_kind", matchKind);
+                AddParameter(update, "@confidence", confidence);
+                AddParameter(update, "@source_entity_revision_id", sourceEntityRevisionId);
+                await update.ExecuteNonQueryAsync(cancellationToken);
+                return;
             }
 
             await using var command = connection.CreateCommand();
@@ -512,8 +553,8 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             AddParameter(command, "@source_entity_id", sourceEntityId);
             AddParameter(command, "@source_entity_revision_id", sourceEntityRevisionId);
             AddParameter(command, "@occurrence_id", occurrenceId);
-            AddParameter(command, "@semantic_fingerprint", evidence.SemanticFingerprint.Trim().ToLowerInvariant());
-            AddNullableParameter(command, "@locator_key", NormalizeOptional(evidence.LocatorKey));
+            AddParameter(command, "@semantic_fingerprint", normalizedFingerprint);
+            AddNullableParameter(command, "@locator_key", locatorKey);
             AddParameter(command, "@match_kind", matchKind);
             AddParameter(command, "@confidence", confidence);
             AddParameter(command, "@created_at", DateTimeOffset.UtcNow);

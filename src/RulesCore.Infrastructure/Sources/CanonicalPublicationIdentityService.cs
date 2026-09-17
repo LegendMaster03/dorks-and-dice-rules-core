@@ -26,7 +26,8 @@ public sealed class CanonicalPublicationIdentityService(RulesCoreDbContext dbCon
     {
         "5etools-corpus-id",
         "5etools-book-id",
-        "5etools-adventure-id"
+        "5etools-adventure-id",
+        TrustedCanonicalAliasPolicy.PublicationSourceCodeScheme
     };
 
     public async Task<CanonicalPublicationIdentityView> ResolveAsync(
@@ -40,7 +41,7 @@ public sealed class CanonicalPublicationIdentityService(RulesCoreDbContext dbCon
         }
 
         await EnsureSchemaAsync(cancellationToken);
-        var aliases = ExpandKnownPublicationAliases(evidence, NormalizeAliases(evidence.Aliases));
+        var aliases = NormalizeAliases(evidence.Aliases);
 
         foreach (var alias in aliases.Where(value => StrongAliasSchemes.Contains(value.Key)))
         {
@@ -56,22 +57,15 @@ public sealed class CanonicalPublicationIdentityService(RulesCoreDbContext dbCon
             }
         }
 
-        var bibliographicFingerprint = CanonicalSourceIdentity.BibliographicFingerprint(evidence);
-        var byBibliography = await FindPublicationByBibliographyAsync(
-            bibliographicFingerprint,
-            cancellationToken);
-        if (byBibliography is not null)
-        {
-            await AddAliasesAsync(byBibliography.Id, aliases, cancellationToken);
-            return byBibliography with { MatchKind = "bibliographic", Confidence = 0.98 };
-        }
-
+        // Reviewed source-specific identifiers must take precedence over bibliography. This is
+        // what lets a newly reviewed cross-format identity repair an older duplicate publication
+        // whose title/date fingerprint was already persisted before the identity was known.
         var sourceSpecificAliases = aliases
             .Where(value => SourceSpecificIdentitySchemes.Contains(value.Key))
             .ToArray();
         foreach (var alias in sourceSpecificAliases)
         {
-            var matches = await FindPublicationsByAliasAsync(alias.Key, alias.Value, cancellationToken);
+            var matches = await FindSourceSpecificMatchesAsync(alias.Key, alias.Value, cancellationToken);
             var compatible = matches
                 .Where(value => IsMetadataCompatible(value, evidence, aliases))
                 .ToArray();
@@ -84,6 +78,16 @@ public sealed class CanonicalPublicationIdentityService(RulesCoreDbContext dbCon
                     Confidence = 0.995
                 };
             }
+        }
+
+        var bibliographicFingerprint = CanonicalSourceIdentity.BibliographicFingerprint(evidence);
+        var byBibliography = await FindPublicationByBibliographyAsync(
+            bibliographicFingerprint,
+            cancellationToken);
+        if (byBibliography is not null)
+        {
+            await AddAliasesAsync(byBibliography.Id, aliases, cancellationToken);
+            return byBibliography with { MatchKind = "bibliographic", Confidence = 0.98 };
         }
 
         var contextualAliases = aliases
@@ -129,6 +133,28 @@ public sealed class CanonicalPublicationIdentityService(RulesCoreDbContext dbCon
             cancellationToken);
         await AddAliasesAsync(created.Id, aliases, cancellationToken);
         return created with { MatchKind = "new", Confidence = 1.0 };
+    }
+
+    private async Task<IReadOnlyList<CanonicalPublicationIdentityView>> FindSourceSpecificMatchesAsync(
+        string scheme,
+        string value,
+        CancellationToken cancellationToken)
+    {
+        var matches = await FindPublicationsByAliasAsync(scheme, value, cancellationToken);
+        if (matches.Count > 0
+            || !string.Equals(
+                scheme,
+                TrustedCanonicalAliasPolicy.PublicationSourceCodeScheme,
+                StringComparison.Ordinal))
+        {
+            return matches;
+        }
+
+        // The reviewed legacy SRD snapshots predate the format-neutral publication alias and
+        // therefore already exist under this compatibility scheme. Use it only as a migration
+        // fallback for an explicitly reviewed Rules Core source code, then AddAliasesAsync above
+        // backfills the format-neutral alias onto the selected canonical publication.
+        return await FindPublicationsByAliasAsync("5etools-source-code", value, cancellationToken);
     }
 
     private async Task<IReadOnlyList<AliasCandidate>> FindAliasCandidatesAsync(
@@ -529,58 +555,6 @@ public sealed class CanonicalPublicationIdentityService(RulesCoreDbContext dbCon
             CanonicalSourceIdentity.NormalizeIdentityPart(existing),
             CanonicalSourceIdentity.NormalizeIdentityPart(observed),
             StringComparison.Ordinal);
-    }
-
-    private static IReadOnlyList<KeyValuePair<string, string>> ExpandKnownPublicationAliases(
-        CanonicalPublicationEvidence evidence,
-        IReadOnlyList<KeyValuePair<string, string>> aliases)
-    {
-        const string pcGenSourceScheme = "pcgen-source-short";
-        const string legacyNormalizedSourceScheme = "5etools-source-code";
-
-        var pcGenSourceCode = aliases
-            .Where(value => string.Equals(value.Key, pcGenSourceScheme, StringComparison.Ordinal))
-            .Select(value => value.Value)
-            .FirstOrDefault();
-        if (pcGenSourceCode is null)
-        {
-            return aliases;
-        }
-
-        var title = CanonicalSourceIdentity.NormalizeIdentityPart(evidence.DisplayName);
-        var gameEdition = CanonicalSourceIdentity.NormalizeIdentityPart(evidence.GameEdition ?? string.Empty);
-        var publisher = CanonicalSourceIdentity.NormalizeIdentityPart(evidence.Publisher ?? string.Empty);
-        if (!string.IsNullOrEmpty(publisher)
-            && !string.Equals(publisher, "wizards-of-the-coast", StringComparison.Ordinal))
-        {
-            return aliases;
-        }
-
-        // The bundled 3.x SRDs retain the historical `5etools-source-code` alias scheme from the
-        // pre-format-migration canonical catalog. PCGen uses its own historical abbreviations:
-        // SRD for the 3.0 System Reference Document and RSRD for the revised 3.5 document.
-        // Bridge only the exact, edition-qualified bibliographic identities. This does not rewrite
-        // SourceEntity.SourceCode, claim 5e.tools provenance for PCGen, or merge PCGen's SRD 5.0
-        // into the distinct Rules Core SRD 5.1 publication.
-        var normalizedSourceCode = (pcGenSourceCode, gameEdition, title) switch
-        {
-            ("srd", "3e", "system-reference-document") => "srd3",
-            ("rsrd", "3-5e", "revised-v-3-5-system-reference-document") => "srd35",
-            ("rsrd", "3-5e", "revised-system-reference-document") => "srd35",
-            _ => null
-        };
-        if (normalizedSourceCode is null
-            || aliases.Any(value => string.Equals(value.Key, legacyNormalizedSourceScheme, StringComparison.Ordinal)
-                && string.Equals(value.Value, normalizedSourceCode, StringComparison.Ordinal)))
-        {
-            return aliases;
-        }
-
-        return aliases
-            .Append(new KeyValuePair<string, string>(legacyNormalizedSourceScheme, normalizedSourceCode))
-            .OrderBy(value => value.Key, StringComparer.Ordinal)
-            .ThenBy(value => value.Value, StringComparer.Ordinal)
-            .ToArray();
     }
 
     private static IReadOnlyList<KeyValuePair<string, string>> NormalizeAliases(
