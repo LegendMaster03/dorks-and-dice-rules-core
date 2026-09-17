@@ -40,7 +40,7 @@ public sealed class CanonicalPublicationIdentityService(RulesCoreDbContext dbCon
         }
 
         await EnsureSchemaAsync(cancellationToken);
-        var aliases = NormalizeAliases(evidence.Aliases);
+        var aliases = ExpandKnownPublicationAliases(evidence, NormalizeAliases(evidence.Aliases));
 
         foreach (var alias in aliases.Where(value => StrongAliasSchemes.Contains(value.Key)))
         {
@@ -529,6 +529,58 @@ public sealed class CanonicalPublicationIdentityService(RulesCoreDbContext dbCon
             CanonicalSourceIdentity.NormalizeIdentityPart(existing),
             CanonicalSourceIdentity.NormalizeIdentityPart(observed),
             StringComparison.Ordinal);
+    }
+
+    private static IReadOnlyList<KeyValuePair<string, string>> ExpandKnownPublicationAliases(
+        CanonicalPublicationEvidence evidence,
+        IReadOnlyList<KeyValuePair<string, string>> aliases)
+    {
+        const string pcGenSourceScheme = "pcgen-source-short";
+        const string legacyNormalizedSourceScheme = "5etools-source-code";
+
+        var pcGenSourceCode = aliases
+            .Where(value => string.Equals(value.Key, pcGenSourceScheme, StringComparison.Ordinal))
+            .Select(value => value.Value)
+            .FirstOrDefault();
+        if (pcGenSourceCode is null)
+        {
+            return aliases;
+        }
+
+        var title = CanonicalSourceIdentity.NormalizeIdentityPart(evidence.DisplayName);
+        var gameEdition = CanonicalSourceIdentity.NormalizeIdentityPart(evidence.GameEdition ?? string.Empty);
+        var publisher = CanonicalSourceIdentity.NormalizeIdentityPart(evidence.Publisher ?? string.Empty);
+        if (!string.IsNullOrEmpty(publisher)
+            && !string.Equals(publisher, "wizards-of-the-coast", StringComparison.Ordinal))
+        {
+            return aliases;
+        }
+
+        // The bundled 3.x SRDs retain the historical `5etools-source-code` alias scheme from the
+        // pre-format-migration canonical catalog. PCGen uses its own historical abbreviations:
+        // SRD for the 3.0 System Reference Document and RSRD for the revised 3.5 document.
+        // Bridge only the exact, edition-qualified bibliographic identities. This does not rewrite
+        // SourceEntity.SourceCode, claim 5e.tools provenance for PCGen, or merge PCGen's SRD 5.0
+        // into the distinct Rules Core SRD 5.1 publication.
+        var normalizedSourceCode = (pcGenSourceCode, gameEdition, title) switch
+        {
+            ("srd", "3e", "system-reference-document") => "srd3",
+            ("rsrd", "3-5e", "revised-v-3-5-system-reference-document") => "srd35",
+            ("rsrd", "3-5e", "revised-system-reference-document") => "srd35",
+            _ => null
+        };
+        if (normalizedSourceCode is null
+            || aliases.Any(value => string.Equals(value.Key, legacyNormalizedSourceScheme, StringComparison.Ordinal)
+                && string.Equals(value.Value, normalizedSourceCode, StringComparison.Ordinal)))
+        {
+            return aliases;
+        }
+
+        return aliases
+            .Append(new KeyValuePair<string, string>(legacyNormalizedSourceScheme, normalizedSourceCode))
+            .OrderBy(value => value.Key, StringComparer.Ordinal)
+            .ThenBy(value => value.Value, StringComparer.Ordinal)
+            .ToArray();
     }
 
     private static IReadOnlyList<KeyValuePair<string, string>> NormalizeAliases(
