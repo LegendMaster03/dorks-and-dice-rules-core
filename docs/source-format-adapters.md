@@ -118,7 +118,10 @@ Supported single-line families are parsed into source-native records with stable
 
 Recognized records are then translated into the same family-shaped `ContentJson` contract used by native 5e.tools content. The translator maps only mechanics with a defensible equivalent and stores unmapped 3.x-specific material under `_rulesCore.pcgen.unmappedSegments`.
 
+The current translator follows actual PCGen conventions. For skill competencies it also normalizes understood `KEYSTAT`, `USEUNTRAINED`, `ACHECK`, specialty, rank-support, and class-skill-state semantics into `_rulesCore.competency`. The original tag/value evidence remains preserved in the native record and under `_rulesCore.pcgen.unmappedSegments`; downstream Character consumers do not need to parse PCGen syntax.
+
 The current translator follows actual PCGen conventions:
+
 
 - `ABILITY` + `CATEGORY:FEAT` becomes the feat family without changing the native key;
 - monster `RACE` records are recognized from `MONSTERCLASS` or strong monster-source path evidence;
@@ -204,3 +207,14 @@ Local uploads and unregistered repositories do not seed trusted-lineage aliases 
 The built-in SRD snapshots are a separate public baseline concern: startup may hydrate those reviewed bundled representations without changing the first-import behavior for user-added trusted source lineages.
 
 CI uses deterministic local fixtures rather than live upstream repositories.
+
+
+## Background import progress
+
+Queued Web-source imports report acquisition, translation, persistence, reconciliation, and finalization as separate stages. Persistence and reconciliation run inside a long-lived source transaction, but import-job progress is written through a separate scoped database context so those updates commit independently and remain visible while the source transaction is still running. This prevents a completed translation count from appearing frozen while records are actually being persisted.
+
+Progress counts use stage-specific units in the user interface: acquisition uses files, translation/persistence uses records, and canonical reconciliation uses publications. Structured progress JSON is not presented directly to the user.
+
+If Rules Core begins a graceful shutdown while a Web-source import is running, that specific job is returned to `queued` instead of being marked failed. If the process exits before it can do that, the next process startup requeues any interrupted `running` jobs before claiming new work. Add imports already perform incomplete-attempt cleanup before retrying, so a service restart restarts the import instead of leaving a permanently orphaned `running` row.
+
+The import-job compatibility schema is initialized once per database for the lifetime of the Rules Core process. Queue polling and progress updates no longer execute the full `CREATE TABLE IF NOT EXISTS` / `ALTER TABLE` / index block every few seconds.

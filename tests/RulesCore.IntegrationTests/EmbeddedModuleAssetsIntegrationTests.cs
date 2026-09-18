@@ -68,6 +68,12 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("Upload file", sourceAdd, StringComparison.Ordinal);
         Assert.Contains("Web source", sourceAdd, StringComparison.Ordinal);
         Assert.Contains("5etools-mirror-3/5etools-src/tree/main/data", sourceAdd, StringComparison.Ordinal);
+        Assert.Contains("Translating source records", sourceAdd, StringComparison.Ordinal);
+        Assert.Contains("Persisting source records", sourceAdd, StringComparison.Ordinal);
+        Assert.Contains("Reconciling publication identities", sourceAdd, StringComparison.Ordinal);
+        Assert.Contains("progressStageUnit", sourceAdd, StringComparison.Ordinal);
+        Assert.Contains("normalizedImportProgress", sourceAdd, StringComparison.Ordinal);
+        Assert.Contains("progressDetailText", sourceAdd, StringComparison.Ordinal);
 
         var rulesBrowser = await GetAssetAsync(client, "/rules-browser.js", "javascript");
         Assert.DoesNotContain("One concept per row", rulesBrowser, StringComparison.Ordinal);

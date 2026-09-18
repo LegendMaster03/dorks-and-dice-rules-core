@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Data;
 using System.Data.Common;
 using System.Security.Cryptography;
@@ -12,6 +13,9 @@ namespace RulesCore.Infrastructure.Sources;
 public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbContext)
 {
     private static readonly JsonSerializerOptions ProgressJsonOptions = new(JsonSerializerDefaults.Web);
+    private static readonly ConcurrentDictionary<string, byte> InitializedSchemas =
+        new(StringComparer.Ordinal);
+    private static readonly SemaphoreSlim SchemaInitializationLock = new(1, 1);
 
     public async Task<CurrentUserSourceImportJobView> QueueWebAddAsync(
         string currentUserId,
@@ -117,6 +121,81 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken)) results.Add(ReadView(reader));
             return results;
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
+    public async Task<bool> RequeueRunningJobAsync(
+        Guid jobId,
+        string detail,
+        CancellationToken cancellationToken = default)
+    {
+        if (jobId == Guid.Empty)
+            throw new ArgumentException("Job ID can not be empty.", nameof(jobId));
+        var normalizedDetail = Require(detail, nameof(detail), 1000);
+
+        await EnsureSchemaAsync(cancellationToken);
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync(cancellationToken);
+
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                UPDATE current_user_source_import_job
+                SET status = 'queued',
+                    started_at = NULL,
+                    completed_at = NULL,
+                    error_message = NULL,
+                    progress_stage = 'queued',
+                    progress_current = 0,
+                    progress_total = NULL,
+                    progress_detail = @detail,
+                    progress_updated_at = @updated_at
+                WHERE current_user_source_import_job_id = @id
+                    AND status = 'running';
+                """;
+            AddParameter(command, "@detail", normalizedDetail);
+            AddParameter(command, "@updated_at", DateTimeOffset.UtcNow);
+            AddParameter(command, "@id", jobId);
+            return await command.ExecuteNonQueryAsync(cancellationToken) == 1;
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
+    public async Task<int> RequeueInterruptedRunningJobsAsync(
+        CancellationToken cancellationToken = default)
+    {
+        await EnsureSchemaAsync(cancellationToken);
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync(cancellationToken);
+
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                UPDATE current_user_source_import_job
+                SET status = 'queued',
+                    started_at = NULL,
+                    completed_at = NULL,
+                    error_message = NULL,
+                    progress_stage = 'queued',
+                    progress_current = 0,
+                    progress_total = NULL,
+                    progress_detail = 'Previous Web source import was interrupted; waiting to retry',
+                    progress_updated_at = @updated_at
+                WHERE status = 'running';
+                """;
+            AddParameter(command, "@updated_at", DateTimeOffset.UtcNow);
+            return await command.ExecuteNonQueryAsync(cancellationToken);
         }
         finally
         {
@@ -421,8 +500,27 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         }
     }
 
-    private Task EnsureSchemaAsync(CancellationToken cancellationToken) =>
-        dbContext.Database.ExecuteSqlRawAsync(SchemaSql, cancellationToken);
+    private async Task EnsureSchemaAsync(CancellationToken cancellationToken)
+    {
+        var connection = dbContext.Database.GetDbConnection();
+        var connectionIdentity = dbContext.Database.GetConnectionString()
+            ?? connection.ConnectionString
+            ?? $"{connection.DataSource}\u001f{connection.Database}";
+        var schemaKey = Fingerprint(Encoding.UTF8.GetBytes(connectionIdentity));
+        if (InitializedSchemas.ContainsKey(schemaKey)) return;
+
+        await SchemaInitializationLock.WaitAsync(cancellationToken);
+        try
+        {
+            if (InitializedSchemas.ContainsKey(schemaKey)) return;
+            await dbContext.Database.ExecuteSqlRawAsync(SchemaSql, cancellationToken);
+            InitializedSchemas.TryAdd(schemaKey, 0);
+        }
+        finally
+        {
+            SchemaInitializationLock.Release();
+        }
+    }
 
     private static CurrentUserSourceImportJobView ReadView(DbDataReader reader)
     {
@@ -456,7 +554,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
             reader.IsDBNull(reader.GetOrdinal("progress_stage")) ? null : reader.GetString(reader.GetOrdinal("progress_stage")),
             reader.IsDBNull(reader.GetOrdinal("progress_current")) ? null : reader.GetInt32(reader.GetOrdinal("progress_current")),
             reader.IsDBNull(reader.GetOrdinal("progress_total")) ? null : reader.GetInt32(reader.GetOrdinal("progress_total")),
-            structured?.Detail ?? rawProgress,
+            structured is null ? rawProgress : structured.Detail,
             reader.IsDBNull(reader.GetOrdinal("progress_updated_at")) ? null : reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("progress_updated_at")),
             reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("created_at")),
             reader.IsDBNull(reader.GetOrdinal("started_at")) ? null : reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("started_at")),
