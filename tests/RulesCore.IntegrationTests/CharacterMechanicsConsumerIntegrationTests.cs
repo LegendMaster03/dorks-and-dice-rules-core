@@ -297,8 +297,8 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal(CharacterCompetencyKinds.Tool, alchemyTools.Competency!.CompetencyKind);
             Assert.Null(alchemyTools.Competency.FamilyName);
             Assert.Null(alchemyTools.Competency.Specialty);
-            Assert.False(alchemyTools.Competency.SupportsRanks);
-            Assert.False(alchemyTools.Competency.SupportsClassSkillState);
+            Assert.True(alchemyTools.Competency.SupportsRanks);
+            Assert.True(alchemyTools.Competency.SupportsClassSkillState);
 
             var attribution = Assert.Single(
                 stealth.SourceAttributions,

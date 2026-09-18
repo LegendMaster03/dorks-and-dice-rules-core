@@ -624,8 +624,8 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             specialty.FamilyName,
             specialty.Specialty,
             governingAbility,
-            SupportsRanks: isThreeX && !isTool,
-            SupportsClassSkillState: isThreeX && !isTool,
+            SupportsRanks: isThreeX,
+            SupportsClassSkillState: isThreeX,
             SupportsTrainingState: true,
             TrainedOnly: trainedOnly,
             ArmorCheckPenaltyApplies: armorCheckPenaltyApplies);
