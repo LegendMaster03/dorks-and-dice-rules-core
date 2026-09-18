@@ -264,6 +264,7 @@ export class RulesCoreApi {
     getGlobalResolvedRule(conceptKey) { return this.backend(`/api/rules/${encodeURIComponent(conceptKey)}`); }
     getCampaignResolvedRule(campaignId, conceptKey) { return this.backend(`/api/campaigns/${encodeURIComponent(campaignId)}/rules/${encodeURIComponent(conceptKey)}`); }
     getRuleVersions(conceptKey) { return this.backend(`/api/rules/${encodeURIComponent(conceptKey)}/versions`); }
+    compareRuleVersions(payload) { return this.backend("/api/rules/comparison", { method: "POST", body: payload }); }
 
     backend(path, options = {}) {
         if (!path.startsWith("/")) throw new Error("Backend paths must start with '/'.");

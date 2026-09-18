@@ -6,9 +6,11 @@ import {
     describeError,
     element,
     formatDate,
+    setButtonBusy,
     DEFAULT_PAGE_SIZE
 } from "./ui.js";
 import { renderResolvedRule } from "./rule-renderers.js";
+import { renderSemanticComparison } from "./semantic-comparison.js";
 
 const DORKS_MODE = "dorks-and-dice";
 const PAGE_SIZE = DEFAULT_PAGE_SIZE;
@@ -415,6 +417,15 @@ async function renderRuleDetailPane(app, container, conceptKey, scopeValue, requ
             });
         }
 
+        if ((versions?.versions?.length ?? 0) > 1) {
+            tabs.push({
+                key: "compare",
+                label: "Compare",
+                title: "Compare source versions",
+                render: () => renderComparisonTab(app, body, resolved, versions, campaignId)
+            });
+        }
+
         let activeKey = "effective";
         const buttons = new Map();
         const activate = key => {
@@ -567,6 +578,138 @@ function renderSourceVersion(container, versions, version, resolved) {
                 ["Equivalent representations", String(version.equivalentRepresentationCount)]
             ])));
     container.append(details);
+}
+
+function renderComparisonTab(app, container, resolved, versions, campaignId) {
+    clear(container);
+
+    const available = versions.versions ?? [];
+    const heading = element("div", { className: "rules-core-comparison-heading" },
+        element("div", {},
+            element("div", { className: "rules-core-eyebrow", text: "VERSION DIFFERENCES" }),
+            element("h3", { className: "h4 mb-1", text: `Compare ${versions.displayName}` }),
+            element("p", {
+                className: "small text-body-secondary mb-0",
+                text: "Compare rule-bearing content without collapsing the source versions into one representation."
+            })));
+    container.append(heading);
+
+    if (available.length < 2) {
+        container.append(alertNode("secondary", "At least two accessible source versions are required."));
+        return;
+    }
+
+    const left = element("select", {
+        className: "form-select form-select-sm",
+        ariaLabel: "Left source version"
+    });
+    const right = element("select", {
+        className: "form-select form-select-sm",
+        ariaLabel: "Right source version"
+    });
+    for (const version of available) {
+        const label = sourceVersionLabel(version);
+        left.append(element("option", { value: version.sourceEntityRevisionId, text: label }));
+        right.append(element("option", { value: version.sourceEntityRevisionId, text: label }));
+    }
+    left.value = available[0].sourceEntityRevisionId;
+    right.value = available[1].sourceEntityRevisionId;
+
+    const compare = element("button", {
+        type: "button",
+        className: "btn btn-sm btn-primary",
+        text: "Compare"
+    });
+    const result = element("div", { className: "rules-core-comparison-result" });
+    const controls = element("div", { className: "rules-core-comparison-controls" },
+        comparisonField("Left", left),
+        comparisonField("Right", right),
+        element("div", { className: "rules-core-comparison-action" }, compare));
+    container.append(controls, result);
+
+    compare.addEventListener("click", async () => {
+        result.replaceChildren();
+        if (left.value === right.value) {
+            result.append(alertNode("secondary", "Choose two different source versions."));
+            return;
+        }
+
+        setButtonBusy(compare, true, "Comparing…");
+        try {
+            const comparison = await app.api.compareRuleVersions({
+                ruleConceptId: resolved.ruleConceptId,
+                leftSourceEntityRevisionId: left.value,
+                rightSourceEntityRevisionId: right.value
+            });
+            renderSemanticComparison(result, comparison);
+            const adjudication = adjudicationButton(app, resolved.ruleConceptId, campaignId);
+            if (adjudication) {
+                result.append(element("div", { className: "rules-core-comparison-adjudication" },
+                    element("div", {},
+                        element("strong", { text: "Need a ruling?" }),
+                        element("div", {
+                            className: "small text-body-secondary",
+                            text: campaignId
+                                ? "Open this concept in the campaign rule editor."
+                                : "Open this concept in the global Rules Lawyer editor."
+                        })),
+                    adjudication));
+            }
+        } catch (error) {
+            result.replaceChildren(alertNode("danger", describeError(error)));
+        } finally {
+            setButtonBusy(compare, false);
+        }
+    });
+
+    compare.click();
+}
+
+function comparisonField(label, control) {
+    return element("label", { className: "rules-core-comparison-field" },
+        element("span", { text: label }),
+        control);
+}
+
+function sourceVersionLabel(version) {
+    return [
+        version.sourceCode || version.formatKey,
+        version.packageDisplayName,
+        `rev. ${version.sourceRevisionNumber}`
+    ].filter(Boolean).join(" · ");
+}
+
+function adjudicationButton(app, ruleConceptId, campaignId) {
+    const campaignCanEdit = campaignId
+        && app.dmCampaigns?.some(value => String(value.id) === String(campaignId));
+    if (!campaignId && !app.canEditGlobal) return null;
+    if (campaignId && !campaignCanEdit) return null;
+
+    return element("button", {
+        type: "button",
+        className: "btn btn-sm btn-outline-primary",
+        text: campaignId ? "Open campaign ruling" : "Open global ruling",
+        onClick: async () => openAdjudication(app, ruleConceptId, campaignId)
+    });
+}
+
+async function openAdjudication(app, ruleConceptId, campaignId) {
+    if (campaignId) {
+        app.activeView = "campaign";
+        app.activeCampaignId = campaignId;
+    } else {
+        app.activeView = "global";
+    }
+
+    await app.render();
+    const body = app.root.querySelector(".rules-core-main");
+    if (!body) return;
+
+    if (campaignId) {
+        await app.renderCampaignConcept(body, ruleConceptId);
+    } else {
+        await app.renderGlobalConcept(body, ruleConceptId);
+    }
 }
 
 function renderMetadata(resolved, campaignScope) {

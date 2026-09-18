@@ -42,7 +42,7 @@ export function installSemanticComparison(app) {
                         rightSourceEntityRevisionId: right.value
                     }
                 });
-                renderComparison(result, comparison);
+                renderSemanticComparison(result, comparison);
             } catch (error) {
                 result.replaceChildren(alertNode("danger", describeError(error)));
             } finally {
@@ -54,7 +54,7 @@ export function installSemanticComparison(app) {
     };
 }
 
-function renderComparison(container, comparison) {
+export function renderSemanticComparison(container, comparison) {
     const summary = element("div", { className: "d-flex flex-wrap gap-2 mb-3" },
         badge(`${comparison.unchangedValueCount} unchanged`, "secondary"),
         badge(`${comparison.compatibleDifferenceCount} compatible`, "success"),

@@ -38,6 +38,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("getGlobalResolvedRule", api, StringComparison.Ordinal);
         Assert.Contains("getCampaignResolvedRule", api, StringComparison.Ordinal);
         Assert.Contains("getRuleVersions", api, StringComparison.Ordinal);
+        Assert.Contains("compareRuleVersions", api, StringComparison.Ordinal);
         Assert.Contains("getCurrentUserSources", api, StringComparison.Ordinal);
         Assert.Contains("addCurrentUserSource", api, StringComparison.Ordinal);
         Assert.Contains("refreshCurrentUserSource", api, StringComparison.Ordinal);
@@ -71,6 +72,8 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("One concept per row", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("rules-core-library-workspace", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("getRuleVersions", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Compare source versions", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Open global ruling", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("browserLink", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("toolRoute", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("toolBasePath", rulesBrowser, StringComparison.Ordinal);
@@ -91,6 +94,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         var semanticComparison = await GetAssetAsync(client, "/semantic-comparison.js", "javascript");
         Assert.Contains("Semantic comparison", semanticComparison, StringComparison.Ordinal);
         Assert.Contains("/api/workspace/comparison", semanticComparison, StringComparison.Ordinal);
+        Assert.Contains("renderSemanticComparison", semanticComparison, StringComparison.Ordinal);
 
         var authoring = await GetAssetAsync(client, "/authoring.js", "javascript");
         Assert.Contains("Global Rules", authoring, StringComparison.Ordinal);

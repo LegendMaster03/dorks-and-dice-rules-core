@@ -57,6 +57,7 @@ jobs:
           if (typeof api.getGlobalResolvedRule !== "function"
               || typeof api.getCampaignResolvedRule !== "function"
               || typeof api.getRuleVersions !== "function"
+              || typeof api.compareRuleVersions !== "function"
               || typeof api.searchSourceEntityPage !== "function"
               || typeof api.addCurrentUserSource !== "function"
               || typeof api.getCurrentUserSources !== "function"
@@ -190,7 +191,8 @@ jobs:
               "RULES LIBRARY",
               "One concept per row",
               "rules-core-library-workspace",
-              "getRuleVersions"
+              "getRuleVersions",
+              "Compare source versions"
           ]) {
               if (!rulesBrowser.includes(required)) {
                   throw new Error(`Rules Library browser contract is missing '${required}'.`);
