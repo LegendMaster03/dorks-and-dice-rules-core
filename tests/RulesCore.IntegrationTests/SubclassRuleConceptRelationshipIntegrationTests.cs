@@ -28,7 +28,8 @@ public sealed class SubclassRuleConceptRelationshipIntegrationTests
         await ResetRulesAsync(db);
 
         var token = Guid.NewGuid().ToString("N")[..12];
-        var packageKey = $"subclass-relationship-{token}";
+        var classPackageKey = $"subclass-parent-class-{token}";
+        var subclassPackageKey = $"subclass-child-{token}";
         var actor = $"rules-lawyer-{token}";
         var importer = new SourceImportService(db);
         var normalization = new SourceNormalizationService(db);
@@ -37,14 +38,14 @@ public sealed class SubclassRuleConceptRelationshipIntegrationTests
 
         try
         {
-            var imported = await importer.Import5eToolsDocumentAsync(new Import5eToolsDocumentRequest(
-                PackageKey: packageKey,
-                PackageDisplayName: "Subclass relationship fixture",
+            var importedClass = await importer.Import5eToolsDocumentAsync(new Import5eToolsDocumentRequest(
+                PackageKey: classPackageKey,
+                PackageDisplayName: "Parent Class fixture",
                 Provider: "integration-test",
                 License: "test-only",
                 IsPublic: true,
-                WorkKey: "fixture-work",
-                WorkDisplayName: "Fixture Work",
+                WorkKey: "fixture-base-work",
+                WorkDisplayName: "Fixture Base Work",
                 EditionKey: "5e",
                 EditionDisplayName: "5e",
                 Json: """
@@ -52,25 +53,40 @@ public sealed class SubclassRuleConceptRelationshipIntegrationTests
                       "class": [
                         {
                           "name": "Wizard",
-                          "source": "TST",
+                          "source": "BASE",
                           "hd": { "number": 1, "faces": 6 }
                         }
-                      ],
+                      ]
+                    }
+                    """,
+                GameEdition: "5e"));
+            var importedSubclass = await importer.Import5eToolsDocumentAsync(new Import5eToolsDocumentRequest(
+                PackageKey: subclassPackageKey,
+                PackageDisplayName: "Subclass fixture",
+                Provider: "integration-test",
+                License: "test-only",
+                IsPublic: true,
+                WorkKey: "fixture-expansion-work",
+                WorkDisplayName: "Fixture Expansion Work",
+                EditionKey: "5e",
+                EditionDisplayName: "5e",
+                Json: """
+                    {
                       "subclass": [
                         {
                           "name": "School of Evocation",
                           "shortName": "Evocation",
-                          "source": "TST",
+                          "source": "EXP",
                           "className": "Wizard",
-                          "classSource": "TST"
+                          "classSource": "BASE"
                         }
                       ]
                     }
                     """,
                 GameEdition: "5e"));
 
-            var classEntity = Assert.Single(imported.Entities, value => value.EntityType == "class");
-            var subclassEntity = Assert.Single(imported.Entities, value => value.EntityType == "subclass");
+            var classEntity = Assert.Single(importedClass.Entities, value => value.EntityType == "class");
+            var subclassEntity = Assert.Single(importedSubclass.Entities, value => value.EntityType == "subclass");
 
             var acceptedClass = await normalization.AcceptAsync(classEntity.EntityId, actor);
             Assert.NotNull(acceptedClass);
@@ -114,6 +130,11 @@ public sealed class SubclassRuleConceptRelationshipIntegrationTests
             // Simulate upgrading a database whose Class/Subclass bindings predate the explicit
             // relationship contract. The first resolved-catalog read must reconstruct the stable
             // relationship without asking a Rules Lawyer to re-accept the source.
+            await db.Database.ExecuteSqlInterpolatedAsync($"""
+                UPDATE rule_concept_source_binding
+                SET source_entity_id = NULL
+                WHERE rule_concept_id IN ({acceptedClass.Concept.Id}, {acceptedSubclass.Concept.Id});
+                """);
             await db.Database.ExecuteSqlRawAsync("""
                 DELETE FROM rule_concept_relationship;
                 DELETE FROM rule_concept_relationship_backfill
@@ -133,8 +154,9 @@ public sealed class SubclassRuleConceptRelationshipIntegrationTests
         {
             await ResetRulesAsync(db);
             db.ChangeTracker.Clear();
+            var packageKeys = new[] { classPackageKey, subclassPackageKey };
             var packages = await db.SourcePackages
-                .Where(value => value.Key == packageKey)
+                .Where(value => packageKeys.Contains(value.Key))
                 .ToArrayAsync();
             db.SourcePackages.RemoveRange(packages);
             await db.SaveChangesAsync();

@@ -212,7 +212,6 @@ internal static class RuleConceptRelationshipStore
             }
 
             var parentConceptIds = classBindings
-                .Where(candidate => candidate.SourcePackageId == subclass.SourcePackageId)
                 .Where(candidate => string.Equals(candidate.SourceEntityName, className, StringComparison.OrdinalIgnoreCase))
                 .Where(candidate => classSource is null
                     || string.Equals(candidate.SourceCode, classSource, StringComparison.OrdinalIgnoreCase))
@@ -322,19 +321,42 @@ internal static class RuleConceptRelationshipStore
             await using var command = connection.CreateCommand();
             command.Transaction = dbContext.Database.CurrentTransaction?.GetDbTransaction();
             command.CommandText = """
-                SELECT binding.rule_concept_id,
+                WITH RECURSIVE concept_entities(rule_concept_id, canonical_entity_id) AS (
+                    SELECT binding.rule_concept_id,
+                           binding.canonical_entity_id
+                    FROM rule_concept_source_binding binding
+                    UNION
+                    SELECT parent.rule_concept_id,
+                           relationship.to_canonical_entity_id
+                    FROM canonical_entity_relationship relationship
+                    JOIN concept_entities parent
+                      ON parent.canonical_entity_id = relationship.from_canonical_entity_id
+                    WHERE relationship.relationship_kind = 'revision'
+                ),
+                bound_sources AS (
+                    SELECT DISTINCT concept_entity.rule_concept_id,
+                           source.source_entity_id
+                    FROM concept_entities concept_entity
+                    JOIN canonical_source_occurrence occurrence
+                      ON occurrence.canonical_entity_id = concept_entity.canonical_entity_id
+                    JOIN source_entity_occurrence_binding occurrence_binding
+                      ON occurrence_binding.canonical_source_occurrence_id = occurrence.canonical_source_occurrence_id
+                    JOIN source_entity_revision revision
+                      ON revision.source_entity_revision_id = occurrence_binding.source_entity_revision_id
+                    JOIN source_entity source
+                      ON source.source_entity_id = revision.source_entity_id
+                )
+                SELECT bound_source.rule_concept_id,
                        concept.entity_type,
-                       source.source_package_id,
                        source.entity_name,
                        source.source_code,
                        source.native_identity_json::text
-                FROM rule_concept_source_binding binding
+                FROM bound_sources bound_source
                 JOIN rule_concept concept
-                  ON concept.rule_concept_id = binding.rule_concept_id
+                  ON concept.rule_concept_id = bound_source.rule_concept_id
                 JOIN source_entity source
-                  ON source.source_entity_id = binding.source_entity_id
-                WHERE binding.source_entity_id IS NOT NULL
-                  AND lower(concept.entity_type) IN ('class', 'subclass');
+                  ON source.source_entity_id = bound_source.source_entity_id
+                WHERE lower(concept.entity_type) IN ('class', 'subclass');
                 """;
 
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -343,10 +365,9 @@ internal static class RuleConceptRelationshipStore
                 values.Add(new BoundConceptSource(
                     reader.GetGuid(0),
                     reader.GetString(1),
-                    reader.GetGuid(2),
-                    reader.GetString(3),
-                    reader.IsDBNull(4) ? null : reader.GetString(4),
-                    reader.GetString(5)));
+                    reader.GetString(2),
+                    reader.IsDBNull(3) ? null : reader.GetString(3),
+                    reader.GetString(4)));
             }
             return values.ToArray();
         }
@@ -421,7 +442,6 @@ internal static class RuleConceptRelationshipStore
     private sealed record BoundConceptSource(
         Guid RuleConceptId,
         string EntityType,
-        Guid SourcePackageId,
         string SourceEntityName,
         string? SourceCode,
         string NativeIdentityJson);
