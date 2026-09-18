@@ -18,28 +18,58 @@ public sealed class RuleSemanticComparisonService(RulesCoreDbContext dbContext)
 
     private static readonly string[] ArrayIdentityProperties = ["name", "id", "key"];
 
-    public async Task<RuleSemanticComparisonView?> CompareAsync(
+    public Task<RuleSemanticComparisonView?> CompareAsync(
         RuleSemanticComparisonRequest request,
         string userId,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(request);
-        if (request.RuleConceptId == Guid.Empty
-            || request.LeftSourceEntityRevisionId == Guid.Empty
-            || request.RightSourceEntityRevisionId == Guid.Empty)
-        {
-            throw new ArgumentException("Rule concept and source revision IDs can not be empty.", nameof(request));
-        }
         if (string.IsNullOrWhiteSpace(userId))
         {
             throw new ArgumentException("User ID can not be blank.", nameof(userId));
         }
 
+        return CompareCoreAsync(
+            request.RuleConceptId,
+            request.LeftSourceEntityRevisionId,
+            request.RightSourceEntityRevisionId,
+            userId.Trim(),
+            cancellationToken);
+    }
+
+    public Task<RuleSemanticComparisonView?> CompareSourcesAsync(
+        RuleSourceComparisonRequest request,
+        string? userId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        return CompareCoreAsync(
+            request.RuleConceptId,
+            request.LeftSourceEntityRevisionId,
+            request.RightSourceEntityRevisionId,
+            string.IsNullOrWhiteSpace(userId) ? null : userId.Trim(),
+            cancellationToken);
+    }
+
+    private async Task<RuleSemanticComparisonView?> CompareCoreAsync(
+        Guid ruleConceptId,
+        Guid leftSourceEntityRevisionId,
+        Guid rightSourceEntityRevisionId,
+        string? userId,
+        CancellationToken cancellationToken)
+    {
+        if (ruleConceptId == Guid.Empty
+            || leftSourceEntityRevisionId == Guid.Empty
+            || rightSourceEntityRevisionId == Guid.Empty)
+        {
+            throw new ArgumentException("Rule concept and source revision IDs can not be empty.");
+        }
+
         await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
         var revisionIds = new[]
         {
-            request.LeftSourceEntityRevisionId,
-            request.RightSourceEntityRevisionId
+            leftSourceEntityRevisionId,
+            rightSourceEntityRevisionId
         };
 
         var revisions = await dbContext.SourceEntityRevisions
@@ -49,8 +79,9 @@ public sealed class RuleSemanticComparisonService(RulesCoreDbContext dbContext)
                 .ThenInclude(value => value.UserGrants)
             .Where(value => revisionIds.Contains(value.Id)
                 && (value.SourceEntity.SourcePackage.IsPublic
-                    || value.SourceEntity.SourcePackage.UserGrants
-                        .Any(grant => grant.UserId == userId)))
+                    || (userId != null
+                        && value.SourceEntity.SourcePackage.UserGrants
+                            .Any(grant => grant.UserId == userId))))
             .ToArrayAsync(cancellationToken);
 
         if (revisions.Length != revisionIds.Distinct().Count())
@@ -62,7 +93,7 @@ public sealed class RuleSemanticComparisonService(RulesCoreDbContext dbContext)
         {
             if (!await CanonicalRuleBindingStore.IsSourceEntityBoundAsync(
                     dbContext,
-                    request.RuleConceptId,
+                    ruleConceptId,
                     revision.SourceEntityId,
                     cancellationToken))
             {
@@ -70,8 +101,8 @@ public sealed class RuleSemanticComparisonService(RulesCoreDbContext dbContext)
             }
         }
 
-        var left = revisions.Single(value => value.Id == request.LeftSourceEntityRevisionId);
-        var right = revisions.Single(value => value.Id == request.RightSourceEntityRevisionId);
+        var left = revisions.Single(value => value.Id == leftSourceEntityRevisionId);
+        var right = revisions.Single(value => value.Id == rightSourceEntityRevisionId);
         var leftJson = left.GetMechanicalContentJson();
         var rightJson = right.GetMechanicalContentJson();
         using var leftDocument = JsonDocument.Parse(leftJson);
@@ -96,7 +127,7 @@ public sealed class RuleSemanticComparisonService(RulesCoreDbContext dbContext)
                 or RuleSemanticDifferenceKinds.CompatibleAdditive);
 
         return new RuleSemanticComparisonView(
-            request.RuleConceptId,
+            ruleConceptId,
             left.Id,
             right.Id,
             unchangedCount,

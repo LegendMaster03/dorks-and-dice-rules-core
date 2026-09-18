@@ -39,6 +39,36 @@ public static class RuleWorkspaceEndpointExtensions
             return Results.Ok(new RuleWorkspaceScopesView(scopes));
         });
 
+        app.MapPost("/api/rules/comparison", async (
+            RuleSourceComparisonRequest request,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
+            try
+            {
+                var comparison = await new RuleSemanticComparisonService(dbContext).CompareSourcesAsync(
+                    request,
+                    authenticationContext?.User.Id,
+                    cancellationToken);
+                if (comparison is null)
+                {
+                    return Results.NotFound();
+                }
+
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(comparison);
+            }
+            catch (ArgumentException exception)
+            {
+                return Results.Problem(
+                    title: "Invalid rule comparison request",
+                    detail: exception.Message,
+                    statusCode: StatusCodes.Status400BadRequest);
+            }
+        });
+
         app.MapPost("/api/workspace/comparison", async (
             RuleSemanticComparisonRequest request,
             HttpContext httpContext,
