@@ -211,6 +211,25 @@ async function renderRulesBrowser(app, container) {
         }));
 
     const controls = element("div", { className: "rules-core-library-controls" });
+    const familyNav = element("div", {
+        className: "rules-core-library-family-nav",
+        role: "navigation",
+        ariaLabel: "Rule families"
+    });
+    const familyButtons = new Map();
+    for (const [value, label] of ENTITY_TYPES) {
+        const button = element("button", {
+            type: "button",
+            className: "rules-core-library-family",
+            text: label,
+            attributes: {
+                "aria-current": value === app.browserFilters.entityType ? "page" : "false"
+            }
+        });
+        familyButtons.set(value, button);
+        familyNav.append(button);
+    }
+
     const scope = element("select", {
         className: "form-select form-select-sm rules-core-library-scope",
         ariaLabel: "Rules scope"
@@ -233,7 +252,16 @@ async function renderRulesBrowser(app, container) {
     }
     type.value = app.browserFilters.entityType;
 
-    controls.append(scope, type);
+    const syncFamilyNav = () => {
+        for (const [value, button] of familyButtons) {
+            const selected = value === type.value;
+            button.classList.toggle("is-active", selected);
+            button.setAttribute("aria-current", selected ? "page" : "false");
+        }
+    };
+    syncFamilyNav();
+
+    controls.append(familyNav, scope, type);
 
     const search = element("input", {
         className: "form-control form-control-sm rules-core-library-search",
@@ -524,17 +552,26 @@ async function renderRulesBrowser(app, container) {
     scope.addEventListener("change", async () => {
         await load({ keepSelection: true });
     });
-    type.addEventListener("change", async () => {
+    const changeEntityType = async value => {
+        if (type.value === value && app.browserFilters.entityType === value) return;
         preserveDeepLink = false;
+        type.value = value;
+        syncFamilyNav();
         app.browserSelectedConceptKey = null;
         pushToolRoute(app, catalogRouteForEntity(type.value));
         await load();
-    });
+    };
+
+    for (const [value, button] of familyButtons) {
+        button.addEventListener("click", () => void changeEntityType(value));
+    }
+    type.addEventListener("change", () => void changeEntityType(type.value));
     reset.addEventListener("click", async () => {
         preserveDeepLink = false;
         if (searchTimer) clearTimeout(searchTimer);
         search.value = "";
         type.value = "";
+        syncFamilyNav();
         app.browserSelectedConceptKey = null;
         pushToolRoute(app, "/");
         await load();
