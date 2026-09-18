@@ -154,7 +154,9 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 "Hide\tKEYSTAT:DEX\tUSEUNTRAINED:YES\tACHECK:YES",
                 "Move Silently\tKEYSTAT:DEX\tUSEUNTRAINED:YES\tACHECK:YES",
                 "Stealth\tKEYSTAT:DEX\tUSEUNTRAINED:YES\tACHECK:YES",
-                "Knowledge (the planes)\tKEYSTAT:INT\tUSEUNTRAINED:NO\tACHECK:NO"
+                "Knowledge (the planes)\tKEYSTAT:INT\tUSEUNTRAINED:NO\tACHECK:NO",
+                "Craft (blacksmithing)\tKEYSTAT:INT\tUSEUNTRAINED:YES\tACHECK:NO",
+                "Craft (alchemy)\tKEYSTAT:INT\tUSEUNTRAINED:YES\tACHECK:NO"
             ]);
             var representation = new PcGenSourceFormatAdapter().TryRead(
                 new SourceRepresentationArtifact(
@@ -178,7 +180,9 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                          ("Hide", "skill.hide"),
                          ("Move Silently", "skill.move-silently"),
                          ("Stealth", "skill.stealth"),
-                         ("Knowledge (the planes)", "skill.knowledge-the-planes")
+                         ("Knowledge (the planes)", "skill.knowledge-the-planes"),
+                         ("Craft (blacksmithing)", "skill.craft-blacksmithing"),
+                         ("Alchemist's Supplies", "tool.alchemists-supplies")
                      })
             {
                 var source = imported.Entities.Single(value => value.Name == name);
@@ -276,6 +280,25 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal("intelligence", specialized.Competency.GoverningAbilityKey);
             Assert.True(specialized.Competency.TrainedOnly);
             Assert.False(specialized.Competency.ArmorCheckPenaltyApplies);
+
+            var craft = Assert.Single(
+                catalog.Mechanics,
+                value => value.MechanicKey == "competency.skill.craft-blacksmithing");
+            Assert.NotNull(craft.Competency);
+            Assert.Equal(CharacterCompetencyKinds.SpecializedSkill, craft.Competency!.CompetencyKind);
+            Assert.Equal("Craft", craft.Competency.FamilyName);
+            Assert.Equal("blacksmithing", craft.Competency.Specialty);
+            Assert.True(craft.Competency.SupportsRanks);
+
+            var alchemyTools = Assert.Single(
+                catalog.Mechanics,
+                value => value.MechanicKey == "competency.tool.alchemists-supplies");
+            Assert.NotNull(alchemyTools.Competency);
+            Assert.Equal(CharacterCompetencyKinds.Tool, alchemyTools.Competency!.CompetencyKind);
+            Assert.Null(alchemyTools.Competency.FamilyName);
+            Assert.Null(alchemyTools.Competency.Specialty);
+            Assert.False(alchemyTools.Competency.SupportsRanks);
+            Assert.False(alchemyTools.Competency.SupportsClassSkillState);
 
             var attribution = Assert.Single(
                 stealth.SourceAttributions,
