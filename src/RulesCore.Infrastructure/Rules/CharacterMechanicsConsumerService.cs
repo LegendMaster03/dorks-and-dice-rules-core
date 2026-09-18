@@ -1769,7 +1769,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             }
         }
 
-        page ??= new ResolvedRulesCatalogView("global", null, null, null, []);
+        page ??= new ResolvedRulesCatalogView("global", null, null, null, 0, [], [], []);
         return page with { Rules = all };
     }
 
@@ -1795,7 +1795,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             }
         }
 
-        page ??= new ResolvedRulesCatalogView("campaign", campaignId, null, null, []);
+        page ??= new ResolvedRulesCatalogView("campaign", campaignId, null, null, 0, [], [], []);
         return page with { Rules = all };
     }
 
