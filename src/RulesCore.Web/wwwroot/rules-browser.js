@@ -484,15 +484,19 @@ async function renderRulesBrowser(app, container) {
         selectedRow?.focus?.({ preventScroll: true });
     };
 
-    const renderSelection = async conceptKey => {
-        const serial = ++detailSerial;
-        app.browserSelectedConceptKey = conceptKey;
-        workspace.classList.add("has-selection");
+    const syncSelectedRowState = conceptKey => {
         for (const [key, row] of rowByConceptKey) {
             const selected = key === conceptKey;
             row.classList.toggle("is-selected", selected);
             row.setAttribute("aria-selected", selected ? "true" : "false");
         }
+    };
+
+    const renderSelection = async conceptKey => {
+        const serial = ++detailSerial;
+        app.browserSelectedConceptKey = conceptKey;
+        workspace.classList.add("has-selection");
+        syncSelectedRowState(conceptKey);
         await renderRuleDetailPane(
             app,
             detail,
@@ -568,6 +572,7 @@ async function renderRulesBrowser(app, container) {
             for (const row of list.querySelectorAll("[data-concept-key]")) {
                 rowByConceptKey.set(row.dataset.conceptKey, row);
             }
+            syncSelectedRowState(app.browserSelectedConceptKey);
             return added;
         } catch (error) {
             if (serial === loadSerial) {
@@ -675,7 +680,7 @@ async function renderRulesBrowser(app, container) {
             if (deepLinkedConceptKey) {
                 conceptKey = deepLinkedConceptKey;
                 app.browserDeepLink = null;
-            } else if (!conceptKey || !currentRules.some(rule => rule.conceptKey === conceptKey)) {
+            } else if (!conceptKey) {
                 conceptKey = isCompactLibraryViewport() ? null : currentRules[0].conceptKey;
             }
 
