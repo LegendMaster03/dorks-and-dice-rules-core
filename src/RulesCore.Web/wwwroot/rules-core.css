@@ -666,7 +666,7 @@ button.rules-core-workflow-step {
 
 .rules-core-library-controls {
     display: grid;
-    grid-template-columns: minmax(10rem, .8fr) minmax(9rem, .65fr) minmax(16rem, 2fr);
+    grid-template-columns: minmax(10rem, .8fr) minmax(9rem, .65fr);
     gap: .5rem;
     align-items: center;
     padding: .52rem;
@@ -689,10 +689,45 @@ button.rules-core-workflow-step {
 
 .rules-core-library-index {
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
     min-width: 0;
     border-right: 1px solid var(--rules-core-border);
     background: var(--rules-core-surface-subtle);
+}
+
+.rules-core-library-search-group {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .35rem;
+    padding: .42rem;
+    border-bottom: 1px solid var(--rules-core-border);
+    background: var(--bs-body-bg);
+}
+
+.rules-core-library-search-wrap {
+    position: relative;
+    min-width: 0;
+}
+
+.rules-core-library-search {
+    padding-right: 2rem;
+}
+
+.rules-core-library-search-hint {
+    position: absolute;
+    top: 50%;
+    right: .48rem;
+    min-width: 1.15rem;
+    padding: .04rem .25rem;
+    transform: translateY(-50%);
+    border: 1px solid var(--rules-core-border);
+    border-radius: .25rem;
+    color: var(--bs-secondary-color);
+    font-size: .62rem;
+    font-weight: 700;
+    line-height: 1.25;
+    text-align: center;
+    pointer-events: none;
 }
 
 .rules-core-library-index-header,
@@ -922,10 +957,6 @@ button.rules-core-workflow-step {
         grid-template-columns: 1fr 1fr;
     }
 
-    .rules-core-library-search {
-        grid-column: 1 / -1;
-    }
-
     .rules-core-library-workspace {
         grid-template-columns: 1fr;
         height: auto;
@@ -951,10 +982,6 @@ button.rules-core-workflow-step {
 @media (max-width: 560px) {
     .rules-core-library-controls {
         grid-template-columns: 1fr;
-    }
-
-    .rules-core-library-search {
-        grid-column: auto;
     }
 
     .rules-core-library-workspace {

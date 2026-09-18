@@ -70,6 +70,9 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         var rulesBrowser = await GetAssetAsync(client, "/rules-browser.js", "javascript");
         Assert.Contains("RULES LIBRARY", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("One concept per row", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Press J/K to navigate", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("rules-core-library-search-group", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("browserKeyboard", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("rules-core-library-workspace", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("getRuleVersions", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Compare source versions", rulesBrowser, StringComparison.Ordinal);

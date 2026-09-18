@@ -62,6 +62,31 @@ export function installResolvedRulesBrowser(app) {
 
     if (app.canBrowseRules) app.activeView = "library";
 
+    app.browserKeyboard ??= { focusSearch: null, selectRelative: null };
+    if (!app.browserKeyboardBound) {
+        app.browserKeyboardBound = true;
+        window.addEventListener("keydown", event => {
+            if (app.activeView !== "library" || event.altKey || event.ctrlKey || event.metaKey) return;
+            if (isEditableTarget(event.target)) return;
+
+            const key = String(event.key ?? "").toLowerCase();
+            if (key === "j") {
+                event.preventDefault();
+                app.browserKeyboard.selectRelative?.(1);
+                return;
+            }
+            if (key === "k") {
+                event.preventDefault();
+                app.browserKeyboard.selectRelative?.(-1);
+                return;
+            }
+            if (key === "f" || key === "/") {
+                event.preventDefault();
+                app.browserKeyboard.focusSearch?.();
+            }
+        });
+    }
+
     app.viewNavigation ??= {};
     app.viewNavigation.library = async () => {
         app.browserDeepLink = null;
@@ -101,14 +126,19 @@ async function renderRulesBrowser(app, container) {
     clear(container);
 
     const shell = element("section", { className: "rules-core-library-shell" });
+    const headingTitle = element("h2", {
+        className: "rules-core-library-title",
+        text: libraryTitle(app.browserFilters.entityType)
+    });
+    const headingSubtitle = element("p", {
+        className: "rules-core-library-subtitle",
+        text: librarySubtitle(app.browserFilters.entityType)
+    });
     const heading = element("div", { className: "rules-core-library-heading" },
         element("div", {},
             element("div", { className: "rules-core-eyebrow", text: "RULES LIBRARY" }),
-            element("h2", { className: "rules-core-library-title", text: "Browse rules" }),
-            element("p", {
-                className: "rules-core-library-subtitle",
-                text: "One concept per row. Open a rule to view the Dorks & Dice result or any accessible source version."
-            })),
+            headingTitle,
+            headingSubtitle),
         element("div", {
             className: "rules-core-library-revision",
             text: "Loading published rules…"
@@ -137,6 +167,8 @@ async function renderRulesBrowser(app, container) {
     }
     type.value = app.browserFilters.entityType;
 
+    controls.append(scope, type);
+
     const search = element("input", {
         className: "form-control form-control-sm rules-core-library-search",
         type: "search",
@@ -144,7 +176,19 @@ async function renderRulesBrowser(app, container) {
         placeholder: "Search rules…",
         ariaLabel: "Search rules"
     });
-    controls.append(scope, type, search);
+    const reset = element("button", {
+        type: "button",
+        className: "btn btn-sm btn-outline-secondary rules-core-library-reset",
+        text: "Reset"
+    });
+    const searchGroup = element("div", { className: "rules-core-library-search-group" },
+        element("div", { className: "rules-core-library-search-wrap" },
+            search,
+            element("span", {
+                className: "rules-core-library-search-hint",
+                text: "F"
+            })),
+        reset);
 
     const workspace = element("div", { className: "rules-core-library-workspace" });
     const index = element("section", {
@@ -160,7 +204,7 @@ async function renderRulesBrowser(app, container) {
         ariaLabel: "Published rules"
     });
     const indexFooter = element("div", { className: "rules-core-library-index-footer" });
-    index.append(indexHeader, list, indexFooter);
+    index.append(searchGroup, indexHeader, list, indexFooter);
 
     const detail = element("section", {
         className: "rules-core-library-detail",
@@ -175,8 +219,28 @@ async function renderRulesBrowser(app, container) {
     let loadSerial = 0;
     let detailSerial = 0;
     let rowByConceptKey = new Map();
+    let currentRules = [];
     let searchTimer = null;
     let preserveDeepLink = Boolean(app.browserDeepLink);
+
+    app.browserKeyboard.focusSearch = () => {
+        search.focus();
+        search.select();
+    };
+    app.browserKeyboard.selectRelative = direction => {
+        if (!currentRules.length) return;
+
+        const currentIndex = currentRules.findIndex(rule =>
+            rule.conceptKey === app.browserSelectedConceptKey);
+        const startIndex = currentIndex >= 0
+            ? currentIndex
+            : direction > 0 ? -1 : 0;
+        const nextIndex = (startIndex + direction + currentRules.length) % currentRules.length;
+        const rule = currentRules[nextIndex];
+        rowByConceptKey.get(rule.conceptKey)?.scrollIntoView?.({ block: "nearest" });
+        pushToolRoute(app, rule.browserLink?.toolRelativePath);
+        void renderSelection(rule.conceptKey);
+    };
 
     const renderSelection = async conceptKey => {
         const serial = ++detailSerial;
@@ -227,12 +291,15 @@ async function renderRulesBrowser(app, container) {
 
             const hasNext = (requested.rules?.length ?? 0) > PAGE_SIZE;
             const rules = (requested.rules ?? []).slice(0, PAGE_SIZE);
+            currentRules = rules;
             if (!rules.length && app.browserPage > 0) {
                 app.browserPage -= 1;
                 await load({ keepSelection });
                 return;
             }
 
+            headingTitle.textContent = libraryTitle(app.browserFilters.entityType);
+            headingSubtitle.textContent = librarySubtitle(app.browserFilters.entityType);
             heading.querySelector(".rules-core-library-revision").textContent = requested.revisionNumber
                 ? `${scopeLabel(app, app.browserScope)} · published #${requested.revisionNumber} · ${formatDate(requested.publishedAt)}`
                 : `${scopeLabel(app, app.browserScope)} · no published ruleset`;
@@ -292,6 +359,16 @@ async function renderRulesBrowser(app, container) {
         pushToolRoute(app, catalogRouteForEntity(type.value));
         await load({ resetPage: true });
     });
+    reset.addEventListener("click", async () => {
+        preserveDeepLink = false;
+        if (searchTimer) clearTimeout(searchTimer);
+        search.value = "";
+        type.value = "";
+        app.browserSelectedConceptKey = null;
+        pushToolRoute(app, "/");
+        await load({ resetPage: true });
+        search.focus();
+    });
     search.addEventListener("input", () => {
         preserveDeepLink = false;
         if (searchTimer) clearTimeout(searchTimer);
@@ -310,6 +387,22 @@ async function renderRulesBrowser(app, container) {
     });
 
     await load({ keepSelection: true });
+}
+
+function isEditableTarget(target) {
+    if (!(target instanceof Element)) return false;
+    return Boolean(target.closest("input, textarea, select, button, [contenteditable='true']"));
+}
+
+function libraryTitle(entityType) {
+    if (!entityType) return "Rules Library";
+    return ENTITY_TYPES.find(([value]) => value === entityType)?.[1]
+        ?? humanizeEntityType(entityType);
+}
+
+function librarySubtitle(entityType) {
+    const subject = entityType ? libraryTitle(entityType) : "Rules";
+    return `One concept per row. Search ${subject.toLowerCase()} on the left and view the selected rule on the right. Press J/K to navigate; F or / focuses search.`;
 }
 
 function renderRuleRows(container, rules, onSelect) {
