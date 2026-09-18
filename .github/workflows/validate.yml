@@ -56,6 +56,7 @@ jobs:
           const api = new RulesCoreApi({ apiBaseUrl: "https://rules-core.test/tool" });
           if (typeof api.getGlobalResolvedRule !== "function"
               || typeof api.getCampaignResolvedRule !== "function"
+              || typeof api.getRuleVersions !== "function"
               || typeof api.searchSourceEntityPage !== "function"
               || typeof api.addCurrentUserSource !== "function"
               || typeof api.getCurrentUserSources !== "function"
@@ -185,8 +186,15 @@ jobs:
           const rulesBrowser = fs.readFileSync(
               "./src/RulesCore.Web/wwwroot/rules-browser.js",
               "utf8");
-          if (!rulesBrowser.includes("Rules on this page")) {
-              throw new Error("Published Rules must distinguish a page count from a total count.");
+          for (const required of [
+              "RULES LIBRARY",
+              "One concept per row",
+              "rules-core-library-workspace",
+              "getRuleVersions"
+          ]) {
+              if (!rulesBrowser.includes(required)) {
+                  throw new Error(`Rules Library browser contract is missing '${required}'.`);
+              }
           }
 
           const library = fs.readFileSync(

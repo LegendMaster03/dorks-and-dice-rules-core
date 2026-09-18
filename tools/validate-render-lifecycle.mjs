@@ -238,8 +238,8 @@ assert(campaignSiteLink.attributes.get("target") === "_top",
 const lifecycleApp = {
     hostContext: { siteMode: "dorks-and-dice" },
     session: { user: null },
-    activeView: "browse",
-    canBrowseSourceLibrary: false,
+    activeView: "sources",
+    canBrowseSourceLibrary: true,
     canBrowseRules: true,
     canEditGlobal: false,
     canReviewVersions: false,
@@ -251,7 +251,7 @@ const lifecycleApp = {
         getCampaignAuthoringOverview: async () => ({ concepts: [] })
     },
     renderActiveView: async target => {
-        target.replaceChildren(ui.element("div", { className: "card" }, ui.element("h3", { text: "Published Rules" })));
+        target.replaceChildren(ui.element("div", { className: "card" }, ui.element("h3", { text: "Sources" })));
     },
     renderGlobalOverview: async target => {
         target.replaceChildren(ui.element("div", { className: "card" }, ui.element("h3", { text: "Global" })));

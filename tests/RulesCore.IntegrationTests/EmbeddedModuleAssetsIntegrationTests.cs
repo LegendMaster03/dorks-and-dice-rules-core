@@ -37,6 +37,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("getCampaignRulesCatalog", api, StringComparison.Ordinal);
         Assert.Contains("getGlobalResolvedRule", api, StringComparison.Ordinal);
         Assert.Contains("getCampaignResolvedRule", api, StringComparison.Ordinal);
+        Assert.Contains("getRuleVersions", api, StringComparison.Ordinal);
         Assert.Contains("getCurrentUserSources", api, StringComparison.Ordinal);
         Assert.Contains("addCurrentUserSource", api, StringComparison.Ordinal);
         Assert.Contains("refreshCurrentUserSource", api, StringComparison.Ordinal);
@@ -66,12 +67,14 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("5etools-mirror-3/5etools-src/tree/main/data", sourceAdd, StringComparison.Ordinal);
 
         var rulesBrowser = await GetAssetAsync(client, "/rules-browser.js", "javascript");
-        Assert.Contains("Rules Browser", rulesBrowser, StringComparison.Ordinal);
-        Assert.Contains("Browse the published resolved ruleset", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("RULES LIBRARY", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("One concept per row", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("rules-core-library-workspace", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("getRuleVersions", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("browserLink", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("toolRoute", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("toolBasePath", rulesBrowser, StringComparison.Ordinal);
-        Assert.Contains("Campaign override", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Override", rulesBrowser, StringComparison.Ordinal);
 
         var renderers = await GetAssetAsync(client, "/rule-renderers.js", "javascript");
         Assert.Contains("[\"monster\", renderMonster]", renderers, StringComparison.Ordinal);
