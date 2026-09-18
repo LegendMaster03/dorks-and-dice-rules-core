@@ -70,9 +70,9 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("5etools-mirror-3/5etools-src/tree/main/data", sourceAdd, StringComparison.Ordinal);
 
         var rulesBrowser = await GetAssetAsync(client, "/rules-browser.js", "javascript");
-        Assert.Contains("RULES LIBRARY", rulesBrowser, StringComparison.Ordinal);
-        Assert.Contains("One concept per row", rulesBrowser, StringComparison.Ordinal);
-        Assert.Contains("Press J/K to navigate", rulesBrowser, StringComparison.Ordinal);
+        Assert.DoesNotContain("One concept per row", rulesBrowser, StringComparison.Ordinal);
+        Assert.DoesNotContain("Press J/K to navigate", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Press F or / to focus search. Use J/K to move through results.", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("rules-core-library-search-group", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("browserKeyboard", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Load more", rulesBrowser, StringComparison.Ordinal);

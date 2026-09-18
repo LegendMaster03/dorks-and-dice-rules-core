@@ -632,34 +632,31 @@ button.rules-core-workflow-step {
 .rules-core-library-shell {
     display: flex;
     flex-direction: column;
-    gap: .65rem;
+    gap: .45rem;
     min-width: 0;
 }
 
 .rules-core-library-heading {
     display: flex;
-    align-items: end;
+    align-items: baseline;
     justify-content: space-between;
-    gap: 1rem;
+    gap: .75rem;
+    min-height: 1.85rem;
     padding-inline: .15rem;
 }
 
 .rules-core-library-title {
     margin: 0;
-    font-size: clamp(1.45rem, 2vw, 2rem);
+    font-size: clamp(1.15rem, 1.5vw, 1.45rem);
     font-weight: 750;
-    line-height: 1.05;
-    letter-spacing: -.02em;
+    line-height: 1.1;
+    letter-spacing: -.015em;
 }
 
-.rules-core-library-subtitle,
 .rules-core-library-revision {
-    margin: .25rem 0 0;
+    margin: 0;
     color: var(--bs-secondary-color);
-    font-size: .8rem;
-}
-
-.rules-core-library-revision {
+    font-size: .72rem;
     text-align: right;
     white-space: nowrap;
 }
@@ -717,7 +714,7 @@ button.rules-core-workflow-step {
     display: grid;
     grid-template-columns: minmax(19rem, 36%) minmax(0, 1fr);
     min-height: 36rem;
-    height: calc(100vh - 14.5rem);
+    height: calc(100vh - 11.5rem);
     max-height: 72rem;
     overflow: hidden;
     border: 1px solid var(--rules-core-border);
@@ -1104,12 +1101,10 @@ button.rules-core-workflow-step {
     }
 
     .rules-core-library-heading {
-        align-items: start;
-        flex-direction: column;
+        align-items: baseline;
     }
 
     .rules-core-library-revision {
-        text-align: left;
         white-space: normal;
     }
 

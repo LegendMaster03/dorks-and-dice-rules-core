@@ -205,15 +205,8 @@ async function renderRulesBrowser(app, container) {
         className: "rules-core-library-title",
         text: libraryTitle(app.browserFilters.entityType)
     });
-    const headingSubtitle = element("p", {
-        className: "rules-core-library-subtitle",
-        text: librarySubtitle(app.browserFilters.entityType)
-    });
     const heading = element("div", { className: "rules-core-library-heading" },
-        element("div", {},
-            element("div", { className: "rules-core-eyebrow", text: "RULES LIBRARY" }),
-            headingTitle,
-            headingSubtitle),
+        headingTitle,
         element("div", {
             className: "rules-core-library-revision",
             text: "Loading published rules…"
@@ -330,7 +323,8 @@ async function renderRulesBrowser(app, container) {
         type: "search",
         value: app.browserFilters.query,
         placeholder: "Search rules…",
-        ariaLabel: "Search rules"
+        ariaLabel: "Search rules",
+        title: "Press F or / to focus search. Use J/K to move through results."
     });
     const filterToggle = element("button", {
         type: "button",
@@ -656,7 +650,6 @@ async function renderRulesBrowser(app, container) {
             hasMore = hasPublishedRuleset && currentRules.length < totalCount;
 
             headingTitle.textContent = libraryTitle(app.browserFilters.entityType);
-            headingSubtitle.textContent = librarySubtitle(app.browserFilters.entityType);
             heading.querySelector(".rules-core-library-revision").textContent = requested.revisionNumber
                 ? `${scopeLabel(app, app.browserScope)} · published #${requested.revisionNumber} · ${formatDate(requested.publishedAt)}`
                 : `${scopeLabel(app, app.browserScope)} · no published ruleset`;
@@ -833,11 +826,6 @@ function libraryTitle(entityType) {
     if (!entityType) return "Rules Library";
     return ENTITY_TYPES.find(([value]) => value === entityType)?.[1]
         ?? humanizeEntityType(entityType);
-}
-
-function librarySubtitle(entityType) {
-    const subject = entityType ? libraryTitle(entityType) : "Rules";
-    return `One concept per row. Search ${subject.toLowerCase()} on the left and view the selected rule on the right. Press J/K to navigate; F or / focuses search.`;
 }
 
 function browserColumns(entityType) {
