@@ -83,6 +83,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("sourceFacets", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("entityTypeFacets", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("pluralizeEntityType", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("/types/", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Clear filters", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Back to list", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("isCompactLibraryViewport", rulesBrowser, StringComparison.Ordinal);

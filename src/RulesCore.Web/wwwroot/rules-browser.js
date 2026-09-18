@@ -1449,6 +1449,9 @@ function parseToolRoute(toolRoute) {
             conceptKey: `${entityType}.${decodeURIComponent(segments[1])}`
         };
     }
+    if (segments.length === 2 && segments[0] === "types") {
+        return { entityType: decodeURIComponent(segments[1]) };
+    }
     if (segments.length === 2 && segments[0] === "rules") {
         return { conceptKey: decodeURIComponent(segments[1]) };
     }
@@ -1472,8 +1475,9 @@ function pushToolRoute(app, toolRelativePath) {
 }
 
 function catalogRouteForEntity(entityType) {
+    if (!entityType) return "/";
     for (const [segment, mappedType] of ROUTE_FAMILIES.entries()) {
         if (mappedType === entityType) return `/${segment}`;
     }
-    return "/";
+    return `/types/${encodeURIComponent(entityType)}`;
 }
