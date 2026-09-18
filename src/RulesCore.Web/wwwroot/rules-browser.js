@@ -123,6 +123,9 @@ export function installResolvedRulesBrowser(app) {
     app.browserDeepLink = null;
     app.browserSelectedConceptKey = null;
 
+    const routeScope = parseBrowserScopeFromLocation(app);
+    if (routeScope) app.browserScope = routeScope;
+
     const route = parseToolRoute(app.hostContext.toolRoute);
     app.browserRouteRequested = Boolean(route.entityType || route.conceptKey);
     if (route.entityType) app.browserFilters.entityType = route.entityType;
@@ -185,6 +188,7 @@ export function installResolvedRulesBrowser(app) {
         if (toolRoute === "/sources" || toolRoute.startsWith("/sources/")) return;
 
         const next = parseToolRoute(toolRoute);
+        app.browserScope = parseBrowserScopeFromLocation(app) ?? "global";
         app.browserFilters.entityType = next.entityType ?? "";
         app.browserDeepLink = next.conceptKey ?? null;
         app.browserSelectedConceptKey = next.conceptKey ?? null;
@@ -693,6 +697,8 @@ async function renderRulesBrowser(app, container) {
         if (!scope.value.startsWith("campaign:")) {
             overrideFilter.querySelector("input").checked = false;
         }
+        app.browserScope = scope.value;
+        pushToolRoute(app, currentToolRoute(app), app.browserScope);
         syncFilterControls();
         await load({ keepSelection: true });
     });
@@ -1464,14 +1470,33 @@ function currentToolRoute(app) {
     return path.startsWith(base) ? path.slice(base.length) || "/" : "/";
 }
 
-function browserHref(app, toolRelativePath) {
-    const base = app.hostContext.toolBasePath ?? "/tools/rules-core";
-    return `${base.replace(/\/$/, "")}${toolRelativePath || "/"}`;
+function parseBrowserScopeFromLocation(app) {
+    const requested = new URLSearchParams(window.location.search).get("scope");
+    if (!requested || requested === "global") return "global";
+    if (!requested.startsWith("campaign:")) return null;
+
+    const campaignId = requested.slice("campaign:".length);
+    return app.campaigns.some(value => String(value.id) === campaignId)
+        ? requested
+        : null;
 }
 
-function pushToolRoute(app, toolRelativePath) {
-    const href = browserHref(app, toolRelativePath || "/");
-    if (window.location.pathname !== href) window.history.pushState({}, "", href);
+function browserHref(app, toolRelativePath, scopeValue = app.browserScope) {
+    const base = app.hostContext.toolBasePath ?? "/tools/rules-core";
+    const path = `${base.replace(/\/$/, "")}${toolRelativePath || "/"}`;
+    const parameters = new URLSearchParams(window.location.search);
+    parameters.delete("scope");
+    if (scopeValue?.startsWith("campaign:")) {
+        parameters.set("scope", scopeValue);
+    }
+    const query = parameters.toString();
+    return query ? `${path}?${query}` : path;
+}
+
+function pushToolRoute(app, toolRelativePath, scopeValue = app.browserScope) {
+    const href = browserHref(app, toolRelativePath || "/", scopeValue);
+    const current = `${window.location.pathname}${window.location.search}`;
+    if (current !== href) window.history.pushState({}, "", href);
 }
 
 function catalogRouteForEntity(entityType) {
