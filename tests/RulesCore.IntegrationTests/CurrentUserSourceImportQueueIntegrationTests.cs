@@ -136,6 +136,39 @@ public sealed class CurrentUserSourceImportQueueIntegrationTests
             Assert.Equal("Wreath of the Prism", progressed.Progress!.CurrentItem);
             Assert.Equal("itemGroup", progressed.Progress.CurrentItemType);
             Assert.Equal(100, progressed.Progress.EntitiesPersisted);
+
+            await using (var recoveryScope = factory.Services.CreateAsyncScope())
+            {
+                var recoveryDb = recoveryScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+                var recoveryJobs = new CurrentUserSourceImportJobService(recoveryDb);
+                Assert.Equal(1, await recoveryJobs.RequeueInterruptedRunningJobsAsync());
+            }
+
+            using var recoveredListRequest = HostedRequest(
+                HttpMethod.Get,
+                "/api/sources/current-user/import-jobs",
+                "web-import-ticket");
+            using var recoveredListResponse = await client.SendAsync(recoveredListRequest);
+            Assert.Equal(HttpStatusCode.OK, recoveredListResponse.StatusCode);
+            var recoveredJobs = await recoveredListResponse.Content
+                .ReadFromJsonAsync<CurrentUserSourceImportJobView[]>();
+            var recovered = Assert.Single(recoveredJobs!, value => value.Id == job.Id);
+            Assert.Equal(CurrentUserSourceImportJobStatuses.Queued, recovered.Status);
+            Assert.Equal("queued", recovered.ProgressStage);
+            Assert.Equal(0, recovered.ProgressCurrent);
+            Assert.Null(recovered.ProgressTotal);
+            Assert.Equal(
+                "Previous Web source import was interrupted; waiting to retry",
+                recovered.ProgressDetail);
+
+            await using (var retryScope = factory.Services.CreateAsyncScope())
+            {
+                var retryDb = retryScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+                var retryJobs = new CurrentUserSourceImportJobService(retryDb);
+                var reclaimed = await retryJobs.ClaimNextAsync();
+                Assert.NotNull(reclaimed);
+                Assert.Equal(job.Id, reclaimed.Id);
+            }
         }
         finally
         {

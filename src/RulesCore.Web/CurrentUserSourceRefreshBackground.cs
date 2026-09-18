@@ -14,6 +14,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
     {
         try
         {
+            await RequeueInterruptedImportJobsAsync(stoppingToken);
             await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
             var nextRefreshSweep = DateTimeOffset.UtcNow.AddMinutes(10);
 
@@ -34,6 +35,20 @@ internal sealed class CurrentUserSourceRefreshBackground(
         catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
         {
             // Normal application shutdown.
+        }
+    }
+
+    private async Task RequeueInterruptedImportJobsAsync(CancellationToken stoppingToken)
+    {
+        await using var scope = scopeFactory.CreateAsyncScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+        var jobs = new CurrentUserSourceImportJobService(dbContext);
+        var requeued = await jobs.RequeueInterruptedRunningJobsAsync(stoppingToken);
+        if (requeued > 0)
+        {
+            logger.LogWarning(
+                "Rules Core requeued {JobCount} Web source import job(s) left running by a previous process.",
+                requeued);
         }
     }
 

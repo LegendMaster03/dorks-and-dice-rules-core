@@ -124,6 +124,39 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         }
     }
 
+    public async Task<int> RequeueInterruptedRunningJobsAsync(
+        CancellationToken cancellationToken = default)
+    {
+        await EnsureSchemaAsync(cancellationToken);
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync(cancellationToken);
+
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                UPDATE current_user_source_import_job
+                SET status = 'queued',
+                    started_at = NULL,
+                    completed_at = NULL,
+                    error_message = NULL,
+                    progress_stage = 'queued',
+                    progress_current = 0,
+                    progress_total = NULL,
+                    progress_detail = 'Previous Web source import was interrupted; waiting to retry',
+                    progress_updated_at = @updated_at
+                WHERE status = 'running';
+                """;
+            AddParameter(command, "@updated_at", DateTimeOffset.UtcNow);
+            return await command.ExecuteNonQueryAsync(cancellationToken);
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
     public async Task<ClaimedCurrentUserSourceImportJob?> ClaimNextAsync(
         CancellationToken cancellationToken = default)
     {
