@@ -383,17 +383,15 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
     {
         var key = NormalizeKey(conceptKey, nameof(conceptKey), 300);
         var normalizedUserId = NormalizeOptionalUserId(userId);
-        var concept = await dbContext.RuleConcepts
-            .AsNoTracking()
-            .SingleOrDefaultAsync(value => value.Key == key, cancellationToken);
-        if (concept is null)
+        var publishedRule = await ResolveLatestAsync(key, normalizedUserId, cancellationToken);
+        if (publishedRule is null)
         {
             return null;
         }
 
         var accessibleSourceIds = await CanonicalRuleBindingStore.GetAccessibleSourceEntityIdsForConceptAsync(
             dbContext,
-            concept.Id,
+            publishedRule.RuleConceptId,
             normalizedUserId,
             cancellationToken);
         if (accessibleSourceIds.Count == 0)
@@ -460,10 +458,10 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         }
 
         return new RuleConceptVersionsView(
-            concept.Id,
-            concept.Key,
-            RuleConceptEntityTypes.Normalize(concept.EntityType),
-            concept.DisplayName,
+            publishedRule.RuleConceptId,
+            publishedRule.ConceptKey,
+            publishedRule.EntityType,
+            publishedRule.DisplayName,
             versions
                 .OrderBy(value => value.SourceCode, StringComparer.OrdinalIgnoreCase)
                 .ThenBy(value => value.PackageDisplayName, StringComparer.OrdinalIgnoreCase)

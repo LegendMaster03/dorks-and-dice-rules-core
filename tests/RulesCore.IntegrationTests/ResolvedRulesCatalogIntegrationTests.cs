@@ -303,6 +303,77 @@ public sealed class ResolvedRulesCatalogIntegrationTests
     }
 
     [Fact]
+    public async Task LibraryVersionReadsDoNotExposeUnpublishedConceptBindings()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        var authenticationClient = new FakeToolHostAuthenticationClient(
+            new Dictionary<string, ToolHostAuthenticationContext>());
+        await using var factory = CreateFactory(authenticationClient);
+        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false
+        });
+
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"browser-unpublished-{token}";
+        var conceptKey = $"skill.browser-unpublished-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            Guid conceptId;
+            Guid revisionId;
+            await using (var scope = factory.Services.CreateAsyncScope())
+            {
+                var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
+                var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+                var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+
+                var imported = await importer.Import5eToolsDocumentAsync(SourceRequest(
+                    packageKey,
+                    $"Unpublished Skill {token}",
+                    "UNPUB",
+                    isPublic: true));
+                packageId = imported.PackageId;
+                var sourceEntityId = imported.Entities.Single().EntityId;
+                revisionId = await db.SourceEntityRevisions
+                    .Where(value => value.SourceEntityId == sourceEntityId)
+                    .Select(value => value.Id)
+                    .SingleAsync();
+
+                var concept = await globalRules.CreateConceptAsync(
+                    new CreateRuleConceptRequest(conceptKey, "skill", $"Unpublished Skill {token}"),
+                    "rules-lawyer");
+                conceptId = concept.Value.Id;
+                await globalRules.BindSourceEntityAsync(
+                    conceptId,
+                    new BindRuleConceptSourceRequest(sourceEntityId),
+                    "rules-lawyer");
+            }
+
+            using (var versionsResponse = await client.GetAsync(
+                       $"/api/rules/{Uri.EscapeDataString(conceptKey)}/versions"))
+            {
+                Assert.Equal(HttpStatusCode.NotFound, versionsResponse.StatusCode);
+            }
+
+            using var comparisonResponse = await client.PostAsJsonAsync(
+                "/api/rules/comparison",
+                new RuleSourceComparisonRequest(conceptId, revisionId, revisionId));
+            Assert.Equal(HttpStatusCode.NotFound, comparisonResponse.StatusCode);
+        }
+        finally
+        {
+            await CleanupAsync(factory, packageId, Guid.Empty);
+        }
+    }
+
+    [Fact]
     public async Task LibraryVersionsExposeBoundSourceVariantsAndSemanticDiffs()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");

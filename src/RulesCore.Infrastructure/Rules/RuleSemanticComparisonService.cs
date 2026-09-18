@@ -37,17 +37,42 @@ public sealed class RuleSemanticComparisonService(RulesCoreDbContext dbContext)
             cancellationToken);
     }
 
-    public Task<RuleSemanticComparisonView?> CompareSourcesAsync(
+    public async Task<RuleSemanticComparisonView?> CompareSourcesAsync(
         RuleSourceComparisonRequest request,
         string? userId,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(request);
-        return CompareCoreAsync(
+        if (request.RuleConceptId == Guid.Empty)
+        {
+            throw new ArgumentException("Rule concept ID can not be empty.", nameof(request));
+        }
+
+        var normalizedUserId = string.IsNullOrWhiteSpace(userId) ? null : userId.Trim();
+        var conceptKey = await dbContext.RuleConcepts
+            .AsNoTracking()
+            .Where(value => value.Id == request.RuleConceptId)
+            .Select(value => value.Key)
+            .SingleOrDefaultAsync(cancellationToken);
+        if (conceptKey is null)
+        {
+            return null;
+        }
+
+        var publishedRule = await new GlobalRulesService(dbContext).ResolveLatestAsync(
+            conceptKey,
+            normalizedUserId,
+            cancellationToken);
+        if (publishedRule is null)
+        {
+            return null;
+        }
+
+        return await CompareCoreAsync(
             request.RuleConceptId,
             request.LeftSourceEntityRevisionId,
             request.RightSourceEntityRevisionId,
-            string.IsNullOrWhiteSpace(userId) ? null : userId.Trim(),
+            normalizedUserId,
             cancellationToken);
     }
 
