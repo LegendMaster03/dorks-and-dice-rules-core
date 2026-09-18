@@ -243,9 +243,9 @@ internal static class RuleBrowserSummaryProjector
 
     private static string Ordinal(int value)
     {
-        var suffix = value % 100 is 11 or 12 or 13
+        var suffix = (value % 100) is 11 or 12 or 13
             ? "th"
-            : value % 10 switch
+            : (value % 10) switch
             {
                 1 => "st",
                 2 => "nd",
