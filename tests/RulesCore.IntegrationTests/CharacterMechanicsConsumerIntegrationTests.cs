@@ -448,6 +448,12 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 MechanicalRelationshipResolutionKinds.DeriveParent,
                 relationship.EffectiveResolutionKind);
 
+            var hide = Assert.Single(
+                catalog.Mechanics,
+                value => value.MechanicKey == "competency.skill.hide");
+            Assert.NotNull(hide.Competency);
+            var hideProfile = Assert.Single(hide.Competency!.Profiles);
+
             var alternateAbilityCheck = await mechanics.EvaluateGlobalAsync(
                 "check.competency",
                 new CharacterMechanicEvaluationRequest(
@@ -558,11 +564,6 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.NotNull(attribution.WorkKey);
             Assert.NotNull(attribution.WorkDisplayName);
 
-            var hide = Assert.Single(
-                catalog.Mechanics,
-                value => value.MechanicKey == "competency.skill.hide");
-            Assert.NotNull(hide.Competency);
-            var hideProfile = Assert.Single(hide.Competency!.Profiles);
             Assert.Equal("ranked-skill", hideProfile.EvaluationProfileKey);
             Assert.True(hideProfile.CanEvaluate);
             Assert.Contains(hideProfile.Inputs, value => value.Key == "armorCheckPenaltyAdjustment");
