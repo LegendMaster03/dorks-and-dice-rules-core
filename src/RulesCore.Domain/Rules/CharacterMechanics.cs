@@ -366,7 +366,7 @@ public static class KnownCharacterMechanics
             [
                 IntegerInput("baseAttackBonus", CharacterMechanicInputOrigins.Derived, true, true),
                 IntegerInput("strengthModifier", CharacterMechanicInputOrigins.Derived, true, true),
-                IntegerInput("sizeModifier", CharacterMechanicInputOrigins.Derived, false, true, 0),
+                IntegerInput("grappleSizeModifier", CharacterMechanicInputOrigins.Derived, false, true, 0),
                 IntegerInput("otherModifier", CharacterMechanicInputOrigins.Derived, false, true, 0)
             ]),
         new(

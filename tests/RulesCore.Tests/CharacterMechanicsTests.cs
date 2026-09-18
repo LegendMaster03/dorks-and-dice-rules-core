@@ -138,6 +138,21 @@ public sealed class CharacterMechanicsTests
     }
 
 
+
+    [Fact]
+    public void GrappleUsesTheThreeXSpecificSizeModifierInput()
+    {
+        var definition = Required("combat.grapple");
+
+        Assert.Contains(
+            definition.Inputs,
+            value => value.Key == "grappleSizeModifier"
+                && value.ValueKind == CharacterMechanicInputValueKinds.Integer);
+        Assert.DoesNotContain(
+            definition.Inputs,
+            value => value.Key == "sizeModifier");
+    }
+
     [Fact]
     public void SkillRanksIdentifyTheCompetencyWhoseRanksAreBeingSupplied()
     {

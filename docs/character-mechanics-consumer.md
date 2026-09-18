@@ -109,7 +109,7 @@ The consumer catalog includes normalized definitions for 3.x mechanics that a 5e
 - Fortitude, Reflex, and Will saves;
 - touch AC and flat-footed AC;
 - base attack bonus;
-- grapple modifier;
+- grapple modifier, using the 3.x grapple-specific size modifier rather than the ordinary AC size modifier;
 - skill ranks, keyed to the competency whose ranks are being supplied;
 - nonlethal damage;
 - spell resistance;
