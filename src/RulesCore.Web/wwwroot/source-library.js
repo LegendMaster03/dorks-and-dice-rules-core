@@ -141,10 +141,10 @@ export function installSourceLibrary(app) {
             return;
         }
 
-        if (app.libraryRouteActive && isSourceLibraryRootRoute(toolRoute)) {
+        if (isSourceLibraryRootRoute(toolRoute)) {
             event.stopImmediatePropagation();
             app.libraryDeepLink = null;
-            app.libraryRouteActive = false;
+            app.libraryRouteActive = true;
             app.activeView = "sources";
             await app.render();
             return;
@@ -489,9 +489,9 @@ async function renderSourceEntityRoute(app, container, entityId) {
         onClick: async event => {
             event.preventDefault();
             app.libraryDeepLink = null;
-            app.libraryRouteActive = false;
+            app.libraryRouteActive = true;
             app.activeView = "sources";
-            pushSourceToolRoute(app, "/");
+            pushSourceToolRoute(app, "/sources");
             await app.render();
         }
     });
@@ -670,7 +670,9 @@ function prependRulesLawyerWorkflow(app, container) {
                 element("h3", { className: "h5 mb-1", text: "Rules Lawyer workflow" }),
                 element("div", { className: "text-body-secondary small", text: "Source material stays separate until you explicitly bind, decide, and publish." })),
             element("div", { className: "rules-core-workflow-steps" },
-                workflowStep("1", "Sources", "Browse and inspect", async () => { app.activeView = "sources"; await app.render(); }),
+                workflowStep("1", "Sources", "Browse and inspect", async () => {
+                    await app.viewNavigation?.sources?.();
+                }),
                 workflowStep("2", "Normalize", "Review suggestions"),
                 workflowStep("3", "Decide", "Select or consolidate"),
                 workflowStep("4", "Publish", "Create global revision"))));
