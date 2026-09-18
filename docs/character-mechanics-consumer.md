@@ -115,7 +115,7 @@ The consumer catalog includes normalized definitions for 3.x mechanics that a 5e
 - spell resistance;
 - damage reduction.
 
-These definitions use `ruleset-edition` applicability for 3e/3.5e. Rules Core detects applicable 3.x source evidence from the effective resolved source revisions, including the translation context retained by the legacy SRD and PCGen adapters.
+These definitions use `ruleset-edition` applicability for 3e/3.5e. Rules Core detects applicable 3.x evidence from canonical publication edition metadata attached to the effective resolved source revisions, with source-code and translation-context fallbacks for legacy and PCGen representations.
 
 The definitions intentionally do not infer values from unrelated fields. For example, touch AC consumes only contributions the Character backend has already determined apply to touch AC.
 

@@ -73,7 +73,6 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         bool includeUnavailable,
         CancellationToken cancellationToken)
     {
-        var editions = await ReadEffectiveEditionsAsync(rules.Rules, cancellationToken);
         var effectivePackageKeys = rules.Rules
             .Select(value => value.PackageKey)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
@@ -81,6 +80,10 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         var sourceUriByRevision = await ReadSourceUrisAsync(rules.Rules, cancellationToken);
         var publicationByRevision = await ReadPublicationAttributionsAsync(
             rules.Rules,
+            cancellationToken);
+        var editions = await ReadEffectiveEditionsAsync(
+            rules.Rules,
+            publicationByRevision,
             cancellationToken);
 
         var mechanics = new List<CharacterMechanicView>();
@@ -494,9 +497,20 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
 
     private async Task<IReadOnlySet<string>> ReadEffectiveEditionsAsync(
         IReadOnlyList<ResolvedRuleCatalogItemView> rules,
+        IReadOnlyDictionary<Guid, IReadOnlyList<PublicationAttribution>> publicationByRevision,
         CancellationToken cancellationToken)
     {
         var editions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var publication in publicationByRevision.Values.SelectMany(value => value))
+        {
+            if (publication.GameEdition is not null
+                && (string.Equals(publication.GameEdition, "3e", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(publication.GameEdition, "3.5e", StringComparison.OrdinalIgnoreCase)))
+            {
+                editions.Add(publication.GameEdition);
+            }
+        }
+
         foreach (var rule in rules)
         {
             if (string.Equals(rule.SourceCode, "SRD3", StringComparison.OrdinalIgnoreCase))

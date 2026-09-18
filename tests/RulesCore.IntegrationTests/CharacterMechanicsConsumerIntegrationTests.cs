@@ -2,10 +2,13 @@ using System.Net;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using RulesCore.Application.Hosting;
 using RulesCore.Application.Rules;
+using RulesCore.Application.Sources;
+using RulesCore.Infrastructure.Persistence;
 
 namespace RulesCore.IntegrationTests;
 
@@ -119,12 +122,161 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         }
     }
 
+
+    [Fact]
+    public async Task EffectiveThreeXPublicationMetadataAndCompositeCompetenciesFlowThroughConsumerContract()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-mechanics-3x-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var mechanics = scope.ServiceProvider.GetRequiredService<ICharacterMechanicsConsumerService>();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+
+            var imported = await importer.Import5eToolsDocumentAsync(new Import5eToolsDocumentRequest(
+                PackageKey: packageKey,
+                PackageDisplayName: $"Character Mechanics 3.x {token}",
+                Provider: "integration-test",
+                License: "test-only",
+                IsPublic: true,
+                WorkKey: $"character-mechanics-work-{token}",
+                WorkDisplayName: $"Character Mechanics 3.5e Work {token}",
+                EditionKey: "3-5e",
+                EditionDisplayName: "3.5e",
+                Json: $"""
+                    {
+                      "skill": [
+                        { "name": "Hide", "source": "CM{{token}}" },
+                        { "name": "Move Silently", "source": "CM{{token}}" },
+                        { "name": "Stealth", "source": "CM{{token}}" }
+                      ]
+                    }
+                    """,
+                GameEdition: "3.5e"));
+            packageId = imported.PackageId;
+
+            foreach (var (name, conceptKey) in new[]
+                     {
+                         ("Hide", "skill.hide"),
+                         ("Move Silently", "skill.move-silently"),
+                         ("Stealth", "skill.stealth")
+                     })
+            {
+                var source = imported.Entities.Single(value => value.Name == name);
+                var concept = await globalRules.CreateConceptAsync(
+                    new CreateRuleConceptRequest(conceptKey, "skill", name),
+                    $"mechanics-test-{token}");
+                await globalRules.BindSourceEntityAsync(
+                    concept.Value.Id,
+                    new BindRuleConceptSourceRequest(source.EntityId),
+                    $"mechanics-test-{token}");
+
+                var revisionId = await db.SourceEntityRevisions
+                    .Where(value => value.SourceEntityId == source.EntityId)
+                    .Select(value => value.Id)
+                    .SingleAsync();
+                await globalRules.SetDecisionAsync(
+                    concept.Value.Id,
+                    new SetGlobalRuleDecisionRequest(revisionId, "Character mechanics consumer fixture."),
+                    $"mechanics-test-{token}");
+            }
+
+            await globalRules.PublishAsync($"mechanics-test-{token}");
+
+            var catalog = await mechanics.GetGlobalAsync(userId: null);
+            var fortitude = Assert.Single(
+                catalog.Mechanics,
+                value => value.MechanicKey == "save.fortitude");
+            Assert.True(fortitude.IsApplicableUnderRuleset);
+
+            var stealth = Assert.Single(
+                catalog.Mechanics,
+                value => value.MechanicKey == "competency.skill.stealth");
+            Assert.Equal(CharacterMechanicEvaluationKinds.CompositeCompetency, stealth.EvaluationKind);
+            var relationship = Assert.Single(
+                stealth.Relationships,
+                value => value.RelationshipKey == "skill-composite.stealth");
+            Assert.True(relationship.CanResolve);
+            Assert.Equal(
+                MechanicalRelationshipResolutionKinds.DeriveParent,
+                relationship.EffectiveResolutionKind);
+
+            var attribution = Assert.Single(
+                stealth.SourceAttributions,
+                value => value.GameEdition == "3.5e");
+            Assert.Equal(1, attribution.SourceRevisionNumber);
+            Assert.Equal("integration-test", attribution.Provider);
+            Assert.NotNull(attribution.WorkKey);
+            Assert.NotNull(attribution.WorkDisplayName);
+
+            var evaluation = await mechanics.EvaluateGlobalAsync(
+                "competency.skill.stealth",
+                new CharacterMechanicEvaluationRequest(
+                    IntegerInputs: new Dictionary<string, int>
+                    {
+                        ["skill.hide"] = 9,
+                        ["skill.move-silently"] = 3
+                    },
+                    Modifiers:
+                    [
+                        new CharacterMechanicModifierInput("skill.hide", 2),
+                        new CharacterMechanicModifierInput("skill.stealth", 1)
+                    ]),
+                userId: null);
+            Assert.NotNull(evaluation);
+            Assert.Equal(8, evaluation.Value);
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
     private static HttpRequestMessage HostedRequest(HttpMethod method, string path, string ticket)
     {
         var request = new HttpRequestMessage(method, path);
         request.Headers.Add(ToolHostAuthenticationHeaders.Ticket, ticket);
         request.Headers.Add(ToolHostAuthenticationHeaders.IntrospectionPath, IntrospectionPath);
         return request;
+    }
+
+
+    private static async Task CleanupAsync(RulesCoreDbContext db, Guid packageId)
+    {
+        await db.CampaignRulesetRevisionEntries.ExecuteDeleteAsync();
+        await db.CampaignRulesetRevisions.ExecuteDeleteAsync();
+        await db.CampaignRuleDecisions.ExecuteDeleteAsync();
+        await db.CampaignRulesetSelections.ExecuteDeleteAsync();
+        await db.RulesetRevisionEntries.ExecuteDeleteAsync();
+        await db.RulesetRevisions.ExecuteDeleteAsync();
+        await db.GlobalRuleDecisions.ExecuteDeleteAsync();
+        await db.RuleConceptSourceBindings.ExecuteDeleteAsync();
+        await db.RuleConcepts.ExecuteDeleteAsync();
+
+        if (packageId != Guid.Empty)
+        {
+            var package = await db.SourcePackages.SingleOrDefaultAsync(value => value.Id == packageId);
+            if (package is not null)
+            {
+                db.SourcePackages.Remove(package);
+                await db.SaveChangesAsync();
+            }
+        }
     }
 
     private static ToolHostAuthenticationContext Context(
