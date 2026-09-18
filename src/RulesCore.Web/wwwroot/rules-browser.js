@@ -584,7 +584,7 @@ async function renderRulesBrowser(app, container) {
 
         app.browserScope = scope.value;
         app.browserFilters = {
-            entityType: app.browserFilters.entityType || null,
+            entityType: app.browserFilters.entityType ?? "",
             query: search.value.trim(),
             sourceCode: sourceFilter.value,
             overridesOnly: scope.value.startsWith("campaign:")
