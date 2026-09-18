@@ -290,26 +290,46 @@ async function renderRulesBrowser(app, container) {
     let detailSerial = 0;
     let rowByConceptKey = new Map();
     let currentRules = [];
+    let totalCount = 0;
+    let hasMore = false;
+    let hasPublishedRuleset = false;
+    let isLoadingMore = false;
+    let loadMoreError = null;
     let searchTimer = null;
     let preserveDeepLink = Boolean(app.browserDeepLink);
+    let loadMore = async () => [];
 
     app.browserKeyboard.focusSearch = () => {
         search.focus();
         search.select();
     };
-    app.browserKeyboard.selectRelative = direction => {
+    app.browserKeyboard.selectRelative = async direction => {
         if (!currentRules.length) return;
 
         const currentIndex = currentRules.findIndex(rule =>
             rule.conceptKey === app.browserSelectedConceptKey);
+        if (direction > 0 && currentIndex === currentRules.length - 1 && hasMore) {
+            const added = await loadMore();
+            if (added.length) {
+                const rule = added[0];
+                rowByConceptKey.get(rule.conceptKey)?.scrollIntoView?.({ block: "nearest" });
+                pushToolRoute(app, rule.browserLink?.toolRelativePath);
+                await renderSelection(rule.conceptKey);
+            }
+            return;
+        }
+
         const startIndex = currentIndex >= 0
             ? currentIndex
             : direction > 0 ? -1 : 0;
-        const nextIndex = (startIndex + direction + currentRules.length) % currentRules.length;
+        const nextIndex = Math.max(
+            0,
+            Math.min(currentRules.length - 1, startIndex + direction));
         const rule = currentRules[nextIndex];
+        if (!rule || rule.conceptKey === app.browserSelectedConceptKey) return;
         rowByConceptKey.get(rule.conceptKey)?.scrollIntoView?.({ block: "nearest" });
         pushToolRoute(app, rule.browserLink?.toolRelativePath);
-        void renderSelection(rule.conceptKey);
+        await renderSelection(rule.conceptKey);
     };
 
     const renderSelection = async conceptKey => {
@@ -329,9 +349,87 @@ async function renderRulesBrowser(app, container) {
             () => detailSerial);
     };
 
-    const load = async ({ resetPage = false, keepSelection = false } = {}) => {
+    const refreshListState = () => {
+        indexStatus.textContent = hasPublishedRuleset
+            ? `${currentRules.length} / ${totalCount}`
+            : "No published rules";
+        renderContinuousIndexFooter(
+            indexFooter,
+            currentRules.length,
+            totalCount,
+            hasMore,
+            isLoadingMore,
+            loadMoreError,
+            () => void loadMore());
+    };
+
+    loadMore = async () => {
+        if (!hasMore || isLoadingMore) return [];
+        const serial = loadSerial;
+        isLoadingMore = true;
+        loadMoreError = null;
+        refreshListState();
+
+        try {
+            const offset = currentRules.length;
+            const filters = {
+                entityType: app.browserFilters.entityType || null,
+                query: app.browserFilters.query || null,
+                limit: PAGE_SIZE,
+                offset
+            };
+            const requested = app.browserScope === "global"
+                ? await app.api.getGlobalRulesCatalog(filters)
+                : await app.api.getCampaignRulesCatalog(
+                    app.browserScope.slice("campaign:".length),
+                    filters);
+            if (serial !== loadSerial) return [];
+
+            const added = requested.rules ?? [];
+            if (!added.length) {
+                hasMore = false;
+                return [];
+            }
+
+            currentRules.push(...added);
+            totalCount = requested.totalCount ?? totalCount;
+            hasMore = currentRules.length < totalCount;
+            renderRuleRows(
+                list,
+                added,
+                app.browserFilters.entityType,
+                async rule => {
+                    preserveDeepLink = false;
+                    pushToolRoute(app, rule.browserLink?.toolRelativePath);
+                    await renderSelection(rule.conceptKey);
+                },
+                { append: true });
+            for (const row of list.querySelectorAll("[data-concept-key]")) {
+                rowByConceptKey.set(row.dataset.conceptKey, row);
+            }
+            return added;
+        } catch (error) {
+            if (serial === loadSerial) {
+                loadMoreError = describeError(error);
+            }
+            return [];
+        } finally {
+            if (serial === loadSerial) {
+                isLoadingMore = false;
+                refreshListState();
+            }
+        }
+    };
+
+    const load = async ({ keepSelection = false } = {}) => {
         const serial = ++loadSerial;
-        if (resetPage) app.browserPage = 0;
+        app.browserPage = 0;
+        isLoadingMore = false;
+        currentRules = [];
+        totalCount = 0;
+        hasMore = false;
+        hasPublishedRuleset = false;
+        loadMoreError = null;
 
         app.browserScope = scope.value;
         app.browserFilters = {
@@ -349,8 +447,8 @@ async function renderRulesBrowser(app, container) {
             const filters = {
                 entityType: app.browserFilters.entityType || null,
                 query: app.browserFilters.query || null,
-                limit: PAGE_SIZE + 1,
-                offset: app.browserPage * PAGE_SIZE
+                limit: PAGE_SIZE,
+                offset: 0
             };
             const requested = app.browserScope === "global"
                 ? await app.api.getGlobalRulesCatalog(filters)
@@ -359,43 +457,35 @@ async function renderRulesBrowser(app, container) {
                     filters);
             if (serial !== loadSerial) return;
 
-            const hasNext = (requested.rules?.length ?? 0) > PAGE_SIZE;
-            const rules = (requested.rules ?? []).slice(0, PAGE_SIZE);
-            currentRules = rules;
-            if (!rules.length && app.browserPage > 0) {
-                app.browserPage -= 1;
-                await load({ keepSelection });
-                return;
-            }
+            const rules = requested.rules ?? [];
+            currentRules = [...rules];
+            totalCount = requested.totalCount ?? rules.length;
+            hasPublishedRuleset = Boolean(requested.revisionNumber);
+            hasMore = hasPublishedRuleset && currentRules.length < totalCount;
 
             headingTitle.textContent = libraryTitle(app.browserFilters.entityType);
             headingSubtitle.textContent = librarySubtitle(app.browserFilters.entityType);
             heading.querySelector(".rules-core-library-revision").textContent = requested.revisionNumber
                 ? `${scopeLabel(app, app.browserScope)} · published #${requested.revisionNumber} · ${formatDate(requested.publishedAt)}`
                 : `${scopeLabel(app, app.browserScope)} · no published ruleset`;
-            const totalCount = requested.totalCount ?? rules.length;
-            const firstVisible = rules.length ? app.browserPage * PAGE_SIZE + 1 : 0;
-            const lastVisible = rules.length ? firstVisible + rules.length - 1 : 0;
             indexStatus.textContent = requested.revisionNumber
-                ? `${firstVisible}–${lastVisible} / ${totalCount}`
+                ? `${currentRules.length} / ${totalCount}`
                 : "No published rules";
             renderIndexHeader(indexHeader, app.browserFilters.entityType);
 
-            renderRuleRows(list, rules, app.browserFilters.entityType, async rule => {
-                preserveDeepLink = false;
-                pushToolRoute(app, rule.browserLink?.toolRelativePath);
-                await renderSelection(rule.conceptKey);
-            });
+            renderRuleRows(
+                list,
+                rules,
+                app.browserFilters.entityType,
+                async rule => {
+                    preserveDeepLink = false;
+                    pushToolRoute(app, rule.browserLink?.toolRelativePath);
+                    await renderSelection(rule.conceptKey);
+                });
             rowByConceptKey = new Map(
                 Array.from(list.querySelectorAll("[data-concept-key]"))
                     .map(row => [row.dataset.conceptKey, row]));
-
-            renderIndexFooter(indexFooter, app.browserPage, hasNext, async nextPage => {
-                preserveDeepLink = false;
-                app.browserPage = nextPage;
-                app.browserSelectedConceptKey = null;
-                await load();
-            });
+            refreshListState();
 
             if (!requested.revisionNumber) {
                 detail.replaceChildren(renderEmptyDetail(
@@ -413,25 +503,32 @@ async function renderRulesBrowser(app, container) {
             if (preserveDeepLink && app.browserDeepLink) {
                 conceptKey = app.browserDeepLink;
                 app.browserDeepLink = null;
-            } else if (!conceptKey || !rules.some(rule => rule.conceptKey === conceptKey)) {
-                conceptKey = rules[0].conceptKey;
+            } else if (!conceptKey || !currentRules.some(rule => rule.conceptKey === conceptKey)) {
+                conceptKey = currentRules[0].conceptKey;
             }
             await renderSelection(conceptKey);
         } catch (error) {
             if (serial !== loadSerial) return;
             list.replaceChildren(alertNode("danger", describeError(error)));
+            indexFooter.replaceChildren();
             detail.replaceChildren(renderEmptyDetail("The rule list could not be loaded."));
         }
     };
 
+    list.addEventListener("scroll", () => {
+        if (!hasMore || isLoadingMore) return;
+        const remaining = list.scrollHeight - list.scrollTop - list.clientHeight;
+        if (remaining <= 180) void loadMore();
+    });
+
     scope.addEventListener("change", async () => {
-        await load({ resetPage: true, keepSelection: true });
+        await load({ keepSelection: true });
     });
     type.addEventListener("change", async () => {
         preserveDeepLink = false;
         app.browserSelectedConceptKey = null;
         pushToolRoute(app, catalogRouteForEntity(type.value));
-        await load({ resetPage: true });
+        await load();
     });
     reset.addEventListener("click", async () => {
         preserveDeepLink = false;
@@ -440,7 +537,7 @@ async function renderRulesBrowser(app, container) {
         type.value = "";
         app.browserSelectedConceptKey = null;
         pushToolRoute(app, "/");
-        await load({ resetPage: true });
+        await load();
         search.focus();
     });
     search.addEventListener("input", () => {
@@ -448,7 +545,7 @@ async function renderRulesBrowser(app, container) {
         if (searchTimer) clearTimeout(searchTimer);
         searchTimer = setTimeout(async () => {
             app.browserSelectedConceptKey = null;
-            await load({ resetPage: true });
+            await load();
         }, 220);
     });
     search.addEventListener("keydown", async event => {
@@ -457,7 +554,7 @@ async function renderRulesBrowser(app, container) {
         if (searchTimer) clearTimeout(searchTimer);
         preserveDeepLink = false;
         app.browserSelectedConceptKey = null;
-        await load({ resetPage: true });
+        await load();
     });
 
     await load({ keepSelection: true });
@@ -497,13 +594,15 @@ function renderIndexHeader(container, entityType) {
     }
 }
 
-function renderRuleRows(container, rules, entityType, onSelect) {
-    container.replaceChildren();
+function renderRuleRows(container, rules, entityType, onSelect, { append = false } = {}) {
+    if (!append) container.replaceChildren();
     if (!rules.length) {
-        container.append(element("div", {
-            className: "rules-core-library-empty-list",
-            text: "No rules match the current filters."
-        }));
+        if (!append) {
+            container.append(element("div", {
+                className: "rules-core-library-empty-list",
+                text: "No rules match the current filters."
+            }));
+        }
         return;
     }
 
@@ -576,25 +675,34 @@ function browserColumnValue(rule, key) {
         ?? "";
 }
 
-function renderIndexFooter(container, page, hasNext, onPage) {
-    const previous = element("button", {
+function renderContinuousIndexFooter(
+    container,
+    loadedCount,
+    totalCount,
+    hasMore,
+    isLoadingMore,
+    loadError,
+    onLoadMore)
+{
+    container.replaceChildren();
+    container.append(element("span", {
+        text: loadError
+            ? `Could not load more: ${loadError}`
+            : totalCount
+                ? `${loadedCount} of ${totalCount} loaded`
+                : "No rules"
+    }));
+
+    if (!hasMore) return;
+
+    const button = element("button", {
         type: "button",
         className: "btn btn-sm btn-outline-secondary",
-        text: "Previous",
-        disabled: page === 0
+        text: isLoadingMore ? "Loading…" : loadError ? "Retry" : "Load more",
+        disabled: isLoadingMore
     });
-    const next = element("button", {
-        type: "button",
-        className: "btn btn-sm btn-outline-secondary",
-        text: "Next",
-        disabled: !hasNext
-    });
-    previous.addEventListener("click", () => onPage(Math.max(0, page - 1)));
-    next.addEventListener("click", () => onPage(page + 1));
-    container.append(
-        previous,
-        element("span", { text: `Page ${page + 1}` }),
-        next);
+    button.addEventListener("click", onLoadMore);
+    container.append(button);
 }
 
 async function renderRuleDetailPane(app, container, conceptKey, scopeValue, requestSerial, getCurrentSerial) {

@@ -778,6 +778,14 @@ button.rules-core-workflow-step {
     overscroll-behavior: contain;
 }
 
+.rules-core-library-index-footer .btn {
+    flex: 0 0 auto;
+}
+
+.rules-core-library-index-footer {
+    background: color-mix(in srgb, var(--bs-body-bg) 96%, var(--rules-core-surface-subtle));
+}
+
 .rules-core-library-row {
     display: grid;
     width: 100%;
