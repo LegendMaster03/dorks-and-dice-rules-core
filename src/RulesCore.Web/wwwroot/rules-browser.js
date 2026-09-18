@@ -383,7 +383,8 @@ async function renderRulesBrowser(app, container) {
 
     const detail = element("section", {
         className: "rules-core-library-detail",
-        ariaLabel: "Selected rule"
+        ariaLabel: "Selected rule",
+        attributes: { tabindex: "-1" }
     });
     detail.append(renderEmptyDetail("Select a rule from the list."));
 
@@ -500,6 +501,11 @@ async function renderRulesBrowser(app, container) {
             serial,
             () => detailSerial,
             showIndexOnCompactViewport);
+
+        if (isCompactLibraryViewport() && serial === detailSerial) {
+            detail.focus({ preventScroll: true });
+            detail.scrollIntoView({ block: "start" });
+        }
     };
 
     const refreshListState = () => {
