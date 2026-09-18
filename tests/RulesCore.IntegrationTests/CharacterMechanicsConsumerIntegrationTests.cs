@@ -1123,7 +1123,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         string actor) =>
         db.Database.ExecuteSqlInterpolatedAsync($"""
             DELETE FROM rule_mechanical_relationship_ruling
-            WHERE created_by_user_id = {{actor}};
+            WHERE created_by_user_id = {actor};
             """);
 
     private static async Task CleanupAsync(RulesCoreDbContext db, params Guid[] packageIds)
