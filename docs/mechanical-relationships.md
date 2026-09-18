@@ -81,3 +81,6 @@ A Rules Lawyer may record an explicit `independent-parent` override. Relationshi
 The current composite catalog intentionally does not attach `Search`, `Escape Artist`, `Spellcraft`, `Gather Information`, `Ride`, `Use Rope`, `Concentration`, `Use Magic Device`, remaining Knowledge specialties, or remaining Craft/Profession relationships to later competencies.
 
 The relationship representation is intentionally generic enough to add partial contributions, one-to-many splits, skill-to-tool relationships, skill-to-saving-throw relationships, and other cross-type competency relationships later without placing those semantics in canonical identity or source adapters.
+## Character mechanics consumers
+
+Character-oriented consumers use the normalized mechanics contract documented in `docs/character-mechanics-consumer.md`. Composite competency rulings exposed there are the same persisted Rules Layer rulings described above; the Character Sheet must not create a parallel relationship interpretation.

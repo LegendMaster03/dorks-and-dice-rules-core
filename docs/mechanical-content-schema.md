@@ -220,3 +220,6 @@ There is no separate developer seeding path for normal 3e, 3.5e, 5e, or 5.5e sou
 On the first successful import from a registered trusted source lineage, Rules Core persists reusable canonical recognition metadata. Later imports can reuse that identity knowledge without gaining access to the first user's source package or source bytes. Rules Core does not require or maintain a global mirror of the complete 5e.tools or PCGen corpus.
 
 The reviewed bundled SRD snapshots remain a separate public baseline concern. CI uses deterministic local fixtures and never depends on live upstream repositories.
+## Character mechanics consumer projection
+
+Character-oriented tools must not parse translated mechanical JSON to reconstruct common checks, 3.x sheet mechanics, or publisher-specific procedures. The normalized consumer contract in `docs/character-mechanics-consumer.md` projects stable mechanic keys, typed inputs, evaluation semantics, applicability, relationships, and accessible provenance while retaining this document's source-native/translated-content boundary.
