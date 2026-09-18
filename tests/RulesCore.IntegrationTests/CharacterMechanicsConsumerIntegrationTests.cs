@@ -11,6 +11,7 @@ using RulesCore.Application.Hosting;
 using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Rules;
 using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.IntegrationTests;
