@@ -93,6 +93,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("detail.scrollIntoView", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("syncSelectedRowState", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("keepSelection ? app.browserSelectedConceptKey", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("isRuleAvailableInScope", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("isCompactLibraryViewport", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("has-selection", rulesBrowser, StringComparison.Ordinal);
         Assert.DoesNotContain("Previous", rulesBrowser, StringComparison.Ordinal);

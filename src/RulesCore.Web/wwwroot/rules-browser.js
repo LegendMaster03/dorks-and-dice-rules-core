@@ -680,6 +680,21 @@ async function renderRulesBrowser(app, container) {
             if (deepLinkedConceptKey) {
                 conceptKey = deepLinkedConceptKey;
                 app.browserDeepLink = null;
+            } else if (conceptKey && keepSelection
+                && !currentRules.some(rule => rule.conceptKey === conceptKey)) {
+                const remainsAvailable = await isRuleAvailableInScope(
+                    app,
+                    conceptKey,
+                    app.browserScope);
+                if (serial !== loadSerial) return;
+                if (!remainsAvailable) {
+                    conceptKey = isCompactLibraryViewport() ? null : currentRules[0].conceptKey;
+                    app.browserSelectedConceptKey = conceptKey;
+                    pushToolRoute(
+                        app,
+                        catalogRouteForEntity(app.browserFilters.entityType),
+                        app.browserScope);
+                }
             } else if (!conceptKey) {
                 conceptKey = isCompactLibraryViewport() ? null : currentRules[0].conceptKey;
             }
@@ -1411,6 +1426,22 @@ function renderEmptyDetail(message) {
     return element("div", { className: "rules-core-library-detail-empty" },
         element("div", { className: "rules-core-library-detail-empty-mark", text: "R" }),
         element("p", { text: message }));
+}
+
+async function isRuleAvailableInScope(app, conceptKey, scopeValue) {
+    try {
+        if (scopeValue.startsWith("campaign:")) {
+            await app.api.getCampaignResolvedRule(
+                scopeValue.slice("campaign:".length),
+                conceptKey);
+        } else {
+            await app.api.getGlobalResolvedRule(conceptKey);
+        }
+        return true;
+    } catch (error) {
+        if (error?.status === 404) return false;
+        throw error;
+    }
 }
 
 async function getOptionalRuleVersions(app, conceptKey) {
