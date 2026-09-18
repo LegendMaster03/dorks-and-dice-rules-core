@@ -82,6 +82,9 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("Campaign overrides only", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("sourceFacets", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Clear filters", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Back to list", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("isCompactLibraryViewport", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("has-selection", rulesBrowser, StringComparison.Ordinal);
         Assert.DoesNotContain("Previous", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("BROWSER_COLUMNS", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("browserFields", rulesBrowser, StringComparison.Ordinal);

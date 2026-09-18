@@ -436,9 +436,18 @@ async function renderRulesBrowser(app, container) {
         syncFilterControls();
     };
 
+    const showIndexOnCompactViewport = () => {
+        workspace.classList.remove("has-selection");
+        pushToolRoute(app, catalogRouteForEntity(app.browserFilters.entityType));
+        const selectedRow = rowByConceptKey.get(app.browserSelectedConceptKey);
+        selectedRow?.scrollIntoView?.({ block: "nearest" });
+        selectedRow?.focus?.({ preventScroll: true });
+    };
+
     const renderSelection = async conceptKey => {
         const serial = ++detailSerial;
         app.browserSelectedConceptKey = conceptKey;
+        workspace.classList.add("has-selection");
         for (const [key, row] of rowByConceptKey) {
             const selected = key === conceptKey;
             row.classList.toggle("is-selected", selected);
@@ -450,7 +459,8 @@ async function renderRulesBrowser(app, container) {
             conceptKey,
             app.browserScope,
             serial,
-            () => detailSerial);
+            () => detailSerial,
+            showIndexOnCompactViewport);
     };
 
     const refreshListState = () => {
@@ -613,13 +623,22 @@ async function renderRulesBrowser(app, container) {
             }
 
             let conceptKey = keepSelection ? app.browserSelectedConceptKey : null;
-            if (preserveDeepLink && app.browserDeepLink) {
-                conceptKey = app.browserDeepLink;
+            const deepLinkedConceptKey = preserveDeepLink && app.browserDeepLink
+                ? app.browserDeepLink
+                : null;
+            if (deepLinkedConceptKey) {
+                conceptKey = deepLinkedConceptKey;
                 app.browserDeepLink = null;
             } else if (!conceptKey || !currentRules.some(rule => rule.conceptKey === conceptKey)) {
-                conceptKey = currentRules[0].conceptKey;
+                conceptKey = isCompactLibraryViewport() ? null : currentRules[0].conceptKey;
             }
-            await renderSelection(conceptKey);
+
+            if (conceptKey) {
+                await renderSelection(conceptKey);
+            } else {
+                workspace.classList.remove("has-selection");
+                detail.replaceChildren(renderEmptyDetail("Select a rule from the list."));
+            }
         } catch (error) {
             if (serial !== loadSerial) return;
             list.replaceChildren(alertNode("danger", describeError(error)));
@@ -711,6 +730,10 @@ async function renderRulesBrowser(app, container) {
     });
 
     await load({ keepSelection: true });
+}
+
+function isCompactLibraryViewport() {
+    return window.matchMedia?.("(max-width: 900px)")?.matches ?? false;
 }
 
 function isEditableTarget(target) {
@@ -858,7 +881,15 @@ function renderContinuousIndexFooter(
     container.append(button);
 }
 
-async function renderRuleDetailPane(app, container, conceptKey, scopeValue, requestSerial, getCurrentSerial) {
+async function renderRuleDetailPane(
+    app,
+    container,
+    conceptKey,
+    scopeValue,
+    requestSerial,
+    getCurrentSerial,
+    onBackToList)
+{
     container.replaceChildren(element("div", {
         className: "rules-core-library-detail-loading",
         text: "Loading rule…"
@@ -880,6 +911,13 @@ async function renderRuleDetailPane(app, container, conceptKey, scopeValue, requ
         if (requestSerial !== getCurrentSerial()) return;
 
         const tabBar = element("div", { className: "rules-core-version-tabs" });
+        const backToList = element("button", {
+            type: "button",
+            className: "btn btn-sm btn-outline-secondary rules-core-library-mobile-back",
+            text: "← Back to list",
+            onClick: onBackToList
+        });
+        tabBar.append(backToList);
         const body = element("div", { className: "rules-core-library-detail-body" });
         const effectiveLabel = campaignId
             ? campaignName(app, campaignId)

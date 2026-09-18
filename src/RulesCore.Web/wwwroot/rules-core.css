@@ -1025,6 +1025,11 @@ button.rules-core-workflow-step {
     color: var(--bs-body-color);
 }
 
+.rules-core-library-mobile-back {
+    display: none;
+    flex: 0 0 auto;
+}
+
 .rules-core-version-tabs-context {
     display: flex;
     align-items: center;
@@ -1074,24 +1079,40 @@ button.rules-core-workflow-step {
     }
 
     .rules-core-library-workspace {
-        grid-template-columns: 1fr;
+        display: block;
         height: auto;
+        min-height: 0;
         max-height: none;
         overflow: visible;
     }
 
     .rules-core-library-index {
-        max-height: 25rem;
+        min-height: 32rem;
+        max-height: calc(100vh - 12rem);
         border-right: 0;
-        border-bottom: 1px solid var(--rules-core-border);
+        border-bottom: 0;
     }
 
     .rules-core-library-detail {
+        display: none;
         overflow: visible;
     }
 
+    .rules-core-library-workspace.has-selection .rules-core-library-index {
+        display: none;
+    }
+
+    .rules-core-library-workspace.has-selection .rules-core-library-detail {
+        display: block;
+    }
+
     .rules-core-version-tabs {
-        position: static;
+        position: sticky;
+        top: 0;
+    }
+
+    .rules-core-library-mobile-back {
+        display: inline-flex;
     }
 }
 
