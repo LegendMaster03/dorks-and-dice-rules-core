@@ -554,7 +554,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
             reader.IsDBNull(reader.GetOrdinal("progress_stage")) ? null : reader.GetString(reader.GetOrdinal("progress_stage")),
             reader.IsDBNull(reader.GetOrdinal("progress_current")) ? null : reader.GetInt32(reader.GetOrdinal("progress_current")),
             reader.IsDBNull(reader.GetOrdinal("progress_total")) ? null : reader.GetInt32(reader.GetOrdinal("progress_total")),
-            structured?.Detail ?? rawProgress,
+            structured is null ? rawProgress : structured.Detail,
             reader.IsDBNull(reader.GetOrdinal("progress_updated_at")) ? null : reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("progress_updated_at")),
             reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("created_at")),
             reader.IsDBNull(reader.GetOrdinal("started_at")) ? null : reader.GetFieldValue<DateTimeOffset>(reader.GetOrdinal("started_at")),
