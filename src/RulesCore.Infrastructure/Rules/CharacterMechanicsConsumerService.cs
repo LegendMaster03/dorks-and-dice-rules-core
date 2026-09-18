@@ -1082,6 +1082,25 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         }
     }
 
+    private static string? NormalizeAbilityKey(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        return value.Trim().ToLowerInvariant() switch
+        {
+            "str" or "strength" => "strength",
+            "dex" or "dexterity" => "dexterity",
+            "con" or "constitution" => "constitution",
+            "int" or "intelligence" => "intelligence",
+            "wis" or "wisdom" => "wisdom",
+            "cha" or "charisma" => "charisma",
+            _ => value.Trim().ToLowerInvariant()
+        };
+    }
+
     private static bool IsLaterEdition(string? gameEdition) =>
         string.Equals(gameEdition, "5e", StringComparison.OrdinalIgnoreCase)
         || string.Equals(gameEdition, "5.5e", StringComparison.OrdinalIgnoreCase);
