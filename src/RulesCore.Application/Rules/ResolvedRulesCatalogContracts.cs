@@ -7,6 +7,13 @@ public sealed record ResolvedRulesCatalogView(
     DateTimeOffset? PublishedAt,
     IReadOnlyList<ResolvedRuleCatalogItemView> Rules);
 
+public sealed record ResolvedRuleRelationshipView(
+    string Kind,
+    Guid RelatedRuleConceptId,
+    string RelatedConceptKey,
+    string RelatedEntityType,
+    string RelatedDisplayName);
+
 public sealed record ResolvedRuleCatalogItemView(
     Guid RuleConceptId,
     string ConceptKey,
@@ -22,7 +29,8 @@ public sealed record ResolvedRuleCatalogItemView(
     string PackageKey,
     string PackageDisplayName,
     string EditionKey,
-    string EditionDisplayName)
+    string EditionDisplayName,
+    IReadOnlyList<ResolvedRuleRelationshipView> Relationships)
 {
     public RuleLinkTargetView BrowserLink => RuleBrowserRoutes.ForConcept(EntityType, ConceptKey);
 }

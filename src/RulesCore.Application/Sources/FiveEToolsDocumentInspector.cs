@@ -7,9 +7,11 @@ public static class FiveEToolsDocumentInspector
 {
     public const string AccountSourceFallbackCode = "user-source";
 
-    // These are native 5e.tools entity families, based on the upstream site/homebrew schema
-    // families. Generic arrays such as "data" are deliberately excluded; corpus bodies are
-    // handled separately by the corpus adapter once their book/adventure identity is known.
+    // These are the entity arrays accepted by the JSON source representation adapter. Most are
+    // native 5e.tools families. prestigeClass and npcClass are canonical legacy extensions emitted
+    // by the 3.x SRD normalization pipeline so they can use the same stored-source import path.
+    // Generic arrays such as "data" are deliberately excluded; corpus bodies are handled separately
+    // by the corpus adapter once their book/adventure identity is known.
     private static readonly HashSet<string> KnownEntityArrays = new(StringComparer.OrdinalIgnoreCase)
     {
         "action",
@@ -42,8 +44,10 @@ public static class FiveEToolsDocumentInspector
         "monster",
         "monsterFluff",
         "name",
+        "npcClass",
         "object",
         "optionalfeature",
+        "prestigeClass",
         "psionic",
         "quickref",
         "race",

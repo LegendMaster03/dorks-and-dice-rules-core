@@ -26,7 +26,8 @@ public sealed class CanonicalPublicationIdentityService(RulesCoreDbContext dbCon
     {
         "5etools-corpus-id",
         "5etools-book-id",
-        "5etools-adventure-id"
+        "5etools-adventure-id",
+        TrustedCanonicalAliasPolicy.PublicationSourceCodeScheme
     };
 
     public async Task<CanonicalPublicationIdentityView> ResolveAsync(
@@ -56,22 +57,15 @@ public sealed class CanonicalPublicationIdentityService(RulesCoreDbContext dbCon
             }
         }
 
-        var bibliographicFingerprint = CanonicalSourceIdentity.BibliographicFingerprint(evidence);
-        var byBibliography = await FindPublicationByBibliographyAsync(
-            bibliographicFingerprint,
-            cancellationToken);
-        if (byBibliography is not null)
-        {
-            await AddAliasesAsync(byBibliography.Id, aliases, cancellationToken);
-            return byBibliography with { MatchKind = "bibliographic", Confidence = 0.98 };
-        }
-
+        // Reviewed source-specific identifiers must take precedence over bibliography. This is
+        // what lets a newly reviewed cross-format identity repair an older duplicate publication
+        // whose title/date fingerprint was already persisted before the identity was known.
         var sourceSpecificAliases = aliases
             .Where(value => SourceSpecificIdentitySchemes.Contains(value.Key))
             .ToArray();
         foreach (var alias in sourceSpecificAliases)
         {
-            var matches = await FindPublicationsByAliasAsync(alias.Key, alias.Value, cancellationToken);
+            var matches = await FindSourceSpecificMatchesAsync(alias.Key, alias.Value, cancellationToken);
             var compatible = matches
                 .Where(value => IsMetadataCompatible(value, evidence, aliases))
                 .ToArray();
@@ -84,6 +78,16 @@ public sealed class CanonicalPublicationIdentityService(RulesCoreDbContext dbCon
                     Confidence = 0.995
                 };
             }
+        }
+
+        var bibliographicFingerprint = CanonicalSourceIdentity.BibliographicFingerprint(evidence);
+        var byBibliography = await FindPublicationByBibliographyAsync(
+            bibliographicFingerprint,
+            cancellationToken);
+        if (byBibliography is not null)
+        {
+            await AddAliasesAsync(byBibliography.Id, aliases, cancellationToken);
+            return byBibliography with { MatchKind = "bibliographic", Confidence = 0.98 };
         }
 
         var contextualAliases = aliases
@@ -129,6 +133,28 @@ public sealed class CanonicalPublicationIdentityService(RulesCoreDbContext dbCon
             cancellationToken);
         await AddAliasesAsync(created.Id, aliases, cancellationToken);
         return created with { MatchKind = "new", Confidence = 1.0 };
+    }
+
+    private async Task<IReadOnlyList<CanonicalPublicationIdentityView>> FindSourceSpecificMatchesAsync(
+        string scheme,
+        string value,
+        CancellationToken cancellationToken)
+    {
+        var matches = await FindPublicationsByAliasAsync(scheme, value, cancellationToken);
+        if (matches.Count > 0
+            || !string.Equals(
+                scheme,
+                TrustedCanonicalAliasPolicy.PublicationSourceCodeScheme,
+                StringComparison.Ordinal))
+        {
+            return matches;
+        }
+
+        // The reviewed legacy SRD snapshots predate the format-neutral publication alias and
+        // therefore already exist under this compatibility scheme. Use it only as a migration
+        // fallback for an explicitly reviewed Rules Core source code, then AddAliasesAsync above
+        // backfills the format-neutral alias onto the selected canonical publication.
+        return await FindPublicationsByAliasAsync("5etools-source-code", value, cancellationToken);
     }
 
     private async Task<IReadOnlyList<AliasCandidate>> FindAliasCandidatesAsync(

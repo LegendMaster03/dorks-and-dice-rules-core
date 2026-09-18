@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
+using RulesCore.Domain.Rules;
 using RulesCore.Domain.Sources;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Sources;
@@ -48,7 +49,7 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
             cancellationToken);
         var conceptIds = conceptIdsBySource.Values.SelectMany(value => value).Distinct().ToArray();
         var conceptById = conceptIds.Length == 0
-            ? new Dictionary<Guid, RulesCore.Domain.Rules.RuleConcept>()
+            ? new Dictionary<Guid, RuleConcept>()
             : await dbContext.RuleConcepts
                 .AsNoTracking()
                 .Where(value => conceptIds.Contains(value.Id))
@@ -60,7 +61,10 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
                 .Where(conceptById.ContainsKey)
                 .Select(conceptId => conceptById[conceptId])
                 .Select(value => new RuleConceptReferenceView(
-                    value.Id, value.Key, value.EntityType, value.DisplayName))
+                    value.Id,
+                    value.Key,
+                    RuleConceptEntityTypes.Normalize(value.EntityType),
+                    value.DisplayName))
                 .OrderBy(value => value.Key, StringComparer.Ordinal)
                 .ToArray());
 
@@ -106,12 +110,16 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
         var actor = RequireUserId(actorUserId);
         await SourceFrameworkStore.EnsureSchemaAsync(dbContext, cancellationToken);
         await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
+        await RuleConceptRelationshipStore.EnsureSchemaAsync(dbContext, cancellationToken);
 
         var source = await AccessibleSources(actor).SingleOrDefaultAsync(value => value.Id == sourceEntityId, cancellationToken);
         if (source is null) return null;
         var concept = await dbContext.RuleConcepts.SingleOrDefaultAsync(value => value.Id == ruleConceptId, cancellationToken)
             ?? throw new KeyNotFoundException($"Rule concept '{ruleConceptId}' does not exist.");
-        if (!string.Equals(concept.EntityType.Trim(), source.EntityType.Trim(), StringComparison.OrdinalIgnoreCase))
+        if (!string.Equals(
+                RuleConceptEntityTypes.Normalize(concept.EntityType),
+                RuleConceptEntityTypes.Normalize(source.EntityType),
+                StringComparison.Ordinal))
         {
             throw new InvalidOperationException(
                 $"Source entity type '{source.EntityType}' can not be bound to concept type '{concept.EntityType}'.");
@@ -126,10 +134,14 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
             cancellationToken);
         if (existing is not null)
         {
+            await RuleConceptRelationshipStore.SynchronizeSubclassParentsAsync(
+                dbContext,
+                actor,
+                cancellationToken);
             return new RuleMutationResult<RuleConceptSourceBindingView>(ToView(existing), false);
         }
 
-        var binding = new RulesCore.Domain.Rules.RuleConceptSourceBinding
+        var binding = new RuleConceptSourceBinding
         {
             Id = Guid.NewGuid(),
             RuleConceptId = concept.Id,
@@ -140,6 +152,10 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
         };
         dbContext.RuleConceptSourceBindings.Add(binding);
         await dbContext.SaveChangesAsync(cancellationToken);
+        await RuleConceptRelationshipStore.SynchronizeSubclassParentsAsync(
+            dbContext,
+            actor,
+            cancellationToken);
         return new RuleMutationResult<RuleConceptSourceBindingView>(ToView(binding), true);
     }
 
@@ -238,7 +254,7 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
         var package = entity.SourcePackage;
         return new SourceVersionEntityView(
             entity.Id,
-            entity.EntityType,
+            RuleConceptEntityTypes.Normalize(entity.EntityType),
             entity.Name,
             entity.SourceCode ?? string.Empty,
             latest.Id,
@@ -457,7 +473,7 @@ public sealed class SourceVersioningService(RulesCoreDbContext dbContext) : ISou
     private static SourceEntityRevision Latest(SourceEntity entity) =>
         entity.Revisions.OrderByDescending(value => value.RevisionNumber).First();
 
-    private static RuleConceptSourceBindingView ToView(RulesCore.Domain.Rules.RuleConceptSourceBinding binding) =>
+    private static RuleConceptSourceBindingView ToView(RuleConceptSourceBinding binding) =>
         new(
             binding.Id,
             binding.RuleConceptId,
@@ -624,7 +640,7 @@ public sealed class RuleConsolidationService(
 
             sourceViews.Add(new RuleConsolidationSourceView(
                 source.Id,
-                source.EntityType,
+                RuleConceptEntityTypes.Normalize(source.EntityType),
                 source.Name,
                 source.SourceCode ?? string.Empty,
                 package.Key,
