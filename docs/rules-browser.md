@@ -24,6 +24,8 @@ Collection routes include `/monsters`, `/spells`, `/classes`, `/subclasses`, `/p
 
 The normal Rules Library uses a persistent list/detail workspace: compact type/search/scope controls above a dense concept list on the left, with the selected rule on the right. The list is concept-based rather than source-record-based, so a rule that exists in several editions still appears once. The effective Dorks & Dice rule is the default detail tab; accessible source versions appear as adjacent tabs. Import, source acquisition, and source-record inspection do not occupy this workspace. They live under the separate `/sources` Sources view.
 
+The catalog also returns compact browser-index fields derived from the published effective mechanical document without returning the document itself. The list chooses columns by entity family, for example monster Type/CR, spell Level/School, class Hit Die, race/species Ability/Size, and skill Ability. Subclasses use the published `parent-class` relationship for their Class column. The response includes the filtered total count so the search strip can show the visible range without loading the complete catalog.
+
 ## Global catalog
 
 `GET /api/rules` returns the latest published global ruleset revision and the rules from that revision whose effective source package is accessible to the current request identity. Optional `entityType`, `q`, `limit`, and `offset` parameters filter/page the catalog.

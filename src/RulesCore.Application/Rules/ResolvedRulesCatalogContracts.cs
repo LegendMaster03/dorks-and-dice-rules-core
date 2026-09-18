@@ -5,7 +5,13 @@ public sealed record ResolvedRulesCatalogView(
     Guid? CampaignId,
     int? RevisionNumber,
     DateTimeOffset? PublishedAt,
+    int TotalCount,
     IReadOnlyList<ResolvedRuleCatalogItemView> Rules);
+
+public sealed record ResolvedRuleBrowserFieldView(
+    string Key,
+    string Label,
+    string Value);
 
 public sealed record ResolvedRuleRelationshipView(
     string Kind,
@@ -30,6 +36,7 @@ public sealed record ResolvedRuleCatalogItemView(
     string PackageDisplayName,
     string EditionKey,
     string EditionDisplayName,
+    IReadOnlyList<ResolvedRuleBrowserFieldView> BrowserFields,
     IReadOnlyList<ResolvedRuleRelationshipView> Relationships)
 {
     public RuleLinkTargetView BrowserLink => RuleBrowserRoutes.ForConcept(EntityType, ConceptKey);

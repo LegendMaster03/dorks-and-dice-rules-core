@@ -44,6 +44,72 @@ const ENTITY_TYPES = [
     ["rule", "Other rules"]
 ];
 
+const BROWSER_COLUMNS = new Map([
+    ["", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
+        { key: "entityType", label: "Type", width: "minmax(5rem, .8fr)" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]],
+    ["monster", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
+        { key: "type", label: "Type", width: "minmax(5rem, .9fr)" },
+        { key: "cr", label: "CR", width: "minmax(2.5rem, .4fr)", align: "center" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]],
+    ["spell", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
+        { key: "level", label: "Level", width: "minmax(4.5rem, .6fr)" },
+        { key: "school", label: "School", width: "minmax(6rem, 1fr)" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]],
+    ["class", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
+        { key: "hitDie", label: "Hit Die", width: "minmax(4rem, .55fr)", align: "center" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]],
+    ["subclass", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
+        { key: "parentClass", label: "Class", width: "minmax(6rem, 1fr)" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]],
+    ["prestigeClass", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]],
+    ["feat", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
+        { key: "category", label: "Category", width: "minmax(6rem, 1fr)" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]],
+    ["race", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
+        { key: "ability", label: "Ability", width: "minmax(7rem, 1.1fr)" },
+        { key: "size", label: "Size", width: "minmax(4rem, .65fr)" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]],
+    ["species", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
+        { key: "ability", label: "Ability", width: "minmax(7rem, 1.1fr)" },
+        { key: "size", label: "Size", width: "minmax(4rem, .65fr)" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]],
+    ["item", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
+        { key: "type", label: "Type", width: "minmax(5rem, .8fr)" },
+        { key: "rarity", label: "Rarity", width: "minmax(5rem, .8fr)" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]],
+    ["condition", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]],
+    ["skill", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
+        { key: "ability", label: "Ability", width: "minmax(4rem, .65fr)" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]]
+]);
+
 export function installResolvedRulesBrowser(app) {
     app.canBrowseRules = app.hostContext.siteMode === DORKS_MODE;
     app.browserScope = "global";
@@ -181,6 +247,10 @@ async function renderRulesBrowser(app, container) {
         className: "btn btn-sm btn-outline-secondary rules-core-library-reset",
         text: "Reset"
     });
+    const indexStatus = element("span", {
+        className: "rules-core-library-search-status",
+        text: "Loading…"
+    });
     const searchGroup = element("div", { className: "rules-core-library-search-group" },
         element("div", { className: "rules-core-library-search-wrap" },
             search,
@@ -188,6 +258,7 @@ async function renderRulesBrowser(app, container) {
                 className: "rules-core-library-search-hint",
                 text: "F"
             })),
+        indexStatus,
         reset);
 
     const workspace = element("div", { className: "rules-core-library-workspace" });
@@ -196,8 +267,7 @@ async function renderRulesBrowser(app, container) {
         ariaLabel: "Rules index"
     });
     const indexHeader = element("div", { className: "rules-core-library-index-header" });
-    const indexStatus = element("span", { text: "Loading…" });
-    indexHeader.append(element("strong", { text: "Rules" }), indexStatus);
+    renderIndexHeader(indexHeader, app.browserFilters.entityType);
     const list = element("div", {
         className: "rules-core-library-index-list",
         role: "listbox",
@@ -303,11 +373,15 @@ async function renderRulesBrowser(app, container) {
             heading.querySelector(".rules-core-library-revision").textContent = requested.revisionNumber
                 ? `${scopeLabel(app, app.browserScope)} · published #${requested.revisionNumber} · ${formatDate(requested.publishedAt)}`
                 : `${scopeLabel(app, app.browserScope)} · no published ruleset`;
+            const totalCount = requested.totalCount ?? rules.length;
+            const firstVisible = rules.length ? app.browserPage * PAGE_SIZE + 1 : 0;
+            const lastVisible = rules.length ? firstVisible + rules.length - 1 : 0;
             indexStatus.textContent = requested.revisionNumber
-                ? `${rules.length}${hasNext ? "+" : ""} rules on this page`
+                ? `${firstVisible}–${lastVisible} / ${totalCount}`
                 : "No published rules";
+            renderIndexHeader(indexHeader, app.browserFilters.entityType);
 
-            renderRuleRows(list, rules, async rule => {
+            renderRuleRows(list, rules, app.browserFilters.entityType, async rule => {
                 preserveDeepLink = false;
                 pushToolRoute(app, rule.browserLink?.toolRelativePath);
                 await renderSelection(rule.conceptKey);
@@ -405,7 +479,25 @@ function librarySubtitle(entityType) {
     return `One concept per row. Search ${subject.toLowerCase()} on the left and view the selected rule on the right. Press J/K to navigate; F or / focuses search.`;
 }
 
-function renderRuleRows(container, rules, onSelect) {
+function browserColumns(entityType) {
+    return BROWSER_COLUMNS.get(entityType)
+        ?? BROWSER_COLUMNS.get("")
+        ?? [];
+}
+
+function renderIndexHeader(container, entityType) {
+    const columns = browserColumns(entityType);
+    container.replaceChildren();
+    container.style.gridTemplateColumns = columns.map(column => column.width).join(" ");
+    for (const column of columns) {
+        container.append(element("span", {
+            className: `rules-core-library-column-header${column.align === "center" ? " is-center" : ""}`,
+            text: column.label
+        }));
+    }
+}
+
+function renderRuleRows(container, rules, entityType, onSelect) {
     container.replaceChildren();
     if (!rules.length) {
         container.append(element("div", {
@@ -415,6 +507,8 @@ function renderRuleRows(container, rules, onSelect) {
         return;
     }
 
+    const columns = browserColumns(entityType);
+    const template = columns.map(column => column.width).join(" ");
     for (const rule of rules) {
         const row = element("button", {
             type: "button",
@@ -425,27 +519,61 @@ function renderRuleRows(container, rules, onSelect) {
                 "aria-selected": "false"
             }
         });
-        row.append(
-            element("span", { className: "rules-core-library-row-main" },
-                element("span", { className: "rules-core-library-row-name", text: rule.displayName }),
-                element("span", {
-                    className: "rules-core-library-row-meta",
-                    text: humanizeEntityType(rule.entityType)
-                })),
-            element("span", { className: "rules-core-library-row-source" },
-                element("span", {
-                    className: "rules-core-library-row-source-code",
-                    text: rule.sourceCode || "D&D"
-                }),
-                rule.hasCampaignOverride
-                    ? element("span", {
-                        className: "rules-core-library-row-override",
-                        text: "Override"
-                    })
-                    : null));
+        row.style.gridTemplateColumns = template;
+        for (const column of columns) {
+            row.append(renderRuleCell(rule, column));
+        }
         row.addEventListener("click", () => onSelect(rule));
         container.append(row);
     }
+}
+
+function renderRuleCell(rule, column) {
+    const value = browserColumnValue(rule, column.key);
+    const classNames = [
+        "rules-core-library-cell",
+        column.key === "name" ? "rules-core-library-cell--name" : "",
+        column.key === "source" ? "rules-core-library-cell--source" : "",
+        column.align === "center" ? "is-center" : ""
+    ].filter(Boolean).join(" ");
+
+    if (column.key === "name") {
+        return element("span", { className: classNames },
+            element("span", {
+                className: "rules-core-library-row-name",
+                text: rule.displayName
+            }),
+            rule.hasCampaignOverride
+                ? element("span", {
+                    className: "rules-core-library-row-override",
+                    text: "Campaign override"
+                })
+                : null);
+    }
+
+    return element("span", {
+        className: classNames,
+        text: value || "—",
+        title: value || undefined
+    });
+}
+
+function browserColumnValue(rule, key) {
+    if (key === "name") return rule.displayName;
+    if (key === "entityType") return humanizeEntityType(rule.entityType);
+    if (key === "source") return rule.sourceCode || "D&D";
+    if (key === "parentClass") {
+        return (rule.relationships ?? [])
+            .filter(relationship =>
+                relationship.kind === "parent-class"
+                && relationship.relatedEntityType === "class")
+            .map(relationship => relationship.relatedDisplayName)
+            .join(", ");
+    }
+
+    return (rule.browserFields ?? [])
+        .find(field => field.key === key)?.value
+        ?? "";
 }
 
 function renderIndexFooter(container, page, hasNext, onPage) {

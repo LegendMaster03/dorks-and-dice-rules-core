@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
 using RulesCore.Domain.Rules;
@@ -37,7 +38,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             .FirstOrDefaultAsync(cancellationToken);
         if (revision is null)
         {
-            return new ResolvedRulesCatalogView("global", null, null, null, []);
+            return new ResolvedRulesCatalogView("global", null, null, null, 0, []);
         }
 
         var entries = dbContext.RulesetRevisionEntries
@@ -65,6 +66,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 || value.SourceEntityRevision.SourceEntity.SourcePackage.DisplayName.ToLower().Contains(normalizedQuery));
         }
 
+        var totalCount = await entries.CountAsync(cancellationToken);
         var rules = await entries
             .OrderBy(value => value.RuleConcept.EntityType)
             .ThenBy(value => value.RuleConcept.DisplayName)
@@ -87,17 +89,23 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 value.SourceEntityRevision.SourceEntity.SourcePackage.DisplayName,
                 value.SourceEntityRevision.SourceEntity.FormatKey,
                 value.SourceEntityRevision.SourceEntity.FormatKey,
+                (IReadOnlyList<ResolvedRuleBrowserFieldView>)null!,
                 (IReadOnlyList<ResolvedRuleRelationshipView>)null!))
             .Take(limit)
             .ToArrayAsync(cancellationToken);
 
         rules = await AttachRelationshipsAsync(rules, cancellationToken);
+        rules = await AttachGlobalBrowserFieldsAsync(
+            revision.Id,
+            rules,
+            cancellationToken);
 
         return new ResolvedRulesCatalogView(
             "global",
             null,
             revision.RevisionNumber,
             revision.PublishedAt,
+            totalCount,
             rules);
     }
 
@@ -134,7 +142,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             .FirstOrDefaultAsync(cancellationToken);
         if (revision is null)
         {
-            return new ResolvedRulesCatalogView("campaign", campaignId, null, null, []);
+            return new ResolvedRulesCatalogView("campaign", campaignId, null, null, 0, []);
         }
 
         var entries = dbContext.CampaignRulesetRevisionEntries
@@ -161,6 +169,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 || value.SourceEntityRevision.SourceEntity.SourcePackage.DisplayName.ToLower().Contains(normalizedQuery));
         }
 
+        var totalCount = await entries.CountAsync(cancellationToken);
         var rules = await entries
             .OrderBy(value => value.RuleConcept.EntityType)
             .ThenBy(value => value.RuleConcept.DisplayName)
@@ -186,19 +195,130 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 value.SourceEntityRevision.SourceEntity.SourcePackage.DisplayName,
                 value.SourceEntityRevision.SourceEntity.FormatKey,
                 value.SourceEntityRevision.SourceEntity.FormatKey,
+                (IReadOnlyList<ResolvedRuleBrowserFieldView>)null!,
                 (IReadOnlyList<ResolvedRuleRelationshipView>)null!))
             .Take(limit)
             .ToArrayAsync(cancellationToken);
 
         rules = await AttachRelationshipsAsync(rules, cancellationToken);
+        rules = await AttachCampaignBrowserFieldsAsync(
+            revision.Id,
+            rules,
+            cancellationToken);
 
         return new ResolvedRulesCatalogView(
             "campaign",
             campaignId,
             revision.RevisionNumber,
             revision.PublishedAt,
+            totalCount,
             rules);
     }
+
+    private async Task<ResolvedRuleCatalogItemView[]> AttachGlobalBrowserFieldsAsync(
+        Guid rulesetRevisionId,
+        IReadOnlyCollection<ResolvedRuleCatalogItemView> rules,
+        CancellationToken cancellationToken)
+    {
+        if (rules.Count == 0) return [];
+
+        var conceptIds = rules.Select(value => value.RuleConceptId).ToArray();
+        var entries = await dbContext.RulesetRevisionEntries
+            .AsNoTracking()
+            .Include(value => value.SourceEntityRevision)
+            .Include(value => value.GlobalRuleDecision)
+            .Where(value => value.RulesetRevisionId == rulesetRevisionId
+                && conceptIds.Contains(value.RuleConceptId))
+            .ToArrayAsync(cancellationToken);
+
+        var entityTypes = rules.ToDictionary(value => value.RuleConceptId, value => value.EntityType);
+        var fieldsByConcept = new Dictionary<Guid, IReadOnlyList<ResolvedRuleBrowserFieldView>>();
+        foreach (var entry in entries)
+        {
+            using var sourceDocument = JsonDocument.Parse(
+                entry.SourceEntityRevision.GetMechanicalContentJson());
+            var resolved = ApplyGlobalDecision(
+                sourceDocument.RootElement,
+                entry.GlobalRuleDecision);
+            fieldsByConcept[entry.RuleConceptId] = RuleBrowserSummaryProjector.Project(
+                entityTypes[entry.RuleConceptId],
+                resolved);
+        }
+
+        return rules
+            .Select(rule => rule with
+            {
+                BrowserFields = fieldsByConcept.GetValueOrDefault(rule.RuleConceptId) ?? []
+            })
+            .ToArray();
+    }
+
+    private async Task<ResolvedRuleCatalogItemView[]> AttachCampaignBrowserFieldsAsync(
+        Guid campaignRulesetRevisionId,
+        IReadOnlyCollection<ResolvedRuleCatalogItemView> rules,
+        CancellationToken cancellationToken)
+    {
+        if (rules.Count == 0) return [];
+
+        var conceptIds = rules.Select(value => value.RuleConceptId).ToArray();
+        var entries = await dbContext.CampaignRulesetRevisionEntries
+            .AsNoTracking()
+            .Include(value => value.SourceEntityRevision)
+            .Include(value => value.CampaignRuleDecision)
+            .Include(value => value.BaselineRulesetRevisionEntry)
+                .ThenInclude(value => value.GlobalRuleDecision)
+            .Where(value => value.CampaignRulesetRevisionId == campaignRulesetRevisionId
+                && conceptIds.Contains(value.RuleConceptId))
+            .ToArrayAsync(cancellationToken);
+
+        var entityTypes = rules.ToDictionary(value => value.RuleConceptId, value => value.EntityType);
+        var fieldsByConcept = new Dictionary<Guid, IReadOnlyList<ResolvedRuleBrowserFieldView>>();
+        foreach (var entry in entries)
+        {
+            using var sourceDocument = JsonDocument.Parse(
+                entry.SourceEntityRevision.GetMechanicalContentJson());
+            var resolved = sourceDocument.RootElement.Clone();
+            if (entry.CampaignRuleDecision?.DecisionKind != CampaignRuleDecisionKinds.SelectSource)
+            {
+                resolved = ApplyGlobalDecision(
+                    resolved,
+                    entry.BaselineRulesetRevisionEntry.GlobalRuleDecision);
+            }
+            if (entry.CampaignRuleDecision is not null)
+            {
+                resolved = ApplyCampaignDecision(resolved, entry.CampaignRuleDecision);
+            }
+
+            fieldsByConcept[entry.RuleConceptId] = RuleBrowserSummaryProjector.Project(
+                entityTypes[entry.RuleConceptId],
+                resolved);
+        }
+
+        return rules
+            .Select(rule => rule with
+            {
+                BrowserFields = fieldsByConcept.GetValueOrDefault(rule.RuleConceptId) ?? []
+            })
+            .ToArray();
+    }
+
+    private static JsonElement ApplyGlobalDecision(
+        JsonElement source,
+        GlobalRuleDecision decision) => decision.DecisionKind switch
+    {
+        RuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(source, decision.PatchJson),
+        RuleDecisionKinds.JsonRulePatch => JsonRulePatch.Apply(source, decision.PatchJson),
+        _ => source.Clone()
+    };
+
+    private static JsonElement ApplyCampaignDecision(
+        JsonElement source,
+        CampaignRuleDecision decision) => decision.DecisionKind switch
+    {
+        CampaignRuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(source, decision.PatchJson),
+        CampaignRuleDecisionKinds.JsonRulePatch => JsonRulePatch.Apply(source, decision.PatchJson),
+        _ => source.Clone()
+    };
 
     private async Task<ResolvedRuleCatalogItemView[]> AttachRelationshipsAsync(
         IReadOnlyCollection<ResolvedRuleCatalogItemView> rules,

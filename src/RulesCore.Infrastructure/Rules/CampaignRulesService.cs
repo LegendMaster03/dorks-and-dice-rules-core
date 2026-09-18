@@ -374,7 +374,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             globalContributions = contributionResolution.Contributions;
         }
 
-        using var sourceDocument = JsonDocument.Parse(sourceRevision.RawJson);
+        using var sourceDocument = JsonDocument.Parse(sourceRevision.GetMechanicalContentJson());
         var resolvedDocument = sourceDocument.RootElement.Clone();
         if (campaignDecision?.DecisionKind != CampaignRuleDecisionKinds.SelectSource)
         {

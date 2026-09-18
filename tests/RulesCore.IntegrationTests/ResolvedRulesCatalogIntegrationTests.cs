@@ -129,9 +129,14 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 var catalog = await directResponse.Content.ReadFromJsonAsync<ResolvedRulesCatalogView>();
                 Assert.NotNull(catalog);
                 Assert.Equal(globalRevision.RevisionNumber, catalog.RevisionNumber);
+                Assert.Equal(1, catalog.TotalCount);
                 var rule = Assert.Single(catalog.Rules);
                 Assert.Equal(publicConceptKey, rule.ConceptKey);
                 Assert.Equal(publicPackageKey, rule.PackageKey);
+                var ability = Assert.Single(rule.BrowserFields);
+                Assert.Equal("ability", ability.Key);
+                Assert.Equal("Ability", ability.Label);
+                Assert.Equal("INT", ability.Value);
             }
 
             using (var publicVersions = await client.GetAsync(
@@ -181,6 +186,7 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 Assert.Equal("no-store", grantedResponse.Headers.CacheControl?.ToString());
                 var catalog = (await grantedResponse.Content
                     .ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
+                Assert.Equal(2, catalog.TotalCount);
                 Assert.Equal(2, catalog.Rules.Count);
                 Assert.Contains(catalog.Rules, value => value.ConceptKey == publicConceptKey);
                 Assert.Contains(catalog.Rules, value => value.ConceptKey == privateConceptKey);
@@ -201,6 +207,8 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 Assert.Equal(HttpStatusCode.OK, secondPageResponse.StatusCode);
                 var firstPage = (await firstPageResponse.Content.ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
                 var secondPage = (await secondPageResponse.Content.ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
+                Assert.Equal(2, firstPage.TotalCount);
+                Assert.Equal(2, secondPage.TotalCount);
                 var first = Assert.Single(firstPage.Rules);
                 var second = Assert.Single(secondPage.Rules);
                 Assert.NotEqual(first.RuleConceptId, second.RuleConceptId);
@@ -249,6 +257,7 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 Assert.NotNull(catalog);
                 Assert.Equal("campaign", catalog.Scope);
                 Assert.Equal(campaignId, catalog.CampaignId);
+                Assert.Equal(2, catalog.TotalCount);
                 Assert.Equal(2, catalog.Rules.Count);
                 Assert.All(catalog.Rules, value => Assert.False(value.HasCampaignOverride));
             }
@@ -268,6 +277,8 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 Assert.Equal(HttpStatusCode.OK, campaignSecondPageResponse.StatusCode);
                 var firstPage = (await campaignFirstPageResponse.Content.ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
                 var secondPage = (await campaignSecondPageResponse.Content.ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
+                Assert.Equal(2, firstPage.TotalCount);
+                Assert.Equal(2, secondPage.TotalCount);
                 Assert.NotEqual(Assert.Single(firstPage.Rules).RuleConceptId, Assert.Single(secondPage.Rules).RuleConceptId);
             }
 
@@ -293,12 +304,146 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 Assert.Equal(HttpStatusCode.OK, filteredResponse.StatusCode);
                 var catalog = (await filteredResponse.Content
                     .ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
+                Assert.Equal(0, catalog.TotalCount);
                 Assert.Empty(catalog.Rules);
             }
         }
         finally
         {
             await CleanupAsync(factory, publicPackageId, privatePackageId);
+        }
+    }
+
+    [Fact]
+    public async Task CatalogProjectsFamilySpecificBrowserFieldsWithoutExposingDocuments()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        var authenticationClient = new FakeToolHostAuthenticationClient(
+            new Dictionary<string, ToolHostAuthenticationContext>());
+        await using var factory = CreateFactory(authenticationClient);
+        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false
+        });
+
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"browser-fields-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using (var scope = factory.Services.CreateAsyncScope())
+            {
+                var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
+                var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+                var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+
+                var imported = await importer.Import5eToolsDocumentAsync(new Import5eToolsDocumentRequest(
+                    PackageKey: packageKey,
+                    PackageDisplayName: $"Browser Fields {token}",
+                    Provider: "integration-test",
+                    License: "test-only",
+                    IsPublic: true,
+                    WorkKey: "browser-fields-work",
+                    WorkDisplayName: "Browser Fields Work",
+                    EditionKey: "browser-fields-edition",
+                    EditionDisplayName: "Browser Fields Edition",
+                    Json: $"""
+                        {
+                          "monster": [
+                            {
+                              "name": "Browser Dragon {{token}}",
+                              "source": "BROWSE",
+                              "size": ["L"],
+                              "type": "dragon",
+                              "cr": "5"
+                            }
+                          ],
+                          "spell": [
+                            {
+                              "name": "Browser Burst {{token}}",
+                              "source": "BROWSE",
+                              "level": 3,
+                              "school": "V"
+                            }
+                          ],
+                          "class": [
+                            {
+                              "name": "Browser Adept {{token}}",
+                              "source": "BROWSE",
+                              "hd": { "number": 1, "faces": 8 }
+                            }
+                          ],
+                          "race": [
+                            {
+                              "name": "Browser Folk {{token}}",
+                              "source": "BROWSE",
+                              "size": ["M"],
+                              "ability": [{ "dex": 2, "wis": 1 }]
+                            }
+                          ]
+                        }
+                        """));
+                packageId = imported.PackageId;
+
+                foreach (var entity in imported.Entities)
+                {
+                    var source = await db.SourceEntities
+                        .AsNoTracking()
+                        .SingleAsync(value => value.Id == entity.EntityId);
+                    var revisionId = await db.SourceEntityRevisions
+                        .Where(value => value.SourceEntityId == entity.EntityId)
+                        .Select(value => value.Id)
+                        .SingleAsync();
+                    var conceptKey = $"{source.EntityType}.browser-fields-{token}-{source.EntityType}";
+                    var concept = await globalRules.CreateConceptAsync(
+                        new CreateRuleConceptRequest(conceptKey, source.EntityType, source.Name),
+                        "rules-lawyer");
+                    await globalRules.BindSourceEntityAsync(
+                        concept.Value.Id,
+                        new BindRuleConceptSourceRequest(entity.EntityId),
+                        "rules-lawyer");
+                    await globalRules.SetDecisionAsync(
+                        concept.Value.Id,
+                        new SetGlobalRuleDecisionRequest(revisionId, "Browser field fixture."),
+                        "rules-lawyer");
+                }
+
+                await globalRules.PublishAsync("rules-lawyer");
+            }
+
+            using var response = await client.GetAsync($"/api/rules?q={token}&limit=20");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var raw = await response.Content.ReadAsStringAsync();
+            Assert.DoesNotContain(""document"", raw, StringComparison.OrdinalIgnoreCase);
+            var catalog = (await response.Content.ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
+            Assert.Equal(4, catalog.TotalCount);
+            Assert.Equal(4, catalog.Rules.Count);
+
+            var monster = catalog.Rules.Single(value => value.EntityType == "monster");
+            Assert.Equal("Dragon", BrowserField(monster, "type"));
+            Assert.Equal("5", BrowserField(monster, "cr"));
+            Assert.Equal("Large", BrowserField(monster, "size"));
+
+            var spell = catalog.Rules.Single(value => value.EntityType == "spell");
+            Assert.Equal("3rd", BrowserField(spell, "level"));
+            Assert.Equal("Evocation", BrowserField(spell, "school"));
+
+            var characterClass = catalog.Rules.Single(value => value.EntityType == "class");
+            Assert.Equal("d8", BrowserField(characterClass, "hitDie"));
+
+            var race = catalog.Rules.Single(value => value.EntityType == "race");
+            Assert.Equal("DEX +2, WIS +1", BrowserField(race, "ability"));
+            Assert.Equal("Medium", BrowserField(race, "size"));
+        }
+        finally
+        {
+            await CleanupAsync(factory, packageId, Guid.Empty);
         }
     }
 
@@ -484,6 +629,9 @@ public sealed class ResolvedRulesCatalogIntegrationTests
             await CleanupAsync(factory, firstPackageId, secondPackageId);
         }
     }
+
+    private static string BrowserField(ResolvedRuleCatalogItemView rule, string key) =>
+        rule.BrowserFields.Single(value => value.Key == key).Value;
 
     private static WebApplicationFactory<Program> CreateFactory(
         IToolHostAuthenticationClient authenticationClient) =>

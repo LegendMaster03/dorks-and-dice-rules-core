@@ -73,6 +73,9 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("Press J/K to navigate", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("rules-core-library-search-group", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("browserKeyboard", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("BROWSER_COLUMNS", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("browserFields", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("parentClass", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("rules-core-library-workspace", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("getRuleVersions", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Compare source versions", rulesBrowser, StringComparison.Ordinal);
