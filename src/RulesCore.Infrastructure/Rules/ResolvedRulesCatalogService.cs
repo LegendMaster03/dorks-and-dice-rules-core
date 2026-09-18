@@ -89,13 +89,20 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                     value.SourceEntityRevision.SourceEntity.SourceCode != null
                     && value.SourceEntityRevision.SourceEntity.SourceCode.ToLower() == normalizedSourceCode);
             }
-            entityTypeFacets = await entityFacetEntries
+            var entityTypeFacetRows = await entityFacetEntries
                 .GroupBy(value => value.RuleConcept.EntityType)
-                .Select(group => new ResolvedRuleCatalogEntityTypeFacetView(
-                    group.Key,
-                    group.Count()))
+                .Select(group => new
+                {
+                    EntityType = group.Key,
+                    Count = group.Count()
+                })
                 .OrderBy(value => value.EntityType)
                 .ToArrayAsync(cancellationToken);
+            entityTypeFacets = entityTypeFacetRows
+                .Select(value => new ResolvedRuleCatalogEntityTypeFacetView(
+                    value.EntityType,
+                    value.Count))
+                .ToArray();
         }
 
         if (normalizedEntityType is not null)
@@ -106,15 +113,22 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
         ResolvedRuleCatalogSourceFacetView[] sourceFacets = [];
         if (offset == 0)
         {
-            sourceFacets = await entries
+            var sourceFacetRows = await entries
                 .Where(value => value.SourceEntityRevision.SourceEntity.SourceCode != null
                     && value.SourceEntityRevision.SourceEntity.SourceCode != "")
                 .GroupBy(value => value.SourceEntityRevision.SourceEntity.SourceCode!)
-                .Select(group => new ResolvedRuleCatalogSourceFacetView(
-                    group.Key,
-                    group.Count()))
+                .Select(group => new
+                {
+                    SourceCode = group.Key,
+                    Count = group.Count()
+                })
                 .OrderBy(value => value.SourceCode)
                 .ToArrayAsync(cancellationToken);
+            sourceFacets = sourceFacetRows
+                .Select(value => new ResolvedRuleCatalogSourceFacetView(
+                    value.SourceCode,
+                    value.Count))
+                .ToArray();
         }
 
         if (normalizedSourceCode is not null)
@@ -263,13 +277,20 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                     value.SourceEntityRevision.SourceEntity.SourceCode != null
                     && value.SourceEntityRevision.SourceEntity.SourceCode.ToLower() == normalizedSourceCode);
             }
-            entityTypeFacets = await entityFacetEntries
+            var entityTypeFacetRows = await entityFacetEntries
                 .GroupBy(value => value.RuleConcept.EntityType)
-                .Select(group => new ResolvedRuleCatalogEntityTypeFacetView(
-                    group.Key,
-                    group.Count()))
+                .Select(group => new
+                {
+                    EntityType = group.Key,
+                    Count = group.Count()
+                })
                 .OrderBy(value => value.EntityType)
                 .ToArrayAsync(cancellationToken);
+            entityTypeFacets = entityTypeFacetRows
+                .Select(value => new ResolvedRuleCatalogEntityTypeFacetView(
+                    value.EntityType,
+                    value.Count))
+                .ToArray();
         }
 
         if (normalizedEntityType is not null)
@@ -280,15 +301,22 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
         ResolvedRuleCatalogSourceFacetView[] sourceFacets = [];
         if (offset == 0)
         {
-            sourceFacets = await entries
+            var sourceFacetRows = await entries
                 .Where(value => value.SourceEntityRevision.SourceEntity.SourceCode != null
                     && value.SourceEntityRevision.SourceEntity.SourceCode != "")
                 .GroupBy(value => value.SourceEntityRevision.SourceEntity.SourceCode!)
-                .Select(group => new ResolvedRuleCatalogSourceFacetView(
-                    group.Key,
-                    group.Count()))
+                .Select(group => new
+                {
+                    SourceCode = group.Key,
+                    Count = group.Count()
+                })
                 .OrderBy(value => value.SourceCode)
                 .ToArrayAsync(cancellationToken);
+            sourceFacets = sourceFacetRows
+                .Select(value => new ResolvedRuleCatalogSourceFacetView(
+                    value.SourceCode,
+                    value.Count))
+                .ToArray();
         }
 
         if (normalizedSourceCode is not null)

@@ -8,6 +8,9 @@ public sealed class RuleBrowserContractTests
     [Theory]
     [InlineData("monster", "monster.ancient-red-dragon", "/monsters/ancient-red-dragon")]
     [InlineData("spell", "spell.fireball", "/spells/fireball")]
+    [InlineData("subclass", "subclass.champion", "/subclasses/champion")]
+    [InlineData("prestigeclass", "prestigeclass.archmage", "/prestige-classes/archmage")]
+    [InlineData("skill", "skill.arcana", "/skills/arcana")]
     [InlineData("feat", "feat.alert", "/feats/alert")]
     public void BrowserLinksUseStableRuleIdentity(string entityType, string conceptKey, string expectedPath)
     {
@@ -29,6 +32,25 @@ public sealed class RuleBrowserContractTests
         Assert.True(resolved);
         Assert.Equal("monster.ancient-red-dragon", conceptKey);
         Assert.Equal("monster", entityType);
+    }
+
+    [Theory]
+    [InlineData("subclass", "/subclasses")]
+    [InlineData("prestigeclass", "/prestige-classes")]
+    [InlineData("skill", "/skills")]
+    [InlineData("maneuver", "/types/maneuver")]
+    public void CatalogPathsUseStableFamilyRoutes(string entityType, string expectedPath)
+    {
+        Assert.Equal(expectedPath, RuleBrowserRoutes.CatalogPath(entityType));
+        Assert.Equal(entityType, RuleBrowserRoutes.EntityTypeForCatalogPath(expectedPath));
+    }
+
+    [Fact]
+    public void DynamicCatalogRouteCanRecoverEscapedEntityType()
+    {
+        Assert.Equal(
+            "third party rule",
+            RuleBrowserRoutes.EntityTypeForCatalogPath("/types/third%20party%20rule?scope=global#catalog"));
     }
 
     [Fact]
