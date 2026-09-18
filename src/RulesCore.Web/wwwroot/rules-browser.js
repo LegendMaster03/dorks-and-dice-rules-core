@@ -260,7 +260,25 @@ async function renderRulesBrowser(app, container) {
     for (const [value, label] of ENTITY_TYPES) {
         type.append(element("option", { value, text: label }));
     }
-    type.value = app.browserFilters.entityType;
+
+    const initialDynamicEntityType = app.browserFilters.entityType;
+    if (initialDynamicEntityType && !familyButtons.has(initialDynamicEntityType)) {
+        const label = pluralizeEntityType(initialDynamicEntityType);
+        const button = element("button", {
+            type: "button",
+            className: "rules-core-library-family",
+            text: label,
+            dataset: { entityType: initialDynamicEntityType },
+            attributes: { "aria-current": "page" }
+        });
+        familyButtons.set(initialDynamicEntityType, button);
+        familyNav.append(button);
+        type.append(element("option", {
+            value: initialDynamicEntityType,
+            text: label
+        }));
+    }
+    type.value = initialDynamicEntityType;
 
     const syncFamilyNav = () => {
         for (const [value, button] of familyButtons) {

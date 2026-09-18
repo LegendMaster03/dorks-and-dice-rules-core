@@ -85,6 +85,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("entityTypeFacets", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("pluralizeEntityType", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("/types/", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("initialDynamicEntityType", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("parseBrowserScopeFromLocation", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("scopeValue?.startsWith(\"campaign:\")", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Clear filters", rulesBrowser, StringComparison.Ordinal);
