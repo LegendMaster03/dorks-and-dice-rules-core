@@ -971,8 +971,8 @@ async function renderRuleDetailPane(
         for (const version of versions?.versions ?? []) {
             tabs.push({
                 key: `source:${version.canonicalEntityId}`,
-                label: version.sourceCode || version.formatKey || version.packageDisplayName,
-                title: `${version.packageDisplayName} · rev. ${version.sourceRevisionNumber}`,
+                label: sourceVersionTabLabel(version, versions?.versions ?? []),
+                title: sourceVersionLabel(version),
                 render: () => renderSourceVersion(body, versions, version, resolved)
             });
         }
@@ -1109,8 +1109,10 @@ function renderSourceVersion(container, versions, version, resolved) {
             element("div", {
                 className: "text-body-secondary",
                 text: [
+                    version.gameEdition,
                     version.sourceCode,
                     version.packageDisplayName,
+                    version.publicationDate,
                     `rev. ${version.sourceRevisionNumber}`
                 ].filter(Boolean).join(" · ")
             })),
@@ -1129,6 +1131,9 @@ function renderSourceVersion(container, versions, version, resolved) {
         element("summary", { text: "Source provenance" }),
         element("div", { className: "rules-core-context-disclosure-body" },
             definitionList([
+                ["Edition", version.gameEdition],
+                ["Release", version.releaseKind],
+                ["Publication date", version.publicationDate],
                 ["Source", version.sourceEntityName],
                 ["Source code", version.sourceCode],
                 ["Package", version.packageDisplayName],
@@ -1231,10 +1236,25 @@ function comparisonField(label, control) {
         control);
 }
 
+function sourceVersionTabLabel(version, allVersions) {
+    const edition = String(version.gameEdition ?? "").trim();
+    if (!edition) {
+        return version.sourceCode || version.formatKey || version.packageDisplayName;
+    }
+
+    const sameEditionCount = allVersions.filter(candidate =>
+        String(candidate.gameEdition ?? "").trim().toLowerCase() === edition.toLowerCase()).length;
+    return sameEditionCount > 1 && version.sourceCode
+        ? `${edition} · ${version.sourceCode}`
+        : edition;
+}
+
 function sourceVersionLabel(version) {
     return [
+        version.gameEdition,
         version.sourceCode || version.formatKey,
         version.packageDisplayName,
+        version.publicationDate,
         `rev. ${version.sourceRevisionNumber}`
     ].filter(Boolean).join(" · ");
 }

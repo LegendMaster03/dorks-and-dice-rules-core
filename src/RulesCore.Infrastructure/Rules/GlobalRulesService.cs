@@ -436,6 +436,10 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             var revision = representative.Revision!;
             using var document = JsonDocument.Parse(revision.GetMechanicalContentJson());
             var source = representative.Source;
+            var publication = await CanonicalPublicationMetadataReader.ReadAsync(
+                dbContext,
+                source.Id,
+                cancellationToken);
             versions.Add(new RuleConceptSourceVersionView(
                 representative.CanonicalEntityId,
                 source.Id,
@@ -447,6 +451,9 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
                 source.SourcePackage.Key,
                 source.SourcePackage.DisplayName,
                 source.FormatKey,
+                publication?.GameEdition,
+                publication?.ReleaseKind,
+                publication?.PublicationDate,
                 revision.ImportedAt,
                 group.Count(),
                 document.RootElement.Clone()));
@@ -463,11 +470,24 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             publishedRule.EntityType,
             publishedRule.DisplayName,
             versions
-                .OrderBy(value => value.SourceCode, StringComparer.OrdinalIgnoreCase)
+                .OrderBy(value => EditionSortKey(value.GameEdition))
+                .ThenBy(value => value.PublicationDate ?? DateOnly.MinValue)
+                .ThenBy(value => value.SourceCode, StringComparer.OrdinalIgnoreCase)
                 .ThenBy(value => value.PackageDisplayName, StringComparer.OrdinalIgnoreCase)
                 .ThenBy(value => value.SourceEntityId)
                 .ToArray());
     }
+
+    private static int EditionSortKey(string? gameEdition) =>
+        gameEdition?.Trim().ToLowerInvariant() switch
+        {
+            "3e" => 300,
+            "3.0e" => 300,
+            "3.5e" => 350,
+            "5e" => 500,
+            "5.5e" => 550,
+            _ => int.MaxValue
+        };
 
     private async Task ValidateContributionsAsync(
         Guid ruleConceptId,

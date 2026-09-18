@@ -94,6 +94,9 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("rules-core-library-workspace", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("getRuleVersions", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Compare source versions", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("sourceVersionTabLabel", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("gameEdition", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Publication date", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Open global ruling", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("browserLink", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("toolRoute", rulesBrowser, StringComparison.Ordinal);

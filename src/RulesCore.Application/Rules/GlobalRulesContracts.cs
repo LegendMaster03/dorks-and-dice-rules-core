@@ -130,6 +130,9 @@ public sealed record RuleConceptSourceVersionView(
     string PackageKey,
     string PackageDisplayName,
     string FormatKey,
+    string? GameEdition,
+    string? ReleaseKind,
+    DateOnly? PublicationDate,
     DateTimeOffset ImportedAt,
     int EquivalentRepresentationCount,
     JsonElement Document);

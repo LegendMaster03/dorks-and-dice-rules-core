@@ -155,6 +155,9 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 Assert.Equal(publicConceptKey, versions.ConceptKey);
                 var source = Assert.Single(versions.Versions);
                 Assert.Equal(publicPackageKey, source.PackageKey);
+                Assert.Equal("5e", source.GameEdition);
+                Assert.Equal("published", source.ReleaseKind);
+                Assert.Equal(new DateOnly(2024, 1, 1), source.PublicationDate);
                 Assert.True(source.Document.TryGetProperty("secretMarker", out var marker));
                 Assert.Equal("source-document-only", marker.GetString());
             }
@@ -735,7 +738,10 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                     }
                   ]
                 }
-                """);
+                """,
+            GameEdition: "5e",
+            ReleaseKind: "published",
+            PublicationDate: new DateOnly(2024, 1, 1));
 
     private static async Task CleanupAsync(
         WebApplicationFactory<Program> factory,
