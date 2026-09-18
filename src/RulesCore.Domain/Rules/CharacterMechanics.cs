@@ -138,6 +138,39 @@ public sealed record CharacterMechanicConditionalRollRuleDefinition(
 public sealed record CharacterMechanicBooleanRequirementDefinition(
     string InputKey,
     bool ExpectedValue);
+public static class CharacterMechanicContributorRoundingKinds
+{
+    public const string Floor = "floor";
+}
+
+public sealed record CharacterMechanicContributorValueDefinition(
+    string AmountIntegerInputKey,
+    string FullAmountBooleanInputKey,
+    bool FullAmountWhenBooleanValue,
+    int AlternateNumerator,
+    int AlternateDenominator,
+    string AlternateRoundingKind,
+    bool RequireNonNegativeAmount = true);
+
+public sealed record CharacterMechanicContributorGroupDefinition(
+    string Key,
+    string? MaximumCountStringInputKey,
+    IReadOnlyDictionary<string, int> MaximumCountByStringValue,
+    IReadOnlyList<CharacterMechanicInputDefinition> Inputs,
+    CharacterMechanicContributorValueDefinition Value,
+    bool StandardHelpActionApplies);
+
+public sealed record CharacterMechanicContributorInputValues(
+    IReadOnlyDictionary<string, int> IntegerInputs,
+    IReadOnlyDictionary<string, bool> BooleanInputs,
+    IReadOnlyDictionary<string, string> StringInputs);
+
+public sealed record CharacterMechanicContributorGroupEvaluation(
+    string Key,
+    int ContributorCount,
+    int? MaximumContributorCount,
+    int Value);
+
 
 public sealed record CharacterMechanicDefinition(
     string Key,
@@ -152,7 +185,8 @@ public sealed record CharacterMechanicDefinition(
     IReadOnlyList<CharacterMechanicConditionalRollRuleDefinition> ConditionalRollRules,
     IReadOnlyList<CharacterMechanicBooleanRequirementDefinition> BooleanRequirements,
     CharacterMechanicSourceReference? Source = null,
-    CharacterMechanicCheckDefinition? Check = null);
+    CharacterMechanicCheckDefinition? Check = null,
+    IReadOnlyList<CharacterMechanicContributorGroupDefinition>? ContributorGroups = null);
 
 public sealed record CharacterMechanicRelationshipDefinition(
     string Key,
@@ -173,7 +207,8 @@ public sealed record CharacterMechanicEvaluation(
     bool? MeetsTarget,
     bool RequirementsSatisfied,
     IReadOnlyList<string> UnsatisfiedRequirementKeys,
-    IReadOnlyList<AppliedCharacterMechanicRollRule> AppliedRollRules);
+    IReadOnlyList<AppliedCharacterMechanicRollRule> AppliedRollRules,
+    IReadOnlyList<CharacterMechanicContributorGroupEvaluation> ContributorGroups);
 
 public static class CharacterMechanicEvaluator
 {
@@ -181,7 +216,8 @@ public static class CharacterMechanicEvaluator
         CharacterMechanicDefinition definition,
         IReadOnlyDictionary<string, int> integerInputs,
         IReadOnlyDictionary<string, bool> booleanInputs,
-        IReadOnlyDictionary<string, string> stringInputs)
+        IReadOnlyDictionary<string, string> stringInputs,
+        IReadOnlyDictionary<string, IReadOnlyList<CharacterMechanicContributorInputValues>>? contributorGroups = null)
     {
         ArgumentNullException.ThrowIfNull(definition);
         ArgumentNullException.ThrowIfNull(integerInputs);
@@ -232,6 +268,16 @@ public static class CharacterMechanicEvaluator
             }
         }
 
+        var evaluatedContributorGroups = EvaluateContributorGroups(
+            definition,
+            contributorGroups ?? new Dictionary<string, IReadOnlyList<CharacterMechanicContributorInputValues>>(
+                StringComparer.OrdinalIgnoreCase),
+            stringInputs);
+        foreach (var contributorGroup in evaluatedContributorGroups)
+        {
+            total += contributorGroup.Value;
+        }
+
         var target = ReadOptionalInteger(definition.TargetInputKey, integerInputs);
         var unsatisfiedRequirements = definition.BooleanRequirements
             .Where(requirement =>
@@ -256,7 +302,168 @@ public static class CharacterMechanicEvaluator
             target.HasValue ? final >= target.Value : null,
             unsatisfiedRequirements.Length == 0,
             unsatisfiedRequirements,
-            appliedRollRules);
+            appliedRollRules,
+            evaluatedContributorGroups);
+    }
+
+    private static IReadOnlyList<CharacterMechanicContributorGroupEvaluation> EvaluateContributorGroups(
+        CharacterMechanicDefinition definition,
+        IReadOnlyDictionary<string, IReadOnlyList<CharacterMechanicContributorInputValues>> suppliedGroups,
+        IReadOnlyDictionary<string, string> mechanicStringInputs)
+    {
+        var definitions = definition.ContributorGroups ?? [];
+        var knownKeys = definitions
+            .Select(value => value.Key)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var unexpected = suppliedGroups.Keys
+            .Where(value => !knownKeys.Contains(value))
+            .ToArray();
+        if (unexpected.Length > 0)
+        {
+            throw new ArgumentException(
+                $"Mechanic '{definition.Key}' does not define contributor group(s): {string.Join(", ", unexpected)}.");
+        }
+
+        var result = new List<CharacterMechanicContributorGroupEvaluation>();
+        foreach (var group in definitions)
+        {
+            var contributors = suppliedGroups.TryGetValue(group.Key, out var supplied)
+                ? supplied
+                : [];
+            var maximum = ResolveContributorMaximum(
+                definition.Key,
+                group,
+                contributors.Count,
+                mechanicStringInputs);
+            if (maximum.HasValue && contributors.Count > maximum.Value)
+            {
+                throw new InvalidOperationException(
+                    $"Mechanic '{definition.Key}' allows at most {maximum.Value} contributor(s) in group '{group.Key}' for the supplied context.");
+            }
+
+            long groupTotal = 0;
+            foreach (var contributor in contributors)
+            {
+                ValidateContributorInputs(definition.Key, group, contributor);
+
+                if (!contributor.IntegerInputs.TryGetValue(
+                        group.Value.AmountIntegerInputKey,
+                        out var amount))
+                {
+                    throw new KeyNotFoundException(
+                        $"Contributor group '{group.Key}' requires integer input '{group.Value.AmountIntegerInputKey}'.");
+                }
+                if (group.Value.RequireNonNegativeAmount && amount < 0)
+                {
+                    throw new ArgumentOutOfRangeException(
+                        group.Value.AmountIntegerInputKey,
+                        "Contributor amount can not be negative.");
+                }
+                if (!contributor.BooleanInputs.TryGetValue(
+                        group.Value.FullAmountBooleanInputKey,
+                        out var condition))
+                {
+                    throw new KeyNotFoundException(
+                        $"Contributor group '{group.Key}' requires boolean input '{group.Value.FullAmountBooleanInputKey}'.");
+                }
+
+                if (condition == group.Value.FullAmountWhenBooleanValue)
+                {
+                    groupTotal += amount;
+                    continue;
+                }
+
+                if (group.Value.AlternateDenominator <= 0
+                    || group.Value.AlternateNumerator < 0)
+                {
+                    throw new InvalidOperationException(
+                        $"Contributor group '{group.Key}' has an invalid alternate contribution fraction.");
+                }
+                if (!string.Equals(
+                        group.Value.AlternateRoundingKind,
+                        CharacterMechanicContributorRoundingKinds.Floor,
+                        StringComparison.Ordinal))
+                {
+                    throw new InvalidOperationException(
+                        $"Contributor group '{group.Key}' uses unsupported rounding '{group.Value.AlternateRoundingKind}'.");
+                }
+
+                var scaled = checked((long)amount * group.Value.AlternateNumerator);
+                groupTotal += scaled / group.Value.AlternateDenominator;
+            }
+
+            result.Add(new CharacterMechanicContributorGroupEvaluation(
+                group.Key,
+                contributors.Count,
+                maximum,
+                checked((int)groupTotal)));
+        }
+
+        return result;
+    }
+
+    private static int? ResolveContributorMaximum(
+        string mechanicKey,
+        CharacterMechanicContributorGroupDefinition group,
+        int contributorCount,
+        IReadOnlyDictionary<string, string> mechanicStringInputs)
+    {
+        if (string.IsNullOrWhiteSpace(group.MaximumCountStringInputKey))
+        {
+            return null;
+        }
+
+        if (!mechanicStringInputs.TryGetValue(group.MaximumCountStringInputKey, out var context)
+            || string.IsNullOrWhiteSpace(context))
+        {
+            if (contributorCount == 0)
+            {
+                return null;
+            }
+
+            throw new KeyNotFoundException(
+                $"Mechanic '{mechanicKey}' requires string input '{group.MaximumCountStringInputKey}' when contributor group '{group.Key}' is supplied.");
+        }
+
+        var match = group.MaximumCountByStringValue
+            .FirstOrDefault(value => string.Equals(
+                value.Key,
+                context.Trim(),
+                StringComparison.OrdinalIgnoreCase));
+        if (string.IsNullOrWhiteSpace(match.Key))
+        {
+            throw new ArgumentException(
+                $"Mechanic '{mechanicKey}' does not define a contributor limit for '{context}' in input '{group.MaximumCountStringInputKey}'.");
+        }
+
+        return match.Value;
+    }
+
+    private static void ValidateContributorInputs(
+        string mechanicKey,
+        CharacterMechanicContributorGroupDefinition group,
+        CharacterMechanicContributorInputValues contributor)
+    {
+        foreach (var input in group.Inputs.Where(value => value.Required))
+        {
+            var supplied = input.ValueKind switch
+            {
+                CharacterMechanicInputValueKinds.Integer =>
+                    contributor.IntegerInputs.ContainsKey(input.Key),
+                CharacterMechanicInputValueKinds.Boolean =>
+                    contributor.BooleanInputs.ContainsKey(input.Key),
+                CharacterMechanicInputValueKinds.String =>
+                    contributor.StringInputs.TryGetValue(input.Key, out var value)
+                    && !string.IsNullOrWhiteSpace(value),
+                _ => throw new InvalidOperationException(
+                    $"Mechanic '{mechanicKey}' contributor group '{group.Key}' uses unknown input value kind '{input.ValueKind}'.")
+            };
+            if (!supplied)
+            {
+                throw new KeyNotFoundException(
+                    $"Mechanic '{mechanicKey}' contributor group '{group.Key}' requires {input.ValueKind} input '{input.Key}'.");
+            }
+        }
     }
 
     private static void ValidateRequiredInputs(
@@ -317,6 +524,17 @@ public static class CharacterMechanicEvaluator
 public static class KnownCharacterMechanics
 {
     public const string LootTavernReferenceKey = "loot-tavern.harvesting-crafting-lite";
+
+    private static readonly IReadOnlyDictionary<string, int> HarvestingHelperLimits =
+        new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["Tiny"] = 0,
+            ["Small"] = 1,
+            ["Medium"] = 2,
+            ["Large"] = 4,
+            ["Huge"] = 6,
+            ["Gargantuan"] = 10
+        };
 
     private static readonly CharacterMechanicApplicabilityDefinition Always =
         new(CharacterMechanicApplicabilityKinds.Always, true, []);
@@ -531,6 +749,7 @@ public static class KnownCharacterMechanics
                 IntegerInput("assessmentResult", CharacterMechanicInputOrigins.Derived, true, true),
                 IntegerInput("carvingResult", CharacterMechanicInputOrigins.Derived, true, true),
                 BooleanInput("sameActor", CharacterMechanicInputOrigins.Runtime, true),
+                StringInput("creatureSize", CharacterMechanicInputOrigins.SourceInput, false),
                 IntegerInput("targetDc", CharacterMechanicInputOrigins.SourceInput, false)
             ],
             "targetDc",
@@ -544,7 +763,32 @@ public static class KnownCharacterMechanics
                     ["check.harvesting.assessment", "check.harvesting.carving"])
             ],
             [],
-            LootTavernHarvestingCrafting),
+            LootTavernHarvestingCrafting,
+            ContributorGroups:
+            [
+                new CharacterMechanicContributorGroupDefinition(
+                    "helpers",
+                    "creatureSize",
+                    HarvestingHelperLimits,
+                    [
+                        IntegerInput(
+                            "proficiencyBonus",
+                            CharacterMechanicInputOrigins.CharacterState,
+                            true),
+                        BooleanInput(
+                            "isProficient",
+                            CharacterMechanicInputOrigins.CharacterState,
+                            true)
+                    ],
+                    new CharacterMechanicContributorValueDefinition(
+                        "proficiencyBonus",
+                        "isProficient",
+                        true,
+                        AlternateNumerator: 1,
+                        AlternateDenominator: 2,
+                        AlternateRoundingKind: CharacterMechanicContributorRoundingKinds.Floor),
+                    StandardHelpActionApplies: false)
+            ]),
         new(
             "check.crafting.manufacturing",
             CharacterMechanicKinds.Check,

@@ -183,8 +183,13 @@ The consumer contract models:
 
 - Assessment as a generalized competency check with fixed Intelligence and the rule-resolved creature-type competency;
 - Carving as a generalized competency check with fixed Dexterity and the same rule-resolved creature-type competency;
-- Harvesting as the sum of Assessment and Carving;
+- Harvesting as the sum of Assessment and Carving plus any evaluated Helper contributions;
 - disadvantage on both harvesting component checks when one creature performs both roles;
+- Helpers as a first-class contributor group rather than a caller-precalculated bonus;
+- a creature-size helper cap of Tiny 0, Small 1, Medium 2, Large 4, Huge 6, and Gargantuan 10;
+- a proficient Helper contributing its full supplied proficiency bonus;
+- a non-proficient Helper contributing one-half of its supplied proficiency bonus, rounded down;
+- the ordinary Help action not supplying a Harvesting or Crafting bonus;
 - Manufacturing as a rule-resolved tool/ability competency check;
 - disadvantage on Manufacturing when the Character lacks the required tool proficiency, unless the GM-resolved input says the character has qualified guidance from a book or a creature with the requisite proficiency;
 - qualified guidance does not grant tool proficiency and therefore does not add a tool-proficiency contribution;
@@ -196,6 +201,8 @@ Harvesting & Crafting Lite follows the same external-public-rules boundary used 
 The contract does **not** bundle Harvest tables, creature-type-to-skill tables, component DCs, manufacturing tables, recipes, item data, materials, prose, art, or layout from the publisher release. Source-selected values remain typed `source-input` requirements when the procedure needs them.
 
 Loot Tavern mechanics carry explicit source attribution with `presentationRequired=true` and `referenceLinkRequired=true`, so a downstream consumer can present the required source reference without hard-coding publisher-specific behavior.
+
+Helper handling uses the general contributor-group contract. The Character backend supplies per-helper Character facts such as `proficiencyBonus` and `isProficient`, plus the source-selected `creatureSize` context. Rules Core validates the contributor count against the mechanic's context table, performs the full-or-fractional contribution and rounding, and adds the result to the Harvesting total. The request never contains one opaque `helperBonus`. The group also explicitly reports `standardHelpActionApplies=false`; an ordinary Help-action flag is not interpreted as a substitute for Helper participation.
 
 ## Provenance and access
 
@@ -215,7 +222,7 @@ Private source names/content are not surfaced through this contract when the cur
 
 Evaluation is deterministic. Rules Core does not roll dice, select Character state, choose a source table row, or mutate Character data.
 
-For a scalar definition it combines caller-supplied inputs according to the normalized mechanic. For a dynamic competency it selects the requested competency profile, enforces that profile's capability and boolean requirements, and combines only the contribution inputs declared by that profile. The caller never supplies a final opaque competency `value`. Conditional inputs are included only when their declared condition is satisfied. Conditional roll-mode rules can require multiple boolean conditions, which lets Rules Core distinguish "not proficient" from "not proficient and lacking qualified guidance." For a composite competency, the Character backend supplies the already-resolved effective component competency values and Rules Core delegates the parent calculation to the existing `CompositeCompetencyEvaluator`; the composite relationship arithmetic remains Rules Core-owned.
+For a scalar definition it combines caller-supplied inputs according to the normalized mechanic. For a dynamic competency it selects the requested competency profile, enforces that profile's capability and boolean requirements, and combines only the contribution inputs declared by that profile. The caller never supplies a final opaque competency `value`. Conditional inputs are included only when their declared condition is satisfied. Conditional roll-mode rules can require multiple boolean conditions, which lets Rules Core distinguish "not proficient" from "not proficient and lacking qualified guidance." For a composite competency, the Character backend supplies the already-resolved effective component competency values and Rules Core delegates the parent calculation to the existing `CompositeCompetencyEvaluator`; the composite relationship arithmetic remains Rules Core-owned. Contributor groups follow the same boundary: the caller supplies contributor facts, while Rules Core owns count limits, conditional full/fractional value, rounding, and how contributor totals enter the parent mechanic.
 
 The batch endpoints accept multiple mechanic evaluations and build the effective global or Campaign mechanics context once for the request. This is the preferred Character backend path when resolving several values for one Character:
 

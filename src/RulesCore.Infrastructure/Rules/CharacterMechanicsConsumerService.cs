@@ -202,6 +202,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 BooleanRequirements: [],
                 Check: null,
                 Competency: competency,
+                ContributorGroups: [],
                 SourceAttributions: BuildRuleAttributions(
                     rule,
                     provider,
@@ -299,7 +300,8 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 known,
                 integerInputs,
                 booleanInputs,
-                stringInputs);
+                stringInputs,
+                MapContributorInputs(request.ContributorGroups));
             return ToEvaluationView(mechanic.MechanicKey, known.EvaluationKind, evaluation);
         }
 
@@ -348,7 +350,8 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 MeetsTarget: null,
                 RequirementsSatisfied: true,
                 UnsatisfiedRequirementKeys: [],
-                AppliedRollRules: []);
+                AppliedRollRules: [],
+                ContributorGroups: []);
         }
 
         if (mechanic.Competency is null)
@@ -402,6 +405,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             profileEvaluation.RequirementsSatisfied,
             profileEvaluation.UnsatisfiedRequirementKeys,
             AppliedRollRules: [],
+            ContributorGroups: [],
             CompetencyProfileSourceEntityRevisionId: profile.SourceEntityRevisionId);
     }
 
@@ -585,6 +589,30 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                         definition.Check.Competency.AllowedCompetencyKinds,
                         definition.Check.Competency.FixedConceptKey)),
             Competency: null,
+            ContributorGroups: (definition.ContributorGroups ?? [])
+                .Select(group => new CharacterMechanicContributorGroupView(
+                    group.Key,
+                    group.MaximumCountStringInputKey,
+                    group.MaximumCountByStringValue,
+                    group.Inputs.Select(input => new CharacterMechanicInputView(
+                        input.Key,
+                        input.ValueKind,
+                        input.Origin,
+                        input.Required,
+                        input.ParticipatesInValue,
+                        input.DefaultInteger,
+                        input.IncludeWhenBooleanInputKey,
+                        input.IncludeWhenBooleanValue)).ToArray(),
+                    new CharacterMechanicContributorValueView(
+                        group.Value.AmountIntegerInputKey,
+                        group.Value.FullAmountBooleanInputKey,
+                        group.Value.FullAmountWhenBooleanValue,
+                        group.Value.AlternateNumerator,
+                        group.Value.AlternateDenominator,
+                        group.Value.AlternateRoundingKind,
+                        group.Value.RequireNonNegativeAmount),
+                    group.StandardHelpActionApplies))
+                .ToArray(),
             sourceAttributions);
     }
 
@@ -603,7 +631,49 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             evaluation.AppliedRollRules.Select(value => new CharacterMechanicAppliedRollRuleView(
                 value.Key,
                 value.RollMode,
-                value.TargetMechanicKeys)).ToArray());
+                value.TargetMechanicKeys)).ToArray(),
+            evaluation.ContributorGroups.Select(value => new CharacterMechanicContributorGroupEvaluationView(
+                value.Key,
+                value.ContributorCount,
+                value.MaximumContributorCount,
+                value.Value)).ToArray());
+
+    private static IReadOnlyDictionary<string, IReadOnlyList<CharacterMechanicContributorInputValues>>
+        MapContributorInputs(IReadOnlyList<CharacterMechanicContributorGroupInput>? contributorGroups)
+    {
+        if (contributorGroups is null || contributorGroups.Count == 0)
+        {
+            return new Dictionary<string, IReadOnlyList<CharacterMechanicContributorInputValues>>(
+                StringComparer.OrdinalIgnoreCase);
+        }
+
+        var result = new Dictionary<string, IReadOnlyList<CharacterMechanicContributorInputValues>>(
+            StringComparer.OrdinalIgnoreCase);
+        foreach (var group in contributorGroups)
+        {
+            if (string.IsNullOrWhiteSpace(group.GroupKey))
+            {
+                throw new ArgumentException("Contributor group key can not be blank.");
+            }
+            if (result.ContainsKey(group.GroupKey))
+            {
+                throw new ArgumentException(
+                    $"Contributor group '{group.GroupKey}' was supplied more than once.");
+            }
+
+            result[group.GroupKey.Trim()] = (group.Contributors ?? [])
+                .Select(value => new CharacterMechanicContributorInputValues(
+                    value.IntegerInputs
+                        ?? new Dictionary<string, int>(StringComparer.Ordinal),
+                    value.BooleanInputs
+                        ?? new Dictionary<string, bool>(StringComparer.Ordinal),
+                    value.StringInputs
+                        ?? new Dictionary<string, string>(StringComparer.Ordinal)))
+                .ToArray();
+        }
+
+        return result;
+    }
 
     private static bool IsAvailable(
         CharacterMechanicDefinition definition,

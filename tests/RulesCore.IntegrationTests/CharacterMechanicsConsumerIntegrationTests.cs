@@ -76,6 +76,80 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 attribution.ReferenceUri);
             Assert.True(attribution.PresentationRequired);
             Assert.True(attribution.ReferenceLinkRequired);
+
+            var helpers = Assert.Single(harvesting.ContributorGroups);
+            Assert.Equal("helpers", helpers.Key);
+            Assert.Equal("creatureSize", helpers.MaximumCountStringInputKey);
+            Assert.Equal(0, helpers.MaximumCountByStringValue["Tiny"]);
+            Assert.Equal(1, helpers.MaximumCountByStringValue["Small"]);
+            Assert.Equal(2, helpers.MaximumCountByStringValue["Medium"]);
+            Assert.Equal(4, helpers.MaximumCountByStringValue["Large"]);
+            Assert.Equal(6, helpers.MaximumCountByStringValue["Huge"]);
+            Assert.Equal(10, helpers.MaximumCountByStringValue["Gargantuan"]);
+            Assert.False(helpers.StandardHelpActionApplies);
+            Assert.Contains(
+                helpers.ContributorInputs,
+                value => value.Key == "proficiencyBonus"
+                    && value.ValueKind == CharacterMechanicInputValueKinds.Integer);
+            Assert.Contains(
+                helpers.ContributorInputs,
+                value => value.Key == "isProficient"
+                    && value.ValueKind == CharacterMechanicInputValueKinds.Boolean);
+        }
+
+        using (var harvestingResponse = await client.PostAsJsonAsync(
+                   "/api/rules/mechanics/check.harvesting.total/evaluate",
+                   new CharacterMechanicEvaluationRequest(
+                       IntegerInputs: new Dictionary<string, int>
+                       {
+                           ["assessmentResult"] = 14,
+                           ["carvingResult"] = 12
+                       },
+                       BooleanInputs: new Dictionary<string, bool>
+                       {
+                           ["sameActor"] = false,
+                           ["helpAction"] = true
+                       },
+                       StringInputs: new Dictionary<string, string>
+                       {
+                           ["creatureSize"] = "Medium"
+                       },
+                       ContributorGroups:
+                       [
+                           new CharacterMechanicContributorGroupInput(
+                               "helpers",
+                               [
+                                   new CharacterMechanicContributorInput(
+                                       IntegerInputs: new Dictionary<string, int>
+                                       {
+                                           ["proficiencyBonus"] = 3
+                                       },
+                                       BooleanInputs: new Dictionary<string, bool>
+                                       {
+                                           ["isProficient"] = true
+                                       }),
+                                   new CharacterMechanicContributorInput(
+                                       IntegerInputs: new Dictionary<string, int>
+                                       {
+                                           ["proficiencyBonus"] = 5
+                                       },
+                                       BooleanInputs: new Dictionary<string, bool>
+                                       {
+                                           ["isProficient"] = false
+                                       })
+                               ])
+                       ])))
+        {
+            Assert.Equal(HttpStatusCode.OK, harvestingResponse.StatusCode);
+            var evaluation = await harvestingResponse.Content
+                .ReadFromJsonAsync<CharacterMechanicEvaluationView>();
+            Assert.NotNull(evaluation);
+            Assert.Equal(31, evaluation.Value);
+            var helpers = Assert.Single(evaluation.ContributorGroups);
+            Assert.Equal(2, helpers.ContributorCount);
+            Assert.Equal(2, helpers.MaximumContributorCount);
+            Assert.Equal(5, helpers.Value);
+            Assert.Empty(evaluation.AppliedRollRules);
         }
 
         using (var evaluationResponse = await client.PostAsJsonAsync(

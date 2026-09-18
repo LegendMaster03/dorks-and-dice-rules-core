@@ -96,6 +96,177 @@ public sealed class CharacterMechanicsTests
     }
 
     [Fact]
+    public void HarvestingHelpersContributeFullOrHalfProficiencyToTheTotal()
+    {
+        var definition = Required("check.harvesting.total");
+        var result = CharacterMechanicEvaluator.Evaluate(
+            definition,
+            new Dictionary<string, int>(StringComparer.Ordinal)
+            {
+                ["assessmentResult"] = 14,
+                ["carvingResult"] = 12
+            },
+            new Dictionary<string, bool>(StringComparer.Ordinal)
+            {
+                ["sameActor"] = false
+            },
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["creatureSize"] = "Large"
+            },
+            new Dictionary<string, IReadOnlyList<CharacterMechanicContributorInputValues>>(
+                StringComparer.OrdinalIgnoreCase)
+            {
+                ["helpers"] =
+                [
+                    Helper(proficiencyBonus: 4, isProficient: true),
+                    Helper(proficiencyBonus: 5, isProficient: false)
+                ]
+            });
+
+        Assert.Equal(32, result.Value);
+        var helpers = Assert.Single(result.ContributorGroups);
+        Assert.Equal("helpers", helpers.Key);
+        Assert.Equal(2, helpers.ContributorCount);
+        Assert.Equal(4, helpers.MaximumContributorCount);
+        Assert.Equal(6, helpers.Value);
+    }
+
+    [Fact]
+    public void HarvestingWithNoHelpersDoesNotInventAHelpActionBonus()
+    {
+        var definition = Required("check.harvesting.total");
+        var result = CharacterMechanicEvaluator.Evaluate(
+            definition,
+            new Dictionary<string, int>(StringComparer.Ordinal)
+            {
+                ["assessmentResult"] = 10,
+                ["carvingResult"] = 11
+            },
+            new Dictionary<string, bool>(StringComparer.Ordinal)
+            {
+                ["sameActor"] = false,
+                ["helpAction"] = true
+            },
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["creatureSize"] = "Medium"
+            });
+
+        Assert.Equal(21, result.Value);
+        var helpers = Assert.Single(result.ContributorGroups);
+        Assert.Equal(0, helpers.ContributorCount);
+        Assert.Equal(2, helpers.MaximumContributorCount);
+        Assert.Equal(0, helpers.Value);
+        Assert.Empty(result.AppliedRollRules);
+    }
+
+    [Theory]
+    [InlineData("Tiny", 0)]
+    [InlineData("Small", 1)]
+    [InlineData("Medium", 2)]
+    [InlineData("Large", 4)]
+    [InlineData("Huge", 6)]
+    [InlineData("Gargantuan", 10)]
+    public void HarvestingHelperCapsFollowCreatureSize(string creatureSize, int expectedMaximum)
+    {
+        var definition = Required("check.harvesting.total");
+        var result = CharacterMechanicEvaluator.Evaluate(
+            definition,
+            new Dictionary<string, int>(StringComparer.Ordinal)
+            {
+                ["assessmentResult"] = 8,
+                ["carvingResult"] = 9
+            },
+            new Dictionary<string, bool>(StringComparer.Ordinal)
+            {
+                ["sameActor"] = false
+            },
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["creatureSize"] = creatureSize
+            },
+            new Dictionary<string, IReadOnlyList<CharacterMechanicContributorInputValues>>(
+                StringComparer.OrdinalIgnoreCase)
+            {
+                ["helpers"] = Enumerable.Range(0, expectedMaximum)
+                    .Select(_ => Helper(proficiencyBonus: 2, isProficient: true))
+                    .ToArray()
+            });
+
+        var helpers = Assert.Single(result.ContributorGroups);
+        Assert.Equal(expectedMaximum, helpers.MaximumContributorCount);
+        Assert.Equal(expectedMaximum, helpers.ContributorCount);
+        Assert.Equal(expectedMaximum * 2, helpers.Value);
+    }
+
+    [Fact]
+    public void HarvestingRejectsHelpersBeyondTheCreatureSizeCap()
+    {
+        var definition = Required("check.harvesting.total");
+
+        Assert.Throws<InvalidOperationException>(() =>
+            CharacterMechanicEvaluator.Evaluate(
+                definition,
+                new Dictionary<string, int>(StringComparer.Ordinal)
+                {
+                    ["assessmentResult"] = 10,
+                    ["carvingResult"] = 10
+                },
+                new Dictionary<string, bool>(StringComparer.Ordinal)
+                {
+                    ["sameActor"] = false
+                },
+                new Dictionary<string, string>(StringComparer.Ordinal)
+                {
+                    ["creatureSize"] = "Small"
+                },
+                new Dictionary<string, IReadOnlyList<CharacterMechanicContributorInputValues>>(
+                    StringComparer.OrdinalIgnoreCase)
+                {
+                    ["helpers"] =
+                    [
+                        Helper(proficiencyBonus: 2, isProficient: true),
+                        Helper(proficiencyBonus: 2, isProficient: false)
+                    ]
+                }));
+    }
+
+    [Fact]
+    public void HarvestingSameActorDisadvantageRemainsOnAssessmentAndCarvingOnly()
+    {
+        var definition = Required("check.harvesting.total");
+        var result = CharacterMechanicEvaluator.Evaluate(
+            definition,
+            new Dictionary<string, int>(StringComparer.Ordinal)
+            {
+                ["assessmentResult"] = 12,
+                ["carvingResult"] = 13
+            },
+            new Dictionary<string, bool>(StringComparer.Ordinal)
+            {
+                ["sameActor"] = true,
+                ["helpAction"] = true
+            },
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["creatureSize"] = "Small"
+            },
+            new Dictionary<string, IReadOnlyList<CharacterMechanicContributorInputValues>>(
+                StringComparer.OrdinalIgnoreCase)
+            {
+                ["helpers"] = [Helper(proficiencyBonus: 3, isProficient: false)]
+            });
+
+        Assert.Equal(26, result.Value);
+        var rollRule = Assert.Single(result.AppliedRollRules);
+        Assert.Equal(
+            new[] { "check.harvesting.assessment", "check.harvesting.carving" },
+            rollRule.TargetMechanicKeys);
+        Assert.Equal(1, Assert.Single(result.ContributorGroups).Value);
+    }
+
+    [Fact]
     public void ManufacturingDoesNotTurnMissingToolProficiencyIntoMissingProficiencyData()
     {
         var definition = Required("check.crafting.manufacturing");
@@ -345,6 +516,20 @@ public sealed class CharacterMechanicsTests
 
         Assert.Equal(17, result.Value);
     }
+
+    private static CharacterMechanicContributorInputValues Helper(
+        int proficiencyBonus,
+        bool isProficient) =>
+        new(
+            new Dictionary<string, int>(StringComparer.Ordinal)
+            {
+                ["proficiencyBonus"] = proficiencyBonus
+            },
+            new Dictionary<string, bool>(StringComparer.Ordinal)
+            {
+                ["isProficient"] = isProficient
+            },
+            new Dictionary<string, string>(StringComparer.Ordinal));
 
     private static CharacterMechanicDefinition Required(string key) =>
         KnownCharacterMechanics.FindByKey(key)
