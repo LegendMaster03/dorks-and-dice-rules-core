@@ -90,7 +90,7 @@ Application-owned DOM continues to use the explicit Rules Core render lifecycle.
 
 The workspace exposes a persistent adjudication scope control when the account has mutation authority. Scope choices are derived from authorization rather than from arbitrary campaign membership:
 
-- `Global Rules` appears as an adjudication target only for a Rules Lawyer;
+- `Dorks & Dice` is the user-facing label for the global adjudication target and appears only for a Rules Lawyer;
 - a campaign scope appears as an adjudication target only when the current account has the campaign-scoped `DM` role;
 - in this architecture, that `DM` role is the campaign owner authority;
 - campaign Players remain in browse mode for that campaign.

@@ -136,6 +136,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
 
         var scopeControl = await GetAssetAsync(client, "/scope-control.js", "javascript");
         Assert.Contains("Adjudication scope", scopeControl, StringComparison.Ordinal);
+        Assert.Contains("Dorks & Dice", scopeControl, StringComparison.Ordinal);
         Assert.Contains("CAMPAIGN_DM_ROLE = \"DM\"", scopeControl, StringComparison.Ordinal);
 
         var semanticComparison = await GetAssetAsync(client, "/semantic-comparison.js", "javascript");
@@ -147,7 +148,8 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("conflicts", semanticComparison, StringComparison.Ordinal);
 
         var authoring = await GetAssetAsync(client, "/authoring.js", "javascript");
-        Assert.Contains("Global Rules", authoring, StringComparison.Ordinal);
+        Assert.Contains("Dorks & Dice", authoring, StringComparison.Ordinal);
+        Assert.DoesNotContain("Global Rules", authoring, StringComparison.Ordinal);
         Assert.Contains("Campaign Rules", authoring, StringComparison.Ordinal);
         Assert.Contains("Preview", authoring, StringComparison.Ordinal);
         Assert.Contains("Save decision", authoring, StringComparison.Ordinal);

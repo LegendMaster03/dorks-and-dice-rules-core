@@ -17,7 +17,7 @@ public static class RuleWorkspaceEndpointExtensions
                 new(
                     RuleAdjudicationScopeKinds.Global,
                     null,
-                    "Global Rules",
+                    "Dorks & Dice",
                     CanBrowse: true,
                     CanAdjudicate: authenticationContext is not null
                         && RulesAuthority.CanEditGlobalRules(authenticationContext))

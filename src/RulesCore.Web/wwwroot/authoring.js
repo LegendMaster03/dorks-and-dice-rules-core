@@ -86,7 +86,7 @@ export class RulesAuthoringApp {
         const nav = element("div", { className: "d-flex flex-wrap gap-2 align-items-center" });
 
         if (this.canEditGlobal) {
-            nav.append(this.navButton("Global Rules", "global"));
+            nav.append(this.navButton("Dorks & Dice", "global"));
         }
         if (this.canEditCampaign) {
             nav.append(this.navButton("Campaign Rules", "campaign"));
@@ -134,7 +134,7 @@ export class RulesAuthoringApp {
 
         const metrics = element("div");
         metrics.append(
-            element("h3", { className: "h5 mb-2", text: "Global authoring" }),
+            element("h3", { className: "h5 mb-2", text: "Dorks & Dice authoring" }),
             definitionList([
                 ["Concepts", String(overview.conceptCount)],
                 ["With decisions", String(overview.conceptsWithDecisions)],
@@ -244,8 +244,8 @@ export class RulesAuthoringApp {
         try {
             const result = await this.api.publishGlobalRules();
             window.alert(result.createdRevision === false
-                ? `Global ruleset revision #${result.revisionNumber} is already current.`
-                : `Published global ruleset revision #${result.revisionNumber}.`);
+                ? `Dorks & Dice ruleset revision #${result.revisionNumber} is already current.`
+                : `Published Dorks & Dice ruleset revision #${result.revisionNumber}.`);
             await this.renderGlobalOverview(container);
         } catch (error) {
             window.alert(describeError(error));
@@ -280,7 +280,7 @@ export class RulesAuthoringApp {
         metrics.append(
             element("h3", { className: "h5 mb-2", text: campaign?.name ?? "Campaign" }),
             definitionList([
-                ["Selected global baseline", baseline ? `#${baseline.rulesetRevisionNumber}` : "None"],
+                ["Selected Dorks & Dice baseline", baseline ? `#${baseline.rulesetRevisionNumber}` : "None"],
                 ["Published campaign revision", published ? `#${published.revisionNumber}` : "None"],
                 ["Concepts", String(overview.conceptCount)],
                 ["Overrides", String(overview.conceptsWithOverrides)],
@@ -309,14 +309,14 @@ export class RulesAuthoringApp {
         if (!baseline) {
             container.append(alertNode(
                 "info",
-                "This campaign has not selected a global ruleset baseline yet. Baseline discovery and migration selection are not exposed in this UI slice."));
+                "This campaign has not selected a Dorks & Dice ruleset baseline yet. Baseline discovery and migration selection are not exposed in this UI slice."));
             return;
         }
 
         const table = element("table", { className: "table table-hover align-middle mb-0" });
         const head = element("thead");
         const headRow = element("tr");
-        for (const text of ["Rule", "Global baseline", "Campaign override", "State", ""]) {
+        for (const text of ["Rule", "Dorks & Dice baseline", "Campaign override", "State", ""]) {
             headRow.append(element("th", { text }));
         }
         head.append(headRow);
@@ -477,7 +477,7 @@ export class RulesAuthoringApp {
         if (scope === "campaign") {
             card.append(alertNode(
                 "secondary",
-                `Selected global baseline uses decision #${detail.baselineGlobalDecision.decisionNumber} (${detail.baselineGlobalDecision.decisionKind}).`));
+                `Selected Dorks & Dice baseline uses decision #${detail.baselineGlobalDecision.decisionNumber} (${detail.baselineGlobalDecision.decisionKind}).`));
         }
 
         const mode = element("select", { className: "form-select" });

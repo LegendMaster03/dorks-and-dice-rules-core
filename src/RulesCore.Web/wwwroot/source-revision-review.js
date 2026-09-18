@@ -125,7 +125,7 @@ async function renderPreview(app, container, conceptId) {
         element("button", {
             type: "button",
             className: "btn btn-sm btn-outline-secondary",
-            text: "Back to Global Rules",
+            text: "Back to Rules Lawyer",
             onClick: async () => app.renderGlobalOverview(container)
         }),
         element("button", {
@@ -157,12 +157,12 @@ async function renderPreview(app, container, conceptId) {
             toolbar.append(createAdoptButton(app, container, preview));
             container.append(alertNode(
                 "info",
-                "Previewing does not change the Rules Layer. Adopting the latest source creates a new pending global decision with the same decision semantics; publication remains a separate explicit action."));
+                "Previewing does not change the Rules Layer. Adopting the latest source creates a new pending Dorks & Dice decision with the same decision semantics; publication remains a separate explicit action."));
         }
 
         container.append(alertNode(
             "secondary",
-            "Rejecting records only that this exact source revision was reviewed for this exact global decision. A newer source revision or a newer global decision will surface the update again."));
+            "Rejecting records only that this exact source revision was reviewed for this exact Dorks & Dice decision. A newer source revision or a newer Dorks & Dice decision will surface the update again."));
         container.append(renderResolvedDocuments(preview));
         if (preview.patchCompatible) {
             container.append(renderChanges(preview.changes));
@@ -183,7 +183,7 @@ function createAdoptButton(app, container, preview) {
 
     button.addEventListener("click", async () => {
         const confirmed = window.confirm(
-            `Create a new global decision for ${update.displayName} using source revision #${update.latestRevisionNumber}? This preserves the current decision kind and patch, but does not publish the rule.`);
+            `Create a new Dorks & Dice decision for ${update.displayName} using source revision #${update.latestRevisionNumber}? This preserves the current decision kind and patch, but does not publish the rule.`);
         if (!confirmed) {
             return;
         }
@@ -198,7 +198,7 @@ function createAdoptButton(app, container, preview) {
                     expectedLatestFingerprint: update.latestFingerprint
                 });
             window.alert(
-                `Created pending global decision #${result.globalDecisionNumber} using source revision #${result.sourceRevisionNumber}. It has not been published.`);
+                `Created pending Dorks & Dice decision #${result.globalDecisionNumber} using source revision #${result.sourceRevisionNumber}. It has not been published.`);
             await app.renderGlobalConcept(container, update.ruleConceptId);
         } catch (error) {
             window.alert(describeError(error));
@@ -219,7 +219,7 @@ function createRejectButton(app, container, preview) {
 
     button.addEventListener("click", async () => {
         const reason = window.prompt(
-            `Why should source revision #${update.latestRevisionNumber} not be adopted for global decision #${update.globalDecisionNumber}? This dismisses only this exact review target.`);
+            `Why should source revision #${update.latestRevisionNumber} not be adopted for Dorks & Dice decision #${update.globalDecisionNumber}? This dismisses only this exact review target.`);
         if (reason === null) {
             return;
         }
@@ -239,7 +239,7 @@ function createRejectButton(app, container, preview) {
                     reason: reason.trim()
                 });
             window.alert(
-                `Recorded rejection of source revision #${result.sourceRevisionNumber} for the current global decision. No rule decision or publication was changed.`);
+                `Recorded rejection of source revision #${result.sourceRevisionNumber} for the current Dorks & Dice decision. No rule decision or publication was changed.`);
             await app.renderGlobalOverview(container);
         } catch (error) {
             window.alert(describeError(error));

@@ -19,7 +19,7 @@ export function installAdjudicationScopeControl(app) {
         const header = renderHeader();
         const options = [];
         if (app.canEditGlobal) {
-            options.push({ value: "global", label: "Global Rules" });
+            options.push({ value: "global", label: "Dorks & Dice" });
         }
         for (const campaign of app.dmCampaigns) {
             options.push({ value: `campaign:${campaign.id}`, label: `Campaign: ${campaign.name}` });
