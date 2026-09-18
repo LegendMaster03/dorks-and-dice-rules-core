@@ -138,6 +138,9 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("Semantic comparison", semanticComparison, StringComparison.Ordinal);
         Assert.Contains("/api/workspace/comparison", semanticComparison, StringComparison.Ordinal);
         Assert.Contains("renderSemanticComparison", semanticComparison, StringComparison.Ordinal);
+        Assert.Contains("rules-core-semantic-values", semanticComparison, StringComparison.Ordinal);
+        Assert.Contains("humanizeDifferenceKind", semanticComparison, StringComparison.Ordinal);
+        Assert.Contains("conflicts", semanticComparison, StringComparison.Ordinal);
 
         var authoring = await GetAssetAsync(client, "/authoring.js", "javascript");
         Assert.Contains("Global Rules", authoring, StringComparison.Ordinal);

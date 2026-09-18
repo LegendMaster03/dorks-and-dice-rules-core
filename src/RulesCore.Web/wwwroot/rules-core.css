@@ -1233,6 +1233,39 @@ button.rules-core-workflow-step {
     min-width: 0;
 }
 
+.rules-core-semantic-values {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .6rem;
+    margin-top: .45rem;
+}
+
+.rules-core-semantic-value {
+    min-width: 0;
+    padding: .55rem;
+    border: 1px solid var(--rules-core-border);
+    border-radius: .55rem;
+    background: var(--rules-core-surface-subtle);
+}
+
+.rules-core-semantic-value-label {
+    margin-bottom: .35rem;
+    color: var(--bs-secondary-color);
+    font-size: .68rem;
+    font-weight: 750;
+}
+
+.rules-core-semantic-value-text {
+    overflow-wrap: anywhere;
+    font-size: .82rem;
+    line-height: 1.4;
+}
+
+.rules-core-semantic-value .rules-core-code {
+    max-height: 16rem;
+    overflow: auto;
+}
+
 .rules-core-comparison-adjudication {
     display: flex;
     align-items: center;
@@ -1246,7 +1279,8 @@ button.rules-core-workflow-step {
 }
 
 @media (max-width: 700px) {
-    .rules-core-comparison-controls {
+    .rules-core-comparison-controls,
+    .rules-core-semantic-values {
         grid-template-columns: 1fr;
     }
 

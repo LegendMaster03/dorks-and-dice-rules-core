@@ -1222,7 +1222,14 @@ function renderComparisonTab(app, container, resolved, versions, campaignId) {
                 leftSourceEntityRevisionId: left.value,
                 rightSourceEntityRevisionId: right.value
             });
-            renderSemanticComparison(result, comparison);
+            const leftVersion = available.find(version =>
+                version.sourceEntityRevisionId === left.value);
+            const rightVersion = available.find(version =>
+                version.sourceEntityRevisionId === right.value);
+            renderSemanticComparison(result, comparison, {
+                leftLabel: leftVersion ? sourceVersionTabLabel(leftVersion, available) : "Left",
+                rightLabel: rightVersion ? sourceVersionTabLabel(rightVersion, available) : "Right"
+            });
             const adjudication = adjudicationButton(app, resolved.ruleConceptId, campaignId);
             if (adjudication) {
                 result.append(element("div", { className: "rules-core-comparison-adjudication" },
