@@ -118,7 +118,10 @@ Supported single-line families are parsed into source-native records with stable
 
 Recognized records are then translated into the same family-shaped `ContentJson` contract used by native 5e.tools content. The translator maps only mechanics with a defensible equivalent and stores unmapped 3.x-specific material under `_rulesCore.pcgen.unmappedSegments`.
 
+The current translator follows actual PCGen conventions. For skill competencies it also normalizes understood `KEYSTAT`, `USEUNTRAINED`, `ACHECK`, specialty, rank-support, and class-skill-state semantics into `_rulesCore.competency`. The original tag/value evidence remains preserved in the native record and under `_rulesCore.pcgen.unmappedSegments`; downstream Character consumers do not need to parse PCGen syntax.
+
 The current translator follows actual PCGen conventions:
+
 
 - `ABILITY` + `CATEGORY:FEAT` becomes the feat family without changing the native key;
 - monster `RACE` records are recognized from `MONSTERCLASS` or strong monster-source path evidence;
