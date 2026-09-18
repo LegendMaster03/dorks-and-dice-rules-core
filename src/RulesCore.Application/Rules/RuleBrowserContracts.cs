@@ -18,7 +18,7 @@ public static class RuleBrowserRoutes
             ["spell"] = "spells",
             ["class"] = "classes",
             ["subclass"] = "subclasses",
-            ["prestigeclass"] = "prestige-classes",
+            ["prestigeClass"] = "prestige-classes",
             ["feat"] = "feats",
             ["race"] = "races",
             ["species"] = "species",

@@ -96,9 +96,9 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                     EntityType = group.Key,
                     Count = group.Count()
                 })
-                .OrderBy(value => value.EntityType)
                 .ToArrayAsync(cancellationToken);
             entityTypeFacets = entityTypeFacetRows
+                .OrderBy(value => value.EntityType, StringComparer.OrdinalIgnoreCase)
                 .Select(value => new ResolvedRuleCatalogEntityTypeFacetView(
                     value.EntityType,
                     value.Count))
@@ -122,9 +122,9 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                     SourceCode = group.Key,
                     Count = group.Count()
                 })
-                .OrderBy(value => value.SourceCode)
                 .ToArrayAsync(cancellationToken);
             sourceFacets = sourceFacetRows
+                .OrderBy(value => value.SourceCode, StringComparer.OrdinalIgnoreCase)
                 .Select(value => new ResolvedRuleCatalogSourceFacetView(
                     value.SourceCode,
                     value.Count))
@@ -284,9 +284,9 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                     EntityType = group.Key,
                     Count = group.Count()
                 })
-                .OrderBy(value => value.EntityType)
                 .ToArrayAsync(cancellationToken);
             entityTypeFacets = entityTypeFacetRows
+                .OrderBy(value => value.EntityType, StringComparer.OrdinalIgnoreCase)
                 .Select(value => new ResolvedRuleCatalogEntityTypeFacetView(
                     value.EntityType,
                     value.Count))
@@ -310,9 +310,9 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                     SourceCode = group.Key,
                     Count = group.Count()
                 })
-                .OrderBy(value => value.SourceCode)
                 .ToArrayAsync(cancellationToken);
             sourceFacets = sourceFacetRows
+                .OrderBy(value => value.SourceCode, StringComparer.OrdinalIgnoreCase)
                 .Select(value => new ResolvedRuleCatalogSourceFacetView(
                     value.SourceCode,
                     value.Count))
