@@ -35,6 +35,8 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("/upstream", api, StringComparison.Ordinal);
         Assert.Contains("getGlobalRulesCatalog", api, StringComparison.Ordinal);
         Assert.Contains("getCampaignRulesCatalog", api, StringComparison.Ordinal);
+        Assert.Contains("sourceCode", api, StringComparison.Ordinal);
+        Assert.Contains("overridesOnly", api, StringComparison.Ordinal);
         Assert.Contains("getGlobalResolvedRule", api, StringComparison.Ordinal);
         Assert.Contains("getCampaignResolvedRule", api, StringComparison.Ordinal);
         Assert.Contains("getRuleVersions", api, StringComparison.Ordinal);
@@ -77,6 +79,9 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("renderContinuousIndexFooter", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("rules-core-library-family-nav", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("changeEntityType", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Campaign overrides only", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("sourceFacets", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Clear filters", rulesBrowser, StringComparison.Ordinal);
         Assert.DoesNotContain("Previous", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("BROWSER_COLUMNS", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("browserFields", rulesBrowser, StringComparison.Ordinal);

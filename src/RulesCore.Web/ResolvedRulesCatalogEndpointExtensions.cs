@@ -12,6 +12,7 @@ public static class ResolvedRulesCatalogEndpointExtensions
         app.MapGet("/api/rules", async (
             string? entityType,
             string? q,
+            string? source,
             int? limit,
             int? offset,
             HttpContext httpContext,
@@ -25,10 +26,11 @@ public static class ResolvedRulesCatalogEndpointExtensions
                     .User.Id;
                 var catalog = new ResolvedRulesCatalogService(dbContext);
                 httpContext.Response.Headers.CacheControl = "no-store";
-                return Results.Ok(await catalog.GetGlobalPageAsync(
+                return Results.Ok(await catalog.GetGlobalFilteredPageAsync(
                     userId,
                     entityType,
                     q,
+                    source,
                     limit ?? 200,
                     offset ?? 0,
                     cancellationToken));
@@ -43,6 +45,8 @@ public static class ResolvedRulesCatalogEndpointExtensions
             Guid campaignId,
             string? entityType,
             string? q,
+            string? source,
+            bool? overridesOnly,
             int? limit,
             int? offset,
             HttpContext httpContext,
@@ -62,11 +66,13 @@ public static class ResolvedRulesCatalogEndpointExtensions
             {
                 var catalog = new ResolvedRulesCatalogService(dbContext);
                 httpContext.Response.Headers.CacheControl = "no-store";
-                return Results.Ok(await catalog.GetCampaignPageAsync(
+                return Results.Ok(await catalog.GetCampaignFilteredPageAsync(
                     campaignId,
                     authenticationContext!.User.Id,
                     entityType,
                     q,
+                    source,
+                    overridesOnly ?? false,
                     limit ?? 200,
                     offset ?? 0,
                     cancellationToken));

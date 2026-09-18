@@ -130,6 +130,9 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 Assert.NotNull(catalog);
                 Assert.Equal(globalRevision.RevisionNumber, catalog.RevisionNumber);
                 Assert.Equal(1, catalog.TotalCount);
+                var publicFacet = Assert.Single(catalog.SourceFacets);
+                Assert.Equal("PUB", publicFacet.SourceCode);
+                Assert.Equal(1, publicFacet.Count);
                 var rule = Assert.Single(catalog.Rules);
                 Assert.Equal(publicConceptKey, rule.ConceptKey);
                 Assert.Equal(publicPackageKey, rule.PackageKey);
@@ -188,8 +191,25 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                     .ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
                 Assert.Equal(2, catalog.TotalCount);
                 Assert.Equal(2, catalog.Rules.Count);
+                Assert.Equal(2, catalog.SourceFacets.Count);
+                Assert.Contains(catalog.SourceFacets, value => value.SourceCode == "PUB" && value.Count == 1);
+                Assert.Contains(catalog.SourceFacets, value => value.SourceCode == "PRV" && value.Count == 1);
                 Assert.Contains(catalog.Rules, value => value.ConceptKey == publicConceptKey);
                 Assert.Contains(catalog.Rules, value => value.ConceptKey == privateConceptKey);
+            }
+
+            using (var sourceFilteredRequest = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/rules?q={token}&source=PRV",
+                       "granted-ticket"))
+            using (var sourceFilteredResponse = await client.SendAsync(sourceFilteredRequest))
+            {
+                Assert.Equal(HttpStatusCode.OK, sourceFilteredResponse.StatusCode);
+                var catalog = (await sourceFilteredResponse.Content
+                    .ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
+                Assert.Equal(1, catalog.TotalCount);
+                Assert.Equal(privateConceptKey, Assert.Single(catalog.Rules).ConceptKey);
+                Assert.Equal(2, catalog.SourceFacets.Count);
             }
 
             using (var firstPageRequest = HostedRequest(
@@ -260,6 +280,19 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 Assert.Equal(2, catalog.TotalCount);
                 Assert.Equal(2, catalog.Rules.Count);
                 Assert.All(catalog.Rules, value => Assert.False(value.HasCampaignOverride));
+            }
+
+            using (var overridesOnlyRequest = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/campaigns/{campaignId}/rules?q={token}&overridesOnly=true",
+                       "player-granted-ticket"))
+            using (var overridesOnlyResponse = await client.SendAsync(overridesOnlyRequest))
+            {
+                Assert.Equal(HttpStatusCode.OK, overridesOnlyResponse.StatusCode);
+                var catalog = (await overridesOnlyResponse.Content
+                    .ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
+                Assert.Equal(0, catalog.TotalCount);
+                Assert.Empty(catalog.Rules);
             }
 
             using (var campaignFirstPageRequest = HostedRequest(

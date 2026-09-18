@@ -114,7 +114,12 @@ export function installResolvedRulesBrowser(app) {
     app.canBrowseRules = app.hostContext.siteMode === DORKS_MODE;
     app.browserScope = "global";
     app.browserPage = 0;
-    app.browserFilters = { entityType: "", query: "" };
+    app.browserFilters = {
+        entityType: "",
+        query: "",
+        sourceCode: "",
+        overridesOnly: false
+    };
     app.browserDeepLink = null;
     app.browserSelectedConceptKey = null;
 
@@ -270,6 +275,14 @@ async function renderRulesBrowser(app, container) {
         placeholder: "Search rules…",
         ariaLabel: "Search rules"
     });
+    const filterToggle = element("button", {
+        type: "button",
+        className: "btn btn-sm btn-outline-secondary rules-core-library-filter-toggle",
+        text: "Filters",
+        attributes: {
+            "aria-expanded": "false"
+        }
+    });
     const reset = element("button", {
         type: "button",
         className: "btn btn-sm btn-outline-secondary rules-core-library-reset",
@@ -287,7 +300,32 @@ async function renderRulesBrowser(app, container) {
                 text: "F"
             })),
         indexStatus,
+        filterToggle,
         reset);
+
+    const sourceFilter = element("select", {
+        className: "form-select form-select-sm",
+        ariaLabel: "Filter by source"
+    }, element("option", { value: "", text: "All sources" }));
+    const overrideFilter = element("label", {
+        className: "rules-core-library-filter-check"
+    }, element("input", {
+        type: "checkbox",
+        className: "form-check-input"
+    }), element("span", { text: "Campaign overrides only" }));
+    const clearFilters = element("button", {
+        type: "button",
+        className: "btn btn-sm btn-link rules-core-library-filter-clear",
+        text: "Clear filters"
+    });
+    const filterBar = element("div", {
+        className: "rules-core-library-filterbar",
+        attributes: { hidden: "" }
+    }, element("label", { className: "rules-core-library-filter-field" },
+        element("span", { text: "Source" }),
+        sourceFilter),
+    overrideFilter,
+    clearFilters);
 
     const workspace = element("div", { className: "rules-core-library-workspace" });
     const index = element("section", {
@@ -302,7 +340,7 @@ async function renderRulesBrowser(app, container) {
         ariaLabel: "Published rules"
     });
     const indexFooter = element("div", { className: "rules-core-library-index-footer" });
-    index.append(searchGroup, indexHeader, list, indexFooter);
+    index.append(searchGroup, filterBar, indexHeader, list, indexFooter);
 
     const detail = element("section", {
         className: "rules-core-library-detail",
@@ -360,6 +398,44 @@ async function renderRulesBrowser(app, container) {
         await renderSelection(rule.conceptKey);
     };
 
+    const syncFilterControls = () => {
+        const campaignScope = scope.value.startsWith("campaign:");
+        overrideFilter.hidden = !campaignScope;
+        if (!campaignScope) {
+            overrideFilter.querySelector("input").checked = false;
+        }
+
+        const activeCount =
+            (sourceFilter.value ? 1 : 0)
+            + (campaignScope && overrideFilter.querySelector("input").checked ? 1 : 0);
+        filterToggle.textContent = activeCount ? `Filters (${activeCount})` : "Filters";
+        filterToggle.classList.toggle("is-active", activeCount > 0);
+    };
+
+    const populateSourceFacets = facets => {
+        const selected = sourceFilter.value;
+        sourceFilter.replaceChildren(element("option", {
+            value: "",
+            text: "All sources"
+        }));
+        for (const facet of facets ?? []) {
+            sourceFilter.append(element("option", {
+                value: facet.sourceCode,
+                text: `${facet.sourceCode} (${facet.count})`
+            }));
+        }
+        const selectedExists = Array.from(sourceFilter.options)
+            .some(option => option.value === selected);
+        if (selected && !selectedExists) {
+            sourceFilter.append(element("option", {
+                value: selected,
+                text: `${selected} (0)`
+            }));
+        }
+        sourceFilter.value = selected;
+        syncFilterControls();
+    };
+
     const renderSelection = async conceptKey => {
         const serial = ++detailSerial;
         app.browserSelectedConceptKey = conceptKey;
@@ -403,6 +479,8 @@ async function renderRulesBrowser(app, container) {
             const filters = {
                 entityType: app.browserFilters.entityType || null,
                 query: app.browserFilters.query || null,
+                sourceCode: app.browserFilters.sourceCode || null,
+                overridesOnly: app.browserFilters.overridesOnly,
                 limit: PAGE_SIZE,
                 offset
             };
@@ -462,8 +540,12 @@ async function renderRulesBrowser(app, container) {
         app.browserScope = scope.value;
         app.browserFilters = {
             entityType: type.value,
-            query: search.value.trim()
+            query: search.value.trim(),
+            sourceCode: sourceFilter.value,
+            overridesOnly: scope.value.startsWith("campaign:")
+                && overrideFilter.querySelector("input").checked
         };
+        syncFilterControls();
 
         list.replaceChildren(element("div", {
             className: "rules-core-library-loading",
@@ -475,6 +557,8 @@ async function renderRulesBrowser(app, container) {
             const filters = {
                 entityType: app.browserFilters.entityType || null,
                 query: app.browserFilters.query || null,
+                sourceCode: app.browserFilters.sourceCode || null,
+                overridesOnly: app.browserFilters.overridesOnly,
                 limit: PAGE_SIZE,
                 offset: 0
             };
@@ -485,6 +569,7 @@ async function renderRulesBrowser(app, container) {
                     filters);
             if (serial !== loadSerial) return;
 
+            populateSourceFacets(requested.sourceFacets);
             const rules = requested.rules ?? [];
             currentRules = [...rules];
             totalCount = requested.totalCount ?? rules.length;
@@ -550,6 +635,10 @@ async function renderRulesBrowser(app, container) {
     });
 
     scope.addEventListener("change", async () => {
+        if (!scope.value.startsWith("campaign:")) {
+            overrideFilter.querySelector("input").checked = false;
+        }
+        syncFilterControls();
         await load({ keepSelection: true });
     });
     const changeEntityType = async value => {
@@ -571,12 +660,39 @@ async function renderRulesBrowser(app, container) {
         if (searchTimer) clearTimeout(searchTimer);
         search.value = "";
         type.value = "";
+        sourceFilter.value = "";
+        overrideFilter.querySelector("input").checked = false;
+        filterBar.hidden = true;
+        filterToggle.setAttribute("aria-expanded", "false");
         syncFamilyNav();
+        syncFilterControls();
         app.browserSelectedConceptKey = null;
         pushToolRoute(app, "/");
         await load();
         search.focus();
     });
+    filterToggle.addEventListener("click", () => {
+        filterBar.hidden = !filterBar.hidden;
+        filterToggle.setAttribute("aria-expanded", filterBar.hidden ? "false" : "true");
+    });
+    sourceFilter.addEventListener("change", async () => {
+        syncFilterControls();
+        app.browserSelectedConceptKey = null;
+        await load();
+    });
+    overrideFilter.querySelector("input").addEventListener("change", async () => {
+        syncFilterControls();
+        app.browserSelectedConceptKey = null;
+        await load();
+    });
+    clearFilters.addEventListener("click", async () => {
+        sourceFilter.value = "";
+        overrideFilter.querySelector("input").checked = false;
+        syncFilterControls();
+        app.browserSelectedConceptKey = null;
+        await load();
+    });
+
     search.addEventListener("input", () => {
         preserveDeepLink = false;
         if (searchTimer) clearTimeout(searchTimer);

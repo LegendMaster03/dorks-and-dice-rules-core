@@ -1,11 +1,16 @@
 namespace RulesCore.Application.Rules;
 
+public sealed record ResolvedRuleCatalogSourceFacetView(
+    string SourceCode,
+    int Count);
+
 public sealed record ResolvedRulesCatalogView(
     string Scope,
     Guid? CampaignId,
     int? RevisionNumber,
     DateTimeOffset? PublishedAt,
     int TotalCount,
+    IReadOnlyList<ResolvedRuleCatalogSourceFacetView> SourceFacets,
     IReadOnlyList<ResolvedRuleCatalogItemView> Rules);
 
 public sealed record ResolvedRuleBrowserFieldView(

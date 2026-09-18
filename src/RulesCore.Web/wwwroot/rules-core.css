@@ -727,7 +727,7 @@ button.rules-core-workflow-step {
 
 .rules-core-library-index {
     display: grid;
-    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
     min-width: 0;
     border-right: 1px solid var(--rules-core-border);
     background: var(--rules-core-surface-subtle);
@@ -735,7 +735,7 @@ button.rules-core-workflow-step {
 
 .rules-core-library-search-group {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-columns: minmax(0, 1fr) auto auto auto;
     gap: .35rem;
     padding: .42rem;
     border-bottom: 1px solid var(--rules-core-border);
@@ -774,6 +774,53 @@ button.rules-core-workflow-step {
     font-size: .68rem;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
+}
+
+.rules-core-library-filter-toggle.is-active {
+    border-color: color-mix(in srgb, var(--bs-primary) 38%, var(--rules-core-border));
+    background: var(--rules-core-primary-soft);
+    color: var(--bs-body-color);
+}
+
+.rules-core-library-filterbar {
+    display: grid;
+    grid-template-columns: minmax(8rem, 1fr) auto auto;
+    gap: .55rem;
+    align-items: end;
+    padding: .45rem .5rem;
+    border-bottom: 1px solid var(--rules-core-border);
+    background: color-mix(in srgb, var(--rules-core-surface-subtle) 88%, var(--bs-body-bg));
+}
+
+.rules-core-library-filterbar[hidden] {
+    display: none;
+}
+
+.rules-core-library-filter-field {
+    display: grid;
+    gap: .2rem;
+    min-width: 0;
+    color: var(--bs-secondary-color);
+    font-size: .66rem;
+    font-weight: 675;
+}
+
+.rules-core-library-filter-check {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+    min-height: 1.95rem;
+    margin: 0;
+    color: var(--bs-secondary-color);
+    font-size: .7rem;
+    white-space: nowrap;
+}
+
+.rules-core-library-filter-clear {
+    align-self: center;
+    padding-inline: .25rem;
+    font-size: .7rem;
+    text-decoration: none;
 }
 
 .rules-core-library-index-header {
@@ -1062,13 +1109,22 @@ button.rules-core-workflow-step {
     }
 
     .rules-core-library-search-group {
-        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-columns: minmax(0, 1fr) auto auto;
     }
 
     .rules-core-library-search-status {
         grid-column: 1 / -1;
         grid-row: 2;
         padding-left: .15rem;
+    }
+
+    .rules-core-library-filterbar {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+    }
+
+    .rules-core-library-filter-check {
+        min-height: auto;
     }
 
     .rules-core-library-workspace {

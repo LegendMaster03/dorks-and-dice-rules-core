@@ -251,13 +251,39 @@ export class RulesCoreApi {
         });
     }
 
-    getGlobalRulesCatalog({ entityType = null, query = null, limit = 200, offset = 0 } = {}) {
-        const parameters = catalogParameters(entityType, query, limit, offset);
+    getGlobalRulesCatalog({
+        entityType = null,
+        query = null,
+        sourceCode = null,
+        limit = 200,
+        offset = 0
+    } = {}) {
+        const parameters = catalogParameters({
+            entityType,
+            query,
+            sourceCode,
+            limit,
+            offset
+        });
         return this.backend(`/api/rules?${parameters.toString()}`);
     }
 
-    getCampaignRulesCatalog(campaignId, { entityType = null, query = null, limit = 200, offset = 0 } = {}) {
-        const parameters = catalogParameters(entityType, query, limit, offset);
+    getCampaignRulesCatalog(campaignId, {
+        entityType = null,
+        query = null,
+        sourceCode = null,
+        overridesOnly = false,
+        limit = 200,
+        offset = 0
+    } = {}) {
+        const parameters = catalogParameters({
+            entityType,
+            query,
+            sourceCode,
+            overridesOnly,
+            limit,
+            offset
+        });
         return this.backend(`/api/campaigns/${encodeURIComponent(campaignId)}/rules?${parameters.toString()}`);
     }
 
@@ -272,10 +298,19 @@ export class RulesCoreApi {
     }
 }
 
-function catalogParameters(entityType, query, limit, offset = 0) {
+function catalogParameters({
+    entityType = null,
+    query = null,
+    sourceCode = null,
+    overridesOnly = false,
+    limit,
+    offset = 0
+}) {
     const parameters = new URLSearchParams();
     if (entityType) parameters.set("entityType", entityType);
     if (query) parameters.set("q", query);
+    if (sourceCode) parameters.set("source", sourceCode);
+    if (overridesOnly) parameters.set("overridesOnly", "true");
     parameters.set("limit", String(limit));
     parameters.set("offset", String(Math.max(0, offset)));
     return parameters;

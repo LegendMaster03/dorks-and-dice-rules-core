@@ -17,12 +17,29 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
         CancellationToken cancellationToken = default) =>
         GetGlobalPageAsync(userId, entityType, query, limit, 0, cancellationToken);
 
-    public async Task<ResolvedRulesCatalogView> GetGlobalPageAsync(
+    public Task<ResolvedRulesCatalogView> GetGlobalPageAsync(
         string? userId,
         string? entityType = null,
         string? query = null,
         int limit = 200,
         int offset = 0,
+        CancellationToken cancellationToken = default) =>
+        GetGlobalFilteredPageAsync(
+            userId,
+            entityType,
+            query,
+            sourceCode: null,
+            limit: limit,
+            offset: offset,
+            cancellationToken: cancellationToken);
+
+    public async Task<ResolvedRulesCatalogView> GetGlobalFilteredPageAsync(
+        string? userId,
+        string? entityType,
+        string? query,
+        string? sourceCode,
+        int limit,
+        int offset,
         CancellationToken cancellationToken = default)
     {
         ValidateLimit(limit);
@@ -30,6 +47,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
         var normalizedUserId = NormalizeOptionalUserId(userId);
         var normalizedEntityType = NormalizeOptional(entityType)?.ToLowerInvariant();
         var normalizedQuery = NormalizeOptional(query)?.ToLowerInvariant();
+        var normalizedSourceCode = NormalizeOptional(sourceCode)?.ToLowerInvariant();
 
         var revision = await dbContext.RulesetRevisions
             .AsNoTracking()
@@ -38,7 +56,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             .FirstOrDefaultAsync(cancellationToken);
         if (revision is null)
         {
-            return new ResolvedRulesCatalogView("global", null, null, null, 0, []);
+            return new ResolvedRulesCatalogView("global", null, null, null, 0, [], []);
         }
 
         var entries = dbContext.RulesetRevisionEntries
@@ -64,6 +82,23 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                     && value.SourceEntityRevision.SourceEntity.SourceCode.ToLower().Contains(normalizedQuery))
                 || value.SourceEntityRevision.SourceEntity.FormatKey.ToLower().Contains(normalizedQuery)
                 || value.SourceEntityRevision.SourceEntity.SourcePackage.DisplayName.ToLower().Contains(normalizedQuery));
+        }
+
+        var sourceFacets = await entries
+            .Where(value => value.SourceEntityRevision.SourceEntity.SourceCode != null
+                && value.SourceEntityRevision.SourceEntity.SourceCode != "")
+            .GroupBy(value => value.SourceEntityRevision.SourceEntity.SourceCode!)
+            .Select(group => new ResolvedRuleCatalogSourceFacetView(
+                group.Key,
+                group.Count()))
+            .OrderBy(value => value.SourceCode)
+            .ToArrayAsync(cancellationToken);
+
+        if (normalizedSourceCode is not null)
+        {
+            entries = entries.Where(value =>
+                value.SourceEntityRevision.SourceEntity.SourceCode != null
+                && value.SourceEntityRevision.SourceEntity.SourceCode.ToLower() == normalizedSourceCode);
         }
 
         var totalCount = await entries.CountAsync(cancellationToken);
@@ -106,6 +141,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             revision.RevisionNumber,
             revision.PublishedAt,
             totalCount,
+            sourceFacets,
             rules);
     }
 
@@ -118,13 +154,34 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
         CancellationToken cancellationToken = default) =>
         GetCampaignPageAsync(campaignId, userId, entityType, query, limit, 0, cancellationToken);
 
-    public async Task<ResolvedRulesCatalogView> GetCampaignPageAsync(
+    public Task<ResolvedRulesCatalogView> GetCampaignPageAsync(
         Guid campaignId,
         string userId,
         string? entityType = null,
         string? query = null,
         int limit = 200,
         int offset = 0,
+        CancellationToken cancellationToken = default) =>
+        GetCampaignFilteredPageAsync(
+            campaignId,
+            userId,
+            entityType,
+            query,
+            sourceCode: null,
+            overridesOnly: false,
+            limit: limit,
+            offset: offset,
+            cancellationToken: cancellationToken);
+
+    public async Task<ResolvedRulesCatalogView> GetCampaignFilteredPageAsync(
+        Guid campaignId,
+        string userId,
+        string? entityType,
+        string? query,
+        string? sourceCode,
+        bool overridesOnly,
+        int limit,
+        int offset,
         CancellationToken cancellationToken = default)
     {
         RequireGuid(campaignId, nameof(campaignId));
@@ -133,6 +190,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
         var normalizedUserId = RequireUserId(userId);
         var normalizedEntityType = NormalizeOptional(entityType)?.ToLowerInvariant();
         var normalizedQuery = NormalizeOptional(query)?.ToLowerInvariant();
+        var normalizedSourceCode = NormalizeOptional(sourceCode)?.ToLowerInvariant();
 
         var revision = await dbContext.CampaignRulesetRevisions
             .AsNoTracking()
@@ -142,7 +200,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             .FirstOrDefaultAsync(cancellationToken);
         if (revision is null)
         {
-            return new ResolvedRulesCatalogView("campaign", campaignId, null, null, 0, []);
+            return new ResolvedRulesCatalogView("campaign", campaignId, null, null, 0, [], []);
         }
 
         var entries = dbContext.CampaignRulesetRevisionEntries
@@ -167,6 +225,30 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                     && value.SourceEntityRevision.SourceEntity.SourceCode.ToLower().Contains(normalizedQuery))
                 || value.SourceEntityRevision.SourceEntity.FormatKey.ToLower().Contains(normalizedQuery)
                 || value.SourceEntityRevision.SourceEntity.SourcePackage.DisplayName.ToLower().Contains(normalizedQuery));
+        }
+
+        if (overridesOnly)
+        {
+            entries = entries.Where(value =>
+                value.CampaignRuleDecision != null
+                && value.CampaignRuleDecision.DecisionKind != CampaignRuleDecisionKinds.InheritGlobal);
+        }
+
+        var sourceFacets = await entries
+            .Where(value => value.SourceEntityRevision.SourceEntity.SourceCode != null
+                && value.SourceEntityRevision.SourceEntity.SourceCode != "")
+            .GroupBy(value => value.SourceEntityRevision.SourceEntity.SourceCode!)
+            .Select(group => new ResolvedRuleCatalogSourceFacetView(
+                group.Key,
+                group.Count()))
+            .OrderBy(value => value.SourceCode)
+            .ToArrayAsync(cancellationToken);
+
+        if (normalizedSourceCode is not null)
+        {
+            entries = entries.Where(value =>
+                value.SourceEntityRevision.SourceEntity.SourceCode != null
+                && value.SourceEntityRevision.SourceEntity.SourceCode.ToLower() == normalizedSourceCode);
         }
 
         var totalCount = await entries.CountAsync(cancellationToken);
@@ -212,6 +294,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             revision.RevisionNumber,
             revision.PublishedAt,
             totalCount,
+            sourceFacets,
             rules);
     }
 
