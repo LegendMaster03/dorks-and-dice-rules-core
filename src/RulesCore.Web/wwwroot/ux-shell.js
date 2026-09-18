@@ -4,8 +4,8 @@ const NAV_GROUPS = [
     {
         label: "Explore",
         items: [
-            { label: "Library", view: "library", capability: "canBrowseSourceLibrary", description: "Source material" },
-            { label: "Published Rules", view: "browse", capability: "canBrowseRules", description: "Table-ready rules" }
+            { label: "Library", view: "library", capability: "canBrowseRules", description: "Rules & mechanics" },
+            { label: "Sources", view: "sources", capability: "canBrowseSourceLibrary", description: "Source access & imports" }
         ]
     },
     {
@@ -224,6 +224,11 @@ function navItem(app, item) {
         attributes: active ? { "aria-current": "page" } : {},
         onClick: async () => {
             if (app.activeView === item.view) return;
+            const navigate = app.viewNavigation?.[item.view];
+            if (navigate) {
+                await navigate();
+                return;
+            }
             app.activeView = item.view;
             await app.render();
         }
@@ -252,7 +257,7 @@ export function enhanceRenderedView(app, container) {
     });
 
     const firstCard = container.querySelector(":scope > .card");
-    if (firstCard && ["library", "browse", "version-review"].includes(app.activeView)) {
+    if (firstCard && ["sources", "version-review"].includes(app.activeView)) {
         firstCard.classList.add("rules-core-page-lead");
     }
 

@@ -8,7 +8,7 @@ export function installAdjudicationScopeControl(app) {
     app.canEditCampaign = app.hostContext.siteMode === DORKS_MODE && app.dmCampaigns.length > 0;
 
     if (app.activeView === "campaign" && !app.canEditCampaign) {
-        app.activeView = app.canEditGlobal ? "global" : "browse";
+        app.activeView = app.canEditGlobal ? "global" : "library";
         app.activeCampaignId = null;
     } else if (!app.activeCampaignId && app.canEditCampaign) {
         app.activeCampaignId = app.dmCampaigns[0].id;

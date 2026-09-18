@@ -19,10 +19,10 @@ export function installSourceAdd(app) {
     const renderActiveView = app.renderActiveView.bind(app);
     app.renderActiveView = async container => {
         await renderActiveView(container);
-        if (app.activeView !== "library") return;
+        if (app.activeView !== "sources") return;
 
         const card = await buildAddSourceCard(app);
-        const libraryLead = container.querySelector(":scope > .rules-core-library-hero");
+        const libraryLead = container.querySelector(":scope > .rules-core-sources-hero");
         if (libraryLead) {
             libraryLead.after(card);
         } else {

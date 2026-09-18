@@ -6,23 +6,41 @@ import {
     describeError,
     element,
     formatDate,
-    setButtonBusy,
-    DEFAULT_PAGE_SIZE,
-    paginationControls
+    DEFAULT_PAGE_SIZE
 } from "./ui.js";
 import { renderResolvedRule } from "./rule-renderers.js";
 
 const DORKS_MODE = "dorks-and-dice";
+const PAGE_SIZE = DEFAULT_PAGE_SIZE;
 const ROUTE_FAMILIES = new Map([
     ["monsters", "monster"],
     ["spells", "spell"],
     ["classes", "class"],
+    ["subclasses", "subclass"],
+    ["prestige-classes", "prestigeClass"],
     ["feats", "feat"],
     ["races", "race"],
     ["species", "species"],
     ["items", "item"],
-    ["conditions", "condition"]
+    ["conditions", "condition"],
+    ["skills", "skill"]
 ]);
+const ENTITY_TYPES = [
+    ["", "All"],
+    ["monster", "Monsters"],
+    ["spell", "Spells"],
+    ["class", "Classes"],
+    ["subclass", "Subclasses"],
+    ["prestigeClass", "Prestige classes"],
+    ["feat", "Feats"],
+    ["race", "Races"],
+    ["species", "Species"],
+    ["item", "Items"],
+    ["condition", "Conditions"],
+    ["skill", "Skills"],
+    ["houseRule", "House rules"],
+    ["rule", "Other rules"]
+];
 
 export function installResolvedRulesBrowser(app) {
     app.canBrowseRules = app.hostContext.siteMode === DORKS_MODE;
@@ -30,30 +48,30 @@ export function installResolvedRulesBrowser(app) {
     app.browserPage = 0;
     app.browserFilters = { entityType: "", query: "" };
     app.browserDeepLink = null;
+    app.browserSelectedConceptKey = null;
 
     const route = parseToolRoute(app.hostContext.toolRoute);
     app.browserRouteRequested = Boolean(route.entityType || route.conceptKey);
     if (route.entityType) app.browserFilters.entityType = route.entityType;
-    if (route.conceptKey) app.browserDeepLink = route.conceptKey;
+    if (route.conceptKey) {
+        app.browserDeepLink = route.conceptKey;
+        app.browserSelectedConceptKey = route.conceptKey;
+    }
 
-    if (app.canBrowseRules) app.activeView = "browse";
+    if (app.canBrowseRules) app.activeView = "library";
 
-    const renderNavigation = app.renderNavigation.bind(app);
-    app.renderNavigation = () => {
-        const nav = renderNavigation();
-        if (app.canBrowseRules) nav.prepend(app.navButton("Rules Browser", "browse"));
-        return nav;
+    app.viewNavigation ??= {};
+    app.viewNavigation.library = async () => {
+        app.browserDeepLink = null;
+        app.browserSelectedConceptKey = null;
+        app.activeView = "library";
+        pushToolRoute(app, catalogRouteForEntity(app.browserFilters.entityType));
+        await app.render();
     };
 
     const renderActiveView = app.renderActiveView.bind(app);
     app.renderActiveView = async container => {
-        if (app.activeView === "browse") {
-            if (app.browserDeepLink) {
-                const conceptKey = app.browserDeepLink;
-                app.browserDeepLink = null;
-                await renderRuleDetailByKey(app, container, conceptKey, "global");
-                return;
-            }
+        if (app.activeView === "library") {
             await renderRulesBrowser(app, container);
             return;
         }
@@ -62,207 +80,401 @@ export function installResolvedRulesBrowser(app) {
 
     window.addEventListener("popstate", async () => {
         if (!app.canBrowseRules) return;
-        const next = parseToolRoute(currentToolRoute(app));
+
+        const toolRoute = currentToolRoute(app);
+        if (toolRoute === "/sources" || toolRoute.startsWith("/sources/")) return;
+
+        const next = parseToolRoute(toolRoute);
         app.browserFilters.entityType = next.entityType ?? "";
         app.browserDeepLink = next.conceptKey ?? null;
-        app.activeView = next.entityType || next.conceptKey
-            ? "browse"
-            : app.canBrowseSourceLibrary
-                ? "library"
-                : "browse";
+        app.browserSelectedConceptKey = next.conceptKey ?? null;
+        app.activeView = "library";
         await app.render();
     });
 }
 
 async function renderRulesBrowser(app, container) {
     clear(container);
-    container.append(element("div", { className: "card card-body mb-3" },
-        element("h3", { className: "h5 mb-1", text: "Dorks & Dice Rules" }),
-        element("p", {
-            className: "text-body-secondary mb-0",
-            text: "Browse the published resolved ruleset. Campaign scope overlays the campaign publication on its pinned global baseline."
-        })));
 
-    const controls = element("div", { className: "card card-body mb-3" });
-    const row = element("div", { className: "row g-2 align-items-end" });
-    const scopeColumn = element("div", { className: "col-lg-3" });
-    scopeColumn.append(element("label", { className: "form-label fw-semibold", text: "Rules scope" }));
-    const scope = element("select", { className: "form-select" });
-    scope.append(element("option", { value: "global", text: "Global Rules" }));
+    const shell = element("section", { className: "rules-core-library-shell" });
+    const heading = element("div", { className: "rules-core-library-heading" },
+        element("div", {},
+            element("div", { className: "rules-core-eyebrow", text: "RULES LIBRARY" }),
+            element("h2", { className: "rules-core-library-title", text: "Browse rules" }),
+            element("p", {
+                className: "rules-core-library-subtitle",
+                text: "One concept per row. Open a rule to view the Dorks & Dice result or any accessible source version."
+            })),
+        element("div", {
+            className: "rules-core-library-revision",
+            text: "Loading published rules…"
+        }));
+
+    const controls = element("div", { className: "rules-core-library-controls" });
+    const scope = element("select", {
+        className: "form-select form-select-sm rules-core-library-scope",
+        ariaLabel: "Rules scope"
+    });
+    scope.append(element("option", { value: "global", text: "Dorks & Dice" }));
     for (const campaign of app.campaigns) {
-        scope.append(element("option", { value: `campaign:${campaign.id}`, text: `Campaign: ${campaign.name ?? campaign.id}` }));
+        scope.append(element("option", {
+            value: `campaign:${campaign.id}`,
+            text: campaign.name ?? `Campaign ${campaign.id}`
+        }));
     }
     scope.value = app.browserScope;
-    scopeColumn.append(scope);
 
-    const type = inputGroup("Entity type", "monster, spell, class…", "col-lg-2");
-    const query = inputGroup("Search", "Rule, source, package, edition…", "col-lg-5");
-    type.input.value = app.browserFilters.entityType;
-    query.input.value = app.browserFilters.query;
-    const actionColumn = element("div", { className: "col-lg-2 d-grid" });
-    const search = element("button", { type: "button", className: "btn btn-primary", text: "Browse" });
-    actionColumn.append(search);
-    row.append(scopeColumn, type.group, query.group, actionColumn);
-    controls.append(row);
-    container.append(controls);
+    const type = element("select", {
+        className: "form-select form-select-sm rules-core-library-type",
+        ariaLabel: "Rule type"
+    });
+    for (const [value, label] of ENTITY_TYPES) {
+        type.append(element("option", { value, text: label }));
+    }
+    type.value = app.browserFilters.entityType;
 
-    const status = element("div");
-    const results = element("div");
-    container.append(status, results);
+    const search = element("input", {
+        className: "form-control form-control-sm rules-core-library-search",
+        type: "search",
+        value: app.browserFilters.query,
+        placeholder: "Search rules…",
+        ariaLabel: "Search rules"
+    });
+    controls.append(scope, type, search);
 
-    const load = async (resetPage = false) => {
+    const workspace = element("div", { className: "rules-core-library-workspace" });
+    const index = element("section", {
+        className: "rules-core-library-index",
+        ariaLabel: "Rules index"
+    });
+    const indexHeader = element("div", { className: "rules-core-library-index-header" });
+    const indexStatus = element("span", { text: "Loading…" });
+    indexHeader.append(element("strong", { text: "Rules" }), indexStatus);
+    const list = element("div", {
+        className: "rules-core-library-index-list",
+        role: "listbox",
+        ariaLabel: "Published rules"
+    });
+    const indexFooter = element("div", { className: "rules-core-library-index-footer" });
+    index.append(indexHeader, list, indexFooter);
+
+    const detail = element("section", {
+        className: "rules-core-library-detail",
+        ariaLabel: "Selected rule"
+    });
+    detail.append(renderEmptyDetail("Select a rule from the list."));
+
+    workspace.append(index, detail);
+    shell.append(heading, controls, workspace);
+    container.append(shell);
+
+    let loadSerial = 0;
+    let detailSerial = 0;
+    let rowByConceptKey = new Map();
+    let searchTimer = null;
+    let preserveDeepLink = Boolean(app.browserDeepLink);
+
+    const renderSelection = async conceptKey => {
+        const serial = ++detailSerial;
+        app.browserSelectedConceptKey = conceptKey;
+        for (const [key, row] of rowByConceptKey) {
+            const selected = key === conceptKey;
+            row.classList.toggle("is-selected", selected);
+            row.setAttribute("aria-selected", selected ? "true" : "false");
+        }
+        await renderRuleDetailPane(
+            app,
+            detail,
+            conceptKey,
+            app.browserScope,
+            serial,
+            () => detailSerial);
+    };
+
+    const load = async ({ resetPage = false, keepSelection = false } = {}) => {
+        const serial = ++loadSerial;
         if (resetPage) app.browserPage = 0;
-        status.replaceChildren();
-        results.replaceChildren();
+
         app.browserScope = scope.value;
-        app.browserFilters = { entityType: type.input.value.trim(), query: query.input.value.trim() };
-        setButtonBusy(search, true, "Loading…");
+        app.browserFilters = {
+            entityType: type.value,
+            query: search.value.trim()
+        };
+
+        list.replaceChildren(element("div", {
+            className: "rules-core-library-loading",
+            text: "Loading rules…"
+        }));
+        indexFooter.replaceChildren();
+
         try {
             const filters = {
                 entityType: app.browserFilters.entityType || null,
                 query: app.browserFilters.query || null,
-                limit: DEFAULT_PAGE_SIZE + 1,
-                offset: app.browserPage * DEFAULT_PAGE_SIZE
+                limit: PAGE_SIZE + 1,
+                offset: app.browserPage * PAGE_SIZE
             };
-            const requested = scope.value === "global"
+            const requested = app.browserScope === "global"
                 ? await app.api.getGlobalRulesCatalog(filters)
-                : await app.api.getCampaignRulesCatalog(scope.value.slice("campaign:".length), filters);
-            const hasNext = (requested.rules?.length ?? 0) > DEFAULT_PAGE_SIZE;
-            const catalog = { ...requested, rules: (requested.rules ?? []).slice(0, DEFAULT_PAGE_SIZE) };
-            if (!catalog.rules.length && app.browserPage > 0) {
+                : await app.api.getCampaignRulesCatalog(
+                    app.browserScope.slice("campaign:".length),
+                    filters);
+            if (serial !== loadSerial) return;
+
+            const hasNext = (requested.rules?.length ?? 0) > PAGE_SIZE;
+            const rules = (requested.rules ?? []).slice(0, PAGE_SIZE);
+            if (!rules.length && app.browserPage > 0) {
                 app.browserPage -= 1;
-                await load(false);
+                await load({ keepSelection });
                 return;
             }
-            renderCatalog(app, container, results, catalog, scope.value, app.browserPage, hasNext, async nextPage => {
-                app.browserPage = nextPage;
-                await load(false);
+
+            heading.querySelector(".rules-core-library-revision").textContent = requested.revisionNumber
+                ? `${scopeLabel(app, app.browserScope)} · published #${requested.revisionNumber} · ${formatDate(requested.publishedAt)}`
+                : `${scopeLabel(app, app.browserScope)} · no published ruleset`;
+            indexStatus.textContent = requested.revisionNumber
+                ? `${rules.length}${hasNext ? "+" : ""} rules on this page`
+                : "No published rules";
+
+            renderRuleRows(list, rules, async rule => {
+                preserveDeepLink = false;
+                pushToolRoute(app, rule.browserLink?.toolRelativePath);
+                await renderSelection(rule.conceptKey);
             });
-            app.presentRenderedFragment?.(results);
+            rowByConceptKey = new Map(
+                Array.from(list.querySelectorAll("[data-concept-key]"))
+                    .map(row => [row.dataset.conceptKey, row]));
+
+            renderIndexFooter(indexFooter, app.browserPage, hasNext, async nextPage => {
+                preserveDeepLink = false;
+                app.browserPage = nextPage;
+                app.browserSelectedConceptKey = null;
+                await load();
+            });
+
+            if (!requested.revisionNumber) {
+                detail.replaceChildren(renderEmptyDetail(
+                    app.browserScope === "global"
+                        ? "No global ruleset has been published yet."
+                        : "This campaign has no published ruleset yet."));
+                return;
+            }
+            if (!rules.length) {
+                detail.replaceChildren(renderEmptyDetail("No rules match the current filters."));
+                return;
+            }
+
+            let conceptKey = keepSelection ? app.browserSelectedConceptKey : null;
+            if (preserveDeepLink && app.browserDeepLink) {
+                conceptKey = app.browserDeepLink;
+                app.browserDeepLink = null;
+            } else if (!conceptKey || !rules.some(rule => rule.conceptKey === conceptKey)) {
+                conceptKey = rules[0].conceptKey;
+            }
+            await renderSelection(conceptKey);
         } catch (error) {
-            status.replaceChildren(alertNode("danger", describeError(error)));
-        } finally {
-            setButtonBusy(search, false);
+            if (serial !== loadSerial) return;
+            list.replaceChildren(alertNode("danger", describeError(error)));
+            detail.replaceChildren(renderEmptyDetail("The rule list could not be loaded."));
         }
     };
 
-    scope.addEventListener("change", () => load(true));
-    search.addEventListener("click", () => load(true));
-    for (const input of [type.input, query.input]) {
-        input.addEventListener("keydown", event => {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                load(true);
-            }
-        });
-    }
-    await load(false);
+    scope.addEventListener("change", async () => {
+        await load({ resetPage: true, keepSelection: true });
+    });
+    type.addEventListener("change", async () => {
+        preserveDeepLink = false;
+        app.browserSelectedConceptKey = null;
+        pushToolRoute(app, catalogRouteForEntity(type.value));
+        await load({ resetPage: true });
+    });
+    search.addEventListener("input", () => {
+        preserveDeepLink = false;
+        if (searchTimer) clearTimeout(searchTimer);
+        searchTimer = setTimeout(async () => {
+            app.browserSelectedConceptKey = null;
+            await load({ resetPage: true });
+        }, 220);
+    });
+    search.addEventListener("keydown", async event => {
+        if (event.key !== "Enter") return;
+        event.preventDefault();
+        if (searchTimer) clearTimeout(searchTimer);
+        preserveDeepLink = false;
+        app.browserSelectedConceptKey = null;
+        await load({ resetPage: true });
+    });
+
+    await load({ keepSelection: true });
 }
 
-function renderCatalog(app, container, results, catalog, scopeValue, page, hasNext, onPage) {
-    results.replaceChildren();
-    results.append(element("div", { className: "card card-body mb-3" }, definitionList([
-        ["Published revision", catalog.revisionNumber ? `#${catalog.revisionNumber}` : "None"],
-        ["Published", formatDate(catalog.publishedAt)],
-        ["Rules on this page", String(catalog.rules?.length ?? 0)]
-    ])));
-
-    if (!catalog.revisionNumber) {
-        results.append(alertNode("secondary", catalog.scope === "campaign" ? "This campaign has no published ruleset yet." : "No global ruleset has been published yet."));
-        return;
-    }
-    if (!catalog.rules?.length) {
-        results.append(alertNode("secondary", "No published rules available to you match the current filters."));
+function renderRuleRows(container, rules, onSelect) {
+    container.replaceChildren();
+    if (!rules.length) {
+        container.append(element("div", {
+            className: "rules-core-library-empty-list",
+            text: "No rules match the current filters."
+        }));
         return;
     }
 
-    const table = element("table", { className: "table table-hover align-middle mb-0" });
-    const head = element("thead");
-    const headRow = element("tr");
-    for (const label of ["Rule", "Type", "Source", "Effective decision", ""]) headRow.append(element("th", { text: label }));
-    head.append(headRow);
-    const body = element("tbody");
-
-    for (const rule of catalog.rules) {
-        const row = element("tr");
-        const name = element("td");
-        const href = browserHref(app, rule.browserLink?.toolRelativePath);
-        const link = element("a", {
-            className: "fw-semibold text-decoration-none",
-            text: rule.displayName,
-            attributes: { href },
-            onClick: async event => {
-                event.preventDefault();
-                pushToolRoute(app, rule.browserLink?.toolRelativePath);
-                await renderRuleDetail(app, container, rule.conceptKey, scopeValue);
+    for (const rule of rules) {
+        const row = element("button", {
+            type: "button",
+            className: "rules-core-library-row",
+            dataset: { conceptKey: rule.conceptKey },
+            attributes: {
+                role: "option",
+                "aria-selected": "false"
             }
         });
-        name.append(link, element("div", { className: "small text-body-secondary font-monospace", text: rule.conceptKey }));
-        row.append(name, element("td", { text: rule.entityType }));
-        row.append(element("td", {},
-            element("div", { text: rule.sourceEntityName }),
-            element("div", { className: "small text-body-secondary", text: `${rule.packageDisplayName} · ${rule.editionDisplayName} · rev. ${rule.sourceRevisionNumber}` })));
-        const decision = element("td");
-        decision.append(badge(rule.effectiveDecisionKind, rule.hasCampaignOverride ? "warning" : "secondary"));
-        if (rule.hasCampaignOverride) decision.append(element("div", { className: "small text-body-secondary mt-1", text: "Campaign override" }));
-        row.append(decision);
-        row.append(element("td", { className: "text-end" }, element("a", {
-            className: "btn btn-sm btn-outline-primary",
-            text: "Open",
-            attributes: { href },
-            onClick: async event => {
-                event.preventDefault();
-                pushToolRoute(app, rule.browserLink?.toolRelativePath);
-                await renderRuleDetail(app, container, rule.conceptKey, scopeValue);
-            }
-        })));
-        body.append(row);
+        row.append(
+            element("span", { className: "rules-core-library-row-main" },
+                element("span", { className: "rules-core-library-row-name", text: rule.displayName }),
+                element("span", {
+                    className: "rules-core-library-row-meta",
+                    text: humanizeEntityType(rule.entityType)
+                })),
+            element("span", { className: "rules-core-library-row-source" },
+                element("span", {
+                    className: "rules-core-library-row-source-code",
+                    text: rule.sourceCode || "D&D"
+                }),
+                rule.hasCampaignOverride
+                    ? element("span", {
+                        className: "rules-core-library-row-override",
+                        text: "Override"
+                    })
+                    : null));
+        row.addEventListener("click", () => onSelect(rule));
+        container.append(row);
     }
-
-    table.append(head, body);
-    results.append(
-        element("div", { className: "card" }, element("div", { className: "table-responsive" }, table)),
-        paginationControls({ page, itemCount: catalog.rules.length, hasNext, onPage }));
 }
 
-async function renderRuleDetail(app, container, conceptKey, scopeValue) {
-    const campaignId = scopeValue.startsWith("campaign:") ? scopeValue.slice("campaign:".length) : null;
-    clear(container);
-    container.append(element("button", {
+function renderIndexFooter(container, page, hasNext, onPage) {
+    const previous = element("button", {
         type: "button",
-        className: "btn btn-outline-secondary mb-3",
-        text: "Back to rules",
-        onClick: async () => {
-            pushToolRoute(app, catalogRouteForEntity(app.browserFilters.entityType));
-            await renderRulesBrowser(app, container);
-        }
+        className: "btn btn-sm btn-outline-secondary",
+        text: "Previous",
+        disabled: page === 0
+    });
+    const next = element("button", {
+        type: "button",
+        className: "btn btn-sm btn-outline-secondary",
+        text: "Next",
+        disabled: !hasNext
+    });
+    previous.addEventListener("click", () => onPage(Math.max(0, page - 1)));
+    next.addEventListener("click", () => onPage(page + 1));
+    container.append(
+        previous,
+        element("span", { text: `Page ${page + 1}` }),
+        next);
+}
+
+async function renderRuleDetailPane(app, container, conceptKey, scopeValue, requestSerial, getCurrentSerial) {
+    container.replaceChildren(element("div", {
+        className: "rules-core-library-detail-loading",
+        text: "Loading rule…"
     }));
 
-    const loading = element("div", { className: "card card-body text-body-secondary", text: "Loading resolved rule…" });
-    container.append(loading);
+    const campaignId = scopeValue.startsWith("campaign:")
+        ? scopeValue.slice("campaign:".length)
+        : null;
     try {
-        const resolved = campaignId
-            ? await app.api.getCampaignResolvedRule(campaignId, conceptKey)
-            : await app.api.getGlobalResolvedRule(conceptKey);
-        const baseline = campaignId ? await getOptionalCampaignBaseline(app, campaignId, conceptKey) : null;
-        loading.remove();
-        renderResolvedDetail(app, container, resolved, baseline, campaignId !== null);
+        const [resolved, versions, baseline] = await Promise.all([
+            campaignId
+                ? app.api.getCampaignResolvedRule(campaignId, conceptKey)
+                : app.api.getGlobalResolvedRule(conceptKey),
+            getOptionalRuleVersions(app, conceptKey),
+            campaignId
+                ? getOptionalCampaignBaseline(app, campaignId, conceptKey)
+                : null
+        ]);
+        if (requestSerial !== getCurrentSerial()) return;
+
+        const tabBar = element("div", { className: "rules-core-version-tabs" });
+        const body = element("div", { className: "rules-core-library-detail-body" });
+        const effectiveLabel = campaignId
+            ? campaignName(app, campaignId)
+            : "Dorks & Dice";
+
+        const tabs = [{
+            key: "effective",
+            label: effectiveLabel,
+            title: campaignId ? "Effective campaign rule" : "Dorks & Dice combined rule",
+            render: () => renderEffectiveRule(body, resolved, baseline, Boolean(campaignId))
+        }];
+
+        for (const version of versions?.versions ?? []) {
+            tabs.push({
+                key: `source:${version.canonicalEntityId}`,
+                label: version.sourceCode || version.formatKey || version.packageDisplayName,
+                title: `${version.packageDisplayName} · rev. ${version.sourceRevisionNumber}`,
+                render: () => renderSourceVersion(body, versions, version, resolved)
+            });
+        }
+
+        let activeKey = "effective";
+        const buttons = new Map();
+        const activate = key => {
+            activeKey = key;
+            for (const [buttonKey, button] of buttons) {
+                const selected = buttonKey === activeKey;
+                button.classList.toggle("is-active", selected);
+                button.setAttribute("aria-selected", selected ? "true" : "false");
+            }
+            const tab = tabs.find(value => value.key === activeKey) ?? tabs[0];
+            tab.render();
+            app.presentRenderedFragment?.(body);
+        };
+
+        tabBar.append(element("span", {
+            className: "rules-core-version-tabs-label",
+            text: "View"
+        }));
+        for (const tab of tabs) {
+            const button = element("button", {
+                type: "button",
+                className: "rules-core-version-tab",
+                text: tab.label,
+                title: tab.title,
+                attributes: {
+                    role: "tab",
+                    "aria-selected": tab.key === activeKey ? "true" : "false"
+                }
+            });
+            button.addEventListener("click", () => activate(tab.key));
+            buttons.set(tab.key, button);
+            tabBar.append(button);
+        }
+
+        const context = element("div", { className: "rules-core-version-tabs-context" },
+            badge(humanizeEntityType(resolved.entityType), "secondary"));
+        if ((versions?.versions?.length ?? 0) > 1) {
+            context.append(element("span", {
+                className: "rules-core-version-count",
+                text: `${versions.versions.length} source versions`
+            }));
+        }
+        tabBar.append(context);
+
+        container.replaceChildren(tabBar, body);
+        activate("effective");
         app.presentRenderedFragment?.(container);
     } catch (error) {
-        loading.remove();
-        container.append(alertNode("danger", describeError(error)));
+        if (requestSerial !== getCurrentSerial()) return;
+        container.replaceChildren(alertNode("danger", describeError(error)));
         app.presentRenderedFragment?.(container);
     }
 }
 
-async function renderRuleDetailByKey(app, container, conceptKey, scopeValue) {
-    await renderRuleDetail(app, container, conceptKey, scopeValue);
-}
-
-function renderResolvedDetail(app, container, resolved, baseline, campaignScope) {
+function renderEffectiveRule(container, resolved, baseline, campaignScope) {
+    clear(container);
     const isMonster = String(resolved.entityType ?? "").toLowerCase() === "monster";
+
     if (isMonster) {
-        container.append(element("section", { className: "mb-3" },
+        container.append(element("section", { className: "rules-core-effective-rule" },
             renderResolvedRule(resolved.entityType, resolved.document, {
                 displayName: resolved.displayName,
                 showDocument: false
@@ -270,54 +482,111 @@ function renderResolvedDetail(app, container, resolved, baseline, campaignScope)
         container.append(renderRuleContextDisclosure(resolved, campaignScope));
     } else {
         container.append(renderMetadata(resolved, campaignScope));
-        container.append(element("section", { className: "mb-3" },
-            element("h4", { className: "h5", text: campaignScope ? "Effective campaign rule" : "Dorks & Dice rule" }),
-            renderResolvedRule(resolved.entityType, resolved.document, { displayName: resolved.displayName })));
+        container.append(element("section", { className: "rules-core-effective-rule" },
+            renderResolvedRule(resolved.entityType, resolved.document, {
+                displayName: resolved.displayName
+            })));
     }
 
     if (campaignScope) {
-        const campaign = element("div", { className: "card card-body mb-3" });
-        campaign.append(element("h4", { className: "h5", text: "Campaign overlay" }), definitionList([
-            ["Pinned global baseline", `#${resolved.baselineRulesetRevisionNumber}`],
-            ["Global decision", `#${resolved.globalDecisionNumber} · ${resolved.globalDecisionKind}`],
-            ["Campaign decision", resolved.campaignDecisionNumber ? `#${resolved.campaignDecisionNumber} · ${resolved.effectiveDecisionKind}` : "Inherited without campaign override"],
-            ["Campaign note", resolved.campaignDecisionNote]
-        ]));
+        const campaign = element("div", {
+            className: "card card-body mb-3 rules-core-detail-context-card"
+        });
+        campaign.append(
+            element("h4", { className: "h5", text: "Campaign overlay" }),
+            definitionList([
+                ["Pinned global baseline", `#${resolved.baselineRulesetRevisionNumber}`],
+                ["Global decision", `#${resolved.globalDecisionNumber} · ${resolved.globalDecisionKind}`],
+                ["Campaign decision", resolved.campaignDecisionNumber
+                    ? `#${resolved.campaignDecisionNumber} · ${resolved.effectiveDecisionKind}`
+                    : "Inherited without campaign override"],
+                ["Campaign note", resolved.campaignDecisionNote]
+            ]));
         container.append(campaign);
 
         if (baseline) {
-            const details = element("details", { className: "card card-body mb-3" });
+            const details = element("details", {
+                className: "card card-body mb-3 rules-core-detail-context-card"
+            });
             details.append(
-                element("summary", { className: "fw-semibold", text: `Published global baseline #${baseline.baselineRulesetRevisionNumber}` }),
-                element("div", { className: "mt-3" }, renderResolvedRule(baseline.entityType, baseline.document, {
-                    displayName: baseline.displayName,
-                    showDocument: !isMonster
-                })));
+                element("summary", {
+                    className: "fw-semibold",
+                    text: `Published global baseline #${baseline.baselineRulesetRevisionNumber}`
+                }),
+                element("div", { className: "mt-3" },
+                    renderResolvedRule(baseline.entityType, baseline.document, {
+                        displayName: baseline.displayName,
+                        showDocument: !isMonster
+                    })));
             container.append(details);
         } else {
-            container.append(alertNode("secondary", "The pinned global baseline is not available to this account under the independent source-access rules."));
+            container.append(alertNode(
+                "secondary",
+                "The pinned global baseline is not available to this account under the independent source-access rules."));
         }
     }
 
     if (!isMonster) container.append(renderProvenance(resolved));
 }
 
+function renderSourceVersion(container, versions, version, resolved) {
+    clear(container);
+    container.append(element("div", { className: "rules-core-source-version-heading" },
+        element("div", {},
+            element("div", { className: "rules-core-eyebrow", text: "SOURCE VERSION" }),
+            element("h3", { className: "h4 mb-1", text: versions.displayName }),
+            element("div", {
+                className: "text-body-secondary",
+                text: [
+                    version.sourceCode,
+                    version.packageDisplayName,
+                    `rev. ${version.sourceRevisionNumber}`
+                ].filter(Boolean).join(" · ")
+            })),
+        version.sourceEntityRevisionId === resolved.sourceEntityRevisionId
+            ? badge("Selected source", "primary")
+            : null));
+
+    container.append(element("section", { className: "rules-core-effective-rule" },
+        renderResolvedRule(versions.entityType, version.document, {
+            displayName: versions.displayName,
+            showDocument: String(versions.entityType).toLowerCase() !== "monster"
+        })));
+
+    const details = element("details", { className: "rules-core-context-disclosure" });
+    details.append(
+        element("summary", { text: "Source provenance" }),
+        element("div", { className: "rules-core-context-disclosure-body" },
+            definitionList([
+                ["Source", version.sourceEntityName],
+                ["Source code", version.sourceCode],
+                ["Package", version.packageDisplayName],
+                ["Format", version.formatKey],
+                ["Source revision", `#${version.sourceRevisionNumber}`],
+                ["Imported", formatDate(version.importedAt)],
+                ["Equivalent representations", String(version.equivalentRepresentationCount)]
+            ])));
+    container.append(details);
+}
+
 function renderMetadata(resolved, campaignScope) {
-    const metadata = element("div", { className: "card card-body mb-3" });
-    metadata.append(
-        element("div", { className: "d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3" },
-            element("div", {},
-                element("h3", { className: "h4 mb-1", text: resolved.displayName }),
-                element("div", { className: "text-body-secondary font-monospace small", text: resolved.conceptKey })),
-            badge(resolved.entityType, "primary")),
-        definitionList([
-            ["Scope", campaignScope ? "Campaign effective rule" : "Published global rule"],
-            ["Published revision", `#${resolved.campaignRulesetRevisionNumber ?? resolved.rulesetRevisionNumber}`],
-            ["Decision", resolved.effectiveDecisionKind ?? resolved.decisionKind],
-            ["Source", `${resolved.sourceEntityName} (${resolved.sourceCode})`],
-            ["Edition", resolved.editionDisplayName]
-        ]));
-    return metadata;
+    return element("div", { className: "rules-core-detail-heading" },
+        element("div", {},
+            element("div", {
+                className: "rules-core-eyebrow",
+                text: campaignScope ? "CAMPAIGN RULE" : "DORKS & DICE RULE"
+            }),
+            element("h3", { className: "h3 mb-1", text: resolved.displayName }),
+            element("div", {
+                className: "text-body-secondary font-monospace small",
+                text: resolved.conceptKey
+            })),
+        element("div", { className: "rules-core-detail-heading-meta" },
+            badge(humanizeEntityType(resolved.entityType), "primary"),
+            element("span", {
+                className: "small text-body-secondary",
+                text: `Published #${resolved.campaignRulesetRevisionNumber ?? resolved.rulesetRevisionNumber}`
+            })));
 }
 
 function renderRuleContextDisclosure(resolved, campaignScope) {
@@ -325,10 +594,10 @@ function renderRuleContextDisclosure(resolved, campaignScope) {
     const body = element("div", { className: "rules-core-context-disclosure-body" });
     body.append(definitionList([
         ["Concept", resolved.conceptKey],
-        ["Scope", campaignScope ? "Campaign effective rule" : "Published global rule"],
+        ["Scope", campaignScope ? "Campaign effective rule" : "Published Dorks & Dice rule"],
         ["Published revision", `#${resolved.campaignRulesetRevisionNumber ?? resolved.rulesetRevisionNumber}`],
         ["Decision", resolved.effectiveDecisionKind ?? resolved.decisionKind],
-        ["Selected source", `${resolved.sourceEntityName} · ${resolved.editionDisplayName} · rev. ${resolved.sourceRevisionNumber}`],
+        ["Selected source", `${resolved.sourceEntityName} · ${resolved.sourceCode} · rev. ${resolved.sourceRevisionNumber}`],
         ["Package", resolved.packageDisplayName],
         ["Decision note", resolved.decisionNote ?? resolved.campaignDecisionNote]
     ]));
@@ -338,14 +607,16 @@ function renderRuleContextDisclosure(resolved, campaignScope) {
 }
 
 function renderProvenance(resolved) {
-    const card = element("div", { className: "card card-body mb-3" });
-    card.append(element("h4", { className: "h5", text: "Provenance" }), definitionList([
-        ["Selected source", `${resolved.sourceEntityName} · ${resolved.editionDisplayName} · rev. ${resolved.sourceRevisionNumber}`],
+    const card = element("details", { className: "rules-core-context-disclosure" });
+    const body = element("div", { className: "rules-core-context-disclosure-body" });
+    body.append(definitionList([
+        ["Selected source", `${resolved.sourceEntityName} · ${resolved.sourceCode} · rev. ${resolved.sourceRevisionNumber}`],
         ["Package", resolved.packageDisplayName],
         ["Decision note", resolved.decisionNote ?? resolved.campaignDecisionNote],
         ["Additional contributing sources", String((resolved.contributions ?? resolved.globalContributions ?? []).length)]
     ]));
-    appendContributions(card, resolved);
+    appendContributions(body, resolved);
+    card.append(element("summary", { text: "Rule context and provenance" }), body);
     return card;
 }
 
@@ -355,31 +626,75 @@ function appendContributions(container, resolved) {
     const list = element("ul", { className: "mb-0 mt-3" });
     for (const contribution of contributions) {
         list.append(element("li", {},
-            element("span", { className: "fw-semibold", text: `${contribution.sourceEntityName} · ${contribution.editionDisplayName}` }),
+            element("span", {
+                className: "fw-semibold",
+                text: `${contribution.sourceEntityName} · ${contribution.sourceCode || contribution.editionDisplayName}`
+            }),
             ` — ${contribution.contributionKind}${contribution.note ? `: ${contribution.note}` : ""}`));
     }
     container.append(list);
 }
 
-async function getOptionalCampaignBaseline(app, campaignId, conceptKey) {
+function renderEmptyDetail(message) {
+    return element("div", { className: "rules-core-library-detail-empty" },
+        element("div", { className: "rules-core-library-detail-empty-mark", text: "R" }),
+        element("p", { text: message }));
+}
+
+async function getOptionalRuleVersions(app, conceptKey) {
     try {
-        return await app.api.backend(`/api/campaigns/${encodeURIComponent(campaignId)}/rules/${encodeURIComponent(conceptKey)}/global-baseline`);
+        return await app.api.getRuleVersions(conceptKey);
     } catch (error) {
         if (error?.status === 404) return null;
         throw error;
     }
 }
 
+async function getOptionalCampaignBaseline(app, campaignId, conceptKey) {
+    try {
+        return await app.api.backend(
+            `/api/campaigns/${encodeURIComponent(campaignId)}/rules/${encodeURIComponent(conceptKey)}/global-baseline`);
+    } catch (error) {
+        if (error?.status === 404) return null;
+        throw error;
+    }
+}
+
+function scopeLabel(app, scopeValue) {
+    if (scopeValue === "global") return "Dorks & Dice";
+    return campaignName(app, scopeValue.slice("campaign:".length));
+}
+
+function campaignName(app, campaignId) {
+    return app.campaigns.find(value => String(value.id) === String(campaignId))?.name
+        ?? "Campaign";
+}
+
+function humanizeEntityType(entityType) {
+    const value = String(entityType ?? "");
+    if (!value) return "Rule";
+    return value
+        .replace(/([a-z])([A-Z])/g, "$1 $2")
+        .replace(/^./, match => match.toUpperCase());
+}
+
 function parseToolRoute(toolRoute) {
     if (!toolRoute || toolRoute === "/") return {};
     const path = String(toolRoute).split(/[?#]/, 1)[0];
     const segments = path.replace(/^\/+|\/+$/g, "").split("/").filter(Boolean);
-    if (segments.length === 1 && ROUTE_FAMILIES.has(segments[0])) return { entityType: ROUTE_FAMILIES.get(segments[0]) };
+    if (segments.length === 1 && ROUTE_FAMILIES.has(segments[0])) {
+        return { entityType: ROUTE_FAMILIES.get(segments[0]) };
+    }
     if (segments.length === 2 && ROUTE_FAMILIES.has(segments[0])) {
         const entityType = ROUTE_FAMILIES.get(segments[0]);
-        return { entityType, conceptKey: `${entityType}.${decodeURIComponent(segments[1])}` };
+        return {
+            entityType,
+            conceptKey: `${entityType}.${decodeURIComponent(segments[1])}`
+        };
     }
-    if (segments.length === 2 && segments[0] === "rules") return { conceptKey: decodeURIComponent(segments[1]) };
+    if (segments.length === 2 && segments[0] === "rules") {
+        return { conceptKey: decodeURIComponent(segments[1]) };
+    }
     return {};
 }
 
@@ -404,11 +719,4 @@ function catalogRouteForEntity(entityType) {
         if (mappedType === entityType) return `/${segment}`;
     }
     return "/";
-}
-
-function inputGroup(label, placeholder, columnClass) {
-    const input = element("input", { className: "form-control", type: "text", placeholder });
-    const group = element("div", { className: columnClass });
-    group.append(element("label", { className: "form-label fw-semibold", text: label }), input);
-    return { group, input };
 }

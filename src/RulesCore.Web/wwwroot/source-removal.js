@@ -15,7 +15,7 @@ export function installSourceRemoval(app) {
     const renderActiveView = app.renderActiveView.bind(app);
     app.renderActiveView = async container => {
         await renderActiveView(container);
-        if (app.activeView !== "library") return;
+        if (app.activeView !== "sources") return;
 
         const notice = app._sourceRemovalNotice ?? null;
         app._sourceRemovalNotice = null;
