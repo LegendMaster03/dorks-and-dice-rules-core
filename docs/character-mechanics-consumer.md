@@ -25,6 +25,7 @@ Global effective mechanics:
 
 ```text
 GET  /api/rules/mechanics
+POST /api/rules/mechanics/evaluate
 POST /api/rules/mechanics/{mechanicKey}/evaluate
 ```
 
@@ -32,10 +33,11 @@ Campaign effective mechanics:
 
 ```text
 GET  /api/campaigns/{campaignId}/rules/mechanics
+POST /api/campaigns/{campaignId}/rules/mechanics/evaluate
 POST /api/campaigns/{campaignId}/rules/mechanics/{mechanicKey}/evaluate
 ```
 
-`includeUnavailable=true` includes known source-dependent mechanics whose required source is not currently accessible/effective, with `isAvailableUnderRuleset=false`. Character capability requirements are different: a capability-driven definition can be available in Rules Core while declaring `requiredCapabilityKeys` that the Character backend must satisfy before presenting or evaluating it.
+`includeUnavailable=true` includes source-dependent mechanics whose activation source is not currently accessible/effective, with `isAvailableUnderRuleset=false`. Character capability requirements are different: a capability-driven definition can be available in Rules Core while declaring `requiredCapabilityKeys` that the Character backend must satisfy before presenting or evaluating it. Independently implemented external-public mechanics are available without a user source-package import and identify their external rules work through attribution rather than `SourcePackage.Key`.
 
 Global access follows the existing resolved-rule source grant model. Campaign access follows the existing campaign read boundary. The mechanics API does not create a second source-access or campaign-authorization model.
 
@@ -108,7 +110,7 @@ Checks also expose structured resolution semantics. Ability selection can be `fi
 
 The consumer catalog includes normalized definitions for 3.x mechanics that a 5e/5.5e-style Character Sheet would not normally expose:
 
-- Fortitude, Reflex, and Will saves;
+- Fortitude, Reflex, and Will saves, explicitly classified as `saving-throw` mechanics rather than generic defenses;
 - touch AC and flat-footed AC;
 - base attack bonus;
 - grapple modifier, using the 3.x grapple-specific size modifier rather than the ordinary AC size modifier;
@@ -134,7 +136,9 @@ Resolved skill and tool concepts carry normalized competency metadata for Charac
 - trained-only state when the source determines it;
 - Armor Check Penalty applicability when the source determines it.
 
-For PCGen 3.x sources, Rules Core reads this from the already-preserved mechanical translation, including retained `KEYSTAT`, `USEUNTRAINED`, and `ACHECK` evidence under `_rulesCore.pcgen.unmappedSegments`. The Character consumer does not parse the native PCGen record itself.
+PCGen translation normalizes understood competency semantics into `_rulesCore.competency` during ingestion. That normalized profile includes the competency kind, specialty family/value when applicable, governing ability, trained-only behavior, Armor Check Penalty applicability, rank/class-skill support, training support, game edition, and any capability qualification. The original `KEYSTAT`, `USEUNTRAINED`, `ACHECK`, and other PCGen evidence remains preserved under `_rulesCore.pcgen.unmappedSegments` for source inspection; the Character mechanics consumer does not parse those PCGen tags or infer specialty semantics from display names.
+
+A competency can expose multiple normalized mechanical profiles across accessible canonical-equivalent source representations. This is important for reviewed direct equivalences such as 3.x `Bluff` -> `Deception` or `Craft (alchemy)` -> `Alchemist's Supplies`: selecting a later-edition representation for the published rule does not erase the accessible 3.x profile that supports ranks and class-skill state. The Character backend can select the profile appropriate to its capabilities without implementing an edition switch.
 
 Ranks, class-skill state, training state, and Armor Check Penalty adjustment remain Character inputs. Source metadata says which concepts exist and which rules apply; it does not fabricate a Character's current ranks or training.
 
@@ -165,16 +169,19 @@ https://www.patreon.com/LootTavern/posts/helianas-and-to-107406117
 
 The consumer contract models:
 
-- Assessment as a generalized competency check using Intelligence;
-- Carving as a generalized competency check using the source-selected carving ability;
+- Assessment as a generalized competency check with fixed Intelligence and the rule-resolved creature-type competency;
+- Carving as a generalized competency check with fixed Dexterity and the same rule-resolved creature-type competency;
 - Harvesting as the sum of Assessment and Carving;
 - disadvantage on both harvesting component checks when one creature performs both roles;
 - Manufacturing as a rule-resolved tool/ability competency check;
-- disadvantage on Manufacturing when the Character lacks the required tool proficiency, without adding a proficiency contribution to the check;
+- disadvantage on Manufacturing when the Character lacks the required tool proficiency, unless the GM-resolved input says the character has qualified guidance from a book or a creature with the requisite proficiency;
+- qualified guidance does not grant tool proficiency and therefore does not add a tool-proficiency contribution;
 - Enchanting as a rule-resolved competency check using the Character-resolved spellcasting ability;
 - the spellcasting requirement for Enchanting.
 
-The contract does **not** bundle Harvest tables, creature-type-to-skill tables, component DCs, manufacturing tables, recipes, item data, materials, or other publisher-owned source content. Those values are represented as `source-input` requirements and must come from an accessible/effective Loot Tavern source.
+Harvesting & Crafting Lite follows the same external-public-rules boundary used by the Kaiju Fighting Lite integration. Dorks & Dice implements the public mechanical procedure independently and links to the creator-hosted public release. Availability therefore does not depend on a magic package key, a user importing the PDF, or the PDF producing a resolved Rule Concept. The static definitions carry the stable work key `loot-tavern.harvesting-crafting-lite`, provider `Loot Tavern`, publication metadata, and the official creator-hosted URL.
+
+The contract does **not** bundle Harvest tables, creature-type-to-skill tables, component DCs, manufacturing tables, recipes, item data, materials, prose, art, or layout from the publisher release. Source-selected values remain typed `source-input` requirements when the procedure needs them.
 
 Loot Tavern mechanics carry explicit source attribution with `presentationRequired=true` and `referenceLinkRequired=true`, so a downstream consumer can present the required source reference without hard-coding publisher-specific behavior.
 
@@ -194,8 +201,17 @@ Private source names/content are not surfaced through this contract when the cur
 
 ## Evaluation boundary
 
-The evaluation endpoint is deterministic. It does not roll dice, select Character state, choose a source table row, or mutate Character data.
+Evaluation is deterministic. Rules Core does not roll dice, select Character state, choose a source table row, or mutate Character data.
 
-For a scalar definition it combines caller-supplied inputs according to the normalized mechanic. Conditional inputs are included only when their declared Character-state condition is satisfied. For a composite competency it delegates to the existing Rules Core composite evaluator and accepts explicit concept-targeted modifiers.
+For a scalar definition it combines caller-supplied inputs according to the normalized mechanic. Conditional inputs are included only when their declared condition is satisfied. Conditional roll-mode rules can require multiple boolean conditions, which lets Rules Core distinguish "not proficient" from "not proficient and lacking qualified guidance." For a composite competency it delegates to the existing Rules Core composite evaluator and accepts explicit concept-targeted modifiers.
+
+The batch endpoints accept multiple mechanic evaluations and build the effective global or Campaign mechanics context once for the request. This is the preferred Character backend path when resolving several values for one Character:
+
+```text
+POST /api/rules/mechanics/evaluate
+POST /api/campaigns/{campaignId}/rules/mechanics/evaluate
+```
+
+The legacy per-mechanic evaluation endpoints remain available, but callers that need many mechanics should use the batch contract rather than rebuilding the effective context once per mechanic.
 
 Roll-mode effects such as disadvantage are returned as structured rules. The consumer remains responsible for actually performing the roll according to its dice/runtime architecture.

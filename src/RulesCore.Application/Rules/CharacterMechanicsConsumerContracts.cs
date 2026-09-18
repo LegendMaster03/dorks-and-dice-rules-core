@@ -58,6 +58,21 @@ public sealed record CharacterMechanicCheckView(
     CharacterCheckAbilityView Ability,
     CharacterCheckCompetencyView Competency);
 
+public sealed record CharacterCompetencyProfileView(
+    Guid SourceEntityRevisionId,
+    string ProfileKey,
+    IReadOnlyList<string> RequiredCapabilityKeys,
+    string CompetencyKind,
+    string? FamilyName,
+    string? Specialty,
+    string? GoverningAbilityKey,
+    bool SupportsRanks,
+    bool SupportsClassSkillState,
+    bool SupportsTrainingState,
+    bool? TrainedOnly,
+    bool? ArmorCheckPenaltyApplies,
+    string? GameEdition);
+
 public sealed record CharacterCompetencyDefinitionView(
     string CompetencyKind,
     string? FamilyName,
@@ -67,7 +82,8 @@ public sealed record CharacterCompetencyDefinitionView(
     bool SupportsClassSkillState,
     bool SupportsTrainingState,
     bool? TrainedOnly,
-    bool? ArmorCheckPenaltyApplies);
+    bool? ArmorCheckPenaltyApplies,
+    IReadOnlyList<CharacterCompetencyProfileView> Profiles);
 
 public sealed record CharacterMechanicRelationshipView(
     string RelationshipKey,
@@ -80,10 +96,13 @@ public sealed record CharacterMechanicRelationshipView(
     bool CanResolve,
     IReadOnlyList<string> MissingMechanicKeys);
 
+public sealed record CharacterMechanicBooleanConditionView(
+    string InputKey,
+    bool ExpectedValue);
+
 public sealed record CharacterMechanicConditionalRollRuleView(
     string Key,
-    string BooleanInputKey,
-    bool WhenValue,
+    IReadOnlyList<CharacterMechanicBooleanConditionView> Conditions,
     string RollMode,
     IReadOnlyList<string> TargetMechanicKeys);
 
@@ -92,8 +111,8 @@ public sealed record CharacterMechanicBooleanRequirementView(
     bool ExpectedValue);
 
 public sealed record CharacterMechanicSourceAttributionView(
-    string PackageKey,
-    string PackageDisplayName,
+    string? PackageKey,
+    string? PackageDisplayName,
     string Provider,
     string? SourceCode,
     int? SourceRevisionNumber,
@@ -118,6 +137,24 @@ public sealed record CharacterMechanicEvaluationRequest(
     Dictionary<string, string>? StringInputs = null,
     IReadOnlyList<CharacterMechanicModifierInput>? Modifiers = null,
     IReadOnlyList<string>? CapabilityKeys = null);
+
+public sealed record CharacterMechanicBatchEvaluationItemRequest(
+    string MechanicKey,
+    CharacterMechanicEvaluationRequest Evaluation);
+
+public sealed record CharacterMechanicsBatchEvaluationRequest(
+    IReadOnlyList<CharacterMechanicBatchEvaluationItemRequest> Evaluations);
+
+public sealed record CharacterMechanicBatchEvaluationItemView(
+    string MechanicKey,
+    CharacterMechanicEvaluationView? Evaluation);
+
+public sealed record CharacterMechanicsBatchEvaluationView(
+    string Scope,
+    Guid? CampaignId,
+    int? RevisionNumber,
+    DateTimeOffset? PublishedAt,
+    IReadOnlyList<CharacterMechanicBatchEvaluationItemView> Evaluations);
 
 public sealed record CharacterMechanicAppliedRollRuleView(
     string Key,
@@ -153,10 +190,21 @@ public interface ICharacterMechanicsConsumerService
         string? userId,
         CancellationToken cancellationToken = default);
 
+    Task<CharacterMechanicsBatchEvaluationView> EvaluateGlobalBatchAsync(
+        CharacterMechanicsBatchEvaluationRequest request,
+        string? userId,
+        CancellationToken cancellationToken = default);
+
     Task<CharacterMechanicEvaluationView?> EvaluateCampaignAsync(
         Guid campaignId,
         string mechanicKey,
         CharacterMechanicEvaluationRequest request,
+        string userId,
+        CancellationToken cancellationToken = default);
+
+    Task<CharacterMechanicsBatchEvaluationView> EvaluateCampaignBatchAsync(
+        Guid campaignId,
+        CharacterMechanicsBatchEvaluationRequest request,
         string userId,
         CancellationToken cancellationToken = default);
 }

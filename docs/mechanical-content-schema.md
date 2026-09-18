@@ -85,6 +85,22 @@ Current field mappings intentionally cover only defensible equivalences:
 - ordinary race size, walk speed, and racial `BONUS:STAT` modifiers can map to race-family equivalents when faithful;
 - monster size, recognized creature type, supported movement modes, CR, and descriptions can map directly.
 
+### Normalized PCGen competency metadata
+
+When a PCGen skill record contains competency mechanics Rules Core understands, translation records those semantics under `_rulesCore.competency` before canonical reconciliation. The normalized profile can carry:
+
+- competency kind (`skill`, `specialized-skill`, or `tool`);
+- specialty family/value for source competencies such as `Knowledge (...)`, `Craft (...)`, `Perform (...)`, or `Profession (...)`;
+- governing ability derived from `KEYSTAT`;
+- trained-only behavior derived from `USEUNTRAINED`;
+- Armor Check Penalty applicability derived from `ACHECK`;
+- rank, class-skill-state, and training-state support;
+- game edition/profile identity and capability qualification.
+
+This is mechanical normalization, not source destruction. The original PCGen tags remain present in `RawJson` and continue to be retained under `_rulesCore.pcgen.unmappedSegments` where they were previously preserved. Character-oriented consumers read the normalized competency profile rather than interpreting PCGen tags or parsing display names.
+
+For reviewed direct equivalences, the normalized profile remains attached to the older source representation even when exact translation changes the normalized source entity name/type. A 3.x `Craft (alchemy)` representation can therefore normalize canonically to the `Alchemist's Supplies` tool competency while still declaring the 3.x rank/class-skill profile that applies to that representation.
+
 ### Direct 3.x competency translations
 
 The reviewed direct mappings are importer translations, not Rules Lawyer relationships. For those mappings, Rules Core treats the older and later names as the **same competency identity**. The PCGen native key, native name, `RawJson`, edition, locator, and other source provenance remain unchanged, but the normalized `SourceEntity` name/type and translated `ContentJson` use the later competency identity before canonical reconciliation.
@@ -222,4 +238,6 @@ On the first successful import from a registered trusted source lineage, Rules C
 The reviewed bundled SRD snapshots remain a separate public baseline concern. CI uses deterministic local fixtures and never depends on live upstream repositories.
 ## Character mechanics consumer projection
 
-Character-oriented tools must not parse translated mechanical JSON to reconstruct common checks, 3.x sheet mechanics, or publisher-specific procedures. The normalized consumer contract in `docs/character-mechanics-consumer.md` projects stable mechanic keys, typed inputs, evaluation semantics, applicability, relationships, and accessible provenance while retaining this document's source-native/translated-content boundary.
+Character-oriented tools must not parse source-native or source-format-specific JSON to reconstruct common checks, 3.x sheet mechanics, or publisher-specific procedures. The normalized consumer contract in `docs/character-mechanics-consumer.md` projects stable mechanic keys, typed inputs, evaluation semantics, applicability, relationships, competency profiles, and accessible provenance while retaining this document's source-native/translated-content boundary.
+
+When multiple accessible source representations share a reviewed canonical competency identity, the consumer may project multiple normalized competency profiles. This preserves capability-qualified mechanics such as 3.x ranks/class-skill state even when the published effective rule selects a later-edition presentation.

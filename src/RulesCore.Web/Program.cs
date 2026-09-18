@@ -534,8 +534,10 @@ else
     app.MapPost("/api/global/rules/publish", () => DatabaseUnavailable("Rules Layer"));
     app.MapGet("/api/campaigns/{campaignId:guid}/rules/{conceptKey}", (Guid campaignId, string conceptKey) => DatabaseUnavailable("Campaign Rules Layer"));
     app.MapGet("/api/rules/mechanics", () => DatabaseUnavailable("Rules Layer"));
+    app.MapPost("/api/rules/mechanics/evaluate", () => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/rules/mechanics/{mechanicKey}/evaluate", (string mechanicKey) => DatabaseUnavailable("Rules Layer"));
     app.MapGet("/api/campaigns/{campaignId:guid}/rules/mechanics", (Guid campaignId) => DatabaseUnavailable("Campaign Rules Layer"));
+    app.MapPost("/api/campaigns/{campaignId:guid}/rules/mechanics/evaluate", (Guid campaignId) => DatabaseUnavailable("Campaign Rules Layer"));
     app.MapPost("/api/campaigns/{campaignId:guid}/rules/mechanics/{mechanicKey}/evaluate", (Guid campaignId, string mechanicKey) => DatabaseUnavailable("Campaign Rules Layer"));
     app.MapGet("/api/campaigns/{campaignId:guid}/rules/authoring", (Guid campaignId) => DatabaseUnavailable("Campaign Rules Layer"));
     app.MapGet("/api/campaigns/{campaignId:guid}/rules/authoring/concepts/{conceptId:guid}", (Guid campaignId, Guid conceptId) => DatabaseUnavailable("Campaign Rules Layer"));

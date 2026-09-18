@@ -4,6 +4,7 @@ public static class CharacterMechanicKinds
 {
     public const string Competency = "competency";
     public const string Check = "check";
+    public const string SavingThrow = "saving-throw";
     public const string Defense = "defense";
     public const string CombatValue = "combat-value";
     public const string Resource = "resource";
@@ -36,6 +37,7 @@ public static class CharacterMechanicApplicabilityKinds
 {
     public const string Always = "always";
     public const string CharacterCapability = "character-capability";
+    public const string ExternalPublicRules = "external-public-rules";
     public const string AccessibleSource = "accessible-source";
 }
 
@@ -110,8 +112,8 @@ public sealed record CharacterMechanicCheckDefinition(
     CharacterCheckCompetencyDefinition Competency);
 
 public sealed record CharacterMechanicSourceReference(
-    string PackageKey,
-    string PackageDisplayName,
+    string? PackageKey,
+    string? PackageDisplayName,
     string WorkKey,
     string WorkDisplayName,
     string Provider,
@@ -122,10 +124,13 @@ public sealed record CharacterMechanicSourceReference(
     bool PresentationRequired,
     bool ReferenceLinkRequired);
 
+public sealed record CharacterMechanicBooleanConditionDefinition(
+    string InputKey,
+    bool ExpectedValue);
+
 public sealed record CharacterMechanicConditionalRollRuleDefinition(
     string Key,
-    string BooleanInputKey,
-    bool WhenValue,
+    IReadOnlyList<CharacterMechanicBooleanConditionDefinition> Conditions,
     string RollMode,
     IReadOnlyList<string> TargetMechanicKeys);
 
@@ -234,9 +239,9 @@ public static class CharacterMechanicEvaluator
             .Select(requirement => requirement.InputKey)
             .ToArray();
         var appliedRollRules = definition.ConditionalRollRules
-            .Where(rule =>
-                booleanInputs.TryGetValue(rule.BooleanInputKey, out var supplied)
-                && supplied == rule.WhenValue)
+            .Where(rule => rule.Conditions.All(condition =>
+                booleanInputs.TryGetValue(condition.InputKey, out var supplied)
+                && supplied == condition.ExpectedValue))
             .Select(rule => new AppliedCharacterMechanicRollRule(
                 rule.Key,
                 rule.RollMode,
@@ -310,7 +315,6 @@ public static class CharacterMechanicEvaluator
 
 public static class KnownCharacterMechanics
 {
-    public const string LootTavernPackageKey = "loot-tavern-free";
     public const string LootTavernReferenceKey = "loot-tavern.harvesting-crafting-lite";
 
     private static readonly CharacterMechanicApplicabilityDefinition Always =
@@ -318,20 +322,19 @@ public static class KnownCharacterMechanics
 
     private static readonly CharacterMechanicApplicabilityDefinition LootTavern =
         new(
-            CharacterMechanicApplicabilityKinds.AccessibleSource,
+            CharacterMechanicApplicabilityKinds.ExternalPublicRules,
             true,
-            [],
-            LootTavernPackageKey);
+            []);
 
     private static readonly CharacterMechanicSourceReference LootTavernHarvestingCrafting =
         new(
-            LootTavernPackageKey,
-            "Loot Tavern Free Releases",
+            null,
+            null,
             LootTavernReferenceKey,
             "Harvesting & Crafting Lite",
             "Loot Tavern",
             "5e",
-            null,
+            "public-release",
             new DateOnly(2024, 7, 3),
             "https://www.patreon.com/LootTavern/posts/helianas-and-to-107406117",
             true,
@@ -372,7 +375,7 @@ public static class KnownCharacterMechanics
 
         SumMechanic(
             "save.fortitude",
-            CharacterMechanicKinds.Defense,
+            CharacterMechanicKinds.SavingThrow,
             "Fortitude Save",
             Capability("save.fortitude"),
             [
@@ -382,7 +385,7 @@ public static class KnownCharacterMechanics
             ]),
         SumMechanic(
             "save.reflex",
-            CharacterMechanicKinds.Defense,
+            CharacterMechanicKinds.SavingThrow,
             "Reflex Save",
             Capability("save.reflex"),
             [
@@ -392,7 +395,7 @@ public static class KnownCharacterMechanics
             ]),
         SumMechanic(
             "save.will",
-            CharacterMechanicKinds.Defense,
+            CharacterMechanicKinds.SavingThrow,
             "Will Save",
             Capability("save.will"),
             [
@@ -505,15 +508,15 @@ public static class KnownCharacterMechanics
             "Harvesting Carving Check",
             [
                 StringInput("creatureTypeCompetencyKey", CharacterMechanicInputOrigins.SourceInput, true),
-                StringInput("carvingAbilitySource", CharacterMechanicInputOrigins.SourceInput, true),
                 IntegerInput("d20Roll", CharacterMechanicInputOrigins.Runtime, true, true),
-                IntegerInput("carvingAbilityModifier", CharacterMechanicInputOrigins.Derived, true, true),
+                IntegerInput("dexterityModifier", CharacterMechanicInputOrigins.Derived, true, true),
                 IntegerInput("competencyContribution", CharacterMechanicInputOrigins.Derived, true, true),
                 IntegerInput("otherModifier", CharacterMechanicInputOrigins.Derived, false, true, 0)
             ],
             new CharacterMechanicCheckDefinition(
                 new CharacterCheckAbilityDefinition(
-                    CharacterCheckAbilityResolutionKinds.RuleResolved),
+                    CharacterCheckAbilityResolutionKinds.Fixed,
+                    "dexterity"),
                 new CharacterCheckCompetencyDefinition(
                     CharacterCheckCompetencyResolutionKinds.RuleResolved,
                     [CharacterCompetencyKinds.Skill, CharacterCompetencyKinds.SpecializedSkill]))),
@@ -535,8 +538,7 @@ public static class KnownCharacterMechanics
             [
                 new CharacterMechanicConditionalRollRuleDefinition(
                     "harvesting.same-actor-disadvantage",
-                    "sameActor",
-                    true,
+                    [new CharacterMechanicBooleanConditionDefinition("sameActor", true)],
                     CharacterMechanicRollModes.Disadvantage,
                     ["check.harvesting.assessment", "check.harvesting.carving"])
             ],
@@ -562,6 +564,7 @@ public static class KnownCharacterMechanics
                     includeWhenBooleanValue: true),
                 IntegerInput("otherModifier", CharacterMechanicInputOrigins.Derived, false, true, 0),
                 BooleanInput("hasToolProficiency", CharacterMechanicInputOrigins.CharacterState, true),
+                BooleanInput("hasQualifiedGuidance", CharacterMechanicInputOrigins.Runtime, true),
                 IntegerInput("targetDc", CharacterMechanicInputOrigins.SourceInput, false)
             ],
             "targetDc",
@@ -570,8 +573,10 @@ public static class KnownCharacterMechanics
             [
                 new CharacterMechanicConditionalRollRuleDefinition(
                     "manufacturing.missing-tool-proficiency-disadvantage",
-                    "hasToolProficiency",
-                    false,
+                    [
+                        new CharacterMechanicBooleanConditionDefinition("hasToolProficiency", false),
+                        new CharacterMechanicBooleanConditionDefinition("hasQualifiedGuidance", false)
+                    ],
                     CharacterMechanicRollModes.Disadvantage,
                     ["check.crafting.manufacturing"])
             ],

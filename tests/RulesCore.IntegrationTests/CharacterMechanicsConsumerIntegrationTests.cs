@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text;
+using System.Text.Json;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -48,7 +49,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             AllowAutoRedirect = false
         });
 
-        using (var globalResponse = await client.GetAsync("/api/rules/mechanics?includeUnavailable=true"))
+        using (var globalResponse = await client.GetAsync("/api/rules/mechanics"))
         {
             Assert.Equal(HttpStatusCode.OK, globalResponse.StatusCode);
             var catalog = await globalResponse.Content.ReadFromJsonAsync<CharacterMechanicsCatalogView>();
@@ -58,14 +59,21 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             var harvesting = Assert.Single(
                 catalog.Mechanics,
                 value => value.MechanicKey == "check.harvesting.total");
-            Assert.False(harvesting.IsAvailableUnderRuleset);
+            Assert.True(harvesting.IsAvailableUnderRuleset);
+            Assert.Equal(
+                CharacterMechanicApplicabilityKinds.ExternalPublicRules,
+                harvesting.Applicability.Kind);
             var attribution = Assert.Single(harvesting.SourceAttributions);
-            Assert.Equal("loot-tavern-free", attribution.PackageKey);
-            Assert.Equal("Loot Tavern Free Releases", attribution.PackageDisplayName);
+            Assert.Null(attribution.PackageKey);
+            Assert.Null(attribution.PackageDisplayName);
             Assert.Equal(KnownCharacterMechanics.LootTavernReferenceKey, attribution.WorkKey);
             Assert.Equal("Harvesting & Crafting Lite", attribution.WorkDisplayName);
             Assert.Equal("5e", attribution.GameEdition);
+            Assert.Equal("public-release", attribution.ReleaseKind);
             Assert.Equal(new DateOnly(2024, 7, 3), attribution.PublicationDate);
+            Assert.Equal(
+                "https://www.patreon.com/LootTavern/posts/helianas-and-to-107406117",
+                attribution.ReferenceUri);
             Assert.True(attribution.PresentationRequired);
             Assert.True(attribution.ReferenceLinkRequired);
         }
@@ -91,6 +99,45 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.NotNull(evaluation);
             Assert.Equal(17, evaluation.Value);
             Assert.True(evaluation.MeetsTarget);
+        }
+
+        using (var batchResponse = await client.PostAsJsonAsync(
+                   "/api/rules/mechanics/evaluate",
+                   new CharacterMechanicsBatchEvaluationRequest(
+                   [
+                       new CharacterMechanicBatchEvaluationItemRequest(
+                           "check.competency",
+                           new CharacterMechanicEvaluationRequest(
+                               IntegerInputs: new Dictionary<string, int>
+                               {
+                                   ["d20Roll"] = 10,
+                                   ["abilityModifier"] = 2,
+                                   ["competencyContribution"] = 3
+                               },
+                               StringInputs: new Dictionary<string, string>
+                               {
+                                   ["abilityKey"] = "intelligence",
+                                   ["competencyKey"] = "skill.arcana"
+                               })),
+                       new CharacterMechanicBatchEvaluationItemRequest(
+                           "save.fortitude",
+                           new CharacterMechanicEvaluationRequest(
+                               IntegerInputs: new Dictionary<string, int>
+                               {
+                                   ["baseSave"] = 4,
+                                   ["constitutionModifier"] = 2
+                               },
+                               CapabilityKeys: ["save.fortitude"]))
+                   ])))
+        {
+            Assert.Equal(HttpStatusCode.OK, batchResponse.StatusCode);
+            var batch = await batchResponse.Content
+                .ReadFromJsonAsync<CharacterMechanicsBatchEvaluationView>();
+            Assert.NotNull(batch);
+            Assert.Equal("global", batch.Scope);
+            Assert.Equal(2, batch.Evaluations.Count);
+            Assert.Equal(15, batch.Evaluations[0].Evaluation!.Value);
+            Assert.Equal(6, batch.Evaluations[1].Evaluation!.Value);
         }
 
         using (var anonymousCampaign = await client.GetAsync(
@@ -121,6 +168,39 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal("campaign", catalog.Scope);
             Assert.Equal(campaignId, catalog.CampaignId);
             Assert.Contains(catalog.Mechanics, value => value.MechanicKey == "check.competency");
+        }
+
+        using (var playerBatchRequest = HostedRequest(
+                   HttpMethod.Post,
+                   $"/api/campaigns/{campaignId}/rules/mechanics/evaluate",
+                   "player-ticket"))
+        {
+            playerBatchRequest.Content = JsonContent.Create(
+                new CharacterMechanicsBatchEvaluationRequest(
+                [
+                    new CharacterMechanicBatchEvaluationItemRequest(
+                        "check.competency",
+                        new CharacterMechanicEvaluationRequest(
+                            IntegerInputs: new Dictionary<string, int>
+                            {
+                                ["d20Roll"] = 9,
+                                ["abilityModifier"] = 2,
+                                ["competencyContribution"] = 1
+                            },
+                            StringInputs: new Dictionary<string, string>
+                            {
+                                ["abilityKey"] = "wisdom",
+                                ["competencyKey"] = "skill.survival"
+                            }))
+                ]));
+            using var playerBatchResponse = await client.SendAsync(playerBatchRequest);
+            Assert.Equal(HttpStatusCode.OK, playerBatchResponse.StatusCode);
+            var batch = await playerBatchResponse.Content
+                .ReadFromJsonAsync<CharacterMechanicsBatchEvaluationView>();
+            Assert.NotNull(batch);
+            Assert.Equal("campaign", batch.Scope);
+            Assert.Equal(campaignId, batch.CampaignId);
+            Assert.Equal(12, Assert.Single(batch.Evaluations).Evaluation!.Value);
         }
     }
 
@@ -187,7 +267,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             {
                 var source = imported.Entities.Single(value => value.Name == name);
                 var concept = await globalRules.CreateConceptAsync(
-                    new CreateRuleConceptRequest(conceptKey, "skill", name),
+                    new CreateRuleConceptRequest(conceptKey, source.EntityType, name),
                     $"mechanics-test-{token}");
                 await globalRules.BindSourceEntityAsync(
                     concept.Value.Id,
@@ -334,6 +414,132 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task DirectEquivalentLaterSourceDoesNotEraseThreeXCompetencyProfile()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var actor = $"mechanics-direct-{token}";
+        Guid fivePackageId = Guid.Empty;
+        Guid threePackageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var importer = new NormalizedSourceImportService(db);
+            var normalization = new RulesCore.Infrastructure.Rules.SourceNormalizationService(db);
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var mechanics = scope.ServiceProvider.GetRequiredService<ICharacterMechanicsConsumerService>();
+
+            var fiveSource = $"D5{token}";
+            var fiveRaw = JsonSerializer.Serialize(new
+            {
+                name = "Deception",
+                source = fiveSource,
+                entries = new[] { "Later-edition Deception fixture." }
+            });
+            var fiveImport = await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                $"mechanics-deception-5e-{token}",
+                $"Mechanics Deception 5e {token}",
+                "integration-test",
+                "test-only",
+                true,
+                new NormalizedSourceRepresentation(
+                    FiveEToolsSourceFormatAdapter.Format,
+                    new SourceRepresentationArtifact(
+                        $"deception-{token}.json",
+                        Encoding.UTF8.GetBytes(fiveRaw),
+                        $"integration:mechanics-deception-5e:{token}"),
+                    [new NormalizedSourceRecord(
+                        "skill",
+                        "Deception",
+                        fiveSource,
+                        $"skill|Deception|{fiveSource}",
+                        fiveRaw,
+                        PublicationLocalKey: fiveSource)],
+                    [new NormalizedSourcePublication(
+                        fiveSource,
+                        $"Later Deception {token}",
+                        "Integration Test Press",
+                        "5e",
+                        new DateOnly(2014, 8, 19))])));
+            fivePackageId = fiveImport.PackageId;
+            var fiveEntity = Assert.Single(fiveImport.Entities);
+            var accepted = await normalization.AcceptAsync(fiveEntity.EntityId, actor);
+            Assert.NotNull(accepted);
+            Assert.Equal("skill.deception", accepted!.Concept.Key);
+
+            var sourceShort = $"B35{token}";
+            var pcgenFile = $"data/35e/example/direct_equivalence_skills_{token}.lst";
+            var pcgenText = string.Join('\n',
+            [
+                $"SOURCELONG:Bluff 3.5e Fixture {token}\tSOURCESHORT:{sourceShort}",
+                "Bluff\tKEYSTAT:CHA\tUSEUNTRAINED:YES\tACHECK:NO"
+            ]);
+            var pcgenRepresentation = new PcGenSourceFormatAdapter().TryRead(
+                new SourceRepresentationArtifact(
+                    pcgenFile,
+                    Encoding.UTF8.GetBytes(pcgenText),
+                    $"integration:mechanics-bluff-35:{token}#{pcgenFile}"))
+                ?? throw new InvalidOperationException("PCGen Bluff fixture was not readable.");
+            var threeImport = await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                $"mechanics-bluff-35-{token}",
+                $"Mechanics Bluff 3.5e {token}",
+                "integration-test",
+                "test-only",
+                true,
+                pcgenRepresentation));
+            threePackageId = threeImport.PackageId;
+            var bluff = Assert.Single(threeImport.Entities);
+            Assert.Equal("skill", bluff.EntityType);
+            Assert.Equal("Deception", bluff.Name);
+
+            var fiveRevisionId = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == fiveEntity.EntityId)
+                .Select(value => value.Id)
+                .SingleAsync();
+            await globalRules.SetDecisionAsync(
+                accepted.Concept.Id,
+                new SetGlobalRuleDecisionRequest(
+                    fiveRevisionId,
+                    "Select the later-edition presentation while retaining canonical competency profiles."),
+                actor);
+            await globalRules.PublishAsync(actor);
+
+            var catalog = await mechanics.GetGlobalAsync(userId: null);
+            var deception = Assert.Single(
+                catalog.Mechanics,
+                value => value.MechanicKey == "competency.skill.deception");
+            Assert.NotNull(deception.Competency);
+            Assert.True(deception.Competency!.SupportsRanks);
+            Assert.True(deception.Competency.SupportsClassSkillState);
+            var threeProfile = Assert.Single(
+                deception.Competency.Profiles,
+                value => value.ProfileKey == "dnd-3x");
+            Assert.Equal("3.5e", threeProfile.GameEdition);
+            Assert.True(threeProfile.SupportsRanks);
+            Assert.True(threeProfile.SupportsClassSkillState);
+            Assert.Contains(
+                "competency.skill-ranks",
+                threeProfile.RequiredCapabilityKeys);
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                fivePackageId,
+                threePackageId);
+        }
+    }
+
     private static HttpRequestMessage HostedRequest(HttpMethod method, string path, string ticket)
     {
         var request = new HttpRequestMessage(method, path);
@@ -343,7 +549,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
     }
 
 
-    private static async Task CleanupAsync(RulesCoreDbContext db, Guid packageId)
+    private static async Task CleanupAsync(RulesCoreDbContext db, params Guid[] packageIds)
     {
         await db.CampaignRulesetRevisionEntries.ExecuteDeleteAsync();
         await db.CampaignRulesetRevisions.ExecuteDeleteAsync();
@@ -355,14 +561,14 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         await db.RuleConceptSourceBindings.ExecuteDeleteAsync();
         await db.RuleConcepts.ExecuteDeleteAsync();
 
-        if (packageId != Guid.Empty)
+        var ids = packageIds.Where(value => value != Guid.Empty).Distinct().ToArray();
+        if (ids.Length > 0)
         {
-            var package = await db.SourcePackages.SingleOrDefaultAsync(value => value.Id == packageId);
-            if (package is not null)
-            {
-                db.SourcePackages.Remove(package);
-                await db.SaveChangesAsync();
-            }
+            var packages = await db.SourcePackages
+                .Where(value => ids.Contains(value.Id))
+                .ToArrayAsync();
+            db.SourcePackages.RemoveRange(packages);
+            await db.SaveChangesAsync();
         }
     }
 

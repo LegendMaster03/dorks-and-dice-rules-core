@@ -25,15 +25,17 @@ public sealed class CharacterMechanicsTests
         Assert.Equal(new[] { "save.fortitude" }, fortitude.Applicability.RequiredCapabilityKeys);
 
         var harvesting = Required("check.harvesting.total");
-        Assert.Equal(CharacterMechanicApplicabilityKinds.AccessibleSource, harvesting.Applicability.Kind);
-        Assert.Equal(KnownCharacterMechanics.LootTavernPackageKey, harvesting.Applicability.SourcePackageKey);
+        Assert.Equal(CharacterMechanicApplicabilityKinds.ExternalPublicRules, harvesting.Applicability.Kind);
+        Assert.Null(harvesting.Applicability.SourcePackageKey);
         Assert.NotNull(harvesting.Source);
-        Assert.True(harvesting.Source!.PresentationRequired);
+        Assert.Null(harvesting.Source!.PackageKey);
+        Assert.Null(harvesting.Source.PackageDisplayName);
+        Assert.True(harvesting.Source.PresentationRequired);
         Assert.True(harvesting.Source.ReferenceLinkRequired);
-        Assert.Equal("Loot Tavern Free Releases", harvesting.Source.PackageDisplayName);
         Assert.Equal(KnownCharacterMechanics.LootTavernReferenceKey, harvesting.Source.WorkKey);
         Assert.Equal("Harvesting & Crafting Lite", harvesting.Source.WorkDisplayName);
         Assert.Equal("5e", harvesting.Source.GameEdition);
+        Assert.Equal("public-release", harvesting.Source.ReleaseKind);
         Assert.Equal(new DateOnly(2024, 7, 3), harvesting.Source.PublicationDate);
         Assert.Equal(
             "https://www.patreon.com/LootTavern/posts/helianas-and-to-107406117",
@@ -106,7 +108,8 @@ public sealed class CharacterMechanicsTests
             },
             new Dictionary<string, bool>(StringComparer.Ordinal)
             {
-                ["hasToolProficiency"] = false
+                ["hasToolProficiency"] = false,
+                ["hasQualifiedGuidance"] = false
             },
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
@@ -162,6 +165,22 @@ public sealed class CharacterMechanicsTests
             CharacterCheckCompetencyResolutionKinds.RuleResolved,
             assessment.Check.Competency.ResolutionKind);
 
+        var carving = Required("check.harvesting.carving");
+        Assert.NotNull(carving.Check);
+        Assert.Equal(
+            CharacterCheckAbilityResolutionKinds.Fixed,
+            carving.Check!.Ability.ResolutionKind);
+        Assert.Equal("dexterity", carving.Check.Ability.FixedAbilityKey);
+        Assert.Equal(
+            CharacterCheckCompetencyResolutionKinds.RuleResolved,
+            carving.Check.Competency.ResolutionKind);
+        Assert.DoesNotContain(
+            carving.Inputs,
+            value => value.Key == "carvingAbilitySource");
+        Assert.Contains(
+            carving.Inputs,
+            value => value.Key == "dexterityModifier");
+
         var manufacturing = Required("check.crafting.manufacturing");
         Assert.NotNull(manufacturing.Check);
         Assert.Equal(
@@ -195,7 +214,8 @@ public sealed class CharacterMechanicsTests
             },
             new Dictionary<string, bool>(StringComparer.Ordinal)
             {
-                ["hasToolProficiency"] = false
+                ["hasToolProficiency"] = false,
+                ["hasQualifiedGuidance"] = false
             },
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
@@ -215,7 +235,8 @@ public sealed class CharacterMechanicsTests
             },
             new Dictionary<string, bool>(StringComparer.Ordinal)
             {
-                ["hasToolProficiency"] = true
+                ["hasToolProficiency"] = true,
+                ["hasQualifiedGuidance"] = false
             },
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
@@ -224,6 +245,53 @@ public sealed class CharacterMechanicsTests
             });
         Assert.Equal(13, proficient.Value);
         Assert.Empty(proficient.AppliedRollRules);
+    }
+
+    [Fact]
+    public void QualifiedGuidanceRemovesManufacturingDisadvantageWithoutGrantingToolProficiency()
+    {
+        var definition = Required("check.crafting.manufacturing");
+        var result = CharacterMechanicEvaluator.Evaluate(
+            definition,
+            new Dictionary<string, int>(StringComparer.Ordinal)
+            {
+                ["d20Roll"] = 9,
+                ["abilityModifier"] = 3
+            },
+            new Dictionary<string, bool>(StringComparer.Ordinal)
+            {
+                ["hasToolProficiency"] = false,
+                ["hasQualifiedGuidance"] = true
+            },
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["toolKey"] = "tool.example",
+                ["abilityKey"] = "intelligence"
+            });
+
+        Assert.Equal(12, result.Value);
+        Assert.Empty(result.AppliedRollRules);
+        Assert.DoesNotContain(
+            definition.Inputs.Where(value => value.ParticipatesInValue),
+            value => value.Key == "toolProficiencyContribution"
+                && value.IncludeWhenBooleanValue != true);
+    }
+
+    [Fact]
+    public void MechanicKindsDistinguishSavingThrowsDefensesAndCombatValues()
+    {
+        Assert.Equal(CharacterMechanicKinds.SavingThrow, Required("save.fortitude").Kind);
+        Assert.Equal(CharacterMechanicKinds.SavingThrow, Required("save.reflex").Kind);
+        Assert.Equal(CharacterMechanicKinds.SavingThrow, Required("save.will").Kind);
+
+        Assert.Equal(CharacterMechanicKinds.Defense, Required("defense.ac.touch").Kind);
+        Assert.Equal(CharacterMechanicKinds.Defense, Required("defense.spell-resistance").Kind);
+        Assert.Equal(CharacterMechanicKinds.Defense, Required("defense.damage-reduction").Kind);
+
+        Assert.Equal(
+            CharacterMechanicKinds.CombatValue,
+            Required("combat.base-attack-bonus").Kind);
+        Assert.Equal(CharacterMechanicKinds.CombatValue, Required("combat.grapple").Kind);
     }
 
     [Fact]
