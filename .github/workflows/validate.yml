@@ -49,6 +49,8 @@ jobs:
             node --input-type=module --check < "$file"
           done
 
+          node tools/validate-structured-rule-renderers.mjs
+
           node --input-type=module <<'NODE'
           import fs from "node:fs";
           import { RulesCoreApi } from "./src/RulesCore.Web/wwwroot/api.js";
