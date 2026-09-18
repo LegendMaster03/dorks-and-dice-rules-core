@@ -97,6 +97,16 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
 
         var renderers = await GetAssetAsync(client, "/rule-renderers.js", "javascript");
         Assert.Contains("[\"monster\", renderMonster]", renderers, StringComparison.Ordinal);
+        Assert.Contains("[\"spell\", renderSpell]", renderers, StringComparison.Ordinal);
+        Assert.Contains("[\"class\", renderClass]", renderers, StringComparison.Ordinal);
+        Assert.Contains("[\"subclass\", renderSubclass]", renderers, StringComparison.Ordinal);
+        Assert.Contains("[\"prestigeclass\", renderPrestigeClass]", renderers, StringComparison.Ordinal);
+        Assert.Contains("[\"species\", renderSpecies]", renderers, StringComparison.Ordinal);
+        Assert.Contains("[\"feat\", renderFeat]", renderers, StringComparison.Ordinal);
+        Assert.Contains("[\"item\", renderItem]", renderers, StringComparison.Ordinal);
+        Assert.Contains("[\"condition\", renderCondition]", renderers, StringComparison.Ordinal);
+        Assert.Contains("[\"skill\", renderSkill]", renderers, StringComparison.Ordinal);
+        Assert.Contains("rules-core-structured-rule", renderers, StringComparison.Ordinal);
         Assert.Contains("Legendary Actions", renderers, StringComparison.Ordinal);
         Assert.Contains("Ability Scores", renderers, StringComparison.Ordinal);
         Assert.Contains("abilityDatum(\"Save\"", renderers, StringComparison.Ordinal);
