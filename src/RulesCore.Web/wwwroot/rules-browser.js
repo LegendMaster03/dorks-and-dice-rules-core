@@ -245,37 +245,51 @@ async function renderRulesBrowser(app, container) {
     }
     scope.value = app.browserScope;
 
-    const type = element("select", {
-        className: "form-select form-select-sm rules-core-library-type",
-        ariaLabel: "Rule family"
-    });
-    for (const [value, label] of ENTITY_TYPES) {
-        type.append(element("option", { value, text: label }));
-    }
-
     const knownEntityTypes = new Set(ENTITY_TYPES.map(([value]) => value));
-    const initialDynamicEntityType = app.browserFilters.entityType;
-    if (initialDynamicEntityType && !knownEntityTypes.has(initialDynamicEntityType)) {
-        type.append(element("option", {
-            value: initialDynamicEntityType,
-            text: pluralizeEntityType(initialDynamicEntityType)
-        }));
-    }
-    type.value = initialDynamicEntityType;
+    const moreTypes = element("select", {
+        className: "form-select form-select-sm rules-core-library-more-types",
+        ariaLabel: "More rule types",
+        attributes: { hidden: "" }
+    });
 
     const populateEntityTypeFacets = facets => {
-        const optionValues = new Set(Array.from(type.options).map(option => option.value));
+        const currentEntityType = app.browserFilters.entityType ?? "";
+        const dynamicTypes = [];
         for (const facet of facets ?? []) {
-            if (optionValues.has(facet.entityType)) continue;
-            type.append(element("option", {
-                value: facet.entityType,
-                text: pluralizeEntityType(facet.entityType)
-            }));
-            optionValues.add(facet.entityType);
+            if (!facet.entityType || knownEntityTypes.has(facet.entityType)) continue;
+            if (dynamicTypes.some(value => value.entityType === facet.entityType)) continue;
+            dynamicTypes.push(facet);
         }
+
+        if (currentEntityType
+            && !knownEntityTypes.has(currentEntityType)
+            && !dynamicTypes.some(value => value.entityType === currentEntityType)) {
+            dynamicTypes.unshift({
+                entityType: currentEntityType,
+                count: null
+            });
+        }
+
+        moreTypes.replaceChildren(element("option", {
+            value: "",
+            text: dynamicTypes.length ? "More rule types…" : "No additional rule types"
+        }));
+        for (const facet of dynamicTypes) {
+            moreTypes.append(element("option", {
+                value: facet.entityType,
+                text: facet.count === null || facet.count === undefined
+                    ? pluralizeEntityType(facet.entityType)
+                    : `${pluralizeEntityType(facet.entityType)} (${facet.count})`
+            }));
+        }
+
+        moreTypes.hidden = dynamicTypes.length === 0;
+        moreTypes.value = currentEntityType && !knownEntityTypes.has(currentEntityType)
+            ? currentEntityType
+            : "";
     };
 
-    controls.append(scope, type);
+    controls.append(scope, moreTypes);
 
     const search = element("input", {
         className: "form-control form-control-sm rules-core-library-search",
@@ -570,7 +584,7 @@ async function renderRulesBrowser(app, container) {
 
         app.browserScope = scope.value;
         app.browserFilters = {
-            entityType: type.value,
+            entityType: app.browserFilters.entityType || null,
             query: search.value.trim(),
             sourceCode: sourceFilter.value,
             overridesOnly: scope.value.startsWith("campaign:")
@@ -704,12 +718,15 @@ async function renderRulesBrowser(app, container) {
         await app.navigateRuleFamily(value);
     };
 
-    type.addEventListener("change", () => void changeEntityType(type.value));
+    moreTypes.addEventListener("change", () => {
+        if (!moreTypes.value) return;
+        void changeEntityType(moreTypes.value);
+    });
     reset.addEventListener("click", async () => {
         preserveDeepLink = false;
         if (searchTimer) clearTimeout(searchTimer);
         search.value = "";
-        type.value = "";
+        moreTypes.value = "";
         sourceFilter.value = "";
         overrideFilter.querySelector("input").checked = false;
         filterBar.hidden = true;
@@ -770,12 +787,6 @@ function isCompactLibraryViewport() {
 function isEditableTarget(target) {
     if (!(target instanceof Element)) return false;
     return Boolean(target.closest("input, textarea, select, button, [contenteditable='true']"));
-}
-
-function libraryTitle(entityType) {
-    if (!entityType) return "Rules Library";
-    return ENTITY_TYPES.find(([value]) => value === entityType)?.[1]
-        ?? humanizeEntityType(entityType);
 }
 
 function browserColumns(entityType) {

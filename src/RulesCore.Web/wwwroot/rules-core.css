@@ -1286,7 +1286,8 @@ button.rules-core-workflow-step {
 }
 
 
-/* Top-level Rules Core navigation. Content families are application-level tabs, not a nested Library subview. */
+/* Top-level Rules Core navigation. Hosted mode uses the Tool Host title chrome and a
+   grouped navigation bar modeled after the content hierarchy used by 5e.tools. */
 .rules-core-app {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
@@ -1296,102 +1297,116 @@ button.rules-core-workflow-step {
     max-width: none;
 }
 
+.rules-core-topbar-hosted[hidden] {
+    display: none !important;
+}
+
 .rules-core-nav-shell {
     grid-area: nav;
     position: sticky;
     top: 0;
     z-index: 30;
     display: flex;
-    align-items: stretch;
-    justify-content: space-between;
-    gap: .75rem;
+    align-items: center;
+    gap: .12rem;
     width: 100%;
     max-height: none;
     margin: 0;
-    padding: .42rem 0 .36rem;
+    padding: .34rem 0;
     overflow: visible;
     border-bottom: 1px solid var(--rules-core-border);
     background: color-mix(in srgb, var(--bs-body-bg) 96%, transparent);
     backdrop-filter: blur(.6rem);
 }
 
-.rules-core-primary-nav {
-    display: flex;
-    flex: 1 1 auto;
-    min-width: 0;
-    gap: .08rem;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scrollbar-width: thin;
-}
-
-.rules-core-primary-tab {
+.rules-core-nav-menu {
     position: relative;
     flex: 0 0 auto;
-    padding: .5rem .62rem .48rem;
-    border: 0;
-    background: transparent;
+}
+
+.rules-core-nav-summary {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: .32rem;
+    min-height: 2.15rem;
+    padding: .42rem .62rem;
+    border: 1px solid transparent;
+    border-radius: .42rem;
     color: var(--bs-secondary-color);
     font-size: .78rem;
     font-weight: 675;
-    white-space: nowrap;
+    line-height: 1;
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
 }
 
-.rules-core-primary-tab::after {
-    position: absolute;
-    right: .5rem;
-    bottom: -.38rem;
-    left: .5rem;
-    height: .16rem;
-    border-radius: 999px 999px 0 0;
-    background: transparent;
-    content: "";
+.rules-core-nav-summary::-webkit-details-marker {
+    display: none;
 }
 
-.rules-core-primary-tab:hover,
-.rules-core-primary-tab:focus-visible {
-    color: var(--bs-body-color);
-    outline: 0;
-}
-
-.rules-core-primary-tab.is-active {
-    color: var(--bs-body-color);
-}
-
-.rules-core-primary-tab.is-active::after {
-    background: var(--bs-primary);
-}
-
-.rules-core-utility-nav {
-    display: flex;
-    flex: 0 0 auto;
-    align-items: center;
-    gap: .18rem;
-}
-
-.rules-core-utility-item {
-    flex: 0 0 auto;
-    padding: .38rem .52rem;
-    border: 1px solid transparent;
-    border-radius: .42rem;
-    background: transparent;
+.rules-core-nav-summary::after {
     color: var(--bs-secondary-color);
-    font-size: .72rem;
-    font-weight: 650;
-    white-space: nowrap;
+    content: "▾";
+    font-size: .64rem;
+    line-height: 1;
 }
 
-.rules-core-utility-item:hover,
-.rules-core-utility-item:focus-visible,
-.rules-core-utility-item.is-active {
+.rules-core-nav-menu:hover > .rules-core-nav-summary,
+.rules-core-nav-menu[open] > .rules-core-nav-summary,
+.rules-core-nav-menu.is-active > .rules-core-nav-summary {
     border-color: var(--rules-core-border);
     background: var(--rules-core-surface-subtle);
     color: var(--bs-body-color);
+}
+
+.rules-core-nav-menu.is-active > .rules-core-nav-summary::before {
+    position: absolute;
+    right: .5rem;
+    bottom: -.36rem;
+    left: .5rem;
+    height: .16rem;
+    border-radius: 999px 999px 0 0;
+    background: var(--bs-primary);
+    content: "";
+}
+
+.rules-core-nav-popover {
+    position: absolute;
+    top: calc(100% + .35rem);
+    left: 0;
+    z-index: 50;
+    display: grid;
+    min-width: 13rem;
+    padding: .35rem;
+    border: 1px solid var(--rules-core-border);
+    border-radius: .55rem;
+    background: var(--bs-body-bg);
+    box-shadow: 0 .65rem 1.6rem color-mix(in srgb, var(--bs-body-color) 14%, transparent);
+}
+
+.rules-core-nav-menu-item {
+    width: 100%;
+    padding: .48rem .58rem;
+    border: 0;
+    border-radius: .38rem;
+    background: transparent;
+    color: var(--bs-body-color);
+    font-size: .78rem;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.rules-core-nav-menu-item:hover,
+.rules-core-nav-menu-item:focus-visible,
+.rules-core-nav-menu-item.is-active {
+    background: var(--rules-core-primary-soft);
     outline: 0;
 }
 
-.rules-core-utility-item.is-maintenance:first-of-type {
-    margin-left: .28rem;
+.rules-core-nav-menu-item.is-active {
+    font-weight: 700;
 }
 
 .rules-core-main {
@@ -1405,12 +1420,15 @@ button.rules-core-workflow-step {
 }
 
 .rules-core-library-controls {
-    grid-template-columns: minmax(10rem, 13rem) minmax(10rem, 13rem);
-    justify-content: end;
+    display: flex;
+    grid-template-columns: none;
+    justify-content: flex-end;
+    gap: .5rem;
 }
 
-.rules-core-library-type {
-    display: block;
+.rules-core-library-scope,
+.rules-core-library-more-types {
+    width: min(13rem, 100%);
 }
 
 .rules-core-library-heading {
@@ -1419,28 +1437,20 @@ button.rules-core-workflow-step {
 }
 
 .rules-core-library-workspace {
-    height: calc(100vh - 9.5rem);
+    height: calc(100vh - 7.25rem);
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 900px) {
     .rules-core-nav-shell {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: .3rem;
+        flex-wrap: wrap;
     }
 
-    .rules-core-primary-nav,
-    .rules-core-utility-nav {
-        width: 100%;
-        overflow-x: auto;
-    }
-
-    .rules-core-utility-nav {
-        padding-bottom: .08rem;
+    .rules-core-nav-popover {
+        min-width: 12rem;
     }
 
     .rules-core-library-workspace {
-        height: calc(100vh - 12rem);
+        height: calc(100vh - 9.5rem);
     }
 }
 
@@ -1451,8 +1461,18 @@ button.rules-core-workflow-step {
         padding-inline: 0;
     }
 
+    .rules-core-nav-summary {
+        padding-inline: .5rem;
+    }
+
     .rules-core-library-controls {
-        grid-template-columns: 1fr;
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .rules-core-library-scope,
+    .rules-core-library-more-types {
+        width: 100%;
     }
 
     .rules-core-library-revision {

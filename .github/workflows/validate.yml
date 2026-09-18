@@ -107,10 +107,14 @@ jobs:
           }
           for (const required of [
               "rules-core-topbar",
+              "rules-core-topbar-hosted",
               "rules-core-nav-shell",
+              "rules-core-nav-menu",
               "rules-core-main",
+              "Players",
+              "Dungeon Masters",
+              "Adjudication",
               "Cross-version",
-              "Maintenance",
               "presentRenderedView",
               "presentRenderedFragment",
               "uxActiveRenderDepth",
@@ -204,12 +208,19 @@ jobs:
 
           for (const required of [
               "RULE_FAMILY_TABS",
-              "rules-core-primary-nav",
-              "rules-core-primary-tab"
+              "rules-core-nav-menu",
+              "Players",
+              "Rules",
+              "Dungeon Masters",
+              "Sources",
+              "Adjudication"
           ]) {
               if (!uxShell.includes(required)) {
                   throw new Error(`Top-level Rules Core navigation is missing '${required}'.`);
               }
+          }
+          if (uxShell.includes("rules-core-primary-tab")) {
+              throw new Error("Rule families must be grouped into the top navigation instead of a second flat tab strip.");
           }
           if (uxShell.includes('{ label: "Library", view: "library"')) {
               throw new Error("Rules Library must not remain a nested workspace navigation item.");

@@ -91,7 +91,8 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("entityTypeFacets", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("pluralizeEntityType", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("/types/", rulesBrowser, StringComparison.Ordinal);
-        Assert.Contains("initialDynamicEntityType", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("More rule types…", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("rules-core-library-more-types", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("parseBrowserScopeFromLocation", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("scopeValue?.startsWith(\"campaign:\")", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Clear filters", rulesBrowser, StringComparison.Ordinal);
@@ -121,9 +122,15 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
 
         var uxShell = await GetAssetAsync(client, "/ux-shell.js", "javascript");
         Assert.Contains("RULE_FAMILY_TABS", uxShell, StringComparison.Ordinal);
-        Assert.Contains("rules-core-primary-nav", uxShell, StringComparison.Ordinal);
-        Assert.Contains("rules-core-primary-tab", uxShell, StringComparison.Ordinal);
+        Assert.Contains("rules-core-nav-menu", uxShell, StringComparison.Ordinal);
+        Assert.Contains("Players", uxShell, StringComparison.Ordinal);
+        Assert.Contains("Rules", uxShell, StringComparison.Ordinal);
+        Assert.Contains("Dungeon Masters", uxShell, StringComparison.Ordinal);
+        Assert.Contains("Sources", uxShell, StringComparison.Ordinal);
+        Assert.Contains("Adjudication", uxShell, StringComparison.Ordinal);
+        Assert.Contains("rules-core-topbar-hosted", uxShell, StringComparison.Ordinal);
         Assert.DoesNotContain("{ label: \"Library\", view: \"library\"", uxShell, StringComparison.Ordinal);
+        Assert.DoesNotContain("rules-core-primary-tab", uxShell, StringComparison.Ordinal);
         Assert.Contains("toolRoute", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("toolBasePath", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Override", rulesBrowser, StringComparison.Ordinal);

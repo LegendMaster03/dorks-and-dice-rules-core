@@ -2,16 +2,64 @@ import { element, enhanceRenderedFragment } from "./ui.js";
 import { RULE_FAMILY_TABS } from "./rules-browser.js";
 
 const WORKSPACE_NAV_ITEMS = [
-    { label: "Sources", view: "sources", capability: "canBrowseSourceLibrary" },
+    { label: "Source Library", view: "sources", capability: "canBrowseSourceLibrary" },
     { label: "Rules Lawyer", view: "global", capability: "canEditGlobal" },
     { label: "Cross-version", view: "version-review", capability: "canReviewVersions" },
     { label: "Campaign Rules", view: "campaign", capability: "canEditCampaign" },
-    { label: "Hosted Sources", view: "hosted-sources", capability: "canManageHostedSources", maintenance: true },
-    { label: "Source Admin", view: "source-admin", capability: "canAdministerSources", maintenance: true }
+    { label: "Hosted Sources", view: "hosted-sources", capability: "canManageHostedSources" },
+    { label: "Source Admin", view: "source-admin", capability: "canAdministerSources" }
 ];
 
 const VIEW_LABELS = new Map(
     WORKSPACE_NAV_ITEMS.map(item => [item.view, item.label]));
+
+const NAV_GROUPS = [
+    {
+        label: "Players",
+        items: [
+            { label: "Species", entityType: "species" },
+            { label: "Races", entityType: "race" },
+            { label: "Classes", entityType: "class" },
+            { label: "Subclasses", entityType: "subclass" },
+            { label: "Prestige Classes", entityType: "prestigeClass" },
+            { label: "Feats", entityType: "feat" },
+            { label: "Skills", entityType: "skill" },
+            { label: "Items", entityType: "item" },
+            { label: "Spells", entityType: "spell" }
+        ]
+    },
+    {
+        label: "Rules",
+        items: [
+            { label: "All Content", entityType: "" },
+            { label: "House Rules", entityType: "houseRule" },
+            { label: "Other Rules", entityType: "rule" },
+            { label: "Conditions", entityType: "condition" }
+        ]
+    },
+    {
+        label: "Dungeon Masters",
+        items: [
+            { label: "Bestiary", entityType: "monster" },
+            { label: "Campaign Rules", view: "campaign", capability: "canEditCampaign" }
+        ]
+    },
+    {
+        label: "Sources",
+        items: [
+            { label: "Source Library", view: "sources", capability: "canBrowseSourceLibrary" },
+            { label: "Hosted Sources", view: "hosted-sources", capability: "canManageHostedSources" },
+            { label: "Source Admin", view: "source-admin", capability: "canAdministerSources" }
+        ]
+    },
+    {
+        label: "Adjudication",
+        items: [
+            { label: "Rules Lawyer", view: "global", capability: "canEditGlobal" },
+            { label: "Cross-version", view: "version-review", capability: "canReviewVersions" }
+        ]
+    }
+];
 
 const VIEW_META = {
     global: {
@@ -144,15 +192,19 @@ function compareCampaignConcepts(left, right) {
 }
 
 function renderWorkspaceHeader(app) {
+    if (app.hostContext.siteMode === "dorks-and-dice") {
+        return element("header", {
+            className: "rules-core-topbar rules-core-topbar-hosted",
+            attributes: { hidden: "", "aria-hidden": "true" }
+        });
+    }
+
     const header = element("header", { className: "rules-core-topbar" });
     const brand = element("div", { className: "rules-core-brand" });
-    const brandContext = app.hostContext.siteMode === "dorks-and-dice"
-        ? "DORKS & DICE"
-        : "RULES WORKSPACE";
     brand.append(
         element("div", { className: "rules-core-brand-mark", text: "R" }),
         element("div", {},
-            element("div", { className: "rules-core-eyebrow", text: brandContext }),
+            element("div", { className: "rules-core-eyebrow", text: "RULES WORKSPACE" }),
             element("div", { className: "rules-core-brand-title", text: "Rules Core" })));
 
     const context = element("div", { className: "rules-core-context" });
@@ -178,55 +230,54 @@ function renderWorkspaceNavigation(app) {
         ariaLabel: "Rules Core"
     });
 
-    const primary = element("div", {
-        className: "rules-core-primary-nav",
-        role: "navigation",
-        ariaLabel: "Rules content"
-    });
-    if (app.canBrowseRules) {
-        for (const [entityType, label] of RULE_FAMILY_TABS) {
-            primary.append(ruleFamilyNavItem(app, entityType, label));
-        }
+    for (const group of NAV_GROUPS) {
+        const availableItems = group.items.filter(item => navItemAvailable(app, item));
+        if (!availableItems.length) continue;
+        nav.append(renderNavMenu(app, group.label, availableItems));
     }
 
-    const utilities = element("div", {
-        className: "rules-core-utility-nav",
-        role: "navigation",
-        ariaLabel: "Rules Core tools"
-    });
-    for (const item of WORKSPACE_NAV_ITEMS) {
-        if (!app[item.capability]) continue;
-        utilities.append(workspaceNavItem(app, item));
-    }
-
-    nav.append(primary, utilities);
     return nav;
 }
 
-function ruleFamilyNavItem(app, entityType, label) {
-    const active = app.activeView === "library"
-        && (app.browserFilters?.entityType ?? "") === entityType;
-    return element("button", {
-        type: "button",
-        className: `rules-core-primary-tab${active ? " is-active" : ""}`,
-        text: label,
-        attributes: active ? { "aria-current": "page" } : {},
-        onClick: async () => {
-            if (active) return;
-            await app.navigateRuleFamily?.(entityType);
-        }
+function renderNavMenu(app, label, items) {
+    const active = items.some(item => navItemActive(app, item));
+    const menu = element("details", {
+        className: `rules-core-nav-menu${active ? " is-active" : ""}`
     });
+    const summary = element("summary", {
+        className: "rules-core-nav-summary",
+        text: label
+    });
+    const popover = element("div", {
+        className: "rules-core-nav-popover",
+        attributes: { role: "menu" }
+    });
+
+    for (const item of items) {
+        popover.append(renderNavMenuItem(app, item));
+    }
+
+    menu.append(summary, popover);
+    return menu;
 }
 
-function workspaceNavItem(app, item) {
-    const active = app.activeView === item.view;
+function renderNavMenuItem(app, item) {
+    const active = navItemActive(app, item);
     return element("button", {
         type: "button",
-        className: `rules-core-utility-item${item.maintenance ? " is-maintenance" : ""}${active ? " is-active" : ""}`,
+        className: `rules-core-nav-menu-item${active ? " is-active" : ""}`,
         text: item.label,
-        attributes: active ? { "aria-current": "page" } : {},
+        attributes: {
+            role: "menuitem",
+            ...(active ? { "aria-current": "page" } : {})
+        },
         onClick: async () => {
             if (active) return;
+            if (hasEntityType(item)) {
+                await app.navigateRuleFamily?.(item.entityType);
+                return;
+            }
+
             const navigate = app.viewNavigation?.[item.view];
             if (navigate) {
                 await navigate();
@@ -236,6 +287,23 @@ function workspaceNavItem(app, item) {
             await app.render();
         }
     });
+}
+
+function navItemAvailable(app, item) {
+    if (hasEntityType(item)) return Boolean(app.canBrowseRules);
+    return !item.capability || Boolean(app[item.capability]);
+}
+
+function navItemActive(app, item) {
+    if (hasEntityType(item)) {
+        return app.activeView === "library"
+            && (app.browserFilters?.entityType ?? "") === item.entityType;
+    }
+    return app.activeView === item.view;
+}
+
+function hasEntityType(item) {
+    return Object.prototype.hasOwnProperty.call(item, "entityType");
 }
 
 function ruleFamilyLabel(entityType) {
