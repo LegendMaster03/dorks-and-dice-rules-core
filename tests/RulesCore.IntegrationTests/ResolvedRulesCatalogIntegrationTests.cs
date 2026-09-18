@@ -302,6 +302,118 @@ public sealed class ResolvedRulesCatalogIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task LibraryVersionsExposeBoundSourceVariantsAndSemanticDiffs()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        var authenticationClient = new FakeToolHostAuthenticationClient(
+            new Dictionary<string, ToolHostAuthenticationContext>());
+        await using var factory = CreateFactory(authenticationClient);
+        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false
+        });
+
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var firstPackageKey = $"browser-version-a-{token}";
+        var secondPackageKey = $"browser-version-b-{token}";
+        var conceptKey = $"skill.browser-version-{token}";
+        Guid firstPackageId = Guid.Empty;
+        Guid secondPackageId = Guid.Empty;
+
+        try
+        {
+            Guid firstRevisionId;
+            Guid secondRevisionId;
+            await using (var scope = factory.Services.CreateAsyncScope())
+            {
+                var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
+                var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+                var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+
+                var firstImport = await importer.Import5eToolsDocumentAsync(SourceRequest(
+                    firstPackageKey,
+                    $"Versioned Skill {token}",
+                    "VER-A",
+                    isPublic: true,
+                    ability: "int"));
+                firstPackageId = firstImport.PackageId;
+                var firstEntityId = firstImport.Entities.Single().EntityId;
+                firstRevisionId = await db.SourceEntityRevisions
+                    .Where(value => value.SourceEntityId == firstEntityId)
+                    .Select(value => value.Id)
+                    .SingleAsync();
+
+                var secondImport = await importer.Import5eToolsDocumentAsync(SourceRequest(
+                    secondPackageKey,
+                    $"Versioned Skill {token}",
+                    "VER-B",
+                    isPublic: true,
+                    ability: "wis"));
+                secondPackageId = secondImport.PackageId;
+                var secondEntityId = secondImport.Entities.Single().EntityId;
+                secondRevisionId = await db.SourceEntityRevisions
+                    .Where(value => value.SourceEntityId == secondEntityId)
+                    .Select(value => value.Id)
+                    .SingleAsync();
+
+                var concept = await globalRules.CreateConceptAsync(
+                    new CreateRuleConceptRequest(conceptKey, "skill", $"Versioned Skill {token}"),
+                    "rules-lawyer");
+                await globalRules.BindSourceEntityAsync(
+                    concept.Value.Id,
+                    new BindRuleConceptSourceRequest(firstEntityId),
+                    "rules-lawyer");
+                await globalRules.BindSourceEntityAsync(
+                    concept.Value.Id,
+                    new BindRuleConceptSourceRequest(secondEntityId),
+                    "rules-lawyer");
+                await globalRules.SetDecisionAsync(
+                    concept.Value.Id,
+                    new SetGlobalRuleDecisionRequest(firstRevisionId, "Version browser fixture."),
+                    "rules-lawyer");
+                await globalRules.PublishAsync("rules-lawyer");
+            }
+
+            using (var versionsResponse = await client.GetAsync(
+                       $"/api/rules/{Uri.EscapeDataString(conceptKey)}/versions"))
+            {
+                Assert.Equal(HttpStatusCode.OK, versionsResponse.StatusCode);
+                var versions = await versionsResponse.Content.ReadFromJsonAsync<RuleConceptVersionsView>();
+                Assert.NotNull(versions);
+                Assert.Equal(2, versions.Versions.Count);
+                Assert.Contains(versions.Versions, value => value.SourceCode == "VER-A");
+                Assert.Contains(versions.Versions, value => value.SourceCode == "VER-B");
+            }
+
+            var comparisonRequest = new RuleSourceComparisonRequest(
+                (await client.GetFromJsonAsync<RuleConceptVersionsView>(
+                    $"/api/rules/{Uri.EscapeDataString(conceptKey)}/versions"))!.RuleConceptId,
+                firstRevisionId,
+                secondRevisionId);
+            using var comparisonResponse = await client.PostAsJsonAsync(
+                "/api/rules/comparison",
+                comparisonRequest);
+            Assert.Equal(HttpStatusCode.OK, comparisonResponse.StatusCode);
+            var comparison = await comparisonResponse.Content
+                .ReadFromJsonAsync<RuleSemanticComparisonView>();
+            Assert.NotNull(comparison);
+            Assert.True(comparison.ContradictionCount > 0);
+            Assert.Contains(
+                comparison.Differences,
+                difference => difference.Path == "$.ability" && difference.RequiresDecision);
+        }
+        finally
+        {
+            await CleanupAsync(factory, firstPackageId, secondPackageId);
+        }
+    }
+
     private static WebApplicationFactory<Program> CreateFactory(
         IToolHostAuthenticationClient authenticationClient) =>
         new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
@@ -339,7 +451,8 @@ public sealed class ResolvedRulesCatalogIntegrationTests
         string packageKey,
         string entityName,
         string sourceCode,
-        bool isPublic) =>
+        bool isPublic,
+        string ability = "int") =>
         new(
             PackageKey: packageKey,
             PackageDisplayName: $"Package {packageKey}",
@@ -356,7 +469,7 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                     {
                       "name": "{{entityName}}",
                       "source": "{{sourceCode}}",
-                      "ability": "int",
+                      "ability": "{{ability}}",
                       "secretMarker": "source-document-only"
                     }
                   ]
