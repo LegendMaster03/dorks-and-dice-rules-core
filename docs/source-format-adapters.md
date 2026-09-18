@@ -212,4 +212,6 @@ Queued Web-source imports report acquisition, translation, persistence, reconcil
 
 Progress counts use stage-specific units in the user interface: acquisition uses files, translation/persistence uses records, and canonical reconciliation uses publications. Structured progress JSON is not presented directly to the user.
 
-If the Rules Core process exits while a queued Web-source import is marked `running`, the next process startup requeues that interrupted job before claiming new work. Add imports already perform incomplete-attempt cleanup before retrying, so a service restart can restart the import instead of leaving a permanently orphaned `running` row.
+If Rules Core begins a graceful shutdown while a Web-source import is running, that specific job is returned to `queued` instead of being marked failed. If the process exits before it can do that, the next process startup requeues any interrupted `running` jobs before claiming new work. Add imports already perform incomplete-attempt cleanup before retrying, so a service restart restarts the import instead of leaving a permanently orphaned `running` row.
+
+The import-job compatibility schema is initialized once per database for the lifetime of the Rules Core process. Queue polling and progress updates no longer execute the full `CREATE TABLE IF NOT EXISTS` / `ALTER TABLE` / index block every few seconds.

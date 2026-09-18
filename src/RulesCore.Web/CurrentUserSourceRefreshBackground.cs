@@ -279,17 +279,16 @@ internal sealed class CurrentUserSourceRefreshBackground(
             await using var scope = scopeFactory.CreateAsyncScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
             var jobs = new CurrentUserSourceImportJobService(dbContext);
-            await jobs.FailAsync(
+            await jobs.RequeueRunningJobAsync(
                 jobId,
-                new InvalidOperationException(
-                    "The Web source import was interrupted by service shutdown. Queue it again after Rules Core restarts."),
+                "Web source import was interrupted by service shutdown; waiting to retry",
                 CancellationToken.None);
         }
         catch (Exception exception)
         {
             logger.LogError(
                 exception,
-                "Rules Core could not record an interrupted Web source import job {JobId}.",
+                "Rules Core could not requeue interrupted Web source import job {JobId}.",
                 jobId);
         }
     }

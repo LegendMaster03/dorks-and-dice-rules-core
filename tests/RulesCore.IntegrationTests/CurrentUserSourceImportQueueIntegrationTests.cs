@@ -137,6 +137,24 @@ public sealed class CurrentUserSourceImportQueueIntegrationTests
             Assert.Equal("itemGroup", progressed.Progress.CurrentItemType);
             Assert.Equal(100, progressed.Progress.EntitiesPersisted);
 
+            await using (var gracefulScope = factory.Services.CreateAsyncScope())
+            {
+                var gracefulDb = gracefulScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+                var gracefulJobs = new CurrentUserSourceImportJobService(gracefulDb);
+                Assert.True(await gracefulJobs.RequeueRunningJobAsync(
+                    job.Id,
+                    "Web source import was interrupted by service shutdown; waiting to retry"));
+            }
+
+            await using (var reclaimScope = factory.Services.CreateAsyncScope())
+            {
+                var reclaimDb = reclaimScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+                var reclaimJobs = new CurrentUserSourceImportJobService(reclaimDb);
+                var reclaimedForRecovery = await reclaimJobs.ClaimNextAsync();
+                Assert.NotNull(reclaimedForRecovery);
+                Assert.Equal(job.Id, reclaimedForRecovery.Id);
+            }
+
             await using (var recoveryScope = factory.Services.CreateAsyncScope())
             {
                 var recoveryDb = recoveryScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
