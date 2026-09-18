@@ -353,11 +353,11 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                     WorkDisplayName: "Browser Fields Work",
                     EditionKey: "browser-fields-edition",
                     EditionDisplayName: "Browser Fields Edition",
-                    Json: $"""
+                    Json: """
                         {
                           "monster": [
                             {
-                              "name": "Browser Dragon {{token}}",
+                              "name": "Browser Dragon __TOKEN__",
                               "source": "BROWSE",
                               "size": ["L"],
                               "type": "dragon",
@@ -366,7 +366,7 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                           ],
                           "spell": [
                             {
-                              "name": "Browser Burst {{token}}",
+                              "name": "Browser Burst __TOKEN__",
                               "source": "BROWSE",
                               "level": 3,
                               "school": "V"
@@ -374,21 +374,21 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                           ],
                           "class": [
                             {
-                              "name": "Browser Adept {{token}}",
+                              "name": "Browser Adept __TOKEN__",
                               "source": "BROWSE",
                               "hd": { "number": 1, "faces": 8 }
                             }
                           ],
                           "race": [
                             {
-                              "name": "Browser Folk {{token}}",
+                              "name": "Browser Folk __TOKEN__",
                               "source": "BROWSE",
                               "size": ["M"],
                               "ability": [{ "dex": 2, "wis": 1 }]
                             }
                           ]
                         }
-                        """));
+                        """.Replace("__TOKEN__", token, StringComparison.Ordinal));
                 packageId = imported.PackageId;
 
                 foreach (var entity in imported.Entities)
@@ -420,7 +420,7 @@ public sealed class ResolvedRulesCatalogIntegrationTests
             using var response = await client.GetAsync($"/api/rules?q={token}&limit=20");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             var raw = await response.Content.ReadAsStringAsync();
-            Assert.DoesNotContain(""document"", raw, StringComparison.OrdinalIgnoreCase);
+            Assert.DoesNotContain("\"document\"", raw, StringComparison.OrdinalIgnoreCase);
             var catalog = (await response.Content.ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
             Assert.Equal(4, catalog.TotalCount);
             Assert.Equal(4, catalog.Rules.Count);
