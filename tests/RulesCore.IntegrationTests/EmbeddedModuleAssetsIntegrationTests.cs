@@ -77,6 +77,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("browserKeyboard", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Load more", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("renderContinuousIndexFooter", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("container.hidden = !hasMore", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("rules-core-library-family-nav", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("changeEntityType", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Campaign overrides only", rulesBrowser, StringComparison.Ordinal);

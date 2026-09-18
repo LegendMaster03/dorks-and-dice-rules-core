@@ -905,13 +905,14 @@ function renderContinuousIndexFooter(
     onLoadMore)
 {
     container.replaceChildren();
-    container.append(element("span", {
-        text: loadError
-            ? `Could not load more: ${loadError}`
-            : totalCount
-                ? `${loadedCount} of ${totalCount} loaded`
-                : "No rules"
-    }));
+    container.hidden = !hasMore && !loadError && !isLoadingMore;
+    if (container.hidden) return;
+
+    if (loadError) {
+        container.append(element("span", {
+            text: `Could not load more: ${loadError}`
+        }));
+    }
 
     if (!hasMore) return;
 

@@ -857,6 +857,14 @@ button.rules-core-workflow-step {
     font-size: .72rem;
 }
 
+.rules-core-library-index-footer[hidden] {
+    display: none;
+}
+
+.rules-core-library-index-footer:not(:has(span)) {
+    justify-content: flex-end;
+}
+
 .rules-core-library-index-list {
     min-height: 0;
     overflow: auto;
