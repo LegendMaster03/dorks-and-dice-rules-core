@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using RulesCore.Application.Hosting;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.IntegrationTests;
 
