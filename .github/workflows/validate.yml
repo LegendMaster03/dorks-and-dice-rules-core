@@ -190,9 +190,10 @@ jobs:
               "./src/RulesCore.Web/wwwroot/rules-browser.js",
               "utf8");
           for (const required of [
-              "RULES LIBRARY",
-              "One concept per row",
+              "rules-core-library-heading",
+              "rules-core-library-revision",
               "rules-core-library-workspace",
+              "rules-core-library-family-nav",
               "getRuleVersions",
               "Compare source versions"
           ]) {
