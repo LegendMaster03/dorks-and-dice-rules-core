@@ -388,7 +388,7 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                             }
                           ]
                         }
-                        """.Replace("__TOKEN__", token, StringComparison.Ordinal));
+                        """.Replace("__TOKEN__", token, StringComparison.Ordinal)));
                 packageId = imported.PackageId;
 
                 foreach (var entity in imported.Entities)
