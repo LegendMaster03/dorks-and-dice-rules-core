@@ -55,6 +55,11 @@ public sealed class SubclassRuleConceptRelationshipIntegrationTests
                           "name": "Wizard",
                           "source": "BASE",
                           "hd": { "number": 1, "faces": 6 }
+                        },
+                        {
+                          "name": "Fighter",
+                          "source": "BASE",
+                          "hd": { "number": 1, "faces": 10 }
                         }
                       ]
                     }
@@ -85,13 +90,23 @@ public sealed class SubclassRuleConceptRelationshipIntegrationTests
                     """,
                 GameEdition: "5e"));
 
-            var classEntity = Assert.Single(importedClass.Entities, value => value.EntityType == "class");
+            var classEntity = Assert.Single(
+                importedClass.Entities,
+                value => value.EntityType == "class" && value.Name == "Wizard");
+            var staleClassEntity = Assert.Single(
+                importedClass.Entities,
+                value => value.EntityType == "class" && value.Name == "Fighter");
             var subclassEntity = Assert.Single(importedSubclass.Entities, value => value.EntityType == "subclass");
 
             var acceptedClass = await normalization.AcceptAsync(classEntity.EntityId, actor);
             Assert.NotNull(acceptedClass);
             Assert.Equal("class.wizard", acceptedClass!.Concept.Key);
             Assert.Equal(RuleConceptEntityTypes.Class, acceptedClass.Concept.EntityType);
+
+            var acceptedStaleClass = await normalization.AcceptAsync(staleClassEntity.EntityId, actor);
+            Assert.NotNull(acceptedStaleClass);
+            Assert.Equal("class.fighter", acceptedStaleClass!.Concept.Key);
+            Assert.Equal(RuleConceptEntityTypes.Class, acceptedStaleClass.Concept.EntityType);
 
             var acceptedSubclass = await normalization.AcceptAsync(subclassEntity.EntityId, actor);
             Assert.NotNull(acceptedSubclass);
@@ -127,6 +142,59 @@ public sealed class SubclassRuleConceptRelationshipIntegrationTests
                 acceptedSubclass.Concept.Id,
                 acceptedClass.Concept.Id);
 
+            await db.Database.ExecuteSqlInterpolatedAsync($"""
+                INSERT INTO rule_concept_relationship (
+                    rule_concept_relationship_id,
+                    from_rule_concept_id,
+                    to_rule_concept_id,
+                    relationship_kind,
+                    created_by_user_id,
+                    created_at)
+                VALUES (
+                    {Guid.NewGuid()},
+                    {acceptedSubclass.Concept.Id},
+                    {acceptedStaleClass.Concept.Id},
+                    {RuleConceptRelationshipKinds.ParentClass},
+                    {actor},
+                    {DateTimeOffset.UtcNow});
+
+                INSERT INTO rule_concept_relationship (
+                    rule_concept_relationship_id,
+                    from_rule_concept_id,
+                    to_rule_concept_id,
+                    relationship_kind,
+                    created_by_user_id,
+                    created_at)
+                VALUES (
+                    {Guid.NewGuid()},
+                    {acceptedClass.Concept.Id},
+                    {acceptedStaleClass.Concept.Id},
+                    {"integration-test-related"},
+                    {actor},
+                    {DateTimeOffset.UtcNow});
+                """);
+
+            var repeatedAcceptance = await normalization.AcceptAsync(subclassEntity.EntityId, actor);
+            Assert.NotNull(repeatedAcceptance);
+
+            var reconciled = await catalog.GetGlobalAsync(
+                userId: null,
+                entityType: RuleConceptEntityTypes.Subclass,
+                query: "Evocation");
+            AssertPublishedSubclassRelationship(
+                reconciled,
+                acceptedSubclass.Concept.Id,
+                acceptedClass.Concept.Id);
+
+            var resolvedClass = await catalog.GetGlobalAsync(
+                userId: null,
+                entityType: RuleConceptEntityTypes.Class,
+                query: "Wizard");
+            var wizard = Assert.Single(resolvedClass.Rules);
+            var preservedRelationship = Assert.Single(wizard.Relationships);
+            Assert.Equal("integration-test-related", preservedRelationship.Kind);
+            Assert.Equal(acceptedStaleClass.Concept.Id, preservedRelationship.RelatedRuleConceptId);
+
             // Simulate upgrading a database whose Class/Subclass bindings predate the explicit
             // relationship contract. The first resolved-catalog read must reconstruct the stable
             // relationship without asking a Rules Lawyer to re-accept the source.
@@ -138,7 +206,7 @@ public sealed class SubclassRuleConceptRelationshipIntegrationTests
             await db.Database.ExecuteSqlRawAsync("""
                 DELETE FROM rule_concept_relationship;
                 DELETE FROM rule_concept_relationship_backfill
-                WHERE backfill_key = 'subclass-parent-v1';
+                WHERE backfill_key = 'subclass-parent-v2';
                 """);
 
             var backfilled = await catalog.GetGlobalAsync(

@@ -17,7 +17,7 @@ internal sealed record RuleConceptRelationshipReference(
 
 internal static class RuleConceptRelationshipStore
 {
-    private const string SubclassParentBackfillKey = "subclass-parent-v1";
+    private const string SubclassParentBackfillKey = "subclass-parent-v2";
     private const string SystemActorUserId = "rules-core-system";
 
     public static async Task EnsureSchemaAsync(
@@ -193,46 +193,175 @@ internal static class RuleConceptRelationshipStore
         string actorUserId,
         CancellationToken cancellationToken)
     {
-        var bindings = await ReadBoundConceptSourcesAsync(dbContext, cancellationToken);
-        var classBindings = bindings
-            .Where(value => string.Equals(
-                RuleConceptEntityTypes.Normalize(value.EntityType),
-                RuleConceptEntityTypes.Class,
-                StringComparison.Ordinal))
-            .ToArray();
-
-        foreach (var subclass in bindings.Where(value => string.Equals(
-                     RuleConceptEntityTypes.Normalize(value.EntityType),
-                     RuleConceptEntityTypes.Subclass,
-                     StringComparison.Ordinal)))
+        IDbContextTransaction? ownedTransaction = null;
+        if (dbContext.Database.CurrentTransaction is null)
         {
-            if (!TryReadParentClassIdentity(subclass.NativeIdentityJson, out var className, out var classSource))
-            {
-                continue;
-            }
+            ownedTransaction = await dbContext.Database.BeginTransactionAsync(
+                IsolationLevel.ReadCommitted,
+                cancellationToken);
+        }
 
-            var parentConceptIds = classBindings
-                .Where(candidate => string.Equals(candidate.SourceEntityName, className, StringComparison.OrdinalIgnoreCase))
-                .Where(candidate => classSource is null
-                    || string.Equals(candidate.SourceCode, classSource, StringComparison.OrdinalIgnoreCase))
-                .Select(candidate => candidate.RuleConceptId)
-                .Distinct()
+        try
+        {
+            var bindings = await ReadBoundConceptSourcesAsync(dbContext, cancellationToken);
+            var classBindings = bindings
+                .Where(value => string.Equals(
+                    RuleConceptEntityTypes.Normalize(value.EntityType),
+                    RuleConceptEntityTypes.Class,
+                    StringComparison.Ordinal))
                 .ToArray();
+            var desiredRelationships = new HashSet<(Guid FromRuleConceptId, Guid ToRuleConceptId)>();
 
-            foreach (var parentConceptId in parentConceptIds)
+            foreach (var subclass in bindings.Where(value => string.Equals(
+                         RuleConceptEntityTypes.Normalize(value.EntityType),
+                         RuleConceptEntityTypes.Subclass,
+                         StringComparison.Ordinal)))
             {
-                if (parentConceptId == subclass.RuleConceptId)
+                if (!TryReadParentClassIdentity(subclass.NativeIdentityJson, out var className, out var classSource))
                 {
                     continue;
                 }
 
+                var parentConceptIds = classBindings
+                    .Where(candidate => string.Equals(candidate.SourceEntityName, className, StringComparison.OrdinalIgnoreCase))
+                    .Where(candidate => classSource is null
+                        || string.Equals(candidate.SourceCode, classSource, StringComparison.OrdinalIgnoreCase))
+                    .Select(candidate => candidate.RuleConceptId)
+                    .Distinct()
+                    .ToArray();
+
+                foreach (var parentConceptId in parentConceptIds)
+                {
+                    if (parentConceptId != subclass.RuleConceptId)
+                    {
+                        desiredRelationships.Add((subclass.RuleConceptId, parentConceptId));
+                    }
+                }
+            }
+
+            var existingRelationships = await ReadRelationshipIdentitiesAsync(
+                dbContext,
+                RuleConceptRelationshipKinds.ParentClass,
+                cancellationToken);
+            foreach (var relationship in existingRelationships.Where(value => !desiredRelationships.Contains(value)))
+            {
+                await DeleteRelationshipAsync(
+                    dbContext,
+                    relationship.FromRuleConceptId,
+                    relationship.ToRuleConceptId,
+                    RuleConceptRelationshipKinds.ParentClass,
+                    cancellationToken);
+            }
+
+            foreach (var relationship in desiredRelationships)
+            {
                 await InsertRelationshipAsync(
                     dbContext,
-                    subclass.RuleConceptId,
-                    parentConceptId,
+                    relationship.FromRuleConceptId,
+                    relationship.ToRuleConceptId,
                     RuleConceptRelationshipKinds.ParentClass,
                     actorUserId,
                     cancellationToken);
+            }
+
+            if (ownedTransaction is not null)
+            {
+                await ownedTransaction.CommitAsync(cancellationToken);
+            }
+        }
+        catch
+        {
+            if (ownedTransaction is not null)
+            {
+                await ownedTransaction.RollbackAsync(cancellationToken);
+            }
+            throw;
+        }
+        finally
+        {
+            if (ownedTransaction is not null)
+            {
+                await ownedTransaction.DisposeAsync();
+            }
+        }
+    }
+
+    private static async Task<HashSet<(Guid FromRuleConceptId, Guid ToRuleConceptId)>> ReadRelationshipIdentitiesAsync(
+        RulesCoreDbContext dbContext,
+        string kind,
+        CancellationToken cancellationToken)
+    {
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere)
+        {
+            await connection.OpenAsync(cancellationToken);
+        }
+
+        try
+        {
+            var relationships = new HashSet<(Guid FromRuleConceptId, Guid ToRuleConceptId)>();
+            await using var command = connection.CreateCommand();
+            command.Transaction = dbContext.Database.CurrentTransaction?.GetDbTransaction();
+            command.CommandText = """
+                SELECT from_rule_concept_id,
+                       to_rule_concept_id
+                FROM rule_concept_relationship
+                WHERE relationship_kind = @kind;
+                """;
+            AddParameter(command, "kind", kind);
+
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                relationships.Add((reader.GetGuid(0), reader.GetGuid(1)));
+            }
+            return relationships;
+        }
+        finally
+        {
+            if (openedHere)
+            {
+                await connection.CloseAsync();
+            }
+        }
+    }
+
+    private static async Task DeleteRelationshipAsync(
+        RulesCoreDbContext dbContext,
+        Guid fromRuleConceptId,
+        Guid toRuleConceptId,
+        string kind,
+        CancellationToken cancellationToken)
+    {
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere)
+        {
+            await connection.OpenAsync(cancellationToken);
+        }
+
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.Transaction = dbContext.Database.CurrentTransaction?.GetDbTransaction();
+            command.CommandText = """
+                DELETE FROM rule_concept_relationship
+                WHERE from_rule_concept_id = @from
+                  AND to_rule_concept_id = @to
+                  AND relationship_kind = @kind;
+                """;
+
+            AddParameter(command, "from", fromRuleConceptId);
+            AddParameter(command, "to", toRuleConceptId);
+            AddParameter(command, "kind", kind);
+            await command.ExecuteNonQueryAsync(cancellationToken);
+        }
+        finally
+        {
+            if (openedHere)
+            {
+                await connection.CloseAsync();
             }
         }
     }
