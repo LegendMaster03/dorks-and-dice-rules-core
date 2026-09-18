@@ -503,7 +503,10 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
     private async Task EnsureSchemaAsync(CancellationToken cancellationToken)
     {
         var connection = dbContext.Database.GetDbConnection();
-        var schemaKey = $"{connection.DataSource}\u001f{connection.Database}";
+        var connectionIdentity = dbContext.Database.GetConnectionString()
+            ?? connection.ConnectionString
+            ?? $"{connection.DataSource}\u001f{connection.Database}";
+        var schemaKey = Fingerprint(Encoding.UTF8.GetBytes(connectionIdentity));
         if (InitializedSchemas.ContainsKey(schemaKey)) return;
 
         await SchemaInitializationLock.WaitAsync(cancellationToken);
