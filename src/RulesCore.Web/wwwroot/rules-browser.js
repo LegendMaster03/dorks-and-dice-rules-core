@@ -66,6 +66,8 @@ export function installResolvedRulesBrowser(app) {
     app.viewNavigation.library = async () => {
         app.browserDeepLink = null;
         app.browserSelectedConceptKey = null;
+        app.libraryDeepLink = null;
+        app.libraryRouteActive = false;
         app.activeView = "library";
         pushToolRoute(app, catalogRouteForEntity(app.browserFilters.entityType));
         await app.render();
