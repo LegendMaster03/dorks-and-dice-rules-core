@@ -81,22 +81,21 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         var publicationByRevision = await ReadPublicationAttributionsAsync(
             rules.Rules,
             cancellationToken);
-        var editions = await ReadEffectiveEditionsAsync(
-            rules.Rules,
-            publicationByRevision,
+        var competencyDocuments = await ReadMechanicalDocumentsAsync(
+            rules.Rules.Where(IsCompetencyRule).ToArray(),
             cancellationToken);
 
         var mechanics = new List<CharacterMechanicView>();
 
         foreach (var definition in KnownCharacterMechanics.All)
         {
-            var applicable = IsApplicable(definition, editions, effectivePackageKeys);
-            if (!applicable && !includeUnavailable)
+            var available = IsAvailable(definition, effectivePackageKeys);
+            if (!available && !includeUnavailable)
             {
                 continue;
             }
 
-            mechanics.Add(ToStaticView(definition, applicable));
+            mechanics.Add(ToStaticView(definition, available));
         }
 
         var relationshipViews = await BuildCompetencyRelationshipsAsync(
@@ -130,24 +129,14 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     StringComparison.Ordinal)
                 && value.CanResolve);
 
-            var inputs = derivation is null
-                ? (IReadOnlyList<CharacterMechanicInputView>)
-                    [new CharacterMechanicInputView(
-                        "value",
-                        CharacterMechanicInputValueKinds.Integer,
-                        CharacterMechanicInputOrigins.CharacterState,
-                        Required: true,
-                        ParticipatesInValue: true,
-                        DefaultInteger: null)]
-                : derivation.ComponentMechanicKeys
-                    .Select(value => new CharacterMechanicInputView(
-                        ConceptKeyFromCompetencyMechanicKey(value),
-                        CharacterMechanicInputValueKinds.Integer,
-                        CharacterMechanicInputOrigins.CharacterState,
-                        Required: true,
-                        ParticipatesInValue: true,
-                        DefaultInteger: null))
-                    .ToArray();
+            var publicationMetadata = publicationByRevision.GetValueOrDefault(
+                rule.SourceEntityRevisionId,
+                []);
+            var competency = BuildCompetencyDefinition(
+                rule,
+                competencyDocuments.GetValueOrDefault(rule.SourceEntityRevisionId),
+                publicationMetadata);
+            var inputs = BuildCompetencyInputs(derivation, competency);
 
             var sourceUri = sourceUriByRevision.GetValueOrDefault(rule.SourceEntityRevisionId);
             var provider = providerByPackageKey.GetValueOrDefault(rule.PackageKey)
@@ -158,11 +147,11 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 rule.DisplayName,
                 rule.ConceptKey,
                 rule.RuleConceptId,
-                IsApplicableUnderRuleset: true,
+                IsAvailableUnderRuleset: true,
                 new CharacterMechanicApplicabilityView(
                     CharacterMechanicApplicabilityKinds.Always,
                     RequiresCharacterState: true,
-                    EditionKeys: [],
+                    RequiredCapabilityKeys: [],
                     SourcePackageKey: rule.PackageKey),
                 derivation is null
                     ? CharacterMechanicEvaluationKinds.SourceValue
@@ -175,13 +164,13 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 relationships,
                 ConditionalRollRules: [],
                 BooleanRequirements: [],
+                Check: null,
+                Competency: competency,
                 SourceAttributions: BuildRuleAttributions(
                     rule,
                     provider,
                     sourceUri,
-                    publicationByRevision.GetValueOrDefault(
-                        rule.SourceEntityRevisionId,
-                        []))));
+                    publicationMetadata)));
         }
 
         mechanics = AttachStaticRelationships(mechanics);
@@ -207,9 +196,20 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         var normalizedKey = RequireMechanicKey(mechanicKey);
         var mechanic = catalog.Mechanics.SingleOrDefault(value =>
             string.Equals(value.MechanicKey, normalizedKey, StringComparison.OrdinalIgnoreCase));
-        if (mechanic is null || !mechanic.IsApplicableUnderRuleset)
+        if (mechanic is null || !mechanic.IsAvailableUnderRuleset)
         {
             return null;
+        }
+
+        var availableCapabilities = (request.CapabilityKeys ?? [])
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var missingCapabilities = mechanic.Applicability.RequiredCapabilityKeys
+            .Where(value => !availableCapabilities.Contains(value))
+            .ToArray();
+        if (missingCapabilities.Length > 0)
+        {
+            throw new InvalidOperationException(
+                $"Mechanic '{mechanic.MechanicKey}' requires Character capability: {string.Join(", ", missingCapabilities)}.");
         }
 
         var integerInputs = request.IntegerInputs
@@ -401,7 +401,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
 
     private static CharacterMechanicView ToStaticView(
         CharacterMechanicDefinition definition,
-        bool applicable)
+        bool available)
     {
         var sourceAttributions = definition.Source is null
             ? (IReadOnlyList<CharacterMechanicSourceAttributionView>)[]
@@ -431,14 +431,14 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             definition.DisplayName,
             ConceptKey: null,
             RuleConceptId: null,
-            applicable,
+            available,
             new CharacterMechanicApplicabilityView(
                 definition.Applicability.Kind,
                 definition.Applicability.RequiresCharacterState,
-                definition.Applicability.EditionKeys,
+                definition.Applicability.RequiredCapabilityKeys,
                 definition.Applicability.SourcePackageKey),
             definition.EvaluationKind,
-            applicable
+            available
                 && definition.EvaluationKind != CharacterMechanicEvaluationKinds.None,
             definition.Constant,
             definition.TargetInputKey,
@@ -449,7 +449,9 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 value.Origin,
                 value.Required,
                 value.ParticipatesInValue,
-                value.DefaultInteger)).ToArray(),
+                value.DefaultInteger,
+                value.IncludeWhenBooleanInputKey,
+                value.IncludeWhenBooleanValue)).ToArray(),
             Relationships: [],
             definition.ConditionalRollRules.Select(value => new CharacterMechanicConditionalRollRuleView(
                 value.Key,
@@ -460,6 +462,18 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             definition.BooleanRequirements.Select(value => new CharacterMechanicBooleanRequirementView(
                 value.InputKey,
                 value.ExpectedValue)).ToArray(),
+            Check: definition.Check is null
+                ? null
+                : new CharacterMechanicCheckView(
+                    new CharacterCheckAbilityView(
+                        definition.Check.Ability.ResolutionKind,
+                        definition.Check.Ability.FixedAbilityKey,
+                        definition.Check.Ability.AllowedAbilityKeys ?? []),
+                    new CharacterCheckCompetencyView(
+                        definition.Check.Competency.ResolutionKind,
+                        definition.Check.Competency.AllowedCompetencyKinds,
+                        definition.Check.Competency.FixedConceptKey)),
+            Competency: null,
             sourceAttributions);
     }
 
@@ -480,105 +494,332 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 value.RollMode,
                 value.TargetMechanicKeys)).ToArray());
 
-    private static bool IsApplicable(
+    private static bool IsAvailable(
         CharacterMechanicDefinition definition,
-        IReadOnlySet<string> effectiveEditions,
         IReadOnlySet<string> effectivePackageKeys) =>
         definition.Applicability.Kind switch
         {
             CharacterMechanicApplicabilityKinds.Always => true,
-            CharacterMechanicApplicabilityKinds.RulesetEdition =>
-                definition.Applicability.EditionKeys.Any(effectiveEditions.Contains),
+            CharacterMechanicApplicabilityKinds.CharacterCapability => true,
             CharacterMechanicApplicabilityKinds.AccessibleSource =>
                 definition.Applicability.SourcePackageKey is string packageKey
                 && effectivePackageKeys.Contains(packageKey),
             _ => false
         };
 
-    private async Task<IReadOnlySet<string>> ReadEffectiveEditionsAsync(
-        IReadOnlyList<ResolvedRuleCatalogItemView> rules,
-        IReadOnlyDictionary<Guid, IReadOnlyList<PublicationAttribution>> publicationByRevision,
-        CancellationToken cancellationToken)
+    private static IReadOnlyList<CharacterMechanicInputView> BuildCompetencyInputs(
+        CharacterMechanicRelationshipView? derivation,
+        CharacterCompetencyDefinitionView competency)
     {
-        var editions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        foreach (var publication in publicationByRevision.Values.SelectMany(value => value))
+        var inputs = new List<CharacterMechanicInputView>();
+        if (derivation is null)
         {
-            if (publication.GameEdition is not null
-                && (string.Equals(publication.GameEdition, "3e", StringComparison.OrdinalIgnoreCase)
-                    || string.Equals(publication.GameEdition, "3.5e", StringComparison.OrdinalIgnoreCase)))
-            {
-                editions.Add(publication.GameEdition);
-            }
+            inputs.Add(new CharacterMechanicInputView(
+                "value",
+                CharacterMechanicInputValueKinds.Integer,
+                CharacterMechanicInputOrigins.CharacterState,
+                Required: true,
+                ParticipatesInValue: true,
+                DefaultInteger: null,
+                IncludeWhenBooleanInputKey: null,
+                IncludeWhenBooleanValue: null));
+        }
+        else
+        {
+            inputs.AddRange(derivation.ComponentMechanicKeys.Select(value =>
+                new CharacterMechanicInputView(
+                    ConceptKeyFromCompetencyMechanicKey(value),
+                    CharacterMechanicInputValueKinds.Integer,
+                    CharacterMechanicInputOrigins.CharacterState,
+                    Required: true,
+                    ParticipatesInValue: true,
+                    DefaultInteger: null,
+                    IncludeWhenBooleanInputKey: null,
+                    IncludeWhenBooleanValue: null)));
         }
 
-        foreach (var rule in rules)
+        if (competency.SupportsRanks)
         {
-            if (string.Equals(rule.SourceCode, "SRD3", StringComparison.OrdinalIgnoreCase))
-            {
-                editions.Add("3e");
-            }
-            else if (string.Equals(rule.SourceCode, "SRD35", StringComparison.OrdinalIgnoreCase))
-            {
-                editions.Add("3.5e");
-            }
+            inputs.Add(new CharacterMechanicInputView(
+                "ranks",
+                CharacterMechanicInputValueKinds.Integer,
+                CharacterMechanicInputOrigins.CharacterState,
+                Required: false,
+                ParticipatesInValue: false,
+                DefaultInteger: null,
+                IncludeWhenBooleanInputKey: null,
+                IncludeWhenBooleanValue: null));
+        }
+        if (competency.SupportsClassSkillState)
+        {
+            inputs.Add(new CharacterMechanicInputView(
+                "classSkillState",
+                CharacterMechanicInputValueKinds.Boolean,
+                CharacterMechanicInputOrigins.CharacterState,
+                Required: false,
+                ParticipatesInValue: false,
+                DefaultInteger: null,
+                IncludeWhenBooleanInputKey: null,
+                IncludeWhenBooleanValue: null));
+        }
+        if (competency.SupportsTrainingState)
+        {
+            inputs.Add(new CharacterMechanicInputView(
+                "trainingState",
+                CharacterMechanicInputValueKinds.String,
+                CharacterMechanicInputOrigins.CharacterState,
+                Required: false,
+                ParticipatesInValue: false,
+                DefaultInteger: null,
+                IncludeWhenBooleanInputKey: null,
+                IncludeWhenBooleanValue: null));
+        }
+        if (competency.ArmorCheckPenaltyApplies is not false)
+        {
+            inputs.Add(new CharacterMechanicInputView(
+                "armorCheckPenaltyAdjustment",
+                CharacterMechanicInputValueKinds.Integer,
+                CharacterMechanicInputOrigins.Derived,
+                Required: false,
+                ParticipatesInValue: false,
+                DefaultInteger: null,
+                IncludeWhenBooleanInputKey: null,
+                IncludeWhenBooleanValue: null));
         }
 
-        var revisionIds = rules.Select(value => value.SourceEntityRevisionId).Distinct().ToArray();
-        if (revisionIds.Length == 0)
-        {
-            return editions;
-        }
-
-        var documents = await dbContext.SourceEntityRevisions
-            .AsNoTracking()
-            .Where(value => revisionIds.Contains(value.Id))
-            .Select(value => new
-            {
-                value.ContentJson,
-                value.RawJson
-            })
-            .ToArrayAsync(cancellationToken);
-        foreach (var value in documents)
-        {
-            TryAddEdition(value.ContentJson, editions);
-            TryAddEdition(value.RawJson, editions);
-        }
-
-        return editions;
+        return inputs;
     }
 
-    private static void TryAddEdition(string? json, ISet<string> editions)
+    private static CharacterCompetencyDefinitionView BuildCompetencyDefinition(
+        ResolvedRuleCatalogItemView rule,
+        string? mechanicalJson,
+        IReadOnlyList<PublicationAttribution> publications)
     {
-        if (string.IsNullOrWhiteSpace(json))
+        var specialty = ParseSpecialty(rule.DisplayName);
+        var isTool = string.Equals(rule.EntityType, "tool", StringComparison.OrdinalIgnoreCase);
+        var isThreeX = publications.Any(value =>
+                string.Equals(value.GameEdition, "3e", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(value.GameEdition, "3.5e", StringComparison.OrdinalIgnoreCase))
+            || string.Equals(rule.SourceCode, "SRD3", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(rule.SourceCode, "SRD35", StringComparison.OrdinalIgnoreCase);
+
+        var governingAbility = ReadGoverningAbilityKey(mechanicalJson);
+        var trainedOnly = ReadOptionalCompetencyBoolean(mechanicalJson, "trainedOnly");
+        var useUntrained = ReadPcGenBooleanTag(mechanicalJson, "USEUNTRAINED");
+        if (!trainedOnly.HasValue && useUntrained.HasValue)
         {
-            return;
+            trainedOnly = !useUntrained.Value;
+        }
+        var armorCheckPenaltyApplies = ReadOptionalCompetencyBoolean(
+                mechanicalJson,
+                "armorCheckPenaltyApplies")
+            ?? ReadPcGenBooleanTag(mechanicalJson, "ACHECK");
+
+        return new CharacterCompetencyDefinitionView(
+            isTool
+                ? CharacterCompetencyKinds.Tool
+                : specialty.Specialty is null
+                    ? CharacterCompetencyKinds.Skill
+                    : CharacterCompetencyKinds.SpecializedSkill,
+            specialty.FamilyName,
+            specialty.Specialty,
+            governingAbility,
+            SupportsRanks: isThreeX && !isTool,
+            SupportsClassSkillState: isThreeX && !isTool,
+            SupportsTrainingState: true,
+            TrainedOnly: trainedOnly,
+            ArmorCheckPenaltyApplies: armorCheckPenaltyApplies);
+    }
+
+    private static (string? FamilyName, string? Specialty) ParseSpecialty(string displayName)
+    {
+        foreach (var family in new[] { "Craft", "Knowledge", "Perform", "Profession" })
+        {
+            var prefix = $"{family} (";
+            if (displayName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
+                && displayName.EndsWith(')')
+                && displayName.Length > prefix.Length + 1)
+            {
+                var specialty = displayName[prefix.Length..^1].Trim();
+                if (!string.IsNullOrWhiteSpace(specialty))
+                {
+                    return (family, specialty);
+                }
+            }
+        }
+
+        return (null, null);
+    }
+
+    private static string? ReadGoverningAbilityKey(string? mechanicalJson)
+    {
+        if (string.IsNullOrWhiteSpace(mechanicalJson))
+        {
+            return null;
         }
 
         try
         {
-            using var document = JsonDocument.Parse(json);
-            if (!document.RootElement.TryGetProperty("_rulesCore", out var rulesCore)
-                || rulesCore.ValueKind != JsonValueKind.Object
-                || !rulesCore.TryGetProperty("context", out var context)
-                || context.ValueKind != JsonValueKind.Object
-                || !context.TryGetProperty("edition", out var edition)
-                || edition.ValueKind != JsonValueKind.String
-                || string.IsNullOrWhiteSpace(edition.GetString()))
+            using var document = JsonDocument.Parse(mechanicalJson);
+            if (document.RootElement.TryGetProperty("ability", out var ability)
+                && ability.ValueKind == JsonValueKind.String)
             {
-                return;
+                return NormalizeAbilityKey(ability.GetString());
             }
 
-            var normalized = edition.GetString()!.Trim();
-            if (string.Equals(normalized, "3e", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(normalized, "3.5e", StringComparison.OrdinalIgnoreCase))
+            if (document.RootElement.TryGetProperty("_rulesCore", out var rulesCore)
+                && rulesCore.ValueKind == JsonValueKind.Object
+                && rulesCore.TryGetProperty("pcgen", out var pcgen)
+                && pcgen.ValueKind == JsonValueKind.Object
+                && pcgen.TryGetProperty("unmappedSegments", out var segments)
+                && segments.ValueKind == JsonValueKind.Array)
             {
-                editions.Add(normalized);
+                foreach (var segment in segments.EnumerateArray())
+                {
+                    if (segment.ValueKind == JsonValueKind.Object
+                        && segment.TryGetProperty("tag", out var tag)
+                        && tag.ValueKind == JsonValueKind.String
+                        && string.Equals(tag.GetString(), "KEYSTAT", StringComparison.OrdinalIgnoreCase)
+                        && segment.TryGetProperty("value", out var value)
+                        && value.ValueKind == JsonValueKind.String)
+                    {
+                        return NormalizeAbilityKey(value.GetString());
+                    }
+                }
             }
         }
         catch (JsonException)
         {
-            // Source validation owns malformed JSON. Applicability detection remains conservative.
+            return null;
         }
+
+        return null;
+    }
+
+    private static bool? ReadOptionalCompetencyBoolean(string? mechanicalJson, string propertyName)
+    {
+        if (string.IsNullOrWhiteSpace(mechanicalJson))
+        {
+            return null;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(mechanicalJson);
+            if (TryReadBoolean(document.RootElement, propertyName, out var direct))
+            {
+                return direct;
+            }
+
+            if (document.RootElement.TryGetProperty("_rulesCore", out var rulesCore)
+                && rulesCore.ValueKind == JsonValueKind.Object
+                && rulesCore.TryGetProperty("competency", out var competency)
+                && competency.ValueKind == JsonValueKind.Object
+                && TryReadBoolean(competency, propertyName, out var normalized))
+            {
+                return normalized;
+            }
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
+
+        return null;
+    }
+
+    private static bool? ReadPcGenBooleanTag(string? mechanicalJson, string tagName)
+    {
+        var value = ReadPcGenTagValue(mechanicalJson, tagName);
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        if (string.Equals(value, "YES", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(value, "TRUE", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+        if (string.Equals(value, "NO", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(value, "FALSE", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+        return null;
+    }
+
+    private static string? ReadPcGenTagValue(string? mechanicalJson, string tagName)
+    {
+        if (string.IsNullOrWhiteSpace(mechanicalJson))
+        {
+            return null;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(mechanicalJson);
+            if (!document.RootElement.TryGetProperty("_rulesCore", out var rulesCore)
+                || rulesCore.ValueKind != JsonValueKind.Object
+                || !rulesCore.TryGetProperty("pcgen", out var pcgen)
+                || pcgen.ValueKind != JsonValueKind.Object
+                || !pcgen.TryGetProperty("unmappedSegments", out var segments)
+                || segments.ValueKind != JsonValueKind.Array)
+            {
+                return null;
+            }
+
+            foreach (var segment in segments.EnumerateArray().Reverse())
+            {
+                if (segment.ValueKind == JsonValueKind.Object
+                    && segment.TryGetProperty("tag", out var tag)
+                    && tag.ValueKind == JsonValueKind.String
+                    && string.Equals(tag.GetString(), tagName, StringComparison.OrdinalIgnoreCase)
+                    && segment.TryGetProperty("value", out var value)
+                    && value.ValueKind == JsonValueKind.String)
+                {
+                    return value.GetString()?.Trim();
+                }
+            }
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
+
+        return null;
+    }
+
+    private static bool TryReadBoolean(JsonElement value, string propertyName, out bool result)
+    {
+        result = false;
+        if (!value.TryGetProperty(propertyName, out var property)
+            || (property.ValueKind != JsonValueKind.True && property.ValueKind != JsonValueKind.False))
+        {
+            return false;
+        }
+
+        result = property.GetBoolean();
+        return true;
+    }
+
+    private static string? NormalizeAbilityKey(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        return value.Trim().ToLowerInvariant() switch
+        {
+            "str" or "strength" => "strength",
+            "dex" or "dexterity" => "dexterity",
+            "con" or "constitution" => "constitution",
+            "int" or "intelligence" => "intelligence",
+            "wis" or "wisdom" => "wisdom",
+            "cha" or "charisma" => "charisma",
+            _ => value.Trim().ToLowerInvariant()
+        };
     }
 
     private static IReadOnlyList<CharacterMechanicSourceAttributionView> BuildRuleAttributions(
@@ -705,6 +946,25 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 await connection.CloseAsync();
             }
         }
+    }
+
+    private async Task<IReadOnlyDictionary<Guid, string>> ReadMechanicalDocumentsAsync(
+        IReadOnlyList<ResolvedRuleCatalogItemView> rules,
+        CancellationToken cancellationToken)
+    {
+        var revisionIds = rules.Select(value => value.SourceEntityRevisionId).Distinct().ToArray();
+        if (revisionIds.Length == 0)
+        {
+            return new Dictionary<Guid, string>();
+        }
+
+        var revisions = await dbContext.SourceEntityRevisions
+            .AsNoTracking()
+            .Where(value => revisionIds.Contains(value.Id))
+            .ToArrayAsync(cancellationToken);
+        return revisions.ToDictionary(
+            value => value.Id,
+            value => value.GetMechanicalContentJson());
     }
 
     private async Task<IReadOnlyDictionary<string, string>> ReadProvidersAsync(

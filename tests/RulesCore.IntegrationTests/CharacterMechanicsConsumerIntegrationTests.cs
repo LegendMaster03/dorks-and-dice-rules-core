@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -9,6 +10,7 @@ using RulesCore.Application.Hosting;
 using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.IntegrationTests;
 
@@ -56,7 +58,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             var harvesting = Assert.Single(
                 catalog.Mechanics,
                 value => value.MechanicKey == "check.harvesting.total");
-            Assert.False(harvesting.IsApplicableUnderRuleset);
+            Assert.False(harvesting.IsAvailableUnderRuleset);
             var attribution = Assert.Single(harvesting.SourceAttributions);
             Assert.Equal("loot-tavern-free", attribution.PackageKey);
             Assert.Equal("Loot Tavern Free Releases", attribution.PackageDisplayName);
@@ -75,7 +77,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                        {
                            ["d20Roll"] = 12,
                            ["abilityModifier"] = 3,
-                           ["competencyModifier"] = 2,
+                           ["competencyContribution"] = 2,
                            ["targetDc"] = 17
                        },
                        StringInputs: new Dictionary<string, string>
@@ -124,7 +126,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
 
 
     [Fact]
-    public async Task EffectiveThreeXPublicationMetadataAndCompositeCompetenciesFlowThroughConsumerContract()
+    public async Task PcGenCompetencyMetadataCompositeRulesAndCapabilityGatesFlowThroughConsumerContract()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
         if (string.IsNullOrWhiteSpace(connectionString))
@@ -140,38 +142,43 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         try
         {
             await using var scope = factory.Services.CreateAsyncScope();
-            var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
             var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
             var mechanics = scope.ServiceProvider.GetRequiredService<ICharacterMechanicsConsumerService>();
             var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
 
-            var imported = await importer.Import5eToolsDocumentAsync(new Import5eToolsDocumentRequest(
-                PackageKey: packageKey,
-                PackageDisplayName: $"Character Mechanics 3.x {token}",
-                Provider: "integration-test",
-                License: "test-only",
-                IsPublic: true,
-                WorkKey: $"character-mechanics-work-{token}",
-                WorkDisplayName: $"Character Mechanics 3.5e Work {token}",
-                EditionKey: "3-5e",
-                EditionDisplayName: "3.5e",
-                Json: $"""
-                    {
-                      "skill": [
-                        { "name": "Hide", "source": "CM{{token}}" },
-                        { "name": "Move Silently", "source": "CM{{token}}" },
-                        { "name": "Stealth", "source": "CM{{token}}" }
-                      ]
-                    }
-                    """,
-                GameEdition: "3.5e"));
+            var sourceShort = $"CM{token}";
+            var fileName = $"data/35e/example/character_mechanics_{token}.lst";
+            var sourceText = string.Join('\n',
+            [
+                $"SOURCELONG:Character Mechanics 3.5e Work {token}\tSOURCESHORT:{sourceShort}",
+                "Hide\tKEYSTAT:DEX\tUSEUNTRAINED:YES\tACHECK:YES",
+                "Move Silently\tKEYSTAT:DEX\tUSEUNTRAINED:YES\tACHECK:YES",
+                "Stealth\tKEYSTAT:DEX\tUSEUNTRAINED:YES\tACHECK:YES",
+                "Knowledge (the planes)\tKEYSTAT:INT\tUSEUNTRAINED:NO\tACHECK:NO"
+            ]);
+            var representation = new PcGenSourceFormatAdapter().TryRead(
+                new SourceRepresentationArtifact(
+                    fileName,
+                    Encoding.UTF8.GetBytes(sourceText),
+                    $"integration:character-mechanics:{token}#{fileName}"))
+                ?? throw new InvalidOperationException("PCGen character mechanics fixture was not readable.");
+
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Character Mechanics 3.x {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    representation));
             packageId = imported.PackageId;
 
             foreach (var (name, conceptKey) in new[]
                      {
                          ("Hide", "skill.hide"),
                          ("Move Silently", "skill.move-silently"),
-                         ("Stealth", "skill.stealth")
+                         ("Stealth", "skill.stealth"),
+                         ("Knowledge (the planes)", "skill.knowledge-the-planes")
                      })
             {
                 var source = imported.Entities.Single(value => value.Name == name);
@@ -196,15 +203,59 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             await globalRules.PublishAsync($"mechanics-test-{token}");
 
             var catalog = await mechanics.GetGlobalAsync(userId: null);
+
             var fortitude = Assert.Single(
                 catalog.Mechanics,
                 value => value.MechanicKey == "save.fortitude");
-            Assert.True(fortitude.IsApplicableUnderRuleset);
+            Assert.True(fortitude.IsAvailableUnderRuleset);
+            Assert.Equal(
+                CharacterMechanicApplicabilityKinds.CharacterCapability,
+                fortitude.Applicability.Kind);
+            Assert.Equal(
+                new[] { "save.fortitude" },
+                fortitude.Applicability.RequiredCapabilityKeys);
+
+            await Assert.ThrowsAsync<InvalidOperationException>(() =>
+                mechanics.EvaluateGlobalAsync(
+                    "save.fortitude",
+                    new CharacterMechanicEvaluationRequest(
+                        IntegerInputs: new Dictionary<string, int>
+                        {
+                            ["baseSave"] = 2,
+                            ["constitutionModifier"] = 3
+                        }),
+                    userId: null));
+
+            var fortitudeEvaluation = await mechanics.EvaluateGlobalAsync(
+                "save.fortitude",
+                new CharacterMechanicEvaluationRequest(
+                    IntegerInputs: new Dictionary<string, int>
+                    {
+                        ["baseSave"] = 2,
+                        ["constitutionModifier"] = 3
+                    },
+                    CapabilityKeys: ["save.fortitude"]),
+                userId: null);
+            Assert.NotNull(fortitudeEvaluation);
+            Assert.Equal(5, fortitudeEvaluation.Value);
 
             var stealth = Assert.Single(
                 catalog.Mechanics,
                 value => value.MechanicKey == "competency.skill.stealth");
             Assert.Equal(CharacterMechanicEvaluationKinds.CompositeCompetency, stealth.EvaluationKind);
+            Assert.NotNull(stealth.Competency);
+            Assert.Equal(CharacterCompetencyKinds.Skill, stealth.Competency!.CompetencyKind);
+            Assert.Equal("dexterity", stealth.Competency.GoverningAbilityKey);
+            Assert.True(stealth.Competency.SupportsRanks);
+            Assert.True(stealth.Competency.SupportsClassSkillState);
+            Assert.True(stealth.Competency.SupportsTrainingState);
+            Assert.False(stealth.Competency.TrainedOnly);
+            Assert.True(stealth.Competency.ArmorCheckPenaltyApplies);
+            Assert.Contains(stealth.Inputs, value => value.Key == "ranks");
+            Assert.Contains(stealth.Inputs, value => value.Key == "classSkillState");
+            Assert.Contains(stealth.Inputs, value => value.Key == "trainingState");
+            Assert.Contains(stealth.Inputs, value => value.Key == "armorCheckPenaltyAdjustment");
+
             var relationship = Assert.Single(
                 stealth.Relationships,
                 value => value.RelationshipKey == "skill-composite.stealth");
@@ -212,6 +263,19 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal(
                 MechanicalRelationshipResolutionKinds.DeriveParent,
                 relationship.EffectiveResolutionKind);
+
+            var specialized = Assert.Single(
+                catalog.Mechanics,
+                value => value.MechanicKey == "competency.skill.knowledge-the-planes");
+            Assert.NotNull(specialized.Competency);
+            Assert.Equal(
+                CharacterCompetencyKinds.SpecializedSkill,
+                specialized.Competency!.CompetencyKind);
+            Assert.Equal("Knowledge", specialized.Competency.FamilyName);
+            Assert.Equal("the planes", specialized.Competency.Specialty);
+            Assert.Equal("intelligence", specialized.Competency.GoverningAbilityKey);
+            Assert.True(specialized.Competency.TrainedOnly);
+            Assert.False(specialized.Competency.ArmorCheckPenaltyApplies);
 
             var attribution = Assert.Single(
                 stealth.SourceAttributions,

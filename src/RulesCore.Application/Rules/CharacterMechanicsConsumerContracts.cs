@@ -13,7 +13,7 @@ public sealed record CharacterMechanicView(
     string DisplayName,
     string? ConceptKey,
     Guid? RuleConceptId,
-    bool IsApplicableUnderRuleset,
+    bool IsAvailableUnderRuleset,
     CharacterMechanicApplicabilityView Applicability,
     string EvaluationKind,
     bool CanEvaluate,
@@ -24,12 +24,14 @@ public sealed record CharacterMechanicView(
     IReadOnlyList<CharacterMechanicRelationshipView> Relationships,
     IReadOnlyList<CharacterMechanicConditionalRollRuleView> ConditionalRollRules,
     IReadOnlyList<CharacterMechanicBooleanRequirementView> BooleanRequirements,
+    CharacterMechanicCheckView? Check,
+    CharacterCompetencyDefinitionView? Competency,
     IReadOnlyList<CharacterMechanicSourceAttributionView> SourceAttributions);
 
 public sealed record CharacterMechanicApplicabilityView(
     string Kind,
     bool RequiresCharacterState,
-    IReadOnlyList<string> EditionKeys,
+    IReadOnlyList<string> RequiredCapabilityKeys,
     string? SourcePackageKey);
 
 public sealed record CharacterMechanicInputView(
@@ -38,7 +40,34 @@ public sealed record CharacterMechanicInputView(
     string Origin,
     bool Required,
     bool ParticipatesInValue,
-    int? DefaultInteger);
+    int? DefaultInteger,
+    string? IncludeWhenBooleanInputKey,
+    bool? IncludeWhenBooleanValue);
+
+public sealed record CharacterCheckAbilityView(
+    string ResolutionKind,
+    string? FixedAbilityKey,
+    IReadOnlyList<string> AllowedAbilityKeys);
+
+public sealed record CharacterCheckCompetencyView(
+    string ResolutionKind,
+    IReadOnlyList<string> AllowedCompetencyKinds,
+    string? FixedConceptKey);
+
+public sealed record CharacterMechanicCheckView(
+    CharacterCheckAbilityView Ability,
+    CharacterCheckCompetencyView Competency);
+
+public sealed record CharacterCompetencyDefinitionView(
+    string CompetencyKind,
+    string? FamilyName,
+    string? Specialty,
+    string? GoverningAbilityKey,
+    bool SupportsRanks,
+    bool SupportsClassSkillState,
+    bool SupportsTrainingState,
+    bool? TrainedOnly,
+    bool? ArmorCheckPenaltyApplies);
 
 public sealed record CharacterMechanicRelationshipView(
     string RelationshipKey,
@@ -87,7 +116,8 @@ public sealed record CharacterMechanicEvaluationRequest(
     Dictionary<string, int>? IntegerInputs = null,
     Dictionary<string, bool>? BooleanInputs = null,
     Dictionary<string, string>? StringInputs = null,
-    IReadOnlyList<CharacterMechanicModifierInput>? Modifiers = null);
+    IReadOnlyList<CharacterMechanicModifierInput>? Modifiers = null,
+    IReadOnlyList<string>? CapabilityKeys = null);
 
 public sealed record CharacterMechanicAppliedRollRuleView(
     string Key,

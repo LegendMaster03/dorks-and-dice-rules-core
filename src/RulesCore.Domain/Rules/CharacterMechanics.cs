@@ -35,8 +35,33 @@ public static class CharacterMechanicInputOrigins
 public static class CharacterMechanicApplicabilityKinds
 {
     public const string Always = "always";
-    public const string RulesetEdition = "ruleset-edition";
+    public const string CharacterCapability = "character-capability";
     public const string AccessibleSource = "accessible-source";
+}
+
+public static class CharacterCheckAbilityResolutionKinds
+{
+    public const string Fixed = "fixed";
+    public const string CallerSelected = "caller-selected";
+    public const string RuleResolved = "rule-resolved";
+    public const string CharacterResolved = "character-resolved";
+    public const string None = "none";
+}
+
+public static class CharacterCheckCompetencyResolutionKinds
+{
+    public const string Fixed = "fixed";
+    public const string CallerSelected = "caller-selected";
+    public const string RuleResolved = "rule-resolved";
+    public const string CharacterResolved = "character-resolved";
+    public const string None = "none";
+}
+
+public static class CharacterCompetencyKinds
+{
+    public const string Skill = "skill";
+    public const string SpecializedSkill = "specialized-skill";
+    public const string Tool = "tool";
 }
 
 public static class CharacterMechanicRollModes
@@ -60,13 +85,29 @@ public sealed record CharacterMechanicInputDefinition(
     string Origin,
     bool Required,
     bool ParticipatesInValue = false,
-    int? DefaultInteger = null);
+    int? DefaultInteger = null,
+    string? IncludeWhenBooleanInputKey = null,
+    bool? IncludeWhenBooleanValue = null);
 
 public sealed record CharacterMechanicApplicabilityDefinition(
     string Kind,
     bool RequiresCharacterState,
-    IReadOnlyList<string> EditionKeys,
+    IReadOnlyList<string> RequiredCapabilityKeys,
     string? SourcePackageKey = null);
+
+public sealed record CharacterCheckAbilityDefinition(
+    string ResolutionKind,
+    string? FixedAbilityKey = null,
+    IReadOnlyList<string>? AllowedAbilityKeys = null);
+
+public sealed record CharacterCheckCompetencyDefinition(
+    string ResolutionKind,
+    IReadOnlyList<string> AllowedCompetencyKinds,
+    string? FixedConceptKey = null);
+
+public sealed record CharacterMechanicCheckDefinition(
+    CharacterCheckAbilityDefinition Ability,
+    CharacterCheckCompetencyDefinition Competency);
 
 public sealed record CharacterMechanicSourceReference(
     string PackageKey,
@@ -104,7 +145,8 @@ public sealed record CharacterMechanicDefinition(
     CharacterMechanicApplicabilityDefinition Applicability,
     IReadOnlyList<CharacterMechanicConditionalRollRuleDefinition> ConditionalRollRules,
     IReadOnlyList<CharacterMechanicBooleanRequirementDefinition> BooleanRequirements,
-    CharacterMechanicSourceReference? Source = null);
+    CharacterMechanicSourceReference? Source = null,
+    CharacterMechanicCheckDefinition? Check = null);
 
 public sealed record CharacterMechanicRelationshipDefinition(
     string Key,
@@ -160,7 +202,9 @@ public static class CharacterMechanicEvaluator
         }
         else
         {
-            foreach (var input in definition.Inputs.Where(value => value.ParticipatesInValue))
+            foreach (var input in definition.Inputs.Where(value =>
+                         value.ParticipatesInValue
+                         && IsInputActive(value, booleanInputs)))
             {
                 if (integerInputs.TryGetValue(input.Key, out var supplied))
                 {
@@ -215,7 +259,9 @@ public static class CharacterMechanicEvaluator
         IReadOnlyDictionary<string, bool> booleanInputs,
         IReadOnlyDictionary<string, string> stringInputs)
     {
-        foreach (var input in definition.Inputs.Where(value => value.Required))
+        foreach (var input in definition.Inputs.Where(value =>
+                     value.Required
+                     && IsInputActive(value, booleanInputs)))
         {
             var supplied = input.ValueKind switch
             {
@@ -235,6 +281,25 @@ public static class CharacterMechanicEvaluator
         }
     }
 
+    private static bool IsInputActive(
+        CharacterMechanicInputDefinition input,
+        IReadOnlyDictionary<string, bool> booleanInputs)
+    {
+        if (string.IsNullOrWhiteSpace(input.IncludeWhenBooleanInputKey))
+        {
+            return true;
+        }
+
+        if (!input.IncludeWhenBooleanValue.HasValue)
+        {
+            throw new InvalidOperationException(
+                $"Input '{input.Key}' declares a boolean condition key without an expected value.");
+        }
+
+        return booleanInputs.TryGetValue(input.IncludeWhenBooleanInputKey, out var supplied)
+            && supplied == input.IncludeWhenBooleanValue.Value;
+    }
+
     private static int? ReadOptionalInteger(
         string? key,
         IReadOnlyDictionary<string, int> integerInputs) =>
@@ -250,9 +315,6 @@ public static class KnownCharacterMechanics
 
     private static readonly CharacterMechanicApplicabilityDefinition Always =
         new(CharacterMechanicApplicabilityKinds.Always, true, []);
-
-    private static readonly CharacterMechanicApplicabilityDefinition ThreeX =
-        new(CharacterMechanicApplicabilityKinds.RulesetEdition, true, ["3e", "3.5e"]);
 
     private static readonly CharacterMechanicApplicabilityDefinition LootTavern =
         new(
@@ -288,7 +350,7 @@ public static class KnownCharacterMechanics
                 StringInput("competencyKey", CharacterMechanicInputOrigins.Runtime, required: true),
                 IntegerInput("d20Roll", CharacterMechanicInputOrigins.Runtime, required: true, participates: true),
                 IntegerInput("abilityModifier", CharacterMechanicInputOrigins.Derived, required: true, participates: true),
-                IntegerInput("competencyModifier", CharacterMechanicInputOrigins.Derived, required: true, participates: true),
+                IntegerInput("competencyContribution", CharacterMechanicInputOrigins.Derived, required: true, participates: true),
                 IntegerInput("otherModifier", CharacterMechanicInputOrigins.Derived, required: false, participates: true, defaultValue: 0),
                 IntegerInput("targetDc", CharacterMechanicInputOrigins.SourceInput, required: false)
             ],
@@ -296,13 +358,23 @@ public static class KnownCharacterMechanics
             null,
             Always,
             [],
-            []),
+            [],
+            Check: new CharacterMechanicCheckDefinition(
+                new CharacterCheckAbilityDefinition(
+                    CharacterCheckAbilityResolutionKinds.CallerSelected),
+                new CharacterCheckCompetencyDefinition(
+                    CharacterCheckCompetencyResolutionKinds.CallerSelected,
+                    [
+                        CharacterCompetencyKinds.Skill,
+                        CharacterCompetencyKinds.SpecializedSkill,
+                        CharacterCompetencyKinds.Tool
+                    ]))),
 
         SumMechanic(
             "save.fortitude",
             CharacterMechanicKinds.Defense,
             "Fortitude Save",
-            ThreeX,
+            Capability("save.fortitude"),
             [
                 IntegerInput("baseSave", CharacterMechanicInputOrigins.Derived, true, true),
                 IntegerInput("constitutionModifier", CharacterMechanicInputOrigins.Derived, true, true),
@@ -312,7 +384,7 @@ public static class KnownCharacterMechanics
             "save.reflex",
             CharacterMechanicKinds.Defense,
             "Reflex Save",
-            ThreeX,
+            Capability("save.reflex"),
             [
                 IntegerInput("baseSave", CharacterMechanicInputOrigins.Derived, true, true),
                 IntegerInput("dexterityModifier", CharacterMechanicInputOrigins.Derived, true, true),
@@ -322,7 +394,7 @@ public static class KnownCharacterMechanics
             "save.will",
             CharacterMechanicKinds.Defense,
             "Will Save",
-            ThreeX,
+            Capability("save.will"),
             [
                 IntegerInput("baseSave", CharacterMechanicInputOrigins.Derived, true, true),
                 IntegerInput("wisdomModifier", CharacterMechanicInputOrigins.Derived, true, true),
@@ -332,7 +404,7 @@ public static class KnownCharacterMechanics
             "defense.ac.touch",
             CharacterMechanicKinds.Defense,
             "Touch Armor Class",
-            ThreeX,
+            Capability("defense.ac.touch"),
             [
                 IntegerInput("dexterityContribution", CharacterMechanicInputOrigins.Derived, true, true),
                 IntegerInput("sizeModifier", CharacterMechanicInputOrigins.Derived, false, true, 0),
@@ -345,7 +417,7 @@ public static class KnownCharacterMechanics
             "defense.ac.flat-footed",
             CharacterMechanicKinds.Defense,
             "Flat-Footed Armor Class",
-            ThreeX,
+            Capability("defense.ac.flat-footed"),
             [
                 IntegerInput("armorBonus", CharacterMechanicInputOrigins.Derived, false, true, 0),
                 IntegerInput("shieldBonus", CharacterMechanicInputOrigins.Derived, false, true, 0),
@@ -357,12 +429,16 @@ public static class KnownCharacterMechanics
                 IntegerInput("otherApplicableModifier", CharacterMechanicInputOrigins.Derived, false, true, 0)
             ],
             constant: 10),
-        SourceValueMechanic("combat.base-attack-bonus", CharacterMechanicKinds.CombatValue, "Base Attack Bonus", ThreeX),
+        SourceValueMechanic(
+            "combat.base-attack-bonus",
+            CharacterMechanicKinds.CombatValue,
+            "Base Attack Bonus",
+            Capability("combat.base-attack-bonus")),
         SumMechanic(
             "combat.grapple",
             CharacterMechanicKinds.CombatValue,
             "Grapple Modifier",
-            ThreeX,
+            Capability("combat.grapple"),
             [
                 IntegerInput("baseAttackBonus", CharacterMechanicInputOrigins.Derived, true, true),
                 IntegerInput("strengthModifier", CharacterMechanicInputOrigins.Derived, true, true),
@@ -381,11 +457,19 @@ public static class KnownCharacterMechanics
             ],
             null,
             null,
-            ThreeX,
+            Capability("competency.skill-ranks"),
             [],
             []),
-        SourceValueMechanic("resource.nonlethal-damage", CharacterMechanicKinds.Resource, "Nonlethal Damage", ThreeX),
-        SourceValueMechanic("defense.spell-resistance", CharacterMechanicKinds.Defense, "Spell Resistance", ThreeX),
+        SourceValueMechanic(
+            "resource.nonlethal-damage",
+            CharacterMechanicKinds.Resource,
+            "Nonlethal Damage",
+            Capability("resource.nonlethal-damage")),
+        SourceValueMechanic(
+            "defense.spell-resistance",
+            CharacterMechanicKinds.Defense,
+            "Spell Resistance",
+            Capability("defense.spell-resistance")),
         new(
             "defense.damage-reduction",
             CharacterMechanicKinds.Defense,
@@ -395,7 +479,7 @@ public static class KnownCharacterMechanics
             [StringInput("value", CharacterMechanicInputOrigins.CharacterState, true)],
             null,
             null,
-            ThreeX,
+            Capability("defense.damage-reduction"),
             [],
             []),
 
@@ -406,9 +490,16 @@ public static class KnownCharacterMechanics
                 StringInput("creatureTypeCompetencyKey", CharacterMechanicInputOrigins.SourceInput, true),
                 IntegerInput("d20Roll", CharacterMechanicInputOrigins.Runtime, true, true),
                 IntegerInput("intelligenceModifier", CharacterMechanicInputOrigins.Derived, true, true),
-                IntegerInput("competencyModifier", CharacterMechanicInputOrigins.Derived, true, true),
+                IntegerInput("competencyContribution", CharacterMechanicInputOrigins.Derived, true, true),
                 IntegerInput("otherModifier", CharacterMechanicInputOrigins.Derived, false, true, 0)
-            ]),
+            ],
+            new CharacterMechanicCheckDefinition(
+                new CharacterCheckAbilityDefinition(
+                    CharacterCheckAbilityResolutionKinds.Fixed,
+                    "intelligence"),
+                new CharacterCheckCompetencyDefinition(
+                    CharacterCheckCompetencyResolutionKinds.RuleResolved,
+                    [CharacterCompetencyKinds.Skill, CharacterCompetencyKinds.SpecializedSkill]))),
         LootCheck(
             "check.harvesting.carving",
             "Harvesting Carving Check",
@@ -417,9 +508,15 @@ public static class KnownCharacterMechanics
                 StringInput("carvingAbilitySource", CharacterMechanicInputOrigins.SourceInput, true),
                 IntegerInput("d20Roll", CharacterMechanicInputOrigins.Runtime, true, true),
                 IntegerInput("carvingAbilityModifier", CharacterMechanicInputOrigins.Derived, true, true),
-                IntegerInput("competencyModifier", CharacterMechanicInputOrigins.Derived, true, true),
+                IntegerInput("competencyContribution", CharacterMechanicInputOrigins.Derived, true, true),
                 IntegerInput("otherModifier", CharacterMechanicInputOrigins.Derived, false, true, 0)
-            ]),
+            ],
+            new CharacterMechanicCheckDefinition(
+                new CharacterCheckAbilityDefinition(
+                    CharacterCheckAbilityResolutionKinds.RuleResolved),
+                new CharacterCheckCompetencyDefinition(
+                    CharacterCheckCompetencyResolutionKinds.RuleResolved,
+                    [CharacterCompetencyKinds.Skill, CharacterCompetencyKinds.SpecializedSkill]))),
         new(
             "check.harvesting.total",
             CharacterMechanicKinds.Check,
@@ -456,7 +553,13 @@ public static class KnownCharacterMechanics
                 StringInput("abilityKey", CharacterMechanicInputOrigins.SourceInput, true),
                 IntegerInput("d20Roll", CharacterMechanicInputOrigins.Runtime, true, true),
                 IntegerInput("abilityModifier", CharacterMechanicInputOrigins.Derived, true, true),
-                IntegerInput("proficiencyModifier", CharacterMechanicInputOrigins.Derived, true, true),
+                IntegerInput(
+                    "toolProficiencyContribution",
+                    CharacterMechanicInputOrigins.Derived,
+                    true,
+                    true,
+                    includeWhenBooleanInputKey: "hasToolProficiency",
+                    includeWhenBooleanValue: true),
                 IntegerInput("otherModifier", CharacterMechanicInputOrigins.Derived, false, true, 0),
                 BooleanInput("hasToolProficiency", CharacterMechanicInputOrigins.CharacterState, true),
                 IntegerInput("targetDc", CharacterMechanicInputOrigins.SourceInput, false)
@@ -473,7 +576,13 @@ public static class KnownCharacterMechanics
                     ["check.crafting.manufacturing"])
             ],
             [],
-            LootTavernHarvestingCrafting),
+            LootTavernHarvestingCrafting,
+            new CharacterMechanicCheckDefinition(
+                new CharacterCheckAbilityDefinition(
+                    CharacterCheckAbilityResolutionKinds.RuleResolved),
+                new CharacterCheckCompetencyDefinition(
+                    CharacterCheckCompetencyResolutionKinds.RuleResolved,
+                    [CharacterCompetencyKinds.Tool]))),
         new(
             "check.crafting.enchanting",
             CharacterMechanicKinds.Check,
@@ -484,7 +593,7 @@ public static class KnownCharacterMechanics
                 StringInput("creatureTypeCompetencyKey", CharacterMechanicInputOrigins.SourceInput, true),
                 IntegerInput("d20Roll", CharacterMechanicInputOrigins.Runtime, true, true),
                 IntegerInput("spellcastingAbilityModifier", CharacterMechanicInputOrigins.Derived, true, true),
-                IntegerInput("competencyModifier", CharacterMechanicInputOrigins.Derived, true, true),
+                IntegerInput("competencyContribution", CharacterMechanicInputOrigins.Derived, true, true),
                 IntegerInput("otherModifier", CharacterMechanicInputOrigins.Derived, false, true, 0),
                 BooleanInput("hasSpellcastingAbility", CharacterMechanicInputOrigins.CharacterState, true),
                 IntegerInput("targetDc", CharacterMechanicInputOrigins.SourceInput, false)
@@ -494,7 +603,13 @@ public static class KnownCharacterMechanics
             LootTavern,
             [],
             [new CharacterMechanicBooleanRequirementDefinition("hasSpellcastingAbility", true)],
-            LootTavernHarvestingCrafting)
+            LootTavernHarvestingCrafting,
+            new CharacterMechanicCheckDefinition(
+                new CharacterCheckAbilityDefinition(
+                    CharacterCheckAbilityResolutionKinds.CharacterResolved),
+                new CharacterCheckCompetencyDefinition(
+                    CharacterCheckCompetencyResolutionKinds.RuleResolved,
+                    [CharacterCompetencyKinds.Skill, CharacterCompetencyKinds.SpecializedSkill])))
     ];
 
     private static readonly IReadOnlyList<CharacterMechanicRelationshipDefinition> RelationshipDefinitions =
@@ -517,7 +632,8 @@ public static class KnownCharacterMechanics
     private static CharacterMechanicDefinition LootCheck(
         string key,
         string displayName,
-        IReadOnlyList<CharacterMechanicInputDefinition> inputs) =>
+        IReadOnlyList<CharacterMechanicInputDefinition> inputs,
+        CharacterMechanicCheckDefinition check) =>
         new(
             key,
             CharacterMechanicKinds.Check,
@@ -530,7 +646,8 @@ public static class KnownCharacterMechanics
             LootTavern,
             [],
             [],
-            LootTavernHarvestingCrafting);
+            LootTavernHarvestingCrafting,
+            check);
 
     private static CharacterMechanicDefinition SumMechanic(
         string key,
@@ -575,14 +692,24 @@ public static class KnownCharacterMechanics
         string origin,
         bool required,
         bool participates = false,
-        int? defaultValue = null) =>
+        int? defaultValue = null,
+        string? includeWhenBooleanInputKey = null,
+        bool? includeWhenBooleanValue = null) =>
         new(
             key,
             CharacterMechanicInputValueKinds.Integer,
             origin,
             required,
             participates,
-            defaultValue);
+            defaultValue,
+            includeWhenBooleanInputKey,
+            includeWhenBooleanValue);
+
+    private static CharacterMechanicApplicabilityDefinition Capability(string mechanicKey) =>
+        new(
+            CharacterMechanicApplicabilityKinds.CharacterCapability,
+            true,
+            [mechanicKey]);
 
     private static CharacterMechanicInputDefinition BooleanInput(
         string key,

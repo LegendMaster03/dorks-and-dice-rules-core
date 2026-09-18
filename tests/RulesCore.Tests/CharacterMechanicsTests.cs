@@ -5,14 +5,24 @@ namespace RulesCore.Tests;
 public sealed class CharacterMechanicsTests
 {
     [Fact]
-    public void KnownCatalogSeparatesGenericThreeXAndLootTavernApplicability()
+    public void KnownCatalogSeparatesGenericCapabilityAndSourceApplicability()
     {
         var generic = Required("check.competency");
         Assert.Equal(CharacterMechanicApplicabilityKinds.Always, generic.Applicability.Kind);
+        Assert.NotNull(generic.Check);
+        Assert.Equal(
+            CharacterCheckAbilityResolutionKinds.CallerSelected,
+            generic.Check!.Ability.ResolutionKind);
+        Assert.Equal(
+            CharacterCheckCompetencyResolutionKinds.CallerSelected,
+            generic.Check.Competency.ResolutionKind);
+        Assert.Contains(CharacterCompetencyKinds.Skill, generic.Check.Competency.AllowedCompetencyKinds);
+        Assert.Contains(CharacterCompetencyKinds.SpecializedSkill, generic.Check.Competency.AllowedCompetencyKinds);
+        Assert.Contains(CharacterCompetencyKinds.Tool, generic.Check.Competency.AllowedCompetencyKinds);
 
         var fortitude = Required("save.fortitude");
-        Assert.Equal(CharacterMechanicApplicabilityKinds.RulesetEdition, fortitude.Applicability.Kind);
-        Assert.Equal(new[] { "3e", "3.5e" }, fortitude.Applicability.EditionKeys);
+        Assert.Equal(CharacterMechanicApplicabilityKinds.CharacterCapability, fortitude.Applicability.Kind);
+        Assert.Equal(new[] { "save.fortitude" }, fortitude.Applicability.RequiredCapabilityKeys);
 
         var harvesting = Required("check.harvesting.total");
         Assert.Equal(CharacterMechanicApplicabilityKinds.AccessibleSource, harvesting.Applicability.Kind);
@@ -40,7 +50,7 @@ public sealed class CharacterMechanicsTests
             {
                 ["d20Roll"] = 12,
                 ["abilityModifier"] = 3,
-                ["competencyModifier"] = 2,
+                ["competencyContribution"] = 2,
                 ["targetDc"] = 17
             },
             new Dictionary<string, bool>(StringComparer.Ordinal),
@@ -92,8 +102,7 @@ public sealed class CharacterMechanicsTests
             new Dictionary<string, int>(StringComparer.Ordinal)
             {
                 ["d20Roll"] = 11,
-                ["abilityModifier"] = 2,
-                ["proficiencyModifier"] = 0
+                ["abilityModifier"] = 2
             },
             new Dictionary<string, bool>(StringComparer.Ordinal)
             {
@@ -121,7 +130,7 @@ public sealed class CharacterMechanicsTests
             {
                 ["d20Roll"] = 10,
                 ["spellcastingAbilityModifier"] = 4,
-                ["competencyModifier"] = 3
+                ["competencyContribution"] = 3
             },
             new Dictionary<string, bool>(StringComparer.Ordinal)
             {
@@ -138,6 +147,84 @@ public sealed class CharacterMechanicsTests
     }
 
 
+
+
+    [Fact]
+    public void HarvestingAndCraftingExposeSourceOwnedResolutionModes()
+    {
+        var assessment = Required("check.harvesting.assessment");
+        Assert.NotNull(assessment.Check);
+        Assert.Equal(
+            CharacterCheckAbilityResolutionKinds.Fixed,
+            assessment.Check!.Ability.ResolutionKind);
+        Assert.Equal("intelligence", assessment.Check.Ability.FixedAbilityKey);
+        Assert.Equal(
+            CharacterCheckCompetencyResolutionKinds.RuleResolved,
+            assessment.Check.Competency.ResolutionKind);
+
+        var manufacturing = Required("check.crafting.manufacturing");
+        Assert.NotNull(manufacturing.Check);
+        Assert.Equal(
+            CharacterCheckAbilityResolutionKinds.RuleResolved,
+            manufacturing.Check!.Ability.ResolutionKind);
+        Assert.Equal(
+            new[] { CharacterCompetencyKinds.Tool },
+            manufacturing.Check.Competency.AllowedCompetencyKinds);
+
+        var enchanting = Required("check.crafting.enchanting");
+        Assert.NotNull(enchanting.Check);
+        Assert.Equal(
+            CharacterCheckAbilityResolutionKinds.CharacterResolved,
+            enchanting.Check!.Ability.ResolutionKind);
+        Assert.Equal(
+            CharacterCheckCompetencyResolutionKinds.RuleResolved,
+            enchanting.Check.Competency.ResolutionKind);
+    }
+
+    [Fact]
+    public void ManufacturingOnlyRequiresToolProficiencyContributionWhenProficient()
+    {
+        var definition = Required("check.crafting.manufacturing");
+
+        var unproficient = CharacterMechanicEvaluator.Evaluate(
+            definition,
+            new Dictionary<string, int>(StringComparer.Ordinal)
+            {
+                ["d20Roll"] = 8,
+                ["abilityModifier"] = 3
+            },
+            new Dictionary<string, bool>(StringComparer.Ordinal)
+            {
+                ["hasToolProficiency"] = false
+            },
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["toolKey"] = "tool.example",
+                ["abilityKey"] = "intelligence"
+            });
+        Assert.Equal(11, unproficient.Value);
+        Assert.Single(unproficient.AppliedRollRules);
+
+        var proficient = CharacterMechanicEvaluator.Evaluate(
+            definition,
+            new Dictionary<string, int>(StringComparer.Ordinal)
+            {
+                ["d20Roll"] = 8,
+                ["abilityModifier"] = 3,
+                ["toolProficiencyContribution"] = 2
+            },
+            new Dictionary<string, bool>(StringComparer.Ordinal)
+            {
+                ["hasToolProficiency"] = true
+            },
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["toolKey"] = "tool.example",
+                ["abilityKey"] = "intelligence"
+            });
+        Assert.Equal(13, proficient.Value);
+        Assert.Empty(proficient.AppliedRollRules);
+    }
 
     [Fact]
     public void GrappleUsesTheThreeXSpecificSizeModifierInput()

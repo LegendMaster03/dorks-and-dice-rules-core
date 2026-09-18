@@ -35,7 +35,7 @@ GET  /api/campaigns/{campaignId}/rules/mechanics
 POST /api/campaigns/{campaignId}/rules/mechanics/{mechanicKey}/evaluate
 ```
 
-`includeUnavailable=true` includes known conditional mechanics with `isApplicableUnderRuleset=false`. This is intended for consumers that need to understand what Rules Core can represent without pretending that the mechanic is active for the current effective rules.
+`includeUnavailable=true` includes known source-dependent mechanics whose required source is not currently accessible/effective, with `isAvailableUnderRuleset=false`. Character capability requirements are different: a capability-driven definition can be available in Rules Core while declaring `requiredCapabilityKeys` that the Character backend must satisfy before presenting or evaluating it.
 
 Global access follows the existing resolved-rule source grant model. Campaign access follows the existing campaign read boundary. The mechanics API does not create a second source-access or campaign-authorization model.
 
@@ -96,11 +96,13 @@ This distinction is important for 3.x source translation. A PCGen racial modifie
 - the competency concept identity;
 - d20 result;
 - resolved ability modifier;
-- resolved competency modifier;
+- resolved competency contribution, excluding the separately supplied ability modifier;
 - any other applicable modifier;
 - optional target DC.
 
 This supports checks such as Intelligence (Arcana), Dexterity (Survival), tool checks, and older-edition competencies without placing ability/skill pairing logic in the Character frontend.
+
+Checks also expose structured resolution semantics. Ability selection can be `fixed`, `caller-selected`, `rule-resolved`, or `character-resolved`; competency selection has the corresponding resolution model. This lets the generic check remain caller-selectable while Harvesting, Manufacturing, and Enchanting state which choices come from source rules or Character state.
 
 ## 3e/3.5e character mechanics
 
@@ -115,9 +117,26 @@ The consumer catalog includes normalized definitions for 3.x mechanics that a 5e
 - spell resistance;
 - damage reduction.
 
-These definitions use `ruleset-edition` applicability for 3e/3.5e. Rules Core detects applicable 3.x evidence from canonical publication edition metadata attached to the effective resolved source revisions, with source-code and translation-context fallbacks for legacy and PCGen representations.
+These definitions are **capability-driven**, not edition-toggle-driven. For example, `save.fortitude` declares a required Character capability of `save.fortitude`. A hybrid Character can therefore expose Fortitude, Touch AC, or BAB beside 5e/5.5e mechanics without changing the entire Character to a "3.5e mode." The Character backend owns capability derivation from the Character's actual classes, species, feats, source selections, and campaign rules.
 
-The definitions intentionally do not infer values from unrelated fields. For example, touch AC consumes only contributions the Character backend has already determined apply to touch AC.
+The definitions intentionally do not infer values from unrelated fields. For example, touch AC consumes only contributions the Character backend has already determined apply to touch AC. The evaluation endpoint requires the declared capability key for capability-driven mechanics and rejects evaluation when it is absent.
+
+## Competency metadata
+
+Resolved skill and tool concepts carry normalized competency metadata for Character consumers. The contract can describe:
+
+- ordinary skills, specialized skills, and tools;
+- specialized skill family and specialty, such as `Knowledge (the planes)`;
+- governing ability when the effective source provides one;
+- whether the competency supports ranks;
+- whether class-skill state is meaningful;
+- whether training state is meaningful;
+- trained-only state when the source determines it;
+- Armor Check Penalty applicability when the source determines it.
+
+For PCGen 3.x sources, Rules Core reads this from the already-preserved mechanical translation, including retained `KEYSTAT`, `USEUNTRAINED`, and `ACHECK` evidence under `_rulesCore.pcgen.unmappedSegments`. The Character consumer does not parse the native PCGen record itself.
+
+Ranks, class-skill state, training state, and Armor Check Penalty adjustment remain Character inputs. Source metadata says which concepts exist and which rules apply; it does not fabricate a Character's current ranks or training.
 
 ## Composite competencies
 
@@ -150,9 +169,9 @@ The consumer contract models:
 - Carving as a generalized competency check using the source-selected carving ability;
 - Harvesting as the sum of Assessment and Carving;
 - disadvantage on both harvesting component checks when one creature performs both roles;
-- Manufacturing as a tool/ability competency check;
-- disadvantage on Manufacturing when the Character lacks the required tool proficiency;
-- Enchanting as a competency check using the Character's spellcasting ability;
+- Manufacturing as a rule-resolved tool/ability competency check;
+- disadvantage on Manufacturing when the Character lacks the required tool proficiency, without adding a proficiency contribution to the check;
+- Enchanting as a rule-resolved competency check using the Character-resolved spellcasting ability;
 - the spellcasting requirement for Enchanting.
 
 The contract does **not** bundle Harvest tables, creature-type-to-skill tables, component DCs, manufacturing tables, recipes, item data, materials, or other publisher-owned source content. Those values are represented as `source-input` requirements and must come from an accessible/effective Loot Tavern source.
@@ -177,6 +196,6 @@ Private source names/content are not surfaced through this contract when the cur
 
 The evaluation endpoint is deterministic. It does not roll dice, select Character state, choose a source table row, or mutate Character data.
 
-For a scalar definition it combines caller-supplied inputs according to the normalized mechanic. For a composite competency it delegates to the existing Rules Core composite evaluator and accepts explicit concept-targeted modifiers.
+For a scalar definition it combines caller-supplied inputs according to the normalized mechanic. Conditional inputs are included only when their declared Character-state condition is satisfied. For a composite competency it delegates to the existing Rules Core composite evaluator and accepts explicit concept-targeted modifiers.
 
 Roll-mode effects such as disadvantage are returned as structured rules. The consumer remains responsible for actually performing the roll according to its dice/runtime architecture.
