@@ -19,10 +19,10 @@ export function installSourceAdd(app) {
     const renderActiveView = app.renderActiveView.bind(app);
     app.renderActiveView = async container => {
         await renderActiveView(container);
-        if (app.activeView !== "library") return;
+        if (app.activeView !== "sources") return;
 
         const card = await buildAddSourceCard(app);
-        const libraryLead = container.querySelector(":scope > .rules-core-library-hero");
+        const libraryLead = container.querySelector(":scope > .rules-core-sources-hero");
         if (libraryLead) {
             libraryLead.after(card);
         } else {
@@ -533,14 +533,21 @@ function buildReconciliationIssueView(issues, explanation) {
 }
 
 function buildProgressView(job) {
-    const stage = progressStageLabel(job.progressStage, job.status);
-    const current = Number.isInteger(job.progressCurrent) ? job.progressCurrent : null;
-    const total = Number.isInteger(job.progressTotal) && job.progressTotal > 0
-        ? job.progressTotal
-        : null;
+    const structured = normalizedImportProgress(job);
+    const stageKey = structured?.stage || job.progressStage;
+    const stage = progressStageLabel(stageKey, job.status);
+    const current = Number.isInteger(structured?.current)
+        ? structured.current
+        : Number.isInteger(job.progressCurrent) ? job.progressCurrent : null;
+    const total = Number.isInteger(structured?.total) && structured.total > 0
+        ? structured.total
+        : Number.isInteger(job.progressTotal) && job.progressTotal > 0
+            ? job.progressTotal
+            : null;
     const hasMeasuredProgress = current !== null && total !== null;
+    const unit = progressStageUnit(stageKey);
     const summary = hasMeasuredProgress
-        ? `${stage} · ${current} of ${total} files`
+        ? `${stage} · ${current} of ${total} ${unit}`
         : stage;
     const wrapper = element("div", { className: "mt-2" },
         element("div", { className: "small fw-semibold", text: summary }));
@@ -563,13 +570,56 @@ function buildProgressView(job) {
     progress.append(bar);
     wrapper.append(progress);
 
-    if (job.progressDetail) {
+    const detail = structured?.detail || progressDetailText(job.progressDetail);
+    const currentItem = structured?.currentItem;
+    const currentItemType = structured?.currentItemType;
+    const secondary = detail || (currentItem
+        ? `Current: ${currentItem}${currentItemType ? ` · ${currentItemType}` : ""}`
+        : null);
+    if (secondary) {
         wrapper.append(element("div", {
             className: "small text-body-secondary text-break mt-1",
-            text: job.progressDetail
+            text: secondary
         }));
     }
     return wrapper;
+}
+
+function normalizedImportProgress(job) {
+    if (job?.progress && typeof job.progress === "object") return job.progress;
+    if (typeof job?.progressDetail !== "string") return null;
+    const raw = job.progressDetail.trim();
+    if (!raw.startsWith("{")) return null;
+    try {
+        const parsed = JSON.parse(raw);
+        return parsed && typeof parsed === "object" ? parsed : null;
+    } catch {
+        return null;
+    }
+}
+
+function progressDetailText(value) {
+    if (typeof value !== "string") return null;
+    const trimmed = value.trim();
+    if (!trimmed || trimmed.startsWith("{")) return null;
+    return trimmed;
+}
+
+function progressStageUnit(stage) {
+    switch (stage) {
+        case "discovering":
+        case "downloading":
+            return "files";
+        case "reconciling":
+            return "publications";
+        case "translating":
+        case "persisting":
+        case "importing":
+        case "finalizing":
+            return "records";
+        default:
+            return "items";
+    }
 }
 
 function progressStageLabel(stage, status) {
@@ -578,6 +628,9 @@ function progressStageLabel(stage, status) {
         case "starting": return "Starting import";
         case "discovering": return "Discovering source files";
         case "downloading": return "Downloading source files";
+        case "translating": return "Translating source records";
+        case "persisting": return "Persisting source records";
+        case "reconciling": return "Reconciling publication identities";
         case "importing": return "Importing source data";
         case "checking": return "Checking upstream source";
         case "finalizing": return "Finalizing import";

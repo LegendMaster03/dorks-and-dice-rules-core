@@ -29,6 +29,7 @@ if (hasDatabase)
     builder.Services.AddScoped<ISourceGrantService, SourceGrantService>();
     builder.Services.AddScoped<IGlobalRulesService, GlobalRulesService>();
     builder.Services.AddScoped<ICampaignRulesService, CampaignRulesService>();
+    builder.Services.AddScoped<ICharacterMechanicsConsumerService, CharacterMechanicsConsumerService>();
     builder.Services.AddScoped<IRulePatchPreviewService, RulePatchPreviewService>();
     builder.Services.AddScoped<IGlobalRulesAuthoringService, GlobalRulesAuthoringService>();
     builder.Services.AddScoped<ICampaignRulesAuthoringService, CampaignRulesAuthoringService>();
@@ -211,6 +212,33 @@ if (hasDatabase)
                 .User.Id;
             var resolved = await rules.ResolveLatestAsync(conceptKey, userId, cancellationToken);
             return resolved is null ? Results.NotFound() : Results.Ok(resolved);
+        }
+        catch (ArgumentException exception)
+        {
+            return Results.Problem(
+                title: "Invalid rule concept key",
+                detail: exception.Message,
+                statusCode: StatusCodes.Status400BadRequest);
+        }
+    });
+
+    app.MapGet("/api/rules/{conceptKey}/versions", async (
+        string conceptKey,
+        HttpContext httpContext,
+        IGlobalRulesService rules,
+        CancellationToken cancellationToken) =>
+    {
+        try
+        {
+            var userId = HostedToolAuthenticationMiddleware
+                .GetAuthenticationContext(httpContext)?
+                .User.Id;
+            httpContext.Response.Headers.CacheControl = "no-store";
+            var versions = await rules.GetAccessibleVersionsAsync(
+                conceptKey,
+                userId,
+                cancellationToken);
+            return versions is null ? Results.NotFound() : Results.Ok(versions);
         }
         catch (ArgumentException exception)
         {
@@ -524,6 +552,7 @@ else
     app.MapGet("/api/sources/entities", () => DatabaseUnavailable("Source Layer"));
     app.MapGet("/api/sources/entities/{entityId:guid}", (Guid entityId) => DatabaseUnavailable("Source Layer"));
     app.MapGet("/api/rules/{conceptKey}", (string conceptKey) => DatabaseUnavailable("Rules Layer"));
+    app.MapGet("/api/rules/{conceptKey}/versions", (string conceptKey) => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/concepts", () => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/concepts/{conceptId:guid}/bindings", (Guid conceptId) => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/concepts/{conceptId:guid}/preview", (Guid conceptId) => DatabaseUnavailable("Rules Layer"));
@@ -532,6 +561,12 @@ else
     app.MapPut("/api/global/rules/concepts/{conceptId:guid}/decision", (Guid conceptId) => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/publish", () => DatabaseUnavailable("Rules Layer"));
     app.MapGet("/api/campaigns/{campaignId:guid}/rules/{conceptKey}", (Guid campaignId, string conceptKey) => DatabaseUnavailable("Campaign Rules Layer"));
+    app.MapGet("/api/rules/mechanics", () => DatabaseUnavailable("Rules Layer"));
+    app.MapPost("/api/rules/mechanics/evaluate", () => DatabaseUnavailable("Rules Layer"));
+    app.MapPost("/api/rules/mechanics/{mechanicKey}/evaluate", (string mechanicKey) => DatabaseUnavailable("Rules Layer"));
+    app.MapGet("/api/campaigns/{campaignId:guid}/rules/mechanics", (Guid campaignId) => DatabaseUnavailable("Campaign Rules Layer"));
+    app.MapPost("/api/campaigns/{campaignId:guid}/rules/mechanics/evaluate", (Guid campaignId) => DatabaseUnavailable("Campaign Rules Layer"));
+    app.MapPost("/api/campaigns/{campaignId:guid}/rules/mechanics/{mechanicKey}/evaluate", (Guid campaignId, string mechanicKey) => DatabaseUnavailable("Campaign Rules Layer"));
     app.MapGet("/api/campaigns/{campaignId:guid}/rules/authoring", (Guid campaignId) => DatabaseUnavailable("Campaign Rules Layer"));
     app.MapGet("/api/campaigns/{campaignId:guid}/rules/authoring/concepts/{conceptId:guid}", (Guid campaignId, Guid conceptId) => DatabaseUnavailable("Campaign Rules Layer"));
     app.MapPut("/api/campaigns/{campaignId:guid}/rules/baseline", (Guid campaignId) => DatabaseUnavailable("Campaign Rules Layer"));

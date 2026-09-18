@@ -71,13 +71,15 @@ Publishing the same effective decisions twice is idempotent. Source changes beco
 
 See `docs/source-normalization.md` for reviewed normalization semantics, `docs/source-revision-review.md` for deliberate source-update review and adoption, and `docs/authoring-workflow.md` for the browse -> preview -> save -> publish workflow and its authorization/source-access boundaries.
 
-## Resolved Rules Browser
+## Rules Library
 
 Published rules are also available through access-aware catalogs. `GET /api/rules` lists the latest global publication filtered to source packages the current identity may access. `GET /api/campaigns/{campaignId}/rules` does the same for the latest published campaign ruleset and requires campaign membership. Catalog responses include rule identity and source provenance but not source-backed rule documents; full documents continue to use the existing per-concept resolved endpoints and their independent source-access checks.
 
-The embedded `Rules Browser` is available to authenticated Dorks & Dice users even when they have no Rules Lawyer or DM authority. Players can browse a campaign they belong to, while Rules Lawyers and DMs retain the separate authoring views. Unpublished global decisions, campaign baseline selections, and campaign overrides are not exposed through this read-only browser.
+The embedded Rules Library is the normal browsing surface for Dorks & Dice rules. It presents one stable concept per list row, keeps the effective Dorks & Dice rule selected by default, and exposes accessible source versions as alternate detail tabs instead of duplicating the concept in the search results. Import and source-management controls live in the separate Sources workspace.
 
-See `docs/rules-browser.md` for catalog behavior, campaign membership rules, source-access filtering, and the current generic resolved-document renderer.
+`GET /api/rules/{conceptKey}/versions` supplies the accessible source-version tabs. `POST /api/rules/comparison` provides read-only semantic differences between two accessible versions without granting mutation authority. Rules Lawyers and campaign DMs can transition from that comparison into their existing global or campaign ruling editors.
+
+See `docs/rules-browser.md` for the list/detail workspace, routes, version browsing, comparison behavior, campaign membership rules, source-access filtering, and specialized entity renderers.
 
 ## Campaign Rules Layer
 

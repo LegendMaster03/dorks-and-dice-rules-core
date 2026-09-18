@@ -92,18 +92,28 @@ export function installSourceLibrary(app) {
 
     const initialSourceRoute = parseSourceEntityRoute(app.hostContext.toolRoute);
     app.libraryDeepLink = initialSourceRoute.entityId ?? null;
-    app.libraryRouteActive = Boolean(app.libraryDeepLink);
+    app.libraryRouteActive = Boolean(app.libraryDeepLink)
+        || isSourceLibraryRootRoute(app.hostContext.toolRoute);
 
-    if (app.canBrowseSourceLibrary && (app.libraryRouteActive || !app.browserRouteRequested)) {
-        app.activeView = "library";
+    if (app.canBrowseSourceLibrary && app.libraryRouteActive) {
+        app.activeView = "sources";
     }
+
+    app.viewNavigation ??= {};
+    app.viewNavigation.sources = async () => {
+        app.libraryDeepLink = null;
+        app.libraryRouteActive = true;
+        app.activeView = "sources";
+        pushSourceToolRoute(app, "/sources");
+        await app.render();
+    };
 
     app.renderHeader = () => renderHeader(app);
     app.renderNavigation = () => renderNavigation(app);
 
     const renderActiveView = app.renderActiveView.bind(app);
     app.renderActiveView = async container => {
-        if (app.activeView === "library") {
+        if (app.activeView === "sources") {
             if (app.libraryDeepLink) {
                 await renderSourceEntityRoute(app, container, app.libraryDeepLink);
                 return;
@@ -126,16 +136,16 @@ export function installSourceLibrary(app) {
             event.stopImmediatePropagation();
             app.libraryDeepLink = next.entityId;
             app.libraryRouteActive = true;
-            app.activeView = "library";
+            app.activeView = "sources";
             await app.render();
             return;
         }
 
-        if (app.libraryRouteActive && isSourceLibraryRootRoute(toolRoute)) {
+        if (isSourceLibraryRootRoute(toolRoute)) {
             event.stopImmediatePropagation();
             app.libraryDeepLink = null;
-            app.libraryRouteActive = false;
-            app.activeView = "library";
+            app.libraryRouteActive = true;
+            app.activeView = "sources";
             await app.render();
             return;
         }
@@ -171,8 +181,8 @@ function renderHeader(app) {
 function renderNavigation(app) {
     const shell = element("div", { className: "rules-core-nav-shell" });
     const primary = element("div", { className: "rules-core-nav-primary" });
-    if (app.canBrowseSourceLibrary) primary.append(sourceAwareNavButton(app, "Library", "library"));
-    if (app.canBrowseRules) primary.append(sourceAwareNavButton(app, "Published Rules", "browse"));
+    if (app.canBrowseRules) primary.append(sourceAwareNavButton(app, "Library", "library"));
+    if (app.canBrowseSourceLibrary) primary.append(sourceAwareNavButton(app, "Sources", "sources"));
     if (app.canEditGlobal) primary.append(sourceAwareNavButton(app, "Rules Lawyer", "global"));
     if (app.canReviewVersions) primary.append(sourceAwareNavButton(app, "Cross-version Review", "version-review"));
     if (app.canEditCampaign) primary.append(sourceAwareNavButton(app, "Campaign Rules", "campaign"));
@@ -192,7 +202,11 @@ function renderNavigation(app) {
 function sourceAwareNavButton(app, label, view) {
     const button = app.navButton(label, view);
     button.addEventListener("click", () => {
-        if (view === "library" || app.libraryRouteActive) {
+        if (view === "sources") {
+            app.libraryDeepLink = null;
+            app.libraryRouteActive = true;
+            pushSourceToolRoute(app, "/sources");
+        } else if (app.libraryRouteActive) {
             app.libraryDeepLink = null;
             app.libraryRouteActive = false;
             pushSourceToolRoute(app, "/");
@@ -214,13 +228,13 @@ async function renderSourceLibrary(app, container) {
         app.libraryNotice = null;
     }
 
-    container.append(element("div", { className: "card card-body mb-3 rules-core-library-hero" },
+    container.append(element("div", { className: "card card-body mb-3 rules-core-sources-hero" },
         element("div", { className: "d-flex flex-wrap justify-content-between align-items-start gap-3" },
             element("div", {},
-                element("h3", { className: "h4 mb-1", text: "Rules Library" }),
+                element("h3", { className: "h4 mb-1", text: "Sources" }),
                 element("p", {
                     className: "text-body-secondary mb-0",
-                    text: "Canonical SRDs are bundled with Rules Core and available here before Rules Lawyer adjudication. Browsing a source does not make it the table rule; publication remains an explicit decision."
+                    text: "Manage source access and inspect source records. Importing and source maintenance are intentionally separate from normal rule browsing."
                 })),
             badge("Source Layer", "primary"))));
 
@@ -413,7 +427,7 @@ async function renderBrowserResults(app, container) {
                 event.preventDefault();
                 app.libraryDeepLink = entity.entityId;
                 app.libraryRouteActive = true;
-                app.activeView = "library";
+                app.activeView = "sources";
                 pushSourceToolRoute(app, sourceEntityRoute(entity.entityId));
                 await app.render();
             };
@@ -470,14 +484,14 @@ async function renderSourceEntityRoute(app, container, entityId) {
     clear(container);
     const back = element("a", {
         className: "btn btn-sm btn-outline-secondary mb-3",
-        text: "← Back to source library",
+        text: "← Back to sources",
         attributes: { href: sourceLibraryHref(app) },
         onClick: async event => {
             event.preventDefault();
             app.libraryDeepLink = null;
-            app.libraryRouteActive = false;
-            app.activeView = "library";
-            pushSourceToolRoute(app, "/");
+            app.libraryRouteActive = true;
+            app.activeView = "sources";
+            pushSourceToolRoute(app, "/sources");
             await app.render();
         }
     });
@@ -602,7 +616,7 @@ function sourceEntityHref(app, entityId) {
 }
 
 function sourceLibraryHref(app) {
-    return sourceToolHref(app, "/");
+    return sourceToolHref(app, "/sources");
 }
 
 function sourceToolHref(app, toolRelativePath) {
@@ -624,7 +638,7 @@ function currentToolRoute(app) {
 function isSourceLibraryRootRoute(toolRoute) {
     if (toolRoute === null || toolRoute === undefined) return false;
     const path = String(toolRoute).split(/[?#]/, 1)[0];
-    return path.replace(/^\/+|\/+$/g, "") === "";
+    return path.replace(/^\/+|\/+$/g, "") === "sources";
 }
 
 function matchesDefinition(entity, definition) {
@@ -656,7 +670,9 @@ function prependRulesLawyerWorkflow(app, container) {
                 element("h3", { className: "h5 mb-1", text: "Rules Lawyer workflow" }),
                 element("div", { className: "text-body-secondary small", text: "Source material stays separate until you explicitly bind, decide, and publish." })),
             element("div", { className: "rules-core-workflow-steps" },
-                workflowStep("1", "Sources", "Browse and inspect", async () => { app.activeView = "library"; await app.render(); }),
+                workflowStep("1", "Sources", "Browse and inspect", async () => {
+                    await app.viewNavigation?.sources?.();
+                }),
                 workflowStep("2", "Normalize", "Review suggestions"),
                 workflowStep("3", "Decide", "Select or consolidate"),
                 workflowStep("4", "Publish", "Create global revision"))));

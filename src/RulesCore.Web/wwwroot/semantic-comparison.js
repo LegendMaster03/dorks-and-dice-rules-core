@@ -42,7 +42,7 @@ export function installSemanticComparison(app) {
                         rightSourceEntityRevisionId: right.value
                     }
                 });
-                renderComparison(result, comparison);
+                renderSemanticComparison(result, comparison);
             } catch (error) {
                 result.replaceChildren(alertNode("danger", describeError(error)));
             } finally {
@@ -54,12 +54,16 @@ export function installSemanticComparison(app) {
     };
 }
 
-function renderComparison(container, comparison) {
+export function renderSemanticComparison(
+    container,
+    comparison,
+    { leftLabel = "Left", rightLabel = "Right" } = {})
+{
     const summary = element("div", { className: "d-flex flex-wrap gap-2 mb-3" },
         badge(`${comparison.unchangedValueCount} unchanged`, "secondary"),
         badge(`${comparison.compatibleDifferenceCount} compatible`, "success"),
         badge(`${comparison.metadataOnlyDifferenceCount} metadata`, "info"),
-        badge(`${comparison.contradictionCount} decisions`, comparison.contradictionCount ? "danger" : "success"));
+        badge(`${comparison.contradictionCount} conflicts`, comparison.contradictionCount ? "danger" : "success"));
     container.append(summary, alertNode(
         comparison.canResolveAutomatically ? "success" : "warning",
         comparison.explanation));
@@ -76,18 +80,47 @@ function renderComparison(container, comparison) {
             : difference.kind === "metadata-only" ? "info" : "success";
         const item = element("div", { className: "list-group-item px-0" });
         item.append(element("div", { className: "d-flex flex-wrap gap-2 align-items-center" },
-            badge(difference.kind, kind),
+            badge(humanizeDifferenceKind(difference.kind), kind),
             element("code", { text: difference.path })));
         item.append(element("p", { className: "small mb-2 mt-1", text: difference.explanation }));
+
+        const values = element("div", { className: "rules-core-semantic-values" });
         if (difference.left !== null && difference.left !== undefined) {
-            item.append(element("div", { className: "small text-body-secondary", text: "Left" }), codeBlock(difference.left));
+            values.append(renderSemanticValue(leftLabel, difference.left));
         }
         if (difference.right !== null && difference.right !== undefined) {
-            item.append(element("div", { className: "small text-body-secondary mt-2", text: "Right" }), codeBlock(difference.right));
+            values.append(renderSemanticValue(rightLabel, difference.right));
         }
+        if (values.children.length) item.append(values);
         list.append(item);
     }
     container.append(list);
+}
+
+function renderSemanticValue(label, value) {
+    const body = isPrimitive(value)
+        ? element("div", {
+            className: "rules-core-semantic-value-text",
+            text: String(value)
+        })
+        : codeBlock(value);
+    return element("section", { className: "rules-core-semantic-value" },
+        element("div", { className: "rules-core-semantic-value-label", text: label }),
+        body);
+}
+
+function isPrimitive(value) {
+    return value === null
+        || value === undefined
+        || typeof value === "string"
+        || typeof value === "number"
+        || typeof value === "boolean";
+}
+
+function humanizeDifferenceKind(kind) {
+    return String(kind ?? "")
+        .replace(/-/g, " ")
+        .replace(/^./, value => value.toUpperCase());
 }
 
 function flattenRevisions(sources) {

@@ -38,10 +38,20 @@ public sealed record RuleSemanticComparisonRequest(
     Guid LeftSourceEntityRevisionId,
     Guid RightSourceEntityRevisionId);
 
+public sealed record RuleSourceComparisonRequest(
+    Guid RuleConceptId,
+    Guid LeftSourceEntityRevisionId,
+    Guid RightSourceEntityRevisionId);
+
 public interface IRuleSemanticComparisonService
 {
     Task<RuleSemanticComparisonView?> CompareAsync(
         RuleSemanticComparisonRequest request,
         string userId,
+        CancellationToken cancellationToken = default);
+
+    Task<RuleSemanticComparisonView?> CompareSourcesAsync(
+        RuleSourceComparisonRequest request,
+        string? userId,
         CancellationToken cancellationToken = default);
 }

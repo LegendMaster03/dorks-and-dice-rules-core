@@ -112,6 +112,31 @@ public sealed record ResolvedRuleView(
     public RuleLinkTargetView BrowserLink => RuleBrowserRoutes.ForConcept(EntityType, ConceptKey);
 }
 
+public sealed record RuleConceptVersionsView(
+    Guid RuleConceptId,
+    string ConceptKey,
+    string EntityType,
+    string DisplayName,
+    IReadOnlyList<RuleConceptSourceVersionView> Versions);
+
+public sealed record RuleConceptSourceVersionView(
+    Guid CanonicalEntityId,
+    Guid SourceEntityId,
+    Guid SourceEntityRevisionId,
+    int SourceRevisionNumber,
+    string SourceFingerprint,
+    string SourceEntityName,
+    string SourceCode,
+    string PackageKey,
+    string PackageDisplayName,
+    string FormatKey,
+    string? GameEdition,
+    string? ReleaseKind,
+    DateOnly? PublicationDate,
+    DateTimeOffset ImportedAt,
+    int EquivalentRepresentationCount,
+    JsonElement Document);
+
 public interface IGlobalRulesService
 {
     Task<RuleMutationResult<RuleConceptView>> CreateConceptAsync(
@@ -136,6 +161,11 @@ public interface IGlobalRulesService
         CancellationToken cancellationToken = default);
 
     Task<ResolvedRuleView?> ResolveLatestAsync(
+        string conceptKey,
+        string? userId,
+        CancellationToken cancellationToken = default);
+
+    Task<RuleConceptVersionsView?> GetAccessibleVersionsAsync(
         string conceptKey,
         string? userId,
         CancellationToken cancellationToken = default);

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using RulesCore.Application.Hosting;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.IntegrationTests;
 
@@ -94,6 +95,98 @@ public sealed class CurrentUserSourceImportQueueIntegrationTests
             Assert.Equal(job.ProgressTotal, listed.ProgressTotal);
             Assert.Equal(job.ProgressDetail, listed.ProgressDetail);
             Assert.Equal(job.ProgressUpdatedAt, listed.ProgressUpdatedAt);
+
+            await using (var progressScope = factory.Services.CreateAsyncScope())
+            {
+                var progressDb = progressScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+                var progressJobs = new CurrentUserSourceImportJobService(progressDb);
+                var claimed = await progressJobs.ClaimNextAsync();
+                Assert.NotNull(claimed);
+                Assert.Equal(job.Id, claimed.Id);
+                await progressJobs.UpdateProgressAsync(
+                    job.Id,
+                    new CurrentUserSourceImportProgress(
+                        "persisting",
+                        100,
+                        2631,
+                        Detail: null,
+                        CurrentItem: "Wreath of the Prism",
+                        CurrentItemType: "itemGroup",
+                        AdapterFormat: "5etools-json",
+                        RecordsDiscovered: 2631,
+                        RecordsTranslated: 2631,
+                        EntitiesPersisted: 100));
+            }
+
+            using var progressListRequest = HostedRequest(
+                HttpMethod.Get,
+                "/api/sources/current-user/import-jobs",
+                "web-import-ticket");
+            using var progressListResponse = await client.SendAsync(progressListRequest);
+            Assert.Equal(HttpStatusCode.OK, progressListResponse.StatusCode);
+            var progressedJobs = await progressListResponse.Content
+                .ReadFromJsonAsync<CurrentUserSourceImportJobView[]>();
+            var progressed = Assert.Single(progressedJobs!, value => value.Id == job.Id);
+            Assert.Equal(CurrentUserSourceImportJobStatuses.Running, progressed.Status);
+            Assert.Equal("persisting", progressed.ProgressStage);
+            Assert.Equal(100, progressed.ProgressCurrent);
+            Assert.Equal(2631, progressed.ProgressTotal);
+            Assert.Null(progressed.ProgressDetail);
+            Assert.NotNull(progressed.Progress);
+            Assert.Equal("Wreath of the Prism", progressed.Progress!.CurrentItem);
+            Assert.Equal("itemGroup", progressed.Progress.CurrentItemType);
+            Assert.Equal(100, progressed.Progress.EntitiesPersisted);
+
+            await using (var gracefulScope = factory.Services.CreateAsyncScope())
+            {
+                var gracefulDb = gracefulScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+                var gracefulJobs = new CurrentUserSourceImportJobService(gracefulDb);
+                Assert.True(await gracefulJobs.RequeueRunningJobAsync(
+                    job.Id,
+                    "Web source import was interrupted by service shutdown; waiting to retry"));
+            }
+
+            await using (var reclaimScope = factory.Services.CreateAsyncScope())
+            {
+                var reclaimDb = reclaimScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+                var reclaimJobs = new CurrentUserSourceImportJobService(reclaimDb);
+                var reclaimedForRecovery = await reclaimJobs.ClaimNextAsync();
+                Assert.NotNull(reclaimedForRecovery);
+                Assert.Equal(job.Id, reclaimedForRecovery.Id);
+            }
+
+            await using (var recoveryScope = factory.Services.CreateAsyncScope())
+            {
+                var recoveryDb = recoveryScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+                var recoveryJobs = new CurrentUserSourceImportJobService(recoveryDb);
+                Assert.Equal(1, await recoveryJobs.RequeueInterruptedRunningJobsAsync());
+            }
+
+            using var recoveredListRequest = HostedRequest(
+                HttpMethod.Get,
+                "/api/sources/current-user/import-jobs",
+                "web-import-ticket");
+            using var recoveredListResponse = await client.SendAsync(recoveredListRequest);
+            Assert.Equal(HttpStatusCode.OK, recoveredListResponse.StatusCode);
+            var recoveredJobs = await recoveredListResponse.Content
+                .ReadFromJsonAsync<CurrentUserSourceImportJobView[]>();
+            var recovered = Assert.Single(recoveredJobs!, value => value.Id == job.Id);
+            Assert.Equal(CurrentUserSourceImportJobStatuses.Queued, recovered.Status);
+            Assert.Equal("queued", recovered.ProgressStage);
+            Assert.Equal(0, recovered.ProgressCurrent);
+            Assert.Null(recovered.ProgressTotal);
+            Assert.Equal(
+                "Previous Web source import was interrupted; waiting to retry",
+                recovered.ProgressDetail);
+
+            await using (var retryScope = factory.Services.CreateAsyncScope())
+            {
+                var retryDb = retryScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+                var retryJobs = new CurrentUserSourceImportJobService(retryDb);
+                var reclaimed = await retryJobs.ClaimNextAsync();
+                Assert.NotNull(reclaimed);
+                Assert.Equal(job.Id, reclaimed.Id);
+            }
         }
         finally
         {

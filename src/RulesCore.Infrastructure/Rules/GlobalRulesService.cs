@@ -376,6 +376,119 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             resolvedDocument);
     }
 
+    public async Task<RuleConceptVersionsView?> GetAccessibleVersionsAsync(
+        string conceptKey,
+        string? userId,
+        CancellationToken cancellationToken = default)
+    {
+        var key = NormalizeKey(conceptKey, nameof(conceptKey), 300);
+        var normalizedUserId = NormalizeOptionalUserId(userId);
+        var publishedRule = await ResolveLatestAsync(key, normalizedUserId, cancellationToken);
+        if (publishedRule is null)
+        {
+            return null;
+        }
+
+        var accessibleSourceIds = await CanonicalRuleBindingStore.GetAccessibleSourceEntityIdsForConceptAsync(
+            dbContext,
+            publishedRule.RuleConceptId,
+            normalizedUserId,
+            cancellationToken);
+        if (accessibleSourceIds.Count == 0)
+        {
+            return null;
+        }
+
+        var sources = await dbContext.SourceEntities
+            .AsNoTracking()
+            .Include(value => value.SourcePackage)
+            .Include(value => value.Revisions)
+            .Where(value => accessibleSourceIds.Contains(value.Id))
+            .ToArrayAsync(cancellationToken);
+        var canonicalBySource = await CanonicalRuleBindingStore.GetCanonicalEntityIdsAsync(
+            dbContext,
+            sources.Select(value => value.Id).ToArray(),
+            cancellationToken);
+
+        var candidates = sources
+            .Select(source => new
+            {
+                Source = source,
+                Revision = source.Revisions
+                    .OrderByDescending(value => value.RevisionNumber)
+                    .FirstOrDefault(),
+                CanonicalEntityId = canonicalBySource.GetValueOrDefault(source.Id)
+            })
+            .Where(value => value.Revision is not null && value.CanonicalEntityId != Guid.Empty)
+            .ToArray();
+
+        var versions = new List<RuleConceptSourceVersionView>();
+        foreach (var group in candidates
+                     .GroupBy(value => value.CanonicalEntityId)
+                     .OrderBy(value => value.Key))
+        {
+            var representative = group
+                .OrderByDescending(value => value.Source.SourcePackage.IsPublic)
+                .ThenBy(value => value.Source.SourceCode ?? string.Empty, StringComparer.OrdinalIgnoreCase)
+                .ThenBy(value => value.Source.SourcePackage.Key, StringComparer.Ordinal)
+                .ThenBy(value => value.Source.Id)
+                .First();
+            var revision = representative.Revision!;
+            using var document = JsonDocument.Parse(revision.GetMechanicalContentJson());
+            var source = representative.Source;
+            var publication = await CanonicalPublicationMetadataReader.ReadAsync(
+                dbContext,
+                source.Id,
+                cancellationToken);
+            versions.Add(new RuleConceptSourceVersionView(
+                representative.CanonicalEntityId,
+                source.Id,
+                revision.Id,
+                revision.RevisionNumber,
+                revision.Fingerprint,
+                source.Name,
+                source.SourceCode ?? string.Empty,
+                source.SourcePackage.Key,
+                source.SourcePackage.DisplayName,
+                source.FormatKey,
+                publication?.GameEdition,
+                publication?.ReleaseKind,
+                publication?.PublicationDate,
+                revision.ImportedAt,
+                group.Count(),
+                document.RootElement.Clone()));
+        }
+
+        if (versions.Count == 0)
+        {
+            return null;
+        }
+
+        return new RuleConceptVersionsView(
+            publishedRule.RuleConceptId,
+            publishedRule.ConceptKey,
+            publishedRule.EntityType,
+            publishedRule.DisplayName,
+            versions
+                .OrderBy(value => EditionSortKey(value.GameEdition))
+                .ThenBy(value => value.PublicationDate ?? DateOnly.MinValue)
+                .ThenBy(value => value.SourceCode, StringComparer.OrdinalIgnoreCase)
+                .ThenBy(value => value.PackageDisplayName, StringComparer.OrdinalIgnoreCase)
+                .ThenBy(value => value.SourceEntityId)
+                .ToArray());
+    }
+
+    private static int EditionSortKey(string? gameEdition) =>
+        gameEdition?.Trim().ToLowerInvariant() switch
+        {
+            "3e" => 300,
+            "3.0e" => 300,
+            "3.5e" => 350,
+            "5e" => 500,
+            "5.5e" => 550,
+            _ => int.MaxValue
+        };
+
     private async Task ValidateContributionsAsync(
         Guid ruleConceptId,
         IReadOnlyCollection<NormalizedDecisionContribution> contributions,

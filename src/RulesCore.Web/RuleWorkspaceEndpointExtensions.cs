@@ -17,7 +17,7 @@ public static class RuleWorkspaceEndpointExtensions
                 new(
                     RuleAdjudicationScopeKinds.Global,
                     null,
-                    "Global Rules",
+                    "Dorks & Dice",
                     CanBrowse: true,
                     CanAdjudicate: authenticationContext is not null
                         && RulesAuthority.CanEditGlobalRules(authenticationContext))
@@ -37,6 +37,36 @@ public static class RuleWorkspaceEndpointExtensions
 
             httpContext.Response.Headers.CacheControl = "no-store";
             return Results.Ok(new RuleWorkspaceScopesView(scopes));
+        });
+
+        app.MapPost("/api/rules/comparison", async (
+            RuleSourceComparisonRequest request,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
+            try
+            {
+                var comparison = await new RuleSemanticComparisonService(dbContext).CompareSourcesAsync(
+                    request,
+                    authenticationContext?.User.Id,
+                    cancellationToken);
+                if (comparison is null)
+                {
+                    return Results.NotFound();
+                }
+
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(comparison);
+            }
+            catch (ArgumentException exception)
+            {
+                return Results.Problem(
+                    title: "Invalid rule comparison request",
+                    detail: exception.Message,
+                    statusCode: StatusCodes.Status400BadRequest);
+            }
         });
 
         app.MapPost("/api/workspace/comparison", async (

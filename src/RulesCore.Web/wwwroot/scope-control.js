@@ -8,7 +8,7 @@ export function installAdjudicationScopeControl(app) {
     app.canEditCampaign = app.hostContext.siteMode === DORKS_MODE && app.dmCampaigns.length > 0;
 
     if (app.activeView === "campaign" && !app.canEditCampaign) {
-        app.activeView = app.canEditGlobal ? "global" : "browse";
+        app.activeView = app.canEditGlobal ? "global" : "library";
         app.activeCampaignId = null;
     } else if (!app.activeCampaignId && app.canEditCampaign) {
         app.activeCampaignId = app.dmCampaigns[0].id;
@@ -19,7 +19,7 @@ export function installAdjudicationScopeControl(app) {
         const header = renderHeader();
         const options = [];
         if (app.canEditGlobal) {
-            options.push({ value: "global", label: "Global Rules" });
+            options.push({ value: "global", label: "Dorks & Dice" });
         }
         for (const campaign of app.dmCampaigns) {
             options.push({ value: `campaign:${campaign.id}`, label: `Campaign: ${campaign.name}` });

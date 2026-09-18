@@ -14,6 +14,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
     {
         try
         {
+            await RequeueInterruptedImportJobsAsync(stoppingToken);
             await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
             var nextRefreshSweep = DateTimeOffset.UtcNow.AddMinutes(10);
 
@@ -37,6 +38,20 @@ internal sealed class CurrentUserSourceRefreshBackground(
         }
     }
 
+    private async Task RequeueInterruptedImportJobsAsync(CancellationToken stoppingToken)
+    {
+        await using var scope = scopeFactory.CreateAsyncScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+        var jobs = new CurrentUserSourceImportJobService(dbContext);
+        var requeued = await jobs.RequeueInterruptedRunningJobsAsync(stoppingToken);
+        if (requeued > 0)
+        {
+            logger.LogWarning(
+                "Rules Core requeued {JobCount} Web source import job(s) left running by a previous process.",
+                requeued);
+        }
+    }
+
     private async Task<bool> ProcessNextImportJobAsync(CancellationToken stoppingToken)
     {
         ClaimedCurrentUserSourceImportJob? job = null;
@@ -57,14 +72,14 @@ internal sealed class CurrentUserSourceRefreshBackground(
             using var httpClient = new HttpClient(new CurrentUserSourceProgressHttpHandler(
                 sourceUri,
                 (progress, cancellationToken) =>
-                    jobs.UpdateProgressAsync(job.Id, progress, cancellationToken)))
+                    ReportImportProgressAsync(job.Id, progress, cancellationToken)))
             {
                 Timeout = TimeSpan.FromMinutes(2)
             };
             var progressImporter = new ProgressReportingNormalizedSourceImportService(
                 normalizedImporter,
                 (progress, cancellationToken) =>
-                    jobs.UpdateProgressAsync(job.Id, progress, cancellationToken));
+                    ReportImportProgressAsync(job.Id, progress, cancellationToken));
             var sourceService = new CurrentUserSourceService(
                 dbContext,
                 progressImporter,
@@ -221,6 +236,21 @@ internal sealed class CurrentUserSourceRefreshBackground(
         }
     }
 
+    private async Task ReportImportProgressAsync(
+        Guid jobId,
+        CurrentUserSourceImportProgress progress,
+        CancellationToken cancellationToken)
+    {
+        // Normalized imports hold a long-running transaction on their scoped DbContext.
+        // Progress must commit independently so the UI can observe persistence and
+        // reconciliation while that import transaction is still in flight.
+        await using var progressScope = scopeFactory.CreateAsyncScope();
+        var progressDbContext = progressScope.ServiceProvider
+            .GetRequiredService<RulesCoreDbContext>();
+        var progressJobs = new CurrentUserSourceImportJobService(progressDbContext);
+        await progressJobs.UpdateProgressAsync(jobId, progress, cancellationToken);
+    }
+
     private async Task RunRefreshSweepAsync(CancellationToken stoppingToken)
     {
         try
@@ -249,17 +279,16 @@ internal sealed class CurrentUserSourceRefreshBackground(
             await using var scope = scopeFactory.CreateAsyncScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
             var jobs = new CurrentUserSourceImportJobService(dbContext);
-            await jobs.FailAsync(
+            await jobs.RequeueRunningJobAsync(
                 jobId,
-                new InvalidOperationException(
-                    "The Web source import was interrupted by service shutdown. Queue it again after Rules Core restarts."),
+                "Web source import was interrupted by service shutdown; waiting to retry",
                 CancellationToken.None);
         }
         catch (Exception exception)
         {
             logger.LogError(
                 exception,
-                "Rules Core could not record an interrupted Web source import job {JobId}.",
+                "Rules Core could not requeue interrupted Web source import job {JobId}.",
                 jobId);
         }
     }

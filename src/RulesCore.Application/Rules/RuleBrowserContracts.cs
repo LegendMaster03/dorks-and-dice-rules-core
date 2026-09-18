@@ -17,11 +17,14 @@ public static class RuleBrowserRoutes
             ["monster"] = "monsters",
             ["spell"] = "spells",
             ["class"] = "classes",
+            ["subclass"] = "subclasses",
+            ["prestigeClass"] = "prestige-classes",
             ["feat"] = "feats",
             ["race"] = "races",
             ["species"] = "species",
             ["item"] = "items",
-            ["condition"] = "conditions"
+            ["condition"] = "conditions",
+            ["skill"] = "skills"
         };
 
     private static readonly IReadOnlyDictionary<string, string> SegmentToEntityType =
@@ -55,7 +58,7 @@ public static class RuleBrowserRoutes
         var normalizedType = RequireText(entityType, nameof(entityType)).ToLowerInvariant();
         return EntityTypeToSegment.TryGetValue(normalizedType, out var segment)
             ? $"/{segment}"
-            : $"/rules?entityType={Uri.EscapeDataString(normalizedType)}";
+            : $"/types/{Uri.EscapeDataString(normalizedType)}";
     }
 
     public static bool TryResolveConceptKey(
@@ -108,9 +111,20 @@ public static class RuleBrowserRoutes
 
         var path = StripQueryAndFragment(toolRelativePath.Trim());
         var segments = path.Trim('/').Split('/', StringSplitOptions.RemoveEmptyEntries);
-        return segments.Length == 1 && SegmentToEntityType.TryGetValue(segments[0], out var entityType)
-            ? entityType
-            : null;
+        if (segments.Length == 1
+            && SegmentToEntityType.TryGetValue(segments[0], out var entityType))
+        {
+            return entityType;
+        }
+
+        if (segments.Length == 2
+            && string.Equals(segments[0], "types", StringComparison.OrdinalIgnoreCase))
+        {
+            var dynamicType = Uri.UnescapeDataString(segments[1]).Trim().ToLowerInvariant();
+            return string.IsNullOrWhiteSpace(dynamicType) ? null : dynamicType;
+        }
+
+        return null;
     }
 
     private static string StripQueryAndFragment(string path)
