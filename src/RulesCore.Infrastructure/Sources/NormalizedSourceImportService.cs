@@ -58,6 +58,16 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
             }
         }
 
+        await ReportAsync(request, new CurrentUserSourceImportProgress(
+            "persisting",
+            0,
+            translatedRecords.Count,
+            "Preparing to persist normalized source records",
+            AdapterFormat: formatKey,
+            RecordsDiscovered: translatedRecords.Count,
+            RecordsTranslated: translatedRecords.Count,
+            EntitiesPersisted: 0), cancellationToken);
+
         await using var transaction = await dbContext.Database.BeginTransactionAsync(
             IsolationLevel.Serializable,
             cancellationToken);

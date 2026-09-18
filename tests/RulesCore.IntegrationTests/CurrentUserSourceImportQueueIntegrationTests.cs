@@ -94,6 +94,47 @@ public sealed class CurrentUserSourceImportQueueIntegrationTests
             Assert.Equal(job.ProgressTotal, listed.ProgressTotal);
             Assert.Equal(job.ProgressDetail, listed.ProgressDetail);
             Assert.Equal(job.ProgressUpdatedAt, listed.ProgressUpdatedAt);
+
+            await using (var progressScope = factory.Services.CreateAsyncScope())
+            {
+                var progressDb = progressScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+                var progressJobs = new CurrentUserSourceImportJobService(progressDb);
+                var claimed = await progressJobs.ClaimNextAsync();
+                Assert.NotNull(claimed);
+                Assert.Equal(job.Id, claimed.Id);
+                await progressJobs.UpdateProgressAsync(
+                    job.Id,
+                    new CurrentUserSourceImportProgress(
+                        "persisting",
+                        100,
+                        2631,
+                        Detail: null,
+                        CurrentItem: "Wreath of the Prism",
+                        CurrentItemType: "itemGroup",
+                        AdapterFormat: "5etools-json",
+                        RecordsDiscovered: 2631,
+                        RecordsTranslated: 2631,
+                        EntitiesPersisted: 100));
+            }
+
+            using var progressListRequest = HostedRequest(
+                HttpMethod.Get,
+                "/api/sources/current-user/import-jobs",
+                "web-import-ticket");
+            using var progressListResponse = await client.SendAsync(progressListRequest);
+            Assert.Equal(HttpStatusCode.OK, progressListResponse.StatusCode);
+            var progressedJobs = await progressListResponse.Content
+                .ReadFromJsonAsync<CurrentUserSourceImportJobView[]>();
+            var progressed = Assert.Single(progressedJobs!, value => value.Id == job.Id);
+            Assert.Equal(CurrentUserSourceImportJobStatuses.Running, progressed.Status);
+            Assert.Equal("persisting", progressed.ProgressStage);
+            Assert.Equal(100, progressed.ProgressCurrent);
+            Assert.Equal(2631, progressed.ProgressTotal);
+            Assert.Null(progressed.ProgressDetail);
+            Assert.NotNull(progressed.Progress);
+            Assert.Equal("Wreath of the Prism", progressed.Progress!.CurrentItem);
+            Assert.Equal("itemGroup", progressed.Progress.CurrentItemType);
+            Assert.Equal(100, progressed.Progress.EntitiesPersisted);
         }
         finally
         {

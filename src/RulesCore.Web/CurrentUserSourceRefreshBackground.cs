@@ -57,14 +57,14 @@ internal sealed class CurrentUserSourceRefreshBackground(
             using var httpClient = new HttpClient(new CurrentUserSourceProgressHttpHandler(
                 sourceUri,
                 (progress, cancellationToken) =>
-                    jobs.UpdateProgressAsync(job.Id, progress, cancellationToken)))
+                    ReportImportProgressAsync(job.Id, progress, cancellationToken)))
             {
                 Timeout = TimeSpan.FromMinutes(2)
             };
             var progressImporter = new ProgressReportingNormalizedSourceImportService(
                 normalizedImporter,
                 (progress, cancellationToken) =>
-                    jobs.UpdateProgressAsync(job.Id, progress, cancellationToken));
+                    ReportImportProgressAsync(job.Id, progress, cancellationToken));
             var sourceService = new CurrentUserSourceService(
                 dbContext,
                 progressImporter,
@@ -219,6 +219,21 @@ internal sealed class CurrentUserSourceRefreshBackground(
             }
             return true;
         }
+    }
+
+    private async Task ReportImportProgressAsync(
+        Guid jobId,
+        CurrentUserSourceImportProgress progress,
+        CancellationToken cancellationToken)
+    {
+        // Normalized imports hold a long-running transaction on their scoped DbContext.
+        // Progress must commit independently so the UI can observe persistence and
+        // reconciliation while that import transaction is still in flight.
+        await using var progressScope = scopeFactory.CreateAsyncScope();
+        var progressDbContext = progressScope.ServiceProvider
+            .GetRequiredService<RulesCoreDbContext>();
+        var progressJobs = new CurrentUserSourceImportJobService(progressDbContext);
+        await progressJobs.UpdateProgressAsync(jobId, progress, cancellationToken);
     }
 
     private async Task RunRefreshSweepAsync(CancellationToken stoppingToken)

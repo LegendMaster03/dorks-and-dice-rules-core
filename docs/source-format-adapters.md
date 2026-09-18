@@ -204,3 +204,10 @@ Local uploads and unregistered repositories do not seed trusted-lineage aliases 
 The built-in SRD snapshots are a separate public baseline concern: startup may hydrate those reviewed bundled representations without changing the first-import behavior for user-added trusted source lineages.
 
 CI uses deterministic local fixtures rather than live upstream repositories.
+
+
+## Background import progress
+
+Queued Web-source imports report acquisition, translation, persistence, reconciliation, and finalization as separate stages. Persistence and reconciliation run inside a long-lived source transaction, but import-job progress is written through a separate scoped database context so those updates commit independently and remain visible while the source transaction is still running. This prevents a completed translation count from appearing frozen while records are actually being persisted.
+
+Progress counts use stage-specific units in the user interface: acquisition uses files, translation/persistence uses records, and canonical reconciliation uses publications. Structured progress JSON is not presented directly to the user.
