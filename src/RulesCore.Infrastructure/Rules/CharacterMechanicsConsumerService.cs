@@ -169,6 +169,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             var competency = BuildCompetencyDefinition(
                 rule,
                 competencyDocuments.GetValueOrDefault(rule.SourceEntityRevisionId),
+                publicationMetadata,
                 competencyProfilesByConcept.GetValueOrDefault(rule.RuleConceptId, []));
             var inputs = BuildCompetencyInputs(derivation, competency);
 
@@ -188,9 +189,10 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     RequiredCapabilityKeys: [],
                     SourcePackageKey: rule.PackageKey),
                 derivation is null
-                    ? CharacterMechanicEvaluationKinds.SourceValue
+                    ? CharacterMechanicEvaluationKinds.CompetencyProfile
                     : CharacterMechanicEvaluationKinds.CompositeCompetency,
-                CanEvaluate: true,
+                CanEvaluate: derivation is not null
+                    || competency.Profiles.Any(value => value.CanEvaluate),
                 Constant: 0,
                 TargetInputKey: null,
                 BaseMechanicKey: null,
@@ -349,21 +351,58 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 AppliedRollRules: []);
         }
 
-        if (!integerInputs.TryGetValue("value", out var sourceValue))
+        if (mechanic.Competency is null)
         {
-            throw new KeyNotFoundException(
-                $"Competency mechanic '{mechanic.MechanicKey}' requires integer input 'value'.");
+            throw new InvalidOperationException(
+                $"Competency mechanic '{mechanic.MechanicKey}' does not expose a competency profile.");
         }
 
+        var selectedProfileRevisionId = request.CompetencyProfileSourceEntityRevisionId
+            ?? mechanic.Competency.DefaultProfileSourceEntityRevisionId;
+        if (!selectedProfileRevisionId.HasValue)
+        {
+            throw new InvalidOperationException(
+                $"Competency mechanic '{mechanic.MechanicKey}' has no default evaluatable profile. Select an explicit competency profile.");
+        }
+
+        var profile = mechanic.Competency.Profiles.SingleOrDefault(value =>
+            value.SourceEntityRevisionId == selectedProfileRevisionId.Value);
+        if (profile is null)
+        {
+            throw new KeyNotFoundException(
+                $"Competency profile source revision '{selectedProfileRevisionId}' is not available for mechanic '{mechanic.MechanicKey}'.");
+        }
+        if (!profile.CanEvaluate)
+        {
+            throw new InvalidOperationException(
+                $"Competency profile '{profile.ProfileKey}' for mechanic '{mechanic.MechanicKey}' can not yet be evaluated faithfully.");
+        }
+
+        var missingProfileCapabilities = profile.RequiredCapabilityKeys
+            .Where(value => !availableCapabilities.Contains(value))
+            .ToArray();
+        if (missingProfileCapabilities.Length > 0)
+        {
+            throw new InvalidOperationException(
+                $"Competency profile '{profile.ProfileKey}' requires Character capability: {string.Join(", ", missingProfileCapabilities)}.");
+        }
+
+        var profileEvaluation = EvaluateCompetencyProfile(
+            mechanic.MechanicKey,
+            profile,
+            integerInputs,
+            booleanInputs,
+            stringInputs);
         return new CharacterMechanicEvaluationView(
             mechanic.MechanicKey,
-            CharacterMechanicEvaluationKinds.SourceValue,
-            sourceValue,
+            CharacterMechanicEvaluationKinds.CompetencyProfile,
+            profileEvaluation.Value,
             Target: null,
             MeetsTarget: null,
-            RequirementsSatisfied: true,
-            UnsatisfiedRequirementKeys: [],
-            AppliedRollRules: []);
+            profileEvaluation.RequirementsSatisfied,
+            profileEvaluation.UnsatisfiedRequirementKeys,
+            AppliedRollRules: [],
+            CompetencyProfileSourceEntityRevisionId: profile.SourceEntityRevisionId);
     }
 
     private async Task<IReadOnlyList<CharacterMechanicRelationshipView>> BuildCompetencyRelationshipsAsync(
@@ -584,22 +623,9 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         CharacterMechanicRelationshipView? derivation,
         CharacterCompetencyDefinitionView competency)
     {
-        var inputs = new List<CharacterMechanicInputView>();
-        if (derivation is null)
+        if (derivation is not null)
         {
-            inputs.Add(new CharacterMechanicInputView(
-                "value",
-                CharacterMechanicInputValueKinds.Integer,
-                CharacterMechanicInputOrigins.CharacterState,
-                Required: true,
-                ParticipatesInValue: true,
-                DefaultInteger: null,
-                IncludeWhenBooleanInputKey: null,
-                IncludeWhenBooleanValue: null));
-        }
-        else
-        {
-            inputs.AddRange(derivation.ComponentMechanicKeys.Select(value =>
+            return derivation.ComponentMechanicKeys.Select(value =>
                 new CharacterMechanicInputView(
                     ConceptKeyFromCompetencyMechanicKey(value),
                     CharacterMechanicInputValueKinds.Integer,
@@ -608,70 +634,37 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     ParticipatesInValue: true,
                     DefaultInteger: null,
                     IncludeWhenBooleanInputKey: null,
-                    IncludeWhenBooleanValue: null)));
+                    IncludeWhenBooleanValue: null))
+                .ToArray();
         }
 
-        if (competency.SupportsRanks)
+        if (!competency.DefaultProfileSourceEntityRevisionId.HasValue)
         {
-            inputs.Add(new CharacterMechanicInputView(
-                "ranks",
-                CharacterMechanicInputValueKinds.Integer,
-                CharacterMechanicInputOrigins.CharacterState,
-                Required: false,
-                ParticipatesInValue: false,
-                DefaultInteger: null,
-                IncludeWhenBooleanInputKey: null,
-                IncludeWhenBooleanValue: null));
-        }
-        if (competency.SupportsClassSkillState)
-        {
-            inputs.Add(new CharacterMechanicInputView(
-                "classSkillState",
-                CharacterMechanicInputValueKinds.Boolean,
-                CharacterMechanicInputOrigins.CharacterState,
-                Required: false,
-                ParticipatesInValue: false,
-                DefaultInteger: null,
-                IncludeWhenBooleanInputKey: null,
-                IncludeWhenBooleanValue: null));
-        }
-        if (competency.SupportsTrainingState)
-        {
-            inputs.Add(new CharacterMechanicInputView(
-                "trainingState",
-                CharacterMechanicInputValueKinds.String,
-                CharacterMechanicInputOrigins.CharacterState,
-                Required: false,
-                ParticipatesInValue: false,
-                DefaultInteger: null,
-                IncludeWhenBooleanInputKey: null,
-                IncludeWhenBooleanValue: null));
-        }
-        if (competency.ArmorCheckPenaltyApplies == true
-            || competency.Profiles.Any(value => value.ArmorCheckPenaltyApplies == true))
-        {
-            inputs.Add(new CharacterMechanicInputView(
-                "armorCheckPenaltyAdjustment",
-                CharacterMechanicInputValueKinds.Integer,
-                CharacterMechanicInputOrigins.Derived,
-                Required: false,
-                ParticipatesInValue: false,
-                DefaultInteger: null,
-                IncludeWhenBooleanInputKey: null,
-                IncludeWhenBooleanValue: null));
+            return [];
         }
 
-        return inputs;
+        return competency.Profiles
+            .SingleOrDefault(value =>
+                value.SourceEntityRevisionId == competency.DefaultProfileSourceEntityRevisionId.Value)
+            ?.Inputs
+            ?? [];
     }
 
     private static CharacterCompetencyDefinitionView BuildCompetencyDefinition(
         ResolvedRuleCatalogItemView rule,
         string? selectedMechanicalJson,
+        IReadOnlyList<PublicationAttribution> selectedPublications,
         IReadOnlyList<CharacterCompetencyProfileView> profiles)
     {
-        var selectedProfile = ParseNormalizedCompetencyProfile(
+        var selectedGameEdition = selectedPublications
+            .Select(value => value.GameEdition)
+            .FirstOrDefault(value => !string.IsNullOrWhiteSpace(value));
+        var selectedProfile = BuildCompetencyProfile(
             rule.SourceEntityRevisionId,
-            selectedMechanicalJson);
+            rule.EntityType,
+            selectedMechanicalJson,
+            selectedGameEdition);
+
         IReadOnlyList<CharacterCompetencyProfileView> selectedProfiles =
             selectedProfile is null ? [] : [selectedProfile];
         var allProfiles = profiles
@@ -696,16 +689,60 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             selectedProfile?.FamilyName,
             selectedProfile?.Specialty,
             selectedProfile?.GoverningAbilityKey,
-            SupportsRanks: allProfiles.Any(value => value.SupportsRanks),
-            SupportsClassSkillState: allProfiles.Any(value => value.SupportsClassSkillState),
-            SupportsTrainingState: allProfiles.Length == 0
-                || allProfiles.Any(value => value.SupportsTrainingState),
-            TrainedOnly: selectedProfile?.TrainedOnly,
-            ArmorCheckPenaltyApplies: selectedProfile?.ArmorCheckPenaltyApplies,
-            Profiles: allProfiles);
+            selectedProfile?.SupportsRanks ?? false,
+            selectedProfile?.SupportsClassSkillState ?? false,
+            selectedProfile?.SupportsTrainingState ?? false,
+            selectedProfile?.TrainedOnly,
+            selectedProfile?.ArmorCheckPenaltyApplies,
+            selectedProfile?.SourceEntityRevisionId,
+            allProfiles);
     }
 
-    private static CharacterCompetencyProfileView? ParseNormalizedCompetencyProfile(
+    private static CharacterCompetencyProfileView? BuildCompetencyProfile(
+        Guid sourceEntityRevisionId,
+        string entityType,
+        string? mechanicalJson,
+        string? gameEdition)
+    {
+        var normalized = ParseNormalizedCompetencyMetadata(
+            sourceEntityRevisionId,
+            mechanicalJson);
+        if (normalized is not null)
+        {
+            return normalized;
+        }
+
+        if (!IsLaterEdition(gameEdition))
+        {
+            return null;
+        }
+
+        var competencyKind = string.Equals(entityType, "tool", StringComparison.OrdinalIgnoreCase)
+            ? CharacterCompetencyKinds.Tool
+            : CharacterCompetencyKinds.Skill;
+        var inputs = BuildProficiencyCompetencyInputs();
+        return new CharacterCompetencyProfileView(
+            sourceEntityRevisionId,
+            "dnd-5x",
+            RequiredCapabilityKeys: [],
+            competencyKind,
+            FamilyName: null,
+            Specialty: null,
+            GoverningAbilityKey: ReadNativeGoverningAbilityKey(mechanicalJson),
+            SupportsRanks: false,
+            SupportsClassSkillState: false,
+            SupportsTrainingState: true,
+            TrainedOnly: false,
+            ArmorCheckPenaltyApplies: false,
+            EvaluationProfileKey: "proficiency-competency",
+            EvaluationKind: CharacterMechanicEvaluationKinds.Sum,
+            CanEvaluate: true,
+            Inputs: inputs,
+            BooleanRequirements: [],
+            GameEdition: gameEdition);
+    }
+
+    private static CharacterCompetencyProfileView? ParseNormalizedCompetencyMetadata(
         Guid sourceEntityRevisionId,
         string? mechanicalJson)
     {
@@ -732,6 +769,25 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 return null;
             }
 
+            var supportsRanks = ReadBoolean(competency, "supportsRanks") ?? false;
+            var supportsClassSkillState = ReadBoolean(competency, "supportsClassSkillState") ?? false;
+            var supportsTrainingState = ReadBoolean(competency, "supportsTrainingState") ?? false;
+            var trainedOnly = ReadBoolean(competency, "trainedOnly");
+            var armorCheckPenaltyApplies = ReadBoolean(competency, "armorCheckPenaltyApplies");
+            var evaluationProfileKey = ReadString(competency, "evaluationProfileKey") ?? "unsupported";
+            var canEvaluate = ReadBoolean(competency, "canEvaluate") ?? false;
+            var inputs = canEvaluate
+                && string.Equals(evaluationProfileKey, "ranked-skill", StringComparison.Ordinal)
+                    ? BuildRankedCompetencyInputs(
+                        supportsClassSkillState,
+                        supportsTrainingState,
+                        armorCheckPenaltyApplies == true)
+                    : [];
+            var requirements = canEvaluate && trainedOnly == true
+                ? (IReadOnlyList<CharacterMechanicBooleanRequirementView>)
+                    [new CharacterMechanicBooleanRequirementView("isTrained", true)]
+                : [];
+
             return new CharacterCompetencyProfileView(
                 sourceEntityRevisionId,
                 profileKey,
@@ -740,11 +796,16 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 ReadString(competency, "familyName"),
                 ReadString(competency, "specialty"),
                 ReadString(competency, "governingAbilityKey"),
-                ReadBoolean(competency, "supportsRanks") ?? false,
-                ReadBoolean(competency, "supportsClassSkillState") ?? false,
-                ReadBoolean(competency, "supportsTrainingState") ?? false,
-                ReadBoolean(competency, "trainedOnly"),
-                ReadBoolean(competency, "armorCheckPenaltyApplies"),
+                supportsRanks,
+                supportsClassSkillState,
+                supportsTrainingState,
+                trainedOnly,
+                armorCheckPenaltyApplies,
+                evaluationProfileKey,
+                canEvaluate ? CharacterMechanicEvaluationKinds.Sum : CharacterMechanicEvaluationKinds.None,
+                canEvaluate,
+                inputs,
+                requirements,
                 ReadString(competency, "gameEdition"));
         }
         catch (JsonException)
@@ -752,6 +813,208 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             return null;
         }
     }
+
+    private static IReadOnlyList<CharacterMechanicInputView> BuildRankedCompetencyInputs(
+        bool supportsClassSkillState,
+        bool supportsTrainingState,
+        bool armorCheckPenaltyApplies)
+    {
+        var inputs = new List<CharacterMechanicInputView>
+        {
+            ContributionInput(
+                "abilityContribution",
+                CharacterMechanicInputOrigins.Derived,
+                required: true),
+            ContributionInput(
+                "ranks",
+                CharacterMechanicInputOrigins.CharacterState,
+                required: true)
+        };
+        if (supportsClassSkillState)
+        {
+            inputs.Add(new CharacterMechanicInputView(
+                "classSkillState",
+                CharacterMechanicInputValueKinds.Boolean,
+                CharacterMechanicInputOrigins.CharacterState,
+                Required: false,
+                ParticipatesInValue: false,
+                DefaultInteger: null,
+                IncludeWhenBooleanInputKey: null,
+                IncludeWhenBooleanValue: null));
+        }
+        if (supportsTrainingState)
+        {
+            inputs.Add(new CharacterMechanicInputView(
+                "isTrained",
+                CharacterMechanicInputValueKinds.Boolean,
+                CharacterMechanicInputOrigins.CharacterState,
+                Required: false,
+                ParticipatesInValue: false,
+                DefaultInteger: null,
+                IncludeWhenBooleanInputKey: null,
+                IncludeWhenBooleanValue: null));
+        }
+        if (armorCheckPenaltyApplies)
+        {
+            inputs.Add(ContributionInput(
+                "armorCheckPenaltyAdjustment",
+                CharacterMechanicInputOrigins.Derived,
+                required: false,
+                defaultInteger: 0));
+        }
+        inputs.Add(ContributionInput(
+            "otherModifier",
+            CharacterMechanicInputOrigins.Derived,
+            required: false,
+            defaultInteger: 0));
+        return inputs;
+    }
+
+    private static IReadOnlyList<CharacterMechanicInputView> BuildProficiencyCompetencyInputs() =>
+    [
+        ContributionInput(
+            "abilityContribution",
+            CharacterMechanicInputOrigins.Derived,
+            required: true),
+        ContributionInput(
+            "trainingContribution",
+            CharacterMechanicInputOrigins.Derived,
+            required: false,
+            defaultInteger: 0),
+        new CharacterMechanicInputView(
+            "isTrained",
+            CharacterMechanicInputValueKinds.Boolean,
+            CharacterMechanicInputOrigins.CharacterState,
+            Required: false,
+            ParticipatesInValue: false,
+            DefaultInteger: null,
+            IncludeWhenBooleanInputKey: null,
+            IncludeWhenBooleanValue: null),
+        ContributionInput(
+            "otherModifier",
+            CharacterMechanicInputOrigins.Derived,
+            required: false,
+            defaultInteger: 0)
+    ];
+
+    private static CharacterMechanicInputView ContributionInput(
+        string key,
+        string origin,
+        bool required,
+        int? defaultInteger = null) =>
+        new(
+            key,
+            CharacterMechanicInputValueKinds.Integer,
+            origin,
+            required,
+            ParticipatesInValue: true,
+            defaultInteger,
+            IncludeWhenBooleanInputKey: null,
+            IncludeWhenBooleanValue: null);
+
+    private static (int Value, bool RequirementsSatisfied, IReadOnlyList<string> UnsatisfiedRequirementKeys)
+        EvaluateCompetencyProfile(
+            string mechanicKey,
+            CharacterCompetencyProfileView profile,
+            IReadOnlyDictionary<string, int> integerInputs,
+            IReadOnlyDictionary<string, bool> booleanInputs,
+            IReadOnlyDictionary<string, string> stringInputs)
+    {
+        if (!string.Equals(profile.EvaluationKind, CharacterMechanicEvaluationKinds.Sum, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"Competency profile '{profile.ProfileKey}' for mechanic '{mechanicKey}' does not use a supported evaluation kind.");
+        }
+
+        long total = 0;
+        foreach (var input in profile.Inputs)
+        {
+            if (!InputIsActive(input, booleanInputs))
+            {
+                continue;
+            }
+
+            var supplied = input.ValueKind switch
+            {
+                CharacterMechanicInputValueKinds.Integer =>
+                    integerInputs.ContainsKey(input.Key) || input.DefaultInteger.HasValue,
+                CharacterMechanicInputValueKinds.Boolean =>
+                    booleanInputs.ContainsKey(input.Key),
+                CharacterMechanicInputValueKinds.String =>
+                    stringInputs.TryGetValue(input.Key, out var stringValue)
+                    && !string.IsNullOrWhiteSpace(stringValue),
+                _ => throw new InvalidOperationException(
+                    $"Competency profile '{profile.ProfileKey}' uses unknown input value kind '{input.ValueKind}'.")
+            };
+            if (input.Required && !supplied)
+            {
+                throw new KeyNotFoundException(
+                    $"Competency mechanic '{mechanicKey}' requires {input.ValueKind} input '{input.Key}' for profile '{profile.ProfileKey}'.");
+            }
+
+            if (!input.ParticipatesInValue
+                || !string.Equals(input.ValueKind, CharacterMechanicInputValueKinds.Integer, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            if (integerInputs.TryGetValue(input.Key, out var value))
+            {
+                total += value;
+            }
+            else if (input.DefaultInteger is int fallback)
+            {
+                total += fallback;
+            }
+        }
+
+        var unsatisfied = profile.BooleanRequirements
+            .Where(requirement =>
+                !booleanInputs.TryGetValue(requirement.InputKey, out var supplied)
+                || supplied != requirement.ExpectedValue)
+            .Select(requirement => requirement.InputKey)
+            .ToArray();
+        return (checked((int)total), unsatisfied.Length == 0, unsatisfied);
+    }
+
+    private static bool InputIsActive(
+        CharacterMechanicInputView input,
+        IReadOnlyDictionary<string, bool> booleanInputs)
+    {
+        if (string.IsNullOrWhiteSpace(input.IncludeWhenBooleanInputKey))
+        {
+            return true;
+        }
+
+        return input.IncludeWhenBooleanValue.HasValue
+            && booleanInputs.TryGetValue(input.IncludeWhenBooleanInputKey, out var supplied)
+            && supplied == input.IncludeWhenBooleanValue.Value;
+    }
+
+    private static string? ReadNativeGoverningAbilityKey(string? mechanicalJson)
+    {
+        if (string.IsNullOrWhiteSpace(mechanicalJson))
+        {
+            return null;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(mechanicalJson);
+            return document.RootElement.TryGetProperty("ability", out var ability)
+                && ability.ValueKind == JsonValueKind.String
+                ? NormalizeAbilityKey(ability.GetString())
+                : null;
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
+    }
+
+    private static bool IsLaterEdition(string? gameEdition) =>
+        string.Equals(gameEdition, "5e", StringComparison.OrdinalIgnoreCase)
+        || string.Equals(gameEdition, "5.5e", StringComparison.OrdinalIgnoreCase);
 
     private static string? ReadString(JsonElement value, string propertyName) =>
         value.TryGetProperty(propertyName, out var property)
@@ -953,7 +1216,9 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     concept_entity.rule_concept_id,
                     revision.source_entity_revision_id,
                     revision.content_json,
-                    revision.raw_json
+                    revision.raw_json,
+                    source.entity_type,
+                    publication.game_edition
                 FROM concept_entities concept_entity
                 JOIN canonical_source_occurrence occurrence
                     ON occurrence.canonical_entity_id = concept_entity.canonical_entity_id
@@ -965,6 +1230,8 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     ON revision.source_entity_revision_id = latest.source_entity_revision_id
                 JOIN source_entity source
                     ON source.source_entity_id = revision.source_entity_id
+                JOIN canonical_publication publication
+                    ON publication.canonical_publication_id = occurrence.canonical_publication_id
                 JOIN source_package package
                     ON package.source_package_id = source.source_package_id
                 WHERE package.is_public
@@ -986,9 +1253,13 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 var revisionId = reader.GetGuid(1);
                 var contentJson = reader.IsDBNull(2) ? null : reader.GetString(2);
                 var rawJson = reader.GetString(3);
-                var profile = ParseNormalizedCompetencyProfile(
+                var entityType = reader.GetString(4);
+                var gameEdition = reader.IsDBNull(5) ? null : reader.GetString(5);
+                var profile = BuildCompetencyProfile(
                     revisionId,
-                    string.IsNullOrWhiteSpace(contentJson) ? rawJson : contentJson);
+                    entityType,
+                    string.IsNullOrWhiteSpace(contentJson) ? rawJson : contentJson,
+                    gameEdition);
                 if (profile is null)
                 {
                     continue;

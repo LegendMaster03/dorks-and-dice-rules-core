@@ -15,6 +15,7 @@ public static class CharacterMechanicEvaluationKinds
     public const string None = "none";
     public const string SourceValue = "source-value";
     public const string Sum = "sum";
+    public const string CompetencyProfile = "competency-profile";
     public const string CompositeCompetency = "composite-competency";
 }
 

@@ -722,7 +722,9 @@ internal static class RulesCoreContentTranslation
             ["kind"] = kind,
             ["supportsRanks"] = isThreeX,
             ["supportsClassSkillState"] = isThreeX,
-            ["supportsTrainingState"] = true
+            ["supportsTrainingState"] = true,
+            ["evaluationProfileKey"] = isThreeX ? "ranked-skill" : "unsupported",
+            ["canEvaluate"] = isThreeX
         };
         if (isThreeX)
         {

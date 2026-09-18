@@ -138,9 +138,21 @@ Resolved skill and tool concepts carry normalized competency metadata for Charac
 
 PCGen translation normalizes understood competency semantics into `_rulesCore.competency` during ingestion. That normalized profile includes the competency kind, specialty family/value when applicable, governing ability, trained-only behavior, Armor Check Penalty applicability, rank/class-skill support, training support, game edition, and any capability qualification. The original `KEYSTAT`, `USEUNTRAINED`, `ACHECK`, and other PCGen evidence remains preserved under `_rulesCore.pcgen.unmappedSegments` for source inspection; the Character mechanics consumer does not parse those PCGen tags or infer specialty semantics from display names.
 
-A competency can expose multiple normalized mechanical profiles across accessible canonical-equivalent source representations. This is important for reviewed direct equivalences such as 3.x `Bluff` -> `Deception` or `Craft (alchemy)` -> `Alchemist's Supplies`: selecting a later-edition representation for the published rule does not erase the accessible 3.x profile that supports ranks and class-skill state. The Character backend can select the profile appropriate to its capabilities without implementing an edition switch.
+A competency can expose multiple normalized mechanical profiles across accessible canonical-equivalent source representations. This is important for reviewed direct equivalences such as 3.x `Bluff` -> `Deception` or `Craft (alchemy)` -> `Alchemist's Supplies`: selecting a later-edition representation for the published rule does not erase the accessible 3.x profile that supports ranks and class-skill state.
 
-Ranks, class-skill state, training state, and Armor Check Penalty adjustment remain Character inputs. Source metadata says which concepts exist and which rules apply; it does not fabricate a Character's current ranks or training.
+Profile selection is explicit and local to the competency evaluation. Each profile exposes its source-revision identity, capability requirements, evaluation profile, typed inputs, boolean requirements, and `canEvaluate`. The evaluation request may supply `competencyProfileSourceEntityRevisionId`; when it is omitted, Rules Core uses the profile belonging to the effective published source revision. This is not an edition-wide Character mode.
+
+Rules Core owns the arithmetic described by the selected profile. The Character backend supplies Character-owned or already-resolved contributions, not a final competency value:
+
+- a ranked 3.x profile uses `abilityContribution`, required `ranks`, an Armor Check Penalty adjustment only when that profile says the penalty applies, and `otherModifier`;
+- a later-edition proficiency profile uses `abilityContribution`, optional `trainingContribution`, and `otherModifier`;
+- `classSkillState` is preserved as nonnumeric Character state and does not create a modifier by itself;
+- a trained-only profile expresses `isTrained == true` as a Rules Core requirement;
+- unknown or not-yet-faithful profiles expose `canEvaluate=false` instead of accepting an opaque final `value`.
+
+Consequently, an accessible 3.x profile does not add ranks to the effective 5e/5.5e profile. The Character backend can deliberately select the 3.x source profile when its Character capabilities support that mechanic. The static `competency.skill-ranks` mechanic remains a raw Character-owned quantity and is not a substitute for effective competency evaluation.
+
+Ranks, class-skill state, training state, ability contributions, proficiency/training contributions, Armor Check Penalty adjustments, and other resolved modifiers remain Character inputs. Rules Core decides which inputs participate and how they combine; it does not fabricate Character state or advancement/rank-purchase rules.
 
 ## Composite competencies
 
@@ -203,7 +215,7 @@ Private source names/content are not surfaced through this contract when the cur
 
 Evaluation is deterministic. Rules Core does not roll dice, select Character state, choose a source table row, or mutate Character data.
 
-For a scalar definition it combines caller-supplied inputs according to the normalized mechanic. Conditional inputs are included only when their declared condition is satisfied. Conditional roll-mode rules can require multiple boolean conditions, which lets Rules Core distinguish "not proficient" from "not proficient and lacking qualified guidance." For a composite competency it delegates to the existing Rules Core composite evaluator and accepts explicit concept-targeted modifiers.
+For a scalar definition it combines caller-supplied inputs according to the normalized mechanic. For a dynamic competency it selects the requested competency profile, enforces that profile's capability and boolean requirements, and combines only the contribution inputs declared by that profile. The caller never supplies a final opaque competency `value`. Conditional inputs are included only when their declared condition is satisfied. Conditional roll-mode rules can require multiple boolean conditions, which lets Rules Core distinguish "not proficient" from "not proficient and lacking qualified guidance." For a composite competency, the Character backend supplies the already-resolved effective component competency values and Rules Core delegates the parent calculation to the existing `CompositeCompetencyEvaluator`; the composite relationship arithmetic remains Rules Core-owned.
 
 The batch endpoints accept multiple mechanic evaluations and build the effective global or Campaign mechanics context once for the request. This is the preferred Character backend path when resolving several values for one Character:
 

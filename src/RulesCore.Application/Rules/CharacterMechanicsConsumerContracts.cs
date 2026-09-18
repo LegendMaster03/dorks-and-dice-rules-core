@@ -71,6 +71,11 @@ public sealed record CharacterCompetencyProfileView(
     bool SupportsTrainingState,
     bool? TrainedOnly,
     bool? ArmorCheckPenaltyApplies,
+    string EvaluationProfileKey,
+    string EvaluationKind,
+    bool CanEvaluate,
+    IReadOnlyList<CharacterMechanicInputView> Inputs,
+    IReadOnlyList<CharacterMechanicBooleanRequirementView> BooleanRequirements,
     string? GameEdition);
 
 public sealed record CharacterCompetencyDefinitionView(
@@ -83,6 +88,7 @@ public sealed record CharacterCompetencyDefinitionView(
     bool SupportsTrainingState,
     bool? TrainedOnly,
     bool? ArmorCheckPenaltyApplies,
+    Guid? DefaultProfileSourceEntityRevisionId,
     IReadOnlyList<CharacterCompetencyProfileView> Profiles);
 
 public sealed record CharacterMechanicRelationshipView(
@@ -136,7 +142,8 @@ public sealed record CharacterMechanicEvaluationRequest(
     Dictionary<string, bool>? BooleanInputs = null,
     Dictionary<string, string>? StringInputs = null,
     IReadOnlyList<CharacterMechanicModifierInput>? Modifiers = null,
-    IReadOnlyList<string>? CapabilityKeys = null);
+    IReadOnlyList<string>? CapabilityKeys = null,
+    Guid? CompetencyProfileSourceEntityRevisionId = null);
 
 public sealed record CharacterMechanicBatchEvaluationItemRequest(
     string MechanicKey,
@@ -169,7 +176,8 @@ public sealed record CharacterMechanicEvaluationView(
     bool? MeetsTarget,
     bool RequirementsSatisfied,
     IReadOnlyList<string> UnsatisfiedRequirementKeys,
-    IReadOnlyList<CharacterMechanicAppliedRollRuleView> AppliedRollRules);
+    IReadOnlyList<CharacterMechanicAppliedRollRuleView> AppliedRollRules,
+    Guid? CompetencyProfileSourceEntityRevisionId = null);
 
 public interface ICharacterMechanicsConsumerService
 {
