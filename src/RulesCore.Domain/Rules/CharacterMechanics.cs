@@ -70,9 +70,13 @@ public sealed record CharacterMechanicApplicabilityDefinition(
 
 public sealed record CharacterMechanicSourceReference(
     string PackageKey,
-    string ReferenceKey,
-    string DisplayName,
+    string PackageDisplayName,
+    string WorkKey,
+    string WorkDisplayName,
     string Provider,
+    string? GameEdition,
+    string? ReleaseKind,
+    DateOnly? PublicationDate,
     string ReferenceUri,
     bool PresentationRequired,
     bool ReferenceLinkRequired);
@@ -260,12 +264,16 @@ public static class KnownCharacterMechanics
     private static readonly CharacterMechanicSourceReference LootTavernHarvestingCrafting =
         new(
             LootTavernPackageKey,
+            "Loot Tavern Free Releases",
             LootTavernReferenceKey,
             "Harvesting & Crafting Lite",
             "Loot Tavern",
+            "5e",
+            null,
+            new DateOnly(2024, 7, 3),
             "https://www.patreon.com/LootTavern/posts/helianas-and-to-107406117",
-            PresentationRequired: true,
-            ReferenceLinkRequired: true);
+            true,
+            true);
 
     private static readonly IReadOnlyList<CharacterMechanicDefinition> Definitions =
     [
@@ -361,7 +369,21 @@ public static class KnownCharacterMechanics
                 IntegerInput("sizeModifier", CharacterMechanicInputOrigins.Derived, false, true, 0),
                 IntegerInput("otherModifier", CharacterMechanicInputOrigins.Derived, false, true, 0)
             ]),
-        SourceValueMechanic("competency.skill-ranks", CharacterMechanicKinds.Competency, "Skill Ranks", ThreeX),
+        new(
+            "competency.skill-ranks",
+            CharacterMechanicKinds.Competency,
+            "Skill Ranks",
+            CharacterMechanicEvaluationKinds.SourceValue,
+            0,
+            [
+                StringInput("competencyKey", CharacterMechanicInputOrigins.SourceInput, true),
+                IntegerInput("value", CharacterMechanicInputOrigins.CharacterState, true)
+            ],
+            null,
+            null,
+            ThreeX,
+            [],
+            []),
         SourceValueMechanic("resource.nonlethal-damage", CharacterMechanicKinds.Resource, "Nonlethal Damage", ThreeX),
         SourceValueMechanic("defense.spell-resistance", CharacterMechanicKinds.Defense, "Spell Resistance", ThreeX),
         new(

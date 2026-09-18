@@ -50,6 +50,19 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.NotNull(catalog);
             Assert.Contains(catalog.Mechanics, value => value.MechanicKey == "check.competency");
             Assert.Contains(catalog.Mechanics, value => value.MechanicKey == "save.fortitude");
+            var harvesting = Assert.Single(
+                catalog.Mechanics,
+                value => value.MechanicKey == "check.harvesting.total");
+            Assert.False(harvesting.IsApplicableUnderRuleset);
+            var attribution = Assert.Single(harvesting.SourceAttributions);
+            Assert.Equal("loot-tavern-free", attribution.PackageKey);
+            Assert.Equal("Loot Tavern Free Releases", attribution.PackageDisplayName);
+            Assert.Equal(KnownCharacterMechanics.LootTavernReferenceKey, attribution.WorkKey);
+            Assert.Equal("Harvesting & Crafting Lite", attribution.WorkDisplayName);
+            Assert.Equal("5e", attribution.GameEdition);
+            Assert.Equal(new DateOnly(2024, 7, 3), attribution.PublicationDate);
+            Assert.True(attribution.PresentationRequired);
+            Assert.True(attribution.ReferenceLinkRequired);
         }
 
         using (var evaluationResponse = await client.PostAsJsonAsync(

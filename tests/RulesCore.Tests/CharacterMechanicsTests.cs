@@ -20,6 +20,11 @@ public sealed class CharacterMechanicsTests
         Assert.NotNull(harvesting.Source);
         Assert.True(harvesting.Source!.PresentationRequired);
         Assert.True(harvesting.Source.ReferenceLinkRequired);
+        Assert.Equal("Loot Tavern Free Releases", harvesting.Source.PackageDisplayName);
+        Assert.Equal(KnownCharacterMechanics.LootTavernReferenceKey, harvesting.Source.WorkKey);
+        Assert.Equal("Harvesting & Crafting Lite", harvesting.Source.WorkDisplayName);
+        Assert.Equal("5e", harvesting.Source.GameEdition);
+        Assert.Equal(new DateOnly(2024, 7, 3), harvesting.Source.PublicationDate);
         Assert.Equal(
             "https://www.patreon.com/LootTavern/posts/helianas-and-to-107406117",
             harvesting.Source.ReferenceUri);
@@ -130,6 +135,26 @@ public sealed class CharacterMechanicsTests
         Assert.Equal(17, result.Value);
         Assert.False(result.RequirementsSatisfied);
         Assert.Equal(new[] { "hasSpellcastingAbility" }, result.UnsatisfiedRequirementKeys);
+    }
+
+
+    [Fact]
+    public void SkillRanksIdentifyTheCompetencyWhoseRanksAreBeingSupplied()
+    {
+        var definition = Required("competency.skill-ranks");
+
+        Assert.Contains(
+            definition.Inputs,
+            value => value.Key == "competencyKey"
+                && value.ValueKind == CharacterMechanicInputValueKinds.String
+                && value.Origin == CharacterMechanicInputOrigins.SourceInput
+                && value.Required);
+        Assert.Contains(
+            definition.Inputs,
+            value => value.Key == "value"
+                && value.ValueKind == CharacterMechanicInputValueKinds.Integer
+                && value.Origin == CharacterMechanicInputOrigins.CharacterState
+                && value.Required);
     }
 
     [Fact]

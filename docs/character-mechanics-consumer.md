@@ -110,7 +110,7 @@ The consumer catalog includes normalized definitions for 3.x mechanics that a 5e
 - touch AC and flat-footed AC;
 - base attack bonus;
 - grapple modifier;
-- skill ranks;
+- skill ranks, keyed to the competency whose ranks are being supplied;
 - nonlethal damage;
 - spell resistance;
 - damage reduction.
@@ -165,7 +165,9 @@ A competency mechanic derived from a resolved Rules Layer concept carries only p
 
 - package key/display name;
 - provider;
-- source code;
+- source code and exact source revision number;
+- canonical publication/work key and display name when available;
+- D&D game edition, release kind, and publication date when available;
 - source entity title;
 - source representation URI when available.
 

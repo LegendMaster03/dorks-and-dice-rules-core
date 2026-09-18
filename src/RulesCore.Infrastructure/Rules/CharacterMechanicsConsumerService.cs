@@ -1,3 +1,5 @@
+using System.Data;
+using System.Data.Common;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
@@ -19,7 +21,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         CancellationToken cancellationToken = default)
     {
         var rules = await ReadAllGlobalRulesAsync(userId, cancellationToken);
-        return await BuildCatalogAsync(rules, userId, includeUnavailable, cancellationToken);
+        return await BuildCatalogAsync(rules, includeUnavailable, cancellationToken);
     }
 
     public async Task<CharacterMechanicsCatalogView> GetCampaignAsync(
@@ -38,7 +40,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         }
 
         var rules = await ReadAllCampaignRulesAsync(campaignId, userId.Trim(), cancellationToken);
-        return await BuildCatalogAsync(rules, userId.Trim(), includeUnavailable, cancellationToken);
+        return await BuildCatalogAsync(rules, includeUnavailable, cancellationToken);
     }
 
     public async Task<CharacterMechanicEvaluationView?> EvaluateGlobalAsync(
@@ -68,7 +70,6 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
 
     private async Task<CharacterMechanicsCatalogView> BuildCatalogAsync(
         ResolvedRulesCatalogView rules,
-        string? userId,
         bool includeUnavailable,
         CancellationToken cancellationToken)
     {
@@ -78,6 +79,9 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
         var providerByPackageKey = await ReadProvidersAsync(rules.Rules, cancellationToken);
         var sourceUriByRevision = await ReadSourceUrisAsync(rules.Rules, cancellationToken);
+        var publicationByRevision = await ReadPublicationAttributionsAsync(
+            rules.Rules,
+            cancellationToken);
 
         var mechanics = new List<CharacterMechanicView>();
 
@@ -168,19 +172,13 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 relationships,
                 ConditionalRollRules: [],
                 BooleanRequirements: [],
-                SourceAttributions:
-                [
-                    new CharacterMechanicSourceAttributionView(
-                        rule.PackageKey,
-                        rule.PackageDisplayName,
-                        provider,
-                        rule.SourceCode,
-                        ReferenceKey: null,
-                        ReferenceTitle: rule.SourceEntityName,
-                        ReferenceUri: sourceUri,
-                        PresentationRequired: false,
-                        ReferenceLinkRequired: false)
-                ]));
+                SourceAttributions: BuildRuleAttributions(
+                    rule,
+                    provider,
+                    sourceUri,
+                    publicationByRevision.GetValueOrDefault(
+                        rule.SourceEntityRevisionId,
+                        []))));
         }
 
         mechanics = AttachStaticRelationships(mechanics);
@@ -408,11 +406,17 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             [
                 new CharacterMechanicSourceAttributionView(
                     definition.Source.PackageKey,
-                    definition.Source.DisplayName,
+                    definition.Source.PackageDisplayName,
                     definition.Source.Provider,
                     null,
-                    definition.Source.ReferenceKey,
-                    definition.Source.DisplayName,
+                    null,
+                    definition.Source.WorkKey,
+                    definition.Source.WorkDisplayName,
+                    definition.Source.GameEdition,
+                    definition.Source.ReleaseKind,
+                    definition.Source.PublicationDate,
+                    definition.Source.WorkKey,
+                    definition.Source.WorkDisplayName,
                     definition.Source.ReferenceUri,
                     definition.Source.PresentationRequired,
                     definition.Source.ReferenceLinkRequired)
@@ -563,6 +567,132 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         }
     }
 
+    private static IReadOnlyList<CharacterMechanicSourceAttributionView> BuildRuleAttributions(
+        ResolvedRuleCatalogItemView rule,
+        string provider,
+        string? sourceUri,
+        IReadOnlyList<PublicationAttribution> publications)
+    {
+        if (publications.Count == 0)
+        {
+            return
+            [
+                new CharacterMechanicSourceAttributionView(
+                    rule.PackageKey,
+                    rule.PackageDisplayName,
+                    provider,
+                    rule.SourceCode,
+                    rule.SourceRevisionNumber,
+                    WorkKey: null,
+                    WorkDisplayName: null,
+                    GameEdition: null,
+                    ReleaseKind: null,
+                    PublicationDate: null,
+                    ReferenceKey: null,
+                    ReferenceTitle: rule.SourceEntityName,
+                    ReferenceUri: sourceUri,
+                    PresentationRequired: false,
+                    ReferenceLinkRequired: false)
+            ];
+        }
+
+        return publications
+            .OrderBy(value => value.WorkDisplayName, StringComparer.Ordinal)
+            .ThenBy(value => value.WorkKey, StringComparer.Ordinal)
+            .Select(value => new CharacterMechanicSourceAttributionView(
+                rule.PackageKey,
+                rule.PackageDisplayName,
+                provider,
+                rule.SourceCode,
+                rule.SourceRevisionNumber,
+                value.WorkKey,
+                value.WorkDisplayName,
+                value.GameEdition,
+                value.ReleaseKind,
+                value.PublicationDate,
+                ReferenceKey: null,
+                ReferenceTitle: rule.SourceEntityName,
+                ReferenceUri: sourceUri,
+                PresentationRequired: false,
+                ReferenceLinkRequired: false))
+            .ToArray();
+    }
+
+    private async Task<IReadOnlyDictionary<Guid, IReadOnlyList<PublicationAttribution>>> ReadPublicationAttributionsAsync(
+        IReadOnlyList<ResolvedRuleCatalogItemView> rules,
+        CancellationToken cancellationToken)
+    {
+        var revisionIds = rules.Select(value => value.SourceEntityRevisionId).Distinct().ToArray();
+        if (revisionIds.Length == 0)
+        {
+            return new Dictionary<Guid, IReadOnlyList<PublicationAttribution>>();
+        }
+
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere)
+        {
+            await connection.OpenAsync(cancellationToken);
+        }
+
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT DISTINCT
+                    binding.source_entity_revision_id,
+                    publication.canonical_key,
+                    publication.display_name,
+                    publication.game_edition,
+                    publication.release_kind,
+                    publication.publication_date
+                FROM source_entity_occurrence_binding binding
+                JOIN canonical_source_occurrence occurrence
+                    ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
+                JOIN canonical_publication publication
+                    ON publication.canonical_publication_id = occurrence.canonical_publication_id
+                WHERE binding.source_entity_revision_id = ANY(@revision_ids);
+                """;
+            AddParameter(command, "@revision_ids", revisionIds);
+
+            var values = new Dictionary<Guid, List<PublicationAttribution>>();
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                var revisionId = reader.GetGuid(0);
+                if (!values.TryGetValue(revisionId, out var publications))
+                {
+                    publications = [];
+                    values.Add(revisionId, publications);
+                }
+
+                publications.Add(new PublicationAttribution(
+                    reader.GetString(1),
+                    reader.GetString(2),
+                    reader.IsDBNull(3) ? null : reader.GetString(3),
+                    reader.IsDBNull(4) ? null : reader.GetString(4),
+                    reader.IsDBNull(5) ? null : reader.GetFieldValue<DateOnly>(5)));
+            }
+
+            return values.ToDictionary(
+                value => value.Key,
+                value => (IReadOnlyList<PublicationAttribution>)value.Value
+                    .Distinct()
+                    .ToArray());
+        }
+        catch (DbException)
+        {
+            return new Dictionary<Guid, IReadOnlyList<PublicationAttribution>>();
+        }
+        finally
+        {
+            if (openedHere)
+            {
+                await connection.CloseAsync();
+            }
+        }
+    }
+
     private async Task<IReadOnlyDictionary<string, string>> ReadProvidersAsync(
         IReadOnlyList<ResolvedRuleCatalogItemView> rules,
         CancellationToken cancellationToken)
@@ -675,6 +805,21 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         }
         return mechanicKey[prefix.Length..];
     }
+
+    private static void AddParameter(DbCommand command, string name, object value)
+    {
+        var parameter = command.CreateParameter();
+        parameter.ParameterName = name;
+        parameter.Value = value;
+        command.Parameters.Add(parameter);
+    }
+
+    private sealed record PublicationAttribution(
+        string WorkKey,
+        string WorkDisplayName,
+        string? GameEdition,
+        string? ReleaseKind,
+        DateOnly? PublicationDate);
 
     private static string RequireMechanicKey(string value)
     {
