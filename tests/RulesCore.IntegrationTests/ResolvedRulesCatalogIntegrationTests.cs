@@ -134,6 +134,43 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 Assert.Equal(publicPackageKey, rule.PackageKey);
             }
 
+            using (var publicVersions = await client.GetAsync(
+                       $"/api/rules/{Uri.EscapeDataString(publicConceptKey)}/versions"))
+            {
+                Assert.Equal(HttpStatusCode.OK, publicVersions.StatusCode);
+                Assert.Equal("no-store", publicVersions.Headers.CacheControl?.ToString());
+                var versions = await publicVersions.Content.ReadFromJsonAsync<RuleConceptVersionsView>();
+                Assert.NotNull(versions);
+                Assert.Equal(publicConceptKey, versions.ConceptKey);
+                var source = Assert.Single(versions.Versions);
+                Assert.Equal(publicPackageKey, source.PackageKey);
+                Assert.True(source.Document.TryGetProperty("secretMarker", out var marker));
+                Assert.Equal("source-document-only", marker.GetString());
+            }
+
+            using (var deniedPrivateVersionsRequest = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/rules/{Uri.EscapeDataString(privateConceptKey)}/versions",
+                       "ungranted-ticket"))
+            using (var deniedPrivateVersionsResponse = await client.SendAsync(deniedPrivateVersionsRequest))
+            {
+                Assert.Equal(HttpStatusCode.NotFound, deniedPrivateVersionsResponse.StatusCode);
+            }
+
+            using (var grantedPrivateVersionsRequest = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/rules/{Uri.EscapeDataString(privateConceptKey)}/versions",
+                       "granted-ticket"))
+            using (var grantedPrivateVersionsResponse = await client.SendAsync(grantedPrivateVersionsRequest))
+            {
+                Assert.Equal(HttpStatusCode.OK, grantedPrivateVersionsResponse.StatusCode);
+                var versions = await grantedPrivateVersionsResponse.Content
+                    .ReadFromJsonAsync<RuleConceptVersionsView>();
+                Assert.NotNull(versions);
+                var source = Assert.Single(versions.Versions);
+                Assert.Equal(privatePackageKey, source.PackageKey);
+            }
+
             using (var grantedRequest = HostedRequest(
                        HttpMethod.Get,
                        $"/api/rules?q={token}",

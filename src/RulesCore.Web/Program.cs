@@ -221,6 +221,33 @@ if (hasDatabase)
         }
     });
 
+    app.MapGet("/api/rules/{conceptKey}/versions", async (
+        string conceptKey,
+        HttpContext httpContext,
+        IGlobalRulesService rules,
+        CancellationToken cancellationToken) =>
+    {
+        try
+        {
+            var userId = HostedToolAuthenticationMiddleware
+                .GetAuthenticationContext(httpContext)?
+                .User.Id;
+            httpContext.Response.Headers.CacheControl = "no-store";
+            var versions = await rules.GetAccessibleVersionsAsync(
+                conceptKey,
+                userId,
+                cancellationToken);
+            return versions is null ? Results.NotFound() : Results.Ok(versions);
+        }
+        catch (ArgumentException exception)
+        {
+            return Results.Problem(
+                title: "Invalid rule concept key",
+                detail: exception.Message,
+                statusCode: StatusCodes.Status400BadRequest);
+        }
+    });
+
     app.MapPost("/api/global/rules/concepts", async (
         CreateRuleConceptRequest request,
         HttpContext httpContext,
@@ -524,6 +551,7 @@ else
     app.MapGet("/api/sources/entities", () => DatabaseUnavailable("Source Layer"));
     app.MapGet("/api/sources/entities/{entityId:guid}", (Guid entityId) => DatabaseUnavailable("Source Layer"));
     app.MapGet("/api/rules/{conceptKey}", (string conceptKey) => DatabaseUnavailable("Rules Layer"));
+    app.MapGet("/api/rules/{conceptKey}/versions", (string conceptKey) => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/concepts", () => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/concepts/{conceptId:guid}/bindings", (Guid conceptId) => DatabaseUnavailable("Rules Layer"));
     app.MapPost("/api/global/rules/concepts/{conceptId:guid}/preview", (Guid conceptId) => DatabaseUnavailable("Rules Layer"));
