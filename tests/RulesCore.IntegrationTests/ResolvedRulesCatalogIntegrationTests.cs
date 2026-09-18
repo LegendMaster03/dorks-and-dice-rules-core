@@ -241,6 +241,10 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 var secondPage = (await secondPageResponse.Content.ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
                 Assert.Equal(2, firstPage.TotalCount);
                 Assert.Equal(2, secondPage.TotalCount);
+                Assert.NotEmpty(firstPage.EntityTypeFacets);
+                Assert.NotEmpty(firstPage.SourceFacets);
+                Assert.Empty(secondPage.EntityTypeFacets);
+                Assert.Empty(secondPage.SourceFacets);
                 var first = Assert.Single(firstPage.Rules);
                 var second = Assert.Single(secondPage.Rules);
                 Assert.NotEqual(first.RuleConceptId, second.RuleConceptId);
@@ -324,6 +328,10 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 var secondPage = (await campaignSecondPageResponse.Content.ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
                 Assert.Equal(2, firstPage.TotalCount);
                 Assert.Equal(2, secondPage.TotalCount);
+                Assert.NotEmpty(firstPage.EntityTypeFacets);
+                Assert.NotEmpty(firstPage.SourceFacets);
+                Assert.Empty(secondPage.EntityTypeFacets);
+                Assert.Empty(secondPage.SourceFacets);
                 Assert.NotEqual(Assert.Single(firstPage.Rules).RuleConceptId, Assert.Single(secondPage.Rules).RuleConceptId);
             }
 
