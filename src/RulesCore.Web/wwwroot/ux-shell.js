@@ -1,38 +1,17 @@
 import { element, enhanceRenderedFragment } from "./ui.js";
+import { RULE_FAMILY_TABS } from "./rules-browser.js";
 
-const NAV_GROUPS = [
-    {
-        label: "Explore",
-        items: [
-            { label: "Library", view: "library", capability: "canBrowseRules", description: "Rules & mechanics" },
-            { label: "Sources", view: "sources", capability: "canBrowseSourceLibrary", description: "Source access & imports" }
-        ]
-    },
-    {
-        label: "Curate",
-        items: [
-            { label: "Rules Lawyer", view: "global", capability: "canEditGlobal", description: "Adjudicate rules" },
-            { label: "Cross-version", view: "version-review", capability: "canReviewVersions", description: "Compare editions" }
-        ]
-    },
-    {
-        label: "Campaign",
-        items: [
-            { label: "Campaign Rules", view: "campaign", capability: "canEditCampaign", description: "Overrides & baselines" }
-        ]
-    },
-    {
-        label: "Maintenance",
-        collapsible: true,
-        items: [
-            { label: "Hosted Sources", view: "hosted-sources", capability: "canManageHostedSources", description: "Upstream definitions" },
-            { label: "Source Admin", view: "source-admin", capability: "canAdministerSources", description: "Import & access" }
-        ]
-    }
+const WORKSPACE_NAV_ITEMS = [
+    { label: "Sources", view: "sources", capability: "canBrowseSourceLibrary" },
+    { label: "Rules Lawyer", view: "global", capability: "canEditGlobal" },
+    { label: "Cross-version", view: "version-review", capability: "canReviewVersions" },
+    { label: "Campaign Rules", view: "campaign", capability: "canEditCampaign" },
+    { label: "Hosted Sources", view: "hosted-sources", capability: "canManageHostedSources", maintenance: true },
+    { label: "Source Admin", view: "source-admin", capability: "canAdministerSources", maintenance: true }
 ];
 
 const VIEW_LABELS = new Map(
-    NAV_GROUPS.flatMap(group => group.items.map(item => [item.view, item.label])));
+    WORKSPACE_NAV_ITEMS.map(item => [item.view, item.label]));
 
 const VIEW_META = {
     global: {
@@ -177,7 +156,9 @@ function renderWorkspaceHeader(app) {
             element("div", { className: "rules-core-brand-title", text: "Rules Core" })));
 
     const context = element("div", { className: "rules-core-context" });
-    const viewLabel = VIEW_LABELS.get(app.activeView) ?? "Rules Core";
+    const viewLabel = app.activeView === "library"
+        ? ruleFamilyLabel(app.browserFilters?.entityType)
+        : VIEW_LABELS.get(app.activeView) ?? "Rules Core";
     context.append(
         element("div", { className: "rules-core-context-view", text: viewLabel }),
         element("div", { className: "rules-core-user-chip" },
@@ -194,36 +175,58 @@ function renderWorkspaceHeader(app) {
 function renderWorkspaceNavigation(app) {
     const nav = element("nav", {
         className: "rules-core-nav-shell",
-        ariaLabel: "Rules Core workspace"
+        ariaLabel: "Rules Core"
     });
-    const groups = element("div", { className: "rules-core-nav-groups" });
 
-    for (const groupDefinition of NAV_GROUPS) {
-        const available = groupDefinition.items.filter(item => app[item.capability]);
-        if (!available.length) continue;
-
-        const group = element("section", {
-            className: `rules-core-nav-section${groupDefinition.collapsible ? " rules-core-nav-section-maintenance" : ""}`
-        });
-        group.append(element("div", { className: "rules-core-nav-label", text: groupDefinition.label }));
-        const items = element("div", { className: "rules-core-nav-items" });
-        for (const item of available) items.append(navItem(app, item));
-        group.append(items);
-        groups.append(group);
+    const primary = element("div", {
+        className: "rules-core-primary-nav",
+        role: "navigation",
+        ariaLabel: "Rules content"
+    });
+    if (app.canBrowseRules) {
+        for (const [entityType, label] of RULE_FAMILY_TABS) {
+            primary.append(ruleFamilyNavItem(app, entityType, label));
+        }
     }
 
-    nav.append(groups);
+    const utilities = element("div", {
+        className: "rules-core-utility-nav",
+        role: "navigation",
+        ariaLabel: "Rules Core tools"
+    });
+    for (const item of WORKSPACE_NAV_ITEMS) {
+        if (!app[item.capability]) continue;
+        utilities.append(workspaceNavItem(app, item));
+    }
+
+    nav.append(primary, utilities);
     return nav;
 }
 
-function navItem(app, item) {
+function ruleFamilyNavItem(app, entityType, label) {
+    const active = app.activeView === "library"
+        && (app.browserFilters?.entityType ?? "") === entityType;
+    return element("button", {
+        type: "button",
+        className: `rules-core-primary-tab${active ? " is-active" : ""}`,
+        text: label,
+        attributes: active ? { "aria-current": "page" } : {},
+        onClick: async () => {
+            if (active) return;
+            await app.navigateRuleFamily?.(entityType);
+        }
+    });
+}
+
+function workspaceNavItem(app, item) {
     const active = app.activeView === item.view;
     return element("button", {
         type: "button",
-        className: `rules-core-nav-item${active ? " is-active" : ""}`,
+        className: `rules-core-utility-item${item.maintenance ? " is-maintenance" : ""}${active ? " is-active" : ""}`,
+        text: item.label,
         attributes: active ? { "aria-current": "page" } : {},
         onClick: async () => {
-            if (app.activeView === item.view) return;
+            if (active) return;
             const navigate = app.viewNavigation?.[item.view];
             if (navigate) {
                 await navigate();
@@ -232,9 +235,18 @@ function navItem(app, item) {
             app.activeView = item.view;
             await app.render();
         }
-    },
-        element("span", { className: "rules-core-nav-item-label", text: item.label }),
-        element("span", { className: "rules-core-nav-item-description", text: item.description }));
+    });
+}
+
+function ruleFamilyLabel(entityType) {
+    const normalized = entityType ?? "";
+    const known = RULE_FAMILY_TABS.find(([value]) => value === normalized);
+    if (known) return known[1];
+    if (!normalized) return "Rules";
+    return normalized
+        .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+        .replace(/[-_]+/g, " ")
+        .replace(/\b\w/g, value => value.toUpperCase());
 }
 
 export function enhanceRenderedView(app, container) {

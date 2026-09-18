@@ -1284,3 +1284,179 @@ button.rules-core-workflow-step {
         flex-direction: column;
     }
 }
+
+
+/* Top-level Rules Core navigation. Content families are application-level tabs, not a nested Library subview. */
+.rules-core-app {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+        "header"
+        "nav"
+        "main";
+    max-width: none;
+}
+
+.rules-core-nav-shell {
+    grid-area: nav;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: .75rem;
+    width: 100%;
+    max-height: none;
+    margin: 0;
+    padding: .42rem 0 .36rem;
+    overflow: visible;
+    border-bottom: 1px solid var(--rules-core-border);
+    background: color-mix(in srgb, var(--bs-body-bg) 96%, transparent);
+    backdrop-filter: blur(.6rem);
+}
+
+.rules-core-primary-nav {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: .08rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: thin;
+}
+
+.rules-core-primary-tab {
+    position: relative;
+    flex: 0 0 auto;
+    padding: .5rem .62rem .48rem;
+    border: 0;
+    background: transparent;
+    color: var(--bs-secondary-color);
+    font-size: .78rem;
+    font-weight: 675;
+    white-space: nowrap;
+}
+
+.rules-core-primary-tab::after {
+    position: absolute;
+    right: .5rem;
+    bottom: -.38rem;
+    left: .5rem;
+    height: .16rem;
+    border-radius: 999px 999px 0 0;
+    background: transparent;
+    content: "";
+}
+
+.rules-core-primary-tab:hover,
+.rules-core-primary-tab:focus-visible {
+    color: var(--bs-body-color);
+    outline: 0;
+}
+
+.rules-core-primary-tab.is-active {
+    color: var(--bs-body-color);
+}
+
+.rules-core-primary-tab.is-active::after {
+    background: var(--bs-primary);
+}
+
+.rules-core-utility-nav {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: .18rem;
+}
+
+.rules-core-utility-item {
+    flex: 0 0 auto;
+    padding: .38rem .52rem;
+    border: 1px solid transparent;
+    border-radius: .42rem;
+    background: transparent;
+    color: var(--bs-secondary-color);
+    font-size: .72rem;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.rules-core-utility-item:hover,
+.rules-core-utility-item:focus-visible,
+.rules-core-utility-item.is-active {
+    border-color: var(--rules-core-border);
+    background: var(--rules-core-surface-subtle);
+    color: var(--bs-body-color);
+    outline: 0;
+}
+
+.rules-core-utility-item.is-maintenance:first-of-type {
+    margin-left: .28rem;
+}
+
+.rules-core-main {
+    grid-area: main;
+    max-width: none;
+    padding-top: .62rem;
+}
+
+.rules-core-main[data-rules-view="library"] {
+    padding-top: .48rem;
+}
+
+.rules-core-library-controls {
+    grid-template-columns: minmax(10rem, 13rem) minmax(10rem, 13rem);
+    justify-content: end;
+}
+
+.rules-core-library-type {
+    display: block;
+}
+
+.rules-core-library-heading {
+    justify-content: flex-end;
+    min-height: 1.25rem;
+}
+
+.rules-core-library-workspace {
+    height: calc(100vh - 9.5rem);
+}
+
+@media (max-width: 1100px) {
+    .rules-core-nav-shell {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: .3rem;
+    }
+
+    .rules-core-primary-nav,
+    .rules-core-utility-nav {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .rules-core-utility-nav {
+        padding-bottom: .08rem;
+    }
+
+    .rules-core-library-workspace {
+        height: calc(100vh - 12rem);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .rules-core-nav-shell {
+        width: 100%;
+        margin: 0;
+        padding-inline: 0;
+    }
+
+    .rules-core-library-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .rules-core-library-revision {
+        white-space: normal;
+        text-align: left;
+    }
+}

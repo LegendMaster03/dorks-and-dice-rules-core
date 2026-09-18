@@ -193,13 +193,29 @@ jobs:
               "rules-core-library-heading",
               "rules-core-library-revision",
               "rules-core-library-workspace",
-              "rules-core-library-family-nav",
+              "navigateRuleFamily",
               "getRuleVersions",
               "Compare source versions"
           ]) {
               if (!rulesBrowser.includes(required)) {
                   throw new Error(`Rules Library browser contract is missing '${required}'.`);
               }
+          }
+
+          const uxShell = fs.readFileSync(
+              "./src/RulesCore.Web/wwwroot/ux-shell.js",
+              "utf8");
+          for (const required of [
+              "RULE_FAMILY_TABS",
+              "rules-core-primary-nav",
+              "rules-core-primary-tab"
+          ]) {
+              if (!uxShell.includes(required)) {
+                  throw new Error(`Top-level Rules Core navigation is missing '${required}'.`);
+              }
+          }
+          if (uxShell.includes('{ label: "Library", view: "library"')) {
+              throw new Error("Rules Library must not remain a nested workspace navigation item.");
           }
 
           const library = fs.readFileSync(

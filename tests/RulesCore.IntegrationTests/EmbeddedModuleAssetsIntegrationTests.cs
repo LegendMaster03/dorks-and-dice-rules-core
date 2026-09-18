@@ -84,7 +84,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("Load more", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("renderContinuousIndexFooter", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("container.hidden = !hasMore", rulesBrowser, StringComparison.Ordinal);
-        Assert.Contains("rules-core-library-family-nav", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("navigateRuleFamily", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("changeEntityType", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Campaign overrides only", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("sourceFacets", rulesBrowser, StringComparison.Ordinal);
@@ -118,6 +118,12 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("Inherited from Dorks & Dice", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("rules-core-ruling-status", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("browserLink", rulesBrowser, StringComparison.Ordinal);
+
+        var uxShell = await GetAssetAsync(client, "/ux-shell.js", "javascript");
+        Assert.Contains("RULE_FAMILY_TABS", uxShell, StringComparison.Ordinal);
+        Assert.Contains("rules-core-primary-nav", uxShell, StringComparison.Ordinal);
+        Assert.Contains("rules-core-primary-tab", uxShell, StringComparison.Ordinal);
+        Assert.DoesNotContain("{ label: \"Library\", view: \"library\"", uxShell, StringComparison.Ordinal);
         Assert.Contains("toolRoute", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("toolBasePath", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Override", rulesBrowser, StringComparison.Ordinal);
