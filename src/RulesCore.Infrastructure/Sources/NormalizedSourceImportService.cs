@@ -227,6 +227,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
         }
 
         var publicationEvidence = (request.Representation.Publications ?? [])
+            .Select(value => TrustedCanonicalAliasPolicy.ApplyPublication(request.Representation, value))
             .GroupBy(
                 value => Require(value.LocalKey, nameof(value.LocalKey), 500),
                 StringComparer.OrdinalIgnoreCase)
@@ -475,7 +476,8 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
             INSERT INTO source_representation_publication (
                 source_representation_publication_id, source_representation_id, canonical_publication_id, local_key, created_at)
             VALUES ({{Guid.NewGuid()}}, {{representationId}}, {{publicationId}}, {{localKey}}, {{DateTimeOffset.UtcNow}})
-            ON CONFLICT (source_representation_id, local_key) DO NOTHING;
+            ON CONFLICT (source_representation_id, local_key) DO UPDATE
+            SET canonical_publication_id = EXCLUDED.canonical_publication_id;
             """, cancellationToken);
 
     private static NormalizedSourceRecord NormalizeRecord(NormalizedSourceRecord record)
