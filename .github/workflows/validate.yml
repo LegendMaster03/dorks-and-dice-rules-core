@@ -202,9 +202,6 @@ jobs:
               }
           }
 
-          const uxShell = fs.readFileSync(
-              "./src/RulesCore.Web/wwwroot/ux-shell.js",
-              "utf8");
           for (const required of [
               "RULE_FAMILY_TABS",
               "rules-core-primary-nav",
