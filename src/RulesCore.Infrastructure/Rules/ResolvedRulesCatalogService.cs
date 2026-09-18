@@ -56,7 +56,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             .FirstOrDefaultAsync(cancellationToken);
         if (revision is null)
         {
-            return new ResolvedRulesCatalogView("global", null, null, null, 0, [], []);
+            return new ResolvedRulesCatalogView("global", null, null, null, 0, [], [], []);
         }
 
         var entries = dbContext.RulesetRevisionEntries
@@ -66,11 +66,6 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 || (normalizedUserId != null
                     && value.SourceEntityRevision.SourceEntity.SourcePackage.UserGrants
                         .Any(grant => grant.UserId == normalizedUserId)));
-
-        if (normalizedEntityType is not null)
-        {
-            entries = entries.Where(value => value.RuleConcept.EntityType.ToLower() == normalizedEntityType);
-        }
 
         if (normalizedQuery is not null)
         {
@@ -82,6 +77,26 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                     && value.SourceEntityRevision.SourceEntity.SourceCode.ToLower().Contains(normalizedQuery))
                 || value.SourceEntityRevision.SourceEntity.FormatKey.ToLower().Contains(normalizedQuery)
                 || value.SourceEntityRevision.SourceEntity.SourcePackage.DisplayName.ToLower().Contains(normalizedQuery));
+        }
+
+        var entityFacetEntries = entries;
+        if (normalizedSourceCode is not null)
+        {
+            entityFacetEntries = entityFacetEntries.Where(value =>
+                value.SourceEntityRevision.SourceEntity.SourceCode != null
+                && value.SourceEntityRevision.SourceEntity.SourceCode.ToLower() == normalizedSourceCode);
+        }
+        var entityTypeFacets = await entityFacetEntries
+            .GroupBy(value => value.RuleConcept.EntityType)
+            .Select(group => new ResolvedRuleCatalogEntityTypeFacetView(
+                group.Key,
+                group.Count()))
+            .OrderBy(value => value.EntityType)
+            .ToArrayAsync(cancellationToken);
+
+        if (normalizedEntityType is not null)
+        {
+            entries = entries.Where(value => value.RuleConcept.EntityType.ToLower() == normalizedEntityType);
         }
 
         var sourceFacets = await entries
@@ -141,6 +156,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             revision.RevisionNumber,
             revision.PublishedAt,
             totalCount,
+            entityTypeFacets,
             sourceFacets,
             rules);
     }
@@ -200,7 +216,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             .FirstOrDefaultAsync(cancellationToken);
         if (revision is null)
         {
-            return new ResolvedRulesCatalogView("campaign", campaignId, null, null, 0, [], []);
+            return new ResolvedRulesCatalogView("campaign", campaignId, null, null, 0, [], [], []);
         }
 
         var entries = dbContext.CampaignRulesetRevisionEntries
@@ -209,11 +225,6 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             .Where(value => value.SourceEntityRevision.SourceEntity.SourcePackage.IsPublic
                 || value.SourceEntityRevision.SourceEntity.SourcePackage.UserGrants
                     .Any(grant => grant.UserId == normalizedUserId));
-
-        if (normalizedEntityType is not null)
-        {
-            entries = entries.Where(value => value.RuleConcept.EntityType.ToLower() == normalizedEntityType);
-        }
 
         if (normalizedQuery is not null)
         {
@@ -232,6 +243,26 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             entries = entries.Where(value =>
                 value.CampaignRuleDecision != null
                 && value.CampaignRuleDecision.DecisionKind != CampaignRuleDecisionKinds.InheritGlobal);
+        }
+
+        var entityFacetEntries = entries;
+        if (normalizedSourceCode is not null)
+        {
+            entityFacetEntries = entityFacetEntries.Where(value =>
+                value.SourceEntityRevision.SourceEntity.SourceCode != null
+                && value.SourceEntityRevision.SourceEntity.SourceCode.ToLower() == normalizedSourceCode);
+        }
+        var entityTypeFacets = await entityFacetEntries
+            .GroupBy(value => value.RuleConcept.EntityType)
+            .Select(group => new ResolvedRuleCatalogEntityTypeFacetView(
+                group.Key,
+                group.Count()))
+            .OrderBy(value => value.EntityType)
+            .ToArrayAsync(cancellationToken);
+
+        if (normalizedEntityType is not null)
+        {
+            entries = entries.Where(value => value.RuleConcept.EntityType.ToLower() == normalizedEntityType);
         }
 
         var sourceFacets = await entries
@@ -294,6 +325,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             revision.RevisionNumber,
             revision.PublishedAt,
             totalCount,
+            entityTypeFacets,
             sourceFacets,
             rules);
     }

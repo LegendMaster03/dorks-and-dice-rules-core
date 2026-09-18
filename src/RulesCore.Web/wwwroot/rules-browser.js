@@ -227,6 +227,7 @@ async function renderRulesBrowser(app, container) {
             type: "button",
             className: "rules-core-library-family",
             text: label,
+            dataset: { entityType: value },
             attributes: {
                 "aria-current": value === app.browserFilters.entityType ? "page" : "false"
             }
@@ -263,6 +264,40 @@ async function renderRulesBrowser(app, container) {
             button.classList.toggle("is-active", selected);
             button.setAttribute("aria-current", selected ? "page" : "false");
         }
+    };
+    const populateEntityTypeFacets = facets => {
+        const counts = new Map(
+            (facets ?? []).map(facet => [facet.entityType, facet.count]));
+
+        for (const facet of facets ?? []) {
+            if (familyButtons.has(facet.entityType)) continue;
+            const label = pluralizeEntityType(facet.entityType);
+            const button = element("button", {
+                type: "button",
+                className: "rules-core-library-family",
+                text: label,
+                dataset: { entityType: facet.entityType },
+                title: `${facet.count} published rules`
+            });
+            familyButtons.set(facet.entityType, button);
+            familyNav.append(button);
+            type.append(element("option", {
+                value: facet.entityType,
+                text: label
+            }));
+        }
+
+        for (const [value, button] of familyButtons) {
+            if (!value) {
+                button.hidden = false;
+                continue;
+            }
+            button.hidden = !counts.has(value) && type.value !== value;
+            if (counts.has(value)) {
+                button.title = `${counts.get(value)} published rules`;
+            }
+        }
+        syncFamilyNav();
     };
     syncFamilyNav();
 
@@ -579,6 +614,7 @@ async function renderRulesBrowser(app, container) {
                     filters);
             if (serial !== loadSerial) return;
 
+            populateEntityTypeFacets(requested.entityTypeFacets);
             populateSourceFacets(requested.sourceFacets);
             const rules = requested.rules ?? [];
             currentRules = [...rules];
@@ -670,9 +706,11 @@ async function renderRulesBrowser(app, container) {
         await load();
     };
 
-    for (const [value, button] of familyButtons) {
-        button.addEventListener("click", () => void changeEntityType(value));
-    }
+    familyNav.addEventListener("click", event => {
+        const button = event.target.closest?.("[data-entity-type]");
+        if (!button || !familyNav.contains(button)) return;
+        void changeEntityType(button.dataset.entityType ?? "");
+    });
     type.addEventListener("change", () => void changeEntityType(type.value));
     reset.addEventListener("click", async () => {
         preserveDeepLink = false;
@@ -1333,6 +1371,16 @@ function scopeLabel(app, scopeValue) {
 function campaignName(app, campaignId) {
     return app.campaigns.find(value => String(value.id) === String(campaignId))?.name
         ?? "Campaign";
+}
+
+function pluralizeEntityType(entityType) {
+    const known = ENTITY_TYPES.find(([value]) => value === entityType)?.[1];
+    if (known) return known;
+
+    const label = humanizeEntityType(entityType);
+    if (/s$/i.test(label)) return label;
+    if (/y$/i.test(label)) return `${label.slice(0, -1)}ies`;
+    return `${label}s`;
 }
 
 function humanizeEntityType(entityType) {

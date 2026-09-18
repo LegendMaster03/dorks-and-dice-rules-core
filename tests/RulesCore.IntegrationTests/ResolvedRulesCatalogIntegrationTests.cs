@@ -130,6 +130,9 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 Assert.NotNull(catalog);
                 Assert.Equal(globalRevision.RevisionNumber, catalog.RevisionNumber);
                 Assert.Equal(1, catalog.TotalCount);
+                var publicTypeFacet = Assert.Single(catalog.EntityTypeFacets);
+                Assert.Equal("skill", publicTypeFacet.EntityType);
+                Assert.Equal(1, publicTypeFacet.Count);
                 var publicFacet = Assert.Single(catalog.SourceFacets);
                 Assert.Equal("PUB", publicFacet.SourceCode);
                 Assert.Equal(1, publicFacet.Count);
@@ -191,6 +194,9 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                     .ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
                 Assert.Equal(2, catalog.TotalCount);
                 Assert.Equal(2, catalog.Rules.Count);
+                var grantedTypeFacet = Assert.Single(catalog.EntityTypeFacets);
+                Assert.Equal("skill", grantedTypeFacet.EntityType);
+                Assert.Equal(2, grantedTypeFacet.Count);
                 Assert.Equal(2, catalog.SourceFacets.Count);
                 Assert.Contains(catalog.SourceFacets, value => value.SourceCode == "PUB" && value.Count == 1);
                 Assert.Contains(catalog.SourceFacets, value => value.SourceCode == "PRV" && value.Count == 1);
@@ -209,6 +215,9 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                     .ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
                 Assert.Equal(1, catalog.TotalCount);
                 Assert.Equal(privateConceptKey, Assert.Single(catalog.Rules).ConceptKey);
+                var filteredTypeFacet = Assert.Single(catalog.EntityTypeFacets);
+                Assert.Equal("skill", filteredTypeFacet.EntityType);
+                Assert.Equal(1, filteredTypeFacet.Count);
                 Assert.Equal(2, catalog.SourceFacets.Count);
             }
 

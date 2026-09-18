@@ -1,5 +1,9 @@
 namespace RulesCore.Application.Rules;
 
+public sealed record ResolvedRuleCatalogEntityTypeFacetView(
+    string EntityType,
+    int Count);
+
 public sealed record ResolvedRuleCatalogSourceFacetView(
     string SourceCode,
     int Count);
@@ -10,6 +14,7 @@ public sealed record ResolvedRulesCatalogView(
     int? RevisionNumber,
     DateTimeOffset? PublishedAt,
     int TotalCount,
+    IReadOnlyList<ResolvedRuleCatalogEntityTypeFacetView> EntityTypeFacets,
     IReadOnlyList<ResolvedRuleCatalogSourceFacetView> SourceFacets,
     IReadOnlyList<ResolvedRuleCatalogItemView> Rules);
 
