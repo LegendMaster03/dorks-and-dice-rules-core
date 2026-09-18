@@ -147,7 +147,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
 
             var sourceShort = $"CM{token}";
-            var fileName = $"data/35e/example/character_mechanics_{token}.lst";
+            var fileName = $"data/35e/example/character_mechanics_skills_{token}.lst";
             var sourceText = string.Join('\n',
             [
                 $"SOURCELONG:Character Mechanics 3.5e Work {token}\tSOURCESHORT:{sourceShort}",
