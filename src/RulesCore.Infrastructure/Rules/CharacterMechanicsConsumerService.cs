@@ -690,82 +690,213 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
 
     private static (string ConceptKey, int CompetencyContribution) EvaluateCompetencyForCheck(
         CharacterMechanicsCatalogView catalog,
-        CharacterMechanicCompetencyInput input)
+        CharacterMechanicCompetencyInput input) =>
+        EvaluateCompetencyForCheck(
+            catalog,
+            input,
+            new HashSet<string>(StringComparer.OrdinalIgnoreCase));
+
+    private static (string ConceptKey, int CompetencyContribution) EvaluateCompetencyForCheck(
+        CharacterMechanicsCatalogView catalog,
+        CharacterMechanicCompetencyInput input,
+        ISet<string> evaluationPath)
     {
         if (string.IsNullOrWhiteSpace(input.MechanicKey))
         {
             throw new ArgumentException("Composed competency mechanic key can not be blank.");
         }
 
-        var mechanic = catalog.Mechanics.SingleOrDefault(value =>
-            string.Equals(value.MechanicKey, input.MechanicKey.Trim(), StringComparison.OrdinalIgnoreCase));
-        if (mechanic is null
-            || !mechanic.IsAvailableUnderRuleset
-            || !string.Equals(mechanic.Kind, CharacterMechanicKinds.Competency, StringComparison.Ordinal))
-        {
-            throw new KeyNotFoundException(
-                $"Composed competency mechanic '{input.MechanicKey}' is not available.");
-        }
-        if (mechanic.Competency is null || mechanic.ConceptKey is null)
+        var normalizedMechanicKey = input.MechanicKey.Trim();
+        if (!evaluationPath.Add(normalizedMechanicKey))
         {
             throw new InvalidOperationException(
-                $"Composed competency mechanic '{mechanic.MechanicKey}' does not expose a directly composable profile.");
-        }
-        if (string.Equals(
-                mechanic.EvaluationKind,
-                CharacterMechanicEvaluationKinds.CompositeCompetency,
-                StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException(
-                $"Composite competency '{mechanic.MechanicKey}' must first be resolved through its established composite evaluator before use as a check competency.");
+                $"Competency composition cycle detected at '{normalizedMechanicKey}'.");
         }
 
-        var selectedRevisionId = input.CompetencyProfileSourceEntityRevisionId
-            ?? mechanic.Competency.DefaultProfileSourceEntityRevisionId;
-        if (!selectedRevisionId.HasValue)
+        try
         {
-            throw new InvalidOperationException(
-                $"Composed competency '{mechanic.MechanicKey}' has no default evaluatable profile.");
-        }
+            var mechanic = catalog.Mechanics.SingleOrDefault(value =>
+                string.Equals(value.MechanicKey, normalizedMechanicKey, StringComparison.OrdinalIgnoreCase));
+            if (mechanic is null
+                || !mechanic.IsAvailableUnderRuleset
+                || !string.Equals(mechanic.Kind, CharacterMechanicKinds.Competency, StringComparison.Ordinal))
+            {
+                throw new KeyNotFoundException(
+                    $"Composed competency mechanic '{input.MechanicKey}' is not available.");
+            }
+            if (mechanic.Competency is null || mechanic.ConceptKey is null)
+            {
+                throw new InvalidOperationException(
+                    $"Composed competency mechanic '{mechanic.MechanicKey}' does not expose competency semantics.");
+            }
 
-        var profile = mechanic.Competency.Profiles.SingleOrDefault(value =>
-            value.SourceEntityRevisionId == selectedRevisionId.Value);
-        if (profile is null)
-        {
-            throw new KeyNotFoundException(
-                $"Competency profile source revision '{selectedRevisionId}' is not available for mechanic '{mechanic.MechanicKey}'.");
-        }
-        if (!profile.CanEvaluate)
-        {
-            throw new InvalidOperationException(
-                $"Competency profile '{profile.ProfileKey}' for mechanic '{mechanic.MechanicKey}' can not yet be evaluated faithfully.");
-        }
+            if (string.Equals(
+                    mechanic.EvaluationKind,
+                    CharacterMechanicEvaluationKinds.CompositeCompetency,
+                    StringComparison.Ordinal))
+            {
+                return EvaluateCompositeCompetencyForCheck(
+                    catalog,
+                    mechanic,
+                    input,
+                    evaluationPath);
+            }
 
-        var availableCapabilities = (input.CapabilityKeys ?? [])
-            .ToHashSet(StringComparer.OrdinalIgnoreCase);
-        var missingCapabilities = profile.RequiredCapabilityKeys
-            .Where(value => !availableCapabilities.Contains(value))
+            if ((input.Components?.Count ?? 0) > 0)
+            {
+                throw new InvalidOperationException(
+                    $"Competency '{mechanic.MechanicKey}' is not derived from components under the effective mechanical relationship.");
+            }
+            if ((input.Modifiers?.Count ?? 0) > 0)
+            {
+                throw new InvalidOperationException(
+                    $"Relationship modifiers can only be supplied when competency '{mechanic.MechanicKey}' is effectively derived from components.");
+            }
+
+            var selectedRevisionId = input.CompetencyProfileSourceEntityRevisionId
+                ?? mechanic.Competency.DefaultProfileSourceEntityRevisionId;
+            if (!selectedRevisionId.HasValue)
+            {
+                throw new InvalidOperationException(
+                    $"Composed competency '{mechanic.MechanicKey}' has no default evaluatable profile.");
+            }
+
+            var profile = mechanic.Competency.Profiles.SingleOrDefault(value =>
+                value.SourceEntityRevisionId == selectedRevisionId.Value);
+            if (profile is null)
+            {
+                throw new KeyNotFoundException(
+                    $"Competency profile source revision '{selectedRevisionId}' is not available for mechanic '{mechanic.MechanicKey}'.");
+            }
+            if (!profile.CanEvaluate)
+            {
+                throw new InvalidOperationException(
+                    $"Competency profile '{profile.ProfileKey}' for mechanic '{mechanic.MechanicKey}' can not yet be evaluated faithfully.");
+            }
+
+            var availableCapabilities = (input.CapabilityKeys ?? [])
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+            var missingCapabilities = profile.RequiredCapabilityKeys
+                .Where(value => !availableCapabilities.Contains(value))
+                .ToArray();
+            if (missingCapabilities.Length > 0)
+            {
+                throw new InvalidOperationException(
+                    $"Competency profile '{profile.ProfileKey}' requires Character capability: {string.Join(", ", missingCapabilities)}.");
+            }
+
+            var evaluation = EvaluateCompetencyProfile(
+                mechanic.MechanicKey,
+                profile,
+                input.IntegerInputs ?? new Dictionary<string, int>(StringComparer.Ordinal),
+                input.BooleanInputs ?? new Dictionary<string, bool>(StringComparer.Ordinal),
+                input.StringInputs ?? new Dictionary<string, string>(StringComparer.Ordinal),
+                includeAbilityContribution: false);
+            if (!evaluation.RequirementsSatisfied)
+            {
+                throw new InvalidOperationException(
+                    $"Competency profile '{profile.ProfileKey}' does not satisfy requirement(s): {string.Join(", ", evaluation.UnsatisfiedRequirementKeys)}.");
+            }
+
+            return (mechanic.ConceptKey, evaluation.CompetencyContribution);
+        }
+        finally
+        {
+            evaluationPath.Remove(normalizedMechanicKey);
+        }
+    }
+
+    private static (string ConceptKey, int CompetencyContribution) EvaluateCompositeCompetencyForCheck(
+        CharacterMechanicsCatalogView catalog,
+        CharacterMechanicView mechanic,
+        CharacterMechanicCompetencyInput input,
+        ISet<string> evaluationPath)
+    {
+        var relationship = mechanic.Relationships.SingleOrDefault(value =>
+            string.Equals(value.ParentMechanicKey, mechanic.MechanicKey, StringComparison.Ordinal)
+            && string.Equals(value.Kind, MechanicalRelationshipKinds.CompositeSkill, StringComparison.Ordinal)
+            && string.Equals(
+                value.EffectiveResolutionKind,
+                MechanicalRelationshipResolutionKinds.DeriveParent,
+                StringComparison.Ordinal)
+            && value.CanResolve)
+            ?? throw new InvalidOperationException(
+                $"Composite competency '{mechanic.MechanicKey}' does not have an effective derive-parent relationship.");
+
+        var definition = KnownMechanicalRelationships.FindByKey(relationship.RelationshipKey)
+            ?? throw new InvalidOperationException(
+                $"Mechanical relationship '{relationship.RelationshipKey}' is not registered.");
+        var suppliedComponents = input.Components ?? [];
+        var duplicateComponentKeys = suppliedComponents
+            .Where(value => !string.IsNullOrWhiteSpace(value.MechanicKey))
+            .GroupBy(value => value.MechanicKey.Trim(), StringComparer.OrdinalIgnoreCase)
+            .Where(group => group.Count() > 1)
+            .Select(group => group.Key)
             .ToArray();
-        if (missingCapabilities.Length > 0)
+        if (duplicateComponentKeys.Length > 0)
         {
-            throw new InvalidOperationException(
-                $"Competency profile '{profile.ProfileKey}' requires Character capability: {string.Join(", ", missingCapabilities)}.");
+            throw new ArgumentException(
+                $"Composite competency '{mechanic.MechanicKey}' received duplicate component input(s): {string.Join(", ", duplicateComponentKeys)}.");
         }
 
-        var evaluation = EvaluateCompetencyProfile(
-            mechanic.MechanicKey,
-            profile,
-            input.IntegerInputs ?? new Dictionary<string, int>(StringComparer.Ordinal),
-            input.BooleanInputs ?? new Dictionary<string, bool>(StringComparer.Ordinal),
-            input.StringInputs ?? new Dictionary<string, string>(StringComparer.Ordinal),
-            includeAbilityContribution: false);
-        if (!evaluation.RequirementsSatisfied)
+        var expectedMechanicKeys = definition.Components
+            .ToDictionary(
+                component => CompetencyMechanicKey(component.ConceptKey),
+                component => component,
+                StringComparer.OrdinalIgnoreCase);
+        var unexpectedComponentKeys = suppliedComponents
+            .Select(value => value.MechanicKey?.Trim())
+            .Where(value => string.IsNullOrWhiteSpace(value)
+                || !expectedMechanicKeys.ContainsKey(value))
+            .Select(value => string.IsNullOrWhiteSpace(value) ? "<blank>" : value!)
+            .ToArray();
+        if (unexpectedComponentKeys.Length > 0)
         {
-            throw new InvalidOperationException(
-                $"Competency profile '{profile.ProfileKey}' does not satisfy requirement(s): {string.Join(", ", evaluation.UnsatisfiedRequirementKeys)}.");
+            throw new ArgumentException(
+                $"Composite competency '{mechanic.MechanicKey}' received unknown component input(s): {string.Join(", ", unexpectedComponentKeys)}.");
         }
 
-        return (mechanic.ConceptKey, evaluation.CompetencyContribution);
+        var componentValues = new Dictionary<string, int>(StringComparer.Ordinal);
+        foreach (var component in definition.Components)
+        {
+            var componentMechanicKey = CompetencyMechanicKey(component.ConceptKey);
+            var componentInput = suppliedComponents.SingleOrDefault(value =>
+                string.Equals(
+                    value.MechanicKey?.Trim(),
+                    componentMechanicKey,
+                    StringComparison.OrdinalIgnoreCase));
+            if (componentInput is null)
+            {
+                throw new KeyNotFoundException(
+                    $"Composite competency '{mechanic.MechanicKey}' requires component competency input '{componentMechanicKey}'.");
+            }
+
+            var componentEvaluation = EvaluateCompetencyForCheck(
+                catalog,
+                componentInput,
+                evaluationPath);
+            if (!string.Equals(
+                    componentEvaluation.ConceptKey,
+                    component.ConceptKey,
+                    StringComparison.Ordinal))
+            {
+                throw new ArgumentException(
+                    $"Composite competency '{mechanic.MechanicKey}' component '{componentMechanicKey}' resolved to unexpected concept '{componentEvaluation.ConceptKey}'.");
+            }
+
+            componentValues.Add(
+                component.ConceptKey,
+                componentEvaluation.CompetencyContribution);
+        }
+
+        var modifiers = (input.Modifiers ?? [])
+            .Select(value => new CompetencyModifier(value.TargetConceptKey, value.Value))
+            .ToArray();
+        var evaluation = CompositeCompetencyEvaluator.Evaluate(
+            definition,
+            componentValues,
+            modifiers);
+        return (mechanic.ConceptKey!, evaluation.ParentValue);
     }
 
     private static IReadOnlyDictionary<string, IReadOnlyList<CharacterMechanicContributorInputValues>>
@@ -829,7 +960,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 new CharacterMechanicInputView(
                     ConceptKeyFromCompetencyMechanicKey(value),
                     CharacterMechanicInputValueKinds.Integer,
-                    CharacterMechanicInputOrigins.CharacterState,
+                    CharacterMechanicInputOrigins.Derived,
                     Required: true,
                     ParticipatesInValue: true,
                     DefaultInteger: null,

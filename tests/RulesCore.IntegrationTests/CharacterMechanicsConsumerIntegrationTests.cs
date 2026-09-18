@@ -313,6 +313,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         await using var factory = new WebApplicationFactory<Program>();
         var token = Guid.NewGuid().ToString("N")[..10];
         var packageKey = $"character-mechanics-3x-{token}";
+        var relationshipActor = $"mechanics-relationship-{token}";
         Guid packageId = Guid.Empty;
 
         try
@@ -321,6 +322,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
             var mechanics = scope.ServiceProvider.GetRequiredService<ICharacterMechanicsConsumerService>();
             var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var mechanicalRelationships = new MechanicalRelationshipService(db);
 
             var sourceShort = $"CM{token}";
             var fileName = $"data/35e/example/character_mechanics_skills_{token}.lst";
@@ -437,7 +439,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.All(
                 stealth.Inputs,
                 value => Assert.Equal(
-                    CharacterMechanicInputOrigins.CharacterState,
+                    CharacterMechanicInputOrigins.Derived,
                     value.Origin));
 
             var relationship = Assert.Single(
@@ -587,6 +589,117 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 moveSilentlyProfile.Inputs,
                 value => value.Key == "armorCheckPenaltyAdjustment");
 
+            var compositeCheck = await mechanics.EvaluateGlobalAsync(
+                "check.competency",
+                new CharacterMechanicEvaluationRequest(
+                    IntegerInputs: new Dictionary<string, int>
+                    {
+                        ["d20Roll"] = 10,
+                        ["abilityModifier"] = 2
+                    },
+                    StringInputs: new Dictionary<string, string>
+                    {
+                        ["abilityKey"] = "wisdom"
+                    },
+                    Competency: new CharacterMechanicCompetencyInput(
+                        "competency.skill.stealth",
+                        Components:
+                        [
+                            new CharacterMechanicCompetencyInput(
+                                "competency.skill.hide",
+                                IntegerInputs: new Dictionary<string, int>
+                                {
+                                    ["ranks"] = 6,
+                                    ["armorCheckPenaltyAdjustment"] = -2,
+                                    ["otherModifier"] = 1
+                                },
+                                CapabilityKeys: ["competency.skill-ranks"],
+                                CompetencyProfileSourceEntityRevisionId: hideProfile.SourceEntityRevisionId),
+                            new CharacterMechanicCompetencyInput(
+                                "competency.skill.move-silently",
+                                IntegerInputs: new Dictionary<string, int>
+                                {
+                                    ["ranks"] = 4,
+                                    ["armorCheckPenaltyAdjustment"] = -1
+                                },
+                                CapabilityKeys: ["competency.skill-ranks"],
+                                CompetencyProfileSourceEntityRevisionId: moveSilentlyProfile.SourceEntityRevisionId)
+                        ],
+                        Modifiers:
+                        [
+                            new CharacterMechanicModifierInput("skill.hide", 2),
+                            new CharacterMechanicModifierInput("skill.stealth", 1)
+                        ])),
+                userId: null);
+            Assert.NotNull(compositeCheck);
+            Assert.Equal(18, compositeCheck.Value);
+
+            await Assert.ThrowsAsync<KeyNotFoundException>(() =>
+                mechanics.EvaluateGlobalAsync(
+                    "check.competency",
+                    new CharacterMechanicEvaluationRequest(
+                        IntegerInputs: new Dictionary<string, int>
+                        {
+                            ["d20Roll"] = 10,
+                            ["abilityModifier"] = 2
+                        },
+                        StringInputs: new Dictionary<string, string>
+                        {
+                            ["abilityKey"] = "wisdom"
+                        },
+                        Competency: new CharacterMechanicCompetencyInput(
+                            "competency.skill.stealth",
+                            Components:
+                            [
+                                new CharacterMechanicCompetencyInput(
+                                    "competency.skill.hide",
+                                    IntegerInputs: new Dictionary<string, int>
+                                    {
+                                        ["ranks"] = 6
+                                    },
+                                    CapabilityKeys: ["competency.skill-ranks"],
+                                    CompetencyProfileSourceEntityRevisionId: hideProfile.SourceEntityRevisionId)
+                            ])),
+                    userId: null));
+
+            await Assert.ThrowsAsync<ArgumentException>(() =>
+                mechanics.EvaluateGlobalAsync(
+                    "check.competency",
+                    new CharacterMechanicEvaluationRequest(
+                        IntegerInputs: new Dictionary<string, int>
+                        {
+                            ["d20Roll"] = 10,
+                            ["abilityModifier"] = 2
+                        },
+                        StringInputs: new Dictionary<string, string>
+                        {
+                            ["abilityKey"] = "wisdom"
+                        },
+                        Competency: new CharacterMechanicCompetencyInput(
+                            "competency.skill.stealth",
+                            Components:
+                            [
+                                new CharacterMechanicCompetencyInput(
+                                    "competency.skill.hide",
+                                    IntegerInputs: new Dictionary<string, int>
+                                    {
+                                        ["ranks"] = 6
+                                    },
+                                    CapabilityKeys: ["competency.skill-ranks"],
+                                    CompetencyProfileSourceEntityRevisionId: hideProfile.SourceEntityRevisionId),
+                                new CharacterMechanicCompetencyInput(
+                                    "competency.skill.move-silently",
+                                    IntegerInputs: new Dictionary<string, int>
+                                    {
+                                        ["ranks"] = 4
+                                    },
+                                    CapabilityKeys: ["competency.skill-ranks"],
+                                    CompetencyProfileSourceEntityRevisionId: moveSilentlyProfile.SourceEntityRevisionId),
+                                new CharacterMechanicCompetencyInput(
+                                    "competency.skill.unknown")
+                            ])),
+                    userId: null));
+
             var hideEvaluation = await mechanics.EvaluateGlobalAsync(
                 "competency.skill.hide",
                 new CharacterMechanicEvaluationRequest(
@@ -690,13 +803,93 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 userId: null);
             Assert.NotNull(evaluation);
             Assert.Equal(8, evaluation.Value);
+
+            var overridden = await mechanicalRelationships.SetRulingAsync(
+                "skill-composite.stealth",
+                new SetMechanicalRelationshipRulingRequest(
+                    MechanicalRelationshipResolutionKinds.IndependentParent,
+                    "Character mechanics consumer independent-parent fixture."),
+                relationshipActor);
+            Assert.Equal(
+                MechanicalRelationshipResolutionKinds.IndependentParent,
+                overridden.EffectiveResolutionKind);
+
+            var independentCatalog = await mechanics.GetGlobalAsync(userId: null);
+            var independentStealth = Assert.Single(
+                independentCatalog.Mechanics,
+                value => value.MechanicKey == "competency.skill.stealth");
+            Assert.Equal(
+                CharacterMechanicEvaluationKinds.CompetencyProfile,
+                independentStealth.EvaluationKind);
+
+            await Assert.ThrowsAsync<InvalidOperationException>(() =>
+                mechanics.EvaluateGlobalAsync(
+                    "check.competency",
+                    new CharacterMechanicEvaluationRequest(
+                        IntegerInputs: new Dictionary<string, int>
+                        {
+                            ["d20Roll"] = 10,
+                            ["abilityModifier"] = 2
+                        },
+                        StringInputs: new Dictionary<string, string>
+                        {
+                            ["abilityKey"] = "wisdom"
+                        },
+                        Competency: new CharacterMechanicCompetencyInput(
+                            "competency.skill.stealth",
+                            Components:
+                            [
+                                new CharacterMechanicCompetencyInput(
+                                    "competency.skill.hide",
+                                    IntegerInputs: new Dictionary<string, int>
+                                    {
+                                        ["ranks"] = 6
+                                    },
+                                    CapabilityKeys: ["competency.skill-ranks"],
+                                    CompetencyProfileSourceEntityRevisionId: hideProfile.SourceEntityRevisionId),
+                                new CharacterMechanicCompetencyInput(
+                                    "competency.skill.move-silently",
+                                    IntegerInputs: new Dictionary<string, int>
+                                    {
+                                        ["ranks"] = 4
+                                    },
+                                    CapabilityKeys: ["competency.skill-ranks"],
+                                    CompetencyProfileSourceEntityRevisionId: moveSilentlyProfile.SourceEntityRevisionId)
+                            ])),
+                    userId: null));
+
+            var independentProfile = Assert.Single(independentStealth.Competency!.Profiles);
+            var independentCheck = await mechanics.EvaluateGlobalAsync(
+                "check.competency",
+                new CharacterMechanicEvaluationRequest(
+                    IntegerInputs: new Dictionary<string, int>
+                    {
+                        ["d20Roll"] = 10,
+                        ["abilityModifier"] = 2
+                    },
+                    StringInputs: new Dictionary<string, string>
+                    {
+                        ["abilityKey"] = "wisdom"
+                    },
+                    Competency: new CharacterMechanicCompetencyInput(
+                        "competency.skill.stealth",
+                        IntegerInputs: new Dictionary<string, int>
+                        {
+                            ["ranks"] = 8,
+                            ["armorCheckPenaltyAdjustment"] = -2
+                        },
+                        CapabilityKeys: ["competency.skill-ranks"],
+                        CompetencyProfileSourceEntityRevisionId: independentProfile.SourceEntityRevisionId)),
+                userId: null);
+            Assert.NotNull(independentCheck);
+            Assert.Equal(18, independentCheck.Value);
         }
         finally
         {
             await using var cleanupScope = factory.Services.CreateAsyncScope();
-            await CleanupAsync(
-                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
-                packageId);
+            var cleanupDb = cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            await DeleteRelationshipRulingsAsync(cleanupDb, relationshipActor);
+            await CleanupAsync(cleanupDb, packageId);
         }
     }
 
@@ -924,6 +1117,14 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         return request;
     }
 
+
+    private static Task DeleteRelationshipRulingsAsync(
+        RulesCoreDbContext db,
+        string actor) =>
+        db.Database.ExecuteSqlInterpolatedAsync($"""
+            DELETE FROM rule_mechanical_relationship_ruling
+            WHERE created_by_user_id = {{actor}};
+            """);
 
     private static async Task CleanupAsync(RulesCoreDbContext db, params Guid[] packageIds)
     {

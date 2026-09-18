@@ -177,7 +177,9 @@ public sealed record CharacterMechanicCompetencyInput(
     Dictionary<string, bool>? BooleanInputs = null,
     Dictionary<string, string>? StringInputs = null,
     IReadOnlyList<string>? CapabilityKeys = null,
-    Guid? CompetencyProfileSourceEntityRevisionId = null);
+    Guid? CompetencyProfileSourceEntityRevisionId = null,
+    IReadOnlyList<CharacterMechanicCompetencyInput>? Components = null,
+    IReadOnlyList<CharacterMechanicModifierInput>? Modifiers = null);
 
 public sealed record CharacterMechanicEvaluationRequest(
     Dictionary<string, int>? IntegerInputs = null,

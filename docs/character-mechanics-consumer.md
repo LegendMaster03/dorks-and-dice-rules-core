@@ -81,28 +81,28 @@ The original `conceptKey` remains present in the response. The `competency.` mec
 
 Every mechanic declares its inputs and their origin:
 
-- `character-state`: owned by the Character backend, such as whether the Character has a tool proficiency;
+- `character-state`: raw Character-owned facts/state, such as ranks, training/proficiency state, or whether the Character has a tool proficiency;
 - `source-input`: supplied by the applicable resolved rule/source, such as a DC, selected tool, selected ability, or creature-type competency;
-- `runtime`: supplied for the current resolution attempt, such as a d20 result;
-- `derived`: calculated by the Character backend from Character state and effective rules.
+- `runtime`: supplied for the current resolution attempt, such as a d20 result or Helper participation fact;
+- `derived`: an effective/calculated mechanical value rather than raw Character state. It can be produced by an earlier Rules Core evaluation or by Character orchestration of already-resolved facts. For example, the component values consumed by a composite parent are `derived`, not `character-state`.
 
-Rules Core owns how those inputs combine. The Character backend owns obtaining Character-specific values.
+Rules Core owns the arithmetic and composition semantics represented by this contract. The Character backend owns obtaining Character-specific facts and transporting resolved values between operations when a multi-step workflow calls for it; transporting a derived value does not make that value raw Character state.
 
 This distinction is important for 3.x source translation. A PCGen racial modifier, class progression fragment, or other partial source declaration is not automatically a final Character value. The consumer contract therefore requests the resolved input rather than fabricating a final score from incomplete source evidence.
 
 ## Generalized competency checks
 
-`check.competency` represents an ability + competency check without assuming the 5e default ability associated with a skill. The caller supplies:
+`check.competency` represents an ability + competency check without assuming the 5e default ability associated with a skill. The check owns the selected/fixed Ability contribution separately from the competency contribution.
 
-- the ability identity;
-- the competency concept identity;
-- d20 result;
-- resolved ability modifier;
-- resolved competency contribution, excluding the separately supplied ability modifier;
-- any other applicable modifier;
-- optional target DC.
+The preferred composition path supplies:
 
-This supports checks such as Intelligence (Arcana), Dexterity (Survival), tool checks, and older-edition competencies without placing ability/skill pairing logic in the Character frontend.
+- the check Ability identity and resolved Ability modifier;
+- d20 result and other check-local inputs;
+- a nested `competency` request containing the competency mechanic key plus the Character facts/profile selection needed to resolve it.
+
+Rules Core evaluates that competency to its non-Ability contribution and injects both the resolved concept identity and contribution into the check. A caller can still supply a pre-resolved direct competency contribution to the scalar check contract, but it must not supply both the direct contribution and nested composition in one request.
+
+This supports checks such as Intelligence (Arcana), Dexterity (Survival), tool checks, older-edition ranked competencies, and composite competencies without placing ability/skill or competency arithmetic in the Character frontend/backend.
 
 Checks also expose structured resolution semantics. Ability selection can be `fixed`, `caller-selected`, `rule-resolved`, or `character-resolved`; competency selection has the corresponding resolution model. This lets the generic check remain caller-selectable while Harvesting, Manufacturing, and Enchanting state which choices come from source rules or Character state.
 
@@ -153,16 +153,22 @@ Rules Core owns the arithmetic described by the selected profile. The Character 
 
 A direct competency evaluation returns both the effective value and a Rules Core-produced breakdown containing `abilityContribution` and `competencyContribution`. The caller does not derive one by subtracting the other.
 
-Checks that consume competencies expose a `competencyComposition` contract. The request can supply a nested `competency` input containing the competency mechanic key, profile selection, Character facts/contributions, and capabilities. Rules Core evaluates that selected profile in check-composition mode, omits the profile's own Ability contribution, and injects only its non-Ability competency contribution into the check's declared contribution input. Rules Core also injects/verifies the competency concept identity. This gives the composition flow:
+Checks that consume competencies expose a `competencyComposition` contract. The request can supply a nested `competency` input containing the competency mechanic key, profile selection, Character facts/contributions, and capabilities. For a direct competency, Rules Core evaluates that selected profile in check-composition mode, omits the profile's own Ability contribution, and injects only its non-Ability competency contribution into the check's declared contribution input. Rules Core also injects/verifies the competency concept identity.
+
+For an effective composite competency, the same nested input can carry a `components` collection. Each component is itself a nested competency request, so Rules Core recursively evaluates its selected profile to a non-Ability contribution. The parent then passes those derived component contributions and any relationship-targeted `modifiers` to the existing `CompositeCompetencyEvaluator`. The result is the parent competency's non-Ability contribution, which is injected into the check. This gives the end-to-end flow:
 
 ```text
-Character-owned facts/contributions
-  -> Rules Core competency profile
-  -> Rules Core non-Ability competency contribution
+component Character facts/contributions
+  -> Rules Core component competency profiles
+  -> derived non-Ability component contributions
+  -> Rules Core CompositeCompetencyEvaluator
+  -> derived non-Ability parent competency contribution
   -> Rules Core generalized/source-defined check
 ```
 
-The check supplies its own selected or fixed Ability contribution independently. Therefore a Dexterity-based Survival check can use a Survival profile without assuming Survival's normal governing Ability, and the Ability contribution is not counted twice. The same contract is used by generic `check.competency` and by source-defined Assessment, Carving, Manufacturing, and Enchanting checks. Supplying both a direct contribution and a nested competency composition request is rejected as ambiguous.
+The check supplies its own selected or fixed Ability contribution independently. Therefore a Wisdom-based Stealth check can derive Stealth from Hide + Move Silently while adding Wisdom exactly once; component profile Ability contributions are not required or counted during check composition. The same rule supports alternate-Ability direct competencies such as Dexterity-based Survival.
+
+The same contract is used by generic `check.competency` and by source-defined Assessment, Carving, Manufacturing, and Enchanting checks. Supplying both a direct contribution and a nested competency composition request is rejected as ambiguous.
 
 Consequently, an accessible 3.x profile does not add ranks to the effective 5e/5.5e profile. The Character backend can deliberately select the 3.x source profile when its Character capabilities support that mechanic. The static `competency.skill-ranks` mechanic remains a raw Character-owned quantity and is not a substitute for effective competency evaluation.
 
@@ -179,7 +185,11 @@ The existing Rules Layer composite competency definitions remain authoritative:
 
 The mechanics catalog exposes the effective persisted Rules Lawyer resolution. When the effective resolution is `derive-parent` and all component competencies are present in the effective accessible ruleset, the parent competency is evaluatable through the existing `CompositeCompetencyEvaluator`.
 
-An `independent-parent` ruling keeps the relationship visible but disables composite derivation. The Character Sheet must not independently reinterpret this ruling.
+For standalone parent evaluation, the parent mechanic exposes its effective component values as inputs. Those inputs have origin `derived` because they are calculated mechanical values, not raw Character-owned state.
+
+For nested check composition, callers do not need to pre-resolve those effective component values. They provide one nested competency input per required component. Rules Core verifies the component set against the effective relationship, recursively evaluates each component profile to its non-Ability contribution, applies relationship-targeted component modifiers, performs the registered composite arithmetic, applies parent modifiers, and passes the resulting non-Ability parent contribution into the check. Missing, duplicate, or unknown component inputs fail explicitly.
+
+An `independent-parent` ruling keeps the relationship visible but disables component recursion. A nested request that still supplies components is rejected instead of silently deriving the parent. If the independent parent has an evaluatable profile, that parent profile can be composed into the check directly. The Character Sheet/backend must not independently reinterpret the ruling.
 
 ## Loot Tavern Harvesting & Crafting Lite
 
@@ -238,7 +248,7 @@ Private source names/content are not surfaced through this contract when the cur
 
 Evaluation is deterministic. Rules Core does not roll dice, select Character state, choose a source table row, or mutate Character data.
 
-For a scalar definition it combines caller-supplied inputs according to the normalized mechanic. For a dynamic competency it selects the requested competency profile, enforces that profile's capability and boolean requirements, and combines only the contribution inputs declared by that profile. The caller never supplies a final opaque competency `value`. For a competency-consuming check, nested competency composition returns the non-Ability contribution directly from the selected profile; the caller does not subtract an Ability modifier or reproduce profile arithmetic. Conditional inputs are included only when their declared condition is satisfied. Conditional roll-mode rules can require multiple boolean conditions, which lets Rules Core distinguish "not proficient" from "not proficient and lacking qualified guidance." For a composite competency, the Character backend supplies the already-resolved effective component competency values and Rules Core delegates the parent calculation to the existing `CompositeCompetencyEvaluator`; the composite relationship arithmetic remains Rules Core-owned. Contributor groups follow the same boundary: the caller supplies contributor facts, while Rules Core owns eligibility requirements, count limits, conditional full/fractional value, rounding, and how contributor totals enter the parent mechanic.
+For a scalar definition it combines caller-supplied inputs according to the normalized mechanic. For a dynamic competency it selects the requested competency profile, enforces that profile's capability and boolean requirements, and combines only the contribution inputs declared by that profile. The caller never supplies a final opaque competency `value`. For a competency-consuming check, nested competency composition returns the non-Ability contribution directly from the selected profile; the caller does not subtract an Ability modifier or reproduce profile arithmetic. When that competency is an effective `derive-parent` composite, Rules Core recursively evaluates the supplied component competency inputs and delegates component modifiers, composite arithmetic, and parent modifiers to the existing `CompositeCompetencyEvaluator`. Conditional inputs are included only when their declared condition is satisfied. Conditional roll-mode rules can require multiple boolean conditions, which lets Rules Core distinguish "not proficient" from "not proficient and lacking qualified guidance." Contributor groups follow the same boundary: the caller supplies contributor facts, while Rules Core owns eligibility requirements, count limits, conditional full/fractional value, rounding, and how contributor totals enter the parent mechanic.
 
 The batch endpoints accept multiple mechanic evaluations and build the effective global or Campaign mechanics context once for the request. This is the preferred Character backend path when resolving several values for one Character:
 
