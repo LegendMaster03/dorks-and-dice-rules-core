@@ -5,6 +5,7 @@ on:
   workflow_run:
     workflows: [ "Validate Rules Core" ]
     types: [ completed ]
+    branches: [ main ]
   workflow_dispatch:
 
 concurrency:
