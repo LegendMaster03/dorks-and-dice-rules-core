@@ -28,7 +28,7 @@ The catalog also returns compact browser-index fields derived from the published
 
 ## Global catalog
 
-`GET /api/rules` returns the latest published global ruleset revision and the rules from that revision whose effective source package is accessible to the current request identity. Optional `entityType`, `q`, `limit`, and `offset` parameters filter/page the catalog.
+`GET /api/rules` returns the latest published global ruleset revision and the rules from that revision whose effective source package is accessible to the current request identity. Optional `entityType`, `q`, `source`, `limit`, and `offset` parameters filter/page the catalog. Entity-type and source facets are populated on the first page (`offset=0`); incremental pages omit the repeated facet payload.
 
 A direct or anonymous request can list rules backed by public source packages. A hosted Dorks & Dice request may additionally list restricted rules for which the stable authenticated user ID has an explicit Rules Core source grant.
 
@@ -38,9 +38,9 @@ The catalog returns stable rule identity, browser link target, effective decisio
 
 ## Campaign catalog and baseline
 
-Campaign lifecycle is owned outside Rules Core. Rules Core does not create campaigns, accept join requests, issue invitations, or assign DM/Player membership. Those responsibilities belong to the Dorks & Dice campaign/account framework and are not yet implemented in the current stack. Until the Tool Host can supply campaign memberships, campaign-scoped Rules Core functionality remains dormant while the global browser and global Rules Lawyer workflow continue to operate normally.
+Campaign lifecycle is owned outside Rules Core. Rules Core does not create campaigns, accept join requests, issue invitations, or assign DM/Player membership. The Dorks & Dice Tool Host supplies the authenticated account's campaign memberships and roles through the host API; Rules Core consumes that context for browsing and authorization. If the host supplies no memberships, campaign scopes are simply absent and global browsing continues independently.
 
-`GET /api/campaigns/{campaignId}/rules` returns the latest **published** campaign ruleset. It never reflects an unpublished baseline selection or unpublished campaign decision.
+`GET /api/campaigns/{campaignId}/rules` returns the latest **published** campaign ruleset. It never reflects an unpublished baseline selection or unpublished campaign decision. It accepts the same `entityType`, `q`, `source`, `limit`, and `offset` catalog controls as the global endpoint, plus `overridesOnly=true` for a campaign-override-only view. Facets are returned on the first page and omitted from subsequent incremental pages.
 
 Campaign catalog access requires normal campaign membership from the Dorks & Dice Tool Host context. Members may browse the campaign's published rules even when they can not adjudicate that campaign. Nonmembers receive not-found behavior and anonymous requests are unauthorized.
 
