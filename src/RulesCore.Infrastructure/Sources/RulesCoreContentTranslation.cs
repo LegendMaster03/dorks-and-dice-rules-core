@@ -659,6 +659,17 @@ internal static class RulesCoreContentTranslation
             }
             extension["competencyConversion"] = conversion;
         }
+        var competency = BuildPcGenCompetencyMetadata(
+            edition,
+            nativeEntityType,
+            normalizedEntityType,
+            nativeName,
+            competencyConversion,
+            segments);
+        if (competency is not null)
+        {
+            extension["competency"] = competency;
+        }
         if (unmapped.Length > 0)
         {
             var segmentsJson = new JsonArray();
@@ -678,6 +689,109 @@ internal static class RulesCoreContentTranslation
 
         content["_rulesCore"] = extension;
     }
+
+    private static JsonObject? BuildPcGenCompetencyMetadata(
+        string? edition,
+        string nativeEntityType,
+        string normalizedEntityType,
+        string nativeName,
+        PcGenCompetencyConversion? competencyConversion,
+        IReadOnlyList<PcGenSegment> segments)
+    {
+        if (!string.Equals(nativeEntityType, "skill", StringComparison.OrdinalIgnoreCase))
+        {
+            return null;
+        }
+
+        var isThreeX = string.Equals(edition, "3e", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(edition, "3.5e", StringComparison.OrdinalIgnoreCase);
+        var effectiveType = !string.IsNullOrWhiteSpace(competencyConversion?.TargetType)
+            && string.IsNullOrWhiteSpace(competencyConversion.Scope)
+                ? competencyConversion.TargetType
+                : normalizedEntityType;
+        var specialty = ParseCompetencySpecialty(nativeName);
+        var kind = string.Equals(effectiveType, "tool", StringComparison.OrdinalIgnoreCase)
+            ? "tool"
+            : specialty.Specialty is null
+                ? "skill"
+                : "specialized-skill";
+
+        var metadata = new JsonObject
+        {
+            ["profileKey"] = isThreeX ? "dnd-3x" : "pcgen",
+            ["kind"] = kind,
+            ["supportsRanks"] = isThreeX,
+            ["supportsClassSkillState"] = isThreeX,
+            ["supportsTrainingState"] = true
+        };
+        if (isThreeX)
+        {
+            metadata["requiredCapabilityKeys"] = new JsonArray("competency.skill-ranks");
+        }
+        if (!string.IsNullOrWhiteSpace(edition))
+        {
+            metadata["gameEdition"] = edition.Trim();
+        }
+        if (specialty.FamilyName is not null)
+        {
+            metadata["familyName"] = specialty.FamilyName;
+            metadata["specialty"] = specialty.Specialty;
+        }
+
+        var keyStat = Last(segments, "KEYSTAT");
+        if (keyStat is not null)
+        {
+            metadata["governingAbilityKey"] = NormalizeAbilityKey(keyStat.Value);
+        }
+
+        var useUntrained = Last(segments, "USEUNTRAINED");
+        if (useUntrained is not null && TryParseBoolean(useUntrained.Value, out var canUseUntrained))
+        {
+            metadata["trainedOnly"] = !canUseUntrained;
+        }
+
+        var armorCheck = Last(segments, "ACHECK");
+        if (armorCheck is not null && TryParseBoolean(armorCheck.Value, out var armorCheckPenaltyApplies))
+        {
+            metadata["armorCheckPenaltyApplies"] = armorCheckPenaltyApplies;
+        }
+
+        return metadata;
+    }
+
+    private static (string? FamilyName, string? Specialty) ParseCompetencySpecialty(string name)
+    {
+        foreach (var family in new[] { "Craft", "Knowledge", "Perform", "Profession" })
+        {
+            var prefix = $"{family} (";
+            if (!name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
+                || !name.EndsWith(')')
+                || name.Length <= prefix.Length + 1)
+            {
+                continue;
+            }
+
+            var specialty = name[prefix.Length..^1].Trim();
+            if (!string.IsNullOrWhiteSpace(specialty))
+            {
+                return (family, specialty);
+            }
+        }
+
+        return (null, null);
+    }
+
+    private static string NormalizeAbilityKey(string value) =>
+        value.Trim().ToUpperInvariant() switch
+        {
+            "STR" => "strength",
+            "DEX" => "dexterity",
+            "CON" => "constitution",
+            "INT" => "intelligence",
+            "WIS" => "wisdom",
+            "CHA" => "charisma",
+            _ => value.Trim().ToLowerInvariant()
+        };
 
     private static string? ResolveEdition(
         NormalizedSourceRepresentation representation,

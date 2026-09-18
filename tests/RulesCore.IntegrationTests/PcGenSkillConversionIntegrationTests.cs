@@ -235,6 +235,93 @@ public sealed class PcGenSkillConversionIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task PcGenCompetencySemanticsAreNormalizedWithoutDiscardingNativeEvidence()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var packageKey = $"pcgen-competency-metadata-{token}";
+            var sourceShort = $"PCM{token}";
+            var fileName = $"data/35e/example/competency_metadata_skills_{token}.lst";
+            var text = string.Join('\n',
+            [
+                $"SOURCELONG:Competency Metadata Fixture {token}\tSOURCESHORT:{sourceShort}",
+                "Knowledge (the planes)\tKEYSTAT:INT\tUSEUNTRAINED:NO\tACHECK:NO",
+                "Craft (alchemy)\tKEYSTAT:INT\tUSEUNTRAINED:YES\tACHECK:NO"
+            ]);
+            var representation = new PcGenSourceFormatAdapter().TryRead(
+                new SourceRepresentationArtifact(
+                    fileName,
+                    Encoding.UTF8.GetBytes(text),
+                    $"integration:competency-metadata:{token}#{fileName}"))
+                ?? throw new InvalidOperationException("PCGen competency metadata fixture was not readable.");
+
+            try
+            {
+                await new NormalizedSourceImportService(db).ImportAsync(
+                    new ImportNormalizedSourceRequest(
+                        packageKey,
+                        $"PCGen competency metadata {token}",
+                        "integration-test",
+                        "test-only",
+                        true,
+                        representation));
+
+                var knowledge = await ReadByNativeNameAsync(db, packageKey, "Knowledge (the planes)");
+                using (var document = JsonDocument.Parse(knowledge.ContentJson))
+                {
+                    var extension = document.RootElement.GetProperty("_rulesCore");
+                    var competency = extension.GetProperty("competency");
+                    Assert.Equal("dnd-3x", competency.GetProperty("profileKey").GetString());
+                    Assert.Equal("specialized-skill", competency.GetProperty("kind").GetString());
+                    Assert.Equal("Knowledge", competency.GetProperty("familyName").GetString());
+                    Assert.Equal("the planes", competency.GetProperty("specialty").GetString());
+                    Assert.Equal("intelligence", competency.GetProperty("governingAbilityKey").GetString());
+                    Assert.True(competency.GetProperty("supportsRanks").GetBoolean());
+                    Assert.True(competency.GetProperty("supportsClassSkillState").GetBoolean());
+                    Assert.True(competency.GetProperty("supportsTrainingState").GetBoolean());
+                    Assert.True(competency.GetProperty("trainedOnly").GetBoolean());
+                    Assert.False(competency.GetProperty("armorCheckPenaltyApplies").GetBoolean());
+                    Assert.Equal(
+                        "competency.skill-ranks",
+                        Assert.Single(competency.GetProperty("requiredCapabilityKeys").EnumerateArray())
+                            .GetString());
+
+                    var tags = extension.GetProperty("pcgen")
+                        .GetProperty("unmappedSegments")
+                        .EnumerateArray()
+                        .Select(value => value.GetProperty("tag").GetString())
+                        .ToArray();
+                    Assert.Contains("KEYSTAT", tags);
+                    Assert.Contains("USEUNTRAINED", tags);
+                    Assert.Contains("ACHECK", tags);
+                }
+
+                var alchemy = await ReadByNativeNameAsync(db, packageKey, "Craft (alchemy)");
+                Assert.Equal("tool", alchemy.EntityType);
+                Assert.Equal("Alchemist's Supplies", alchemy.NormalizedName);
+                using (var document = JsonDocument.Parse(alchemy.ContentJson))
+                {
+                    var competency = document.RootElement
+                        .GetProperty("_rulesCore")
+                        .GetProperty("competency");
+                    Assert.Equal("tool", competency.GetProperty("kind").GetString());
+                    Assert.Equal("Craft", competency.GetProperty("familyName").GetString());
+                    Assert.Equal("alchemy", competency.GetProperty("specialty").GetString());
+                    Assert.True(competency.GetProperty("supportsRanks").GetBoolean());
+                    Assert.True(competency.GetProperty("supportsClassSkillState").GetBoolean());
+                }
+            }
+            finally
+            {
+                await DeletePackageAsync(db, packageKey);
+            }
+        }
+    }
+
     private static NormalizedSourceRepresentation PcGenRepresentation(
         string editionPath,
         string sourceShort,
