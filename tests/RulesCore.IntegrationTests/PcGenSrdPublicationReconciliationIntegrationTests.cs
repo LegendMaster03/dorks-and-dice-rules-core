@@ -143,7 +143,7 @@ public sealed class PcGenSrdPublicationReconciliationIntegrationTests
             var identities = new CanonicalPublicationIdentityService(db);
             var builtInThreeE = await identities.ResolveAsync(BuiltInSrd("SRD3", "3e"));
             var importer = new NormalizedSourceImportService(db);
-            var representation = PcGenCampaign(
+            var representation = PcGenPublishedRecord(
                 "data/3e/wizards_of_the_coast/srd/srd.pcc",
                 """
                 CAMPAIGN:3.0 SRD
@@ -216,6 +216,43 @@ public sealed class PcGenSrdPublicationReconciliationIntegrationTests
             MediaType: "text/plain"));
         Assert.NotNull(representation);
         return representation!;
+    }
+
+    private static NormalizedSourceRepresentation PcGenPublishedRecord(
+        string campaignPath,
+        string campaignText)
+    {
+        const string listFileName = "rules-core-reconciliation-fixture.lst";
+        var separator = campaignPath.LastIndexOf('/');
+        var directory = separator < 0 ? string.Empty : campaignPath[..separator];
+        var listPath = string.IsNullOrEmpty(directory)
+            ? listFileName
+            : $"{directory}/{listFileName}";
+        var campaignWithReference = $"{campaignText.TrimEnd()}\nSPELL:{listFileName}\n";
+        var adapter = new PcGenSourceFormatAdapter();
+        var representations = adapter.TryReadMany(
+        [
+            new SourceRepresentationArtifact(
+                Path.GetFileName(campaignPath),
+                Encoding.UTF8.GetBytes(campaignWithReference.Replace("\r\n", "\n", StringComparison.Ordinal)),
+                $"test:pcgen-srd-reconciliation#{campaignPath}",
+                SourceUri: $"https://raw.githubusercontent.com/PCGen/pcgen/master/{campaignPath}",
+                MediaType: "text/plain"),
+            new SourceRepresentationArtifact(
+                listFileName,
+                Encoding.UTF8.GetBytes("Arc Spark\tTYPE:Arcane\tSCHOOL:Evocation\tDESC:Publication reconciliation fixture.\n"),
+                $"test:pcgen-srd-reconciliation#{listPath}",
+                SourceUri: $"https://raw.githubusercontent.com/PCGen/pcgen/master/{listPath}",
+                MediaType: "text/plain")
+        ]);
+
+        var representation = Assert.Single(
+            representations,
+            value => string.Equals(value.Artifact.FileName, listFileName, StringComparison.Ordinal));
+        Assert.Single(representation.Publications!);
+        Assert.Single(representation.Records);
+        Assert.NotNull(Assert.Single(representation.Records).PublicationLocalKey);
+        return representation;
     }
 
     private static async Task<Guid?> ReadEntityPublicationAsync(RulesCoreDbContext db, Guid sourceEntityId)
