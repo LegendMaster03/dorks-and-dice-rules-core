@@ -1166,7 +1166,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         var parameter = command.CreateParameter();
         parameter.ParameterName = name;
         parameter.DbType = DbType.String;
-        parameter.Value = value ?? DBNull.Value;
+        parameter.Value = (object?)value ?? DBNull.Value;
         command.Parameters.Add(parameter);
     }
 
