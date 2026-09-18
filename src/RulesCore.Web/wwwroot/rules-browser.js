@@ -965,7 +965,7 @@ async function renderRuleDetailPane(
             key: "effective",
             label: effectiveLabel,
             title: campaignId ? "Effective campaign rule" : "Dorks & Dice combined rule",
-            render: () => renderEffectiveRule(body, resolved, baseline, Boolean(campaignId))
+            render: () => renderEffectiveRule(app, body, resolved, baseline, campaignId)
         }];
 
         for (const version of versions?.versions ?? []) {
@@ -1040,9 +1040,12 @@ async function renderRuleDetailPane(
     }
 }
 
-function renderEffectiveRule(container, resolved, baseline, campaignScope) {
+function renderEffectiveRule(app, container, resolved, baseline, campaignId) {
     clear(container);
+    const campaignScope = Boolean(campaignId);
     const isMonster = String(resolved.entityType ?? "").toLowerCase() === "monster";
+
+    container.append(renderRulingStatusBar(app, resolved, campaignId));
 
     if (isMonster) {
         container.append(element("section", { className: "rules-core-effective-rule" },
@@ -1259,6 +1262,27 @@ function sourceVersionLabel(version) {
     ].filter(Boolean).join(" · ");
 }
 
+function renderRulingStatusBar(app, resolved, campaignId) {
+    const campaignScope = Boolean(campaignId);
+    const hasCampaignOverride = campaignScope && Boolean(resolved.campaignDecisionNumber);
+    const title = campaignScope
+        ? hasCampaignOverride
+            ? "Campaign override"
+            : "Inherited from Dorks & Dice"
+        : "Dorks & Dice ruling";
+    const detail = campaignScope
+        ? hasCampaignOverride
+            ? `Decision #${resolved.campaignDecisionNumber} · ${resolved.effectiveDecisionKind}`
+            : `Global decision #${resolved.globalDecisionNumber} · ${resolved.globalDecisionKind}`
+        : `Decision #${resolved.globalDecisionNumber} · ${resolved.decisionKind}`;
+
+    return element("div", { className: "rules-core-ruling-status" },
+        element("div", {},
+            element("div", { className: "rules-core-ruling-status-title", text: title }),
+            element("div", { className: "rules-core-ruling-status-detail", text: detail })),
+        adjudicationButton(app, resolved.ruleConceptId, campaignId));
+}
+
 function adjudicationButton(app, ruleConceptId, campaignId) {
     const campaignCanEdit = campaignId
         && app.dmCampaigns?.some(value => String(value.id) === String(campaignId));
@@ -1268,7 +1292,7 @@ function adjudicationButton(app, ruleConceptId, campaignId) {
     return element("button", {
         type: "button",
         className: "btn btn-sm btn-outline-primary",
-        text: campaignId ? "Open campaign ruling" : "Open global ruling",
+        text: campaignId ? "Edit campaign rule" : "Edit Dorks & Dice rule",
         onClick: async () => openAdjudication(app, ruleConceptId, campaignId)
     });
 }

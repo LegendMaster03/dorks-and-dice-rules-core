@@ -97,7 +97,10 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("sourceVersionTabLabel", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("gameEdition", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Publication date", rulesBrowser, StringComparison.Ordinal);
-        Assert.Contains("Open global ruling", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Edit Dorks & Dice rule", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Edit campaign rule", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("Inherited from Dorks & Dice", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("rules-core-ruling-status", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("browserLink", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("toolRoute", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("toolBasePath", rulesBrowser, StringComparison.Ordinal);

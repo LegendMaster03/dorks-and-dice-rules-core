@@ -1038,6 +1038,33 @@ button.rules-core-workflow-step {
     padding-left: .45rem;
 }
 
+.rules-core-ruling-status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    margin-bottom: .7rem;
+    padding: .55rem .65rem;
+    border: 1px solid var(--rules-core-border);
+    border-radius: .55rem;
+    background: var(--rules-core-surface-subtle);
+}
+
+.rules-core-ruling-status-title {
+    font-size: .74rem;
+    font-weight: 760;
+}
+
+.rules-core-ruling-status-detail {
+    margin-top: .08rem;
+    color: var(--bs-secondary-color);
+    font-size: .68rem;
+}
+
+.rules-core-ruling-status .btn {
+    flex: 0 0 auto;
+}
+
 .rules-core-library-detail-body {
     padding: .8rem;
 }
@@ -1117,6 +1144,15 @@ button.rules-core-workflow-step {
 }
 
 @media (max-width: 560px) {
+    .rules-core-ruling-status {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .rules-core-ruling-status .btn {
+        width: 100%;
+    }
+
     .rules-core-library-controls {
         grid-template-columns: 1fr 1fr;
     }
