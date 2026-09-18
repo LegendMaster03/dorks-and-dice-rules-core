@@ -14,6 +14,8 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
     private readonly IResolvedRulesCatalogService resolvedRules =
         new ResolvedRulesCatalogService(dbContext);
     private const int PageSize = 500;
+    private const string AbilityContributionRole = "ability";
+    private const string CompetencyContributionRole = "competency";
 
     public async Task<CharacterMechanicsCatalogView> GetGlobalAsync(
         string? userId,
@@ -296,11 +298,46 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         var known = KnownCharacterMechanics.FindByKey(mechanic.MechanicKey);
         if (known is not null)
         {
+            var effectiveIntegerInputs = new Dictionary<string, int>(
+                integerInputs,
+                StringComparer.Ordinal);
+            var effectiveStringInputs = new Dictionary<string, string>(
+                stringInputs,
+                StringComparer.Ordinal);
+
+            if (known.Check?.CompetencyComposition is { } composition
+                && request.Competency is { } competencyInput)
+            {
+                if (effectiveIntegerInputs.ContainsKey(composition.ContributionInputKey))
+                {
+                    throw new ArgumentException(
+                        $"Mechanic '{mechanic.MechanicKey}' received both a direct competency contribution and a Rules Core competency composition request.");
+                }
+
+                var composed = EvaluateCompetencyForCheck(catalog, competencyInput);
+                effectiveIntegerInputs[composition.ContributionInputKey] =
+                    composed.CompetencyContribution;
+
+                if (effectiveStringInputs.TryGetValue(
+                        composition.ConceptKeyInputKey,
+                        out var suppliedConceptKey)
+                    && !string.Equals(
+                        suppliedConceptKey,
+                        composed.ConceptKey,
+                        StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new ArgumentException(
+                        $"Mechanic '{mechanic.MechanicKey}' competency concept '{suppliedConceptKey}' does not match composed competency '{composed.ConceptKey}'.");
+                }
+
+                effectiveStringInputs[composition.ConceptKeyInputKey] = composed.ConceptKey;
+            }
+
             var evaluation = CharacterMechanicEvaluator.Evaluate(
                 known,
-                integerInputs,
+                effectiveIntegerInputs,
                 booleanInputs,
-                stringInputs,
+                effectiveStringInputs,
                 MapContributorInputs(request.ContributorGroups));
             return ToEvaluationView(mechanic.MechanicKey, known.EvaluationKind, evaluation);
         }
@@ -395,7 +432,8 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             profile,
             integerInputs,
             booleanInputs,
-            stringInputs);
+            stringInputs,
+            includeAbilityContribution: true);
         return new CharacterMechanicEvaluationView(
             mechanic.MechanicKey,
             CharacterMechanicEvaluationKinds.CompetencyProfile,
@@ -406,6 +444,9 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             profileEvaluation.UnsatisfiedRequirementKeys,
             AppliedRollRules: [],
             ContributorGroups: [],
+            CompetencyBreakdown: new CharacterCompetencyEvaluationBreakdownView(
+                profileEvaluation.AbilityContribution,
+                profileEvaluation.CompetencyContribution),
             CompetencyProfileSourceEntityRevisionId: profile.SourceEntityRevisionId);
     }
 
@@ -587,7 +628,12 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     new CharacterCheckCompetencyView(
                         definition.Check.Competency.ResolutionKind,
                         definition.Check.Competency.AllowedCompetencyKinds,
-                        definition.Check.Competency.FixedConceptKey)),
+                        definition.Check.Competency.FixedConceptKey),
+                    definition.Check.CompetencyComposition is null
+                        ? null
+                        : new CharacterCheckCompetencyCompositionView(
+                            definition.Check.CompetencyComposition.ConceptKeyInputKey,
+                            definition.Check.CompetencyComposition.ContributionInputKey)),
             Competency: null,
             ContributorGroups: (definition.ContributorGroups ?? [])
                 .Select(group => new CharacterMechanicContributorGroupView(
@@ -611,6 +657,10 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                         group.Value.AlternateDenominator,
                         group.Value.AlternateRoundingKind,
                         group.Value.RequireNonNegativeAmount),
+                    group.BooleanRequirements.Select(requirement =>
+                        new CharacterMechanicBooleanRequirementView(
+                            requirement.InputKey,
+                            requirement.ExpectedValue)).ToArray(),
                     group.StandardHelpActionApplies))
                 .ToArray(),
             sourceAttributions);
@@ -637,6 +687,86 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 value.ContributorCount,
                 value.MaximumContributorCount,
                 value.Value)).ToArray());
+
+    private static (string ConceptKey, int CompetencyContribution) EvaluateCompetencyForCheck(
+        CharacterMechanicsCatalogView catalog,
+        CharacterMechanicCompetencyInput input)
+    {
+        if (string.IsNullOrWhiteSpace(input.MechanicKey))
+        {
+            throw new ArgumentException("Composed competency mechanic key can not be blank.");
+        }
+
+        var mechanic = catalog.Mechanics.SingleOrDefault(value =>
+            string.Equals(value.MechanicKey, input.MechanicKey.Trim(), StringComparison.OrdinalIgnoreCase));
+        if (mechanic is null
+            || !mechanic.IsAvailableUnderRuleset
+            || !string.Equals(mechanic.Kind, CharacterMechanicKinds.Competency, StringComparison.Ordinal))
+        {
+            throw new KeyNotFoundException(
+                $"Composed competency mechanic '{input.MechanicKey}' is not available.");
+        }
+        if (mechanic.Competency is null || mechanic.ConceptKey is null)
+        {
+            throw new InvalidOperationException(
+                $"Composed competency mechanic '{mechanic.MechanicKey}' does not expose a directly composable profile.");
+        }
+        if (string.Equals(
+                mechanic.EvaluationKind,
+                CharacterMechanicEvaluationKinds.CompositeCompetency,
+                StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException(
+                $"Composite competency '{mechanic.MechanicKey}' must first be resolved through its established composite evaluator before use as a check competency.");
+        }
+
+        var selectedRevisionId = input.CompetencyProfileSourceEntityRevisionId
+            ?? mechanic.Competency.DefaultProfileSourceEntityRevisionId;
+        if (!selectedRevisionId.HasValue)
+        {
+            throw new InvalidOperationException(
+                $"Composed competency '{mechanic.MechanicKey}' has no default evaluatable profile.");
+        }
+
+        var profile = mechanic.Competency.Profiles.SingleOrDefault(value =>
+            value.SourceEntityRevisionId == selectedRevisionId.Value);
+        if (profile is null)
+        {
+            throw new KeyNotFoundException(
+                $"Competency profile source revision '{selectedRevisionId}' is not available for mechanic '{mechanic.MechanicKey}'.");
+        }
+        if (!profile.CanEvaluate)
+        {
+            throw new InvalidOperationException(
+                $"Competency profile '{profile.ProfileKey}' for mechanic '{mechanic.MechanicKey}' can not yet be evaluated faithfully.");
+        }
+
+        var availableCapabilities = (input.CapabilityKeys ?? [])
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var missingCapabilities = profile.RequiredCapabilityKeys
+            .Where(value => !availableCapabilities.Contains(value))
+            .ToArray();
+        if (missingCapabilities.Length > 0)
+        {
+            throw new InvalidOperationException(
+                $"Competency profile '{profile.ProfileKey}' requires Character capability: {string.Join(", ", missingCapabilities)}.");
+        }
+
+        var evaluation = EvaluateCompetencyProfile(
+            mechanic.MechanicKey,
+            profile,
+            input.IntegerInputs ?? new Dictionary<string, int>(StringComparer.Ordinal),
+            input.BooleanInputs ?? new Dictionary<string, bool>(StringComparer.Ordinal),
+            input.StringInputs ?? new Dictionary<string, string>(StringComparer.Ordinal),
+            includeAbilityContribution: false);
+        if (!evaluation.RequirementsSatisfied)
+        {
+            throw new InvalidOperationException(
+                $"Competency profile '{profile.ProfileKey}' does not satisfy requirement(s): {string.Join(", ", evaluation.UnsatisfiedRequirementKeys)}.");
+        }
+
+        return (mechanic.ConceptKey, evaluation.CompetencyContribution);
+    }
 
     private static IReadOnlyDictionary<string, IReadOnlyList<CharacterMechanicContributorInputValues>>
         MapContributorInputs(IReadOnlyList<CharacterMechanicContributorGroupInput>? contributorGroups)
@@ -894,11 +1024,13 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             ContributionInput(
                 "abilityContribution",
                 CharacterMechanicInputOrigins.Derived,
-                required: true),
+                required: true,
+                contributionRole: AbilityContributionRole),
             ContributionInput(
                 "ranks",
                 CharacterMechanicInputOrigins.CharacterState,
-                required: true)
+                required: true,
+                contributionRole: CompetencyContributionRole)
         };
         if (supportsClassSkillState)
         {
@@ -930,13 +1062,15 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 "armorCheckPenaltyAdjustment",
                 CharacterMechanicInputOrigins.Derived,
                 required: false,
-                defaultInteger: 0));
+                defaultInteger: 0,
+                contributionRole: CompetencyContributionRole));
         }
         inputs.Add(ContributionInput(
             "otherModifier",
             CharacterMechanicInputOrigins.Derived,
             required: false,
-            defaultInteger: 0));
+            defaultInteger: 0,
+            contributionRole: CompetencyContributionRole));
         return inputs;
     }
 
@@ -945,12 +1079,14 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         ContributionInput(
             "abilityContribution",
             CharacterMechanicInputOrigins.Derived,
-            required: true),
+            required: true,
+            contributionRole: AbilityContributionRole),
         ContributionInput(
             "trainingContribution",
             CharacterMechanicInputOrigins.Derived,
             required: false,
-            defaultInteger: 0),
+            defaultInteger: 0,
+            contributionRole: CompetencyContributionRole),
         new CharacterMechanicInputView(
             "isTrained",
             CharacterMechanicInputValueKinds.Boolean,
@@ -964,14 +1100,16 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             "otherModifier",
             CharacterMechanicInputOrigins.Derived,
             required: false,
-            defaultInteger: 0)
+            defaultInteger: 0,
+            contributionRole: CompetencyContributionRole)
     ];
 
     private static CharacterMechanicInputView ContributionInput(
         string key,
         string origin,
         bool required,
-        int? defaultInteger = null) =>
+        int? defaultInteger = null,
+        string? contributionRole = null) =>
         new(
             key,
             CharacterMechanicInputValueKinds.Integer,
@@ -980,15 +1118,22 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             ParticipatesInValue: true,
             defaultInteger,
             IncludeWhenBooleanInputKey: null,
-            IncludeWhenBooleanValue: null);
+            IncludeWhenBooleanValue: null,
+            ContributionRole: contributionRole);
 
-    private static (int Value, bool RequirementsSatisfied, IReadOnlyList<string> UnsatisfiedRequirementKeys)
+    private static (
+        int Value,
+        int AbilityContribution,
+        int CompetencyContribution,
+        bool RequirementsSatisfied,
+        IReadOnlyList<string> UnsatisfiedRequirementKeys)
         EvaluateCompetencyProfile(
             string mechanicKey,
             CharacterCompetencyProfileView profile,
             IReadOnlyDictionary<string, int> integerInputs,
             IReadOnlyDictionary<string, bool> booleanInputs,
-            IReadOnlyDictionary<string, string> stringInputs)
+            IReadOnlyDictionary<string, string> stringInputs,
+            bool includeAbilityContribution)
     {
         if (!string.Equals(profile.EvaluationKind, CharacterMechanicEvaluationKinds.Sum, StringComparison.Ordinal))
         {
@@ -997,9 +1142,20 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         }
 
         long total = 0;
+        long abilityContribution = 0;
+        long competencyContribution = 0;
         foreach (var input in profile.Inputs)
         {
             if (!InputIsActive(input, booleanInputs))
+            {
+                continue;
+            }
+
+            var isAbilityContribution = string.Equals(
+                input.ContributionRole,
+                AbilityContributionRole,
+                StringComparison.Ordinal);
+            if (isAbilityContribution && !includeAbilityContribution)
             {
                 continue;
             }
@@ -1028,13 +1184,26 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 continue;
             }
 
-            if (integerInputs.TryGetValue(input.Key, out var value))
+            var contribution = integerInputs.TryGetValue(input.Key, out var value)
+                ? value
+                : input.DefaultInteger ?? 0;
+            total += contribution;
+
+            if (isAbilityContribution)
             {
-                total += value;
+                abilityContribution += contribution;
             }
-            else if (input.DefaultInteger is int fallback)
+            else if (string.Equals(
+                         input.ContributionRole,
+                         CompetencyContributionRole,
+                         StringComparison.Ordinal))
             {
-                total += fallback;
+                competencyContribution += contribution;
+            }
+            else
+            {
+                throw new InvalidOperationException(
+                    $"Competency profile '{profile.ProfileKey}' input '{input.Key}' participates in value without a recognized contribution role.");
             }
         }
 
@@ -1044,7 +1213,12 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 || supplied != requirement.ExpectedValue)
             .Select(requirement => requirement.InputKey)
             .ToArray();
-        return (checked((int)total), unsatisfied.Length == 0, unsatisfied);
+        return (
+            checked((int)total),
+            checked((int)abilityContribution),
+            checked((int)competencyContribution),
+            unsatisfied.Length == 0,
+            unsatisfied);
     }
 
     private static bool InputIsActive(

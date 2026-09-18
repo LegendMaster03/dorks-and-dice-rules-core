@@ -108,9 +108,14 @@ public sealed record CharacterCheckCompetencyDefinition(
     IReadOnlyList<string> AllowedCompetencyKinds,
     string? FixedConceptKey = null);
 
+public sealed record CharacterCheckCompetencyCompositionDefinition(
+    string ConceptKeyInputKey,
+    string ContributionInputKey);
+
 public sealed record CharacterMechanicCheckDefinition(
     CharacterCheckAbilityDefinition Ability,
-    CharacterCheckCompetencyDefinition Competency);
+    CharacterCheckCompetencyDefinition Competency,
+    CharacterCheckCompetencyCompositionDefinition? CompetencyComposition = null);
 
 public sealed record CharacterMechanicSourceReference(
     string? PackageKey,
@@ -158,6 +163,7 @@ public sealed record CharacterMechanicContributorGroupDefinition(
     IReadOnlyDictionary<string, int> MaximumCountByStringValue,
     IReadOnlyList<CharacterMechanicInputDefinition> Inputs,
     CharacterMechanicContributorValueDefinition Value,
+    IReadOnlyList<CharacterMechanicBooleanRequirementDefinition> BooleanRequirements,
     bool StandardHelpActionApplies);
 
 public sealed record CharacterMechanicContributorInputValues(
@@ -345,6 +351,7 @@ public static class CharacterMechanicEvaluator
             foreach (var contributor in contributors)
             {
                 ValidateContributorInputs(definition.Key, group, contributor);
+                ValidateContributorEligibility(definition.Key, group, contributor);
 
                 if (!contributor.IntegerInputs.TryGetValue(
                         group.Value.AmountIntegerInputKey,
@@ -437,6 +444,24 @@ public static class CharacterMechanicEvaluator
         }
 
         return match.Value;
+    }
+
+    private static void ValidateContributorEligibility(
+        string mechanicKey,
+        CharacterMechanicContributorGroupDefinition group,
+        CharacterMechanicContributorInputValues contributor)
+    {
+        var unsatisfied = group.BooleanRequirements
+            .Where(requirement =>
+                !contributor.BooleanInputs.TryGetValue(requirement.InputKey, out var supplied)
+                || supplied != requirement.ExpectedValue)
+            .Select(requirement => requirement.InputKey)
+            .ToArray();
+        if (unsatisfied.Length > 0)
+        {
+            throw new InvalidOperationException(
+                $"Mechanic '{mechanicKey}' contributor group '{group.Key}' contains an ineligible contributor. Unsatisfied requirement(s): {string.Join(", ", unsatisfied)}.");
+        }
     }
 
     private static void ValidateContributorInputs(
@@ -590,7 +615,10 @@ public static class KnownCharacterMechanics
                         CharacterCompetencyKinds.Skill,
                         CharacterCompetencyKinds.SpecializedSkill,
                         CharacterCompetencyKinds.Tool
-                    ]))),
+                    ]),
+                new CharacterCheckCompetencyCompositionDefinition(
+                    "competencyKey",
+                    "competencyContribution"))),
 
         SumMechanic(
             "save.fortitude",
@@ -721,7 +749,10 @@ public static class KnownCharacterMechanics
                     "intelligence"),
                 new CharacterCheckCompetencyDefinition(
                     CharacterCheckCompetencyResolutionKinds.RuleResolved,
-                    [CharacterCompetencyKinds.Skill, CharacterCompetencyKinds.SpecializedSkill]))),
+                    [CharacterCompetencyKinds.Skill, CharacterCompetencyKinds.SpecializedSkill]),
+                new CharacterCheckCompetencyCompositionDefinition(
+                    "creatureTypeCompetencyKey",
+                    "competencyContribution"))),
         LootCheck(
             "check.harvesting.carving",
             "Harvesting Carving Check",
@@ -738,7 +769,10 @@ public static class KnownCharacterMechanics
                     "dexterity"),
                 new CharacterCheckCompetencyDefinition(
                     CharacterCheckCompetencyResolutionKinds.RuleResolved,
-                    [CharacterCompetencyKinds.Skill, CharacterCompetencyKinds.SpecializedSkill]))),
+                    [CharacterCompetencyKinds.Skill, CharacterCompetencyKinds.SpecializedSkill]),
+                new CharacterCheckCompetencyCompositionDefinition(
+                    "creatureTypeCompetencyKey",
+                    "competencyContribution"))),
         new(
             "check.harvesting.total",
             CharacterMechanicKinds.Check,
@@ -778,6 +812,18 @@ public static class KnownCharacterMechanics
                         BooleanInput(
                             "isProficient",
                             CharacterMechanicInputOrigins.CharacterState,
+                            true),
+                        BooleanInput(
+                            "participatedForEntireDuration",
+                            CharacterMechanicInputOrigins.Runtime,
+                            true),
+                        BooleanInput(
+                            "isAssessmentParticipant",
+                            CharacterMechanicInputOrigins.Runtime,
+                            true),
+                        BooleanInput(
+                            "isCarvingParticipant",
+                            CharacterMechanicInputOrigins.Runtime,
                             true)
                     ],
                     new CharacterMechanicContributorValueDefinition(
@@ -787,6 +833,17 @@ public static class KnownCharacterMechanics
                         AlternateNumerator: 1,
                         AlternateDenominator: 2,
                         AlternateRoundingKind: CharacterMechanicContributorRoundingKinds.Floor),
+                    [
+                        new CharacterMechanicBooleanRequirementDefinition(
+                            "participatedForEntireDuration",
+                            true),
+                        new CharacterMechanicBooleanRequirementDefinition(
+                            "isAssessmentParticipant",
+                            false),
+                        new CharacterMechanicBooleanRequirementDefinition(
+                            "isCarvingParticipant",
+                            false)
+                    ],
                     StandardHelpActionApplies: false)
             ]),
         new(
@@ -832,7 +889,10 @@ public static class KnownCharacterMechanics
                     CharacterCheckAbilityResolutionKinds.RuleResolved),
                 new CharacterCheckCompetencyDefinition(
                     CharacterCheckCompetencyResolutionKinds.RuleResolved,
-                    [CharacterCompetencyKinds.Tool]))),
+                    [CharacterCompetencyKinds.Tool]),
+                new CharacterCheckCompetencyCompositionDefinition(
+                    "toolKey",
+                    "toolProficiencyContribution"))),
         new(
             "check.crafting.enchanting",
             CharacterMechanicKinds.Check,
@@ -859,7 +919,10 @@ public static class KnownCharacterMechanics
                     CharacterCheckAbilityResolutionKinds.CharacterResolved),
                 new CharacterCheckCompetencyDefinition(
                     CharacterCheckCompetencyResolutionKinds.RuleResolved,
-                    [CharacterCompetencyKinds.Skill, CharacterCompetencyKinds.SpecializedSkill])))
+                    [CharacterCompetencyKinds.Skill, CharacterCompetencyKinds.SpecializedSkill]),
+                new CharacterCheckCompetencyCompositionDefinition(
+                    "creatureTypeCompetencyKey",
+                    "competencyContribution")))
     ];
 
     private static readonly IReadOnlyList<CharacterMechanicRelationshipDefinition> RelationshipDefinitions =

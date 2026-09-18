@@ -43,7 +43,8 @@ public sealed record CharacterMechanicInputView(
     bool ParticipatesInValue,
     int? DefaultInteger,
     string? IncludeWhenBooleanInputKey,
-    bool? IncludeWhenBooleanValue);
+    bool? IncludeWhenBooleanValue,
+    string? ContributionRole = null);
 
 public sealed record CharacterCheckAbilityView(
     string ResolutionKind,
@@ -55,9 +56,14 @@ public sealed record CharacterCheckCompetencyView(
     IReadOnlyList<string> AllowedCompetencyKinds,
     string? FixedConceptKey);
 
+public sealed record CharacterCheckCompetencyCompositionView(
+    string ConceptKeyInputKey,
+    string ContributionInputKey);
+
 public sealed record CharacterMechanicCheckView(
     CharacterCheckAbilityView Ability,
-    CharacterCheckCompetencyView Competency);
+    CharacterCheckCompetencyView Competency,
+    CharacterCheckCompetencyCompositionView? CompetencyComposition);
 
 public sealed record CharacterCompetencyProfileView(
     Guid SourceEntityRevisionId,
@@ -131,6 +137,7 @@ public sealed record CharacterMechanicContributorGroupView(
     IReadOnlyDictionary<string, int> MaximumCountByStringValue,
     IReadOnlyList<CharacterMechanicInputView> ContributorInputs,
     CharacterMechanicContributorValueView Value,
+    IReadOnlyList<CharacterMechanicBooleanRequirementView> BooleanRequirements,
     bool StandardHelpActionApplies);
 
 
@@ -164,6 +171,14 @@ public sealed record CharacterMechanicContributorGroupInput(
     IReadOnlyList<CharacterMechanicContributorInput> Contributors);
 
 
+public sealed record CharacterMechanicCompetencyInput(
+    string MechanicKey,
+    Dictionary<string, int>? IntegerInputs = null,
+    Dictionary<string, bool>? BooleanInputs = null,
+    Dictionary<string, string>? StringInputs = null,
+    IReadOnlyList<string>? CapabilityKeys = null,
+    Guid? CompetencyProfileSourceEntityRevisionId = null);
+
 public sealed record CharacterMechanicEvaluationRequest(
     Dictionary<string, int>? IntegerInputs = null,
     Dictionary<string, bool>? BooleanInputs = null,
@@ -171,7 +186,8 @@ public sealed record CharacterMechanicEvaluationRequest(
     IReadOnlyList<CharacterMechanicModifierInput>? Modifiers = null,
     IReadOnlyList<string>? CapabilityKeys = null,
     Guid? CompetencyProfileSourceEntityRevisionId = null,
-    IReadOnlyList<CharacterMechanicContributorGroupInput>? ContributorGroups = null);
+    IReadOnlyList<CharacterMechanicContributorGroupInput>? ContributorGroups = null,
+    CharacterMechanicCompetencyInput? Competency = null);
 
 public sealed record CharacterMechanicBatchEvaluationItemRequest(
     string MechanicKey,
@@ -202,6 +218,10 @@ public sealed record CharacterMechanicContributorGroupEvaluationView(
     int Value);
 
 
+public sealed record CharacterCompetencyEvaluationBreakdownView(
+    int AbilityContribution,
+    int CompetencyContribution);
+
 public sealed record CharacterMechanicEvaluationView(
     string MechanicKey,
     string EvaluationKind,
@@ -212,6 +232,7 @@ public sealed record CharacterMechanicEvaluationView(
     IReadOnlyList<string> UnsatisfiedRequirementKeys,
     IReadOnlyList<CharacterMechanicAppliedRollRuleView> AppliedRollRules,
     IReadOnlyList<CharacterMechanicContributorGroupEvaluationView> ContributorGroups,
+    CharacterCompetencyEvaluationBreakdownView? CompetencyBreakdown = null,
     Guid? CompetencyProfileSourceEntityRevisionId = null);
 
 public interface ICharacterMechanicsConsumerService

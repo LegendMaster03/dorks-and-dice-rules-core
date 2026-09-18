@@ -19,6 +19,11 @@ public sealed class CharacterMechanicsTests
         Assert.Contains(CharacterCompetencyKinds.Skill, generic.Check.Competency.AllowedCompetencyKinds);
         Assert.Contains(CharacterCompetencyKinds.SpecializedSkill, generic.Check.Competency.AllowedCompetencyKinds);
         Assert.Contains(CharacterCompetencyKinds.Tool, generic.Check.Competency.AllowedCompetencyKinds);
+        Assert.NotNull(generic.Check.CompetencyComposition);
+        Assert.Equal("competencyKey", generic.Check.CompetencyComposition!.ConceptKeyInputKey);
+        Assert.Equal(
+            "competencyContribution",
+            generic.Check.CompetencyComposition.ContributionInputKey);
 
         var fortitude = Required("save.fortitude");
         Assert.Equal(CharacterMechanicApplicabilityKinds.CharacterCapability, fortitude.Applicability.Kind);
@@ -267,6 +272,108 @@ public sealed class CharacterMechanicsTests
     }
 
     [Fact]
+    public void HarvestingRejectsHelperWhoDidNotParticipateForEntireDuration()
+    {
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            CharacterMechanicEvaluator.Evaluate(
+                Required("check.harvesting.total"),
+                new Dictionary<string, int>(StringComparer.Ordinal)
+                {
+                    ["assessmentResult"] = 10,
+                    ["carvingResult"] = 10
+                },
+                new Dictionary<string, bool>(StringComparer.Ordinal)
+                {
+                    ["sameActor"] = false
+                },
+                new Dictionary<string, string>(StringComparer.Ordinal)
+                {
+                    ["creatureSize"] = "Medium"
+                },
+                new Dictionary<string, IReadOnlyList<CharacterMechanicContributorInputValues>>(
+                    StringComparer.OrdinalIgnoreCase)
+                {
+                    ["helpers"] =
+                    [
+                        Helper(
+                            proficiencyBonus: 3,
+                            isProficient: true,
+                            participatedForEntireDuration: false)
+                    ]
+                }));
+
+        Assert.Contains("participatedForEntireDuration", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void HarvestingRejectsAssessmentParticipantSubmittedAsHelper()
+    {
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            CharacterMechanicEvaluator.Evaluate(
+                Required("check.harvesting.total"),
+                new Dictionary<string, int>(StringComparer.Ordinal)
+                {
+                    ["assessmentResult"] = 10,
+                    ["carvingResult"] = 10
+                },
+                new Dictionary<string, bool>(StringComparer.Ordinal)
+                {
+                    ["sameActor"] = false
+                },
+                new Dictionary<string, string>(StringComparer.Ordinal)
+                {
+                    ["creatureSize"] = "Medium"
+                },
+                new Dictionary<string, IReadOnlyList<CharacterMechanicContributorInputValues>>(
+                    StringComparer.OrdinalIgnoreCase)
+                {
+                    ["helpers"] =
+                    [
+                        Helper(
+                            proficiencyBonus: 3,
+                            isProficient: true,
+                            isAssessmentParticipant: true)
+                    ]
+                }));
+
+        Assert.Contains("isAssessmentParticipant", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void HarvestingRejectsCarvingParticipantSubmittedAsHelper()
+    {
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            CharacterMechanicEvaluator.Evaluate(
+                Required("check.harvesting.total"),
+                new Dictionary<string, int>(StringComparer.Ordinal)
+                {
+                    ["assessmentResult"] = 10,
+                    ["carvingResult"] = 10
+                },
+                new Dictionary<string, bool>(StringComparer.Ordinal)
+                {
+                    ["sameActor"] = false
+                },
+                new Dictionary<string, string>(StringComparer.Ordinal)
+                {
+                    ["creatureSize"] = "Medium"
+                },
+                new Dictionary<string, IReadOnlyList<CharacterMechanicContributorInputValues>>(
+                    StringComparer.OrdinalIgnoreCase)
+                {
+                    ["helpers"] =
+                    [
+                        Helper(
+                            proficiencyBonus: 3,
+                            isProficient: false,
+                            isCarvingParticipant: true)
+                    ]
+                }));
+
+        Assert.Contains("isCarvingParticipant", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void ManufacturingDoesNotTurnMissingToolProficiencyIntoMissingProficiencyData()
     {
         var definition = Required("check.crafting.manufacturing");
@@ -335,6 +442,10 @@ public sealed class CharacterMechanicsTests
         Assert.Equal(
             CharacterCheckCompetencyResolutionKinds.RuleResolved,
             assessment.Check.Competency.ResolutionKind);
+        Assert.NotNull(assessment.Check.CompetencyComposition);
+        Assert.Equal(
+            "competencyContribution",
+            assessment.Check.CompetencyComposition!.ContributionInputKey);
 
         var carving = Required("check.harvesting.carving");
         Assert.NotNull(carving.Check);
@@ -345,6 +456,10 @@ public sealed class CharacterMechanicsTests
         Assert.Equal(
             CharacterCheckCompetencyResolutionKinds.RuleResolved,
             carving.Check.Competency.ResolutionKind);
+        Assert.NotNull(carving.Check.CompetencyComposition);
+        Assert.Equal(
+            "competencyContribution",
+            carving.Check.CompetencyComposition!.ContributionInputKey);
         Assert.DoesNotContain(
             carving.Inputs,
             value => value.Key == "carvingAbilitySource");
@@ -360,6 +475,10 @@ public sealed class CharacterMechanicsTests
         Assert.Equal(
             new[] { CharacterCompetencyKinds.Tool },
             manufacturing.Check.Competency.AllowedCompetencyKinds);
+        Assert.NotNull(manufacturing.Check.CompetencyComposition);
+        Assert.Equal(
+            "toolProficiencyContribution",
+            manufacturing.Check.CompetencyComposition!.ContributionInputKey);
 
         var enchanting = Required("check.crafting.enchanting");
         Assert.NotNull(enchanting.Check);
@@ -369,6 +488,10 @@ public sealed class CharacterMechanicsTests
         Assert.Equal(
             CharacterCheckCompetencyResolutionKinds.RuleResolved,
             enchanting.Check.Competency.ResolutionKind);
+        Assert.NotNull(enchanting.Check.CompetencyComposition);
+        Assert.Equal(
+            "competencyContribution",
+            enchanting.Check.CompetencyComposition!.ContributionInputKey);
     }
 
     [Fact]
@@ -519,7 +642,10 @@ public sealed class CharacterMechanicsTests
 
     private static CharacterMechanicContributorInputValues Helper(
         int proficiencyBonus,
-        bool isProficient) =>
+        bool isProficient,
+        bool participatedForEntireDuration = true,
+        bool isAssessmentParticipant = false,
+        bool isCarvingParticipant = false) =>
         new(
             new Dictionary<string, int>(StringComparer.Ordinal)
             {
@@ -527,7 +653,10 @@ public sealed class CharacterMechanicsTests
             },
             new Dictionary<string, bool>(StringComparer.Ordinal)
             {
-                ["isProficient"] = isProficient
+                ["isProficient"] = isProficient,
+                ["participatedForEntireDuration"] = participatedForEntireDuration,
+                ["isAssessmentParticipant"] = isAssessmentParticipant,
+                ["isCarvingParticipant"] = isCarvingParticipant
             },
             new Dictionary<string, string>(StringComparer.Ordinal));
 

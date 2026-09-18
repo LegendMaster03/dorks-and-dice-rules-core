@@ -146,9 +146,23 @@ Rules Core owns the arithmetic described by the selected profile. The Character 
 
 - a ranked 3.x profile uses `abilityContribution`, required `ranks`, an Armor Check Penalty adjustment only when that profile says the penalty applies, and `otherModifier`;
 - a later-edition proficiency profile uses `abilityContribution`, optional `trainingContribution`, and `otherModifier`;
+- each participating profile input declares whether it contributes to the Ability portion or the non-Ability competency portion;
 - `classSkillState` is preserved as nonnumeric Character state and does not create a modifier by itself;
 - a trained-only profile expresses `isTrained == true` as a Rules Core requirement;
 - unknown or not-yet-faithful profiles expose `canEvaluate=false` instead of accepting an opaque final `value`.
+
+A direct competency evaluation returns both the effective value and a Rules Core-produced breakdown containing `abilityContribution` and `competencyContribution`. The caller does not derive one by subtracting the other.
+
+Checks that consume competencies expose a `competencyComposition` contract. The request can supply a nested `competency` input containing the competency mechanic key, profile selection, Character facts/contributions, and capabilities. Rules Core evaluates that selected profile in check-composition mode, omits the profile's own Ability contribution, and injects only its non-Ability competency contribution into the check's declared contribution input. Rules Core also injects/verifies the competency concept identity. This gives the composition flow:
+
+```text
+Character-owned facts/contributions
+  -> Rules Core competency profile
+  -> Rules Core non-Ability competency contribution
+  -> Rules Core generalized/source-defined check
+```
+
+The check supplies its own selected or fixed Ability contribution independently. Therefore a Dexterity-based Survival check can use a Survival profile without assuming Survival's normal governing Ability, and the Ability contribution is not counted twice. The same contract is used by generic `check.competency` and by source-defined Assessment, Carving, Manufacturing, and Enchanting checks. Supplying both a direct contribution and a nested competency composition request is rejected as ambiguous.
 
 Consequently, an accessible 3.x profile does not add ranks to the effective 5e/5.5e profile. The Character backend can deliberately select the 3.x source profile when its Character capabilities support that mechanic. The static `competency.skill-ranks` mechanic remains a raw Character-owned quantity and is not a substitute for effective competency evaluation.
 
@@ -202,7 +216,9 @@ The contract does **not** bundle Harvest tables, creature-type-to-skill tables, 
 
 Loot Tavern mechanics carry explicit source attribution with `presentationRequired=true` and `referenceLinkRequired=true`, so a downstream consumer can present the required source reference without hard-coding publisher-specific behavior.
 
-Helper handling uses the general contributor-group contract. The Character backend supplies per-helper Character facts such as `proficiencyBonus` and `isProficient`, plus the source-selected `creatureSize` context. Rules Core validates the contributor count against the mechanic's context table, performs the full-or-fractional contribution and rounding, and adds the result to the Harvesting total. The request never contains one opaque `helperBonus`. The group also explicitly reports `standardHelpActionApplies=false`; an ordinary Help-action flag is not interpreted as a substitute for Helper participation.
+Helper handling uses the general contributor-group contract. The Character backend supplies per-helper Character/runtime facts such as `proficiencyBonus`, `isProficient`, whether the creature participated for the entire required duration, and whether it was an Assessment or Carving participant, plus the source-selected `creatureSize` context. Contributor groups can declare boolean eligibility requirements. Rules Core rejects a submitted Helper when those supplied facts do not satisfy the Helper requirements; inclusion in the contributor list is not itself proof of eligibility.
+
+For an eligible Helper, Rules Core validates the contributor count against the mechanic's context table, performs the full-or-fractional contribution and rounding, and adds the result to the Harvesting total. The request never contains one opaque `helperBonus`. The group also explicitly reports `standardHelpActionApplies=false`; an ordinary Help-action flag is not interpreted as a substitute for Helper participation.
 
 ## Provenance and access
 
@@ -222,7 +238,7 @@ Private source names/content are not surfaced through this contract when the cur
 
 Evaluation is deterministic. Rules Core does not roll dice, select Character state, choose a source table row, or mutate Character data.
 
-For a scalar definition it combines caller-supplied inputs according to the normalized mechanic. For a dynamic competency it selects the requested competency profile, enforces that profile's capability and boolean requirements, and combines only the contribution inputs declared by that profile. The caller never supplies a final opaque competency `value`. Conditional inputs are included only when their declared condition is satisfied. Conditional roll-mode rules can require multiple boolean conditions, which lets Rules Core distinguish "not proficient" from "not proficient and lacking qualified guidance." For a composite competency, the Character backend supplies the already-resolved effective component competency values and Rules Core delegates the parent calculation to the existing `CompositeCompetencyEvaluator`; the composite relationship arithmetic remains Rules Core-owned. Contributor groups follow the same boundary: the caller supplies contributor facts, while Rules Core owns count limits, conditional full/fractional value, rounding, and how contributor totals enter the parent mechanic.
+For a scalar definition it combines caller-supplied inputs according to the normalized mechanic. For a dynamic competency it selects the requested competency profile, enforces that profile's capability and boolean requirements, and combines only the contribution inputs declared by that profile. The caller never supplies a final opaque competency `value`. For a competency-consuming check, nested competency composition returns the non-Ability contribution directly from the selected profile; the caller does not subtract an Ability modifier or reproduce profile arithmetic. Conditional inputs are included only when their declared condition is satisfied. Conditional roll-mode rules can require multiple boolean conditions, which lets Rules Core distinguish "not proficient" from "not proficient and lacking qualified guidance." For a composite competency, the Character backend supplies the already-resolved effective component competency values and Rules Core delegates the parent calculation to the existing `CompositeCompetencyEvaluator`; the composite relationship arithmetic remains Rules Core-owned. Contributor groups follow the same boundary: the caller supplies contributor facts, while Rules Core owns eligibility requirements, count limits, conditional full/fractional value, rounding, and how contributor totals enter the parent mechanic.
 
 The batch endpoints accept multiple mechanic evaluations and build the effective global or Campaign mechanics context once for the request. This is the preferred Character backend path when resolving several values for one Character:
 

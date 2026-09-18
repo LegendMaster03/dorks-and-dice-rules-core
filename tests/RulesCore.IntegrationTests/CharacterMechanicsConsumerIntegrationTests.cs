@@ -95,6 +95,22 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 helpers.ContributorInputs,
                 value => value.Key == "isProficient"
                     && value.ValueKind == CharacterMechanicInputValueKinds.Boolean);
+            Assert.Contains(
+                helpers.ContributorInputs,
+                value => value.Key == "participatedForEntireDuration"
+                    && value.ValueKind == CharacterMechanicInputValueKinds.Boolean);
+            Assert.Contains(
+                helpers.BooleanRequirements,
+                value => value.InputKey == "participatedForEntireDuration"
+                    && value.ExpectedValue);
+            Assert.Contains(
+                helpers.BooleanRequirements,
+                value => value.InputKey == "isAssessmentParticipant"
+                    && !value.ExpectedValue);
+            Assert.Contains(
+                helpers.BooleanRequirements,
+                value => value.InputKey == "isCarvingParticipant"
+                    && !value.ExpectedValue);
         }
 
         using (var harvestingResponse = await client.PostAsJsonAsync(
@@ -126,7 +142,10 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                                        },
                                        BooleanInputs: new Dictionary<string, bool>
                                        {
-                                           ["isProficient"] = true
+                                           ["isProficient"] = true,
+                                           ["participatedForEntireDuration"] = true,
+                                           ["isAssessmentParticipant"] = false,
+                                           ["isCarvingParticipant"] = false
                                        }),
                                    new CharacterMechanicContributorInput(
                                        IntegerInputs: new Dictionary<string, int>
@@ -135,7 +154,10 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                                        },
                                        BooleanInputs: new Dictionary<string, bool>
                                        {
-                                           ["isProficient"] = false
+                                           ["isProficient"] = false,
+                                           ["participatedForEntireDuration"] = true,
+                                           ["isAssessmentParticipant"] = false,
+                                           ["isCarvingParticipant"] = false
                                        })
                                ])
                        ])))
@@ -409,12 +431,14 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.True(stealth.Competency.SupportsTrainingState);
             Assert.False(stealth.Competency.TrainedOnly);
             Assert.True(stealth.Competency.ArmorCheckPenaltyApplies);
-            Assert.Contains(stealth.Inputs, value => value.Key == "abilityContribution");
-            Assert.Contains(stealth.Inputs, value => value.Key == "ranks");
-            Assert.Contains(stealth.Inputs, value => value.Key == "classSkillState");
-            Assert.Contains(stealth.Inputs, value => value.Key == "isTrained");
-            Assert.Contains(stealth.Inputs, value => value.Key == "armorCheckPenaltyAdjustment");
-            Assert.DoesNotContain(stealth.Inputs, value => value.Key == "value");
+            Assert.Equal(
+                new[] { "skill.hide", "skill.move-silently" },
+                stealth.Inputs.Select(value => value.Key).ToArray());
+            Assert.All(
+                stealth.Inputs,
+                value => Assert.Equal(
+                    CharacterMechanicInputOrigins.CharacterState,
+                    value.Origin));
 
             var relationship = Assert.Single(
                 stealth.Relationships,
@@ -423,6 +447,76 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal(
                 MechanicalRelationshipResolutionKinds.DeriveParent,
                 relationship.EffectiveResolutionKind);
+
+            var alternateAbilityCheck = await mechanics.EvaluateGlobalAsync(
+                "check.competency",
+                new CharacterMechanicEvaluationRequest(
+                    IntegerInputs: new Dictionary<string, int>
+                    {
+                        ["d20Roll"] = 10,
+                        ["abilityModifier"] = 2
+                    },
+                    StringInputs: new Dictionary<string, string>
+                    {
+                        ["abilityKey"] = "wisdom"
+                    },
+                    Competency: new CharacterMechanicCompetencyInput(
+                        "competency.skill.hide",
+                        IntegerInputs: new Dictionary<string, int>
+                        {
+                            ["ranks"] = 6,
+                            ["armorCheckPenaltyAdjustment"] = -2,
+                            ["otherModifier"] = 1
+                        },
+                        CapabilityKeys: ["competency.skill-ranks"],
+                        CompetencyProfileSourceEntityRevisionId: hideProfile.SourceEntityRevisionId)),
+                userId: null);
+            Assert.NotNull(alternateAbilityCheck);
+            Assert.Equal(17, alternateAbilityCheck.Value);
+
+            var assessment = await mechanics.EvaluateGlobalAsync(
+                "check.harvesting.assessment",
+                new CharacterMechanicEvaluationRequest(
+                    IntegerInputs: new Dictionary<string, int>
+                    {
+                        ["d20Roll"] = 10,
+                        ["intelligenceModifier"] = 3
+                    },
+                    Competency: new CharacterMechanicCompetencyInput(
+                        "competency.skill.hide",
+                        IntegerInputs: new Dictionary<string, int>
+                        {
+                            ["ranks"] = 6,
+                            ["armorCheckPenaltyAdjustment"] = -2,
+                            ["otherModifier"] = 1
+                        },
+                        CapabilityKeys: ["competency.skill-ranks"],
+                        CompetencyProfileSourceEntityRevisionId: hideProfile.SourceEntityRevisionId)),
+                userId: null);
+            Assert.NotNull(assessment);
+            Assert.Equal(18, assessment.Value);
+
+            var carving = await mechanics.EvaluateGlobalAsync(
+                "check.harvesting.carving",
+                new CharacterMechanicEvaluationRequest(
+                    IntegerInputs: new Dictionary<string, int>
+                    {
+                        ["d20Roll"] = 10,
+                        ["dexterityModifier"] = 4
+                    },
+                    Competency: new CharacterMechanicCompetencyInput(
+                        "competency.skill.hide",
+                        IntegerInputs: new Dictionary<string, int>
+                        {
+                            ["ranks"] = 6,
+                            ["armorCheckPenaltyAdjustment"] = -2,
+                            ["otherModifier"] = 1
+                        },
+                        CapabilityKeys: ["competency.skill-ranks"],
+                        CompetencyProfileSourceEntityRevisionId: hideProfile.SourceEntityRevisionId)),
+                userId: null);
+            Assert.NotNull(carving);
+            Assert.Equal(19, carving.Value);
 
             var specialized = Assert.Single(
                 catalog.Mechanics,
@@ -472,6 +566,25 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal("ranked-skill", hideProfile.EvaluationProfileKey);
             Assert.True(hideProfile.CanEvaluate);
             Assert.Contains(hideProfile.Inputs, value => value.Key == "armorCheckPenaltyAdjustment");
+            Assert.Contains(
+                hideProfile.Inputs,
+                value => value.Key == "abilityContribution"
+                    && value.ContributionRole == "ability");
+            Assert.Contains(
+                hideProfile.Inputs,
+                value => value.Key == "ranks"
+                    && value.ContributionRole == "competency");
+
+            var moveSilently = Assert.Single(
+                catalog.Mechanics,
+                value => value.MechanicKey == "competency.skill.move-silently");
+            Assert.NotNull(moveSilently.Competency);
+            var moveSilentlyProfile = Assert.Single(moveSilently.Competency!.Profiles);
+            Assert.Equal("ranked-skill", moveSilentlyProfile.EvaluationProfileKey);
+            Assert.True(moveSilentlyProfile.CanEvaluate);
+            Assert.Contains(
+                moveSilentlyProfile.Inputs,
+                value => value.Key == "armorCheckPenaltyAdjustment");
 
             var hideEvaluation = await mechanics.EvaluateGlobalAsync(
                 "competency.skill.hide",
@@ -489,6 +602,9 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.NotNull(hideEvaluation);
             Assert.Equal(CharacterMechanicEvaluationKinds.CompetencyProfile, hideEvaluation.EvaluationKind);
             Assert.Equal(9, hideEvaluation.Value);
+            Assert.NotNull(hideEvaluation.CompetencyBreakdown);
+            Assert.Equal(4, hideEvaluation.CompetencyBreakdown!.AbilityContribution);
+            Assert.Equal(5, hideEvaluation.CompetencyBreakdown.CompetencyContribution);
             Assert.Equal(
                 hideProfile.SourceEntityRevisionId,
                 hideEvaluation.CompetencyProfileSourceEntityRevisionId);
@@ -724,9 +840,37 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 userId: null);
             Assert.NotNull(laterEvaluation);
             Assert.Equal(6, laterEvaluation.Value);
+            Assert.NotNull(laterEvaluation.CompetencyBreakdown);
+            Assert.Equal(2, laterEvaluation.CompetencyBreakdown!.AbilityContribution);
+            Assert.Equal(4, laterEvaluation.CompetencyBreakdown.CompetencyContribution);
             Assert.Equal(
                 laterProfile.SourceEntityRevisionId,
                 laterEvaluation.CompetencyProfileSourceEntityRevisionId);
+
+            var laterCheck = await mechanics.EvaluateGlobalAsync(
+                "check.competency",
+                new CharacterMechanicEvaluationRequest(
+                    IntegerInputs: new Dictionary<string, int>
+                    {
+                        ["d20Roll"] = 10,
+                        ["abilityModifier"] = 4
+                    },
+                    StringInputs: new Dictionary<string, string>
+                    {
+                        ["abilityKey"] = "intelligence"
+                    },
+                    Competency: new CharacterMechanicCompetencyInput(
+                        "competency.skill.deception",
+                        IntegerInputs: new Dictionary<string, int>
+                        {
+                            ["trainingContribution"] = 3,
+                            ["otherModifier"] = 1,
+                            ["ranks"] = 99
+                        },
+                        CompetencyProfileSourceEntityRevisionId: laterProfile.SourceEntityRevisionId)),
+                userId: null);
+            Assert.NotNull(laterCheck);
+            Assert.Equal(18, laterCheck.Value);
 
             await Assert.ThrowsAsync<InvalidOperationException>(() =>
                 mechanics.EvaluateGlobalAsync(
@@ -754,6 +898,9 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 userId: null);
             Assert.NotNull(threeEvaluation);
             Assert.Equal(10, threeEvaluation.Value);
+            Assert.NotNull(threeEvaluation.CompetencyBreakdown);
+            Assert.Equal(4, threeEvaluation.CompetencyBreakdown!.AbilityContribution);
+            Assert.Equal(6, threeEvaluation.CompetencyBreakdown.CompetencyContribution);
             Assert.Equal(
                 threeProfile.SourceEntityRevisionId,
                 threeEvaluation.CompetencyProfileSourceEntityRevisionId);
