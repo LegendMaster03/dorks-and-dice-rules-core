@@ -182,9 +182,9 @@ public sealed class RuleAdjudicationWorkIntegrationTests
             {
                 var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
                 var publicImport = await importer.Import5eToolsDocumentAsync(
-                    SourceRequest($"adjudication-normalization-public-{Guid.NewGuid():N}", "public", "Queue Skill", "PUB", "int", true));
+                    SourceRequest($"adjudication-normalization-public-{Guid.NewGuid():N}", "2014", "Queue Skill", "PUB", "int", true));
                 var restrictedImport = await importer.Import5eToolsDocumentAsync(
-                    SourceRequest($"adjudication-normalization-restricted-{Guid.NewGuid():N}", "restricted", "Restricted Queue Skill", "SECRET", "dex", false));
+                    SourceRequest($"adjudication-normalization-restricted-{Guid.NewGuid():N}", "2024", "Restricted Queue Skill", "SECRET", "dex", false));
                 packageIds.Add(publicImport.PackageId);
                 packageIds.Add(restrictedImport.PackageId);
                 publicEntityId = publicImport.Entities.Single().EntityId;
@@ -215,6 +215,19 @@ public sealed class RuleAdjudicationWorkIntegrationTests
             }
             Assert.Contains(beforeAcceptance, value => value.SourceEntityId == publicEntityId);
             Assert.DoesNotContain(beforeAcceptance, value => value.SourceEntityId == restrictedEntityId);
+
+            var normalizationItem = beforeAcceptance.Single(value => value.SourceEntityId == publicEntityId);
+            using (var request = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/global/rules/adjudication/work/{normalizationItem.Id}",
+                       "agent-ticket"))
+            using (var response = await client.SendAsync(request))
+            {
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                var detail = (await response.Content.ReadFromJsonAsync<RuleAdjudicationWorkDetailView>())!;
+                Assert.Equal("5e", detail.NormalizationCandidate!.EditionDisplayName);
+                Assert.NotEqual("5etools", detail.NormalizationCandidate.EditionDisplayName);
+            }
 
             await using (var scope = factory.Services.CreateAsyncScope())
             {
@@ -280,6 +293,97 @@ public sealed class RuleAdjudicationWorkIntegrationTests
                 var items = (await response.Content.ReadFromJsonAsync<IReadOnlyList<RuleAdjudicationWorkSummaryView>>())!;
                 Assert.Contains(items, value => value.SourceEntityId == restrictedEntityId);
             }
+        }
+        finally
+        {
+            await CleanupAsync(factory, packageIds);
+        }
+    }
+
+    [Fact]
+    public async Task SourceUpdateWorkUsesCanonicalEditionEvidenceAndTracksAdoptionToPublication()
+    {
+        if (!HasDatabase()) return;
+
+        await using var factory = CreateFactory(new FakeToolHostAuthenticationClient(new Dictionary<string, ToolHostAuthenticationContext>()));
+        var packageIds = new List<Guid>();
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var rules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            const string actor = "source-update-agent";
+            var packageKey = $"adjudication-source-update-{Guid.NewGuid():N}";
+
+            var firstImport = await importer.Import5eToolsDocumentAsync(
+                SourceRequest(packageKey, "2014", "Update Queue Skill", "UPD", "int", true));
+            packageIds.Add(firstImport.PackageId);
+            var sourceEntityId = firstImport.Entities.Single().EntityId;
+            var firstRevisionId = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == sourceEntityId)
+                .Select(value => value.Id)
+                .SingleAsync();
+
+            var concept = (await rules.CreateConceptAsync(
+                new CreateRuleConceptRequest($"skill.update-queue-{Guid.NewGuid():N}", "skill", "Update Queue Skill"),
+                actor)).Value;
+            await rules.BindSourceEntityAsync(
+                concept.Id,
+                new BindRuleConceptSourceRequest(sourceEntityId),
+                actor);
+            await rules.SetDecisionAsync(
+                concept.Id,
+                new SetGlobalRuleDecisionRequest(firstRevisionId, "Reviewed source-update baseline."),
+                actor);
+
+            await importer.Import5eToolsDocumentAsync(
+                SourceRequest(packageKey, "2014", "Update Queue Skill", "UPD", "wis", true));
+
+            var workflow = new RuleAdjudicationWorkService(db);
+            await workflow.DiscoverAsync(actor);
+            var item = Assert.Single(
+                await workflow.ListAsync(
+                    actor,
+                    kind: RuleAdjudicationWorkKinds.SourceUpdateReview,
+                    includePublishedCompleted: true),
+                value => value.RuleConceptId == concept.Id);
+            Assert.Equal(RuleAdjudicationWorkStates.Pending, item.State);
+
+            var detail = (await workflow.GetAsync(item.Id, actor))!;
+            Assert.NotNull(detail.SourceUpdate);
+            Assert.Equal("5e", detail.SourceUpdate!.Update.EditionDisplayName);
+            Assert.NotEqual("5etools", detail.SourceUpdate.Update.EditionDisplayName);
+
+            var update = detail.SourceUpdate.Update;
+            var adopted = await new SourceRevisionReviewService(db).AdoptLatestAsync(
+                concept.Id,
+                new AdoptLatestSourceRevisionRequest(
+                    update.GlobalRuleDecisionId,
+                    update.LatestSourceEntityRevisionId,
+                    update.LatestFingerprint),
+                actor);
+            Assert.NotNull(adopted);
+
+            var completed = (await workflow.GetAsync(item.Id, actor))!;
+            Assert.Equal(RuleAdjudicationWorkStates.Completed, completed.WorkItem.State);
+            Assert.True(completed.WorkItem.CompletedButUnpublished);
+            Assert.Contains(
+                completed.History,
+                value => value.EventKind == RuleAdjudicationWorkEventKinds.SourceUpdateResolved);
+            Assert.Contains(
+                completed.History,
+                value => value.EventKind == RuleAdjudicationWorkEventKinds.DecisionAssociated
+                    && value.GlobalRuleDecisionId == adopted!.GlobalRuleDecisionId);
+
+            await rules.PublishAsync(actor);
+            var published = (await workflow.GetAsync(item.Id, actor))!;
+            Assert.True(published.WorkItem.Published);
+            Assert.False(published.WorkItem.CompletedButUnpublished);
+            Assert.Contains(
+                published.History,
+                value => value.EventKind == RuleAdjudicationWorkEventKinds.PublicationObserved);
         }
         finally
         {

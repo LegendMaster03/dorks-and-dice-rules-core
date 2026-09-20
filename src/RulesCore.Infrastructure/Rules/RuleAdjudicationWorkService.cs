@@ -276,6 +276,12 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
                     sourceUpdateConceptId,
                     actor,
                     cancellationToken);
+                if (sourceUpdate is not null)
+                {
+                    sourceUpdate = await NormalizeSourceUpdateEvidenceAsync(
+                        sourceUpdate,
+                        cancellationToken);
+                }
             }
         }
 
@@ -792,10 +798,47 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
                 offset: offset,
                 cancellationToken: cancellationToken);
             var candidate = page.SingleOrDefault(value => value.SourceEntityId == sourceEntityId);
-            if (candidate is not null) return candidate;
+            if (candidate is not null)
+            {
+                var gameEdition = await ReadCanonicalGameEditionAsync(sourceEntityId, cancellationToken);
+                return string.IsNullOrWhiteSpace(gameEdition)
+                    ? candidate
+                    : candidate with
+                    {
+                        EditionKey = gameEdition,
+                        EditionDisplayName = gameEdition
+                    };
+            }
             if (page.Count < DiscoveryPageSize) return null;
         }
     }
+
+    private async Task<SourceRevisionReviewPreviewView> NormalizeSourceUpdateEvidenceAsync(
+        SourceRevisionReviewPreviewView preview,
+        CancellationToken cancellationToken)
+    {
+        var gameEdition = await ReadCanonicalGameEditionAsync(
+            preview.Update.SourceEntityId,
+            cancellationToken);
+        return string.IsNullOrWhiteSpace(gameEdition)
+            ? preview
+            : preview with
+            {
+                Update = preview.Update with
+                {
+                    EditionKey = gameEdition,
+                    EditionDisplayName = gameEdition
+                }
+            };
+    }
+
+    private async Task<string?> ReadCanonicalGameEditionAsync(
+        Guid sourceEntityId,
+        CancellationToken cancellationToken) =>
+        (await CanonicalPublicationMetadataReader.ReadAsync(
+            dbContext,
+            sourceEntityId,
+            cancellationToken))?.GameEdition;
 
     private async Task<IReadOnlyList<SourceRevisionReviewItemView>> GetVisiblePendingSourceUpdatesAsync(
         string actor,
