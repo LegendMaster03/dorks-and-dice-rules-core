@@ -571,6 +571,10 @@ export class RulesAuthoringApp {
                 const payload = scope === "global"
                     ? this.buildGlobalPayload(mode, source, note, patch)
                     : this.buildCampaignPayload(mode, source, note, patch);
+                if (scope === "global") {
+                    payload.enforceExpectedLatestDecision = true;
+                    payload.expectedLatestDecisionId = current?.id ?? null;
+                }
                 const saved = scope === "global"
                     ? await this.api.saveGlobalDecision(detail.concept.id, payload)
                     : await this.api.saveCampaignDecision(detail.campaignId, detail.concept.id, payload);

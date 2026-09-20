@@ -15,7 +15,9 @@ public sealed record SetGlobalRuleDecisionRequest(
     string? Note,
     JsonElement? MergePatch = null,
     RuleStructuredPatchRequest? StructuredPatch = null,
-    IReadOnlyList<RuleConsolidationContributionRequest>? Contributions = null);
+    IReadOnlyList<RuleConsolidationContributionRequest>? Contributions = null,
+    Guid? ExpectedLatestDecisionId = null,
+    bool EnforceExpectedLatestDecision = false);
 
 public sealed record RuleMutationResult<T>(
     T Value,
