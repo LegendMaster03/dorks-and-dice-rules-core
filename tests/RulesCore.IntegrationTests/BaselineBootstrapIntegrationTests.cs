@@ -283,22 +283,16 @@ public sealed class BaselineBootstrapIntegrationTests
                     relationship.EffectiveResolutionKind);
             }
 
-            Assert.Contains(
-                competencyMechanics,
-                value => value.Competency!.FamilyName == "Knowledge"
-                    && !string.IsNullOrWhiteSpace(value.Competency.Specialty));
-            Assert.Contains(
-                competencyMechanics,
-                value => value.Competency!.FamilyName == "Craft"
-                    && !string.IsNullOrWhiteSpace(value.Competency.Specialty));
-            Assert.Contains(
-                competencyMechanics,
-                value => value.Competency!.FamilyName == "Perform"
-                    && !string.IsNullOrWhiteSpace(value.Competency.Specialty));
-            Assert.Contains(
-                competencyMechanics,
-                value => value.Competency!.FamilyName == "Profession"
-                    && !string.IsNullOrWhiteSpace(value.Competency.Specialty));
+            var competencyProfiles = competencyMechanics
+                .SelectMany(value => value.Competency!.Profiles)
+                .ToArray();
+            foreach (var family in new[] { "Knowledge", "Craft", "Perform", "Profession" })
+            {
+                Assert.Contains(
+                    competencyProfiles,
+                    value => value.FamilyName == family
+                        && !string.IsNullOrWhiteSpace(value.Specialty));
+            }
 
             var search = Assert.Single(
                 competencyMechanics,
