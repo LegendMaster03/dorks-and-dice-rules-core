@@ -185,15 +185,15 @@ internal sealed class ReviewedBundledCompetencyBaselineSynchronizer(
                 continue;
             }
 
-            var reviewedSourceEntityIds = grouped
-                .Select(value => value.SourceEntity.Id)
+            var reviewedSourceEntityRevisionIds = grouped
+                .Select(value => value.Revision.Id)
                 .Distinct()
                 .ToArray();
             var automatic = await RuleAutoResolutionService.TryResolveReviewedBaselineAsync(
                 dbContext,
                 concept.Id,
                 RulesCoreBaselineCatalog.BootstrapActor,
-                reviewedSourceEntityIds,
+                reviewedSourceEntityRevisionIds,
                 cancellationToken);
             if (automatic.Applied)
             {
