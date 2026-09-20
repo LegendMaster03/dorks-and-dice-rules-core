@@ -758,7 +758,30 @@ public sealed class BaselineBootstrapIntegrationTests
             var root = JsonNode.Parse(revision.ContentJson ?? revision.RawJson) as JsonObject
                 ?? throw new InvalidOperationException(
                     $"Reviewed source revision '{revision.Id}' does not have an object mechanical body.");
-            root["baselineConflictProbe"] = $"conflict-{index}";
+            var rulesCore = root["_rulesCore"] as JsonObject;
+            if (rulesCore is null)
+            {
+                rulesCore = new JsonObject();
+                root["_rulesCore"] = rulesCore;
+            }
+
+            var competency = rulesCore["competency"] as JsonObject;
+            if (competency is null)
+            {
+                competency = new JsonObject();
+                rulesCore["competency"] = competency;
+            }
+
+            competency["profileKey"] = "baseline-conflict-profile";
+            competency["kind"] = "skill";
+            competency["governingAbilityKey"] = index == 0 ? "strength" : "wisdom";
+            competency["supportsRanks"] = false;
+            competency["supportsClassSkillState"] = false;
+            competency["supportsTrainingState"] = true;
+            competency["trainedOnly"] = false;
+            competency["armorCheckPenaltyApplies"] = false;
+            competency["evaluationProfileKey"] = "proficiency-competency";
+            competency["canEvaluate"] = true;
             revision.ContentJson = root.ToJsonString();
         }
 

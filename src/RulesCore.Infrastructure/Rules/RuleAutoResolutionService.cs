@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
 using RulesCore.Domain.Rules;
@@ -165,24 +166,13 @@ public static class RuleAutoResolutionService
     {
         ArgumentNullException.ThrowIfNull(globalRules);
         ArgumentNullException.ThrowIfNull(reviewedSourceEntityRevisionIds);
+        var actor = RequireActor(actorUserId);
         var revisionScope = reviewedSourceEntityRevisionIds
             .Where(value => value != Guid.Empty)
             .ToHashSet();
         if (revisionScope.Count == 0)
         {
             return NotEligible("The reviewed competency baseline revision scope is empty.");
-        }
-
-        var sourceScope = (await dbContext.SourceEntityRevisions
-                .AsNoTracking()
-                .Where(value => revisionScope.Contains(value.Id))
-                .Select(value => value.SourceEntityId)
-                .Distinct()
-                .ToArrayAsync(cancellationToken))
-            .ToHashSet();
-        if (sourceScope.Count == 0)
-        {
-            return NotEligible("The reviewed competency baseline revisions do not resolve to source entities.");
         }
 
         var existingDecision = await dbContext.GlobalRuleDecisions
@@ -200,41 +190,93 @@ public static class RuleAutoResolutionService
                 "An existing global decision is authoritative and was preserved.");
         }
 
-        var evaluation = await EvaluateAsync(
-            dbContext,
-            ruleConceptId,
-            actorUserId,
-            cancellationToken,
-            sourceScope,
-            revisionScope);
-        if (!evaluation.Eligible
-            || evaluation.SelectedRevisionId is null
-            || evaluation.ResolvedSemanticFingerprint is null
-            || evaluation.Contexts.Count == 0)
+        var revisions = await dbContext.SourceEntityRevisions
+            .AsNoTracking()
+            .Include(value => value.SourceEntity)
+            .Where(value => revisionScope.Contains(value.Id))
+            .ToArrayAsync(cancellationToken);
+        if (revisions.Length != revisionScope.Count)
         {
-            return NotEligible(evaluation.Reason);
+            return NotEligible(
+                "At least one reviewed competency baseline revision is no longer available.");
         }
 
-        var actor = RequireActor(actorUserId);
-        var baseContext = evaluation.Contexts.Single(value =>
-            value.Revision.Id == evaluation.SelectedRevisionId.Value);
-        var contributions = evaluation.Contexts
-            .Where(value => value.Revision.Id != baseContext.Revision.Id)
-            .OrderBy(value => value.Metadata.GameEdition, StringComparer.Ordinal)
-            .ThenBy(value => value.Source.SourceCode, StringComparer.Ordinal)
-            .Select(value => BuildContribution(baseContext, value, evaluation.Mode))
+        var contexts = new List<ReviewedCompetencyContext>(revisions.Length);
+        foreach (var revision in revisions)
+        {
+            var metadata = await CanonicalPublicationMetadataReader.ReadAsync(
+                dbContext,
+                revision.SourceEntityId,
+                cancellationToken);
+            if (metadata is null || string.IsNullOrWhiteSpace(metadata.GameEdition))
+            {
+                return NotEligible(
+                    "Every reviewed competency baseline implementation requires canonical game-edition metadata.");
+            }
+
+            var projection = BuildReviewedCompetencyProjection(
+                revision,
+                revision.SourceEntity.EntityType,
+                metadata.GameEdition);
+            if (projection is null)
+            {
+                return NotEligible(
+                    $"Reviewed competency source '{revision.SourceEntity.SourceCode ?? revision.SourceEntity.NativeKey}' does not expose a normalized competency profile that can be compared safely.");
+            }
+
+            contexts.Add(new ReviewedCompetencyContext(
+                revision.SourceEntity,
+                revision,
+                metadata,
+                projection,
+                ComputeSemanticFingerprint(projection)));
+        }
+
+        var ordered = contexts
+            .OrderBy(value => value.Source.SourceCode ?? string.Empty, StringComparer.Ordinal)
+            .ThenBy(value => value.Source.NativeKey, StringComparer.Ordinal)
+            .ThenBy(value => value.Revision.RevisionNumber)
+            .ThenBy(value => value.Revision.Id)
+            .ToArray();
+        var baseContext = ordered[0];
+        var distinctFingerprints = ordered
+            .Select(value => value.ProjectionFingerprint)
+            .Distinct(StringComparer.Ordinal)
             .ToArray();
 
-        JsonElement? mergePatch = null;
-        if (!string.IsNullOrWhiteSpace(evaluation.MergePatchJson))
+        var mode = IdenticalMode;
+        if (distinctFingerprints.Length > 1)
         {
-            using var patchDocument = JsonDocument.Parse(evaluation.MergePatchJson);
-            mergePatch = patchDocument.RootElement.Clone();
+            var merge = RuleSemanticCompatibility.TryCreateAdditiveUnion(
+                baseContext.ProjectionJson,
+                ordered.Skip(1).Select(value => value.ProjectionJson));
+            if (!merge.Compatible || merge.MergedJson is null)
+            {
+                return NotEligible(
+                    $"{merge.Reason} Manual adjudication is required.");
+            }
+            mode = AdditiveMode;
         }
 
-        var note = evaluation.Mode == AdditiveMode
-            ? "Built-in reviewed SRD competency baseline: compatible reviewed representations were combined using the existing additive-resolution policy."
-            : "Built-in reviewed SRD competency baseline: mechanically equivalent reviewed representations were resolved using the existing equivalence policy.";
+        var contributions = ordered
+            .Skip(1)
+            .Select(value => new RuleConsolidationContributionRequest(
+                value.Revision.Id,
+                mode == AdditiveMode
+                    && !string.Equals(
+                        value.ProjectionFingerprint,
+                        baseContext.ProjectionFingerprint,
+                        StringComparison.Ordinal)
+                    ? RuleConsolidationContributionKinds.Incorporated
+                    : RuleConsolidationContributionKinds.Reference,
+                mode == AdditiveMode
+                    ? "Reviewed competency profile is compatible with the selected baseline profile and remains part of the published competency provenance."
+                    : "Reviewed competency profile is mechanically equivalent to the selected baseline profile."))
+            .ToArray();
+
+        var note = mode == AdditiveMode
+            ? "Built-in reviewed SRD competency baseline: compatible normalized competency profiles were accepted using the existing additive-resolution policy; no edition or work precedence selected a winner."
+            : "Built-in reviewed SRD competency baseline: mechanically equivalent normalized competency profiles were resolved using the existing equivalence policy.";
         var decision = await TryCreateInitialBaselineDecisionAsync(
             dbContext,
             globalRules,
@@ -242,7 +284,6 @@ public static class RuleAutoResolutionService
             new SetGlobalRuleDecisionRequest(
                 baseContext.Revision.Id,
                 note,
-                MergePatch: mergePatch,
                 Contributions: contributions),
             actor,
             cancellationToken);
@@ -253,10 +294,93 @@ public static class RuleAutoResolutionService
             decision.DecisionId,
             decision.DecisionNumber,
             decision.Created
-                ? "The reviewed competency baseline decision was established by the existing safe-resolution policy."
+                ? mode == AdditiveMode
+                    ? "The reviewed competency baseline was established from compatible normalized competency profiles."
+                    : "The reviewed competency baseline was established from mechanically equivalent normalized competency profiles."
                 : decision.ExistingDecisionPreserved
                     ? "A concurrent global decision became authoritative before the reviewed competency baseline could be saved and was preserved."
                     : "The reviewed competency baseline decision was already current.");
+    }
+
+    private static string? BuildReviewedCompetencyProjection(
+        SourceEntityRevision revision,
+        string entityType,
+        string gameEdition)
+    {
+        JsonObject root;
+        try
+        {
+            root = JsonNode.Parse(revision.GetMechanicalContentJson()) as JsonObject
+                ?? throw new InvalidDataException("Competency mechanical content must have an object root.");
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
+
+        JsonObject? profile = null;
+        if (root["_rulesCore"] is JsonObject rulesCore
+            && rulesCore["competency"] is JsonObject normalizedCompetency)
+        {
+            profile = (JsonObject)normalizedCompetency.DeepClone();
+            profile.Remove("gameEdition");
+        }
+        else if (IsLaterEditionCompetency(gameEdition))
+        {
+            var competencyKind = string.Equals(entityType, "tool", StringComparison.OrdinalIgnoreCase)
+                ? "tool"
+                : "skill";
+            profile = new JsonObject
+            {
+                ["profileKey"] = "dnd-5x",
+                ["kind"] = competencyKind,
+                ["governingAbilityKey"] = NormalizeCompetencyAbilityKey(root["ability"]?.GetValue<string>()),
+                ["supportsRanks"] = false,
+                ["supportsClassSkillState"] = false,
+                ["supportsTrainingState"] = true,
+                ["trainedOnly"] = false,
+                ["armorCheckPenaltyApplies"] = false,
+                ["evaluationProfileKey"] = "proficiency-competency",
+                ["canEvaluate"] = true
+            };
+        }
+
+        if (profile is null
+            || profile["profileKey"] is not JsonValue profileKeyValue
+            || !profileKeyValue.TryGetValue<string>(out var profileKey)
+            || string.IsNullOrWhiteSpace(profileKey))
+        {
+            return null;
+        }
+
+        profile["name"] = profileKey.Trim();
+        return new JsonObject
+        {
+            ["profiles"] = new JsonArray(profile)
+        }.ToJsonString();
+    }
+
+    private static bool IsLaterEditionCompetency(string? gameEdition) =>
+        string.Equals(gameEdition, "5e", StringComparison.OrdinalIgnoreCase)
+        || string.Equals(gameEdition, "5.5e", StringComparison.OrdinalIgnoreCase);
+
+    private static string? NormalizeCompetencyAbilityKey(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        return value.Trim().ToLowerInvariant() switch
+        {
+            "str" or "strength" => "strength",
+            "dex" or "dexterity" => "dexterity",
+            "con" or "constitution" => "constitution",
+            "int" or "intelligence" => "intelligence",
+            "wis" or "wisdom" => "wisdom",
+            "cha" or "charisma" => "charisma",
+            _ => value.Trim().ToLowerInvariant()
+        };
     }
 
     internal static async Task<InitialBaselineDecisionWriteResult> TryCreateInitialBaselineDecisionAsync(
@@ -622,6 +746,13 @@ public static class RuleAutoResolutionService
         string? MergePatchJson,
         string? PatchFingerprint,
         string? Mode);
+
+    private sealed record ReviewedCompetencyContext(
+        SourceEntity Source,
+        SourceEntityRevision Revision,
+        CanonicalPublicationMetadata Metadata,
+        string ProjectionJson,
+        string ProjectionFingerprint);
 
     private sealed record SourceContext(
         Guid CanonicalEntityId,
