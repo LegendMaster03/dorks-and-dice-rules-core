@@ -147,6 +147,98 @@ public static class RuleAutoResolutionService
                     : "The equivalent cross-edition decision was already current.");
     }
 
+    /// <summary>
+    /// Applies the existing equivalence/additive resolution policy to an explicitly bounded
+    /// source set. The resulting decision is a reviewed bootstrap decision rather than a
+    /// continuously auto-maintained decision, so unrelated later source imports can not become
+    /// part of the baseline merely because they reconcile to the same canonical entity.
+    /// </summary>
+    internal static async Task<RuleAutoResolutionResult> TryResolveReviewedBaselineAsync(
+        RulesCoreDbContext dbContext,
+        Guid ruleConceptId,
+        string actorUserId,
+        IReadOnlyCollection<Guid> reviewedSourceEntityIds,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(reviewedSourceEntityIds);
+        var sourceScope = reviewedSourceEntityIds
+            .Where(value => value != Guid.Empty)
+            .ToHashSet();
+        if (sourceScope.Count == 0)
+        {
+            return NotEligible("The reviewed competency baseline source scope is empty.");
+        }
+
+        var existingDecision = await dbContext.GlobalRuleDecisions
+            .AsNoTracking()
+            .Where(value => value.RuleConceptId == ruleConceptId)
+            .OrderByDescending(value => value.DecisionNumber)
+            .FirstOrDefaultAsync(cancellationToken);
+        if (existingDecision is not null)
+        {
+            return new RuleAutoResolutionResult(
+                Eligible: true,
+                Applied: false,
+                existingDecision.Id,
+                existingDecision.DecisionNumber,
+                "An existing global decision is authoritative and was preserved.");
+        }
+
+        var evaluation = await EvaluateAsync(
+            dbContext,
+            ruleConceptId,
+            actorUserId,
+            cancellationToken,
+            sourceScope);
+        if (!evaluation.Eligible
+            || evaluation.SelectedRevisionId is null
+            || evaluation.ResolvedSemanticFingerprint is null
+            || evaluation.Contexts.Count == 0)
+        {
+            return NotEligible(evaluation.Reason);
+        }
+
+        var actor = RequireActor(actorUserId);
+        var baseContext = evaluation.Contexts.Single(value =>
+            value.Revision.Id == evaluation.SelectedRevisionId.Value);
+        var contributions = evaluation.Contexts
+            .Where(value => value.Revision.Id != baseContext.Revision.Id)
+            .OrderBy(value => value.Metadata.GameEdition, StringComparer.Ordinal)
+            .ThenBy(value => value.Source.SourceCode, StringComparer.Ordinal)
+            .Select(value => BuildContribution(baseContext, value, evaluation.Mode))
+            .ToArray();
+
+        JsonElement? mergePatch = null;
+        if (!string.IsNullOrWhiteSpace(evaluation.MergePatchJson))
+        {
+            using var patchDocument = JsonDocument.Parse(evaluation.MergePatchJson);
+            mergePatch = patchDocument.RootElement.Clone();
+        }
+
+        var note = evaluation.Mode == AdditiveMode
+            ? "Built-in reviewed SRD competency baseline: compatible reviewed representations were combined using the existing additive-resolution policy."
+            : "Built-in reviewed SRD competency baseline: mechanically equivalent reviewed representations were resolved using the existing equivalence policy.";
+        var rules = new GlobalRulesService(dbContext);
+        var decision = await rules.SetDecisionAsync(
+            ruleConceptId,
+            new SetGlobalRuleDecisionRequest(
+                baseContext.Revision.Id,
+                note,
+                MergePatch: mergePatch,
+                Contributions: contributions),
+            actor,
+            cancellationToken);
+
+        return new RuleAutoResolutionResult(
+            true,
+            decision.Created,
+            decision.Value.Id,
+            decision.Value.DecisionNumber,
+            decision.Created
+                ? "The reviewed competency baseline decision was established by the existing safe-resolution policy."
+                : "The reviewed competency baseline decision was already current.");
+    }
+
     internal static string ComputeSemanticFingerprint(string contentJson) =>
         RuleSemanticCompatibility.ComputeFingerprint(contentJson);
 
@@ -185,7 +277,8 @@ public static class RuleAutoResolutionService
         RulesCoreDbContext dbContext,
         Guid ruleConceptId,
         string actorUserId,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        IReadOnlySet<Guid>? sourceEntityScope = null)
     {
         if (ruleConceptId == Guid.Empty)
         {
@@ -217,6 +310,12 @@ public static class RuleAutoResolutionService
             ruleConceptId,
             actor,
             cancellationToken);
+        if (sourceEntityScope is not null)
+        {
+            accessibleSourceIds = accessibleSourceIds
+                .Where(sourceEntityScope.Contains)
+                .ToArray();
+        }
         if (accessibleSourceIds.Count == 0)
         {
             return NotEligibleEvaluation("The current account can not inspect any source implementation for the bound canonical rule entities.");
