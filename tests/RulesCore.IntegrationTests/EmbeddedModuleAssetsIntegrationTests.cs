@@ -128,6 +128,8 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("Players", uxShell, StringComparison.Ordinal);
         Assert.Contains("Rules", uxShell, StringComparison.Ordinal);
         Assert.Contains("Dungeon Masters", uxShell, StringComparison.Ordinal);
+        Assert.Contains("Backgrounds", uxShell, StringComparison.Ordinal);
+        Assert.Contains("Options & Features", uxShell, StringComparison.Ordinal);
         Assert.Contains("Sources", uxShell, StringComparison.Ordinal);
         Assert.Contains("Adjudication", uxShell, StringComparison.Ordinal);
         Assert.Contains("rules-core-topbar-hosted", uxShell, StringComparison.Ordinal);

@@ -23,6 +23,8 @@ const NAV_GROUPS = [
             { label: "Subclasses", entityType: "subclass" },
             { label: "Prestige Classes", entityType: "prestigeClass" },
             { label: "Feats", entityType: "feat" },
+            { label: "Options & Features", entityType: "optionalfeature" },
+            { label: "Backgrounds", entityType: "background" },
             { label: "Skills", entityType: "skill" },
             { label: "Items", entityType: "item" },
             { label: "Spells", entityType: "spell" }

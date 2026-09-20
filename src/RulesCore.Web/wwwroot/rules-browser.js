@@ -21,6 +21,8 @@ const ROUTE_FAMILIES = new Map([
     ["subclasses", "subclass"],
     ["prestige-classes", "prestigeClass"],
     ["feats", "feat"],
+    ["backgrounds", "background"],
+    ["optional-features", "optionalfeature"],
     ["races", "race"],
     ["species", "species"],
     ["items", "item"],
@@ -35,6 +37,8 @@ export const RULE_FAMILY_TABS = [
     ["subclass", "Subclasses"],
     ["prestigeClass", "Prestige Classes"],
     ["feat", "Feats"],
+    ["background", "Backgrounds"],
+    ["optionalfeature", "Options & Features"],
     ["race", "Races"],
     ["species", "Species"],
     ["item", "Items"],
@@ -52,6 +56,8 @@ const ENTITY_TYPES = [
     ["subclass", "Subclasses"],
     ["prestigeClass", "Prestige classes"],
     ["feat", "Feats"],
+    ["background", "Backgrounds"],
+    ["optionalfeature", "Options & features"],
     ["race", "Races"],
     ["species", "Species"],
     ["item", "Items"],
@@ -96,6 +102,14 @@ const BROWSER_COLUMNS = new Map([
     ["feat", [
         { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
         { key: "category", label: "Category", width: "minmax(6rem, 1fr)" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]],
+    ["background", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]],
+    ["optionalfeature", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
         { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
     ]],
     ["race", [
