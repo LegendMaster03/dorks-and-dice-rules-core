@@ -106,7 +106,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
         var importedEntities = new List<ImportedSourceEntity>();
         var importedPublications = new List<ImportedNormalizedPublication>();
         var reconciliationIssues = new List<NormalizedSourceReconciliationIssue>();
-        var persisted = new List<(SourceEntity Entity, SourceEntityRevision Revision, NormalizedSourceRecord Record)>();
+        var persisted = new List<(SourceEntity Entity, SourceEntityRevision Revision, NormalizedSourceRecord Record, bool TranslationOnlyUpdate)>();
         var newEntities = 0;
         var unchangedEntities = 0;
         var newRevisions = 0;
@@ -167,6 +167,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                 .FirstOrDefaultAsync(cancellationToken);
             var createdRevision = latest is null
                 || !string.Equals(latest.Fingerprint, fingerprint, StringComparison.Ordinal);
+            var translationOnlyUpdate = false;
             if (createdRevision)
             {
                 latest = new SourceEntityRevision
@@ -191,6 +192,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                 // source revisions. Update only ContentJson on the existing native revision.
                 latest.ContentJson = normalized.ContentJson;
                 await dbContext.SaveChangesAsync(cancellationToken);
+                translationOnlyUpdate = true;
                 translationOnlyUpdates++;
             }
             else
@@ -212,7 +214,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                 latest.RevisionNumber,
                 latest.Fingerprint,
                 createdRevision));
-            persisted.Add((entity, latest, normalized));
+            persisted.Add((entity, latest, normalized, translationOnlyUpdate));
             persistedCount++;
 
             if (ShouldReport(persistedCount, translatedRecords.Count))
@@ -303,7 +305,8 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                                 semanticFingerprint),
                             request.Representation.FormatKey,
                             cancellationToken,
-                            value.Record.CanonicalAliases);
+                            value.Record.CanonicalAliases,
+                            value.TranslationOnlyUpdate);
                     canonicalPublicationId ??= association.Publication.Id;
                     if (canonicalPublicationId != association.Publication.Id)
                     {
