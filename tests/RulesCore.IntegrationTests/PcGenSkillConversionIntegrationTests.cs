@@ -77,7 +77,7 @@ public sealed class PcGenSkillConversionIntegrationTests
                 var candidate = Assert.Single(
                     candidates,
                     value => value.PackageKey == packageKey);
-                Assert.Equal("Alchemist's Supplies", candidate.SourceName);
+                Assert.Equal("Alchemist's Supplies", candidate.Name);
                 Assert.Equal("tool.alchemists-supplies", candidate.SuggestedConceptKey);
             }
             finally
