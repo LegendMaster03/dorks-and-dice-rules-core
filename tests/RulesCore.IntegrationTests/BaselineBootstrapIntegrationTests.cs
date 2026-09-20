@@ -286,13 +286,19 @@ public sealed class BaselineBootstrapIntegrationTests
             var competencyProfiles = competencyMechanics
                 .SelectMany(value => value.Competency!.Profiles)
                 .ToArray();
-            foreach (var family in new[] { "Knowledge", "Craft", "Perform", "Profession" })
-            {
-                Assert.Contains(
-                    competencyProfiles,
-                    value => value.FamilyName == family
-                        && !string.IsNullOrWhiteSpace(value.Specialty));
-            }
+            Assert.Contains(
+                competencyProfiles,
+                value => value.FamilyName == "Knowledge"
+                    && !string.IsNullOrWhiteSpace(value.Specialty));
+
+            // The checked-in SRD3/SRD35 snapshots have generic Craft, Perform, and Profession
+            // entries. SRD3 has Alchemy, which converges directly to Alchemist's Supplies, but
+            // that native record is not a Craft (...) specialty. Do not fabricate specialty
+            // metadata that is absent from the reviewed source corpus. Translation coverage
+            // below verifies all four parenthetical specialty families independently.
+            Assert.Contains("skill.craft", publishedCompetencyKeys);
+            Assert.Contains("skill.perform", publishedCompetencyKeys);
+            Assert.Contains("skill.profession", publishedCompetencyKeys);
 
             var search = Assert.Single(
                 competencyMechanics,
@@ -305,6 +311,13 @@ public sealed class BaselineBootstrapIntegrationTests
                 value => value.ConceptKey == "skill.deception");
             Assert.Contains(deception.Competency!.Profiles, value => value.SupportsTrainingState);
             Assert.Contains(deception.Competency.Profiles, value => value.SupportsRanks);
+
+            var alchemistsSupplies = Assert.Single(
+                competencyMechanics,
+                value => value.ConceptKey == "tool.alchemists-supplies");
+            Assert.Contains(
+                alchemistsSupplies.Competency!.Profiles,
+                value => value.SupportsRanks && value.SupportsClassSkillState);
 
             var psionicSourceNames = await db.SourceEntities
                 .AsNoTracking()

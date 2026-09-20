@@ -373,7 +373,15 @@ public sealed class PcGenSkillConversionIntegrationTests
             var representation = LegacySrdRepresentation(
                 token,
                 "SRD35",
-                ["Bluff", "Craft (alchemy)", "Open Lock", "Knowledge (the planes)"]);
+                [
+                    "Bluff",
+                    "Craft (alchemy)",
+                    "Craft (blacksmithing)",
+                    "Open Lock",
+                    "Knowledge (the planes)",
+                    "Perform (dance)",
+                    "Profession (sailor)"
+                ]);
 
             try
             {
@@ -412,6 +420,18 @@ public sealed class PcGenSkillConversionIntegrationTests
                     family: "Craft",
                     specialty: "alchemy");
 
+                var craft = await ReadByNativeNameAsync(
+                    db,
+                    packageKey,
+                    "Craft (blacksmithing)");
+                Assert.Equal("skill", craft.EntityType);
+                Assert.Equal("Craft (blacksmithing)", craft.NormalizedName);
+                AssertLegacyCompetencyProfile(
+                    craft.ContentJson,
+                    expectedKind: "specialized-skill",
+                    family: "Craft",
+                    specialty: "blacksmithing");
+
                 var openLock = await ReadByNativeNameAsync(db, packageKey, "Open Lock");
                 Assert.Equal("skill", openLock.EntityType);
                 Assert.Equal("Open Lock", openLock.NormalizedName);
@@ -439,6 +459,30 @@ public sealed class PcGenSkillConversionIntegrationTests
                     expectedKind: "specialized-skill",
                     family: "Knowledge",
                     specialty: "the planes");
+
+                var perform = await ReadByNativeNameAsync(
+                    db,
+                    packageKey,
+                    "Perform (dance)");
+                Assert.Equal("skill", perform.EntityType);
+                Assert.Equal("Perform (dance)", perform.NormalizedName);
+                AssertLegacyCompetencyProfile(
+                    perform.ContentJson,
+                    expectedKind: "specialized-skill",
+                    family: "Perform",
+                    specialty: "dance");
+
+                var profession = await ReadByNativeNameAsync(
+                    db,
+                    packageKey,
+                    "Profession (sailor)");
+                Assert.Equal("skill", profession.EntityType);
+                Assert.Equal("Profession (sailor)", profession.NormalizedName);
+                AssertLegacyCompetencyProfile(
+                    profession.ContentJson,
+                    expectedKind: "specialized-skill",
+                    family: "Profession",
+                    specialty: "sailor");
             }
             finally
             {
