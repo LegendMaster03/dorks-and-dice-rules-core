@@ -40,11 +40,21 @@ internal static class BundledSrdSnapshots
                 continue;
             }
 
-            imported.Add(await ImportSnapshotAsync(
+            var result = await ImportSnapshotAsync(
                 dbContext,
                 snapshot,
                 artifact,
-                cancellationToken));
+                cancellationToken);
+            if (result.ReconciliationIssues.Count > 0)
+            {
+                throw new InvalidOperationException(
+                    $"Reviewed bundled SRD '{snapshot.WorkKey}' produced canonical reconciliation issue(s): "
+                    + string.Join(
+                        " | ",
+                        result.ReconciliationIssues.Select(value =>
+                            $"{value.PublicationLocalKey}: {value.Message}")));
+            }
+            imported.Add(result);
         }
 
         return imported;
