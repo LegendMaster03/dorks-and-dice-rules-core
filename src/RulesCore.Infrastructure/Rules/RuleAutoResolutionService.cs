@@ -127,7 +127,9 @@ public static class RuleAutoResolutionService
                 baseContext.Revision.Id,
                 evaluation.Mode == AdditiveMode ? AdditiveAutoResolutionNote : NoChangeAutoResolutionNote,
                 MergePatch: mergePatch,
-                Contributions: contributions),
+                Contributions: contributions,
+                ExpectedLatestDecisionId: latestDecision?.Id,
+                EnforceExpectedLatestDecision: true),
             actor,
             cancellationToken);
 

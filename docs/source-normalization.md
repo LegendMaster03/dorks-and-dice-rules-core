@@ -57,11 +57,12 @@ Canonical publication/occurrence tables do not weaken this rule. They are intern
 
 Normalization and automatic compatibility resolution are intentionally conservative:
 
-- no bulk automatic acceptance;
-- no automatic concept binding;
+- no unattended or bulk automatic acceptance by server heuristics;
+- no automatic concept binding by server heuristics;
+- an authenticated human or Rules Lawyer agent may deliberately inspect and explicitly accept one deterministic suggestion, with the normal actor identity and audit provenance recorded;
 - no content-similarity binding into Rules Layer concepts;
 - no mutation of Source Layer records;
-- no automatic publication;
+- no automatic publication; publication remains a separate explicit Rules Lawyer action;
 - no blind JSON union across conflicting or ambiguous versions;
 - no replacement of an existing manual or patched ruling;
 - no silent resolution of key conflicts;

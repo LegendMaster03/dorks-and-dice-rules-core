@@ -1,5 +1,6 @@
 import { RulesCoreApi, loadToolHostContext } from "./api.js";
 import { RulesAuthoringApp } from "./authoring.js";
+import { installAdjudicationQueue } from "./adjudication-queue.js";
 import { installCampaignBaselineAuthoring } from "./campaign-baseline-authoring.js";
 import { installConceptSourceAuthoring } from "./concept-source-authoring.js";
 import { installHostedSourceAuthoring } from "./hosted-source-authoring.js";
@@ -46,6 +47,7 @@ try {
     installSourceNormalization(app);
     installSourceRevisionReview(app);
     installSourceVersioning(app);
+    installAdjudicationQueue(app);
     installHostedSourceAuthoring(app);
     installSourceAdministration(app);
     installSourceAccessAdministration(app);
