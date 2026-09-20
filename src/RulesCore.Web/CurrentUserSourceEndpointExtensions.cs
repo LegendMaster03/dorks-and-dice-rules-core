@@ -54,6 +54,29 @@ public static class CurrentUserSourceEndpointExtensions
                 cancellationToken));
         });
 
+        app.MapPost("/api/sources/current-user/import-jobs/dismiss", async (
+            DismissCurrentUserSourceImportJobsRequest request,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireSignedInDorksAndDiceAccount(
+                httpContext,
+                out var authenticationContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            var jobs = new CurrentUserSourceImportJobService(dbContext);
+            var dismissedCount = await jobs.DismissAsync(
+                authenticationContext!.User.Id,
+                request.JobIds,
+                cancellationToken);
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(new DismissCurrentUserSourceImportJobsResult(dismissedCount));
+        });
+
         app.MapGet("/api/sources/current-user/{currentUserSourceId:guid}/reconciliation-issues", async (
             Guid currentUserSourceId,
             HttpContext httpContext,

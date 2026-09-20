@@ -8,9 +8,6 @@ import {
 
 const DORKS_MODE = "dorks-and-dice";
 const IMPORT_POLL_INTERVAL_MS = 2000;
-const DISMISSED_IMPORT_JOBS_STORAGE_KEY = "rules-core:dismissed-import-jobs:v1";
-const MAX_DISMISSED_IMPORT_JOBS = 100;
-const volatileDismissedImportJobIds = new Set();
 
 export function installSourceAdd(app) {
     app.canAddSource = app.hostContext.siteMode === DORKS_MODE && Boolean(app.session.user);
@@ -192,11 +189,10 @@ async function renderExistingSources(app, container, result) {
                 app.api.getCurrentUserSourceReconciliationIssues(source.id))
         ])));
         const sourcesById = new Map(sources.map(source => [source.id, source]));
-        const dismissedJobIds = readDismissedImportJobIds(jobs);
 
         container.replaceChildren();
 
-        const visibleJobs = jobs.filter(job => !dismissedJobIds.has(job.id));
+        const visibleJobs = jobs;
         if (!sources.length && !visibleJobs.length) return;
 
         if (visibleJobs.length) {
@@ -348,10 +344,8 @@ function buildImportJobView(job, source, reconciliationIssues, app, container, r
             text: "Dismiss",
             title: "Hide this finished import notification"
         });
-        dismiss.addEventListener("click", async () => {
-            rememberDismissedImportJobs([job.id]);
-            await renderExistingSources(app, container, result);
-        });
+        dismiss.addEventListener("click", () =>
+            dismissImportJobs([job.id], dismiss, app, container, result));
         statusActions.append(dismiss);
     }
 
@@ -441,10 +435,13 @@ function buildDismissFinishedButton(terminalJobs, app, container, result) {
         text: "Dismiss finished",
         title: "Hide all finished import notifications"
     });
-    dismiss.addEventListener("click", async () => {
-        rememberDismissedImportJobs(terminalJobs.map(job => job.id));
-        await renderExistingSources(app, container, result);
-    });
+    dismiss.addEventListener("click", () =>
+        dismissImportJobs(
+            terminalJobs.map(job => job.id),
+            dismiss,
+            app,
+            container,
+            result));
     return dismiss;
 }
 
@@ -452,45 +449,15 @@ function isTerminalImportJob(job) {
     return job.status === "completed" || job.status === "failed";
 }
 
-function readDismissedImportJobIds(jobs) {
-    const knownJobIds = new Set(jobs.map(job => job.id));
-    const dismissed = new Set(
-        [...volatileDismissedImportJobIds].filter(id => knownJobIds.has(id)));
+async function dismissImportJobs(jobIds, button, app, container, result) {
+    setButtonBusy(button, true, "Dismissing…");
     try {
-        const stored = JSON.parse(window.localStorage.getItem(DISMISSED_IMPORT_JOBS_STORAGE_KEY) ?? "[]");
-        if (Array.isArray(stored)) {
-            for (const id of stored) {
-                if (typeof id === "string" && knownJobIds.has(id)) {
-                    dismissed.add(id);
-                }
-            }
-        }
-    } catch {
-        // Dismissal remains available for this page session when browser storage is unavailable.
-    }
-
-    replaceDismissedImportJobs(dismissed);
-    return dismissed;
-}
-
-function rememberDismissedImportJobs(jobIds) {
-    const dismissed = new Set(volatileDismissedImportJobIds);
-    for (const id of jobIds) {
-        if (typeof id === "string" && id) dismissed.add(id);
-    }
-    replaceDismissedImportJobs(dismissed);
-}
-
-function replaceDismissedImportJobs(jobIds) {
-    const retained = [...jobIds].slice(-MAX_DISMISSED_IMPORT_JOBS);
-    volatileDismissedImportJobIds.clear();
-    for (const id of retained) volatileDismissedImportJobIds.add(id);
-    try {
-        window.localStorage.setItem(
-            DISMISSED_IMPORT_JOBS_STORAGE_KEY,
-            JSON.stringify(retained));
-    } catch {
-        // Session-local dismissal still works through volatileDismissedImportJobIds.
+        await app.api.dismissCurrentUserSourceImportJobs(jobIds);
+        await renderExistingSources(app, container, result);
+    } catch (error) {
+        result.replaceChildren(dismissibleAlertNode("danger", describeError(error)));
+    } finally {
+        setButtonBusy(button, false);
     }
 }
 

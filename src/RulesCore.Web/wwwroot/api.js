@@ -66,6 +66,13 @@ export class RulesCoreApi {
     getCurrentUserSources() { return this.backend("/api/sources/current-user"); }
     getCurrentUserSourceImportJobs() { return this.backend("/api/sources/current-user/import-jobs"); }
 
+    dismissCurrentUserSourceImportJobs(jobIds) {
+        return this.backend("/api/sources/current-user/import-jobs/dismiss", {
+            method: "POST",
+            body: { jobIds }
+        });
+    }
+
     getCurrentUserSourceReconciliationIssues(currentUserSourceId) {
         return this.backend(`/api/sources/current-user/${encodeURIComponent(currentUserSourceId)}/reconciliation-issues`);
     }

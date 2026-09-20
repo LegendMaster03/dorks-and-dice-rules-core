@@ -186,6 +186,47 @@ public sealed class CurrentUserSourceImportQueueIntegrationTests
                 var reclaimed = await retryJobs.ClaimNextAsync();
                 Assert.NotNull(reclaimed);
                 Assert.Equal(job.Id, reclaimed.Id);
+                await retryJobs.FailAsync(job.Id, new InvalidOperationException("Fixture terminal failure."));
+            }
+
+            using var dismissRequest = HostedRequest(
+                HttpMethod.Post,
+                "/api/sources/current-user/import-jobs/dismiss",
+                "web-import-ticket");
+            dismissRequest.Content = JsonContent.Create(
+                new DismissCurrentUserSourceImportJobsRequest([job.Id]));
+            using var dismissResponse = await client.SendAsync(dismissRequest);
+            Assert.Equal(HttpStatusCode.OK, dismissResponse.StatusCode);
+            var dismissResult = await dismissResponse.Content
+                .ReadFromJsonAsync<DismissCurrentUserSourceImportJobsResult>();
+            Assert.NotNull(dismissResult);
+            Assert.Equal(1, dismissResult.DismissedCount);
+
+            using var dismissedListRequest = HostedRequest(
+                HttpMethod.Get,
+                "/api/sources/current-user/import-jobs",
+                "web-import-ticket");
+            using var dismissedListResponse = await client.SendAsync(dismissedListRequest);
+            Assert.Equal(HttpStatusCode.OK, dismissedListResponse.StatusCode);
+            var visibleAfterDismiss = await dismissedListResponse.Content
+                .ReadFromJsonAsync<CurrentUserSourceImportJobView[]>();
+            Assert.DoesNotContain(visibleAfterDismiss!, value => value.Id == job.Id);
+
+            await using (var historyScope = factory.Services.CreateAsyncScope())
+            {
+                var historyDb = historyScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+                var retainedHistory = await historyDb.Database.SqlQueryRaw<bool>(
+                        """
+                        SELECT EXISTS (
+                            SELECT 1
+                            FROM current_user_source_import_job
+                            WHERE current_user_source_import_job_id = {0}
+                                AND status = 'failed'
+                                AND dismissed_at IS NOT NULL) AS "Value"
+                        """,
+                        job.Id)
+                    .SingleAsync();
+                Assert.True(retainedHistory);
             }
         }
         finally

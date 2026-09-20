@@ -64,6 +64,7 @@ jobs:
               || typeof api.addCurrentUserSource !== "function"
               || typeof api.getCurrentUserSources !== "function"
               || typeof api.getCurrentUserSourceImportJobs !== "function"
+              || typeof api.dismissCurrentUserSourceImportJobs !== "function"
               || typeof api.getCurrentUserSourceReconciliationIssues !== "function"
               || typeof api.getCurrentUserSourceImportJobReconciliationIssues !== "function"
               || typeof api.refreshCurrentUserSource !== "function"
