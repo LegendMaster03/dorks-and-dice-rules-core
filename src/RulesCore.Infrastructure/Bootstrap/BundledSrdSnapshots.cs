@@ -292,6 +292,12 @@ internal static class BundledSrdSnapshots
                 && string.Equals(
                     sourceFormat.GetString(),
                     LegacySrdSourceFormatAdapter.Format,
+                    StringComparison.Ordinal)
+                && context.TryGetProperty("competencyNormalizationVersion", out var competencyVersion)
+                && competencyVersion.ValueKind == JsonValueKind.String
+                && string.Equals(
+                    competencyVersion.GetString(),
+                    ExactCompetencyTranslationPolicy.LegacyCompetencyNormalizationVersion,
                     StringComparison.Ordinal);
         }
         catch (JsonException)
