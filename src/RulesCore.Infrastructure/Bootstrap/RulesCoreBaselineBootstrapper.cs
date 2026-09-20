@@ -208,7 +208,9 @@ public sealed class RulesCoreBaselineBootstrapper(
         SourceImportResult houseRuleImport,
         CancellationToken cancellationToken)
     {
-        await EnsureInitialHouseRuleBaselineAsync(houseRuleImport, cancellationToken);
+        var houseRuleBaselineChanged = await EnsureInitialHouseRuleBaselineAsync(
+            houseRuleImport,
+            cancellationToken);
 
         var competencySync = await new ReviewedBundledCompetencyBaselineSynchronizer(
                 dbContext,
@@ -216,7 +218,9 @@ public sealed class RulesCoreBaselineBootstrapper(
             .SynchronizeAsync(cancellationToken);
 
         PublishedRulesetRevisionView? publishedRuleset = null;
-        if (await dbContext.GlobalRuleDecisions.AsNoTracking().AnyAsync(cancellationToken))
+        var baselineDecisionChanged = houseRuleBaselineChanged || competencySync.CreatedDecisionCount > 0;
+        if (baselineDecisionChanged
+            && await dbContext.GlobalRuleDecisions.AsNoTracking().AnyAsync(cancellationToken))
         {
             var publication = await globalRules.PublishAsync(
                 RulesCoreBaselineCatalog.BootstrapActor,
