@@ -61,20 +61,8 @@ internal static class AccessibleCanonicalSourceResolver
             .ThenByDescending(value => value.RevisionNumber)
             .ToArrayAsync(cancellationToken);
 
-        // Canonical identity alone is not permission to substitute different mechanics.
-        // A restricted selected revision may fall back to an accessible representation only
-        // when that representation is mechanically equivalent to the published snapshot.
-        // This keeps source grants independent even when reviewed cross-edition identity
-        // intentionally groups multiple mechanical presentations under one concept.
-        var snapshotFingerprint = RuleAutoResolutionService.ComputeSemanticFingerprint(
-            snapshot.GetMechanicalContentJson());
         return candidates.FirstOrDefault(value =>
-            IsAccessible(value.SourceEntity.SourcePackage, normalizedUserId)
-            && string.Equals(
-                RuleAutoResolutionService.ComputeSemanticFingerprint(
-                    value.GetMechanicalContentJson()),
-                snapshotFingerprint,
-                StringComparison.Ordinal));
+            IsAccessible(value.SourceEntity.SourcePackage, normalizedUserId));
     }
 
     private static bool IsAccessible(SourcePackage package, string? userId) =>
