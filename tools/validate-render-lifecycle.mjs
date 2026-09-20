@@ -268,6 +268,25 @@ const lifecycleApp = {
 };
 
 ux.installRulesCoreUx(lifecycleApp);
+
+const hostedHeader = lifecycleApp.renderHeader();
+assert(hostedHeader.classList.contains("rules-core-topbar-hosted"),
+    "Dorks & Dice hosted mode must not render a second visible Rules Core brand header");
+assert(hostedHeader.attributes.has("hidden"),
+    "Dorks & Dice Tool Host must own the visible Rules Core title chrome");
+
+const groupedNavigation = lifecycleApp.renderNavigation();
+const navigationLabels = groupedNavigation.querySelectorAll("summary")
+    .map(summary => summary.textContent);
+assert(navigationLabels.includes("Players"), "top navigation must expose the Players group");
+assert(navigationLabels.includes("Rules"), "top navigation must expose the Rules group");
+assert(navigationLabels.includes("Dungeon Masters"), "top navigation must expose the Dungeon Masters group");
+assert(navigationLabels.includes("Sources"), "top navigation must expose the Sources group");
+assert(!navigationLabels.includes("Adjudication"),
+    "Adjudication navigation must remain hidden without Rules Lawyer or version-review authority");
+assert(groupedNavigation.querySelectorAll(".rules-core-nav-menu").length === 4,
+    "hosted read-only navigation must render only authorized top-level groups");
+
 const lifecycleContainer = ui.element("div");
 await lifecycleApp.renderActiveView(lifecycleContainer);
 assert(lifecycleContainer.classList.contains("rules-core-main"), "full active-view renders must install the view shell");

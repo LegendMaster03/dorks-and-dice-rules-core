@@ -12,6 +12,8 @@ public sealed class RuleBrowserContractTests
     [InlineData("prestigeClass", "prestigeclass.archmage", "/prestige-classes/archmage")]
     [InlineData("skill", "skill.arcana", "/skills/arcana")]
     [InlineData("feat", "feat.alert", "/feats/alert")]
+    [InlineData("background", "background.acolyte", "/backgrounds/acolyte")]
+    [InlineData("optionalfeature", "optionalfeature.fighting-style", "/optional-features/fighting-style")]
     public void BrowserLinksUseStableRuleIdentity(string entityType, string conceptKey, string expectedPath)
     {
         var link = RuleBrowserRoutes.ForConcept(entityType, conceptKey);
@@ -38,6 +40,8 @@ public sealed class RuleBrowserContractTests
     [InlineData("subclass", "/subclasses")]
     [InlineData("prestigeClass", "/prestige-classes")]
     [InlineData("skill", "/skills")]
+    [InlineData("background", "/backgrounds")]
+    [InlineData("optionalfeature", "/optional-features")]
     [InlineData("maneuver", "/types/maneuver")]
     public void CatalogPathsUseStableFamilyRoutes(string entityType, string expectedPath)
     {
