@@ -497,7 +497,7 @@ public sealed class PcGenSkillConversionIntegrationTests
         var extension = document.RootElement.GetProperty("_rulesCore");
         var context = extension.GetProperty("context");
         Assert.Equal(
-            ExactCompetencyTranslationPolicy.LegacyCompetencyNormalizationVersion,
+            "legacy-srd-competency-v1",
             context.GetProperty("competencyNormalizationVersion").GetString());
         var competency = extension.GetProperty("competency");
         Assert.Equal("dnd-3x", competency.GetProperty("profileKey").GetString());
