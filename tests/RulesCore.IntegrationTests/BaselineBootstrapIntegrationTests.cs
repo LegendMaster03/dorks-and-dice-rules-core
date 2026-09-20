@@ -3,6 +3,7 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
+using RulesCore.Domain.Rules;
 using RulesCore.Infrastructure.Bootstrap;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Rules;
@@ -50,7 +51,7 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.True(first.RulesBaselineApplied);
             Assert.NotNull(first.PublishedRuleset);
             Assert.Equal(1, first.PublishedRuleset!.RevisionNumber);
-            Assert.Equal(6, first.PublishedRuleset.EntryCount);
+            Assert.True(first.PublishedRuleset.EntryCount > 6);
             Assert.Equal(6, first.HouseRuleSourceEntityCount);
             Assert.Equal(4, first.SourceAuthorityReferenceCount);
             Assert.Equal(0, first.HostedSourceDefinitionCount);
@@ -105,9 +106,18 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Equal(6, houseEntities.Length);
             Assert.All(houseEntities, value => Assert.Equal("DDBASE", value.SourceCode));
 
-            Assert.Equal(6, await db.RuleConcepts.CountAsync());
-            Assert.Equal(6, await db.RuleConceptSourceBindings.CountAsync());
-            Assert.Equal(6, await db.GlobalRuleDecisions.CountAsync());
+            var competencyConceptCount = await db.RuleConcepts.CountAsync(value =>
+                value.EntityType == "skill" || value.EntityType == "tool");
+            Assert.True(competencyConceptCount > 0);
+            Assert.Equal(
+                first.PublishedRuleset.EntryCount,
+                await db.RuleConcepts.CountAsync());
+            Assert.True(
+                await db.RuleConceptSourceBindings.CountAsync()
+                >= await db.RuleConcepts.CountAsync());
+            Assert.Equal(
+                first.PublishedRuleset.EntryCount,
+                await db.GlobalRuleDecisions.CountAsync());
             Assert.Equal(1, await db.RulesetRevisions.CountAsync());
 
             var healing = await globalRules.ResolveLatestAsync("house.healing-potion-use", null);
@@ -175,6 +185,347 @@ public sealed class BaselineBootstrapIntegrationTests
         {
             await ResetAsync(db);
         }
+    }
+
+    [Fact]
+    public async Task FreshBaselinePublishesNormalizedReviewedCompetencyCorpusToCharacterMechanics()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString)) return;
+
+        await using var db = new RulesCoreDbContext(
+            new DbContextOptionsBuilder<RulesCoreDbContext>().UseNpgsql(connectionString).Options);
+        await new RulesCoreSchemaInitializer(db).InitializeAsync();
+        var importer = new SourceImportService(db);
+        var globalRules = new GlobalRulesService(db);
+        var bootstrapper = new RulesCoreBaselineBootstrapper(db, importer, globalRules);
+
+        await ResetAsync(db);
+        try
+        {
+            var first = await bootstrapper.EnsureAsync();
+            Assert.True(first.RulesBaselineApplied);
+            Assert.NotNull(first.PublishedRuleset);
+
+            var expectedConceptKeys = await ReadReviewedCompetencyConceptKeysAsync(db);
+            Assert.NotEmpty(expectedConceptKeys);
+
+            var latestRevisionId = await db.RulesetRevisions
+                .OrderByDescending(value => value.RevisionNumber)
+                .Select(value => value.Id)
+                .FirstAsync();
+            var publishedCompetencyKeys = (await db.RulesetRevisionEntries
+                    .AsNoTracking()
+                    .Where(value => value.RulesetRevisionId == latestRevisionId
+                        && (value.RuleConcept.EntityType == "skill"
+                            || value.RuleConcept.EntityType == "tool"))
+                    .Select(value => value.RuleConcept.Key)
+                    .ToArrayAsync())
+                .ToHashSet(StringComparer.Ordinal);
+            Assert.Equal(
+                expectedConceptKeys.OrderBy(value => value, StringComparer.Ordinal),
+                publishedCompetencyKeys.OrderBy(value => value, StringComparer.Ordinal));
+
+            Assert.Contains("skill.deception", publishedCompetencyKeys);
+            Assert.DoesNotContain("skill.bluff", publishedCompetencyKeys);
+            Assert.Contains("skill.medicine", publishedCompetencyKeys);
+            Assert.DoesNotContain("skill.heal", publishedCompetencyKeys);
+            Assert.Contains("skill.insight", publishedCompetencyKeys);
+            Assert.DoesNotContain("skill.sense-motive", publishedCompetencyKeys);
+            Assert.Contains("skill.arcana", publishedCompetencyKeys);
+            Assert.DoesNotContain("skill.knowledge-arcana", publishedCompetencyKeys);
+            Assert.Contains("skill.sleight-of-hand", publishedCompetencyKeys);
+            Assert.Contains("tool.alchemists-supplies", publishedCompetencyKeys);
+            Assert.DoesNotContain("skill.craft-alchemy", publishedCompetencyKeys);
+
+            foreach (var retained in new[]
+                     {
+                         "skill.search",
+                         "skill.spellcraft",
+                         "skill.disable-device",
+                         "skill.use-magic-device",
+                         "skill.use-rope"
+                     })
+            {
+                Assert.Contains(retained, publishedCompetencyKeys);
+            }
+
+            var mechanics = new CharacterMechanicsConsumerService(db);
+            var catalog = await mechanics.GetGlobalAsync(userId: null);
+            var competencyMechanics = catalog.Mechanics
+                .Where(value => value.Competency is not null)
+                .ToArray();
+            Assert.NotEmpty(competencyMechanics);
+            Assert.Equal(
+                expectedConceptKeys.OrderBy(value => value, StringComparer.Ordinal),
+                competencyMechanics
+                    .Select(value => value.ConceptKey!)
+                    .ToHashSet(StringComparer.Ordinal)
+                    .OrderBy(value => value, StringComparer.Ordinal));
+
+            foreach (var definition in KnownMechanicalRelationships.All)
+            {
+                Assert.Contains(definition.Parent.ConceptKey, publishedCompetencyKeys);
+                foreach (var component in definition.Components)
+                {
+                    Assert.Contains(component.ConceptKey, publishedCompetencyKeys);
+                }
+
+                var parent = Assert.Single(
+                    competencyMechanics,
+                    value => value.ConceptKey == definition.Parent.ConceptKey);
+                var relationship = Assert.Single(
+                    parent.Relationships,
+                    value => value.RelationshipKey == definition.Key);
+                Assert.True(relationship.CanResolve);
+                Assert.Equal(
+                    MechanicalRelationshipResolutionKinds.DeriveParent,
+                    relationship.EffectiveResolutionKind);
+            }
+
+            Assert.Contains(
+                competencyMechanics,
+                value => value.Competency!.FamilyName == "Knowledge"
+                    && !string.IsNullOrWhiteSpace(value.Competency.Specialty));
+            Assert.Contains(
+                competencyMechanics,
+                value => value.Competency!.FamilyName == "Craft"
+                    && !string.IsNullOrWhiteSpace(value.Competency.Specialty));
+            Assert.Contains(
+                competencyMechanics,
+                value => value.Competency!.FamilyName == "Perform"
+                    && !string.IsNullOrWhiteSpace(value.Competency.Specialty));
+            Assert.Contains(
+                competencyMechanics,
+                value => value.Competency!.FamilyName == "Profession"
+                    && !string.IsNullOrWhiteSpace(value.Competency.Specialty));
+
+            var search = Assert.Single(
+                competencyMechanics,
+                value => value.ConceptKey == "skill.search");
+            Assert.Contains(search.Competency!.Profiles, value => value.SupportsRanks);
+            Assert.Contains(search.Competency.Profiles, value => value.SupportsClassSkillState);
+
+            var deception = Assert.Single(
+                competencyMechanics,
+                value => value.ConceptKey == "skill.deception");
+            Assert.Contains(deception.Competency!.Profiles, value => value.SupportsTrainingState);
+            Assert.Contains(deception.Competency.Profiles, value => value.SupportsRanks);
+
+            var psionicSourceNames = await db.SourceEntities
+                .AsNoTracking()
+                .Where(value => (value.SourcePackage.Key == "wotc-srd-ogl"
+                        || value.SourcePackage.Key == "wotc-srd-cc")
+                    && value.EntityType == "skill"
+                    && (value.Name.Contains("Psion")
+                        || value.Name == "Autohypnosis"
+                        || value.Name == "Psicraft"))
+                .Select(value => value.Name)
+                .Distinct()
+                .ToArrayAsync();
+            if (psionicSourceNames.Length > 0)
+            {
+                var psionicKeys = await ReadReviewedCompetencyConceptKeysAsync(
+                    db,
+                    psionicSourceNames);
+                Assert.NotEmpty(psionicKeys);
+                Assert.True(psionicKeys.All(publishedCompetencyKeys.Contains));
+            }
+        }
+        finally
+        {
+            await ResetAsync(db);
+        }
+    }
+
+    [Fact]
+    public async Task ExistingSixRuleInstallationGetsIncrementalCompetencyRevisionIdempotently()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString)) return;
+
+        await using var db = new RulesCoreDbContext(
+            new DbContextOptionsBuilder<RulesCoreDbContext>().UseNpgsql(connectionString).Options);
+        await new RulesCoreSchemaInitializer(db).InitializeAsync();
+        var importer = new SourceImportService(db);
+        var globalRules = new GlobalRulesService(db);
+        var bootstrapper = new RulesCoreBaselineBootstrapper(db, importer, globalRules);
+
+        await ResetAsync(db);
+        try
+        {
+            // Hydrate the reviewed Source Layer once, then reduce only the Rules Layer to the
+            // historical production shape: the six Dorks & Dice house rules in revision 1.
+            await bootstrapper.EnsureAsync();
+            var competencyConceptIds = await db.RuleConcepts
+                .Where(value => value.EntityType == "skill" || value.EntityType == "tool")
+                .Select(value => value.Id)
+                .ToArrayAsync();
+            await db.RulesetRevisionEntries.ExecuteDeleteAsync();
+            await db.RulesetRevisions.ExecuteDeleteAsync();
+            await db.GlobalRuleDecisions
+                .Where(value => competencyConceptIds.Contains(value.RuleConceptId))
+                .ExecuteDeleteAsync();
+            await db.RuleConceptSourceBindings
+                .Where(value => competencyConceptIds.Contains(value.RuleConceptId))
+                .ExecuteDeleteAsync();
+            await db.RuleConcepts
+                .Where(value => competencyConceptIds.Contains(value.Id))
+                .ExecuteDeleteAsync();
+            db.ChangeTracker.Clear();
+
+            var legacyRevision = await globalRules.PublishAsync("legacy-production-bootstrap");
+            Assert.True(legacyRevision.CreatedRevision);
+            Assert.Equal(1, legacyRevision.RevisionNumber);
+            Assert.Equal(6, legacyRevision.EntryCount);
+
+            var legacyEntries = await db.RulesetRevisionEntries
+                .AsNoTracking()
+                .Where(value => value.RulesetRevisionId == legacyRevision.Id)
+                .OrderBy(value => value.RuleConceptId)
+                .Select(value => new
+                {
+                    value.RuleConceptId,
+                    value.GlobalRuleDecisionId,
+                    value.SourceEntityRevisionId
+                })
+                .ToArrayAsync();
+            var legacyDecisionCount = await db.GlobalRuleDecisions.CountAsync();
+
+            var upgraded = await bootstrapper.EnsureAsync();
+            Assert.True(upgraded.RulesBaselineApplied);
+            Assert.NotNull(upgraded.PublishedRuleset);
+            Assert.Equal(2, upgraded.PublishedRuleset!.RevisionNumber);
+            Assert.True(upgraded.PublishedRuleset.EntryCount > 6);
+            Assert.Equal(legacyDecisionCount, 6);
+
+            var preservedEntries = await db.RulesetRevisionEntries
+                .AsNoTracking()
+                .Where(value => value.RulesetRevisionId == legacyRevision.Id)
+                .OrderBy(value => value.RuleConceptId)
+                .Select(value => new
+                {
+                    value.RuleConceptId,
+                    value.GlobalRuleDecisionId,
+                    value.SourceEntityRevisionId
+                })
+                .ToArrayAsync();
+            Assert.Equal(legacyEntries, preservedEntries);
+
+            var conceptCount = await db.RuleConcepts.CountAsync();
+            var bindingCount = await db.RuleConceptSourceBindings.CountAsync();
+            var decisionCount = await db.GlobalRuleDecisions.CountAsync();
+            Assert.True(decisionCount > legacyDecisionCount);
+            Assert.Equal(2, await db.RulesetRevisions.CountAsync());
+
+            var rerun = await bootstrapper.EnsureAsync();
+            Assert.False(rerun.RulesBaselineApplied);
+            Assert.Null(rerun.PublishedRuleset);
+            Assert.Equal(conceptCount, await db.RuleConcepts.CountAsync());
+            Assert.Equal(bindingCount, await db.RuleConceptSourceBindings.CountAsync());
+            Assert.Equal(decisionCount, await db.GlobalRuleDecisions.CountAsync());
+            Assert.Equal(2, await db.RulesetRevisions.CountAsync());
+        }
+        finally
+        {
+            await ResetAsync(db);
+        }
+    }
+
+    [Fact]
+    public async Task BootstrapPreservesRulesLawyerCompetencyDecisionWithoutAdvancingIt()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString)) return;
+
+        await using var db = new RulesCoreDbContext(
+            new DbContextOptionsBuilder<RulesCoreDbContext>().UseNpgsql(connectionString).Options);
+        await new RulesCoreSchemaInitializer(db).InitializeAsync();
+        var importer = new SourceImportService(db);
+        var globalRules = new GlobalRulesService(db);
+        var bootstrapper = new RulesCoreBaselineBootstrapper(db, importer, globalRules);
+
+        await ResetAsync(db);
+        try
+        {
+            await bootstrapper.EnsureAsync();
+            var search = await db.RuleConcepts.SingleAsync(value => value.Key == "skill.search");
+            var currentDecision = await db.GlobalRuleDecisions
+                .Where(value => value.RuleConceptId == search.Id)
+                .OrderByDescending(value => value.DecisionNumber)
+                .FirstAsync();
+
+            var human = await globalRules.SetDecisionAsync(
+                search.Id,
+                new SetGlobalRuleDecisionRequest(
+                    currentDecision.SelectedSourceEntityRevisionId,
+                    "Rules Lawyer-authored competency decision."),
+                "rules-lawyer");
+            Assert.True(human.Created);
+            await globalRules.PublishAsync("rules-lawyer");
+            var revisionCount = await db.RulesetRevisions.CountAsync();
+
+            var rerun = await bootstrapper.EnsureAsync();
+            Assert.False(rerun.RulesBaselineApplied);
+            Assert.Null(rerun.PublishedRuleset);
+
+            var latest = await db.GlobalRuleDecisions
+                .Where(value => value.RuleConceptId == search.Id)
+                .OrderByDescending(value => value.DecisionNumber)
+                .FirstAsync();
+            Assert.Equal(human.Value.Id, latest.Id);
+            Assert.Equal(human.Value.DecisionNumber, latest.DecisionNumber);
+            Assert.Equal("rules-lawyer", latest.CreatedByUserId);
+            Assert.Equal(
+                2,
+                await db.GlobalRuleDecisions.CountAsync(value => value.RuleConceptId == search.Id));
+            Assert.Equal(revisionCount, await db.RulesetRevisions.CountAsync());
+        }
+        finally
+        {
+            await ResetAsync(db);
+        }
+    }
+
+    private static async Task<HashSet<string>> ReadReviewedCompetencyConceptKeysAsync(
+        RulesCoreDbContext db,
+        IReadOnlyCollection<string>? restrictNames = null)
+    {
+        var names = restrictNames?.ToArray();
+        var query = db.SourceEntities
+            .AsNoTracking()
+            .Where(value => (value.SourcePackage.Key == "wotc-srd-ogl"
+                    || value.SourcePackage.Key == "wotc-srd-cc")
+                && (value.SourceCode == "SRD3"
+                    || value.SourceCode == "SRD35"
+                    || value.SourceCode == "SRD51"
+                    || value.SourceCode == "SRD52")
+                && (value.EntityType == "skill" || value.EntityType == "tool"));
+        if (names is not null)
+        {
+            query = query.Where(value => names.Contains(value.Name));
+        }
+
+        var sources = await query
+            .Select(value => new
+            {
+                value.EntityType,
+                value.Name,
+                value.NativeIdentityJson
+            })
+            .ToArrayAsync();
+        var method = typeof(SourceNormalizationService).GetMethod(
+            "BuildSuggestedConceptKey",
+            BindingFlags.NonPublic | BindingFlags.Static)
+            ?? throw new InvalidOperationException(
+                "SourceNormalizationService.BuildSuggestedConceptKey is unavailable.");
+
+        return sources
+            .Select(value => (string)(method.Invoke(
+                null,
+                [value.EntityType, value.Name, value.NativeIdentityJson])
+                ?? throw new InvalidOperationException("Suggested concept key was null.")))
+            .ToHashSet(StringComparer.Ordinal);
     }
 
     private static SetHostedSourceDefinitionRequest HistoricalHostedDefinition(string definitionKey)
