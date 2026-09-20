@@ -641,23 +641,8 @@ internal static class RulesCoreContentTranslation
         };
         if (competencyConversion is not null)
         {
-            var conversion = new JsonObject
-            {
-                ["relationship"] = competencyConversion.Relationship,
-                ["sourceType"] = "skill",
-                ["sourceName"] = competencyConversion.SourceName,
-                ["targetType"] = competencyConversion.TargetType,
-                ["targetName"] = competencyConversion.TargetName
-            };
-            if (!string.IsNullOrWhiteSpace(competencyConversion.Scope))
-            {
-                conversion["scope"] = competencyConversion.Scope;
-            }
-            if (competencyConversion.PreserveSourceMechanicalName)
-            {
-                conversion["mechanicalNamePreserved"] = true;
-            }
-            extension["competencyConversion"] = conversion;
+            extension["competencyConversion"] = BuildCompetencyConversionMetadata(
+                competencyConversion);
         }
         var competency = BuildPcGenCompetencyMetadata(
             edition,
@@ -709,35 +694,41 @@ internal static class RulesCoreContentTranslation
             && string.IsNullOrWhiteSpace(competencyConversion.Scope)
                 ? competencyConversion.TargetType
                 : normalizedEntityType;
-        var specialty = ParseCompetencySpecialty(nativeName);
-        var kind = string.Equals(effectiveType, "tool", StringComparison.OrdinalIgnoreCase)
-            ? "tool"
-            : specialty.Specialty is null
-                ? "skill"
-                : "specialized-skill";
-
-        var metadata = new JsonObject
-        {
-            ["profileKey"] = isThreeX ? "dnd-3x" : "pcgen",
-            ["kind"] = kind,
-            ["supportsRanks"] = isThreeX,
-            ["supportsClassSkillState"] = isThreeX,
-            ["supportsTrainingState"] = true,
-            ["evaluationProfileKey"] = isThreeX ? "ranked-skill" : "unsupported",
-            ["canEvaluate"] = isThreeX
-        };
+        JsonObject metadata;
         if (isThreeX)
         {
-            metadata["requiredCapabilityKeys"] = new JsonArray("competency.skill-ranks");
+            metadata = BuildThreeXCompetencyMetadata(
+                nativeName,
+                effectiveType,
+                edition!);
         }
-        if (!string.IsNullOrWhiteSpace(edition))
+        else
         {
-            metadata["gameEdition"] = edition.Trim();
-        }
-        if (specialty.FamilyName is not null)
-        {
-            metadata["familyName"] = specialty.FamilyName;
-            metadata["specialty"] = specialty.Specialty;
+            var specialty = ParseCompetencySpecialty(nativeName);
+            var kind = string.Equals(effectiveType, "tool", StringComparison.OrdinalIgnoreCase)
+                ? "tool"
+                : specialty.Specialty is null
+                    ? "skill"
+                    : "specialized-skill";
+            metadata = new JsonObject
+            {
+                ["profileKey"] = "pcgen",
+                ["kind"] = kind,
+                ["supportsRanks"] = false,
+                ["supportsClassSkillState"] = false,
+                ["supportsTrainingState"] = true,
+                ["evaluationProfileKey"] = "unsupported",
+                ["canEvaluate"] = false
+            };
+            if (!string.IsNullOrWhiteSpace(edition))
+            {
+                metadata["gameEdition"] = edition.Trim();
+            }
+            if (specialty.FamilyName is not null)
+            {
+                metadata["familyName"] = specialty.FamilyName;
+                metadata["specialty"] = specialty.Specialty;
+            }
         }
 
         var keyStat = Last(segments, "KEYSTAT");
@@ -758,6 +749,76 @@ internal static class RulesCoreContentTranslation
             metadata["armorCheckPenaltyApplies"] = armorCheckPenaltyApplies;
         }
 
+        return metadata;
+    }
+
+    internal static JsonObject BuildCompetencyConversionMetadata(
+        PcGenCompetencyConversion conversion)
+    {
+        ArgumentNullException.ThrowIfNull(conversion);
+        var result = new JsonObject
+        {
+            ["relationship"] = conversion.Relationship,
+            ["sourceType"] = "skill",
+            ["sourceName"] = conversion.SourceName,
+            ["targetType"] = conversion.TargetType,
+            ["targetName"] = conversion.TargetName
+        };
+        if (!string.IsNullOrWhiteSpace(conversion.Scope))
+        {
+            result["scope"] = conversion.Scope;
+        }
+        if (conversion.PreserveSourceMechanicalName)
+        {
+            result["mechanicalNamePreserved"] = true;
+        }
+        return result;
+    }
+
+    internal static JsonObject BuildThreeXCompetencyMetadata(
+        string nativeName,
+        string effectiveType,
+        string edition)
+    {
+        if (string.IsNullOrWhiteSpace(nativeName))
+        {
+            throw new ArgumentException("Native competency name can not be blank.", nameof(nativeName));
+        }
+        if (string.IsNullOrWhiteSpace(effectiveType))
+        {
+            throw new ArgumentException("Effective competency type can not be blank.", nameof(effectiveType));
+        }
+        if (!string.Equals(edition, "3e", StringComparison.OrdinalIgnoreCase)
+            && !string.Equals(edition, "3.5e", StringComparison.OrdinalIgnoreCase))
+        {
+            throw new ArgumentException(
+                "Three-X competency metadata requires a reviewed 3e or 3.5e edition.",
+                nameof(edition));
+        }
+
+        var specialty = ParseCompetencySpecialty(nativeName);
+        var kind = string.Equals(effectiveType, "tool", StringComparison.OrdinalIgnoreCase)
+            ? "tool"
+            : specialty.Specialty is null
+                ? "skill"
+                : "specialized-skill";
+        var metadata = new JsonObject
+        {
+            ["profileKey"] = "dnd-3x",
+            ["kind"] = kind,
+            ["supportsRanks"] = true,
+            ["supportsClassSkillState"] = true,
+            ["supportsTrainingState"] = true,
+            ["evaluationProfileKey"] = "ranked-skill",
+            ["canEvaluate"] = true,
+            ["requiredCapabilityKeys"] = new JsonArray("competency.skill-ranks"),
+            ["gameEdition"] = edition.Trim()
+        };
+        if (specialty.FamilyName is not null)
+        {
+            metadata["familyName"] = specialty.FamilyName;
+            metadata["specialty"] = specialty.Specialty;
+        }
         return metadata;
     }
 
