@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Reflection;
+using System.Text.Json.Nodes;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
@@ -346,6 +347,160 @@ public sealed class BaselineBootstrapIntegrationTests
     }
 
     [Fact]
+    public async Task GenuineReviewedCompetencyConflictRemainsUnresolvedForRulesLawyerAdjudication()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString)) return;
+
+        await using var db = new RulesCoreDbContext(
+            new DbContextOptionsBuilder<RulesCoreDbContext>().UseNpgsql(connectionString).Options);
+        await new RulesCoreSchemaInitializer(db).InitializeAsync();
+        var importer = new SourceImportService(db);
+        var globalRules = new GlobalRulesService(db);
+        var bootstrapper = new RulesCoreBaselineBootstrapper(db, importer, globalRules);
+
+        await ResetAsync(db);
+        try
+        {
+            await bootstrapper.EnsureAsync();
+            var fixture = await FindReviewedMultiImplementationCompetencyAsync(db);
+
+            await ClearRulesLayerAsync(db);
+            await MakeReviewedCompetencyConflictAsync(db, fixture);
+
+            var syncResult = await SynchronizeReviewedCompetenciesAsync(db, globalRules);
+            var conflicts = ReadSyncProperty<IReadOnlyList<string>>(syncResult, "Conflicts");
+
+            var conflict = Assert.Single(
+                conflicts,
+                value => value.Contains(fixture.ConceptKey, StringComparison.Ordinal));
+            Assert.Contains("require Rules Lawyer adjudication", conflict, StringComparison.Ordinal);
+            foreach (var sourceCode in fixture.SourceCodes)
+            {
+                Assert.Contains(sourceCode, conflict, StringComparison.Ordinal);
+            }
+            Assert.DoesNotContain("later checked-in", conflict, StringComparison.OrdinalIgnoreCase);
+
+            var concept = await db.RuleConcepts.SingleAsync(value => value.Key == fixture.ConceptKey);
+            Assert.True(await db.RuleConceptSourceBindings.AnyAsync(value => value.RuleConceptId == concept.Id));
+            Assert.False(await db.GlobalRuleDecisions.AnyAsync(value => value.RuleConceptId == concept.Id));
+            Assert.Equal(0, await db.RulesetRevisions.CountAsync());
+        }
+        finally
+        {
+            await ResetAsync(db);
+        }
+    }
+
+    [Fact]
+    public async Task CompetencyConflictPreventsPartialRulesetPublication()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString)) return;
+
+        await using var db = new RulesCoreDbContext(
+            new DbContextOptionsBuilder<RulesCoreDbContext>().UseNpgsql(connectionString).Options);
+        await new RulesCoreSchemaInitializer(db).InitializeAsync();
+        var importer = new SourceImportService(db);
+        var globalRules = new GlobalRulesService(db);
+        var bootstrapper = new RulesCoreBaselineBootstrapper(db, importer, globalRules);
+
+        await ResetAsync(db);
+        try
+        {
+            await bootstrapper.EnsureAsync();
+            var fixture = await FindReviewedMultiImplementationCompetencyAsync(db);
+            var priorRevision = await ReduceToHistoricalSixRuleBaselineAsync(db, globalRules);
+            var priorEntries = await db.RulesetRevisionEntries
+                .AsNoTracking()
+                .Where(value => value.RulesetRevisionId == priorRevision.Id)
+                .OrderBy(value => value.RuleConceptId)
+                .Select(value => new
+                {
+                    value.RuleConceptId,
+                    value.GlobalRuleDecisionId,
+                    value.SourceEntityRevisionId
+                })
+                .ToArrayAsync();
+
+            await MakeReviewedCompetencyConflictAsync(db, fixture);
+
+            var exception = await Assert.ThrowsAsync<InvalidOperationException>(
+                () => bootstrapper.EnsureAsync());
+            Assert.Contains(fixture.ConceptKey, exception.Message, StringComparison.Ordinal);
+            Assert.Contains("Rules Lawyer review", exception.Message, StringComparison.Ordinal);
+
+            Assert.Equal(1, await db.RulesetRevisions.CountAsync());
+            var preservedEntries = await db.RulesetRevisionEntries
+                .AsNoTracking()
+                .Where(value => value.RulesetRevisionId == priorRevision.Id)
+                .OrderBy(value => value.RuleConceptId)
+                .Select(value => new
+                {
+                    value.RuleConceptId,
+                    value.GlobalRuleDecisionId,
+                    value.SourceEntityRevisionId
+                })
+                .ToArrayAsync();
+            Assert.Equal(priorEntries, preservedEntries);
+
+            var conflictedConcept = await db.RuleConcepts.SingleAsync(value => value.Key == fixture.ConceptKey);
+            Assert.True(await db.RuleConceptSourceBindings.AnyAsync(value => value.RuleConceptId == conflictedConcept.Id));
+            Assert.False(await db.GlobalRuleDecisions.AnyAsync(value => value.RuleConceptId == conflictedConcept.Id));
+
+            // Safe decisions are allowed to persist as unpublished work for a later successful
+            // synchronization. The failed invocation must not turn them into an immutable revision.
+            Assert.True(await db.GlobalRuleDecisions.CountAsync() > 6);
+        }
+        finally
+        {
+            await ResetAsync(db);
+        }
+    }
+
+    [Fact]
+    public async Task ConcurrentRulesLawyerDecisionWinsInitialCompetencyBaselineRace()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString)) return;
+
+        await using var db = new RulesCoreDbContext(
+            new DbContextOptionsBuilder<RulesCoreDbContext>().UseNpgsql(connectionString).Options);
+        await new RulesCoreSchemaInitializer(db).InitializeAsync();
+        var importer = new SourceImportService(db);
+        var globalRules = new GlobalRulesService(db);
+        var bootstrapper = new RulesCoreBaselineBootstrapper(db, importer, globalRules);
+
+        await ResetAsync(db);
+        try
+        {
+            await bootstrapper.EnsureAsync();
+            await ClearRulesLayerAsync(db);
+
+            var racingRules = new RacingGlobalRulesService(new GlobalRulesService(db));
+            _ = await SynchronizeReviewedCompetenciesAsync(db, racingRules);
+
+            Assert.NotNull(racingRules.RacedConceptId);
+            Assert.NotNull(racingRules.HumanDecision);
+
+            var decisions = await db.GlobalRuleDecisions
+                .AsNoTracking()
+                .Where(value => value.RuleConceptId == racingRules.RacedConceptId!.Value)
+                .OrderBy(value => value.DecisionNumber)
+                .ToArrayAsync();
+            var human = Assert.Single(decisions);
+            Assert.Equal(racingRules.HumanDecision!.Id, human.Id);
+            Assert.Equal(1, human.DecisionNumber);
+            Assert.Equal("rules-lawyer", human.CreatedByUserId);
+            Assert.Equal("Concurrent Rules Lawyer competency decision.", human.Note);
+        }
+        finally
+        {
+            await ResetAsync(db);
+        }
+    }
+
+    [Fact]
     public async Task ExistingSixRuleInstallationGetsIncrementalCompetencyRevisionIdempotently()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
@@ -494,6 +649,166 @@ public sealed class BaselineBootstrapIntegrationTests
         }
     }
 
+    private static async Task<object> SynchronizeReviewedCompetenciesAsync(
+        RulesCoreDbContext db,
+        IGlobalRulesService globalRules)
+    {
+        var type = typeof(RulesCoreBaselineBootstrapper).Assembly.GetType(
+            "RulesCore.Infrastructure.Bootstrap.ReviewedBundledCompetencyBaselineSynchronizer",
+            throwOnError: true)!;
+        var constructor = type.GetConstructors(
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+            .Single();
+        var instance = constructor.Invoke([db, globalRules]);
+        var method = type.GetMethod(
+            "SynchronizeAsync",
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException(
+                "ReviewedBundledCompetencyBaselineSynchronizer.SynchronizeAsync is unavailable.");
+        var task = method.Invoke(instance, [CancellationToken.None]) as Task
+            ?? throw new InvalidOperationException(
+                "Reviewed competency synchronization did not return a Task.");
+        await task;
+        return task.GetType().GetProperty("Result")?.GetValue(task)
+            ?? throw new InvalidOperationException(
+                "Reviewed competency synchronization returned no result.");
+    }
+
+    private static T ReadSyncProperty<T>(object result, string propertyName) =>
+        (T)(result.GetType().GetProperty(propertyName)?.GetValue(result)
+            ?? throw new InvalidOperationException(
+                $"Reviewed competency synchronization result has no '{propertyName}' value."));
+
+    private static async Task<ReviewedCompetencyFixture> FindReviewedMultiImplementationCompetencyAsync(
+        RulesCoreDbContext db)
+    {
+        var sources = await db.SourceEntities
+            .AsNoTracking()
+            .Where(value => (value.SourcePackage.Key == "wotc-srd-ogl"
+                    || value.SourcePackage.Key == "wotc-srd-cc")
+                && (value.SourceCode == "SRD3"
+                    || value.SourceCode == "SRD35"
+                    || value.SourceCode == "SRD51"
+                    || value.SourceCode == "SRD52")
+                && (value.EntityType == "skill" || value.EntityType == "tool"))
+            .Select(value => new
+            {
+                value.Id,
+                value.EntityType,
+                value.Name,
+                value.NativeIdentityJson,
+                SourceCode = value.SourceCode ?? string.Empty
+            })
+            .ToArrayAsync();
+        var keyMethod = typeof(SourceNormalizationService).GetMethod(
+            "BuildSuggestedConceptKey",
+            BindingFlags.NonPublic | BindingFlags.Static)
+            ?? throw new InvalidOperationException(
+                "SourceNormalizationService.BuildSuggestedConceptKey is unavailable.");
+
+        var group = sources
+            .Select(value => new
+            {
+                Source = value,
+                ConceptKey = (string)(keyMethod.Invoke(
+                    null,
+                    [value.EntityType, value.Name, value.NativeIdentityJson])
+                    ?? throw new InvalidOperationException("Suggested concept key was null."))
+            })
+            .GroupBy(value => value.ConceptKey, StringComparer.Ordinal)
+            .Where(value =>
+                value.Select(item => item.Source.SourceCode)
+                    .Where(sourceCode => !string.IsNullOrWhiteSpace(sourceCode))
+                    .Distinct(StringComparer.Ordinal)
+                    .Count() >= 2)
+            .OrderBy(value => value.Key, StringComparer.Ordinal)
+            .FirstOrDefault()
+            ?? throw new InvalidOperationException(
+                "The reviewed bundled SRD corpus did not contain a multi-implementation competency fixture.");
+
+        return new ReviewedCompetencyFixture(
+            group.Key,
+            group.Select(value => value.Source.Id).Distinct().ToArray(),
+            group.Select(value => value.Source.SourceCode)
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .Distinct(StringComparer.Ordinal)
+                .OrderBy(value => value, StringComparer.Ordinal)
+                .ToArray());
+    }
+
+    private static async Task MakeReviewedCompetencyConflictAsync(
+        RulesCoreDbContext db,
+        ReviewedCompetencyFixture fixture)
+    {
+        var revisions = await db.SourceEntityRevisions
+            .Where(value => fixture.SourceEntityIds.Contains(value.SourceEntityId))
+            .OrderBy(value => value.SourceEntityId)
+            .ThenByDescending(value => value.RevisionNumber)
+            .ToArrayAsync();
+        var latest = revisions
+            .GroupBy(value => value.SourceEntityId)
+            .Select(value => value.First())
+            .OrderBy(value => value.SourceEntityId)
+            .ToArray();
+        Assert.Equal(fixture.SourceEntityIds.Count, latest.Length);
+
+        for (var index = 0; index < latest.Length; index++)
+        {
+            var revision = latest[index];
+            var root = JsonNode.Parse(revision.ContentJson ?? revision.RawJson) as JsonObject
+                ?? throw new InvalidOperationException(
+                    $"Reviewed source revision '{revision.Id}' does not have an object mechanical body.");
+            root["baselineConflictProbe"] = $"conflict-{index}";
+            revision.ContentJson = root.ToJsonString();
+        }
+
+        await db.SaveChangesAsync();
+        db.ChangeTracker.Clear();
+    }
+
+    private static async Task ClearRulesLayerAsync(RulesCoreDbContext db)
+    {
+        await db.CampaignRulesetRevisionEntries.ExecuteDeleteAsync();
+        await db.CampaignRulesetRevisions.ExecuteDeleteAsync();
+        await db.CampaignRuleDecisions.ExecuteDeleteAsync();
+        await db.CampaignRulesetSelections.ExecuteDeleteAsync();
+        await db.RulesetRevisionEntries.ExecuteDeleteAsync();
+        await db.RulesetRevisions.ExecuteDeleteAsync();
+        await db.GlobalRuleDecisions.ExecuteDeleteAsync();
+        await db.RuleConceptSourceBindings.ExecuteDeleteAsync();
+        await db.RuleConcepts.ExecuteDeleteAsync();
+        db.ChangeTracker.Clear();
+    }
+
+    private static async Task<PublishedRulesetRevisionView> ReduceToHistoricalSixRuleBaselineAsync(
+        RulesCoreDbContext db,
+        IGlobalRulesService globalRules)
+    {
+        var competencyConceptIds = await db.RuleConcepts
+            .Where(value => value.EntityType == "skill" || value.EntityType == "tool")
+            .Select(value => value.Id)
+            .ToArrayAsync();
+
+        await db.RulesetRevisionEntries.ExecuteDeleteAsync();
+        await db.RulesetRevisions.ExecuteDeleteAsync();
+        await db.GlobalRuleDecisions
+            .Where(value => competencyConceptIds.Contains(value.RuleConceptId))
+            .ExecuteDeleteAsync();
+        await db.RuleConceptSourceBindings
+            .Where(value => competencyConceptIds.Contains(value.RuleConceptId))
+            .ExecuteDeleteAsync();
+        await db.RuleConcepts
+            .Where(value => competencyConceptIds.Contains(value.Id))
+            .ExecuteDeleteAsync();
+        db.ChangeTracker.Clear();
+
+        var revision = await globalRules.PublishAsync("legacy-production-bootstrap");
+        Assert.True(revision.CreatedRevision);
+        Assert.Equal(1, revision.RevisionNumber);
+        Assert.Equal(6, revision.EntryCount);
+        return revision;
+    }
+
     private static async Task<HashSet<string>> ReadReviewedCompetencyConceptKeysAsync(
         RulesCoreDbContext db,
         IReadOnlyCollection<string>? restrictNames = null)
@@ -573,6 +888,82 @@ public sealed class BaselineBootstrapIntegrationTests
         {
             if (openedHere) await connection.CloseAsync();
         }
+    }
+
+    private sealed record ReviewedCompetencyFixture(
+        string ConceptKey,
+        IReadOnlyList<Guid> SourceEntityIds,
+        IReadOnlyList<string> SourceCodes);
+
+    private sealed class RacingGlobalRulesService(IGlobalRulesService inner) : IGlobalRulesService
+    {
+        private bool injected;
+
+        public Guid? RacedConceptId { get; private set; }
+        public GlobalRuleDecisionView? HumanDecision { get; private set; }
+
+        public Task<RuleMutationResult<RuleConceptView>> CreateConceptAsync(
+            CreateRuleConceptRequest request,
+            string actorUserId,
+            CancellationToken cancellationToken = default) =>
+            inner.CreateConceptAsync(request, actorUserId, cancellationToken);
+
+        public Task<RuleMutationResult<RuleConceptSourceBindingView>> BindSourceEntityAsync(
+            Guid ruleConceptId,
+            BindRuleConceptSourceRequest request,
+            string actorUserId,
+            CancellationToken cancellationToken = default) =>
+            inner.BindSourceEntityAsync(ruleConceptId, request, actorUserId, cancellationToken);
+
+        public async Task<RuleMutationResult<GlobalRuleDecisionView>> SetDecisionAsync(
+            Guid ruleConceptId,
+            SetGlobalRuleDecisionRequest request,
+            string actorUserId,
+            CancellationToken cancellationToken = default)
+        {
+            if (!injected
+                && string.Equals(actorUserId, BootstrapActor, StringComparison.Ordinal)
+                && request.EnforceExpectedLatestDecision
+                && request.ExpectedLatestDecisionId is null)
+            {
+                injected = true;
+                RacedConceptId = ruleConceptId;
+                var human = await inner.SetDecisionAsync(
+                    ruleConceptId,
+                    request with
+                    {
+                        Note = "Concurrent Rules Lawyer competency decision.",
+                        ExpectedLatestDecisionId = null,
+                        EnforceExpectedLatestDecision = false
+                    },
+                    "rules-lawyer",
+                    cancellationToken);
+                HumanDecision = human.Value;
+            }
+
+            return await inner.SetDecisionAsync(
+                ruleConceptId,
+                request,
+                actorUserId,
+                cancellationToken);
+        }
+
+        public Task<PublishedRulesetRevisionView> PublishAsync(
+            string actorUserId,
+            CancellationToken cancellationToken = default) =>
+            inner.PublishAsync(actorUserId, cancellationToken);
+
+        public Task<ResolvedRuleView?> ResolveLatestAsync(
+            string conceptKey,
+            string? userId,
+            CancellationToken cancellationToken = default) =>
+            inner.ResolveLatestAsync(conceptKey, userId, cancellationToken);
+
+        public Task<RuleConceptVersionsView?> GetAccessibleVersionsAsync(
+            string conceptKey,
+            string? userId,
+            CancellationToken cancellationToken = default) =>
+            inner.GetAccessibleVersionsAsync(conceptKey, userId, cancellationToken);
     }
 
     private static async Task ResetAsync(RulesCoreDbContext db)

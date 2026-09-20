@@ -895,7 +895,7 @@ public sealed class RuleAdjudicationWorkIntegrationTests
         RulesCoreDbContext db,
         Guid fromCanonicalEntityId,
         Guid toCanonicalEntityId) =>
-        db.Database.ExecuteSqlInterpolatedAsync($"""
+        db.Database.ExecuteSqlInterpolatedAsync($$"""
             INSERT INTO canonical_entity_relationship (
                 canonical_entity_relationship_id,
                 from_canonical_entity_id,
