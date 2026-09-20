@@ -49,6 +49,45 @@ public sealed class PcGenSkillConversionIntegrationTests
     ];
 
     [Fact]
+    public async Task AlchemistsSuppliesUsesEstablishedCompetencyConceptKey()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var packageKey = $"pcgen-alchemy-key-{token}";
+
+            try
+            {
+                await new NormalizedSourceImportService(db).ImportAsync(
+                    new ImportNormalizedSourceRequest(
+                        packageKey,
+                        $"PCGen alchemy key fixture {token}",
+                        "integration-test",
+                        "test-only",
+                        true,
+                        PcGenRepresentation("3e", $"ALK{token}", ["Alchemy"])));
+
+                var candidates = await new SourceNormalizationService(db).GetCandidatesAsync(
+                    $"rules-lawyer-{token}",
+                    entityType: "tool",
+                    query: "Alchemist's Supplies");
+
+                var candidate = Assert.Single(
+                    candidates,
+                    value => value.PackageKey == packageKey);
+                Assert.Equal("Alchemist's Supplies", candidate.SourceName);
+                Assert.Equal("tool.alchemists-supplies", candidate.SuggestedConceptKey);
+            }
+            finally
+            {
+                await DeletePackageAsync(db, packageKey);
+            }
+        }
+    }
+
+    [Fact]
     public async Task ApprovedMappingsAreImporterTranslationsAndPreserveNativePcGenEvidence()
     {
         var db = await OpenDatabaseAsync();
