@@ -457,6 +457,82 @@ public sealed class RuleAdjudicationWorkIntegrationTests
     }
 
     [Fact]
+    public async Task RejectedSourceUpdateAuditUsesTheRejectingRulesLawyer()
+    {
+        if (!HasDatabase()) return;
+
+        await using var factory = CreateFactory(new FakeToolHostAuthenticationClient(new Dictionary<string, ToolHostAuthenticationContext>()));
+        var packageIds = new List<Guid>();
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var rules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var packageKey = $"adjudication-source-rejection-{Guid.NewGuid():N}";
+
+            var firstImport = await importer.Import5eToolsDocumentAsync(
+                SourceRequest(packageKey, "2014", "Rejected Update Skill", "REJ", "int", true));
+            packageIds.Add(firstImport.PackageId);
+            var sourceEntityId = firstImport.Entities.Single().EntityId;
+            var firstRevisionId = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == sourceEntityId)
+                .Select(value => value.Id)
+                .SingleAsync();
+
+            var concept = (await rules.CreateConceptAsync(
+                new CreateRuleConceptRequest($"skill.rejected-update-{Guid.NewGuid():N}", "skill", "Rejected Update Skill"),
+                "seed-rules-lawyer")).Value;
+            await rules.BindSourceEntityAsync(
+                concept.Id,
+                new BindRuleConceptSourceRequest(sourceEntityId),
+                "seed-rules-lawyer");
+            await rules.SetDecisionAsync(
+                concept.Id,
+                new SetGlobalRuleDecisionRequest(firstRevisionId, "Reviewed rejection baseline."),
+                "seed-rules-lawyer");
+
+            await importer.Import5eToolsDocumentAsync(
+                SourceRequest(packageKey, "2014", "Rejected Update Skill", "REJ", "wis", true));
+
+            var workflow = new RuleAdjudicationWorkService(db);
+            await workflow.DiscoverAsync("agent-source-reviewer");
+            var item = Assert.Single(
+                await workflow.ListAsync(
+                    "agent-source-reviewer",
+                    kind: RuleAdjudicationWorkKinds.SourceUpdateReview,
+                    includePublishedCompleted: true),
+                value => value.RuleConceptId == concept.Id);
+            var detail = (await workflow.GetAsync(item.Id, "agent-source-reviewer"))!;
+            var update = detail.SourceUpdate!.Update;
+            const string rejectionReason = "The new revision is not adopted for the Dorks & Dice baseline.";
+
+            var rejected = await new SourceRevisionRejectionService(db).RejectLatestAsync(
+                concept.Id,
+                new RejectLatestSourceRevisionRequest(
+                    update.GlobalRuleDecisionId,
+                    update.LatestSourceEntityRevisionId,
+                    update.LatestFingerprint,
+                    rejectionReason),
+                "human-source-reviewer");
+            Assert.NotNull(rejected);
+
+            var completed = (await workflow.GetAsync(item.Id, "agent-source-reviewer"))!;
+            Assert.Equal(RuleAdjudicationWorkStates.Completed, completed.WorkItem.State);
+            Assert.Contains(
+                completed.History,
+                value => value.EventKind == RuleAdjudicationWorkEventKinds.SourceUpdateResolved
+                    && value.ActorUserId == "human-source-reviewer"
+                    && value.Message!.Contains(rejectionReason, StringComparison.Ordinal));
+        }
+        finally
+        {
+            await CleanupAsync(factory, packageIds);
+        }
+    }
+
+    [Fact]
     public async Task ManualNormalizationBindingCompletesAgainstTheActualConcept()
     {
         if (!HasDatabase()) return;

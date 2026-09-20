@@ -608,17 +608,31 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
 
             row = await store.CompleteAsync(row, updateConceptId, cancellationToken);
             var latest = await GetLatestDecisionAsync(updateConceptId, cancellationToken);
+            var rejection = row.ExpectedGlobalRuleDecisionId is Guid expectedDecisionId
+                && row.SourceRevisionId is Guid reviewedRevisionId
+                ? await new SourceRevisionRejectionService(dbContext).GetRecordedAsync(
+                    expectedDecisionId,
+                    reviewedRevisionId,
+                    cancellationToken)
+                : null;
+            var resolutionActor = rejection?.CreatedByUserId ?? latest?.CreatedByUserId;
+            var resolutionMessage = rejection is null
+                ? "The source-update condition is no longer outstanding under the ordinary source revision review workflow."
+                : $"The reviewed source revision was explicitly rejected: {rejection.Reason}";
+            var resolutionDedupeKey = rejection is null
+                ? $"source-update-resolved:{latest?.Id.ToString("D") ?? "reviewed"}"
+                : $"source-update-rejected:{row.ExpectedGlobalRuleDecisionId:D}:{row.SourceRevisionId:D}";
             await store.AppendEventAsync(
                 row.Id,
                 RuleAdjudicationWorkEventKinds.SourceUpdateResolved,
-                latest?.CreatedByUserId,
+                resolutionActor,
                 row.Version,
-                "The source-update condition is no longer outstanding under the ordinary source revision review workflow.",
+                resolutionMessage,
                 updateConceptId,
                 row.SourceEntityId,
                 latest?.Id,
                 rulesetRevisionId: null,
-                dedupeKey: $"source-update-resolved:{latest?.Id.ToString("D") ?? "reviewed"}",
+                dedupeKey: resolutionDedupeKey,
                 cancellationToken);
             if (latest is not null)
             {

@@ -46,6 +46,23 @@ public sealed class SourceRevisionRejectionService(RulesCoreDbContext dbContext)
             .ToArray();
     }
 
+    internal async Task<SourceRevisionRejectionAudit?> GetRecordedAsync(
+        Guid globalRuleDecisionId,
+        Guid sourceEntityRevisionId,
+        CancellationToken cancellationToken = default)
+    {
+        RequireGuid(globalRuleDecisionId, nameof(globalRuleDecisionId));
+        RequireGuid(sourceEntityRevisionId, nameof(sourceEntityRevisionId));
+        await EnsureSchemaAsync(cancellationToken);
+        var stored = await GetAsync(globalRuleDecisionId, sourceEntityRevisionId, cancellationToken);
+        return stored is null
+            ? null
+            : new SourceRevisionRejectionAudit(
+                stored.CreatedByUserId,
+                stored.Reason,
+                stored.CreatedAt);
+    }
+
     public async Task<SourceRevisionRejectionView?> RejectLatestAsync(
         Guid ruleConceptId,
         RejectLatestSourceRevisionRequest request,
@@ -312,6 +329,11 @@ public sealed class SourceRevisionRejectionService(RulesCoreDbContext dbContext)
         if (normalized.Length > 2000) throw new ArgumentException("A source revision rejection reason can not exceed 2000 characters.", nameof(value));
         return normalized;
     }
+
+    internal sealed record SourceRevisionRejectionAudit(
+        string CreatedByUserId,
+        string Reason,
+        DateTimeOffset CreatedAt);
 
     private sealed record StoredSourceRevisionRejection(
         Guid Id,
