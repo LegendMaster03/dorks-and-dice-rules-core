@@ -535,7 +535,13 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
                 dbContext,
                 [sourceEntityId],
                 cancellationToken);
-            if (!mappings.TryGetValue(sourceEntityId, out var concepts) || concepts.Count == 0) return row;
+            if (!mappings.TryGetValue(sourceEntityId, out var concepts) || concepts.Count == 0)
+            {
+                return await ReopenDerivedCompletionAsync(
+                    row,
+                    "The source entity no longer has a Rules Layer binding, so normalization review is outstanding again.",
+                    cancellationToken);
+            }
             var normalizedConceptId = concepts[0];
             var binding = await dbContext.RuleConceptSourceBindings
                 .AsNoTracking()
@@ -562,7 +568,13 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
         if (row.WorkKind == RuleAdjudicationWorkKinds.GlobalRuleAdjudication && row.RuleConceptId is Guid conceptId)
         {
             var latest = await GetLatestDecisionAsync(conceptId, cancellationToken);
-            if (latest is null || !await IsUsableDecisionAsync(latest, actor, cancellationToken)) return row;
+            if (latest is null || !await IsUsableDecisionAsync(latest, actor, cancellationToken))
+            {
+                return await ReopenDerivedCompletionAsync(
+                    row,
+                    "The previously completed rule no longer has a usable current global decision, so adjudication is outstanding again.",
+                    cancellationToken);
+            }
             row = await store.CompleteAsync(row, conceptId, cancellationToken);
             await store.AppendEventAsync(
                 row.Id,
@@ -586,7 +598,13 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
             var remainsPending = pending.Any(value => value.RuleConceptId == updateConceptId
                 && value.GlobalRuleDecisionId == row.ExpectedGlobalRuleDecisionId
                 && value.LatestSourceEntityRevisionId == row.SourceRevisionId);
-            if (remainsPending) return row;
+            if (remainsPending)
+            {
+                return await ReopenDerivedCompletionAsync(
+                    row,
+                    "The reviewed source-update condition is outstanding again.",
+                    cancellationToken);
+            }
 
             row = await store.CompleteAsync(row, updateConceptId, cancellationToken);
             var latest = await GetLatestDecisionAsync(updateConceptId, cancellationToken);
@@ -622,6 +640,34 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
         }
 
         return row;
+    }
+
+    private async Task<StoredRuleAdjudicationWorkItem> ReopenDerivedCompletionAsync(
+        StoredRuleAdjudicationWorkItem row,
+        string message,
+        CancellationToken cancellationToken)
+    {
+        if (row.State != RuleAdjudicationWorkStates.Completed) return row;
+
+        var reopened = await store.TransitionAsync(
+            row,
+            RuleAdjudicationWorkStates.Pending,
+            manualReason: null,
+            deferredReason: null,
+            cancellationToken);
+        await store.AppendEventAsync(
+            reopened.Id,
+            RuleAdjudicationWorkEventKinds.Reopened,
+            actorUserId: null,
+            reopened.Version,
+            message,
+            reopened.RuleConceptId,
+            reopened.SourceEntityId,
+            globalRuleDecisionId: null,
+            rulesetRevisionId: null,
+            dedupeKey: $"derived-reopened:{reopened.Version}",
+            cancellationToken);
+        return reopened;
     }
 
     private async Task ObservePublicationAsync(

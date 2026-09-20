@@ -93,6 +93,71 @@ public sealed class RuleAdjudicationWorkIntegrationTests
     }
 
     [Fact]
+    public async Task CompletedAutomaticAdjudicationReopensWhenNewSourceEvidenceContradictsIt()
+    {
+        if (!HasDatabase()) return;
+
+        await using var factory = CreateFactory(new FakeToolHostAuthenticationClient(new Dictionary<string, ToolHostAuthenticationContext>()));
+        var packageIds = new List<Guid>();
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            const string actor = "reopen-agent";
+            var firstPackageKey = $"adjudication-reopen-a-{Guid.NewGuid():N}";
+            var secondPackageKey = $"adjudication-reopen-b-{Guid.NewGuid():N}";
+
+            var firstImport = await importer.Import5eToolsDocumentAsync(
+                SourceRequest(firstPackageKey, "2014", "Reopen Skill", "R14", "int", true));
+            var secondImport = await importer.Import5eToolsDocumentAsync(
+                SourceRequest(secondPackageKey, "2024", "Reopen Skill", "R24", "int", true));
+            packageIds.Add(firstImport.PackageId);
+            packageIds.Add(secondImport.PackageId);
+
+            var normalization = new SourceNormalizationService(db);
+            var first = (await normalization.AcceptAsync(firstImport.Entities.Single().EntityId, actor))!;
+            var second = (await normalization.AcceptAsync(secondImport.Entities.Single().EntityId, actor))!;
+            Assert.Equal(first.Concept.Id, second.Concept.Id);
+
+            var workflow = new RuleAdjudicationWorkService(db);
+            await workflow.DiscoverAsync(actor);
+            var completed = Assert.Single(
+                await workflow.ListAsync(actor, includePublishedCompleted: true),
+                value => value.RuleConceptId == first.Concept.Id);
+            Assert.Equal(RuleAdjudicationWorkStates.Completed, completed.State);
+            var workItemId = completed.Id;
+
+            await importer.Import5eToolsDocumentAsync(
+                SourceRequest(secondPackageKey, "2024", "Reopen Skill", "R24", "wis", true));
+
+            await workflow.DiscoverAsync(actor);
+            var reopened = Assert.Single(
+                await workflow.ListAsync(
+                    actor,
+                    kind: RuleAdjudicationWorkKinds.GlobalRuleAdjudication,
+                    includePublishedCompleted: true),
+                value => value.RuleConceptId == first.Concept.Id);
+            Assert.Equal(workItemId, reopened.Id);
+            Assert.Equal(RuleAdjudicationWorkStates.Pending, reopened.State);
+
+            var detail = (await workflow.GetAsync(reopened.Id, actor))!;
+            Assert.NotNull(detail.DeterministicResolution);
+            Assert.False(detail.DeterministicResolution!.Applied);
+            Assert.Contains(detail.SemanticComparisons, value => value.ContradictionCount > 0);
+            Assert.Contains(
+                detail.History,
+                value => value.EventKind == RuleAdjudicationWorkEventKinds.Reopened
+                    && value.ActorUserId is null);
+        }
+        finally
+        {
+            await CleanupAsync(factory, packageIds);
+        }
+    }
+
+    [Fact]
     public async Task ContradictionsRemainAdjudicationWorkAndManualDecisionsAreNotReplaced()
     {
         if (!HasDatabase()) return;
