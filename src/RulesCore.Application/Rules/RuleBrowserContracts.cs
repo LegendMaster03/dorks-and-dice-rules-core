@@ -20,6 +20,8 @@ public static class RuleBrowserRoutes
             ["subclass"] = "subclasses",
             ["prestigeClass"] = "prestige-classes",
             ["feat"] = "feats",
+            ["background"] = "backgrounds",
+            ["optionalfeature"] = "optional-features",
             ["race"] = "races",
             ["species"] = "species",
             ["item"] = "items",

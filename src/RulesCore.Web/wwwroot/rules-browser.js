@@ -21,12 +21,33 @@ const ROUTE_FAMILIES = new Map([
     ["subclasses", "subclass"],
     ["prestige-classes", "prestigeClass"],
     ["feats", "feat"],
+    ["backgrounds", "background"],
+    ["optional-features", "optionalfeature"],
     ["races", "race"],
     ["species", "species"],
     ["items", "item"],
     ["conditions", "condition"],
     ["skills", "skill"]
 ]);
+export const RULE_FAMILY_TABS = [
+    ["", "All Content"],
+    ["monster", "Bestiary"],
+    ["spell", "Spells"],
+    ["class", "Classes"],
+    ["subclass", "Subclasses"],
+    ["prestigeClass", "Prestige Classes"],
+    ["feat", "Feats"],
+    ["background", "Backgrounds"],
+    ["optionalfeature", "Options & Features"],
+    ["race", "Races"],
+    ["species", "Species"],
+    ["item", "Items"],
+    ["condition", "Conditions"],
+    ["skill", "Skills"],
+    ["houseRule", "House Rules"],
+    ["rule", "Other Rules"]
+];
+
 const ENTITY_TYPES = [
     ["", "All"],
     ["monster", "Monsters"],
@@ -35,6 +56,8 @@ const ENTITY_TYPES = [
     ["subclass", "Subclasses"],
     ["prestigeClass", "Prestige classes"],
     ["feat", "Feats"],
+    ["background", "Backgrounds"],
+    ["optionalfeature", "Options & features"],
     ["race", "Races"],
     ["species", "Species"],
     ["item", "Items"],
@@ -79,6 +102,14 @@ const BROWSER_COLUMNS = new Map([
     ["feat", [
         { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
         { key: "category", label: "Category", width: "minmax(6rem, 1fr)" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]],
+    ["background", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
+        { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
+    ]],
+    ["optionalfeature", [
+        { key: "name", label: "Name", width: "minmax(9rem, 2fr)" },
         { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
     ]],
     ["race", [
@@ -136,6 +167,19 @@ export function installResolvedRulesBrowser(app) {
 
     if (app.canBrowseRules) app.activeView = "library";
 
+    app.ruleFamilyTabs = RULE_FAMILY_TABS;
+    app.navigateRuleFamily = async entityType => {
+        const nextEntityType = entityType ?? "";
+        app.browserDeepLink = null;
+        app.browserSelectedConceptKey = null;
+        app.libraryDeepLink = null;
+        app.libraryRouteActive = false;
+        app.browserFilters.entityType = nextEntityType;
+        app.activeView = "library";
+        pushToolRoute(app, catalogRouteForEntity(nextEntityType), app.browserScope);
+        await app.render();
+    };
+
     app.browserKeyboard ??= { focusSearch: null, selectRelative: null };
     if (!app.browserKeyboardBound) {
         app.browserKeyboardBound = true;
@@ -162,15 +206,8 @@ export function installResolvedRulesBrowser(app) {
     }
 
     app.viewNavigation ??= {};
-    app.viewNavigation.library = async () => {
-        app.browserDeepLink = null;
-        app.browserSelectedConceptKey = null;
-        app.libraryDeepLink = null;
-        app.libraryRouteActive = false;
-        app.activeView = "library";
-        pushToolRoute(app, catalogRouteForEntity(app.browserFilters.entityType));
-        await app.render();
-    };
+    app.viewNavigation.library = async () =>
+        app.navigateRuleFamily(app.browserFilters.entityType);
 
     const renderActiveView = app.renderActiveView.bind(app);
     app.renderActiveView = async container => {
@@ -213,25 +250,6 @@ async function renderRulesBrowser(app, container) {
         }));
 
     const controls = element("div", { className: "rules-core-library-controls" });
-    const familyNav = element("div", {
-        className: "rules-core-library-family-nav",
-        role: "navigation",
-        ariaLabel: "Rule families"
-    });
-    const familyButtons = new Map();
-    for (const [value, label] of ENTITY_TYPES) {
-        const button = element("button", {
-            type: "button",
-            className: "rules-core-library-family",
-            text: label,
-            dataset: { entityType: value },
-            attributes: {
-                "aria-current": value === app.browserFilters.entityType ? "page" : "false"
-            }
-        });
-        familyButtons.set(value, button);
-        familyNav.append(button);
-    }
 
     const scope = element("select", {
         className: "form-select form-select-sm rules-core-library-scope",
@@ -246,77 +264,51 @@ async function renderRulesBrowser(app, container) {
     }
     scope.value = app.browserScope;
 
-    const type = element("select", {
-        className: "form-select form-select-sm rules-core-library-type",
-        ariaLabel: "Rule type"
+    const knownEntityTypes = new Set(ENTITY_TYPES.map(([value]) => value));
+    const moreTypes = element("select", {
+        className: "form-select form-select-sm rules-core-library-more-types",
+        ariaLabel: "More rule types",
+        attributes: { hidden: "" }
     });
-    for (const [value, label] of ENTITY_TYPES) {
-        type.append(element("option", { value, text: label }));
-    }
 
-    const initialDynamicEntityType = app.browserFilters.entityType;
-    if (initialDynamicEntityType && !familyButtons.has(initialDynamicEntityType)) {
-        const label = pluralizeEntityType(initialDynamicEntityType);
-        const button = element("button", {
-            type: "button",
-            className: "rules-core-library-family",
-            text: label,
-            dataset: { entityType: initialDynamicEntityType },
-            attributes: { "aria-current": "page" }
-        });
-        familyButtons.set(initialDynamicEntityType, button);
-        familyNav.append(button);
-        type.append(element("option", {
-            value: initialDynamicEntityType,
-            text: label
-        }));
-    }
-    type.value = initialDynamicEntityType;
-
-    const syncFamilyNav = () => {
-        for (const [value, button] of familyButtons) {
-            const selected = value === type.value;
-            button.classList.toggle("is-active", selected);
-            button.setAttribute("aria-current", selected ? "page" : "false");
-        }
-    };
     const populateEntityTypeFacets = facets => {
-        const counts = new Map(
-            (facets ?? []).map(facet => [facet.entityType, facet.count]));
-
+        const currentEntityType = app.browserFilters.entityType ?? "";
+        const dynamicTypes = [];
         for (const facet of facets ?? []) {
-            if (familyButtons.has(facet.entityType)) continue;
-            const label = pluralizeEntityType(facet.entityType);
-            const button = element("button", {
-                type: "button",
-                className: "rules-core-library-family",
-                text: label,
-                dataset: { entityType: facet.entityType },
-                title: `${facet.count} published rules`
+            if (!facet.entityType || knownEntityTypes.has(facet.entityType)) continue;
+            if (dynamicTypes.some(value => value.entityType === facet.entityType)) continue;
+            dynamicTypes.push(facet);
+        }
+
+        if (currentEntityType
+            && !knownEntityTypes.has(currentEntityType)
+            && !dynamicTypes.some(value => value.entityType === currentEntityType)) {
+            dynamicTypes.unshift({
+                entityType: currentEntityType,
+                count: null
             });
-            familyButtons.set(facet.entityType, button);
-            familyNav.append(button);
-            type.append(element("option", {
+        }
+
+        moreTypes.replaceChildren(element("option", {
+            value: "",
+            text: dynamicTypes.length ? "More rule types…" : "No additional rule types"
+        }));
+        for (const facet of dynamicTypes) {
+            moreTypes.append(element("option", {
                 value: facet.entityType,
-                text: label
+                text: facet.count === null || facet.count === undefined
+                    ? pluralizeEntityType(facet.entityType)
+                    : `${pluralizeEntityType(facet.entityType)} (${facet.count})`
             }));
         }
 
-        for (const [value, button] of familyButtons) {
-            if (!value) {
-                button.hidden = false;
-                continue;
-            }
-            button.hidden = !counts.has(value) && type.value !== value;
-            if (counts.has(value)) {
-                button.title = `${counts.get(value)} published rules`;
-            }
-        }
-        syncFamilyNav();
+        moreTypes.hidden = dynamicTypes.length === 0;
+        moreTypes.value = currentEntityType && !knownEntityTypes.has(currentEntityType)
+            ? currentEntityType
+            : "";
     };
-    syncFamilyNav();
 
-    controls.append(familyNav, scope, type);
+    controls.append(scope, moreTypes);
 
     const search = element("input", {
         className: "form-control form-control-sm rules-core-library-search",
@@ -611,7 +603,7 @@ async function renderRulesBrowser(app, container) {
 
         app.browserScope = scope.value;
         app.browserFilters = {
-            entityType: type.value,
+            entityType: app.browserFilters.entityType ?? "",
             query: search.value.trim(),
             sourceCode: sourceFilter.value,
             overridesOnly: scope.value.startsWith("campaign:")
@@ -649,7 +641,6 @@ async function renderRulesBrowser(app, container) {
             hasPublishedRuleset = Boolean(requested.revisionNumber);
             hasMore = hasPublishedRuleset && currentRules.length < totalCount;
 
-            headingTitle.textContent = libraryTitle(app.browserFilters.entityType);
             heading.querySelector(".rules-core-library-revision").textContent = requested.revisionNumber
                 ? `${scopeLabel(app, app.browserScope)} · published #${requested.revisionNumber} · ${formatDate(requested.publishedAt)}`
                 : `${scopeLabel(app, app.browserScope)} · no published ruleset`;
@@ -740,36 +731,31 @@ async function renderRulesBrowser(app, container) {
         await load({ keepSelection: true });
     });
     const changeEntityType = async value => {
-        if (type.value === value && app.browserFilters.entityType === value) return;
+        if (app.browserFilters.entityType === value) return;
         preserveDeepLink = false;
-        type.value = value;
-        syncFamilyNav();
         app.browserSelectedConceptKey = null;
-        pushToolRoute(app, catalogRouteForEntity(type.value));
-        await load();
+        await app.navigateRuleFamily(value);
     };
 
-    familyNav.addEventListener("click", event => {
-        const button = event.target.closest?.("[data-entity-type]");
-        if (!button || !familyNav.contains(button)) return;
-        void changeEntityType(button.dataset.entityType ?? "");
+    moreTypes.addEventListener("change", () => {
+        if (!moreTypes.value) return;
+        void changeEntityType(moreTypes.value);
     });
-    type.addEventListener("change", () => void changeEntityType(type.value));
     reset.addEventListener("click", async () => {
         preserveDeepLink = false;
         if (searchTimer) clearTimeout(searchTimer);
         search.value = "";
-        type.value = "";
+        moreTypes.value = "";
         sourceFilter.value = "";
         overrideFilter.querySelector("input").checked = false;
         filterBar.hidden = true;
         filterToggle.setAttribute("aria-expanded", "false");
-        syncFamilyNav();
         syncFilterControls();
         app.browserSelectedConceptKey = null;
-        pushToolRoute(app, "/");
-        await load();
-        search.focus();
+        app.browserFilters.query = "";
+        app.browserFilters.sourceCode = "";
+        app.browserFilters.overridesOnly = false;
+        await app.navigateRuleFamily("");
     });
     filterToggle.addEventListener("click", () => {
         filterBar.hidden = !filterBar.hidden;
@@ -823,9 +809,9 @@ function isEditableTarget(target) {
 }
 
 function libraryTitle(entityType) {
-    if (!entityType) return "Rules Library";
-    return ENTITY_TYPES.find(([value]) => value === entityType)?.[1]
-        ?? humanizeEntityType(entityType);
+    const normalized = entityType ?? "";
+    const known = RULE_FAMILY_TABS.find(([value]) => value === normalized);
+    return known?.[1] ?? humanizeEntityType(normalized);
 }
 
 function browserColumns(entityType) {
