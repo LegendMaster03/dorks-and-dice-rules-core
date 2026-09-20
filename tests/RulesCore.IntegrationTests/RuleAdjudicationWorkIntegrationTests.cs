@@ -592,11 +592,14 @@ public sealed class RuleAdjudicationWorkIntegrationTests
                     new DeferRuleAdjudicationWorkRequest(review.Version, "Stale request."),
                     "agent-rules-lawyer"));
 
+            var clarificationAnswer =
+                "Yes. Preserve the exception unless the source explicitly removes it. "
+                + new string('x', 4200);
             var resumed = (await workflow.AnswerClarificationAsync(
                 item.Id,
                 new AnswerRuleAdjudicationClarificationRequest(
                     waiting.Version,
-                    "Yes. Preserve the exception unless the source explicitly removes it."),
+                    clarificationAnswer),
                 "human-rules-lawyer"))!;
             Assert.Equal(RuleAdjudicationWorkStates.AgentReview, resumed.State);
 
@@ -634,10 +637,12 @@ public sealed class RuleAdjudicationWorkIntegrationTests
                 completed.History,
                 value => value.EventKind == RuleAdjudicationWorkEventKinds.ClarificationRequested
                     && value.ActorUserId == "agent-rules-lawyer");
+            Assert.Equal(clarificationAnswer, completed.Clarification!.Answer);
             Assert.Contains(
                 completed.History,
                 value => value.EventKind == RuleAdjudicationWorkEventKinds.ClarificationAnswered
-                    && value.ActorUserId == "human-rules-lawyer");
+                    && value.ActorUserId == "human-rules-lawyer"
+                    && value.Message == clarificationAnswer);
             Assert.Contains(
                 completed.History,
                 value => value.EventKind == RuleAdjudicationWorkEventKinds.ManualEscalation);

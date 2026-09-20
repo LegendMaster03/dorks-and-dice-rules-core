@@ -1092,7 +1092,7 @@ internal sealed class RuleAdjudicationWorkStore(RulesCoreDbContext dbContext)
             event_kind varchar(100) NOT NULL,
             actor_user_id varchar(200) NULL,
             work_version integer NOT NULL,
-            message varchar(4000) NULL,
+            message text NULL,
             rule_concept_id uuid NULL,
             source_entity_id uuid NULL,
             global_rule_decision_id uuid NULL,
@@ -1107,6 +1107,8 @@ internal sealed class RuleAdjudicationWorkStore(RulesCoreDbContext dbContext)
         CREATE UNIQUE INDEX IF NOT EXISTS ux_rule_adjudication_work_event_dedupe
             ON rule_adjudication_work_event(rule_adjudication_work_item_id, dedupe_key)
             WHERE dedupe_key IS NOT NULL;
+        ALTER TABLE rule_adjudication_work_event
+            ALTER COLUMN message TYPE text;
         """;
 
     public Task EnsureSchemaAsync(CancellationToken cancellationToken = default) =>
