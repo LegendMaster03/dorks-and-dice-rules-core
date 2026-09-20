@@ -16,7 +16,7 @@ internal sealed record ReviewedBundledCompetencyBaselineSyncResult(
     IReadOnlyList<string> Conflicts);
 
 /// <summary>
-/// Publishes only competency identities represented by the exact checked-in reviewed SRD
+/// Synchronizes only competency identities represented by the exact checked-in reviewed SRD
 /// snapshots. This is deliberately narrower than ordinary Source Layer normalization:
 /// arbitrary imported packages remain subject to the normal Rules Lawyer publication workflow.
 /// </summary>

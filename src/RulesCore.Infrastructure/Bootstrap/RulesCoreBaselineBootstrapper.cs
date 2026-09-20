@@ -357,7 +357,9 @@ public sealed class RulesCoreBaselineBootstrapper(
                 .Select(value => value.Id)
                 .FirstAsync(cancellationToken);
 
-            var decision = await globalRules.SetDecisionAsync(
+            var decision = await RuleAutoResolutionService.TryCreateInitialBaselineDecisionAsync(
+                dbContext,
+                globalRules,
                 concept.Id,
                 new SetGlobalRuleDecisionRequest(
                     sourceRevisionId,
