@@ -199,6 +199,62 @@ public sealed class CurrentUserSourceImportQueueIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task SourceImportExecutionPolicyAllowsLongRunningDatabaseCommands()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString)) return;
+
+        await using var db = new RulesCoreDbContext(
+            new DbContextOptionsBuilder<RulesCoreDbContext>()
+                .UseNpgsql(connectionString)
+                .Options);
+        db.Database.SetCommandTimeout(30);
+
+        SourceImportExecutionPolicy.Apply(db);
+
+        Assert.Equal(
+            SourceImportExecutionPolicy.DatabaseCommandTimeoutSeconds,
+            db.Database.GetCommandTimeout().GetValueOrDefault());
+    }
+
+    [Fact]
+    public async Task ImportJobFailureExplainsDatabaseCommandTimeout()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString)) return;
+
+        var userId = $"web-timeout-{Guid.NewGuid():N}";
+        await using var db = new RulesCoreDbContext(
+            new DbContextOptionsBuilder<RulesCoreDbContext>()
+                .UseNpgsql(connectionString)
+                .Options);
+        var jobs = new CurrentUserSourceImportJobService(db);
+        try
+        {
+            var job = await jobs.QueueWebAddAsync(userId, RegressionSourceUrl);
+            await jobs.FailAsync(
+                job.Id,
+                new InvalidOperationException(
+                    "An exception has been raised that is likely due to a transient failure.",
+                    new TimeoutException("Timeout during reading attempt")));
+
+            var failed = Assert.Single(
+                await jobs.ListAsync(userId),
+                value => value.Id == job.Id);
+            Assert.Equal(
+                "A database operation timed out while importing this source. The import can be retried.",
+                failed.Error);
+        }
+        finally
+        {
+            await db.Database.ExecuteSqlInterpolatedAsync($$"""
+                DELETE FROM current_user_source_import_job
+                WHERE user_id = {{userId}};
+                """);
+        }
+    }
+
     private static HttpRequestMessage HostedRequest(HttpMethod method, string path, string ticket)
     {
         var request = new HttpRequestMessage(method, path);

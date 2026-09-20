@@ -320,9 +320,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(exception);
-        var message = string.IsNullOrWhiteSpace(exception.Message)
-            ? "The Web source import failed."
-            : exception.Message.Trim();
+        var message = DescribeFailure(exception);
         if (message.Length > 1000) message = message[..1000];
         return SetTerminalStateAsync(
             jobId,
@@ -562,6 +560,29 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         {
             Progress = structured
         };
+    }
+
+    private static string DescribeFailure(Exception exception)
+    {
+        const string transientFailure = "An exception has been raised that is likely due to a transient failure.";
+        if (string.Equals(exception.Message?.Trim(), transientFailure, StringComparison.Ordinal)
+            && ExceptionChainContainsTimeout(exception))
+        {
+            return "A database operation timed out while importing this source. The import can be retried.";
+        }
+
+        return string.IsNullOrWhiteSpace(exception.Message)
+            ? "The Web source import failed."
+            : exception.Message.Trim();
+    }
+
+    private static bool ExceptionChainContainsTimeout(Exception exception)
+    {
+        for (Exception? current = exception; current is not null; current = current.InnerException)
+        {
+            if (current is TimeoutException) return true;
+        }
+        return false;
     }
 
     private static void ValidateProgress(CurrentUserSourceImportProgress progress)

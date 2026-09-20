@@ -17,6 +17,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
     {
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(request.Representation);
+        SourceImportExecutionPolicy.Apply(dbContext);
         var packageKey = NormalizeKey(request.PackageKey);
         var packageDisplayName = Require(request.PackageDisplayName, nameof(request.PackageDisplayName), 300);
         var provider = Require(request.Provider, nameof(request.Provider), 200);
