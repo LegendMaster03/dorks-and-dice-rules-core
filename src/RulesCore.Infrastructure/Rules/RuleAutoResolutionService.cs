@@ -321,6 +321,10 @@ public static class RuleAutoResolutionService
             .SelectMany(value => value)
             .ToHashSet();
 
+        var allSourceIds = await CanonicalRuleBindingStore.GetSourceEntityIdsForConceptAsync(
+            dbContext,
+            ruleConceptId,
+            cancellationToken);
         var accessibleSourceIds = await CanonicalRuleBindingStore.GetAccessibleSourceEntityIdsForConceptAsync(
             dbContext,
             ruleConceptId,
@@ -328,13 +332,38 @@ public static class RuleAutoResolutionService
             cancellationToken);
         if (sourceEntityScope is not null)
         {
+            allSourceIds = allSourceIds
+                .Where(sourceEntityScope.Contains)
+                .ToArray();
             accessibleSourceIds = accessibleSourceIds
                 .Where(sourceEntityScope.Contains)
                 .ToArray();
         }
-        if (accessibleSourceIds.Count == 0)
+
+        var ignoredPackageIds = (await new GlobalSourceDispositionService(dbContext)
+                .GetIgnoredPackageIdsAsync(cancellationToken))
+            .ToHashSet();
+        var sourcePackageIds = await dbContext.SourceEntities
+            .AsNoTracking()
+            .Where(value => allSourceIds.Contains(value.Id))
+            .Select(value => new { value.Id, value.SourcePackageId })
+            .ToArrayAsync(cancellationToken);
+        var activeSourceIds = sourcePackageIds
+            .Where(value => !ignoredPackageIds.Contains(value.SourcePackageId))
+            .Select(value => value.Id)
+            .ToHashSet();
+        if (activeSourceIds.Count == 0)
         {
-            return NotEligibleEvaluation("The current account can not inspect any source implementation for the bound canonical rule entities.");
+            return NotEligibleEvaluation("No non-ignored source implementations remain for automatic global resolution.");
+        }
+
+        var accessibleActiveSourceIds = accessibleSourceIds
+            .Where(activeSourceIds.Contains)
+            .ToHashSet();
+        if (accessibleActiveSourceIds.Count != activeSourceIds.Count)
+        {
+            return NotEligibleEvaluation(
+                "Automatic global resolution requires access to every active source implementation in the bound canonical revision closure.");
         }
 
         var sources = await dbContext.SourceEntities
@@ -342,12 +371,9 @@ public static class RuleAutoResolutionService
             .Include(value => value.Revisions)
             .Include(value => value.SourcePackage)
                 .ThenInclude(value => value.UserGrants)
-            .Where(value => accessibleSourceIds.Contains(value.Id))
+            .Where(value => accessibleActiveSourceIds.Contains(value.Id))
             .ToArrayAsync(cancellationToken);
 
-        var ignoredPackageIds = (await new GlobalSourceDispositionService(dbContext)
-                .GetIgnoredPackageIdsAsync(cancellationToken))
-            .ToHashSet();
         var activeSources = sources
             .Where(value => !ignoredPackageIds.Contains(value.SourcePackageId))
             .ToArray();
@@ -366,7 +392,8 @@ public static class RuleAutoResolutionService
             if (!canonicalBySource.TryGetValue(source.Id, out var canonicalEntityId)
                 || !allowedCanonicalEntityIds.Contains(canonicalEntityId))
             {
-                continue;
+                return NotEligibleEvaluation(
+                    "An active source implementation could not be reconciled to the bound canonical revision closure.");
             }
 
             var latest = source.Revisions
@@ -375,13 +402,15 @@ public static class RuleAutoResolutionService
                 .FirstOrDefault();
             if (latest is null)
             {
-                continue;
+                return NotEligibleEvaluation(
+                    "An active source implementation has no revision in the automatic-resolution review scope.");
             }
 
             var metadata = await CanonicalPublicationMetadataReader.ReadAsync(dbContext, source.Id, cancellationToken);
             if (metadata is null || string.IsNullOrWhiteSpace(metadata.GameEdition))
             {
-                continue;
+                return NotEligibleEvaluation(
+                    "Automatic global resolution requires canonical game-edition metadata for every active source implementation.");
             }
 
             allContexts.Add(new SourceContext(
@@ -402,8 +431,20 @@ public static class RuleAutoResolutionService
             }
         }
 
-        var contexts = allContexts
+        var contextGroups = allContexts
             .GroupBy(value => new { value.CanonicalEntityId, value.Metadata.GameEdition })
+            .ToArray();
+        if (contextGroups.Any(group =>
+                group.Select(value => value.SemanticFingerprint)
+                    .Distinct(StringComparer.Ordinal)
+                    .Skip(1)
+                    .Any()))
+        {
+            return NotEligibleEvaluation(
+                "Multiple active source implementations for the same canonical entity and game edition differ mechanically.");
+        }
+
+        var contexts = contextGroups
             .Select(group => SelectRepresentativeContext(group))
             .OrderBy(value => value.Metadata.GameEdition, StringComparer.Ordinal)
             .ThenBy(value => value.CanonicalEntityId)

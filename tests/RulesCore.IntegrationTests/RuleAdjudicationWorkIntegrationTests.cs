@@ -158,6 +158,73 @@ public sealed class RuleAdjudicationWorkIntegrationTests
     }
 
     [Fact]
+    public async Task DeterministicResolutionAbstainsWhenARevisionClosureContainsAnInaccessibleSource()
+    {
+        if (!HasDatabase()) return;
+
+        await using var factory = CreateFactory(new FakeToolHostAuthenticationClient(new Dictionary<string, ToolHostAuthenticationContext>()));
+        var packageIds = new List<Guid>();
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var rules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            const string actor = "partial-source-agent";
+
+            var firstImport = await importer.Import5eToolsDocumentAsync(
+                SourceRequest($"adjudication-partial-a-{Guid.NewGuid():N}", "2014", "Partial Source Skill", "PA", "int", true));
+            var secondImport = await importer.Import5eToolsDocumentAsync(
+                SourceRequest($"adjudication-partial-b-{Guid.NewGuid():N}", "2024", "Partial Source Skill", "PB", "int", true));
+            var restrictedImport = await importer.Import5eToolsDocumentAsync(
+                SourceRequest($"adjudication-partial-secret-{Guid.NewGuid():N}", "3.5e", "Partial Source Skill", "PS", "wis", false));
+            packageIds.Add(firstImport.PackageId);
+            packageIds.Add(secondImport.PackageId);
+            packageIds.Add(restrictedImport.PackageId);
+
+            var firstEntityId = firstImport.Entities.Single().EntityId;
+            var secondEntityId = secondImport.Entities.Single().EntityId;
+            var restrictedEntityId = restrictedImport.Entities.Single().EntityId;
+            var firstCanonicalId = await ReadCanonicalEntityIdAsync(db, firstEntityId);
+            var secondCanonicalId = await ReadCanonicalEntityIdAsync(db, secondEntityId);
+            var restrictedCanonicalId = await ReadCanonicalEntityIdAsync(db, restrictedEntityId);
+            Assert.NotEqual(firstCanonicalId, restrictedCanonicalId);
+
+            if (secondCanonicalId != firstCanonicalId)
+            {
+                await RelateCanonicalRevisionAsync(db, firstCanonicalId, secondCanonicalId);
+            }
+            await RelateCanonicalRevisionAsync(db, firstCanonicalId, restrictedCanonicalId);
+
+            var concept = (await rules.CreateConceptAsync(
+                new CreateRuleConceptRequest($"skill.partial-source-{Guid.NewGuid():N}", "skill", "Partial Source Skill"),
+                "seed-rules-lawyer")).Value;
+            await rules.BindSourceEntityAsync(
+                concept.Id,
+                new BindRuleConceptSourceRequest(firstEntityId),
+                "seed-rules-lawyer");
+
+            var result = await RuleAutoResolutionService.TryResolveAsync(db, concept.Id, actor);
+            Assert.False(result.Eligible);
+            Assert.False(result.Applied);
+            Assert.Contains("requires access to every active source implementation", result.Reason, StringComparison.Ordinal);
+            Assert.False(await db.GlobalRuleDecisions.AnyAsync(value => value.RuleConceptId == concept.Id));
+
+            await scope.ServiceProvider.GetRequiredService<ISourceGrantService>()
+                .GrantAsync(actor, restrictedImport.PackageId);
+            var fullyVisible = await RuleAutoResolutionService.TryResolveAsync(db, concept.Id, actor);
+            Assert.False(fullyVisible.Eligible);
+            Assert.Contains("Manual adjudication is required", fullyVisible.Reason, StringComparison.Ordinal);
+            Assert.False(await db.GlobalRuleDecisions.AnyAsync(value => value.RuleConceptId == concept.Id));
+        }
+        finally
+        {
+            await CleanupAsync(factory, packageIds);
+        }
+    }
+
+    [Fact]
     public async Task ContradictionsRemainAdjudicationWorkAndManualDecisionsAreNotReplaced()
     {
         if (!HasDatabase()) return;
@@ -804,6 +871,50 @@ public sealed class RuleAdjudicationWorkIntegrationTests
                   ]
                 }
                 """);
+
+    private static async Task<Guid> ReadCanonicalEntityIdAsync(
+        RulesCoreDbContext db,
+        Guid sourceEntityId) =>
+        await db.Database.SqlQueryRaw<Guid>(
+                """
+                SELECT occurrence.canonical_entity_id AS "Value"
+                FROM source_entity_revision revision
+                JOIN source_entity_occurrence_binding binding
+                    ON binding.source_entity_revision_id = revision.source_entity_revision_id
+                JOIN canonical_source_occurrence occurrence
+                    ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
+                WHERE revision.source_entity_id = {0}
+                    AND occurrence.canonical_entity_id IS NOT NULL
+                ORDER BY revision.revision_number DESC
+                LIMIT 1
+                """,
+                sourceEntityId)
+            .SingleAsync();
+
+    private static Task RelateCanonicalRevisionAsync(
+        RulesCoreDbContext db,
+        Guid fromCanonicalEntityId,
+        Guid toCanonicalEntityId) =>
+        db.Database.ExecuteSqlInterpolatedAsync($"""
+            INSERT INTO canonical_entity_relationship (
+                canonical_entity_relationship_id,
+                from_canonical_entity_id,
+                to_canonical_entity_id,
+                relationship_kind,
+                evidence_kind,
+                confidence,
+                created_at)
+            VALUES (
+                {{Guid.NewGuid()}},
+                {{fromCanonicalEntityId}},
+                {{toCanonicalEntityId}},
+                'revision',
+                'integration-test',
+                1.0,
+                {{DateTimeOffset.UtcNow}})
+            ON CONFLICT (from_canonical_entity_id, to_canonical_entity_id, relationship_kind)
+            DO NOTHING;
+            """);
 
     private static async Task CleanupAsync(
         WebApplicationFactory<Program> factory,
