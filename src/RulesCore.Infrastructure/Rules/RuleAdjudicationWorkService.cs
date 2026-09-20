@@ -543,7 +543,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
                 RuleAdjudicationWorkEventKinds.NormalizationAccepted,
                 binding?.CreatedByUserId,
                 updated.Version,
-                "The normalization suggestion is now represented by an explicit Rules Lawyer source binding.",
+                "An explicit Rules Lawyer source binding resolved the normalization work item.",
                 normalizedConceptId,
                 sourceEntityId,
                 globalRuleDecisionId: null,
@@ -724,6 +724,11 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
         {
             var revision = source.Revisions.OrderByDescending(value => value.RevisionNumber).FirstOrDefault();
             if (revision is null) continue;
+            var publication = await CanonicalPublicationMetadataReader.ReadAsync(
+                dbContext,
+                source.Id,
+                cancellationToken);
+            var edition = publication?.GameEdition ?? source.FormatKey;
             using var document = JsonDocument.Parse(revision.GetMechanicalContentJson());
             results.Add(new RuleAdjudicationSourceRevisionEvidenceView(
                 source.Id,
@@ -734,8 +739,8 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
                 source.SourceCode ?? string.Empty,
                 source.SourcePackage.Key,
                 source.SourcePackage.DisplayName,
-                source.FormatKey,
-                source.FormatKey,
+                edition,
+                edition,
                 revision.ImportedAt,
                 document.RootElement.Clone()));
         }
@@ -1129,7 +1134,7 @@ internal sealed class RuleAdjudicationWorkStore(RulesCoreDbContext dbContext)
             """
             state = @state,
             version = version + 1,
-            rule_concept_id = COALESCE(rule_concept_id, @rule_concept_id),
+            rule_concept_id = COALESCE(@rule_concept_id, rule_concept_id),
             updated_at = @now
             """,
             command =>

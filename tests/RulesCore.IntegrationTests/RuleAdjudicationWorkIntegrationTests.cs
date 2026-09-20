@@ -59,6 +59,9 @@ public sealed class RuleAdjudicationWorkIntegrationTests
             Assert.False(item.Published);
 
             var detail = (await workflow.GetAsync(item.Id, actor))!;
+            Assert.Contains(detail.AccessibleSourceRevisions, value => value.EditionDisplayName == "5e");
+            Assert.Contains(detail.AccessibleSourceRevisions, value => value.EditionDisplayName == "5.5e");
+            Assert.DoesNotContain(detail.AccessibleSourceRevisions, value => value.EditionDisplayName == "5etools");
             Assert.Contains(
                 detail.History,
                 value => value.EventKind == RuleAdjudicationWorkEventKinds.DeterministicResolutionApplied);
@@ -277,6 +280,64 @@ public sealed class RuleAdjudicationWorkIntegrationTests
                 var items = (await response.Content.ReadFromJsonAsync<IReadOnlyList<RuleAdjudicationWorkSummaryView>>())!;
                 Assert.Contains(items, value => value.SourceEntityId == restrictedEntityId);
             }
+        }
+        finally
+        {
+            await CleanupAsync(factory, packageIds);
+        }
+    }
+
+    [Fact]
+    public async Task ManualNormalizationBindingCompletesAgainstTheActualConcept()
+    {
+        if (!HasDatabase()) return;
+
+        await using var factory = CreateFactory(new FakeToolHostAuthenticationClient(new Dictionary<string, ToolHostAuthenticationContext>()));
+        var packageIds = new List<Guid>();
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var rules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            const string actor = "manual-normalization-reviewer";
+
+            var imported = await importer.Import5eToolsDocumentAsync(
+                SourceRequest($"adjudication-manual-normalization-{Guid.NewGuid():N}", "2014", "Manual Bound Skill", "MAN", "int", true));
+            packageIds.Add(imported.PackageId);
+            var sourceEntityId = imported.Entities.Single().EntityId;
+
+            var suggested = (await rules.CreateConceptAsync(
+                new CreateRuleConceptRequest("skill.manual-bound-skill", "skill", "Manual Bound Skill"),
+                actor)).Value;
+            var actual = (await rules.CreateConceptAsync(
+                new CreateRuleConceptRequest("skill.manual-bound-skill-reviewed", "skill", "Manual Bound Skill Reviewed"),
+                actor)).Value;
+
+            var workflow = new RuleAdjudicationWorkService(db);
+            await workflow.DiscoverAsync(actor);
+            var pending = Assert.Single(
+                await workflow.ListAsync(
+                    actor,
+                    kind: RuleAdjudicationWorkKinds.NormalizationReview,
+                    includePublishedCompleted: true),
+                value => value.SourceEntityId == sourceEntityId);
+            Assert.Equal(suggested.Id, pending.RuleConceptId);
+
+            await rules.BindSourceEntityAsync(
+                actual.Id,
+                new BindRuleConceptSourceRequest(sourceEntityId),
+                actor);
+
+            var completed = (await workflow.GetAsync(pending.Id, actor))!;
+            Assert.Equal(RuleAdjudicationWorkStates.Completed, completed.WorkItem.State);
+            Assert.Equal(actual.Id, completed.WorkItem.RuleConceptId);
+            Assert.Contains(
+                completed.History,
+                value => value.EventKind == RuleAdjudicationWorkEventKinds.NormalizationAccepted
+                    && value.RuleConceptId == actual.Id
+                    && value.ActorUserId == actor);
         }
         finally
         {
