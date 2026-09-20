@@ -322,6 +322,203 @@ public sealed class PcGenSkillConversionIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task ReviewedLegacySrdUsesTheSameDirectCompetencyConversionsAndMetadata()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var packageKey = $"legacy-srd-competency-{token}";
+            var representation = LegacySrdRepresentation(
+                token,
+                "SRD35",
+                ["Bluff", "Craft (alchemy)", "Open Lock", "Knowledge (the planes)"]);
+
+            try
+            {
+                await new NormalizedSourceImportService(db).ImportAsync(
+                    new ImportNormalizedSourceRequest(
+                        packageKey,
+                        $"Legacy SRD competency fixture {token}",
+                        "integration-test",
+                        "test-only",
+                        true,
+                        representation));
+
+                var bluff = await ReadByNativeNameAsync(db, packageKey, "Bluff");
+                Assert.Equal("skill", bluff.EntityType);
+                Assert.Equal("Deception", bluff.NormalizedName);
+                AssertNativeSourceName(bluff.RawJson, "Bluff");
+                AssertExactTranslation(bluff.ContentJson, "Bluff", "skill", "Deception");
+                AssertLegacyCompetencyProfile(
+                    bluff.ContentJson,
+                    expectedKind: "skill",
+                    family: null,
+                    specialty: null);
+
+                var alchemy = await ReadByNativeNameAsync(db, packageKey, "Craft (alchemy)");
+                Assert.Equal("tool", alchemy.EntityType);
+                Assert.Equal("Alchemist's Supplies", alchemy.NormalizedName);
+                AssertNativeSourceName(alchemy.RawJson, "Craft (alchemy)");
+                AssertExactTranslation(
+                    alchemy.ContentJson,
+                    "Craft (alchemy)",
+                    "tool",
+                    "Alchemist's Supplies");
+                AssertLegacyCompetencyProfile(
+                    alchemy.ContentJson,
+                    expectedKind: "tool",
+                    family: "Craft",
+                    specialty: "alchemy");
+
+                var openLock = await ReadByNativeNameAsync(db, packageKey, "Open Lock");
+                Assert.Equal("skill", openLock.EntityType);
+                Assert.Equal("Open Lock", openLock.NormalizedName);
+                using (var document = JsonDocument.Parse(openLock.ContentJson))
+                {
+                    var extension = document.RootElement.GetProperty("_rulesCore");
+                    var conversion = extension.GetProperty("competencyConversion");
+                    Assert.Equal("Thieves' Tools", conversion.GetProperty("targetName").GetString());
+                    Assert.Equal("open-lock", conversion.GetProperty("scope").GetString());
+                }
+                AssertLegacyCompetencyProfile(
+                    openLock.ContentJson,
+                    expectedKind: "skill",
+                    family: null,
+                    specialty: null);
+
+                var knowledge = await ReadByNativeNameAsync(
+                    db,
+                    packageKey,
+                    "Knowledge (the planes)");
+                Assert.Equal("skill", knowledge.EntityType);
+                Assert.Equal("Knowledge (the planes)", knowledge.NormalizedName);
+                AssertLegacyCompetencyProfile(
+                    knowledge.ContentJson,
+                    expectedKind: "specialized-skill",
+                    family: "Knowledge",
+                    specialty: "the planes");
+            }
+            finally
+            {
+                await DeletePackageAsync(db, packageKey);
+            }
+        }
+    }
+
+    [Fact]
+    public async Task ReviewedLegacySrdCanUpgradePreviouslyPersistedNormalizedNameWithoutNewNativeRevision()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var packageKey = $"legacy-srd-competency-upgrade-{token}";
+            var representation = LegacySrdRepresentation(token, "SRD35", ["Bluff"]);
+            var importer = new NormalizedSourceImportService(db);
+
+            try
+            {
+                await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Legacy SRD competency upgrade fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    representation));
+
+                var entity = await db.SourceEntities
+                    .Include(value => value.Revisions)
+                    .SingleAsync(value => value.SourcePackage.Key == packageKey);
+                var sourceEntityId = entity.Id;
+                var sourceRevisionId = Assert.Single(entity.Revisions).Id;
+
+                // Reconstruct the pre-convergence persisted metadata while leaving the immutable
+                // native key, RawJson, revision, and canonical/Rules Layer references intact.
+                entity.Name = "Bluff";
+                await db.SaveChangesAsync();
+                db.ChangeTracker.Clear();
+
+                await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Legacy SRD competency upgrade fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    representation));
+
+                var upgraded = await db.SourceEntities
+                    .Include(value => value.Revisions)
+                    .SingleAsync(value => value.Id == sourceEntityId);
+                Assert.Equal("Deception", upgraded.Name);
+                Assert.Equal("skill", upgraded.EntityType);
+                Assert.Equal(sourceRevisionId, Assert.Single(upgraded.Revisions).Id);
+            }
+            finally
+            {
+                await DeletePackageAsync(db, packageKey);
+            }
+        }
+    }
+
+    private static NormalizedSourceRepresentation LegacySrdRepresentation(
+        string token,
+        string sourceCode,
+        IReadOnlyList<string> names)
+    {
+        var records = names.Select((name, index) => new
+        {
+            name,
+            source = sourceCode,
+            uniqueId = $"{token}-{index}",
+            documentUri = $"https://example.invalid/{token}/{index}",
+            body = $"Reviewed legacy competency fixture for {name}."
+        }).ToArray();
+        var json = JsonSerializer.Serialize(new { skill = records });
+        return new LegacySrdSourceFormatAdapter().TryRead(
+            new SourceRepresentationArtifact(
+                "srd-3-5e.json",
+                Encoding.UTF8.GetBytes(json),
+                $"integration:legacy-srd-competency:{token}"))
+            ?? throw new InvalidOperationException(
+                "Legacy SRD competency fixture was not readable.");
+    }
+
+    private static void AssertLegacyCompetencyProfile(
+        string contentJson,
+        string expectedKind,
+        string? family,
+        string? specialty)
+    {
+        using var document = JsonDocument.Parse(contentJson);
+        var extension = document.RootElement.GetProperty("_rulesCore");
+        var context = extension.GetProperty("context");
+        Assert.Equal(
+            ExactCompetencyTranslationPolicy.LegacyCompetencyNormalizationVersion,
+            context.GetProperty("competencyNormalizationVersion").GetString());
+        var competency = extension.GetProperty("competency");
+        Assert.Equal("dnd-3x", competency.GetProperty("profileKey").GetString());
+        Assert.Equal(expectedKind, competency.GetProperty("kind").GetString());
+        Assert.True(competency.GetProperty("supportsRanks").GetBoolean());
+        Assert.True(competency.GetProperty("supportsClassSkillState").GetBoolean());
+        Assert.True(competency.GetProperty("supportsTrainingState").GetBoolean());
+        Assert.Equal("ranked-skill", competency.GetProperty("evaluationProfileKey").GetString());
+        Assert.True(competency.GetProperty("canEvaluate").GetBoolean());
+        if (family is null)
+        {
+            Assert.False(competency.TryGetProperty("familyName", out _));
+            Assert.False(competency.TryGetProperty("specialty", out _));
+        }
+        else
+        {
+            Assert.Equal(family, competency.GetProperty("familyName").GetString());
+            Assert.Equal(specialty, competency.GetProperty("specialty").GetString());
+        }
+    }
+
     private static NormalizedSourceRepresentation PcGenRepresentation(
         string editionPath,
         string sourceShort,
