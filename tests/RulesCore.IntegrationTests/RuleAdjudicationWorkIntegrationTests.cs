@@ -891,7 +891,7 @@ public sealed class RuleAdjudicationWorkIntegrationTests
                 sourceEntityId)
             .SingleAsync();
 
-    private static Task RelateCanonicalRevisionAsync(
+    private static Task<int> RelateCanonicalRevisionAsync(
         RulesCoreDbContext db,
         Guid fromCanonicalEntityId,
         Guid toCanonicalEntityId) =>
