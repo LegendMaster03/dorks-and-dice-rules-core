@@ -105,7 +105,7 @@ Storage implementation may evolve later, including content-addressed backing sto
 
 ## Bootstrap and maintenance
 
-Baseline bootstrap hydrates reviewed public SRD snapshots and the Dorks & Dice house-rule baseline without requiring a live upstream host at runtime. Hosted-source definitions and authority references remain maintenance/acquisition metadata; they do not replace immutable Source Layer representations or canonical identity.
+Baseline bootstrap hydrates reviewed public SRD snapshots and the Dorks & Dice house-rule baseline without requiring a live upstream host at runtime. It also performs a narrowly scoped Rules Layer synchronization for skill/tool competencies found in the exact checked-in reviewed SRD representations. That synchronization still passes through normalized canonical identity, Rule Concepts, canonical bindings, Global Rule decisions, and immutable ruleset publication; the Character mechanics consumer does not read unpublished Source Layer skills directly. Arbitrary imports and hosted-source refreshes do not receive this bootstrap publication treatment. Hosted-source definitions and authority references remain maintenance/acquisition metadata; they do not replace immutable Source Layer representations or canonical identity.
 
 The 3e/3.5e developer reconciliation workflow uses the same persistent adapters and canonical stores as normal imports. Its reusable output is canonical identity knowledge, not a global cache of restricted source bodies.
 

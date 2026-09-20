@@ -123,6 +123,12 @@ These definitions are **capability-driven**, not edition-toggle-driven. For exam
 
 The definitions intentionally do not infer values from unrelated fields. For example, touch AC consumes only contributions the Character backend has already determined apply to touch AC. The evaluation endpoint requires the declared capability key for capability-driven mechanics and rejects evaluation when it is absent.
 
+## Published competency baseline
+
+The normal installation publishes reviewed bundled SRD skill/tool concepts through the Global Rules Layer during baseline synchronization. The mechanics consumer continues to read only effective resolved rules. It does not scan the Source Layer for unpublished competencies and does not maintain its own skill list.
+
+Because publication uses the same canonical identity that ingestion already produced, direct-convergence names appear under the canonical Rule Concept while accessible source-equivalent profiles can remain available. Composite relationships continue to come from the existing Rules Layer relationship model rather than frontend hierarchy data.
+
 ## Competency metadata
 
 Resolved skill and tool concepts carry normalized competency metadata for Character consumers. The contract can describe:
