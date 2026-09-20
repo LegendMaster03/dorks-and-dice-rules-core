@@ -157,16 +157,28 @@ public static class RuleAutoResolutionService
         RulesCoreDbContext dbContext,
         Guid ruleConceptId,
         string actorUserId,
-        IReadOnlyCollection<Guid> reviewedSourceEntityIds,
+        IReadOnlyCollection<Guid> reviewedSourceEntityRevisionIds,
         CancellationToken cancellationToken = default)
     {
-        ArgumentNullException.ThrowIfNull(reviewedSourceEntityIds);
-        var sourceScope = reviewedSourceEntityIds
+        ArgumentNullException.ThrowIfNull(reviewedSourceEntityRevisionIds);
+        var revisionScope = reviewedSourceEntityRevisionIds
             .Where(value => value != Guid.Empty)
+            .ToHashSet();
+        if (revisionScope.Count == 0)
+        {
+            return NotEligible("The reviewed competency baseline revision scope is empty.");
+        }
+
+        var sourceScope = (await dbContext.SourceEntityRevisions
+                .AsNoTracking()
+                .Where(value => revisionScope.Contains(value.Id))
+                .Select(value => value.SourceEntityId)
+                .Distinct()
+                .ToArrayAsync(cancellationToken))
             .ToHashSet();
         if (sourceScope.Count == 0)
         {
-            return NotEligible("The reviewed competency baseline source scope is empty.");
+            return NotEligible("The reviewed competency baseline revisions do not resolve to source entities.");
         }
 
         var existingDecision = await dbContext.GlobalRuleDecisions
@@ -189,7 +201,8 @@ public static class RuleAutoResolutionService
             ruleConceptId,
             actorUserId,
             cancellationToken,
-            sourceScope);
+            sourceScope,
+            revisionScope);
         if (!evaluation.Eligible
             || evaluation.SelectedRevisionId is null
             || evaluation.ResolvedSemanticFingerprint is null
@@ -278,7 +291,8 @@ public static class RuleAutoResolutionService
         Guid ruleConceptId,
         string actorUserId,
         CancellationToken cancellationToken,
-        IReadOnlySet<Guid>? sourceEntityScope = null)
+        IReadOnlySet<Guid>? sourceEntityScope = null,
+        IReadOnlySet<Guid>? sourceRevisionScope = null)
     {
         if (ruleConceptId == Guid.Empty)
         {
@@ -353,7 +367,10 @@ public static class RuleAutoResolutionService
                 continue;
             }
 
-            var latest = source.Revisions.OrderByDescending(value => value.RevisionNumber).FirstOrDefault();
+            var latest = source.Revisions
+                .Where(value => sourceRevisionScope is null || sourceRevisionScope.Contains(value.Id))
+                .OrderByDescending(value => value.RevisionNumber)
+                .FirstOrDefault();
             if (latest is null)
             {
                 continue;
