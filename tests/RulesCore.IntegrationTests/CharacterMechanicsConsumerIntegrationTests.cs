@@ -985,6 +985,10 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 .Where(value => value.SourceEntityId == fiveEntity.EntityId)
                 .Select(value => value.Id)
                 .SingleAsync();
+            var threeRevisionId = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == bluff.EntityId)
+                .Select(value => value.Id)
+                .SingleAsync();
             await globalRules.SetDecisionAsync(
                 accepted.Concept.Id,
                 new SetGlobalRuleDecisionRequest(
@@ -1004,17 +1008,19 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Contains(deception.Inputs, value => value.Key == "trainingContribution");
             var laterProfile = Assert.Single(
                 deception.Competency.Profiles,
-                value => value.ProfileKey == "dnd-5x");
+                value => value.SourceEntityRevisionId == fiveRevisionId);
+            Assert.Equal("dnd-5x", laterProfile.ProfileKey);
             Assert.True(laterProfile.CanEvaluate);
             Assert.False(laterProfile.SupportsRanks);
             Assert.DoesNotContain(laterProfile.Inputs, value => value.Key == "ranks");
             Assert.Equal(
-                laterProfile.SourceEntityRevisionId,
+                fiveRevisionId,
                 deception.Competency.DefaultProfileSourceEntityRevisionId);
 
             var threeProfile = Assert.Single(
                 deception.Competency.Profiles,
-                value => value.ProfileKey == "dnd-3x");
+                value => value.SourceEntityRevisionId == threeRevisionId);
+            Assert.Equal("dnd-3x", threeProfile.ProfileKey);
             Assert.Equal("3.5e", threeProfile.GameEdition);
             Assert.True(threeProfile.SupportsRanks);
             Assert.True(threeProfile.SupportsClassSkillState);

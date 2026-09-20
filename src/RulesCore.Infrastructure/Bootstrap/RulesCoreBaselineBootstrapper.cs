@@ -208,6 +208,82 @@ public sealed class RulesCoreBaselineBootstrapper(
         SourceImportResult houseRuleImport,
         CancellationToken cancellationToken)
     {
+        _ = await EnsureInitialHouseRuleBaselineAsync(
+            houseRuleImport,
+            cancellationToken);
+
+        var competencySync = await new ReviewedBundledCompetencyBaselineSynchronizer(
+                dbContext,
+                globalRules)
+            .SynchronizeAsync(cancellationToken);
+
+        if (competencySync.Conflicts.Count > 0)
+        {
+            throw new InvalidOperationException(
+                "Reviewed bundled SRD competency baseline synchronization requires Rules Lawyer review:"
+                + Environment.NewLine
+                + string.Join(
+                    Environment.NewLine,
+                    competencySync.Conflicts.Select(value => $"- {value}")));
+        }
+
+        PublishedRulesetRevisionView? publishedRuleset = null;
+        if (await HasUnpublishedBootstrapDecisionAsync(cancellationToken)
+            && await dbContext.GlobalRuleDecisions.AsNoTracking().AnyAsync(cancellationToken))
+        {
+            var publication = await globalRules.PublishAsync(
+                RulesCoreBaselineCatalog.BootstrapActor,
+                cancellationToken);
+            if (publication.CreatedRevision)
+            {
+                publishedRuleset = publication;
+            }
+        }
+
+        return publishedRuleset;
+    }
+
+    private async Task<bool> HasUnpublishedBootstrapDecisionAsync(
+        CancellationToken cancellationToken)
+    {
+        var latestBootstrapDecisionIds = await dbContext.GlobalRuleDecisions
+            .AsNoTracking()
+            .Where(value =>
+                value.CreatedByUserId == RulesCoreBaselineCatalog.BootstrapActor
+                && !dbContext.GlobalRuleDecisions.Any(candidate =>
+                    candidate.RuleConceptId == value.RuleConceptId
+                    && candidate.DecisionNumber > value.DecisionNumber))
+            .Select(value => value.Id)
+            .ToArrayAsync(cancellationToken);
+        if (latestBootstrapDecisionIds.Length == 0)
+        {
+            return false;
+        }
+
+        var latestRulesetRevisionId = await dbContext.RulesetRevisions
+            .AsNoTracking()
+            .OrderByDescending(value => value.RevisionNumber)
+            .Select(value => (Guid?)value.Id)
+            .FirstOrDefaultAsync(cancellationToken);
+        if (latestRulesetRevisionId is null)
+        {
+            return true;
+        }
+
+        var publishedDecisionIds = (await dbContext.RulesetRevisionEntries
+                .AsNoTracking()
+                .Where(value => value.RulesetRevisionId == latestRulesetRevisionId.Value)
+                .Select(value => value.GlobalRuleDecisionId)
+                .ToArrayAsync(cancellationToken))
+            .ToHashSet();
+
+        return latestBootstrapDecisionIds.Any(value => !publishedDecisionIds.Contains(value));
+    }
+
+    private async Task<bool> EnsureInitialHouseRuleBaselineAsync(
+        SourceImportResult houseRuleImport,
+        CancellationToken cancellationToken)
+    {
         var baselineConceptKeys = RulesCoreBaselineCatalog.Rules
             .Select(value => value.ConceptKey)
             .ToHashSet(StringComparer.Ordinal);
@@ -227,11 +303,15 @@ public sealed class RulesCoreBaselineBootstrapper(
                 value => value.CreatedByUserId != RulesCoreBaselineCatalog.BootstrapActor,
                 cancellationToken);
 
+        // The six Dorks & Dice house rules remain a fresh-install seed. An established Rules
+        // Layer is never back-filled with house rules it did not already adopt. Reviewed SRD
+        // competency synchronization is separate and runs for both fresh and existing installs.
         if (hasNonBaselineConcept || hasPublishedRuleset || hasNonBootstrapDecision)
         {
-            return null;
+            return false;
         }
 
+        var changed = false;
         foreach (var seed in RulesCoreBaselineCatalog.Rules)
         {
             var importedEntity = houseRuleImport.Entities.SingleOrDefault(value =>
@@ -243,19 +323,22 @@ public sealed class RulesCoreBaselineBootstrapper(
                     $"Built-in house-rule source entity '{seed.SourceEntityName}' was not imported.");
             }
 
-            var concept = (await globalRules.CreateConceptAsync(
+            var conceptMutation = await globalRules.CreateConceptAsync(
                 new CreateRuleConceptRequest(
                     seed.ConceptKey,
                     importedEntity.EntityType,
                     seed.DisplayName),
                 RulesCoreBaselineCatalog.BootstrapActor,
-                cancellationToken)).Value;
+                cancellationToken);
+            var concept = conceptMutation.Value;
+            changed |= conceptMutation.Created;
 
-            await globalRules.BindSourceEntityAsync(
+            var binding = await globalRules.BindSourceEntityAsync(
                 concept.Id,
                 new BindRuleConceptSourceRequest(importedEntity.EntityId),
                 RulesCoreBaselineCatalog.BootstrapActor,
                 cancellationToken);
+            changed |= binding.Created;
 
             var hasDecision = await dbContext.GlobalRuleDecisions
                 .AsNoTracking()
@@ -274,18 +357,19 @@ public sealed class RulesCoreBaselineBootstrapper(
                 .Select(value => value.Id)
                 .FirstAsync(cancellationToken);
 
-            await globalRules.SetDecisionAsync(
+            var decision = await RuleAutoResolutionService.TryCreateInitialBaselineDecisionAsync(
+                dbContext,
+                globalRules,
                 concept.Id,
                 new SetGlobalRuleDecisionRequest(
                     sourceRevisionId,
                     "Built-in Dorks & Dice baseline rule."),
                 RulesCoreBaselineCatalog.BootstrapActor,
                 cancellationToken);
+            changed |= decision.Created;
         }
 
-        return await globalRules.PublishAsync(
-            RulesCoreBaselineCatalog.BootstrapActor,
-            cancellationToken);
+        return changed;
     }
 
     private static void EnsurePackageMatches(

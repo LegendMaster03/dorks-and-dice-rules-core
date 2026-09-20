@@ -17,6 +17,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
     {
         ArgumentNullException.ThrowIfNull(request);
         ArgumentNullException.ThrowIfNull(request.Representation);
+        SourceImportExecutionPolicy.Apply(dbContext);
         var packageKey = NormalizeKey(request.PackageKey);
         var packageDisplayName = Require(request.PackageDisplayName, nameof(request.PackageDisplayName), 300);
         var provider = Require(request.Provider, nameof(request.Provider), 200);
@@ -106,7 +107,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
         var importedEntities = new List<ImportedSourceEntity>();
         var importedPublications = new List<ImportedNormalizedPublication>();
         var reconciliationIssues = new List<NormalizedSourceReconciliationIssue>();
-        var persisted = new List<(SourceEntity Entity, SourceEntityRevision Revision, NormalizedSourceRecord Record)>();
+        var persisted = new List<(SourceEntity Entity, SourceEntityRevision Revision, NormalizedSourceRecord Record, bool TranslationOnlyUpdate)>();
         var newEntities = 0;
         var unchangedEntities = 0;
         var newRevisions = 0;
@@ -167,6 +168,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                 .FirstOrDefaultAsync(cancellationToken);
             var createdRevision = latest is null
                 || !string.Equals(latest.Fingerprint, fingerprint, StringComparison.Ordinal);
+            var translationOnlyUpdate = false;
             if (createdRevision)
             {
                 latest = new SourceEntityRevision
@@ -191,6 +193,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                 // source revisions. Update only ContentJson on the existing native revision.
                 latest.ContentJson = normalized.ContentJson;
                 await dbContext.SaveChangesAsync(cancellationToken);
+                translationOnlyUpdate = true;
                 translationOnlyUpdates++;
             }
             else
@@ -212,7 +215,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                 latest.RevisionNumber,
                 latest.Fingerprint,
                 createdRevision));
-            persisted.Add((entity, latest, normalized));
+            persisted.Add((entity, latest, normalized, translationOnlyUpdate));
             persistedCount++;
 
             if (ShouldReport(persistedCount, translatedRecords.Count))
@@ -303,7 +306,8 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                                 semanticFingerprint),
                             request.Representation.FormatKey,
                             cancellationToken,
-                            value.Record.CanonicalAliases);
+                            value.Record.CanonicalAliases,
+                            value.TranslationOnlyUpdate);
                     canonicalPublicationId ??= association.Publication.Id;
                     if (canonicalPublicationId != association.Publication.Id)
                     {
@@ -540,9 +544,39 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
 
     private static bool EnsureEntityIdentityMatches(SourceEntity entity, NormalizedSourceRecord record)
     {
-        if (!string.Equals(entity.EntityType, record.EntityType, StringComparison.Ordinal)
-            || !string.Equals(entity.Name, record.Name, StringComparison.Ordinal)
-            || !string.Equals(entity.SourceCode, record.SourceCode, StringComparison.Ordinal))
+        var sourceCodeMatches = string.Equals(
+            entity.SourceCode,
+            record.SourceCode,
+            StringComparison.Ordinal);
+        var entityTypeMatches = string.Equals(
+            entity.EntityType,
+            record.EntityType,
+            StringComparison.Ordinal);
+        var nameMatches = string.Equals(
+            entity.Name,
+            record.Name,
+            StringComparison.Ordinal);
+        if ((!entityTypeMatches || !nameMatches) && sourceCodeMatches
+            && string.Equals(
+                entity.FormatKey,
+                LegacySrdSourceFormatAdapter.Format,
+                StringComparison.Ordinal)
+            && ExactCompetencyTranslationPolicy.IsReviewedLegacyCompetencyMigration(
+                entity.EntityType,
+                entity.Name,
+                record))
+        {
+            // The native key, RawJson, and NativeIdentityJson remain unchanged. This is a
+            // correction to Rules Core's derived normalized competency identity, using the same
+            // reviewed direct-conversion policy applied to new imports. Existing source revision
+            // IDs and any canonical/Rules Layer references therefore remain stable.
+            entity.EntityType = record.EntityType;
+            entity.Name = record.Name;
+            entityTypeMatches = true;
+            nameMatches = true;
+        }
+
+        if (!entityTypeMatches || !nameMatches || !sourceCodeMatches)
         {
             throw new InvalidOperationException(
                 $"Source entity native identity '{entity.NativeKey}' changed immutable identity metadata across representations.");

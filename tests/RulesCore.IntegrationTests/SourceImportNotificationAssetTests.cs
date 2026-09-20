@@ -29,7 +29,7 @@ public sealed class SourceImportNotificationAssetTests
         Assert.Contains("Dismiss hides finished notifications only", source, StringComparison.Ordinal);
         Assert.Contains("does not cancel imports", source, StringComparison.Ordinal);
         Assert.Contains("Last update", source, StringComparison.Ordinal);
-        Assert.Contains("rules-core:dismissed-import-jobs:v1", source, StringComparison.Ordinal);
-        Assert.Contains("window.localStorage", source, StringComparison.Ordinal);
+        Assert.Contains("dismissCurrentUserSourceImportJobs", source, StringComparison.Ordinal);
+        Assert.DoesNotContain("window.localStorage", source, StringComparison.Ordinal);
     }
 }

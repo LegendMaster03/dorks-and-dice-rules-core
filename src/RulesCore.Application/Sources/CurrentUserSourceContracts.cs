@@ -26,6 +26,12 @@ public static class CurrentUserSourceImportJobStatuses
     public const string Failed = "failed";
 }
 
+public sealed record DismissCurrentUserSourceImportJobsRequest(
+    IReadOnlyList<Guid> JobIds);
+
+public sealed record DismissCurrentUserSourceImportJobsResult(
+    int DismissedCount);
+
 public sealed record AddCurrentUserSourceRequest
 {
     public AddCurrentUserSourceRequest()

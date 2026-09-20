@@ -24,6 +24,8 @@ public sealed class IncompleteCurrentUserSourceImportCleanupService(RulesCoreDbC
             throw new ArgumentException("Web source URL must be an absolute HTTPS URL.", nameof(url));
         }
 
+        SourceImportExecutionPolicy.Apply(dbContext);
+
         var userId = currentUserId.Trim();
         var normalizedOrigin = NormalizeWebOrigin(uri);
         var originIdentity = $"web:{normalizedOrigin}";

@@ -15,7 +15,8 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
         CanonicalSourceOccurrenceEvidence occurrenceEvidence,
         string representationKind,
         CancellationToken cancellationToken = default,
-        IReadOnlyDictionary<string, string>? canonicalAliases = null)
+        IReadOnlyDictionary<string, string>? canonicalAliases = null,
+        bool allowTranslationOnlyReassociation = false)
     {
         if (sourceEntityId == Guid.Empty)
         {
@@ -199,6 +200,7 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             occurrenceEvidence,
             $"{NormalizeRepresentationKind(representationKind)}:{occurrenceMatchKind}",
             confidence,
+            allowTranslationOnlyReassociation,
             cancellationToken);
 
         await SeedTrustedAliasesAsync(
@@ -464,6 +466,7 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
         CanonicalSourceOccurrenceEvidence evidence,
         string matchKind,
         double confidence,
+        bool allowTranslationOnlyReassociation,
         CancellationToken cancellationToken)
     {
         var normalizedFingerprint = evidence.SemanticFingerprint.Trim().ToLowerInvariant();
@@ -504,33 +507,63 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
 
             if (existingOccurrenceId.HasValue)
             {
-                if (existingOccurrenceId.Value == occurrenceId)
+                var sameOccurrence = existingOccurrenceId.Value == occurrenceId;
+                var sameFingerprint = string.Equals(
+                    existingFingerprint,
+                    normalizedFingerprint,
+                    StringComparison.Ordinal);
+                var sameCanonicalEntity = existingCanonicalEntityId == canonicalEntityId;
+                if (sameOccurrence && sameFingerprint && sameCanonicalEntity)
                 {
                     return;
                 }
 
-                if (!string.Equals(existingFingerprint, normalizedFingerprint, StringComparison.Ordinal)
-                    || existingCanonicalEntityId != canonicalEntityId)
+                if (!allowTranslationOnlyReassociation)
                 {
-                    throw new CanonicalReconciliationConflictException(
-                        $"Source entity revision '{sourceEntityRevisionId}' can not move to a different canonical occurrence because its canonical entity or semantic fingerprint changed.");
+                    if (sameOccurrence)
+                    {
+                        return;
+                    }
+
+                    if (!sameFingerprint || !sameCanonicalEntity)
+                    {
+                        throw new CanonicalReconciliationConflictException(
+                            $"Source entity revision '{sourceEntityRevisionId}' can not move to a different canonical occurrence because its canonical entity or semantic fingerprint changed.");
+                    }
                 }
 
                 await using var update = connection.CreateCommand();
                 update.CommandText = """
                     UPDATE source_entity_occurrence_binding
                     SET canonical_source_occurrence_id = @occurrence_id,
+                        semantic_fingerprint = @semantic_fingerprint,
                         locator_key = @locator_key,
                         match_kind = @match_kind,
                         confidence = @confidence
                     WHERE source_entity_revision_id = @source_entity_revision_id;
                     """;
                 AddParameter(update, "@occurrence_id", occurrenceId);
+                AddParameter(update, "@semantic_fingerprint", normalizedFingerprint);
                 AddNullableParameter(update, "@locator_key", locatorKey);
                 AddParameter(update, "@match_kind", matchKind);
                 AddParameter(update, "@confidence", confidence);
                 AddParameter(update, "@source_entity_revision_id", sourceEntityRevisionId);
                 await update.ExecuteNonQueryAsync(cancellationToken);
+
+                if (allowTranslationOnlyReassociation
+                    && existingCanonicalEntityId.HasValue
+                    && existingCanonicalEntityId.Value != canonicalEntityId)
+                {
+                    // A translator-only update changes Rules Core's interpretation, not the
+                    // source-native revision. Preserve bindings made against the prior
+                    // interpretation through the existing revision relationship graph.
+                    await new CanonicalEntityRelationshipStore(dbContext).RelateRevisionAsync(
+                        existingCanonicalEntityId.Value,
+                        canonicalEntityId,
+                        "translation-only-reconciliation",
+                        1.0,
+                        cancellationToken);
+                }
                 return;
             }
 

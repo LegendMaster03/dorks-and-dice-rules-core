@@ -40,14 +40,76 @@ internal static class BundledSrdSnapshots
                 continue;
             }
 
-            imported.Add(await ImportSnapshotAsync(
+            var result = await ImportSnapshotAsync(
                 dbContext,
                 snapshot,
                 artifact,
-                cancellationToken));
+                cancellationToken);
+            if (result.ReconciliationIssues.Count > 0)
+            {
+                throw new InvalidOperationException(
+                    $"Reviewed bundled SRD '{snapshot.WorkKey}' produced canonical reconciliation issue(s): "
+                    + string.Join(
+                        " | ",
+                        result.ReconciliationIssues.Select(value =>
+                            $"{value.PublicationLocalKey}: {value.Message}")));
+            }
+            imported.Add(result);
         }
 
         return imported;
+    }
+
+    /// <summary>
+    /// Returns the exact immutable Source Layer representations that correspond to the
+    /// checked-in reviewed SRD bytes. Package membership alone is deliberately insufficient:
+    /// user imports, hosted-source refreshes, and other representations in the same package are
+    /// not eligible for reviewed baseline publication.
+    /// </summary>
+    internal static async Task<IReadOnlyList<ReviewedBundledSrdRepresentation>> GetReviewedRepresentationsAsync(
+        RulesCoreDbContext dbContext,
+        CancellationToken cancellationToken = default)
+    {
+        var reviewed = new List<ReviewedBundledSrdRepresentation>(Definitions.Count);
+        foreach (var snapshot in Definitions)
+        {
+            var package = RulesCoreBaselineCatalog.SourcePackages.Single(value =>
+                string.Equals(value.Key, snapshot.PackageKey, StringComparison.Ordinal));
+            var work = package.Works.Single(value =>
+                string.Equals(value.Key, snapshot.WorkKey, StringComparison.Ordinal));
+            var packageId = await dbContext.SourcePackages
+                .AsNoTracking()
+                .Where(value => value.Key == snapshot.PackageKey)
+                .Select(value => (Guid?)value.Id)
+                .SingleOrDefaultAsync(cancellationToken)
+                ?? throw new InvalidOperationException(
+                    $"Reviewed bundled SRD package '{snapshot.PackageKey}' has not been hydrated.");
+
+            var artifact = await LoadArtifactAsync(snapshot, cancellationToken);
+            var expectedFormat = snapshot.IsLegacy
+                ? LegacySrdSourceFormatAdapter.Format
+                : FiveEToolsSourceFormatAdapter.Format;
+            var contentHash = Convert.ToHexString(SHA256.HashData(artifact.Content)).ToLowerInvariant();
+            var representation = await dbContext.SourceRepresentations
+                .AsNoTracking()
+                .SingleOrDefaultAsync(
+                    value => value.SourcePackageId == packageId
+                        && value.OriginIdentity == artifact.OriginIdentity
+                        && value.ContentSha256 == contentHash
+                        && value.FormatKey == expectedFormat,
+                    cancellationToken)
+                ?? throw new InvalidOperationException(
+                    $"Reviewed bundled SRD representation '{snapshot.WorkKey}' is not hydrated at the expected immutable identity.");
+
+            reviewed.Add(new ReviewedBundledSrdRepresentation(
+                representation.Id,
+                snapshot.PackageKey,
+                snapshot.WorkKey,
+                snapshot.SourceCode,
+                work.GameEdition));
+        }
+
+        return reviewed;
     }
 
     /// <summary>
@@ -240,6 +302,12 @@ internal static class BundledSrdSnapshots
                 && string.Equals(
                     sourceFormat.GetString(),
                     LegacySrdSourceFormatAdapter.Format,
+                    StringComparison.Ordinal)
+                && context.TryGetProperty("competencyNormalizationVersion", out var competencyVersion)
+                && competencyVersion.ValueKind == JsonValueKind.String
+                && string.Equals(
+                    competencyVersion.GetString(),
+                    ExactCompetencyTranslationPolicy.LegacyCompetencyNormalizationVersion,
                     StringComparison.Ordinal);
         }
         catch (JsonException)
@@ -361,3 +429,11 @@ internal sealed record BundledSrdSnapshotSeed(
         string.Equals(WorkKey, "srd-3e", StringComparison.Ordinal)
         || string.Equals(WorkKey, "srd-3-5e", StringComparison.Ordinal);
 }
+
+
+internal sealed record ReviewedBundledSrdRepresentation(
+    Guid RepresentationId,
+    string PackageKey,
+    string WorkKey,
+    string SourceCode,
+    string? GameEdition);

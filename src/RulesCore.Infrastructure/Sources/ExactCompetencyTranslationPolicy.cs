@@ -13,6 +13,7 @@ namespace RulesCore.Infrastructure.Sources;
 internal static class ExactCompetencyTranslationPolicy
 {
     public const string IdentityVersion = "rules-core-exact-competency-v1";
+    public const string LegacyCompetencyNormalizationVersion = "legacy-srd-competency-v1";
 
     private static readonly IReadOnlyDictionary<string, HashSet<string>> CanonicalTargets =
         new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase)
@@ -48,14 +49,19 @@ internal static class ExactCompetencyTranslationPolicy
 
         var targetType = record.EntityType;
         var targetName = record.Name;
+        var result = record;
         JsonObject? content = null;
         JsonObject? extension = null;
+        var isPcGen = string.Equals(
+            representation.FormatKey,
+            PcGenSourceFormatAdapter.Format,
+            StringComparison.OrdinalIgnoreCase);
+        var isLegacySrd = string.Equals(
+            representation.FormatKey,
+            LegacySrdSourceFormatAdapter.Format,
+            StringComparison.OrdinalIgnoreCase);
 
-        if (string.Equals(
-                representation.FormatKey,
-                PcGenSourceFormatAdapter.Format,
-                StringComparison.OrdinalIgnoreCase)
-            && !string.IsNullOrWhiteSpace(record.ContentJson))
+        if ((isPcGen || isLegacySrd) && !string.IsNullOrWhiteSpace(record.ContentJson))
         {
             try
             {
@@ -67,17 +73,64 @@ internal static class ExactCompetencyTranslationPolicy
                 content = null;
                 extension = null;
             }
+        }
 
-            if (TryReadUnscopedPcGenConversion(extension, out var convertedType, out var convertedName))
+        if (isPcGen
+            && TryReadUnscopedPcGenConversion(extension, out var convertedType, out var convertedName))
+        {
+            targetType = convertedType;
+            targetName = convertedName;
+        }
+        else if (isLegacySrd && content is not null && extension is not null)
+        {
+            var edition = ResolveEdition(representation, record);
+            if (extension["context"] is JsonObject normalizationContext)
             {
-                targetType = convertedType;
-                targetName = convertedName;
+                normalizationContext["competencyNormalizationVersion"] = LegacyCompetencyNormalizationVersion;
             }
+
+            if (string.Equals(record.EntityType, "skill", StringComparison.OrdinalIgnoreCase)
+                && IsThreeXEdition(edition))
+            {
+                var conversion = PcGenCompetencyConversions.Resolve(record.Name, edition);
+                var effectiveType = conversion is not null
+                    && string.IsNullOrWhiteSpace(conversion.Scope)
+                        ? conversion.TargetType
+                        : record.EntityType;
+
+                extension["competency"] = RulesCoreContentTranslation.BuildThreeXCompetencyMetadata(
+                    record.Name,
+                    effectiveType,
+                    edition!);
+
+                if (conversion is not null)
+                {
+                    extension["competencyConversion"] =
+                        RulesCoreContentTranslation.BuildCompetencyConversionMetadata(conversion);
+                    if (extension["context"] is JsonObject conversionContext)
+                    {
+                        conversionContext["nativeName"] = record.Name;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(conversion.Scope)
+                        && IsCanonicalTarget(conversion.TargetType, conversion.TargetName))
+                    {
+                        targetType = conversion.TargetType;
+                        targetName = conversion.TargetName;
+                    }
+                }
+            }
+
+            result = result with
+            {
+                ContentJson = content.ToJsonString(
+                    new JsonSerializerOptions { WriteIndented = false })
+            };
         }
 
         if (!IsCanonicalTarget(targetType, targetName))
         {
-            return record;
+            return result;
         }
 
         var canonicalIdentityKey = CanonicalSourceIdentity.OccurrenceKey(targetType, targetName);
@@ -90,12 +143,12 @@ internal static class ExactCompetencyTranslationPolicy
                 FiveEToolsSourceFormatAdapter.Format,
                 StringComparison.OrdinalIgnoreCase))
         {
-            return record with { CanonicalIdentityKey = canonicalIdentityKey };
+            return result with { CanonicalIdentityKey = canonicalIdentityKey };
         }
 
         if (content is null)
         {
-            return record with
+            return result with
             {
                 EntityType = targetType,
                 Name = targetName,
@@ -110,7 +163,7 @@ internal static class ExactCompetencyTranslationPolicy
         }
 
         content["name"] = targetName;
-        return record with
+        return result with
         {
             EntityType = targetType,
             Name = targetName,
@@ -132,6 +185,79 @@ internal static class ExactCompetencyTranslationPolicy
         return CanonicalSourceIdentity.Fingerprint(
             $"{IdentityVersion}\n{canonicalIdentityKey.Trim().ToLowerInvariant()}");
     }
+
+    internal static bool IsReviewedLegacyCompetencyMigration(
+        string currentEntityType,
+        string currentName,
+        NormalizedSourceRecord translatedRecord)
+    {
+        if (!string.Equals(currentEntityType, "skill", StringComparison.OrdinalIgnoreCase)
+            || string.IsNullOrWhiteSpace(currentName)
+            || string.IsNullOrWhiteSpace(translatedRecord.CanonicalIdentityKey)
+            || string.IsNullOrWhiteSpace(translatedRecord.ContentJson))
+        {
+            return false;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(translatedRecord.ContentJson);
+            if (!document.RootElement.TryGetProperty("_rulesCore", out var rulesCore)
+                || rulesCore.ValueKind != JsonValueKind.Object
+                || !rulesCore.TryGetProperty("context", out var context)
+                || context.ValueKind != JsonValueKind.Object
+                || !string.Equals(
+                    ReadString(context, "sourceFormat"),
+                    LegacySrdSourceFormatAdapter.Format,
+                    StringComparison.Ordinal)
+                || !string.Equals(
+                    ReadString(context, "competencyNormalizationVersion"),
+                    LegacyCompetencyNormalizationVersion,
+                    StringComparison.Ordinal))
+            {
+                return false;
+            }
+
+            var edition = ReadString(context, "edition");
+            var conversion = PcGenCompetencyConversions.Resolve(currentName, edition);
+            return conversion is not null
+                && string.IsNullOrWhiteSpace(conversion.Scope)
+                && string.Equals(
+                    conversion.TargetType,
+                    translatedRecord.EntityType,
+                    StringComparison.OrdinalIgnoreCase)
+                && string.Equals(
+                    conversion.TargetName,
+                    translatedRecord.Name,
+                    StringComparison.OrdinalIgnoreCase)
+                && IsCanonicalTarget(conversion.TargetType, conversion.TargetName);
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
+    }
+
+    private static string? ResolveEdition(
+        NormalizedSourceRepresentation representation,
+        NormalizedSourceRecord record)
+    {
+        if (string.IsNullOrWhiteSpace(record.PublicationLocalKey))
+        {
+            return null;
+        }
+
+        return (representation.Publications ?? [])
+            .FirstOrDefault(value => string.Equals(
+                value.LocalKey,
+                record.PublicationLocalKey,
+                StringComparison.OrdinalIgnoreCase))
+            ?.GameEdition;
+    }
+
+    private static bool IsThreeXEdition(string? edition) =>
+        string.Equals(edition, "3e", StringComparison.OrdinalIgnoreCase)
+        || string.Equals(edition, "3.5e", StringComparison.OrdinalIgnoreCase);
 
     private static bool TryReadUnscopedPcGenConversion(
         JsonObject? extension,
@@ -169,5 +295,11 @@ internal static class ExactCompetencyTranslationPolicy
         value[propertyName] is JsonValue property
         && property.TryGetValue<string>(out var result)
             ? result
+            : null;
+
+    private static string? ReadString(JsonElement value, string propertyName) =>
+        value.TryGetProperty(propertyName, out var property)
+        && property.ValueKind == JsonValueKind.String
+            ? property.GetString()
             : null;
 }

@@ -123,6 +123,12 @@ These definitions are **capability-driven**, not edition-toggle-driven. For exam
 
 The definitions intentionally do not infer values from unrelated fields. For example, touch AC consumes only contributions the Character backend has already determined apply to touch AC. The evaluation endpoint requires the declared capability key for capability-driven mechanics and rejects evaluation when it is absent.
 
+## Published competency baseline
+
+The normal installation publishes reviewed bundled SRD skill/tool concepts through the Global Rules Layer during baseline synchronization. The mechanics consumer continues to read only effective resolved rules. It does not scan the Source Layer for unpublished competencies and does not maintain its own skill list.
+
+Because publication uses the same canonical identity that ingestion already produced, direct-convergence names appear under the canonical Rule Concept while accessible source-equivalent profiles can remain available. Composite relationships continue to come from the existing Rules Layer relationship model rather than frontend hierarchy data.
+
 ## Competency metadata
 
 Resolved skill and tool concepts carry normalized competency metadata for Character consumers. The contract can describe:
@@ -138,7 +144,7 @@ Resolved skill and tool concepts carry normalized competency metadata for Charac
 
 PCGen translation normalizes understood competency semantics into `_rulesCore.competency` during ingestion. That normalized profile includes the competency kind, specialty family/value when applicable, governing ability, trained-only behavior, Armor Check Penalty applicability, rank/class-skill support, training support, game edition, and any capability qualification. The original `KEYSTAT`, `USEUNTRAINED`, `ACHECK`, and other PCGen evidence remains preserved under `_rulesCore.pcgen.unmappedSegments` for source inspection; the Character mechanics consumer does not parse those PCGen tags or infer specialty semantics from display names.
 
-A competency can expose multiple normalized mechanical profiles across accessible canonical-equivalent source representations. This is important for reviewed direct equivalences such as 3.x `Bluff` -> `Deception` or `Craft (alchemy)` -> `Alchemist's Supplies`: selecting a later-edition representation for the published rule does not erase the accessible 3.x profile that supports ranks and class-skill state.
+A competency can expose multiple normalized mechanical profiles across accessible canonical-equivalent source representations. This is important for reviewed direct equivalences such as 3.x `Bluff` -> `Deception` or `Craft (alchemy)` -> `Alchemist's Supplies`: when an effective published decision selects any reviewed representation, the other accessible profile evidence remains available. Genuine unresolved mechanical differences are not assigned a published representation by edition precedence; they remain subject to Rules Lawyer adjudication.
 
 Profile selection is explicit and local to the competency evaluation. Each profile exposes its source-revision identity, capability requirements, evaluation profile, typed inputs, boolean requirements, and `canEvaluate`. The evaluation request may supply `competencyProfileSourceEntityRevisionId`; when it is omitted, Rules Core uses the profile belonging to the effective published source revision. This is not an edition-wide Character mode.
 

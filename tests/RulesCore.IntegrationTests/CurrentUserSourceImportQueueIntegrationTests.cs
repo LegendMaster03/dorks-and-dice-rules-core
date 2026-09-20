@@ -186,12 +186,109 @@ public sealed class CurrentUserSourceImportQueueIntegrationTests
                 var reclaimed = await retryJobs.ClaimNextAsync();
                 Assert.NotNull(reclaimed);
                 Assert.Equal(job.Id, reclaimed.Id);
+                await retryJobs.FailAsync(job.Id, new InvalidOperationException("Fixture terminal failure."));
+            }
+
+            using var dismissRequest = HostedRequest(
+                HttpMethod.Post,
+                "/api/sources/current-user/import-jobs/dismiss",
+                "web-import-ticket");
+            dismissRequest.Content = JsonContent.Create(
+                new DismissCurrentUserSourceImportJobsRequest([job.Id]));
+            using var dismissResponse = await client.SendAsync(dismissRequest);
+            Assert.Equal(HttpStatusCode.OK, dismissResponse.StatusCode);
+            var dismissResult = await dismissResponse.Content
+                .ReadFromJsonAsync<DismissCurrentUserSourceImportJobsResult>();
+            Assert.NotNull(dismissResult);
+            Assert.Equal(1, dismissResult.DismissedCount);
+
+            using var dismissedListRequest = HostedRequest(
+                HttpMethod.Get,
+                "/api/sources/current-user/import-jobs",
+                "web-import-ticket");
+            using var dismissedListResponse = await client.SendAsync(dismissedListRequest);
+            Assert.Equal(HttpStatusCode.OK, dismissedListResponse.StatusCode);
+            var visibleAfterDismiss = await dismissedListResponse.Content
+                .ReadFromJsonAsync<CurrentUserSourceImportJobView[]>();
+            Assert.DoesNotContain(visibleAfterDismiss!, value => value.Id == job.Id);
+
+            await using (var historyScope = factory.Services.CreateAsyncScope())
+            {
+                var historyDb = historyScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+                var retainedHistory = await historyDb.Database.SqlQueryRaw<bool>(
+                        """
+                        SELECT EXISTS (
+                            SELECT 1
+                            FROM current_user_source_import_job
+                            WHERE current_user_source_import_job_id = {0}
+                                AND status = 'failed'
+                                AND dismissed_at IS NOT NULL) AS "Value"
+                        """,
+                        job.Id)
+                    .SingleAsync();
+                Assert.True(retainedHistory);
             }
         }
         finally
         {
             await using var cleanupScope = factory.Services.CreateAsyncScope();
             var db = cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            await db.Database.ExecuteSqlInterpolatedAsync($$"""
+                DELETE FROM current_user_source_import_job
+                WHERE user_id = {{userId}};
+                """);
+        }
+    }
+
+    [Fact]
+    public async Task SourceImportExecutionPolicyAllowsLongRunningDatabaseCommands()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString)) return;
+
+        await using var db = new RulesCoreDbContext(
+            new DbContextOptionsBuilder<RulesCoreDbContext>()
+                .UseNpgsql(connectionString)
+                .Options);
+        db.Database.SetCommandTimeout(30);
+
+        SourceImportExecutionPolicy.Apply(db);
+
+        Assert.Equal(
+            SourceImportExecutionPolicy.DatabaseCommandTimeoutSeconds,
+            db.Database.GetCommandTimeout().GetValueOrDefault());
+    }
+
+    [Fact]
+    public async Task ImportJobFailureExplainsDatabaseCommandTimeout()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString)) return;
+
+        var userId = $"web-timeout-{Guid.NewGuid():N}";
+        await using var db = new RulesCoreDbContext(
+            new DbContextOptionsBuilder<RulesCoreDbContext>()
+                .UseNpgsql(connectionString)
+                .Options);
+        var jobs = new CurrentUserSourceImportJobService(db);
+        try
+        {
+            var job = await jobs.QueueWebAddAsync(userId, RegressionSourceUrl);
+            await jobs.FailAsync(
+                job.Id,
+                new InvalidOperationException(
+                    "An exception has been raised that is likely due to a transient failure.",
+                    new TimeoutException("Timeout during reading attempt")));
+
+            var failed = Assert.Single(
+                await jobs.ListAsync(userId),
+                value => value.Id == job.Id);
+            Assert.Equal(
+                "A database operation timed out while importing this source. The import can be retried.",
+                failed.Error);
+        }
+        finally
+        {
             await db.Database.ExecuteSqlInterpolatedAsync($$"""
                 DELETE FROM current_user_source_import_job
                 WHERE user_id = {{userId}};

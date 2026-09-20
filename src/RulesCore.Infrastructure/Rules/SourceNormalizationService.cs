@@ -295,6 +295,16 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         }
 
         var availableNameLength = Math.Max(1, 300 - prefix.Length);
+
+        // This competency key predates generic source-name slugging and is part of the
+        // Character mechanics contract. Keep its stable identifier while preserving the
+        // source/display name "Alchemist's Supplies".
+        if (string.Equals(normalizedEntityType, "tool", StringComparison.Ordinal)
+            && string.Equals(name.Trim(), "Alchemist's Supplies", StringComparison.OrdinalIgnoreCase))
+        {
+            return "tool.alchemists-supplies";
+        }
+
         var nameSegment = Slugify(name, "item");
         if (nameSegment.Length > availableNameLength)
         {

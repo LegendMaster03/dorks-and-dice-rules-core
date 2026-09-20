@@ -112,6 +112,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
                     completed_at
                 FROM current_user_source_import_job
                 WHERE user_id = @user_id
+                    AND dismissed_at IS NULL
                 ORDER BY created_at DESC, current_user_source_import_job_id
                 LIMIT 20;
                 """;
@@ -121,6 +122,53 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken)) results.Add(ReadView(reader));
             return results;
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
+    public async Task<int> DismissAsync(
+        string currentUserId,
+        IReadOnlyCollection<Guid>? jobIds,
+        CancellationToken cancellationToken = default)
+    {
+        var userId = RequireUserId(currentUserId);
+        if (jobIds is null || jobIds.Count == 0) return 0;
+        var ids = jobIds
+            .Where(value => value != Guid.Empty)
+            .Distinct()
+            .Take(100)
+            .ToArray();
+        if (ids.Length == 0) return 0;
+
+        await EnsureSchemaAsync(cancellationToken);
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync(cancellationToken);
+
+        try
+        {
+            var dismissedCount = 0;
+            var dismissedAt = DateTimeOffset.UtcNow;
+            foreach (var jobId in ids)
+            {
+                await using var command = connection.CreateCommand();
+                command.CommandText = """
+                    UPDATE current_user_source_import_job
+                    SET dismissed_at = @dismissed_at
+                    WHERE current_user_source_import_job_id = @id
+                        AND user_id = @user_id
+                        AND status IN ('completed', 'failed')
+                        AND dismissed_at IS NULL;
+                    """;
+                AddParameter(command, "@dismissed_at", dismissedAt);
+                AddParameter(command, "@id", jobId);
+                AddParameter(command, "@user_id", userId);
+                dismissedCount += await command.ExecuteNonQueryAsync(cancellationToken);
+            }
+            return dismissedCount;
         }
         finally
         {
@@ -320,9 +368,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(exception);
-        var message = string.IsNullOrWhiteSpace(exception.Message)
-            ? "The Web source import failed."
-            : exception.Message.Trim();
+        var message = DescribeFailure(exception);
         if (message.Length > 1000) message = message[..1000];
         return SetTerminalStateAsync(
             jobId,
@@ -564,6 +610,29 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         };
     }
 
+    private static string DescribeFailure(Exception exception)
+    {
+        const string transientFailure = "An exception has been raised that is likely due to a transient failure.";
+        if (string.Equals(exception.Message?.Trim(), transientFailure, StringComparison.Ordinal)
+            && ExceptionChainContainsTimeout(exception))
+        {
+            return "A database operation timed out while importing this source. The import can be retried.";
+        }
+
+        return string.IsNullOrWhiteSpace(exception.Message)
+            ? "The Web source import failed."
+            : exception.Message.Trim();
+    }
+
+    private static bool ExceptionChainContainsTimeout(Exception exception)
+    {
+        for (Exception? current = exception; current is not null; current = current.InnerException)
+        {
+            if (current is TimeoutException) return true;
+        }
+        return false;
+    }
+
     private static void ValidateProgress(CurrentUserSourceImportProgress progress)
     {
         var counts = new int?[]
@@ -667,6 +736,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
             created_at timestamp with time zone NOT NULL,
             started_at timestamp with time zone NULL,
             completed_at timestamp with time zone NULL,
+            dismissed_at timestamp with time zone NULL,
             CONSTRAINT pk_current_user_source_import_job PRIMARY KEY (current_user_source_import_job_id),
             CONSTRAINT ck_current_user_source_import_job_operation CHECK (operation IN ('add', 'refresh')),
             CONSTRAINT ck_current_user_source_import_job_kind CHECK (source_kind = 'web'),
@@ -677,6 +747,7 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
         ALTER TABLE current_user_source_import_job ADD COLUMN IF NOT EXISTS progress_detail text NULL;
         ALTER TABLE current_user_source_import_job ALTER COLUMN progress_detail TYPE text;
         ALTER TABLE current_user_source_import_job ADD COLUMN IF NOT EXISTS progress_updated_at timestamp with time zone NULL;
+        ALTER TABLE current_user_source_import_job ADD COLUMN IF NOT EXISTS dismissed_at timestamp with time zone NULL;
         CREATE INDEX IF NOT EXISTS ix_current_user_source_import_job_user_created
             ON current_user_source_import_job(user_id, created_at DESC);
         CREATE INDEX IF NOT EXISTS ix_current_user_source_import_job_queue

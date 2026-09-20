@@ -193,6 +193,13 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             .Where(value => value.RuleConceptId == ruleConceptId)
             .OrderByDescending(value => value.DecisionNumber)
             .FirstOrDefaultAsync(cancellationToken);
+        if (request.EnforceExpectedLatestDecision
+            && latest?.Id != request.ExpectedLatestDecisionId)
+        {
+            throw new InvalidOperationException(
+                "The global rule decision changed after this candidate was reviewed. Reload the rule before saving another decision.");
+        }
+
         if (latest is not null)
         {
             var existingContributions = await SourceFrameworkStore.GetDecisionContributionsAsync(dbContext, latest.Id, cancellationToken);

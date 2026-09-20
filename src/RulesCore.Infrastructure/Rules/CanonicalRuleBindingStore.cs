@@ -136,6 +136,65 @@ internal static class CanonicalRuleBindingStore
         }
     }
 
+    public static async Task<IReadOnlyList<Guid>> GetSourceEntityIdsForConceptAsync(
+        RulesCoreDbContext dbContext,
+        Guid ruleConceptId,
+        CancellationToken cancellationToken = default)
+    {
+        if (ruleConceptId == Guid.Empty)
+        {
+            throw new ArgumentException("Rule concept ID can not be empty.", nameof(ruleConceptId));
+        }
+
+        await EnsureSchemaAsync(dbContext, cancellationToken);
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync(cancellationToken);
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                WITH RECURSIVE concept_entities(canonical_entity_id) AS (
+                    SELECT canonical_entity_id
+                    FROM rule_concept_source_binding
+                    WHERE rule_concept_id = @concept_id
+                    UNION
+                    SELECT relationship.to_canonical_entity_id
+                    FROM canonical_entity_relationship relationship
+                    JOIN concept_entities parent
+                        ON parent.canonical_entity_id = relationship.from_canonical_entity_id
+                    WHERE relationship.relationship_kind = 'revision'
+                )
+                SELECT DISTINCT source.source_entity_id
+                FROM source_entity source
+                JOIN (
+                    SELECT DISTINCT ON (source_entity_id)
+                        source_entity_id,
+                        source_entity_revision_id
+                    FROM source_entity_revision
+                    ORDER BY source_entity_id, revision_number DESC
+                ) latest
+                    ON latest.source_entity_id = source.source_entity_id
+                JOIN source_entity_occurrence_binding source_binding
+                    ON source_binding.source_entity_revision_id = latest.source_entity_revision_id
+                JOIN canonical_source_occurrence occurrence
+                    ON occurrence.canonical_source_occurrence_id = source_binding.canonical_source_occurrence_id
+                JOIN concept_entities concept_entity
+                    ON concept_entity.canonical_entity_id = occurrence.canonical_entity_id
+                ORDER BY source.source_entity_id;
+                """;
+            AddParameter(command, "@concept_id", ruleConceptId);
+            var ids = new List<Guid>();
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken)) ids.Add(reader.GetGuid(0));
+            return ids;
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
     public static async Task<IReadOnlyList<Guid>> GetAccessibleSourceEntityIdsForConceptAsync(
         RulesCoreDbContext dbContext,
         Guid ruleConceptId,

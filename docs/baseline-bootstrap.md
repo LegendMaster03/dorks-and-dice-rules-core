@@ -13,7 +13,8 @@ On startup, the baseline bootstrapper:
 3. hydrates reviewed bundled snapshots of all four SRDs into the public immutable Source Layer when the expected representation is not already present;
 4. registers four persistent hosted-source definitions as Advanced maintenance metadata for deliberate upstream comparison/rebuild work;
 5. imports the local immutable Dorks & Dice baseline-rule source document through the normalized source pipeline;
-6. on an otherwise fresh Rules Layer, creates the settled baseline concepts/decisions and publishes the first global ruleset.
+6. synchronizes normalized skill/tool competencies from the exact reviewed bundled SRD representations into the Global Rules Layer;
+7. validates the complete reviewed competency synchronization result before publication; if any competency still requires Rules Lawyer adjudication, publishes no new ruleset revision; otherwise, on a fresh Rules Layer publishes the six settled house rules and reviewed competency decisions together, and on an existing installation publishes still-unpublished bootstrap decisions in a new immutable revision.
 
 The authority-reference records are stored in `source_package_authority_reference`. They identify the external authority used to determine corpus membership; they are not Source Layer parent entities and they do not contain the imported source body.
 
@@ -110,7 +111,25 @@ The Rules Layer may bind multiple implementations to one concept and then explic
 
 When published rules use source contributions, access is evaluated across the actual applied provenance set. A public base can not redistribute a restricted incorporated contribution. Campaign inheritance retains those access requirements unless the campaign decision replaces the global source/contribution path.
 
-Runtime canonical substitution follows the same access rule: if a published snapshot points to an inaccessible source revision, Rules Core may use another revision of the same canonical entity only when that alternative comes from a package accessible to the requesting user. Shared canonical identity never exposes another user's representation.
+Runtime canonical substitution follows the same access rule: if a published snapshot points to an inaccessible source revision, Rules Core may use another revision associated with the same canonical entity when that alternative comes from a package accessible to the requesting user. Trusted canonical identity may intentionally connect different normalized presentations of the same underlying entity; the substitution reuses that identity but never exposes another user's inaccessible representation.
+
+## Reviewed bundled SRD competency baseline
+
+Source Layer import does not normally make source content an effective table rule. Arbitrary uploads, private packages, hosted-source refreshes, and other imported material still require the ordinary Rules Lawyer normalization, decision, and publication workflow.
+
+The four checked-in reviewed SRD representations are a deliberately narrower bootstrap exception for competencies. Eligibility is based on the exact embedded representation identity: package, origin identity, adapter format, and SHA-256 content hash must match the reviewed bytes. Merely importing another skill into `wotc-srd-ogl` or `wotc-srd-cc` does not make it eligible for baseline publication.
+
+For eligible `skill` and `tool` records, bootstrap uses the already-normalized Source Layer identity and the ordinary stable concept-key convention. It does not maintain a second conversion table. Reviewed direct convergence performed by `PcGenCompetencyConversions` and `ExactCompetencyTranslationPolicy` therefore remains authoritative. For example, source-native Bluff and canonical Deception converge before Rules Layer synchronization, so bootstrap creates/reuses `skill.deception` rather than publishing an additional `skill.bluff` concept solely because an older edition used that name.
+
+Direct convergence is distinct from composite competency relationships. Hide and Move Silently remain independent concepts beside Stealth; Listen and Spot remain independent beside Perception; Climb, Jump, and Swim remain independent beside Athletics; Balance and Tumble remain independent beside Acrobatics. `KnownMechanicalRelationships` continues to supply the existing `derive-parent` behavior when all required concepts are present. Bootstrap does not encode a second hierarchy.
+
+Older reviewed competencies that have no approved direct convergence remain independent effective concepts. The same rule applies to individual Knowledge, Craft, Perform, Profession, and psionic specialties represented by the reviewed corpus. Bootstrap never replaces those with wildcard family rows.
+
+When reviewed implementations map to one competency concept, synchronization uses only deterministic outcomes that the existing Rules Core policy can justify. A single reviewed implementation may establish the initial baseline directly. Multiple mechanically identical implementations may resolve through the existing equivalence policy, and compatible non-destructive additions may resolve through the existing additive policy. A genuine mechanical difference that those policies can not prove safe remains unresolved: the Rule Concept and valid canonical bindings are retained for Rules Lawyer adjudication, but bootstrap creates no `GlobalRuleDecision` and does not choose a source by edition, work order, publication date, or other precedence.
+
+Existing Global Rule decisions are authoritative. Baseline synchronization does not replace or advance a Rules Lawyer-authored competency decision, and every attempt to establish an initial baseline decision enforces that no newer decision appeared after review. If a human decision wins that race, bootstrap preserves it and does not append a competing baseline decision.
+
+Bootstrap checks the complete competency synchronization result before global publication. If any reviewed competency remains in conflict, no new immutable `RulesetRevision` is published by that invocation. Concepts, canonical bindings, and safe bootstrap decisions may already be persisted so the adjudication workflow can inspect them; after the conflicts are resolved, startup can publish still-unpublished bootstrap decisions without modifying prior immutable revisions. On an installation that already has the historical six-rule baseline, synchronization adds only missing reviewed competency state and publishes a new immutable global revision only after the synchronization is publishable. Re-running bootstrap is idempotent: stable concept keys, canonical binding uniqueness, guarded initial decisions, and ruleset fingerprints prevent duplicate concepts, bindings, decisions, or no-op revisions.
 
 ## Dorks & Dice adjudicated baseline
 
@@ -123,7 +142,7 @@ The deterministic public package `dorks-and-dice-baseline` contains the settled 
 - **Free Flavor Feats** — purely flavor feats do not consume a mechanical feat choice.
 - **Cross-Edition Additive Compatibility** — 3e, 3.5e, 5e, and 5.5e are merged additively; omission from a newer edition does not remove a compatible older option; explicit conflicts require adjudication; source provenance is preserved.
 
-On a fresh Rules Layer these source entities are bound to stable `house.*` concepts and published as the first global ruleset revision.
+On a fresh Rules Layer these source entities are bound to stable `house.*` concepts and published in the first global ruleset revision together with the reviewed bundled SRD competency baseline.
 
 Unresolved class/prestige progression, feat cadence, BAB/skill-rank/save prerequisite conversion, prestige spellcasting progression, and similar open design questions remain unseeded. Detailed initiative-block execution remains the Initiative Tracker's responsibility.
 

@@ -66,6 +66,13 @@ export class RulesCoreApi {
     getCurrentUserSources() { return this.backend("/api/sources/current-user"); }
     getCurrentUserSourceImportJobs() { return this.backend("/api/sources/current-user/import-jobs"); }
 
+    dismissCurrentUserSourceImportJobs(jobIds) {
+        return this.backend("/api/sources/current-user/import-jobs/dismiss", {
+            method: "POST",
+            body: { jobIds }
+        });
+    }
+
     getCurrentUserSourceReconciliationIssues(currentUserSourceId) {
         return this.backend(`/api/sources/current-user/${encodeURIComponent(currentUserSourceId)}/reconciliation-issues`);
     }
@@ -223,6 +230,58 @@ export class RulesCoreApi {
     async saveGlobalDecision(conceptId, payload) {
         const result = await this.backend(`/api/global/rules/concepts/${encodeURIComponent(conceptId)}/decision`, { method: "PUT", body: payload });
         return { ...result.value, created: result.created };
+    }
+
+    discoverAdjudicationWork() {
+        return this.backend("/api/global/rules/adjudication/discover", { method: "POST" });
+    }
+
+    getAdjudicationWork({ kind = null, state = null, includePublishedCompleted = false } = {}) {
+        const parameters = new URLSearchParams();
+        if (kind) parameters.set("kind", kind);
+        if (state) parameters.set("state", state);
+        if (includePublishedCompleted) parameters.set("includePublishedCompleted", "true");
+        return this.backend(`/api/global/rules/adjudication/work?${parameters.toString()}`);
+    }
+
+    getAdjudicationWorkItem(workItemId) {
+        return this.backend(`/api/global/rules/adjudication/work/${encodeURIComponent(workItemId)}`);
+    }
+
+    beginAdjudicationWork(workItemId, expectedVersion) {
+        return this.backend(`/api/global/rules/adjudication/work/${encodeURIComponent(workItemId)}/begin`, {
+            method: "POST", body: { expectedVersion }
+        });
+    }
+
+    requestAdjudicationClarification(workItemId, expectedVersion, question) {
+        return this.backend(`/api/global/rules/adjudication/work/${encodeURIComponent(workItemId)}/clarification`, {
+            method: "POST", body: { expectedVersion, question }
+        });
+    }
+
+    answerAdjudicationClarification(workItemId, expectedVersion, answer) {
+        return this.backend(`/api/global/rules/adjudication/work/${encodeURIComponent(workItemId)}/clarification/answer`, {
+            method: "POST", body: { expectedVersion, answer }
+        });
+    }
+
+    escalateAdjudicationWork(workItemId, expectedVersion, reason) {
+        return this.backend(`/api/global/rules/adjudication/work/${encodeURIComponent(workItemId)}/escalate`, {
+            method: "POST", body: { expectedVersion, reason }
+        });
+    }
+
+    deferAdjudicationWork(workItemId, expectedVersion, reason) {
+        return this.backend(`/api/global/rules/adjudication/work/${encodeURIComponent(workItemId)}/defer`, {
+            method: "POST", body: { expectedVersion, reason }
+        });
+    }
+
+    reopenAdjudicationWork(workItemId, expectedVersion) {
+        return this.backend(`/api/global/rules/adjudication/work/${encodeURIComponent(workItemId)}/reopen`, {
+            method: "POST", body: { expectedVersion }
+        });
     }
 
     publishGlobalRules() { return this.backend("/api/global/rules/publish", { method: "POST" }); }
