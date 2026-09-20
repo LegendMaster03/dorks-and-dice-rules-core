@@ -84,9 +84,9 @@ internal static class ExactCompetencyTranslationPolicy
         else if (isLegacySrd && content is not null && extension is not null)
         {
             var edition = ResolveEdition(representation, record);
-            if (extension["context"] is JsonObject context)
+            if (extension["context"] is JsonObject normalizationContext)
             {
-                context["competencyNormalizationVersion"] = LegacyCompetencyNormalizationVersion;
+                normalizationContext["competencyNormalizationVersion"] = LegacyCompetencyNormalizationVersion;
             }
 
             if (string.Equals(record.EntityType, "skill", StringComparison.OrdinalIgnoreCase)
