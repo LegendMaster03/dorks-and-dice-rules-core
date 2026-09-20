@@ -99,8 +99,10 @@ public sealed class LegacySrdSourceFormatAdapter : ISourceFormatAdapter
                 GameEdition: InferEdition(source),
                 ExternalIdentifiers: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
                 {
-                    // Retained because existing canonical publication evidence used this
-                    // stable source-code identifier before the format migration.
+                    // The format-neutral reviewed identity is authoritative for new
+                    // reconciliation. Retain the former 5e.tools-scoped alias so existing
+                    // installations can be recognized and migrated in place.
+                    [TrustedCanonicalAliasPolicy.PublicationSourceCodeScheme] = source,
                     ["5etools-source-code"] = source
                 }))
             .ToArray();

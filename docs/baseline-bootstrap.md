@@ -111,7 +111,7 @@ The Rules Layer may bind multiple implementations to one concept and then explic
 
 When published rules use source contributions, access is evaluated across the actual applied provenance set. A public base can not redistribute a restricted incorporated contribution. Campaign inheritance retains those access requirements unless the campaign decision replaces the global source/contribution path.
 
-Runtime canonical substitution follows the same access rule: if a published snapshot points to an inaccessible source revision, Rules Core may use another revision of the same canonical entity only when that alternative comes from a package accessible to the requesting user **and has mechanically equivalent content to the published snapshot**. Canonical identity can intentionally group differing edition presentations, so identity alone is not permission to substitute mechanics. Shared canonical identity never exposes another user's representation.
+Runtime canonical substitution follows the same access rule: if a published snapshot points to an inaccessible source revision, Rules Core may use another revision associated with the same canonical entity when that alternative comes from a package accessible to the requesting user. Trusted canonical identity may intentionally connect different normalized presentations of the same underlying entity; the substitution reuses that identity but never exposes another user's inaccessible representation.
 
 ## Reviewed bundled SRD competency baseline
 

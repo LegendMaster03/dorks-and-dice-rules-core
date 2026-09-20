@@ -14,6 +14,36 @@ public sealed class PcGenSrdPublicationReconciliationIntegrationTests
     private const string RulesCoreSourceCodeScheme = "rules-core-source-code";
 
     [Fact]
+    public void ReviewedLegacySnapshotPublishesFormatNeutralSourceCodeIdentity()
+    {
+        const string json = """
+            {
+              "skill": [
+                {
+                  "name": "Balance",
+                  "source": "SRD35",
+                  "uniqueId": "skill-balance",
+                  "documentUri": "https://example.invalid/srd35/skills/balance",
+                  "body": "Key Ability: Dex"
+                }
+              ]
+            }
+            """;
+
+        var representation = new LegacySrdSourceFormatAdapter().TryRead(
+            new SourceRepresentationArtifact(
+                "srd-3-5e.json",
+                Encoding.UTF8.GetBytes(json),
+                "test:reviewed-legacy-srd"));
+
+        Assert.NotNull(representation);
+        var publication = Assert.Single(representation!.Publications!);
+        Assert.NotNull(publication.ExternalIdentifiers);
+        Assert.Equal("SRD35", publication.ExternalIdentifiers!["5etools-source-code"]);
+        Assert.Equal("SRD35", publication.ExternalIdentifiers[RulesCoreSourceCodeScheme]);
+    }
+
+    [Fact]
     public async Task OfficialPcGenSrdIdentitiesReuseCorrectBuiltInPublicationsWithoutCollapsingDistinctEditions()
     {
         var db = await OpenDatabaseAsync();
