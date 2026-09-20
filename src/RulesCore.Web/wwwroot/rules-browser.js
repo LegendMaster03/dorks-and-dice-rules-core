@@ -28,7 +28,7 @@ const ROUTE_FAMILIES = new Map([
     ["skills", "skill"]
 ]);
 export const RULE_FAMILY_TABS = [
-    ["", "Rules"],
+    ["", "All Content"],
     ["monster", "Bestiary"],
     ["spell", "Spells"],
     ["class", "Classes"],
@@ -224,7 +224,12 @@ async function renderRulesBrowser(app, container) {
     clear(container);
 
     const shell = element("section", { className: "rules-core-library-shell" });
+    const headingTitle = element("h2", {
+        className: "rules-core-library-title",
+        text: libraryTitle(app.browserFilters.entityType)
+    });
     const heading = element("div", { className: "rules-core-library-heading" },
+        headingTitle,
         element("div", {
             className: "rules-core-library-revision",
             text: "Loading published rules…"
@@ -787,6 +792,12 @@ function isCompactLibraryViewport() {
 function isEditableTarget(target) {
     if (!(target instanceof Element)) return false;
     return Boolean(target.closest("input, textarea, select, button, [contenteditable='true']"));
+}
+
+function libraryTitle(entityType) {
+    const normalized = entityType ?? "";
+    const known = RULE_FAMILY_TABS.find(([value]) => value === normalized);
+    return known?.[1] ?? humanizeEntityType(normalized);
 }
 
 function browserColumns(entityType) {

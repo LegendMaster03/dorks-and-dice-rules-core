@@ -80,6 +80,8 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.DoesNotContain("Press J/K to navigate", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Press F or / to focus search. Use J/K to move through results.", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("rules-core-library-search-group", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("rules-core-library-title", rulesBrowser, StringComparison.Ordinal);
+        Assert.Contains("All Content", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("browserKeyboard", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Load more", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("renderContinuousIndexFooter", rulesBrowser, StringComparison.Ordinal);

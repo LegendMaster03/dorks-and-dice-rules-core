@@ -511,44 +511,6 @@ button.rules-core-workflow-step {
     background: var(--rules-core-surface-subtle);
 }
 
-.rules-core-library-family-nav {
-    display: flex;
-    min-width: 0;
-    gap: .2rem;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scrollbar-width: thin;
-}
-
-.rules-core-library-family {
-    flex: 0 0 auto;
-    padding: .34rem .55rem;
-    border: 1px solid transparent;
-    border-radius: .42rem;
-    background: transparent;
-    color: var(--bs-secondary-color);
-    font-size: .72rem;
-    font-weight: 675;
-    white-space: nowrap;
-}
-
-.rules-core-library-family:hover,
-.rules-core-library-family:focus-visible {
-    border-color: var(--rules-core-border);
-    color: var(--bs-body-color);
-    outline: 0;
-}
-
-.rules-core-library-family.is-active {
-    border-color: color-mix(in srgb, var(--bs-primary) 36%, var(--rules-core-border));
-    background: var(--rules-core-primary-soft);
-    color: var(--bs-body-color);
-}
-
-.rules-core-library-type {
-    display: none;
-}
-
 .rules-core-library-workspace {
     display: grid;
     grid-template-columns: minmax(19rem, 36%) minmax(0, 1fr);
@@ -995,18 +957,6 @@ button.rules-core-workflow-step {
         width: 100%;
     }
 
-    .rules-core-library-controls {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .rules-core-library-family-nav {
-        display: none;
-    }
-
-    .rules-core-library-type {
-        display: block;
-    }
-
     .rules-core-library-search-group {
         grid-template-columns: minmax(0, 1fr) auto auto;
     }
@@ -1256,8 +1206,8 @@ button.rules-core-workflow-step {
 }
 
 .rules-core-library-heading {
-    justify-content: flex-end;
-    min-height: 1.25rem;
+    justify-content: space-between;
+    min-height: 1.85rem;
 }
 
 .rules-core-library-workspace {
