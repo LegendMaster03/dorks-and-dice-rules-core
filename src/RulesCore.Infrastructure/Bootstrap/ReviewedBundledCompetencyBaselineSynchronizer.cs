@@ -33,6 +33,9 @@ internal sealed class ReviewedBundledCompetencyBaselineSynchronizer(
         var representationIds = reviewedRepresentations
             .Select(value => value.RepresentationId)
             .ToArray();
+        var reviewedOrder = reviewedRepresentations
+            .Select((value, index) => new { value.RepresentationId, index, value.WorkKey, value.GameEdition })
+            .ToDictionary(value => value.RepresentationId);
 
         var reviewedRevisions = await dbContext.SourceEntityRevisions
             .AsNoTracking()
@@ -48,13 +51,20 @@ internal sealed class ReviewedBundledCompetencyBaselineSynchronizer(
                 .OrderByDescending(value => value.RevisionNumber)
                 .ThenByDescending(value => value.ImportedAt)
                 .First())
-            .Select(value => new ReviewedCompetencyCandidate(
-                value.SourceEntity,
-                value,
-                SourceNormalizationService.BuildSuggestedConceptKey(
-                    value.SourceEntity.EntityType,
-                    value.SourceEntity.Name,
-                    value.SourceEntity.NativeIdentityJson)))
+            .Select(value =>
+            {
+                var review = reviewedOrder[value.SourceRepresentationId];
+                return new ReviewedCompetencyCandidate(
+                    value.SourceEntity,
+                    value,
+                    SourceNormalizationService.BuildSuggestedConceptKey(
+                        value.SourceEntity.EntityType,
+                        value.SourceEntity.Name,
+                        value.SourceEntity.NativeIdentityJson),
+                    review.index,
+                    review.WorkKey,
+                    review.GameEdition);
+            })
             .OrderBy(value => value.ConceptKey, StringComparer.Ordinal)
             .ThenBy(value => value.SourceEntity.SourceCode, StringComparer.Ordinal)
             .ThenBy(value => value.SourceEntity.NativeKey, StringComparer.Ordinal)
@@ -216,31 +226,26 @@ internal sealed class ReviewedBundledCompetencyBaselineSynchronizer(
                     value.Revision.GetMechanicalContentJson()))
                 .Distinct(StringComparer.Ordinal)
                 .ToArray();
-            if (grouped.Length == 1 || distinctFingerprints.Length == 1)
+            var selected = grouped
+                .OrderByDescending(value => value.ReviewedOrder)
+                .ThenBy(value => value.SourceEntity.SourceCode, StringComparer.Ordinal)
+                .ThenBy(value => value.SourceEntity.NativeKey, StringComparer.Ordinal)
+                .ThenByDescending(value => value.Revision.RevisionNumber)
+                .First();
+            var note = grouped.Length == 1
+                ? "Built-in reviewed SRD competency baseline: the only reviewed implementation was selected."
+                : distinctFingerprints.Length == 1
+                    ? "Built-in reviewed SRD competency baseline: mechanically identical reviewed implementations were resolved deterministically."
+                    : $"Built-in reviewed SRD competency baseline: reviewed implementations differ, so the later checked-in baseline work '{selected.WorkKey}' ({selected.GameEdition ?? "edition unspecified"}) supplies the default presentation. Other reviewed implementations remain available as competency profiles; this does not assert mechanical equivalence.";
+            var decision = await globalRules.SetDecisionAsync(
+                concept.Id,
+                new SetGlobalRuleDecisionRequest(selected.Revision.Id, note),
+                RulesCoreBaselineCatalog.BootstrapActor,
+                cancellationToken);
+            if (decision.Created)
             {
-                var selected = grouped
-                    .OrderBy(value => value.SourceEntity.SourceCode, StringComparer.Ordinal)
-                    .ThenBy(value => value.SourceEntity.NativeKey, StringComparer.Ordinal)
-                    .ThenByDescending(value => value.Revision.RevisionNumber)
-                    .First();
-                var decision = await globalRules.SetDecisionAsync(
-                    concept.Id,
-                    new SetGlobalRuleDecisionRequest(
-                        selected.Revision.Id,
-                        grouped.Length == 1
-                            ? "Built-in reviewed SRD competency baseline: the only reviewed implementation was selected."
-                            : "Built-in reviewed SRD competency baseline: mechanically identical reviewed implementations were resolved deterministically."),
-                    RulesCoreBaselineCatalog.BootstrapActor,
-                    cancellationToken);
-                if (decision.Created)
-                {
-                    createdDecisionCount++;
-                }
-                continue;
+                createdDecisionCount++;
             }
-
-            conflicts.Add(
-                $"{group.Key}: reviewed implementations differ and the existing automatic resolution policy did not establish a safe baseline ({automatic.Reason}).");
         }
 
         return new ReviewedBundledCompetencyBaselineSyncResult(
@@ -255,5 +260,8 @@ internal sealed class ReviewedBundledCompetencyBaselineSynchronizer(
     private sealed record ReviewedCompetencyCandidate(
         SourceEntity SourceEntity,
         SourceEntityRevision Revision,
-        string ConceptKey);
+        string ConceptKey,
+        int ReviewedOrder,
+        string WorkKey,
+        string? GameEdition);
 }
