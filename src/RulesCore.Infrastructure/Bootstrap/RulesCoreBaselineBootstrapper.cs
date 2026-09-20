@@ -208,7 +208,7 @@ public sealed class RulesCoreBaselineBootstrapper(
         SourceImportResult houseRuleImport,
         CancellationToken cancellationToken)
     {
-        var houseRuleBaselineChanged = await EnsureInitialHouseRuleBaselineAsync(
+        _ = await EnsureInitialHouseRuleBaselineAsync(
             houseRuleImport,
             cancellationToken);
 
@@ -216,20 +216,6 @@ public sealed class RulesCoreBaselineBootstrapper(
                 dbContext,
                 globalRules)
             .SynchronizeAsync(cancellationToken);
-
-        PublishedRulesetRevisionView? publishedRuleset = null;
-        var baselineDecisionChanged = houseRuleBaselineChanged || competencySync.CreatedDecisionCount > 0;
-        if (baselineDecisionChanged
-            && await dbContext.GlobalRuleDecisions.AsNoTracking().AnyAsync(cancellationToken))
-        {
-            var publication = await globalRules.PublishAsync(
-                RulesCoreBaselineCatalog.BootstrapActor,
-                cancellationToken);
-            if (publication.CreatedRevision)
-            {
-                publishedRuleset = publication;
-            }
-        }
 
         if (competencySync.Conflicts.Count > 0)
         {
@@ -241,7 +227,57 @@ public sealed class RulesCoreBaselineBootstrapper(
                     competencySync.Conflicts.Select(value => $"- {value}")));
         }
 
+        PublishedRulesetRevisionView? publishedRuleset = null;
+        if (await HasUnpublishedBootstrapDecisionAsync(cancellationToken)
+            && await dbContext.GlobalRuleDecisions.AsNoTracking().AnyAsync(cancellationToken))
+        {
+            var publication = await globalRules.PublishAsync(
+                RulesCoreBaselineCatalog.BootstrapActor,
+                cancellationToken);
+            if (publication.CreatedRevision)
+            {
+                publishedRuleset = publication;
+            }
+        }
+
         return publishedRuleset;
+    }
+
+    private async Task<bool> HasUnpublishedBootstrapDecisionAsync(
+        CancellationToken cancellationToken)
+    {
+        var latestBootstrapDecisionIds = await dbContext.GlobalRuleDecisions
+            .AsNoTracking()
+            .Where(value =>
+                value.CreatedByUserId == RulesCoreBaselineCatalog.BootstrapActor
+                && !dbContext.GlobalRuleDecisions.Any(candidate =>
+                    candidate.RuleConceptId == value.RuleConceptId
+                    && candidate.DecisionNumber > value.DecisionNumber))
+            .Select(value => value.Id)
+            .ToArrayAsync(cancellationToken);
+        if (latestBootstrapDecisionIds.Length == 0)
+        {
+            return false;
+        }
+
+        var latestRulesetRevisionId = await dbContext.RulesetRevisions
+            .AsNoTracking()
+            .OrderByDescending(value => value.RevisionNumber)
+            .Select(value => (Guid?)value.Id)
+            .FirstOrDefaultAsync(cancellationToken);
+        if (latestRulesetRevisionId is null)
+        {
+            return true;
+        }
+
+        var publishedDecisionIds = (await dbContext.RulesetRevisionEntries
+                .AsNoTracking()
+                .Where(value => value.RulesetRevisionId == latestRulesetRevisionId.Value)
+                .Select(value => value.GlobalRuleDecisionId)
+                .ToArrayAsync(cancellationToken))
+            .ToHashSet();
+
+        return latestBootstrapDecisionIds.Any(value => !publishedDecisionIds.Contains(value));
     }
 
     private async Task<bool> EnsureInitialHouseRuleBaselineAsync(

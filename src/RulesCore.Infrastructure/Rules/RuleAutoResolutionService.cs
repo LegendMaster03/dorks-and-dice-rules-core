@@ -157,11 +157,13 @@ public static class RuleAutoResolutionService
     /// </summary>
     internal static async Task<RuleAutoResolutionResult> TryResolveReviewedBaselineAsync(
         RulesCoreDbContext dbContext,
+        IGlobalRulesService globalRules,
         Guid ruleConceptId,
         string actorUserId,
         IReadOnlyCollection<Guid> reviewedSourceEntityRevisionIds,
         CancellationToken cancellationToken = default)
     {
+        ArgumentNullException.ThrowIfNull(globalRules);
         ArgumentNullException.ThrowIfNull(reviewedSourceEntityRevisionIds);
         var revisionScope = reviewedSourceEntityRevisionIds
             .Where(value => value != Guid.Empty)
@@ -233,8 +235,9 @@ public static class RuleAutoResolutionService
         var note = evaluation.Mode == AdditiveMode
             ? "Built-in reviewed SRD competency baseline: compatible reviewed representations were combined using the existing additive-resolution policy."
             : "Built-in reviewed SRD competency baseline: mechanically equivalent reviewed representations were resolved using the existing equivalence policy.";
-        var rules = new GlobalRulesService(dbContext);
-        var decision = await rules.SetDecisionAsync(
+        var decision = await TryCreateInitialBaselineDecisionAsync(
+            dbContext,
+            globalRules,
             ruleConceptId,
             new SetGlobalRuleDecisionRequest(
                 baseContext.Revision.Id,
@@ -247,11 +250,62 @@ public static class RuleAutoResolutionService
         return new RuleAutoResolutionResult(
             true,
             decision.Created,
-            decision.Value.Id,
-            decision.Value.DecisionNumber,
+            decision.DecisionId,
+            decision.DecisionNumber,
             decision.Created
                 ? "The reviewed competency baseline decision was established by the existing safe-resolution policy."
-                : "The reviewed competency baseline decision was already current.");
+                : decision.ExistingDecisionPreserved
+                    ? "A concurrent global decision became authoritative before the reviewed competency baseline could be saved and was preserved."
+                    : "The reviewed competency baseline decision was already current.");
+    }
+
+    internal static async Task<InitialBaselineDecisionWriteResult> TryCreateInitialBaselineDecisionAsync(
+        RulesCoreDbContext dbContext,
+        IGlobalRulesService globalRules,
+        Guid ruleConceptId,
+        SetGlobalRuleDecisionRequest request,
+        string actorUserId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(globalRules);
+        ArgumentNullException.ThrowIfNull(request);
+        var guardedRequest = request with
+        {
+            ExpectedLatestDecisionId = null,
+            EnforceExpectedLatestDecision = true
+        };
+
+        try
+        {
+            var decision = await globalRules.SetDecisionAsync(
+                ruleConceptId,
+                guardedRequest,
+                actorUserId,
+                cancellationToken);
+            return new InitialBaselineDecisionWriteResult(
+                decision.Created,
+                decision.Value.Id,
+                decision.Value.DecisionNumber,
+                ExistingDecisionPreserved: false);
+        }
+        catch (InvalidOperationException)
+        {
+            var latest = await dbContext.GlobalRuleDecisions
+                .AsNoTracking()
+                .Where(value => value.RuleConceptId == ruleConceptId)
+                .OrderByDescending(value => value.DecisionNumber)
+                .FirstOrDefaultAsync(cancellationToken);
+            if (latest is null)
+            {
+                throw;
+            }
+
+            return new InitialBaselineDecisionWriteResult(
+                Created: false,
+                latest.Id,
+                latest.DecisionNumber,
+                ExistingDecisionPreserved: true);
+        }
     }
 
     internal static string ComputeSemanticFingerprint(string contentJson) =>
@@ -551,6 +605,12 @@ public static class RuleAutoResolutionService
     private static RuleAutoResolutionResult NotEligible(string reason) => new(false, false, null, null, reason);
     private static AutoResolutionEvaluation NotEligibleEvaluation(string reason) =>
         new(false, reason, [], null, null, null, null, null, null);
+
+    internal sealed record InitialBaselineDecisionWriteResult(
+        bool Created,
+        Guid? DecisionId,
+        int? DecisionNumber,
+        bool ExistingDecisionPreserved);
 
     private sealed record AutoResolutionEvaluation(
         bool Eligible,
