@@ -24,6 +24,8 @@ public sealed class PcGenSkillConversionIntegrationTests
         ("Knowledge (history)", "History"),
         ("Knowledge (nature)", "Nature"),
         ("Knowledge (religion)", "Religion"),
+        ("Knowledge (Psionics)", "Psionics"),
+        ("Knowledge (the planes)", "The planes"),
         ("Sense Motive", "Insight"),
         ("Sleight of Hand", "Sleight of Hand"),
         ("Survival", "Survival")
