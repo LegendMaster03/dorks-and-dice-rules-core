@@ -35,13 +35,17 @@ SPLITTABLE_CLASSES = {
 # separate known corpus/bootstrap paths so the initial adaptive run can not put
 # nearly all expensive work in one shard merely because the test counts match.
 SEED_RUNTIME_SECONDS = {
-    "RulesCore.IntegrationTests.BaselineBootstrapIntegrationTests.FreshDatabaseGetsPublicSrdsAndSettledRulesWithoutOverwritingLaterChanges": 540.0,
-    "RulesCore.IntegrationTests.BaselineBootstrapIntegrationTests.FreshBaselinePublishesNormalizedReviewedCompetencyCorpusToCharacterMechanics": 360.0,
-    "RulesCore.IntegrationTests.BaselineBootstrapIntegrationTests.CompetencyConflictPreventsPartialRulesetPublication": 300.0,
-    "RulesCore.IntegrationTests.BaselineBootstrapIntegrationTests.ExistingSixRuleInstallationGetsIncrementalCompetencyRevisionIdempotently": 300.0,
-    "RulesCore.IntegrationTests.BaselineBootstrapIntegrationTests.BootstrapPreservesRulesLawyerCompetencyDecisionWithoutAdvancingIt": 240.0,
-    "RulesCore.IntegrationTests.BaselineBootstrapIntegrationTests.GenuineReviewedCompetencyConflictRemainsUnresolvedForRulesLawyerAdjudication": 180.0,
-    "RulesCore.IntegrationTests.BaselineBootstrapIntegrationTests.ConcurrentRulesLawyerDecisionWinsInitialCompetencyBaselineRace": 180.0,
+    # Rounded conservative weights from observed isolated CI behavior. These are
+    # intentionally coarse: their purpose is to keep cold-cache validation from
+    # co-locating known multi-minute bootstrap paths before a measured profile exists.
+    "RulesCore.IntegrationTests.GlobalBaselineAnonymousAccessIntegrationTests": 540.0,
+    "RulesCore.IntegrationTests.BaselineBootstrapIntegrationTests.FreshDatabaseGetsPublicSrdsAndSettledRulesWithoutOverwritingLaterChanges": 300.0,
+    "RulesCore.IntegrationTests.BaselineBootstrapIntegrationTests.FreshBaselinePublishesNormalizedReviewedCompetencyCorpusToCharacterMechanics": 420.0,
+    "RulesCore.IntegrationTests.BaselineBootstrapIntegrationTests.CompetencyConflictPreventsPartialRulesetPublication": 480.0,
+    "RulesCore.IntegrationTests.BaselineBootstrapIntegrationTests.ExistingSixRuleInstallationGetsIncrementalCompetencyRevisionIdempotently": 480.0,
+    "RulesCore.IntegrationTests.BaselineBootstrapIntegrationTests.BootstrapPreservesRulesLawyerCompetencyDecisionWithoutAdvancingIt": 540.0,
+    "RulesCore.IntegrationTests.BaselineBootstrapIntegrationTests.GenuineReviewedCompetencyConflictRemainsUnresolvedForRulesLawyerAdjudication": 360.0,
+    "RulesCore.IntegrationTests.BaselineBootstrapIntegrationTests.ConcurrentRulesLawyerDecisionWinsInitialCompetencyBaselineRace": 480.0,
     "RulesCore.IntegrationTests.BundledSrdMaintenanceIntegrationTests": 240.0,
     "RulesCore.IntegrationTests.RealSrdImportPilotIntegrationTests": 180.0,
     "RulesCore.IntegrationTests.PcGenSkillConversionIntegrationTests": 120.0,
@@ -282,6 +286,17 @@ def main() -> int:
     print(
         "Estimated shard loads: "
         + ", ".join(f"{index}={load:.1f}s" for index, load in enumerate(loads)),
+        file=sys.stderr,
+    )
+    total_estimated = sum(weight for weight, _ in weights.values())
+    largest_group = max(weight for weight, _ in weights.values())
+    lower_bound = max(total_estimated / args.shard_count, largest_group)
+    achieved = max(loads)
+    print(
+        f"Balancing lower bound: {lower_bound:.1f}s "
+        f"(average={total_estimated / args.shard_count:.1f}s, "
+        f"largest indivisible group={largest_group:.1f}s); "
+        f"achieved={achieved:.1f}s ({achieved / lower_bound:.3f}x lower bound).",
         file=sys.stderr,
     )
     for group in selected:
