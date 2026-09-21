@@ -1,11 +1,9 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
-using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Bootstrap;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Rules;
-using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.IntegrationTests;
 
@@ -28,12 +26,6 @@ public sealed class BundledSrdMaintenanceIntegrationTests
         await new RulesCoreSchemaInitializer(db).InitializeAsync();
         var globalRules = new GlobalRulesService(db);
         var maintenance = new BundledSrdMaintenanceService(db);
-
-        // ResetAsync cleans up legacy hosted-source definitions. That schema is lazily owned by
-        // HostedSourceService rather than RulesCoreSchemaInitializer, so initialize it explicitly
-        // instead of relying on another integration test to have run first.
-        var hostedSources = new HostedSourceService(db, new SourceImportService(db));
-        await hostedSources.ListAsync(includeDisabled: true);
 
         await ResetAsync(db);
         try
@@ -145,8 +137,14 @@ public sealed class BundledSrdMaintenanceIntegrationTests
         await db.RuleConceptSourceBindings.ExecuteDeleteAsync();
         await db.RuleConcepts.ExecuteDeleteAsync();
         await db.Database.ExecuteSqlRawAsync("""
-            DELETE FROM hosted_source_definition
-            WHERE definition_key IN ('builtin-wotc-srd-3e','builtin-wotc-srd-3-5e','builtin-wotc-srd-5-1','builtin-wotc-srd-5-2-1');
+            DO $
+            BEGIN
+                IF to_regclass('public.hosted_source_definition') IS NOT NULL THEN
+                    DELETE FROM hosted_source_definition
+                    WHERE definition_key IN ('builtin-wotc-srd-3e','builtin-wotc-srd-3-5e','builtin-wotc-srd-5-1','builtin-wotc-srd-5-2-1');
+                END IF;
+            END
+            $;
             """);
         db.ChangeTracker.Clear();
         var packages = await db.SourcePackages
