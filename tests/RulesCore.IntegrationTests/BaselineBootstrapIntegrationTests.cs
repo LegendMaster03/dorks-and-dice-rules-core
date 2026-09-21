@@ -1001,8 +1001,14 @@ public sealed class BaselineBootstrapIntegrationTests
         await db.RuleConceptSourceBindings.ExecuteDeleteAsync();
         await db.RuleConcepts.ExecuteDeleteAsync();
         await db.Database.ExecuteSqlRawAsync("""
-            DELETE FROM hosted_source_definition
-            WHERE definition_key IN ('builtin-wotc-srd-3e','builtin-wotc-srd-3-5e','builtin-wotc-srd-5-1','builtin-wotc-srd-5-2-1');
+            DO $
+            BEGIN
+                IF to_regclass('public.hosted_source_definition') IS NOT NULL THEN
+                    DELETE FROM hosted_source_definition
+                    WHERE definition_key IN ('builtin-wotc-srd-3e','builtin-wotc-srd-3-5e','builtin-wotc-srd-5-1','builtin-wotc-srd-5-2-1');
+                END IF;
+            END
+            $;
             """);
         db.ChangeTracker.Clear();
         var packages = await db.SourcePackages.Where(value => BuiltInPackageKeys.Contains(value.Key)).ToArrayAsync();
