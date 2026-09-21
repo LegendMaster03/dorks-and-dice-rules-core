@@ -112,10 +112,7 @@ The current direct skill-to-skill set is:
 - `Handle Animal` -> `Animal Handling`;
 - `Heal` -> `Medicine`;
 - `Intimidate` -> `Intimidation`;
-- `Knowledge (arcana)` -> `Arcana`;
-- `Knowledge (history)` -> `History`;
-- `Knowledge (nature)` -> `Nature`;
-- `Knowledge (religion)` -> `Religion`;
+- every 3.x `Knowledge (X)` specialty -> `X` (for example, `Knowledge (arcana)` -> `Arcana`, `Knowledge (Psionics)` -> `Psionics`, and `Knowledge (the planes)` -> `The planes`);
 - `Sense Motive` -> `Insight`;
 - `Sleight of Hand` -> `Sleight of Hand`;
 - `Survival` -> `Survival`.
@@ -137,7 +134,7 @@ These unscoped mappings set `NormalizedSourceRecord.CanonicalIdentityKey` to a s
 
 The clean many-to-one consolidations Hide/Move Silently -> Stealth, Listen/Spot -> Perception, Balance/Tumble -> Acrobatics, and Climb/Jump/Swim -> Athletics are intentionally **not importer translations**. Their PCGen records remain distinct source-native and canonical competencies. Rules Layer represents those consolidations separately as directional `composite-skill` mechanical relationships; see `docs/mechanical-relationships.md`.
 
-`Perform` specialties are not collapsed into `Performance`. Other merged, split, partial, or category-changing relationships such as Ride, Spellcraft, Search, Disable Device, Disguise, Profession, Escape Artist, Gather Information, Use Rope, Concentration, Use Magic Device, remaining Knowledge specialties, and non-alchemy Craft specialties remain source-native until a reviewed Rules Layer relationship can represent them without losing information.
+`Perform` specialties are not collapsed into `Performance`. Other merged, split, partial, or category-changing relationships such as Ride, Spellcraft, Search, Disable Device, Disguise, Profession, Escape Artist, Gather Information, Use Rope, Concentration, Use Magic Device, and non-alchemy Craft specialties remain source-native until a reviewed Rules Layer relationship can represent them without losing information.
 
 PCGen monster race records normally encode **racial modifiers and racial hit-die declarations**, not a final 5e-style stat block. For example, `BONUS:STAT|STR|16`, `BONUS:COMBAT|AC|7|TYPE=NaturalArmor`, and `MONSTERCLASS:Aberration:8` do not by themselves establish the final Strength score, total AC, or HP formula. Rules Core therefore does not fabricate `str`, `ac`, or `hp` from those values. They remain preserved under the Rules Core extension until a translator has enough surrounding 3.x rules context to derive a faithful result.
 

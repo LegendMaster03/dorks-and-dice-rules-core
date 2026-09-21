@@ -114,6 +114,21 @@ internal sealed class ReviewedBundledCompetencyBaselineSynchronizer(
                 .Include(value => value.RuleConcept)
                 .Where(value => groupCanonicalIds.Contains(value.CanonicalEntityId))
                 .ToArrayAsync(cancellationToken);
+            if (await TryMigrateBootstrapKnowledgeConceptAsync(
+                    group.Key,
+                    expectedType,
+                    expectedDisplayName,
+                    groupCanonicalIds,
+                    existingCanonicalBindings,
+                    cancellationToken))
+            {
+                existingCanonicalBindings = await dbContext.RuleConceptSourceBindings
+                    .AsNoTracking()
+                    .Include(value => value.RuleConcept)
+                    .Where(value => groupCanonicalIds.Contains(value.CanonicalEntityId))
+                    .ToArrayAsync(cancellationToken);
+            }
+
             var conflictingBindings = existingCanonicalBindings
                 .Where(value => !string.Equals(value.RuleConcept.Key, group.Key, StringComparison.Ordinal))
                 .Select(value => value.RuleConcept.Key)
@@ -260,6 +275,78 @@ internal sealed class ReviewedBundledCompetencyBaselineSynchronizer(
             createdBindingCount,
             createdDecisionCount,
             conflicts.OrderBy(value => value, StringComparer.Ordinal).ToArray());
+    }
+
+    private async Task<bool> TryMigrateBootstrapKnowledgeConceptAsync(
+        string targetKey,
+        string expectedType,
+        string expectedDisplayName,
+        IReadOnlyCollection<Guid> canonicalEntityIds,
+        IReadOnlyList<RuleConceptSourceBinding> existingBindings,
+        CancellationToken cancellationToken)
+    {
+        const string legacyPrefix = "skill.knowledge-";
+        const string targetPrefix = "skill.";
+
+        if (!string.Equals(expectedType, "skill", StringComparison.Ordinal)
+            || !targetKey.StartsWith(targetPrefix, StringComparison.Ordinal)
+            || targetKey.StartsWith(legacyPrefix, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var conflictingConcepts = existingBindings
+            .Select(value => value.RuleConcept)
+            .Where(value => !string.Equals(value.Key, targetKey, StringComparison.Ordinal))
+            .DistinctBy(value => value.Id)
+            .ToArray();
+        if (conflictingConcepts.Length != 1)
+        {
+            return false;
+        }
+
+        var legacy = conflictingConcepts[0];
+        if (!legacy.Key.StartsWith(legacyPrefix, StringComparison.Ordinal)
+            || !string.Equals(
+                targetKey,
+                targetPrefix + legacy.Key[legacyPrefix.Length..],
+                StringComparison.Ordinal)
+            || !string.Equals(
+                legacy.CreatedByUserId,
+                RulesCoreBaselineCatalog.BootstrapActor,
+                StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        if (await dbContext.RuleConcepts
+            .AsNoTracking()
+            .AnyAsync(
+                value => value.Id != legacy.Id && value.Key == targetKey,
+                cancellationToken))
+        {
+            return false;
+        }
+
+        var canonicalSet = canonicalEntityIds.ToHashSet();
+        var legacyBindingIds = await dbContext.RuleConceptSourceBindings
+            .AsNoTracking()
+            .Where(value => value.RuleConceptId == legacy.Id)
+            .Select(value => value.CanonicalEntityId)
+            .Distinct()
+            .ToArrayAsync(cancellationToken);
+        if (legacyBindingIds.Length == 0
+            || legacyBindingIds.Any(value => !canonicalSet.Contains(value)))
+        {
+            return false;
+        }
+
+        var tracked = await dbContext.RuleConcepts
+            .SingleAsync(value => value.Id == legacy.Id, cancellationToken);
+        tracked.Key = targetKey;
+        tracked.DisplayName = expectedDisplayName;
+        await dbContext.SaveChangesAsync(cancellationToken);
+        return true;
     }
 
     private sealed record ReviewedCompetencyCandidate(

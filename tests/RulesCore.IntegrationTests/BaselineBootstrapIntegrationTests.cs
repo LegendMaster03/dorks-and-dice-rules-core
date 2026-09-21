@@ -292,6 +292,11 @@ public sealed class BaselineBootstrapIntegrationTests
                 value => value.FamilyName == "Knowledge"
                     && !string.IsNullOrWhiteSpace(value.Specialty));
 
+            var balance = Assert.Single(
+                competencyMechanics,
+                value => value.ConceptKey == "skill.balance");
+            Assert.Equal("dexterity", balance.Competency!.GoverningAbilityKey);
+
             // The checked-in SRD3/SRD35 snapshots have generic Craft, Perform, and Profession
             // entries. SRD3 has Alchemy, which converges directly to Alchemist's Supplies, but
             // that native record is not a Craft (...) specialty. Do not fabricate specialty
@@ -338,6 +343,13 @@ public sealed class BaselineBootstrapIntegrationTests
                     psionicSourceNames);
                 Assert.NotEmpty(psionicKeys);
                 Assert.True(psionicKeys.All(publishedCompetencyKeys.Contains));
+
+                if (psionicSourceNames.Any(value =>
+                        string.Equals(value, "Psionics", StringComparison.OrdinalIgnoreCase)))
+                {
+                    Assert.Contains("skill.psionics", publishedCompetencyKeys);
+                    Assert.DoesNotContain("skill.knowledge-psionics", publishedCompetencyKeys);
+                }
             }
         }
         finally
@@ -587,6 +599,29 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Equal(bindingCount, await db.RuleConceptSourceBindings.CountAsync());
             Assert.Equal(decisionCount, await db.GlobalRuleDecisions.CountAsync());
             Assert.Equal(2, await db.RulesetRevisions.CountAsync());
+
+            var mechanics = await new CharacterMechanicsConsumerService(db)
+                .GetGlobalAsync(userId: null);
+            var knowledge = mechanics.Mechanics.First(value =>
+                value.Competency?.FamilyName == "Knowledge"
+                && value.ConceptKey is not null
+                && value.ConceptKey.StartsWith("skill.", StringComparison.Ordinal)
+                && !value.ConceptKey.StartsWith("skill.knowledge-", StringComparison.Ordinal));
+            var correctedKey = knowledge.ConceptKey!;
+            var legacyKey = "skill.knowledge-" + correctedKey["skill.".Length..];
+            var concept = await db.RuleConcepts.SingleAsync(value => value.Key == correctedKey);
+            concept.Key = legacyKey;
+            concept.DisplayName = $"Knowledge ({knowledge.DisplayName})";
+            await db.SaveChangesAsync();
+            db.ChangeTracker.Clear();
+
+            await bootstrapper.EnsureAsync();
+
+            Assert.True(await db.RuleConcepts.AnyAsync(value =>
+                value.Id == concept.Id
+                && value.Key == correctedKey
+                && value.DisplayName == knowledge.DisplayName));
+            Assert.False(await db.RuleConcepts.AnyAsync(value => value.Key == legacyKey));
         }
         finally
         {

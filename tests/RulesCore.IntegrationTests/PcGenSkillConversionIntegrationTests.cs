@@ -24,6 +24,8 @@ public sealed class PcGenSkillConversionIntegrationTests
         ("Knowledge (history)", "History"),
         ("Knowledge (nature)", "Nature"),
         ("Knowledge (religion)", "Religion"),
+        ("Knowledge (Psionics)", "Psionics"),
+        ("Knowledge (the planes)", "The planes"),
         ("Sense Motive", "Insight"),
         ("Sleight of Hand", "Sleight of Hand"),
         ("Survival", "Survival")
@@ -453,7 +455,7 @@ public sealed class PcGenSkillConversionIntegrationTests
                     packageKey,
                     "Knowledge (the planes)");
                 Assert.Equal("skill", knowledge.EntityType);
-                Assert.Equal("Knowledge (the planes)", knowledge.NormalizedName);
+                Assert.Equal("The planes", knowledge.NormalizedName);
                 AssertLegacyCompetencyProfile(
                     knowledge.ContentJson,
                     expectedKind: "specialized-skill",
@@ -580,7 +582,7 @@ public sealed class PcGenSkillConversionIntegrationTests
         var extension = document.RootElement.GetProperty("_rulesCore");
         var context = extension.GetProperty("context");
         Assert.Equal(
-            "legacy-srd-competency-v1",
+            "legacy-srd-competency-v2",
             context.GetProperty("competencyNormalizationVersion").GetString());
         var competency = extension.GetProperty("competency");
         Assert.Equal("dnd-3x", competency.GetProperty("profileKey").GetString());
