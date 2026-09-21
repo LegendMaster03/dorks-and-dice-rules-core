@@ -1005,22 +1005,22 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.NotNull(deception.Provenance);
             Assert.Contains(
                 deception.SourceAttributions,
-                value => value.PackageKey == fiveImport.PackageKey);
+                value => value.PackageKey == $"mechanics-deception-5e-{token}");
             Assert.Contains(
                 deception.SourceAttributions,
-                value => value.PackageKey == threeImport.PackageKey);
+                value => value.PackageKey == $"mechanics-bluff-35-{token}");
             Assert.Contains(
                 deception.Provenance!.CanonicalConcept,
-                value => value.PackageKey == fiveImport.PackageKey);
+                value => value.PackageKey == $"mechanics-deception-5e-{token}");
             Assert.Contains(
                 deception.Provenance.CanonicalConcept,
-                value => value.PackageKey == threeImport.PackageKey);
+                value => value.PackageKey == $"mechanics-bluff-35-{token}");
             Assert.All(
                 deception.Provenance.MechanicalProfile,
-                value => Assert.Equal(fiveImport.PackageKey, value.PackageKey));
+                value => Assert.Equal($"mechanics-deception-5e-{token}", value.PackageKey));
             Assert.All(
                 deception.Provenance.EffectiveRule,
-                value => Assert.Equal(fiveImport.PackageKey, value.PackageKey));
+                value => Assert.Equal($"mechanics-deception-5e-{token}", value.PackageKey));
             Assert.False(deception.Competency!.SupportsRanks);
             Assert.False(deception.Competency.SupportsClassSkillState);
             Assert.DoesNotContain(deception.Inputs, value => value.Key == "ranks");
