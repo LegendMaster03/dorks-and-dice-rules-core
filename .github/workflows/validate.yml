@@ -331,8 +331,10 @@ jobs:
       - name: Restore
         run: dotnet restore dorks-and-dice-rules-core.slnx
 
-      - name: Validate shard helper
-        run: python3 tools/create-integration-test-shard-filter.py --self-test
+      - name: Validate CI timing helpers
+        run: |
+          python3 tools/create-integration-test-shard-filter.py --self-test
+          python3 tools/summarize-integration-test-timings.py --self-test
 
       - name: Unit tests
         run: >-
@@ -368,6 +370,14 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "10.0.x"
+
+      - name: Restore previous integration timing profile
+        uses: actions/cache/restore@v4
+        with:
+          path: .ci/integration-timing-profile.json
+          key: rules-core-integration-timing-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref_name }}-${{ github.run_id }}
+          restore-keys: |
+            rules-core-integration-timing-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref_name }}-
 
       - name: Start isolated PostgreSQL
         run: |
@@ -412,9 +422,15 @@ jobs:
             --no-restore \
             --list-tests > /tmp/rules-core-integration-tests.txt
 
+          TIMING_ARGS=()
+          if [ -f .ci/integration-timing-profile.json ]; then
+            TIMING_ARGS=(--timings .ci/integration-timing-profile.json)
+          fi
+
           FILTER="$(python3 tools/create-integration-test-shard-filter.py \
             --shard "${{ matrix.shard }}" \
             --shard-count 4 \
+            "${TIMING_ARGS[@]}" \
             < /tmp/rules-core-integration-tests.txt)"
 
           if [ -z "$FILTER" ]; then
@@ -434,6 +450,7 @@ jobs:
           --no-build
           --no-restore
           --filter "${{ steps.shard.outputs.filter }}"
+          --logger "console;verbosity=normal"
           --logger "trx;LogFileName=integration-shard-${{ matrix.shard }}.trx"
           --results-directory "TestResults/integration-${{ matrix.shard }}"
 
@@ -449,6 +466,54 @@ jobs:
           path: TestResults/integration-${{ matrix.shard }}/*.trx
           if-no-files-found: warn
           retention-days: 14
+
+  integration-timing-profile:
+    name: Integration timing profile
+    if: ${{ always() && needs.integration.result == 'success' }}
+    needs: [integration]
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download integration TRX artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: integration-test-results-*
+          path: TestResults
+          merge-multiple: true
+
+      - name: Build measured timing profile
+        run: |
+          mapfile -d '' files < <(find TestResults -type f -name '*.trx' -print0)
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "No integration TRX files were downloaded."
+            exit 1
+          fi
+
+          python3 tools/summarize-integration-test-timings.py \
+            --output .ci/integration-timing-profile.json \
+            "${files[@]}" | tee /tmp/integration-timing-summary.txt
+
+          {
+            echo "## Integration timing profile"
+            echo
+            cat /tmp/integration-timing-summary.txt
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Save timing profile for the next validation run
+        uses: actions/cache/save@v4
+        with:
+          path: .ci/integration-timing-profile.json
+          key: rules-core-integration-timing-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref_name }}-${{ github.run_id }}
+
+      - name: Upload timing profile
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-timing-profile
+          path: .ci/integration-timing-profile.json
+          if-no-files-found: error
+          retention-days: 30
 
   container:
     name: Container validation
