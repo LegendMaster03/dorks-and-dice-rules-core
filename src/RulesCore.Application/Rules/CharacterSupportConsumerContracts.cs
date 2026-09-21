@@ -751,7 +751,7 @@ public static class CharacterSupportResolver
             request.StringInputs?.Keys,
             CharacterMechanicInputValueKinds.String);
 
-        foreach (var key in request.Choices?.Keys ?? [])
+        foreach (var key in request.Choices?.Keys ?? Enumerable.Empty<string>())
         {
             if (!procedure.Choices.Any(value =>
                     string.Equals(value.Key, key, StringComparison.OrdinalIgnoreCase)))
@@ -761,7 +761,7 @@ public static class CharacterSupportResolver
             }
         }
 
-        foreach (var key in request.Rolls?.Keys ?? [])
+        foreach (var key in request.Rolls?.Keys ?? Enumerable.Empty<string>())
         {
             if (!procedure.Rolls.Any(value =>
                     string.Equals(value.Key, key, StringComparison.OrdinalIgnoreCase)))
