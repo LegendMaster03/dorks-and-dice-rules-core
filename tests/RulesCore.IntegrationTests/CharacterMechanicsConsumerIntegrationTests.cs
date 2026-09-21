@@ -2408,6 +2408,242 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task CharacterProjectionRequiresStartingClassAndUsesMulticlassProficiencies()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-multiclass-{token}";
+        var alphaConceptKey = $"class.alpha-{token}";
+        var betaConceptKey = $"class.beta-{token}";
+        var actor = $"character-multiclass-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"MUL{token}";
+            var alphaRaw = JsonSerializer.Serialize(new
+            {
+                name = "Alpha",
+                source = sourceCode,
+                hd = new { number = 1, faces = 10 },
+                proficiency = new[] { "str", "con" },
+                startingProficiencies = new
+                {
+                    armor = new[] { "heavy" }
+                },
+                multiclassing = new
+                {
+                    proficienciesGained = new
+                    {
+                        armor = new[] { "light" }
+                    }
+                }
+            });
+            var betaRaw = JsonSerializer.Serialize(new
+            {
+                name = "Beta",
+                source = sourceCode,
+                hd = new { number = 1, faces = 8 },
+                proficiency = new[] { "dex", "int" },
+                startingProficiencies = new
+                {
+                    armor = new[] { "medium" }
+                },
+                multiclassing = new
+                {
+                    proficienciesGained = new
+                    {
+                        armor = new[] { "shield" }
+                    }
+                }
+            });
+
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Character Multiclass Fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"multiclass-{token}.json",
+                            Encoding.UTF8.GetBytes("{}"),
+                            $"integration:character-multiclass:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "class",
+                                "Alpha",
+                                sourceCode,
+                                $"class|Alpha|{sourceCode}",
+                                alphaRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "class",
+                                "Beta",
+                                sourceCode,
+                                $"class|Beta|{sourceCode}",
+                                betaRaw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Character Multiclass Fixture {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2014, 8, 19))
+                        ])));
+            packageId = imported.PackageId;
+            var byName = imported.Entities.ToDictionary(value => value.Name, StringComparer.Ordinal);
+            var alphaSource = byName["Alpha"];
+            var betaSource = byName["Beta"];
+
+            var alphaConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    alphaConceptKey,
+                    alphaSource.EntityType,
+                    alphaSource.Name),
+                actor);
+            var betaConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    betaConceptKey,
+                    betaSource.EntityType,
+                    betaSource.Name),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                alphaConcept.Value.Id,
+                new BindRuleConceptSourceRequest(alphaSource.EntityId),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                betaConcept.Value.Id,
+                new BindRuleConceptSourceRequest(betaSource.EntityId),
+                actor);
+
+            var revisionIds = await db.SourceEntityRevisions
+                .Where(value =>
+                    value.SourceEntityId == alphaSource.EntityId
+                    || value.SourceEntityId == betaSource.EntityId)
+                .ToDictionaryAsync(value => value.SourceEntityId, value => value.Id);
+            await globalRules.SetDecisionAsync(
+                alphaConcept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionIds[alphaSource.EntityId],
+                    "Alpha multiclass fixture."),
+                actor);
+            await globalRules.SetDecisionAsync(
+                betaConcept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionIds[betaSource.EntityId],
+                    "Beta multiclass fixture."),
+                actor);
+            await globalRules.PublishAsync(actor);
+
+            CharacterRulesProjectionRequest Request(
+                IReadOnlyList<CharacterRuntimeChoiceInput>? choices = null) =>
+                new(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 14,
+                        ["dexterity"] = 16,
+                        ["constitution"] = 12,
+                        ["intelligence"] = 14,
+                        ["wisdom"] = 10,
+                        ["charisma"] = 10
+                    },
+                    Advancements:
+                    [
+                        new CharacterAdvancementFactInput(alphaConceptKey, 3),
+                        new CharacterAdvancementFactInput(betaConceptKey, 2)
+                    ],
+                    Choices: choices);
+
+            var unresolved = await projection.ResolveGlobalAsync(
+                Request(),
+                userId: null);
+            var startingClass = Assert.Single(
+                unresolved.Mechanics,
+                value => value.MechanicKey == "advancement.starting-class");
+            Assert.Equal(CharacterResolutionStates.ChoiceRequired, startingClass.State);
+            Assert.Contains(
+                "advancement.starting-class",
+                startingClass.RequiredChoices);
+            Assert.DoesNotContain(
+                unresolved.Capabilities,
+                value => value.CapabilityKey.StartsWith(
+                    "save.",
+                    StringComparison.OrdinalIgnoreCase)
+                    && value.CapabilityKey.EndsWith(
+                        ".proficient",
+                        StringComparison.OrdinalIgnoreCase));
+
+            var resolved = await projection.ResolveGlobalAsync(
+                Request(
+                [
+                    new CharacterRuntimeChoiceInput(
+                        "advancement.starting-class",
+                        alphaConceptKey)
+                ]),
+                userId: null);
+
+            Assert.Equal(3, Assert.Single(
+                resolved.Mechanics,
+                value => value.MechanicKey == "proficiency.standard").NumericValue);
+            Assert.Equal(5, Assert.Single(
+                resolved.Mechanics,
+                value => value.MechanicKey == "save.strength").NumericValue);
+            Assert.Equal(3, Assert.Single(
+                resolved.Mechanics,
+                value => value.MechanicKey == "save.dexterity").NumericValue);
+
+            Assert.Contains(
+                resolved.Capabilities,
+                value => value.CapabilityKey == "save.strength.proficient");
+            Assert.Contains(
+                resolved.Capabilities,
+                value => value.CapabilityKey == "save.constitution.proficient");
+            Assert.DoesNotContain(
+                resolved.Capabilities,
+                value => value.CapabilityKey == "save.dexterity.proficient");
+            Assert.DoesNotContain(
+                resolved.Capabilities,
+                value => value.CapabilityKey == "save.intelligence.proficient");
+
+            Assert.Contains(
+                resolved.Qualifications,
+                value => value.QualificationKey == "qualification.armor.heavy");
+            Assert.Contains(
+                resolved.Qualifications,
+                value => value.QualificationKey == "qualification.armor.shield");
+            Assert.DoesNotContain(
+                resolved.Qualifications,
+                value => value.QualificationKey == "qualification.armor.medium");
+            Assert.DoesNotContain(
+                resolved.Qualifications,
+                value => value.QualificationKey == "qualification.armor.light");
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
     private static HttpRequestMessage HostedRequest(HttpMethod method, string path, string ticket)
     {
         var request = new HttpRequestMessage(method, path);

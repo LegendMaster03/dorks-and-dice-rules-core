@@ -292,3 +292,9 @@ If more than one selected class contributes a standard spell-slot table, Rules C
 The bulk Character projection reads acquisition levels directly from native 5e.tools class-feature and subclass-feature UIDs. Class feature references use `Name|Class|ClassSource|Level|...`; subclass feature references use `Name|Class|ClassSource|Subclass|SubclassSource|Level|...`. Object-wrapped `classFeature` and `subclassFeature` references are treated identically.
 
 Only features whose source-defined acquisition level is at or below the supplied advancement level are projected as resolved Character features. Future features are omitted. A feature entry with no trustworthy acquisition level remains `applicable-unresolved` instead of being assigned to a level by position or display order.
+
+## Starting class and multiclass proficiencies
+
+When exactly one selected base-class advancement has a positive level, Rules Core treats it as the starting class automatically. When more than one base class is present, the Character must identify the starting class with the `advancement.starting-class` runtime choice (or the same key in string facts). The projection does not infer the starting class from request order.
+
+Only the starting class grants its native `proficiency`/`savingThrows` proficiencies and `startingProficiencies`. Other selected base classes instead project `multiclassing.proficienciesGained`. Standard proficiency bonus still uses the total supplied base-class advancement levels. If the starting class is unresolved, starting-only and multiclass-only grants are withheld and the projection reports `choice-required` rather than over-granting Character capabilities.

@@ -124,7 +124,10 @@ internal sealed class CharacterProjectionContext
     public HashSet<string> DerivedClassSkillTypes { get; } = new(Keys);
     public bool HasDerivedClassSkillData { get; set; }
     public Dictionary<string, string> RuleDisplayNames { get; } = new(Keys);
+    public Dictionary<string, string> RuleEntityTypes { get; } = new(Keys);
     public Dictionary<string, string> CompetencyConceptKeysByDisplayName { get; } = new(Keys);
+    public string? StartingClassConceptKey { get; private set; }
+    public bool StartingClassChoiceRequired { get; private set; }
     public Dictionary<string, CharacterWeaponAttackProfile> WeaponAttacks { get; } = new(Keys);
     public Dictionary<string, CharacterSpellSlotProgression> SpellSlotProgressions { get; } = new(Keys);
 
@@ -157,13 +160,102 @@ internal sealed class CharacterProjectionContext
         ?? 0;
 
 
-    public void RegisterRuleIdentity(string conceptKey, string displayName)
+    public void RegisterRuleIdentity(
+        string conceptKey,
+        string displayName,
+        string entityType)
     {
-        if (string.IsNullOrWhiteSpace(conceptKey) || string.IsNullOrWhiteSpace(displayName))
+        if (string.IsNullOrWhiteSpace(conceptKey)
+            || string.IsNullOrWhiteSpace(displayName)
+            || string.IsNullOrWhiteSpace(entityType))
         {
             return;
         }
         RuleDisplayNames[conceptKey.Trim()] = displayName.Trim();
+        RuleEntityTypes[conceptKey.Trim()] = entityType.Trim();
+    }
+
+    public void ResolveStartingClass()
+    {
+        const string choiceKey = "advancement.starting-class";
+        var classConceptKeys = (Request.Advancements ?? [])
+            .Where(value => value.Level > 0)
+            .Select(value => value.ConceptKey?.Trim())
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Cast<string>()
+            .Where(value =>
+                RuleEntityTypes.TryGetValue(value, out var entityType)
+                && string.Equals(entityType, "class", StringComparison.OrdinalIgnoreCase))
+            .Distinct(Keys)
+            .OrderBy(value => value, StringComparer.Ordinal)
+            .ToArray();
+
+        if (classConceptKeys.Length == 0)
+        {
+            return;
+        }
+        if (classConceptKeys.Length == 1)
+        {
+            StartingClassConceptKey = classConceptKeys[0];
+            return;
+        }
+
+        var supplied = StringFacts.GetValueOrDefault(choiceKey);
+        if (string.IsNullOrWhiteSpace(supplied))
+        {
+            supplied = Choices.GetValueOrDefault(choiceKey);
+        }
+
+        if (!string.IsNullOrWhiteSpace(supplied)
+            && classConceptKeys.Contains(supplied.Trim(), Keys))
+        {
+            StartingClassConceptKey = supplied.Trim();
+            return;
+        }
+
+        StartingClassChoiceRequired = true;
+        Mechanics[choiceKey] = new CharacterResolvedMechanicView(
+            choiceKey,
+            "advancement",
+            "Starting Class",
+            CharacterResolutionStates.ChoiceRequired,
+            null,
+            null,
+            null,
+            [],
+            [],
+            [choiceKey],
+            [],
+            [],
+            EmptyProvenance());
+
+        if (!string.IsNullOrWhiteSpace(supplied))
+        {
+            Conflicts.Add(new CharacterProjectionConflictView(
+                "conflict.advancement.starting-class",
+                "invalid-runtime-choice",
+                $"Starting class '{supplied}' is not one of the Character's selected base classes.",
+                [choiceKey],
+                classConceptKeys));
+        }
+    }
+
+    public bool? IsStartingClass(string conceptKey)
+    {
+        if (!RuleEntityTypes.TryGetValue(conceptKey, out var entityType)
+            || !string.Equals(entityType, "class", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+        if (StartingClassChoiceRequired)
+        {
+            return null;
+        }
+        return StartingClassConceptKey is not null
+            && string.Equals(
+                StartingClassConceptKey,
+                conceptKey,
+                StringComparison.OrdinalIgnoreCase);
     }
 
     public void RegisterCompetencyIdentity(

@@ -89,8 +89,12 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
         foreach (var rule in projectionRules)
         {
-            context.RegisterRuleIdentity(rule.Catalog.ConceptKey, rule.Catalog.DisplayName);
+            context.RegisterRuleIdentity(
+                rule.Catalog.ConceptKey,
+                rule.Catalog.DisplayName,
+                rule.Catalog.EntityType);
         }
+        context.ResolveStartingClass();
 
         foreach (var rule in projectionRules)
         {
