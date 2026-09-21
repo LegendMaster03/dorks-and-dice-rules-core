@@ -1,4 +1,8 @@
+using System.Data;
+using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
+using RulesCore.Infrastructure.Rules;
+using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.Infrastructure.Persistence;
 
@@ -11,9 +15,115 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
 {
     public async Task InitializeAsync(CancellationToken cancellationToken = default)
     {
-        await dbContext.Database.ExecuteSqlRawAsync(PostgresSourceSchema, cancellationToken);
-        await RulesCoreCurrentSchema.ApplyAsync(dbContext, cancellationToken);
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere)
+        {
+            await dbContext.Database.OpenConnectionAsync(cancellationToken);
+        }
+
+        var lockAcquired = false;
+        try
+        {
+            await dbContext.Database.ExecuteSqlInterpolatedAsync(
+                $"SELECT pg_advisory_lock({SchemaInitializationLockKey});",
+                cancellationToken);
+            lockAcquired = true;
+
+            if (await HasAppliedSchemaRevisionAsync(connection, cancellationToken))
+            {
+                return;
+            }
+
+            await dbContext.Database.ExecuteSqlRawAsync(SchemaRevisionTableSql, cancellationToken);
+            await dbContext.Database.ExecuteSqlRawAsync(PostgresSourceSchema, cancellationToken);
+            await RulesCoreCurrentSchema.ApplyAsync(dbContext, cancellationToken);
+            await SourceFrameworkStore.InitializeSchemaAsync(dbContext, cancellationToken);
+            await RuleConceptRelationshipStore.InitializeSchemaAsync(dbContext, cancellationToken);
+            await RecordSchemaRevisionAsync(connection, cancellationToken);
+        }
+        finally
+        {
+            try
+            {
+                if (lockAcquired)
+                {
+                    await dbContext.Database.ExecuteSqlInterpolatedAsync(
+                        $"SELECT pg_advisory_unlock({SchemaInitializationLockKey});",
+                        CancellationToken.None);
+                }
+            }
+            finally
+            {
+                if (openedHere)
+                {
+                    await dbContext.Database.CloseConnectionAsync();
+                }
+            }
+        }
     }
+
+    private static async Task<bool> HasAppliedSchemaRevisionAsync(
+        DbConnection connection,
+        CancellationToken cancellationToken)
+    {
+        await using (var tableCommand = connection.CreateCommand())
+        {
+            tableCommand.CommandText =
+                "SELECT to_regclass('rules_core_schema_revision') IS NOT NULL;";
+            if (!Convert.ToBoolean(await tableCommand.ExecuteScalarAsync(cancellationToken)))
+            {
+                return false;
+            }
+        }
+
+        await using var command = connection.CreateCommand();
+        command.CommandText = """
+            SELECT EXISTS (
+                SELECT 1
+                FROM rules_core_schema_revision
+                WHERE schema_revision = @schema_revision);
+            """;
+        AddParameter(command, "@schema_revision", CurrentSchemaRevision);
+        return Convert.ToBoolean(await command.ExecuteScalarAsync(cancellationToken));
+    }
+
+    private static async Task RecordSchemaRevisionAsync(
+        DbConnection connection,
+        CancellationToken cancellationToken)
+    {
+        await using var command = connection.CreateCommand();
+        command.CommandText = """
+            INSERT INTO rules_core_schema_revision (schema_revision, applied_at)
+            VALUES (@schema_revision, @applied_at);
+            """;
+        AddParameter(command, "@schema_revision", CurrentSchemaRevision);
+        AddParameter(command, "@applied_at", DateTimeOffset.UtcNow);
+        await command.ExecuteNonQueryAsync(cancellationToken);
+    }
+
+    private static void AddParameter(DbCommand command, string name, object value)
+    {
+        var parameter = command.CreateParameter();
+        parameter.ParameterName = name;
+        parameter.Value = value;
+        command.Parameters.Add(parameter);
+    }
+
+    // Bump this value whenever startup-owned schema SQL changes. The persisted marker
+    // makes a schema revision effectively one-time across replicas and restarts.
+    private const string CurrentSchemaRevision = "2026-09-21-canonical-schema-concurrency-v1";
+
+    // "DNDRCSCH" encoded as a signed 64-bit key. PostgreSQL advisory locks
+    // coordinate independent Rules Core processes that share the same database.
+    private const long SchemaInitializationLockKey = 4921946562870068040L;
+
+    private const string SchemaRevisionTableSql = """
+        CREATE TABLE IF NOT EXISTS rules_core_schema_revision (
+            schema_revision varchar(200) NOT NULL,
+            applied_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_rules_core_schema_revision PRIMARY KEY (schema_revision));
+        """;
 
     private const string PostgresSourceSchema = """
         DO $$

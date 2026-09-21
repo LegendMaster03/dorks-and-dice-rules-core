@@ -20,7 +20,7 @@ internal static class RuleConceptRelationshipStore
     private const string SubclassParentBackfillKey = "subclass-parent-v2";
     private const string SystemActorUserId = "rules-core-system";
 
-    public static async Task EnsureSchemaAsync(
+    internal static async Task InitializeSchemaAsync(
         RulesCoreDbContext dbContext,
         CancellationToken cancellationToken = default)
     {
@@ -37,12 +37,16 @@ internal static class RuleConceptRelationshipStore
         await MarkBackfillCompletedAsync(dbContext, cancellationToken);
     }
 
+    public static Task EnsureSchemaAsync(
+        RulesCoreDbContext dbContext,
+        CancellationToken cancellationToken = default) =>
+        Task.CompletedTask;
+
     public static async Task SynchronizeSubclassParentsAsync(
         RulesCoreDbContext dbContext,
         string actorUserId,
         CancellationToken cancellationToken = default)
     {
-        await EnsureSchemaOnlyAsync(dbContext, cancellationToken);
         await SynchronizeSubclassParentsCoreAsync(dbContext, actorUserId, cancellationToken);
         await MarkBackfillCompletedAsync(dbContext, cancellationToken);
     }

@@ -19,8 +19,8 @@ internal sealed record CanonicalEntityIdentity(
 /// </summary>
 internal sealed class CanonicalEntityStore(RulesCoreDbContext dbContext)
 {
-    public async Task EnsureSchemaAsync(CancellationToken cancellationToken = default) =>
-        await dbContext.Database.ExecuteSqlRawAsync(SchemaSql, cancellationToken);
+    public Task EnsureSchemaAsync(CancellationToken cancellationToken = default) =>
+        Task.CompletedTask;
 
     public async Task<CanonicalEntityIdentity> ResolveAsync(
         CanonicalSourceOccurrenceEvidence evidence,
@@ -210,78 +210,4 @@ internal sealed class CanonicalEntityStore(RulesCoreDbContext dbContext)
         command.Parameters.Add(parameter);
     }
 
-    private const string SchemaSql = """
-        CREATE TABLE IF NOT EXISTS canonical_entity (
-            canonical_entity_id uuid NOT NULL,
-            canonical_key varchar(300) NOT NULL,
-            entity_type varchar(120) NOT NULL,
-            normalized_name varchar(500) NOT NULL,
-            display_name varchar(500) NOT NULL,
-            semantic_fingerprint varchar(64) NOT NULL,
-            created_at timestamp with time zone NOT NULL,
-            CONSTRAINT pk_canonical_entity PRIMARY KEY (canonical_entity_id));
-        CREATE UNIQUE INDEX IF NOT EXISTS ux_canonical_entity_key
-            ON canonical_entity(canonical_key);
-        CREATE UNIQUE INDEX IF NOT EXISTS ux_canonical_entity_exact_identity
-            ON canonical_entity(entity_type, normalized_name, semantic_fingerprint);
-        CREATE INDEX IF NOT EXISTS ix_canonical_entity_name
-            ON canonical_entity(entity_type, normalized_name);
-        CREATE INDEX IF NOT EXISTS ix_canonical_entity_semantic_fingerprint
-            ON canonical_entity(semantic_fingerprint);
-
-        ALTER TABLE canonical_source_occurrence
-            ADD COLUMN IF NOT EXISTS canonical_entity_id uuid NULL;
-        DO $$
-        BEGIN
-            IF NOT EXISTS (
-                SELECT 1
-                FROM pg_constraint
-                WHERE conname = 'fk_canonical_source_occurrence_entity'
-                  AND conrelid = 'canonical_source_occurrence'::regclass)
-            THEN
-                ALTER TABLE canonical_source_occurrence
-                    ADD CONSTRAINT fk_canonical_source_occurrence_entity
-                    FOREIGN KEY (canonical_entity_id)
-                    REFERENCES canonical_entity(canonical_entity_id) ON DELETE RESTRICT;
-            END IF;
-        END $$;
-        CREATE INDEX IF NOT EXISTS ix_canonical_source_occurrence_entity
-            ON canonical_source_occurrence(canonical_entity_id);
-
-        ALTER TABLE source_entity_occurrence_binding
-            ADD COLUMN IF NOT EXISTS source_entity_revision_id uuid NULL;
-        UPDATE source_entity_occurrence_binding binding
-        SET source_entity_revision_id = (
-            SELECT revision.source_entity_revision_id
-            FROM source_entity_revision revision
-            WHERE revision.source_entity_id = binding.source_entity_id
-            ORDER BY revision.revision_number DESC
-            LIMIT 1)
-        WHERE binding.source_entity_revision_id IS NULL;
-        DELETE FROM source_entity_occurrence_binding
-        WHERE source_entity_revision_id IS NULL;
-        DROP INDEX IF EXISTS ux_source_entity_occurrence_binding_entity;
-        CREATE INDEX IF NOT EXISTS ux_source_entity_occurrence_binding_entity
-            ON source_entity_occurrence_binding(source_entity_id);
-        DO $$
-        BEGIN
-            IF NOT EXISTS (
-                SELECT 1
-                FROM pg_constraint
-                WHERE conname = 'fk_source_entity_occurrence_binding_revision'
-                  AND conrelid = 'source_entity_occurrence_binding'::regclass)
-            THEN
-                ALTER TABLE source_entity_occurrence_binding
-                    ADD CONSTRAINT fk_source_entity_occurrence_binding_revision
-                    FOREIGN KEY (source_entity_revision_id)
-                    REFERENCES source_entity_revision(source_entity_revision_id) ON DELETE CASCADE;
-            END IF;
-        END $$;
-        ALTER TABLE source_entity_occurrence_binding
-            ALTER COLUMN source_entity_revision_id SET NOT NULL;
-        CREATE UNIQUE INDEX IF NOT EXISTS ux_source_entity_occurrence_binding_revision
-            ON source_entity_occurrence_binding(source_entity_revision_id);
-        CREATE INDEX IF NOT EXISTS ix_source_entity_occurrence_binding_entity
-            ON source_entity_occurrence_binding(source_entity_id);
-        """;
 }

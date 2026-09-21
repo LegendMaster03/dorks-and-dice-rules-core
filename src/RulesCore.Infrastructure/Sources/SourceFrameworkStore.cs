@@ -56,10 +56,15 @@ internal static class SourceFrameworkStore
             ON global_rule_decision_contribution(source_entity_revision_id);
         """;
 
-    public static Task EnsureSchemaAsync(
+    internal static Task InitializeSchemaAsync(
         RulesCoreDbContext dbContext,
         CancellationToken cancellationToken = default) =>
         dbContext.Database.ExecuteSqlRawAsync(SchemaSql, cancellationToken);
+
+    public static Task EnsureSchemaAsync(
+        RulesCoreDbContext dbContext,
+        CancellationToken cancellationToken = default) =>
+        Task.CompletedTask;
 
     public static async Task<IReadOnlyList<StoredSourceLineage>> GetLineageForSourcesAsync(
         RulesCoreDbContext dbContext,
