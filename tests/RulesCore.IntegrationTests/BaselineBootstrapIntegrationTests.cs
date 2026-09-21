@@ -345,7 +345,7 @@ public sealed class BaselineBootstrapIntegrationTests
                 Assert.True(psionicKeys.All(publishedCompetencyKeys.Contains));
 
                 if (psionicSourceNames.Any(value =>
-                        value.StartsWith("Knowledge (Psionics)", StringComparison.OrdinalIgnoreCase)))
+                        string.Equals(value, "Psionics", StringComparison.OrdinalIgnoreCase)))
                 {
                     Assert.Contains("skill.psionics", publishedCompetencyKeys);
                     Assert.DoesNotContain("skill.knowledge-psionics", publishedCompetencyKeys);
