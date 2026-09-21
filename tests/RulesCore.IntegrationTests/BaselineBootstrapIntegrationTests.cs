@@ -292,6 +292,11 @@ public sealed class BaselineBootstrapIntegrationTests
                 value => value.FamilyName == "Knowledge"
                     && !string.IsNullOrWhiteSpace(value.Specialty));
 
+            var balance = Assert.Single(
+                competencyMechanics,
+                value => value.ConceptKey == "skill.balance");
+            Assert.Equal("dexterity", balance.Competency!.GoverningAbilityKey);
+
             // The checked-in SRD3/SRD35 snapshots have generic Craft, Perform, and Profession
             // entries. SRD3 has Alchemy, which converges directly to Alchemist's Supplies, but
             // that native record is not a Craft (...) specialty. Do not fabricate specialty
@@ -338,6 +343,13 @@ public sealed class BaselineBootstrapIntegrationTests
                     psionicSourceNames);
                 Assert.NotEmpty(psionicKeys);
                 Assert.True(psionicKeys.All(publishedCompetencyKeys.Contains));
+
+                if (psionicSourceNames.Any(value =>
+                        value.StartsWith("Knowledge (Psionics)", StringComparison.OrdinalIgnoreCase)))
+                {
+                    Assert.Contains("skill.psionics", publishedCompetencyKeys);
+                    Assert.DoesNotContain("skill.knowledge-psionics", publishedCompetencyKeys);
+                }
             }
         }
         finally

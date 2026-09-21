@@ -1015,11 +1015,26 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             ? CharacterCompetencyKinds.Tool
             : CharacterCompetencyKinds.Skill;
 
+        var governingAbilityKey = selectedProfile?.GoverningAbilityKey;
+        if (string.IsNullOrWhiteSpace(governingAbilityKey))
+        {
+            var profileAbilities = allProfiles
+                .Select(value => value.GoverningAbilityKey)
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .Cast<string>()
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+            if (profileAbilities.Length == 1)
+            {
+                governingAbilityKey = profileAbilities[0];
+            }
+        }
+
         return new CharacterCompetencyDefinitionView(
             selectedProfile?.CompetencyKind ?? defaultKind,
             selectedProfile?.FamilyName,
             selectedProfile?.Specialty,
-            selectedProfile?.GoverningAbilityKey,
+            governingAbilityKey,
             selectedProfile?.SupportsRanks ?? false,
             selectedProfile?.SupportsClassSkillState ?? false,
             selectedProfile?.SupportsTrainingState ?? false,

@@ -100,10 +100,17 @@ internal static class ExactCompetencyTranslationPolicy
                         ? conversion.TargetType
                         : record.EntityType;
 
-                extension["competency"] = RulesCoreContentTranslation.BuildThreeXCompetencyMetadata(
+                var normalizedCompetency = RulesCoreContentTranslation.BuildThreeXCompetencyMetadata(
                     record.Name,
                     effectiveType,
                     edition!);
+                if (extension["threeX"] is JsonObject threeX
+                    && ReadString(threeX, "governingAbilityKey") is { } governingAbilityKey
+                    && !string.IsNullOrWhiteSpace(governingAbilityKey))
+                {
+                    normalizedCompetency["governingAbilityKey"] = governingAbilityKey.Trim();
+                }
+                extension["competency"] = normalizedCompetency;
 
                 if (conversion is not null)
                 {

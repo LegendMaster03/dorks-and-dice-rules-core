@@ -164,6 +164,9 @@ internal static class LegacySrdMechanicalTranslator
     private static readonly Regex SkillPair = new(
         @"(?<name>[A-Za-z][A-Za-z '\-()]+?)\s+(?<bonus>[+-]\d+)(?:,|$)",
         RegexOptions.Compiled | RegexOptions.CultureInvariant);
+    private static readonly Regex KeyAbility = new(
+        @"\bKey\s+Ability\s*:?\s*(?<ability>Str(?:ength)?|Dex(?:terity)?|Con(?:stitution)?|Int(?:elligence)?|Wis(?:dom)?|Cha(?:risma)?)\b",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
     private static readonly IReadOnlyDictionary<string, string> SizeCodes =
         new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
@@ -217,9 +220,42 @@ internal static class LegacySrdMechanicalTranslator
         if (IsMonster(entityType)) TranslateMonster(content, threeX, fields);
         else PreserveFields(threeX, fields);
 
+        if (string.Equals(entityType, "skill", StringComparison.OrdinalIgnoreCase)
+            && TryReadKeyAbility(body, out var governingAbilityKey))
+        {
+            threeX["governingAbilityKey"] = governingAbilityKey;
+        }
+
         if (!string.IsNullOrWhiteSpace(body)) threeX["sourceBody"] = body;
         content["_rulesCore"] = extension;
         return content.ToJsonString(new JsonSerializerOptions { WriteIndented = false });
+    }
+
+    private static bool TryReadKeyAbility(string body, out string governingAbilityKey)
+    {
+        governingAbilityKey = string.Empty;
+        if (string.IsNullOrWhiteSpace(body))
+        {
+            return false;
+        }
+
+        var match = KeyAbility.Match(body);
+        if (!match.Success)
+        {
+            return false;
+        }
+
+        governingAbilityKey = match.Groups["ability"].Value.Trim().ToLowerInvariant() switch
+        {
+            "str" or "strength" => "strength",
+            "dex" or "dexterity" => "dexterity",
+            "con" or "constitution" => "constitution",
+            "int" or "intelligence" => "intelligence",
+            "wis" or "wisdom" => "wisdom",
+            "cha" or "charisma" => "charisma",
+            _ => string.Empty
+        };
+        return governingAbilityKey.Length > 0;
     }
 
     private static void TranslateMonster(
