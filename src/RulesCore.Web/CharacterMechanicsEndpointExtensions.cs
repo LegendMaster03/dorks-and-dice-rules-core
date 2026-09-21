@@ -208,6 +208,8 @@ public static class CharacterMechanicsEndpointExtensions
                 return InvalidEvaluation(exception);
             }
         });
+
+        app.MapCharacterProjectionEndpoints();
     }
 
     private static IResult? RequireCampaignRead(

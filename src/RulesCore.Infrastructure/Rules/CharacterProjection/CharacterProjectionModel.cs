@@ -1,0 +1,378 @@
+using System.Text.Json;
+using RulesCore.Application.Rules;
+using RulesCore.Domain.Rules;
+
+namespace RulesCore.Infrastructure.Rules.CharacterProjection;
+
+internal sealed record CharacterProjectionRule(
+    ResolvedRuleCatalogItemView Catalog,
+    JsonElement Document,
+    CharacterMechanicProvenanceView Provenance);
+
+internal interface ICharacterRuleProjectionModule
+{
+    bool Handles(CharacterProjectionRule rule, CharacterProjectionContext context);
+    void Project(CharacterProjectionRule rule, CharacterProjectionContext context);
+}
+
+internal sealed class CharacterProjectionContext
+{
+    private static readonly StringComparer Keys = StringComparer.OrdinalIgnoreCase;
+
+    public CharacterProjectionContext(CharacterRulesProjectionRequest request)
+    {
+        Request = request;
+        SelectedConcepts = new HashSet<string>(
+            request.SelectedConcepts?.Select(value => Normalize(value.ConceptKey)) ?? [],
+            Keys);
+        EquippedItems = new HashSet<string>(
+            request.EquippedItemConceptKeys?.Select(Normalize) ?? [],
+            Keys);
+        KnownSpells = new HashSet<string>(
+            request.KnownSpellConceptKeys?.Select(Normalize) ?? [],
+            Keys);
+        PreparedSpells = new HashSet<string>(
+            request.PreparedSpellConceptKeys?.Select(Normalize) ?? [],
+            Keys);
+        ActiveConditions = new HashSet<string>(
+            request.ConditionKeys?.Select(Normalize) ?? [],
+            Keys);
+        TrainingKeys = new HashSet<string>(
+            request.TrainingKeys?.Select(Normalize) ?? [],
+            Keys);
+        ClassSkillKeys = new HashSet<string>(
+            request.ClassSkillKeys?.Select(Normalize) ?? [],
+            Keys);
+        Capabilities = new HashSet<string>(
+            request.CapabilityKeys?.Select(Normalize) ?? [],
+            Keys);
+        Choices = (request.Choices ?? [])
+            .GroupBy(value => Normalize(value.ChoiceKey), Keys)
+            .ToDictionary(group => group.Key, group => group.Last().Value.Trim(), Keys);
+        Rolls = (request.Rolls ?? [])
+            .GroupBy(value => Normalize(value.RollKey), Keys)
+            .ToDictionary(group => group.Key, group => group.Last().Value, Keys);
+        BaseAbilityScores = NormalizeIntegerDictionary(request.BaseAbilityScores);
+        CompetencyRanks = NormalizeIntegerDictionary(request.CompetencyRanks);
+        IntegerFacts = NormalizeIntegerDictionary(request.IntegerFacts);
+        BooleanFacts = NormalizeBooleanDictionary(request.BooleanFacts);
+        StringFacts = NormalizeStringDictionary(request.StringFacts);
+        CurrentResources = NormalizeIntegerDictionary(request.CurrentResources);
+        RequestedMechanics = request.RequestedMechanicKeys is null
+            ? null
+            : new HashSet<string>(request.RequestedMechanicKeys.Select(Normalize), Keys);
+    }
+
+    public CharacterRulesProjectionRequest Request { get; }
+    public HashSet<string> SelectedConcepts { get; }
+    public HashSet<string> EquippedItems { get; }
+    public HashSet<string> KnownSpells { get; }
+    public HashSet<string> PreparedSpells { get; }
+    public HashSet<string> ActiveConditions { get; }
+    public HashSet<string> TrainingKeys { get; }
+    public HashSet<string> ClassSkillKeys { get; }
+    public HashSet<string> Capabilities { get; }
+    public Dictionary<string, string> Choices { get; }
+    public Dictionary<string, int> Rolls { get; }
+    public Dictionary<string, int> BaseAbilityScores { get; }
+    public Dictionary<string, int> CompetencyRanks { get; }
+    public Dictionary<string, int> IntegerFacts { get; }
+    public Dictionary<string, bool> BooleanFacts { get; }
+    public Dictionary<string, string> StringFacts { get; }
+    public Dictionary<string, int> CurrentResources { get; }
+    public HashSet<string>? RequestedMechanics { get; }
+
+    public Dictionary<string, List<CharacterMechanicContributionView>> AbilityContributions { get; } =
+        new(Keys);
+    public HashSet<string> RequiredAbilityChoices { get; } = new(Keys);
+    public HashSet<string> SaveProficiencyAbilities { get; } = new(Keys);
+    public bool UsesStandardProficiency { get; set; }
+    public int StandardProficiencyLevel { get; set; }
+
+    public Dictionary<string, CharacterResolvedMechanicView> Mechanics { get; } = new(Keys);
+    public Dictionary<string, CharacterCapabilityView> CapabilityViews { get; } = new(Keys);
+    public Dictionary<string, CharacterMovementModeView> Movement { get; } = new(Keys);
+    public Dictionary<string, CharacterQualificationView> Qualifications { get; } = new(Keys);
+    public Dictionary<string, CharacterActionView> Actions { get; } = new(Keys);
+    public Dictionary<string, CharacterFeatureView> Features { get; } = new(Keys);
+    public Dictionary<string, CharacterResourceView> Resources { get; } = new(Keys);
+    public Dictionary<string, CharacterSpellcastingView> Spellcasting { get; } = new(Keys);
+    public Dictionary<string, CharacterProcedureView> Procedures { get; } = new(Keys);
+    public Dictionary<string, CharacterPrerequisiteView> Prerequisites { get; } = new(Keys);
+    public List<CharacterGrantView> Grants { get; } = [];
+    public List<CharacterRuleEffectView> Effects { get; } = [];
+    public List<CharacterProjectionConflictView> Conflicts { get; } = [];
+
+    public bool IsSelected(string conceptKey) =>
+        SelectedConcepts.Contains(conceptKey)
+        || Request.Advancements?.Any(value =>
+            string.Equals(value.ConceptKey?.Trim(), conceptKey, StringComparison.OrdinalIgnoreCase)) == true;
+
+    public int AdvancementLevel(string conceptKey) =>
+        Request.Advancements?
+            .Where(value => string.Equals(
+                value.ConceptKey?.Trim(),
+                conceptKey,
+                StringComparison.OrdinalIgnoreCase))
+            .Sum(value => Math.Max(value.Level, 0))
+        ?? 0;
+
+    public void AddAbilityContribution(
+        string abilityKey,
+        CharacterMechanicContributionView contribution)
+    {
+        var key = CharacterProjectionJson.NormalizeAbilityKey(abilityKey);
+        if (!AbilityContributions.TryGetValue(key, out var values))
+        {
+            values = [];
+            AbilityContributions.Add(key, values);
+        }
+        values.Add(contribution);
+    }
+
+    public void AddCapability(
+        string key,
+        string displayName,
+        string sourceConceptKey,
+        CharacterMechanicProvenanceView provenance)
+    {
+        var normalized = Normalize(key);
+        Capabilities.Add(normalized);
+        if (CapabilityViews.TryGetValue(normalized, out var existing))
+        {
+            var grants = existing.GrantedByConceptKeys
+                .Append(sourceConceptKey)
+                .Distinct(Keys)
+                .OrderBy(value => value, StringComparer.Ordinal)
+                .ToArray();
+            CapabilityViews[normalized] = existing with { GrantedByConceptKeys = grants };
+            return;
+        }
+
+        CapabilityViews[normalized] = new CharacterCapabilityView(
+            normalized,
+            string.IsNullOrWhiteSpace(displayName) ? normalized : displayName.Trim(),
+            [sourceConceptKey],
+            provenance);
+    }
+
+    public void AddFeature(
+        string featureKey,
+        string displayName,
+        string kind,
+        string state,
+        string? sourceConceptKey,
+        CharacterMechanicProvenanceView provenance)
+    {
+        var normalized = Normalize(featureKey);
+        Features[normalized] = new CharacterFeatureView(
+            normalized,
+            displayName,
+            kind,
+            state,
+            sourceConceptKey,
+            [],
+            provenance);
+    }
+
+    public void AddEffect(CharacterRuleEffectView effect)
+    {
+        Effects.Add(effect);
+        if (string.Equals(effect.Kind, CharacterEffectKinds.Capability, StringComparison.OrdinalIgnoreCase)
+            && string.Equals(effect.Operation, CharacterEffectOperations.Grant, StringComparison.OrdinalIgnoreCase)
+            && effect.SourceConceptKey is not null)
+        {
+            AddCapability(
+                effect.TargetKey,
+                CharacterProjectionJson.Humanize(effect.TargetKey),
+                effect.SourceConceptKey,
+                effect.Provenance);
+        }
+        if (string.Equals(effect.Kind, CharacterEffectKinds.MechanicContribution, StringComparison.OrdinalIgnoreCase)
+            && string.Equals(effect.Operation, CharacterEffectOperations.Add, StringComparison.OrdinalIgnoreCase)
+            && effect.NumericValue is int value
+            && effect.TargetKey.StartsWith("ability.", StringComparison.OrdinalIgnoreCase)
+            && effect.TargetKey.EndsWith(".score", StringComparison.OrdinalIgnoreCase))
+        {
+            var ability = effect.TargetKey["ability.".Length..^".score".Length];
+            AddAbilityContribution(
+                ability,
+                new CharacterMechanicContributionView(
+                    effect.EffectKey,
+                    CharacterProjectionJson.Humanize(effect.EffectKey),
+                    effect.Operation,
+                    value,
+                    null,
+                    effect.SourceConceptKey,
+                    effect.Provenance));
+        }
+    }
+
+    public bool ShouldIncludeMechanic(string key) =>
+        RequestedMechanics is null || RequestedMechanics.Contains(key);
+
+    public static CharacterMechanicProvenanceView EmptyProvenance() =>
+        new([], [], []);
+
+    private static string Normalize(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException("Character fact keys can not be blank.");
+        }
+        return value.Trim();
+    }
+
+    private static Dictionary<string, int> NormalizeIntegerDictionary(
+        IReadOnlyDictionary<string, int>? values) =>
+        values?.ToDictionary(
+            pair => Normalize(pair.Key),
+            pair => pair.Value,
+            Keys)
+        ?? new Dictionary<string, int>(Keys);
+
+    private static Dictionary<string, bool> NormalizeBooleanDictionary(
+        IReadOnlyDictionary<string, bool>? values) =>
+        values?.ToDictionary(
+            pair => Normalize(pair.Key),
+            pair => pair.Value,
+            Keys)
+        ?? new Dictionary<string, bool>(Keys);
+
+    private static Dictionary<string, string> NormalizeStringDictionary(
+        IReadOnlyDictionary<string, string>? values) =>
+        values?.ToDictionary(
+            pair => Normalize(pair.Key),
+            pair => pair.Value?.Trim() ?? string.Empty,
+            Keys)
+        ?? new Dictionary<string, string>(Keys);
+}
+
+internal static class CharacterProjectionJson
+{
+    private static readonly Dictionary<string, string> AbilityKeys =
+        new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["str"] = "strength",
+            ["strength"] = "strength",
+            ["dex"] = "dexterity",
+            ["dexterity"] = "dexterity",
+            ["con"] = "constitution",
+            ["constitution"] = "constitution",
+            ["int"] = "intelligence",
+            ["intelligence"] = "intelligence",
+            ["wis"] = "wisdom",
+            ["wisdom"] = "wisdom",
+            ["cha"] = "charisma",
+            ["charisma"] = "charisma"
+        };
+
+    public static string NormalizeAbilityKey(string value) =>
+        AbilityKeys.TryGetValue(value?.Trim() ?? string.Empty, out var key)
+            ? key
+            : (value?.Trim().ToLowerInvariant()
+                ?? throw new ArgumentNullException(nameof(value)));
+
+    public static bool TryGetProperty(JsonElement element, string name, out JsonElement value)
+    {
+        value = default;
+        return element.ValueKind == JsonValueKind.Object
+            && element.TryGetProperty(name, out value);
+    }
+
+    public static string? String(JsonElement element, string name)
+    {
+        if (!TryGetProperty(element, name, out var value))
+        {
+            return null;
+        }
+        return value.ValueKind == JsonValueKind.String ? value.GetString() : value.ToString();
+    }
+
+    public static int? Integer(JsonElement element, string name)
+    {
+        if (!TryGetProperty(element, name, out var value))
+        {
+            return null;
+        }
+        if (value.ValueKind == JsonValueKind.Number && value.TryGetInt32(out var number))
+        {
+            return number;
+        }
+        return value.ValueKind == JsonValueKind.String
+            && int.TryParse(value.GetString(), out number)
+                ? number
+                : null;
+    }
+
+    public static IReadOnlyList<string> Strings(JsonElement element, string name)
+    {
+        if (!TryGetProperty(element, name, out var value))
+        {
+            return [];
+        }
+        if (value.ValueKind == JsonValueKind.String)
+        {
+            var item = value.GetString();
+            return string.IsNullOrWhiteSpace(item) ? [] : [item.Trim()];
+        }
+        if (value.ValueKind != JsonValueKind.Array)
+        {
+            return [];
+        }
+
+        return value.EnumerateArray()
+            .Select(item => item.ValueKind == JsonValueKind.String ? item.GetString() : null)
+            .Where(item => !string.IsNullOrWhiteSpace(item))
+            .Select(item => item!.Trim())
+            .ToArray();
+    }
+
+    public static string Humanize(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return value;
+        }
+
+        var tail = value.Trim().Split(['.', '-', '_'], StringSplitOptions.RemoveEmptyEntries)
+            .LastOrDefault() ?? value.Trim();
+        return string.Join(
+            ' ',
+            tail.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Select(part => char.ToUpperInvariant(part[0]) + part[1..]));
+    }
+
+    public static string? RangeText(JsonElement document)
+    {
+        if (!TryGetProperty(document, "range", out var range))
+        {
+            return null;
+        }
+        if (range.ValueKind == JsonValueKind.String)
+        {
+            return range.GetString();
+        }
+        if (range.ValueKind != JsonValueKind.Object)
+        {
+            return range.ToString();
+        }
+
+        if (TryGetProperty(range, "distance", out var distance)
+            && distance.ValueKind == JsonValueKind.Object)
+        {
+            var type = String(distance, "type");
+            var amount = Integer(distance, "amount");
+            if (amount is not null)
+            {
+                return $"{amount} {type ?? "units"}";
+            }
+            if (!string.IsNullOrWhiteSpace(type))
+            {
+                return type;
+            }
+        }
+
+        return String(range, "type") ?? range.ToString();
+    }
+}

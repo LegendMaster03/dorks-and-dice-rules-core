@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace RulesCore.Application.Rules;
 
 public sealed record ResolvedRuleCatalogEntityTypeFacetView(
@@ -47,7 +49,8 @@ public sealed record ResolvedRuleCatalogItemView(
     string EditionKey,
     string EditionDisplayName,
     IReadOnlyList<ResolvedRuleBrowserFieldView> BrowserFields,
-    IReadOnlyList<ResolvedRuleRelationshipView> Relationships)
+    IReadOnlyList<ResolvedRuleRelationshipView> Relationships,
+    JsonElement? Document = null)
 {
     public RuleLinkTargetView BrowserLink => RuleBrowserRoutes.ForConcept(EntityType, ConceptKey);
 }

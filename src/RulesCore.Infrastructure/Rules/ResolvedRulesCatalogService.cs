@@ -162,7 +162,8 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 value.SourceEntityRevision.SourceEntity.FormatKey,
                 value.SourceEntityRevision.SourceEntity.FormatKey,
                 (IReadOnlyList<ResolvedRuleBrowserFieldView>)null!,
-                (IReadOnlyList<ResolvedRuleRelationshipView>)null!))
+                (IReadOnlyList<ResolvedRuleRelationshipView>)null!,
+                null))
             .Take(limit)
             .ToArrayAsync(cancellationToken);
 
@@ -353,7 +354,8 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 value.SourceEntityRevision.SourceEntity.FormatKey,
                 value.SourceEntityRevision.SourceEntity.FormatKey,
                 (IReadOnlyList<ResolvedRuleBrowserFieldView>)null!,
-                (IReadOnlyList<ResolvedRuleRelationshipView>)null!))
+                (IReadOnlyList<ResolvedRuleRelationshipView>)null!,
+                null))
             .Take(limit)
             .ToArrayAsync(cancellationToken);
 
@@ -391,7 +393,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             .ToArrayAsync(cancellationToken);
 
         var entityTypes = rules.ToDictionary(value => value.RuleConceptId, value => value.EntityType);
-        var fieldsByConcept = new Dictionary<Guid, IReadOnlyList<ResolvedRuleBrowserFieldView>>();
+        var resolvedByConcept = new Dictionary<Guid, (IReadOnlyList<ResolvedRuleBrowserFieldView> Fields, JsonElement Document)>();
         foreach (var entry in entries)
         {
             using var sourceDocument = JsonDocument.Parse(
@@ -399,15 +401,24 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             var resolved = ApplyGlobalDecision(
                 sourceDocument.RootElement,
                 entry.GlobalRuleDecision);
-            fieldsByConcept[entry.RuleConceptId] = RuleBrowserSummaryProjector.Project(
-                entityTypes[entry.RuleConceptId],
-                resolved);
+            resolvedByConcept[entry.RuleConceptId] = (
+                RuleBrowserSummaryProjector.Project(
+                    entityTypes[entry.RuleConceptId],
+                    resolved),
+                resolved.Clone());
         }
 
         return rules
-            .Select(rule => rule with
+            .Select(rule =>
             {
-                BrowserFields = fieldsByConcept.GetValueOrDefault(rule.RuleConceptId) ?? []
+                var projected = resolvedByConcept.GetValueOrDefault(rule.RuleConceptId);
+                return rule with
+                {
+                    BrowserFields = projected.Fields ?? [],
+                    Document = projected.Document.ValueKind == JsonValueKind.Undefined
+                        ? null
+                        : projected.Document
+                };
             })
             .ToArray();
     }
@@ -431,7 +442,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             .ToArrayAsync(cancellationToken);
 
         var entityTypes = rules.ToDictionary(value => value.RuleConceptId, value => value.EntityType);
-        var fieldsByConcept = new Dictionary<Guid, IReadOnlyList<ResolvedRuleBrowserFieldView>>();
+        var resolvedByConcept = new Dictionary<Guid, (IReadOnlyList<ResolvedRuleBrowserFieldView> Fields, JsonElement Document)>();
         foreach (var entry in entries)
         {
             using var sourceDocument = JsonDocument.Parse(
@@ -448,15 +459,24 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 resolved = ApplyCampaignDecision(resolved, entry.CampaignRuleDecision);
             }
 
-            fieldsByConcept[entry.RuleConceptId] = RuleBrowserSummaryProjector.Project(
-                entityTypes[entry.RuleConceptId],
-                resolved);
+            resolvedByConcept[entry.RuleConceptId] = (
+                RuleBrowserSummaryProjector.Project(
+                    entityTypes[entry.RuleConceptId],
+                    resolved),
+                resolved.Clone());
         }
 
         return rules
-            .Select(rule => rule with
+            .Select(rule =>
             {
-                BrowserFields = fieldsByConcept.GetValueOrDefault(rule.RuleConceptId) ?? []
+                var projected = resolvedByConcept.GetValueOrDefault(rule.RuleConceptId);
+                return rule with
+                {
+                    BrowserFields = projected.Fields ?? [],
+                    Document = projected.Document.ValueKind == JsonValueKind.Undefined
+                        ? null
+                        : projected.Document
+                };
             })
             .ToArray();
     }
