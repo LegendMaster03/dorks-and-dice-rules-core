@@ -2408,6 +2408,238 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task CharacterProjectionExposesClassSkillChoiceOptionsAndAppliesSelectedTraining()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-skill-choice-{token}";
+        var classConceptKey = $"class.skill-choice-{token}";
+        var arcanaConceptKey = $"skill.arcana-{token}";
+        var historyConceptKey = $"skill.history-{token}";
+        var actor = $"character-skill-choice-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"SKL{token}";
+            var classRaw = JsonSerializer.Serialize(new
+            {
+                name = "Scholar",
+                source = sourceCode,
+                hd = new { number = 1, faces = 8 },
+                proficiency = new[] { "int", "wis" },
+                startingProficiencies = new
+                {
+                    skills = new object[]
+                    {
+                        new
+                        {
+                            choose = new
+                            {
+                                from = new[] { "arcana", "history" },
+                                count = 1
+                            }
+                        }
+                    }
+                }
+            });
+            var arcanaRaw = JsonSerializer.Serialize(new
+            {
+                name = "Arcana",
+                source = sourceCode,
+                ability = "int"
+            });
+            var historyRaw = JsonSerializer.Serialize(new
+            {
+                name = "History",
+                source = sourceCode,
+                ability = "int"
+            });
+
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Character Skill Choice Fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"skill-choice-{token}.json",
+                            Encoding.UTF8.GetBytes("{}"),
+                            $"integration:character-skill-choice:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "class",
+                                "Scholar",
+                                sourceCode,
+                                $"class|Scholar|{sourceCode}",
+                                classRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "skill",
+                                "Arcana",
+                                sourceCode,
+                                $"skill|Arcana|{sourceCode}",
+                                arcanaRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "skill",
+                                "History",
+                                sourceCode,
+                                $"skill|History|{sourceCode}",
+                                historyRaw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Character Skill Choice Fixture {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2014, 8, 19))
+                        ])));
+            packageId = imported.PackageId;
+            var byName = imported.Entities.ToDictionary(value => value.Name, StringComparer.Ordinal);
+            var classSource = byName["Scholar"];
+            var arcanaSource = byName["Arcana"];
+            var historySource = byName["History"];
+
+            var classConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    classConceptKey,
+                    classSource.EntityType,
+                    classSource.Name),
+                actor);
+            var arcanaConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    arcanaConceptKey,
+                    arcanaSource.EntityType,
+                    arcanaSource.Name),
+                actor);
+            var historyConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    historyConceptKey,
+                    historySource.EntityType,
+                    historySource.Name),
+                actor);
+
+            foreach (var pair in new[]
+                     {
+                         (ConceptId: classConcept.Value.Id, EntityId: classSource.EntityId),
+                         (ConceptId: arcanaConcept.Value.Id, EntityId: arcanaSource.EntityId),
+                         (ConceptId: historyConcept.Value.Id, EntityId: historySource.EntityId)
+                     })
+            {
+                await globalRules.BindSourceEntityAsync(
+                    pair.ConceptId,
+                    new BindRuleConceptSourceRequest(pair.EntityId),
+                    actor);
+            }
+
+            var revisionIds = await db.SourceEntityRevisions
+                .Where(value =>
+                    value.SourceEntityId == classSource.EntityId
+                    || value.SourceEntityId == arcanaSource.EntityId
+                    || value.SourceEntityId == historySource.EntityId)
+                .ToDictionaryAsync(value => value.SourceEntityId, value => value.Id);
+            foreach (var pair in new[]
+                     {
+                         (ConceptId: classConcept.Value.Id, EntityId: classSource.EntityId),
+                         (ConceptId: arcanaConcept.Value.Id, EntityId: arcanaSource.EntityId),
+                         (ConceptId: historyConcept.Value.Id, EntityId: historySource.EntityId)
+                     })
+            {
+                await globalRules.SetDecisionAsync(
+                    pair.ConceptId,
+                    new SetGlobalRuleDecisionRequest(
+                        revisionIds[pair.EntityId],
+                        "Class skill choice fixture."),
+                    actor);
+            }
+            await globalRules.PublishAsync(actor);
+
+            CharacterRulesProjectionRequest Request(
+                IReadOnlyList<CharacterRuntimeChoiceInput>? choices = null) =>
+                new(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 10,
+                        ["dexterity"] = 12,
+                        ["constitution"] = 12,
+                        ["intelligence"] = 18,
+                        ["wisdom"] = 12,
+                        ["charisma"] = 10
+                    },
+                    Advancements:
+                    [
+                        new CharacterAdvancementFactInput(classConceptKey, 5)
+                    ],
+                    Choices: choices);
+
+            var unresolved = await projection.ResolveGlobalAsync(
+                Request(),
+                userId: null);
+            var choice = Assert.Single(
+                unresolved.Choices,
+                value => value.Kind == "skill-proficiency");
+            Assert.Equal(CharacterResolutionStates.ChoiceRequired, choice.State);
+            Assert.Equal(2, choice.Options.Count);
+            var arcanaOption = Assert.Single(
+                choice.Options,
+                value => value.ConceptKey == arcanaConceptKey);
+            Assert.Contains(
+                choice.Options,
+                value => value.ConceptKey == historyConceptKey);
+
+            var selected = await projection.ResolveGlobalAsync(
+                Request(
+                [
+                    new CharacterRuntimeChoiceInput(
+                        choice.ChoiceKey,
+                        arcanaOption.Value)
+                ]),
+                userId: null);
+
+            var resolvedChoice = Assert.Single(
+                selected.Choices,
+                value => value.ChoiceKey == choice.ChoiceKey);
+            Assert.Equal(CharacterResolutionStates.Resolved, resolvedChoice.State);
+            Assert.Equal(arcanaOption.Value, resolvedChoice.SelectedValue);
+
+            var arcana = Assert.Single(
+                selected.Mechanics,
+                value => value.MechanicKey == $"competency.{arcanaConceptKey}");
+            Assert.Equal(CharacterResolutionStates.Resolved, arcana.State);
+            Assert.Equal(7, arcana.NumericValue);
+            Assert.Contains(
+                selected.Qualifications,
+                value => value.Category == "skills"
+                    && value.DisplayName == "Arcana"
+                    && value.IsQualified == true);
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
     private static HttpRequestMessage HostedRequest(HttpMethod method, string path, string ticket)
     {
         var request = new HttpRequestMessage(method, path);

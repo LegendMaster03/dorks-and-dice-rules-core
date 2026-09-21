@@ -125,6 +125,10 @@ internal sealed class CharacterProjectionContext
     public bool HasDerivedClassSkillData { get; set; }
     public Dictionary<string, string> RuleDisplayNames { get; } = new(Keys);
     public Dictionary<string, string> CompetencyConceptKeysByDisplayName { get; } = new(Keys);
+    public Dictionary<string, CharacterChoiceOptionView> CompetencyChoiceOptionsByName { get; } =
+        new(Keys);
+    public Dictionary<string, CharacterChoiceOptionView> SkillChoiceOptionsByConceptKey { get; } =
+        new(Keys);
     public Dictionary<string, CharacterWeaponAttackProfile> WeaponAttacks { get; } = new(Keys);
     public Dictionary<string, CharacterSpellSlotProgression> SpellSlotProgressions { get; } = new(Keys);
 
@@ -137,6 +141,7 @@ internal sealed class CharacterProjectionContext
     public Dictionary<string, CharacterResourceView> Resources { get; } = new(Keys);
     public Dictionary<string, CharacterSpellcastingView> Spellcasting { get; } = new(Keys);
     public Dictionary<string, CharacterProcedureView> Procedures { get; } = new(Keys);
+    public Dictionary<string, CharacterChoiceView> ChoiceViews { get; } = new(Keys);
     public Dictionary<string, CharacterPrerequisiteView> Prerequisites { get; } = new(Keys);
     public List<CharacterGrantView> Grants { get; } = [];
     public List<CharacterRuleEffectView> Effects { get; } = [];
@@ -170,17 +175,107 @@ internal sealed class CharacterProjectionContext
         string displayName,
         string conceptKey,
         string? familyName,
-        string? specialty)
+        string? specialty,
+        string competencyKind)
     {
+        if (string.IsNullOrWhiteSpace(conceptKey))
+        {
+            return;
+        }
+
+        var normalizedConceptKey = conceptKey.Trim();
+        var normalizedDisplayName = string.IsNullOrWhiteSpace(displayName)
+            ? CharacterProjectionJson.Humanize(normalizedConceptKey)
+            : displayName.Trim();
+        var option = new CharacterChoiceOptionView(
+            normalizedConceptKey,
+            normalizedDisplayName,
+            normalizedConceptKey);
+
+        CompetencyConceptKeysByDisplayName[normalizedConceptKey] = normalizedConceptKey;
+        CompetencyChoiceOptionsByName[normalizedConceptKey] = option;
         if (!string.IsNullOrWhiteSpace(displayName))
         {
-            CompetencyConceptKeysByDisplayName[displayName.Trim()] = conceptKey;
+            CompetencyConceptKeysByDisplayName[displayName.Trim()] = normalizedConceptKey;
+            CompetencyChoiceOptionsByName[displayName.Trim()] = option;
         }
         if (!string.IsNullOrWhiteSpace(familyName)
             && !string.IsNullOrWhiteSpace(specialty))
         {
-            CompetencyConceptKeysByDisplayName[$"{familyName.Trim()} ({specialty.Trim()})"] = conceptKey;
+            var compositeName = $"{familyName.Trim()} ({specialty.Trim()})";
+            CompetencyConceptKeysByDisplayName[compositeName] = normalizedConceptKey;
+            CompetencyChoiceOptionsByName[compositeName] = option;
         }
+
+        if (string.Equals(
+                competencyKind,
+                CharacterCompetencyKinds.Skill,
+                StringComparison.OrdinalIgnoreCase)
+            || string.Equals(
+                competencyKind,
+                CharacterCompetencyKinds.SpecializedSkill,
+                StringComparison.OrdinalIgnoreCase))
+        {
+            SkillChoiceOptionsByConceptKey[normalizedConceptKey] = option;
+        }
+    }
+
+    public CharacterChoiceOptionView ResolveSkillChoiceOption(string sourceValue)
+    {
+        var normalized = Normalize(sourceValue);
+        if (CompetencyChoiceOptionsByName.TryGetValue(normalized, out var direct)
+            && direct.ConceptKey is not null
+            && SkillChoiceOptionsByConceptKey.ContainsKey(direct.ConceptKey))
+        {
+            return direct;
+        }
+
+        var normalizedName = NormalizeName(normalized);
+        var byName = SkillChoiceOptionsByConceptKey.Values
+            .FirstOrDefault(option =>
+                string.Equals(
+                    NormalizeName(option.DisplayName),
+                    normalizedName,
+                    StringComparison.Ordinal)
+                || string.Equals(
+                    NormalizeName(option.Value.Split('.').LastOrDefault() ?? option.Value),
+                    normalizedName,
+                    StringComparison.Ordinal));
+        return byName
+            ?? new CharacterChoiceOptionView(
+                normalized,
+                CharacterProjectionJson.Humanize(normalized),
+                null);
+    }
+
+    public IReadOnlyList<CharacterChoiceOptionView> AllSkillChoiceOptions() =>
+        SkillChoiceOptionsByConceptKey.Values
+            .OrderBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(value => value.Value, StringComparer.Ordinal)
+            .ToArray();
+
+    public void AddSkillTraining(
+        CharacterChoiceOptionView option,
+        string sourceConceptKey,
+        CharacterMechanicProvenanceView provenance)
+    {
+        var trainingKey = option.ConceptKey ?? option.Value;
+        TrainingKeys.Add(trainingKey);
+
+        var qualificationKey = $"qualification.skills.{Slug(option.DisplayName)}";
+        Qualifications[qualificationKey] = new CharacterQualificationView(
+            qualificationKey,
+            "skills",
+            option.DisplayName,
+            true,
+            CharacterResolutionStates.Resolved,
+            [sourceConceptKey],
+            provenance);
+        AddCapability(
+            qualificationKey,
+            option.DisplayName,
+            sourceConceptKey,
+            provenance);
     }
 
     public bool TryFindAdvancementLevel(string targetName, out int level)
@@ -258,6 +353,14 @@ internal sealed class CharacterProjectionContext
             .Trim()
             .ToLowerInvariant()
             .Where(char.IsLetterOrDigit));
+
+    private static string Slug(string value) =>
+        string.Join(
+            '-',
+            value.Trim().ToLowerInvariant()
+                .Split(
+                    [' ', '/', '_', '-', '.', '|'],
+                    StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
 
     public void AddSizeCategory(
         string sizeCategory,

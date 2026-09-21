@@ -18,6 +18,22 @@ public sealed record CharacterRuntimeRollInput(
     string RollKey,
     int Value);
 
+public sealed record CharacterChoiceOptionView(
+    string Value,
+    string DisplayName,
+    string? ConceptKey);
+
+public sealed record CharacterChoiceView(
+    string ChoiceKey,
+    string GroupKey,
+    string DisplayName,
+    string Kind,
+    string State,
+    IReadOnlyList<CharacterChoiceOptionView> Options,
+    string? SelectedValue,
+    string? SourceConceptKey,
+    CharacterMechanicProvenanceView Provenance);
+
 public sealed record CharacterRulesProjectionRequest(
     Dictionary<string, int>? BaseAbilityScores = null,
     IReadOnlyList<CharacterSelectedConceptInput>? SelectedConcepts = null,
@@ -212,6 +228,7 @@ public sealed record CharacterRulesProjectionView(
     IReadOnlyList<CharacterResourceView> Resources,
     IReadOnlyList<CharacterSpellcastingView> Spellcasting,
     IReadOnlyList<CharacterProcedureView> Procedures,
+    IReadOnlyList<CharacterChoiceView> Choices,
     IReadOnlyList<CharacterPrerequisiteView> Prerequisites,
     IReadOnlyList<CharacterProjectionConflictView> Conflicts);
 

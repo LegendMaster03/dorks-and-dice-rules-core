@@ -599,7 +599,16 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
             return;
         }
 
-        foreach (var category in proficiencies.EnumerateObject())
+        CharacterStartingProficiencyProjector.ProjectSkills(
+            rule,
+            context,
+            proficiencies);
+
+        foreach (var category in proficiencies.EnumerateObject()
+                     .Where(value => !string.Equals(
+                         value.Name,
+                         "skills",
+                         StringComparison.OrdinalIgnoreCase)))
         {
             IEnumerable<string> values = category.Value.ValueKind switch
             {

@@ -78,6 +78,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
     {
         var context = new CharacterProjectionContext(request);
         SeedCallerCapabilities(context);
+        RegisterMechanicCatalogIdentities(context, mechanicCatalog);
 
         var projectionRules = rules.Rules
             .Where(value => value.Document is not null)
@@ -131,8 +132,25 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             context.Resources.Values.OrderBy(value => value.ResourceKey, StringComparer.Ordinal).ToArray(),
             context.Spellcasting.Values.OrderBy(value => value.SpellcastingKey, StringComparer.Ordinal).ToArray(),
             context.Procedures.Values.OrderBy(value => value.ProcedureKey, StringComparer.Ordinal).ToArray(),
+            context.ChoiceViews.Values.OrderBy(value => value.ChoiceKey, StringComparer.Ordinal).ToArray(),
             context.Prerequisites.Values.OrderBy(value => value.ConceptKey, StringComparer.Ordinal).ToArray(),
             context.Conflicts.OrderBy(value => value.ConflictKey, StringComparer.Ordinal).ToArray());
+    }
+
+    private static void RegisterMechanicCatalogIdentities(
+        CharacterProjectionContext context,
+        CharacterMechanicsCatalogView catalog)
+    {
+        foreach (var mechanic in catalog.Mechanics.Where(value => value.Competency is not null))
+        {
+            var competency = mechanic.Competency!;
+            context.RegisterCompetencyIdentity(
+                mechanic.DisplayName,
+                competency.ConceptKey,
+                competency.FamilyName,
+                competency.Specialty,
+                competency.CompetencyKind);
+        }
     }
 
     private static void SeedCallerCapabilities(CharacterProjectionContext context)
@@ -1147,7 +1165,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 mechanic.DisplayName,
                 competency.ConceptKey,
                 competency.FamilyName,
-                competency.Specialty);
+                competency.Specialty,
+                competency.CompetencyKind);
             var profile = SelectProfile(competency, context);
             if (profile is null)
             {
@@ -1255,7 +1274,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
             if (profile.SupportsTrainingState)
             {
-                if (!context.HasTrainingInput)
+                var trained = context.TrainingKeys.Contains(competency.ConceptKey);
+                if (!trained && !context.HasTrainingInput)
                 {
                     context.Mechanics[mechanic.MechanicKey] = Unresolved(
                         mechanic.MechanicKey,
@@ -1267,7 +1287,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     continue;
                 }
 
-                if (context.TrainingKeys.Contains(competency.ConceptKey))
+                if (trained)
                 {
                     if (!TryResolvedNumeric(context, "proficiency.standard", out var proficiency))
                     {

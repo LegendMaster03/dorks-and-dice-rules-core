@@ -292,3 +292,11 @@ If more than one selected class contributes a standard spell-slot table, Rules C
 The bulk Character projection reads acquisition levels directly from native 5e.tools class-feature and subclass-feature UIDs. Class feature references use `Name|Class|ClassSource|Level|...`; subclass feature references use `Name|Class|ClassSource|Subclass|SubclassSource|Level|...`. Object-wrapped `classFeature` and `subclassFeature` references are treated identically.
 
 Only features whose source-defined acquisition level is at or below the supplied advancement level are projected as resolved Character features. Future features are omitted. A feature entry with no trustworthy acquisition level remains `applicable-unresolved` instead of being assigned to a level by position or display order.
+
+## Character projection choices
+
+The bulk Character projection exposes rule-defined selections as `choices` rather than requiring a Character client to reopen source JSON. A choice carries a stable choice key and group key, kind, state, legal options, selected value when supplied, source concept, and provenance. Runtime selections are sent back through the existing `choices` request collection.
+
+The first normalized consumer is `startingProficiencies.skills`. Fixed source skill proficiencies become Character training directly. A 5e.tools `choose.from` group becomes one choice slot per required selection, and `any: N` is populated from the effective accessible skill competency catalog. Duplicate selections within one source group and values outside the legal option set are explicit conflicts. When an option resolves to a canonical competency, selecting it feeds the Rules Core competency calculation directly; the Character Sheet does not need to mirror that selection into `TrainingKeys`.
+
+Missing choices do not imply non-proficiency. Competencies that could still be selected remain unresolved until the Character supplies the choice or a complete external training-state set.
