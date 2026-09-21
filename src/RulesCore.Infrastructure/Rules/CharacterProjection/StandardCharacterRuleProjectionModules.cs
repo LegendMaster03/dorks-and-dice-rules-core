@@ -214,7 +214,7 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
         ProjectHitDie(rule, context, level);
         ProjectSpellcasting(rule, context, level);
         ProjectStartingQualifications(rule, context);
-        ProjectClassFeatures(rule, context);
+        ProjectClassFeatures(rule, context, level);
         ProjectNormalizedThreeXClass(rule, context, level);
     }
 
@@ -633,56 +633,167 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
 
     private static void ProjectClassFeatures(
         CharacterProjectionRule rule,
-        CharacterProjectionContext context)
+        CharacterProjectionContext context,
+        int level)
     {
-        if (!CharacterProjectionJson.TryGetProperty(rule.Document, "classFeatures", out var features)
-            && !CharacterProjectionJson.TryGetProperty(rule.Document, "prestigeClassFeatures", out features))
+        JsonElement features;
+        var isSubclass = string.Equals(
+            rule.Catalog.EntityType,
+            "subclass",
+            StringComparison.OrdinalIgnoreCase);
+        if (isSubclass)
+        {
+            if (!CharacterProjectionJson.TryGetProperty(
+                    rule.Document,
+                    "subclassFeatures",
+                    out features))
+            {
+                return;
+            }
+        }
+        else if (!CharacterProjectionJson.TryGetProperty(
+                     rule.Document,
+                     "classFeatures",
+                     out features)
+                 && !CharacterProjectionJson.TryGetProperty(
+                     rule.Document,
+                     "prestigeClassFeatures",
+                     out features))
         {
             return;
         }
 
+        var entries = features.ValueKind == JsonValueKind.Array
+            ? features.EnumerateArray().ToArray()
+            : [features];
+
         var index = 0;
-        foreach (var label in ExtractLabels(features))
+        foreach (var entry in entries)
         {
-            var key = $"feature.{rule.Catalog.ConceptKey}.progression.{index++}";
+            var parsed = TryReadAdvancementFeature(
+                entry,
+                isSubclass,
+                out var displayName,
+                out var acquisitionLevel);
+            if (!parsed)
+            {
+                var fallback = ReadFeatureDisplayName(entry, isSubclass);
+                if (string.IsNullOrWhiteSpace(fallback))
+                {
+                    index++;
+                    continue;
+                }
+
+                context.AddFeature(
+                    $"feature.{rule.Catalog.ConceptKey}.progression.unresolved.{index++}",
+                    fallback,
+                    "advancement-feature",
+                    CharacterResolutionStates.ApplicableUnresolved,
+                    rule.Catalog.ConceptKey,
+                    rule.Provenance);
+                continue;
+            }
+
+            if (acquisitionLevel > level || level <= 0)
+            {
+                index++;
+                continue;
+            }
+
+            var key =
+                $"feature.{rule.Catalog.ConceptKey}.level-{acquisitionLevel}.{Slug(displayName)}.{index++}";
             context.AddFeature(
                 key,
-                label,
+                displayName,
                 "advancement-feature",
-                CharacterResolutionStates.ApplicableUnresolved,
+                CharacterResolutionStates.Resolved,
                 rule.Catalog.ConceptKey,
                 rule.Provenance);
         }
     }
 
-    private static IEnumerable<string> ExtractLabels(JsonElement value)
+    private static bool TryReadAdvancementFeature(
+        JsonElement entry,
+        bool isSubclass,
+        out string displayName,
+        out int acquisitionLevel)
     {
-        if (value.ValueKind == JsonValueKind.String)
+        displayName = string.Empty;
+        acquisitionLevel = 0;
+
+        string? reference = null;
+        if (entry.ValueKind == JsonValueKind.String)
         {
-            yield return value.GetString()!;
-            yield break;
+            reference = entry.GetString();
         }
-        if (value.ValueKind == JsonValueKind.Object)
+        else if (entry.ValueKind == JsonValueKind.Object)
         {
-            var name = CharacterProjectionJson.String(value, "name");
-            if (!string.IsNullOrWhiteSpace(name))
+            var referenceProperty = isSubclass
+                ? "subclassFeature"
+                : "classFeature";
+            reference = CharacterProjectionJson.String(entry, referenceProperty);
+
+            if (string.IsNullOrWhiteSpace(reference))
             {
-                yield return name;
+                var directName = CharacterProjectionJson.String(entry, "name");
+                var directLevel = CharacterProjectionJson.Integer(entry, "level");
+                if (!string.IsNullOrWhiteSpace(directName)
+                    && directLevel is > 0)
+                {
+                    displayName = directName.Trim();
+                    acquisitionLevel = directLevel.Value;
+                    return true;
+                }
             }
-            yield break;
-        }
-        if (value.ValueKind != JsonValueKind.Array)
-        {
-            yield break;
         }
 
-        foreach (var child in value.EnumerateArray())
+        if (string.IsNullOrWhiteSpace(reference))
         {
-            foreach (var label in ExtractLabels(child))
-            {
-                yield return label;
-            }
+            return false;
         }
+
+        var parts = reference.Split('|');
+        var levelIndex = isSubclass ? 5 : 3;
+        if (parts.Length <= levelIndex
+            || string.IsNullOrWhiteSpace(parts[0])
+            || !int.TryParse(parts[levelIndex], out var parsedLevel)
+            || parsedLevel <= 0)
+        {
+            return false;
+        }
+
+        displayName = parts[0].Trim();
+        acquisitionLevel = parsedLevel;
+        return true;
+    }
+
+    private static string? ReadFeatureDisplayName(
+        JsonElement entry,
+        bool isSubclass)
+    {
+        if (entry.ValueKind == JsonValueKind.String)
+        {
+            return entry.GetString()?
+                .Split('|', 2)[0]
+                .Trim();
+        }
+        if (entry.ValueKind != JsonValueKind.Object)
+        {
+            return null;
+        }
+
+        var directName = CharacterProjectionJson.String(entry, "name");
+        if (!string.IsNullOrWhiteSpace(directName))
+        {
+            return directName.Trim();
+        }
+
+        var reference = CharacterProjectionJson.String(
+            entry,
+            isSubclass ? "subclassFeature" : "classFeature");
+        return string.IsNullOrWhiteSpace(reference)
+            ? null
+            : reference.Split('|', 2)[0].Trim();
     }
 
     private static string Slug(string value) =>

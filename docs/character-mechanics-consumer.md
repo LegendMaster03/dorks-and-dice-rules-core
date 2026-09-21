@@ -286,3 +286,9 @@ For a single selected caster whose effective class document exposes `rowsSpellPr
 The published Dorks & Dice resource-choice house rule is recognized from its actual `casterChoosesResourceSystem` and `availableResourceSystems` fields. `spellcasting.resource-system` accepts the normalized choices `spell-slots` or `spell-points` (human forms such as `spell slots` are normalized). Until that choice is supplied, spellcasting resources are `choice-required`. A spell-points choice remains explicitly unresolved until a point-progression/conversion rule is normalized; Rules Core does not derive a point pool from slot counts.
 
 If more than one selected class contributes a standard spell-slot table, Rules Core reports the multiclass combination as unresolved instead of adding class-table slots together. Pact-magic and other nonstandard progressions are likewise preserved separately until their exact resource rules are normalized.
+
+## Native class and subclass feature progression
+
+The bulk Character projection reads acquisition levels directly from native 5e.tools class-feature and subclass-feature UIDs. Class feature references use `Name|Class|ClassSource|Level|...`; subclass feature references use `Name|Class|ClassSource|Subclass|SubclassSource|Level|...`. Object-wrapped `classFeature` and `subclassFeature` references are treated identically.
+
+Only features whose source-defined acquisition level is at or below the supplied advancement level are projected as resolved Character features. Future features are omitted. A feature entry with no trustworthy acquisition level remains `applicable-unresolved` instead of being assigned to a level by position or display order.

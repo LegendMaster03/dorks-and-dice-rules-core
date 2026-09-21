@@ -1428,7 +1428,12 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 spellcastingAbility = "int",
                 classFeatures = new object[]
                 {
-                    new { name = "Arcane Study", entries = new[] { "Representative feature." } }
+                    $"Arcane Study|Example Mage|{sourceCode}|1",
+                    new
+                    {
+                        classFeature = $"Focused Study|Example Mage|{sourceCode}|3"
+                    },
+                    $"Arcane Mastery|Example Mage|{sourceCode}|6"
                 }
             });
             var imported = await new NormalizedSourceImportService(db).ImportAsync(
@@ -1532,6 +1537,17 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Contains(
                 result.Capabilities,
                 value => value.CapabilityKey == "spellcasting");
+            Assert.Contains(
+                result.Features,
+                value => value.DisplayName == "Arcane Study"
+                    && value.State == CharacterResolutionStates.Resolved);
+            Assert.Contains(
+                result.Features,
+                value => value.DisplayName == "Focused Study"
+                    && value.State == CharacterResolutionStates.Resolved);
+            Assert.DoesNotContain(
+                result.Features,
+                value => value.DisplayName == "Arcane Mastery");
         }
         finally
         {
@@ -2248,6 +2264,140 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     points.Spellcasting,
                     value => value.SpellcastingKey == $"spellcasting.{classConceptKey}")
                     .ResourceSystemKey);
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
+    [Fact]
+    public async Task CharacterProjectionResolvesNativeSubclassFeatureLevels()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-subclass-{token}";
+        var conceptKey = $"subclass.arcane-path-{token}";
+        var actor = $"character-subclass-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"SUB{token}";
+            var raw = JsonSerializer.Serialize(new
+            {
+                name = "Arcane Path",
+                source = sourceCode,
+                className = "Example Mage",
+                classSource = sourceCode,
+                subclassFeatures = new object[]
+                {
+                    $"Path Initiate|Example Mage|{sourceCode}|Arcane Path|{sourceCode}|3",
+                    new
+                    {
+                        subclassFeature =
+                            $"Path Adept|Example Mage|{sourceCode}|Arcane Path|{sourceCode}|6"
+                    },
+                    $"Path Master|Example Mage|{sourceCode}|Arcane Path|{sourceCode}|10"
+                }
+            });
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Character Subclass Fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"subclass-{token}.json",
+                            Encoding.UTF8.GetBytes(raw),
+                            $"integration:character-subclass:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "subclass",
+                                "Arcane Path",
+                                sourceCode,
+                                $"subclass|Arcane Path|{sourceCode}",
+                                raw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Character Subclass Fixture {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2014, 8, 19))
+                        ])));
+            packageId = imported.PackageId;
+            var source = Assert.Single(imported.Entities);
+
+            var concept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    conceptKey,
+                    source.EntityType,
+                    source.Name),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                concept.Value.Id,
+                new BindRuleConceptSourceRequest(source.EntityId),
+                actor);
+            var revisionId = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == source.EntityId)
+                .Select(value => value.Id)
+                .SingleAsync();
+            await globalRules.SetDecisionAsync(
+                concept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionId,
+                    "Native subclass feature fixture."),
+                actor);
+            await globalRules.PublishAsync(actor);
+
+            var result = await projection.ResolveGlobalAsync(
+                new CharacterRulesProjectionRequest(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 10,
+                        ["dexterity"] = 10,
+                        ["constitution"] = 10,
+                        ["intelligence"] = 16,
+                        ["wisdom"] = 10,
+                        ["charisma"] = 10
+                    },
+                    Advancements:
+                    [
+                        new CharacterAdvancementFactInput(conceptKey, 7)
+                    ]),
+                userId: null);
+
+            Assert.Contains(
+                result.Features,
+                value => value.DisplayName == "Path Initiate"
+                    && value.State == CharacterResolutionStates.Resolved);
+            Assert.Contains(
+                result.Features,
+                value => value.DisplayName == "Path Adept"
+                    && value.State == CharacterResolutionStates.Resolved);
+            Assert.DoesNotContain(
+                result.Features,
+                value => value.DisplayName == "Path Master");
         }
         finally
         {
