@@ -164,6 +164,12 @@ internal static class LegacySrdMechanicalTranslator
     private static readonly Regex SkillPair = new(
         @"(?<name>[A-Za-z][A-Za-z '\-()]+?)\s+(?<bonus>[+-]\d+)(?:,|$)",
         RegexOptions.Compiled | RegexOptions.CultureInvariant);
+    private static readonly Regex KeyAbility = new(
+        @"\bKey\s+Ability\s*:?\s*(?<ability>Str(?:ength)?|Dex(?:terity)?|Con(?:stitution)?|Int(?:elligence)?|Wis(?:dom)?|Cha(?:risma)?)\b",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+    private static readonly Regex SkillHeadingAbility = new(
+        @"\((?<ability>Str(?:ength)?|Dex(?:terity)?|Con(?:stitution)?|Int(?:elligence)?|Wis(?:dom)?|Cha(?:risma)?|None)(?:\s*;[^)]*)?\)\s*$",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
     private static readonly IReadOnlyDictionary<string, string> SizeCodes =
         new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
@@ -217,9 +223,59 @@ internal static class LegacySrdMechanicalTranslator
         if (IsMonster(entityType)) TranslateMonster(content, threeX, fields);
         else PreserveFields(threeX, fields);
 
+        if (string.Equals(entityType, "skill", StringComparison.OrdinalIgnoreCase)
+            && TryReadSkillGoverningAbility(document.RootElement, body, out var governingAbilityKey))
+        {
+            threeX["governingAbilityKey"] = governingAbilityKey;
+        }
+
         if (!string.IsNullOrWhiteSpace(body)) threeX["sourceBody"] = body;
         content["_rulesCore"] = extension;
         return content.ToJsonString(new JsonSerializerOptions { WriteIndented = false });
+    }
+
+    private static bool TryReadSkillGoverningAbility(
+        JsonElement source,
+        string body,
+        out string governingAbilityKey)
+    {
+        governingAbilityKey = string.Empty;
+
+        var originalHeading = ReadString(source, "originalHeading");
+        if (!string.IsNullOrWhiteSpace(originalHeading))
+        {
+            var normalizedHeading = Regex.Replace(originalHeading, "<[^>]+>", string.Empty);
+            var headingMatch = SkillHeadingAbility.Match(normalizedHeading);
+            if (headingMatch.Success
+                && TryNormalizeAbilityKey(headingMatch.Groups["ability"].Value, out governingAbilityKey))
+            {
+                return true;
+            }
+        }
+
+        if (string.IsNullOrWhiteSpace(body))
+        {
+            return false;
+        }
+
+        var bodyMatch = KeyAbility.Match(body);
+        return bodyMatch.Success
+            && TryNormalizeAbilityKey(bodyMatch.Groups["ability"].Value, out governingAbilityKey);
+    }
+
+    private static bool TryNormalizeAbilityKey(string value, out string abilityKey)
+    {
+        abilityKey = value.Trim().ToLowerInvariant() switch
+        {
+            "str" or "strength" => "strength",
+            "dex" or "dexterity" => "dexterity",
+            "con" or "constitution" => "constitution",
+            "int" or "intelligence" => "intelligence",
+            "wis" or "wisdom" => "wisdom",
+            "cha" or "charisma" => "charisma",
+            _ => string.Empty
+        };
+        return abilityKey.Length > 0;
     }
 
     private static void TranslateMonster(

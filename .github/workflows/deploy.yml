@@ -44,11 +44,10 @@ jobs:
             postgres:18
 
           # A fresh official PostgreSQL container briefly runs a temporary server during
-          # initialization. Wait past that handoff, then require several consecutive SQL
-          # queries to succeed against the final server before launching Rules Core.
-          sleep 10
+          # initialization. Probe immediately, but require several consecutive SQL queries
+          # to succeed so a transient initialization server can not satisfy readiness.
           consecutive=0
-          for i in {1..30}; do
+          for i in {1..45}; do
             result=$(docker exec dorks-and-dice-rules-core-test-postgres \
               psql -v ON_ERROR_STOP=1 -U rules_core_test -d rules_core_test -tAc 'SELECT 1' \
               2>/dev/null || true)
@@ -143,16 +142,44 @@ jobs:
             up -d --force-recreate --remove-orphans
 
       - name: Verify deployed service
-        timeout-minutes: 16
+        timeout-minutes: 32
         run: |
-          # A deployment that introduces a new bundled corpus can spend several minutes hydrating
-          # immutable Source Layer revisions before ASP.NET starts accepting requests. Subsequent
-          # deployments skip already-present bundled works and normally become ready much faster.
+          # Translator-version upgrades can require a one-time local reprocessing pass over
+          # bundled legacy SRDs before ASP.NET starts accepting requests. Bound each probe so
+          # an unopened application port can not consume the entire verification timeout.
+          deadline=$((SECONDS + 1800))
+          initial_restarts=$(docker inspect -f '{{.RestartCount}}' dorks-and-dice-rules-core 2>/dev/null || echo 0)
+          attempt=0
           ready=false
-          for i in {1..900}; do
-            response=$(docker run --rm \
+
+          while [ "$SECONDS" -lt "$deadline" ]; do
+            attempt=$((attempt + 1))
+
+            if ! docker inspect dorks-and-dice-rules-core >/dev/null 2>&1; then
+              echo "Deployed Rules Core container is missing."
+              exit 1
+            fi
+
+            state=$(docker inspect -f '{{.State.Status}}' dorks-and-dice-rules-core 2>/dev/null || echo unknown)
+            restarts=$(docker inspect -f '{{.RestartCount}}' dorks-and-dice-rules-core 2>/dev/null || echo 0)
+
+            if [ "$state" = "exited" ] || [ "$state" = "dead" ]; then
+              echo "Deployed Rules Core container entered state '$state'."
+              docker logs --tail 200 dorks-and-dice-rules-core || true
+              exit 1
+            fi
+
+            if [ "$restarts" -ge $((initial_restarts + 3)) ]; then
+              echo "Deployed Rules Core is crash-looping (restart count $restarts)."
+              docker logs --tail 200 dorks-and-dice-rules-core || true
+              exit 1
+            fi
+
+            response=$(timeout 8s docker run --rm \
               --network dorks-and-dice-backend \
               curlimages/curl:8.12.1 \
+              --connect-timeout 2 \
+              --max-time 5 \
               -fsS http://dorks-and-dice-rules-core:8080/ready 2>/dev/null || true)
 
             if echo "$response" | grep -q '"status":"ready"'; then
@@ -160,11 +187,17 @@ jobs:
               ready=true
               break
             fi
+
+            if [ $((attempt % 30)) -eq 0 ]; then
+              echo "Rules Core is still starting after ${attempt} readiness probes; state=$state restarts=$restarts."
+              docker logs --tail 40 dorks-and-dice-rules-core || true
+            fi
+
             sleep 1
           done
 
           if [ "$ready" != "true" ]; then
-            echo "Deployed Rules Core did not become ready."
-            docker logs dorks-and-dice-rules-core || true
+            echo "Deployed Rules Core did not become ready within 30 minutes."
+            docker logs --tail 200 dorks-and-dice-rules-core || true
             exit 1
           fi

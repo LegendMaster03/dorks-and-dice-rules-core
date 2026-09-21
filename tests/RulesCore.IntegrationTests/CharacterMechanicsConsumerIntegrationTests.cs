@@ -359,7 +359,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                          ("Hide", "skill.hide"),
                          ("Move Silently", "skill.move-silently"),
                          ("Stealth", "skill.stealth"),
-                         ("Knowledge (the planes)", "skill.knowledge-the-planes"),
+                         ("The planes", "skill.the-planes"),
                          ("Craft (blacksmithing)", "skill.craft-blacksmithing"),
                          ("Alchemist's Supplies", "tool.alchemists-supplies")
                      })
@@ -529,7 +529,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
 
             var specialized = Assert.Single(
                 catalog.Mechanics,
-                value => value.MechanicKey == "competency.skill.knowledge-the-planes");
+                value => value.MechanicKey == "competency.skill.the-planes");
             Assert.NotNull(specialized.Competency);
             Assert.Equal(
                 CharacterCompetencyKinds.SpecializedSkill,
@@ -730,7 +730,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 specializedProfile.Inputs,
                 value => value.Key == "armorCheckPenaltyAdjustment");
             var untrainedSpecialized = await mechanics.EvaluateGlobalAsync(
-                "competency.skill.knowledge-the-planes",
+                "competency.skill.the-planes",
                 new CharacterMechanicEvaluationRequest(
                     IntegerInputs: new Dictionary<string, int>
                     {
@@ -752,7 +752,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal(new[] { "isTrained" }, untrainedSpecialized.UnsatisfiedRequirementKeys);
 
             var trainedSpecialized = await mechanics.EvaluateGlobalAsync(
-                "competency.skill.knowledge-the-planes",
+                "competency.skill.the-planes",
                 new CharacterMechanicEvaluationRequest(
                     IntegerInputs: new Dictionary<string, int>
                     {

@@ -8,14 +8,10 @@ namespace RulesCore.Infrastructure.Rules;
 
 internal static class CanonicalRuleBindingStore
 {
-    public static async Task EnsureSchemaAsync(
+    public static Task EnsureSchemaAsync(
         RulesCoreDbContext dbContext,
-        CancellationToken cancellationToken = default)
-    {
-        await new CanonicalEntityStore(dbContext).EnsureSchemaAsync(cancellationToken);
-        await new CanonicalEntityRelationshipStore(dbContext).EnsureSchemaAsync(cancellationToken);
-        await dbContext.Database.ExecuteSqlRawAsync(SchemaSql, cancellationToken);
-    }
+        CancellationToken cancellationToken = default) =>
+        Task.CompletedTask;
 
     public static async Task<Guid> GetCanonicalEntityIdAsync(
         RulesCoreDbContext dbContext,
@@ -511,63 +507,4 @@ internal static class CanonicalRuleBindingStore
         command.Parameters.Add(parameter);
     }
 
-    private const string SchemaSql = """
-        ALTER TABLE rule_concept_source_binding
-            ADD COLUMN IF NOT EXISTS canonical_entity_id uuid NULL;
-
-        UPDATE rule_concept_source_binding target
-        SET canonical_entity_id = occurrence.canonical_entity_id
-        FROM source_entity_revision revision
-        JOIN source_entity_occurrence_binding source_binding
-            ON source_binding.source_entity_revision_id = revision.source_entity_revision_id
-        JOIN canonical_source_occurrence occurrence
-            ON occurrence.canonical_source_occurrence_id = source_binding.canonical_source_occurrence_id
-        WHERE target.canonical_entity_id IS NULL
-            AND target.source_entity_id = revision.source_entity_id
-            AND occurrence.canonical_entity_id IS NOT NULL
-            AND revision.revision_number = (
-                SELECT MAX(candidate.revision_number)
-                FROM source_entity_revision candidate
-                WHERE candidate.source_entity_id = revision.source_entity_id);
-
-        DELETE FROM rule_concept_source_binding target
-        WHERE target.canonical_entity_id IS NULL;
-
-        DELETE FROM rule_concept_source_binding duplicate
-        USING rule_concept_source_binding keeper
-        WHERE duplicate.rule_concept_id = keeper.rule_concept_id
-            AND duplicate.canonical_entity_id = keeper.canonical_entity_id
-            AND (
-                duplicate.created_at > keeper.created_at
-                OR (duplicate.created_at = keeper.created_at
-                    AND duplicate.rule_concept_source_binding_id > keeper.rule_concept_source_binding_id));
-
-        ALTER TABLE rule_concept_source_binding
-            ALTER COLUMN canonical_entity_id SET NOT NULL;
-        ALTER TABLE rule_concept_source_binding
-            ALTER COLUMN source_entity_id DROP NOT NULL;
-        ALTER TABLE rule_concept_source_binding
-            DROP CONSTRAINT IF EXISTS fk_rule_concept_source_binding_entity;
-        ALTER TABLE rule_concept_source_binding
-            ADD CONSTRAINT fk_rule_concept_source_binding_entity
-            FOREIGN KEY (source_entity_id)
-            REFERENCES source_entity(source_entity_id) ON DELETE SET NULL;
-        DO $$
-        BEGIN
-            IF NOT EXISTS (
-                SELECT 1
-                FROM pg_constraint
-                WHERE conname = 'fk_rule_concept_source_binding_canonical_entity'
-                  AND conrelid = 'rule_concept_source_binding'::regclass)
-            THEN
-                ALTER TABLE rule_concept_source_binding
-                    ADD CONSTRAINT fk_rule_concept_source_binding_canonical_entity
-                    FOREIGN KEY (canonical_entity_id)
-                    REFERENCES canonical_entity(canonical_entity_id) ON DELETE RESTRICT;
-            END IF;
-        END $$;
-        DROP INDEX IF EXISTS ux_rule_concept_source_binding_concept_entity;
-        CREATE UNIQUE INDEX IF NOT EXISTS ux_rule_concept_source_binding_concept_canonical_entity
-            ON rule_concept_source_binding(rule_concept_id, canonical_entity_id);
-        """;
 }

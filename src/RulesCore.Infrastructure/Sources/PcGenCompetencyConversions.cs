@@ -18,10 +18,6 @@ internal static class PcGenCompetencyConversions
             ["Handle Animal"] = Skill("Handle Animal", "Animal Handling"),
             ["Heal"] = Skill("Heal", "Medicine"),
             ["Intimidate"] = Skill("Intimidate", "Intimidation"),
-            ["Knowledge (arcana)"] = Skill("Knowledge (arcana)", "Arcana"),
-            ["Knowledge (history)"] = Skill("Knowledge (history)", "History"),
-            ["Knowledge (nature)"] = Skill("Knowledge (nature)", "Nature"),
-            ["Knowledge (religion)"] = Skill("Knowledge (religion)", "Religion"),
             ["Sense Motive"] = Skill("Sense Motive", "Insight"),
             ["Sleight of Hand"] = Skill("Sleight of Hand", "Sleight of Hand"),
             ["Survival"] = Skill("Survival", "Survival"),
@@ -52,6 +48,11 @@ internal static class PcGenCompetencyConversions
         }
 
         var normalizedName = sourceName.Trim();
+        if (TryResolveKnowledgeSpecialty(normalizedName, out var knowledge))
+        {
+            return knowledge;
+        }
+
         if (isThirdEdition
             && ThirdEditionOnly.TryGetValue(normalizedName, out var thirdEdition))
         {
@@ -61,6 +62,30 @@ internal static class PcGenCompetencyConversions
         return Direct.TryGetValue(normalizedName, out var direct)
             ? direct
             : null;
+    }
+
+    private static bool TryResolveKnowledgeSpecialty(
+        string sourceName,
+        out PcGenCompetencyConversion conversion)
+    {
+        const string prefix = "Knowledge (";
+        conversion = null!;
+        if (!sourceName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
+            || !sourceName.EndsWith(')')
+            || sourceName.Length <= prefix.Length + 1)
+        {
+            return false;
+        }
+
+        var specialty = sourceName[prefix.Length..^1].Trim();
+        if (string.IsNullOrWhiteSpace(specialty))
+        {
+            return false;
+        }
+
+        var target = char.ToUpperInvariant(specialty[0]) + specialty[1..];
+        conversion = Skill(sourceName, target);
+        return true;
     }
 
     private static PcGenCompetencyConversion Skill(string sourceName, string targetName) =>

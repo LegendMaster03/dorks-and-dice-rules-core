@@ -133,6 +133,79 @@ public sealed class CanonicalSourceIdentityIntegrationTests
     }
 
     [Fact]
+    public async Task ContentOverlapDoesNotCollapseConflictingGameEditions()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var importer = new NormalizedSourceImportService(db);
+            const string firstJson = "{\"name\":\"Shared Rule One\",\"effect\":\"Shared first mechanical text.\"}";
+            const string secondJson = "{\"name\":\"Shared Rule Two\",\"effect\":\"Shared second mechanical text.\"}";
+            const string thirdJson = "{\"name\":\"Shared Rule Three\",\"effect\":\"Shared third mechanical text.\"}";
+
+            static NormalizedSourceRepresentation CrossEditionRepresentation(
+                string fileName,
+                string origin,
+                string publicationKey,
+                string displayName,
+                string gameEdition,
+                string firstJson,
+                string secondJson,
+                string thirdJson) =>
+                new(
+                    FiveEToolsSourceFormatAdapter.Format,
+                    Artifact(fileName, origin),
+                    [
+                        Record(publicationKey, "rule", "Shared Rule One", "shared-one", firstJson, "page:1"),
+                        Record(publicationKey, "rule", "Shared Rule Two", "shared-two", secondJson, "page:2"),
+                        Record(publicationKey, "rule", "Shared Rule Three", "shared-three", thirdJson, "page:3")
+                    ],
+                    [new NormalizedSourcePublication(
+                        publicationKey,
+                        displayName,
+                        Publisher: "Example Press",
+                        GameEdition: gameEdition)]);
+
+            var older = await importer.ImportAsync(Request(
+                $"content-overlap-3e-{Guid.NewGuid():N}",
+                CrossEditionRepresentation(
+                    "shared-3e.json",
+                    "shared-3e",
+                    "shared-3e",
+                    "Shared Rules 3e",
+                    "3e",
+                    firstJson,
+                    secondJson,
+                    thirdJson)));
+            var newer = await importer.ImportAsync(Request(
+                $"content-overlap-5e-{Guid.NewGuid():N}",
+                CrossEditionRepresentation(
+                    "shared-5e.json",
+                    "shared-5e",
+                    "shared-5e",
+                    "Shared Rules 5e",
+                    "5e",
+                    firstJson,
+                    secondJson,
+                    thirdJson)));
+
+            var olderBinding = await ReadCanonicalBindingAsync(
+                db,
+                older.Entities.Single(value => value.Name == "Shared Rule One").EntityId);
+            var newerBinding = await ReadCanonicalBindingAsync(
+                db,
+                newer.Entities.Single(value => value.Name == "Shared Rule One").EntityId);
+
+            Assert.NotNull(olderBinding);
+            Assert.NotNull(newerBinding);
+            Assert.NotEqual(olderBinding.Value.PublicationId, newerBinding.Value.PublicationId);
+            Assert.NotNull(olderBinding.Value.CanonicalEntityId);
+            Assert.Equal(olderBinding.Value.CanonicalEntityId, newerBinding.Value.CanonicalEntityId);
+        }
+    }
+
+    [Fact]
     public async Task FormatNeutralContentEvidenceCanAssociateASeparateRepresentation()
     {
         var db = await OpenDatabaseAsync();

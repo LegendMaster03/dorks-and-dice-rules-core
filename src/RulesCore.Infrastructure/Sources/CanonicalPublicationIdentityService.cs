@@ -119,7 +119,8 @@ public sealed class CanonicalPublicationIdentityService(RulesCoreDbContext dbCon
         var byContent = await FindPublicationByOccurrenceOverlapAsync(
             evidence.OccurrenceFingerprints,
             cancellationToken);
-        if (byContent is not null)
+        if (byContent is not null
+            && !HasMetadataConflict(byContent, evidence))
         {
             await AddAliasesAsync(byContent.Id, aliases, cancellationToken);
             return byContent;
@@ -466,11 +467,7 @@ public sealed class CanonicalPublicationIdentityService(RulesCoreDbContext dbCon
         CanonicalPublicationEvidence evidence,
         IReadOnlyList<KeyValuePair<string, string>> aliases)
     {
-        if (Conflicts(candidate.Publisher, evidence.Publisher)
-            || Conflicts(candidate.GameEdition, evidence.GameEdition)
-            || (candidate.PublicationDate.HasValue
-                && evidence.PublicationDate.HasValue
-                && candidate.PublicationDate.Value != evidence.PublicationDate.Value))
+        if (HasMetadataConflict(candidate, evidence))
         {
             return false;
         }
@@ -538,6 +535,15 @@ public sealed class CanonicalPublicationIdentityService(RulesCoreDbContext dbCon
             CanonicalSourceIdentity.NormalizeIdentityPart(value.Value),
             StringComparison.Ordinal));
     }
+
+    private static bool HasMetadataConflict(
+        CanonicalPublicationIdentityView candidate,
+        CanonicalPublicationEvidence evidence) =>
+        Conflicts(candidate.Publisher, evidence.Publisher)
+        || Conflicts(candidate.GameEdition, evidence.GameEdition)
+        || (candidate.PublicationDate.HasValue
+            && evidence.PublicationDate.HasValue
+            && candidate.PublicationDate.Value != evidence.PublicationDate.Value);
 
     private static bool Conflicts(string? existing, string? observed)
     {

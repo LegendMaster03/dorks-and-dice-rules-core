@@ -13,7 +13,7 @@ namespace RulesCore.Infrastructure.Sources;
 internal static class ExactCompetencyTranslationPolicy
 {
     public const string IdentityVersion = "rules-core-exact-competency-v1";
-    public const string LegacyCompetencyNormalizationVersion = "legacy-srd-competency-v1";
+    public const string LegacyCompetencyNormalizationVersion = "legacy-srd-competency-v2";
 
     private static readonly IReadOnlyDictionary<string, HashSet<string>> CanonicalTargets =
         new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase)
@@ -50,6 +50,7 @@ internal static class ExactCompetencyTranslationPolicy
         var targetType = record.EntityType;
         var targetName = record.Name;
         var result = record;
+        var reviewedConvertedIdentity = false;
         JsonObject? content = null;
         JsonObject? extension = null;
         var isPcGen = string.Equals(
@@ -80,6 +81,7 @@ internal static class ExactCompetencyTranslationPolicy
         {
             targetType = convertedType;
             targetName = convertedName;
+            reviewedConvertedIdentity = true;
         }
         else if (isLegacySrd && content is not null && extension is not null)
         {
@@ -98,10 +100,17 @@ internal static class ExactCompetencyTranslationPolicy
                         ? conversion.TargetType
                         : record.EntityType;
 
-                extension["competency"] = RulesCoreContentTranslation.BuildThreeXCompetencyMetadata(
+                var normalizedCompetency = RulesCoreContentTranslation.BuildThreeXCompetencyMetadata(
                     record.Name,
                     effectiveType,
                     edition!);
+                if (extension["threeX"] is JsonObject threeX
+                    && ReadString(threeX, "governingAbilityKey") is { } governingAbilityKey
+                    && !string.IsNullOrWhiteSpace(governingAbilityKey))
+                {
+                    normalizedCompetency["governingAbilityKey"] = governingAbilityKey.Trim();
+                }
+                extension["competency"] = normalizedCompetency;
 
                 if (conversion is not null)
                 {
@@ -112,11 +121,11 @@ internal static class ExactCompetencyTranslationPolicy
                         conversionContext["nativeName"] = record.Name;
                     }
 
-                    if (string.IsNullOrWhiteSpace(conversion.Scope)
-                        && IsCanonicalTarget(conversion.TargetType, conversion.TargetName))
+                    if (string.IsNullOrWhiteSpace(conversion.Scope))
                     {
                         targetType = conversion.TargetType;
                         targetName = conversion.TargetName;
+                        reviewedConvertedIdentity = true;
                     }
                 }
             }
@@ -128,7 +137,7 @@ internal static class ExactCompetencyTranslationPolicy
             };
         }
 
-        if (!IsCanonicalTarget(targetType, targetName))
+        if (!reviewedConvertedIdentity && !IsCanonicalTarget(targetType, targetName))
         {
             return result;
         }
@@ -229,8 +238,7 @@ internal static class ExactCompetencyTranslationPolicy
                 && string.Equals(
                     conversion.TargetName,
                     translatedRecord.Name,
-                    StringComparison.OrdinalIgnoreCase)
-                && IsCanonicalTarget(conversion.TargetType, conversion.TargetName);
+                    StringComparison.OrdinalIgnoreCase);
         }
         catch (JsonException)
         {
@@ -280,8 +288,7 @@ internal static class ExactCompetencyTranslationPolicy
             || !string.Equals(sourceType, "skill", StringComparison.OrdinalIgnoreCase)
             || string.IsNullOrWhiteSpace(convertedType)
             || string.IsNullOrWhiteSpace(convertedName)
-            || !string.IsNullOrWhiteSpace(scope)
-            || !IsCanonicalTarget(convertedType, convertedName))
+            || !string.IsNullOrWhiteSpace(scope))
         {
             return false;
         }

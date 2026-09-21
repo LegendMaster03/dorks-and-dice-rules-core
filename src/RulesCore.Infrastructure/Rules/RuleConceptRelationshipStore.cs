@@ -20,11 +20,31 @@ internal static class RuleConceptRelationshipStore
     private const string SubclassParentBackfillKey = "subclass-parent-v2";
     private const string SystemActorUserId = "rules-core-system";
 
-    public static async Task EnsureSchemaAsync(
+    internal static async Task InitializeSchemaAsync(
         RulesCoreDbContext dbContext,
         CancellationToken cancellationToken = default)
     {
         await EnsureSchemaOnlyAsync(dbContext, cancellationToken);
+        if (await HasCompletedBackfillAsync(dbContext, cancellationToken))
+        {
+            return;
+        }
+
+        await SynchronizeSubclassParentsCoreAsync(
+            dbContext,
+            SystemActorUserId,
+            cancellationToken);
+        await MarkBackfillCompletedAsync(dbContext, cancellationToken);
+    }
+
+    public static async Task EnsureSchemaAsync(
+        RulesCoreDbContext dbContext,
+        CancellationToken cancellationToken = default)
+    {
+        // Schema DDL is owned by RulesCoreSchemaInitializer so concurrent request
+        // paths can not race on CREATE/ALTER statements. Keep the legacy runtime
+        // backfill contract, however: a database missing the backfill marker must
+        // reconstruct subclass-parent relationships on the first catalog access.
         if (await HasCompletedBackfillAsync(dbContext, cancellationToken))
         {
             return;
@@ -42,7 +62,6 @@ internal static class RuleConceptRelationshipStore
         string actorUserId,
         CancellationToken cancellationToken = default)
     {
-        await EnsureSchemaOnlyAsync(dbContext, cancellationToken);
         await SynchronizeSubclassParentsCoreAsync(dbContext, actorUserId, cancellationToken);
         await MarkBackfillCompletedAsync(dbContext, cancellationToken);
     }

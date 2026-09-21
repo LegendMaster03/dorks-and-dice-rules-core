@@ -24,7 +24,8 @@ public sealed class PcGenSrdPublicationReconciliationIntegrationTests
                   "source": "SRD35",
                   "uniqueId": "skill-balance",
                   "documentUri": "https://example.invalid/srd35/skills/balance",
-                  "body": "Key Ability: Dex"
+                  "originalHeading": "Balance <small>(Dex; Armor Check Penalty)</small>",
+                  "body": "Reviewed Balance rules."
                 }
               ]
             }
@@ -41,6 +42,16 @@ public sealed class PcGenSrdPublicationReconciliationIntegrationTests
         Assert.NotNull(publication.ExternalIdentifiers);
         Assert.Equal("SRD35", publication.ExternalIdentifiers!["5etools-source-code"]);
         Assert.Equal("SRD35", publication.ExternalIdentifiers[RulesCoreSourceCodeScheme]);
+
+        var record = Assert.Single(representation.Records);
+        using var translated = System.Text.Json.JsonDocument.Parse(record.ContentJson!);
+        Assert.Equal(
+            "dexterity",
+            translated.RootElement
+                .GetProperty("_rulesCore")
+                .GetProperty("threeX")
+                .GetProperty("governingAbilityKey")
+                .GetString());
     }
 
     [Fact]
