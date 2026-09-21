@@ -167,6 +167,9 @@ internal static class LegacySrdMechanicalTranslator
     private static readonly Regex KeyAbility = new(
         @"\bKey\s+Ability\s*:?\s*(?<ability>Str(?:ength)?|Dex(?:terity)?|Con(?:stitution)?|Int(?:elligence)?|Wis(?:dom)?|Cha(?:risma)?)\b",
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+    private static readonly Regex SkillHeadingAbility = new(
+        @"\((?<ability>Str(?:ength)?|Dex(?:terity)?|Con(?:stitution)?|Int(?:elligence)?|Wis(?:dom)?|Cha(?:risma)?|None)(?:\s*;[^)]*)?\)\s*$",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
     private static readonly IReadOnlyDictionary<string, string> SizeCodes =
         new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
@@ -221,7 +224,7 @@ internal static class LegacySrdMechanicalTranslator
         else PreserveFields(threeX, fields);
 
         if (string.Equals(entityType, "skill", StringComparison.OrdinalIgnoreCase)
-            && TryReadKeyAbility(body, out var governingAbilityKey))
+            && TryReadSkillGoverningAbility(document.RootElement, body, out var governingAbilityKey))
         {
             threeX["governingAbilityKey"] = governingAbilityKey;
         }
@@ -231,21 +234,37 @@ internal static class LegacySrdMechanicalTranslator
         return content.ToJsonString(new JsonSerializerOptions { WriteIndented = false });
     }
 
-    private static bool TryReadKeyAbility(string body, out string governingAbilityKey)
+    private static bool TryReadSkillGoverningAbility(
+        JsonElement source,
+        string body,
+        out string governingAbilityKey)
     {
         governingAbilityKey = string.Empty;
+
+        var originalHeading = ReadString(source, "originalHeading");
+        if (!string.IsNullOrWhiteSpace(originalHeading))
+        {
+            var headingMatch = SkillHeadingAbility.Match(originalHeading);
+            if (headingMatch.Success
+                && TryNormalizeAbilityKey(headingMatch.Groups["ability"].Value, out governingAbilityKey))
+            {
+                return true;
+            }
+        }
+
         if (string.IsNullOrWhiteSpace(body))
         {
             return false;
         }
 
-        var match = KeyAbility.Match(body);
-        if (!match.Success)
-        {
-            return false;
-        }
+        var bodyMatch = KeyAbility.Match(body);
+        return bodyMatch.Success
+            && TryNormalizeAbilityKey(bodyMatch.Groups["ability"].Value, out governingAbilityKey);
+    }
 
-        governingAbilityKey = match.Groups["ability"].Value.Trim().ToLowerInvariant() switch
+    private static bool TryNormalizeAbilityKey(string value, out string abilityKey)
+    {
+        abilityKey = value.Trim().ToLowerInvariant() switch
         {
             "str" or "strength" => "strength",
             "dex" or "dexterity" => "dexterity",
@@ -255,7 +274,7 @@ internal static class LegacySrdMechanicalTranslator
             "cha" or "charisma" => "charisma",
             _ => string.Empty
         };
-        return governingAbilityKey.Length > 0;
+        return abilityKey.Length > 0;
     }
 
     private static void TranslateMonster(

@@ -24,7 +24,8 @@ public sealed class PcGenSrdPublicationReconciliationIntegrationTests
                   "source": "SRD35",
                   "uniqueId": "skill-balance",
                   "documentUri": "https://example.invalid/srd35/skills/balance",
-                  "body": "Key Ability: Dex"
+                  "originalHeading": "Balance (Dex; Armor Check Penalty)",
+                  "body": "Reviewed Balance rules."
                 }
               ]
             }
