@@ -74,6 +74,98 @@ public sealed class MechanicalContentIntegrationTests
     }
 
     [Fact]
+    public async Task PcGenClassRecordsNormalizeThreeXCharacterProgressionWithoutDiscardingSourceEvidence()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString)) return;
+
+        var options = new DbContextOptionsBuilder<RulesCoreDbContext>()
+            .UseNpgsql(connectionString)
+            .Options;
+        await using var db = new RulesCoreDbContext(options);
+        await new RulesCoreSchemaInitializer(db).InitializeAsync();
+
+        var token = Guid.NewGuid().ToString("N")[..12];
+        var packageKey = $"mechanical-class-{token}";
+        var campaign = new SourceRepresentationArtifact(
+            "example.pcc",
+            Encoding.UTF8.GetBytes("""
+                CAMPAIGN:Class Mechanics
+                GAMEMODE:35e
+                SOURCELONG:Class Mechanics
+                SOURCESHORT:CLS
+                CLASS:example_classes.lst
+                """),
+            $"integration:class:{token}#data/35e/example/example.pcc");
+        var classes = new SourceRepresentationArtifact(
+            "example_classes.lst",
+            Encoding.UTF8.GetBytes(string.Join('\n',
+            [
+                "CLASS:Example Class\tHD:8\tTYPE:Base.PC\tMAXLEVEL:20\tBONUS:COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")*3/4\tBONUS:SAVE|BASE.Fortitude,BASE.Will|classlevel(\"APPLIEDAS=NONEPIC\")/3\tBONUS:SAVE|BASE.Reflex|classlevel(\"APPLIEDAS=NONEPIC\")/2+2",
+                "CLASS:Example Class\tSTARTSKILLPTS:4\tCSKILL:Climb|Jump|TYPE.Craft\tSPELLSTAT:INT",
+                "1\tABILITY:Special Ability|AUTOMATIC|First Feature",
+                "2\tSAB:Second Feature"
+            ])),
+            $"integration:class:{token}#data/35e/example/example_classes.lst");
+        var representation = new PcGenSourceFormatAdapter()
+            .TryReadMany([campaign, classes])
+            .Single(value => value.Artifact.FileName == "example_classes.lst");
+        var imported = await new NormalizedSourceImportService(db).ImportAsync(
+            new ImportNormalizedSourceRequest(
+                packageKey,
+                $"Class mechanics {token}",
+                "integration-test",
+                "test-only",
+                true,
+                representation));
+
+        try
+        {
+            var entity = Assert.Single(imported.Entities);
+            Assert.Equal("class", entity.EntityType);
+            var revision = await db.SourceEntityRevisions
+                .AsNoTracking()
+                .SingleAsync(value => value.SourceEntityId == entity.EntityId);
+            using var content = JsonDocument.Parse(revision.ContentJson!);
+            var root = content.RootElement;
+            Assert.Equal(8, root.GetProperty("hd").GetProperty("faces").GetInt32());
+            var character = root.GetProperty("_rulesCore").GetProperty("character");
+            Assert.Equal(4, character.GetProperty("skillPointsPerLevel").GetInt32());
+            Assert.Equal(20, character.GetProperty("maximumLevel").GetInt32());
+            Assert.Equal("intelligence", character.GetProperty("spellcastingAbility").GetString());
+            Assert.Equal("dnd-3x", character.GetProperty("spellcastingProfile").GetString());
+            Assert.Equal("three-quarters", character.GetProperty("baseAttackProgression").GetString());
+            var saves = character.GetProperty("saveProgressions");
+            Assert.Equal("poor", saves.GetProperty("fortitude").GetString());
+            Assert.Equal("good", saves.GetProperty("reflex").GetString());
+            Assert.Equal("poor", saves.GetProperty("will").GetString());
+            Assert.Contains(
+                character.GetProperty("classSkills").EnumerateArray(),
+                value => value.GetString() == "TYPE.Craft");
+            var features = character.GetProperty("advancementFeatures").EnumerateArray().ToArray();
+            Assert.Contains(features, value =>
+                value.GetProperty("level").GetInt32() == 1
+                && value.GetProperty("name").GetString() == "First Feature");
+            Assert.Contains(features, value =>
+                value.GetProperty("level").GetInt32() == 2
+                && value.GetProperty("name").GetString() == "Second Feature");
+
+            var unmapped = root.GetProperty("_rulesCore")
+                .GetProperty("pcgen")
+                .GetProperty("unmappedSegments")
+                .EnumerateArray()
+                .ToArray();
+            Assert.Contains(unmapped, value =>
+                value.GetProperty("tag").GetString() == "BONUS"
+                && value.GetProperty("value").GetString()!.StartsWith("COMBAT|BASEAB|", StringComparison.Ordinal));
+        }
+        finally
+        {
+            await DeletePackageAsync(db, packageKey);
+        }
+    }
+
+    [Fact]
     public async Task FiveEToolsAndRepresentativePcGenRecordsExposeFaithfulFamilyShapes()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");

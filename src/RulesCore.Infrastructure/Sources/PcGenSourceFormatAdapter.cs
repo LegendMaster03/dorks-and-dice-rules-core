@@ -14,7 +14,7 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
         {
             ["ABILITY"] = "ability",
             ["ARMORPROF"] = "armor-proficiency",
-            ["CLASS"] = null,
+            ["CLASS"] = "class",
             ["COMPANIONMOD"] = null,
             ["DEITY"] = "deity",
             ["DOMAIN"] = "domain",
@@ -259,6 +259,15 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
         string? entityType,
         PublicationContext? publication)
     {
+        if (string.Equals(entityType, "class", StringComparison.OrdinalIgnoreCase))
+        {
+            return PcGenClassSourceParser.Parse(
+                artifact.Path,
+                artifact.Text,
+                publication?.SourceCode,
+                publication?.LocalKey).ToList();
+        }
+
         var records = new List<NormalizedSourceRecord>();
         var duplicateOrdinals = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
         var nativeKeyOwners = new Dictionary<string, (int RecordIndex, string IdentityName)>(StringComparer.Ordinal);
@@ -525,6 +534,7 @@ public sealed class PcGenSourceFormatAdapter : ISourceFormatBatchAdapter
     {
         var name = Path.GetFileNameWithoutExtension(path).ToLowerInvariant();
         if (name.Contains("spell", StringComparison.Ordinal)) return "spell";
+        if (name.Contains("class", StringComparison.Ordinal)) return "class";
         if (name.Contains("feat", StringComparison.Ordinal)) return "feat";
         if (name.Contains("skill", StringComparison.Ordinal)) return "skill";
         if (name.Contains("race", StringComparison.Ordinal)) return "race";

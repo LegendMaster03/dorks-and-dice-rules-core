@@ -108,7 +108,8 @@ internal static class RulesCoreContentTranslation
         using var native = JsonDocument.Parse(rawJson);
         if (native.RootElement.ValueKind != JsonValueKind.Object
             || !native.RootElement.TryGetProperty("kind", out var kind)
-            || !string.Equals(kind.GetString(), "record", StringComparison.OrdinalIgnoreCase)
+            || !(string.Equals(kind.GetString(), "record", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(kind.GetString(), "class-record", StringComparison.OrdinalIgnoreCase))
             || !native.RootElement.TryGetProperty("segments", out var segmentArray)
             || segmentArray.ValueKind != JsonValueKind.Array)
         {
@@ -141,6 +142,16 @@ internal static class RulesCoreContentTranslation
             && (All(segments, "MONSTERCLASS").Any() || IsMonsterSourcePath(path)))
         {
             return "monster";
+        }
+
+        if (string.Equals(entityType, "class", StringComparison.OrdinalIgnoreCase)
+            && All(segments, "TYPE")
+                .SelectMany(value => value.Value.Split(
+                    '.',
+                    StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                .Any(value => string.Equals(value, "Prestige", StringComparison.OrdinalIgnoreCase)))
+        {
+            return "prestigeClass";
         }
 
         return entityType;
@@ -184,6 +195,7 @@ internal static class RulesCoreContentTranslation
         MapPage(content, segments, mapped);
         MapDescriptions(content, segments, mapped);
 
+        JsonObject? characterExtension = null;
         switch (record.EntityType.ToLowerInvariant())
         {
             case "spell":
@@ -204,6 +216,10 @@ internal static class RulesCoreContentTranslation
             case "creature":
                 MapMonster(content, segments, mapped);
                 break;
+            case "class":
+            case "prestigeclass":
+                characterExtension = MapClass(content, segments, mapped);
+                break;
         }
 
         AddRulesCoreExtensions(
@@ -214,7 +230,8 @@ internal static class RulesCoreContentTranslation
             record.Name,
             competencyConversion,
             segments,
-            mapped);
+            mapped,
+            characterExtension);
 
         return content.ToJsonString(new JsonSerializerOptions { WriteIndented = false });
     }
@@ -232,8 +249,14 @@ internal static class RulesCoreContentTranslation
             : TryReadInt32(value, "index", out explicitIndex)
                 ? explicitIndex
                 : ordinal;
+        int? level = TryReadInt32(value, "Level", out var explicitLevel)
+            ? explicitLevel
+            : TryReadInt32(value, "level", out explicitLevel)
+                ? explicitLevel
+                : null;
         return new PcGenSegment(
             index,
+            level,
             tag.Trim(),
             (ReadString(value, "Value") ?? ReadString(value, "value") ?? string.Empty).Trim(),
             (ReadString(value, "Raw") ?? ReadString(value, "raw") ?? string.Empty).Trim());
@@ -297,6 +320,300 @@ internal static class RulesCoreContentTranslation
             }
         }
         content["entries"] = entries;
+    }
+
+
+    private static JsonObject? MapClass(
+        JsonObject content,
+        IReadOnlyList<PcGenSegment> segments,
+        ISet<int> mapped)
+    {
+        var character = new JsonObject();
+
+        var hitDie = Last(segments, "HD");
+        if (hitDie is not null
+            && int.TryParse(hitDie.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var faces)
+            && faces > 0)
+        {
+            content["hd"] = new JsonObject
+            {
+                ["number"] = 1,
+                ["faces"] = faces
+            };
+            mapped.Add(hitDie.Index);
+        }
+
+        var skillPoints = Last(segments, "STARTSKILLPTS");
+        if (skillPoints is not null
+            && int.TryParse(skillPoints.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var points)
+            && points >= 0)
+        {
+            character["skillPointsPerLevel"] = points;
+            mapped.Add(skillPoints.Index);
+        }
+
+        var maxLevel = Last(segments, "MAXLEVEL");
+        if (maxLevel is not null
+            && int.TryParse(maxLevel.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var maximum)
+            && maximum > 0)
+        {
+            character["maximumLevel"] = maximum;
+            mapped.Add(maxLevel.Index);
+        }
+
+        var classSkills = All(segments, "CSKILL")
+            .SelectMany(segment => segment.Value.Split(
+                '|',
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        if (classSkills.Length > 0)
+        {
+            character["classSkills"] = new JsonArray(
+                classSkills.Select(value => JsonValue.Create(value)).ToArray());
+            foreach (var segment in All(segments, "CSKILL"))
+            {
+                mapped.Add(segment.Index);
+            }
+        }
+
+        var spellStat = Last(segments, "SPELLSTAT");
+        if (spellStat is not null && IsAbility(spellStat.Value))
+        {
+            character["spellcastingAbility"] = NormalizeAbilityKey(spellStat.Value);
+            character["spellcastingProfile"] = "dnd-3x";
+            mapped.Add(spellStat.Index);
+        }
+
+        foreach (var bonus in All(segments, "BONUS"))
+        {
+            var parts = bonus.Value.Split(
+                '|',
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            if (parts.Length < 3)
+            {
+                continue;
+            }
+
+            if (string.Equals(parts[0], "COMBAT", StringComparison.OrdinalIgnoreCase)
+                && string.Equals(parts[1], "BASEAB", StringComparison.OrdinalIgnoreCase)
+                && TryNormalizeBaseAttackProgression(parts[2], out var baseAttackProgression))
+            {
+                character["baseAttackProgression"] = baseAttackProgression;
+                continue;
+            }
+
+            if (!string.Equals(parts[0], "SAVE", StringComparison.OrdinalIgnoreCase)
+                || !TryNormalizeSaveProgression(parts[2], out var saveProgression))
+            {
+                continue;
+            }
+
+            var saves = character["saveProgressions"] as JsonObject ?? new JsonObject();
+            foreach (var target in parts[1].Split(
+                         ',',
+                         StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            {
+                var normalized = target.Trim();
+                if (normalized.StartsWith("BASE.", StringComparison.OrdinalIgnoreCase))
+                {
+                    normalized = normalized["BASE.".Length..];
+                }
+                normalized = normalized.ToLowerInvariant();
+                if (normalized is "fortitude" or "reflex" or "will")
+                {
+                    saves[normalized] = saveProgression;
+                }
+            }
+            if (saves.Count > 0)
+            {
+                character["saveProgressions"] = saves;
+            }
+        }
+
+        var features = new JsonArray();
+        foreach (var segment in segments.Where(value => value.Level.HasValue))
+        {
+            if (string.Equals(segment.Tag, "ABILITY", StringComparison.OrdinalIgnoreCase))
+            {
+                var parts = segment.Value.Split(
+                    '|',
+                    StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                if (parts.Length >= 3
+                    && string.Equals(parts[1], "AUTOMATIC", StringComparison.OrdinalIgnoreCase))
+                {
+                    foreach (var featureName in parts.Skip(2).TakeWhile(value =>
+                                 !value.StartsWith("PRE", StringComparison.OrdinalIgnoreCase)
+                                 && !value.StartsWith("TYPE=", StringComparison.OrdinalIgnoreCase)))
+                    {
+                        features.Add(new JsonObject
+                        {
+                            ["level"] = segment.Level,
+                            ["name"] = featureName,
+                            ["kind"] = parts[0]
+                        });
+                    }
+                    mapped.Add(segment.Index);
+                }
+            }
+            else if (string.Equals(segment.Tag, "SAB", StringComparison.OrdinalIgnoreCase))
+            {
+                var name = segment.Value.Split('|', 2)[0].Trim();
+                if (!string.IsNullOrWhiteSpace(name))
+                {
+                    features.Add(new JsonObject
+                    {
+                        ["level"] = segment.Level,
+                        ["name"] = name,
+                        ["kind"] = "special-ability"
+                    });
+                    if (!segment.Value.Contains('|'))
+                    {
+                        mapped.Add(segment.Index);
+                    }
+                }
+            }
+        }
+        if (features.Count > 0)
+        {
+            character["advancementFeatures"] = features;
+        }
+
+        var prerequisites = BuildClassPrerequisites(segments, mapped);
+        if (prerequisites.Count > 0)
+        {
+            character["prerequisites"] = prerequisites;
+        }
+
+        return character.Count == 0 ? null : character;
+    }
+
+    private static JsonArray BuildClassPrerequisites(
+        IReadOnlyList<PcGenSegment> segments,
+        ISet<int> mapped)
+    {
+        var result = new JsonArray();
+        foreach (var segment in segments.Where(value => value.Level is null))
+        {
+            var kind = segment.Tag.ToUpperInvariant() switch
+            {
+                "PRESTAT" => "ability-score",
+                "PRESKILL" => "skill-ranks",
+                "PRECLASS" => "class-level",
+                _ => null
+            };
+            if (kind is null)
+            {
+                continue;
+            }
+
+            var parts = segment.Value.Split(
+                ',',
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            if (parts.Length < 2
+                || !int.TryParse(parts[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out var matchCount)
+                || matchCount < 1)
+            {
+                continue;
+            }
+
+            var requirements = new JsonArray();
+            foreach (var expression in parts.Skip(1))
+            {
+                var equals = expression.LastIndexOf('=');
+                if (equals <= 0
+                    || equals + 1 >= expression.Length
+                    || !int.TryParse(
+                        expression[(equals + 1)..].Trim().TrimStart('+'),
+                        NumberStyles.Integer,
+                        CultureInfo.InvariantCulture,
+                        out var threshold))
+                {
+                    continue;
+                }
+
+                var target = expression[..equals].Trim();
+                var requirement = new JsonObject
+                {
+                    ["operator"] = ">=",
+                    ["value"] = threshold
+                };
+                if (kind == "ability-score")
+                {
+                    requirement["targetKey"] = $"ability.{NormalizeAbilityKey(target)}.score";
+                }
+                else
+                {
+                    requirement["targetName"] = target;
+                }
+                requirements.Add(requirement);
+            }
+
+            if (requirements.Count == 0)
+            {
+                continue;
+            }
+
+            result.Add(new JsonObject
+            {
+                ["kind"] = kind,
+                ["matchCount"] = matchCount,
+                ["requirements"] = requirements
+            });
+            mapped.Add(segment.Index);
+        }
+        return result;
+    }
+
+    private static bool TryNormalizeBaseAttackProgression(string formula, out string progression)
+    {
+        var normalized = NormalizeClassLevelFormula(formula);
+        progression = normalized switch
+        {
+            "l" => "full",
+            "l*3/4" => "three-quarters",
+            "l/2" => "half",
+            _ => string.Empty
+        };
+        return progression.Length > 0;
+    }
+
+    private static bool TryNormalizeSaveProgression(string formula, out string progression)
+    {
+        var normalized = NormalizeClassLevelFormula(formula);
+        progression = normalized switch
+        {
+            "l/2+2" => "good",
+            "l/3" => "poor",
+            _ => string.Empty
+        };
+        return progression.Length > 0;
+    }
+
+    private static string NormalizeClassLevelFormula(string formula)
+    {
+        var normalized = formula
+            .Replace(" ", string.Empty, StringComparison.Ordinal)
+            .ToLowerInvariant();
+
+        if (normalized.StartsWith("classlevel(", StringComparison.Ordinal))
+        {
+            var close = normalized.IndexOf(')');
+            if (close >= 0)
+            {
+                normalized = "l" + normalized[(close + 1)..];
+            }
+        }
+        else if (normalized.StartsWith("classlevel", StringComparison.Ordinal))
+        {
+            normalized = "l" + normalized["classlevel".Length..];
+        }
+        else if (normalized.StartsWith("cl", StringComparison.Ordinal))
+        {
+            normalized = "l" + normalized[2..];
+        }
+
+        return normalized;
     }
 
     private static void MapSpell(
@@ -609,7 +926,8 @@ internal static class RulesCoreContentTranslation
         string nativeName,
         PcGenCompetencyConversion? competencyConversion,
         IReadOnlyList<PcGenSegment> segments,
-        ISet<int> mapped)
+        ISet<int> mapped,
+        JsonObject? characterExtension)
     {
         var unmapped = segments
             .Where(value => !mapped.Contains(value.Index))
@@ -639,6 +957,10 @@ internal static class RulesCoreContentTranslation
         {
             ["context"] = context
         };
+        if (characterExtension is not null)
+        {
+            extension["character"] = characterExtension;
+        }
         if (competencyConversion is not null)
         {
             extension["competencyConversion"] = BuildCompetencyConversionMetadata(
@@ -955,5 +1277,5 @@ internal static class RulesCoreContentTranslation
 
     private sealed record PcGenNativeRecord(string Path, IReadOnlyList<PcGenSegment> Segments);
 
-    private sealed record PcGenSegment(int Index, string Tag, string Value, string Raw);
+    private sealed record PcGenSegment(int Index, int? Level, string Tag, string Value, string Raw);
 }
