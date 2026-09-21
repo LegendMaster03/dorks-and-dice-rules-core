@@ -135,7 +135,7 @@ Resolved skill and tool concepts carry normalized competency metadata for Charac
 
 - ordinary skills, specialized skills, and tools;
 - specialized skill family and specialty, such as `Knowledge (the planes)`;
-- governing ability when the effective source provides one;
+- governing ability when the effective source provides one, with a unanimous accessible-profile ability used as presentation metadata when the selected representation omits it;
 - whether the competency supports ranks;
 - whether class-skill state is meaningful;
 - whether training state is meaningful;
