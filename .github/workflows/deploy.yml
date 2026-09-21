@@ -44,11 +44,10 @@ jobs:
             postgres:18
 
           # A fresh official PostgreSQL container briefly runs a temporary server during
-          # initialization. Wait past that handoff, then require several consecutive SQL
-          # queries to succeed against the final server before launching Rules Core.
-          sleep 10
+          # initialization. Probe immediately, but require several consecutive SQL queries
+          # to succeed so a transient initialization server can not satisfy readiness.
           consecutive=0
-          for i in {1..30}; do
+          for i in {1..45}; do
             result=$(docker exec dorks-and-dice-rules-core-test-postgres \
               psql -v ON_ERROR_STOP=1 -U rules_core_test -d rules_core_test -tAc 'SELECT 1' \
               2>/dev/null || true)
