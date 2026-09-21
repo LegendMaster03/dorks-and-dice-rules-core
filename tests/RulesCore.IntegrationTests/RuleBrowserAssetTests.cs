@@ -24,6 +24,18 @@ public sealed class RuleBrowserAssetTests
     }
 
     [Fact]
+    public void RulesLawyerWorkspaceUsesAddressableHostedRoute()
+    {
+        var content = ReadWebAsset("workspace-routing.js");
+
+        Assert.Contains("/adjudication/rules-lawyer", content, StringComparison.Ordinal);
+        Assert.Contains("viewNavigation.global", content, StringComparison.Ordinal);
+        Assert.Contains("toolBasePath", content, StringComparison.Ordinal);
+        Assert.Contains("popstate", content, StringComparison.Ordinal);
+        Assert.Contains("canEditGlobal", content, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void MonsterRendererIsRegisteredAsSpecializedRuleRenderer()
     {
         var content = ReadWebAsset("rule-renderers.js");

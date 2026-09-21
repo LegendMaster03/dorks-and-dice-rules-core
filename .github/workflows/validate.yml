@@ -26,6 +26,7 @@ jobs:
         run: |
           for file in \
             src/RulesCore.Web/wwwroot/app.js \
+            src/RulesCore.Web/wwwroot/workspace-routing.js \
             src/RulesCore.Web/wwwroot/api.js \
             src/RulesCore.Web/wwwroot/ui.js \
             src/RulesCore.Web/wwwroot/ux-shell.js \
@@ -327,6 +328,7 @@ jobs:
           NODE
 
           node tools/validate-render-lifecycle.mjs
+          node tools/validate-workspace-routing.mjs
 
       - name: Restore
         run: dotnet restore dorks-and-dice-rules-core.slnx

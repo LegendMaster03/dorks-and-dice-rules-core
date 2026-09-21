@@ -18,6 +18,7 @@ import { installSourceNormalization } from "./source-normalization.js";
 import { installSourceRevisionReview } from "./source-revision-review.js";
 import { installSourceVersioning } from "./source-versioning.js";
 import { installRulesCoreUx } from "./ux-shell.js";
+import { installWorkspaceRouting } from "./workspace-routing.js";
 import { alertNode, clear, describeError, element } from "./ui.js";
 
 const root = document.getElementById("tool-root");
@@ -58,6 +59,7 @@ try {
         installSourceAdd(app);
         installSourceRemoval(app);
     }
+    installWorkspaceRouting(app);
     installRulesCoreUx(app);
     await app.render();
 } catch (error) {
