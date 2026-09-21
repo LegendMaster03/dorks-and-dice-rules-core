@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using RulesCore.Application.Hosting;
 using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
+using RulesCore.Domain.Rules;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Rules;
 using RulesCore.Infrastructure.Sources;
@@ -1384,6 +1385,292 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Contains(
                 ineligible.Features,
                 value => value.FeatureKey == $"feature.{conceptKey}");
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
+    [Fact]
+    public async Task CharacterProjectionResolvesRepresentativeFiveXClassMechanics()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-5x-{token}";
+        var conceptKey = $"class.example-mage-{token}";
+        var actor = $"character-5x-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"FIVE{token}";
+            var raw = JsonSerializer.Serialize(new
+            {
+                name = "Example Mage",
+                source = sourceCode,
+                hd = new { number = 1, faces = 6 },
+                proficiency = new[] { "int", "wis" },
+                spellcastingAbility = "int",
+                classFeatures = new object[]
+                {
+                    new { name = "Arcane Study", entries = new[] { "Representative feature." } }
+                }
+            });
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Character 5.x Fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"class-{token}.json",
+                            Encoding.UTF8.GetBytes(raw),
+                            $"integration:character-5x:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "class",
+                                "Example Mage",
+                                sourceCode,
+                                $"class|Example Mage|{sourceCode}",
+                                raw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Character 5.x Fixture {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2014, 8, 19))
+                        ])));
+            packageId = imported.PackageId;
+            var source = Assert.Single(imported.Entities);
+
+            var concept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(conceptKey, source.EntityType, source.Name),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                concept.Value.Id,
+                new BindRuleConceptSourceRequest(source.EntityId),
+                actor);
+            var revisionId = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == source.EntityId)
+                .Select(value => value.Id)
+                .SingleAsync();
+            await globalRules.SetDecisionAsync(
+                concept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionId,
+                    "Representative 5.x Character projection fixture."),
+                actor);
+            await globalRules.PublishAsync(actor);
+
+            var result = await projection.ResolveGlobalAsync(
+                new CharacterRulesProjectionRequest(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 10,
+                        ["dexterity"] = 14,
+                        ["constitution"] = 12,
+                        ["intelligence"] = 18,
+                        ["wisdom"] = 12,
+                        ["charisma"] = 8
+                    },
+                    Advancements:
+                    [
+                        new CharacterAdvancementFactInput(conceptKey, 5)
+                    ]),
+                userId: null);
+
+            Assert.Equal(3, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "proficiency.standard").NumericValue);
+            Assert.Equal(2, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "combat.initiative").NumericValue);
+            Assert.Equal(7, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "save.intelligence").NumericValue);
+            Assert.Equal(4, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "save.wisdom").NumericValue);
+            Assert.Equal(2, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "save.dexterity").NumericValue);
+            Assert.Equal(15, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == $"spellcasting.{conceptKey}.save-dc").NumericValue);
+            Assert.Equal(7, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == $"spellcasting.{conceptKey}.attack").NumericValue);
+
+            var hitDice = Assert.Single(
+                result.Resources,
+                value => value.ResourceKey == $"resource.hit-die.{conceptKey}");
+            Assert.Equal(5, hitDice.MaximumValue);
+            Assert.Equal(CharacterResolutionStates.RollRequired, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "health.maximum-hp").State);
+            Assert.Contains(
+                result.Capabilities,
+                value => value.CapabilityKey == "spellcasting");
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
+    [Fact]
+    public async Task CharacterProjectionUsesEffectiveCampaignOverrideDocument()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-campaign-{token}";
+        var conceptKey = $"race.example-speed-{token}";
+        var actor = $"character-campaign-{token}";
+        var campaignId = Guid.NewGuid();
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var campaignRules = scope.ServiceProvider.GetRequiredService<ICampaignRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"OVR{token}";
+            var raw = JsonSerializer.Serialize(new
+            {
+                name = "Example Species",
+                source = sourceCode,
+                size = new[] { "M" },
+                speed = 30
+            });
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Campaign Character Fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"race-{token}.json",
+                            Encoding.UTF8.GetBytes(raw),
+                            $"integration:character-campaign:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "race",
+                                "Example Species",
+                                sourceCode,
+                                $"race|Example Species|{sourceCode}",
+                                raw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Campaign Character Fixture {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2014, 8, 19))
+                        ])));
+            packageId = imported.PackageId;
+            var source = Assert.Single(imported.Entities);
+
+            var concept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(conceptKey, source.EntityType, source.Name),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                concept.Value.Id,
+                new BindRuleConceptSourceRequest(source.EntityId),
+                actor);
+            var revisionId = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == source.EntityId)
+                .Select(value => value.Id)
+                .SingleAsync();
+            await globalRules.SetDecisionAsync(
+                concept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionId,
+                    "Global movement fixture."),
+                actor);
+            var globalPublication = await globalRules.PublishAsync(actor);
+
+            await campaignRules.SelectBaselineAsync(
+                campaignId,
+                new SelectCampaignRulesetBaselineRequest(globalPublication.Id),
+                actor);
+            using var patchDocument = JsonDocument.Parse("""{"speed":40}""");
+            await campaignRules.SetDecisionAsync(
+                campaignId,
+                concept.Value.Id,
+                new SetCampaignRuleDecisionRequest(
+                    CampaignRuleDecisionKinds.JsonMergePatch,
+                    SourceEntityRevisionId: null,
+                    Note: "Campaign movement override.",
+                    MergePatch: patchDocument.RootElement.Clone()),
+                actor);
+            await campaignRules.PublishAsync(campaignId, actor);
+
+            var request = new CharacterRulesProjectionRequest(
+                BaseAbilityScores: new Dictionary<string, int>
+                {
+                    ["strength"] = 10,
+                    ["dexterity"] = 10,
+                    ["constitution"] = 10,
+                    ["intelligence"] = 10,
+                    ["wisdom"] = 10,
+                    ["charisma"] = 10
+                },
+                SelectedConcepts: [new CharacterSelectedConceptInput(conceptKey)]);
+
+            var global = await projection.ResolveGlobalAsync(request, userId: null);
+            var globalWalk = Assert.Single(
+                global.Movement,
+                value => value.MovementKey == "movement.walk");
+            Assert.Equal(30, globalWalk.Value);
+
+            var campaign = await projection.ResolveCampaignAsync(
+                campaignId,
+                request,
+                userId: "campaign-reader");
+            var campaignWalk = Assert.Single(
+                campaign.Movement,
+                value => value.MovementKey == "movement.walk");
+            Assert.Equal(40, campaignWalk.Value);
+            Assert.Equal("campaign", campaign.Scope);
+            Assert.Equal(campaignId, campaign.CampaignId);
         }
         finally
         {
