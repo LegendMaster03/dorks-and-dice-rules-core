@@ -178,6 +178,26 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             var sourceUri = sourceUriByRevision.GetValueOrDefault(rule.SourceEntityRevisionId);
             var provider = providerByPackageKey.GetValueOrDefault(rule.PackageKey)
                 ?? rule.PackageDisplayName;
+            var effectiveRuleAttributions = BuildRuleAttributions(
+                rule,
+                provider,
+                sourceUri,
+                publicationMetadata);
+            var canonicalAttributions = competency.Profiles
+                .SelectMany(value => value.SourceAttributions ?? [])
+                .Concat(effectiveRuleAttributions)
+                .Distinct()
+                .OrderBy(value => value.WorkDisplayName, StringComparer.Ordinal)
+                .ThenBy(value => value.PackageKey, StringComparer.Ordinal)
+                .ThenBy(value => value.SourceRevisionNumber)
+                .ToArray();
+            var mechanicalProfileAttributions = competency.DefaultProfileSourceEntityRevisionId is Guid defaultProfileRevisionId
+                ? competency.Profiles
+                    .Where(value => value.SourceEntityRevisionId == defaultProfileRevisionId)
+                    .SelectMany(value => value.SourceAttributions ?? [])
+                    .Distinct()
+                    .ToArray()
+                : [];
             mechanics.Add(new CharacterMechanicView(
                 mechanicKey,
                 CharacterMechanicKinds.Competency,
@@ -205,11 +225,11 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 Check: null,
                 Competency: competency,
                 ContributorGroups: [],
-                SourceAttributions: BuildRuleAttributions(
-                    rule,
-                    provider,
-                    sourceUri,
-                    publicationMetadata)));
+                SourceAttributions: canonicalAttributions,
+                Provenance: new CharacterMechanicProvenanceView(
+                    canonicalAttributions,
+                    mechanicalProfileAttributions,
+                    effectiveRuleAttributions)));
         }
 
         mechanics = AttachStaticRelationships(mechanics);
@@ -1048,11 +1068,13 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         Guid sourceEntityRevisionId,
         string entityType,
         string? mechanicalJson,
-        string? gameEdition)
+        string? gameEdition,
+        IReadOnlyList<CharacterMechanicSourceAttributionView>? sourceAttributions = null)
     {
         var normalized = ParseNormalizedCompetencyMetadata(
             sourceEntityRevisionId,
-            mechanicalJson);
+            mechanicalJson,
+            sourceAttributions);
         if (normalized is not null)
         {
             return normalized;
@@ -1085,12 +1107,14 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             CanEvaluate: true,
             Inputs: inputs,
             BooleanRequirements: [],
-            GameEdition: gameEdition);
+            GameEdition: gameEdition,
+            SourceAttributions: sourceAttributions);
     }
 
     private static CharacterCompetencyProfileView? ParseNormalizedCompetencyMetadata(
         Guid sourceEntityRevisionId,
-        string? mechanicalJson)
+        string? mechanicalJson,
+        IReadOnlyList<CharacterMechanicSourceAttributionView>? sourceAttributions)
     {
         if (sourceEntityRevisionId == Guid.Empty || string.IsNullOrWhiteSpace(mechanicalJson))
         {
@@ -1627,7 +1651,17 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     revision.content_json,
                     revision.raw_json,
                     source.entity_type,
-                    publication.game_edition
+                    publication.game_edition,
+                    package.key,
+                    package.display_name,
+                    package.provider,
+                    source.source_code,
+                    revision.revision_number,
+                    publication.canonical_key,
+                    publication.display_name,
+                    publication.release_kind,
+                    publication.publication_date,
+                    representation.source_uri
                 FROM concept_entities concept_entity
                 JOIN canonical_source_occurrence occurrence
                     ON occurrence.canonical_entity_id = concept_entity.canonical_entity_id
@@ -1639,6 +1673,8 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     ON revision.source_entity_revision_id = latest.source_entity_revision_id
                 JOIN source_entity source
                     ON source.source_entity_id = revision.source_entity_id
+                JOIN source_representation representation
+                    ON representation.source_representation_id = revision.source_representation_id
                 JOIN canonical_publication publication
                     ON publication.canonical_publication_id = occurrence.canonical_publication_id
                 JOIN source_package package
@@ -1664,11 +1700,28 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 var rawJson = reader.GetString(3);
                 var entityType = reader.GetString(4);
                 var gameEdition = reader.IsDBNull(5) ? null : reader.GetString(5);
+                var attribution = new CharacterMechanicSourceAttributionView(
+                    reader.GetString(6),
+                    reader.GetString(7),
+                    reader.GetString(8),
+                    reader.IsDBNull(9) ? null : reader.GetString(9),
+                    reader.GetInt32(10),
+                    reader.IsDBNull(11) ? null : reader.GetString(11),
+                    reader.IsDBNull(12) ? null : reader.GetString(12),
+                    gameEdition,
+                    reader.IsDBNull(13) ? null : reader.GetString(13),
+                    reader.IsDBNull(14) ? null : reader.GetFieldValue<DateOnly>(14),
+                    ReferenceKey: null,
+                    ReferenceTitle: null,
+                    ReferenceUri: reader.IsDBNull(15) ? null : reader.GetString(15),
+                    PresentationRequired: false,
+                    ReferenceLinkRequired: false);
                 var profile = BuildCompetencyProfile(
                     revisionId,
                     entityType,
                     string.IsNullOrWhiteSpace(contentJson) ? rawJson : contentJson,
-                    gameEdition);
+                    gameEdition,
+                    [attribution]);
                 if (profile is null)
                 {
                     continue;
@@ -1686,7 +1739,17 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 pair => pair.Key,
                 pair => (IReadOnlyList<CharacterCompetencyProfileView>)pair.Value
                     .GroupBy(value => new { value.SourceEntityRevisionId, value.ProfileKey })
-                    .Select(group => group.First())
+                    .Select(group =>
+                    {
+                        var first = group.First();
+                        var attributions = group
+                            .SelectMany(value => value.SourceAttributions ?? [])
+                            .Distinct()
+                            .OrderBy(value => value.WorkDisplayName, StringComparer.Ordinal)
+                            .ThenBy(value => value.PackageKey, StringComparer.Ordinal)
+                            .ToArray();
+                        return first with { SourceAttributions = attributions };
+                    })
                     .OrderBy(value => value.ProfileKey, StringComparer.Ordinal)
                     .ThenBy(value => value.GameEdition, StringComparer.Ordinal)
                     .ThenBy(value => value.SourceEntityRevisionId)

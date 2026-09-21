@@ -440,7 +440,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                         .Distinct(StringComparer.OrdinalIgnoreCase)
                         .OrderBy(value => value, StringComparer.Ordinal)
                         .ToArray(),
-                    provenance: Provenance(mechanic.SourceAttributions));
+                    provenance: mechanic.Provenance ?? mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
                 continue;
             }
 
@@ -451,7 +451,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     "competency",
                     mechanic.DisplayName,
                     CharacterResolutionStates.ApplicableUnresolved,
-                    provenance: Provenance(mechanic.SourceAttributions));
+                    provenance: mechanic.Provenance ?? mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
                 continue;
             }
 
@@ -464,7 +464,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     mechanic.DisplayName,
                     CharacterResolutionStates.MissingCharacterInput,
                     [$"ability.{ability}.base"],
-                    provenance: Provenance(mechanic.SourceAttributions));
+                    provenance: mechanic.Provenance ?? mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
                 continue;
             }
 
@@ -494,7 +494,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                         mechanic.DisplayName,
                         CharacterResolutionStates.MissingCharacterInput,
                         ["advancement.levels"],
-                        provenance: Provenance(mechanic.SourceAttributions));
+                        provenance: mechanic.Provenance ?? mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
                     continue;
                 }
                 total = checked(total + proficiency);
@@ -521,7 +521,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 [],
                 [],
                 contributions,
-                Provenance(mechanic.SourceAttributions));
+                mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
             projected[competency.ConceptKey] = total;
         }
 
@@ -696,7 +696,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     mechanic.Kind,
                     mechanic.DisplayName,
                     CharacterResolutionStates.ApplicableUnresolved,
-                    provenance: Provenance(mechanic.SourceAttributions));
+                    provenance: mechanic.Provenance ?? mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
             }
         }
     }

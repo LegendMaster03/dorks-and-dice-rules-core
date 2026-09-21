@@ -27,7 +27,8 @@ public sealed record CharacterMechanicView(
     CharacterMechanicCheckView? Check,
     CharacterCompetencyDefinitionView? Competency,
     IReadOnlyList<CharacterMechanicContributorGroupView> ContributorGroups,
-    IReadOnlyList<CharacterMechanicSourceAttributionView> SourceAttributions);
+    IReadOnlyList<CharacterMechanicSourceAttributionView> SourceAttributions,
+    CharacterMechanicProvenanceView? Provenance = null);
 
 public sealed record CharacterMechanicApplicabilityView(
     string Kind,
@@ -83,7 +84,8 @@ public sealed record CharacterCompetencyProfileView(
     bool CanEvaluate,
     IReadOnlyList<CharacterMechanicInputView> Inputs,
     IReadOnlyList<CharacterMechanicBooleanRequirementView> BooleanRequirements,
-    string? GameEdition);
+    string? GameEdition,
+    IReadOnlyList<CharacterMechanicSourceAttributionView>? SourceAttributions = null);
 
 public sealed record CharacterCompetencyDefinitionView(
     string CompetencyKind,
