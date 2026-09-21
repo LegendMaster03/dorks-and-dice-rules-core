@@ -56,7 +56,7 @@ function createQueueCard(app, container) {
         }),
         element("p", {
             className: "text-body-secondary mb-0",
-            text: "Inspecting the queue is read-only. Run deterministic discovery explicitly when you want Rules Core to discover work and apply eligible deterministic decisions."
+            text: "Opening or refreshing the queue does not run discovery or create new work. The server may reconcile existing work against current decisions and publication state. Run deterministic discovery explicitly when you want Rules Core to discover new work and apply eligible deterministic decisions."
         }));
     const actions = element("div", { className: "d-flex flex-wrap gap-2" });
     const discover = element("button", {

@@ -68,6 +68,8 @@ public sealed class RuleBrowserAssetTests
         Assert.Contains("Run deterministic discovery", content, StringComparison.Ordinal);
         Assert.Contains("Loading existing adjudication work", content, StringComparison.Ordinal);
         Assert.Contains("No discovery was run", content, StringComparison.Ordinal);
+        Assert.Contains("does not run discovery or create new work", content, StringComparison.Ordinal);
+        Assert.Contains("may reconcile existing work", content, StringComparison.Ordinal);
         Assert.Contains("Discovery completed", content, StringComparison.Ordinal);
         Assert.Contains("Discovery failed", content, StringComparison.Ordinal);
         Assert.Contains("card.refresh = loadQueue", content, StringComparison.Ordinal);
