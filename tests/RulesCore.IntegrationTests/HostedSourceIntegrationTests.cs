@@ -33,7 +33,7 @@ public sealed class HostedSourceIntegrationTests
             [sourceUri] = """
                 {
                   "feat": [
-                    { "name": "Hosted Feat", "source": "SRD51", "entries": ["v1"] },
+                    { "name": "Hosted Feat", "source": "HSTDIR", "entries": ["v1"] },
                     { "name": "Other Feat", "source": "XGE", "entries": ["not selected"] }
                   ]
                 }
@@ -47,7 +47,7 @@ public sealed class HostedSourceIntegrationTests
         {
             var request = DefinitionRequest(
                 packageKey,
-                ["SRD51"],
+                ["HSTDIR"],
                 [new HostedSourceResourceRequest(HostedSourceResourceKinds.DirectJson, sourceUri)]);
 
             var created = await service.SetAsync(definitionKey, request, "rules-lawyer");
@@ -59,7 +59,7 @@ public sealed class HostedSourceIntegrationTests
             Assert.False(unchangedDefinition.CreatedRevision);
             Assert.Equal(1, unchangedDefinition.RevisionNumber);
 
-            var match = Assert.Single(await service.FindMatchesAsync(["SRD51"]));
+            var match = Assert.Single(await service.FindMatchesAsync(["HSTDIR"]));
             Assert.True(match.ExactSourceCodeMatch);
             Assert.Equal(definitionKey, match.DefinitionKey);
 
@@ -82,7 +82,7 @@ public sealed class HostedSourceIntegrationTests
             documents[sourceUri] = """
                 {
                   "feat": [
-                    { "name": "Hosted Feat", "source": "SRD51", "entries": ["v2"] },
+                    { "name": "Hosted Feat", "source": "HSTDIR", "entries": ["v2"] },
                     { "name": "Other Feat", "source": "XGE", "entries": ["not selected"] }
                   ]
                 }
@@ -235,10 +235,10 @@ public sealed class HostedSourceIntegrationTests
             Provider: "integration-test",
             License: "test-only",
             IsPublic: true,
-            WorkKey: "hosted-work",
-            WorkDisplayName: "Hosted Work",
-            EditionKey: "hosted-release",
-            EditionDisplayName: "Hosted Release",
+            WorkKey: $"{packageKey}-work",
+            WorkDisplayName: $"{packageKey} Work",
+            EditionKey: $"{packageKey}-release",
+            EditionDisplayName: $"{packageKey} Release",
             GameEdition: "5e",
             ReleaseKind: "published",
             PublicationDate: new DateOnly(2026, 9, 10),
