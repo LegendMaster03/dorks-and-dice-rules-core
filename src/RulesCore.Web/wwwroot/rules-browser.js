@@ -664,14 +664,23 @@ async function renderRulesBrowser(app, container) {
             refreshListState();
 
             if (!requested.revisionNumber) {
-                detail.replaceChildren(renderEmptyDetail(
-                    app.browserScope === "global"
-                        ? "No global ruleset has been published yet."
-                        : "This campaign has no published ruleset yet."));
+                const message = app.browserScope === "global"
+                    ? "No global ruleset has been published yet."
+                    : "This campaign has no published ruleset yet.";
+                list.replaceChildren(renderEmptyIndexState(message));
+                detail.replaceChildren(renderEmptyDetail(message));
                 return;
             }
             if (!rules.length) {
-                detail.replaceChildren(renderEmptyDetail("No rules match the current filters."));
+                const emptyState = await resolvePublishedEmptyState(app);
+                if (serial !== loadSerial) return;
+                list.replaceChildren(renderEmptyIndexState(
+                    emptyState.message,
+                    emptyState.showSourceLibrary ? renderSourceLibraryAction(app) : null));
+                detail.replaceChildren(renderEmptyDetail(
+                    emptyState.message,
+                    emptyState.showSourceLibrary ? renderSourceLibraryAction(app) : null,
+                    emptyState.note));
                 return;
             }
 
@@ -1414,10 +1423,83 @@ function appendContributions(container, resolved) {
     container.append(list);
 }
 
-function renderEmptyDetail(message) {
-    return element("div", { className: "rules-core-library-detail-empty" },
+async function resolvePublishedEmptyState(app) {
+    const entityType = app.browserFilters.entityType ?? "";
+    const family = entityType ? pluralizeEntityType(entityType).toLowerCase() : "rules";
+    const hasFilters = Boolean(
+        app.browserFilters.query
+        || app.browserFilters.sourceCode
+        || app.browserFilters.overridesOnly);
+
+    if (hasFilters) {
+        return {
+            message: `No published ${family} match the current filters.`,
+            note: "Clear or change the filters to inspect other published rules in this scope.",
+            showSourceLibrary: false
+        };
+    }
+
+    let sourceAvailability = null;
+    try {
+        const sourceRecords = await app.api.searchSourceEntityPage({
+            entityType: entityType || null,
+            limit: 1,
+            offset: 0
+        });
+        sourceAvailability = Array.isArray(sourceRecords) && sourceRecords.length > 0;
+    } catch {
+        sourceAvailability = null;
+    }
+
+    const message = `No ${family} are published in this ruleset for the current account.`;
+    if (sourceAvailability === true) {
+        return {
+            message,
+            note: `Accessible ${family} source records exist in the Source Library, but imported/source material is not published until a Rules Layer decision is included in a published ruleset.`,
+            showSourceLibrary: true
+        };
+    }
+    if (sourceAvailability === false) {
+        return {
+            message,
+            note: `The Source Library returned no accessible ${entityType ? family : "source"} records. Published catalogs are filtered by source access, so inaccessible material is not counted here.`,
+            showSourceLibrary: Boolean(app.canBrowseSourceLibrary)
+        };
+    }
+    return {
+        message,
+        note: "Source Layer availability could not be checked. Imported/source material remains separate from published content.",
+        showSourceLibrary: Boolean(app.canBrowseSourceLibrary)
+    };
+}
+
+function renderEmptyIndexState(message, action = null) {
+    const node = element("div", { className: "rules-core-library-empty-list" },
+        element("p", { className: "mb-2", text: message }));
+    if (action) node.append(action);
+    return node;
+}
+
+function renderEmptyDetail(message, action = null, note = null) {
+    const node = element("div", { className: "rules-core-library-detail-empty" },
         element("div", { className: "rules-core-library-detail-empty-mark", text: "R" }),
-        element("p", { text: message }));
+        element("p", { className: "mb-0", text: message }));
+    if (note) node.append(element("p", {
+        className: "small text-body-secondary mb-0 rules-core-library-empty-note",
+        text: note
+    }));
+    if (action) node.append(action);
+    return node;
+}
+
+function renderSourceLibraryAction(app) {
+    if (!app.canBrowseSourceLibrary || !app.viewNavigation?.sources) return null;
+    return element("button", {
+        type: "button",
+        className: "btn btn-sm btn-outline-primary",
+        text: "Open Source Library",
+        onClick: async () => app.viewNavigation.sources()
+    });
 }
 
 async function isRuleAvailableInScope(app, conceptKey, scopeValue) {

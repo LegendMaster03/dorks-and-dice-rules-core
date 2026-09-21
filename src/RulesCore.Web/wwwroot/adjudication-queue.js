@@ -56,15 +56,23 @@ function createQueueCard(app, container) {
         }),
         element("p", {
             className: "text-body-secondary mb-0",
-            text: "Rules Core performs deterministic processing first. Remaining items can be reviewed by a Rules Lawyer agent or human, while publication remains explicit."
+            text: "Inspecting the queue is read-only. Run deterministic discovery explicitly when you want Rules Core to discover work and apply eligible deterministic decisions."
         }));
-    const refresh = element("button", {
+    const actions = element("div", { className: "d-flex flex-wrap gap-2" });
+    const discover = element("button", {
         type: "button",
         className: "btn btn-outline-primary",
-        text: "Refresh queue",
-        ariaLabel: "Refresh adjudication queue"
+        text: "Run deterministic discovery",
+        ariaLabel: "Run deterministic adjudication discovery"
     });
-    heading.append(title, refresh);
+    const refresh = element("button", {
+        type: "button",
+        className: "btn btn-outline-secondary",
+        text: "Refresh queue",
+        ariaLabel: "Refresh adjudication queue without running discovery"
+    });
+    actions.append(discover, refresh);
+    heading.append(title, actions);
     card.append(heading);
 
     const filters = element("div", { className: "row g-2 mb-3" });
@@ -82,34 +90,85 @@ function createQueueCard(app, container) {
     card.append(filters);
 
     const status = element("div", { className: "small text-body-secondary mb-2" });
+    const discoveryFeedback = element("div", { className: "mb-2" });
     const results = element("div");
-    card.append(status, results);
+    card.append(status, discoveryFeedback, results);
 
-    const load = async () => {
+    const loadQueue = async ({ statusPrefix = null } = {}) => {
         setButtonBusy(refresh, true, "Refreshing…");
-        status.textContent = "Running deterministic discovery and loading adjudication work…";
-        results.replaceChildren();
+        status.textContent = statusPrefix
+            ? `${statusPrefix} · Loading existing adjudication work…`
+            : "Loading existing adjudication work…";
         try {
-            const discovery = await app.api.discoverAdjudicationWork();
             const items = await app.api.getAdjudicationWork({
                 kind: kind.select.value || null,
                 state: state.select.value || null
             });
-            status.textContent = `${items.length} visible work item${items.length === 1 ? "" : "s"} · ${discovery.deterministicDecisionsApplied} deterministic decision${discovery.deterministicDecisionsApplied === 1 ? "" : "s"} applied during this discovery pass.`;
+            const updated = queueTime(new Date());
+            status.textContent = statusPrefix
+                ? `${statusPrefix} · ${items.length} visible work item${items.length === 1 ? "" : "s"} · queue updated ${updated}.`
+                : `${items.length} visible work item${items.length === 1 ? "" : "s"} · queue updated ${updated}. No discovery was run.`;
             renderQueue(app, container, results, items);
+            return items;
         } catch (error) {
-            status.textContent = "";
-            results.replaceChildren(alertNode("danger", describeError(error)));
+            status.textContent = `Queue refresh failed at ${queueTime(new Date())}.`;
+            results.replaceChildren(alertNode(
+                "danger",
+                `Existing adjudication work could not be loaded: ${describeError(error)}`));
+            return null;
         } finally {
             setButtonBusy(refresh, false);
         }
     };
 
-    refresh.addEventListener("click", load);
-    kind.select.addEventListener("change", load);
-    state.select.addEventListener("change", load);
-    card.refresh = load;
+    const runDiscovery = async () => {
+        setButtonBusy(discover, true, "Running discovery…");
+        refresh.disabled = true;
+        discoveryFeedback.replaceChildren();
+        const startedAt = new Date();
+        const updateRunningStatus = () => {
+            const elapsedSeconds = Math.max(0, Math.floor((Date.now() - startedAt.getTime()) / 1000));
+            status.textContent = `Running deterministic discovery · started ${queueTime(startedAt)} · ${elapsedSeconds}s elapsed. Existing queue results remain visible until discovery finishes.`;
+        };
+        updateRunningStatus();
+        const ticker = window.setInterval(updateRunningStatus, 1000);
+
+        try {
+            const discovery = await app.api.discoverAdjudicationWork();
+            window.clearInterval(ticker);
+            const completedAt = queueTime(new Date());
+            const prefix = `Discovery completed ${completedAt}: ${discovery.deterministicDecisionsApplied} deterministic decision${discovery.deterministicDecisionsApplied === 1 ? "" : "s"} applied; ${discovery.outstandingWorkItems} outstanding work item${discovery.outstandingWorkItems === 1 ? "" : "s"}`;
+            discoveryFeedback.replaceChildren(alertNode(
+                "success",
+                "Deterministic discovery completed. Publication remains explicit."));
+            await loadQueue({ statusPrefix: prefix });
+        } catch (error) {
+            window.clearInterval(ticker);
+            status.textContent = `Discovery failed at ${queueTime(new Date())}. Existing queue results were not cleared.`;
+            discoveryFeedback.replaceChildren(alertNode(
+                "danger",
+                `Deterministic discovery failed: ${describeError(error)} Retry with Run deterministic discovery. Existing queue data remains available below.`));
+        } finally {
+            setButtonBusy(discover, false);
+            refresh.disabled = false;
+        }
+    };
+
+    refresh.addEventListener("click", () => void loadQueue());
+    discover.addEventListener("click", () => void runDiscovery());
+    kind.select.addEventListener("change", () => void loadQueue());
+    state.select.addEventListener("change", () => void loadQueue());
+    card.refresh = loadQueue;
+    card.runDiscovery = runDiscovery;
     return card;
+}
+
+function queueTime(value) {
+    return value.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    });
 }
 
 function renderQueue(app, container, target, items) {
