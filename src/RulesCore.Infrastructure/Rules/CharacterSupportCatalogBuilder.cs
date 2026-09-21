@@ -316,7 +316,7 @@ internal static class CharacterSupportCatalogBuilder
             }
 
             var relatedConceptKey = ReadOptionalString(value, "relatedConceptKey");
-            var relatedRuleConceptId = relatedConceptKey is not null
+            Guid? relatedRuleConceptId = relatedConceptKey is not null
                 && ruleByConceptKey.TryGetValue(relatedConceptKey, out var relatedRule)
                     ? relatedRule.RuleConceptId
                     : null;
@@ -382,7 +382,7 @@ internal static class CharacterSupportCatalogBuilder
             var associatedConceptKey = ReadOptionalString(
                 value,
                 "associatedConceptKey");
-            var associatedRuleConceptId = associatedConceptKey is not null
+            Guid? associatedRuleConceptId = associatedConceptKey is not null
                 && ruleByConceptKey.TryGetValue(associatedConceptKey, out var associatedRule)
                     ? associatedRule.RuleConceptId
                     : null;
