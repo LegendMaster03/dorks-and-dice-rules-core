@@ -738,11 +738,18 @@ public sealed partial class PdfSourceFormatAdapter : ISourceFormatAdapter
             var identifiers = ReadIdentifiers(frontMatter);
             var localKey = BuildLocalKey(title, identifiers, artifact.Content);
 
+            // Page numbers are only unique within one document. A package can contain
+            // multiple PDF representations (for example a GitHub tree), so scope native
+            // page identity to the stable artifact identity rather than content bytes.
+            // This keeps refreshes of the same artifact stable while preventing page 1
+            // from one PDF from aliasing page 1 of another PDF in the same package.
+            var documentIdentity = CanonicalSourceIdentity.Fingerprint(
+                $"{artifact.OriginIdentity}\n{artifact.FileName}")[..24];
             var records = pages.Select(page => new NormalizedSourceRecord(
                 EntityType: "source-fragment",
                 Name: $"Page {page.Number}",
                 SourceCode: localKey,
-                NativeKey: $"source-fragment|page-{page.Number}",
+                NativeKey: $"source-fragment|{documentIdentity}|page-{page.Number}",
                 RawJson: JsonSerializer.Serialize(new
                 {
                     kind = "source-fragment",
@@ -755,6 +762,7 @@ public sealed partial class PdfSourceFormatAdapter : ISourceFormatAdapter
                 PublicationLocalKey: localKey,
                 NativeIdentityJson: JsonSerializer.Serialize(new
                 {
+                    documentIdentity,
                     page = page.Number,
                     extraction = "pdf-text-layer"
                 }))).ToArray();

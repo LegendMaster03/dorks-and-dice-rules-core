@@ -20,6 +20,74 @@ public sealed class RuleAdjudicationWorkIntegrationTests
     private const string IntrospectionPath = "/tool-host/rules-core/api/introspect";
 
     [Fact]
+    public async Task ListingQueueDoesNotDiscoverNewWork()
+    {
+        if (!HasDatabase()) return;
+
+        var authenticationClient = new FakeToolHostAuthenticationClient(new Dictionary<string, ToolHostAuthenticationContext>
+        {
+            ["agent-ticket"] = Context("queue-observer", [RulesAuthority.RulesLawyerRole])
+        });
+        await using var factory = CreateFactory(authenticationClient);
+        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        var packageIds = new List<Guid>();
+
+        try
+        {
+            Guid sourceEntityId;
+            await using (var scope = factory.Services.CreateAsyncScope())
+            {
+                var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
+                var imported = await importer.Import5eToolsDocumentAsync(
+                    SourceRequest(
+                        $"adjudication-observation-{Guid.NewGuid():N}",
+                        "2014",
+                        "Observed Queue Skill",
+                        "OBS",
+                        "int",
+                        true));
+                packageIds.Add(imported.PackageId);
+                sourceEntityId = imported.Entities.Single().EntityId;
+            }
+
+            using (var request = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/global/rules/adjudication/work?kind={RuleAdjudicationWorkKinds.NormalizationReview}&includePublishedCompleted=true",
+                       "agent-ticket"))
+            using (var response = await client.SendAsync(request))
+            {
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                var existing = await response.Content.ReadFromJsonAsync<IReadOnlyList<RuleAdjudicationWorkSummaryView>>();
+                Assert.NotNull(existing);
+                Assert.DoesNotContain(existing!, value => value.SourceEntityId == sourceEntityId);
+            }
+
+            using (var request = HostedRequest(
+                       HttpMethod.Post,
+                       "/api/global/rules/adjudication/discover",
+                       "agent-ticket"))
+            using (var response = await client.SendAsync(request))
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            using (var request = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/global/rules/adjudication/work?kind={RuleAdjudicationWorkKinds.NormalizationReview}&includePublishedCompleted=true",
+                       "agent-ticket"))
+            using (var response = await client.SendAsync(request))
+            {
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                var discovered = await response.Content.ReadFromJsonAsync<IReadOnlyList<RuleAdjudicationWorkSummaryView>>();
+                Assert.NotNull(discovered);
+                Assert.Contains(discovered!, value => value.SourceEntityId == sourceEntityId);
+            }
+        }
+        finally
+        {
+            await CleanupAsync(factory, packageIds);
+        }
+    }
+
+    [Fact]
     public async Task DiscoveryAppliesSafeDeterministicResolutionBeforeAgentReviewAndDerivesPublication()
     {
         if (!HasDatabase()) return;

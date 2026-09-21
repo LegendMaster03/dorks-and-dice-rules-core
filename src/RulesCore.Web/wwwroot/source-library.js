@@ -511,18 +511,33 @@ async function renderSourceEntityDetail(app, container, entityId) {
         ]);
         clear(container);
 
-        if (entity.entityType === "monster") {
-            container.append(renderResolvedRule("monster", entity.document, {
+        const readable = element("section", {
+            className: "card card-body mb-3 rules-core-source-readable"
+        });
+        readable.append(
+            element("div", { className: "rules-core-eyebrow", text: "Readable content" }),
+            element("p", {
+                className: "small text-body-secondary mb-3",
+                text: "This presentation uses the Rules Core mechanical translation for readability. It does not replace or rewrite the source-native record."
+            }),
+            renderResolvedRule(entity.entityType, entity.document, {
                 displayName: entity.name,
                 showDocument: false
             }));
-        } else {
-            container.append(element("div", { className: "d-flex flex-wrap justify-content-between gap-3 mb-3" },
-                element("div", {},
-                    element("h5", { className: "h4 mb-1", text: entity.name }),
-                    element("div", { className: "text-body-secondary", text: `${entity.packageDisplayName} · ${entity.sourceCode}` })),
-                badge(entity.entityType, "secondary")));
-        }
+        container.append(readable);
+
+        const readableNative = element("details", {
+            className: "card card-body mb-3 rules-core-source-native-readable",
+            attributes: { open: "" }
+        });
+        readableNative.append(
+            element("summary", { className: "fw-semibold", text: "Readable source-native content" }),
+            element("p", {
+                className: "small text-body-secondary mt-3 mb-2",
+                text: "Fields below are a human-readable projection of the immutable source-native record. Values are not normalized or promoted into published rules by this view."
+            }),
+            renderReadableSourceValue(nativeDocument));
+        container.append(readableNative);
 
         const context = element("details", { className: "rules-core-context-disclosure" });
         const contextBody = element("div", { className: "rules-core-context-disclosure-body" });
@@ -540,20 +555,20 @@ async function renderSourceEntityDetail(app, container, entityId) {
 
         const native = element("details", { className: "card card-body mb-3" });
         native.append(
-            element("summary", { className: "fw-semibold", text: "Source-native document" }),
+            element("summary", { className: "fw-semibold", text: "Raw source-native data (advanced)" }),
             element("p", {
                 className: "small text-body-secondary mt-3 mb-2",
-                text: "This is the immutable source-native record used for native revision identity."
+                text: "Exact immutable source-native structured data used for native revision identity."
             }),
             codeBlock(nativeDocument));
         container.append(native);
 
         const mechanical = element("details", { className: "card card-body" });
         mechanical.append(
-            element("summary", { className: "fw-semibold", text: "Rules Core mechanical document" }),
+            element("summary", { className: "fw-semibold", text: "Raw Rules Core mechanical data (advanced)" }),
             element("p", {
                 className: "small text-body-secondary mt-3 mb-2",
-                text: "This translated rule-bearing representation drives the stat block and Rules Layer without replacing the source-native record."
+                text: "Exact translated rule-bearing representation used by Rules Core. The source-native record above remains authoritative for source fidelity."
             }),
             codeBlock(entity.document));
         container.append(mechanical);
@@ -563,6 +578,42 @@ async function renderSourceEntityDetail(app, container, entityId) {
         container.append(alertNode("danger", describeError(error)));
         presentFragment(app, container);
     }
+}
+
+function renderReadableSourceValue(value, depth = 0) {
+    if (value === null || value === undefined) {
+        return element("span", { className: "text-body-secondary", text: "—" });
+    }
+    if (Array.isArray(value)) {
+        if (!value.length) return element("span", { className: "text-body-secondary", text: "Empty list" });
+        const list = element("ol", { className: "rules-core-source-native-list" });
+        for (const item of value) {
+            list.append(element("li", {}, renderReadableSourceValue(item, depth + 1)));
+        }
+        return list;
+    }
+    if (typeof value === "object") {
+        const entries = Object.entries(value);
+        if (!entries.length) return element("span", { className: "text-body-secondary", text: "Empty object" });
+        const list = element("dl", { className: `rules-core-source-native-fields depth-${Math.min(depth, 3)}` });
+        for (const [key, item] of entries) {
+            list.append(
+                element("dt", { text: readableSourceFieldLabel(key) }),
+                element("dd", {}, renderReadableSourceValue(item, depth + 1)));
+        }
+        return list;
+    }
+    if (typeof value === "boolean") {
+        return element("span", { text: value ? "Yes" : "No" });
+    }
+    return element("span", { text: String(value) });
+}
+
+function readableSourceFieldLabel(key) {
+    return String(key ?? "")
+        .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+        .replace(/[_-]+/g, " ")
+        .replace(/^./, value => value.toUpperCase());
 }
 
 function renderIntegrationPayloadButton(entity) {

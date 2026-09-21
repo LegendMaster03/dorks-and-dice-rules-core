@@ -17,6 +17,7 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
 
         var app = await GetAssetAsync(client, "/app.js", "javascript");
         Assert.Contains("./api.js", app, StringComparison.Ordinal);
+        Assert.Contains("./workspace-routing.js", app, StringComparison.Ordinal);
         Assert.Contains("./authoring.js", app, StringComparison.Ordinal);
         Assert.Contains("./rules-browser.js", app, StringComparison.Ordinal);
         Assert.Contains("./scope-control.js", app, StringComparison.Ordinal);
@@ -30,6 +31,10 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("./source-normalization.js", app, StringComparison.Ordinal);
         Assert.Contains("./source-revision-review.js", app, StringComparison.Ordinal);
         Assert.Contains("rules-core.css", app, StringComparison.Ordinal);
+
+        var workspaceRouting = await GetAssetAsync(client, "/workspace-routing.js", "javascript");
+        Assert.Contains("/adjudication/rules-lawyer", workspaceRouting, StringComparison.Ordinal);
+        Assert.Contains("canEditGlobal", workspaceRouting, StringComparison.Ordinal);
 
         var api = await GetAssetAsync(client, "/api.js", "javascript");
         Assert.Contains("/upstream", api, StringComparison.Ordinal);
