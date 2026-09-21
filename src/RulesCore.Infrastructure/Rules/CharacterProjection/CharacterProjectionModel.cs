@@ -9,6 +9,19 @@ internal sealed record CharacterProjectionRule(
     JsonElement Document,
     CharacterMechanicProvenanceView Provenance);
 
+internal sealed record CharacterWeaponAttackProfile(
+    string ConceptKey,
+    string DisplayName,
+    string ItemType,
+    string? WeaponCategory,
+    bool Finesse,
+    int AttackBonus,
+    int DamageBonus,
+    string DamageExpression,
+    string? DamageType,
+    string? Range,
+    CharacterMechanicProvenanceView Provenance);
+
 internal interface ICharacterRuleProjectionModule
 {
     bool Handles(CharacterProjectionRule rule, CharacterProjectionContext context);
@@ -104,6 +117,7 @@ internal sealed class CharacterProjectionContext
     public bool HasDerivedClassSkillData { get; set; }
     public Dictionary<string, string> RuleDisplayNames { get; } = new(Keys);
     public Dictionary<string, string> CompetencyConceptKeysByDisplayName { get; } = new(Keys);
+    public Dictionary<string, CharacterWeaponAttackProfile> WeaponAttacks { get; } = new(Keys);
 
     public Dictionary<string, CharacterResolvedMechanicView> Mechanics { get; } = new(Keys);
     public Dictionary<string, CharacterCapabilityView> CapabilityViews { get; } = new(Keys);

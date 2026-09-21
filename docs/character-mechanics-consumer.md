@@ -272,3 +272,9 @@ Roll-mode effects such as disadvantage are returned as structured rules. The con
 The bulk Character projection resolves `defense.ac.total` from equipped items only when the item role is mechanically unambiguous. Native/reference item type `LA` uses the armor base plus the full Dexterity modifier, `MA` caps the Dexterity contribution at +2, `HA` contributes no Dexterity modifier, and `S` contributes its shield bonus. Multiple armor bases, multiple shields, or an AC-bearing item whose role is not normalized produce an explicit unresolved/conflict result instead of implicit stacking.
 
 Rules Core does not assume the ordinary unarmored formula when only a shield is equipped because another selected rule may replace that formula. Until such a formula is normalized from the effective ruleset, the result remains `missing-character-input` rather than being guessed.
+
+## Character projection weapon attacks
+
+The bulk Character projection resolves attack and damage modifiers for equipped 5e.tools-shaped melee (`M`) and ranged (`R`) weapons when the source supplies a damage expression. Ranged weapons use Dexterity. Melee weapons use Strength unless the item has the `F` (Finesse) property; finesse remains an explicit runtime choice between Strength and Dexterity rather than Rules Core silently selecting the larger modifier.
+
+Weapon proficiency is derived when a selected class or other normalized rule grants a matching `qualification.weapons.*` capability. A caller can also supply the explicit boolean Character fact `weapon.<concept-key>.proficient`. Absence of both is treated as unknown, not as non-proficiency. Standard proficiency bonus, `bonusWeapon`, `bonusWeaponAttack`, `bonusWeaponDamage`, and caller-supplied `attack.<concept-key>.other` / `damage.<concept-key>.other` facts are incorporated with provenance-preserving contributions. Unsupported weapon roles remain unresolved.

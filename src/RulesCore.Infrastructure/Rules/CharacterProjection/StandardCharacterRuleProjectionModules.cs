@@ -629,7 +629,8 @@ internal sealed class ItemCharacterRuleProjectionModule : ICharacterRuleProjecti
             rule.Catalog.ConceptKey,
             rule.Provenance);
 
-        var itemType = CharacterProjectionJson.String(rule.Document, "type")?.Trim().ToUpperInvariant();
+        var itemType = NormalizeItemType(
+            CharacterProjectionJson.String(rule.Document, "type"));
         var ac = CharacterProjectionJson.Integer(rule.Document, "ac")
             ?? CharacterProjectionJson.Integer(rule.Document, "armorClass");
         if (ac is int armorClass)
@@ -666,6 +667,7 @@ internal sealed class ItemCharacterRuleProjectionModule : ICharacterRuleProjecti
             || !string.IsNullOrWhiteSpace(weaponCategory))
         {
             var actionKey = $"action.attack.{rule.Catalog.ConceptKey}";
+            var range = CharacterProjectionJson.RangeText(rule.Document);
             context.Actions[actionKey] = new CharacterActionView(
                 actionKey,
                 rule.Catalog.DisplayName,
@@ -674,14 +676,105 @@ internal sealed class ItemCharacterRuleProjectionModule : ICharacterRuleProjecti
                 $"attack.{rule.Catalog.ConceptKey}",
                 damage,
                 damageType,
-                CharacterProjectionJson.RangeText(rule.Document),
+                range,
                 null,
                 null,
                 null,
                 null,
                 [],
                 rule.Provenance);
+
+            if (itemType is "M" or "R" && !string.IsNullOrWhiteSpace(damage))
+            {
+                context.WeaponAttacks[rule.Catalog.ConceptKey] =
+                    new CharacterWeaponAttackProfile(
+                        rule.Catalog.ConceptKey,
+                        rule.Catalog.DisplayName,
+                        itemType,
+                        string.IsNullOrWhiteSpace(weaponCategory)
+                            ? null
+                            : weaponCategory.Trim(),
+                        HasItemProperty(rule.Document, "F"),
+                        ReadSignedInteger(rule.Document, "bonusWeaponAttack")
+                            ?? ReadSignedInteger(rule.Document, "bonusWeapon")
+                            ?? 0,
+                        ReadSignedInteger(rule.Document, "bonusWeaponDamage")
+                            ?? ReadSignedInteger(rule.Document, "bonusWeapon")
+                            ?? 0,
+                        damage,
+                        damageType,
+                        range,
+                        rule.Provenance);
+            }
         }
+
+
+    private static string? NormalizeItemType(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+        return value.Split('|', 2)[0].Trim().ToUpperInvariant();
+    }
+
+    private static bool HasItemProperty(JsonElement document, string propertyCode)
+    {
+        foreach (var field in new[] { "property", "propertyAdd" })
+        {
+            if (!CharacterProjectionJson.TryGetProperty(document, field, out var properties)
+                || properties.ValueKind != JsonValueKind.Array)
+            {
+                continue;
+            }
+
+            foreach (var property in properties.EnumerateArray())
+            {
+                string? raw = property.ValueKind switch
+                {
+                    JsonValueKind.String => property.GetString(),
+                    JsonValueKind.Object => CharacterProjectionJson.String(property, "uid")
+                        ?? CharacterProjectionJson.String(property, "abbreviation"),
+                    _ => null
+                };
+                if (string.IsNullOrWhiteSpace(raw))
+                {
+                    continue;
+                }
+                var abbreviation = raw.Split('|', 2)[0].Trim();
+                if (string.Equals(abbreviation, propertyCode, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static int? ReadSignedInteger(JsonElement document, string property)
+    {
+        if (!CharacterProjectionJson.TryGetProperty(document, property, out var value))
+        {
+            return null;
+        }
+        if (value.ValueKind == JsonValueKind.Number && value.TryGetInt32(out var numeric))
+        {
+            return numeric;
+        }
+        if (value.ValueKind != JsonValueKind.String)
+        {
+            return null;
+        }
+
+        var text = value.GetString()?.Trim();
+        return int.TryParse(
+            text,
+            System.Globalization.NumberStyles.AllowLeadingSign,
+            System.Globalization.CultureInfo.InvariantCulture,
+            out var parsed)
+                ? parsed
+                : null;
+    }
 
         var attunement = CharacterProjectionJson.String(rule.Document, "reqAttune")
             ?? CharacterProjectionJson.String(rule.Document, "requiresAttunement");

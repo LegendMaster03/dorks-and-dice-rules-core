@@ -1840,6 +1840,200 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task CharacterProjectionResolvesFiveXWeaponAttackAndPreservesFinesseChoice()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-weapon-{token}";
+        var classConceptKey = $"class.weapon-user-{token}";
+        var weaponConceptKey = $"item.rapier-{token}";
+        var actor = $"character-weapon-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"WPN{token}";
+            var classRaw = JsonSerializer.Serialize(new
+            {
+                name = "Weapon User",
+                source = sourceCode,
+                hd = new { number = 1, faces = 10 },
+                proficiency = new[] { "str", "con" },
+                startingProficiencies = new
+                {
+                    weapons = new[] { "simple", "martial" }
+                }
+            });
+            var weaponRaw = JsonSerializer.Serialize(new
+            {
+                name = "Rapier +1",
+                source = sourceCode,
+                type = "M",
+                weaponCategory = "martial",
+                property = new[] { "F" },
+                dmg1 = "1d8",
+                dmgType = "P",
+                bonusWeapon = "+1"
+            });
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Character Weapon Fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"weapon-fixture-{token}.json",
+                            Encoding.UTF8.GetBytes("{}"),
+                            $"integration:character-weapon:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "class",
+                                "Weapon User",
+                                sourceCode,
+                                $"class|Weapon User|{sourceCode}",
+                                classRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "item",
+                                "Rapier +1",
+                                sourceCode,
+                                $"item|Rapier +1|{sourceCode}",
+                                weaponRaw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Character Weapon Fixture {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2014, 8, 19))
+                        ])));
+            packageId = imported.PackageId;
+            var byName = imported.Entities.ToDictionary(value => value.Name, StringComparer.Ordinal);
+            var classSource = byName["Weapon User"];
+            var weaponSource = byName["Rapier +1"];
+
+            var classConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    classConceptKey,
+                    classSource.EntityType,
+                    classSource.Name),
+                actor);
+            var weaponConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    weaponConceptKey,
+                    weaponSource.EntityType,
+                    weaponSource.Name),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                classConcept.Value.Id,
+                new BindRuleConceptSourceRequest(classSource.EntityId),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                weaponConcept.Value.Id,
+                new BindRuleConceptSourceRequest(weaponSource.EntityId),
+                actor);
+
+            var revisionIds = await db.SourceEntityRevisions
+                .Where(value =>
+                    value.SourceEntityId == classSource.EntityId
+                    || value.SourceEntityId == weaponSource.EntityId)
+                .ToDictionaryAsync(value => value.SourceEntityId, value => value.Id);
+            await globalRules.SetDecisionAsync(
+                classConcept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionIds[classSource.EntityId],
+                    "Weapon class fixture."),
+                actor);
+            await globalRules.SetDecisionAsync(
+                weaponConcept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionIds[weaponSource.EntityId],
+                    "Weapon item fixture."),
+                actor);
+            await globalRules.PublishAsync(actor);
+
+            CharacterRulesProjectionRequest Request(IReadOnlyList<CharacterRuntimeChoiceInput>? choices = null) =>
+                new(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 10,
+                        ["dexterity"] = 18,
+                        ["constitution"] = 12,
+                        ["intelligence"] = 10,
+                        ["wisdom"] = 10,
+                        ["charisma"] = 10
+                    },
+                    Advancements:
+                    [
+                        new CharacterAdvancementFactInput(classConceptKey, 5)
+                    ],
+                    EquippedItemConceptKeys: [weaponConceptKey],
+                    Choices: choices);
+
+            var unresolved = await projection.ResolveGlobalAsync(Request(), userId: null);
+            var unresolvedAttack = Assert.Single(
+                unresolved.Mechanics,
+                value => value.MechanicKey == $"attack.{weaponConceptKey}");
+            Assert.Equal(CharacterResolutionStates.ChoiceRequired, unresolvedAttack.State);
+            Assert.Contains(
+                $"weapon.{weaponConceptKey}.attack-ability",
+                unresolvedAttack.RequiredChoices);
+
+            var resolved = await projection.ResolveGlobalAsync(
+                Request(
+                [
+                    new CharacterRuntimeChoiceInput(
+                        $"weapon.{weaponConceptKey}.attack-ability",
+                        "dexterity")
+                ]),
+                userId: null);
+
+            var attack = Assert.Single(
+                resolved.Mechanics,
+                value => value.MechanicKey == $"attack.{weaponConceptKey}");
+            Assert.Equal(CharacterResolutionStates.Resolved, attack.State);
+            Assert.Equal(8, attack.NumericValue);
+            Assert.Equal("dexterity", attack.TextValue);
+
+            var damageModifier = Assert.Single(
+                resolved.Mechanics,
+                value => value.MechanicKey == $"damage.{weaponConceptKey}.modifier");
+            Assert.Equal(5, damageModifier.NumericValue);
+
+            var action = Assert.Single(
+                resolved.Actions,
+                value => value.ActionKey == $"action.attack.{weaponConceptKey}");
+            Assert.Equal(CharacterResolutionStates.Resolved, action.State);
+            Assert.Equal($"attack.{weaponConceptKey}", action.AttackMechanicKey);
+            Assert.Equal("1d8 + 5", action.DamageExpression);
+            Assert.Equal("P", action.DamageType);
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
     private static HttpRequestMessage HostedRequest(HttpMethod method, string path, string ticket)
     {
         var request = new HttpRequestMessage(method, path);
