@@ -532,10 +532,6 @@ internal static class CanonicalPublicationMetadataReader
         Guid sourceEntityId,
         CancellationToken cancellationToken)
     {
-        await dbContext.Database.ExecuteSqlRawAsync(
-            "ALTER TABLE canonical_publication ADD COLUMN IF NOT EXISTS release_kind varchar(40) NULL;",
-            cancellationToken);
-
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
         if (openedHere) await connection.OpenAsync(cancellationToken);
