@@ -253,12 +253,25 @@ public sealed class CharacterSupportConsumerIntegrationTests
                     new CharacterSupportProjectionRequest(),
                     userId: null);
                 Assert.DoesNotContain(
+                    anonymous.RecoveryProcedures,
+                    value => value.ProcedureKey == "recovery.private-secret");
+                Assert.DoesNotContain(
                     anonymous.PassiveValues,
                     value => value.MechanicKey == "passive.private-secret");
+                Assert.DoesNotContain(
+                    anonymous.Qualifications,
+                    value => value.QualificationKey == "qualification.private-secret");
 
                 var licensed = await mechanics.ProjectGlobalSupportAsync(
                     new CharacterSupportProjectionRequest(),
                     "licensed-player");
+                var restrictedRecovery = Assert.Single(
+                    licensed.RecoveryProcedures,
+                    value => value.ProcedureKey == "recovery.private-secret");
+                Assert.Equal(
+                    privatePackageKey,
+                    Assert.Single(restrictedRecovery.SourceAttributions).PackageKey);
+
                 var restricted = Assert.Single(
                     licensed.PassiveValues,
                     value => value.MechanicKey == "passive.private-secret");
@@ -266,6 +279,16 @@ public sealed class CharacterSupportConsumerIntegrationTests
                 Assert.Equal(
                     privatePackageKey,
                     Assert.Single(restricted.SourceAttributions).PackageKey);
+
+                var restrictedQualification = Assert.Single(
+                    licensed.Qualifications,
+                    value => value.QualificationKey == "qualification.private-secret");
+                Assert.Equal(
+                    CharacterSupportResolutionStates.UnresolvedCharacterState,
+                    restrictedQualification.ResolutionState);
+                Assert.Equal(
+                    privatePackageKey,
+                    Assert.Single(restrictedQualification.SourceAttributions).PackageKey);
             }
         }
         finally
@@ -365,12 +388,40 @@ public sealed class CharacterSupportConsumerIntegrationTests
               "entries": ["Restricted integration fixture."],
               "_rulesCore": {
                 "characterSupport": {
+                  "recoveryProcedures": [
+                    {
+                      "key": "recovery.private-secret",
+                      "displayName": "Private Recovery",
+                      "effects": [
+                        {
+                          "key": "recover-private",
+                          "targetKind": "resource",
+                          "targetKey": "private-resource",
+                          "operation": "adjust",
+                          "amount": 1
+                        }
+                      ]
+                    }
+                  ],
                   "passiveValues": [
                     {
                       "key": "passive.private-secret",
                       "displayName": "Private Secret Value",
                       "evaluationKind": "sum",
                       "constant": 999
+                    }
+                  ],
+                  "qualifications": [
+                    {
+                      "key": "qualification.private-secret",
+                      "displayName": "Private Training",
+                      "category": "private-training",
+                      "stateInput": {
+                        "key": "state",
+                        "valueKind": "string",
+                        "origin": "character-state",
+                        "required": true
+                      }
                     }
                   ]
                 }
