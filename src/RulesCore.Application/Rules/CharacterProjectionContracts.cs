@@ -178,7 +178,9 @@ public sealed record CharacterPrerequisiteRequirementView(
     string? TextValue,
     bool? Satisfied,
     string State,
-    string? Reason);
+    string? Reason,
+    string? GroupKey = null,
+    int GroupMatchCount = 1);
 
 public sealed record CharacterPrerequisiteView(
     string ConceptKey,

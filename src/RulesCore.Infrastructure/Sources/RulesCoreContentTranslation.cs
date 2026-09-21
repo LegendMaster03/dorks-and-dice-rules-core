@@ -202,7 +202,7 @@ internal static class RulesCoreContentTranslation
                 MapSpell(content, segments, mapped);
                 break;
             case "feat":
-                MapFeat(content, segments, mapped);
+                characterExtension = MapFeat(content, segments, mapped);
                 break;
             case "item":
             case "equipment":
@@ -479,7 +479,7 @@ internal static class RulesCoreContentTranslation
             character["advancementFeatures"] = features;
         }
 
-        var prerequisites = BuildClassPrerequisites(segments, mapped);
+        var prerequisites = BuildPcGenPrerequisites(segments);
         if (prerequisites.Count > 0)
         {
             character["prerequisites"] = prerequisites;
@@ -488,81 +488,214 @@ internal static class RulesCoreContentTranslation
         return character.Count == 0 ? null : character;
     }
 
-    private static JsonArray BuildClassPrerequisites(
-        IReadOnlyList<PcGenSegment> segments,
-        ISet<int> mapped)
+    private static JsonArray BuildPcGenPrerequisites(
+        IReadOnlyList<PcGenSegment> segments)
     {
         var result = new JsonArray();
         foreach (var segment in segments.Where(value => value.Level is null))
         {
-            var kind = segment.Tag.ToUpperInvariant() switch
+            if (TryBuildDirectPrerequisiteGroup(
+                    segment.Tag,
+                    segment.Value,
+                    $"pcgen.{segment.Tag.ToLowerInvariant()}.{segment.Index}",
+                    out var direct))
             {
-                "PRESTAT" => "ability-score",
-                "PRESKILL" => "skill-ranks",
-                "PRECLASS" => "class-level",
-                _ => null
-            };
-            if (kind is null)
-            {
+                result.Add(direct);
                 continue;
             }
 
-            var parts = segment.Value.Split(
-                ',',
-                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-            if (parts.Length < 2
-                || !int.TryParse(parts[0], NumberStyles.Integer, CultureInfo.InvariantCulture, out var matchCount)
-                || matchCount < 1)
+            if (string.Equals(segment.Tag, "PREMULT", StringComparison.OrdinalIgnoreCase)
+                && TryBuildSimplePreMultGroup(segment, out var grouped))
             {
-                continue;
+                result.Add(grouped);
             }
-
-            var requirements = new JsonArray();
-            foreach (var expression in parts.Skip(1))
-            {
-                var equals = expression.LastIndexOf('=');
-                if (equals <= 0
-                    || equals + 1 >= expression.Length
-                    || !int.TryParse(
-                        expression[(equals + 1)..].Trim().TrimStart('+'),
-                        NumberStyles.Integer,
-                        CultureInfo.InvariantCulture,
-                        out var threshold))
-                {
-                    continue;
-                }
-
-                var target = expression[..equals].Trim();
-                var requirement = new JsonObject
-                {
-                    ["operator"] = ">=",
-                    ["value"] = threshold
-                };
-                if (kind == "ability-score")
-                {
-                    requirement["targetKey"] = $"ability.{NormalizeAbilityKey(target)}.score";
-                }
-                else
-                {
-                    requirement["targetName"] = target;
-                }
-                requirements.Add(requirement);
-            }
-
-            if (requirements.Count == 0)
-            {
-                continue;
-            }
-
-            result.Add(new JsonObject
-            {
-                ["kind"] = kind,
-                ["matchCount"] = matchCount,
-                ["requirements"] = requirements
-            });
-            mapped.Add(segment.Index);
         }
         return result;
+    }
+
+    private static bool TryBuildDirectPrerequisiteGroup(
+        string tag,
+        string value,
+        string groupKey,
+        out JsonObject group)
+    {
+        group = new JsonObject();
+        var kind = tag.Trim().ToUpperInvariant() switch
+        {
+            "PRESTAT" => "ability-score",
+            "PRESKILL" => "skill-ranks",
+            "PRECLASS" => "class-level",
+            _ => null
+        };
+        if (kind is null)
+        {
+            return false;
+        }
+
+        var parts = value.Split(
+            ',',
+            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        if (parts.Length < 2
+            || !int.TryParse(
+                parts[0],
+                NumberStyles.Integer,
+                CultureInfo.InvariantCulture,
+                out var matchCount)
+            || matchCount < 1)
+        {
+            return false;
+        }
+
+        var requirements = new JsonArray();
+        foreach (var expression in parts.Skip(1))
+        {
+            var equals = expression.LastIndexOf('=');
+            if (equals <= 0
+                || equals + 1 >= expression.Length
+                || !int.TryParse(
+                    expression[(equals + 1)..].Trim().TrimStart('+'),
+                    NumberStyles.Integer,
+                    CultureInfo.InvariantCulture,
+                    out var threshold))
+            {
+                return false;
+            }
+
+            var target = expression[..equals].Trim();
+            if (string.IsNullOrWhiteSpace(target))
+            {
+                return false;
+            }
+
+            var requirement = new JsonObject
+            {
+                ["kind"] = kind,
+                ["operator"] = ">=",
+                ["value"] = threshold
+            };
+            if (kind == "ability-score")
+            {
+                if (!IsAbility(target))
+                {
+                    return false;
+                }
+                requirement["targetKey"] = $"ability.{NormalizeAbilityKey(target)}.score";
+            }
+            else
+            {
+                requirement["targetName"] = target;
+            }
+            requirements.Add(requirement);
+        }
+
+        if (requirements.Count < matchCount)
+        {
+            return false;
+        }
+
+        group = new JsonObject
+        {
+            ["key"] = groupKey,
+            ["matchCount"] = matchCount,
+            ["requirements"] = requirements
+        };
+        return true;
+    }
+
+    private static bool TryBuildSimplePreMultGroup(
+        PcGenSegment segment,
+        out JsonObject group)
+    {
+        group = new JsonObject();
+        var parts = SplitTopLevel(segment.Value);
+        if (parts.Count < 2
+            || !int.TryParse(
+                parts[0],
+                NumberStyles.Integer,
+                CultureInfo.InvariantCulture,
+                out var matchCount)
+            || matchCount < 1)
+        {
+            return false;
+        }
+
+        var requirements = new JsonArray();
+        var childIndex = 0;
+        foreach (var rawChild in parts.Skip(1))
+        {
+            var child = rawChild.Trim();
+            if (child.Length < 3 || child[0] != '[' || child[^1] != ']')
+            {
+                return false;
+            }
+
+            var expression = child[1..^1].Trim();
+            var colon = expression.IndexOf(':');
+            if (colon <= 0 || colon + 1 >= expression.Length)
+            {
+                return false;
+            }
+
+            if (!TryBuildDirectPrerequisiteGroup(
+                    expression[..colon],
+                    expression[(colon + 1)..],
+                    $"pcgen.premult.{segment.Index}.{childIndex++}",
+                    out var childGroup))
+            {
+                return false;
+            }
+
+            if (childGroup["matchCount"]?.GetValue<int>() != 1
+                || childGroup["requirements"] is not JsonArray childRequirements
+                || childRequirements.Count != 1
+                || childRequirements[0] is not JsonObject requirement)
+            {
+                return false;
+            }
+
+            requirements.Add(requirement.DeepClone());
+        }
+
+        if (requirements.Count < matchCount)
+        {
+            return false;
+        }
+
+        group = new JsonObject
+        {
+            ["key"] = $"pcgen.premult.{segment.Index}",
+            ["matchCount"] = matchCount,
+            ["requirements"] = requirements
+        };
+        return true;
+    }
+
+    private static IReadOnlyList<string> SplitTopLevel(string value)
+    {
+        var result = new List<string>();
+        var start = 0;
+        var depth = 0;
+        for (var index = 0; index < value.Length; index++)
+        {
+            switch (value[index])
+            {
+                case '[':
+                    depth++;
+                    break;
+                case ']':
+                    if (depth > 0)
+                    {
+                        depth--;
+                    }
+                    break;
+                case ',' when depth == 0:
+                    result.Add(value[start..index].Trim());
+                    start = index + 1;
+                    break;
+            }
+        }
+        result.Add(value[start..].Trim());
+        return result.Where(item => !string.IsNullOrWhiteSpace(item)).ToArray();
     }
 
     private static bool TryNormalizeBaseAttackProgression(string formula, out string progression)
@@ -706,7 +839,7 @@ internal static class RulesCoreContentTranslation
         return false;
     }
 
-    private static void MapFeat(
+    private static JsonObject? MapFeat(
         JsonObject content,
         IReadOnlyList<PcGenSegment> segments,
         ISet<int> mapped)
@@ -723,6 +856,17 @@ internal static class RulesCoreContentTranslation
             content["repeatable"] = repeatable;
             mapped.Add(multiple.Index);
         }
+
+        var prerequisites = BuildPcGenPrerequisites(segments);
+        if (prerequisites.Count == 0)
+        {
+            return null;
+        }
+
+        return new JsonObject
+        {
+            ["prerequisites"] = prerequisites
+        };
     }
 
     private static void MapItem(

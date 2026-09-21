@@ -357,7 +357,7 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
         }
 
         ProjectNormalizedAdvancementFeatures(rule, context, character, level);
-        ProjectNormalizedPrerequisites(rule, context, character);
+        NormalizedCharacterPrerequisiteProjector.Project(rule, context, character);
     }
 
     private static void ProjectNormalizedAdvancementFeatures(
@@ -398,65 +398,6 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
                 CharacterProjectionJson.String(feature, "kind") ?? "advancement-feature",
                 CharacterResolutionStates.Resolved,
                 rule.Catalog.ConceptKey,
-                rule.Provenance);
-        }
-    }
-
-    private static void ProjectNormalizedPrerequisites(
-        CharacterProjectionRule rule,
-        CharacterProjectionContext context,
-        JsonElement character)
-    {
-        if (!CharacterProjectionJson.TryGetProperty(character, "prerequisites", out var prerequisites)
-            || prerequisites.ValueKind != JsonValueKind.Array)
-        {
-            return;
-        }
-
-        var requirements = new List<CharacterPrerequisiteRequirementView>();
-        var groupIndex = 0;
-        foreach (var group in prerequisites.EnumerateArray())
-        {
-            if (group.ValueKind != JsonValueKind.Object
-                || !CharacterProjectionJson.TryGetProperty(group, "requirements", out var groupRequirements)
-                || groupRequirements.ValueKind != JsonValueKind.Array)
-            {
-                groupIndex++;
-                continue;
-            }
-
-            var kind = CharacterProjectionJson.String(group, "kind") ?? "source-defined";
-            var matchCount = CharacterProjectionJson.Integer(group, "matchCount") ?? groupRequirements.GetArrayLength();
-            var itemIndex = 0;
-            foreach (var requirement in groupRequirements.EnumerateArray())
-            {
-                if (requirement.ValueKind != JsonValueKind.Object)
-                {
-                    itemIndex++;
-                    continue;
-                }
-
-                requirements.Add(new CharacterPrerequisiteRequirementView(
-                    $"{rule.Catalog.ConceptKey}.prerequisite.{groupIndex}.{itemIndex++}",
-                    kind,
-                    CharacterProjectionJson.String(requirement, "targetKey"),
-                    CharacterProjectionJson.String(requirement, "operator"),
-                    CharacterProjectionJson.Integer(requirement, "value"),
-                    CharacterProjectionJson.String(requirement, "targetName"),
-                    null,
-                    CharacterResolutionStates.ApplicableUnresolved,
-                    $"Source prerequisite group requires {matchCount} matching condition(s)."));
-            }
-            groupIndex++;
-        }
-
-        if (requirements.Count > 0)
-        {
-            context.Prerequisites[rule.Catalog.ConceptKey] = new CharacterPrerequisiteView(
-                rule.Catalog.ConceptKey,
-                CharacterResolutionStates.ApplicableUnresolved,
-                null,
-                requirements,
                 rule.Provenance);
         }
     }
@@ -886,6 +827,7 @@ internal sealed class GenericCharacterRuleProjectionModule : ICharacterRuleProje
                 rule.Provenance);
         }
 
+        NormalizedCharacterPrerequisiteProjector.Project(rule, context, character);
         ProjectEffects(rule, context, character);
         ProjectMovement(rule, context, character);
         ProjectResources(rule, context, character);

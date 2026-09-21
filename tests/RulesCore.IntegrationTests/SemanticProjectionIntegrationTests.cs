@@ -245,6 +245,17 @@ public sealed class MechanicalContentIntegrationTests
             Assert.Equal(
                 "ability",
                 featExtension.GetProperty("context").GetProperty("nativeEntityType").GetString());
+            var featPrerequisiteGroup = Assert.Single(
+                featExtension
+                    .GetProperty("character")
+                    .GetProperty("prerequisites")
+                    .EnumerateArray());
+            Assert.Equal(1, featPrerequisiteGroup.GetProperty("matchCount").GetInt32());
+            var featRequirement = Assert.Single(
+                featPrerequisiteGroup.GetProperty("requirements").EnumerateArray());
+            Assert.Equal("ability-score", featRequirement.GetProperty("kind").GetString());
+            Assert.Equal("ability.strength.score", featRequirement.GetProperty("targetKey").GetString());
+            Assert.Equal(13, featRequirement.GetProperty("value").GetInt32());
             var featUnmapped = featExtension.GetProperty("pcgen").GetProperty("unmappedSegments");
             Assert.Contains(featUnmapped.EnumerateArray(), value =>
                 value.GetProperty("tag").GetString() == "PREMULT"

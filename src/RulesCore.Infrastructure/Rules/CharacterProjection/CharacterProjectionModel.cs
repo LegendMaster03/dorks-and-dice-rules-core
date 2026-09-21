@@ -102,6 +102,8 @@ internal sealed class CharacterProjectionContext
         new(Keys);
     public HashSet<string> DerivedClassSkillTypes { get; } = new(Keys);
     public bool HasDerivedClassSkillData { get; set; }
+    public Dictionary<string, string> RuleDisplayNames { get; } = new(Keys);
+    public Dictionary<string, string> CompetencyConceptKeysByDisplayName { get; } = new(Keys);
 
     public Dictionary<string, CharacterResolvedMechanicView> Mechanics { get; } = new(Keys);
     public Dictionary<string, CharacterCapabilityView> CapabilityViews { get; } = new(Keys);
@@ -131,6 +133,108 @@ internal sealed class CharacterProjectionContext
             .Sum(value => Math.Max(value.Level, 0))
         ?? 0;
 
+
+    public void RegisterRuleIdentity(string conceptKey, string displayName)
+    {
+        if (string.IsNullOrWhiteSpace(conceptKey) || string.IsNullOrWhiteSpace(displayName))
+        {
+            return;
+        }
+        RuleDisplayNames[conceptKey.Trim()] = displayName.Trim();
+    }
+
+    public void RegisterCompetencyIdentity(
+        string displayName,
+        string conceptKey,
+        string? familyName,
+        string? specialty)
+    {
+        if (!string.IsNullOrWhiteSpace(displayName))
+        {
+            CompetencyConceptKeysByDisplayName[displayName.Trim()] = conceptKey;
+        }
+        if (!string.IsNullOrWhiteSpace(familyName)
+            && !string.IsNullOrWhiteSpace(specialty))
+        {
+            CompetencyConceptKeysByDisplayName[$"{familyName.Trim()} ({specialty.Trim()})"] = conceptKey;
+        }
+    }
+
+    public bool TryFindAdvancementLevel(string targetName, out int level)
+    {
+        level = 0;
+        if (string.IsNullOrWhiteSpace(targetName))
+        {
+            return false;
+        }
+
+        var normalizedTarget = NormalizeName(targetName);
+        var found = false;
+        foreach (var advancement in Request.Advancements ?? [])
+        {
+            var conceptKey = advancement.ConceptKey?.Trim();
+            if (string.IsNullOrWhiteSpace(conceptKey))
+            {
+                continue;
+            }
+
+            var displayMatch = RuleDisplayNames.TryGetValue(conceptKey, out var displayName)
+                && string.Equals(
+                    NormalizeName(displayName),
+                    normalizedTarget,
+                    StringComparison.Ordinal);
+            var conceptTail = conceptKey.Split(
+                '.',
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .LastOrDefault();
+            var keyMatch = !string.IsNullOrWhiteSpace(conceptTail)
+                && string.Equals(
+                    NormalizeName(conceptTail),
+                    normalizedTarget,
+                    StringComparison.Ordinal);
+            if (!displayMatch && !keyMatch)
+            {
+                continue;
+            }
+
+            found = true;
+            level = checked(level + Math.Max(advancement.Level, 0));
+        }
+        return found;
+    }
+
+    public bool TryFindCompetencyRanks(
+        string targetName,
+        out int ranks,
+        out string? conceptKey)
+    {
+        ranks = 0;
+        conceptKey = null;
+        if (string.IsNullOrWhiteSpace(targetName))
+        {
+            return false;
+        }
+
+        if (CompetencyRanks.TryGetValue(targetName.Trim(), out ranks))
+        {
+            conceptKey = targetName.Trim();
+            return true;
+        }
+
+        if (!CompetencyConceptKeysByDisplayName.TryGetValue(targetName.Trim(), out var resolvedConceptKey))
+        {
+            return false;
+        }
+
+        conceptKey = resolvedConceptKey;
+        return CompetencyRanks.TryGetValue(resolvedConceptKey, out ranks);
+    }
+
+    private static string NormalizeName(string value) =>
+        string.Concat(value
+            .Trim()
+            .ToLowerInvariant()
+            .Where(char.IsLetterOrDigit));
 
     public void AddSizeCategory(
         string sizeCategory,

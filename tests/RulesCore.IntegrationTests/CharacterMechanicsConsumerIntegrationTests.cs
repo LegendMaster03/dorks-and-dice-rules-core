@@ -1276,6 +1276,124 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task CharacterProjectionEvaluatesNormalizedFeatPrerequisitesWithoutRejectingSelectedConcept()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-prerequisite-{token}";
+        var conceptKey = $"feat.mighty-training-{token}";
+        var actor = $"character-prerequisite-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var fileName = $"data/35e/example/prerequisite_feats_{token}.lst";
+            var sourceText = string.Join('\n',
+            [
+                $"SOURCELONG:Prerequisite Fixture {token}\tSOURCESHORT:PF{token}",
+                "Mighty Training\tCATEGORY:FEAT\tPREMULT:1,[PRESTAT:1,STR=13]\tDESC:Requires exceptional strength."
+            ]);
+            var representation = new PcGenSourceFormatAdapter().TryRead(
+                new SourceRepresentationArtifact(
+                    fileName,
+                    Encoding.UTF8.GetBytes(sourceText),
+                    $"integration:character-prerequisite:{token}#{fileName}"))
+                ?? throw new InvalidOperationException("PCGen prerequisite fixture was not readable.");
+
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Character Prerequisite {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    representation));
+            packageId = imported.PackageId;
+            var source = Assert.Single(imported.Entities);
+            Assert.Equal("feat", source.EntityType);
+
+            var concept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(conceptKey, source.EntityType, source.Name),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                concept.Value.Id,
+                new BindRuleConceptSourceRequest(source.EntityId),
+                actor);
+            var revisionId = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == source.EntityId)
+                .Select(value => value.Id)
+                .SingleAsync();
+            await globalRules.SetDecisionAsync(
+                concept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionId,
+                    "Character prerequisite fixture."),
+                actor);
+            await globalRules.PublishAsync(actor);
+
+            static CharacterRulesProjectionRequest Request(string key, int strength) =>
+                new(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = strength,
+                        ["dexterity"] = 10,
+                        ["constitution"] = 10,
+                        ["intelligence"] = 10,
+                        ["wisdom"] = 10,
+                        ["charisma"] = 10
+                    },
+                    SelectedConcepts: [new CharacterSelectedConceptInput(key)]);
+
+            var eligible = await projection.ResolveGlobalAsync(
+                Request(conceptKey, 14),
+                userId: null);
+            var eligiblePrerequisite = Assert.Single(
+                eligible.Prerequisites,
+                value => value.ConceptKey == conceptKey);
+            Assert.True(eligiblePrerequisite.Satisfied);
+            Assert.Equal(CharacterResolutionStates.Resolved, eligiblePrerequisite.State);
+            Assert.True(Assert.Single(eligiblePrerequisite.Requirements).Satisfied);
+            Assert.DoesNotContain(
+                eligible.Conflicts,
+                value => value.ConflictKey == $"conflict.prerequisite.{conceptKey}");
+
+            var ineligible = await projection.ResolveGlobalAsync(
+                Request(conceptKey, 12),
+                userId: null);
+            var ineligiblePrerequisite = Assert.Single(
+                ineligible.Prerequisites,
+                value => value.ConceptKey == conceptKey);
+            Assert.False(ineligiblePrerequisite.Satisfied);
+            Assert.Equal(CharacterResolutionStates.Resolved, ineligiblePrerequisite.State);
+            Assert.False(Assert.Single(ineligiblePrerequisite.Requirements).Satisfied);
+            Assert.Contains(
+                ineligible.Conflicts,
+                value => value.ConflictKey == $"conflict.prerequisite.{conceptKey}");
+            Assert.Contains(
+                ineligible.Features,
+                value => value.FeatureKey == $"feature.{conceptKey}");
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
     private static HttpRequestMessage HostedRequest(HttpMethod method, string path, string ticket)
     {
         var request = new HttpRequestMessage(method, path);
