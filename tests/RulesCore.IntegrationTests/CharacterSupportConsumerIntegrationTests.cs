@@ -43,7 +43,7 @@ public sealed class CharacterSupportConsumerIntegrationTests
             {
                 var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
                 var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
-                var normalization = scope.ServiceProvider.GetRequiredService<ISourceNormalizationService>();
+                var normalization = new SourceNormalizationService(db);
                 var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
 
                 var imported = await importer.Import5eToolsDocumentAsync(
@@ -200,7 +200,7 @@ public sealed class CharacterSupportConsumerIntegrationTests
             {
                 var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
                 var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
-                var normalization = scope.ServiceProvider.GetRequiredService<ISourceNormalizationService>();
+                var normalization = new SourceNormalizationService(db);
                 var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
 
                 var importedPrivate = await importer.Import5eToolsDocumentAsync(
