@@ -175,6 +175,122 @@ A 3.x rule is not converted into a false 5e mechanic merely to fill a familiar f
 
 Historical persisted content may still contain `_rulesCore.exactCompetencyIdentity` from the earlier implementation. Canonical identity readers continue to recognize that marker for backward compatibility, but current imports do not write it.
 
+### Character-support extension
+
+Normalized rule content can publish Character-oriented support mechanics under `_rulesCore.characterSupport`. This extension is rule-bearing and therefore survives `RulesMechanicalContent.ForRules()`; only `_rulesCore.context` is removed from the rule-bearing view.
+
+The extension has three independent arrays:
+
+```json
+{
+  "_rulesCore": {
+    "characterSupport": {
+      "recoveryProcedures": [
+        {
+          "key": "recovery.example",
+          "displayName": "Example Recovery",
+          "presentationRole": "short-rest",
+          "available": true,
+          "applicability": {
+            "kind": "character-capability",
+            "requiresCharacterState": true,
+            "requiredCapabilityKeys": ["example.recovery"]
+          },
+          "inputs": [
+            {
+              "key": "pointsToSpend",
+              "valueKind": "integer",
+              "origin": "character-state",
+              "required": true
+            }
+          ],
+          "choices": [
+            {
+              "key": "resource",
+              "prompt": "Choose a resource.",
+              "required": true,
+              "options": [
+                { "key": "focus", "displayName": "Focus", "value": "focus-points" }
+              ]
+            }
+          ],
+          "rolls": [
+            {
+              "key": "recoveryRoll",
+              "rollKind": "die",
+              "prompt": "Roll recovery.",
+              "required": true,
+              "mechanicKey": "check.example-recovery"
+            }
+          ],
+          "effects": [
+            {
+              "key": "spend",
+              "targetKind": "resource",
+              "targetKey": "recovery-points",
+              "operation": "expend",
+              "amountInputKey": "pointsToSpend"
+            },
+            {
+              "key": "restore",
+              "targetKind": "resource",
+              "targetChoiceKey": "resource",
+              "operation": "adjust",
+              "amountRollKey": "recoveryRoll",
+              "referenceKey": "rule-defined-limit"
+            }
+          ]
+        }
+      ],
+      "passiveValues": [
+        {
+          "key": "passive.example-awareness",
+          "displayName": "Example Awareness",
+          "evaluationKind": "sum",
+          "constant": 7,
+          "inputs": [
+            {
+              "key": "awarenessContribution",
+              "valueKind": "integer",
+              "origin": "derived",
+              "required": true,
+              "participatesInValue": true
+            }
+          ],
+          "relatedConceptKey": "skill.example-awareness",
+          "relatedAbilityKey": "wisdom"
+        }
+      ],
+      "qualifications": [
+        {
+          "key": "qualification.example-training",
+          "displayName": "Example Training",
+          "category": "source-defined-training",
+          "family": "example",
+          "associatedConceptKey": "training.example",
+          "stateInput": {
+            "key": "state",
+            "valueKind": "string",
+            "origin": "character-state",
+            "required": true
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+These arrays are normalized Rules Core mechanics, not a source-format compatibility layer. A translator or reviewed normalized source must establish them from defensible source evidence. Character consumers never infer them from source-native display text.
+
+Recovery procedure keys and qualification categories are open identities. `short-rest` and `long-rest` are optional presentation roles only. They do not imply duration or consequences. Recovery effects use structured target/operation semantics and may obtain a target from a declared choice or an amount from a declared Character input or runtime roll. Optional effect conditions can predicate an effect on one declared input value or choice. Runtime requirements can explicitly state Character state, choices, rolls, resource expenditure, and other runtime facts; structural requirements are also derived from declared inputs/choices/rolls/effects.
+
+Passive values use the existing scalar mechanic evaluator and the dedicated `passive-value` kind. The normalized definition must supply the formula inputs/constant; Rules Core does not add a universal `10 + modifier` rule.
+
+Qualifications carry a typed `stateInput` rather than a fixed proficiency boolean. A source can therefore represent a string training state, boolean qualification, integer rank, or another currently supported typed Character fact without defining Armor/Weapons/Tools/Languages as universal categories.
+
+`available: false` preserves a normalized entry while marking it unavailable under the effective rule. Campaign/global JSON patches can alter or remove Character-support metadata through the existing rule-decision machinery; no second override layer exists.
+
 `_rulesCore.pcgen.unmappedSegments` is also rule-bearing: those values represent mechanics that have not been translated into a faithful 5e.tools field. They remain in the rule-bearing view for mechanical inspection even when the separate canonical competency identity causes edition-specific representations to reconcile to the same competency.
 
 The extension is subordinate to the complete `RawJson`; it is not a replacement 3.x ontology. Unsupported source fragments and operations remain separate source evidence until a translator can construct a legitimate mechanical entity.
