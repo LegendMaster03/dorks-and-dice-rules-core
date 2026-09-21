@@ -629,17 +629,30 @@ internal sealed class ItemCharacterRuleProjectionModule : ICharacterRuleProjecti
             rule.Catalog.ConceptKey,
             rule.Provenance);
 
+        var itemType = CharacterProjectionJson.String(rule.Document, "type")?.Trim().ToUpperInvariant();
         var ac = CharacterProjectionJson.Integer(rule.Document, "ac")
             ?? CharacterProjectionJson.Integer(rule.Document, "armorClass");
         if (ac is int armorClass)
         {
+            var (operation, target) = itemType switch
+            {
+                "LA" or "MA" or "HA" => (
+                    CharacterEffectOperations.Set,
+                    "defense.ac.armor-base"),
+                "S" => (
+                    CharacterEffectOperations.Add,
+                    "defense.ac.shield-bonus"),
+                _ => (
+                    CharacterEffectOperations.Add,
+                    "defense.ac.unclassified")
+            };
             context.AddEffect(new CharacterRuleEffectView(
                 $"{rule.Catalog.ConceptKey}.armor-class",
                 CharacterEffectKinds.MechanicContribution,
-                CharacterEffectOperations.Set,
-                "defense.ac.armor-base",
+                operation,
+                target,
                 armorClass,
-                null,
+                itemType,
                 null,
                 rule.Catalog.ConceptKey,
                 rule.Provenance));

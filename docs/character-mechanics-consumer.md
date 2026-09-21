@@ -266,3 +266,9 @@ POST /api/campaigns/{campaignId}/rules/mechanics/evaluate
 The legacy per-mechanic evaluation endpoints remain available, but callers that need many mechanics should use the batch contract rather than rebuilding the effective context once per mechanic.
 
 Roll-mode effects such as disadvantage are returned as structured rules. The consumer remains responsible for actually performing the roll according to its dice/runtime architecture.
+
+## Character projection Armor Class
+
+The bulk Character projection resolves `defense.ac.total` from equipped items only when the item role is mechanically unambiguous. Native/reference item type `LA` uses the armor base plus the full Dexterity modifier, `MA` caps the Dexterity contribution at +2, `HA` contributes no Dexterity modifier, and `S` contributes its shield bonus. Multiple armor bases, multiple shields, or an AC-bearing item whose role is not normalized produce an explicit unresolved/conflict result instead of implicit stacking.
+
+Rules Core does not assume the ordinary unarmored formula when only a shield is equipped because another selected rule may replace that formula. Until such a formula is normalized from the effective ruleset, the result remains `missing-character-input` rather than being guessed.

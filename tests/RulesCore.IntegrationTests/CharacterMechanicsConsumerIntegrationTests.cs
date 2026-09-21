@@ -1681,6 +1681,165 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task CharacterProjectionResolvesRecognizedArmorAndShieldFormula()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-armor-{token}";
+        var armorConceptKey = $"item.breastplate-{token}";
+        var shieldConceptKey = $"item.shield-{token}";
+        var actor = $"character-armor-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"ARM{token}";
+            var armorRaw = JsonSerializer.Serialize(new
+            {
+                name = "Breastplate",
+                source = sourceCode,
+                type = "MA",
+                ac = 14
+            });
+            var shieldRaw = JsonSerializer.Serialize(new
+            {
+                name = "Shield",
+                source = sourceCode,
+                type = "S",
+                ac = 2
+            });
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Character Armor Fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"items-{token}.json",
+                            Encoding.UTF8.GetBytes("{}"),
+                            $"integration:character-armor:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "item",
+                                "Breastplate",
+                                sourceCode,
+                                $"item|Breastplate|{sourceCode}",
+                                armorRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "item",
+                                "Shield",
+                                sourceCode,
+                                $"item|Shield|{sourceCode}",
+                                shieldRaw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Character Armor Fixture {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2014, 8, 19))
+                        ])));
+            packageId = imported.PackageId;
+
+            var byName = imported.Entities.ToDictionary(value => value.Name, StringComparer.Ordinal);
+            var armorSource = byName["Breastplate"];
+            var shieldSource = byName["Shield"];
+            var armorConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(armorConceptKey, "item", armorSource.Name),
+                actor);
+            var shieldConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(shieldConceptKey, "item", shieldSource.Name),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                armorConcept.Value.Id,
+                new BindRuleConceptSourceRequest(armorSource.EntityId),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                shieldConcept.Value.Id,
+                new BindRuleConceptSourceRequest(shieldSource.EntityId),
+                actor);
+
+            var revisionIds = await db.SourceEntityRevisions
+                .Where(value =>
+                    value.SourceEntityId == armorSource.EntityId
+                    || value.SourceEntityId == shieldSource.EntityId)
+                .ToDictionaryAsync(value => value.SourceEntityId, value => value.Id);
+            await globalRules.SetDecisionAsync(
+                armorConcept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionIds[armorSource.EntityId],
+                    "Armor projection fixture."),
+                actor);
+            await globalRules.SetDecisionAsync(
+                shieldConcept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionIds[shieldSource.EntityId],
+                    "Shield projection fixture."),
+                actor);
+            await globalRules.PublishAsync(actor);
+
+            var result = await projection.ResolveGlobalAsync(
+                new CharacterRulesProjectionRequest(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 10,
+                        ["dexterity"] = 18,
+                        ["constitution"] = 10,
+                        ["intelligence"] = 10,
+                        ["wisdom"] = 10,
+                        ["charisma"] = 10
+                    },
+                    EquippedItemConceptKeys: [armorConceptKey, shieldConceptKey]),
+                userId: null);
+
+            var armorClass = Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "defense.ac.total");
+            Assert.Equal(CharacterResolutionStates.Resolved, armorClass.State);
+            Assert.Equal(18, armorClass.NumericValue);
+            Assert.Contains(
+                armorClass.Contributions,
+                value => value.Label == "Armor base"
+                    && value.NumericValue == 14);
+            Assert.Contains(
+                armorClass.Contributions,
+                value => value.Label == "Dexterity contribution"
+                    && value.NumericValue == 2);
+            Assert.Contains(
+                armorClass.Contributions,
+                value => value.Label == "Shield bonus"
+                    && value.NumericValue == 2);
+            Assert.Empty(
+                result.Conflicts.Where(value =>
+                    value.ConflictKey.StartsWith("conflict.defense.ac.", StringComparison.Ordinal)));
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
     private static HttpRequestMessage HostedRequest(HttpMethod method, string path, string ticket)
     {
         var request = new HttpRequestMessage(method, path);
