@@ -8,6 +8,7 @@ public static class CharacterMechanicKinds
     public const string Defense = "defense";
     public const string CombatValue = "combat-value";
     public const string Resource = "resource";
+    public const string PassiveValue = "passive-value";
 }
 
 public static class CharacterMechanicEvaluationKinds

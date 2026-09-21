@@ -98,6 +98,99 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         return EvaluateBatchFromCatalog(catalog, request);
     }
 
+    public async Task<CharacterSupportProjectionView> ProjectGlobalSupportAsync(
+        CharacterSupportProjectionRequest request,
+        string? userId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        var rules = await ReadAllGlobalRulesAsync(userId, cancellationToken);
+        var catalog = await CharacterSupportCatalogBuilder.BuildAsync(
+            dbContext,
+            rules,
+            cancellationToken);
+        return CharacterSupportResolver.Project(catalog, request);
+    }
+
+    public async Task<CharacterSupportProjectionView> ProjectCampaignSupportAsync(
+        Guid campaignId,
+        CharacterSupportProjectionRequest request,
+        string userId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        var normalizedUserId = ValidateCampaignSupportRequest(campaignId, userId);
+        var rules = await ReadAllCampaignRulesAsync(
+            campaignId,
+            normalizedUserId,
+            cancellationToken);
+        var catalog = await CharacterSupportCatalogBuilder.BuildAsync(
+            dbContext,
+            rules,
+            cancellationToken);
+        return CharacterSupportResolver.Project(catalog, request);
+    }
+
+    public async Task<CharacterRecoveryResolutionView?> ResolveGlobalRecoveryAsync(
+        string procedureKey,
+        CharacterRecoveryResolutionRequest request,
+        string? userId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        var rules = await ReadAllGlobalRulesAsync(userId, cancellationToken);
+        var catalog = await CharacterSupportCatalogBuilder.BuildAsync(
+            dbContext,
+            rules,
+            cancellationToken);
+        return CharacterSupportResolver.ResolveRecovery(
+            catalog,
+            procedureKey,
+            request);
+    }
+
+    public async Task<CharacterRecoveryResolutionView?> ResolveCampaignRecoveryAsync(
+        Guid campaignId,
+        string procedureKey,
+        CharacterRecoveryResolutionRequest request,
+        string userId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        var normalizedUserId = ValidateCampaignSupportRequest(campaignId, userId);
+        var rules = await ReadAllCampaignRulesAsync(
+            campaignId,
+            normalizedUserId,
+            cancellationToken);
+        var catalog = await CharacterSupportCatalogBuilder.BuildAsync(
+            dbContext,
+            rules,
+            cancellationToken);
+        return CharacterSupportResolver.ResolveRecovery(
+            catalog,
+            procedureKey,
+            request);
+    }
+
+    private static string ValidateCampaignSupportRequest(
+        Guid campaignId,
+        string userId)
+    {
+        if (campaignId == Guid.Empty)
+        {
+            throw new ArgumentException(
+                "Campaign ID can not be empty.",
+                nameof(campaignId));
+        }
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            throw new ArgumentException(
+                "User ID can not be blank.",
+                nameof(userId));
+        }
+        return userId.Trim();
+    }
+
     private async Task<CharacterMechanicsCatalogView> BuildCatalogAsync(
         ResolvedRulesCatalogView rules,
         string? userId,

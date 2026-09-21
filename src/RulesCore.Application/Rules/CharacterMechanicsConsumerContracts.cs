@@ -273,4 +273,28 @@ public interface ICharacterMechanicsConsumerService
         CharacterMechanicsBatchEvaluationRequest request,
         string userId,
         CancellationToken cancellationToken = default);
+
+    Task<CharacterSupportProjectionView> ProjectGlobalSupportAsync(
+        CharacterSupportProjectionRequest request,
+        string? userId,
+        CancellationToken cancellationToken = default);
+
+    Task<CharacterSupportProjectionView> ProjectCampaignSupportAsync(
+        Guid campaignId,
+        CharacterSupportProjectionRequest request,
+        string userId,
+        CancellationToken cancellationToken = default);
+
+    Task<CharacterRecoveryResolutionView?> ResolveGlobalRecoveryAsync(
+        string procedureKey,
+        CharacterRecoveryResolutionRequest request,
+        string? userId,
+        CancellationToken cancellationToken = default);
+
+    Task<CharacterRecoveryResolutionView?> ResolveCampaignRecoveryAsync(
+        Guid campaignId,
+        string procedureKey,
+        CharacterRecoveryResolutionRequest request,
+        string userId,
+        CancellationToken cancellationToken = default);
 }
