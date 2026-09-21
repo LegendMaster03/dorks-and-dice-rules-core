@@ -378,6 +378,8 @@ jobs:
           key: rules-core-integration-timing-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref_name }}-${{ github.run_id }}
           restore-keys: |
             rules-core-integration-timing-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref_name }}-
+            rules-core-integration-timing-${{ github.event_name }}-
+            rules-core-integration-timing-
 
       - name: Start isolated PostgreSQL
         run: |
