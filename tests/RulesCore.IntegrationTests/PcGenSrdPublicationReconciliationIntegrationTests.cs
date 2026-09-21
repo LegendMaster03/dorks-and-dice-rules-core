@@ -24,7 +24,7 @@ public sealed class PcGenSrdPublicationReconciliationIntegrationTests
                   "source": "SRD35",
                   "uniqueId": "skill-balance",
                   "documentUri": "https://example.invalid/srd35/skills/balance",
-                  "originalHeading": "Balance (Dex; Armor Check Penalty)",
+                  "originalHeading": "Balance <small>(Dex; Armor Check Penalty)</small>",
                   "body": "Reviewed Balance rules."
                 }
               ]
