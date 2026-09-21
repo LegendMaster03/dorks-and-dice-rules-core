@@ -2034,6 +2034,230 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task CharacterProjectionUsesPublishedResourceChoiceAndSingleClassSpellSlotTable()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-spell-resource-{token}";
+        var classConceptKey = $"class.slot-caster-{token}";
+        var houseConceptKey = $"house.spellcasting-resource-choice-{token}";
+        var actor = $"character-spell-resource-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"SPR{token}";
+            var classRaw = JsonSerializer.Serialize(new
+            {
+                name = "Slot Caster",
+                source = sourceCode,
+                hd = new { number = 1, faces = 8 },
+                proficiency = new[] { "wis", "cha" },
+                spellcastingAbility = "cha",
+                casterProgression = "full",
+                classTableGroups = new object[]
+                {
+                    new
+                    {
+                        title = "Spell Slots per Spell Level",
+                        colLabels = new[] { "1st", "2nd", "3rd" },
+                        rowsSpellProgression = new[]
+                        {
+                            new[] { 2, 0, 0 },
+                            new[] { 3, 0, 0 },
+                            new[] { 4, 2, 0 },
+                            new[] { 4, 3, 0 },
+                            new[] { 4, 3, 2 }
+                        }
+                    }
+                }
+            });
+            var houseRaw = JsonSerializer.Serialize(new
+            {
+                name = "Spellcasting Resource Choice",
+                source = sourceCode,
+                category = "spellcasting",
+                casterChoosesResourceSystem = true,
+                availableResourceSystems = new[] { "spell slots", "spell points" }
+            });
+
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Character Spell Resource Fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"spell-resource-{token}.json",
+                            Encoding.UTF8.GetBytes("{}"),
+                            $"integration:character-spell-resource:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "class",
+                                "Slot Caster",
+                                sourceCode,
+                                $"class|Slot Caster|{sourceCode}",
+                                classRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "houseRule",
+                                "Spellcasting Resource Choice",
+                                sourceCode,
+                                $"houseRule|Spellcasting Resource Choice|{sourceCode}",
+                                houseRaw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Character Spell Resource Fixture {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2014, 8, 19))
+                        ])));
+            packageId = imported.PackageId;
+            var byName = imported.Entities.ToDictionary(value => value.Name, StringComparer.Ordinal);
+            var classSource = byName["Slot Caster"];
+            var houseSource = byName["Spellcasting Resource Choice"];
+
+            var classConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    classConceptKey,
+                    classSource.EntityType,
+                    classSource.Name),
+                actor);
+            var houseConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    houseConceptKey,
+                    houseSource.EntityType,
+                    houseSource.Name),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                classConcept.Value.Id,
+                new BindRuleConceptSourceRequest(classSource.EntityId),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                houseConcept.Value.Id,
+                new BindRuleConceptSourceRequest(houseSource.EntityId),
+                actor);
+
+            var revisionIds = await db.SourceEntityRevisions
+                .Where(value =>
+                    value.SourceEntityId == classSource.EntityId
+                    || value.SourceEntityId == houseSource.EntityId)
+                .ToDictionaryAsync(value => value.SourceEntityId, value => value.Id);
+            await globalRules.SetDecisionAsync(
+                classConcept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionIds[classSource.EntityId],
+                    "Spell slot table fixture."),
+                actor);
+            await globalRules.SetDecisionAsync(
+                houseConcept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionIds[houseSource.EntityId],
+                    "Published resource choice fixture."),
+                actor);
+            await globalRules.PublishAsync(actor);
+
+            CharacterRulesProjectionRequest Request(string? system = null) =>
+                new(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 10,
+                        ["dexterity"] = 12,
+                        ["constitution"] = 12,
+                        ["intelligence"] = 10,
+                        ["wisdom"] = 10,
+                        ["charisma"] = 18
+                    },
+                    Advancements:
+                    [
+                        new CharacterAdvancementFactInput(classConceptKey, 5)
+                    ],
+                    Choices: system is null
+                        ? null
+                        : [
+                            new CharacterRuntimeChoiceInput(
+                                "spellcasting.resource-system",
+                                system)
+                        ]);
+
+            var choiceRequired = await projection.ResolveGlobalAsync(
+                Request(),
+                userId: null);
+            var resourceChoice = Assert.Single(
+                choiceRequired.Spellcasting,
+                value => value.SpellcastingKey == "spellcasting.resource-choice");
+            Assert.Equal(CharacterResolutionStates.ChoiceRequired, resourceChoice.State);
+            Assert.Contains(
+                "spellcasting.resource-system",
+                resourceChoice.RequiredChoices);
+            Assert.DoesNotContain(
+                choiceRequired.Resources,
+                value => value.ResourceKey.StartsWith("resource.spell-slot.", StringComparison.Ordinal));
+
+            var slots = await projection.ResolveGlobalAsync(
+                Request("spell slots"),
+                userId: null);
+            Assert.Equal(4, Assert.Single(
+                slots.Resources,
+                value => value.ResourceKey == "resource.spell-slot.1").MaximumValue);
+            Assert.Equal(3, Assert.Single(
+                slots.Resources,
+                value => value.ResourceKey == "resource.spell-slot.2").MaximumValue);
+            Assert.Equal(2, Assert.Single(
+                slots.Resources,
+                value => value.ResourceKey == "resource.spell-slot.3").MaximumValue);
+            Assert.Equal(
+                "spell-slots",
+                Assert.Single(
+                    slots.Spellcasting,
+                    value => value.SpellcastingKey == $"spellcasting.{classConceptKey}")
+                    .ResourceSystemKey);
+
+            var points = await projection.ResolveGlobalAsync(
+                Request("spell points"),
+                userId: null);
+            var spellPoints = Assert.Single(
+                points.Resources,
+                value => value.ResourceKey == "resource.spell-points");
+            Assert.Equal(CharacterResolutionStates.ApplicableUnresolved, spellPoints.State);
+            Assert.Null(spellPoints.MaximumValue);
+            Assert.DoesNotContain(
+                points.Resources,
+                value => value.ResourceKey.StartsWith("resource.spell-slot.", StringComparison.Ordinal));
+            Assert.Equal(
+                "spell-points",
+                Assert.Single(
+                    points.Spellcasting,
+                    value => value.SpellcastingKey == $"spellcasting.{classConceptKey}")
+                    .ResourceSystemKey);
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
     private static HttpRequestMessage HostedRequest(HttpMethod method, string path, string ticket)
     {
         var request = new HttpRequestMessage(method, path);

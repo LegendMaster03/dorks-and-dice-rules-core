@@ -22,6 +22,14 @@ internal sealed record CharacterWeaponAttackProfile(
     string? Range,
     CharacterMechanicProvenanceView Provenance);
 
+internal sealed record CharacterSpellSlotProgression(
+    string ConceptKey,
+    string DisplayName,
+    int ClassLevel,
+    string? CasterProgression,
+    IReadOnlyList<int> SlotsBySpellLevel,
+    CharacterMechanicProvenanceView Provenance);
+
 internal interface ICharacterRuleProjectionModule
 {
     bool Handles(CharacterProjectionRule rule, CharacterProjectionContext context);
@@ -118,6 +126,7 @@ internal sealed class CharacterProjectionContext
     public Dictionary<string, string> RuleDisplayNames { get; } = new(Keys);
     public Dictionary<string, string> CompetencyConceptKeysByDisplayName { get; } = new(Keys);
     public Dictionary<string, CharacterWeaponAttackProfile> WeaponAttacks { get; } = new(Keys);
+    public Dictionary<string, CharacterSpellSlotProgression> SpellSlotProgressions { get; } = new(Keys);
 
     public Dictionary<string, CharacterResolvedMechanicView> Mechanics { get; } = new(Keys);
     public Dictionary<string, CharacterCapabilityView> CapabilityViews { get; } = new(Keys);
@@ -507,6 +516,36 @@ internal static class CharacterProjectionJson
         }
         return value.ValueKind == JsonValueKind.String ? value.GetString() : value.ToString();
     }
+
+    public static bool? Boolean(JsonElement element, string name)
+    {
+        if (!TryGetProperty(element, name, out var value))
+        {
+            return null;
+        }
+        if (value.ValueKind == JsonValueKind.True)
+        {
+            return true;
+        }
+        if (value.ValueKind == JsonValueKind.False)
+        {
+            return false;
+        }
+        if (value.ValueKind == JsonValueKind.String
+            && bool.TryParse(value.GetString(), out var parsed))
+        {
+            return parsed;
+        }
+        return null;
+    }
+
+    public static string NormalizeResourceSystemKey(string value) =>
+        string.Join(
+            '-',
+            value.Trim().ToLowerInvariant()
+                .Split(
+                    [' ', '/', '_', '-'],
+                    StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
 
     public static int? Integer(JsonElement element, string name)
     {

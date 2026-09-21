@@ -212,7 +212,7 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
 
         ProjectSavingThrowTraining(rule, context);
         ProjectHitDie(rule, context, level);
-        ProjectSpellcasting(rule, context);
+        ProjectSpellcasting(rule, context, level);
         ProjectStartingQualifications(rule, context);
         ProjectClassFeatures(rule, context);
         ProjectNormalizedThreeXClass(rule, context, level);
@@ -480,7 +480,8 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
 
     private static void ProjectSpellcasting(
         CharacterProjectionRule rule,
-        CharacterProjectionContext context)
+        CharacterProjectionContext context,
+        int level)
     {
         var raw = CharacterProjectionJson.String(rule.Document, "spellcastingAbility")
             ?? CharacterProjectionJson.String(rule.Document, "casterAbility");
@@ -490,6 +491,28 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
         }
 
         var ability = CharacterProjectionJson.NormalizeAbilityKey(raw);
+        var casterProgression = CharacterProjectionJson.String(rule.Document, "casterProgression");
+        string? resourceSystemKey = string.Equals(
+            casterProgression,
+            "pact",
+            StringComparison.OrdinalIgnoreCase)
+                ? "pact-magic"
+                : null;
+
+        if (level > 0
+            && TryReadSpellSlotProgression(rule.Document, level, out var slots))
+        {
+            context.SpellSlotProgressions[rule.Catalog.ConceptKey] =
+                new CharacterSpellSlotProgression(
+                    rule.Catalog.ConceptKey,
+                    rule.Catalog.DisplayName,
+                    level,
+                    casterProgression,
+                    slots,
+                    rule.Provenance);
+            resourceSystemKey = "spell-slots";
+        }
+
         context.UsesStandardProficiency = true;
         context.AddCapability(
             "spellcasting",
@@ -502,12 +525,68 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
                 $"{rule.Catalog.DisplayName} Spellcasting",
                 CharacterResolutionStates.ApplicableUnresolved,
                 ability,
-                null,
+                resourceSystemKey,
                 $"spellcasting.{rule.Catalog.ConceptKey}.save-dc",
                 $"spellcasting.{rule.Catalog.ConceptKey}.attack",
                 [],
                 [],
                 rule.Provenance);
+    }
+
+    private static bool TryReadSpellSlotProgression(
+        JsonElement document,
+        int classLevel,
+        out IReadOnlyList<int> slots)
+    {
+        slots = [];
+        if (!CharacterProjectionJson.TryGetProperty(document, "classTableGroups", out var groups)
+            || groups.ValueKind != JsonValueKind.Array)
+        {
+            return false;
+        }
+
+        foreach (var group in groups.EnumerateArray())
+        {
+            if (group.ValueKind != JsonValueKind.Object
+                || !CharacterProjectionJson.TryGetProperty(group, "rowsSpellProgression", out var rows)
+                || rows.ValueKind != JsonValueKind.Array)
+            {
+                continue;
+            }
+
+            var rowArray = rows.EnumerateArray().ToArray();
+            if (classLevel <= 0 || classLevel > rowArray.Length)
+            {
+                return false;
+            }
+
+            var row = rowArray[classLevel - 1];
+            if (row.ValueKind != JsonValueKind.Array)
+            {
+                return false;
+            }
+
+            var values = new List<int>();
+            foreach (var value in row.EnumerateArray())
+            {
+                if (value.ValueKind != JsonValueKind.Number
+                    || !value.TryGetInt32(out var count)
+                    || count < 0)
+                {
+                    return false;
+                }
+                values.Add(count);
+            }
+            if (values.Count == 0)
+            {
+                return false;
+            }
+
+            slots = values;
+            return true;
+        }
+
+        return false;
     }
 
     private static void ProjectStartingQualifications(
@@ -1280,24 +1359,54 @@ internal sealed class GenericCharacterRuleProjectionModule : ICharacterRuleProje
         CharacterProjectionContext context)
     {
         var mechanic = CharacterProjectionJson.String(rule.Document, "mechanic");
-        if (string.Equals(mechanic, "caster-resource-choice", StringComparison.OrdinalIgnoreCase)
-            && context.Capabilities.Contains("spellcasting"))
+        var choosesResourceSystem =
+            string.Equals(mechanic, "caster-resource-choice", StringComparison.OrdinalIgnoreCase)
+            || CharacterProjectionJson.Boolean(
+                rule.Document,
+                "casterChoosesResourceSystem") == true;
+        if (!choosesResourceSystem)
         {
-            var choiceKey = "spellcasting.resource-system";
-            context.Spellcasting["spellcasting.resource-choice"] =
-                new CharacterSpellcastingView(
-                    "spellcasting.resource-choice",
-                    rule.Catalog.DisplayName,
-                    context.Choices.ContainsKey(choiceKey)
-                        ? CharacterResolutionStates.Resolved
-                        : CharacterResolutionStates.ChoiceRequired,
-                    null,
-                    context.Choices.GetValueOrDefault(choiceKey),
-                    null,
-                    null,
-                    [],
-                    context.Choices.ContainsKey(choiceKey) ? [] : [choiceKey],
-                    rule.Provenance);
+            return;
         }
+
+        var choiceKey = "spellcasting.resource-system";
+        var available = CharacterProjectionJson.Strings(
+                rule.Document,
+                "availableResourceSystems")
+            .Select(CharacterProjectionJson.NormalizeResourceSystemKey)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var hasChoice = context.Choices.TryGetValue(choiceKey, out var rawChoice);
+        var choice = hasChoice
+            ? CharacterProjectionJson.NormalizeResourceSystemKey(rawChoice!)
+            : null;
+        var valid = choice is null
+            || available.Length == 0
+            || available.Contains(choice, StringComparer.OrdinalIgnoreCase);
+
+        if (choice is not null && !valid)
+        {
+            context.Conflicts.Add(new CharacterProjectionConflictView(
+                "conflict.spellcasting.resource-system",
+                "invalid-runtime-choice",
+                $"Spellcasting resource system '{rawChoice}' is not allowed by the effective house rule.",
+                [],
+                [rule.Catalog.ConceptKey]));
+        }
+
+        context.Spellcasting["spellcasting.resource-choice"] =
+            new CharacterSpellcastingView(
+                "spellcasting.resource-choice",
+                rule.Catalog.DisplayName,
+                !hasChoice || !valid
+                    ? CharacterResolutionStates.ChoiceRequired
+                    : CharacterResolutionStates.Resolved,
+                null,
+                valid ? choice : null,
+                null,
+                null,
+                [],
+                !hasChoice || !valid ? [choiceKey] : [],
+                rule.Provenance);
     }
 }

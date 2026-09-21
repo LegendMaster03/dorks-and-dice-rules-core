@@ -80,7 +80,7 @@ Current field mappings intentionally cover only defensible equivalences:
 
 - spell level is derived from actual `CLASSES`/`DOMAINS` assignments only when those assignments agree on one level; class/domain access itself remains preserved as PCGen-specific mechanics;
 - recognized spell school, simple verbal/somatic components, instantaneous duration, and descriptions map to spell-family fields;
-- feat description and `MULT` repeatability map to feat-family fields, while prerequisites and other 3.x expressions remain source-specific;
+- feat description and `MULT` repeatability map to feat-family fields; the reviewed `PRESTAT`/`PRESKILL`/`PRECLASS` subset and simple `PREMULT` groups are additionally normalized under `_rulesCore.character.prerequisites`, while unsupported prerequisite expressions remain source-specific;
 - equipment weight maps directly, and PCGen `COST` is interpreted according to PCGen semantics: a bare numeric cost is gold pieces and is converted to the 5e.tools copper-piece `value` representation;
 - ordinary race size, walk speed, and racial `BONUS:STAT` modifiers can map to race-family equivalents when faithful;
 - monster size, recognized creature type, supported movement modes, CR, and descriptions can map directly.

@@ -278,3 +278,11 @@ Rules Core does not assume the ordinary unarmored formula when only a shield is 
 The bulk Character projection resolves attack and damage modifiers for equipped 5e.tools-shaped melee (`M`) and ranged (`R`) weapons when the source supplies a damage expression. Ranged weapons use Dexterity. Melee weapons use Strength unless the item has the `F` (Finesse) property; finesse remains an explicit runtime choice between Strength and Dexterity rather than Rules Core silently selecting the larger modifier.
 
 Weapon proficiency is derived when a selected class or other normalized rule grants a matching `qualification.weapons.*` capability. A caller can also supply the explicit boolean Character fact `weapon.<concept-key>.proficient`. Absence of both is treated as unknown, not as non-proficiency. Standard proficiency bonus, `bonusWeapon`, `bonusWeaponAttack`, `bonusWeaponDamage`, and caller-supplied `attack.<concept-key>.other` / `damage.<concept-key>.other` facts are incorporated with provenance-preserving contributions. Unsupported weapon roles remain unresolved.
+
+## Character projection spellcasting resources
+
+For a single selected caster whose effective class document exposes `rowsSpellProgression`, the bulk Character projection reads the row for the supplied class level and returns one `resource.spell-slot.<level>` resource for every nonzero slot maximum. The table remains source-owned; Rules Core selects the row and carries the class rule provenance into each resource.
+
+The published Dorks & Dice resource-choice house rule is recognized from its actual `casterChoosesResourceSystem` and `availableResourceSystems` fields. `spellcasting.resource-system` accepts the normalized choices `spell-slots` or `spell-points` (human forms such as `spell slots` are normalized). Until that choice is supplied, spellcasting resources are `choice-required`. A spell-points choice remains explicitly unresolved until a point-progression/conversion rule is normalized; Rules Core does not derive a point pool from slot counts.
+
+If more than one selected class contributes a standard spell-slot table, Rules Core reports the multiclass combination as unresolved instead of adding class-table slots together. Pact-magic and other nonstandard progressions are likewise preserved separately until their exact resource rules are normalized.

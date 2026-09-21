@@ -105,6 +105,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
         ResolveCoreMechanics(context, mechanicCatalog);
         ResolveSpellcastingMechanics(context);
+        ResolveSpellcastingResources(context);
         ResolveHealthMechanics(context);
         ResolvePrerequisites(context);
         ResolveLegacyMechanicPlaceholders(context, mechanicCatalog);
@@ -1571,6 +1572,191 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             Satisfied = satisfied,
             State = CharacterResolutionStates.Resolved,
             Reason = $"{actualDescription} is {actual}; requirement is >= {threshold}."
+        };
+    }
+
+    private static void ResolveSpellcastingResources(CharacterProjectionContext context)
+    {
+        if (!context.Capabilities.Contains("spellcasting"))
+        {
+            context.Spellcasting.Remove("spellcasting.resource-choice");
+            return;
+        }
+
+        context.Spellcasting.TryGetValue(
+            "spellcasting.resource-choice",
+            out var resourceChoice);
+        if (resourceChoice is not null
+            && !string.Equals(
+                resourceChoice.State,
+                CharacterResolutionStates.Resolved,
+                StringComparison.Ordinal))
+        {
+            context.Resources["resource.spellcasting"] = new CharacterResourceView(
+                "resource.spellcasting",
+                "Spellcasting Resource",
+                resourceChoice.State,
+                null,
+                null,
+                null,
+                [],
+                resourceChoice.Provenance);
+            return;
+        }
+
+        var selectedSystem = resourceChoice?.ResourceSystemKey;
+        if (string.Equals(selectedSystem, "spell-points", StringComparison.OrdinalIgnoreCase))
+        {
+            context.CurrentResources.TryGetValue(
+                "resource.spell-points",
+                out var currentPoints);
+            context.Resources["resource.spell-points"] = new CharacterResourceView(
+                "resource.spell-points",
+                "Spell Points",
+                CharacterResolutionStates.ApplicableUnresolved,
+                context.CurrentResources.ContainsKey("resource.spell-points")
+                    ? currentPoints
+                    : null,
+                null,
+                null,
+                [],
+                resourceChoice?.Provenance
+                    ?? CharacterProjectionContext.EmptyProvenance());
+            SetSpellcastingResourceSystem(
+                context,
+                "spell-points",
+                CharacterResolutionStates.ApplicableUnresolved);
+            return;
+        }
+
+        if (selectedSystem is not null
+            && !string.Equals(selectedSystem, "spell-slots", StringComparison.OrdinalIgnoreCase))
+        {
+            context.Resources["resource.spellcasting"] = new CharacterResourceView(
+                "resource.spellcasting",
+                "Spellcasting Resource",
+                CharacterResolutionStates.ApplicableUnresolved,
+                null,
+                null,
+                null,
+                [],
+                resourceChoice?.Provenance
+                    ?? CharacterProjectionContext.EmptyProvenance());
+            return;
+        }
+
+        var progressions = context.SpellSlotProgressions.Values
+            .OrderBy(value => value.ConceptKey, StringComparer.Ordinal)
+            .ToArray();
+        if (progressions.Length == 0)
+        {
+            if (selectedSystem is not null)
+            {
+                context.Resources["resource.spell-slots"] = new CharacterResourceView(
+                    "resource.spell-slots",
+                    "Spell Slots",
+                    CharacterResolutionStates.ApplicableUnresolved,
+                    null,
+                    null,
+                    null,
+                    [],
+                    resourceChoice?.Provenance
+                        ?? CharacterProjectionContext.EmptyProvenance());
+            }
+            return;
+        }
+
+        if (progressions.Length > 1)
+        {
+            context.Resources["resource.spell-slots"] = new CharacterResourceView(
+                "resource.spell-slots",
+                "Spell Slots",
+                CharacterResolutionStates.ApplicableUnresolved,
+                null,
+                null,
+                null,
+                [],
+                CharacterProjectionContext.EmptyProvenance());
+            context.Conflicts.Add(new CharacterProjectionConflictView(
+                "conflict.spellcasting.multiclass-slots",
+                "multiclass-spell-slot-progression",
+                "Multiple selected classes provide spell-slot tables. Rules Core preserves those source progressions but will not combine them until the effective multiclass caster-level rule is normalized.",
+                ["resource.spell-slots"],
+                progressions.Select(value => value.ConceptKey).ToArray()));
+            return;
+        }
+
+        var progression = progressions[0];
+        for (var index = 0; index < progression.SlotsBySpellLevel.Count; index++)
+        {
+            var maximum = progression.SlotsBySpellLevel[index];
+            if (maximum <= 0)
+            {
+                continue;
+            }
+
+            var spellLevel = index + 1;
+            var key = $"resource.spell-slot.{spellLevel}";
+            context.CurrentResources.TryGetValue(key, out var current);
+            context.Resources[key] = new CharacterResourceView(
+                key,
+                $"{Ordinal(spellLevel)}-Level Spell Slots",
+                CharacterResolutionStates.Resolved,
+                context.CurrentResources.ContainsKey(key) ? current : null,
+                maximum,
+                null,
+                [new CharacterMechanicContributionView(
+                    $"{progression.ConceptKey}.spell-slots.level-{spellLevel}",
+                    $"{progression.DisplayName} level {progression.ClassLevel} slot table",
+                    CharacterEffectOperations.Set,
+                    maximum,
+                    progression.CasterProgression,
+                    progression.ConceptKey,
+                    progression.Provenance)],
+                progression.Provenance);
+        }
+
+        SetSpellcastingResourceSystem(
+            context,
+            "spell-slots",
+            CharacterResolutionStates.Resolved);
+    }
+
+    private static void SetSpellcastingResourceSystem(
+        CharacterProjectionContext context,
+        string resourceSystemKey,
+        string state)
+    {
+        foreach (var pair in context.Spellcasting
+                     .Where(value =>
+                         !string.Equals(
+                             value.Key,
+                             "spellcasting.resource-choice",
+                             StringComparison.OrdinalIgnoreCase))
+                     .ToArray())
+        {
+            context.Spellcasting[pair.Key] = pair.Value with
+            {
+                State = state,
+                ResourceSystemKey = resourceSystemKey
+            };
+        }
+    }
+
+    private static string Ordinal(int value)
+    {
+        var mod100 = value % 100;
+        if (mod100 is 11 or 12 or 13)
+        {
+            return $"{value}th";
+        }
+
+        return (value % 10) switch
+        {
+            1 => $"{value}st",
+            2 => $"{value}nd",
+            3 => $"{value}rd",
+            _ => $"{value}th"
         };
     }
 
