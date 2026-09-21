@@ -244,7 +244,8 @@ internal static class LegacySrdMechanicalTranslator
         var originalHeading = ReadString(source, "originalHeading");
         if (!string.IsNullOrWhiteSpace(originalHeading))
         {
-            var headingMatch = SkillHeadingAbility.Match(originalHeading);
+            var normalizedHeading = Regex.Replace(originalHeading, "<[^>]+>", string.Empty);
+            var headingMatch = SkillHeadingAbility.Match(normalizedHeading);
             if (headingMatch.Success
                 && TryNormalizeAbilityKey(headingMatch.Groups["ability"].Value, out governingAbilityKey))
             {
