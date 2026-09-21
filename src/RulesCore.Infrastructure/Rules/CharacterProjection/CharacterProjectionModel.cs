@@ -43,6 +43,9 @@ internal sealed class CharacterProjectionContext
         ClassSkillKeys = new HashSet<string>(
             request.ClassSkillKeys?.Select(Normalize) ?? [],
             Keys);
+        HasClassSkillInput = request.ClassSkillKeys is not null;
+        HasTrainingInput = request.TrainingKeys is not null;
+        HasCompetencyRanksInput = request.CompetencyRanks is not null;
         Capabilities = new HashSet<string>(
             request.CapabilityKeys?.Select(Normalize) ?? [],
             Keys);
@@ -71,6 +74,9 @@ internal sealed class CharacterProjectionContext
     public HashSet<string> ActiveConditions { get; }
     public HashSet<string> TrainingKeys { get; }
     public HashSet<string> ClassSkillKeys { get; }
+    public bool HasClassSkillInput { get; }
+    public bool HasTrainingInput { get; }
+    public bool HasCompetencyRanksInput { get; }
     public HashSet<string> Capabilities { get; }
     public Dictionary<string, string> Choices { get; }
     public Dictionary<string, int> Rolls { get; }
@@ -88,6 +94,14 @@ internal sealed class CharacterProjectionContext
     public HashSet<string> SaveProficiencyAbilities { get; } = new(Keys);
     public bool UsesStandardProficiency { get; set; }
     public int StandardProficiencyLevel { get; set; }
+    public string? SizeCategory { get; private set; }
+    public List<CharacterMechanicContributionView> ThreeXBaseAttackContributions { get; } = [];
+    public Dictionary<string, List<CharacterMechanicContributionView>> ThreeXSaveContributions { get; } =
+        new(Keys);
+    public Dictionary<string, HashSet<string>> DerivedClassSkillGrantSources { get; } =
+        new(Keys);
+    public HashSet<string> DerivedClassSkillTypes { get; } = new(Keys);
+    public bool HasDerivedClassSkillData { get; set; }
 
     public Dictionary<string, CharacterResolvedMechanicView> Mechanics { get; } = new(Keys);
     public Dictionary<string, CharacterCapabilityView> CapabilityViews { get; } = new(Keys);
@@ -116,6 +130,93 @@ internal sealed class CharacterProjectionContext
                 StringComparison.OrdinalIgnoreCase))
             .Sum(value => Math.Max(value.Level, 0))
         ?? 0;
+
+
+    public void AddSizeCategory(
+        string sizeCategory,
+        string sourceConceptKey)
+    {
+        if (string.IsNullOrWhiteSpace(sizeCategory))
+        {
+            return;
+        }
+
+        var normalized = sizeCategory.Trim().ToUpperInvariant();
+        if (SizeCategory is null)
+        {
+            SizeCategory = normalized;
+            return;
+        }
+        if (string.Equals(SizeCategory, normalized, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        Conflicts.Add(new CharacterProjectionConflictView(
+            "conflict.character-size",
+            CharacterResolutionStates.Conflict,
+            $"Selected Character rules provide conflicting size categories '{SizeCategory}' and '{normalized}'.",
+            ["combat.grapple"],
+            [sourceConceptKey]));
+    }
+
+    public void AddThreeXSaveContribution(
+        string saveKey,
+        CharacterMechanicContributionView contribution)
+    {
+        var normalized = Normalize(saveKey);
+        if (!ThreeXSaveContributions.TryGetValue(normalized, out var values))
+        {
+            values = [];
+            ThreeXSaveContributions.Add(normalized, values);
+        }
+        values.Add(contribution);
+    }
+
+    public void AddClassSkill(
+        string value,
+        string sourceConceptKey)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return;
+        }
+
+        HasDerivedClassSkillData = true;
+        var normalized = value.Trim();
+        if (normalized.StartsWith("TYPE.", StringComparison.OrdinalIgnoreCase))
+        {
+            DerivedClassSkillTypes.Add(normalized["TYPE.".Length..]);
+            return;
+        }
+
+        if (!DerivedClassSkillGrantSources.TryGetValue(normalized, out var sources))
+        {
+            sources = new HashSet<string>(Keys);
+            DerivedClassSkillGrantSources.Add(normalized, sources);
+        }
+        sources.Add(sourceConceptKey);
+    }
+
+    public IReadOnlyList<string> FindClassSkillGrantSources(
+        string displayName,
+        string? familyName)
+    {
+        var result = new HashSet<string>(Keys);
+        if (DerivedClassSkillGrantSources.TryGetValue(displayName, out var direct))
+        {
+            result.UnionWith(direct);
+        }
+        if (!string.IsNullOrWhiteSpace(familyName)
+            && DerivedClassSkillTypes.Contains(familyName))
+        {
+            foreach (var sources in DerivedClassSkillGrantSources.Values)
+            {
+                result.UnionWith(sources);
+            }
+        }
+        return result.OrderBy(value => value, StringComparer.Ordinal).ToArray();
+    }
 
     public void AddAbilityContribution(
         string abilityKey,

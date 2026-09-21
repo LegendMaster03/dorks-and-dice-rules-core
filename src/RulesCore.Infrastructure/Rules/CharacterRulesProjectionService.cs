@@ -146,6 +146,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
     {
         ResolveAbilities(context);
         ResolveProficiency(context);
+        ResolveThreeXCombatMechanics(context);
         ResolveInitiative(context);
         ResolveAbilitySavingThrows(context);
         ResolveCompetencies(context, mechanicCatalog);
@@ -314,6 +315,185 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         context.Capabilities.Add("proficiency.standard");
     }
 
+
+    private static void ResolveThreeXCombatMechanics(CharacterProjectionContext context)
+    {
+        if (context.ThreeXBaseAttackContributions.Count > 0)
+        {
+            var value = checked(context.ThreeXBaseAttackContributions.Sum(contribution =>
+                contribution.NumericValue ?? 0));
+            context.Mechanics["combat.base-attack-bonus"] = new CharacterResolvedMechanicView(
+                "combat.base-attack-bonus",
+                "combat-value",
+                "Base Attack Bonus",
+                CharacterResolutionStates.Resolved,
+                value,
+                null,
+                null,
+                [],
+                [],
+                [],
+                [],
+                context.ThreeXBaseAttackContributions.ToArray(),
+                CharacterProjectionContext.EmptyProvenance());
+        }
+
+        var saveAbilities = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["fortitude"] = "constitution",
+            ["reflex"] = "dexterity",
+            ["will"] = "wisdom"
+        };
+
+        foreach (var (save, ability) in saveAbilities)
+        {
+            if (!context.ThreeXSaveContributions.TryGetValue(save, out var baseContributions)
+                || baseContributions.Count == 0)
+            {
+                continue;
+            }
+
+            var baseValue = checked(baseContributions.Sum(contribution =>
+                contribution.NumericValue ?? 0));
+            context.Mechanics[$"save.{save}.base"] = new CharacterResolvedMechanicView(
+                $"save.{save}.base",
+                "saving-throw-base",
+                $"{CharacterProjectionJson.Humanize(save)} Base Save",
+                CharacterResolutionStates.Resolved,
+                baseValue,
+                null,
+                null,
+                [],
+                [],
+                [],
+                [],
+                baseContributions.ToArray(),
+                CharacterProjectionContext.EmptyProvenance());
+
+            if (!TryResolvedNumeric(context, $"ability.{ability}.modifier", out var abilityModifier))
+            {
+                context.Mechanics[$"save.{save}"] = new CharacterResolvedMechanicView(
+                    $"save.{save}",
+                    "saving-throw",
+                    CharacterProjectionJson.Humanize(save),
+                    CharacterResolutionStates.MissingCharacterInput,
+                    null,
+                    null,
+                    null,
+                    [$"ability.{ability}.base"],
+                    [],
+                    [],
+                    [],
+                    baseContributions.ToArray(),
+                    CharacterProjectionContext.EmptyProvenance());
+                continue;
+            }
+
+            var other = context.IntegerFacts.GetValueOrDefault($"save.{save}.other");
+            var contributions = new List<CharacterMechanicContributionView>(baseContributions)
+            {
+                Contribution(
+                    $"ability.{ability}.modifier",
+                    $"{CharacterProjectionJson.Humanize(ability)} modifier",
+                    abilityModifier)
+            };
+            if (other != 0)
+            {
+                contributions.Add(Contribution($"save.{save}.other", "Other modifiers", other));
+            }
+
+            context.Mechanics[$"save.{save}"] = new CharacterResolvedMechanicView(
+                $"save.{save}",
+                "saving-throw",
+                CharacterProjectionJson.Humanize(save),
+                CharacterResolutionStates.Resolved,
+                checked(baseValue + abilityModifier + other),
+                null,
+                null,
+                [],
+                [],
+                [],
+                [],
+                contributions,
+                CharacterProjectionContext.EmptyProvenance());
+        }
+
+        ResolveThreeXGrapple(context);
+    }
+
+    private static void ResolveThreeXGrapple(CharacterProjectionContext context)
+    {
+        if (!TryResolvedNumeric(context, "combat.base-attack-bonus", out var baseAttackBonus))
+        {
+            return;
+        }
+        if (!TryResolvedNumeric(context, "ability.strength.modifier", out var strengthModifier))
+        {
+            context.Mechanics["combat.grapple"] = Unresolved(
+                "combat.grapple",
+                "combat-value",
+                "Grapple",
+                CharacterResolutionStates.MissingCharacterInput,
+                ["ability.strength.base"]);
+            return;
+        }
+
+        int sizeModifier;
+        if (context.IntegerFacts.TryGetValue("combat.grapple.size-modifier", out var explicitSizeModifier))
+        {
+            sizeModifier = explicitSizeModifier;
+        }
+        else if (!TryThreeXSizeModifier(context.SizeCategory, out sizeModifier))
+        {
+            context.Mechanics["combat.grapple"] = Unresolved(
+                "combat.grapple",
+                "combat-value",
+                "Grapple",
+                CharacterResolutionStates.MissingCharacterInput,
+                ["combat.grapple.size-modifier"]);
+            return;
+        }
+
+        var other = context.IntegerFacts.GetValueOrDefault("combat.grapple.other");
+        context.Mechanics["combat.grapple"] = new CharacterResolvedMechanicView(
+            "combat.grapple",
+            "combat-value",
+            "Grapple",
+            CharacterResolutionStates.Resolved,
+            checked(baseAttackBonus + strengthModifier + sizeModifier + other),
+            null,
+            null,
+            [],
+            [],
+            [],
+            [],
+            [
+                Contribution("combat.base-attack-bonus", "Base attack bonus", baseAttackBonus),
+                Contribution("ability.strength.modifier", "Strength modifier", strengthModifier),
+                Contribution("combat.grapple.size-modifier", "Size modifier", sizeModifier),
+                Contribution("combat.grapple.other", "Other modifiers", other)
+            ],
+            CharacterProjectionContext.EmptyProvenance());
+    }
+
+    private static bool TryThreeXSizeModifier(string? sizeCategory, out int modifier)
+    {
+        modifier = sizeCategory?.Trim().ToUpperInvariant() switch
+        {
+            "F" or "FINE" => -16,
+            "D" or "DIMINUTIVE" => -12,
+            "T" or "TINY" => -8,
+            "S" or "SMALL" => -4,
+            "M" or "MEDIUM" => 0,
+            "L" or "LARGE" => 4,
+            "H" or "HUGE" => 8,
+            "G" or "GARGANTUAN" => 12,
+            "C" or "COLOSSAL" => 16,
+            _ => int.MinValue
+        };
+        return modifier != int.MinValue;
+    }
+
     private static void ResolveInitiative(CharacterProjectionContext context)
     {
         const string key = "combat.initiative";
@@ -440,7 +620,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                         .Distinct(StringComparer.OrdinalIgnoreCase)
                         .OrderBy(value => value, StringComparer.Ordinal)
                         .ToArray(),
-                    provenance: mechanic.Provenance ?? mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                    provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
                 continue;
             }
 
@@ -451,7 +631,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     "competency",
                     mechanic.DisplayName,
                     CharacterResolutionStates.ApplicableUnresolved,
-                    provenance: mechanic.Provenance ?? mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                    provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
                 continue;
             }
 
@@ -464,7 +644,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     mechanic.DisplayName,
                     CharacterResolutionStates.MissingCharacterInput,
                     [$"ability.{ability}.base"],
-                    provenance: mechanic.Provenance ?? mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                    provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
                 continue;
             }
 
@@ -474,31 +654,94 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             };
             var total = abilityModifier;
 
-            if (profile.SupportsRanks)
+            if (profile.SupportsClassSkillState)
             {
-                var ranks = context.CompetencyRanks.GetValueOrDefault(competency.ConceptKey);
-                total = checked(total + ranks);
-                contributions.Add(Contribution(
-                    $"{competency.ConceptKey}.ranks",
-                    "Ranks",
-                    ranks));
+                var explicitClassSkill = context.ClassSkillKeys.Contains(competency.ConceptKey)
+                    || context.ClassSkillKeys.Contains(mechanic.MechanicKey);
+                var derivedSources = context.FindClassSkillGrantSources(
+                    mechanic.DisplayName,
+                    profile.FamilyName);
+                bool? isClassSkill = explicitClassSkill || derivedSources.Count > 0
+                    ? true
+                    : context.HasClassSkillInput || context.HasDerivedClassSkillData
+                        ? false
+                        : null;
+                context.Qualifications[$"qualification.class-skill.{competency.ConceptKey}"] =
+                    new CharacterQualificationView(
+                        $"qualification.class-skill.{competency.ConceptKey}",
+                        "class-skill",
+                        $"{mechanic.DisplayName} Class Skill",
+                        isClassSkill,
+                        isClassSkill.HasValue
+                            ? CharacterResolutionStates.Resolved
+                            : CharacterResolutionStates.ApplicableUnresolved,
+                        derivedSources,
+                        mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
             }
 
-            if (profile.SupportsTrainingState && context.TrainingKeys.Contains(competency.ConceptKey))
+            if (profile.SupportsRanks)
             {
-                if (!TryResolvedNumeric(context, "proficiency.standard", out var proficiency))
+                if (!context.HasCompetencyRanksInput
+                    || !context.CompetencyRanks.TryGetValue(competency.ConceptKey, out var ranks))
                 {
                     context.Mechanics[mechanic.MechanicKey] = Unresolved(
                         mechanic.MechanicKey,
                         "competency",
                         mechanic.DisplayName,
                         CharacterResolutionStates.MissingCharacterInput,
-                        ["advancement.levels"],
-                        provenance: mechanic.Provenance ?? mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                        [$"{competency.ConceptKey}.ranks"],
+                        provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
                     continue;
                 }
-                total = checked(total + proficiency);
-                contributions.Add(Contribution("proficiency.standard", "Training proficiency", proficiency));
+                total = checked(total + ranks);
+                contributions.Add(Contribution(
+                    $"{competency.ConceptKey}.ranks",
+                    "Ranks",
+                    ranks));
+
+                if (profile.TrainedOnly == true && ranks <= 0)
+                {
+                    context.Mechanics[mechanic.MechanicKey] = Unresolved(
+                        mechanic.MechanicKey,
+                        "competency",
+                        mechanic.DisplayName,
+                        CharacterResolutionStates.MissingCapability,
+                        missingCapabilities: [$"competency.trained.{competency.ConceptKey}"],
+                        provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                    continue;
+                }
+            }
+
+            if (profile.SupportsTrainingState)
+            {
+                if (!context.HasTrainingInput)
+                {
+                    context.Mechanics[mechanic.MechanicKey] = Unresolved(
+                        mechanic.MechanicKey,
+                        "competency",
+                        mechanic.DisplayName,
+                        CharacterResolutionStates.MissingCharacterInput,
+                        [$"{competency.ConceptKey}.trained"],
+                        provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                    continue;
+                }
+
+                if (context.TrainingKeys.Contains(competency.ConceptKey))
+                {
+                    if (!TryResolvedNumeric(context, "proficiency.standard", out var proficiency))
+                    {
+                        context.Mechanics[mechanic.MechanicKey] = Unresolved(
+                            mechanic.MechanicKey,
+                            "competency",
+                            mechanic.DisplayName,
+                            CharacterResolutionStates.MissingCharacterInput,
+                            ["advancement.levels"],
+                            provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                        continue;
+                    }
+                    total = checked(total + proficiency);
+                    contributions.Add(Contribution("proficiency.standard", "Training proficiency", proficiency));
+                }
             }
 
             var other = context.IntegerFacts.GetValueOrDefault($"{mechanic.MechanicKey}.other");
@@ -576,13 +819,17 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
     private static void ResolveSpellcastingMechanics(CharacterProjectionContext context)
     {
-        if (!context.Spellcasting.Values.Any(value => value.CastingAbilityKey is not null))
+        if (!context.Spellcasting.Values.Any(value =>
+                value.CastingAbilityKey is not null
+                && !string.Equals(value.ResourceSystemKey, "spell-slots-3x", StringComparison.OrdinalIgnoreCase)))
         {
             return;
         }
 
         foreach (var system in context.Spellcasting.Values
-                     .Where(value => value.CastingAbilityKey is not null)
+                     .Where(value =>
+                         value.CastingAbilityKey is not null
+                         && !string.Equals(value.ResourceSystemKey, "spell-slots-3x", StringComparison.OrdinalIgnoreCase))
                      .ToArray())
         {
             var ability = CharacterProjectionJson.NormalizeAbilityKey(system.CastingAbilityKey!);
@@ -696,7 +943,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     mechanic.Kind,
                     mechanic.DisplayName,
                     CharacterResolutionStates.ApplicableUnresolved,
-                    provenance: mechanic.Provenance ?? mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                    provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
             }
         }
     }

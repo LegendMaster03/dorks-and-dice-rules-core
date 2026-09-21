@@ -21,8 +21,39 @@ internal sealed class RaceCharacterRuleProjectionModule : ICharacterRuleProjecti
             rule.Catalog.ConceptKey,
             rule.Provenance);
 
+        ProjectSize(rule, context);
         ProjectMovement(rule, context);
         ProjectAbilityAdjustments(rule, context);
+    }
+
+
+    private static void ProjectSize(
+        CharacterProjectionRule rule,
+        CharacterProjectionContext context)
+    {
+        if (!CharacterProjectionJson.TryGetProperty(rule.Document, "size", out var size))
+        {
+            return;
+        }
+
+        string? value = null;
+        if (size.ValueKind == JsonValueKind.String)
+        {
+            value = size.GetString();
+        }
+        else if (size.ValueKind == JsonValueKind.Array)
+        {
+            var first = size.EnumerateArray().FirstOrDefault();
+            if (first.ValueKind == JsonValueKind.String)
+            {
+                value = first.GetString();
+            }
+        }
+
+        if (!string.IsNullOrWhiteSpace(value))
+        {
+            context.AddSizeCategory(value, rule.Catalog.ConceptKey);
+        }
     }
 
     private static void ProjectMovement(CharacterProjectionRule rule, CharacterProjectionContext context)
@@ -184,6 +215,250 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
         ProjectSpellcasting(rule, context);
         ProjectStartingQualifications(rule, context);
         ProjectClassFeatures(rule, context);
+        ProjectNormalizedThreeXClass(rule, context, level);
+    }
+
+
+    private static void ProjectNormalizedThreeXClass(
+        CharacterProjectionRule rule,
+        CharacterProjectionContext context,
+        int level)
+    {
+        if (!CharacterProjectionJson.TryGetProperty(rule.Document, "_rulesCore", out var rulesCore)
+            || !CharacterProjectionJson.TryGetProperty(rulesCore, "character", out var character)
+            || character.ValueKind != JsonValueKind.Object)
+        {
+            return;
+        }
+
+        var skillPoints = CharacterProjectionJson.Integer(character, "skillPointsPerLevel");
+        if (skillPoints is int points)
+        {
+            var key = $"advancement.{rule.Catalog.ConceptKey}.skill-points-per-level";
+            context.Mechanics[key] = new CharacterResolvedMechanicView(
+                key,
+                "advancement",
+                $"{rule.Catalog.DisplayName} Skill Points per Level",
+                CharacterResolutionStates.Resolved,
+                points,
+                null,
+                null,
+                [],
+                [],
+                [],
+                [],
+                [new CharacterMechanicContributionView(
+                    key,
+                    rule.Catalog.DisplayName,
+                    CharacterEffectOperations.Set,
+                    points,
+                    null,
+                    rule.Catalog.ConceptKey,
+                    rule.Provenance)],
+                rule.Provenance);
+        }
+
+        if (CharacterProjectionJson.TryGetProperty(character, "classSkills", out var classSkills)
+            && classSkills.ValueKind == JsonValueKind.Array)
+        {
+            context.HasDerivedClassSkillData = true;
+            foreach (var skill in classSkills.EnumerateArray()
+                         .Where(value => value.ValueKind == JsonValueKind.String)
+                         .Select(value => value.GetString())
+                         .Where(value => !string.IsNullOrWhiteSpace(value)))
+            {
+                context.AddClassSkill(skill!, rule.Catalog.ConceptKey);
+            }
+        }
+
+        var maximumLevel = CharacterProjectionJson.Integer(character, "maximumLevel");
+        if (maximumLevel is int maximum && level > maximum)
+        {
+            context.Conflicts.Add(new CharacterProjectionConflictView(
+                $"conflict.{rule.Catalog.ConceptKey}.maximum-level",
+                CharacterResolutionStates.Conflict,
+                $"{rule.Catalog.DisplayName} is limited to {maximum} levels by the effective rule, but the Character supplies level {level}.",
+                [],
+                [rule.Catalog.ConceptKey]));
+        }
+
+        var baseAttackProgression = CharacterProjectionJson.String(character, "baseAttackProgression");
+        if (level > 0 && !string.IsNullOrWhiteSpace(baseAttackProgression))
+        {
+            var value = ThreeXClassProgressionMath.BaseAttackBonus(level, baseAttackProgression);
+            context.ThreeXBaseAttackContributions.Add(new CharacterMechanicContributionView(
+                $"{rule.Catalog.ConceptKey}.base-attack-bonus",
+                $"{rule.Catalog.DisplayName} BAB",
+                CharacterEffectOperations.Add,
+                value,
+                baseAttackProgression,
+                rule.Catalog.ConceptKey,
+                rule.Provenance));
+        }
+
+        if (level > 0
+            && CharacterProjectionJson.TryGetProperty(character, "saveProgressions", out var saveProgressions)
+            && saveProgressions.ValueKind == JsonValueKind.Object)
+        {
+            foreach (var save in saveProgressions.EnumerateObject())
+            {
+                if (save.Value.ValueKind != JsonValueKind.String)
+                {
+                    continue;
+                }
+                var progression = save.Value.GetString();
+                if (string.IsNullOrWhiteSpace(progression))
+                {
+                    continue;
+                }
+
+                var value = ThreeXClassProgressionMath.BaseSave(level, progression);
+                context.AddThreeXSaveContribution(
+                    save.Name,
+                    new CharacterMechanicContributionView(
+                        $"{rule.Catalog.ConceptKey}.save.{save.Name}",
+                        $"{rule.Catalog.DisplayName} {CharacterProjectionJson.Humanize(save.Name)} base save",
+                        CharacterEffectOperations.Add,
+                        value,
+                        progression,
+                        rule.Catalog.ConceptKey,
+                        rule.Provenance));
+            }
+        }
+
+        var spellcastingProfile = CharacterProjectionJson.String(character, "spellcastingProfile");
+        var spellcastingAbility = CharacterProjectionJson.String(character, "spellcastingAbility");
+        if (string.Equals(spellcastingProfile, "dnd-3x", StringComparison.OrdinalIgnoreCase)
+            && !string.IsNullOrWhiteSpace(spellcastingAbility))
+        {
+            var ability = CharacterProjectionJson.NormalizeAbilityKey(spellcastingAbility);
+            context.AddCapability(
+                "spellcasting",
+                "Spellcasting",
+                rule.Catalog.ConceptKey,
+                rule.Provenance);
+            context.AddCapability(
+                "spellcasting.dnd-3x",
+                "3.x Spellcasting",
+                rule.Catalog.ConceptKey,
+                rule.Provenance);
+            context.Spellcasting[$"spellcasting.{rule.Catalog.ConceptKey}"] =
+                new CharacterSpellcastingView(
+                    $"spellcasting.{rule.Catalog.ConceptKey}",
+                    $"{rule.Catalog.DisplayName} Spellcasting",
+                    CharacterResolutionStates.ApplicableUnresolved,
+                    ability,
+                    "spell-slots-3x",
+                    null,
+                    null,
+                    [],
+                    [],
+                    rule.Provenance);
+        }
+
+        ProjectNormalizedAdvancementFeatures(rule, context, character, level);
+        ProjectNormalizedPrerequisites(rule, context, character);
+    }
+
+    private static void ProjectNormalizedAdvancementFeatures(
+        CharacterProjectionRule rule,
+        CharacterProjectionContext context,
+        JsonElement character,
+        int level)
+    {
+        if (!CharacterProjectionJson.TryGetProperty(character, "advancementFeatures", out var features)
+            || features.ValueKind != JsonValueKind.Array)
+        {
+            return;
+        }
+
+        var index = 0;
+        foreach (var feature in features.EnumerateArray())
+        {
+            if (feature.ValueKind != JsonValueKind.Object)
+            {
+                index++;
+                continue;
+            }
+
+            var acquisitionLevel = CharacterProjectionJson.Integer(feature, "level");
+            var displayName = CharacterProjectionJson.String(feature, "name");
+            if (acquisitionLevel is null
+                || string.IsNullOrWhiteSpace(displayName)
+                || acquisitionLevel > level)
+            {
+                index++;
+                continue;
+            }
+
+            var key = $"feature.{rule.Catalog.ConceptKey}.level-{acquisitionLevel}.{Slug(displayName)}.{index++}";
+            context.AddFeature(
+                key,
+                displayName,
+                CharacterProjectionJson.String(feature, "kind") ?? "advancement-feature",
+                CharacterResolutionStates.Resolved,
+                rule.Catalog.ConceptKey,
+                rule.Provenance);
+        }
+    }
+
+    private static void ProjectNormalizedPrerequisites(
+        CharacterProjectionRule rule,
+        CharacterProjectionContext context,
+        JsonElement character)
+    {
+        if (!CharacterProjectionJson.TryGetProperty(character, "prerequisites", out var prerequisites)
+            || prerequisites.ValueKind != JsonValueKind.Array)
+        {
+            return;
+        }
+
+        var requirements = new List<CharacterPrerequisiteRequirementView>();
+        var groupIndex = 0;
+        foreach (var group in prerequisites.EnumerateArray())
+        {
+            if (group.ValueKind != JsonValueKind.Object
+                || !CharacterProjectionJson.TryGetProperty(group, "requirements", out var groupRequirements)
+                || groupRequirements.ValueKind != JsonValueKind.Array)
+            {
+                groupIndex++;
+                continue;
+            }
+
+            var kind = CharacterProjectionJson.String(group, "kind") ?? "source-defined";
+            var matchCount = CharacterProjectionJson.Integer(group, "matchCount") ?? groupRequirements.GetArrayLength();
+            var itemIndex = 0;
+            foreach (var requirement in groupRequirements.EnumerateArray())
+            {
+                if (requirement.ValueKind != JsonValueKind.Object)
+                {
+                    itemIndex++;
+                    continue;
+                }
+
+                requirements.Add(new CharacterPrerequisiteRequirementView(
+                    $"{rule.Catalog.ConceptKey}.prerequisite.{groupIndex}.{itemIndex++}",
+                    kind,
+                    CharacterProjectionJson.String(requirement, "targetKey"),
+                    CharacterProjectionJson.String(requirement, "operator"),
+                    CharacterProjectionJson.Integer(requirement, "value"),
+                    CharacterProjectionJson.String(requirement, "targetName"),
+                    null,
+                    CharacterResolutionStates.ApplicableUnresolved,
+                    $"Source prerequisite group requires {matchCount} matching condition(s)."));
+            }
+            groupIndex++;
+        }
+
+        if (requirements.Count > 0)
+        {
+            context.Prerequisites[rule.Catalog.ConceptKey] = new CharacterPrerequisiteView(
+                rule.Catalog.ConceptKey,
+                CharacterResolutionStates.ApplicableUnresolved,
+                null,
+                requirements,
+                rule.Provenance);
+        }
     }
 
     private static void ProjectSavingThrowTraining(

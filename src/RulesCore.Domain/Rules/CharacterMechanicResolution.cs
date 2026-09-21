@@ -182,3 +182,56 @@ public static class StandardDndCharacterMath
         return checked(2 + ((characterLevel - 1) / 4));
     }
 }
+
+public static class ThreeXBaseAttackProgressionKinds
+{
+    public const string Full = "full";
+    public const string ThreeQuarters = "three-quarters";
+    public const string Half = "half";
+}
+
+public static class ThreeXSaveProgressionKinds
+{
+    public const string Good = "good";
+    public const string Poor = "poor";
+}
+
+public static class ThreeXClassProgressionMath
+{
+    public static int BaseAttackBonus(int classLevel, string progression)
+    {
+        ValidateLevel(classLevel);
+        return progression?.Trim().ToLowerInvariant() switch
+        {
+            ThreeXBaseAttackProgressionKinds.Full => classLevel,
+            ThreeXBaseAttackProgressionKinds.ThreeQuarters => checked((classLevel * 3) / 4),
+            ThreeXBaseAttackProgressionKinds.Half => classLevel / 2,
+            _ => throw new ArgumentException(
+                $"Unsupported 3.x base attack progression '{progression}'.",
+                nameof(progression))
+        };
+    }
+
+    public static int BaseSave(int classLevel, string progression)
+    {
+        ValidateLevel(classLevel);
+        return progression?.Trim().ToLowerInvariant() switch
+        {
+            ThreeXSaveProgressionKinds.Good => classLevel == 0 ? 0 : checked(2 + (classLevel / 2)),
+            ThreeXSaveProgressionKinds.Poor => classLevel / 3,
+            _ => throw new ArgumentException(
+                $"Unsupported 3.x save progression '{progression}'.",
+                nameof(progression))
+        };
+    }
+
+    private static void ValidateLevel(int classLevel)
+    {
+        if (classLevel < 0)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(classLevel),
+                "Class level can not be negative.");
+        }
+    }
+}

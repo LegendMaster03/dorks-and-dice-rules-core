@@ -1135,6 +1135,147 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task CharacterProjectionResolvesThreeXClassBabSavesGrappleAndAdvancementFeatures()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-class-{token}";
+        var conceptKey = $"class.example-martial-{token}";
+        var actor = $"character-projection-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var campaign = new SourceRepresentationArtifact(
+                "example.pcc",
+                Encoding.UTF8.GetBytes("""
+                    CAMPAIGN:Character Projection Class
+                    GAMEMODE:35e
+                    SOURCELONG:Character Projection Class
+                    SOURCESHORT:CPC
+                    CLASS:example_classes.lst
+                    """),
+                $"integration:character-projection:{token}#data/35e/example/example.pcc");
+            var classes = new SourceRepresentationArtifact(
+                "example_classes.lst",
+                Encoding.UTF8.GetBytes(string.Join('\n',
+                [
+                    "CLASS:Example Martial\tHD:8\tTYPE:Base.PC\tBONUS:COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")*3/4\tBONUS:SAVE|BASE.Fortitude,BASE.Will|classlevel(\"APPLIEDAS=NONEPIC\")/3\tBONUS:SAVE|BASE.Reflex|classlevel(\"APPLIEDAS=NONEPIC\")/2+2",
+                    "CLASS:Example Martial\tSTARTSKILLPTS:4\tCSKILL:Climb|Jump|TYPE.Craft",
+                    "1\tABILITY:Special Ability|AUTOMATIC|Opening Feature",
+                    "2\tSAB:Second Feature"
+                ])),
+                $"integration:character-projection:{token}#data/35e/example/example_classes.lst");
+            var representation = new PcGenSourceFormatAdapter()
+                .TryReadMany([campaign, classes])
+                .Single(value => value.Artifact.FileName == "example_classes.lst");
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Character Projection Class {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    representation));
+            packageId = imported.PackageId;
+            var source = Assert.Single(imported.Entities);
+
+            var concept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(conceptKey, source.EntityType, source.Name),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                concept.Value.Id,
+                new BindRuleConceptSourceRequest(source.EntityId),
+                actor);
+            var revisionId = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == source.EntityId)
+                .Select(value => value.Id)
+                .SingleAsync();
+            await globalRules.SetDecisionAsync(
+                concept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionId,
+                    "Character projection 3.x class fixture."),
+                actor);
+            await globalRules.PublishAsync(actor);
+
+            var result = await projection.ResolveGlobalAsync(
+                new CharacterRulesProjectionRequest(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 14,
+                        ["dexterity"] = 16,
+                        ["constitution"] = 14,
+                        ["intelligence"] = 10,
+                        ["wisdom"] = 12,
+                        ["charisma"] = 8
+                    },
+                    Advancements:
+                    [
+                        new CharacterAdvancementFactInput(conceptKey, 5)
+                    ],
+                    IntegerFacts: new Dictionary<string, int>
+                    {
+                        ["combat.grapple.size-modifier"] = 0
+                    }),
+                userId: null);
+
+            Assert.Equal(3, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "combat.base-attack-bonus").NumericValue);
+            Assert.Equal(3, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "save.fortitude").NumericValue);
+            Assert.Equal(7, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "save.reflex").NumericValue);
+            Assert.Equal(2, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "save.will").NumericValue);
+            Assert.Equal(5, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "combat.grapple").NumericValue);
+            Assert.Equal(4, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == $"advancement.{conceptKey}.skill-points-per-level").NumericValue);
+
+            var hitDice = Assert.Single(
+                result.Resources,
+                value => value.ResourceKey == $"resource.hit-die.{conceptKey}");
+            Assert.Equal(5, hitDice.MaximumValue);
+            Assert.Equal(CharacterResolutionStates.RollRequired, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "health.maximum-hp").State);
+            Assert.Contains(
+                result.Features,
+                value => value.DisplayName == "Opening Feature"
+                    && value.State == CharacterResolutionStates.Resolved);
+            Assert.Contains(
+                result.Features,
+                value => value.DisplayName == "Second Feature"
+                    && value.State == CharacterResolutionStates.Resolved);
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
     private static HttpRequestMessage HostedRequest(HttpMethod method, string path, string ticket)
     {
         var request = new HttpRequestMessage(method, path);

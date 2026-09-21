@@ -81,6 +81,43 @@ public sealed class CharacterMechanicResolutionTests
         Assert.Equal(expected, StandardDndCharacterMath.ProficiencyBonusForCharacterLevel(level));
     }
 
+
+    [Theory]
+    [InlineData(1, "full", 1)]
+    [InlineData(5, "full", 5)]
+    [InlineData(1, "three-quarters", 0)]
+    [InlineData(5, "three-quarters", 3)]
+    [InlineData(8, "three-quarters", 6)]
+    [InlineData(1, "half", 0)]
+    [InlineData(5, "half", 2)]
+    public void ThreeXBaseAttackProgressionsUseClassLevelTables(
+        int level,
+        string progression,
+        int expected)
+    {
+        Assert.Equal(
+            expected,
+            ThreeXClassProgressionMath.BaseAttackBonus(level, progression));
+    }
+
+    [Theory]
+    [InlineData(1, "good", 2)]
+    [InlineData(2, "good", 3)]
+    [InlineData(5, "good", 4)]
+    [InlineData(1, "poor", 0)]
+    [InlineData(3, "poor", 1)]
+    [InlineData(5, "poor", 1)]
+    [InlineData(6, "poor", 2)]
+    public void ThreeXSaveProgressionsUseClassLevelTables(
+        int level,
+        string progression,
+        int expected)
+    {
+        Assert.Equal(
+            expected,
+            ThreeXClassProgressionMath.BaseSave(level, progression));
+    }
+
     [Fact]
     public void ResolutionStatesDoNotConflateUnknownWithFalseOrZero()
     {
