@@ -49,6 +49,80 @@ public sealed class SourceFormatAdapterIntegrationTests
     }
 
     [Fact]
+    public void PdfAdapterScopesPageIdentityToStableDocumentIdentity()
+    {
+        var firstBytes = BuildPdf(["Title: First Document", "First document page one."]);
+        var secondBytes = BuildPdf(["Title: Second Document", "Second document page one."]);
+        var refreshedFirstBytes = BuildPdf(["Title: First Document", "Updated first document page one."]);
+
+        var adapter = new PdfSourceFormatAdapter();
+        var first = RequireNotNull(adapter.TryRead(new SourceRepresentationArtifact(
+            "docs/first.pdf",
+            firstBytes,
+            "web:https://example.invalid/tree/data#docs/first.pdf")));
+        var second = RequireNotNull(adapter.TryRead(new SourceRepresentationArtifact(
+            "docs/second.pdf",
+            secondBytes,
+            "web:https://example.invalid/tree/data#docs/second.pdf")));
+        var refreshedFirst = RequireNotNull(adapter.TryRead(new SourceRepresentationArtifact(
+            "docs/first.pdf",
+            refreshedFirstBytes,
+            "web:https://example.invalid/tree/data#docs/first.pdf")));
+
+        var firstPage = Assert.Single(first.Records);
+        var secondPage = Assert.Single(second.Records);
+        var refreshedFirstPage = Assert.Single(refreshedFirst.Records);
+
+        Assert.NotEqual(firstPage.NativeKey, secondPage.NativeKey);
+        Assert.Equal(firstPage.NativeKey, refreshedFirstPage.NativeKey);
+        Assert.NotEqual(firstPage.NativeIdentityJson, secondPage.NativeIdentityJson);
+        Assert.Equal(firstPage.NativeIdentityJson, refreshedFirstPage.NativeIdentityJson);
+    }
+
+    [Fact]
+    public async Task MultiplePdfDocumentsInOnePackageDoNotCollideOnPageIdentity()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var importer = new NormalizedSourceImportService(db);
+            var packageKey = $"pdf-multi-{Guid.NewGuid():N}";
+            var adapter = new PdfSourceFormatAdapter();
+            var first = RequireNotNull(adapter.TryRead(new SourceRepresentationArtifact(
+                "docs/first.pdf",
+                BuildPdf(["Title: First Document", "First document page one."]),
+                "web:https://example.invalid/tree/data#docs/first.pdf")));
+            var second = RequireNotNull(adapter.TryRead(new SourceRepresentationArtifact(
+                "docs/second.pdf",
+                BuildPdf(["Title: Second Document", "Second document page one."]),
+                "web:https://example.invalid/tree/data#docs/second.pdf")));
+
+            var firstImport = await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                packageKey,
+                "Multiple PDF fixture",
+                "integration-test",
+                License: null,
+                IsPublic: false,
+                first));
+            var secondImport = await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                packageKey,
+                "Multiple PDF fixture",
+                "integration-test",
+                License: null,
+                IsPublic: false,
+                second));
+
+            Assert.NotEqual(
+                Assert.Single(firstImport.Entities).EntityId,
+                Assert.Single(secondImport.Entities).EntityId);
+            Assert.Equal(
+                2,
+                await db.SourceEntities.CountAsync(value => value.SourcePackageId == firstImport.PackageId));
+        }
+    }
+
+    [Fact]
     public void PdfAdapterRejectsPdfWithoutUsableTextLayer()
     {
         var builder = new PdfDocumentBuilder();
