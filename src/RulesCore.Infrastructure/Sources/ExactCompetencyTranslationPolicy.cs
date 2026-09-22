@@ -119,6 +119,9 @@ internal static class ExactCompetencyTranslationPolicy
                 {
                     extension["competencyConversion"] =
                         RulesCoreContentTranslation.BuildCompetencyConversionMetadata(conversion);
+                    RulesCoreContentTranslation.ApplyCompetencyFacetIdentityMetadata(
+                        normalizedCompetency,
+                        conversion);
                     if (extension["context"] is JsonObject conversionContext)
                     {
                         conversionContext["nativeName"] = record.Name;

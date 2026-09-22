@@ -1218,14 +1218,9 @@ internal static class RulesCoreContentTranslation
             metadata["armorCheckPenaltyApplies"] = armorCheckPenaltyApplies;
         }
 
-        if (competencyConversion is not null
-            && PcGenCompetencyConversions.EstablishesSharedCompetencyIdentity(competencyConversion))
+        if (competencyConversion is not null)
         {
-            metadata["identityKey"] = competencyConversion.SharedCompetencyKey;
-            metadata["identityName"] = competencyConversion.SharedCompetencyName;
-            metadata["sharedTrainingKey"] =
-                $"competency.{competencyConversion.SharedCompetencyKey}.training";
-            metadata["facetType"] = competencyConversion.FacetType ?? "skill";
+            ApplyCompetencyFacetIdentityMetadata(metadata, competencyConversion);
         }
 
         return metadata;
@@ -1264,6 +1259,24 @@ internal static class RulesCoreContentTranslation
             result["facetType"] = conversion.FacetType;
         }
         return result;
+    }
+
+    internal static void ApplyCompetencyFacetIdentityMetadata(
+        JsonObject metadata,
+        PcGenCompetencyConversion conversion)
+    {
+        ArgumentNullException.ThrowIfNull(metadata);
+        ArgumentNullException.ThrowIfNull(conversion);
+        if (!PcGenCompetencyConversions.EstablishesSharedCompetencyIdentity(conversion))
+        {
+            return;
+        }
+
+        metadata["identityKey"] = conversion.SharedCompetencyKey;
+        metadata["identityName"] = conversion.SharedCompetencyName;
+        metadata["sharedTrainingKey"] =
+            $"competency.{conversion.SharedCompetencyKey}.training";
+        metadata["facetType"] = conversion.FacetType ?? "skill";
     }
 
     internal static JsonObject BuildThreeXCompetencyMetadata(
