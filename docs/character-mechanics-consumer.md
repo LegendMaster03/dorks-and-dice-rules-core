@@ -356,7 +356,7 @@ A class with `casterProgression: "pact"` is projected through its Pact Magic tab
 
 The published Dorks & Dice resource-choice house rule is recognized from its actual `casterChoosesResourceSystem` and `availableResourceSystems` fields. `spellcasting.resource-system` accepts the normalized choices `spell-slots` or `spell-points` (human forms such as `spell slots` are normalized). Until that choice is supplied, standard spellcasting resources are `choice-required`. A spell-points choice remains explicitly unresolved until a point-progression/conversion rule is normalized; Rules Core does not derive a point pool from slot counts or rewrite source-defined Pact Magic into spell points.
 
-If more than one selected class contributes a standard spell-slot table, Rules Core reports the multiclass combination as unresolved instead of adding class-table slots together. Other nonstandard progressions remain explicit until their exact resource rules are normalized.
+When more than one selected class contributes a standard spell-slot table, Rules Core combines caster levels from the source `casterProgression` identities rather than adding class-table slot counts. `full` contributes the full class level, `1/2` contributes half rounded down, `1/3` contributes one third rounded down, and `artificer` contributes half rounded up. The resulting effective caster level selects a row from the retained source slot tables. If available source tables disagree for that effective level, or a progression identity is unsupported, the result remains explicit and conflicted instead of choosing one table silently. Pact Magic is excluded from this calculation and remains a separate resource.
 
 ## Character projection maximum HP
 
