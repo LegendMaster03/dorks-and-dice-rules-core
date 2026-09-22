@@ -3338,6 +3338,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         var classConceptKey = $"class.structured-profs-{token}";
         var thievesConceptKey = $"tool.thieves-tools-{token}";
         var herbalismConceptKey = $"tool.herbalism-kit-{token}";
+        var smithConceptKey = $"tool.smiths-tools-{token}";
         var actor = $"character-structured-profs-{token}";
         Guid packageId = Guid.Empty;
 
@@ -3384,13 +3385,22 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             {
                 name = "Thieves' Tools",
                 source = sourceCode,
+                type = "T",
                 ability = "dex"
             });
             var herbalismRaw = JsonSerializer.Serialize(new
             {
                 name = "Herbalism Kit",
                 source = sourceCode,
+                type = "T",
                 ability = "wis"
+            });
+            var smithRaw = JsonSerializer.Serialize(new
+            {
+                name = "Smith's Tools",
+                source = sourceCode,
+                type = "AT",
+                ability = "str"
             });
 
             var imported = await new NormalizedSourceImportService(db).ImportAsync(
@@ -3427,6 +3437,13 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                                 sourceCode,
                                 $"tool|Herbalism Kit|{sourceCode}",
                                 herbalismRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "tool",
+                                "Smith's Tools",
+                                sourceCode,
+                                $"tool|Smith's Tools|{sourceCode}",
+                                smithRaw,
                                 PublicationLocalKey: sourceCode)
                         ],
                         [
@@ -3443,7 +3460,8 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             {
                 (Key: classConceptKey, Entity: byName["Structured Proficiency Class"]),
                 (Key: thievesConceptKey, Entity: byName["Thieves' Tools"]),
-                (Key: herbalismConceptKey, Entity: byName["Herbalism Kit"])
+                (Key: herbalismConceptKey, Entity: byName["Herbalism Kit"]),
+                (Key: smithConceptKey, Entity: byName["Smith's Tools"])
             };
             var concepts = new Dictionary<string, RuleConceptView>(StringComparer.Ordinal);
             foreach (var definition in definitions)
@@ -3528,7 +3546,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 value => value.Kind == "tool-proficiency"
                     && value.ChoiceKey.Contains("anytool", StringComparison.OrdinalIgnoreCase));
             Assert.Equal(CharacterResolutionStates.ChoiceRequired, anyTool.State);
-            Assert.Equal(2, anyTool.Options.Count);
+            Assert.Equal(3, anyTool.Options.Count);
             var herbalismOption = Assert.Single(
                 anyTool.Options,
                 value => value.ConceptKey == herbalismConceptKey);
@@ -3539,15 +3557,20 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     && value.ChoiceKey.Contains(
                         "anyartisanstool",
                         StringComparison.OrdinalIgnoreCase));
-            Assert.Equal(CharacterResolutionStates.SourceUnavailable, artisan.State);
-            Assert.Empty(artisan.Options);
+            Assert.Equal(CharacterResolutionStates.ChoiceRequired, artisan.State);
+            var smithOption = Assert.Single(
+                artisan.Options,
+                value => value.ConceptKey == smithConceptKey);
 
             var selected = await projection.ResolveGlobalAsync(
                 Request(
                 [
                     new CharacterRuntimeChoiceInput(
                         anyTool.ChoiceKey,
-                        herbalismOption.Value)
+                        herbalismOption.Value),
+                    new CharacterRuntimeChoiceInput(
+                        artisan.ChoiceKey,
+                        smithOption.Value)
                 ]),
                 userId: null);
             var herbalism = Assert.Single(
@@ -3559,6 +3582,11 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 selected.Qualifications,
                 value => value.Category == "tools"
                     && value.DisplayName == "Herbalism Kit"
+                    && value.IsQualified == true);
+            Assert.Contains(
+                selected.Qualifications,
+                value => value.Category == "tools"
+                    && value.DisplayName == "Smith's Tools"
                     && value.IsQualified == true);
         }
         finally
