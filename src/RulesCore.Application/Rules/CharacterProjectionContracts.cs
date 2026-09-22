@@ -18,6 +18,12 @@ public sealed record CharacterRuntimeRollInput(
     string RollKey,
     int Value);
 
+public sealed record CharacterHitPointGainInput(
+    string ConceptKey,
+    int ClassLevel,
+    int HitDieValue,
+    string? OccurrenceKey = null);
+
 public sealed record CharacterChoiceOptionView(
     string Value,
     string DisplayName,
@@ -52,7 +58,8 @@ public sealed record CharacterRulesProjectionRequest(
     Dictionary<string, string>? StringFacts = null,
     IReadOnlyList<CharacterRuntimeChoiceInput>? Choices = null,
     IReadOnlyList<CharacterRuntimeRollInput>? Rolls = null,
-    IReadOnlyList<string>? RequestedMechanicKeys = null);
+    IReadOnlyList<string>? RequestedMechanicKeys = null,
+    IReadOnlyList<CharacterHitPointGainInput>? HitPointGains = null);
 
 public sealed record CharacterMechanicProvenanceView(
     IReadOnlyList<CharacterMechanicSourceAttributionView> CanonicalConcept,
