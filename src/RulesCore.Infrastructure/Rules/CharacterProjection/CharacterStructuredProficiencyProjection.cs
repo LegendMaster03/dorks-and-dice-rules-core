@@ -232,7 +232,8 @@ internal static class CharacterStructuredProficiencyProjector
         sourceValue.Trim().ToLowerInvariant() is
             "anytool" or
             "anyartisanstool" or
-            "anymusicalinstrument";
+            "anymusicalinstrument" or
+            "anygamingset";
 
     private static IReadOnlyList<CharacterChoiceOptionView> ExpandToolChoiceOptions(
         CharacterProjectionContext context,
@@ -248,6 +249,7 @@ internal static class CharacterStructuredProficiencyProjector
             "anytool" => context.AllToolChoiceOptions(),
             "anyartisanstool" => context.ToolChoiceOptionsForCategory("artisans-tool"),
             "anymusicalinstrument" => context.ToolChoiceOptionsForCategory("musical-instrument"),
+            "anygamingset" => context.ToolChoiceOptionsForCategory("gaming-set"),
             _ => [context.ResolveToolChoiceOption(sourceValue)]
         };
     }
