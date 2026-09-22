@@ -80,7 +80,7 @@ Current field mappings intentionally cover only defensible equivalences:
 
 - spell level is derived from actual `CLASSES`/`DOMAINS` assignments only when those assignments agree on one level; class/domain access itself remains preserved as PCGen-specific mechanics;
 - recognized spell school, simple verbal/somatic components, instantaneous duration, and descriptions map to spell-family fields;
-- feat description and `MULT` repeatability map to feat-family fields, while prerequisites and other 3.x expressions remain source-specific;
+- feat description and `MULT` repeatability map to feat-family fields; the reviewed `PRESTAT`/`PRESKILL`/`PRECLASS` subset and simple `PREMULT` groups are additionally normalized under `_rulesCore.character.prerequisites`, while unsupported prerequisite expressions remain source-specific;
 - equipment weight maps directly, and PCGen `COST` is interpreted according to PCGen semantics: a bare numeric cost is gold pieces and is converted to the 5e.tools copper-piece `value` representation;
 - ordinary race size, walk speed, and racial `BONUS:STAT` modifiers can map to race-family equivalents when faithful;
 - monster size, recognized creature type, supported movement modes, CR, and descriptions can map directly.
@@ -90,51 +90,71 @@ Current field mappings intentionally cover only defensible equivalences:
 When a PCGen skill record contains competency mechanics Rules Core understands, translation records those semantics under `_rulesCore.competency` before canonical reconciliation. The normalized profile can carry:
 
 - competency kind (`skill`, `specialized-skill`, or `tool`);
-- specialty family/value for source competencies such as `Knowledge (...)`, `Craft (...)`, `Perform (...)`, or `Profession (...)`;
+- competency family/category and specialty for specialized families such as `Craft (...)`, `Perform (...)`, and `Profession (...)`;
+- facet type, shared learned-competency identity, and shared training-state key when an established cross-edition skill/tool identity exists;
 - governing ability derived from `KEYSTAT`;
 - trained-only behavior derived from `USEUNTRAINED`;
 - Armor Check Penalty applicability derived from `ACHECK`;
 - rank, class-skill-state, and training-state support;
 - game edition/profile identity and capability qualification.
 
-This is mechanical normalization, not source destruction. The original PCGen tags remain present in `RawJson` and continue to be retained under `_rulesCore.pcgen.unmappedSegments` where they were previously preserved. Character-oriented consumers read the normalized competency profile rather than interpreting PCGen tags or parsing display names.
+`Craft`, `Perform`, and `Profession` are competency families. A family is taxonomy/organization; a specialized child remains independently addressable and retains its own ranks, class-skill state, governing Ability, training state, source identity, and provenance. Nesting never causes numeric mechanics to be inherited or merged.
 
-For reviewed direct equivalences, the normalized profile remains attached to the older source representation even when exact translation changes the normalized source entity name/type. A 3.x `Craft (alchemy)` representation can therefore normalize canonically to the `Alchemist's Supplies` tool competency while still declaring the 3.x rank/class-skill profile that applies to that representation.
+`Knowledge` is the intentional exception. A reviewed `Knowledge (X)` record normalizes directly to competency identity `X`. The Character-facing contract therefore exposes `Arcana`, `History`, `Psionics`, `The planes`, and similar specialties directly rather than exposing a visible `Knowledge -> X` hierarchy. The older source name and provenance remain preserved.
 
-### Direct 3.x competency translations
+This is mechanical normalization, not source destruction. Original PCGen tags remain in `RawJson` and continue to be retained under `_rulesCore.pcgen.unmappedSegments` where applicable. Character-oriented consumers read the normalized competency contract rather than interpreting PCGen tags or parsing display names.
 
-The reviewed direct mappings are importer translations, not Rules Lawyer relationships. For those mappings, Rules Core treats the older and later names as the **same competency identity**. The PCGen native key, native name, `RawJson`, edition, locator, and other source provenance remain unchanged, but the normalized `SourceEntity` name/type and translated `ContentJson` use the later competency identity before canonical reconciliation.
+### Direct normalized competency identities
 
-The current direct skill-to-skill set is:
+Reviewed direct identity translations change the normalized source name/type before canonical reconciliation. They are appropriate only when the older and later records are the same competency rather than related competencies or distinct facets.
+
+The reviewed skill identities are:
 
 - `Bluff` -> `Deception`;
 - `Diplomacy` -> `Persuasion`;
 - `Handle Animal` -> `Animal Handling`;
 - `Heal` -> `Medicine`;
 - `Intimidate` -> `Intimidation`;
-- every 3.x `Knowledge (X)` specialty -> `X` (for example, `Knowledge (arcana)` -> `Arcana`, `Knowledge (Psionics)` -> `Psionics`, and `Knowledge (the planes)` -> `The planes`);
+- every 3.x `Knowledge (X)` specialty -> `X`;
 - `Sense Motive` -> `Insight`;
 - `Sleight of Hand` -> `Sleight of Hand`;
 - `Survival` -> `Survival`.
 
-The following apply only when the source publication is identified as 3e/3.0:
+The following apply only to 3e/3.0 sources:
 
 - `Pick Pocket` -> `Sleight of Hand`;
-- `Wilderness Lore` -> `Survival`;
-- `Alchemy` -> `Alchemist's Supplies`.
+- `Wilderness Lore` -> `Survival`.
 
-The reviewed direct cross-type translations are:
+Only these exact identity translations use `NormalizedSourceRecord.CanonicalIdentityKey` to converge source representations before Rules Layer normalization. A shared skill/tool learned competency does **not** use canonical source identity, because a skill Rule Concept and a tool Rule Concept retain different source types and mechanical contracts.
 
-- `Craft (alchemy)` -> `Alchemist's Supplies`;
-- `Forgery` -> `Forgery Kit`.
+### Specialized competency facets
 
-These unscoped mappings set `NormalizedSourceRecord.CanonicalIdentityKey` to a stable reviewed competency identity used only during canonical reconciliation. That identity is not source evidence and is not injected into `ContentJson`. Consequently, once `Deception` is bound to a Rules Layer concept, a later 3.x `Bluff` import can resolve to the same canonical competency without changing the source-native record or requiring a second Rules Lawyer binding.
+Some historical skills and later tool proficiencies represent different mechanical facets of one learned discipline. Rules Core records a separate learned-competency identity while preserving each facet as its own canonical source entity and Rule Concept.
 
-`Open Lock` -> `Thieves' Tools` remains intentionally different. It is limited to the `open-lock` scope, so `Open Lock` remains its own normalized competency and records only the scoped relationship under `_rulesCore.competencyConversion`. This prevents an Open Lock proficiency from becoming full Thieves' Tools proficiency.
+The reviewed shared identities are:
 
-The clean many-to-one consolidations Hide/Move Silently -> Stealth, Listen/Spot -> Perception, Balance/Tumble -> Acrobatics, and Climb/Jump/Swim -> Athletics are intentionally **not importer translations**. Their PCGen records remain distinct source-native and canonical competencies. Rules Layer represents those consolidations separately as directional `composite-skill` mechanical relationships; see `docs/mechanical-relationships.md`.
+- 3e `Alchemy`, 3.5e `Craft (alchemy)`, and later `Alchemist's Supplies` -> shared learned competency `Alchemy`;
+- `Forgery` and later `Forgery Kit` -> shared learned competency `Forgery`.
 
-`Perform` specialties are not collapsed into `Performance`. Other merged, split, partial, or category-changing relationships such as Ride, Spellcraft, Search, Disable Device, Disguise, Profession, Escape Artist, Gather Information, Use Rope, Concentration, Use Magic Device, and non-alchemy Craft specialties remain source-native until a reviewed Rules Layer relationship can represent them without losing information.
+The shared state is conceptual training/proficiency identity. Facet-specific mechanics do not transfer. A 3.x Alchemy/Craft profile can carry ranks, class-skill state, governing Ability, trained-only behavior, and Armor Check Penalty semantics. The later tool facet uses its own proficiency mechanics. Ranks never become a tool bonus, proficiency bonus never becomes ranks, and class-skill state is never discarded.
+
+The source conversion relationship is `shared-competency-facet`. The normalized competency profile carries `identityKey`, `identityName`, `sharedTrainingKey`, and `facetType`. Later reviewed tool facets receive the same learned-competency identity in the Character mechanics consumer without rewriting their source document.
+
+### Scoped and related competency relationships
+
+Cross-type similarity is not sufficient for shared identity.
+
+- `Open Lock` -> `Thieves' Tools` is scoped to `open-lock`.
+- `Disable Device` -> `Thieves' Tools` is scoped to `disable-device`.
+- `Disguise` -> `Disguise Kit` is a `related-competency` relationship, not shared training identity. The historical skill covers broader disguise use than possession/proficiency with the later kit.
+
+These relationships preserve the historical ranked skill and do not grant unrestricted tool proficiency.
+
+The clean many-to-one consolidations Hide/Move Silently -> Stealth, Listen/Spot -> Perception, Balance/Tumble -> Acrobatics, and Climb/Jump/Swim -> Athletics remain distinct source-native competencies. Rules Layer represents those consolidations separately as directional `composite-skill` relationships; they are not competency families or shared facets.
+
+`Perform` specialties remain independent specialized competencies and are not collapsed into modern `Performance`. Instrument-specific tool facets may be established only when source evidence identifies a defensible instrument correspondence. `Profession (...)` specialties likewise remain independent. Non-alchemy Craft specialties are not mapped to modern tools from name similarity alone.
+
+The complete reviewed classification is maintained in `docs/competency-reconciliation-audit.md`.
 
 PCGen monster race records normally encode **racial modifiers and racial hit-die declarations**, not a final 5e-style stat block. For example, `BONUS:STAT|STR|16`, `BONUS:COMBAT|AC|7|TYPE=NaturalArmor`, and `MONSTERCLASS:Aberration:8` do not by themselves establish the final Strength score, total AC, or HP formula. Rules Core therefore does not fabricate `str`, `ac`, or `hp` from those values. They remain preserved under the Rules Core extension until a translator has enough surrounding 3.x rules context to derive a faithful result.
 
@@ -174,6 +194,122 @@ A 3.x rule is not converted into a false 5e mechanic merely to fill a familiar f
 `NormalizedSourceRecord.CanonicalIdentityKey` carries the reviewed exact competency identity separately from mechanical content. The normalized importer uses it to derive canonical identity during reconciliation, but it is neither source evidence nor part of `ContentJson`.
 
 Historical persisted content may still contain `_rulesCore.exactCompetencyIdentity` from the earlier implementation. Canonical identity readers continue to recognize that marker for backward compatibility, but current imports do not write it.
+
+### Character-support extension
+
+Normalized rule content can publish Character-oriented support mechanics under `_rulesCore.characterSupport`. This extension is rule-bearing and therefore survives `RulesMechanicalContent.ForRules()`; only `_rulesCore.context` is removed from the rule-bearing view.
+
+The extension has three independent arrays:
+
+```json
+{
+  "_rulesCore": {
+    "characterSupport": {
+      "recoveryProcedures": [
+        {
+          "key": "recovery.example",
+          "displayName": "Example Recovery",
+          "presentationRole": "short-rest",
+          "available": true,
+          "applicability": {
+            "kind": "character-capability",
+            "requiresCharacterState": true,
+            "requiredCapabilityKeys": ["example.recovery"]
+          },
+          "inputs": [
+            {
+              "key": "pointsToSpend",
+              "valueKind": "integer",
+              "origin": "character-state",
+              "required": true
+            }
+          ],
+          "choices": [
+            {
+              "key": "resource",
+              "prompt": "Choose a resource.",
+              "required": true,
+              "options": [
+                { "key": "focus", "displayName": "Focus", "value": "focus-points" }
+              ]
+            }
+          ],
+          "rolls": [
+            {
+              "key": "recoveryRoll",
+              "rollKind": "die",
+              "prompt": "Roll recovery.",
+              "required": true,
+              "mechanicKey": "check.example-recovery"
+            }
+          ],
+          "effects": [
+            {
+              "key": "spend",
+              "targetKind": "resource",
+              "targetKey": "recovery-points",
+              "operation": "expend",
+              "amountInputKey": "pointsToSpend"
+            },
+            {
+              "key": "restore",
+              "targetKind": "resource",
+              "targetChoiceKey": "resource",
+              "operation": "adjust",
+              "amountRollKey": "recoveryRoll",
+              "referenceKey": "rule-defined-limit"
+            }
+          ]
+        }
+      ],
+      "passiveValues": [
+        {
+          "key": "passive.example-awareness",
+          "displayName": "Example Awareness",
+          "evaluationKind": "sum",
+          "constant": 7,
+          "inputs": [
+            {
+              "key": "awarenessContribution",
+              "valueKind": "integer",
+              "origin": "derived",
+              "required": true,
+              "participatesInValue": true
+            }
+          ],
+          "relatedConceptKey": "skill.example-awareness",
+          "relatedAbilityKey": "wisdom"
+        }
+      ],
+      "qualifications": [
+        {
+          "key": "qualification.example-training",
+          "displayName": "Example Training",
+          "category": "source-defined-training",
+          "family": "example",
+          "associatedConceptKey": "training.example",
+          "stateInput": {
+            "key": "state",
+            "valueKind": "string",
+            "origin": "character-state",
+            "required": true
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+These arrays are normalized Rules Core mechanics, not a source-format compatibility layer. A translator or reviewed normalized source must establish them from defensible source evidence. Character consumers never infer them from source-native display text.
+
+Recovery procedure keys and qualification categories are open identities. `short-rest` and `long-rest` are optional presentation roles only. They do not imply duration or consequences. Recovery effects use structured target/operation semantics and may obtain a target from a declared choice or an amount from a declared Character input or runtime roll. Optional effect conditions can predicate an effect on one declared input value or choice. Runtime requirements can explicitly state Character state, choices, rolls, resource expenditure, and other runtime facts; structural requirements are also derived from declared inputs/choices/rolls/effects.
+
+Passive values use the existing scalar mechanic evaluator and the dedicated `passive-value` kind. The normalized definition must supply the formula inputs/constant; Rules Core does not add a universal `10 + modifier` rule.
+
+Qualifications carry a typed `stateInput` rather than a fixed proficiency boolean. A source can therefore represent a string training state, boolean qualification, integer rank, or another currently supported typed Character fact without defining Armor/Weapons/Tools/Languages as universal categories.
+
+`available: false` preserves a normalized entry while marking it unavailable under the effective rule. Campaign/global JSON patches can alter or remove Character-support metadata through the existing rule-decision machinery; no second override layer exists.
 
 `_rulesCore.pcgen.unmappedSegments` is also rule-bearing: those values represent mechanics that have not been translated into a faithful 5e.tools field. They remain in the rule-bearing view for mechanical inspection even when the separate canonical competency identity causes edition-specific representations to reconcile to the same competency.
 
@@ -238,3 +374,8 @@ The reviewed bundled SRD snapshots remain a separate public baseline concern. CI
 Character-oriented tools must not parse source-native or source-format-specific JSON to reconstruct common checks, 3.x sheet mechanics, or publisher-specific procedures. The normalized consumer contract in `docs/character-mechanics-consumer.md` projects stable mechanic keys, typed inputs, evaluation semantics, applicability, relationships, competency profiles, and accessible provenance while retaining this document's source-native/translated-content boundary.
 
 When multiple accessible source representations share a reviewed canonical competency identity, the consumer may project multiple normalized competency profiles. This preserves capability-qualified mechanics such as 3.x ranks/class-skill state even when the published effective rule selects a later-edition presentation.
+### Character prerequisite normalization
+
+Character-facing PCGen prerequisites are normalized only when Rules Core can preserve their source semantics exactly. The executable subset currently includes `PRESTAT`, `PRESKILL`, and `PRECLASS`, plus simple `PREMULT` groups whose children are single requirements from that subset. Normalized groups retain their `N of M` match count and each predicate retains its source target, operator, and threshold.
+
+More complex PCGen prerequisite trees remain in `_rulesCore.pcgen.unmappedSegments`; they are not flattened or guessed. The original prerequisite tags also remain in the source-native `RawJson` even when an executable normalized predicate is available. Character projection evaluates normalized prerequisites after the dependent Character mechanics have resolved and reports `true`, `false`, or an explicit unresolved state. An unsatisfied prerequisite does not delete or reject a selected Character option; it is surfaced as an eligibility result and conflict so a caller or DM can decide how to proceed.

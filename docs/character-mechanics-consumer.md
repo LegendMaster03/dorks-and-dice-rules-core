@@ -19,6 +19,10 @@ Character frontend
 
 Consumers must not parse `SourceEntityRevision.RawJson`, PCGen tags, 5e.tools fields, or publisher-native documents to rediscover mechanics already represented by this contract.
 
+Rules-defined identity metadata follows the same boundary. Backgrounds, alignments, deities, species/races, size categories, advancement rules, and similar source concepts remain Rules Core definitions with stable concept identity and provenance. The Character owns which applicable concept is selected and mutable advancement state such as current XP. Player name, Campaign display name, appearance, age/height/weight entered by the player, personality traits, ideals, bonds, flaws, backstory, allies/organizations, symbols, and other freeform biography remain Character/Site data. Rules Core represents a physical or biographical constraint only when a rule source actually defines one; it does not create rule concepts merely because an official paper sheet has a field.
+
+A selected race/species size is projected directly as the text mechanic `character.size-category` with structured source contributions and provenance. Common D&D size codes are normalized to their canonical display names, while an unknown source-defined size identity is retained rather than discarded. When a source defines more than one allowed Size, Rules Core exposes an ordinary `size-category` Character choice and leaves the Size mechanic `choice-required` until the Character supplies one of the source-defined options. Conflicting resolved size rules produce an explicit conflict. Character consumers therefore do not need to reopen a race/species source document, pick the first array entry, or infer Size from a label.
+
 ## Endpoints
 
 Global effective mechanics:
@@ -36,6 +40,20 @@ GET  /api/campaigns/{campaignId}/rules/mechanics
 POST /api/campaigns/{campaignId}/rules/mechanics/evaluate
 POST /api/campaigns/{campaignId}/rules/mechanics/{mechanicKey}/evaluate
 ```
+
+Character-support discovery/projection and recovery resolution use the same effective rules context:
+
+```text
+GET  /api/rules/mechanics/support
+POST /api/rules/mechanics/support
+POST /api/rules/mechanics/recovery/{procedureKey}/resolve
+
+GET  /api/campaigns/{campaignId}/rules/mechanics/support
+POST /api/campaigns/{campaignId}/rules/mechanics/support
+POST /api/campaigns/{campaignId}/rules/mechanics/recovery/{procedureKey}/resolve
+```
+
+The support `GET` endpoints are discovery calls with no Character facts. They retain applicable definitions even when Character capability/state is not yet available and report an unresolved state instead of deleting the row. The support `POST` endpoints accept Character-owned facts and capability keys so passive values and qualification state can be projected. Recovery resolution is separate because a procedure can require additional player choices, rolls, resource expenditure, or other runtime facts.
 
 `includeUnavailable=true` includes source-dependent mechanics whose activation source is not currently accessible/effective, with `isAvailableUnderRuleset=false`. Character capability requirements are different: a capability-driven definition can be available in Rules Core while declaring `requiredCapabilityKeys` that the Character backend must satisfy before presenting or evaluating it. Independently implemented external-public mechanics are available without a user source-package import and identify their external rules work through attribution rather than `SourcePackage.Key`.
 
@@ -90,6 +108,61 @@ Rules Core owns the arithmetic and composition semantics represented by this con
 
 This distinction is important for 3.x source translation. A PCGen racial modifier, class progression fragment, or other partial source declaration is not automatically a final Character value. The consumer contract therefore requests the resolved input rather than fabricating a final score from incomplete source evidence.
 
+## Character support: recovery, passive values, and qualifications
+
+The Character-support projection is one extension of the Character mechanics consumer boundary, but its three result families remain semantically distinct:
+
+- recovery procedures are executable rule procedures;
+- passive values are scalar Character mechanics whose formula belongs to Rules Core;
+- qualifications are Character training/proficiency/knowledge facts interpreted under Rules Core definitions.
+
+All three read the same published global or Campaign-effective Rules Layer snapshot and use the same access-aware source provenance. They are projected only from normalized `_rulesCore.characterSupport` metadata on the effective rule document. Character-oriented consumers do not parse 5e.tools, PCGen, or publisher-native fields to reconstruct these features.
+
+A support entry can be `available`, `not-applicable`, `unresolved-character-state`, `unresolved-rule-definition`, or resolved as appropriate. A required capability is not treated as absent when the caller simply has not supplied Character capability state: discovery reports it as unresolved. When the caller explicitly supplies a capability set that omits a required capability, the entry is not applicable.
+
+### Recovery procedures
+
+"Short Rest" and "Long Rest" are stable Character Sheet user intents, not universal algorithms. Rules Core does not define either label to mean a particular duration, Hit Dice rule, HP restoration rule, spell-slot reset, exhaustion interaction, or condition interaction.
+
+An effective rule can publish any number of recovery procedures. A procedure has a stable `procedureKey`, display name, optional presentation role such as `short-rest` or `long-rest`, applicability/capability requirements, declared typed inputs, source attribution, and structured runtime requirements. Procedures without those roles are equally valid. More than one procedure can use the same presentation role when the effective rules genuinely expose multiple procedures; the consumer must use the discovered procedure key rather than assuming the role itself is an algorithm.
+
+Recovery resolution accepts only:
+
+- declared Character/source/runtime inputs;
+- required Character capability keys;
+- declared player choices;
+- declared roll results supplied through the existing runtime roll boundary.
+
+It does not accept final Character state such as a new HP total, restored slot collection, or reset feature-use state unless that value is itself a declared rule input for a different mechanical purpose. Undeclared typed inputs are rejected.
+
+If information is missing, Rules Core returns a structured continuation state: `input-required`, `choice-required`, or `roll-required`. It does not guess a choice or perform browser-side dice behavior. A resolved procedure returns structured consequences such as a target kind/key, operation, resolved amount/value, and optional rule-defined reference key. Operations and targets are intentionally open mechanical identities rather than a fixed 5e rest effect list.
+
+Rules Core resolves what should happen. The Character-owning backend persists those consequences to Character runtime state. Rules Core does not mutate Character Sheet storage.
+
+### Passive values
+
+Passive/automatic Character values use the `passive-value` mechanic kind. Each normalized passive mechanic supplies its own evaluation kind, constant, participating inputs, applicability, optional presentation role, optional relationship to another mechanic/concept/ability, and source attribution.
+
+There is no built-in `Passive Perception / Passive Investigation / Passive Insight` taxonomy and no universal `10 + modifier` formula. A 5e passive check can use that formula only when normalized rule evidence explicitly defines it. Older-edition take-10/automatic mechanics or source-specific passive values retain their own identities and formulas rather than being renamed into 5e terminology.
+
+If required Character input is absent, the passive value remains present with `unresolved-character-state`. The frontend renders the supplied resolved value when one exists; it does not recalculate the formula.
+
+### Proficiencies, training, and qualifications
+
+Qualification projection is intentionally not a fixed Armor/Weapons/Tools/Languages table. A normalized qualification supplies a stable `qualificationKey`, display name, arbitrary category and optional family, a typed Character-owned state input, applicability/capability requirements, optional associated Rule Concept identity, and source attribution.
+
+This model can represent weapon groups, exotic-weapon proficiency, tool training, class-skill state, language knowledge, vehicles, instruments, magic/psionic training, and future source-specific categories without adding universal schema rows.
+
+The distinction from competency profiles is deliberate:
+
+- "Stealth is trained-only under this profile" is a Rules Core competency-profile rule.
+- "This Character is trained in Stealth" is Character-owned qualification/training state projected through a qualification definition.
+- "This Character is proficient with martial weapons" is a Character qualification fact, potentially capability-qualified.
+- "This Character knows Draconic" is a Character qualification/knowledge fact.
+- "This source says a class grants martial-weapon proficiency" is source rule evidence that Character derivation can use; it is not automatically a persisted Character fact.
+
+Rules Core defines rule meaning, applicability, derivation contracts, and canonical relationships. The Character backend owns selections and acquired/runtime state. Missing Character state therefore remains unresolved rather than being fabricated from source grants.
+
 ## Generalized competency checks
 
 `check.competency` represents an ability + competency check without assuming the 5e default ability associated with a skill. The check owns the selected/fixed Ability contribution separately from the competency contribution.
@@ -119,7 +192,7 @@ The consumer catalog includes normalized definitions for 3.x mechanics that a 5e
 - spell resistance;
 - damage reduction.
 
-These definitions are **capability-driven**, not edition-toggle-driven. For example, `save.fortitude` declares a required Character capability of `save.fortitude`. A hybrid Character can therefore expose Fortitude, Touch AC, or BAB beside 5e/5.5e mechanics without changing the entire Character to a "3.5e mode." The Character backend owns capability derivation from the Character's actual classes, species, feats, source selections, and campaign rules.
+These definitions are **capability-driven**, not edition-toggle-driven. For example, `save.fortitude` declares a required Character capability of `save.fortitude`. A hybrid Character can therefore expose Fortitude, Touch AC, or BAB beside 5e/5.5e mechanics without changing the entire Character to a "3.5e mode." The bulk projection derives the core 3.x capability set when the Character actually selects a normalized 3.x class; direct per-mechanic evaluation continues to require the caller to supply the applicable capability explicitly. Additional capabilities from species, feats, items, and other source selections remain source-driven rather than edition-wide toggles.
 
 The definitions intentionally do not infer values from unrelated fields. For example, touch AC consumes only contributions the Character backend has already determined apply to touch AC. The evaluation endpoint requires the declared capability key for capability-driven mechanics and rejects evaluation when it is absent.
 
@@ -131,54 +204,80 @@ Because publication uses the same canonical identity that ingestion already prod
 
 ## Competency metadata
 
-Resolved skill and tool concepts carry normalized competency metadata for Character consumers. The contract can describe:
+Resolved skill and tool concepts carry normalized competency metadata for Character consumers. The Character Sheet does not need to inspect `_rulesCore`, source-native JSON, or edition-specific skill lists to understand the structure.
 
-- ordinary skills, specialized skills, and tools;
-- specialized skill family and specialty, such as `Knowledge (the planes)`;
-- governing ability when the effective source provides one, with a unanimous accessible-profile ability used as presentation metadata when the selected representation omits it;
-- whether the competency supports ranks;
-- whether class-skill state is meaningful;
-- whether training state is meaningful;
-- trained-only state when the source determines it;
-- Armor Check Penalty applicability when the source determines it.
+The contract exposes, as applicable:
 
-PCGen translation normalizes understood competency semantics into `_rulesCore.competency` during ingestion. That normalized profile includes the competency kind, specialty family/value when applicable, governing ability, trained-only behavior, Armor Check Penalty applicability, rank/class-skill support, training support, game edition, and any capability qualification. The original `KEYSTAT`, `USEUNTRAINED`, `ACHECK`, and other PCGen evidence remains preserved under `_rulesCore.pcgen.unmappedSegments` for source inspection; the Character mechanics consumer does not parse those PCGen tags or infer specialty semantics from display names.
+- ordinary skill/tool identity;
+- competency family/category and specialty;
+- whether a row is an organizational family;
+- learned-competency `identityKey` / `identityName`;
+- `sharedTrainingKey` for Character-owned training/proficiency state shared across established facets;
+- facet type and the complete facet set for the learned competency;
+- the Rule mechanic keys belonging to each facet;
+- governing Ability;
+- rank support;
+- class-skill-state support;
+- training-state support;
+- trained-only state;
+- Armor Check Penalty applicability;
+- scoped/related competency relationships and relationship scope;
+- source profiles and provenance.
 
-A competency can expose multiple normalized mechanical profiles across accessible canonical-equivalent source representations. This is important for reviewed direct equivalences such as 3.x `Bluff` -> `Deception` or `Craft (alchemy)` -> `Alchemist's Supplies`: when an effective published decision selects any reviewed representation, the other accessible profile evidence remains available. Genuine unresolved mechanical differences are not assigned a published representation by edition precedence; they remain subject to Rules Lawyer adjudication.
+### Families and specialized competencies
 
-Profile selection is explicit and local to the competency evaluation. Each profile exposes its source-revision identity, capability requirements, evaluation profile, typed inputs, boolean requirements, and `canEvaluate`. The evaluation request may supply `competencyProfileSourceEntityRevisionId`; when it is omitted, Rules Core uses the profile belonging to the effective published source revision. This is not an edition-wide Character mode.
+`Craft`, `Perform`, and `Profession` can be organizational competency families. Their children remain independent competencies. `Craft (alchemy)` and `Craft (blacksmithing)`, for example, do not share a rank value merely because both render under Craft. The same rule applies to separate Perform and Profession specialties.
+
+`Knowledge` intentionally does not use this visible family structure. Reviewed `Knowledge (X)` identities normalize directly to `X`, so a Character consumer sees `Arcana`, `History`, `Psionics`, `The planes`, and similar competencies directly while provenance retains the historical source name.
+
+A family hierarchy and a composite competency can look similar in a nested UI, but they are mechanically different. A family is taxonomy containing independent children. A composite competency, such as Hide + Move Silently -> Stealth, has an explicit Rules Layer value-composition relationship.
+
+### Shared competency facets
+
+A learned competency can have more than one mechanical facet without making those facets numerically equivalent. The current reviewed examples are Alchemy and Forgery.
+
+For Alchemy, the catalog can expose both:
+
+```text
+Alchemy
+  skill facet
+    3e Alchemy
+    3.5e Craft (alchemy)
+  tool facet
+    Alchemist's Supplies
+```
+
+The skill and tool remain separate Rule Concepts and separate canonical source identities. Both definitions carry the same learned `identityKey` and `sharedTrainingKey`. After the catalog is assembled, Rules Core groups every effective mechanic with that identity and exposes the complete facet list, including the mechanic keys and profile revision IDs that belong to each facet.
+
+Shared training state does not imply shared numerical state. A ranked profile consumes `ranks` and its source-specific skill mechanics. A later tool profile consumes the later proficiency/training inputs. The Character backend can store one conceptual trained/proficient fact under the shared training key while retaining facet-specific rank/class-skill state separately.
+
+The same model is used for Forgery / Forgery Kit. It is extensible, but new shared identities require reviewed source/rules evidence.
+
+### Scoped and related relationships
+
+The contract exposes cross-type relationships that do not share training identity:
+
+- Open Lock -> Thieves' Tools, scope `open-lock`;
+- Disable Device -> Thieves' Tools, scope `disable-device`;
+- Disguise -> Disguise Kit as `related-competency`.
+
+A scoped relationship never grants unrestricted proficiency in the target tool. A related relationship reports the rules connection without asserting that training in one is training in the other.
+
+### Mechanical profiles and evaluation
+
+Each competency profile retains its own source revision, edition/profile identity, capability requirements, typed inputs, boolean requirements, and `canEvaluate` state. Profile selection is local to a competency evaluation through `competencyProfileSourceEntityRevisionId`; it is not an edition-wide Character mode.
 
 Rules Core owns the arithmetic described by the selected profile. The Character backend supplies Character-owned or already-resolved contributions, not a final competency value:
 
 - a ranked 3.x profile uses `abilityContribution`, required `ranks`, an Armor Check Penalty adjustment only when that profile says the penalty applies, and `otherModifier`;
 - a later-edition proficiency profile uses `abilityContribution`, optional `trainingContribution`, and `otherModifier`;
-- each participating profile input declares whether it contributes to the Ability portion or the non-Ability competency portion;
-- `classSkillState` is preserved as nonnumeric Character state and does not create a modifier by itself;
+- `classSkillState` remains nonnumeric Character state;
 - a trained-only profile expresses `isTrained == true` as a Rules Core requirement;
-- unknown or not-yet-faithful profiles expose `canEvaluate=false` instead of accepting an opaque final `value`.
+- unknown or not-yet-faithful profiles expose `canEvaluate=false` rather than accepting an opaque final value.
 
-A direct competency evaluation returns both the effective value and a Rules Core-produced breakdown containing `abilityContribution` and `competencyContribution`. The caller does not derive one by subtracting the other.
+A direct competency evaluation returns the effective value and a Rules Core-produced Ability/competency breakdown. Numeric fields never migrate between incompatible facet profiles.
 
-Checks that consume competencies expose a `competencyComposition` contract. The request can supply a nested `competency` input containing the competency mechanic key, profile selection, Character facts/contributions, and capabilities. For a direct competency, Rules Core evaluates that selected profile in check-composition mode, omits the profile's own Ability contribution, and injects only its non-Ability competency contribution into the check's declared contribution input. Rules Core also injects/verifies the competency concept identity.
 
-For an effective composite competency, the same nested input can carry a `components` collection. Each component is itself a nested competency request, so Rules Core recursively evaluates its selected profile to a non-Ability contribution. The parent then passes those derived component contributions and any relationship-targeted `modifiers` to the existing `CompositeCompetencyEvaluator`. The result is the parent competency's non-Ability contribution, which is injected into the check. This gives the end-to-end flow:
-
-```text
-component Character facts/contributions
-  -> Rules Core component competency profiles
-  -> derived non-Ability component contributions
-  -> Rules Core CompositeCompetencyEvaluator
-  -> derived non-Ability parent competency contribution
-  -> Rules Core generalized/source-defined check
-```
-
-The check supplies its own selected or fixed Ability contribution independently. Therefore a Wisdom-based Stealth check can derive Stealth from Hide + Move Silently while adding Wisdom exactly once; component profile Ability contributions are not required or counted during check composition. The same rule supports alternate-Ability direct competencies such as Dexterity-based Survival.
-
-The same contract is used by generic `check.competency` and by source-defined Assessment, Carving, Manufacturing, and Enchanting checks. Supplying both a direct contribution and a nested competency composition request is rejected as ambiguous.
-
-Consequently, an accessible 3.x profile does not add ranks to the effective 5e/5.5e profile. The Character backend can deliberately select the 3.x source profile when its Character capabilities support that mechanic. The static `competency.skill-ranks` mechanic remains a raw Character-owned quantity and is not a substitute for effective competency evaluation.
-
-Ranks, class-skill state, training state, ability contributions, proficiency/training contributions, Armor Check Penalty adjustments, and other resolved modifiers remain Character inputs. Rules Core decides which inputs participate and how they combine; it does not fabricate Character state or advancement/rank-purchase rules.
 
 ## Composite competencies
 
@@ -266,3 +365,100 @@ POST /api/campaigns/{campaignId}/rules/mechanics/evaluate
 The legacy per-mechanic evaluation endpoints remain available, but callers that need many mechanics should use the batch contract rather than rebuilding the effective context once per mechanic.
 
 Roll-mode effects such as disadvantage are returned as structured rules. The consumer remains responsible for actually performing the roll according to its dice/runtime architecture.
+
+## Character projection Armor Class
+
+The bulk Character projection resolves `defense.ac.total` from equipped items only when the item role is mechanically unambiguous. Native/reference item type `LA` uses the armor base plus the full Dexterity modifier, `MA` caps the Dexterity contribution at +2, `HA` contributes no Dexterity modifier, and `S` contributes its shield bonus. Multiple armor bases, multiple shields, or an AC-bearing item whose role is not normalized produce an explicit unresolved/conflict result instead of implicit stacking.
+
+When no armor base is selected, the ordinary unarmored formula is `10 + Dexterity modifier`, with an equipped shield and explicit other modifiers applied normally. Rule-projected replacement formulas remain a separate extension point rather than being encoded as class-name exceptions.
+
+A selected normalized 3.x class grants the core 3.x Character capabilities used by the bulk projection, including Fortitude/Reflex/Will, BAB, grapple, touch AC, flat-footed AC, skill ranks, and nonlethal-damage tracking. Touch AC uses the 3.x formula and omits armor, shield, and natural-armor bonuses. Flat-footed AC removes a positive Dexterity contribution and ordinary dodge contribution by default while retaining armor, shield, size, natural armor, and deflection. Explicit rule-derived Character facts can replace the Dexterity or flat-footed dodge contributions when a feature changes those normal rules. For a pure 3.x projection, ordinary AC is also composed from the same 3.x contribution set; a hybrid Character that also has standard 5.x proficiency keeps its normal effective AC while exposing the additional 3.x defenses.
+
+Every calculated AC value carries its structured contribution list. The 3.x total preserves distinct armor, shield, Dexterity, size, natural-armor, deflection, dodge, and other contribution identities rather than forcing them into one opaque bonus. Arbitrary source-defined additions use the open `defense.ac.contribution.<identity>` namespace; touch-only and flat-footed-only additions use `defense.ac.touch.contribution.<identity>` and `defense.ac.flat-footed.contribution.<identity>`. Rule effects may target the same namespaces, retaining their source provenance and active-condition state. A Details surface therefore does not need to reconstruct or rename source-defined contribution types from the final number.
+
+Miss Chance is a separate mechanic, not an AC contribution. Normalized rules should use the stable `defense.miss-chance` mechanic identity when that rule applies and may supply a `percent` unit through `_rulesCore.character.passives`. Other source-defined avoidance mechanics may use their own keys; the projection does not force them into Miss Chance or Armor Class.
+
+## Character projection equipment definitions
+
+The request separates item definitions from Character inventory state. `itemConceptKeys` asks Rules Core to project semantic definitions for items the Character backend cares about; `equippedItemConceptKeys` is the subset currently equipped and therefore eligible to contribute active combat effects. Equipped concepts are automatically included in the item-definition set.
+
+The `equipment` result exposes stable item/concept identity, source provenance, item type/category, normalized armor role when known, weight and unit, ammunition relationship text when the source defines it, capacity text, attunement requirement, and arbitrary source property keys. These are rule/source definitions. Occurrences, possessed quantity, carried/equipped state, current ammunition/resource quantity, and current attunement selections remain Character state. An unequipped item can therefore be described without granting its AC or attack effects.
+
+Currency totals are likewise Character state. Rules-defined currency denominations/conversions, load formulas, encumbrance thresholds, container capacities, ammunition rules, and item prerequisites belong in Rules Core when their effective source has normalized them. They should be represented through canonical concepts and structured mechanics/effects/procedures rather than parsed from item prose. Unknown source semantics remain unresolved instead of receiving invented stack, capacity, conversion, or encumbrance defaults.
+
+## Character projection weapon attacks
+
+The bulk Character projection resolves attack and damage modifiers for equipped 5e.tools-shaped melee (`M`) and ranged (`R`) weapons when the source supplies a damage expression. Ranged weapons use Dexterity. Melee weapons use Strength unless the item has the `F` (Finesse) property; finesse remains an explicit runtime choice between Strength and Dexterity rather than Rules Core silently selecting the larger modifier.
+
+Weapon proficiency is derived when a selected class or other normalized rule grants a matching `qualification.weapons.*` capability. A caller can also supply the explicit boolean Character fact `weapon.<concept-key>.proficient`. Absence of both is treated as unknown, not as non-proficiency. Standard proficiency bonus, `bonusWeapon`, `bonusWeaponAttack`, `bonusWeaponDamage`, and caller-supplied `attack.<concept-key>.other` / `damage.<concept-key>.other` facts are incorporated with provenance-preserving contributions. Unsupported weapon roles remain unresolved.
+
+## Character projection spellcasting resources
+
+Spell actions preserve source-defined casting metadata when the spell concept provides it. The action result can carry the spell level, school identity, full casting-time text, range, V/S/M component identities, material-component text, duration, ritual state, concentration state, source concept identity, and provenance. The Character Sheet does not need to reopen the spell source document to reconstruct those fields.
+For a single selected standard caster whose effective class document exposes `rowsSpellProgression`, the bulk Character projection reads the row for the supplied class level and returns one `resource.spell-slot.<level>` resource for every nonzero slot maximum. The table remains source-owned; Rules Core selects the row and carries the class rule provenance into each resource.
+
+A class with `casterProgression: "pact"` is projected through its Pact Magic table instead of `rowsSpellProgression`. Rules Core locates the source `Spell Slots` and `Slot Level` columns, reads the supplied class-level row, and returns `resource.pact-slot.<class-concept-key>.level-<slot-level>`. Pact slots remain a `pact-magic` resource system and coexist with normal spell slots; selecting a Pact Magic class alongside a standard caster does not create a false multiclass-slot conflict.
+
+Known/prepared spell lists are Character state inputs associated with stable spell concepts; source and grant provenance remain Rules Core data. A source edition's preparation rules do not become an implicit frontend restriction. The effective published rules decide whether preparation is required. A normalized `preparedSpellRestriction` policy is exposed as the stable `spellcasting.preparation-restriction` mechanic with source provenance. In the Dorks & Dice effective rules, the baseline `house.spell-preparation` value is `removed`; the Character Sheet must not reintroduce preparation simply because an underlying official source document contains it.
+
+The published Dorks & Dice resource-choice house rule is recognized from its actual `casterChoosesResourceSystem` and `availableResourceSystems` fields. `spellcasting.resource-system` accepts the normalized choices `spell-slots` or `spell-points` (human forms such as `spell slots` are normalized). Until that choice is supplied, standard spellcasting resources are `choice-required`. A spell-points choice uses the official 2014 spell-point progression for standard Spellcasting. Rules Core derives the effective spell-point caster level from the normalized caster progression, projects the point-pool maximum, maximum slot level, per-slot point costs, and the one-per-long-rest creation limit for 6th-level and higher slots. Pact Magic remains a separate resource system and is not converted by this policy. The spell-point policy is isolated from Pact Magic so a distinct Pact conversion can be added later without changing the standard progression.
+
+When more than one selected class contributes a standard spell-slot table, Rules Core combines caster levels from the source `casterProgression` identities rather than adding class-table slot counts. `full` contributes the full class level, `1/2` contributes half rounded down, `1/3` contributes one third rounded down, and `artificer` contributes half rounded up. The resulting effective caster level selects a row from the retained source slot tables. If available source tables disagree for that effective level, or a progression identity is unsupported, the result remains explicit and conflicted instead of choosing one table silently. Pact Magic is excluded from this calculation and remains a separate resource.
+
+## Character projection maximum HP
+
+Class hit-die size and advancement level are Rules Core inputs to maximum-HP projection. The caller supplies one raw hit-die outcome per class level through `hitPointGains`; that outcome may represent a resolved roll or a fixed value selected under the effective rules. The stable identity is the class concept plus the class level, for example `health.hit-point-gain.class.example.level-3`. Runtime `rolls` may use the same key when the outcome was rolled.
+
+Rules Core validates each supplied value against the source hit die, applies the resolved Constitution modifier for every level, applies the standard minimum gain of 1 hit point per level, and returns the composed `health.maximum-hp` value with per-level provenance. It does not assume a first-level maximum, choose a fixed average, or fill in a missing level. Missing level outcomes remain `missing-character-input`; stale, duplicate, or out-of-range outcomes are explicit conflicts.
+
+Each contributing class/prestige-class Hit Die is also projected as its own `resource.hit-die.<class-concept-key>` resource. The maximum comes from source-defined Hit Die size plus the supplied advancement level, so multiclass Characters retain separate pools by granting source. The current/spent value is read only from Character-owned `currentResources`. Recovery behavior is not hard-coded into the pool; an effective ruleset can attach the relevant recovery procedure.
+
+Death Saves use the same generalized boundary. When an effective rule defines them, success and failure tracks can be projected as resources such as `resource.death-save.successes` and `resource.death-save.failures`, including source-defined maxima and a recovery/reset procedure key. The Character owns the current track values. A normalized procedure can carry structured `set`/adjustment effects for reset behavior, so the Character Sheet does not infer the limit or clear the tracks from UI convention. Rulesets without Death Saves simply do not project those resources.
+
+## Native class and subclass feature progression
+
+The bulk Character projection reads acquisition levels directly from native 5e.tools class-feature and subclass-feature UIDs. Class feature references use `Name|Class|ClassSource|Level|...`; subclass feature references use `Name|Class|ClassSource|Subclass|SubclassSource|Level|...`. Object-wrapped `classFeature` and `subclassFeature` references are treated identically.
+
+Only features whose source-defined acquisition level is at or below the supplied advancement level are projected as resolved Character features. Future features are omitted. A feature entry with no trustworthy acquisition level remains `applicable-unresolved` instead of being assigned to a level by position or display order.
+
+Every projected feature has a stable `featureKey` and occurrence identity, source concept/provenance, granting-source kind, and acquisition level when the source exposes one. This preserves distinctions such as class, subclass, prestige-class, race/species, background, and feat grants even when a Character UI presents them in one Features & Traits list. Two grants with the same display name do not become one occurrence merely because their labels match. Normalized effects remain structured rule effects rather than forcing the Character Sheet to crawl source documents.
+
+## Character projection choices
+
+The bulk Character projection exposes rule-defined selections as `choices` rather than requiring a Character client to reopen source JSON. A choice carries a stable choice key and group key, kind, state, legal options, selected value when supplied, source concept, and provenance. Runtime selections are sent back through the existing `choices` request collection.
+
+`startingProficiencies.skills` and top-level `skillProficiencies` use the same normalized choice path. Fixed source skill proficiencies become Character training directly. A 5e.tools `choose.from` group becomes one choice slot per required selection, and `any: N` is populated from the effective accessible skill competency catalog. Fixed boolean grants and a choice can coexist in one source object. Duplicate selections within one source group and values outside the legal option set are explicit conflicts. When an option resolves to a canonical competency, selecting it feeds the Rules Core competency calculation directly; the Character Sheet does not need to mirror that selection into `TrainingKeys`.
+
+Missing choices do not imply non-proficiency. Competencies that could still be selected remain unresolved until the Character supplies the choice or a complete external training-state set.
+
+## Structured proficiency projection
+
+The bulk Character projection reads 5e.tools `weaponProficiencies`, `armorProficiencies`, and `toolProficiencies` in addition to the human-facing `weapons`, `armor`, and `tools` arrays. Fixed boolean weapon and armor entries become qualifications/capabilities. For weapon `all.fromFilter` expressions, Rules Core evaluates the normalized filter against accessible effective weapon concepts when every filter clause is supported. The current exact grammar supports `type` clauses for simple/martial and melee/ranged weapons plus `property` clauses; pipe-separated clauses are ANDed and semicolon-separated values within one clause are ORed. Native Finesse (`F`) and Light (`L`) item properties are normalized to the source filter names. Matching weapon concepts become ordinary weapon qualifications, so equipped attack projection consumes the result through the same proficiency capability path. Unsupported filter fields remain `applicable-unresolved`, and a supported filter with no accessible matching weapon concept remains `source-unavailable`; Rules Core does not broaden the expression.
+
+Fixed named tool entries resolve against the accessible canonical tool competency catalog and feed Character training directly. `anyTool: N` becomes N ordinary choice slots populated from that catalog. Narrower category quantities such as `anyArtisansTool`, `anyMusicalInstrument`, and `anyGamingSet` are populated only from accessible effective tool concepts whose source document exposes the matching normalized tool category. Native 5e.tools item type identities `AT`, `INS`, and `GS` are recognized, and normalized rules may instead publish `_rulesCore.toolCategory`. A category with no trustworthy available members remains `source-unavailable`; Rules Core does not fabricate tool names. Category placeholders inside `choose.from` are expanded through the same catalog and may coexist with explicitly named tools.
+
+## Language proficiency projection
+
+The bulk Character projection treats effective `language` Rule Concepts as the legal language catalog. Fixed entries in `languageProficiencies` become resolved `qualification.languages.*` capabilities. Choice tokens `any`/`anyLanguage`, `anyStandard`, `anyExotic`, and `anyRare` are populated from accessible effective language concepts; category-scoped choices use the source language `type` or normalized `_rulesCore.languageCategory` metadata.
+
+Fixed languages are registered before category choices regardless of source JSON property order, so a language already granted by the same rule is not offered again. A selected language is likewise removed from later choice groups during the same projection. `choose.from` may mix category tokens and explicitly named languages and uses the same canonical option path. If the effective catalog can not represent a requested category, the choice remains `source-unavailable`; Rules Core does not synthesize a language list.
+
+## Ability state and temporary effects
+
+`ability.<ability>.base` is the Character-owned input score as received by Rules Core. `ability.<ability>.score` and `ability.<ability>.modifier` remain the effective values after rule contributions. Contributions now carry an optional state kind and condition identity. A conditional or active-condition contribution is marked `temporary` rather than being indistinguishable from a permanent ancestry/background/advancement bonus.
+
+When at least one active temporary contribution exists, the projection additionally exposes `ordinary-score`, `ordinary-modifier`, `temporary-adjustment`, `temporary-score`, and `temporary-modifier` identities for that ability. Those values are Rules Core results, not frontend arithmetic. Conditional effects that are not active remain visible as rule effects but do not alter the effective score.
+
+## Ability-score choice projection
+
+The bulk Character projection treats a 5e.tools `ability` array as alternate ability-score sets, not cumulative entries. When more than one set is present, Rules Core exposes an `ability-score-set` choice and projects only the selected set. This prevents mutually exclusive schemes such as “+2/+1” versus “+1/+1/+1” from being added together.
+
+Within the selected set, fixed numeric adjustments are applied directly. `choose.from` supports source-defined `count` and `amount`, while `choose.weighted` creates one distinct ability selection per source weight (for example +2 and +1). Duplicate selections inside the same weighted/uniform group are explicit conflicts. Missing choices mark only the ability scores that the unresolved source choice can affect; unrelated abilities remain resolved.
+
+Ability choices are returned through the same generic `choices` contract used for proficiencies, with stable keys, legal options, selected values, source concept, and provenance. Unknown choice shapes are preserved as `source-unavailable` rather than guessed.
+
+## Starting class and multiclass proficiencies
+
+When exactly one selected base-class advancement has a positive level, Rules Core treats it as the starting class automatically. When more than one base class is present, the Character must identify the starting class with the `advancement.starting-class` runtime choice (or the same key in string facts). The projection does not infer the starting class from request order. The generic `choices` response exposes the legal selected base-class options.
+
+Only the starting class grants its native `proficiency`/`savingThrows` proficiencies and `startingProficiencies`. Other selected base classes instead project `multiclassing.proficienciesGained`, including the normalized skill/tool/weapon/armor choice paths supported by Character projection. Standard proficiency bonus still uses the total supplied base-class advancement levels. If the starting class is unresolved, starting-only and multiclass-only grants are withheld and the projection reports `choice-required` rather than over-granting Character capabilities.

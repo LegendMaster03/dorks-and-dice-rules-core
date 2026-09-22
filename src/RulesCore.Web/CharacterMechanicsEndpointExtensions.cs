@@ -23,6 +23,63 @@ public static class CharacterMechanicsEndpointExtensions
                 cancellationToken));
         });
 
+        app.MapGet("/api/rules/mechanics/support", async (
+            HttpContext httpContext,
+            ICharacterMechanicsConsumerService mechanics,
+            CancellationToken cancellationToken) =>
+        {
+            var userId = HostedToolAuthenticationMiddleware
+                .GetAuthenticationContext(httpContext)?
+                .User.Id;
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(await mechanics.ProjectGlobalSupportAsync(
+                new CharacterSupportProjectionRequest(),
+                userId,
+                cancellationToken));
+        });
+
+        app.MapPost("/api/rules/mechanics/support", async (
+            CharacterSupportProjectionRequest request,
+            HttpContext httpContext,
+            ICharacterMechanicsConsumerService mechanics,
+            CancellationToken cancellationToken) =>
+        {
+            var userId = HostedToolAuthenticationMiddleware
+                .GetAuthenticationContext(httpContext)?
+                .User.Id;
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(await mechanics.ProjectGlobalSupportAsync(
+                request,
+                userId,
+                cancellationToken));
+        });
+
+        app.MapPost("/api/rules/mechanics/recovery/{procedureKey}/resolve", async (
+            string procedureKey,
+            CharacterRecoveryResolutionRequest request,
+            HttpContext httpContext,
+            ICharacterMechanicsConsumerService mechanics,
+            CancellationToken cancellationToken) =>
+        {
+            try
+            {
+                var userId = HostedToolAuthenticationMiddleware
+                    .GetAuthenticationContext(httpContext)?
+                    .User.Id;
+                httpContext.Response.Headers.CacheControl = "no-store";
+                var result = await mechanics.ResolveGlobalRecoveryAsync(
+                    procedureKey,
+                    request,
+                    userId,
+                    cancellationToken);
+                return result is null ? Results.NotFound() : Results.Ok(result);
+            }
+            catch (ArgumentException exception)
+            {
+                return InvalidSupportRequest(exception);
+            }
+        });
+
         app.MapPost("/api/rules/mechanics/evaluate", async (
             CharacterMechanicsBatchEvaluationRequest request,
             HttpContext httpContext,
@@ -120,6 +177,87 @@ public static class CharacterMechanicsEndpointExtensions
                 cancellationToken));
         });
 
+        app.MapGet("/api/campaigns/{campaignId:guid}/rules/mechanics/support", async (
+            Guid campaignId,
+            HttpContext httpContext,
+            ICharacterMechanicsConsumerService mechanics,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireCampaignRead(
+                httpContext,
+                campaignId,
+                out var authenticationContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(await mechanics.ProjectCampaignSupportAsync(
+                campaignId,
+                new CharacterSupportProjectionRequest(),
+                authenticationContext!.User.Id,
+                cancellationToken));
+        });
+
+        app.MapPost("/api/campaigns/{campaignId:guid}/rules/mechanics/support", async (
+            Guid campaignId,
+            CharacterSupportProjectionRequest request,
+            HttpContext httpContext,
+            ICharacterMechanicsConsumerService mechanics,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireCampaignRead(
+                httpContext,
+                campaignId,
+                out var authenticationContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(await mechanics.ProjectCampaignSupportAsync(
+                campaignId,
+                request,
+                authenticationContext!.User.Id,
+                cancellationToken));
+        });
+
+        app.MapPost("/api/campaigns/{campaignId:guid}/rules/mechanics/recovery/{procedureKey}/resolve", async (
+            Guid campaignId,
+            string procedureKey,
+            CharacterRecoveryResolutionRequest request,
+            HttpContext httpContext,
+            ICharacterMechanicsConsumerService mechanics,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireCampaignRead(
+                httpContext,
+                campaignId,
+                out var authenticationContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            try
+            {
+                httpContext.Response.Headers.CacheControl = "no-store";
+                var result = await mechanics.ResolveCampaignRecoveryAsync(
+                    campaignId,
+                    procedureKey,
+                    request,
+                    authenticationContext!.User.Id,
+                    cancellationToken);
+                return result is null ? Results.NotFound() : Results.Ok(result);
+            }
+            catch (ArgumentException exception)
+            {
+                return InvalidSupportRequest(exception);
+            }
+        });
+
         app.MapPost("/api/campaigns/{campaignId:guid}/rules/mechanics/evaluate", async (
             Guid campaignId,
             CharacterMechanicsBatchEvaluationRequest request,
@@ -208,6 +346,8 @@ public static class CharacterMechanicsEndpointExtensions
                 return InvalidEvaluation(exception);
             }
         });
+
+        app.MapCharacterProjectionEndpoints();
     }
 
     private static IResult? RequireCampaignRead(
@@ -225,6 +365,12 @@ public static class CharacterMechanicsEndpointExtensions
             ? null
             : Results.NotFound();
     }
+
+    private static IResult InvalidSupportRequest(Exception exception) =>
+        Results.Problem(
+            title: "Invalid Character support request",
+            detail: exception.Message,
+            statusCode: StatusCodes.Status400BadRequest);
 
     private static IResult InvalidEvaluation(Exception exception) =>
         Results.Problem(

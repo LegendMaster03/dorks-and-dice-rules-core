@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
 using RulesCore.Domain.Rules;
 using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.Infrastructure.Rules;
 
@@ -98,6 +99,99 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         return EvaluateBatchFromCatalog(catalog, request);
     }
 
+    public async Task<CharacterSupportProjectionView> ProjectGlobalSupportAsync(
+        CharacterSupportProjectionRequest request,
+        string? userId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        var rules = await ReadAllGlobalRulesAsync(userId, cancellationToken);
+        var catalog = await CharacterSupportCatalogBuilder.BuildAsync(
+            dbContext,
+            rules,
+            cancellationToken);
+        return CharacterSupportResolver.Project(catalog, request);
+    }
+
+    public async Task<CharacterSupportProjectionView> ProjectCampaignSupportAsync(
+        Guid campaignId,
+        CharacterSupportProjectionRequest request,
+        string userId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        var normalizedUserId = ValidateCampaignSupportRequest(campaignId, userId);
+        var rules = await ReadAllCampaignRulesAsync(
+            campaignId,
+            normalizedUserId,
+            cancellationToken);
+        var catalog = await CharacterSupportCatalogBuilder.BuildAsync(
+            dbContext,
+            rules,
+            cancellationToken);
+        return CharacterSupportResolver.Project(catalog, request);
+    }
+
+    public async Task<CharacterRecoveryResolutionView?> ResolveGlobalRecoveryAsync(
+        string procedureKey,
+        CharacterRecoveryResolutionRequest request,
+        string? userId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        var rules = await ReadAllGlobalRulesAsync(userId, cancellationToken);
+        var catalog = await CharacterSupportCatalogBuilder.BuildAsync(
+            dbContext,
+            rules,
+            cancellationToken);
+        return CharacterSupportResolver.ResolveRecovery(
+            catalog,
+            procedureKey,
+            request);
+    }
+
+    public async Task<CharacterRecoveryResolutionView?> ResolveCampaignRecoveryAsync(
+        Guid campaignId,
+        string procedureKey,
+        CharacterRecoveryResolutionRequest request,
+        string userId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        var normalizedUserId = ValidateCampaignSupportRequest(campaignId, userId);
+        var rules = await ReadAllCampaignRulesAsync(
+            campaignId,
+            normalizedUserId,
+            cancellationToken);
+        var catalog = await CharacterSupportCatalogBuilder.BuildAsync(
+            dbContext,
+            rules,
+            cancellationToken);
+        return CharacterSupportResolver.ResolveRecovery(
+            catalog,
+            procedureKey,
+            request);
+    }
+
+    private static string ValidateCampaignSupportRequest(
+        Guid campaignId,
+        string userId)
+    {
+        if (campaignId == Guid.Empty)
+        {
+            throw new ArgumentException(
+                "Campaign ID can not be empty.",
+                nameof(campaignId));
+        }
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            throw new ArgumentException(
+                "User ID can not be blank.",
+                nameof(userId));
+        }
+        return userId.Trim();
+    }
+
     private async Task<CharacterMechanicsCatalogView> BuildCatalogAsync(
         ResolvedRulesCatalogView rules,
         string? userId,
@@ -178,6 +272,38 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             var sourceUri = sourceUriByRevision.GetValueOrDefault(rule.SourceEntityRevisionId);
             var provider = providerByPackageKey.GetValueOrDefault(rule.PackageKey)
                 ?? rule.PackageDisplayName;
+            var effectiveRuleAttributions = BuildRuleAttributions(
+                rule,
+                provider,
+                sourceUri,
+                publicationMetadata);
+            var canonicalAttributions = competency.Profiles
+                .SelectMany(value => value.SourceAttributions ?? [])
+                .Concat(effectiveRuleAttributions)
+                .GroupBy(value => new
+                {
+                    value.PackageKey,
+                    value.SourceCode,
+                    value.SourceRevisionNumber,
+                    value.WorkKey,
+                    value.ReferenceKey,
+                    value.ReferenceUri
+                })
+                .Select(group => group
+                    .OrderByDescending(value => !string.IsNullOrWhiteSpace(value.ReferenceTitle))
+                    .ThenByDescending(value => !string.IsNullOrWhiteSpace(value.WorkDisplayName))
+                    .First())
+                .OrderBy(value => value.WorkDisplayName, StringComparer.Ordinal)
+                .ThenBy(value => value.PackageKey, StringComparer.Ordinal)
+                .ThenBy(value => value.SourceRevisionNumber)
+                .ToArray();
+            var mechanicalProfileAttributions = competency.DefaultProfileSourceEntityRevisionId is Guid defaultProfileRevisionId
+                ? competency.Profiles
+                    .Where(value => value.SourceEntityRevisionId == defaultProfileRevisionId)
+                    .SelectMany(value => value.SourceAttributions ?? [])
+                    .Distinct()
+                    .ToArray()
+                : [];
             mechanics.Add(new CharacterMechanicView(
                 mechanicKey,
                 CharacterMechanicKinds.Competency,
@@ -205,14 +331,15 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 Check: null,
                 Competency: competency,
                 ContributorGroups: [],
-                SourceAttributions: BuildRuleAttributions(
-                    rule,
-                    provider,
-                    sourceUri,
-                    publicationMetadata)));
+                SourceAttributions: canonicalAttributions,
+                Provenance: new CharacterMechanicProvenanceView(
+                    canonicalAttributions,
+                    mechanicalProfileAttributions,
+                    effectiveRuleAttributions)));
         }
 
         mechanics = AttachStaticRelationships(mechanics);
+        mechanics = AttachCompetencyIdentityFacets(mechanics);
 
         return new CharacterMechanicsCatalogView(
             rules.Scope,
@@ -548,6 +675,99 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 var index = mechanics.FindIndex(value =>
                     string.Equals(value.MechanicKey, key, StringComparison.Ordinal));
                 mechanics[index] = updated;
+            }
+        }
+
+        return mechanics;
+    }
+
+    private static List<CharacterMechanicView> AttachCompetencyIdentityFacets(
+        List<CharacterMechanicView> mechanics)
+    {
+        var groups = mechanics
+            .Where(value => value.Competency is not null
+                && !string.IsNullOrWhiteSpace(value.Competency.IdentityKey))
+            .GroupBy(
+                value => value.Competency!.IdentityKey!,
+                StringComparer.OrdinalIgnoreCase)
+            .Where(group => group.Count() > 0)
+            .ToArray();
+
+        foreach (var group in groups)
+        {
+            var members = group.ToArray();
+            var profiles = members
+                .SelectMany(value => value.Competency!.Profiles
+                    .Select(profile => new { Mechanic = value, Profile = profile }))
+                .ToArray();
+            var facets = profiles
+                .GroupBy(
+                    value => string.IsNullOrWhiteSpace(value.Profile.FacetType)
+                        ? string.Equals(
+                            value.Profile.CompetencyKind,
+                            CharacterCompetencyKinds.Tool,
+                            StringComparison.OrdinalIgnoreCase)
+                            ? "tool"
+                            : "skill"
+                        : value.Profile.FacetType!,
+                    StringComparer.OrdinalIgnoreCase)
+                .Select(facet => new CharacterCompetencyFacetView(
+                    facet.Key,
+                    facet.Select(value => value.Profile.SourceEntityRevisionId)
+                        .Distinct()
+                        .OrderBy(value => value)
+                        .ToArray(),
+                    facet.Any(value => value.Profile.SupportsRanks),
+                    facet.Any(value => value.Profile.SupportsClassSkillState),
+                    facet.Any(value => value.Profile.SupportsTrainingState),
+                    facet.Select(value => value.Mechanic.MechanicKey)
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .OrderBy(value => value, StringComparer.Ordinal)
+                        .ToArray()))
+                .OrderBy(value => value.FacetType, StringComparer.Ordinal)
+                .ToArray();
+
+            var identityNames = members
+                .Select(value => value.Competency!.IdentityName)
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .Cast<string>()
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+            var trainingKeys = members
+                .Select(value => value.Competency!.SharedTrainingKey)
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .Cast<string>()
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+            var relationships = members
+                .SelectMany(value => value.Competency!.RelatedCompetencies ?? [])
+                .Distinct()
+                .OrderBy(value => value.Kind, StringComparer.Ordinal)
+                .ThenBy(value => value.TargetType, StringComparer.Ordinal)
+                .ThenBy(value => value.TargetName, StringComparer.Ordinal)
+                .ThenBy(value => value.Scope, StringComparer.Ordinal)
+                .ToArray();
+
+            foreach (var member in members)
+            {
+                var competency = member.Competency! with
+                {
+                    IdentityName = identityNames.Length == 1
+                        ? identityNames[0]
+                        : member.Competency!.IdentityName,
+                    SharedTrainingKey = trainingKeys.Length == 1
+                        ? trainingKeys[0]
+                        : member.Competency!.SharedTrainingKey,
+                    Facets = facets,
+                    RelatedCompetencies = relationships
+                };
+                var updated = member with { Competency = competency };
+                var memberIndex = mechanics.FindIndex(value =>
+                    string.Equals(
+                        value.MechanicKey,
+                        member.MechanicKey,
+                        StringComparison.Ordinal));
+                mechanics[memberIndex] = updated;
             }
         }
 
@@ -1030,10 +1250,91 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             }
         }
 
+        var familyName = selectedProfile?.FamilyName;
+        if (string.IsNullOrWhiteSpace(familyName))
+        {
+            var familyNames = allProfiles
+                .Select(value => value.FamilyName)
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .Cast<string>()
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+            if (familyNames.Length == 1)
+            {
+                familyName = familyNames[0];
+            }
+        }
+
+        var specialty = selectedProfile?.Specialty;
+        if (string.IsNullOrWhiteSpace(specialty))
+        {
+            var specialties = allProfiles
+                .Select(value => value.Specialty)
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .Cast<string>()
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+            if (specialties.Length == 1)
+            {
+                specialty = specialties[0];
+            }
+        }
+
+        var identityKeys = allProfiles
+            .Select(value => value.IdentityKey)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Cast<string>()
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var identityNames = allProfiles
+            .Select(value => value.IdentityName)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Cast<string>()
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var sharedTrainingKeys = allProfiles
+            .Select(value => value.SharedTrainingKey)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Cast<string>()
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+
+        var facets = allProfiles
+            .GroupBy(
+                value => string.IsNullOrWhiteSpace(value.FacetType)
+                    ? string.Equals(
+                        value.CompetencyKind,
+                        CharacterCompetencyKinds.Tool,
+                        StringComparison.OrdinalIgnoreCase)
+                        ? "tool"
+                        : "skill"
+                    : value.FacetType!,
+                StringComparer.OrdinalIgnoreCase)
+            .Select(group => new CharacterCompetencyFacetView(
+                group.Key,
+                group.Select(value => value.SourceEntityRevisionId)
+                    .Distinct()
+                    .OrderBy(value => value)
+                    .ToArray(),
+                group.Any(value => value.SupportsRanks),
+                group.Any(value => value.SupportsClassSkillState),
+                group.Any(value => value.SupportsTrainingState)))
+            .OrderBy(value => value.FacetType, StringComparer.Ordinal)
+            .ToArray();
+
+        var relatedCompetencies = allProfiles
+            .SelectMany(value => value.RelatedCompetencies ?? [])
+            .Distinct()
+            .OrderBy(value => value.Kind, StringComparer.Ordinal)
+            .ThenBy(value => value.TargetType, StringComparer.Ordinal)
+            .ThenBy(value => value.TargetName, StringComparer.Ordinal)
+            .ThenBy(value => value.Scope, StringComparer.Ordinal)
+            .ToArray();
+
         return new CharacterCompetencyDefinitionView(
             selectedProfile?.CompetencyKind ?? defaultKind,
-            selectedProfile?.FamilyName,
-            selectedProfile?.Specialty,
+            familyName,
+            specialty,
             governingAbilityKey,
             selectedProfile?.SupportsRanks ?? false,
             selectedProfile?.SupportsClassSkillState ?? false,
@@ -1041,18 +1342,29 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             selectedProfile?.TrainedOnly,
             selectedProfile?.ArmorCheckPenaltyApplies,
             selectedProfile?.SourceEntityRevisionId,
-            allProfiles);
+            allProfiles,
+            IdentityKey: identityKeys.Length == 1 ? identityKeys[0] : null,
+            IdentityName: identityNames.Length == 1 ? identityNames[0] : null,
+            SharedTrainingKey:
+                sharedTrainingKeys.Length == 1 ? sharedTrainingKeys[0] : null,
+            IsFamily:
+                selectedProfile?.IsFamily == true
+                || allProfiles.Any(value => value.IsFamily),
+            Facets: facets,
+            RelatedCompetencies: relatedCompetencies);
     }
 
     private static CharacterCompetencyProfileView? BuildCompetencyProfile(
         Guid sourceEntityRevisionId,
         string entityType,
         string? mechanicalJson,
-        string? gameEdition)
+        string? gameEdition,
+        IReadOnlyList<CharacterMechanicSourceAttributionView>? sourceAttributions = null)
     {
         var normalized = ParseNormalizedCompetencyMetadata(
             sourceEntityRevisionId,
-            mechanicalJson);
+            mechanicalJson,
+            sourceAttributions);
         if (normalized is not null)
         {
             return normalized;
@@ -1066,6 +1378,9 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         var competencyKind = string.Equals(entityType, "tool", StringComparison.OrdinalIgnoreCase)
             ? CharacterCompetencyKinds.Tool
             : CharacterCompetencyKinds.Skill;
+        var facetIdentity = ReviewedCompetencyFacetPolicy.ResolveLaterFacet(
+            entityType,
+            ReadNativeName(mechanicalJson));
         var inputs = BuildProficiencyCompetencyInputs();
         return new CharacterCompetencyProfileView(
             sourceEntityRevisionId,
@@ -1085,12 +1400,27 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             CanEvaluate: true,
             Inputs: inputs,
             BooleanRequirements: [],
-            GameEdition: gameEdition);
+            GameEdition: gameEdition,
+            SourceAttributions: sourceAttributions,
+            FacetType: string.Equals(
+                competencyKind,
+                CharacterCompetencyKinds.Tool,
+                StringComparison.OrdinalIgnoreCase)
+                ? "tool"
+                : "skill",
+            IsFamily: false,
+            IdentityKey: facetIdentity?.IdentityKey,
+            IdentityName: facetIdentity?.IdentityName,
+            SharedTrainingKey: facetIdentity is null
+                ? null
+                : $"competency.{facetIdentity.IdentityKey}.training",
+            RelatedCompetencies: []);
     }
 
     private static CharacterCompetencyProfileView? ParseNormalizedCompetencyMetadata(
         Guid sourceEntityRevisionId,
-        string? mechanicalJson)
+        string? mechanicalJson,
+        IReadOnlyList<CharacterMechanicSourceAttributionView>? sourceAttributions)
     {
         if (sourceEntityRevisionId == Guid.Empty || string.IsNullOrWhiteSpace(mechanicalJson))
         {
@@ -1134,6 +1464,32 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     [new CharacterMechanicBooleanRequirementView("isTrained", true)]
                 : [];
 
+            IReadOnlyList<CharacterCompetencyRelationshipView> relationships = [];
+            if (rulesCore.TryGetProperty("competencyConversion", out var conversion)
+                && conversion.ValueKind == JsonValueKind.Object)
+            {
+                var relationshipKind = ReadString(conversion, "relationship");
+                var targetType = ReadString(conversion, "targetType");
+                var targetName = ReadString(conversion, "targetName");
+                if (!string.IsNullOrWhiteSpace(relationshipKind)
+                    && !string.IsNullOrWhiteSpace(targetType)
+                    && !string.IsNullOrWhiteSpace(targetName))
+                {
+                    relationships =
+                    [
+                        new CharacterCompetencyRelationshipView(
+                            relationshipKind,
+                            targetType,
+                            targetName,
+                            ReadString(conversion, "scope"),
+                            SharesTrainingState: string.Equals(
+                                relationshipKind,
+                                "shared-competency-facet",
+                                StringComparison.Ordinal))
+                    ];
+                }
+            }
+
             return new CharacterCompetencyProfileView(
                 sourceEntityRevisionId,
                 profileKey,
@@ -1152,7 +1508,20 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 canEvaluate,
                 inputs,
                 requirements,
-                ReadString(competency, "gameEdition"));
+                ReadString(competency, "gameEdition"),
+                SourceAttributions: sourceAttributions,
+                FacetType: ReadString(competency, "facetType")
+                    ?? (string.Equals(
+                        kind,
+                        CharacterCompetencyKinds.Tool,
+                        StringComparison.OrdinalIgnoreCase)
+                        ? "tool"
+                        : "skill"),
+                IsFamily: ReadBoolean(competency, "isFamily") ?? false,
+                IdentityKey: ReadString(competency, "identityKey"),
+                IdentityName: ReadString(competency, "identityName"),
+                SharedTrainingKey: ReadString(competency, "sharedTrainingKey"),
+                RelatedCompetencies: relationships);
         }
         catch (JsonException)
         {
@@ -1379,6 +1748,27 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         return input.IncludeWhenBooleanValue.HasValue
             && booleanInputs.TryGetValue(input.IncludeWhenBooleanInputKey, out var supplied)
             && supplied == input.IncludeWhenBooleanValue.Value;
+    }
+
+    private static string? ReadNativeName(string? mechanicalJson)
+    {
+        if (string.IsNullOrWhiteSpace(mechanicalJson))
+        {
+            return null;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(mechanicalJson);
+            return document.RootElement.TryGetProperty("name", out var name)
+                && name.ValueKind == JsonValueKind.String
+                ? name.GetString()
+                : null;
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
     }
 
     private static string? ReadNativeGoverningAbilityKey(string? mechanicalJson)
@@ -1627,7 +2017,17 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     revision.content_json,
                     revision.raw_json,
                     source.entity_type,
-                    publication.game_edition
+                    publication.game_edition,
+                    package.package_key,
+                    package.display_name,
+                    package.provider,
+                    source.source_code,
+                    revision.revision_number,
+                    publication.canonical_key,
+                    publication.display_name,
+                    publication.release_kind,
+                    publication.publication_date,
+                    representation.source_uri
                 FROM concept_entities concept_entity
                 JOIN canonical_source_occurrence occurrence
                     ON occurrence.canonical_entity_id = concept_entity.canonical_entity_id
@@ -1639,6 +2039,8 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     ON revision.source_entity_revision_id = latest.source_entity_revision_id
                 JOIN source_entity source
                     ON source.source_entity_id = revision.source_entity_id
+                JOIN source_representation representation
+                    ON representation.source_representation_id = revision.source_representation_id
                 JOIN canonical_publication publication
                     ON publication.canonical_publication_id = occurrence.canonical_publication_id
                 JOIN source_package package
@@ -1664,11 +2066,28 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 var rawJson = reader.GetString(3);
                 var entityType = reader.GetString(4);
                 var gameEdition = reader.IsDBNull(5) ? null : reader.GetString(5);
+                var attribution = new CharacterMechanicSourceAttributionView(
+                    reader.GetString(6),
+                    reader.GetString(7),
+                    reader.GetString(8),
+                    reader.IsDBNull(9) ? null : reader.GetString(9),
+                    reader.GetInt32(10),
+                    reader.IsDBNull(11) ? null : reader.GetString(11),
+                    reader.IsDBNull(12) ? null : reader.GetString(12),
+                    gameEdition,
+                    reader.IsDBNull(13) ? null : reader.GetString(13),
+                    reader.IsDBNull(14) ? null : reader.GetFieldValue<DateOnly>(14),
+                    ReferenceKey: null,
+                    ReferenceTitle: null,
+                    ReferenceUri: reader.IsDBNull(15) ? null : reader.GetString(15),
+                    PresentationRequired: false,
+                    ReferenceLinkRequired: false);
                 var profile = BuildCompetencyProfile(
                     revisionId,
                     entityType,
                     string.IsNullOrWhiteSpace(contentJson) ? rawJson : contentJson,
-                    gameEdition);
+                    gameEdition,
+                    [attribution]);
                 if (profile is null)
                 {
                     continue;
@@ -1686,7 +2105,17 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 pair => pair.Key,
                 pair => (IReadOnlyList<CharacterCompetencyProfileView>)pair.Value
                     .GroupBy(value => new { value.SourceEntityRevisionId, value.ProfileKey })
-                    .Select(group => group.First())
+                    .Select(group =>
+                    {
+                        var first = group.First();
+                        var attributions = group
+                            .SelectMany(value => value.SourceAttributions ?? [])
+                            .Distinct()
+                            .OrderBy(value => value.WorkDisplayName, StringComparer.Ordinal)
+                            .ThenBy(value => value.PackageKey, StringComparer.Ordinal)
+                            .ToArray();
+                        return first with { SourceAttributions = attributions };
+                    })
                     .OrderBy(value => value.ProfileKey, StringComparer.Ordinal)
                     .ThenBy(value => value.GameEdition, StringComparer.Ordinal)
                     .ThenBy(value => value.SourceEntityRevisionId)

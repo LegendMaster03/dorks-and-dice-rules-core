@@ -31,10 +31,10 @@ public sealed class PcGenSkillConversionIntegrationTests
         ("Survival", "Survival")
     ];
 
-    private static readonly (string Source, string Target)[] DirectToolConversions =
+    private static readonly (string Source, string Target, string IdentityKey, string IdentityName)[] SharedToolFacets =
     [
-        ("Craft (alchemy)", "Alchemist's Supplies"),
-        ("Forgery", "Forgery Kit")
+        ("Craft (alchemy)", "Alchemist's Supplies", "alchemy", "Alchemy"),
+        ("Forgery", "Forgery Kit", "forgery", "Forgery")
     ];
 
     private static readonly string[] ExcludedDirectConversions =
@@ -51,40 +51,170 @@ public sealed class PcGenSkillConversionIntegrationTests
     ];
 
     [Fact]
-    public async Task AlchemistsSuppliesUsesEstablishedCompetencyConceptKey()
+    public async Task SpecializedCompetencyFamiliesAreTaxonomyWhileKnowledgeNormalizesDirectly()
     {
         var db = await OpenDatabaseAsync();
         if (db is null) return;
         await using (db)
         {
             var token = Guid.NewGuid().ToString("N")[..12];
-            var packageKey = $"pcgen-alchemy-key-{token}";
+            var packageKey = $"pcgen-competency-families-{token}";
 
             try
             {
                 await new NormalizedSourceImportService(db).ImportAsync(
                     new ImportNormalizedSourceRequest(
                         packageKey,
-                        $"PCGen alchemy key fixture {token}",
+                        $"PCGen competency family fixture {token}",
                         "integration-test",
                         "test-only",
                         true,
-                        PcGenRepresentation("3e", $"ALK{token}", ["Alchemy"])));
+                        PcGenRepresentation(
+                            "35e",
+                            $"FAM{token}",
+                            [
+                                "Craft",
+                                "Craft (blacksmithing)",
+                                "Perform",
+                                "Perform (dance)",
+                                "Profession",
+                                "Profession (sailor)",
+                                "Knowledge (arcana)"
+                            ])));
 
-                var candidates = await new SourceNormalizationService(db).GetCandidatesAsync(
-                    $"rules-lawyer-{token}",
-                    entityType: "tool",
-                    query: "Alchemist's Supplies");
+                foreach (var family in new[] { "Craft", "Perform", "Profession" })
+                {
+                    var row = await ReadByNativeNameAsync(db, packageKey, family);
+                    using var document = JsonDocument.Parse(row.ContentJson);
+                    var competency = document.RootElement
+                        .GetProperty("_rulesCore")
+                        .GetProperty("competency");
+                    Assert.Equal("skill", competency.GetProperty("kind").GetString());
+                    Assert.Equal(family, competency.GetProperty("familyName").GetString());
+                    Assert.True(competency.GetProperty("isFamily").GetBoolean());
+                    Assert.False(competency.TryGetProperty("specialty", out _));
+                    Assert.True(competency.GetProperty("supportsRanks").GetBoolean());
+                    Assert.True(competency.GetProperty("supportsClassSkillState").GetBoolean());
+                }
 
-                var candidate = Assert.Single(
-                    candidates,
-                    value => value.PackageKey == packageKey);
-                Assert.Equal("Alchemist's Supplies", candidate.Name);
-                Assert.Equal("tool.alchemists-supplies", candidate.SuggestedConceptKey);
+                foreach (var (name, family, specialty) in new[]
+                         {
+                             ("Craft (blacksmithing)", "Craft", "blacksmithing"),
+                             ("Perform (dance)", "Perform", "dance"),
+                             ("Profession (sailor)", "Profession", "sailor")
+                         })
+                {
+                    var row = await ReadByNativeNameAsync(db, packageKey, name);
+                    using var document = JsonDocument.Parse(row.ContentJson);
+                    var competency = document.RootElement
+                        .GetProperty("_rulesCore")
+                        .GetProperty("competency");
+                    Assert.Equal(
+                        "specialized-skill",
+                        competency.GetProperty("kind").GetString());
+                    Assert.Equal(family, competency.GetProperty("familyName").GetString());
+                    Assert.Equal(specialty, competency.GetProperty("specialty").GetString());
+                    Assert.False(competency.TryGetProperty("isFamily", out _));
+                    Assert.True(competency.GetProperty("supportsRanks").GetBoolean());
+                    Assert.True(competency.GetProperty("supportsClassSkillState").GetBoolean());
+                }
+
+                var knowledge = await ReadByNativeNameAsync(
+                    db,
+                    packageKey,
+                    "Knowledge (arcana)");
+                Assert.Equal("skill", knowledge.EntityType);
+                Assert.Equal("Arcana", knowledge.NormalizedName);
+                using (var document = JsonDocument.Parse(knowledge.ContentJson))
+                {
+                    var competency = document.RootElement
+                        .GetProperty("_rulesCore")
+                        .GetProperty("competency");
+                    Assert.Equal("skill", competency.GetProperty("kind").GetString());
+                    Assert.False(competency.TryGetProperty("familyName", out _));
+                    Assert.False(competency.TryGetProperty("specialty", out _));
+                    Assert.False(competency.TryGetProperty("isFamily", out _));
+                }
             }
             finally
             {
                 await DeletePackageAsync(db, packageKey);
+            }
+        }
+    }
+
+    [Fact]
+    public async Task SharedAlchemyFacetsKeepSeparateCanonicalIdentities()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var skillPackage = $"pcgen-alchemy-skill-{token}";
+            var toolPackage = $"fivee-alchemy-tool-{token}";
+
+            try
+            {
+                var skillImport = await new NormalizedSourceImportService(db).ImportAsync(
+                    new ImportNormalizedSourceRequest(
+                        skillPackage,
+                        $"PCGen alchemy skill fixture {token}",
+                        "integration-test",
+                        "test-only",
+                        true,
+                        PcGenRepresentation("35e", $"ALK{token}", ["Craft (alchemy)"])));
+                var toolImport = await new NormalizedSourceImportService(db).ImportAsync(
+                    new ImportNormalizedSourceRequest(
+                        toolPackage,
+                        $"5e alchemy tool fixture {token}",
+                        "integration-test",
+                        "test-only",
+                        true,
+                        FiveEToolRepresentation(token, "Alchemist's Supplies")));
+
+                var skillEntity = Assert.Single(skillImport.Entities);
+                Assert.Equal("skill", skillEntity.EntityType);
+                Assert.Equal("Craft (alchemy)", skillEntity.Name);
+                var toolEntity = Assert.Single(toolImport.Entities);
+                Assert.Equal("tool", toolEntity.EntityType);
+                Assert.Equal("Alchemist's Supplies", toolEntity.Name);
+
+                Assert.NotEqual(
+                    await ReadCanonicalEntityIdAsync(db, skillEntity.EntityId),
+                    await ReadCanonicalEntityIdAsync(db, toolEntity.EntityId));
+
+                var skillCandidate = Assert.Single(
+                    await new SourceNormalizationService(db).GetCandidatesAsync(
+                        $"rules-lawyer-{token}",
+                        entityType: "skill",
+                        query: "Craft (alchemy)"),
+                    value => value.PackageKey == skillPackage);
+                Assert.Equal("skill.craft-alchemy", skillCandidate.SuggestedConceptKey);
+
+                var toolCandidate = Assert.Single(
+                    await new SourceNormalizationService(db).GetCandidatesAsync(
+                        $"rules-lawyer-{token}",
+                        entityType: "tool",
+                        query: "Alchemist's Supplies"),
+                    value => value.PackageKey == toolPackage);
+                Assert.Equal("tool.alchemists-supplies", toolCandidate.SuggestedConceptKey);
+
+                var skillRow = await ReadByNativeNameAsync(
+                    db,
+                    skillPackage,
+                    "Craft (alchemy)");
+                AssertSharedFacet(
+                    skillRow.ContentJson,
+                    "Craft (alchemy)",
+                    "Alchemist's Supplies",
+                    "alchemy",
+                    "Alchemy");
+            }
+            finally
+            {
+                await DeletePackageAsync(db, skillPackage);
+                await DeletePackageAsync(db, toolPackage);
             }
         }
     }
@@ -113,8 +243,8 @@ public sealed class PcGenSkillConversionIntegrationTests
                         "35e",
                         $"S35{token}",
                         DirectSkillConversions.Select(value => value.Source)
-                            .Concat(DirectToolConversions.Select(value => value.Source))
-                            .Concat(["Open Lock", "Pick Pocket", "Wilderness Lore", "Alchemy"])
+                            .Concat(SharedToolFacets.Select(value => value.Source))
+                            .Concat(["Open Lock", "Disable Device", "Disguise", "Pick Pocket", "Wilderness Lore", "Alchemy"])
                             .Concat(ExcludedDirectConversions)
                             .Distinct(StringComparer.OrdinalIgnoreCase)
                             .ToArray())));
@@ -139,26 +269,41 @@ public sealed class PcGenSkillConversionIntegrationTests
                     AssertExactTranslation(row.ContentJson, source, "skill", target);
                 }
 
-                foreach (var (source, target) in DirectToolConversions)
+                foreach (var (source, target, identityKey, identityName) in SharedToolFacets)
                 {
                     var row = await ReadByNativeNameAsync(db, package35, source);
-                    Assert.Equal("tool", row.EntityType);
-                    Assert.Equal(target, row.NormalizedName);
+                    Assert.Equal("skill", row.EntityType);
+                    Assert.Equal(source, row.NormalizedName);
                     AssertNativeSourceName(row.RawJson, source);
-                    AssertExactTranslation(row.ContentJson, source, "tool", target);
+                    AssertSharedFacet(
+                        row.ContentJson,
+                        source,
+                        target,
+                        identityKey,
+                        identityName);
                 }
 
                 var openLock = await ReadByNativeNameAsync(db, package35, "Open Lock");
-                Assert.Equal("skill", openLock.EntityType);
-                Assert.Equal("Open Lock", openLock.NormalizedName);
-                using (var document = JsonDocument.Parse(openLock.ContentJson))
-                {
-                    var extension = document.RootElement.GetProperty("_rulesCore");
-                    Assert.False(extension.TryGetProperty("exactCompetencyIdentity", out _));
-                    var conversion = extension.GetProperty("competencyConversion");
-                    Assert.Equal("Thieves' Tools", conversion.GetProperty("targetName").GetString());
-                    Assert.Equal("open-lock", conversion.GetProperty("scope").GetString());
-                }
+                AssertScopedCompetency(
+                    openLock.ContentJson,
+                    "Open Lock",
+                    "Thieves' Tools",
+                    "open-lock");
+
+                var disableDevice = await ReadByNativeNameAsync(db, package35, "Disable Device");
+                AssertScopedCompetency(
+                    disableDevice.ContentJson,
+                    "Disable Device",
+                    "Thieves' Tools",
+                    "disable-device");
+
+                var disguise = await ReadByNativeNameAsync(db, package35, "Disguise");
+                AssertRelatedCompetency(
+                    disguise.ContentJson,
+                    "Disguise",
+                    "skill",
+                    "Disguise Kit",
+                    "tool");
 
                 foreach (var source in ExcludedDirectConversions.Concat(["Pick Pocket", "Wilderness Lore", "Alchemy"]))
                 {
@@ -168,20 +313,33 @@ public sealed class PcGenSkillConversionIntegrationTests
                     AssertNoExactTranslation(row.ContentJson);
                 }
 
+                var pickPocket = await ReadByNativeNameAsync(db, package30, "Pick Pocket");
+                AssertNativeSourceName(pickPocket.RawJson, "Pick Pocket");
                 AssertExactTranslation(
-                    (await ReadByNativeNameAsync(db, package30, "Pick Pocket")).ContentJson,
+                    pickPocket.ContentJson,
                     "Pick Pocket",
                     "skill",
                     "Sleight of Hand");
+
+                var wildernessLore = await ReadByNativeNameAsync(
+                    db,
+                    package30,
+                    "Wilderness Lore");
+                AssertNativeSourceName(wildernessLore.RawJson, "Wilderness Lore");
                 AssertExactTranslation(
-                    (await ReadByNativeNameAsync(db, package30, "Wilderness Lore")).ContentJson,
+                    wildernessLore.ContentJson,
                     "Wilderness Lore",
                     "skill",
                     "Survival");
                 var alchemy = await ReadByNativeNameAsync(db, package30, "Alchemy");
-                Assert.Equal("tool", alchemy.EntityType);
-                Assert.Equal("Alchemist's Supplies", alchemy.NormalizedName);
-                AssertExactTranslation(alchemy.ContentJson, "Alchemy", "tool", "Alchemist's Supplies");
+                Assert.Equal("skill", alchemy.EntityType);
+                Assert.Equal("Alchemy", alchemy.NormalizedName);
+                AssertSharedFacet(
+                    alchemy.ContentJson,
+                    "Alchemy",
+                    "Alchemist's Supplies",
+                    "alchemy",
+                    "Alchemy");
             }
             finally
             {
@@ -277,6 +435,167 @@ public sealed class PcGenSkillConversionIntegrationTests
     }
 
     [Fact]
+    public async Task PersistedLegacyCrossTypeFacetKeepsStableRuleConceptReferenceAfterReimport()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var packageKey = $"pcgen-shared-facet-migration-{token}";
+            var actor = $"rules-lawyer-{token}";
+            var representation = PcGenRepresentation(
+                "35e",
+                $"SFM{token}",
+                ["Craft (alchemy)"]);
+            var importer = new NormalizedSourceImportService(db);
+            AcceptedSourceNormalizationView? accepted = null;
+
+            try
+            {
+                var first = await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"PCGen shared facet migration fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    representation));
+                var source = Assert.Single(first.Entities);
+                Assert.Equal("skill", source.EntityType);
+                Assert.Equal("Craft (alchemy)", source.Name);
+
+                var entity = await db.SourceEntities.SingleAsync(value => value.Id == source.EntityId);
+                var revisionId = await db.SourceEntityRevisions
+                    .Where(value => value.SourceEntityId == source.EntityId)
+                    .Select(value => value.Id)
+                    .SingleAsync();
+
+                // Reconstruct the previously persisted cross-type normalization. This is derived
+                // Rules Core metadata only; the native key, source code, raw evidence, and revision
+                // identity remain unchanged.
+                entity.EntityType = "tool";
+                entity.Name = "Alchemist's Supplies";
+                await db.SaveChangesAsync();
+                db.ChangeTracker.Clear();
+
+                var normalization = new SourceNormalizationService(db);
+                accepted = await normalization.AcceptAsync(source.EntityId, actor);
+                Assert.NotNull(accepted);
+                Assert.Equal("tool.alchemists-supplies", accepted!.Concept.Key);
+                var stableConceptId = accepted.Concept.Id;
+                var stableBindingId = accepted.Binding.Id;
+
+                var globalRules = new GlobalRulesService(db);
+                await globalRules.SetDecisionAsync(
+                    stableConceptId,
+                    new SetGlobalRuleDecisionRequest(
+                        revisionId,
+                        "Legacy Character compatibility fixture."),
+                    actor);
+                await globalRules.PublishAsync(actor);
+
+                var reimport = await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"PCGen shared facet migration fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    representation));
+                var migrated = Assert.Single(reimport.Entities);
+                Assert.Equal(source.EntityId, migrated.EntityId);
+                Assert.Equal("skill", migrated.EntityType);
+                Assert.Equal("Craft (alchemy)", migrated.Name);
+
+                var persistedEntity = await db.SourceEntities
+                    .AsNoTracking()
+                    .SingleAsync(value => value.Id == source.EntityId);
+                Assert.Equal("skill", persistedEntity.EntityType);
+                Assert.Equal("Craft (alchemy)", persistedEntity.Name);
+
+                var migratedRevisionId = await db.SourceEntityRevisions
+                    .Where(value => value.SourceEntityId == source.EntityId)
+                    .Select(value => value.Id)
+                    .SingleAsync();
+                Assert.Equal(revisionId, migratedRevisionId);
+
+                var binding = await db.RuleConceptSourceBindings
+                    .AsNoTracking()
+                    .SingleAsync(value => value.Id == stableBindingId);
+                Assert.Equal(stableConceptId, binding.RuleConceptId);
+                Assert.Equal(source.EntityId, binding.SourceEntityId);
+                var concept = await db.RuleConcepts
+                    .AsNoTracking()
+                    .SingleAsync(value => value.Id == stableConceptId);
+                Assert.Equal("tool.alchemists-supplies", concept.Key);
+
+                var postMigrationCandidates = await normalization.GetCandidatesAsync(
+                    actor,
+                    entityType: "skill",
+                    query: "Craft (alchemy)");
+                Assert.DoesNotContain(
+                    postMigrationCandidates,
+                    value => value.SourceEntityId == source.EntityId);
+                await Assert.ThrowsAsync<InvalidOperationException>(() =>
+                    normalization.AcceptAsync(source.EntityId, actor));
+
+                var catalog = await new CharacterMechanicsConsumerService(db)
+                    .GetGlobalAsync(userId: null);
+                var legacyMechanic = Assert.Single(
+                    catalog.Mechanics,
+                    value => value.MechanicKey == "competency.tool.alchemists-supplies");
+                Assert.NotNull(legacyMechanic.Competency);
+                Assert.Equal("alchemy", legacyMechanic.Competency!.IdentityKey);
+                Assert.Equal("Alchemy", legacyMechanic.Competency.IdentityName);
+                Assert.Equal(
+                    "competency.alchemy.training",
+                    legacyMechanic.Competency.SharedTrainingKey);
+                var profile = Assert.Single(legacyMechanic.Competency.Profiles);
+                Assert.Equal("skill", profile.FacetType);
+                Assert.True(profile.SupportsRanks);
+                Assert.True(profile.SupportsClassSkillState);
+            }
+            finally
+            {
+                if (accepted is not null)
+                {
+                    var rulesetRevisionIds = await db.RulesetRevisionEntries
+                        .Where(value => value.RuleConceptId == accepted.Concept.Id)
+                        .Select(value => value.RulesetRevisionId)
+                        .Distinct()
+                        .ToArrayAsync();
+                    await db.RulesetRevisionEntries
+                        .Where(value => value.RuleConceptId == accepted.Concept.Id)
+                        .ExecuteDeleteAsync();
+                    if (rulesetRevisionIds.Length > 0)
+                    {
+                        await db.RulesetRevisions
+                            .Where(value => rulesetRevisionIds.Contains(value.Id)
+                                && !value.Entries.Any())
+                            .ExecuteDeleteAsync();
+                    }
+                    await db.GlobalRuleDecisions
+                        .Where(value => value.RuleConceptId == accepted.Concept.Id)
+                        .ExecuteDeleteAsync();
+                }
+                if (accepted?.CreatedBinding == true)
+                {
+                    await db.RuleConceptSourceBindings
+                        .Where(value => value.Id == accepted.Binding.Id)
+                        .ExecuteDeleteAsync();
+                }
+                if (accepted?.CreatedConcept == true)
+                {
+                    await db.RuleConcepts
+                        .Where(value => value.Id == accepted.Concept.Id)
+                        .ExecuteDeleteAsync();
+                }
+                db.ChangeTracker.Clear();
+                await DeletePackageAsync(db, packageKey);
+            }
+        }
+    }
+
+    [Fact]
     public async Task PcGenCompetencySemanticsAreNormalizedWithoutDiscardingNativeEvidence()
     {
         var db = await OpenDatabaseAsync();
@@ -317,9 +636,9 @@ public sealed class PcGenSkillConversionIntegrationTests
                     var extension = document.RootElement.GetProperty("_rulesCore");
                     var competency = extension.GetProperty("competency");
                     Assert.Equal("dnd-3x", competency.GetProperty("profileKey").GetString());
-                    Assert.Equal("specialized-skill", competency.GetProperty("kind").GetString());
-                    Assert.Equal("Knowledge", competency.GetProperty("familyName").GetString());
-                    Assert.Equal("the planes", competency.GetProperty("specialty").GetString());
+                    Assert.Equal("skill", competency.GetProperty("kind").GetString());
+                    Assert.False(competency.TryGetProperty("familyName", out _));
+                    Assert.False(competency.TryGetProperty("specialty", out _));
                     Assert.Equal("intelligence", competency.GetProperty("governingAbilityKey").GetString());
                     Assert.True(competency.GetProperty("supportsRanks").GetBoolean());
                     Assert.True(competency.GetProperty("supportsClassSkillState").GetBoolean());
@@ -342,16 +661,22 @@ public sealed class PcGenSkillConversionIntegrationTests
                 }
 
                 var alchemy = await ReadByNativeNameAsync(db, packageKey, "Craft (alchemy)");
-                Assert.Equal("tool", alchemy.EntityType);
-                Assert.Equal("Alchemist's Supplies", alchemy.NormalizedName);
+                Assert.Equal("skill", alchemy.EntityType);
+                Assert.Equal("Craft (alchemy)", alchemy.NormalizedName);
                 using (var document = JsonDocument.Parse(alchemy.ContentJson))
                 {
                     var competency = document.RootElement
                         .GetProperty("_rulesCore")
                         .GetProperty("competency");
-                    Assert.Equal("tool", competency.GetProperty("kind").GetString());
+                    Assert.Equal("specialized-skill", competency.GetProperty("kind").GetString());
                     Assert.Equal("Craft", competency.GetProperty("familyName").GetString());
                     Assert.Equal("alchemy", competency.GetProperty("specialty").GetString());
+                    Assert.Equal("skill", competency.GetProperty("facetType").GetString());
+                    Assert.Equal("alchemy", competency.GetProperty("identityKey").GetString());
+                    Assert.Equal("Alchemy", competency.GetProperty("identityName").GetString());
+                    Assert.Equal(
+                        "competency.alchemy.training",
+                        competency.GetProperty("sharedTrainingKey").GetString());
                     Assert.True(competency.GetProperty("supportsRanks").GetBoolean());
                     Assert.True(competency.GetProperty("supportsClassSkillState").GetBoolean());
                 }
@@ -408,17 +733,18 @@ public sealed class PcGenSkillConversionIntegrationTests
                     specialty: null);
 
                 var alchemy = await ReadByNativeNameAsync(db, packageKey, "Craft (alchemy)");
-                Assert.Equal("tool", alchemy.EntityType);
-                Assert.Equal("Alchemist's Supplies", alchemy.NormalizedName);
+                Assert.Equal("skill", alchemy.EntityType);
+                Assert.Equal("Craft (alchemy)", alchemy.NormalizedName);
                 AssertNativeSourceName(alchemy.RawJson, "Craft (alchemy)");
-                AssertExactTranslation(
+                AssertSharedFacet(
                     alchemy.ContentJson,
                     "Craft (alchemy)",
-                    "tool",
-                    "Alchemist's Supplies");
+                    "Alchemist's Supplies",
+                    "alchemy",
+                    "Alchemy");
                 AssertLegacyCompetencyProfile(
                     alchemy.ContentJson,
-                    expectedKind: "tool",
+                    expectedKind: "specialized-skill",
                     family: "Craft",
                     specialty: "alchemy");
 
@@ -458,9 +784,9 @@ public sealed class PcGenSkillConversionIntegrationTests
                 Assert.Equal("The planes", knowledge.NormalizedName);
                 AssertLegacyCompetencyProfile(
                     knowledge.ContentJson,
-                    expectedKind: "specialized-skill",
-                    family: "Knowledge",
-                    specialty: "the planes");
+                    expectedKind: "skill",
+                    family: null,
+                    specialty: null);
 
                 var perform = await ReadByNativeNameAsync(
                     db,
@@ -620,6 +946,38 @@ public sealed class PcGenSkillConversionIntegrationTests
             ?? throw new InvalidOperationException("PCGen skill fixture was not readable.");
     }
 
+    private static NormalizedSourceRepresentation FiveEToolRepresentation(
+        string token,
+        string name)
+    {
+        var source = $"T5{token}";
+        var raw = JsonSerializer.Serialize(new
+        {
+            name,
+            source,
+            entries = new[] { $"Reviewed 5e tool fixture for {name}." }
+        });
+        return new NormalizedSourceRepresentation(
+            FiveEToolsSourceFormatAdapter.Format,
+            new SourceRepresentationArtifact(
+                $"tools-{token}.json",
+                Encoding.UTF8.GetBytes(raw),
+                $"integration:5e-tool:{token}"),
+            [new NormalizedSourceRecord(
+                "tool",
+                name,
+                source,
+                $"tool|{name}|{source}",
+                raw,
+                PublicationLocalKey: source)],
+            [new NormalizedSourcePublication(
+                source,
+                $"5e Tool Fixture {token}",
+                "Integration Test Press",
+                "5e",
+                new DateOnly(2014, 8, 19))]);
+    }
+
     private static NormalizedSourceRepresentation FiveEDeceptionRepresentation(string token)
     {
         var source = $"D5{token}";
@@ -697,6 +1055,81 @@ public sealed class PcGenSkillConversionIntegrationTests
         Assert.Equal(sourceName, conversion.GetProperty("sourceName").GetString());
         Assert.Equal(targetType, conversion.GetProperty("targetType").GetString());
         Assert.Equal(targetName, conversion.GetProperty("targetName").GetString());
+        Assert.False(extension.TryGetProperty("exactCompetencyIdentity", out _));
+    }
+
+    private static void AssertSharedFacet(
+        string contentJson,
+        string sourceName,
+        string targetName,
+        string identityKey,
+        string identityName)
+    {
+        using var document = JsonDocument.Parse(contentJson);
+        var root = document.RootElement;
+        Assert.Equal(sourceName, root.GetProperty("name").GetString());
+        var extension = root.GetProperty("_rulesCore");
+        var conversion = extension.GetProperty("competencyConversion");
+        Assert.Equal(
+            "shared-competency-facet",
+            conversion.GetProperty("relationship").GetString());
+        Assert.Equal("skill", conversion.GetProperty("sourceType").GetString());
+        Assert.Equal(sourceName, conversion.GetProperty("sourceName").GetString());
+        Assert.Equal("tool", conversion.GetProperty("targetType").GetString());
+        Assert.Equal(targetName, conversion.GetProperty("targetName").GetString());
+        Assert.True(conversion.GetProperty("mechanicalNamePreserved").GetBoolean());
+        Assert.Equal(identityKey, conversion.GetProperty("sharedCompetencyKey").GetString());
+        Assert.Equal(identityName, conversion.GetProperty("sharedCompetencyName").GetString());
+
+        var competency = extension.GetProperty("competency");
+        Assert.Equal(identityKey, competency.GetProperty("identityKey").GetString());
+        Assert.Equal(identityName, competency.GetProperty("identityName").GetString());
+        Assert.Equal(
+            $"competency.{identityKey}.training",
+            competency.GetProperty("sharedTrainingKey").GetString());
+        Assert.Equal("skill", competency.GetProperty("facetType").GetString());
+        Assert.True(competency.GetProperty("supportsRanks").GetBoolean());
+        Assert.True(competency.GetProperty("supportsClassSkillState").GetBoolean());
+        Assert.False(extension.TryGetProperty("exactCompetencyIdentity", out _));
+    }
+
+    private static void AssertScopedCompetency(
+        string contentJson,
+        string sourceName,
+        string targetName,
+        string scope)
+    {
+        using var document = JsonDocument.Parse(contentJson);
+        var root = document.RootElement;
+        Assert.Equal(sourceName, root.GetProperty("name").GetString());
+        var extension = root.GetProperty("_rulesCore");
+        var conversion = extension.GetProperty("competencyConversion");
+        Assert.Equal("direct-cross-type", conversion.GetProperty("relationship").GetString());
+        Assert.Equal(targetName, conversion.GetProperty("targetName").GetString());
+        Assert.Equal(scope, conversion.GetProperty("scope").GetString());
+        Assert.True(conversion.GetProperty("mechanicalNamePreserved").GetBoolean());
+        Assert.False(conversion.TryGetProperty("sharedCompetencyKey", out _));
+    }
+
+    private static void AssertRelatedCompetency(
+        string contentJson,
+        string sourceName,
+        string sourceType,
+        string targetName,
+        string targetType)
+    {
+        using var document = JsonDocument.Parse(contentJson);
+        var root = document.RootElement;
+        Assert.Equal(sourceName, root.GetProperty("name").GetString());
+        var extension = root.GetProperty("_rulesCore");
+        var conversion = extension.GetProperty("competencyConversion");
+        Assert.Equal("related-competency", conversion.GetProperty("relationship").GetString());
+        Assert.Equal(sourceType, conversion.GetProperty("sourceType").GetString());
+        Assert.Equal(sourceName, conversion.GetProperty("sourceName").GetString());
+        Assert.Equal(targetType, conversion.GetProperty("targetType").GetString());
+        Assert.Equal(targetName, conversion.GetProperty("targetName").GetString());
+        Assert.True(conversion.GetProperty("mechanicalNamePreserved").GetBoolean());
+        Assert.Equal("skill", extension.GetProperty("competency").GetProperty("kind").GetString());
         Assert.False(extension.TryGetProperty("exactCompetencyIdentity", out _));
     }
 

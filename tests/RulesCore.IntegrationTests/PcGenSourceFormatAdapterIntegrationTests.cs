@@ -218,7 +218,7 @@ public sealed class PcGenSourceFormatAdapterIntegrationTests
     }
 
     [Fact]
-    public void UnsupportedClassFamilyIsImportedAsLosslessFragmentsInsteadOfGuessedEntities()
+    public void ClassFamilyAggregatesRepeatedHeadersAndLevelProgressionIntoOneNativeEntity()
     {
         var adapter = new PcGenSourceFormatAdapter();
         var campaign = Artifact(
@@ -234,20 +234,42 @@ public sealed class PcGenSourceFormatAdapterIntegrationTests
             "data/35e/example/example_classes.lst",
             string.Join('\n',
             [
-                "CLASS:Example Class\tHD:8\tTYPE:Base.PC",
-                "CLASS:Example Class\tSTARTSKILLPTS:4"
+                "CLASS:Example Class\tHD:8\tTYPE:Base.PC\tBONUS:COMBAT|BASEAB|classlevel(\"APPLIEDAS=NONEPIC\")*3/4\tBONUS:SAVE|BASE.Fortitude,BASE.Will|classlevel(\"APPLIEDAS=NONEPIC\")/3\tBONUS:SAVE|BASE.Reflex|classlevel(\"APPLIEDAS=NONEPIC\")/2+2",
+                "CLASS:Example Class\tSTARTSKILLPTS:4\tCSKILL:Climb|Jump|TYPE.Craft",
+                "1\tABILITY:Special Ability|AUTOMATIC|First Feature",
+                "2\tSAB:Second Feature"
             ]));
 
-        var representation = adapter.TryReadMany([campaign, classes])
+        var representations = adapter.TryReadMany([campaign, classes]);
+        var classPublication = Assert.Single(
+            representations.Single(value => value.Artifact.FileName == "example.pcc").Publications!);
+        var representation = representations
             .Single(value => value.Artifact.FileName == "example_classes.lst");
 
-        Assert.Equal(2, representation.Records.Count);
-        Assert.All(representation.Records, record =>
-        {
-            Assert.Equal("pcgen-fragment", record.EntityType);
-            Assert.Null(record.PublicationLocalKey);
-            Assert.Contains("unsupported-family", record.RawJson, StringComparison.Ordinal);
-        });
+        var record = Assert.Single(representation.Records);
+        Assert.Equal("class", record.EntityType);
+        Assert.Equal("Example Class", record.Name);
+        Assert.Equal("CLS", record.SourceCode);
+        Assert.Equal(classPublication.LocalKey, record.PublicationLocalKey);
+        Assert.StartsWith("pcgen|class|", record.NativeKey, StringComparison.Ordinal);
+
+        using var raw = JsonDocument.Parse(record.RawJson);
+        Assert.Equal("class-record", raw.RootElement.GetProperty("kind").GetString());
+        var lines = raw.RootElement.GetProperty("lines").EnumerateArray().ToArray();
+        Assert.Equal(4, lines.Length);
+        Assert.Equal(JsonValueKind.Null, lines[0].GetProperty("Level").ValueKind);
+        Assert.Equal(1, lines[2].GetProperty("Level").GetInt32());
+        Assert.Equal(2, lines[3].GetProperty("Level").GetInt32());
+        var levelSegments = raw.RootElement.GetProperty("segments")
+            .EnumerateArray()
+            .Where(value => value.GetProperty("Level").ValueKind == JsonValueKind.Number)
+            .ToArray();
+        Assert.Contains(levelSegments, value =>
+            value.GetProperty("Level").GetInt32() == 1
+            && value.GetProperty("Tag").GetString() == "ABILITY");
+        Assert.Contains(levelSegments, value =>
+            value.GetProperty("Level").GetInt32() == 2
+            && value.GetProperty("Tag").GetString() == "SAB");
     }
 
     [Fact]

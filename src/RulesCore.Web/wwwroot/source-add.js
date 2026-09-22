@@ -503,22 +503,140 @@ function buildProgressView(job) {
     const structured = normalizedImportProgress(job);
     const stageKey = structured?.stage || job.progressStage;
     const stage = progressStageLabel(stageKey, job.status);
-    const current = Number.isInteger(structured?.current)
-        ? structured.current
-        : Number.isInteger(job.progressCurrent) ? job.progressCurrent : null;
-    const total = Number.isInteger(structured?.total) && structured.total > 0
-        ? structured.total
-        : Number.isInteger(job.progressTotal) && job.progressTotal > 0
-            ? job.progressTotal
-            : null;
-    const hasMeasuredProgress = current !== null && total !== null;
-    const unit = progressStageUnit(stageKey);
-    const summary = hasMeasuredProgress
-        ? `${stage} · ${current} of ${total} ${unit}`
-        : stage;
     const wrapper = element("div", { className: "mt-2" },
-        element("div", { className: "small fw-semibold", text: summary }));
+        element("div", { className: "small fw-semibold", text: stage }));
 
+    const metrics = importProgressMetrics(structured, stageKey, job);
+    if (metrics.length) {
+        const metricList = element("div", { className: "mt-1" });
+        for (const metric of metrics) {
+            metricList.append(buildMeasuredProgress(metric.label, metric.current, metric.total));
+        }
+        wrapper.append(metricList);
+    } else {
+        wrapper.append(buildLegacyProgressBar(structured, stageKey, job));
+    }
+
+    const detail = structured?.detail || progressDetailText(job.progressDetail);
+    if (detail) {
+        wrapper.append(element("div", {
+            className: "small text-body-secondary text-break mt-1",
+            text: detail
+        }));
+    }
+
+    const currentItem = structured?.currentItem;
+    const currentItemType = structured?.currentItemType;
+    if (currentItem) {
+        wrapper.append(element("div", {
+            className: "small text-body-secondary text-break mt-1",
+            text: `Current item: ${currentItem}${currentItemType ? ` · ${currentItemType}` : ""}`
+        }));
+    }
+
+    const details = importProgressDetails(structured);
+    if (details.length) {
+        const disclosure = element("details", { className: "small mt-1" },
+            element("summary", { text: "Import details" }),
+            element("div", {
+                className: "text-body-secondary mt-1",
+                text: details.join(" · ")
+            }));
+        wrapper.append(disclosure);
+    }
+    return wrapper;
+}
+
+function importProgressMetrics(progress, stageKey, job) {
+    if (!progress) return [];
+    const metrics = [];
+    const filesDiscovered = positiveInteger(progress.filesDiscovered);
+    const filesProcessed = nonNegativeInteger(progress.filesProcessed);
+    if (filesDiscovered !== null) {
+        const fallbackProcessed = stageKey === "downloading"
+            ? nonNegativeInteger(progress.current ?? job.progressCurrent)
+            : null;
+        metrics.push({
+            label: "Source files processed",
+            current: filesProcessed ?? fallbackProcessed ?? 0,
+            total: filesDiscovered
+        });
+    }
+
+    const importUnitTotal = positiveInteger(progress.importUnitTotal);
+    if (importUnitTotal !== null) {
+        metrics.push({
+            label: "Source sets imported",
+            current: nonNegativeInteger(progress.importUnitsProcessed) ?? 0,
+            total: importUnitTotal
+        });
+    }
+
+    const recordsDiscovered = positiveInteger(progress.recordsDiscovered);
+    if (recordsDiscovered !== null) {
+        metrics.push({
+            label: "Records translated",
+            current: nonNegativeInteger(progress.recordsTranslated) ?? 0,
+            total: recordsDiscovered
+        });
+        metrics.push({
+            label: "Records persisted",
+            current: nonNegativeInteger(progress.entitiesPersisted) ?? 0,
+            total: recordsDiscovered
+        });
+    }
+
+    const publicationTotal = positiveInteger(progress.publicationTotal);
+    if (publicationTotal !== null) {
+        metrics.push({
+            label: "Publications reconciled",
+            current: nonNegativeInteger(progress.publicationsProcessed) ?? 0,
+            total: publicationTotal
+        });
+    }
+    return metrics;
+}
+
+function buildMeasuredProgress(label, current, total) {
+    const boundedCurrent = Math.max(0, Math.min(total, current));
+    const percent = Math.max(0, Math.min(100, Math.round((boundedCurrent / total) * 100)));
+    const wrapper = element("div", { className: "mb-2" },
+        element("div", {
+            className: "d-flex flex-wrap justify-content-between gap-2 small"
+        },
+        element("span", { text: label }),
+        element("span", {
+            className: "text-body-secondary",
+            text: `${boundedCurrent} of ${total} · ${percent}%`
+        })));
+    const progress = element("div", {
+        className: "progress mt-1",
+        role: "progressbar",
+        attributes: {
+            "aria-label": label,
+            "aria-valuenow": String(percent),
+            "aria-valuemin": "0",
+            "aria-valuemax": "100"
+        }
+    });
+    const bar = element("div", { className: "progress-bar" });
+    bar.style.width = `${percent}%`;
+    progress.append(bar);
+    wrapper.append(progress);
+    return wrapper;
+}
+
+function buildLegacyProgressBar(structured, stageKey, job) {
+    const current = nonNegativeInteger(structured?.current)
+        ?? nonNegativeInteger(job.progressCurrent);
+    const total = positiveInteger(structured?.total)
+        ?? positiveInteger(job.progressTotal);
+    const hasMeasuredProgress = current !== null && total !== null;
+    const summary = hasMeasuredProgress
+        ? `${current} of ${total} ${progressStageUnit(stageKey)}`
+        : "Progress is not measurable yet";
+    const wrapper = element("div", { className: "mt-1" },
+        element("div", { className: "small text-body-secondary", text: summary }));
     const progress = element("div", { className: "progress mt-1", role: "progressbar" });
     const bar = element("div", {
         className: hasMeasuredProgress
@@ -536,20 +654,29 @@ function buildProgressView(job) {
     }
     progress.append(bar);
     wrapper.append(progress);
-
-    const detail = structured?.detail || progressDetailText(job.progressDetail);
-    const currentItem = structured?.currentItem;
-    const currentItemType = structured?.currentItemType;
-    const secondary = detail || (currentItem
-        ? `Current: ${currentItem}${currentItemType ? ` · ${currentItemType}` : ""}`
-        : null);
-    if (secondary) {
-        wrapper.append(element("div", {
-            className: "small text-body-secondary text-break mt-1",
-            text: secondary
-        }));
-    }
     return wrapper;
+}
+
+function importProgressDetails(progress) {
+    if (!progress) return [];
+    const values = [
+        ["new entities", progress.newEntities],
+        ["unchanged entities", progress.unchangedEntities],
+        ["new revisions", progress.newRevisions],
+        ["translation-only updates", progress.translationOnlyUpdates],
+        ["reconciliation issues", progress.reconciliationIssueCount]
+    ];
+    return values
+        .filter(([, value]) => Number.isInteger(value))
+        .map(([label, value]) => `${value} ${label}`);
+}
+
+function nonNegativeInteger(value) {
+    return Number.isInteger(value) && value >= 0 ? value : null;
+}
+
+function positiveInteger(value) {
+    return Number.isInteger(value) && value > 0 ? value : null;
 }
 
 function normalizedImportProgress(job) {
