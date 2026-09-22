@@ -22,6 +22,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
     private readonly ISourceFormatAdapterRegistry adapters;
     private readonly ISourceGrantService grants;
     private readonly HttpClient httpClient;
+    private readonly Func<CurrentUserSourceImportProgress, CancellationToken, Task>? progressReporter;
 
     // Compatibility constructor retained for existing integration/bootstrap callers while
     // current-user ingestion moves to the normalized adapter pipeline.
@@ -59,13 +60,15 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         INormalizedSourceImportService importer,
         ISourceFormatAdapterRegistry adapters,
         ISourceGrantService grants,
-        HttpClient httpClient)
+        HttpClient httpClient,
+        Func<CurrentUserSourceImportProgress, CancellationToken, Task>? progressReporter = null)
     {
         this.dbContext = dbContext;
         this.importer = importer;
         this.adapters = adapters;
         this.grants = grants;
         this.httpClient = httpClient;
+        this.progressReporter = progressReporter;
     }
 
     public async Task<IReadOnlyList<CurrentUserSourceView>> ListAsync(
@@ -175,28 +178,92 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         Guid? packageId = null;
         var entityCount = 0;
         var publicationKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        foreach (var representation in representations)
+        var totalRecords = representations.Sum(value => value.Records.Count);
+        var totalPublications = representations.Sum(CountPublicationGroups);
+        var translatedOffset = 0;
+        var persistedOffset = 0;
+        var publicationOffset = 0;
+        var reconciliationIssueOffset = 0;
+        var newEntitiesOffset = 0;
+        var unchangedEntitiesOffset = 0;
+        var newRevisionsOffset = 0;
+        var translationOnlyUpdatesOffset = 0;
+        var representationsStoredOffset = 0;
+        var representationsReusedOffset = 0;
+
+        for (var representationIndex = 0; representationIndex < representations.Count; representationIndex++)
         {
-            var imported = await importer.ImportAsync(
-                new ImportNormalizedSourceRequest(
-                    packageKey,
-                    packageDisplayName,
-                    provider,
-                    License: null,
-                    IsPublic: false,
-                    representation),
-                cancellationToken);
+            var representation = representations[representationIndex];
+            CurrentUserSourceImportProgress? latestRepresentationProgress = null;
+
+            async Task ReportRepresentationProgressAsync(
+                CurrentUserSourceImportProgress progress,
+                CancellationToken progressCancellationToken)
+            {
+                latestRepresentationProgress = progress;
+                if (progressReporter is null) return;
+                await progressReporter(
+                    AggregateRepresentationProgress(
+                        progress,
+                        representation,
+                        representationIndex,
+                        representations.Count,
+                        totalRecords,
+                        totalPublications,
+                        translatedOffset,
+                        persistedOffset,
+                        publicationOffset,
+                        reconciliationIssueOffset,
+                        newEntitiesOffset,
+                        unchangedEntitiesOffset,
+                        newRevisionsOffset,
+                        translationOnlyUpdatesOffset,
+                        representationsStoredOffset,
+                        representationsReusedOffset),
+                    progressCancellationToken);
+            }
+
+            var importRequest = new ImportNormalizedSourceRequest(
+                packageKey,
+                packageDisplayName,
+                provider,
+                License: null,
+                IsPublic: false,
+                representation);
+            if (progressReporter is not null)
+            {
+                importRequest = importRequest with
+                {
+                    ProgressReporter = ReportRepresentationProgressAsync
+                };
+            }
+
+            var imported = await importer.ImportAsync(importRequest, cancellationToken);
             packageId ??= imported.PackageId;
             if (packageId != imported.PackageId)
             {
                 throw new InvalidOperationException(
                     "One added source unexpectedly resolved to multiple source packages.");
             }
+
             entityCount += imported.Entities.Count;
             foreach (var key in imported.SourceCodes)
             {
                 publicationKeys.Add(key);
             }
+
+            translatedOffset += representation.Records.Count;
+            persistedOffset += latestRepresentationProgress?.EntitiesPersisted ?? imported.Entities.Count;
+            publicationOffset += latestRepresentationProgress?.PublicationsProcessed
+                ?? CountPublicationGroups(representation);
+            reconciliationIssueOffset += latestRepresentationProgress?.ReconciliationIssueCount
+                ?? imported.ReconciliationIssues.Count;
+            newEntitiesOffset += latestRepresentationProgress?.NewEntities ?? 0;
+            unchangedEntitiesOffset += latestRepresentationProgress?.UnchangedEntities ?? 0;
+            newRevisionsOffset += latestRepresentationProgress?.NewRevisions ?? 0;
+            translationOnlyUpdatesOffset += latestRepresentationProgress?.TranslationOnlyUpdates ?? 0;
+            representationsStoredOffset += latestRepresentationProgress?.RepresentationsStored ?? 0;
+            representationsReusedOffset += latestRepresentationProgress?.RepresentationsReused ?? 0;
         }
 
         if (packageId is null || entityCount == 0)
@@ -220,6 +287,95 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             entityCount,
             cancellationToken);
     }
+
+    private static CurrentUserSourceImportProgress AggregateRepresentationProgress(
+        CurrentUserSourceImportProgress progress,
+        NormalizedSourceRepresentation representation,
+        int representationIndex,
+        int representationCount,
+        int totalRecords,
+        int totalPublications,
+        int translatedOffset,
+        int persistedOffset,
+        int publicationOffset,
+        int reconciliationIssueOffset,
+        int newEntitiesOffset,
+        int unchangedEntitiesOffset,
+        int newRevisionsOffset,
+        int translationOnlyUpdatesOffset,
+        int representationsStoredOffset,
+        int representationsReusedOffset)
+    {
+        var current = progress.Current;
+        var total = progress.Total;
+        if (string.Equals(progress.Stage, "translating", StringComparison.Ordinal))
+        {
+            current = AggregateCount(translatedOffset, progress.Current, totalRecords);
+            total = totalRecords;
+        }
+        else if (string.Equals(progress.Stage, "persisting", StringComparison.Ordinal)
+            || string.Equals(progress.Stage, "finalizing", StringComparison.Ordinal))
+        {
+            current = AggregateCount(persistedOffset, progress.Current, totalRecords);
+            total = totalRecords;
+        }
+        else if (string.Equals(progress.Stage, "reconciling", StringComparison.Ordinal))
+        {
+            current = AggregateCount(publicationOffset, progress.Current, totalPublications);
+            total = totalPublications;
+        }
+
+        var sourceSet = $"Source set {representationIndex + 1} of {representationCount}: {representation.Artifact.FileName}";
+        var detail = string.IsNullOrWhiteSpace(progress.Detail)
+            ? sourceSet
+            : $"{sourceSet} · {progress.Detail}";
+        var completedImportUnits = string.Equals(progress.Stage, "finalizing", StringComparison.Ordinal)
+            ? representationIndex + 1
+            : representationIndex;
+
+        return progress with
+        {
+            Current = current,
+            Total = total,
+            Detail = detail,
+            ImportUnitsProcessed = completedImportUnits,
+            ImportUnitTotal = representationCount,
+            RecordsDiscovered = totalRecords,
+            RecordsTranslated = AggregateCount(
+                translatedOffset,
+                progress.RecordsTranslated,
+                totalRecords),
+            EntitiesPersisted = AggregateCount(
+                persistedOffset,
+                progress.EntitiesPersisted,
+                totalRecords),
+            NewEntities = newEntitiesOffset + (progress.NewEntities ?? 0),
+            UnchangedEntities = unchangedEntitiesOffset + (progress.UnchangedEntities ?? 0),
+            NewRevisions = newRevisionsOffset + (progress.NewRevisions ?? 0),
+            TranslationOnlyUpdates = translationOnlyUpdatesOffset
+                + (progress.TranslationOnlyUpdates ?? 0),
+            PublicationsProcessed = AggregateCount(
+                publicationOffset,
+                progress.PublicationsProcessed,
+                totalPublications),
+            PublicationTotal = totalPublications,
+            ReconciliationIssueCount = reconciliationIssueOffset
+                + (progress.ReconciliationIssueCount ?? 0),
+            RepresentationsStored = representationsStoredOffset
+                + (progress.RepresentationsStored ?? 0),
+            RepresentationsReused = representationsReusedOffset
+                + (progress.RepresentationsReused ?? 0)
+        };
+    }
+
+    private static int AggregateCount(int offset, int? current, int total) =>
+        Math.Min(total, checked(offset + (current ?? 0)));
+
+    private static int CountPublicationGroups(NormalizedSourceRepresentation representation) =>
+        (representation.Publications ?? [])
+            .Select(value => value.LocalKey)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .Count();
 
     public async Task<CurrentUserSourceView?> RefreshAsync(
         string currentUserId,

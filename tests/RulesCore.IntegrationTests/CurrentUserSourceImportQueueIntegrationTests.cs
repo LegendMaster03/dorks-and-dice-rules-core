@@ -113,6 +113,10 @@ public sealed class CurrentUserSourceImportQueueIntegrationTests
                         CurrentItem: "Wreath of the Prism",
                         CurrentItemType: "itemGroup",
                         AdapterFormat: "5etools-json",
+                        FilesDiscovered: 824,
+                        FilesProcessed: 824,
+                        ImportUnitsProcessed: 17,
+                        ImportUnitTotal: 824,
                         RecordsDiscovered: 2631,
                         RecordsTranslated: 2631,
                         EntitiesPersisted: 100));
@@ -135,6 +139,10 @@ public sealed class CurrentUserSourceImportQueueIntegrationTests
             Assert.NotNull(progressed.Progress);
             Assert.Equal("Wreath of the Prism", progressed.Progress!.CurrentItem);
             Assert.Equal("itemGroup", progressed.Progress.CurrentItemType);
+            Assert.Equal(824, progressed.Progress.FilesDiscovered);
+            Assert.Equal(824, progressed.Progress.FilesProcessed);
+            Assert.Equal(17, progressed.Progress.ImportUnitsProcessed);
+            Assert.Equal(824, progressed.Progress.ImportUnitTotal);
             Assert.Equal(100, progressed.Progress.EntitiesPersisted);
 
             await using (var gracefulScope = factory.Services.CreateAsyncScope())
