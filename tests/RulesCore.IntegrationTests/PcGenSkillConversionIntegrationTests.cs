@@ -342,6 +342,137 @@ public sealed class PcGenSkillConversionIntegrationTests
     }
 
     [Fact]
+    public async Task PersistedLegacyCrossTypeFacetKeepsStableRuleConceptReferenceAfterReimport()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var packageKey = $"pcgen-shared-facet-migration-{token}";
+            var actor = $"rules-lawyer-{token}";
+            var representation = PcGenRepresentation(
+                "35e",
+                $"SFM{token}",
+                ["Craft (alchemy)"]);
+            var importer = new NormalizedSourceImportService(db);
+            AcceptedSourceNormalizationView? accepted = null;
+
+            try
+            {
+                var first = await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"PCGen shared facet migration fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    representation));
+                var source = Assert.Single(first.Entities);
+                Assert.Equal("skill", source.EntityType);
+                Assert.Equal("Craft (alchemy)", source.Name);
+
+                var entity = await db.SourceEntities.SingleAsync(value => value.Id == source.EntityId);
+                var revisionId = await db.SourceEntityRevisions
+                    .Where(value => value.SourceEntityId == source.EntityId)
+                    .Select(value => value.Id)
+                    .SingleAsync();
+
+                // Reconstruct the previously persisted cross-type normalization. This is derived
+                // Rules Core metadata only; the native key, source code, raw evidence, and revision
+                // identity remain unchanged.
+                entity.EntityType = "tool";
+                entity.Name = "Alchemist's Supplies";
+                await db.SaveChangesAsync();
+                db.ChangeTracker.Clear();
+
+                var normalization = new SourceNormalizationService(db);
+                accepted = await normalization.AcceptAsync(source.EntityId, actor);
+                Assert.NotNull(accepted);
+                Assert.Equal("tool.alchemists-supplies", accepted!.Concept.Key);
+                var stableConceptId = accepted.Concept.Id;
+                var stableBindingId = accepted.Binding.Id;
+
+                var globalRules = new GlobalRulesService(db);
+                await globalRules.SetDecisionAsync(
+                    stableConceptId,
+                    new SetGlobalRuleDecisionRequest(
+                        revisionId,
+                        "Legacy Character compatibility fixture."),
+                    actor);
+                await globalRules.PublishAsync(actor);
+
+                var reimport = await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"PCGen shared facet migration fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    representation));
+                var migrated = Assert.Single(reimport.Entities);
+                Assert.Equal(source.EntityId, migrated.EntityId);
+                Assert.Equal("skill", migrated.EntityType);
+                Assert.Equal("Craft (alchemy)", migrated.Name);
+
+                var migratedRevisionId = await db.SourceEntityRevisions
+                    .Where(value => value.SourceEntityId == source.EntityId)
+                    .Select(value => value.Id)
+                    .SingleAsync();
+                Assert.Equal(revisionId, migratedRevisionId);
+
+                var binding = await db.RuleConceptSourceBindings
+                    .AsNoTracking()
+                    .SingleAsync(value => value.Id == stableBindingId);
+                Assert.Equal(stableConceptId, binding.RuleConceptId);
+                Assert.Equal(source.EntityId, binding.SourceEntityId);
+                var concept = await db.RuleConcepts
+                    .AsNoTracking()
+                    .SingleAsync(value => value.Id == stableConceptId);
+                Assert.Equal("tool.alchemists-supplies", concept.Key);
+
+                var catalog = await new CharacterMechanicsConsumerService(db)
+                    .GetGlobalAsync(userId: null);
+                var legacyMechanic = Assert.Single(
+                    catalog.Mechanics,
+                    value => value.MechanicKey == "competency.tool.alchemists-supplies");
+                Assert.NotNull(legacyMechanic.Competency);
+                Assert.Equal("alchemy", legacyMechanic.Competency!.IdentityKey);
+                Assert.Equal("Alchemy", legacyMechanic.Competency.IdentityName);
+                Assert.Equal(
+                    "competency.alchemy.training",
+                    legacyMechanic.Competency.SharedTrainingKey);
+                var profile = Assert.Single(legacyMechanic.Competency.Profiles);
+                Assert.Equal("skill", profile.FacetType);
+                Assert.True(profile.SupportsRanks);
+                Assert.True(profile.SupportsClassSkillState);
+            }
+            finally
+            {
+                if (accepted?.CreatedBinding == true)
+                {
+                    var binding = await db.RuleConceptSourceBindings
+                        .SingleOrDefaultAsync(value => value.Id == accepted.Binding.Id);
+                    if (binding is not null)
+                    {
+                        db.RuleConceptSourceBindings.Remove(binding);
+                        await db.SaveChangesAsync();
+                    }
+                }
+                if (accepted?.CreatedConcept == true)
+                {
+                    var concept = await db.RuleConcepts
+                        .SingleOrDefaultAsync(value => value.Id == accepted.Concept.Id);
+                    if (concept is not null)
+                    {
+                        db.RuleConcepts.Remove(concept);
+                        await db.SaveChangesAsync();
+                    }
+                }
+                await DeletePackageAsync(db, packageKey);
+            }
+        }
+    }
+
+    [Fact]
     public async Task PcGenCompetencySemanticsAreNormalizedWithoutDiscardingNativeEvidence()
     {
         var db = await OpenDatabaseAsync();

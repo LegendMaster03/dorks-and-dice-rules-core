@@ -556,20 +556,29 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
             entity.Name,
             record.Name,
             StringComparison.Ordinal);
-        if ((!entityTypeMatches || !nameMatches) && sourceCodeMatches
-            && string.Equals(
-                entity.FormatKey,
-                LegacySrdSourceFormatAdapter.Format,
-                StringComparison.Ordinal)
-            && ExactCompetencyTranslationPolicy.IsReviewedLegacyCompetencyMigration(
-                entity.EntityType,
-                entity.Name,
-                record))
+        var reviewedIdentityMigration =
+            (!entityTypeMatches || !nameMatches)
+            && sourceCodeMatches
+            && (
+                (string.Equals(
+                        entity.FormatKey,
+                        LegacySrdSourceFormatAdapter.Format,
+                        StringComparison.Ordinal)
+                    && ExactCompetencyTranslationPolicy.IsReviewedLegacyCompetencyMigration(
+                        entity.EntityType,
+                        entity.Name,
+                        record))
+                || ExactCompetencyTranslationPolicy.IsReviewedSharedFacetMigration(
+                    entity.EntityType,
+                    entity.Name,
+                    record));
+        if (reviewedIdentityMigration)
         {
-            // The native key, RawJson, and NativeIdentityJson remain unchanged. This is a
-            // correction to Rules Core's derived normalized competency identity, using the same
-            // reviewed direct-conversion policy applied to new imports. Existing source revision
-            // IDs and any canonical/Rules Layer references therefore remain stable.
+            // The native key, RawJson, and NativeIdentityJson remain unchanged. This corrects
+            // Rules Core's derived normalized competency identity without replacing the source
+            // entity or revision. Existing Rule Concept bindings and Character references can
+            // therefore continue to use their stable IDs/keys while canonical revision-lineage
+            // preserves access to the corrected mechanical profile.
             entity.EntityType = record.EntityType;
             entity.Name = record.Name;
             entityTypeMatches = true;

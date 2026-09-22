@@ -252,6 +252,65 @@ internal static class ExactCompetencyTranslationPolicy
         }
     }
 
+    internal static bool IsReviewedSharedFacetMigration(
+        string currentEntityType,
+        string currentName,
+        NormalizedSourceRecord translatedRecord)
+    {
+        if (!string.Equals(currentEntityType, "tool", StringComparison.OrdinalIgnoreCase)
+            || string.IsNullOrWhiteSpace(currentName)
+            || !string.Equals(translatedRecord.EntityType, "skill", StringComparison.OrdinalIgnoreCase)
+            || string.IsNullOrWhiteSpace(translatedRecord.Name)
+            || string.IsNullOrWhiteSpace(translatedRecord.ContentJson))
+        {
+            return false;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(translatedRecord.ContentJson);
+            if (!document.RootElement.TryGetProperty("_rulesCore", out var rulesCore)
+                || rulesCore.ValueKind != JsonValueKind.Object
+                || !rulesCore.TryGetProperty("context", out var context)
+                || context.ValueKind != JsonValueKind.Object)
+            {
+                return false;
+            }
+
+            var sourceFormat = ReadString(context, "sourceFormat");
+            if (!string.Equals(
+                    sourceFormat,
+                    PcGenSourceFormatAdapter.Format,
+                    StringComparison.Ordinal)
+                && !string.Equals(
+                    sourceFormat,
+                    LegacySrdSourceFormatAdapter.Format,
+                    StringComparison.Ordinal))
+            {
+                return false;
+            }
+
+            var edition = ReadString(context, "edition");
+            var conversion = PcGenCompetencyConversions.Resolve(
+                translatedRecord.Name,
+                edition);
+            return conversion is not null
+                && PcGenCompetencyConversions.EstablishesSharedCompetencyIdentity(conversion)
+                && string.Equals(
+                    conversion.TargetType,
+                    currentEntityType,
+                    StringComparison.OrdinalIgnoreCase)
+                && string.Equals(
+                    conversion.TargetName,
+                    currentName,
+                    StringComparison.OrdinalIgnoreCase);
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
+    }
+
     private static string? ResolveEdition(
         NormalizedSourceRepresentation representation,
         NormalizedSourceRecord record)
