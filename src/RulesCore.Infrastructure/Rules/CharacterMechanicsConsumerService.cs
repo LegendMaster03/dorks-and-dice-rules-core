@@ -1745,7 +1745,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     revision.raw_json,
                     source.entity_type,
                     publication.game_edition,
-                    package.key,
+                    package.package_key,
                     package.display_name,
                     package.provider,
                     source.source_code,

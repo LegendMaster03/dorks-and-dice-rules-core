@@ -1427,7 +1427,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             {
                 name = "Example Mage",
                 source = sourceCode,
-                hd = new { number = 1, faces = 6 },
+                hd = new { number = 1, faces = 8 },
                 proficiency = new[] { "int", "wis" },
                 spellcastingAbility = "int",
                 classFeatures = new object[]

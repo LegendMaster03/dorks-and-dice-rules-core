@@ -212,10 +212,10 @@ public sealed class CharacterSupportConsumerIntegrationTests
                         IsPublic: false,
                         WorkKey: $"private-character-support-{token}",
                         WorkDisplayName: "Private Character Support Fixture",
-                        EditionKey: "fixture",
-                        EditionDisplayName: "Fixture",
+                        EditionKey: "5e",
+                        EditionDisplayName: "5e",
                         Json: PrivateSupportJson,
-                        GameEdition: "fixture"));
+                        GameEdition: "5e"));
                 privatePackageId = importedPrivate.PackageId;
                 var privateEntity = Assert.Single(importedPrivate.Entities);
                 var acceptedPrivate = await normalization.AcceptAsync(
@@ -313,10 +313,10 @@ public sealed class CharacterSupportConsumerIntegrationTests
             IsPublic: isPublic,
             WorkKey: "character-support-fixture",
             WorkDisplayName: "Character Support Fixture",
-            EditionKey: "fixture",
-            EditionDisplayName: "Fixture",
+            EditionKey: "5e",
+            EditionDisplayName: "5e",
             Json: json,
-            GameEdition: "fixture");
+            GameEdition: "5e");
 
     private static string SupportJson(
         string recoveryName,
