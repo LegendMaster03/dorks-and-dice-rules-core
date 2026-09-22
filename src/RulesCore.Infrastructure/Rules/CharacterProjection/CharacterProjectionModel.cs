@@ -111,7 +111,8 @@ internal sealed class CharacterProjectionContext
 
     public Dictionary<string, List<CharacterMechanicContributionView>> AbilityContributions { get; } =
         new(Keys);
-    public HashSet<string> RequiredAbilityChoices { get; } = new(Keys);
+    public Dictionary<string, HashSet<string>> RequiredAbilityChoices { get; } =
+        new(Keys);
     public HashSet<string> SaveProficiencyAbilities { get; } = new(Keys);
     public bool UsesStandardProficiency { get; set; }
     public int StandardProficiencyLevel { get; set; }
@@ -514,6 +515,24 @@ internal sealed class CharacterProjectionContext
         }
         return result.OrderBy(value => value, StringComparer.Ordinal).ToArray();
     }
+
+    public void RequireAbilityChoice(string abilityKey, string choiceKey)
+    {
+        var ability = CharacterProjectionJson.NormalizeAbilityKey(abilityKey);
+        if (!RequiredAbilityChoices.TryGetValue(ability, out var choices))
+        {
+            choices = new HashSet<string>(Keys);
+            RequiredAbilityChoices.Add(ability, choices);
+        }
+        choices.Add(choiceKey);
+    }
+
+    public IReadOnlyList<string> RequiredAbilityChoicesFor(string abilityKey) =>
+        RequiredAbilityChoices.TryGetValue(
+            CharacterProjectionJson.NormalizeAbilityKey(abilityKey),
+            out var choices)
+            ? choices.OrderBy(value => value, StringComparer.Ordinal).ToArray()
+            : [];
 
     public void AddAbilityContribution(
         string abilityKey,

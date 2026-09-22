@@ -190,7 +190,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             var hasBase = context.BaseAbilityScores.TryGetValue(ability, out var baseScore)
                 || context.BaseAbilityScores.TryGetValue(baseKey, out baseScore)
                 || context.IntegerFacts.TryGetValue(baseKey, out baseScore);
-            var requiredChoices = context.RequiredAbilityChoices.OrderBy(value => value, StringComparer.Ordinal).ToArray();
+            var requiredChoices = context.RequiredAbilityChoicesFor(ability);
 
             if (!hasBase)
             {

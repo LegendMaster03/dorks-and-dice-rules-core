@@ -3111,6 +3111,212 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task CharacterProjectionKeepsAlternateWeightedAbilitySetsMutuallyExclusive()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-ability-choice-{token}";
+        var conceptKey = $"background.ability-choice-{token}";
+        var actor = $"character-ability-choice-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"ABI{token}";
+            var raw = JsonSerializer.Serialize(new
+            {
+                name = "Flexible Background",
+                source = sourceCode,
+                ability = new object[]
+                {
+                    new
+                    {
+                        choose = new
+                        {
+                            weighted = new
+                            {
+                                from = new[] { "str", "dex", "con" },
+                                weights = new[] { 2, 1 }
+                            }
+                        }
+                    },
+                    new
+                    {
+                        choose = new
+                        {
+                            weighted = new
+                            {
+                                from = new[] { "str", "dex", "con" },
+                                weights = new[] { 1, 1, 1 }
+                            }
+                        }
+                    }
+                }
+            });
+
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Ability Choice Fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"ability-choice-{token}.json",
+                            Encoding.UTF8.GetBytes("{}"),
+                            $"integration:ability-choice:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "background",
+                                "Flexible Background",
+                                sourceCode,
+                                $"background|Flexible Background|{sourceCode}",
+                                raw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Ability Choice Fixture {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2024, 9, 17))
+                        ])));
+            packageId = imported.PackageId;
+            var source = Assert.Single(imported.Entities);
+            var concept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    conceptKey,
+                    source.EntityType,
+                    source.Name),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                concept.Value.Id,
+                new BindRuleConceptSourceRequest(source.EntityId),
+                actor);
+            var revisionId = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == source.EntityId)
+                .Select(value => value.Id)
+                .SingleAsync();
+            await globalRules.SetDecisionAsync(
+                concept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionId,
+                    "Weighted ability choice fixture."),
+                actor);
+            await globalRules.PublishAsync(actor);
+
+            CharacterRulesProjectionRequest Request(
+                IReadOnlyList<CharacterRuntimeChoiceInput>? choices = null) =>
+                new(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 10,
+                        ["dexterity"] = 10,
+                        ["constitution"] = 10,
+                        ["intelligence"] = 10,
+                        ["wisdom"] = 10,
+                        ["charisma"] = 10
+                    },
+                    SelectedConcepts:
+                    [
+                        new CharacterSelectedConceptInput(conceptKey)
+                    ],
+                    Choices: choices);
+
+            var noSet = await projection.ResolveGlobalAsync(
+                Request(),
+                userId: null);
+            var setChoice = Assert.Single(
+                noSet.Choices,
+                value => value.Kind == "ability-score-set");
+            Assert.Equal(CharacterResolutionStates.ChoiceRequired, setChoice.State);
+            Assert.Equal(2, setChoice.Options.Count);
+            Assert.Equal(
+                CharacterResolutionStates.ChoiceRequired,
+                Assert.Single(
+                    noSet.Mechanics,
+                    value => value.MechanicKey == "ability.strength.score").State);
+            Assert.Equal(
+                CharacterResolutionStates.Resolved,
+                Assert.Single(
+                    noSet.Mechanics,
+                    value => value.MechanicKey == "ability.wisdom.score").State);
+
+            var firstSetValue = setChoice.Options[0].Value;
+            var setSelected = await projection.ResolveGlobalAsync(
+                Request(
+                [
+                    new CharacterRuntimeChoiceInput(
+                        setChoice.ChoiceKey,
+                        firstSetValue)
+                ]),
+                userId: null);
+            var abilityChoices = setSelected.Choices
+                .Where(value => value.Kind == "ability-score")
+                .OrderBy(value => value.ChoiceKey, StringComparer.Ordinal)
+                .ToArray();
+            Assert.Equal(2, abilityChoices.Length);
+            Assert.Contains(abilityChoices, value => value.DisplayName.Contains("+2", StringComparison.Ordinal));
+            Assert.Contains(abilityChoices, value => value.DisplayName.Contains("+1", StringComparison.Ordinal));
+
+            var plusTwo = abilityChoices.Single(value =>
+                value.DisplayName.Contains("+2", StringComparison.Ordinal));
+            var plusOne = abilityChoices.Single(value =>
+                value.DisplayName.Contains("+1", StringComparison.Ordinal));
+
+            var resolved = await projection.ResolveGlobalAsync(
+                Request(
+                [
+                    new CharacterRuntimeChoiceInput(
+                        setChoice.ChoiceKey,
+                        firstSetValue),
+                    new CharacterRuntimeChoiceInput(
+                        plusTwo.ChoiceKey,
+                        "strength"),
+                    new CharacterRuntimeChoiceInput(
+                        plusOne.ChoiceKey,
+                        "dexterity")
+                ]),
+                userId: null);
+
+            Assert.Equal(12, Assert.Single(
+                resolved.Mechanics,
+                value => value.MechanicKey == "ability.strength.score").NumericValue);
+            Assert.Equal(11, Assert.Single(
+                resolved.Mechanics,
+                value => value.MechanicKey == "ability.dexterity.score").NumericValue);
+            Assert.Equal(10, Assert.Single(
+                resolved.Mechanics,
+                value => value.MechanicKey == "ability.constitution.score").NumericValue);
+            Assert.DoesNotContain(
+                resolved.Mechanics,
+                value => value.MechanicKey.StartsWith("ability.", StringComparison.Ordinal)
+                    && value.State == CharacterResolutionStates.ChoiceRequired);
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
     private static HttpRequestMessage HostedRequest(HttpMethod method, string path, string ticket)
     {
         var request = new HttpRequestMessage(method, path);

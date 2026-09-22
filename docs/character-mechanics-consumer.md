@@ -306,3 +306,11 @@ Missing choices do not imply non-proficiency. Competencies that could still be s
 The bulk Character projection reads 5e.tools `weaponProficiencies`, `armorProficiencies`, and `toolProficiencies` in addition to the human-facing `weapons`, `armor`, and `tools` arrays. Fixed boolean weapon and armor entries become qualifications/capabilities. Structured filter expressions such as a filtered martial-weapon set remain `applicable-unresolved`; Rules Core does not expand a source filter into broader grants unless the filter semantics are normalized.
 
 Fixed named tool entries resolve against the accessible canonical tool competency catalog and feed Character training directly. `anyTool: N` becomes N ordinary choice slots populated from that catalog. Narrower category quantities such as `anyArtisansTool` or `anyMusicalInstrument` are reported as `source-unavailable` choices until tool-category metadata exists to generate a trustworthy legal option set. This preserves the source requirement without presenting an invented list.
+
+## Ability-score choice projection
+
+The bulk Character projection treats a 5e.tools `ability` array as alternate ability-score sets, not cumulative entries. When more than one set is present, Rules Core exposes an `ability-score-set` choice and projects only the selected set. This prevents mutually exclusive schemes such as “+2/+1” versus “+1/+1/+1” from being added together.
+
+Within the selected set, fixed numeric adjustments are applied directly. `choose.from` supports source-defined `count` and `amount`, while `choose.weighted` creates one distinct ability selection per source weight (for example +2 and +1). Duplicate selections inside the same weighted/uniform group are explicit conflicts. Missing choices mark only the ability scores that the unresolved source choice can affect; unrelated abilities remain resolved.
+
+Ability choices are returned through the same generic `choices` contract used for proficiencies, with stable keys, legal options, selected values, source concept, and provenance. Unknown choice shapes are preserved as `source-unavailable` rather than guessed.

@@ -23,7 +23,6 @@ internal sealed class RaceCharacterRuleProjectionModule : ICharacterRuleProjecti
 
         ProjectSize(rule, context);
         ProjectMovement(rule, context);
-        ProjectAbilityAdjustments(rule, context);
     }
 
 
@@ -118,72 +117,6 @@ internal sealed class RaceCharacterRuleProjectionModule : ICharacterRuleProjecti
         }
     }
 
-    private static void ProjectAbilityAdjustments(
-        CharacterProjectionRule rule,
-        CharacterProjectionContext context)
-    {
-        if (!CharacterProjectionJson.TryGetProperty(rule.Document, "ability", out var ability)
-            || ability.ValueKind != JsonValueKind.Array)
-        {
-            return;
-        }
-
-        var index = 0;
-        foreach (var entry in ability.EnumerateArray())
-        {
-            if (entry.ValueKind != JsonValueKind.Object)
-            {
-                index++;
-                continue;
-            }
-
-            foreach (var property in entry.EnumerateObject())
-            {
-                if (property.Value.ValueKind == JsonValueKind.Number
-                    && property.Value.TryGetInt32(out var amount))
-                {
-                    var key = CharacterProjectionJson.NormalizeAbilityKey(property.Name);
-                    context.AddAbilityContribution(
-                        key,
-                        new CharacterMechanicContributionView(
-                            $"{rule.Catalog.ConceptKey}.ability.{key}.{index}",
-                            rule.Catalog.DisplayName,
-                            CharacterEffectOperations.Add,
-                            amount,
-                            null,
-                            rule.Catalog.ConceptKey,
-                            rule.Provenance));
-                }
-            }
-
-            if (entry.TryGetProperty("choose", out var choose)
-                && choose.ValueKind == JsonValueKind.Object)
-            {
-                var choiceKey = $"{rule.Catalog.ConceptKey}.ability-choice.{index}";
-                var amount = CharacterProjectionJson.Integer(choose, "amount") ?? 1;
-                if (context.Choices.TryGetValue(choiceKey, out var selected))
-                {
-                    var abilityKey = CharacterProjectionJson.NormalizeAbilityKey(selected);
-                    context.AddAbilityContribution(
-                        abilityKey,
-                        new CharacterMechanicContributionView(
-                            choiceKey,
-                            $"{rule.Catalog.DisplayName} ability choice",
-                            CharacterEffectOperations.Add,
-                            amount,
-                            null,
-                            rule.Catalog.ConceptKey,
-                            rule.Provenance));
-                }
-                else
-                {
-                    context.RequiredAbilityChoices.Add(choiceKey);
-                }
-            }
-
-            index++;
-        }
-    }
 }
 
 internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProjectionModule
@@ -1071,6 +1004,9 @@ internal sealed class GenericCharacterRuleProjectionModule : ICharacterRuleProje
 
         if (context.IsSelected(rule.Catalog.ConceptKey))
         {
+            CharacterAbilityProjector.Project(
+                rule,
+                context);
             CharacterStartingProficiencyProjector.ProjectSourceSkills(
                 rule,
                 context,
