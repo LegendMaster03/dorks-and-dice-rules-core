@@ -161,6 +161,7 @@ internal sealed class CharacterProjectionContext
     public bool UsesStandardProficiency { get; set; }
     public int StandardProficiencyLevel { get; set; }
     public string? SizeCategory { get; private set; }
+    public bool HasSizeCategoryConflict { get; private set; }
     public List<CharacterMechanicContributionView> ThreeXBaseAttackContributions { get; } = [];
     public Dictionary<string, List<CharacterMechanicContributionView>> ThreeXSaveContributions { get; } =
         new(Keys);
@@ -941,6 +942,7 @@ internal sealed class CharacterProjectionContext
             return;
         }
 
+        HasSizeCategoryConflict = true;
         var existingContributions = Mechanics.TryGetValue(mechanicKey, out var current)
             ? current.Contributions
             : [];

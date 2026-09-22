@@ -1514,6 +1514,34 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         {
             sizeModifier = explicitSizeModifier;
         }
+        else if (context.HasSizeCategoryConflict)
+        {
+            if (resolvesTouch)
+            {
+                context.Mechanics["defense.ac.touch"] = Unresolved(
+                    "defense.ac.touch",
+                    "defense",
+                    "Touch Armor Class",
+                    CharacterResolutionStates.Conflict);
+            }
+            if (resolvesFlatFooted)
+            {
+                context.Mechanics["defense.ac.flat-footed"] = Unresolved(
+                    "defense.ac.flat-footed",
+                    "defense",
+                    "Flat-Footed Armor Class",
+                    CharacterResolutionStates.Conflict);
+            }
+            if (!context.UsesStandardProficiency)
+            {
+                context.Mechanics["defense.ac.total"] = Unresolved(
+                    "defense.ac.total",
+                    "defense",
+                    "Armor Class",
+                    CharacterResolutionStates.Conflict);
+            }
+            return;
+        }
         else if (!TryThreeXArmorClassSizeModifier(context.SizeCategory, out sizeModifier))
         {
             if (resolvesTouch)
@@ -1885,6 +1913,15 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         if (context.IntegerFacts.TryGetValue("combat.grapple.size-modifier", out var explicitSizeModifier))
         {
             sizeModifier = explicitSizeModifier;
+        }
+        else if (context.HasSizeCategoryConflict)
+        {
+            context.Mechanics["combat.grapple"] = Unresolved(
+                "combat.grapple",
+                "combat-value",
+                "Grapple",
+                CharacterResolutionStates.Conflict);
+            return;
         }
         else if (!TryThreeXSizeModifier(context.SizeCategory, out sizeModifier))
         {
