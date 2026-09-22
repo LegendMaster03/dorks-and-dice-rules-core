@@ -98,6 +98,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             RegisterToolChoiceCategory(context, rule);
             RegisterLanguageChoiceIdentity(context, rule);
             RegisterWeaponCatalogEntry(context, rule);
+            RegisterFeatureCatalogEntry(context, rule);
         }
         context.ResolveStartingClass();
 
@@ -326,6 +327,101 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             "T" => "tool",
             _ => null
         };
+    }
+
+    private static void RegisterFeatureCatalogEntry(
+        CharacterProjectionContext context,
+        CharacterProjectionRule rule)
+    {
+        var isClassFeature = string.Equals(
+            rule.Catalog.EntityType,
+            "classFeature",
+            StringComparison.OrdinalIgnoreCase);
+        var isSubclassFeature = string.Equals(
+            rule.Catalog.EntityType,
+            "subclassFeature",
+            StringComparison.OrdinalIgnoreCase);
+        if (!isClassFeature && !isSubclassFeature)
+        {
+            return;
+        }
+
+        var className = CharacterProjectionJson.String(rule.Document, "className");
+        var level = CharacterProjectionJson.Integer(rule.Document, "level");
+        if (string.IsNullOrWhiteSpace(className) || level is null or <= 0)
+        {
+            return;
+        }
+
+        var subclassName = isSubclassFeature
+            ? CharacterProjectionJson.String(rule.Document, "subclassShortName")
+                ?? CharacterProjectionJson.String(rule.Document, "subclassName")
+            : null;
+        if (isSubclassFeature && string.IsNullOrWhiteSpace(subclassName))
+        {
+            return;
+        }
+
+        context.FeatureCatalog.Add(new CharacterFeatureCatalogEntry(
+            rule.Catalog.ConceptKey,
+            rule.Catalog.EntityType,
+            rule.Catalog.DisplayName,
+            className.Trim(),
+            CharacterProjectionJson.String(rule.Document, "classSource"),
+            subclassName?.Trim(),
+            isSubclassFeature
+                ? CharacterProjectionJson.String(rule.Document, "subclassSource")
+                : null,
+            level.Value,
+            rule.Catalog.SourceCode,
+            ReadNormalizedFeatureEffects(rule),
+            rule.Provenance));
+    }
+
+    private static IReadOnlyList<CharacterRuleEffectView> ReadNormalizedFeatureEffects(
+        CharacterProjectionRule rule)
+    {
+        if (!CharacterProjectionJson.TryGetProperty(rule.Document, "_rulesCore", out var rulesCore)
+            || !CharacterProjectionJson.TryGetProperty(rulesCore, "character", out var character)
+            || !CharacterProjectionJson.TryGetProperty(character, "effects", out var effects)
+            || effects.ValueKind != JsonValueKind.Array)
+        {
+            return [];
+        }
+
+        var result = new List<CharacterRuleEffectView>();
+        var index = 0;
+        foreach (var item in effects.EnumerateArray())
+        {
+            if (item.ValueKind != JsonValueKind.Object)
+            {
+                index++;
+                continue;
+            }
+
+            var target = CharacterProjectionJson.String(item, "target");
+            if (string.IsNullOrWhiteSpace(target))
+            {
+                index++;
+                continue;
+            }
+
+            result.Add(new CharacterRuleEffectView(
+                CharacterProjectionJson.String(item, "key")
+                    ?? $"{rule.Catalog.ConceptKey}.effect.{index}",
+                CharacterProjectionJson.String(item, "kind") ?? CharacterEffectKinds.Other,
+                CharacterProjectionJson.String(item, "operation")
+                    ?? CharacterEffectOperations.Add,
+                target,
+                CharacterProjectionJson.Integer(item, "value"),
+                CharacterProjectionJson.String(item, "textValue"),
+                CharacterProjectionJson.String(item, "condition"),
+                rule.Catalog.ConceptKey,
+                rule.Provenance));
+            index++;
+        }
+
+        return result;
     }
 
     private static void SeedCallerCapabilities(CharacterProjectionContext context)
