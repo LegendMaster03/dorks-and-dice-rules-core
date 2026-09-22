@@ -96,7 +96,7 @@ internal static class ExactCompetencyTranslationPolicy
             {
                 var conversion = PcGenCompetencyConversions.Resolve(record.Name, edition);
                 var effectiveType = conversion is not null
-                    && string.IsNullOrWhiteSpace(conversion.Scope)
+                    && PcGenCompetencyConversions.IsExactIdentityTranslation(conversion)
                         ? conversion.TargetType
                         : record.EntityType;
 
@@ -121,7 +121,7 @@ internal static class ExactCompetencyTranslationPolicy
                         conversionContext["nativeName"] = record.Name;
                     }
 
-                    if (string.IsNullOrWhiteSpace(conversion.Scope))
+                    if (PcGenCompetencyConversions.IsExactIdentityTranslation(conversion))
                     {
                         targetType = conversion.TargetType;
                         targetName = conversion.TargetName;
@@ -230,7 +230,7 @@ internal static class ExactCompetencyTranslationPolicy
             var edition = ReadString(context, "edition");
             var conversion = PcGenCompetencyConversions.Resolve(currentName, edition);
             return conversion is not null
-                && string.IsNullOrWhiteSpace(conversion.Scope)
+                && PcGenCompetencyConversions.IsExactIdentityTranslation(conversion)
                 && string.Equals(
                     conversion.TargetType,
                     translatedRecord.EntityType,
