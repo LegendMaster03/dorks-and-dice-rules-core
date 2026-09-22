@@ -366,6 +366,7 @@ Weapon proficiency is derived when a selected class or other normalized rule gra
 
 ## Character projection spellcasting resources
 
+Spell actions preserve source-defined casting metadata when the spell concept provides it. The action result can carry the spell level, school identity, full casting-time text, range, V/S/M component identities, material-component text, duration, ritual state, concentration state, source concept identity, and provenance. The Character Sheet does not need to reopen the spell source document to reconstruct those fields.
 For a single selected standard caster whose effective class document exposes `rowsSpellProgression`, the bulk Character projection reads the row for the supplied class level and returns one `resource.spell-slot.<level>` resource for every nonzero slot maximum. The table remains source-owned; Rules Core selects the row and carries the class rule provenance into each resource.
 
 A class with `casterProgression: "pact"` is projected through its Pact Magic table instead of `rowsSpellProgression`. Rules Core locates the source `Spell Slots` and `Slot Level` columns, reads the supplied class-level row, and returns `resource.pact-slot.<class-concept-key>.level-<slot-level>`. Pact slots remain a `pact-magic` resource system and coexist with normal spell slots; selecting a Pact Magic class alongside a standard caster does not create a false multiclass-slot conflict.
