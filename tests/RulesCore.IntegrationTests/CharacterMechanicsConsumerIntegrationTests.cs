@@ -3047,10 +3047,6 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     [
                         new CharacterAdvancementFactInput(classConceptKey, 5)
                     ],
-                    EquippedItemConceptKeys:
-                    [
-                        lightWeaponConceptKey
-                    ],
                     Choices: choices);
 
             var unresolved = await projection.ResolveGlobalAsync(
