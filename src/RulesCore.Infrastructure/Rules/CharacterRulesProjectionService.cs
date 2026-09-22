@@ -94,6 +94,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 rule.Catalog.ConceptKey,
                 rule.Catalog.DisplayName,
                 rule.Catalog.EntityType);
+            RegisterToolChoiceCategory(context, rule);
         }
         context.ResolveStartingClass();
 
@@ -155,6 +156,56 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 competency.Specialty,
                 competency.CompetencyKind);
         }
+    }
+
+    private static void RegisterToolChoiceCategory(
+        CharacterProjectionContext context,
+        CharacterProjectionRule rule)
+    {
+        if (!string.Equals(
+                rule.Catalog.EntityType,
+                "tool",
+                StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        var category = ReadNormalizedToolCategory(rule.Document);
+        if (category is not null)
+        {
+            context.RegisterToolChoiceCategory(rule.Catalog.ConceptKey, category);
+        }
+    }
+
+    private static string? ReadNormalizedToolCategory(JsonElement document)
+    {
+        if (CharacterProjectionJson.TryGetProperty(document, "_rulesCore", out var rulesCore)
+            && CharacterProjectionJson.TryGetProperty(rulesCore, "toolCategory", out var normalized)
+            && normalized.ValueKind == JsonValueKind.String
+            && !string.IsNullOrWhiteSpace(normalized.GetString()))
+        {
+            return CharacterProjectionJson.NormalizeResourceSystemKey(normalized.GetString()!);
+        }
+
+        var rawType = CharacterProjectionJson.String(document, "type");
+        if (string.IsNullOrWhiteSpace(rawType))
+        {
+            return null;
+        }
+
+        var type = rawType
+            .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .FirstOrDefault()?
+            .Trim()
+            .ToUpperInvariant();
+        return type switch
+        {
+            "AT" => "artisans-tool",
+            "INS" => "musical-instrument",
+            "GS" => "gaming-set",
+            "T" => "tool",
+            _ => null
+        };
     }
 
     private static void SeedCallerCapabilities(CharacterProjectionContext context)
