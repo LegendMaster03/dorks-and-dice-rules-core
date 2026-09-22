@@ -37,6 +37,20 @@ POST /api/campaigns/{campaignId}/rules/mechanics/evaluate
 POST /api/campaigns/{campaignId}/rules/mechanics/{mechanicKey}/evaluate
 ```
 
+Character-support discovery/projection and recovery resolution use the same effective rules context:
+
+```text
+GET  /api/rules/mechanics/support
+POST /api/rules/mechanics/support
+POST /api/rules/mechanics/recovery/{procedureKey}/resolve
+
+GET  /api/campaigns/{campaignId}/rules/mechanics/support
+POST /api/campaigns/{campaignId}/rules/mechanics/support
+POST /api/campaigns/{campaignId}/rules/mechanics/recovery/{procedureKey}/resolve
+```
+
+The support `GET` endpoints are discovery calls with no Character facts. They retain applicable definitions even when Character capability/state is not yet available and report an unresolved state instead of deleting the row. The support `POST` endpoints accept Character-owned facts and capability keys so passive values and qualification state can be projected. Recovery resolution is separate because a procedure can require additional player choices, rolls, resource expenditure, or other runtime facts.
+
 `includeUnavailable=true` includes source-dependent mechanics whose activation source is not currently accessible/effective, with `isAvailableUnderRuleset=false`. Character capability requirements are different: a capability-driven definition can be available in Rules Core while declaring `requiredCapabilityKeys` that the Character backend must satisfy before presenting or evaluating it. Independently implemented external-public mechanics are available without a user source-package import and identify their external rules work through attribution rather than `SourcePackage.Key`.
 
 Global access follows the existing resolved-rule source grant model. Campaign access follows the existing campaign read boundary. The mechanics API does not create a second source-access or campaign-authorization model.
@@ -89,6 +103,61 @@ Every mechanic declares its inputs and their origin:
 Rules Core owns the arithmetic and composition semantics represented by this contract. The Character backend owns obtaining Character-specific facts and transporting resolved values between operations when a multi-step workflow calls for it; transporting a derived value does not make that value raw Character state.
 
 This distinction is important for 3.x source translation. A PCGen racial modifier, class progression fragment, or other partial source declaration is not automatically a final Character value. The consumer contract therefore requests the resolved input rather than fabricating a final score from incomplete source evidence.
+
+## Character support: recovery, passive values, and qualifications
+
+The Character-support projection is one extension of the Character mechanics consumer boundary, but its three result families remain semantically distinct:
+
+- recovery procedures are executable rule procedures;
+- passive values are scalar Character mechanics whose formula belongs to Rules Core;
+- qualifications are Character training/proficiency/knowledge facts interpreted under Rules Core definitions.
+
+All three read the same published global or Campaign-effective Rules Layer snapshot and use the same access-aware source provenance. They are projected only from normalized `_rulesCore.characterSupport` metadata on the effective rule document. Character-oriented consumers do not parse 5e.tools, PCGen, or publisher-native fields to reconstruct these features.
+
+A support entry can be `available`, `not-applicable`, `unresolved-character-state`, `unresolved-rule-definition`, or resolved as appropriate. A required capability is not treated as absent when the caller simply has not supplied Character capability state: discovery reports it as unresolved. When the caller explicitly supplies a capability set that omits a required capability, the entry is not applicable.
+
+### Recovery procedures
+
+"Short Rest" and "Long Rest" are stable Character Sheet user intents, not universal algorithms. Rules Core does not define either label to mean a particular duration, Hit Dice rule, HP restoration rule, spell-slot reset, exhaustion interaction, or condition interaction.
+
+An effective rule can publish any number of recovery procedures. A procedure has a stable `procedureKey`, display name, optional presentation role such as `short-rest` or `long-rest`, applicability/capability requirements, declared typed inputs, source attribution, and structured runtime requirements. Procedures without those roles are equally valid. More than one procedure can use the same presentation role when the effective rules genuinely expose multiple procedures; the consumer must use the discovered procedure key rather than assuming the role itself is an algorithm.
+
+Recovery resolution accepts only:
+
+- declared Character/source/runtime inputs;
+- required Character capability keys;
+- declared player choices;
+- declared roll results supplied through the existing runtime roll boundary.
+
+It does not accept final Character state such as a new HP total, restored slot collection, or reset feature-use state unless that value is itself a declared rule input for a different mechanical purpose. Undeclared typed inputs are rejected.
+
+If information is missing, Rules Core returns a structured continuation state: `input-required`, `choice-required`, or `roll-required`. It does not guess a choice or perform browser-side dice behavior. A resolved procedure returns structured consequences such as a target kind/key, operation, resolved amount/value, and optional rule-defined reference key. Operations and targets are intentionally open mechanical identities rather than a fixed 5e rest effect list.
+
+Rules Core resolves what should happen. The Character-owning backend persists those consequences to Character runtime state. Rules Core does not mutate Character Sheet storage.
+
+### Passive values
+
+Passive/automatic Character values use the `passive-value` mechanic kind. Each normalized passive mechanic supplies its own evaluation kind, constant, participating inputs, applicability, optional presentation role, optional relationship to another mechanic/concept/ability, and source attribution.
+
+There is no built-in `Passive Perception / Passive Investigation / Passive Insight` taxonomy and no universal `10 + modifier` formula. A 5e passive check can use that formula only when normalized rule evidence explicitly defines it. Older-edition take-10/automatic mechanics or source-specific passive values retain their own identities and formulas rather than being renamed into 5e terminology.
+
+If required Character input is absent, the passive value remains present with `unresolved-character-state`. The frontend renders the supplied resolved value when one exists; it does not recalculate the formula.
+
+### Proficiencies, training, and qualifications
+
+Qualification projection is intentionally not a fixed Armor/Weapons/Tools/Languages table. A normalized qualification supplies a stable `qualificationKey`, display name, arbitrary category and optional family, a typed Character-owned state input, applicability/capability requirements, optional associated Rule Concept identity, and source attribution.
+
+This model can represent weapon groups, exotic-weapon proficiency, tool training, class-skill state, language knowledge, vehicles, instruments, magic/psionic training, and future source-specific categories without adding universal schema rows.
+
+The distinction from competency profiles is deliberate:
+
+- "Stealth is trained-only under this profile" is a Rules Core competency-profile rule.
+- "This Character is trained in Stealth" is Character-owned qualification/training state projected through a qualification definition.
+- "This Character is proficient with martial weapons" is a Character qualification fact, potentially capability-qualified.
+- "This Character knows Draconic" is a Character qualification/knowledge fact.
+- "This source says a class grants martial-weapon proficiency" is source rule evidence that Character derivation can use; it is not automatically a persisted Character fact.
+
+Rules Core defines rule meaning, applicability, derivation contracts, and canonical relationships. The Character backend owns selections and acquired/runtime state. Missing Character state therefore remains unresolved rather than being fabricated from source grants.
 
 ## Generalized competency checks
 

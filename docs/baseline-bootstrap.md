@@ -113,6 +113,14 @@ When published rules use source contributions, access is evaluated across the ac
 
 Runtime canonical substitution follows the same access rule: if a published snapshot points to an inaccessible source revision, Rules Core may use another revision associated with the same canonical entity when that alternative comes from a package accessible to the requesting user. Trusted canonical identity may intentionally connect different normalized presentations of the same underlying entity; the substitution reuses that identity but never exposes another user's inaccessible representation.
 
+## Character-support baseline publication
+
+The reviewed bundled bootstrap currently publishes only the settled house-rule concepts and the reviewed SRD skill/tool competency baseline described below. Inspection of the reviewed bundled normalized sources found no published `_rulesCore.characterSupport` recovery procedures, passive-value definitions, or general qualification definitions.
+
+Bootstrap therefore does **not** synthesize Short Rest, Long Rest, Passive Perception, Armor/Weapons/Tools/Languages rows, or any other Character-support entry merely to populate Character Sheet UI. The static cross-edition Character mechanic definitions are also not treated as proof that a particular Character owns a qualification.
+
+Character-support rows appear only when an effective published rule contains reviewed/accepted normalized `_rulesCore.characterSupport` evidence. Ordinary Rules Layer decisions, global patches, Campaign baseline selection, and Campaign decisions determine the effective definition. Future bundled publication can add these mechanics when the reviewed source normalization can represent them faithfully; unresolved source gaps remain documented gaps rather than inferred defaults.
+
 ## Reviewed bundled SRD competency baseline
 
 Source Layer import does not normally make source content an effective table rule. Arbitrary uploads, private packages, hosted-source refreshes, and other imported material still require the ordinary Rules Lawyer normalization, decision, and publication workflow.
