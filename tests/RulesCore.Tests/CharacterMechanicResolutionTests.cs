@@ -83,6 +83,20 @@ public sealed class CharacterMechanicResolutionTests
 
 
     [Theory]
+    [InlineData(8, 2, 10)]
+    [InlineData(1, -1, 1)]
+    [InlineData(1, -5, 1)]
+    public void StandardHitPointGainAppliesConstitutionWithMinimumOne(
+        int hitDieValue,
+        int constitutionModifier,
+        int expected)
+    {
+        Assert.Equal(
+            expected,
+            StandardDndCharacterMath.HitPointGain(hitDieValue, constitutionModifier));
+    }
+
+    [Theory]
     [InlineData(1, "full", 1)]
     [InlineData(5, "full", 5)]
     [InlineData(1, "three-quarters", 0)]
