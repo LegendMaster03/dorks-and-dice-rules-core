@@ -637,7 +637,8 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
     {
         var counts = new int?[]
         {
-            progress.Current, progress.Total, progress.FilesDiscovered, progress.CompatibleFiles,
+            progress.Current, progress.Total, progress.FilesDiscovered, progress.FilesProcessed,
+            progress.CompatibleFiles, progress.ImportUnitsProcessed, progress.ImportUnitTotal,
             progress.RecordsDiscovered, progress.RecordsTranslated, progress.EntitiesPersisted,
             progress.NewEntities, progress.UnchangedEntities, progress.NewRevisions,
             progress.TranslationOnlyUpdates, progress.PublicationsProcessed, progress.PublicationTotal,
@@ -647,6 +648,14 @@ public sealed class CurrentUserSourceImportJobService(RulesCoreDbContext dbConte
             throw new ArgumentOutOfRangeException(nameof(progress), "Progress counts can not be negative.");
         if (progress.Current is not null && progress.Total is not null && progress.Current > progress.Total)
             throw new ArgumentException("Progress current can not exceed progress total.", nameof(progress));
+        if (progress.FilesProcessed is not null
+            && progress.FilesDiscovered is not null
+            && progress.FilesProcessed > progress.FilesDiscovered)
+            throw new ArgumentException("Processed file count can not exceed discovered file count.", nameof(progress));
+        if (progress.ImportUnitsProcessed is not null
+            && progress.ImportUnitTotal is not null
+            && progress.ImportUnitsProcessed > progress.ImportUnitTotal)
+            throw new ArgumentException("Processed import-unit count can not exceed import-unit total.", nameof(progress));
         if (progress.PublicationsProcessed is not null
             && progress.PublicationTotal is not null
             && progress.PublicationsProcessed > progress.PublicationTotal)

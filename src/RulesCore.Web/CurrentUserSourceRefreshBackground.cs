@@ -68,24 +68,32 @@ internal sealed class CurrentUserSourceRefreshBackground(
             job = await jobs.ClaimNextAsync(stoppingToken);
             if (job is null) return false;
 
+            CurrentUserSourceImportProgress? retainedProgress = null;
+            async Task ReportProgressAsync(
+                CurrentUserSourceImportProgress progress,
+                CancellationToken progressCancellationToken)
+            {
+                retainedProgress = MergeImportProgress(retainedProgress, progress);
+                await ReportImportProgressAsync(
+                    job.Id,
+                    retainedProgress,
+                    progressCancellationToken);
+            }
+
             var sourceUri = new Uri(job.Url, UriKind.Absolute);
             using var httpClient = new HttpClient(new CurrentUserSourceProgressHttpHandler(
                 sourceUri,
-                (progress, cancellationToken) =>
-                    ReportImportProgressAsync(job.Id, progress, cancellationToken)))
+                ReportProgressAsync))
             {
                 Timeout = TimeSpan.FromMinutes(2)
             };
-            var progressImporter = new ProgressReportingNormalizedSourceImportService(
-                normalizedImporter,
-                (progress, cancellationToken) =>
-                    ReportImportProgressAsync(job.Id, progress, cancellationToken));
             var sourceService = new CurrentUserSourceService(
                 dbContext,
-                progressImporter,
+                normalizedImporter,
                 adapters,
                 grants,
-                httpClient);
+                httpClient,
+                ReportProgressAsync);
 
             CurrentUserSourceView? source;
             if (string.Equals(
@@ -99,8 +107,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
                         "Queued Web source refresh did not identify the source to refresh.");
                 }
 
-                await jobs.UpdateProgressAsync(
-                    job.Id,
+                await ReportProgressAsync(
                     new CurrentUserSourceImportProgress(
                         "checking",
                         Detail: "Checking the current source registration before refresh"),
@@ -115,8 +122,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
                         "The Web source was removed before its queued refresh could run.");
                 }
 
-                await jobs.UpdateProgressAsync(
-                    job.Id,
+                await ReportProgressAsync(
                     new CurrentUserSourceImportProgress(
                         "finalizing",
                         source.EntityCount,
@@ -135,8 +141,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
             }
             else
             {
-                await jobs.UpdateProgressAsync(
-                    job.Id,
+                await ReportProgressAsync(
                     new CurrentUserSourceImportProgress(
                         "preparing",
                         Detail: "Preparing a clean import attempt"),
@@ -148,8 +153,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
                     stoppingToken);
                 if (resetPartial)
                 {
-                    await jobs.UpdateProgressAsync(
-                        job.Id,
+                    await ReportProgressAsync(
                         new CurrentUserSourceImportProgress(
                             "preparing",
                             Detail: "Removed incomplete data from the previous failed attempt"),
@@ -163,8 +167,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
                         Url: job.Url),
                     stoppingToken);
 
-                await jobs.UpdateProgressAsync(
-                    job.Id,
+                await ReportProgressAsync(
                     new CurrentUserSourceImportProgress(
                         "finalizing",
                         source.EntityCount,
@@ -234,6 +237,34 @@ internal sealed class CurrentUserSourceRefreshBackground(
             }
             return true;
         }
+    }
+
+    private static CurrentUserSourceImportProgress MergeImportProgress(
+        CurrentUserSourceImportProgress? previous,
+        CurrentUserSourceImportProgress current)
+    {
+        if (previous is null) return current;
+        return current with
+        {
+            FilesDiscovered = current.FilesDiscovered ?? previous.FilesDiscovered,
+            FilesProcessed = current.FilesProcessed ?? previous.FilesProcessed,
+            CompatibleFiles = current.CompatibleFiles ?? previous.CompatibleFiles,
+            ImportUnitsProcessed = current.ImportUnitsProcessed ?? previous.ImportUnitsProcessed,
+            ImportUnitTotal = current.ImportUnitTotal ?? previous.ImportUnitTotal,
+            RecordsDiscovered = current.RecordsDiscovered ?? previous.RecordsDiscovered,
+            RecordsTranslated = current.RecordsTranslated ?? previous.RecordsTranslated,
+            EntitiesPersisted = current.EntitiesPersisted ?? previous.EntitiesPersisted,
+            NewEntities = current.NewEntities ?? previous.NewEntities,
+            UnchangedEntities = current.UnchangedEntities ?? previous.UnchangedEntities,
+            NewRevisions = current.NewRevisions ?? previous.NewRevisions,
+            TranslationOnlyUpdates = current.TranslationOnlyUpdates ?? previous.TranslationOnlyUpdates,
+            PublicationsProcessed = current.PublicationsProcessed ?? previous.PublicationsProcessed,
+            PublicationTotal = current.PublicationTotal ?? previous.PublicationTotal,
+            ReconciliationIssueCount = current.ReconciliationIssueCount
+                ?? previous.ReconciliationIssueCount,
+            RepresentationsStored = current.RepresentationsStored ?? previous.RepresentationsStored,
+            RepresentationsReused = current.RepresentationsReused ?? previous.RepresentationsReused
+        };
     }
 
     private async Task ReportImportProgressAsync(

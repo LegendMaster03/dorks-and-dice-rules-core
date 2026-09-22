@@ -49,7 +49,8 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
                     1,
                     Path.GetFileName(sourceUri.AbsolutePath),
                     CurrentItem: Path.GetFileName(sourceUri.AbsolutePath),
-                    FilesDiscovered: 1),
+                    FilesDiscovered: 1,
+                    FilesProcessed: 0),
                 cancellationToken);
         }
 
@@ -81,7 +82,8 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
                     1,
                     "Inspecting source format and parsing source records",
                     CurrentItem: Path.GetFileName(sourceUri.AbsolutePath),
-                    FilesDiscovered: 1),
+                    FilesDiscovered: 1,
+                    FilesProcessed: 1),
                 cancellationToken);
         }
 
@@ -133,7 +135,8 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
                     0,
                     paths.Length,
                     paths.Length == 1 ? "1 candidate source file" : $"{paths.Length} candidate source files",
-                    FilesDiscovered: paths.Length),
+                    FilesDiscovered: paths.Length,
+                    FilesProcessed: 0),
                 cancellationToken);
         }
         catch (JsonException)
@@ -158,7 +161,8 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
                 total,
                 item,
                 CurrentItem: item,
-                FilesDiscovered: total),
+                FilesDiscovered: total,
+                FilesProcessed: current),
             cancellationToken);
 
         if (total is > 0 && current >= total.Value)
@@ -172,7 +176,8 @@ internal sealed class CurrentUserSourceProgressHttpHandler(
                     0,
                     total,
                     detail,
-                    FilesDiscovered: total),
+                    FilesDiscovered: total,
+                    FilesProcessed: current),
                 cancellationToken);
         }
     }
