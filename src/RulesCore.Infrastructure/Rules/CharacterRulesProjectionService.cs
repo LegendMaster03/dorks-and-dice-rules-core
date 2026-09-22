@@ -142,7 +142,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             context.Procedures.Values.OrderBy(value => value.ProcedureKey, StringComparer.Ordinal).ToArray(),
             context.ChoiceViews.Values.OrderBy(value => value.ChoiceKey, StringComparer.Ordinal).ToArray(),
             context.Prerequisites.Values.OrderBy(value => value.ConceptKey, StringComparer.Ordinal).ToArray(),
-            context.Conflicts.OrderBy(value => value.ConflictKey, StringComparer.Ordinal).ToArray());
+            context.Conflicts.OrderBy(value => value.ConflictKey, StringComparer.Ordinal).ToArray(),
+            context.Equipment.Values.OrderBy(value => value.ItemKey, StringComparer.Ordinal).ToArray());
     }
 
     private static void RegisterMechanicCatalogIdentities(
@@ -361,6 +362,18 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             var scoreKey = $"ability.{ability}.score";
             var modifierKey = $"ability.{ability}.modifier";
             var contributions = context.AbilityContributions.GetValueOrDefault(ability) ?? [];
+            var persistentContributions = contributions
+                .Where(value => !string.Equals(
+                    value.StateKind,
+                    "temporary",
+                    StringComparison.OrdinalIgnoreCase))
+                .ToArray();
+            var temporaryContributions = contributions
+                .Where(value => string.Equals(
+                    value.StateKind,
+                    "temporary",
+                    StringComparison.OrdinalIgnoreCase))
+                .ToArray();
             var hasBase = context.BaseAbilityScores.TryGetValue(ability, out var baseScore)
                 || context.BaseAbilityScores.TryGetValue(baseKey, out baseScore)
                 || context.IntegerFacts.TryGetValue(baseKey, out baseScore);
@@ -385,26 +398,33 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 continue;
             }
 
-            long total = baseScore;
-            var breakdown = new List<CharacterMechanicContributionView>
-            {
-                new(
-                    baseKey,
-                    "Base score",
-                    CharacterEffectOperations.Set,
-                    baseScore,
-                    null,
-                    null,
-                    CharacterProjectionContext.EmptyProvenance())
-            };
-            foreach (var contribution in contributions)
-            {
-                if (contribution.NumericValue is int value)
-                {
-                    total += value;
-                    breakdown.Add(contribution);
-                }
-            }
+            var baseContribution = new CharacterMechanicContributionView(
+                baseKey,
+                "Base score",
+                CharacterEffectOperations.Set,
+                baseScore,
+                null,
+                null,
+                CharacterProjectionContext.EmptyProvenance(),
+                "base");
+            context.Mechanics[baseKey] = new CharacterResolvedMechanicView(
+                baseKey,
+                "ability-score-input",
+                $"{CharacterProjectionJson.Humanize(ability)} Base Score",
+                CharacterResolutionStates.Resolved,
+                baseScore,
+                null,
+                null,
+                [],
+                [],
+                [],
+                [],
+                [baseContribution],
+                CharacterProjectionContext.EmptyProvenance());
+
+            var breakdown = new List<CharacterMechanicContributionView> { baseContribution };
+            breakdown.AddRange(persistentContributions);
+            breakdown.AddRange(temporaryContributions);
 
             if (requiredChoices.Count > 0)
             {
@@ -431,8 +451,14 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 continue;
             }
 
-            var effective = checked((int)total);
+            var ordinaryScore = checked(
+                baseScore + persistentContributions.Sum(value => value.NumericValue ?? 0));
+            var temporaryAdjustment =
+                temporaryContributions.Sum(value => value.NumericValue ?? 0);
+            var effective = checked(ordinaryScore + temporaryAdjustment);
+            var ordinaryModifier = StandardDndCharacterMath.AbilityModifier(ordinaryScore);
             var modifier = StandardDndCharacterMath.AbilityModifier(effective);
+
             context.Mechanics[scoreKey] = new CharacterResolvedMechanicView(
                 scoreKey,
                 "ability-score",
@@ -467,6 +493,105 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     null,
                     null,
                     CharacterProjectionContext.EmptyProvenance())],
+                CharacterProjectionContext.EmptyProvenance());
+
+            if (temporaryContributions.Length == 0)
+            {
+                continue;
+            }
+
+            var ordinaryScoreKey = $"ability.{ability}.ordinary-score";
+            var ordinaryModifierKey = $"ability.{ability}.ordinary-modifier";
+            var temporaryAdjustmentKey = $"ability.{ability}.temporary-adjustment";
+            var temporaryScoreKey = $"ability.{ability}.temporary-score";
+            var temporaryModifierKey = $"ability.{ability}.temporary-modifier";
+            var ordinaryBreakdown = new List<CharacterMechanicContributionView> { baseContribution };
+            ordinaryBreakdown.AddRange(persistentContributions);
+
+            context.Mechanics[ordinaryScoreKey] = new CharacterResolvedMechanicView(
+                ordinaryScoreKey,
+                "ability-score",
+                $"{CharacterProjectionJson.Humanize(ability)} Ordinary Score",
+                CharacterResolutionStates.Resolved,
+                ordinaryScore,
+                null,
+                null,
+                [],
+                [],
+                [],
+                [],
+                ordinaryBreakdown,
+                CharacterProjectionContext.EmptyProvenance());
+            context.Mechanics[ordinaryModifierKey] = new CharacterResolvedMechanicView(
+                ordinaryModifierKey,
+                "ability-modifier",
+                $"{CharacterProjectionJson.Humanize(ability)} Ordinary Modifier",
+                CharacterResolutionStates.Resolved,
+                ordinaryModifier,
+                null,
+                null,
+                [],
+                [],
+                [],
+                [],
+                [new CharacterMechanicContributionView(
+                    ordinaryScoreKey,
+                    "Ordinary ability score",
+                    CharacterEffectOperations.Set,
+                    ordinaryScore,
+                    null,
+                    null,
+                    CharacterProjectionContext.EmptyProvenance())],
+                CharacterProjectionContext.EmptyProvenance());
+            context.Mechanics[temporaryAdjustmentKey] = new CharacterResolvedMechanicView(
+                temporaryAdjustmentKey,
+                "ability-temporary-adjustment",
+                $"{CharacterProjectionJson.Humanize(ability)} Temporary Adjustment",
+                CharacterResolutionStates.Resolved,
+                temporaryAdjustment,
+                null,
+                null,
+                [],
+                [],
+                [],
+                [],
+                temporaryContributions,
+                CharacterProjectionContext.EmptyProvenance());
+            context.Mechanics[temporaryScoreKey] = new CharacterResolvedMechanicView(
+                temporaryScoreKey,
+                "ability-score",
+                $"{CharacterProjectionJson.Humanize(ability)} Temporary Score",
+                CharacterResolutionStates.Resolved,
+                effective,
+                null,
+                null,
+                [],
+                [],
+                [],
+                [],
+                breakdown,
+                CharacterProjectionContext.EmptyProvenance());
+            context.Mechanics[temporaryModifierKey] = new CharacterResolvedMechanicView(
+                temporaryModifierKey,
+                "ability-modifier",
+                $"{CharacterProjectionJson.Humanize(ability)} Temporary Modifier",
+                CharacterResolutionStates.Resolved,
+                modifier,
+                null,
+                null,
+                [],
+                [],
+                [],
+                [],
+                [new CharacterMechanicContributionView(
+                    temporaryScoreKey,
+                    "Temporary ability score",
+                    CharacterEffectOperations.Set,
+                    effective,
+                    null,
+                    null,
+                    CharacterProjectionContext.EmptyProvenance(),
+                    "temporary")],
                 CharacterProjectionContext.EmptyProvenance());
         }
     }
