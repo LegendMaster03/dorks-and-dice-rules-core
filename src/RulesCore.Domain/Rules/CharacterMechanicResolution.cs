@@ -181,6 +181,18 @@ public static class StandardDndCharacterMath
 
         return checked(2 + ((characterLevel - 1) / 4));
     }
+
+    public static int HitPointGain(int hitDieValue, int constitutionModifier)
+    {
+        if (hitDieValue <= 0)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(hitDieValue),
+                "Hit die value must be greater than zero.");
+        }
+
+        return Math.Max(1, checked(hitDieValue + constitutionModifier));
+    }
 }
 
 public static class ThreeXBaseAttackProgressionKinds
