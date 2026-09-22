@@ -352,7 +352,9 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
                 CharacterProjectionJson.String(feature, "kind") ?? "advancement-feature",
                 CharacterResolutionStates.Resolved,
                 rule.Catalog.ConceptKey,
-                rule.Provenance);
+                rule.Provenance,
+                rule.Catalog.EntityType,
+                acquisitionLevel);
         }
     }
 
@@ -965,21 +967,66 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
 internal sealed class ItemCharacterRuleProjectionModule : ICharacterRuleProjectionModule
 {
     public bool Handles(CharacterProjectionRule rule, CharacterProjectionContext context) =>
-        context.EquippedItems.Contains(rule.Catalog.ConceptKey)
+        context.InventoryItems.Contains(rule.Catalog.ConceptKey)
         && string.Equals(rule.Catalog.EntityType, "item", StringComparison.OrdinalIgnoreCase);
 
     public void Project(CharacterProjectionRule rule, CharacterProjectionContext context)
     {
+        var equipped = context.EquippedItems.Contains(rule.Catalog.ConceptKey);
+        var rawItemType = CharacterProjectionJson.String(rule.Document, "type");
+        var itemType = NormalizeItemType(rawItemType);
+        var armorRole = itemType switch
+        {
+            "LA" => "light-armor",
+            "MA" => "medium-armor",
+            "HA" => "heavy-armor",
+            "S" => "shield",
+            _ => null
+        };
+        var attunementRequirement = CharacterProjectionJson.String(rule.Document, "reqAttune")
+            ?? CharacterProjectionJson.String(rule.Document, "requiresAttunement");
+        var requiresAttunement = CharacterProjectionJson.Boolean(
+                rule.Document,
+                "requiresAttunement")
+            ?? (!string.IsNullOrWhiteSpace(attunementRequirement)
+                ? true
+                : null);
+        var propertyKeys = ReadItemPropertyKeys(rule.Document);
+        context.Equipment[$"equipment.{rule.Catalog.ConceptKey}"] =
+            new CharacterEquipmentDefinitionView(
+                $"equipment.{rule.Catalog.ConceptKey}",
+                rule.Catalog.ConceptKey,
+                rule.Catalog.DisplayName,
+                CharacterResolutionStates.Resolved,
+                itemType ?? rawItemType,
+                CharacterProjectionJson.String(rule.Document, "equipmentCategory")
+                    ?? CharacterProjectionJson.String(rule.Document, "category"),
+                armorRole,
+                CharacterProjectionJson.Decimal(rule.Document, "weight"),
+                CharacterProjectionJson.String(rule.Document, "weightUnit") ?? "lb",
+                CharacterProjectionJson.String(rule.Document, "ammoType")
+                    ?? CharacterProjectionJson.String(rule.Document, "ammunitionType")
+                    ?? CharacterProjectionJson.String(rule.Document, "ammunition"),
+                CharacterProjectionJson.String(rule.Document, "capacity"),
+                requiresAttunement,
+                attunementRequirement,
+                propertyKeys,
+                rule.Provenance);
+
+        if (!equipped)
+        {
+            return;
+        }
+
         context.AddFeature(
             $"feature.{rule.Catalog.ConceptKey}",
             rule.Catalog.DisplayName,
             "equipped-item",
             CharacterResolutionStates.Resolved,
             rule.Catalog.ConceptKey,
-            rule.Provenance);
+            rule.Provenance,
+            "item");
 
-        var itemType = NormalizeItemType(
-            CharacterProjectionJson.String(rule.Document, "type"));
         var ac = CharacterProjectionJson.Integer(rule.Document, "ac")
             ?? CharacterProjectionJson.Integer(rule.Document, "armorClass");
         if (ac is int armorClass)
@@ -1057,9 +1104,7 @@ internal sealed class ItemCharacterRuleProjectionModule : ICharacterRuleProjecti
             }
         }
 
-        var attunement = CharacterProjectionJson.String(rule.Document, "reqAttune")
-            ?? CharacterProjectionJson.String(rule.Document, "requiresAttunement");
-        if (!string.IsNullOrWhiteSpace(attunement))
+        if (requiresAttunement == true)
         {
             var factKey = $"item.{rule.Catalog.ConceptKey}.attuned";
             if (!context.BooleanFacts.TryGetValue(factKey, out var attuned) || !attuned)
@@ -1083,8 +1128,9 @@ internal sealed class ItemCharacterRuleProjectionModule : ICharacterRuleProjecti
         return value.Split('|', 2)[0].Trim().ToUpperInvariant();
     }
 
-    private static bool HasItemProperty(JsonElement document, string propertyCode)
+    private static IReadOnlyList<string> ReadItemPropertyKeys(JsonElement document)
     {
+        var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var field in new[] { "property", "propertyAdd" })
         {
             if (!CharacterProjectionJson.TryGetProperty(document, field, out var properties)
@@ -1102,19 +1148,17 @@ internal sealed class ItemCharacterRuleProjectionModule : ICharacterRuleProjecti
                         ?? CharacterProjectionJson.String(property, "abbreviation"),
                     _ => null
                 };
-                if (string.IsNullOrWhiteSpace(raw))
+                if (!string.IsNullOrWhiteSpace(raw))
                 {
-                    continue;
-                }
-                var abbreviation = raw.Split('|', 2)[0].Trim();
-                if (string.Equals(abbreviation, propertyCode, StringComparison.OrdinalIgnoreCase))
-                {
-                    return true;
+                    result.Add(raw.Split('|', 2)[0].Trim());
                 }
             }
         }
-        return false;
+        return result.OrderBy(value => value, StringComparer.OrdinalIgnoreCase).ToArray();
     }
+
+    private static bool HasItemProperty(JsonElement document, string propertyCode) =>
+        ReadItemPropertyKeys(document).Contains(propertyCode, StringComparer.OrdinalIgnoreCase);
 
     private static int? ReadSignedInteger(JsonElement document, string property)
     {
@@ -1548,9 +1592,50 @@ internal sealed class GenericCharacterRuleProjectionModule : ICharacterRuleProje
                 CharacterProjectionJson.Strings(item, "requiredFacts"),
                 CharacterProjectionJson.Strings(item, "requiredChoices"),
                 CharacterProjectionJson.Strings(item, "requiredRolls"),
-                [],
+                ReadProcedureEffects(rule, item),
                 rule.Provenance);
         }
+    }
+
+    private static IReadOnlyList<CharacterRuleEffectView> ReadProcedureEffects(
+        CharacterProjectionRule rule,
+        JsonElement procedure)
+    {
+        if (!CharacterProjectionJson.TryGetProperty(procedure, "effects", out var effects)
+            || effects.ValueKind != JsonValueKind.Array)
+        {
+            return [];
+        }
+
+        var result = new List<CharacterRuleEffectView>();
+        var index = 0;
+        foreach (var item in effects.EnumerateArray())
+        {
+            if (item.ValueKind != JsonValueKind.Object)
+            {
+                index++;
+                continue;
+            }
+            var target = CharacterProjectionJson.String(item, "target");
+            if (string.IsNullOrWhiteSpace(target))
+            {
+                index++;
+                continue;
+            }
+            result.Add(new CharacterRuleEffectView(
+                CharacterProjectionJson.String(item, "key")
+                    ?? $"{rule.Catalog.ConceptKey}.procedure-effect.{index}",
+                CharacterProjectionJson.String(item, "kind") ?? CharacterEffectKinds.Other,
+                CharacterProjectionJson.String(item, "operation") ?? CharacterEffectOperations.Add,
+                target,
+                CharacterProjectionJson.Integer(item, "value"),
+                CharacterProjectionJson.String(item, "textValue"),
+                CharacterProjectionJson.String(item, "condition"),
+                rule.Catalog.ConceptKey,
+                rule.Provenance));
+            index++;
+        }
+        return result;
     }
 
     private static void ProjectPassives(
@@ -1577,16 +1662,18 @@ internal sealed class GenericCharacterRuleProjectionModule : ICharacterRuleProje
                 continue;
             }
             var value = CharacterProjectionJson.Integer(item, "value");
+            var textValue = CharacterProjectionJson.String(item, "textValue");
+            var unit = CharacterProjectionJson.String(item, "unit");
             context.Mechanics[key] = new CharacterResolvedMechanicView(
                 key,
                 "passive",
                 CharacterProjectionJson.String(item, "displayName") ?? CharacterProjectionJson.Humanize(key),
-                value is null
+                value is null && string.IsNullOrWhiteSpace(textValue)
                     ? CharacterResolutionStates.ApplicableUnresolved
                     : CharacterResolutionStates.Resolved,
                 value,
-                null,
-                null,
+                textValue,
+                unit,
                 [],
                 [],
                 [],
