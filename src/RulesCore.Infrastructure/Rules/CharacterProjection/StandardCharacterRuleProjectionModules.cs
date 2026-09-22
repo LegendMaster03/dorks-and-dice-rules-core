@@ -441,15 +441,32 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
 
         var ability = CharacterProjectionJson.NormalizeAbilityKey(raw);
         var casterProgression = CharacterProjectionJson.String(rule.Document, "casterProgression");
-        string? resourceSystemKey = string.Equals(
+        var isPactMagic = string.Equals(
             casterProgression,
             "pact",
-            StringComparison.OrdinalIgnoreCase)
-                ? "pact-magic"
-                : null;
+            StringComparison.OrdinalIgnoreCase);
+        string? resourceSystemKey = isPactMagic ? "pact-magic" : null;
 
-        if (level > 0
-            && TryReadSpellSlotProgression(rule.Document, level, out var slots))
+        if (level > 0 && isPactMagic)
+        {
+            if (TryReadPactMagicProgression(
+                    rule.Document,
+                    level,
+                    out var pactSlotCount,
+                    out var pactSlotLevel))
+            {
+                context.PactMagicProgressions[rule.Catalog.ConceptKey] =
+                    new CharacterPactMagicProgression(
+                        rule.Catalog.ConceptKey,
+                        rule.Catalog.DisplayName,
+                        level,
+                        pactSlotCount,
+                        pactSlotLevel,
+                        rule.Provenance);
+            }
+        }
+        else if (level > 0
+                 && TryReadSpellSlotProgression(rule.Document, level, out var slots))
         {
             context.SpellSlotProgressions[rule.Catalog.ConceptKey] =
                 new CharacterSpellSlotProgression(
@@ -480,6 +497,113 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
                 [],
                 [],
                 rule.Provenance);
+    }
+
+    private static bool TryReadPactMagicProgression(
+        JsonElement document,
+        int classLevel,
+        out int slotCount,
+        out int slotLevel)
+    {
+        slotCount = 0;
+        slotLevel = 0;
+        if (!CharacterProjectionJson.TryGetProperty(document, "classTableGroups", out var groups)
+            || groups.ValueKind != JsonValueKind.Array)
+        {
+            return false;
+        }
+
+        foreach (var group in groups.EnumerateArray())
+        {
+            if (group.ValueKind != JsonValueKind.Object
+                || !CharacterProjectionJson.TryGetProperty(group, "colLabels", out var labels)
+                || labels.ValueKind != JsonValueKind.Array
+                || !CharacterProjectionJson.TryGetProperty(group, "rows", out var rows)
+                || rows.ValueKind != JsonValueKind.Array)
+            {
+                continue;
+            }
+
+            var labelArray = labels.EnumerateArray().ToArray();
+            var slotCountIndex = FindColumnIndex(labelArray, "Spell Slots");
+            var slotLevelIndex = FindColumnIndex(labelArray, "Slot Level");
+            if (slotCountIndex < 0 || slotLevelIndex < 0)
+            {
+                continue;
+            }
+
+            var rowArray = rows.EnumerateArray().ToArray();
+            if (classLevel <= 0 || classLevel > rowArray.Length)
+            {
+                return false;
+            }
+
+            var row = rowArray[classLevel - 1];
+            if (row.ValueKind != JsonValueKind.Array)
+            {
+                return false;
+            }
+
+            var cells = row.EnumerateArray().ToArray();
+            if (slotCountIndex >= cells.Length || slotLevelIndex >= cells.Length
+                || !TryReadTableInteger(cells[slotCountIndex], out slotCount)
+                || slotCount < 0
+                || !TryReadTableInteger(cells[slotLevelIndex], out slotLevel)
+                || slotLevel <= 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private static int FindColumnIndex(
+        IReadOnlyList<JsonElement> labels,
+        string expectedLabel)
+    {
+        for (var index = 0; index < labels.Count; index++)
+        {
+            var label = labels[index].ValueKind == JsonValueKind.String
+                ? labels[index].GetString()
+                : labels[index].ToString();
+            if (!string.IsNullOrWhiteSpace(label)
+                && label.Contains(expectedLabel, StringComparison.OrdinalIgnoreCase))
+            {
+                return index;
+            }
+        }
+
+        return -1;
+    }
+
+    private static bool TryReadTableInteger(JsonElement value, out int result)
+    {
+        result = 0;
+        if (value.ValueKind == JsonValueKind.Number && value.TryGetInt32(out result))
+        {
+            return true;
+        }
+
+        var text = value.ValueKind == JsonValueKind.String
+            ? value.GetString()
+            : value.ToString();
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return false;
+        }
+        if (int.TryParse(text.Trim(), out result))
+        {
+            return true;
+        }
+
+        var digits = new string(
+            text.SkipWhile(character => !char.IsDigit(character))
+                .TakeWhile(char.IsDigit)
+                .ToArray());
+        return digits.Length > 0 && int.TryParse(digits, out result);
     }
 
     private static bool TryReadSpellSlotProgression(
