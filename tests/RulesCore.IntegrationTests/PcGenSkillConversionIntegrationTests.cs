@@ -413,6 +413,12 @@ public sealed class PcGenSkillConversionIntegrationTests
                 Assert.Equal("skill", migrated.EntityType);
                 Assert.Equal("Craft (alchemy)", migrated.Name);
 
+                var persistedEntity = await db.SourceEntities
+                    .AsNoTracking()
+                    .SingleAsync(value => value.Id == source.EntityId);
+                Assert.Equal("skill", persistedEntity.EntityType);
+                Assert.Equal("Craft (alchemy)", persistedEntity.Name);
+
                 var migratedRevisionId = await db.SourceEntityRevisions
                     .Where(value => value.SourceEntityId == source.EntityId)
                     .Select(value => value.Id)

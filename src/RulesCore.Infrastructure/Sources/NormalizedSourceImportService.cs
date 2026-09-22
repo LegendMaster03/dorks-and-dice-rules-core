@@ -556,6 +556,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
             entity.Name,
             record.Name,
             StringComparison.Ordinal);
+        var entityIdentityMigrated = false;
         var reviewedIdentityMigration =
             (!entityTypeMatches || !nameMatches)
             && sourceCodeMatches
@@ -583,6 +584,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
             entity.Name = record.Name;
             entityTypeMatches = true;
             nameMatches = true;
+            entityIdentityMigrated = true;
         }
 
         if (!entityTypeMatches || !nameMatches || !sourceCodeMatches)
@@ -593,7 +595,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
 
         if (JsonEquivalent(entity.NativeIdentityJson, record.NativeIdentityJson))
         {
-            return false;
+            return entityIdentityMigrated;
         }
 
         if (string.Equals(entity.FormatKey, FiveEToolsSourceFormatAdapter.Format, StringComparison.Ordinal))
