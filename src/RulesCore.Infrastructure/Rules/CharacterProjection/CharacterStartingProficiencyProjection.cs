@@ -210,19 +210,22 @@ internal static class CharacterStartingProficiencyProjector
         string sourceShape,
         string kind = "skill-proficiency",
         string optionLabel = "Skill Proficiency",
-        Action<CharacterChoiceOptionView>? onSelected = null)
+        Action<CharacterChoiceOptionView>? onSelected = null,
+        bool forceSourceUnavailable = false)
     {
         var groupKey =
             $"choice-group.{rule.Catalog.ConceptKey}.{pathKey}.{groupIndex}";
         var selectedIdentities = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        var sourceUnavailable = options.Count < count;
+        var sourceUnavailable = forceSourceUnavailable || options.Count < count;
 
         if (sourceUnavailable)
         {
             context.Conflicts.Add(new CharacterProjectionConflictView(
                 $"conflict.{groupKey}.options",
                 "source-unavailable",
-                $"{rule.Catalog.DisplayName} requires {count} {optionLabel.ToLowerInvariant()} choice(s), but only {options.Count} available option(s) can be represented for source choice shape '{sourceShape}'.",
+                forceSourceUnavailable
+                    ? $"{rule.Catalog.DisplayName} has a {optionLabel.ToLowerInvariant()} choice whose source option category can not be fully represented for source choice shape '{sourceShape}'."
+                    : $"{rule.Catalog.DisplayName} requires {count} {optionLabel.ToLowerInvariant()} choice(s), but only {options.Count} available option(s) can be represented for source choice shape '{sourceShape}'.",
                 [],
                 [rule.Catalog.ConceptKey]));
         }
