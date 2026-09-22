@@ -3328,6 +3328,239 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
     }
 
     [Fact]
+    public async Task CharacterProjectionUsesEffectiveLanguageChoicesAndExcludesKnownLanguages()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-languages-{token}";
+        var backgroundConceptKey = $"background.languages-{token}";
+        var commonConceptKey = $"language.common-{token}";
+        var elvishConceptKey = $"language.elvish-{token}";
+        var abyssalConceptKey = $"language.abyssal-{token}";
+        var actor = $"character-languages-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"LNG{token}";
+            var backgroundRaw = JsonSerializer.Serialize(new
+            {
+                name = "Language Background",
+                source = sourceCode,
+                languageProficiencies = new object[]
+                {
+                    new Dictionary<string, object>
+                    {
+                        ["anyStandard"] = 1,
+                        ["common"] = true,
+                        ["anyExotic"] = 1
+                    }
+                }
+            });
+            var commonRaw = JsonSerializer.Serialize(new
+            {
+                name = "Common",
+                source = sourceCode,
+                type = "standard"
+            });
+            var elvishRaw = JsonSerializer.Serialize(new
+            {
+                name = "Elvish",
+                source = sourceCode,
+                type = "standard"
+            });
+            var abyssalRaw = JsonSerializer.Serialize(new
+            {
+                name = "Abyssal",
+                source = sourceCode,
+                type = "exotic"
+            });
+
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Character Language Fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"languages-{token}.json",
+                            Encoding.UTF8.GetBytes("{}"),
+                            $"integration:character-languages:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "background",
+                                "Language Background",
+                                sourceCode,
+                                $"background|Language Background|{sourceCode}",
+                                backgroundRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "language",
+                                "Common",
+                                sourceCode,
+                                $"language|Common|{sourceCode}",
+                                commonRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "language",
+                                "Elvish",
+                                sourceCode,
+                                $"language|Elvish|{sourceCode}",
+                                elvishRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "language",
+                                "Abyssal",
+                                sourceCode,
+                                $"language|Abyssal|{sourceCode}",
+                                abyssalRaw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Character Language Fixture {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2014, 8, 19))
+                        ])));
+            packageId = imported.PackageId;
+            var byName = imported.Entities.ToDictionary(value => value.Name, StringComparer.Ordinal);
+            var definitions = new[]
+            {
+                (Key: backgroundConceptKey, Entity: byName["Language Background"]),
+                (Key: commonConceptKey, Entity: byName["Common"]),
+                (Key: elvishConceptKey, Entity: byName["Elvish"]),
+                (Key: abyssalConceptKey, Entity: byName["Abyssal"])
+            };
+            var concepts = new Dictionary<string, RuleConceptView>(StringComparer.Ordinal);
+            foreach (var definition in definitions)
+            {
+                var created = await globalRules.CreateConceptAsync(
+                    new CreateRuleConceptRequest(
+                        definition.Key,
+                        definition.Entity.EntityType,
+                        definition.Entity.Name),
+                    actor);
+                concepts[definition.Key] = created.Value;
+                await globalRules.BindSourceEntityAsync(
+                    created.Value.Id,
+                    new BindRuleConceptSourceRequest(definition.Entity.EntityId),
+                    actor);
+            }
+
+            var entityIds = definitions.Select(value => value.Entity.EntityId).ToArray();
+            var revisionIds = await db.SourceEntityRevisions
+                .Where(value => entityIds.Contains(value.SourceEntityId))
+                .ToDictionaryAsync(value => value.SourceEntityId, value => value.Id);
+            foreach (var definition in definitions)
+            {
+                await globalRules.SetDecisionAsync(
+                    concepts[definition.Key].Id,
+                    new SetGlobalRuleDecisionRequest(
+                        revisionIds[definition.Entity.EntityId],
+                        "Language proficiency fixture."),
+                    actor);
+            }
+            await globalRules.PublishAsync(actor);
+
+            CharacterRulesProjectionRequest Request(
+                IReadOnlyList<CharacterRuntimeChoiceInput>? choices = null) =>
+                new(
+                    SelectedConcepts:
+                    [
+                        new CharacterSelectedConceptInput(backgroundConceptKey)
+                    ],
+                    Choices: choices);
+
+            var unresolved = await projection.ResolveGlobalAsync(
+                Request(),
+                userId: null);
+
+            Assert.Contains(
+                unresolved.Qualifications,
+                value => value.QualificationKey == "qualification.languages.common"
+                    && value.IsQualified == true
+                    && value.State == CharacterResolutionStates.Resolved);
+
+            var standardChoice = Assert.Single(
+                unresolved.Choices,
+                value => value.Kind == "language-proficiency"
+                    && value.ChoiceKey.Contains(
+                        "anystandard",
+                        StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(CharacterResolutionStates.ChoiceRequired, standardChoice.State);
+            var elvishOption = Assert.Single(standardChoice.Options);
+            Assert.Equal(elvishConceptKey, elvishOption.ConceptKey);
+            Assert.DoesNotContain(
+                standardChoice.Options,
+                value => value.ConceptKey == commonConceptKey);
+
+            var exoticChoice = Assert.Single(
+                unresolved.Choices,
+                value => value.Kind == "language-proficiency"
+                    && value.ChoiceKey.Contains(
+                        "anyexotic",
+                        StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(CharacterResolutionStates.ChoiceRequired, exoticChoice.State);
+            var abyssalOption = Assert.Single(exoticChoice.Options);
+            Assert.Equal(abyssalConceptKey, abyssalOption.ConceptKey);
+
+            var selected = await projection.ResolveGlobalAsync(
+                Request(
+                [
+                    new CharacterRuntimeChoiceInput(
+                        standardChoice.ChoiceKey,
+                        elvishOption.Value),
+                    new CharacterRuntimeChoiceInput(
+                        exoticChoice.ChoiceKey,
+                        abyssalOption.Value)
+                ]),
+                userId: null);
+
+            Assert.Contains(
+                selected.Qualifications,
+                value => value.QualificationKey == "qualification.languages.elvish"
+                    && value.IsQualified == true);
+            Assert.Contains(
+                selected.Qualifications,
+                value => value.QualificationKey == "qualification.languages.abyssal"
+                    && value.IsQualified == true);
+            Assert.Equal(
+                CharacterResolutionStates.Resolved,
+                Assert.Single(
+                    selected.Choices,
+                    value => value.ChoiceKey == standardChoice.ChoiceKey).State);
+            Assert.Equal(
+                CharacterResolutionStates.Resolved,
+                Assert.Single(
+                    selected.Choices,
+                    value => value.ChoiceKey == exoticChoice.ChoiceKey).State);
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
+    [Fact]
     public async Task CharacterProjectionUsesStructuredWeaponArmorAndToolProficiencies()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
