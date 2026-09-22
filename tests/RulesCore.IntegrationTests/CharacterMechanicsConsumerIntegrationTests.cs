@@ -1992,7 +1992,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal("A", action.SpellSchool);
             Assert.Equal("1 action", action.CastingTime);
             Assert.Equal("60 feet", action.Range);
-            Assert.Equal(["V", "S", "M"], action.SpellComponents);
+            Assert.Equal(new[] { "V", "S", "M" }, action.SpellComponents);
             Assert.Equal("a pearl worth 50 gp", action.MaterialComponent);
             Assert.Equal("1 minute", action.Duration);
             Assert.True(action.Ritual);
