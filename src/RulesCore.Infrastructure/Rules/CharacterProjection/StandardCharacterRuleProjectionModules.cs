@@ -165,6 +165,26 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
             return;
         }
 
+        foreach (var (capabilityKey, displayName) in new[]
+                 {
+                     (Key: "save.fortitude", DisplayName: "Fortitude Save"),
+                     (Key: "save.reflex", DisplayName: "Reflex Save"),
+                     (Key: "save.will", DisplayName: "Will Save"),
+                     (Key: "combat.base-attack-bonus", DisplayName: "Base Attack Bonus"),
+                     (Key: "combat.grapple", DisplayName: "Grapple"),
+                     (Key: "defense.ac.touch", DisplayName: "Touch Armor Class"),
+                     (Key: "defense.ac.flat-footed", DisplayName: "Flat-Footed Armor Class"),
+                     (Key: "competency.skill-ranks", DisplayName: "Skill Ranks"),
+                     (Key: "resource.nonlethal-damage", DisplayName: "Nonlethal Damage")
+                 })
+        {
+            context.AddCapability(
+                capabilityKey,
+                displayName,
+                rule.Catalog.ConceptKey,
+                rule.Provenance);
+        }
+
         var skillPoints = CharacterProjectionJson.Integer(character, "skillPointsPerLevel");
         if (skillPoints is int points)
         {
@@ -488,6 +508,11 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
         context.AddCapability(
             "spellcasting",
             "Spellcasting",
+            rule.Catalog.ConceptKey,
+            rule.Provenance);
+        context.AddCapability(
+            isPactMagic ? "spellcasting.pact" : "spellcasting.standard",
+            isPactMagic ? "Pact Magic" : "Standard Spellcasting",
             rule.Catalog.ConceptKey,
             rule.Provenance);
         context.Spellcasting[$"spellcasting.{rule.Catalog.ConceptKey}"] =

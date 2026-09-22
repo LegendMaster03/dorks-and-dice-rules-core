@@ -836,7 +836,14 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 && value.NumericValue.HasValue)
             .ToArray();
 
-        if (armor.Length == 0 && shields.Length == 0 && unclassified.Length == 0)
+        var hasDexterityInput =
+            context.BaseAbilityScores.ContainsKey("dexterity")
+            || context.BaseAbilityScores.ContainsKey("ability.dexterity.base")
+            || context.IntegerFacts.ContainsKey("ability.dexterity.base");
+        if (armor.Length == 0
+            && shields.Length == 0
+            && unclassified.Length == 0
+            && !hasDexterityInput)
         {
             return;
         }
@@ -905,17 +912,6 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             return;
         }
 
-        if (armor.Length == 0)
-        {
-            context.Mechanics["defense.ac.total"] = Unresolved(
-                "defense.ac.total",
-                "defense",
-                "Armor Class",
-                CharacterResolutionStates.MissingCharacterInput,
-                ["defense.ac.unarmored-formula"]);
-            return;
-        }
-
         if (!TryResolvedNumeric(context, "ability.dexterity.modifier", out var dexterityModifier))
         {
             context.Mechanics["defense.ac.total"] = Unresolved(
@@ -924,6 +920,107 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 "Armor Class",
                 CharacterResolutionStates.MissingCharacterInput,
                 ["ability.dexterity.base"]);
+            return;
+        }
+
+        var shieldBonus = shields.SingleOrDefault()?.NumericValue ?? 0;
+        var other = context.IntegerFacts.GetValueOrDefault("defense.ac.other");
+
+        if (armor.Length == 0)
+        {
+            var total = checked(10 + dexterityModifier + shieldBonus + other);
+            var contributions = new List<CharacterMechanicContributionView>
+            {
+                new(
+                    "defense.ac.unarmored-base",
+                    "Unarmored base",
+                    CharacterEffectOperations.Set,
+                    10,
+                    null,
+                    null,
+                    CharacterProjectionContext.EmptyProvenance()),
+                Contribution(
+                    "ability.dexterity.modifier",
+                    "Dexterity contribution",
+                    dexterityModifier)
+            };
+            if (shields.Length == 1)
+            {
+                var shield = shields[0];
+                contributions.Add(new CharacterMechanicContributionView(
+                    shield.EffectKey,
+                    "Shield bonus",
+                    CharacterEffectOperations.Add,
+                    shieldBonus,
+                    shield.TextValue,
+                    shield.SourceConceptKey,
+                    shield.Provenance));
+            }
+            if (other != 0)
+            {
+                contributions.Add(Contribution("defense.ac.other", "Other modifiers", other));
+            }
+
+            context.Mechanics["defense.ac.unarmored-base"] = new CharacterResolvedMechanicView(
+                "defense.ac.unarmored-base",
+                "defense",
+                "Unarmored Armor Class Base",
+                CharacterResolutionStates.Resolved,
+                10,
+                null,
+                null,
+                [],
+                [],
+                [],
+                [],
+                [contributions[0]],
+                CharacterProjectionContext.EmptyProvenance());
+            context.Mechanics["defense.ac.dexterity-contribution"] = new CharacterResolvedMechanicView(
+                "defense.ac.dexterity-contribution",
+                "defense",
+                "Armor Class Dexterity Contribution",
+                CharacterResolutionStates.Resolved,
+                dexterityModifier,
+                null,
+                null,
+                [],
+                [],
+                [],
+                [],
+                [contributions[1]],
+                CharacterProjectionContext.EmptyProvenance());
+            if (shields.Length == 1)
+            {
+                context.Mechanics["defense.ac.shield-bonus"] = new CharacterResolvedMechanicView(
+                    "defense.ac.shield-bonus",
+                    "defense",
+                    "Shield Bonus",
+                    CharacterResolutionStates.Resolved,
+                    shieldBonus,
+                    null,
+                    null,
+                    [],
+                    [],
+                    [],
+                    [],
+                    [contributions.Single(value => value.Label == "Shield bonus")],
+                    shields[0].Provenance);
+            }
+            context.Mechanics["defense.ac.total"] = new CharacterResolvedMechanicView(
+                "defense.ac.total",
+                "defense",
+                "Armor Class",
+                CharacterResolutionStates.Resolved,
+                total,
+                null,
+                null,
+                [],
+                [],
+                [],
+                [],
+                contributions,
+                shields.SingleOrDefault()?.Provenance
+                    ?? CharacterProjectionContext.EmptyProvenance());
             return;
         }
 
@@ -947,11 +1044,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             return;
         }
 
-        var shieldBonus = shields.SingleOrDefault()?.NumericValue ?? 0;
-        var other = context.IntegerFacts.GetValueOrDefault("defense.ac.other");
-        var total = checked(armorBase + dexterityContribution + shieldBonus + other);
-
-        var contributions = new List<CharacterMechanicContributionView>
+        var armoredTotal = checked(armorBase + dexterityContribution + shieldBonus + other);
+        var armoredContributions = new List<CharacterMechanicContributionView>
         {
             new(
                 armorEffect.EffectKey,
@@ -969,7 +1063,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         if (shields.Length == 1)
         {
             var shield = shields[0];
-            contributions.Add(new CharacterMechanicContributionView(
+            armoredContributions.Add(new CharacterMechanicContributionView(
                 shield.EffectKey,
                 "Shield bonus",
                 CharacterEffectOperations.Add,
@@ -980,7 +1074,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         }
         if (other != 0)
         {
-            contributions.Add(Contribution("defense.ac.other", "Other modifiers", other));
+            armoredContributions.Add(Contribution("defense.ac.other", "Other modifiers", other));
         }
 
         context.Mechanics["defense.ac.armor-base"] = new CharacterResolvedMechanicView(
@@ -995,7 +1089,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             [],
             [],
             [],
-            [contributions[0]],
+            [armoredContributions[0]],
             armorEffect.Provenance);
         context.Mechanics["defense.ac.dexterity-contribution"] = new CharacterResolvedMechanicView(
             "defense.ac.dexterity-contribution",
@@ -1009,7 +1103,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             [],
             [],
             [],
-            [contributions[1]],
+            [armoredContributions[1]],
             CharacterProjectionContext.EmptyProvenance());
         if (shields.Length == 1)
         {
@@ -1025,7 +1119,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 [],
                 [],
                 [],
-                [contributions.Single(value => value.Label == "Shield bonus")],
+                [armoredContributions.Single(value => value.Label == "Shield bonus")],
                 shields[0].Provenance);
         }
         context.Mechanics["defense.ac.total"] = new CharacterResolvedMechanicView(
@@ -1033,14 +1127,14 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             "defense",
             "Armor Class",
             CharacterResolutionStates.Resolved,
-            total,
+            armoredTotal,
             null,
             null,
             [],
             [],
             [],
             [],
-            contributions,
+            armoredContributions,
             armorEffect.Provenance);
     }
 
@@ -1146,7 +1240,294 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 CharacterProjectionContext.EmptyProvenance());
         }
 
+        ResolveThreeXArmorClasses(context);
         ResolveThreeXGrapple(context);
+    }
+
+    private static void ResolveThreeXArmorClasses(CharacterProjectionContext context)
+    {
+        var resolvesTouch = context.Capabilities.Contains("defense.ac.touch");
+        var resolvesFlatFooted = context.Capabilities.Contains("defense.ac.flat-footed");
+        if (!resolvesTouch && !resolvesFlatFooted)
+        {
+            return;
+        }
+
+        if (!TryResolvedNumeric(context, "ability.dexterity.modifier", out var dexterityModifier))
+        {
+            if (resolvesTouch)
+            {
+                context.Mechanics["defense.ac.touch"] = Unresolved(
+                    "defense.ac.touch",
+                    "defense",
+                    "Touch Armor Class",
+                    CharacterResolutionStates.MissingCharacterInput,
+                    ["ability.dexterity.base"]);
+            }
+            if (resolvesFlatFooted)
+            {
+                context.Mechanics["defense.ac.flat-footed"] = Unresolved(
+                    "defense.ac.flat-footed",
+                    "defense",
+                    "Flat-Footed Armor Class",
+                    CharacterResolutionStates.MissingCharacterInput,
+                    ["ability.dexterity.base"]);
+            }
+            return;
+        }
+
+        int sizeModifier;
+        if (context.IntegerFacts.TryGetValue("defense.ac.size-modifier", out var explicitSizeModifier))
+        {
+            sizeModifier = explicitSizeModifier;
+        }
+        else if (!TryThreeXArmorClassSizeModifier(context.SizeCategory, out sizeModifier))
+        {
+            if (resolvesTouch)
+            {
+                context.Mechanics["defense.ac.touch"] = Unresolved(
+                    "defense.ac.touch",
+                    "defense",
+                    "Touch Armor Class",
+                    CharacterResolutionStates.MissingCharacterInput,
+                    ["defense.ac.size-modifier"]);
+            }
+            if (resolvesFlatFooted)
+            {
+                context.Mechanics["defense.ac.flat-footed"] = Unresolved(
+                    "defense.ac.flat-footed",
+                    "defense",
+                    "Flat-Footed Armor Class",
+                    CharacterResolutionStates.MissingCharacterInput,
+                    ["defense.ac.size-modifier"]);
+            }
+            if (!context.UsesStandardProficiency)
+            {
+                context.Mechanics["defense.ac.total"] = Unresolved(
+                    "defense.ac.total",
+                    "defense",
+                    "Armor Class",
+                    CharacterResolutionStates.MissingCharacterInput,
+                    ["defense.ac.size-modifier"]);
+            }
+            return;
+        }
+
+        var dexterityContribution =
+            context.IntegerFacts.TryGetValue(
+                "defense.ac.dexterity-contribution",
+                out var explicitDexterityContribution)
+                ? explicitDexterityContribution
+                : dexterityModifier;
+        var armorBonus = context.IntegerFacts.GetValueOrDefault("defense.ac.armor-bonus");
+        var shieldBonus = context.IntegerFacts.TryGetValue(
+                "defense.ac.shield-bonus",
+                out var explicitShieldBonus)
+            ? explicitShieldBonus
+            : context.Effects
+                .Where(value =>
+                    string.Equals(
+                        value.TargetKey,
+                        "defense.ac.shield-bonus",
+                        StringComparison.OrdinalIgnoreCase)
+                    && value.NumericValue.HasValue)
+                .Select(value => value.NumericValue!.Value)
+                .SingleOrDefault();
+        var naturalArmorBonus =
+            context.IntegerFacts.GetValueOrDefault("defense.ac.natural-armor-bonus");
+        var deflectionBonus =
+            context.IntegerFacts.GetValueOrDefault("defense.ac.deflection-bonus");
+        var dodgeContribution =
+            context.IntegerFacts.GetValueOrDefault("defense.ac.dodge-contribution");
+
+        if (!context.UsesStandardProficiency)
+        {
+            var other = context.IntegerFacts.GetValueOrDefault("defense.ac.other");
+            context.Mechanics["defense.ac.total"] = new CharacterResolvedMechanicView(
+                "defense.ac.total",
+                "defense",
+                "Armor Class",
+                CharacterResolutionStates.Resolved,
+                checked(
+                    10
+                    + armorBonus
+                    + shieldBonus
+                    + dexterityContribution
+                    + sizeModifier
+                    + naturalArmorBonus
+                    + deflectionBonus
+                    + dodgeContribution
+                    + other),
+                null,
+                null,
+                [],
+                [],
+                [],
+                [],
+                [
+                    Contribution("defense.ac.base", "Base", 10),
+                    Contribution("defense.ac.armor-bonus", "Armor bonus", armorBonus),
+                    Contribution("defense.ac.shield-bonus", "Shield bonus", shieldBonus),
+                    Contribution(
+                        "defense.ac.dexterity-contribution",
+                        "Dexterity contribution",
+                        dexterityContribution),
+                    Contribution("defense.ac.size-modifier", "Size modifier", sizeModifier),
+                    Contribution(
+                        "defense.ac.natural-armor-bonus",
+                        "Natural armor bonus",
+                        naturalArmorBonus),
+                    Contribution(
+                        "defense.ac.deflection-bonus",
+                        "Deflection bonus",
+                        deflectionBonus),
+                    Contribution(
+                        "defense.ac.dodge-contribution",
+                        "Dodge contribution",
+                        dodgeContribution),
+                    Contribution("defense.ac.other", "Other modifiers", other)
+                ],
+                CharacterProjectionContext.EmptyProvenance());
+        }
+
+        if (resolvesTouch)
+        {
+            var touchOther =
+                context.IntegerFacts.GetValueOrDefault("defense.ac.touch.other");
+            context.Mechanics["defense.ac.touch"] = new CharacterResolvedMechanicView(
+                "defense.ac.touch",
+                "defense",
+                "Touch Armor Class",
+                CharacterResolutionStates.Resolved,
+                checked(
+                    10
+                    + dexterityContribution
+                    + sizeModifier
+                    + deflectionBonus
+                    + dodgeContribution
+                    + touchOther),
+                null,
+                null,
+                [],
+                [],
+                [],
+                [],
+                [
+                    Contribution("defense.ac.touch.base", "Base", 10),
+                    Contribution(
+                        "defense.ac.dexterity-contribution",
+                        "Dexterity contribution",
+                        dexterityContribution),
+                    Contribution("defense.ac.size-modifier", "Size modifier", sizeModifier),
+                    Contribution(
+                        "defense.ac.deflection-bonus",
+                        "Deflection bonus",
+                        deflectionBonus),
+                    Contribution(
+                        "defense.ac.dodge-contribution",
+                        "Dodge contribution",
+                        dodgeContribution),
+                    Contribution(
+                        "defense.ac.touch.other",
+                        "Other applicable modifiers",
+                        touchOther)
+                ],
+                CharacterProjectionContext.EmptyProvenance());
+        }
+
+        if (resolvesFlatFooted)
+        {
+            var flatFootedDexterityContribution =
+                context.IntegerFacts.TryGetValue(
+                    "defense.ac.flat-footed.dexterity-contribution",
+                    out var explicitFlatFootedDexterityContribution)
+                    ? explicitFlatFootedDexterityContribution
+                    : Math.Min(dexterityContribution, 0);
+            var flatFootedDodgeContribution =
+                context.IntegerFacts.GetValueOrDefault(
+                    "defense.ac.flat-footed.dodge-contribution");
+            var flatFootedOther =
+                context.IntegerFacts.GetValueOrDefault(
+                    "defense.ac.flat-footed.other");
+            context.Mechanics["defense.ac.flat-footed"] =
+                new CharacterResolvedMechanicView(
+                    "defense.ac.flat-footed",
+                    "defense",
+                    "Flat-Footed Armor Class",
+                    CharacterResolutionStates.Resolved,
+                    checked(
+                        10
+                        + armorBonus
+                        + shieldBonus
+                        + flatFootedDexterityContribution
+                        + sizeModifier
+                        + naturalArmorBonus
+                        + deflectionBonus
+                        + flatFootedDodgeContribution
+                        + flatFootedOther),
+                    null,
+                    null,
+                    [],
+                    [],
+                    [],
+                    [],
+                    [
+                        Contribution("defense.ac.flat-footed.base", "Base", 10),
+                        Contribution(
+                            "defense.ac.armor-bonus",
+                            "Armor bonus",
+                            armorBonus),
+                        Contribution(
+                            "defense.ac.shield-bonus",
+                            "Shield bonus",
+                            shieldBonus),
+                        Contribution(
+                            "defense.ac.flat-footed.dexterity-contribution",
+                            "Flat-footed Dexterity contribution",
+                            flatFootedDexterityContribution),
+                        Contribution(
+                            "defense.ac.size-modifier",
+                            "Size modifier",
+                            sizeModifier),
+                        Contribution(
+                            "defense.ac.natural-armor-bonus",
+                            "Natural armor bonus",
+                            naturalArmorBonus),
+                        Contribution(
+                            "defense.ac.deflection-bonus",
+                            "Deflection bonus",
+                            deflectionBonus),
+                        Contribution(
+                            "defense.ac.flat-footed.dodge-contribution",
+                            "Flat-footed dodge contribution",
+                            flatFootedDodgeContribution),
+                        Contribution(
+                            "defense.ac.flat-footed.other",
+                            "Other applicable modifiers",
+                            flatFootedOther)
+                    ],
+                    CharacterProjectionContext.EmptyProvenance());
+        }
+    }
+
+    private static bool TryThreeXArmorClassSizeModifier(
+        string? sizeCategory,
+        out int modifier)
+    {
+        modifier = sizeCategory?.Trim().ToUpperInvariant() switch
+        {
+            "F" or "FINE" => 8,
+            "D" or "DIMINUTIVE" => 4,
+            "T" or "TINY" => 2,
+            "S" or "SMALL" => 1,
+            "M" or "MEDIUM" => 0,
+            "L" or "LARGE" => -1,
+            "H" or "HUGE" => -2,
+            "G" or "GARGANTUAN" => -4,
+            "C" or "COLOSSAL" => -8,
+            _ => int.MinValue
+        };
+        return modifier != int.MinValue;
     }
 
     private static void ResolveThreeXGrapple(CharacterProjectionContext context)
@@ -1782,6 +2163,13 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
         ResolvePactMagicResources(context);
 
+        if (!context.Capabilities.Contains("spellcasting.standard"))
+        {
+            context.Spellcasting.Remove("spellcasting.resource-choice");
+            context.Resources.Remove("resource.spellcasting");
+            return;
+        }
+
         context.Spellcasting.TryGetValue(
             "spellcasting.resource-choice",
             out var resourceChoice);
@@ -1804,27 +2192,185 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         }
 
         var selectedSystem = resourceChoice?.ResourceSystemKey;
+        var progressions = context.SpellSlotProgressions.Values
+            .OrderBy(value => value.ConceptKey, StringComparer.Ordinal)
+            .ToArray();
+
+        if (progressions.Length == 0)
+        {
+            var missingResourceKey =
+                string.Equals(
+                    selectedSystem,
+                    "spell-points",
+                    StringComparison.OrdinalIgnoreCase)
+                    ? "resource.spell-points"
+                    : "resource.spell-slots";
+            context.Resources[missingResourceKey] = new CharacterResourceView(
+                missingResourceKey,
+                string.Equals(
+                    selectedSystem,
+                    "spell-points",
+                    StringComparison.OrdinalIgnoreCase)
+                    ? "Spell Points"
+                    : "Spell Slots",
+                CharacterResolutionStates.ApplicableUnresolved,
+                null,
+                null,
+                null,
+                [],
+                resourceChoice?.Provenance
+                    ?? CharacterProjectionContext.EmptyProvenance());
+            return;
+        }
+
         if (string.Equals(selectedSystem, "spell-points", StringComparison.OrdinalIgnoreCase))
         {
+            if (!TryResolveSpellPointCasterLevel(
+                    progressions,
+                    out var spellPointCasterLevel,
+                    out var spellPointCasterLevelContributions,
+                    out var spellPointFailureReason)
+                || !CharacterSpellPointRules.TryGetProgression(
+                    spellPointCasterLevel,
+                    out var spellPointProgression))
+            {
+                context.Resources["resource.spell-points"] = new CharacterResourceView(
+                    "resource.spell-points",
+                    "Spell Points",
+                    CharacterResolutionStates.ApplicableUnresolved,
+                    null,
+                    null,
+                    null,
+                    [],
+                    resourceChoice?.Provenance
+                        ?? CharacterProjectionContext.EmptyProvenance());
+                context.Conflicts.Add(new CharacterProjectionConflictView(
+                    "conflict.spellcasting.spell-points",
+                    "spell-point-progression",
+                    spellPointFailureReason
+                        ?? $"Effective spell-point caster level {spellPointCasterLevel} is outside the supported official progression.",
+                    ["resource.spell-points"],
+                    progressions.Select(value => value.ConceptKey).ToArray()));
+                SetSpellcastingResourceSystem(
+                    context,
+                    "spell-points",
+                    CharacterResolutionStates.ApplicableUnresolved);
+                return;
+            }
+
+            var pointContributions = progressions
+                .Select(progression => new CharacterMechanicContributionView(
+                    $"{progression.ConceptKey}.spell-point-caster-level",
+                    $"{progression.DisplayName} spell-point caster level",
+                    CharacterEffectOperations.Add,
+                    spellPointCasterLevelContributions.GetValueOrDefault(
+                        progression.ConceptKey),
+                    progression.CasterProgression,
+                    progression.ConceptKey,
+                    progression.Provenance))
+                .Append(new CharacterMechanicContributionView(
+                    $"spellcasting.spell-points.level-{spellPointProgression.CasterLevel}",
+                    $"Spell-point table level {spellPointProgression.CasterLevel}",
+                    CharacterEffectOperations.Set,
+                    spellPointProgression.MaximumPoints,
+                    $"maximum-slot-level:{spellPointProgression.MaximumSlotLevel}",
+                    null,
+                    CharacterProjectionContext.EmptyProvenance()))
+                .ToArray();
+
             context.CurrentResources.TryGetValue(
                 "resource.spell-points",
                 out var currentPoints);
             context.Resources["resource.spell-points"] = new CharacterResourceView(
                 "resource.spell-points",
                 "Spell Points",
-                CharacterResolutionStates.ApplicableUnresolved,
+                CharacterResolutionStates.Resolved,
                 context.CurrentResources.ContainsKey("resource.spell-points")
                     ? currentPoints
                     : null,
+                spellPointProgression.MaximumPoints,
                 null,
-                null,
-                [],
+                pointContributions,
                 resourceChoice?.Provenance
                     ?? CharacterProjectionContext.EmptyProvenance());
+
+            context.Mechanics["spellcasting.spell-points.maximum-slot-level"] =
+                new CharacterResolvedMechanicView(
+                    "spellcasting.spell-points.maximum-slot-level",
+                    "spellcasting",
+                    "Maximum Spell-Point Slot Level",
+                    CharacterResolutionStates.Resolved,
+                    spellPointProgression.MaximumSlotLevel,
+                    null,
+                    "spell-level",
+                    [],
+                    [],
+                    [],
+                    [],
+                    [
+                        Contribution(
+                            $"spellcasting.spell-points.level-{spellPointProgression.CasterLevel}",
+                            $"Spell-point table level {spellPointProgression.CasterLevel}",
+                            spellPointProgression.MaximumSlotLevel)
+                    ],
+                    resourceChoice?.Provenance
+                        ?? CharacterProjectionContext.EmptyProvenance());
+
+            for (var spellLevel = 1;
+                 spellLevel <= spellPointProgression.MaximumSlotLevel;
+                 spellLevel++)
+            {
+                if (!CharacterSpellPointRules.TryGetSlotCost(
+                        spellLevel,
+                        out var pointCost))
+                {
+                    continue;
+                }
+
+                var costKey =
+                    $"spellcasting.spell-points.slot-cost.level-{spellLevel}";
+                context.Mechanics[costKey] = new CharacterResolvedMechanicView(
+                    costKey,
+                    "spellcasting",
+                    $"{Ordinal(spellLevel)}-Level Slot Spell-Point Cost",
+                    CharacterResolutionStates.Resolved,
+                    pointCost,
+                    null,
+                    "spell-points",
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    resourceChoice?.Provenance
+                        ?? CharacterProjectionContext.EmptyProvenance());
+
+                if (CharacterSpellPointRules.HasPerLongRestCreationLimit(spellLevel))
+                {
+                    var limitKey =
+                        $"spellcasting.spell-points.slot-creation-limit.level-{spellLevel}";
+                    context.Mechanics[limitKey] = new CharacterResolvedMechanicView(
+                        limitKey,
+                        "spellcasting",
+                        $"{Ordinal(spellLevel)}-Level Spell-Point Slot Creation Limit",
+                        CharacterResolutionStates.Resolved,
+                        CharacterSpellPointRules.HighLevelSlotCreationLimit,
+                        "per-long-rest",
+                        "slot",
+                        [],
+                        [],
+                        [],
+                        [],
+                        [],
+                        resourceChoice?.Provenance
+                            ?? CharacterProjectionContext.EmptyProvenance());
+                }
+            }
+
             SetSpellcastingResourceSystem(
                 context,
                 "spell-points",
-                CharacterResolutionStates.ApplicableUnresolved);
+                CharacterResolutionStates.Resolved);
             return;
         }
 
@@ -1841,27 +2387,6 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 [],
                 resourceChoice?.Provenance
                     ?? CharacterProjectionContext.EmptyProvenance());
-            return;
-        }
-
-        var progressions = context.SpellSlotProgressions.Values
-            .OrderBy(value => value.ConceptKey, StringComparer.Ordinal)
-            .ToArray();
-        if (progressions.Length == 0)
-        {
-            if (selectedSystem is not null)
-            {
-                context.Resources["resource.spell-slots"] = new CharacterResourceView(
-                    "resource.spell-slots",
-                    "Spell Slots",
-                    CharacterResolutionStates.ApplicableUnresolved,
-                    null,
-                    null,
-                    null,
-                    [],
-                    resourceChoice?.Provenance
-                        ?? CharacterProjectionContext.EmptyProvenance());
-            }
             return;
         }
 
@@ -1974,6 +2499,37 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             context,
             "spell-slots",
             CharacterResolutionStates.Resolved);
+    }
+
+    private static bool TryResolveSpellPointCasterLevel(
+        IReadOnlyList<CharacterSpellSlotProgression> progressions,
+        out int effectiveCasterLevel,
+        out IReadOnlyDictionary<string, int> casterLevelContributions,
+        out string? failureReason)
+    {
+        effectiveCasterLevel = 0;
+        failureReason = null;
+        var contributions = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var progression in progressions)
+        {
+            if (!TryGetEffectiveCasterLevel(
+                    progression.ClassLevel,
+                    progression.CasterProgression,
+                    out var contribution))
+            {
+                casterLevelContributions = contributions;
+                failureReason =
+                    $"Caster progression '{progression.CasterProgression ?? "unknown"}' from '{progression.DisplayName}' does not have a normalized spell-point weighting.";
+                return false;
+            }
+
+            contributions[progression.ConceptKey] = contribution;
+            effectiveCasterLevel = checked(effectiveCasterLevel + contribution);
+        }
+
+        casterLevelContributions = contributions;
+        return true;
     }
 
     private static bool TryResolveMulticlassSpellSlots(

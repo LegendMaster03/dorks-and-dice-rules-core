@@ -1229,7 +1229,13 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     ],
                     IntegerFacts: new Dictionary<string, int>
                     {
-                        ["combat.grapple.size-modifier"] = 0
+                        ["combat.grapple.size-modifier"] = 0,
+                        ["defense.ac.size-modifier"] = 0,
+                        ["defense.ac.armor-bonus"] = 4,
+                        ["defense.ac.shield-bonus"] = 2,
+                        ["defense.ac.natural-armor-bonus"] = 1,
+                        ["defense.ac.deflection-bonus"] = 1,
+                        ["defense.ac.dodge-contribution"] = 1
                     }),
                 userId: null);
 
@@ -1248,6 +1254,21 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal(5, Assert.Single(
                 result.Mechanics,
                 value => value.MechanicKey == "combat.grapple").NumericValue);
+            Assert.Equal(22, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "defense.ac.total").NumericValue);
+            Assert.Equal(15, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "defense.ac.touch").NumericValue);
+            Assert.Equal(18, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "defense.ac.flat-footed").NumericValue);
+            Assert.Contains(
+                result.Capabilities,
+                value => value.CapabilityKey == "defense.ac.touch");
+            Assert.Contains(
+                result.Capabilities,
+                value => value.CapabilityKey == "defense.ac.flat-footed");
             Assert.Equal(4, Assert.Single(
                 result.Mechanics,
                 value => value.MechanicKey == $"advancement.{conceptKey}.skill-points-per-level").NumericValue);
@@ -1861,6 +1882,22 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Empty(
                 result.Conflicts.Where(value =>
                     value.ConflictKey.StartsWith("conflict.defense.ac.", StringComparison.Ordinal)));
+
+            var unarmored = await projection.ResolveGlobalAsync(
+                new CharacterRulesProjectionRequest(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 10,
+                        ["dexterity"] = 18,
+                        ["constitution"] = 10,
+                        ["intelligence"] = 10,
+                        ["wisdom"] = 10,
+                        ["charisma"] = 10
+                    }),
+                userId: null);
+            Assert.Equal(14, Assert.Single(
+                unarmored.Mechanics,
+                value => value.MechanicKey == "defense.ac.total").NumericValue);
         }
         finally
         {
@@ -2268,8 +2305,16 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             var spellPoints = Assert.Single(
                 points.Resources,
                 value => value.ResourceKey == "resource.spell-points");
-            Assert.Equal(CharacterResolutionStates.ApplicableUnresolved, spellPoints.State);
-            Assert.Null(spellPoints.MaximumValue);
+            Assert.Equal(CharacterResolutionStates.Resolved, spellPoints.State);
+            Assert.Equal(27, spellPoints.MaximumValue);
+            Assert.Equal(3, Assert.Single(
+                points.Mechanics,
+                value => value.MechanicKey ==
+                    "spellcasting.spell-points.maximum-slot-level").NumericValue);
+            Assert.Equal(5, Assert.Single(
+                points.Mechanics,
+                value => value.MechanicKey ==
+                    "spellcasting.spell-points.slot-cost.level-3").NumericValue);
             Assert.DoesNotContain(
                 points.Resources,
                 value => value.ResourceKey.StartsWith("resource.spell-slot.", StringComparison.Ordinal));
@@ -2490,11 +2535,17 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 value => value.SpellcastingKey == $"spellcasting.{pactConceptKey}");
             Assert.Equal(CharacterResolutionStates.Resolved, pactSpellcasting.State);
             Assert.Equal("pact-magic", pactSpellcasting.ResourceSystemKey);
+            Assert.Contains(
+                result.Capabilities,
+                value => value.CapabilityKey == "spellcasting.pact");
 
             var standardSpellcasting = Assert.Single(
                 result.Spellcasting,
                 value => value.SpellcastingKey == $"spellcasting.{fullConceptKey}");
             Assert.Equal("spell-slots", standardSpellcasting.ResourceSystemKey);
+            Assert.Contains(
+                result.Capabilities,
+                value => value.CapabilityKey == "spellcasting.standard");
         }
         finally
         {
