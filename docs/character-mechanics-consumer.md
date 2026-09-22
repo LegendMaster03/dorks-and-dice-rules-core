@@ -350,11 +350,13 @@ Weapon proficiency is derived when a selected class or other normalized rule gra
 
 ## Character projection spellcasting resources
 
-For a single selected caster whose effective class document exposes `rowsSpellProgression`, the bulk Character projection reads the row for the supplied class level and returns one `resource.spell-slot.<level>` resource for every nonzero slot maximum. The table remains source-owned; Rules Core selects the row and carries the class rule provenance into each resource.
+For a single selected standard caster whose effective class document exposes `rowsSpellProgression`, the bulk Character projection reads the row for the supplied class level and returns one `resource.spell-slot.<level>` resource for every nonzero slot maximum. The table remains source-owned; Rules Core selects the row and carries the class rule provenance into each resource.
 
-The published Dorks & Dice resource-choice house rule is recognized from its actual `casterChoosesResourceSystem` and `availableResourceSystems` fields. `spellcasting.resource-system` accepts the normalized choices `spell-slots` or `spell-points` (human forms such as `spell slots` are normalized). Until that choice is supplied, spellcasting resources are `choice-required`. A spell-points choice remains explicitly unresolved until a point-progression/conversion rule is normalized; Rules Core does not derive a point pool from slot counts.
+A class with `casterProgression: "pact"` is projected through its Pact Magic table instead of `rowsSpellProgression`. Rules Core locates the source `Spell Slots` and `Slot Level` columns, reads the supplied class-level row, and returns `resource.pact-slot.<class-concept-key>.level-<slot-level>`. Pact slots remain a `pact-magic` resource system and coexist with normal spell slots; selecting a Pact Magic class alongside a standard caster does not create a false multiclass-slot conflict.
 
-If more than one selected class contributes a standard spell-slot table, Rules Core reports the multiclass combination as unresolved instead of adding class-table slots together. Pact-magic and other nonstandard progressions are likewise preserved separately until their exact resource rules are normalized.
+The published Dorks & Dice resource-choice house rule is recognized from its actual `casterChoosesResourceSystem` and `availableResourceSystems` fields. `spellcasting.resource-system` accepts the normalized choices `spell-slots` or `spell-points` (human forms such as `spell slots` are normalized). Until that choice is supplied, standard spellcasting resources are `choice-required`. A spell-points choice remains explicitly unresolved until a point-progression/conversion rule is normalized; Rules Core does not derive a point pool from slot counts or rewrite source-defined Pact Magic into spell points.
+
+If more than one selected class contributes a standard spell-slot table, Rules Core reports the multiclass combination as unresolved instead of adding class-table slots together. Other nonstandard progressions remain explicit until their exact resource rules are normalized.
 
 ## Character projection maximum HP
 
