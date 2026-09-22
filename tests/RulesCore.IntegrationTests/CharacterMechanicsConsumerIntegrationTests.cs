@@ -1573,14 +1573,22 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Contains(
                 result.Capabilities,
                 value => value.CapabilityKey == "spellcasting");
-            Assert.Contains(
+            var arcaneStudy = Assert.Single(
                 result.Features,
                 value => value.DisplayName == "Arcane Study"
                     && value.State == CharacterResolutionStates.Resolved);
-            Assert.Contains(
+            Assert.Equal("class", arcaneStudy.GrantingSourceKind);
+            Assert.Equal(1, arcaneStudy.AcquisitionLevel);
+            Assert.Equal(arcaneStudy.FeatureKey, arcaneStudy.OccurrenceKey);
+            Assert.Equal(conceptKey, arcaneStudy.SourceConceptKey);
+
+            var focusedStudy = Assert.Single(
                 result.Features,
                 value => value.DisplayName == "Focused Study"
                     && value.State == CharacterResolutionStates.Resolved);
+            Assert.Equal("class", focusedStudy.GrantingSourceKind);
+            Assert.Equal(3, focusedStudy.AcquisitionLevel);
+            Assert.Equal(conceptKey, focusedStudy.SourceConceptKey);
             Assert.DoesNotContain(
                 result.Features,
                 value => value.DisplayName == "Arcane Mastery");
