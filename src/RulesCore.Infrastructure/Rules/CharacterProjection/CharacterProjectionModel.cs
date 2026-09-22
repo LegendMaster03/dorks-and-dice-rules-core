@@ -30,6 +30,14 @@ internal sealed record CharacterSpellSlotProgression(
     IReadOnlyList<int> SlotsBySpellLevel,
     CharacterMechanicProvenanceView Provenance);
 
+internal sealed record CharacterPactMagicProgression(
+    string ConceptKey,
+    string DisplayName,
+    int ClassLevel,
+    int SlotCount,
+    int SlotLevel,
+    CharacterMechanicProvenanceView Provenance);
+
 internal sealed record CharacterHitDieProfile(
     string ConceptKey,
     string DisplayName,
@@ -146,6 +154,7 @@ internal sealed class CharacterProjectionContext
         new(Keys);
     public Dictionary<string, CharacterWeaponAttackProfile> WeaponAttacks { get; } = new(Keys);
     public Dictionary<string, CharacterSpellSlotProgression> SpellSlotProgressions { get; } = new(Keys);
+    public Dictionary<string, CharacterPactMagicProgression> PactMagicProgressions { get; } = new(Keys);
     public Dictionary<string, CharacterHitDieProfile> HitDice { get; } = new(Keys);
 
     public Dictionary<string, CharacterResolvedMechanicView> Mechanics { get; } = new(Keys);
