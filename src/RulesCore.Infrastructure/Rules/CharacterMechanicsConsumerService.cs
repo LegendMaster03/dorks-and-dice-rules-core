@@ -1269,7 +1269,8 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 canEvaluate,
                 inputs,
                 requirements,
-                ReadString(competency, "gameEdition"));
+                ReadString(competency, "gameEdition"),
+                SourceAttributions: sourceAttributions);
         }
         catch (JsonException)
         {

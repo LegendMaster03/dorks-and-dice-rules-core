@@ -218,6 +218,15 @@ public sealed class CharacterSupportConsumerIntegrationTests
                         GameEdition: "5e"));
                 privatePackageId = importedPrivate.PackageId;
                 var privateEntity = Assert.Single(importedPrivate.Entities);
+                db.UserSourceGrants.Add(new UserSourceGrant
+                {
+                    Id = Guid.NewGuid(),
+                    SourcePackageId = privatePackageId,
+                    UserId = actor,
+                    GrantedAt = DateTimeOffset.UtcNow
+                });
+                await db.SaveChangesAsync();
+
                 var acceptedPrivate = await normalization.AcceptAsync(
                     privateEntity.EntityId,
                     actor);
