@@ -116,7 +116,7 @@ public sealed record CharacterSupportValueView(
     bool? BooleanValue,
     string? StringValue);
 
-public sealed record CharacterQualificationView(
+public sealed record CharacterSupportQualificationView(
     string QualificationKey,
     string DisplayName,
     string Category,
@@ -139,7 +139,7 @@ public sealed record CharacterSupportProjectionView(
     DateTimeOffset? PublishedAt,
     IReadOnlyList<CharacterRecoveryProcedureView> RecoveryProcedures,
     IReadOnlyList<CharacterPassiveValueView> PassiveValues,
-    IReadOnlyList<CharacterQualificationView> Qualifications);
+    IReadOnlyList<CharacterSupportQualificationView> Qualifications);
 
 public sealed record CharacterRecoveryResolutionView(
     string Scope,
@@ -506,7 +506,7 @@ public static class CharacterSupportResolver
             []);
     }
 
-    private static CharacterQualificationView ProjectQualification(
+    private static CharacterSupportQualificationView ProjectQualification(
         CharacterQualificationDefinition definition,
         CharacterSupportProjectionRequest request)
     {
@@ -573,7 +573,7 @@ public static class CharacterSupportResolver
             definition.Mechanic.Inputs.Select(ToInputView).ToArray(),
             definition.SourceAttributions);
 
-    private static CharacterQualificationView QualificationResult(
+    private static CharacterSupportQualificationView QualificationResult(
         CharacterQualificationDefinition definition,
         string resolutionState,
         CharacterSupportValueView? state,
