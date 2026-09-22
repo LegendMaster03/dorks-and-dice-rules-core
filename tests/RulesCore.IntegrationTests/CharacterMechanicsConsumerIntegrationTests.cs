@@ -1595,6 +1595,259 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
     }
 
     [Fact]
+    public async Task CharacterProjectionProjectsTemporaryAbilityDeathSaveAndMissChanceSemantics()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-state-support-{token}";
+        var conceptKey = $"rule.character-state-support-{token}";
+        var actor = $"character-state-support-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"CSS{token}";
+            var raw = JsonSerializer.Serialize(new
+            {
+                name = "Character State Support",
+                source = sourceCode,
+                _rulesCore = new
+                {
+                    character = new
+                    {
+                        effects = new object[]
+                        {
+                            new
+                            {
+                                key = "effect.temporary-strength",
+                                kind = "mechanic-contribution",
+                                operation = "add",
+                                target = "ability.strength.score",
+                                value = 4,
+                                condition = "condition.temporary-strength"
+                            }
+                        },
+                        resources = new object[]
+                        {
+                            new
+                            {
+                                key = "resource.death-save.successes",
+                                displayName = "Death Save Successes",
+                                maximum = 3,
+                                recoveryProcedure = "procedure.death-save.reset"
+                            },
+                            new
+                            {
+                                key = "resource.death-save.failures",
+                                displayName = "Death Save Failures",
+                                maximum = 3,
+                                recoveryProcedure = "procedure.death-save.reset"
+                            }
+                        },
+                        procedures = new object[]
+                        {
+                            new
+                            {
+                                key = "procedure.death-save.reset",
+                                displayName = "Reset Death Saves",
+                                presentationRole = "recovery",
+                                effects = new object[]
+                                {
+                                    new
+                                    {
+                                        key = "effect.death-save.reset-successes",
+                                        kind = "resource",
+                                        operation = "set",
+                                        target = "resource.death-save.successes",
+                                        value = 0
+                                    },
+                                    new
+                                    {
+                                        key = "effect.death-save.reset-failures",
+                                        kind = "resource",
+                                        operation = "set",
+                                        target = "resource.death-save.failures",
+                                        value = 0
+                                    }
+                                }
+                            }
+                        },
+                        passives = new object[]
+                        {
+                            new
+                            {
+                                key = "defense.miss-chance",
+                                displayName = "Miss Chance",
+                                value = 20,
+                                unit = "percent"
+                            }
+                        }
+                    }
+                }
+            });
+
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Character State Support {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"character-state-support-{token}.json",
+                            Encoding.UTF8.GetBytes(raw),
+                            $"integration:character-state-support:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "rule",
+                                "Character State Support",
+                                sourceCode,
+                                $"rule|Character State Support|{sourceCode}",
+                                raw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Character State Support {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2014, 8, 19))
+                        ])));
+            packageId = imported.PackageId;
+            var source = Assert.Single(imported.Entities);
+
+            var concept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(conceptKey, source.EntityType, source.Name),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                concept.Value.Id,
+                new BindRuleConceptSourceRequest(source.EntityId),
+                actor);
+            var revisionId = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == source.EntityId)
+                .Select(value => value.Id)
+                .SingleAsync();
+            await globalRules.SetDecisionAsync(
+                concept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionId,
+                    "Character state support fixture."),
+                actor);
+            await globalRules.PublishAsync(actor);
+
+            CharacterRulesProjectionRequest Request(bool active) =>
+                new(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 10,
+                        ["dexterity"] = 14,
+                        ["constitution"] = 12,
+                        ["intelligence"] = 10,
+                        ["wisdom"] = 10,
+                        ["charisma"] = 10
+                    },
+                    SelectedConcepts: [new CharacterSelectedConceptInput(conceptKey)],
+                    CurrentResources: new Dictionary<string, int>
+                    {
+                        ["resource.death-save.successes"] = 1,
+                        ["resource.death-save.failures"] = 2
+                    },
+                    ConditionKeys: active ? ["condition.temporary-strength"] : []);
+
+            var inactive = await projection.ResolveGlobalAsync(Request(active: false), userId: null);
+            Assert.Equal(10, Assert.Single(
+                inactive.Mechanics,
+                value => value.MechanicKey == "ability.strength.score").NumericValue);
+            Assert.DoesNotContain(
+                inactive.Mechanics,
+                value => value.MechanicKey == "ability.strength.temporary-score");
+
+            var result = await projection.ResolveGlobalAsync(Request(active: true), userId: null);
+
+            Assert.Equal(10, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "ability.strength.base").NumericValue);
+            Assert.Equal(10, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "ability.strength.ordinary-score").NumericValue);
+            Assert.Equal(14, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "ability.strength.temporary-score").NumericValue);
+            Assert.Equal(2, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "ability.strength.temporary-modifier").NumericValue);
+            var effectiveStrength = Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "ability.strength.score");
+            Assert.Equal(14, effectiveStrength.NumericValue);
+            Assert.Contains(
+                effectiveStrength.Contributions,
+                value => value.ContributionKey == "effect.temporary-strength"
+                    && value.StateKind == "temporary"
+                    && value.ConditionKey == "condition.temporary-strength");
+
+            var successes = Assert.Single(
+                result.Resources,
+                value => value.ResourceKey == "resource.death-save.successes");
+            Assert.Equal(1, successes.CurrentValue);
+            Assert.Equal(3, successes.MaximumValue);
+            Assert.Equal("procedure.death-save.reset", successes.RecoveryProcedureKey);
+            var failures = Assert.Single(
+                result.Resources,
+                value => value.ResourceKey == "resource.death-save.failures");
+            Assert.Equal(2, failures.CurrentValue);
+            Assert.Equal(3, failures.MaximumValue);
+
+            var reset = Assert.Single(
+                result.Procedures,
+                value => value.ProcedureKey == "procedure.death-save.reset");
+            Assert.Equal(2, reset.Effects.Count);
+            Assert.Contains(
+                reset.Effects,
+                value => value.TargetKey == "resource.death-save.successes"
+                    && value.Operation == "set"
+                    && value.NumericValue == 0);
+            Assert.Contains(
+                reset.Effects,
+                value => value.TargetKey == "resource.death-save.failures"
+                    && value.Operation == "set"
+                    && value.NumericValue == 0);
+
+            var missChance = Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "defense.miss-chance");
+            Assert.Equal(20, missChance.NumericValue);
+            Assert.Equal("percent", missChance.Unit);
+            Assert.DoesNotContain(
+                Assert.Single(
+                    result.Mechanics,
+                    value => value.MechanicKey == "defense.ac.total").Contributions,
+                value => value.ContributionKey == "defense.miss-chance");
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
+    [Fact]
     public async Task CharacterProjectionUsesEffectiveCampaignOverrideDocument()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
