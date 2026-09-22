@@ -59,7 +59,8 @@ public sealed record CharacterRulesProjectionRequest(
     IReadOnlyList<CharacterRuntimeChoiceInput>? Choices = null,
     IReadOnlyList<CharacterRuntimeRollInput>? Rolls = null,
     IReadOnlyList<string>? RequestedMechanicKeys = null,
-    IReadOnlyList<CharacterHitPointGainInput>? HitPointGains = null);
+    IReadOnlyList<CharacterHitPointGainInput>? HitPointGains = null,
+    IReadOnlyList<string>? ItemConceptKeys = null);
 
 public sealed record CharacterMechanicProvenanceView(
     IReadOnlyList<CharacterMechanicSourceAttributionView> CanonicalConcept,
@@ -73,7 +74,9 @@ public sealed record CharacterMechanicContributionView(
     int? NumericValue,
     string? TextValue,
     string? SourceConceptKey,
-    CharacterMechanicProvenanceView? Provenance = null);
+    CharacterMechanicProvenanceView? Provenance = null,
+    string? StateKind = null,
+    string? ConditionKey = null);
 
 public sealed record CharacterResolvedMechanicView(
     string MechanicKey,
@@ -156,6 +159,26 @@ public sealed record CharacterFeatureView(
     string State,
     string? SourceConceptKey,
     IReadOnlyList<CharacterRuleEffectView> Effects,
+    CharacterMechanicProvenanceView Provenance,
+    string? OccurrenceKey = null,
+    string? GrantingSourceKind = null,
+    int? AcquisitionLevel = null);
+
+public sealed record CharacterEquipmentDefinitionView(
+    string ItemKey,
+    string ConceptKey,
+    string DisplayName,
+    string State,
+    string? ItemType,
+    string? EquipmentCategory,
+    string? ArmorRole,
+    decimal? Weight,
+    string? WeightUnit,
+    string? AmmunitionType,
+    string? Capacity,
+    bool? RequiresAttunement,
+    string? AttunementRequirement,
+    IReadOnlyList<string> PropertyKeys,
     CharacterMechanicProvenanceView Provenance);
 
 public sealed record CharacterResourceView(
@@ -237,7 +260,8 @@ public sealed record CharacterRulesProjectionView(
     IReadOnlyList<CharacterProcedureView> Procedures,
     IReadOnlyList<CharacterChoiceView> Choices,
     IReadOnlyList<CharacterPrerequisiteView> Prerequisites,
-    IReadOnlyList<CharacterProjectionConflictView> Conflicts);
+    IReadOnlyList<CharacterProjectionConflictView> Conflicts,
+    IReadOnlyList<CharacterEquipmentDefinitionView> Equipment);
 
 public interface ICharacterRulesProjectionService
 {
