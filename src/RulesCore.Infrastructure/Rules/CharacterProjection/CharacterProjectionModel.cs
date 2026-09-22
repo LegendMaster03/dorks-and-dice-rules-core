@@ -1039,6 +1039,17 @@ internal sealed class CharacterProjectionContext
     public void AddEffect(CharacterRuleEffectView effect)
     {
         Effects.Add(effect);
+
+        var conditionSatisfied =
+            string.IsNullOrWhiteSpace(effect.ConditionKey)
+            || ActiveConditions.Contains(effect.ConditionKey)
+            || (BooleanFacts.TryGetValue(effect.ConditionKey, out var conditionState)
+                && conditionState);
+        if (!conditionSatisfied)
+        {
+            return;
+        }
+
         if (string.Equals(effect.Kind, CharacterEffectKinds.Capability, StringComparison.OrdinalIgnoreCase)
             && string.Equals(effect.Operation, CharacterEffectOperations.Grant, StringComparison.OrdinalIgnoreCase)
             && effect.SourceConceptKey is not null)
