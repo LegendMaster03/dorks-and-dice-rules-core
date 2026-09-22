@@ -168,13 +168,21 @@ public sealed class PcGenSkillConversionIntegrationTests
                     AssertNoExactTranslation(row.ContentJson);
                 }
 
+                var pickPocket = await ReadByNativeNameAsync(db, package30, "Pick Pocket");
+                AssertNativeSourceName(pickPocket.RawJson, "Pick Pocket");
                 AssertExactTranslation(
-                    (await ReadByNativeNameAsync(db, package30, "Pick Pocket")).ContentJson,
+                    pickPocket.ContentJson,
                     "Pick Pocket",
                     "skill",
                     "Sleight of Hand");
+
+                var wildernessLore = await ReadByNativeNameAsync(
+                    db,
+                    package30,
+                    "Wilderness Lore");
+                AssertNativeSourceName(wildernessLore.RawJson, "Wilderness Lore");
                 AssertExactTranslation(
-                    (await ReadByNativeNameAsync(db, package30, "Wilderness Lore")).ContentJson,
+                    wildernessLore.ContentJson,
                     "Wilderness Lore",
                     "skill",
                     "Survival");
