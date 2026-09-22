@@ -22,6 +22,14 @@ internal sealed record CharacterWeaponAttackProfile(
     string? Range,
     CharacterMechanicProvenanceView Provenance);
 
+internal sealed record CharacterWeaponCatalogEntry(
+    string ConceptKey,
+    string DisplayName,
+    string ItemType,
+    string? WeaponCategory,
+    IReadOnlySet<string> Properties,
+    CharacterMechanicProvenanceView Provenance);
+
 internal sealed record CharacterSpellSlotProgression(
     string ConceptKey,
     string DisplayName,
@@ -155,6 +163,7 @@ internal sealed class CharacterProjectionContext
         new(Keys);
     public Dictionary<string, HashSet<string>> ToolChoiceConceptKeysByCategory { get; } =
         new(Keys);
+    public Dictionary<string, CharacterWeaponCatalogEntry> WeaponCatalog { get; } = new(Keys);
     public Dictionary<string, CharacterWeaponAttackProfile> WeaponAttacks { get; } = new(Keys);
     public Dictionary<string, CharacterSpellSlotProgression> SpellSlotProgressions { get; } = new(Keys);
     public Dictionary<string, CharacterPactMagicProgression> PactMagicProgressions { get; } = new(Keys);
@@ -400,6 +409,120 @@ internal sealed class CharacterProjectionContext
             ToolChoiceConceptKeysByCategory[normalizedCategory] = conceptKeys;
         }
         conceptKeys.Add(normalizedConceptKey);
+    }
+
+    public void RegisterWeaponCatalogEntry(
+        string conceptKey,
+        string displayName,
+        string itemType,
+        string? weaponCategory,
+        IEnumerable<string> properties,
+        CharacterMechanicProvenanceView provenance)
+    {
+        if (string.IsNullOrWhiteSpace(conceptKey)
+            || string.IsNullOrWhiteSpace(displayName)
+            || string.IsNullOrWhiteSpace(itemType))
+        {
+            return;
+        }
+
+        var normalizedType = itemType.Trim().ToUpperInvariant();
+        if (normalizedType is not "M" and not "R")
+        {
+            return;
+        }
+
+        WeaponCatalog[conceptKey.Trim()] = new CharacterWeaponCatalogEntry(
+            conceptKey.Trim(),
+            displayName.Trim(),
+            normalizedType,
+            string.IsNullOrWhiteSpace(weaponCategory) ? null : weaponCategory.Trim(),
+            new HashSet<string>(
+                properties
+                    .Where(value => !string.IsNullOrWhiteSpace(value))
+                    .Select(value => Normalize(value)),
+                Keys),
+            provenance);
+    }
+
+    public bool TryMatchWeaponFilter(
+        string filter,
+        out IReadOnlyList<CharacterWeaponCatalogEntry> matches)
+    {
+        matches = [];
+        if (string.IsNullOrWhiteSpace(filter))
+        {
+            return false;
+        }
+
+        var predicates = new List<Func<CharacterWeaponCatalogEntry, bool>>();
+        foreach (var rawClause in filter.Split(
+                     '|',
+                     StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        {
+            var parts = rawClause.Split('=', 2, StringSplitOptions.TrimEntries);
+            if (parts.Length != 2 || string.IsNullOrWhiteSpace(parts[1]))
+            {
+                return false;
+            }
+
+            var key = Normalize(parts[0]);
+            var values = parts[1]
+                .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Select(Normalize)
+                .Where(value => value.Length > 0)
+                .ToArray();
+            if (values.Length == 0)
+            {
+                return false;
+            }
+
+            switch (key)
+            {
+                case "type":
+                    predicates.Add(entry => values.Any(value =>
+                        value switch
+                        {
+                            "martial weapon" => string.Equals(
+                                entry.WeaponCategory,
+                                "martial",
+                                StringComparison.OrdinalIgnoreCase),
+                            "simple weapon" => string.Equals(
+                                entry.WeaponCategory,
+                                "simple",
+                                StringComparison.OrdinalIgnoreCase),
+                            "melee weapon" => string.Equals(
+                                entry.ItemType,
+                                "M",
+                                StringComparison.OrdinalIgnoreCase),
+                            "ranged weapon" => string.Equals(
+                                entry.ItemType,
+                                "R",
+                                StringComparison.OrdinalIgnoreCase),
+                            _ => false
+                        }));
+                    if (values.Any(value => value is not
+                            ("martial weapon" or "simple weapon" or "melee weapon" or "ranged weapon")))
+                    {
+                        return false;
+                    }
+                    break;
+
+                case "property":
+                    predicates.Add(entry => values.Any(value => entry.Properties.Contains(value)));
+                    break;
+
+                default:
+                    return false;
+            }
+        }
+
+        matches = WeaponCatalog.Values
+            .Where(entry => predicates.All(predicate => predicate(entry)))
+            .OrderBy(entry => entry.DisplayName, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(entry => entry.ConceptKey, StringComparer.Ordinal)
+            .ToArray();
+        return true;
     }
 
     public CharacterChoiceOptionView ResolveSkillChoiceOption(string sourceValue)
