@@ -192,11 +192,17 @@ internal static class CharacterStructuredProficiencyProjector
             return;
         }
 
-        var options = from.EnumerateArray()
+        var sourceValues = from.EnumerateArray()
             .Where(value => value.ValueKind == JsonValueKind.String)
             .Select(value => value.GetString())
             .Where(value => !string.IsNullOrWhiteSpace(value))
-            .SelectMany(value => ExpandToolChoiceOptions(context, value!))
+            .Cast<string>()
+            .ToArray();
+        var forceSourceUnavailable = sourceValues
+            .Where(IsToolChoiceCategoryToken)
+            .Any(value => ExpandToolChoiceOptions(context, value).Count == 0);
+        var options = sourceValues
+            .SelectMany(value => ExpandToolChoiceOptions(context, value))
             .GroupBy(
                 value => value.ConceptKey ?? value.Value,
                 StringComparer.OrdinalIgnoreCase)
@@ -218,8 +224,15 @@ internal static class CharacterStructuredProficiencyProjector
             onSelected: selected => context.AddToolTraining(
                 selected,
                 rule.Catalog.ConceptKey,
-                rule.Provenance));
+                rule.Provenance),
+            forceSourceUnavailable: forceSourceUnavailable);
     }
+
+    private static bool IsToolChoiceCategoryToken(string sourceValue) =>
+        sourceValue.Trim().ToLowerInvariant() is
+            "anytool" or
+            "anyartisanstool" or
+            "anymusicalinstrument";
 
     private static IReadOnlyList<CharacterChoiceOptionView> ExpandToolChoiceOptions(
         CharacterProjectionContext context,
