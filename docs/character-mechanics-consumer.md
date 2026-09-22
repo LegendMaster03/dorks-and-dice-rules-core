@@ -356,6 +356,12 @@ The published Dorks & Dice resource-choice house rule is recognized from its act
 
 If more than one selected class contributes a standard spell-slot table, Rules Core reports the multiclass combination as unresolved instead of adding class-table slots together. Pact-magic and other nonstandard progressions are likewise preserved separately until their exact resource rules are normalized.
 
+## Character projection maximum HP
+
+Class hit-die size and advancement level are Rules Core inputs to maximum-HP projection. The caller supplies one raw hit-die outcome per class level through `hitPointGains`; that outcome may represent a resolved roll or a fixed value selected under the effective rules. The stable identity is the class concept plus the class level, for example `health.hit-point-gain.class.example.level-3`. Runtime `rolls` may use the same key when the outcome was rolled.
+
+Rules Core validates each supplied value against the source hit die, applies the resolved Constitution modifier for every level, applies the standard minimum gain of 1 hit point per level, and returns the composed `health.maximum-hp` value with per-level provenance. It does not assume a first-level maximum, choose a fixed average, or fill in a missing level. Missing level outcomes remain `missing-character-input`; stale, duplicate, or out-of-range outcomes are explicit conflicts.
+
 ## Native class and subclass feature progression
 
 The bulk Character projection reads acquisition levels directly from native 5e.tools class-feature and subclass-feature UIDs. Class feature references use `Name|Class|ClassSource|Level|...`; subclass feature references use `Name|Class|ClassSource|Subclass|SubclassSource|Level|...`. Object-wrapped `classFeature` and `subclassFeature` references are treated identically.
