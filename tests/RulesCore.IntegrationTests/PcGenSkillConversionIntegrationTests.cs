@@ -447,25 +447,38 @@ public sealed class PcGenSkillConversionIntegrationTests
             }
             finally
             {
+                if (accepted is not null)
+                {
+                    var rulesetRevisionIds = await db.RulesetRevisionEntries
+                        .Where(value => value.RuleConceptId == accepted.Concept.Id)
+                        .Select(value => value.RulesetRevisionId)
+                        .Distinct()
+                        .ToArrayAsync();
+                    await db.RulesetRevisionEntries
+                        .Where(value => value.RuleConceptId == accepted.Concept.Id)
+                        .ExecuteDeleteAsync();
+                    if (rulesetRevisionIds.Length > 0)
+                    {
+                        await db.RulesetRevisions
+                            .Where(value => rulesetRevisionIds.Contains(value.Id)
+                                && !value.Entries.Any())
+                            .ExecuteDeleteAsync();
+                    }
+                    await db.GlobalRuleDecisions
+                        .Where(value => value.RuleConceptId == accepted.Concept.Id)
+                        .ExecuteDeleteAsync();
+                }
                 if (accepted?.CreatedBinding == true)
                 {
-                    var binding = await db.RuleConceptSourceBindings
-                        .SingleOrDefaultAsync(value => value.Id == accepted.Binding.Id);
-                    if (binding is not null)
-                    {
-                        db.RuleConceptSourceBindings.Remove(binding);
-                        await db.SaveChangesAsync();
-                    }
+                    await db.RuleConceptSourceBindings
+                        .Where(value => value.Id == accepted.Binding.Id)
+                        .ExecuteDeleteAsync();
                 }
                 if (accepted?.CreatedConcept == true)
                 {
-                    var concept = await db.RuleConcepts
-                        .SingleOrDefaultAsync(value => value.Id == accepted.Concept.Id);
-                    if (concept is not null)
-                    {
-                        db.RuleConcepts.Remove(concept);
-                        await db.SaveChangesAsync();
-                    }
+                    await db.RuleConcepts
+                        .Where(value => value.Id == accepted.Concept.Id)
+                        .ExecuteDeleteAsync();
                 }
                 await DeletePackageAsync(db, packageKey);
             }
