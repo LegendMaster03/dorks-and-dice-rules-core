@@ -2290,6 +2290,222 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
     }
 
     [Fact]
+    public async Task CharacterProjectionKeepsPactMagicSeparateFromStandardSpellSlots()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-pact-magic-{token}";
+        var pactConceptKey = $"class.pact-caster-{token}";
+        var fullConceptKey = $"class.full-caster-{token}";
+        var actor = $"character-pact-magic-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"PCM{token}";
+            var pactRaw = JsonSerializer.Serialize(new
+            {
+                name = "Pact Caster",
+                source = sourceCode,
+                hd = new { number = 1, faces = 8 },
+                proficiency = new[] { "wis", "cha" },
+                spellcastingAbility = "cha",
+                casterProgression = "pact",
+                classTableGroups = new object[]
+                {
+                    new
+                    {
+                        colLabels = new[] { "Cantrips Known", "Spell Slots", "Slot Level" },
+                        rows = new object[][]
+                        {
+                            [2, 1, "{@filter 1st|spells|level=1|class=Pact Caster}"],
+                            [2, 2, "{@filter 1st|spells|level=1|class=Pact Caster}"],
+                            [2, 2, "{@filter 2nd|spells|level=2|class=Pact Caster}"],
+                            [3, 2, "{@filter 2nd|spells|level=2|class=Pact Caster}"],
+                            [3, 2, "{@filter 3rd|spells|level=3|class=Pact Caster}"]
+                        }
+                    }
+                }
+            });
+            var fullRaw = JsonSerializer.Serialize(new
+            {
+                name = "Full Caster",
+                source = sourceCode,
+                hd = new { number = 1, faces = 6 },
+                proficiency = new[] { "int", "wis" },
+                spellcastingAbility = "int",
+                casterProgression = "full",
+                classTableGroups = new object[]
+                {
+                    new
+                    {
+                        title = "Spell Slots per Spell Level",
+                        colLabels = new[] { "1st", "2nd", "3rd" },
+                        rowsSpellProgression = new[]
+                        {
+                            new[] { 2, 0, 0 },
+                            new[] { 3, 0, 0 },
+                            new[] { 4, 2, 0 }
+                        }
+                    }
+                }
+            });
+
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Character Pact Magic Fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"pact-magic-{token}.json",
+                            Encoding.UTF8.GetBytes("{}"),
+                            $"integration:character-pact-magic:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "class",
+                                "Pact Caster",
+                                sourceCode,
+                                $"class|Pact Caster|{sourceCode}",
+                                pactRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "class",
+                                "Full Caster",
+                                sourceCode,
+                                $"class|Full Caster|{sourceCode}",
+                                fullRaw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Character Pact Magic Fixture {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2014, 8, 19))
+                        ])));
+            packageId = imported.PackageId;
+            var byName = imported.Entities.ToDictionary(value => value.Name, StringComparer.Ordinal);
+            var pactSource = byName["Pact Caster"];
+            var fullSource = byName["Full Caster"];
+
+            var pactConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    pactConceptKey,
+                    pactSource.EntityType,
+                    pactSource.Name),
+                actor);
+            var fullConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    fullConceptKey,
+                    fullSource.EntityType,
+                    fullSource.Name),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                pactConcept.Value.Id,
+                new BindRuleConceptSourceRequest(pactSource.EntityId),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                fullConcept.Value.Id,
+                new BindRuleConceptSourceRequest(fullSource.EntityId),
+                actor);
+
+            var revisionIds = await db.SourceEntityRevisions
+                .Where(value =>
+                    value.SourceEntityId == pactSource.EntityId
+                    || value.SourceEntityId == fullSource.EntityId)
+                .ToDictionaryAsync(value => value.SourceEntityId, value => value.Id);
+            await globalRules.SetDecisionAsync(
+                pactConcept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionIds[pactSource.EntityId],
+                    "Pact Magic table fixture."),
+                actor);
+            await globalRules.SetDecisionAsync(
+                fullConcept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionIds[fullSource.EntityId],
+                    "Standard spell slot table fixture."),
+                actor);
+            await globalRules.PublishAsync(actor);
+
+            var result = await projection.ResolveGlobalAsync(
+                new CharacterRulesProjectionRequest(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 8,
+                        ["dexterity"] = 12,
+                        ["constitution"] = 14,
+                        ["intelligence"] = 18,
+                        ["wisdom"] = 12,
+                        ["charisma"] = 18
+                    },
+                    Advancements:
+                    [
+                        new CharacterAdvancementFactInput(pactConceptKey, 5),
+                        new CharacterAdvancementFactInput(fullConceptKey, 3)
+                    ],
+                    Choices:
+                    [
+                        new CharacterRuntimeChoiceInput(
+                            "advancement.starting-class",
+                            fullConceptKey)
+                    ]),
+                userId: null);
+
+            var pactResource = Assert.Single(
+                result.Resources,
+                value => value.ResourceKey ==
+                    $"resource.pact-slot.{pactConceptKey}.level-3");
+            Assert.Equal(CharacterResolutionStates.Resolved, pactResource.State);
+            Assert.Equal(2, pactResource.MaximumValue);
+
+            Assert.Equal(4, Assert.Single(
+                result.Resources,
+                value => value.ResourceKey == "resource.spell-slot.1").MaximumValue);
+            Assert.Equal(2, Assert.Single(
+                result.Resources,
+                value => value.ResourceKey == "resource.spell-slot.2").MaximumValue);
+            Assert.DoesNotContain(
+                result.Conflicts,
+                value => value.ConflictKey == "conflict.spellcasting.multiclass-slots");
+
+            var pactSpellcasting = Assert.Single(
+                result.Spellcasting,
+                value => value.SpellcastingKey == $"spellcasting.{pactConceptKey}");
+            Assert.Equal(CharacterResolutionStates.Resolved, pactSpellcasting.State);
+            Assert.Equal("pact-magic", pactSpellcasting.ResourceSystemKey);
+
+            var standardSpellcasting = Assert.Single(
+                result.Spellcasting,
+                value => value.SpellcastingKey == $"spellcasting.{fullConceptKey}");
+            Assert.Equal("spell-slots", standardSpellcasting.ResourceSystemKey);
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
+    [Fact]
     public async Task CharacterProjectionResolvesNativeSubclassFeatureLevels()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
