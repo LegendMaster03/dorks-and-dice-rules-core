@@ -1235,7 +1235,10 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                         ["defense.ac.shield-bonus"] = 2,
                         ["defense.ac.natural-armor-bonus"] = 1,
                         ["defense.ac.deflection-bonus"] = 1,
-                        ["defense.ac.dodge-contribution"] = 1
+                        ["defense.ac.dodge-contribution"] = 1,
+                        ["defense.ac.contribution.insight"] = 2,
+                        ["defense.ac.touch.contribution.circumstance"] = 1,
+                        ["defense.ac.flat-footed.contribution.sacred"] = 3
                     }),
                 userId: null);
 
@@ -1257,15 +1260,32 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal(5, Assert.Single(
                 result.Mechanics,
                 value => value.MechanicKey == "combat.grapple").NumericValue);
-            Assert.Equal(22, Assert.Single(
+            var totalArmorClass = Assert.Single(
                 result.Mechanics,
-                value => value.MechanicKey == "defense.ac.total").NumericValue);
-            Assert.Equal(15, Assert.Single(
+                value => value.MechanicKey == "defense.ac.total");
+            Assert.Equal(24, totalArmorClass.NumericValue);
+            Assert.Contains(
+                totalArmorClass.Contributions,
+                value => value.ContributionKey == "defense.ac.contribution.insight"
+                    && value.NumericValue == 2);
+
+            var touchArmorClass = Assert.Single(
                 result.Mechanics,
-                value => value.MechanicKey == "defense.ac.touch").NumericValue);
-            Assert.Equal(18, Assert.Single(
+                value => value.MechanicKey == "defense.ac.touch");
+            Assert.Equal(16, touchArmorClass.NumericValue);
+            Assert.Contains(
+                touchArmorClass.Contributions,
+                value => value.ContributionKey == "defense.ac.touch.contribution.circumstance"
+                    && value.NumericValue == 1);
+
+            var flatFootedArmorClass = Assert.Single(
                 result.Mechanics,
-                value => value.MechanicKey == "defense.ac.flat-footed").NumericValue);
+                value => value.MechanicKey == "defense.ac.flat-footed");
+            Assert.Equal(21, flatFootedArmorClass.NumericValue);
+            Assert.Contains(
+                flatFootedArmorClass.Contributions,
+                value => value.ContributionKey == "defense.ac.flat-footed.contribution.sacred"
+                    && value.NumericValue == 3);
             Assert.Contains(
                 result.Capabilities,
                 value => value.CapabilityKey == "defense.ac.touch");
