@@ -384,6 +384,12 @@ The bulk Character projection reads 5e.tools `weaponProficiencies`, `armorProfic
 
 Fixed named tool entries resolve against the accessible canonical tool competency catalog and feed Character training directly. `anyTool: N` becomes N ordinary choice slots populated from that catalog. Narrower category quantities such as `anyArtisansTool`, `anyMusicalInstrument`, and `anyGamingSet` are populated only from accessible effective tool concepts whose source document exposes the matching normalized tool category. Native 5e.tools item type identities `AT`, `INS`, and `GS` are recognized, and normalized rules may instead publish `_rulesCore.toolCategory`. A category with no trustworthy available members remains `source-unavailable`; Rules Core does not fabricate tool names. Category placeholders inside `choose.from` are expanded through the same catalog and may coexist with explicitly named tools.
 
+## Language proficiency projection
+
+The bulk Character projection treats effective `language` Rule Concepts as the legal language catalog. Fixed entries in `languageProficiencies` become resolved `qualification.languages.*` capabilities. Choice tokens `any`/`anyLanguage`, `anyStandard`, `anyExotic`, and `anyRare` are populated from accessible effective language concepts; category-scoped choices use the source language `type` or normalized `_rulesCore.languageCategory` metadata.
+
+Fixed languages are registered before category choices regardless of source JSON property order, so a language already granted by the same rule is not offered again. A selected language is likewise removed from later choice groups during the same projection. `choose.from` may mix category tokens and explicitly named languages and uses the same canonical option path. If the effective catalog can not represent a requested category, the choice remains `source-unavailable`; Rules Core does not synthesize a language list.
+
 ## Ability-score choice projection
 
 The bulk Character projection treats a 5e.tools `ability` array as alternate ability-score sets, not cumulative entries. When more than one set is present, Rules Core exposes an `ability-score-set` choice and projects only the selected set. This prevents mutually exclusive schemes such as “+2/+1” versus “+1/+1/+1” from being added together.
