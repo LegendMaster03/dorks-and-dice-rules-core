@@ -236,7 +236,8 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Contains("skill.arcana", publishedCompetencyKeys);
             Assert.DoesNotContain("skill.knowledge-arcana", publishedCompetencyKeys);
             Assert.Contains("skill.sleight-of-hand", publishedCompetencyKeys);
-            Assert.Contains("tool.alchemists-supplies", publishedCompetencyKeys);
+            Assert.Contains("skill.alchemy", publishedCompetencyKeys);
+            Assert.DoesNotContain("tool.alchemists-supplies", publishedCompetencyKeys);
             Assert.DoesNotContain("skill.craft-alchemy", publishedCompetencyKeys);
 
             foreach (var retained in new[]
@@ -318,11 +319,11 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Contains(deception.Competency!.Profiles, value => value.SupportsTrainingState);
             Assert.Contains(deception.Competency.Profiles, value => value.SupportsRanks);
 
-            var alchemistsSupplies = Assert.Single(
+            var alchemy = Assert.Single(
                 competencyMechanics,
-                value => value.ConceptKey == "tool.alchemists-supplies");
+                value => value.ConceptKey == "skill.alchemy");
             Assert.Contains(
-                alchemistsSupplies.Competency!.Profiles,
+                alchemy.Competency!.Profiles,
                 value => value.SupportsRanks && value.SupportsClassSkillState);
 
             var psionicSourceNames = await db.SourceEntities
