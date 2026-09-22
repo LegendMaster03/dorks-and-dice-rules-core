@@ -150,7 +150,16 @@ public sealed record CharacterActionView(
     string? ResourceKey,
     int? ResourceCost,
     IReadOnlyList<string> RequiredCapabilityKeys,
-    CharacterMechanicProvenanceView Provenance);
+    CharacterMechanicProvenanceView Provenance,
+    string? SourceConceptKey = null,
+    int? SpellLevel = null,
+    string? SpellSchool = null,
+    string? CastingTime = null,
+    IReadOnlyList<string>? SpellComponents = null,
+    string? MaterialComponent = null,
+    string? Duration = null,
+    bool? Ritual = null,
+    bool? Concentration = null);
 
 public sealed record CharacterFeatureView(
     string FeatureKey,
