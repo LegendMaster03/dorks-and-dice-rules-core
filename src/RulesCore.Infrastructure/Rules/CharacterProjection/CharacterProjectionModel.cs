@@ -54,6 +54,19 @@ internal sealed record CharacterHitDieProfile(
     int? Faces,
     CharacterMechanicProvenanceView Provenance);
 
+internal sealed record CharacterFeatureCatalogEntry(
+    string ConceptKey,
+    string EntityType,
+    string DisplayName,
+    string ClassName,
+    string? ClassSource,
+    string? SubclassName,
+    string? SubclassSource,
+    int AcquisitionLevel,
+    string? FeatureSource,
+    IReadOnlyList<CharacterRuleEffectView> Effects,
+    CharacterMechanicProvenanceView Provenance);
+
 internal interface ICharacterRuleProjectionModule
 {
     bool Handles(CharacterProjectionRule rule, CharacterProjectionContext context);
@@ -178,6 +191,7 @@ internal sealed class CharacterProjectionContext
     public Dictionary<string, CharacterSpellSlotProgression> SpellSlotProgressions { get; } = new(Keys);
     public Dictionary<string, CharacterPactMagicProgression> PactMagicProgressions { get; } = new(Keys);
     public Dictionary<string, CharacterHitDieProfile> HitDice { get; } = new(Keys);
+    public List<CharacterFeatureCatalogEntry> FeatureCatalog { get; } = [];
 
     public Dictionary<string, CharacterResolvedMechanicView> Mechanics { get; } = new(Keys);
     public Dictionary<string, CharacterCapabilityView> CapabilityViews { get; } = new(Keys);
@@ -1020,7 +1034,8 @@ internal sealed class CharacterProjectionContext
         CharacterMechanicProvenanceView provenance,
         string? grantingSourceKind = null,
         int? acquisitionLevel = null,
-        string? occurrenceKey = null)
+        string? occurrenceKey = null,
+        CharacterFeatureCatalogEntry? featureDefinition = null)
     {
         var normalized = Normalize(featureKey);
         Features[normalized] = new CharacterFeatureView(
@@ -1029,11 +1044,71 @@ internal sealed class CharacterProjectionContext
             kind,
             state,
             sourceConceptKey,
-            [],
+            featureDefinition?.Effects ?? [],
             provenance,
             occurrenceKey ?? normalized,
             grantingSourceKind ?? kind,
-            acquisitionLevel);
+            acquisitionLevel,
+            featureDefinition?.ConceptKey,
+            featureDefinition?.EntityType,
+            featureDefinition?.Provenance);
+    }
+
+    public CharacterFeatureCatalogEntry? ResolveFeatureReference(
+        string reference,
+        bool isSubclass)
+    {
+        if (string.IsNullOrWhiteSpace(reference))
+        {
+            return null;
+        }
+
+        var parts = reference.Split('|');
+        var levelIndex = isSubclass ? 5 : 3;
+        if (parts.Length <= levelIndex
+            || !int.TryParse(parts[levelIndex], out var level)
+            || level <= 0)
+        {
+            return null;
+        }
+
+        var name = parts[0].Trim();
+        var className = parts.Length > 1 ? parts[1].Trim() : string.Empty;
+        var classSource = parts.Length > 2 ? parts[2].Trim() : string.Empty;
+        var subclassName = isSubclass && parts.Length > 3 ? parts[3].Trim() : null;
+        var subclassSource = isSubclass && parts.Length > 4 ? parts[4].Trim() : null;
+        var featureSourceIndex = isSubclass ? 6 : 4;
+        var featureSource = parts.Length > featureSourceIndex
+            && !string.IsNullOrWhiteSpace(parts[featureSourceIndex])
+                ? parts[featureSourceIndex].Trim()
+                : null;
+
+        var matches = FeatureCatalog
+            .Where(value =>
+                string.Equals(value.DisplayName, name, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(value.ClassName, className, StringComparison.OrdinalIgnoreCase)
+                && string.Equals(
+                    value.ClassSource ?? string.Empty,
+                    classSource,
+                    StringComparison.OrdinalIgnoreCase)
+                && value.AcquisitionLevel == level
+                && (!isSubclass
+                    || (string.Equals(
+                            value.SubclassName,
+                            subclassName,
+                            StringComparison.OrdinalIgnoreCase)
+                        && string.Equals(
+                            value.SubclassSource ?? string.Empty,
+                            subclassSource ?? string.Empty,
+                            StringComparison.OrdinalIgnoreCase)))
+                && (featureSource is null
+                    || string.Equals(
+                        value.FeatureSource,
+                        featureSource,
+                        StringComparison.OrdinalIgnoreCase)))
+            .ToArray();
+
+        return matches.Length == 1 ? matches[0] : null;
     }
 
     public void AddEffect(CharacterRuleEffectView effect)
