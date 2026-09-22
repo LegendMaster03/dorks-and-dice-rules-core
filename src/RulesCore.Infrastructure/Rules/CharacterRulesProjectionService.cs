@@ -1320,19 +1320,23 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 ? explicitDexterityContribution
                 : dexterityModifier;
         var armorBonus = context.IntegerFacts.GetValueOrDefault("defense.ac.armor-bonus");
-        var shieldBonus = context.IntegerFacts.TryGetValue(
-                "defense.ac.shield-bonus",
-                out var explicitShieldBonus)
+        var projectedShieldBonuses = context.Effects
+            .Where(value =>
+                string.Equals(
+                    value.TargetKey,
+                    "defense.ac.shield-bonus",
+                    StringComparison.OrdinalIgnoreCase)
+                && value.NumericValue.HasValue)
+            .Select(value => value.NumericValue!.Value)
+            .ToArray();
+        var hasExplicitShieldBonus = context.IntegerFacts.TryGetValue(
+            "defense.ac.shield-bonus",
+            out var explicitShieldBonus);
+        var conflictingProjectedShields =
+            !hasExplicitShieldBonus && projectedShieldBonuses.Length > 1;
+        var shieldBonus = hasExplicitShieldBonus
             ? explicitShieldBonus
-            : context.Effects
-                .Where(value =>
-                    string.Equals(
-                        value.TargetKey,
-                        "defense.ac.shield-bonus",
-                        StringComparison.OrdinalIgnoreCase)
-                    && value.NumericValue.HasValue)
-                .Select(value => value.NumericValue!.Value)
-                .SingleOrDefault();
+            : projectedShieldBonuses.SingleOrDefault();
         var naturalArmorBonus =
             context.IntegerFacts.GetValueOrDefault("defense.ac.natural-armor-bonus");
         var deflectionBonus =
@@ -1340,7 +1344,13 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         var dodgeContribution =
             context.IntegerFacts.GetValueOrDefault("defense.ac.dodge-contribution");
 
-        if (!context.UsesStandardProficiency)
+        var preserveExistingAcConflict =
+            context.Mechanics.TryGetValue("defense.ac.total", out var existingArmorClass)
+            && existingArmorClass.State is
+                CharacterResolutionStates.Conflict
+                or CharacterResolutionStates.ApplicableUnresolved;
+
+        if (!context.UsesStandardProficiency && !preserveExistingAcConflict)
         {
             var other = context.IntegerFacts.GetValueOrDefault("defense.ac.other");
             context.Mechanics["defense.ac.total"] = new CharacterResolvedMechanicView(
@@ -1435,7 +1445,15 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 CharacterProjectionContext.EmptyProvenance());
         }
 
-        if (resolvesFlatFooted)
+        if (resolvesFlatFooted && conflictingProjectedShields)
+        {
+            context.Mechanics["defense.ac.flat-footed"] = Unresolved(
+                "defense.ac.flat-footed",
+                "defense",
+                "Flat-Footed Armor Class",
+                CharacterResolutionStates.Conflict);
+        }
+        else if (resolvesFlatFooted)
         {
             var flatFootedDexterityContribution =
                 context.IntegerFacts.TryGetValue(
