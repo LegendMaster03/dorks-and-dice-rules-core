@@ -28,6 +28,7 @@ internal sealed record CharacterSpellSlotProgression(
     int ClassLevel,
     string? CasterProgression,
     IReadOnlyList<int> SlotsBySpellLevel,
+    IReadOnlyList<IReadOnlyList<int>> SlotsByClassLevel,
     CharacterMechanicProvenanceView Provenance);
 
 internal sealed record CharacterPactMagicProgression(
