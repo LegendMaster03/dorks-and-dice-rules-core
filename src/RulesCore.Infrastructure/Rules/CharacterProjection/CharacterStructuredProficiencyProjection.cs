@@ -196,7 +196,7 @@ internal static class CharacterStructuredProficiencyProjector
             .Where(value => value.ValueKind == JsonValueKind.String)
             .Select(value => value.GetString())
             .Where(value => !string.IsNullOrWhiteSpace(value))
-            .Select(value => context.ResolveToolChoiceOption(value!))
+            .SelectMany(value => ExpandToolChoiceOptions(context, value!))
             .GroupBy(
                 value => value.ConceptKey ?? value.Value,
                 StringComparer.OrdinalIgnoreCase)
