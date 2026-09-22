@@ -396,6 +396,13 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
             }
         }
 
+        context.HitDice[rule.Catalog.ConceptKey] = new CharacterHitDieProfile(
+            rule.Catalog.ConceptKey,
+            rule.Catalog.DisplayName,
+            Math.Max(level, 0),
+            faces,
+            rule.Provenance);
+
         var key = $"resource.hit-die.{rule.Catalog.ConceptKey}";
         context.CurrentResources.TryGetValue(key, out var current);
         context.Resources[key] = new CharacterResourceView(
