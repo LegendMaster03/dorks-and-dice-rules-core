@@ -78,7 +78,8 @@ public sealed record CharacterCompetencyFacetView(
     IReadOnlyList<Guid> ProfileSourceEntityRevisionIds,
     bool SupportsRanks,
     bool SupportsClassSkillState,
-    bool SupportsTrainingState);
+    bool SupportsTrainingState,
+    IReadOnlyList<string>? MechanicKeys = null);
 
 public sealed record CharacterCompetencyProfileView(
     Guid SourceEntityRevisionId,

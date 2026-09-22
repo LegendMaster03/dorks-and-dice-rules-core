@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
 using RulesCore.Domain.Rules;
 using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.Infrastructure.Rules;
 
@@ -338,6 +339,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         }
 
         mechanics = AttachStaticRelationships(mechanics);
+        mechanics = AttachCompetencyIdentityFacets(mechanics);
 
         return new CharacterMechanicsCatalogView(
             rules.Scope,
@@ -673,6 +675,99 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 var index = mechanics.FindIndex(value =>
                     string.Equals(value.MechanicKey, key, StringComparison.Ordinal));
                 mechanics[index] = updated;
+            }
+        }
+
+        return mechanics;
+    }
+
+    private static List<CharacterMechanicView> AttachCompetencyIdentityFacets(
+        List<CharacterMechanicView> mechanics)
+    {
+        var groups = mechanics
+            .Where(value => value.Competency is not null
+                && !string.IsNullOrWhiteSpace(value.Competency.IdentityKey))
+            .GroupBy(
+                value => value.Competency!.IdentityKey!,
+                StringComparer.OrdinalIgnoreCase)
+            .Where(group => group.Count() > 0)
+            .ToArray();
+
+        foreach (var group in groups)
+        {
+            var members = group.ToArray();
+            var profiles = members
+                .SelectMany(value => value.Competency!.Profiles
+                    .Select(profile => new { Mechanic = value, Profile = profile }))
+                .ToArray();
+            var facets = profiles
+                .GroupBy(
+                    value => string.IsNullOrWhiteSpace(value.Profile.FacetType)
+                        ? string.Equals(
+                            value.Profile.CompetencyKind,
+                            CharacterCompetencyKinds.Tool,
+                            StringComparison.OrdinalIgnoreCase)
+                            ? "tool"
+                            : "skill"
+                        : value.Profile.FacetType!,
+                    StringComparer.OrdinalIgnoreCase)
+                .Select(facet => new CharacterCompetencyFacetView(
+                    facet.Key,
+                    facet.Select(value => value.Profile.SourceEntityRevisionId)
+                        .Distinct()
+                        .OrderBy(value => value)
+                        .ToArray(),
+                    facet.Any(value => value.Profile.SupportsRanks),
+                    facet.Any(value => value.Profile.SupportsClassSkillState),
+                    facet.Any(value => value.Profile.SupportsTrainingState),
+                    facet.Select(value => value.Mechanic.MechanicKey)
+                        .Distinct(StringComparer.OrdinalIgnoreCase)
+                        .OrderBy(value => value, StringComparer.Ordinal)
+                        .ToArray()))
+                .OrderBy(value => value.FacetType, StringComparer.Ordinal)
+                .ToArray();
+
+            var identityNames = members
+                .Select(value => value.Competency!.IdentityName)
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .Cast<string>()
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+            var trainingKeys = members
+                .Select(value => value.Competency!.SharedTrainingKey)
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .Cast<string>()
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+            var relationships = members
+                .SelectMany(value => value.Competency!.RelatedCompetencies ?? [])
+                .Distinct()
+                .OrderBy(value => value.Kind, StringComparer.Ordinal)
+                .ThenBy(value => value.TargetType, StringComparer.Ordinal)
+                .ThenBy(value => value.TargetName, StringComparer.Ordinal)
+                .ThenBy(value => value.Scope, StringComparer.Ordinal)
+                .ToArray();
+
+            foreach (var member in members)
+            {
+                var competency = member.Competency! with
+                {
+                    IdentityName = identityNames.Length == 1
+                        ? identityNames[0]
+                        : member.Competency!.IdentityName,
+                    SharedTrainingKey = trainingKeys.Length == 1
+                        ? trainingKeys[0]
+                        : member.Competency!.SharedTrainingKey,
+                    Facets = facets,
+                    RelatedCompetencies = relationships
+                };
+                var updated = member with { Competency = competency };
+                var memberIndex = mechanics.FindIndex(value =>
+                    string.Equals(
+                        value.MechanicKey,
+                        member.MechanicKey,
+                        StringComparison.Ordinal));
+                mechanics[memberIndex] = updated;
             }
         }
 
@@ -1283,6 +1378,9 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         var competencyKind = string.Equals(entityType, "tool", StringComparison.OrdinalIgnoreCase)
             ? CharacterCompetencyKinds.Tool
             : CharacterCompetencyKinds.Skill;
+        var facetIdentity = ReviewedCompetencyFacetPolicy.ResolveLaterFacet(
+            entityType,
+            ReadNativeName(mechanicalJson));
         var inputs = BuildProficiencyCompetencyInputs();
         return new CharacterCompetencyProfileView(
             sourceEntityRevisionId,
@@ -1311,6 +1409,11 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 ? "tool"
                 : "skill",
             IsFamily: false,
+            IdentityKey: facetIdentity?.IdentityKey,
+            IdentityName: facetIdentity?.IdentityName,
+            SharedTrainingKey: facetIdentity is null
+                ? null
+                : $"competency.{facetIdentity.IdentityKey}.training",
             RelatedCompetencies: []);
     }
 
@@ -1645,6 +1748,27 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         return input.IncludeWhenBooleanValue.HasValue
             && booleanInputs.TryGetValue(input.IncludeWhenBooleanInputKey, out var supplied)
             && supplied == input.IncludeWhenBooleanValue.Value;
+    }
+
+    private static string? ReadNativeName(string? mechanicalJson)
+    {
+        if (string.IsNullOrWhiteSpace(mechanicalJson))
+        {
+            return null;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(mechanicalJson);
+            return document.RootElement.TryGetProperty("name", out var name)
+                && name.ValueKind == JsonValueKind.String
+                ? name.GetString()
+                : null;
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
     }
 
     private static string? ReadNativeGoverningAbilityKey(string? mechanicalJson)

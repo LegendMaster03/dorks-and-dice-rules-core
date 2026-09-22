@@ -49,8 +49,6 @@ internal static class ExactCompetencyTranslationPolicy
 
         var targetType = record.EntityType;
         var targetName = record.Name;
-        var canonicalType = record.EntityType;
-        var canonicalName = record.Name;
         var result = record;
         var reviewedConvertedIdentity = false;
         JsonObject? content = null;
@@ -82,16 +80,10 @@ internal static class ExactCompetencyTranslationPolicy
             && TryReadUnscopedPcGenConversion(
                 extension,
                 out var convertedType,
-                out var convertedName,
-                out var preserveMechanicalIdentity))
+                out var convertedName))
         {
-            canonicalType = convertedType;
-            canonicalName = convertedName;
-            if (!preserveMechanicalIdentity)
-            {
-                targetType = convertedType;
-                targetName = convertedName;
-            }
+            targetType = convertedType;
+            targetName = convertedName;
             reviewedConvertedIdentity = true;
         }
         else if (isLegacySrd && content is not null && extension is not null)
@@ -132,16 +124,11 @@ internal static class ExactCompetencyTranslationPolicy
                         conversionContext["nativeName"] = record.Name;
                     }
 
-                    if (PcGenCompetencyConversions.EstablishesCanonicalIdentity(conversion))
-                    {
-                        canonicalType = conversion.TargetType;
-                        canonicalName = conversion.TargetName;
-                        reviewedConvertedIdentity = true;
-                    }
                     if (PcGenCompetencyConversions.IsExactIdentityTranslation(conversion))
                     {
                         targetType = conversion.TargetType;
                         targetName = conversion.TargetName;
+                        reviewedConvertedIdentity = true;
                     }
                 }
             }
@@ -158,7 +145,7 @@ internal static class ExactCompetencyTranslationPolicy
             return result;
         }
 
-        var canonicalIdentityKey = CanonicalSourceIdentity.OccurrenceKey(canonicalType, canonicalName);
+        var canonicalIdentityKey = CanonicalSourceIdentity.OccurrenceKey(targetType, targetName);
 
         // Native 5e.tools records are already the Rules Core mechanical schema. Identity metadata
         // must never be injected into ContentJson because doing so would make direct ingestion
@@ -245,35 +232,16 @@ internal static class ExactCompetencyTranslationPolicy
 
             var edition = ReadString(context, "edition");
             var conversion = PcGenCompetencyConversions.Resolve(currentName, edition);
-            if (conversion is null
-                || !PcGenCompetencyConversions.EstablishesCanonicalIdentity(conversion)
-                || !string.Equals(
-                    CanonicalSourceIdentity.OccurrenceKey(
-                        conversion.TargetType,
-                        conversion.TargetName),
-                    translatedRecord.CanonicalIdentityKey,
-                    StringComparison.Ordinal))
-            {
-                return false;
-            }
-
-            return PcGenCompetencyConversions.IsExactIdentityTranslation(conversion)
-                ? string.Equals(
-                        conversion.TargetType,
-                        translatedRecord.EntityType,
-                        StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(
-                        conversion.TargetName,
-                        translatedRecord.Name,
-                        StringComparison.OrdinalIgnoreCase)
-                : string.Equals(
-                        currentEntityType,
-                        translatedRecord.EntityType,
-                        StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(
-                        currentName,
-                        translatedRecord.Name,
-                        StringComparison.OrdinalIgnoreCase);
+            return conversion is not null
+                && PcGenCompetencyConversions.IsExactIdentityTranslation(conversion)
+                && string.Equals(
+                    conversion.TargetType,
+                    translatedRecord.EntityType,
+                    StringComparison.OrdinalIgnoreCase)
+                && string.Equals(
+                    conversion.TargetName,
+                    translatedRecord.Name,
+                    StringComparison.OrdinalIgnoreCase);
         }
         catch (JsonException)
         {
@@ -305,12 +273,10 @@ internal static class ExactCompetencyTranslationPolicy
     private static bool TryReadUnscopedPcGenConversion(
         JsonObject? extension,
         out string targetType,
-        out string targetName,
-        out bool preserveMechanicalIdentity)
+        out string targetName)
     {
         targetType = string.Empty;
         targetName = string.Empty;
-        preserveMechanicalIdentity = false;
         if (extension?["competencyConversion"] is not JsonObject conversion)
         {
             return false;
@@ -321,13 +287,7 @@ internal static class ExactCompetencyTranslationPolicy
         var convertedType = ReadString(conversion, "targetType");
         var convertedName = ReadString(conversion, "targetName");
         var scope = ReadString(conversion, "scope");
-        var exactIdentity =
-            relationship is "direct-equivalence" or "direct-cross-type";
-        var sharedFacetIdentity = string.Equals(
-            relationship,
-            "shared-competency-facet",
-            StringComparison.Ordinal);
-        if ((!exactIdentity && !sharedFacetIdentity)
+        if ((relationship is not "direct-equivalence" and not "direct-cross-type")
             || !string.Equals(sourceType, "skill", StringComparison.OrdinalIgnoreCase)
             || string.IsNullOrWhiteSpace(convertedType)
             || string.IsNullOrWhiteSpace(convertedName)
@@ -338,7 +298,6 @@ internal static class ExactCompetencyTranslationPolicy
 
         targetType = convertedType.Trim();
         targetName = convertedName.Trim();
-        preserveMechanicalIdentity = sharedFacetIdentity;
         return true;
     }
 

@@ -122,11 +122,6 @@ internal static class PcGenCompetencyConversions
         && string.IsNullOrWhiteSpace(conversion.Scope)
         && !string.IsNullOrWhiteSpace(conversion.SharedCompetencyKey);
 
-    internal static bool EstablishesCanonicalIdentity(
-        PcGenCompetencyConversion conversion) =>
-        IsExactIdentityTranslation(conversion)
-        || EstablishesSharedCompetencyIdentity(conversion);
-
     private static PcGenCompetencyConversion Skill(string sourceName, string targetName) =>
         new(sourceName, targetName, "skill", "direct-equivalence");
 
