@@ -2016,14 +2016,20 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 name = "Breastplate",
                 source = sourceCode,
                 type = "MA",
-                ac = 14
+                category = "armor",
+                ac = 14,
+                weight = 20.0m,
+                property = new[] { "StealthDisadvantage" }
             });
             var shieldRaw = JsonSerializer.Serialize(new
             {
                 name = "Shield",
                 source = sourceCode,
                 type = "S",
-                ac = 2
+                category = "armor",
+                ac = 2,
+                weight = 6.0m,
+                reqAttune = "by a shield specialist"
             });
             var imported = await new NormalizedSourceImportService(db).ImportAsync(
                 new ImportNormalizedSourceRequest(
@@ -2135,6 +2141,45 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Empty(
                 result.Conflicts.Where(value =>
                     value.ConflictKey.StartsWith("conflict.defense.ac.", StringComparison.Ordinal)));
+
+            var armorDefinition = Assert.Single(
+                result.Equipment,
+                value => value.ConceptKey == armorConceptKey);
+            Assert.Equal("MA", armorDefinition.ItemType);
+            Assert.Equal("medium-armor", armorDefinition.ArmorRole);
+            Assert.Equal(20.0m, armorDefinition.Weight);
+            Assert.Equal("lb", armorDefinition.WeightUnit);
+            Assert.Contains("StealthDisadvantage", armorDefinition.PropertyKeys);
+
+            var shieldDefinition = Assert.Single(
+                result.Equipment,
+                value => value.ConceptKey == shieldConceptKey);
+            Assert.Equal("shield", shieldDefinition.ArmorRole);
+            Assert.True(shieldDefinition.RequiresAttunement);
+            Assert.Equal("by a shield specialist", shieldDefinition.AttunementRequirement);
+
+            var carriedOnly = await projection.ResolveGlobalAsync(
+                new CharacterRulesProjectionRequest(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 10,
+                        ["dexterity"] = 18,
+                        ["constitution"] = 10,
+                        ["intelligence"] = 10,
+                        ["wisdom"] = 10,
+                        ["charisma"] = 10
+                    },
+                    ItemConceptKeys: [armorConceptKey]),
+                userId: null);
+            Assert.Single(
+                carriedOnly.Equipment,
+                value => value.ConceptKey == armorConceptKey);
+            Assert.Equal(14, Assert.Single(
+                carriedOnly.Mechanics,
+                value => value.MechanicKey == "defense.ac.total").NumericValue);
+            Assert.DoesNotContain(
+                carriedOnly.Features,
+                value => value.FeatureKey == $"feature.{armorConceptKey}");
 
             var unarmored = await projection.ResolveGlobalAsync(
                 new CharacterRulesProjectionRequest(
