@@ -976,7 +976,7 @@ internal sealed class CharacterProjectionContext
                 .ToArray()));
     }
 
-    private static string NormalizeSizeCategory(string value) =>
+    public static string NormalizeSizeCategory(string value) =>
         value.Trim().ToUpperInvariant() switch
         {
             "F" or "FINE" => "Fine",

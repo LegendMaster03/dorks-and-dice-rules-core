@@ -2057,7 +2057,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             {
                 name = "Example Species",
                 source = sourceCode,
-                size = new[] { "M" },
+                size = new[] { "S", "M" },
                 speed = 30
             });
             var imported = await new NormalizedSourceImportService(db).ImportAsync(
@@ -2128,7 +2128,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 actor);
             await campaignRules.PublishAsync(campaignId, actor);
 
-            var request = new CharacterRulesProjectionRequest(
+            var unresolvedRequest = new CharacterRulesProjectionRequest(
                 BaseAbilityScores: new Dictionary<string, int>
                 {
                     ["strength"] = 10,
@@ -2139,6 +2139,33 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     ["charisma"] = 10
                 },
                 SelectedConcepts: [new CharacterSelectedConceptInput(conceptKey)]);
+
+            var unresolvedSize = await projection.ResolveGlobalAsync(
+                unresolvedRequest,
+                userId: null);
+            var sizeChoice = Assert.Single(
+                unresolvedSize.Choices,
+                value => value.Kind == "size-category");
+            Assert.Equal(CharacterResolutionStates.ChoiceRequired, sizeChoice.State);
+            Assert.Collection(
+                sizeChoice.Options.OrderBy(value => value.DisplayName, StringComparer.Ordinal),
+                value => Assert.Equal("Medium", value.DisplayName),
+                value => Assert.Equal("Small", value.DisplayName));
+            Assert.Equal(
+                CharacterResolutionStates.ChoiceRequired,
+                Assert.Single(
+                    unresolvedSize.Mechanics,
+                    value => value.MechanicKey == "character.size-category").State);
+
+            var request = unresolvedRequest with
+            {
+                Choices =
+                [
+                    new CharacterRuntimeChoiceInput(
+                        $"choice.{conceptKey}.size-category",
+                        "Medium")
+                ]
+            };
 
             var global = await projection.ResolveGlobalAsync(request, userId: null);
             var globalWalk = Assert.Single(

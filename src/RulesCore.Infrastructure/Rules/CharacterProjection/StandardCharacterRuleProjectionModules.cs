@@ -36,27 +36,127 @@ internal sealed class RaceCharacterRuleProjectionModule : ICharacterRuleProjecti
             return;
         }
 
-        string? value = null;
-        if (size.ValueKind == JsonValueKind.String)
+        var values = size.ValueKind switch
         {
-            value = size.GetString();
-        }
-        else if (size.ValueKind == JsonValueKind.Array)
+            JsonValueKind.String => new[] { size.GetString() },
+            JsonValueKind.Array => size.EnumerateArray()
+                .Where(value => value.ValueKind == JsonValueKind.String)
+                .Select(value => value.GetString())
+                .ToArray(),
+            _ => []
+        };
+        var normalized = values
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => CharacterProjectionContext.NormalizeSizeCategory(value!))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        if (normalized.Length == 0)
         {
-            var first = size.EnumerateArray().FirstOrDefault();
-            if (first.ValueKind == JsonValueKind.String)
-            {
-                value = first.GetString();
-            }
+            return;
         }
 
-        if (!string.IsNullOrWhiteSpace(value))
+        if (normalized.Length == 1)
         {
             context.AddSizeCategory(
-                value,
+                normalized[0],
                 rule.Catalog.ConceptKey,
                 rule.Provenance);
+            return;
         }
+
+        var choiceKey = $"choice.{rule.Catalog.ConceptKey}.size-category";
+        var options = normalized
+            .Select(value => new CharacterChoiceOptionView(
+                value,
+                value,
+                rule.Catalog.ConceptKey))
+            .ToArray();
+
+        if (!context.Choices.TryGetValue(choiceKey, out var selected))
+        {
+            context.ChoiceViews[choiceKey] = new CharacterChoiceView(
+                choiceKey,
+                $"choice-group.{rule.Catalog.ConceptKey}.size-category",
+                $"{rule.Catalog.DisplayName} Size",
+                "size-category",
+                CharacterResolutionStates.ChoiceRequired,
+                options,
+                null,
+                rule.Catalog.ConceptKey,
+                rule.Provenance);
+            context.Mechanics["character.size-category"] = new CharacterResolvedMechanicView(
+                "character.size-category",
+                "character-metadata",
+                "Size",
+                CharacterResolutionStates.ChoiceRequired,
+                null,
+                null,
+                null,
+                [],
+                [],
+                [choiceKey],
+                [],
+                [],
+                rule.Provenance);
+            return;
+        }
+
+        var normalizedSelection =
+            CharacterProjectionContext.NormalizeSizeCategory(selected);
+        var resolved = normalized.FirstOrDefault(value =>
+            string.Equals(
+                value,
+                normalizedSelection,
+                StringComparison.OrdinalIgnoreCase));
+        if (resolved is null)
+        {
+            context.ChoiceViews[choiceKey] = new CharacterChoiceView(
+                choiceKey,
+                $"choice-group.{rule.Catalog.ConceptKey}.size-category",
+                $"{rule.Catalog.DisplayName} Size",
+                "size-category",
+                CharacterResolutionStates.Conflict,
+                options,
+                selected,
+                rule.Catalog.ConceptKey,
+                rule.Provenance);
+            context.Mechanics["character.size-category"] = new CharacterResolvedMechanicView(
+                "character.size-category",
+                "character-metadata",
+                "Size",
+                CharacterResolutionStates.Conflict,
+                null,
+                null,
+                null,
+                [],
+                [],
+                [choiceKey],
+                [],
+                [],
+                rule.Provenance);
+            context.Conflicts.Add(new CharacterProjectionConflictView(
+                $"conflict.{choiceKey}",
+                "invalid-choice",
+                $"Size choice '{selected}' is not allowed by '{rule.Catalog.DisplayName}'.",
+                ["character.size-category"],
+                [rule.Catalog.ConceptKey]));
+            return;
+        }
+
+        context.ChoiceViews[choiceKey] = new CharacterChoiceView(
+            choiceKey,
+            $"choice-group.{rule.Catalog.ConceptKey}.size-category",
+            $"{rule.Catalog.DisplayName} Size",
+            "size-category",
+            CharacterResolutionStates.Resolved,
+            options,
+            resolved,
+            rule.Catalog.ConceptKey,
+            rule.Provenance);
+        context.AddSizeCategory(
+            resolved,
+            rule.Catalog.ConceptKey,
+            rule.Provenance);
     }
 
     private static void ProjectMovement(CharacterProjectionRule rule, CharacterProjectionContext context)
