@@ -466,7 +466,11 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
             }
         }
         else if (level > 0
-                 && TryReadSpellSlotProgression(rule.Document, level, out var slots))
+                 && TryReadSpellSlotProgression(
+                     rule.Document,
+                     level,
+                     out var slots,
+                     out var slotTable))
         {
             context.SpellSlotProgressions[rule.Catalog.ConceptKey] =
                 new CharacterSpellSlotProgression(
@@ -475,6 +479,7 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
                     level,
                     casterProgression,
                     slots,
+                    slotTable,
                     rule.Provenance);
             resourceSystemKey = "spell-slots";
         }
@@ -609,9 +614,11 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
     private static bool TryReadSpellSlotProgression(
         JsonElement document,
         int classLevel,
-        out IReadOnlyList<int> slots)
+        out IReadOnlyList<int> slots,
+        out IReadOnlyList<IReadOnlyList<int>> slotTable)
     {
         slots = [];
+        slotTable = [];
         if (!CharacterProjectionJson.TryGetProperty(document, "classTableGroups", out var groups)
             || groups.ValueKind != JsonValueKind.Array)
         {
@@ -627,35 +634,39 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
                 continue;
             }
 
-            var rowArray = rows.EnumerateArray().ToArray();
-            if (classLevel <= 0 || classLevel > rowArray.Length)
+            var parsedRows = new List<IReadOnlyList<int>>();
+            foreach (var row in rows.EnumerateArray())
             {
-                return false;
-            }
-
-            var row = rowArray[classLevel - 1];
-            if (row.ValueKind != JsonValueKind.Array)
-            {
-                return false;
-            }
-
-            var values = new List<int>();
-            foreach (var value in row.EnumerateArray())
-            {
-                if (value.ValueKind != JsonValueKind.Number
-                    || !value.TryGetInt32(out var count)
-                    || count < 0)
+                if (row.ValueKind != JsonValueKind.Array)
                 {
                     return false;
                 }
-                values.Add(count);
+
+                var values = new List<int>();
+                foreach (var value in row.EnumerateArray())
+                {
+                    if (value.ValueKind != JsonValueKind.Number
+                        || !value.TryGetInt32(out var count)
+                        || count < 0)
+                    {
+                        return false;
+                    }
+                    values.Add(count);
+                }
+                if (values.Count == 0)
+                {
+                    return false;
+                }
+                parsedRows.Add(values);
             }
-            if (values.Count == 0)
+
+            if (classLevel <= 0 || classLevel > parsedRows.Count)
             {
                 return false;
             }
 
-            slots = values;
+            slotTable = parsedRows;
+            slots = parsedRows[classLevel - 1];
             return true;
         }
 
