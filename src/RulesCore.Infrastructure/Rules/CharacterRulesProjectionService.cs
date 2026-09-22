@@ -96,6 +96,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 rule.Catalog.DisplayName,
                 rule.Catalog.EntityType);
             RegisterToolChoiceCategory(context, rule);
+            RegisterWeaponCatalogEntry(context, rule);
         }
         context.ResolveStartingClass();
 
@@ -176,6 +177,88 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         {
             context.RegisterToolChoiceCategory(rule.Catalog.ConceptKey, category);
         }
+    }
+
+    private static void RegisterWeaponCatalogEntry(
+        CharacterProjectionContext context,
+        CharacterProjectionRule rule)
+    {
+        if (!string.Equals(
+                rule.Catalog.EntityType,
+                "item",
+                StringComparison.OrdinalIgnoreCase)
+            && !string.Equals(
+                rule.Catalog.EntityType,
+                "baseitem",
+                StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        var rawType = CharacterProjectionJson.String(rule.Document, "type");
+        if (string.IsNullOrWhiteSpace(rawType))
+        {
+            return;
+        }
+
+        var itemType = rawType
+            .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .FirstOrDefault()?
+            .Trim()
+            .ToUpperInvariant();
+        if (itemType is not ("M" or "R"))
+        {
+            return;
+        }
+
+        var properties = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var field in new[] { "property", "propertyAdd" })
+        {
+            if (!CharacterProjectionJson.TryGetProperty(rule.Document, field, out var values)
+                || values.ValueKind != JsonValueKind.Array)
+            {
+                continue;
+            }
+
+            foreach (var value in values.EnumerateArray())
+            {
+                var raw = value.ValueKind switch
+                {
+                    JsonValueKind.String => value.GetString(),
+                    JsonValueKind.Object => CharacterProjectionJson.String(value, "uid")
+                        ?? CharacterProjectionJson.String(value, "abbreviation"),
+                    _ => null
+                };
+                if (string.IsNullOrWhiteSpace(raw))
+                {
+                    continue;
+                }
+
+                var property = raw
+                    .Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                    .FirstOrDefault()?
+                    .Trim();
+                if (string.IsNullOrWhiteSpace(property))
+                {
+                    continue;
+                }
+
+                properties.Add(property.ToUpperInvariant() switch
+                {
+                    "F" => "finesse",
+                    "L" => "light",
+                    _ => property.ToLowerInvariant()
+                });
+            }
+        }
+
+        context.RegisterWeaponCatalogEntry(
+            rule.Catalog.ConceptKey,
+            rule.Catalog.DisplayName,
+            itemType,
+            CharacterProjectionJson.String(rule.Document, "weaponCategory"),
+            properties,
+            rule.Provenance);
     }
 
     private static string? ReadNormalizedToolCategory(JsonElement document)
