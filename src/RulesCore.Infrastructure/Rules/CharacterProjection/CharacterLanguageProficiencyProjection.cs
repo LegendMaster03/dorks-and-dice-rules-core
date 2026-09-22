@@ -34,7 +34,25 @@ internal static class CharacterLanguageProficiencyProjector
                 continue;
             }
 
-            foreach (var property in entry.EnumerateObject())
+            var properties = entry.EnumerateObject().ToArray();
+
+            // Fixed languages must be known before category choices are expanded so
+            // source property order can not make an already-known language selectable.
+            foreach (var property in properties.Where(value =>
+                         value.Value.ValueKind == JsonValueKind.True
+                         && !IsLanguageChoiceCategoryToken(value.Name)
+                         && !string.Equals(
+                             value.Name,
+                             "choose",
+                             StringComparison.OrdinalIgnoreCase)))
+            {
+                context.AddLanguageKnowledge(
+                    context.ResolveLanguageChoiceOption(property.Name),
+                    rule.Catalog.ConceptKey,
+                    rule.Provenance);
+            }
+
+            foreach (var property in properties)
             {
                 if (string.Equals(
                         property.Name,
@@ -73,15 +91,6 @@ internal static class CharacterLanguageProficiencyProjector
                             rule.Catalog.ConceptKey,
                             rule.Provenance),
                         forceSourceUnavailable: sourceUnavailable);
-                    continue;
-                }
-
-                if (property.Value.ValueKind == JsonValueKind.True)
-                {
-                    context.AddLanguageKnowledge(
-                        context.ResolveLanguageChoiceOption(property.Name),
-                        rule.Catalog.ConceptKey,
-                        rule.Provenance);
                 }
             }
         }
@@ -152,6 +161,14 @@ internal static class CharacterLanguageProficiencyProjector
                 rule.Provenance),
             forceSourceUnavailable: forceSourceUnavailable);
     }
+
+    private static bool IsLanguageChoiceCategoryToken(string sourceValue) =>
+        sourceValue.Trim().ToLowerInvariant() is
+            "any" or
+            "anylanguage" or
+            "anystandard" or
+            "anyexotic" or
+            "anyrare";
 
     private static bool TryExpandCategory(
         CharacterProjectionContext context,
