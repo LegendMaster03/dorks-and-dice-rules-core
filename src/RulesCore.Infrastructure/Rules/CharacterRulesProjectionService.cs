@@ -1607,6 +1607,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             return;
         }
 
+        ResolvePactMagicResources(context);
+
         context.Spellcasting.TryGetValue(
             "spellcasting.resource-choice",
             out var resourceChoice);
@@ -1746,6 +1748,43 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             CharacterResolutionStates.Resolved);
     }
 
+    private static void ResolvePactMagicResources(CharacterProjectionContext context)
+    {
+        foreach (var progression in context.PactMagicProgressions.Values
+                     .OrderBy(value => value.ConceptKey, StringComparer.Ordinal))
+        {
+            var key =
+                $"resource.pact-slot.{progression.ConceptKey}.level-{progression.SlotLevel}";
+            context.CurrentResources.TryGetValue(key, out var current);
+            context.Resources[key] = new CharacterResourceView(
+                key,
+                $"{progression.DisplayName} {Ordinal(progression.SlotLevel)}-Level Pact Slots",
+                CharacterResolutionStates.Resolved,
+                context.CurrentResources.ContainsKey(key) ? current : null,
+                progression.SlotCount,
+                null,
+                [new CharacterMechanicContributionView(
+                    $"{progression.ConceptKey}.pact-slots.level-{progression.SlotLevel}",
+                    $"{progression.DisplayName} level {progression.ClassLevel} Pact Magic table",
+                    CharacterEffectOperations.Set,
+                    progression.SlotCount,
+                    $"slot-level:{progression.SlotLevel}",
+                    progression.ConceptKey,
+                    progression.Provenance)],
+                progression.Provenance);
+
+            var spellcastingKey = $"spellcasting.{progression.ConceptKey}";
+            if (context.Spellcasting.TryGetValue(spellcastingKey, out var spellcasting))
+            {
+                context.Spellcasting[spellcastingKey] = spellcasting with
+                {
+                    State = CharacterResolutionStates.Resolved,
+                    ResourceSystemKey = "pact-magic"
+                };
+            }
+        }
+    }
+
     private static void SetSpellcastingResourceSystem(
         CharacterProjectionContext context,
         string resourceSystemKey,
@@ -1756,6 +1795,10 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                          !string.Equals(
                              value.Key,
                              "spellcasting.resource-choice",
+                             StringComparison.OrdinalIgnoreCase)
+                         && !string.Equals(
+                             value.Value.ResourceSystemKey,
+                             "pact-magic",
                              StringComparison.OrdinalIgnoreCase))
                      .ToArray())
         {
