@@ -1149,6 +1149,200 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
     }
 
     [Fact]
+    public async Task SharedCompetencyFacetsShareTrainingIdentityWithoutSharingNumericMechanics()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var actor = $"mechanics-facets-{token}";
+        Guid skillPackageId = Guid.Empty;
+        Guid toolPackageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var importer = new NormalizedSourceImportService(db);
+            var normalization = new SourceNormalizationService(db);
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var mechanics = scope.ServiceProvider.GetRequiredService<ICharacterMechanicsConsumerService>();
+
+            var toolSource = $"AT5{token}";
+            var toolRaw = JsonSerializer.Serialize(new
+            {
+                name = "Alchemist's Supplies",
+                source = toolSource,
+                entries = new[] { "Later-edition alchemy tool fixture." }
+            });
+            var toolImport = await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                $"mechanics-alchemy-tool-{token}",
+                $"Mechanics Alchemy Tool {token}",
+                "integration-test",
+                "test-only",
+                true,
+                new NormalizedSourceRepresentation(
+                    FiveEToolsSourceFormatAdapter.Format,
+                    new SourceRepresentationArtifact(
+                        $"alchemy-tool-{token}.json",
+                        Encoding.UTF8.GetBytes(toolRaw),
+                        $"integration:mechanics-alchemy-tool:{token}"),
+                    [new NormalizedSourceRecord(
+                        "tool",
+                        "Alchemist's Supplies",
+                        toolSource,
+                        $"tool|Alchemist's Supplies|{toolSource}",
+                        toolRaw,
+                        PublicationLocalKey: toolSource)],
+                    [new NormalizedSourcePublication(
+                        toolSource,
+                        $"Later Alchemy Tool {token}",
+                        "Integration Test Press",
+                        "5e",
+                        new DateOnly(2014, 8, 19))])));
+            toolPackageId = toolImport.PackageId;
+            var toolEntity = Assert.Single(toolImport.Entities);
+            var toolAccepted = await normalization.AcceptAsync(toolEntity.EntityId, actor);
+            Assert.NotNull(toolAccepted);
+            Assert.Equal("tool.alchemists-supplies", toolAccepted!.Concept.Key);
+
+            var sourceShort = $"CA35{token}";
+            var pcgenFile = $"data/35e/example/shared_alchemy_skill_{token}.lst";
+            var pcgenText = string.Join('\n',
+            [
+                $"SOURCELONG:Craft Alchemy 3.5e Fixture {token}\tSOURCESHORT:{sourceShort}",
+                "Craft (alchemy)\tKEYSTAT:INT\tUSEUNTRAINED:YES\tACHECK:NO"
+            ]);
+            var pcgenRepresentation = new PcGenSourceFormatAdapter().TryRead(
+                new SourceRepresentationArtifact(
+                    pcgenFile,
+                    Encoding.UTF8.GetBytes(pcgenText),
+                    $"integration:mechanics-craft-alchemy-35:{token}#{pcgenFile}"))
+                ?? throw new InvalidOperationException(
+                    "PCGen Craft (alchemy) fixture was not readable.");
+            var skillImport = await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                $"mechanics-craft-alchemy-35-{token}",
+                $"Mechanics Craft Alchemy 3.5e {token}",
+                "integration-test",
+                "test-only",
+                true,
+                pcgenRepresentation));
+            skillPackageId = skillImport.PackageId;
+            var skillEntity = Assert.Single(skillImport.Entities);
+            Assert.Equal("skill", skillEntity.EntityType);
+            Assert.Equal("Craft (alchemy)", skillEntity.Name);
+            var skillAccepted = await normalization.AcceptAsync(skillEntity.EntityId, actor);
+            Assert.NotNull(skillAccepted);
+            Assert.Equal("skill.craft-alchemy", skillAccepted!.Concept.Key);
+
+            var revisionIds = await db.SourceEntityRevisions
+                .Where(value =>
+                    value.SourceEntityId == toolEntity.EntityId
+                    || value.SourceEntityId == skillEntity.EntityId)
+                .ToDictionaryAsync(value => value.SourceEntityId, value => value.Id);
+            await globalRules.SetDecisionAsync(
+                toolAccepted.Concept.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionIds[toolEntity.EntityId],
+                    "Later tool facet fixture."),
+                actor);
+            await globalRules.SetDecisionAsync(
+                skillAccepted.Concept.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionIds[skillEntity.EntityId],
+                    "Historical ranked skill facet fixture."),
+                actor);
+            await globalRules.PublishAsync(actor);
+
+            var catalog = await mechanics.GetGlobalAsync(userId: null);
+            var tool = Assert.Single(
+                catalog.Mechanics,
+                value => value.MechanicKey == "competency.tool.alchemists-supplies");
+            var skill = Assert.Single(
+                catalog.Mechanics,
+                value => value.MechanicKey == "competency.skill.craft-alchemy");
+            Assert.NotNull(tool.Competency);
+            Assert.NotNull(skill.Competency);
+
+            foreach (var competency in new[] { tool.Competency!, skill.Competency! })
+            {
+                Assert.Equal("alchemy", competency.IdentityKey);
+                Assert.Equal("Alchemy", competency.IdentityName);
+                Assert.Equal("competency.alchemy.training", competency.SharedTrainingKey);
+                Assert.Equal(2, competency.Facets!.Count);
+
+                var skillFacet = Assert.Single(
+                    competency.Facets,
+                    value => value.FacetType == "skill");
+                Assert.True(skillFacet.SupportsRanks);
+                Assert.True(skillFacet.SupportsClassSkillState);
+                Assert.Contains(
+                    "competency.skill.craft-alchemy",
+                    skillFacet.MechanicKeys!);
+
+                var toolFacet = Assert.Single(
+                    competency.Facets,
+                    value => value.FacetType == "tool");
+                Assert.False(toolFacet.SupportsRanks);
+                Assert.False(toolFacet.SupportsClassSkillState);
+                Assert.True(toolFacet.SupportsTrainingState);
+                Assert.Contains(
+                    "competency.tool.alchemists-supplies",
+                    toolFacet.MechanicKeys!);
+            }
+
+            var skillProfile = Assert.Single(skill.Competency!.Profiles);
+            Assert.True(skillProfile.SupportsRanks);
+            var skillEvaluation = await mechanics.EvaluateGlobalAsync(
+                "competency.skill.craft-alchemy",
+                new CharacterMechanicEvaluationRequest(
+                    IntegerInputs: new Dictionary<string, int>
+                    {
+                        ["abilityContribution"] = 4,
+                        ["ranks"] = 6,
+                        ["otherModifier"] = 1
+                    },
+                    CapabilityKeys: ["competency.skill-ranks"],
+                    CompetencyProfileSourceEntityRevisionId:
+                        skillProfile.SourceEntityRevisionId),
+                userId: null);
+            Assert.NotNull(skillEvaluation);
+            Assert.Equal(11, skillEvaluation.Value);
+
+            var toolProfile = Assert.Single(tool.Competency!.Profiles);
+            Assert.False(toolProfile.SupportsRanks);
+            var toolEvaluation = await mechanics.EvaluateGlobalAsync(
+                "competency.tool.alchemists-supplies",
+                new CharacterMechanicEvaluationRequest(
+                    IntegerInputs: new Dictionary<string, int>
+                    {
+                        ["abilityContribution"] = 4,
+                        ["trainingContribution"] = 3,
+                        ["otherModifier"] = 1,
+                        ["ranks"] = 99
+                    },
+                    CompetencyProfileSourceEntityRevisionId:
+                        toolProfile.SourceEntityRevisionId),
+                userId: null);
+            Assert.NotNull(toolEvaluation);
+            Assert.Equal(8, toolEvaluation.Value);
+            Assert.DoesNotContain(toolProfile.Inputs, value => value.Key == "ranks");
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                skillPackageId,
+                toolPackageId);
+        }
+    }
+
+    [Fact]
     public async Task CharacterProjectionResolvesThreeXClassBabSavesGrappleAndAdvancementFeatures()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
