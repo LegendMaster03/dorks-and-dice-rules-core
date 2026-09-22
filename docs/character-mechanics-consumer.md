@@ -19,6 +19,8 @@ Character frontend
 
 Consumers must not parse `SourceEntityRevision.RawJson`, PCGen tags, 5e.tools fields, or publisher-native documents to rediscover mechanics already represented by this contract.
 
+Rules-defined identity metadata follows the same boundary. Backgrounds, alignments, deities, species/races, size categories, advancement rules, and similar source concepts remain Rules Core definitions with stable concept identity and provenance. The Character owns which applicable concept is selected and mutable advancement state such as current XP. Player name, Campaign display name, appearance, age/height/weight entered by the player, personality traits, ideals, bonds, flaws, backstory, allies/organizations, symbols, and other freeform biography remain Character/Site data. Rules Core represents a physical or biographical constraint only when a rule source actually defines one; it does not create rule concepts merely because an official paper sheet has a field.
+
 ## Endpoints
 
 Global effective mechanics:
@@ -344,6 +346,18 @@ When no armor base is selected, the ordinary unarmored formula is `10 + Dexterit
 
 A selected normalized 3.x class grants the core 3.x Character capabilities used by the bulk projection, including Fortitude/Reflex/Will, BAB, grapple, touch AC, flat-footed AC, skill ranks, and nonlethal-damage tracking. Touch AC uses the 3.x formula and omits armor, shield, and natural-armor bonuses. Flat-footed AC removes a positive Dexterity contribution and ordinary dodge contribution by default while retaining armor, shield, size, natural armor, and deflection. Explicit rule-derived Character facts can replace the Dexterity or flat-footed dodge contributions when a feature changes those normal rules. For a pure 3.x projection, ordinary AC is also composed from the same 3.x contribution set; a hybrid Character that also has standard 5.x proficiency keeps its normal effective AC while exposing the additional 3.x defenses.
 
+Every calculated AC value carries its structured contribution list. The 3.x total preserves distinct armor, shield, Dexterity, size, natural-armor, deflection, dodge, and other contribution identities rather than forcing them into one opaque bonus. Source-defined additions can continue to use distinct contribution keys, so a Details surface does not need to reconstruct the formula from the final number.
+
+Miss Chance is a separate mechanic, not an AC contribution. Normalized rules should use the stable `defense.miss-chance` mechanic identity when that rule applies and may supply a `percent` unit through `_rulesCore.character.passives`. Other source-defined avoidance mechanics may use their own keys; the projection does not force them into Miss Chance or Armor Class.
+
+## Character projection equipment definitions
+
+The request separates item definitions from Character inventory state. `itemConceptKeys` asks Rules Core to project semantic definitions for items the Character backend cares about; `equippedItemConceptKeys` is the subset currently equipped and therefore eligible to contribute active combat effects. Equipped concepts are automatically included in the item-definition set.
+
+The `equipment` result exposes stable item/concept identity, source provenance, item type/category, normalized armor role when known, weight and unit, ammunition relationship text when the source defines it, capacity text, attunement requirement, and arbitrary source property keys. These are rule/source definitions. Occurrences, possessed quantity, carried/equipped state, current ammunition/resource quantity, and current attunement selections remain Character state. An unequipped item can therefore be described without granting its AC or attack effects.
+
+Currency totals are likewise Character state. Rules-defined currency denominations/conversions, load formulas, encumbrance thresholds, container capacities, ammunition rules, and item prerequisites belong in Rules Core when their effective source has normalized them. They should be represented through canonical concepts and structured mechanics/effects/procedures rather than parsed from item prose. Unknown source semantics remain unresolved instead of receiving invented stack, capacity, conversion, or encumbrance defaults.
+
 ## Character projection weapon attacks
 
 The bulk Character projection resolves attack and damage modifiers for equipped 5e.tools-shaped melee (`M`) and ranged (`R`) weapons when the source supplies a damage expression. Ranged weapons use Dexterity. Melee weapons use Strength unless the item has the `F` (Finesse) property; finesse remains an explicit runtime choice between Strength and Dexterity rather than Rules Core silently selecting the larger modifier.
@@ -356,6 +370,8 @@ For a single selected standard caster whose effective class document exposes `ro
 
 A class with `casterProgression: "pact"` is projected through its Pact Magic table instead of `rowsSpellProgression`. Rules Core locates the source `Spell Slots` and `Slot Level` columns, reads the supplied class-level row, and returns `resource.pact-slot.<class-concept-key>.level-<slot-level>`. Pact slots remain a `pact-magic` resource system and coexist with normal spell slots; selecting a Pact Magic class alongside a standard caster does not create a false multiclass-slot conflict.
 
+Known/prepared spell lists are Character state inputs associated with stable spell concepts; source and grant provenance remain Rules Core data. A source edition's preparation rules do not become an implicit frontend restriction. The effective published rules decide whether preparation is required. In the Dorks & Dice effective rules, the house-rule override that removes the normal prepared-spell restriction must remain distinct from the underlying source rule and takes precedence when published; the Character Sheet must not reintroduce preparation simply because an official source document contains it.
+
 The published Dorks & Dice resource-choice house rule is recognized from its actual `casterChoosesResourceSystem` and `availableResourceSystems` fields. `spellcasting.resource-system` accepts the normalized choices `spell-slots` or `spell-points` (human forms such as `spell slots` are normalized). Until that choice is supplied, standard spellcasting resources are `choice-required`. A spell-points choice uses the official 2014 spell-point progression for standard Spellcasting. Rules Core derives the effective spell-point caster level from the normalized caster progression, projects the point-pool maximum, maximum slot level, per-slot point costs, and the one-per-long-rest creation limit for 6th-level and higher slots. Pact Magic remains a separate resource system and is not converted by this policy. The spell-point policy is isolated from Pact Magic so a distinct Pact conversion can be added later without changing the standard progression.
 
 When more than one selected class contributes a standard spell-slot table, Rules Core combines caster levels from the source `casterProgression` identities rather than adding class-table slot counts. `full` contributes the full class level, `1/2` contributes half rounded down, `1/3` contributes one third rounded down, and `artificer` contributes half rounded up. The resulting effective caster level selects a row from the retained source slot tables. If available source tables disagree for that effective level, or a progression identity is unsupported, the result remains explicit and conflicted instead of choosing one table silently. Pact Magic is excluded from this calculation and remains a separate resource.
@@ -366,11 +382,17 @@ Class hit-die size and advancement level are Rules Core inputs to maximum-HP pro
 
 Rules Core validates each supplied value against the source hit die, applies the resolved Constitution modifier for every level, applies the standard minimum gain of 1 hit point per level, and returns the composed `health.maximum-hp` value with per-level provenance. It does not assume a first-level maximum, choose a fixed average, or fill in a missing level. Missing level outcomes remain `missing-character-input`; stale, duplicate, or out-of-range outcomes are explicit conflicts.
 
+Each contributing class/prestige-class Hit Die is also projected as its own `resource.hit-die.<class-concept-key>` resource. The maximum comes from source-defined Hit Die size plus the supplied advancement level, so multiclass Characters retain separate pools by granting source. The current/spent value is read only from Character-owned `currentResources`. Recovery behavior is not hard-coded into the pool; an effective ruleset can attach the relevant recovery procedure.
+
+Death Saves use the same generalized boundary. When an effective rule defines them, success and failure tracks can be projected as resources such as `resource.death-save.successes` and `resource.death-save.failures`, including source-defined maxima and a recovery/reset procedure key. The Character owns the current track values. A normalized procedure can carry structured `set`/adjustment effects for reset behavior, so the Character Sheet does not infer the limit or clear the tracks from UI convention. Rulesets without Death Saves simply do not project those resources.
+
 ## Native class and subclass feature progression
 
 The bulk Character projection reads acquisition levels directly from native 5e.tools class-feature and subclass-feature UIDs. Class feature references use `Name|Class|ClassSource|Level|...`; subclass feature references use `Name|Class|ClassSource|Subclass|SubclassSource|Level|...`. Object-wrapped `classFeature` and `subclassFeature` references are treated identically.
 
 Only features whose source-defined acquisition level is at or below the supplied advancement level are projected as resolved Character features. Future features are omitted. A feature entry with no trustworthy acquisition level remains `applicable-unresolved` instead of being assigned to a level by position or display order.
+
+Every projected feature has a stable `featureKey` and occurrence identity, source concept/provenance, granting-source kind, and acquisition level when the source exposes one. This preserves distinctions such as class, subclass, prestige-class, race/species, background, and feat grants even when a Character UI presents them in one Features & Traits list. Two grants with the same display name do not become one occurrence merely because their labels match. Normalized effects remain structured rule effects rather than forcing the Character Sheet to crawl source documents.
 
 ## Character projection choices
 
@@ -391,6 +413,12 @@ Fixed named tool entries resolve against the accessible canonical tool competenc
 The bulk Character projection treats effective `language` Rule Concepts as the legal language catalog. Fixed entries in `languageProficiencies` become resolved `qualification.languages.*` capabilities. Choice tokens `any`/`anyLanguage`, `anyStandard`, `anyExotic`, and `anyRare` are populated from accessible effective language concepts; category-scoped choices use the source language `type` or normalized `_rulesCore.languageCategory` metadata.
 
 Fixed languages are registered before category choices regardless of source JSON property order, so a language already granted by the same rule is not offered again. A selected language is likewise removed from later choice groups during the same projection. `choose.from` may mix category tokens and explicitly named languages and uses the same canonical option path. If the effective catalog can not represent a requested category, the choice remains `source-unavailable`; Rules Core does not synthesize a language list.
+
+## Ability state and temporary effects
+
+`ability.<ability>.base` is the Character-owned input score as received by Rules Core. `ability.<ability>.score` and `ability.<ability>.modifier` remain the effective values after rule contributions. Contributions now carry an optional state kind and condition identity. A conditional or active-condition contribution is marked `temporary` rather than being indistinguishable from a permanent ancestry/background/advancement bonus.
+
+When at least one active temporary contribution exists, the projection additionally exposes `ordinary-score`, `ordinary-modifier`, `temporary-adjustment`, `temporary-score`, and `temporary-modifier` identities for that ability. Those values are Rules Core results, not frontend arithmetic. Conditional effects that are not active remain visible as rule effects but do not alter the effective score.
 
 ## Ability-score choice projection
 
