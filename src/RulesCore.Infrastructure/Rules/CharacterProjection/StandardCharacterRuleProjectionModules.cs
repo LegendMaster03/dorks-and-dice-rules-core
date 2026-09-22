@@ -1857,6 +1857,35 @@ internal sealed class GenericCharacterRuleProjectionModule : ICharacterRuleProje
         CharacterProjectionRule rule,
         CharacterProjectionContext context)
     {
+        var preparationRestriction = CharacterProjectionJson.String(
+            rule.Document,
+            "preparedSpellRestriction");
+        if (!string.IsNullOrWhiteSpace(preparationRestriction))
+        {
+            const string key = "spellcasting.preparation-restriction";
+            context.Mechanics[key] = new CharacterResolvedMechanicView(
+                key,
+                "spellcasting-policy",
+                "Spell Preparation Restriction",
+                CharacterResolutionStates.Resolved,
+                null,
+                preparationRestriction.Trim(),
+                null,
+                [],
+                [],
+                [],
+                [],
+                [new CharacterMechanicContributionView(
+                    $"{rule.Catalog.ConceptKey}.prepared-spell-restriction",
+                    rule.Catalog.DisplayName,
+                    CharacterEffectOperations.Set,
+                    null,
+                    preparationRestriction.Trim(),
+                    rule.Catalog.ConceptKey,
+                    rule.Provenance)],
+                rule.Provenance);
+        }
+
         var mechanic = CharacterProjectionJson.String(rule.Document, "mechanic");
         var choosesResourceSystem =
             string.Equals(mechanic, "caster-resource-choice", StringComparison.OrdinalIgnoreCase)
