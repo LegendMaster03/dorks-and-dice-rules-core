@@ -141,13 +141,9 @@ internal static class CharacterStructuredProficiencyProjector
                     && property.Value.TryGetInt32(out var count)
                     && count > 0)
                 {
-                    var allTools = string.Equals(
-                        property.Name,
-                        "anyTool",
-                        StringComparison.OrdinalIgnoreCase);
-                    var options = allTools
-                        ? context.AllToolChoiceOptions()
-                        : [];
+                    var options = ExpandToolChoiceOptions(
+                        context,
+                        property.Name);
                     CharacterStartingProficiencyProjector.ProjectChoiceGroup(
                         rule,
                         context,
@@ -155,7 +151,7 @@ internal static class CharacterStructuredProficiencyProjector
                         groupIndex,
                         count,
                         options,
-                        allTools ? "anyTool" : property.Name,
+                        property.Name,
                         kind: "tool-proficiency",
                         optionLabel: "Tool Proficiency",
                         onSelected: selected => context.AddToolTraining(
