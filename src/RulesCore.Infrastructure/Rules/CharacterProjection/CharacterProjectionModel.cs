@@ -167,6 +167,7 @@ internal sealed class CharacterProjectionContext
         new(Keys);
     public Dictionary<string, HashSet<string>> LanguageChoiceConceptKeysByCategory { get; } =
         new(Keys);
+    public HashSet<string> KnownLanguageChoiceIdentities { get; } = new(Keys);
     public Dictionary<string, CharacterWeaponCatalogEntry> WeaponCatalog { get; } = new(Keys);
     public Dictionary<string, CharacterWeaponAttackProfile> WeaponAttacks { get; } = new(Keys);
     public Dictionary<string, CharacterSpellSlotProgression> SpellSlotProgressions { get; } = new(Keys);
@@ -679,6 +680,8 @@ internal sealed class CharacterProjectionContext
 
     public IReadOnlyList<CharacterChoiceOptionView> AllLanguageChoiceOptions() =>
         LanguageChoiceOptionsByConceptKey.Values
+            .Where(value => !KnownLanguageChoiceIdentities.Contains(
+                value.ConceptKey ?? value.Value))
             .OrderBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
             .ThenBy(value => value.Value, StringComparer.Ordinal)
             .ToArray();
@@ -698,6 +701,8 @@ internal sealed class CharacterProjectionContext
             .Select(value => LanguageChoiceOptionsByConceptKey.GetValueOrDefault(value))
             .Where(value => value is not null)
             .Cast<CharacterChoiceOptionView>()
+            .Where(value => !KnownLanguageChoiceIdentities.Contains(
+                value.ConceptKey ?? value.Value))
             .OrderBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
             .ThenBy(value => value.Value, StringComparer.Ordinal)
             .ToArray();
@@ -708,6 +713,7 @@ internal sealed class CharacterProjectionContext
         string sourceConceptKey,
         CharacterMechanicProvenanceView provenance)
     {
+        KnownLanguageChoiceIdentities.Add(option.ConceptKey ?? option.Value);
         var qualificationKey = $"qualification.languages.{Slug(option.DisplayName)}";
         Qualifications[qualificationKey] = new CharacterQualificationView(
             qualificationKey,
