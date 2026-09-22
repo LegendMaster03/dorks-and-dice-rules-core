@@ -221,6 +221,24 @@ internal static class CharacterStructuredProficiencyProjector
                 rule.Provenance));
     }
 
+    private static IReadOnlyList<CharacterChoiceOptionView> ExpandToolChoiceOptions(
+        CharacterProjectionContext context,
+        string sourceValue)
+    {
+        if (string.IsNullOrWhiteSpace(sourceValue))
+        {
+            return [];
+        }
+
+        return sourceValue.Trim().ToLowerInvariant() switch
+        {
+            "anytool" => context.AllToolChoiceOptions(),
+            "anyartisanstool" => context.ToolChoiceOptionsForCategory("artisans-tool"),
+            "anymusicalinstrument" => context.ToolChoiceOptionsForCategory("musical-instrument"),
+            _ => [context.ResolveToolChoiceOption(sourceValue)]
+        };
+    }
+
     private static void AddQualification(
         CharacterProjectionRule rule,
         CharacterProjectionContext context,
