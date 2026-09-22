@@ -171,7 +171,10 @@ public sealed record CharacterFeatureView(
     CharacterMechanicProvenanceView Provenance,
     string? OccurrenceKey = null,
     string? GrantingSourceKind = null,
-    int? AcquisitionLevel = null);
+    int? AcquisitionLevel = null,
+    string? FeatureConceptKey = null,
+    string? FeatureEntityType = null,
+    CharacterMechanicProvenanceView? FeatureProvenance = null);
 
 public sealed record CharacterEquipmentDefinitionView(
     string ItemKey,
