@@ -836,7 +836,8 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
                 entry,
                 isSubclass,
                 out var displayName,
-                out var acquisitionLevel);
+                out var acquisitionLevel,
+                out var featureReference);
             if (!parsed)
             {
                 var fallback = ReadFeatureDisplayName(entry, isSubclass);
@@ -873,7 +874,10 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
                 rule.Catalog.ConceptKey,
                 rule.Provenance,
                 rule.Catalog.EntityType,
-                acquisitionLevel);
+                acquisitionLevel,
+                featureDefinition: featureReference is null
+                    ? null
+                    : context.ResolveFeatureReference(featureReference, isSubclass));
         }
     }
 
@@ -881,10 +885,12 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
         JsonElement entry,
         bool isSubclass,
         out string displayName,
-        out int acquisitionLevel)
+        out int acquisitionLevel,
+        out string? featureReference)
     {
         displayName = string.Empty;
         acquisitionLevel = 0;
+        featureReference = null;
 
         string? reference = null;
         if (entry.ValueKind == JsonValueKind.String)
@@ -929,6 +935,7 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
 
         displayName = parts[0].Trim();
         acquisitionLevel = parsedLevel;
+        featureReference = reference.Trim();
         return true;
     }
 
