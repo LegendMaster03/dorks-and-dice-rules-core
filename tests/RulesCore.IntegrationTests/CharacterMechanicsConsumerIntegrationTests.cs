@@ -1639,6 +1639,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             {
                 name = "Character State Support",
                 source = sourceCode,
+                preparedSpellRestriction = "removed",
                 _rulesCore = new
                 {
                     character = new
@@ -1849,6 +1850,11 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 value => value.MechanicKey == "defense.miss-chance");
             Assert.Equal(20, missChance.NumericValue);
             Assert.Equal("percent", missChance.Unit);
+            var preparation = Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "spellcasting.preparation-restriction");
+            Assert.Equal("removed", preparation.TextValue);
+            Assert.Equal(conceptKey, Assert.Single(preparation.Contributions).SourceConceptKey);
             Assert.DoesNotContain(
                 Assert.Single(
                     result.Mechanics,
