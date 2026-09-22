@@ -30,6 +30,13 @@ internal sealed record CharacterSpellSlotProgression(
     IReadOnlyList<int> SlotsBySpellLevel,
     CharacterMechanicProvenanceView Provenance);
 
+internal sealed record CharacterHitDieProfile(
+    string ConceptKey,
+    string DisplayName,
+    int ClassLevel,
+    int? Faces,
+    CharacterMechanicProvenanceView Provenance);
+
 internal interface ICharacterRuleProjectionModule
 {
     bool Handles(CharacterProjectionRule rule, CharacterProjectionContext context);
@@ -82,6 +89,7 @@ internal sealed class CharacterProjectionContext
         BooleanFacts = NormalizeBooleanDictionary(request.BooleanFacts);
         StringFacts = NormalizeStringDictionary(request.StringFacts);
         CurrentResources = NormalizeIntegerDictionary(request.CurrentResources);
+        HitPointGains = request.HitPointGains ?? [];
         RequestedMechanics = request.RequestedMechanicKeys is null
             ? null
             : new HashSet<string>(request.RequestedMechanicKeys.Select(Normalize), Keys);
@@ -107,6 +115,7 @@ internal sealed class CharacterProjectionContext
     public Dictionary<string, bool> BooleanFacts { get; }
     public Dictionary<string, string> StringFacts { get; }
     public Dictionary<string, int> CurrentResources { get; }
+    public IReadOnlyList<CharacterHitPointGainInput> HitPointGains { get; }
     public HashSet<string>? RequestedMechanics { get; }
 
     public Dictionary<string, List<CharacterMechanicContributionView>> AbilityContributions { get; } =
@@ -137,6 +146,7 @@ internal sealed class CharacterProjectionContext
         new(Keys);
     public Dictionary<string, CharacterWeaponAttackProfile> WeaponAttacks { get; } = new(Keys);
     public Dictionary<string, CharacterSpellSlotProgression> SpellSlotProgressions { get; } = new(Keys);
+    public Dictionary<string, CharacterHitDieProfile> HitDice { get; } = new(Keys);
 
     public Dictionary<string, CharacterResolvedMechanicView> Mechanics { get; } = new(Keys);
     public Dictionary<string, CharacterCapabilityView> CapabilityViews { get; } = new(Keys);
