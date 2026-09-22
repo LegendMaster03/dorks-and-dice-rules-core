@@ -19,7 +19,8 @@ internal sealed class RaceCharacterRuleProjectionModule : ICharacterRuleProjecti
             "race-species",
             CharacterResolutionStates.Resolved,
             rule.Catalog.ConceptKey,
-            rule.Provenance);
+            rule.Provenance,
+            rule.Catalog.EntityType);
 
         ProjectSize(rule, context);
         ProjectMovement(rule, context);
