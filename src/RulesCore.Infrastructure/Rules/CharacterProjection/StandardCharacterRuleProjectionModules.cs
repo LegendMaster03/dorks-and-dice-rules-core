@@ -1064,6 +1064,14 @@ internal sealed class GenericCharacterRuleProjectionModule : ICharacterRuleProje
                 rule.Provenance);
         }
 
+        if (context.IsSelected(rule.Catalog.ConceptKey))
+        {
+            CharacterStartingProficiencyProjector.ProjectSourceSkills(
+                rule,
+                context,
+                rule.Document);
+        }
+
         if (context.ActiveConditions.Contains(rule.Catalog.ConceptKey))
         {
             context.AddFeature(

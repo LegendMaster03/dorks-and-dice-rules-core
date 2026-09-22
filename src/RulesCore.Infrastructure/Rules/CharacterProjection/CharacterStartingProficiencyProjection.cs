@@ -16,11 +16,53 @@ internal static class CharacterStartingProficiencyProjector
             return;
         }
 
+        ProjectSkillCollection(
+            rule,
+            context,
+            skills,
+            "starting-proficiencies.skills");
+    }
+
+    public static void ProjectSourceSkills(
+        CharacterProjectionRule rule,
+        CharacterProjectionContext context,
+        JsonElement document)
+    {
+        if (!CharacterProjectionJson.TryGetProperty(document, "skillProficiencies", out var skills))
+        {
+            return;
+        }
+
+        ProjectSkillCollection(
+            rule,
+            context,
+            skills,
+            "skill-proficiencies");
+    }
+
+    private static void ProjectSkillCollection(
+        CharacterProjectionRule rule,
+        CharacterProjectionContext context,
+        JsonElement skills,
+        string pathKey)
+    {
         if (skills.ValueKind == JsonValueKind.String)
         {
             ProjectDirectSkill(rule, context, skills.GetString());
             return;
         }
+
+        if (skills.ValueKind == JsonValueKind.Object)
+        {
+            ProjectSkillObject(
+                rule,
+                context,
+                skills,
+                pathKey,
+                groupIndex: 0);
+            return;
+        }
+
         if (skills.ValueKind != JsonValueKind.Array)
         {
             return;
@@ -32,30 +74,59 @@ internal static class CharacterStartingProficiencyProjector
             if (entry.ValueKind == JsonValueKind.String)
             {
                 ProjectDirectSkill(rule, context, entry.GetString());
-                continue;
-            }
-            if (entry.ValueKind != JsonValueKind.Object)
-            {
                 groupIndex++;
                 continue;
             }
 
-            if (TryReadChoice(
-                    entry,
-                    context,
-                    out var count,
-                    out var options,
-                    out var sourceShape))
+            if (entry.ValueKind == JsonValueKind.Object)
             {
-                ProjectChoiceGroup(
+                ProjectSkillObject(
                     rule,
                     context,
-                    groupIndex,
-                    count,
-                    options,
-                    sourceShape);
+                    entry,
+                    pathKey,
+                    groupIndex);
             }
             groupIndex++;
+        }
+    }
+
+    private static void ProjectSkillObject(
+        CharacterProjectionRule rule,
+        CharacterProjectionContext context,
+        JsonElement entry,
+        string pathKey,
+        int groupIndex)
+    {
+        foreach (var property in entry.EnumerateObject())
+        {
+            if (string.Equals(property.Name, "any", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(property.Name, "choose", StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            if (property.Value.ValueKind == JsonValueKind.True)
+            {
+                ProjectDirectSkill(rule, context, property.Name);
+            }
+        }
+
+        if (TryReadChoice(
+                entry,
+                context,
+                out var count,
+                out var options,
+                out var sourceShape))
+        {
+            ProjectChoiceGroup(
+                rule,
+                context,
+                pathKey,
+                groupIndex,
+                count,
+                options,
+                sourceShape);
         }
     }
 
@@ -132,13 +203,14 @@ internal static class CharacterStartingProficiencyProjector
     private static void ProjectChoiceGroup(
         CharacterProjectionRule rule,
         CharacterProjectionContext context,
+        string pathKey,
         int groupIndex,
         int count,
         IReadOnlyList<CharacterChoiceOptionView> options,
         string sourceShape)
     {
         var groupKey =
-            $"choice-group.{rule.Catalog.ConceptKey}.starting-proficiencies.skills.{groupIndex}";
+            $"choice-group.{rule.Catalog.ConceptKey}.{pathKey}.{groupIndex}";
         var selectedIdentities = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var sourceUnavailable = options.Count < count;
 
@@ -147,7 +219,7 @@ internal static class CharacterStartingProficiencyProjector
             context.Conflicts.Add(new CharacterProjectionConflictView(
                 $"conflict.{groupKey}.options",
                 "source-unavailable",
-                $"{rule.Catalog.DisplayName} requires {count} skill proficiency choice(s), but only {options.Count} mechanically resolvable option(s) are available for source choice shape '{sourceShape}'.",
+                $"{rule.Catalog.DisplayName} requires {count} skill proficiency choice(s), but only {options.Count} available option(s) can be represented for source choice shape '{sourceShape}'.",
                 [],
                 [rule.Catalog.ConceptKey]));
         }
@@ -155,7 +227,7 @@ internal static class CharacterStartingProficiencyProjector
         for (var slot = 0; slot < count; slot++)
         {
             var choiceKey =
-                $"choice.{rule.Catalog.ConceptKey}.starting-proficiencies.skills.{groupIndex}.{slot}";
+                $"choice.{rule.Catalog.ConceptKey}.{pathKey}.{groupIndex}.{slot}";
             var displayName = count == 1
                 ? $"{rule.Catalog.DisplayName} Skill Proficiency"
                 : $"{rule.Catalog.DisplayName} Skill Proficiency {slot + 1} of {count}";

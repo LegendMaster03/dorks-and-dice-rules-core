@@ -2640,6 +2640,230 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task CharacterProjectionAppliesSelectedFeatSkillProficiencies()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-feat-skills-{token}";
+        var classConceptKey = $"class.feat-skill-user-{token}";
+        var featConceptKey = $"feat.skill-training-{token}";
+        var arcanaConceptKey = $"skill.arcana-feat-{token}";
+        var historyConceptKey = $"skill.history-feat-{token}";
+        var actor = $"character-feat-skills-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"FSP{token}";
+            var classRaw = JsonSerializer.Serialize(new
+            {
+                name = "Feat Skill User",
+                source = sourceCode,
+                hd = new { number = 1, faces = 8 },
+                proficiency = new[] { "int", "wis" }
+            });
+            var featRaw = JsonSerializer.Serialize(new
+            {
+                name = "Skill Training",
+                source = sourceCode,
+                skillProficiencies = new object[]
+                {
+                    new Dictionary<string, object> { ["history"] = true },
+                    new
+                    {
+                        choose = new
+                        {
+                            from = new[] { "arcana" },
+                            count = 1
+                        }
+                    }
+                }
+            });
+            var arcanaRaw = JsonSerializer.Serialize(new
+            {
+                name = "Arcana",
+                source = sourceCode,
+                ability = "int"
+            });
+            var historyRaw = JsonSerializer.Serialize(new
+            {
+                name = "History",
+                source = sourceCode,
+                ability = "int"
+            });
+
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Feat Skill Projection Fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"feat-skills-{token}.json",
+                            Encoding.UTF8.GetBytes("{}"),
+                            $"integration:character-feat-skills:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "class",
+                                "Feat Skill User",
+                                sourceCode,
+                                $"class|Feat Skill User|{sourceCode}",
+                                classRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "feat",
+                                "Skill Training",
+                                sourceCode,
+                                $"feat|Skill Training|{sourceCode}",
+                                featRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "skill",
+                                "Arcana",
+                                sourceCode,
+                                $"skill|Arcana|{sourceCode}",
+                                arcanaRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "skill",
+                                "History",
+                                sourceCode,
+                                $"skill|History|{sourceCode}",
+                                historyRaw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Feat Skill Projection Fixture {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2014, 8, 19))
+                        ])));
+            packageId = imported.PackageId;
+            var byName = imported.Entities.ToDictionary(value => value.Name, StringComparer.Ordinal);
+            var definitions = new[]
+            {
+                (Key: classConceptKey, Entity: byName["Feat Skill User"]),
+                (Key: featConceptKey, Entity: byName["Skill Training"]),
+                (Key: arcanaConceptKey, Entity: byName["Arcana"]),
+                (Key: historyConceptKey, Entity: byName["History"])
+            };
+            var concepts = new Dictionary<string, RuleConceptView>(StringComparer.Ordinal);
+            foreach (var definition in definitions)
+            {
+                var concept = await globalRules.CreateConceptAsync(
+                    new CreateRuleConceptRequest(
+                        definition.Key,
+                        definition.Entity.EntityType,
+                        definition.Entity.Name),
+                    actor);
+                concepts[definition.Key] = concept.Value;
+                await globalRules.BindSourceEntityAsync(
+                    concept.Value.Id,
+                    new BindRuleConceptSourceRequest(definition.Entity.EntityId),
+                    actor);
+            }
+
+            var entityIds = definitions.Select(value => value.Entity.EntityId).ToArray();
+            var revisionIds = await db.SourceEntityRevisions
+                .Where(value => entityIds.Contains(value.SourceEntityId))
+                .ToDictionaryAsync(value => value.SourceEntityId, value => value.Id);
+            foreach (var definition in definitions)
+            {
+                await globalRules.SetDecisionAsync(
+                    concepts[definition.Key].Id,
+                    new SetGlobalRuleDecisionRequest(
+                        revisionIds[definition.Entity.EntityId],
+                        "Source-level skill proficiency fixture."),
+                    actor);
+            }
+            await globalRules.PublishAsync(actor);
+
+            CharacterRulesProjectionRequest Request(
+                IReadOnlyList<CharacterRuntimeChoiceInput>? choices = null) =>
+                new(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 10,
+                        ["dexterity"] = 12,
+                        ["constitution"] = 12,
+                        ["intelligence"] = 18,
+                        ["wisdom"] = 12,
+                        ["charisma"] = 10
+                    },
+                    SelectedConcepts:
+                    [
+                        new CharacterSelectedConceptInput(featConceptKey)
+                    ],
+                    Advancements:
+                    [
+                        new CharacterAdvancementFactInput(classConceptKey, 5)
+                    ],
+                    Choices: choices);
+
+            var unresolved = await projection.ResolveGlobalAsync(
+                Request(),
+                userId: null);
+            var choice = Assert.Single(
+                unresolved.Choices,
+                value => value.SourceConceptKey == featConceptKey
+                    && value.Kind == "skill-proficiency");
+            Assert.Equal(CharacterResolutionStates.ChoiceRequired, choice.State);
+
+            var history = Assert.Single(
+                unresolved.Mechanics,
+                value => value.MechanicKey == $"competency.{historyConceptKey}");
+            Assert.Equal(CharacterResolutionStates.Resolved, history.State);
+            Assert.Equal(7, history.NumericValue);
+
+            var arcanaOption = Assert.Single(
+                choice.Options,
+                value => value.ConceptKey == arcanaConceptKey);
+            var selected = await projection.ResolveGlobalAsync(
+                Request(
+                [
+                    new CharacterRuntimeChoiceInput(
+                        choice.ChoiceKey,
+                        arcanaOption.Value)
+                ]),
+                userId: null);
+
+            var arcana = Assert.Single(
+                selected.Mechanics,
+                value => value.MechanicKey == $"competency.{arcanaConceptKey}");
+            Assert.Equal(CharacterResolutionStates.Resolved, arcana.State);
+            Assert.Equal(7, arcana.NumericValue);
+            Assert.Equal(
+                CharacterResolutionStates.Resolved,
+                Assert.Single(
+                    selected.Choices,
+                    value => value.ChoiceKey == choice.ChoiceKey).State);
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
     private static HttpRequestMessage HostedRequest(HttpMethod method, string path, string ticket)
     {
         var request = new HttpRequestMessage(method, path);
