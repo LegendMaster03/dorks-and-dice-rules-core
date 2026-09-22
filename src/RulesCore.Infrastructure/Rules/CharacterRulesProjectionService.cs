@@ -1692,30 +1692,52 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             return;
         }
 
+        IReadOnlyList<int> slotMaximums;
+        CharacterSpellSlotProgression referenceProgression;
+        int? effectiveCasterLevel = null;
+        IReadOnlyDictionary<string, int>? casterLevelContributions = null;
+
         if (progressions.Length > 1)
         {
-            context.Resources["resource.spell-slots"] = new CharacterResourceView(
-                "resource.spell-slots",
-                "Spell Slots",
-                CharacterResolutionStates.ApplicableUnresolved,
-                null,
-                null,
-                null,
-                [],
-                CharacterProjectionContext.EmptyProvenance());
-            context.Conflicts.Add(new CharacterProjectionConflictView(
-                "conflict.spellcasting.multiclass-slots",
-                "multiclass-spell-slot-progression",
-                "Multiple selected classes provide spell-slot tables. Rules Core preserves those source progressions but will not combine them until the effective multiclass caster-level rule is normalized.",
-                ["resource.spell-slots"],
-                progressions.Select(value => value.ConceptKey).ToArray()));
-            return;
+            if (!TryResolveMulticlassSpellSlots(
+                    progressions,
+                    out slotMaximums,
+                    out referenceProgression,
+                    out var combinedCasterLevel,
+                    out var contributions,
+                    out var failureReason))
+            {
+                context.Resources["resource.spell-slots"] = new CharacterResourceView(
+                    "resource.spell-slots",
+                    "Spell Slots",
+                    CharacterResolutionStates.ApplicableUnresolved,
+                    null,
+                    null,
+                    null,
+                    [],
+                    CharacterProjectionContext.EmptyProvenance());
+                context.Conflicts.Add(new CharacterProjectionConflictView(
+                    "conflict.spellcasting.multiclass-slots",
+                    "multiclass-spell-slot-progression",
+                    failureReason
+                        ?? "The selected spellcasting progressions can not be combined from the effective source tables.",
+                    ["resource.spell-slots"],
+                    progressions.Select(value => value.ConceptKey).ToArray()));
+                return;
+            }
+
+            effectiveCasterLevel = combinedCasterLevel;
+            casterLevelContributions = contributions;
+        }
+        else
+        {
+            referenceProgression = progressions[0];
+            slotMaximums = referenceProgression.SlotsBySpellLevel;
         }
 
-        var progression = progressions[0];
-        for (var index = 0; index < progression.SlotsBySpellLevel.Count; index++)
+        for (var index = 0; index < slotMaximums.Count; index++)
         {
-            var maximum = progression.SlotsBySpellLevel[index];
+            var maximum = slotMaximums[index];
             if (maximum <= 0)
             {
                 continue;
@@ -1724,6 +1746,44 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             var spellLevel = index + 1;
             var key = $"resource.spell-slot.{spellLevel}";
             context.CurrentResources.TryGetValue(key, out var current);
+
+            var maximumContributions = new List<CharacterMechanicContributionView>();
+            if (effectiveCasterLevel is int combinedLevel
+                && casterLevelContributions is not null)
+            {
+                foreach (var progression in progressions)
+                {
+                    maximumContributions.Add(new CharacterMechanicContributionView(
+                        $"{progression.ConceptKey}.effective-caster-level",
+                        $"{progression.DisplayName} effective caster level",
+                        CharacterEffectOperations.Add,
+                        casterLevelContributions.GetValueOrDefault(progression.ConceptKey),
+                        progression.CasterProgression,
+                        progression.ConceptKey,
+                        progression.Provenance));
+                }
+
+                maximumContributions.Add(new CharacterMechanicContributionView(
+                    $"spellcasting.multiclass-slots.level-{spellLevel}",
+                    $"Combined caster level {combinedLevel} slot table",
+                    CharacterEffectOperations.Set,
+                    maximum,
+                    $"effective-caster-level:{combinedLevel}",
+                    referenceProgression.ConceptKey,
+                    referenceProgression.Provenance));
+            }
+            else
+            {
+                maximumContributions.Add(new CharacterMechanicContributionView(
+                    $"{referenceProgression.ConceptKey}.spell-slots.level-{spellLevel}",
+                    $"{referenceProgression.DisplayName} level {referenceProgression.ClassLevel} slot table",
+                    CharacterEffectOperations.Set,
+                    maximum,
+                    referenceProgression.CasterProgression,
+                    referenceProgression.ConceptKey,
+                    referenceProgression.Provenance));
+            }
+
             context.Resources[key] = new CharacterResourceView(
                 key,
                 $"{Ordinal(spellLevel)}-Level Spell Slots",
@@ -1731,21 +1791,172 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 context.CurrentResources.ContainsKey(key) ? current : null,
                 maximum,
                 null,
-                [new CharacterMechanicContributionView(
-                    $"{progression.ConceptKey}.spell-slots.level-{spellLevel}",
-                    $"{progression.DisplayName} level {progression.ClassLevel} slot table",
-                    CharacterEffectOperations.Set,
-                    maximum,
-                    progression.CasterProgression,
-                    progression.ConceptKey,
-                    progression.Provenance)],
-                progression.Provenance);
+                maximumContributions,
+                effectiveCasterLevel is null
+                    ? referenceProgression.Provenance
+                    : CharacterProjectionContext.EmptyProvenance());
         }
 
         SetSpellcastingResourceSystem(
             context,
             "spell-slots",
             CharacterResolutionStates.Resolved);
+    }
+
+    private static bool TryResolveMulticlassSpellSlots(
+        IReadOnlyList<CharacterSpellSlotProgression> progressions,
+        out IReadOnlyList<int> slots,
+        out CharacterSpellSlotProgression referenceProgression,
+        out int effectiveCasterLevel,
+        out IReadOnlyDictionary<string, int> casterLevelContributions,
+        out string? failureReason)
+    {
+        slots = [];
+        referenceProgression = progressions[0];
+        effectiveCasterLevel = 0;
+        failureReason = null;
+        var contributions = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var progression in progressions)
+        {
+            if (!TryGetEffectiveCasterLevel(
+                    progression.ClassLevel,
+                    progression.CasterProgression,
+                    out var contribution))
+            {
+                casterLevelContributions = contributions;
+                failureReason =
+                    $"Caster progression '{progression.CasterProgression ?? "unknown"}' from '{progression.DisplayName}' does not have normalized multiclass weighting.";
+                return false;
+            }
+
+            contributions[progression.ConceptKey] = contribution;
+            effectiveCasterLevel = checked(effectiveCasterLevel + contribution);
+        }
+
+        casterLevelContributions = contributions;
+        if (effectiveCasterLevel <= 0)
+        {
+            slots = [];
+            return true;
+        }
+
+        var candidates = new List<(CharacterSpellSlotProgression Progression, IReadOnlyList<int> Slots)>();
+        foreach (var progression in progressions)
+        {
+            if (!TryGetSourceClassLevelForEffectiveCasterLevel(
+                    effectiveCasterLevel,
+                    progression.CasterProgression,
+                    out var sourceClassLevel)
+                || sourceClassLevel <= 0
+                || sourceClassLevel > progression.SlotsByClassLevel.Count)
+            {
+                continue;
+            }
+
+            candidates.Add((
+                progression,
+                progression.SlotsByClassLevel[sourceClassLevel - 1]));
+        }
+
+        if (candidates.Count == 0)
+        {
+            failureReason =
+                $"No selected source slot table can represent combined effective caster level {effectiveCasterLevel}.";
+            return false;
+        }
+
+        referenceProgression = candidates
+            .OrderByDescending(value => value.Slots.Count)
+            .ThenBy(value => value.Progression.ConceptKey, StringComparer.Ordinal)
+            .First()
+            .Progression;
+        var referenceSlots = candidates
+            .First(value => ReferenceEquals(value.Progression, referenceProgression))
+            .Slots;
+        var width = candidates.Max(value => value.Slots.Count);
+
+        foreach (var candidate in candidates)
+        {
+            for (var index = 0; index < width; index++)
+            {
+                var expected = index < referenceSlots.Count ? referenceSlots[index] : 0;
+                var actual = index < candidate.Slots.Count ? candidate.Slots[index] : 0;
+                if (actual == expected)
+                {
+                    continue;
+                }
+
+                failureReason =
+                    $"Selected source spell-slot tables disagree at combined effective caster level {effectiveCasterLevel}.";
+                return false;
+            }
+        }
+
+        slots = Enumerable.Range(0, width)
+            .Select(index => index < referenceSlots.Count ? referenceSlots[index] : 0)
+            .ToArray();
+        return true;
+    }
+
+    private static bool TryGetEffectiveCasterLevel(
+        int classLevel,
+        string? casterProgression,
+        out int effectiveLevel)
+    {
+        effectiveLevel = 0;
+        if (classLevel < 0)
+        {
+            return false;
+        }
+
+        switch (casterProgression?.Trim().ToLowerInvariant())
+        {
+            case "full":
+                effectiveLevel = classLevel;
+                return true;
+            case "1/2":
+                effectiveLevel = classLevel / 2;
+                return true;
+            case "artificer":
+                effectiveLevel = (classLevel + 1) / 2;
+                return true;
+            case "1/3":
+                effectiveLevel = classLevel / 3;
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private static bool TryGetSourceClassLevelForEffectiveCasterLevel(
+        int effectiveCasterLevel,
+        string? casterProgression,
+        out int sourceClassLevel)
+    {
+        sourceClassLevel = 0;
+        if (effectiveCasterLevel <= 0)
+        {
+            return false;
+        }
+
+        switch (casterProgression?.Trim().ToLowerInvariant())
+        {
+            case "full":
+                sourceClassLevel = effectiveCasterLevel;
+                return true;
+            case "1/2":
+                sourceClassLevel = checked(effectiveCasterLevel * 2);
+                return true;
+            case "artificer":
+                sourceClassLevel = checked((effectiveCasterLevel * 2) - 1);
+                return true;
+            case "1/3":
+                sourceClassLevel = checked(effectiveCasterLevel * 3);
+                return true;
+            default:
+                return false;
+        }
     }
 
     private static void ResolvePactMagicResources(CharacterProjectionContext context)
