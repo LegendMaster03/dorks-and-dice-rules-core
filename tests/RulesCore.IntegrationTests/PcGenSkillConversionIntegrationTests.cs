@@ -51,7 +51,7 @@ public sealed class PcGenSkillConversionIntegrationTests
     ];
 
     [Fact]
-    public async Task AlchemistsSuppliesUsesEstablishedCompetencyConceptKey()
+    public async Task CraftAlchemyUsesEstablishedCompetencyConceptKey()
     {
         var db = await OpenDatabaseAsync();
         if (db is null) return;
@@ -69,7 +69,7 @@ public sealed class PcGenSkillConversionIntegrationTests
                         "integration-test",
                         "test-only",
                         true,
-                        PcGenRepresentation("3e", $"ALK{token}", ["Alchemy"])));
+                        PcGenRepresentation("35e", $"ALK{token}", ["Craft (alchemy)"])));
 
                 var candidates = await new SourceNormalizationService(db).GetCandidatesAsync(
                     $"rules-lawyer-{token}",
@@ -179,9 +179,14 @@ public sealed class PcGenSkillConversionIntegrationTests
                     "skill",
                     "Survival");
                 var alchemy = await ReadByNativeNameAsync(db, package30, "Alchemy");
-                Assert.Equal("tool", alchemy.EntityType);
-                Assert.Equal("Alchemist's Supplies", alchemy.NormalizedName);
-                AssertExactTranslation(alchemy.ContentJson, "Alchemy", "tool", "Alchemist's Supplies");
+                Assert.Equal("skill", alchemy.EntityType);
+                Assert.Equal("Alchemy", alchemy.NormalizedName);
+                AssertRelatedCompetency(
+                    alchemy.ContentJson,
+                    "Alchemy",
+                    "skill",
+                    "Alchemist's Supplies",
+                    "tool");
             }
             finally
             {
@@ -697,6 +702,28 @@ public sealed class PcGenSkillConversionIntegrationTests
         Assert.Equal(sourceName, conversion.GetProperty("sourceName").GetString());
         Assert.Equal(targetType, conversion.GetProperty("targetType").GetString());
         Assert.Equal(targetName, conversion.GetProperty("targetName").GetString());
+        Assert.False(extension.TryGetProperty("exactCompetencyIdentity", out _));
+    }
+
+    private static void AssertRelatedCompetency(
+        string contentJson,
+        string sourceName,
+        string sourceType,
+        string targetName,
+        string targetType)
+    {
+        using var document = JsonDocument.Parse(contentJson);
+        var root = document.RootElement;
+        Assert.Equal(sourceName, root.GetProperty("name").GetString());
+        var extension = root.GetProperty("_rulesCore");
+        var conversion = extension.GetProperty("competencyConversion");
+        Assert.Equal("related-competency", conversion.GetProperty("relationship").GetString());
+        Assert.Equal(sourceType, conversion.GetProperty("sourceType").GetString());
+        Assert.Equal(sourceName, conversion.GetProperty("sourceName").GetString());
+        Assert.Equal(targetType, conversion.GetProperty("targetType").GetString());
+        Assert.Equal(targetName, conversion.GetProperty("targetName").GetString());
+        Assert.True(conversion.GetProperty("mechanicalNamePreserved").GetBoolean());
+        Assert.Equal("skill", extension.GetProperty("competency").GetProperty("kind").GetString());
         Assert.False(extension.TryGetProperty("exactCompetencyIdentity", out _));
     }
 
