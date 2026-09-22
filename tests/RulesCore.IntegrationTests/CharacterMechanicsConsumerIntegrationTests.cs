@@ -2140,14 +2140,20 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     new
                     {
                         title = "Spell Slots per Spell Level",
-                        colLabels = new[] { "1st", "2nd", "3rd" },
+                        colLabels = new[] { "1st", "2nd", "3rd", "4th", "5th", "6th" },
                         rowsSpellProgression = new[]
                         {
-                            new[] { 2, 0, 0 },
-                            new[] { 3, 0, 0 },
-                            new[] { 4, 2, 0 },
-                            new[] { 4, 3, 0 },
-                            new[] { 4, 3, 2 }
+                            new[] { 2, 0, 0, 0, 0, 0 },
+                            new[] { 3, 0, 0, 0, 0, 0 },
+                            new[] { 4, 2, 0, 0, 0, 0 },
+                            new[] { 4, 3, 0, 0, 0, 0 },
+                            new[] { 4, 3, 2, 0, 0, 0 },
+                            new[] { 4, 3, 3, 0, 0, 0 },
+                            new[] { 4, 3, 3, 1, 0, 0 },
+                            new[] { 4, 3, 3, 2, 0, 0 },
+                            new[] { 4, 3, 3, 3, 1, 0 },
+                            new[] { 4, 3, 3, 3, 2, 0 },
+                            new[] { 4, 3, 3, 3, 2, 1 }
                         }
                     }
                 }
@@ -2243,7 +2249,9 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 actor);
             await globalRules.PublishAsync(actor);
 
-            CharacterRulesProjectionRequest Request(string? system = null) =>
+            CharacterRulesProjectionRequest Request(
+                string? system = null,
+                int classLevel = 5) =>
                 new(
                     BaseAbilityScores: new Dictionary<string, int>
                     {
@@ -2256,7 +2264,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     },
                     Advancements:
                     [
-                        new CharacterAdvancementFactInput(classConceptKey, 5)
+                        new CharacterAdvancementFactInput(classConceptKey, classLevel)
                     ],
                     Choices: system is null
                         ? null
@@ -2324,6 +2332,25 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     points.Spellcasting,
                     value => value.SpellcastingKey == $"spellcasting.{classConceptKey}")
                     .ResourceSystemKey);
+
+            var highLevelPoints = await projection.ResolveGlobalAsync(
+                Request("spell points", classLevel: 11),
+                userId: null);
+            Assert.Equal(73, Assert.Single(
+                highLevelPoints.Resources,
+                value => value.ResourceKey == "resource.spell-points").MaximumValue);
+            Assert.Equal(6, Assert.Single(
+                highLevelPoints.Mechanics,
+                value => value.MechanicKey ==
+                    "spellcasting.spell-points.maximum-slot-level").NumericValue);
+            Assert.Equal(9, Assert.Single(
+                highLevelPoints.Mechanics,
+                value => value.MechanicKey ==
+                    "spellcasting.spell-points.slot-cost.level-6").NumericValue);
+            Assert.Equal(1, Assert.Single(
+                highLevelPoints.Mechanics,
+                value => value.MechanicKey ==
+                    "spellcasting.spell-points.slot-creation-limit.level-6").NumericValue);
         }
         finally
         {
@@ -2348,6 +2375,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         var packageKey = $"character-projection-pact-magic-{token}";
         var pactConceptKey = $"class.pact-caster-{token}";
         var fullConceptKey = $"class.full-caster-{token}";
+        var houseConceptKey = $"house.spellcasting-resource-choice-{token}";
         var actor = $"character-pact-magic-{token}";
         Guid packageId = Guid.Empty;
 
@@ -2407,6 +2435,15 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 }
             });
 
+            var houseRaw = JsonSerializer.Serialize(new
+            {
+                name = "Spellcasting Resource Choice",
+                source = sourceCode,
+                category = "spellcasting",
+                casterChoosesResourceSystem = true,
+                availableResourceSystems = new[] { "spell slots", "spell points" }
+            });
+
             var imported = await new NormalizedSourceImportService(db).ImportAsync(
                 new ImportNormalizedSourceRequest(
                     packageKey,
@@ -2434,6 +2471,13 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                                 sourceCode,
                                 $"class|Full Caster|{sourceCode}",
                                 fullRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "houseRule",
+                                "Spellcasting Resource Choice",
+                                sourceCode,
+                                $"houseRule|Spellcasting Resource Choice|{sourceCode}",
+                                houseRaw,
                                 PublicationLocalKey: sourceCode)
                         ],
                         [
@@ -2448,6 +2492,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             var byName = imported.Entities.ToDictionary(value => value.Name, StringComparer.Ordinal);
             var pactSource = byName["Pact Caster"];
             var fullSource = byName["Full Caster"];
+            var houseSource = byName["Spellcasting Resource Choice"];
 
             var pactConcept = await globalRules.CreateConceptAsync(
                 new CreateRuleConceptRequest(
@@ -2461,6 +2506,12 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     fullSource.EntityType,
                     fullSource.Name),
                 actor);
+            var houseConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    houseConceptKey,
+                    houseSource.EntityType,
+                    houseSource.Name),
+                actor);
             await globalRules.BindSourceEntityAsync(
                 pactConcept.Value.Id,
                 new BindRuleConceptSourceRequest(pactSource.EntityId),
@@ -2469,11 +2520,16 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 fullConcept.Value.Id,
                 new BindRuleConceptSourceRequest(fullSource.EntityId),
                 actor);
+            await globalRules.BindSourceEntityAsync(
+                houseConcept.Value.Id,
+                new BindRuleConceptSourceRequest(houseSource.EntityId),
+                actor);
 
             var revisionIds = await db.SourceEntityRevisions
                 .Where(value =>
                     value.SourceEntityId == pactSource.EntityId
-                    || value.SourceEntityId == fullSource.EntityId)
+                    || value.SourceEntityId == fullSource.EntityId
+                    || value.SourceEntityId == houseSource.EntityId)
                 .ToDictionaryAsync(value => value.SourceEntityId, value => value.Id);
             await globalRules.SetDecisionAsync(
                 pactConcept.Value.Id,
@@ -2486,6 +2542,12 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 new SetGlobalRuleDecisionRequest(
                     revisionIds[fullSource.EntityId],
                     "Standard spell slot table fixture."),
+                actor);
+            await globalRules.SetDecisionAsync(
+                houseConcept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionIds[houseSource.EntityId],
+                    "Published resource choice fixture."),
                 actor);
             await globalRules.PublishAsync(actor);
 
@@ -2509,7 +2571,10 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     [
                         new CharacterRuntimeChoiceInput(
                             "advancement.starting-class",
-                            fullConceptKey)
+                            fullConceptKey),
+                        new CharacterRuntimeChoiceInput(
+                            "spellcasting.resource-system",
+                            "spell-points")
                     ]),
                 userId: null);
 
@@ -2520,12 +2585,14 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal(CharacterResolutionStates.Resolved, pactResource.State);
             Assert.Equal(2, pactResource.MaximumValue);
 
-            Assert.Equal(4, Assert.Single(
+            Assert.Equal(14, Assert.Single(
                 result.Resources,
-                value => value.ResourceKey == "resource.spell-slot.1").MaximumValue);
-            Assert.Equal(2, Assert.Single(
+                value => value.ResourceKey == "resource.spell-points").MaximumValue);
+            Assert.DoesNotContain(
                 result.Resources,
-                value => value.ResourceKey == "resource.spell-slot.2").MaximumValue);
+                value => value.ResourceKey.StartsWith(
+                    "resource.spell-slot.",
+                    StringComparison.Ordinal));
             Assert.DoesNotContain(
                 result.Conflicts,
                 value => value.ConflictKey == "conflict.spellcasting.multiclass-slots");
@@ -2542,7 +2609,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             var standardSpellcasting = Assert.Single(
                 result.Spellcasting,
                 value => value.SpellcastingKey == $"spellcasting.{fullConceptKey}");
-            Assert.Equal("spell-slots", standardSpellcasting.ResourceSystemKey);
+            Assert.Equal("spell-points", standardSpellcasting.ResourceSystemKey);
             Assert.Contains(
                 result.Capabilities,
                 value => value.CapabilityKey == "spellcasting.standard");
