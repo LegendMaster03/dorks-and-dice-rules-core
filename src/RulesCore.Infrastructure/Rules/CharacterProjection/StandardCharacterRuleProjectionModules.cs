@@ -723,6 +723,11 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
             context,
             proficiencies,
             pathPrefix);
+        CharacterLanguageProficiencyProjector.Project(
+            rule,
+            context,
+            proficiencies,
+            pathPrefix);
 
         foreach (var category in proficiencies.EnumerateObject()
                      .Where(value => !string.Equals(
@@ -1193,6 +1198,11 @@ internal sealed class GenericCharacterRuleProjectionModule : ICharacterRuleProje
                 context,
                 rule.Document);
             CharacterStructuredProficiencyProjector.Project(
+                rule,
+                context,
+                rule.Document,
+                "source-proficiencies");
+            CharacterLanguageProficiencyProjector.Project(
                 rule,
                 context,
                 rule.Document,
