@@ -1180,6 +1180,9 @@ internal static class RulesCoreContentTranslation
             {
                 ["profileKey"] = "pcgen",
                 ["kind"] = kind,
+                ["facetType"] = string.Equals(effectiveType, "tool", StringComparison.OrdinalIgnoreCase)
+                    ? "tool"
+                    : "skill",
                 ["supportsRanks"] = false,
                 ["supportsClassSkillState"] = false,
                 ["supportsTrainingState"] = true,
@@ -1215,6 +1218,16 @@ internal static class RulesCoreContentTranslation
             metadata["armorCheckPenaltyApplies"] = armorCheckPenaltyApplies;
         }
 
+        if (competencyConversion is not null
+            && PcGenCompetencyConversions.EstablishesSharedCompetencyIdentity(competencyConversion))
+        {
+            metadata["identityKey"] = competencyConversion.SharedCompetencyKey;
+            metadata["identityName"] = competencyConversion.SharedCompetencyName;
+            metadata["sharedTrainingKey"] =
+                $"competency.{competencyConversion.SharedCompetencyKey}.training";
+            metadata["facetType"] = competencyConversion.FacetType ?? "skill";
+        }
+
         return metadata;
     }
 
@@ -1237,6 +1250,18 @@ internal static class RulesCoreContentTranslation
         if (conversion.PreserveSourceMechanicalName)
         {
             result["mechanicalNamePreserved"] = true;
+        }
+        if (!string.IsNullOrWhiteSpace(conversion.SharedCompetencyKey))
+        {
+            result["sharedCompetencyKey"] = conversion.SharedCompetencyKey;
+        }
+        if (!string.IsNullOrWhiteSpace(conversion.SharedCompetencyName))
+        {
+            result["sharedCompetencyName"] = conversion.SharedCompetencyName;
+        }
+        if (!string.IsNullOrWhiteSpace(conversion.FacetType))
+        {
+            result["facetType"] = conversion.FacetType;
         }
         return result;
     }
@@ -1272,6 +1297,9 @@ internal static class RulesCoreContentTranslation
         {
             ["profileKey"] = "dnd-3x",
             ["kind"] = kind,
+            ["facetType"] = string.Equals(effectiveType, "tool", StringComparison.OrdinalIgnoreCase)
+                ? "tool"
+                : "skill",
             ["supportsRanks"] = true,
             ["supportsClassSkillState"] = true,
             ["supportsTrainingState"] = true,
@@ -1285,12 +1313,17 @@ internal static class RulesCoreContentTranslation
             metadata["familyName"] = specialty.FamilyName;
             metadata["specialty"] = specialty.Specialty;
         }
+        else if (IsSpecializedCompetencyFamily(nativeName))
+        {
+            metadata["familyName"] = nativeName.Trim();
+            metadata["isFamily"] = true;
+        }
         return metadata;
     }
 
     private static (string? FamilyName, string? Specialty) ParseCompetencySpecialty(string name)
     {
-        foreach (var family in new[] { "Craft", "Knowledge", "Perform", "Profession" })
+        foreach (var family in new[] { "Craft", "Perform", "Profession" })
         {
             var prefix = $"{family} (";
             if (!name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
@@ -1309,6 +1342,11 @@ internal static class RulesCoreContentTranslation
 
         return (null, null);
     }
+
+    private static bool IsSpecializedCompetencyFamily(string name) =>
+        string.Equals(name.Trim(), "Craft", StringComparison.OrdinalIgnoreCase)
+        || string.Equals(name.Trim(), "Perform", StringComparison.OrdinalIgnoreCase)
+        || string.Equals(name.Trim(), "Profession", StringComparison.OrdinalIgnoreCase);
 
     private static string NormalizeAbilityKey(string value) =>
         value.Trim().ToUpperInvariant() switch
