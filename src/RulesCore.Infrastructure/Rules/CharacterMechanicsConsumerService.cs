@@ -1155,10 +1155,91 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             }
         }
 
+        var familyName = selectedProfile?.FamilyName;
+        if (string.IsNullOrWhiteSpace(familyName))
+        {
+            var familyNames = allProfiles
+                .Select(value => value.FamilyName)
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .Cast<string>()
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+            if (familyNames.Length == 1)
+            {
+                familyName = familyNames[0];
+            }
+        }
+
+        var specialty = selectedProfile?.Specialty;
+        if (string.IsNullOrWhiteSpace(specialty))
+        {
+            var specialties = allProfiles
+                .Select(value => value.Specialty)
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .Cast<string>()
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+            if (specialties.Length == 1)
+            {
+                specialty = specialties[0];
+            }
+        }
+
+        var identityKeys = allProfiles
+            .Select(value => value.IdentityKey)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Cast<string>()
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var identityNames = allProfiles
+            .Select(value => value.IdentityName)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Cast<string>()
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var sharedTrainingKeys = allProfiles
+            .Select(value => value.SharedTrainingKey)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Cast<string>()
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+
+        var facets = allProfiles
+            .GroupBy(
+                value => string.IsNullOrWhiteSpace(value.FacetType)
+                    ? string.Equals(
+                        value.CompetencyKind,
+                        CharacterCompetencyKinds.Tool,
+                        StringComparison.OrdinalIgnoreCase)
+                        ? "tool"
+                        : "skill"
+                    : value.FacetType!,
+                StringComparer.OrdinalIgnoreCase)
+            .Select(group => new CharacterCompetencyFacetView(
+                group.Key,
+                group.Select(value => value.SourceEntityRevisionId)
+                    .Distinct()
+                    .OrderBy(value => value)
+                    .ToArray(),
+                group.Any(value => value.SupportsRanks),
+                group.Any(value => value.SupportsClassSkillState),
+                group.Any(value => value.SupportsTrainingState)))
+            .OrderBy(value => value.FacetType, StringComparer.Ordinal)
+            .ToArray();
+
+        var relatedCompetencies = allProfiles
+            .SelectMany(value => value.RelatedCompetencies ?? [])
+            .Distinct()
+            .OrderBy(value => value.Kind, StringComparer.Ordinal)
+            .ThenBy(value => value.TargetType, StringComparer.Ordinal)
+            .ThenBy(value => value.TargetName, StringComparer.Ordinal)
+            .ThenBy(value => value.Scope, StringComparer.Ordinal)
+            .ToArray();
+
         return new CharacterCompetencyDefinitionView(
             selectedProfile?.CompetencyKind ?? defaultKind,
-            selectedProfile?.FamilyName,
-            selectedProfile?.Specialty,
+            familyName,
+            specialty,
             governingAbilityKey,
             selectedProfile?.SupportsRanks ?? false,
             selectedProfile?.SupportsClassSkillState ?? false,
@@ -1166,7 +1247,16 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             selectedProfile?.TrainedOnly,
             selectedProfile?.ArmorCheckPenaltyApplies,
             selectedProfile?.SourceEntityRevisionId,
-            allProfiles);
+            allProfiles,
+            IdentityKey: identityKeys.Length == 1 ? identityKeys[0] : null,
+            IdentityName: identityNames.Length == 1 ? identityNames[0] : null,
+            SharedTrainingKey:
+                sharedTrainingKeys.Length == 1 ? sharedTrainingKeys[0] : null,
+            IsFamily:
+                selectedProfile?.IsFamily == true
+                || allProfiles.Any(value => value.IsFamily),
+            Facets: facets,
+            RelatedCompetencies: relatedCompetencies);
     }
 
     private static CharacterCompetencyProfileView? BuildCompetencyProfile(
@@ -1213,7 +1303,15 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             Inputs: inputs,
             BooleanRequirements: [],
             GameEdition: gameEdition,
-            SourceAttributions: sourceAttributions);
+            SourceAttributions: sourceAttributions,
+            FacetType: string.Equals(
+                competencyKind,
+                CharacterCompetencyKinds.Tool,
+                StringComparison.OrdinalIgnoreCase)
+                ? "tool"
+                : "skill",
+            IsFamily: false,
+            RelatedCompetencies: []);
     }
 
     private static CharacterCompetencyProfileView? ParseNormalizedCompetencyMetadata(
@@ -1263,6 +1361,32 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     [new CharacterMechanicBooleanRequirementView("isTrained", true)]
                 : [];
 
+            IReadOnlyList<CharacterCompetencyRelationshipView> relationships = [];
+            if (rulesCore.TryGetProperty("competencyConversion", out var conversion)
+                && conversion.ValueKind == JsonValueKind.Object)
+            {
+                var relationshipKind = ReadString(conversion, "relationship");
+                var targetType = ReadString(conversion, "targetType");
+                var targetName = ReadString(conversion, "targetName");
+                if (!string.IsNullOrWhiteSpace(relationshipKind)
+                    && !string.IsNullOrWhiteSpace(targetType)
+                    && !string.IsNullOrWhiteSpace(targetName))
+                {
+                    relationships =
+                    [
+                        new CharacterCompetencyRelationshipView(
+                            relationshipKind,
+                            targetType,
+                            targetName,
+                            ReadString(conversion, "scope"),
+                            SharesTrainingState: string.Equals(
+                                relationshipKind,
+                                "shared-competency-facet",
+                                StringComparison.Ordinal))
+                    ];
+                }
+            }
+
             return new CharacterCompetencyProfileView(
                 sourceEntityRevisionId,
                 profileKey,
@@ -1282,7 +1406,19 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 inputs,
                 requirements,
                 ReadString(competency, "gameEdition"),
-                SourceAttributions: sourceAttributions);
+                SourceAttributions: sourceAttributions,
+                FacetType: ReadString(competency, "facetType")
+                    ?? (string.Equals(
+                        kind,
+                        CharacterCompetencyKinds.Tool,
+                        StringComparison.OrdinalIgnoreCase)
+                        ? "tool"
+                        : "skill"),
+                IsFamily: ReadBoolean(competency, "isFamily") ?? false,
+                IdentityKey: ReadString(competency, "identityKey"),
+                IdentityName: ReadString(competency, "identityName"),
+                SharedTrainingKey: ReadString(competency, "sharedTrainingKey"),
+                RelatedCompetencies: relationships);
         }
         catch (JsonException)
         {

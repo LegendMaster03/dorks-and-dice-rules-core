@@ -66,6 +66,20 @@ public sealed record CharacterMechanicCheckView(
     CharacterCheckCompetencyView Competency,
     CharacterCheckCompetencyCompositionView? CompetencyComposition);
 
+public sealed record CharacterCompetencyRelationshipView(
+    string Kind,
+    string TargetType,
+    string TargetName,
+    string? Scope,
+    bool SharesTrainingState);
+
+public sealed record CharacterCompetencyFacetView(
+    string FacetType,
+    IReadOnlyList<Guid> ProfileSourceEntityRevisionIds,
+    bool SupportsRanks,
+    bool SupportsClassSkillState,
+    bool SupportsTrainingState);
+
 public sealed record CharacterCompetencyProfileView(
     Guid SourceEntityRevisionId,
     string ProfileKey,
@@ -85,7 +99,13 @@ public sealed record CharacterCompetencyProfileView(
     IReadOnlyList<CharacterMechanicInputView> Inputs,
     IReadOnlyList<CharacterMechanicBooleanRequirementView> BooleanRequirements,
     string? GameEdition,
-    IReadOnlyList<CharacterMechanicSourceAttributionView>? SourceAttributions = null);
+    IReadOnlyList<CharacterMechanicSourceAttributionView>? SourceAttributions = null,
+    string? FacetType = null,
+    bool IsFamily = false,
+    string? IdentityKey = null,
+    string? IdentityName = null,
+    string? SharedTrainingKey = null,
+    IReadOnlyList<CharacterCompetencyRelationshipView>? RelatedCompetencies = null);
 
 public sealed record CharacterCompetencyDefinitionView(
     string CompetencyKind,
@@ -98,7 +118,13 @@ public sealed record CharacterCompetencyDefinitionView(
     bool? TrainedOnly,
     bool? ArmorCheckPenaltyApplies,
     Guid? DefaultProfileSourceEntityRevisionId,
-    IReadOnlyList<CharacterCompetencyProfileView> Profiles);
+    IReadOnlyList<CharacterCompetencyProfileView> Profiles,
+    string? IdentityKey = null,
+    string? IdentityName = null,
+    string? SharedTrainingKey = null,
+    bool IsFamily = false,
+    IReadOnlyList<CharacterCompetencyFacetView>? Facets = null,
+    IReadOnlyList<CharacterCompetencyRelationshipView>? RelatedCompetencies = null);
 
 public sealed record CharacterMechanicRelationshipView(
     string RelationshipKey,
