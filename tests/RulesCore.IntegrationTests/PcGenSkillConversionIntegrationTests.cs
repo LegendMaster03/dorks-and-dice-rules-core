@@ -589,6 +589,7 @@ public sealed class PcGenSkillConversionIntegrationTests
                         .Where(value => value.Id == accepted.Concept.Id)
                         .ExecuteDeleteAsync();
                 }
+                db.ChangeTracker.Clear();
                 await DeletePackageAsync(db, packageKey);
             }
         }
