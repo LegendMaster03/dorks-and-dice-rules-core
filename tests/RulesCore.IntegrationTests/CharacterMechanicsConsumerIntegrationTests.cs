@@ -3047,6 +3047,10 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     [
                         new CharacterAdvancementFactInput(classConceptKey, 5)
                     ],
+                    EquippedItemConceptKeys:
+                    [
+                        lightWeaponConceptKey
+                    ],
                     Choices: choices);
 
             var unresolved = await projection.ResolveGlobalAsync(
@@ -3339,6 +3343,8 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         var thievesConceptKey = $"tool.thieves-tools-{token}";
         var herbalismConceptKey = $"tool.herbalism-kit-{token}";
         var smithConceptKey = $"tool.smiths-tools-{token}";
+        var lightWeaponConceptKey = $"item.martial-light-blade-{token}";
+        var heavyWeaponConceptKey = $"item.martial-heavy-blade-{token}";
         var actor = $"character-structured-profs-{token}";
         Guid packageId = Guid.Empty;
 
@@ -3402,6 +3408,26 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 type = "AT",
                 ability = "str"
             });
+            var lightWeaponRaw = JsonSerializer.Serialize(new
+            {
+                name = "Martial Light Blade",
+                source = sourceCode,
+                type = "M",
+                weaponCategory = "martial",
+                property = new[] { "L" },
+                dmg1 = "1d6",
+                dmgType = "S"
+            });
+            var heavyWeaponRaw = JsonSerializer.Serialize(new
+            {
+                name = "Martial Heavy Blade",
+                source = sourceCode,
+                type = "M",
+                weaponCategory = "martial",
+                property = new[] { "H" },
+                dmg1 = "1d10",
+                dmgType = "S"
+            });
 
             var imported = await new NormalizedSourceImportService(db).ImportAsync(
                 new ImportNormalizedSourceRequest(
@@ -3444,6 +3470,20 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                                 sourceCode,
                                 $"tool|Smith's Tools|{sourceCode}",
                                 smithRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "item",
+                                "Martial Light Blade",
+                                sourceCode,
+                                $"item|Martial Light Blade|{sourceCode}",
+                                lightWeaponRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "item",
+                                "Martial Heavy Blade",
+                                sourceCode,
+                                $"item|Martial Heavy Blade|{sourceCode}",
+                                heavyWeaponRaw,
                                 PublicationLocalKey: sourceCode)
                         ],
                         [
@@ -3461,7 +3501,9 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 (Key: classConceptKey, Entity: byName["Structured Proficiency Class"]),
                 (Key: thievesConceptKey, Entity: byName["Thieves' Tools"]),
                 (Key: herbalismConceptKey, Entity: byName["Herbalism Kit"]),
-                (Key: smithConceptKey, Entity: byName["Smith's Tools"])
+                (Key: smithConceptKey, Entity: byName["Smith's Tools"]),
+                (Key: lightWeaponConceptKey, Entity: byName["Martial Light Blade"]),
+                (Key: heavyWeaponConceptKey, Entity: byName["Martial Heavy Blade"])
             };
             var concepts = new Dictionary<string, RuleConceptView>(StringComparer.Ordinal);
             foreach (var definition in definitions)
@@ -3530,10 +3572,22 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     && value.IsQualified == true);
             Assert.Contains(
                 unresolved.Qualifications,
+                value => value.QualificationKey == "qualification.weapons.martial-light-blade"
+                    && value.IsQualified == true);
+            Assert.DoesNotContain(
+                unresolved.Qualifications,
+                value => value.QualificationKey == "qualification.weapons.martial-heavy-blade");
+            Assert.DoesNotContain(
+                unresolved.Qualifications,
                 value => value.QualificationKey.StartsWith(
                     "qualification.weapons.source-expression.",
-                    StringComparison.Ordinal)
-                    && value.State == CharacterResolutionStates.ApplicableUnresolved);
+                    StringComparison.Ordinal));
+
+            var weaponAttack = Assert.Single(
+                unresolved.Mechanics,
+                value => value.MechanicKey == $"attack.{lightWeaponConceptKey}");
+            Assert.Equal(CharacterResolutionStates.Resolved, weaponAttack.State);
+            Assert.Equal(3, weaponAttack.NumericValue);
 
             var thieves = Assert.Single(
                 unresolved.Mechanics,
