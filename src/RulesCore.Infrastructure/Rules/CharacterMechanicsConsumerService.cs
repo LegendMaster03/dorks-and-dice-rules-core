@@ -279,7 +279,19 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             var canonicalAttributions = competency.Profiles
                 .SelectMany(value => value.SourceAttributions ?? [])
                 .Concat(effectiveRuleAttributions)
-                .Distinct()
+                .GroupBy(value => new
+                {
+                    value.PackageKey,
+                    value.SourceCode,
+                    value.SourceRevisionNumber,
+                    value.WorkKey,
+                    value.ReferenceKey,
+                    value.ReferenceUri
+                })
+                .Select(group => group
+                    .OrderByDescending(value => !string.IsNullOrWhiteSpace(value.ReferenceTitle))
+                    .ThenByDescending(value => !string.IsNullOrWhiteSpace(value.WorkDisplayName))
+                    .First())
                 .OrderBy(value => value.WorkDisplayName, StringComparer.Ordinal)
                 .ThenBy(value => value.PackageKey, StringComparer.Ordinal)
                 .ThenBy(value => value.SourceRevisionNumber)
