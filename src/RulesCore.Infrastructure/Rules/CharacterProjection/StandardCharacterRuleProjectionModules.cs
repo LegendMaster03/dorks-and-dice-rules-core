@@ -1027,6 +1027,22 @@ internal sealed class ItemCharacterRuleProjectionModule : ICharacterRuleProjecti
             }
         }
 
+        var attunement = CharacterProjectionJson.String(rule.Document, "reqAttune")
+            ?? CharacterProjectionJson.String(rule.Document, "requiresAttunement");
+        if (!string.IsNullOrWhiteSpace(attunement))
+        {
+            var factKey = $"item.{rule.Catalog.ConceptKey}.attuned";
+            if (!context.BooleanFacts.TryGetValue(factKey, out var attuned) || !attuned)
+            {
+                context.Conflicts.Add(new CharacterProjectionConflictView(
+                    $"requirement.{factKey}",
+                    "missing-character-input",
+                    $"The equipped item '{rule.Catalog.DisplayName}' has an attunement requirement whose Character state is not satisfied.",
+                    [],
+                    [rule.Catalog.ConceptKey]));
+            }
+        }
+    }
 
     private static string? NormalizeItemType(string? value)
     {
@@ -1093,23 +1109,6 @@ internal sealed class ItemCharacterRuleProjectionModule : ICharacterRuleProjecti
             out var parsed)
                 ? parsed
                 : null;
-    }
-
-        var attunement = CharacterProjectionJson.String(rule.Document, "reqAttune")
-            ?? CharacterProjectionJson.String(rule.Document, "requiresAttunement");
-        if (!string.IsNullOrWhiteSpace(attunement))
-        {
-            var factKey = $"item.{rule.Catalog.ConceptKey}.attuned";
-            if (!context.BooleanFacts.TryGetValue(factKey, out var attuned) || !attuned)
-            {
-                context.Conflicts.Add(new CharacterProjectionConflictView(
-                    $"requirement.{factKey}",
-                    "missing-character-input",
-                    $"The equipped item '{rule.Catalog.DisplayName}' has an attunement requirement whose Character state is not satisfied.",
-                    [],
-                    [rule.Catalog.ConceptKey]));
-            }
-        }
     }
 }
 
