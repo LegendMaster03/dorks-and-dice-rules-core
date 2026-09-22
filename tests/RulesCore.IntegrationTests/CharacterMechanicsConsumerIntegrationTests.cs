@@ -1251,6 +1251,9 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal(2, Assert.Single(
                 result.Mechanics,
                 value => value.MechanicKey == "save.will").NumericValue);
+            Assert.DoesNotContain(
+                result.Mechanics,
+                value => value.MechanicKey == "save.constitution");
             Assert.Equal(5, Assert.Single(
                 result.Mechanics,
                 value => value.MechanicKey == "combat.grapple").NumericValue);
@@ -1553,6 +1556,12 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal(2, Assert.Single(
                 result.Mechanics,
                 value => value.MechanicKey == "save.dexterity").NumericValue);
+            Assert.Equal(1, Assert.Single(
+                result.Mechanics,
+                value => value.MechanicKey == "save.constitution").NumericValue);
+            Assert.DoesNotContain(
+                result.Mechanics,
+                value => value.MechanicKey == "save.fortitude");
             Assert.Equal(15, Assert.Single(
                 result.Mechanics,
                 value => value.MechanicKey == $"spellcasting.{conceptKey}.save-dc").NumericValue);
