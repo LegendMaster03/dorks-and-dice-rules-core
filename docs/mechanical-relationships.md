@@ -76,11 +76,21 @@ The granular competencies are the recommended rule-bearing foundation because th
 
 A Rules Lawyer may record an explicit `independent-parent` override. Relationship rulings are numbered and persisted as structured data; they are not inferred from notes. Recording `derive-parent` again restores the default structural resolution while retaining ruling history.
 
+## Competency families and facets
+
+Competency taxonomy is separate from mechanical composition. `Craft`, `Perform`, and `Profession` may contain independently addressable specialties. A parent family does not contribute a numeric value to a child and does not cause siblings to share ranks.
+
+A shared learned competency is also separate from canonical identity. Reviewed Alchemy and Forgery skill/tool pairs retain distinct Rule Concepts and source identities while exposing a common learned-competency identity and Character-owned training key. Edition-specific ranks, class-skill state, governing Ability, and tool proficiency calculations remain on their own facets.
+
+Scoped relationships remain distinct again: Open Lock and Disable Device relate only specific uses to Thieves' Tools and do not confer unrestricted tool proficiency. Disguise is related to Disguise Kit without asserting shared training identity.
+
 ## Deferred relationships
 
-The current composite catalog intentionally does not attach `Search`, `Escape Artist`, `Spellcraft`, `Gather Information`, `Ride`, `Use Rope`, `Concentration`, `Use Magic Device`, remaining Knowledge specialties, or remaining Craft/Profession relationships to later competencies.
+The current relationship catalog intentionally leaves `Search`, `Escape Artist`, `Spellcraft`, `Gather Information`, `Ride`, `Use Rope`, `Concentration`, `Use Magic Device`, and unresolved Craft/Perform/Profession tool correspondences independent unless reviewed evidence establishes a lossless relationship.
 
-The relationship representation is intentionally generic enough to add partial contributions, one-to-many splits, skill-to-tool relationships, skill-to-saving-throw relationships, and other cross-type competency relationships later without placing those semantics in canonical identity or source adapters.
+Knowledge specialties are not deferred family relationships: `Knowledge (X)` uses the explicit normalized identity `X`.
+
+The relationship representation remains generic enough to add partial contributions, one-to-many splits, scoped cross-type relationships, skill-to-saving-throw relationships, and future relationship kinds without placing those semantics in canonical identity.
 ## Character mechanics consumers
 
 Character-oriented consumers use the normalized mechanics contract documented in `docs/character-mechanics-consumer.md`. Composite competency rulings exposed there are the same persisted Rules Layer rulings described above; the Character Sheet must not create a parallel relationship interpretation.

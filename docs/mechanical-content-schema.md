@@ -90,52 +90,71 @@ Current field mappings intentionally cover only defensible equivalences:
 When a PCGen skill record contains competency mechanics Rules Core understands, translation records those semantics under `_rulesCore.competency` before canonical reconciliation. The normalized profile can carry:
 
 - competency kind (`skill`, `specialized-skill`, or `tool`);
-- specialty family/value for source competencies such as `Knowledge (...)`, `Craft (...)`, `Perform (...)`, or `Profession (...)`;
+- competency family/category and specialty for specialized families such as `Craft (...)`, `Perform (...)`, and `Profession (...)`;
+- facet type, shared learned-competency identity, and shared training-state key when an established cross-edition skill/tool identity exists;
 - governing ability derived from `KEYSTAT`;
 - trained-only behavior derived from `USEUNTRAINED`;
 - Armor Check Penalty applicability derived from `ACHECK`;
 - rank, class-skill-state, and training-state support;
 - game edition/profile identity and capability qualification.
 
-This is mechanical normalization, not source destruction. The original PCGen tags remain present in `RawJson` and continue to be retained under `_rulesCore.pcgen.unmappedSegments` where they were previously preserved. Character-oriented consumers read the normalized competency profile rather than interpreting PCGen tags or parsing display names.
+`Craft`, `Perform`, and `Profession` are competency families. A family is taxonomy/organization; a specialized child remains independently addressable and retains its own ranks, class-skill state, governing Ability, training state, source identity, and provenance. Nesting never causes numeric mechanics to be inherited or merged.
 
-For reviewed direct equivalences, the normalized profile remains attached to the older source representation even when exact translation changes the normalized source entity name/type. A 3.x `Craft (alchemy)` representation can therefore normalize canonically to the `Alchemist's Supplies` tool competency while still declaring the 3.x rank/class-skill profile that applies to that representation.
+`Knowledge` is the intentional exception. A reviewed `Knowledge (X)` record normalizes directly to competency identity `X`. The Character-facing contract therefore exposes `Arcana`, `History`, `Psionics`, `The planes`, and similar specialties directly rather than exposing a visible `Knowledge -> X` hierarchy. The older source name and provenance remain preserved.
 
-### Direct 3.x competency translations
+This is mechanical normalization, not source destruction. Original PCGen tags remain in `RawJson` and continue to be retained under `_rulesCore.pcgen.unmappedSegments` where applicable. Character-oriented consumers read the normalized competency contract rather than interpreting PCGen tags or parsing display names.
 
-The reviewed direct mappings are importer translations, not Rules Lawyer relationships. For those mappings, Rules Core treats the older and later names as the **same competency identity**. The PCGen native key, native name, `RawJson`, edition, locator, and other source provenance remain unchanged, but the normalized `SourceEntity` name/type and translated `ContentJson` use the later competency identity before canonical reconciliation.
+### Direct normalized competency identities
 
-The current direct skill-to-skill set is:
+Reviewed direct identity translations change the normalized source name/type before canonical reconciliation. They are appropriate only when the older and later records are the same competency rather than related competencies or distinct facets.
+
+The reviewed skill identities are:
 
 - `Bluff` -> `Deception`;
 - `Diplomacy` -> `Persuasion`;
 - `Handle Animal` -> `Animal Handling`;
 - `Heal` -> `Medicine`;
 - `Intimidate` -> `Intimidation`;
-- every 3.x `Knowledge (X)` specialty -> `X` (for example, `Knowledge (arcana)` -> `Arcana`, `Knowledge (Psionics)` -> `Psionics`, and `Knowledge (the planes)` -> `The planes`);
+- every 3.x `Knowledge (X)` specialty -> `X`;
 - `Sense Motive` -> `Insight`;
 - `Sleight of Hand` -> `Sleight of Hand`;
 - `Survival` -> `Survival`.
 
-The following exact skill-to-skill translations apply only when the source publication is identified as 3e/3.0:
+The following apply only to 3e/3.0 sources:
 
 - `Pick Pocket` -> `Sleight of Hand`;
 - `Wilderness Lore` -> `Survival`.
 
-3e `Alchemy` is deliberately **not** an exact translation to `Alchemist's Supplies`. The source defines Alchemy as a ranked skill, while later rules define Alchemist's Supplies as a tool proficiency. Rules Core preserves the canonical/source-native `Alchemy` skill identity and records a directional `related-competency` relationship to `Alchemist's Supplies` so a consumer can explain the cross-edition relationship without merging the mechanics.
+Only these exact identity translations use `NormalizedSourceRecord.CanonicalIdentityKey` to converge source representations before Rules Layer normalization. A shared skill/tool learned competency does **not** use canonical source identity, because a skill Rule Concept and a tool Rule Concept retain different source types and mechanical contracts.
 
-The reviewed direct cross-type translations are:
+### Specialized competency facets
 
-- `Craft (alchemy)` -> `Alchemist's Supplies`;
-- `Forgery` -> `Forgery Kit`.
+Some historical skills and later tool proficiencies represent different mechanical facets of one learned discipline. Rules Core records a separate learned-competency identity while preserving each facet as its own canonical source entity and Rule Concept.
 
-The exact unscoped mappings above set `NormalizedSourceRecord.CanonicalIdentityKey` to a stable reviewed competency identity used only during canonical reconciliation. Non-identity relationships such as 3e Alchemy -> Alchemist's Supplies do not set a shared canonical identity key. That identity is not source evidence and is not injected into `ContentJson`. Consequently, once `Deception` is bound to a Rules Layer concept, a later 3.x `Bluff` import can resolve to the same canonical competency without changing the source-native record or requiring a second Rules Lawyer binding.
+The reviewed shared identities are:
 
-`Open Lock` -> `Thieves' Tools` remains intentionally different. It is limited to the `open-lock` scope, so `Open Lock` remains its own normalized competency and records only the scoped relationship under `_rulesCore.competencyConversion`. This prevents an Open Lock proficiency from becoming full Thieves' Tools proficiency.
+- 3e `Alchemy`, 3.5e `Craft (alchemy)`, and later `Alchemist's Supplies` -> shared learned competency `Alchemy`;
+- `Forgery` and later `Forgery Kit` -> shared learned competency `Forgery`.
 
-The clean many-to-one consolidations Hide/Move Silently -> Stealth, Listen/Spot -> Perception, Balance/Tumble -> Acrobatics, and Climb/Jump/Swim -> Athletics are intentionally **not importer translations**. Their PCGen records remain distinct source-native and canonical competencies. Rules Layer represents those consolidations separately as directional `composite-skill` mechanical relationships; see `docs/mechanical-relationships.md`.
+The shared state is conceptual training/proficiency identity. Facet-specific mechanics do not transfer. A 3.x Alchemy/Craft profile can carry ranks, class-skill state, governing Ability, trained-only behavior, and Armor Check Penalty semantics. The later tool facet uses its own proficiency mechanics. Ranks never become a tool bonus, proficiency bonus never becomes ranks, and class-skill state is never discarded.
 
-`Perform` specialties are not collapsed into `Performance`. Other merged, split, partial, or category-changing relationships such as Ride, Spellcraft, Search, Disable Device, Disguise, Profession, Escape Artist, Gather Information, Use Rope, Concentration, Use Magic Device, and non-alchemy Craft specialties remain source-native until a reviewed Rules Layer relationship can represent them without losing information.
+The source conversion relationship is `shared-competency-facet`. The normalized competency profile carries `identityKey`, `identityName`, `sharedTrainingKey`, and `facetType`. Later reviewed tool facets receive the same learned-competency identity in the Character mechanics consumer without rewriting their source document.
+
+### Scoped and related competency relationships
+
+Cross-type similarity is not sufficient for shared identity.
+
+- `Open Lock` -> `Thieves' Tools` is scoped to `open-lock`.
+- `Disable Device` -> `Thieves' Tools` is scoped to `disable-device`.
+- `Disguise` -> `Disguise Kit` is a `related-competency` relationship, not shared training identity. The historical skill covers broader disguise use than possession/proficiency with the later kit.
+
+These relationships preserve the historical ranked skill and do not grant unrestricted tool proficiency.
+
+The clean many-to-one consolidations Hide/Move Silently -> Stealth, Listen/Spot -> Perception, Balance/Tumble -> Acrobatics, and Climb/Jump/Swim -> Athletics remain distinct source-native competencies. Rules Layer represents those consolidations separately as directional `composite-skill` relationships; they are not competency families or shared facets.
+
+`Perform` specialties remain independent specialized competencies and are not collapsed into modern `Performance`. Instrument-specific tool facets may be established only when source evidence identifies a defensible instrument correspondence. `Profession (...)` specialties likewise remain independent. Non-alchemy Craft specialties are not mapped to modern tools from name similarity alone.
+
+The complete reviewed classification is maintained in `docs/competency-reconciliation-audit.md`.
 
 PCGen monster race records normally encode **racial modifiers and racial hit-die declarations**, not a final 5e-style stat block. For example, `BONUS:STAT|STR|16`, `BONUS:COMBAT|AC|7|TYPE=NaturalArmor`, and `MONSTERCLASS:Aberration:8` do not by themselves establish the final Strength score, total AC, or HP formula. Rules Core therefore does not fabricate `str`, `ac`, or `hp` from those values. They remain preserved under the Rules Core extension until a translator has enough surrounding 3.x rules context to derive a faithful result.
 

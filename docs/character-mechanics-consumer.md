@@ -204,54 +204,80 @@ Because publication uses the same canonical identity that ingestion already prod
 
 ## Competency metadata
 
-Resolved skill and tool concepts carry normalized competency metadata for Character consumers. The contract can describe:
+Resolved skill and tool concepts carry normalized competency metadata for Character consumers. The Character Sheet does not need to inspect `_rulesCore`, source-native JSON, or edition-specific skill lists to understand the structure.
 
-- ordinary skills, specialized skills, and tools;
-- specialized skill family and specialty, such as `Knowledge (the planes)`;
-- governing ability when the effective source provides one, with a unanimous accessible-profile ability used as presentation metadata when the selected representation omits it;
-- whether the competency supports ranks;
-- whether class-skill state is meaningful;
-- whether training state is meaningful;
-- trained-only state when the source determines it;
-- Armor Check Penalty applicability when the source determines it.
+The contract exposes, as applicable:
 
-PCGen translation normalizes understood competency semantics into `_rulesCore.competency` during ingestion. That normalized profile includes the competency kind, specialty family/value when applicable, governing ability, trained-only behavior, Armor Check Penalty applicability, rank/class-skill support, training support, game edition, and any capability qualification. The original `KEYSTAT`, `USEUNTRAINED`, `ACHECK`, and other PCGen evidence remains preserved under `_rulesCore.pcgen.unmappedSegments` for source inspection; the Character mechanics consumer does not parse those PCGen tags or infer specialty semantics from display names.
+- ordinary skill/tool identity;
+- competency family/category and specialty;
+- whether a row is an organizational family;
+- learned-competency `identityKey` / `identityName`;
+- `sharedTrainingKey` for Character-owned training/proficiency state shared across established facets;
+- facet type and the complete facet set for the learned competency;
+- the Rule mechanic keys belonging to each facet;
+- governing Ability;
+- rank support;
+- class-skill-state support;
+- training-state support;
+- trained-only state;
+- Armor Check Penalty applicability;
+- scoped/related competency relationships and relationship scope;
+- source profiles and provenance.
 
-A competency can expose multiple normalized mechanical profiles across accessible canonical-equivalent source representations. This is important for reviewed direct equivalences such as 3.x `Bluff` -> `Deception` or `Craft (alchemy)` -> `Alchemist's Supplies`: when an effective published decision selects any reviewed representation, the other accessible profile evidence remains available. Cross-edition relationships that are not identity translations stay separate. In particular, 3e `Alchemy` remains a ranked skill and may point to `Alchemist's Supplies` through `related-competency` metadata without inheriting the tool's canonical identity or mechanics. Genuine unresolved mechanical differences are not assigned a published representation by edition precedence; they remain subject to Rules Lawyer adjudication.
+### Families and specialized competencies
 
-Profile selection is explicit and local to the competency evaluation. Each profile exposes its source-revision identity, capability requirements, evaluation profile, typed inputs, boolean requirements, and `canEvaluate`. The evaluation request may supply `competencyProfileSourceEntityRevisionId`; when it is omitted, Rules Core uses the profile belonging to the effective published source revision. This is not an edition-wide Character mode.
+`Craft`, `Perform`, and `Profession` can be organizational competency families. Their children remain independent competencies. `Craft (alchemy)` and `Craft (blacksmithing)`, for example, do not share a rank value merely because both render under Craft. The same rule applies to separate Perform and Profession specialties.
+
+`Knowledge` intentionally does not use this visible family structure. Reviewed `Knowledge (X)` identities normalize directly to `X`, so a Character consumer sees `Arcana`, `History`, `Psionics`, `The planes`, and similar competencies directly while provenance retains the historical source name.
+
+A family hierarchy and a composite competency can look similar in a nested UI, but they are mechanically different. A family is taxonomy containing independent children. A composite competency, such as Hide + Move Silently -> Stealth, has an explicit Rules Layer value-composition relationship.
+
+### Shared competency facets
+
+A learned competency can have more than one mechanical facet without making those facets numerically equivalent. The current reviewed examples are Alchemy and Forgery.
+
+For Alchemy, the catalog can expose both:
+
+```text
+Alchemy
+  skill facet
+    3e Alchemy
+    3.5e Craft (alchemy)
+  tool facet
+    Alchemist's Supplies
+```
+
+The skill and tool remain separate Rule Concepts and separate canonical source identities. Both definitions carry the same learned `identityKey` and `sharedTrainingKey`. After the catalog is assembled, Rules Core groups every effective mechanic with that identity and exposes the complete facet list, including the mechanic keys and profile revision IDs that belong to each facet.
+
+Shared training state does not imply shared numerical state. A ranked profile consumes `ranks` and its source-specific skill mechanics. A later tool profile consumes the later proficiency/training inputs. The Character backend can store one conceptual trained/proficient fact under the shared training key while retaining facet-specific rank/class-skill state separately.
+
+The same model is used for Forgery / Forgery Kit. It is extensible, but new shared identities require reviewed source/rules evidence.
+
+### Scoped and related relationships
+
+The contract exposes cross-type relationships that do not share training identity:
+
+- Open Lock -> Thieves' Tools, scope `open-lock`;
+- Disable Device -> Thieves' Tools, scope `disable-device`;
+- Disguise -> Disguise Kit as `related-competency`.
+
+A scoped relationship never grants unrestricted proficiency in the target tool. A related relationship reports the rules connection without asserting that training in one is training in the other.
+
+### Mechanical profiles and evaluation
+
+Each competency profile retains its own source revision, edition/profile identity, capability requirements, typed inputs, boolean requirements, and `canEvaluate` state. Profile selection is local to a competency evaluation through `competencyProfileSourceEntityRevisionId`; it is not an edition-wide Character mode.
 
 Rules Core owns the arithmetic described by the selected profile. The Character backend supplies Character-owned or already-resolved contributions, not a final competency value:
 
 - a ranked 3.x profile uses `abilityContribution`, required `ranks`, an Armor Check Penalty adjustment only when that profile says the penalty applies, and `otherModifier`;
 - a later-edition proficiency profile uses `abilityContribution`, optional `trainingContribution`, and `otherModifier`;
-- each participating profile input declares whether it contributes to the Ability portion or the non-Ability competency portion;
-- `classSkillState` is preserved as nonnumeric Character state and does not create a modifier by itself;
+- `classSkillState` remains nonnumeric Character state;
 - a trained-only profile expresses `isTrained == true` as a Rules Core requirement;
-- unknown or not-yet-faithful profiles expose `canEvaluate=false` instead of accepting an opaque final `value`.
+- unknown or not-yet-faithful profiles expose `canEvaluate=false` rather than accepting an opaque final value.
 
-A direct competency evaluation returns both the effective value and a Rules Core-produced breakdown containing `abilityContribution` and `competencyContribution`. The caller does not derive one by subtracting the other.
+A direct competency evaluation returns the effective value and a Rules Core-produced Ability/competency breakdown. Numeric fields never migrate between incompatible facet profiles.
 
-Checks that consume competencies expose a `competencyComposition` contract. The request can supply a nested `competency` input containing the competency mechanic key, profile selection, Character facts/contributions, and capabilities. For a direct competency, Rules Core evaluates that selected profile in check-composition mode, omits the profile's own Ability contribution, and injects only its non-Ability competency contribution into the check's declared contribution input. Rules Core also injects/verifies the competency concept identity.
 
-For an effective composite competency, the same nested input can carry a `components` collection. Each component is itself a nested competency request, so Rules Core recursively evaluates its selected profile to a non-Ability contribution. The parent then passes those derived component contributions and any relationship-targeted `modifiers` to the existing `CompositeCompetencyEvaluator`. The result is the parent competency's non-Ability contribution, which is injected into the check. This gives the end-to-end flow:
-
-```text
-component Character facts/contributions
-  -> Rules Core component competency profiles
-  -> derived non-Ability component contributions
-  -> Rules Core CompositeCompetencyEvaluator
-  -> derived non-Ability parent competency contribution
-  -> Rules Core generalized/source-defined check
-```
-
-The check supplies its own selected or fixed Ability contribution independently. Therefore a Wisdom-based Stealth check can derive Stealth from Hide + Move Silently while adding Wisdom exactly once; component profile Ability contributions are not required or counted during check composition. The same rule supports alternate-Ability direct competencies such as Dexterity-based Survival.
-
-The same contract is used by generic `check.competency` and by source-defined Assessment, Carving, Manufacturing, and Enchanting checks. Supplying both a direct contribution and a nested competency composition request is rejected as ambiguous.
-
-Consequently, an accessible 3.x profile does not add ranks to the effective 5e/5.5e profile. The Character backend can deliberately select the 3.x source profile when its Character capabilities support that mechanic. The static `competency.skill-ranks` mechanic remains a raw Character-owned quantity and is not a substitute for effective competency evaluation.
-
-Ranks, class-skill state, training state, ability contributions, proficiency/training contributions, Armor Check Penalty adjustments, and other resolved modifiers remain Character inputs. Rules Core decides which inputs participate and how they combine; it does not fabricate Character state or advancement/rank-purchase rules.
 
 ## Composite competencies
 
