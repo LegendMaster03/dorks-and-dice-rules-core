@@ -152,9 +152,12 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         foreach (var mechanic in catalog.Mechanics.Where(value => value.Competency is not null))
         {
             var competency = mechanic.Competency!;
+            var competencyConceptKey = mechanic.ConceptKey
+                ?? throw new InvalidOperationException(
+                    $"Competency mechanic '{mechanic.MechanicKey}' does not expose a concept key.");
             context.RegisterCompetencyIdentity(
                 mechanic.DisplayName,
-                competency.ConceptKey,
+                competencyConceptKey,
                 competency.FamilyName,
                 competency.Specialty,
                 competency.CompetencyKind);
@@ -403,7 +406,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 }
             }
 
-            if (requiredChoices.Length > 0)
+            if (requiredChoices.Count > 0)
             {
                 context.Mechanics[scoreKey] = new CharacterResolvedMechanicView(
                     scoreKey,
@@ -1332,9 +1335,12 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         foreach (var mechanic in competencyMechanics)
         {
             var competency = mechanic.Competency!;
+            var competencyConceptKey = mechanic.ConceptKey
+                ?? throw new InvalidOperationException(
+                    $"Competency mechanic '{mechanic.MechanicKey}' does not expose a concept key.");
             context.RegisterCompetencyIdentity(
                 mechanic.DisplayName,
-                competency.ConceptKey,
+                competencyConceptKey,
                 competency.FamilyName,
                 competency.Specialty,
                 competency.CompetencyKind);
@@ -1387,7 +1393,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
             if (profile.SupportsClassSkillState)
             {
-                var explicitClassSkill = context.ClassSkillKeys.Contains(competency.ConceptKey)
+                var explicitClassSkill = context.ClassSkillKeys.Contains(competencyConceptKey)
                     || context.ClassSkillKeys.Contains(mechanic.MechanicKey);
                 var derivedSources = context.FindClassSkillGrantSources(
                     mechanic.DisplayName,
@@ -1397,9 +1403,9 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     : context.HasClassSkillInput || context.HasDerivedClassSkillData
                         ? false
                         : null;
-                context.Qualifications[$"qualification.class-skill.{competency.ConceptKey}"] =
+                context.Qualifications[$"qualification.class-skill.{competencyConceptKey}"] =
                     new CharacterQualificationView(
-                        $"qualification.class-skill.{competency.ConceptKey}",
+                        $"qualification.class-skill.{competencyConceptKey}",
                         "class-skill",
                         $"{mechanic.DisplayName} Class Skill",
                         isClassSkill,
@@ -1413,20 +1419,20 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             if (profile.SupportsRanks)
             {
                 if (!context.HasCompetencyRanksInput
-                    || !context.CompetencyRanks.TryGetValue(competency.ConceptKey, out var ranks))
+                    || !context.CompetencyRanks.TryGetValue(competencyConceptKey, out var ranks))
                 {
                     context.Mechanics[mechanic.MechanicKey] = Unresolved(
                         mechanic.MechanicKey,
                         "competency",
                         mechanic.DisplayName,
                         CharacterResolutionStates.MissingCharacterInput,
-                        [$"{competency.ConceptKey}.ranks"],
+                        [$"{competencyConceptKey}.ranks"],
                         provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
                     continue;
                 }
                 total = checked(total + ranks);
                 contributions.Add(Contribution(
-                    $"{competency.ConceptKey}.ranks",
+                    $"{competencyConceptKey}.ranks",
                     "Ranks",
                     ranks));
 
@@ -1437,7 +1443,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                         "competency",
                         mechanic.DisplayName,
                         CharacterResolutionStates.MissingCapability,
-                        missingCapabilities: [$"competency.trained.{competency.ConceptKey}"],
+                        missingCapabilities: [$"competency.trained.{competencyConceptKey}"],
                         provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
                     continue;
                 }
@@ -1445,7 +1451,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
             if (profile.SupportsTrainingState)
             {
-                var trained = context.TrainingKeys.Contains(competency.ConceptKey);
+                var trained = context.TrainingKeys.Contains(competencyConceptKey);
                 if (!trained && !context.HasTrainingInput)
                 {
                     context.Mechanics[mechanic.MechanicKey] = Unresolved(
@@ -1453,7 +1459,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                         "competency",
                         mechanic.DisplayName,
                         CharacterResolutionStates.MissingCharacterInput,
-                        [$"{competency.ConceptKey}.trained"],
+                        [$"{competencyConceptKey}.trained"],
                         provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
                     continue;
                 }
@@ -1497,7 +1503,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 [],
                 contributions,
                 mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
-            projected[competency.ConceptKey] = total;
+            projected[competencyConceptKey] = total;
         }
 
         foreach (var relationship in KnownMechanicalRelationships.All)
@@ -2033,14 +2039,12 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             return false;
         }
 
-        referenceProgression = candidates
+        var referenceCandidate = candidates
             .OrderByDescending(value => value.Slots.Count)
             .ThenBy(value => value.Progression.ConceptKey, StringComparer.Ordinal)
-            .First()
-            .Progression;
-        var referenceSlots = candidates
-            .First(value => ReferenceEquals(value.Progression, referenceProgression))
-            .Slots;
+            .First();
+        referenceProgression = referenceCandidate.Progression;
+        var referenceSlots = referenceCandidate.Slots;
         var width = candidates.Max(value => value.Slots.Count);
 
         foreach (var candidate in candidates)
