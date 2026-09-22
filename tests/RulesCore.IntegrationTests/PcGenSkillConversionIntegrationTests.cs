@@ -51,6 +51,99 @@ public sealed class PcGenSkillConversionIntegrationTests
     ];
 
     [Fact]
+    public async Task SpecializedCompetencyFamiliesAreTaxonomyWhileKnowledgeNormalizesDirectly()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var packageKey = $"pcgen-competency-families-{token}";
+
+            try
+            {
+                await new NormalizedSourceImportService(db).ImportAsync(
+                    new ImportNormalizedSourceRequest(
+                        packageKey,
+                        $"PCGen competency family fixture {token}",
+                        "integration-test",
+                        "test-only",
+                        true,
+                        PcGenRepresentation(
+                            "35e",
+                            $"FAM{token}",
+                            [
+                                "Craft",
+                                "Craft (blacksmithing)",
+                                "Perform",
+                                "Perform (dance)",
+                                "Profession",
+                                "Profession (sailor)",
+                                "Knowledge (arcana)"
+                            ])));
+
+                foreach (var family in new[] { "Craft", "Perform", "Profession" })
+                {
+                    var row = await ReadByNativeNameAsync(db, packageKey, family);
+                    using var document = JsonDocument.Parse(row.ContentJson);
+                    var competency = document.RootElement
+                        .GetProperty("_rulesCore")
+                        .GetProperty("competency");
+                    Assert.Equal("skill", competency.GetProperty("kind").GetString());
+                    Assert.Equal(family, competency.GetProperty("familyName").GetString());
+                    Assert.True(competency.GetProperty("isFamily").GetBoolean());
+                    Assert.False(competency.TryGetProperty("specialty", out _));
+                    Assert.True(competency.GetProperty("supportsRanks").GetBoolean());
+                    Assert.True(competency.GetProperty("supportsClassSkillState").GetBoolean());
+                }
+
+                foreach (var (name, family, specialty) in new[]
+                         {
+                             ("Craft (blacksmithing)", "Craft", "blacksmithing"),
+                             ("Perform (dance)", "Perform", "dance"),
+                             ("Profession (sailor)", "Profession", "sailor")
+                         })
+                {
+                    var row = await ReadByNativeNameAsync(db, packageKey, name);
+                    using var document = JsonDocument.Parse(row.ContentJson);
+                    var competency = document.RootElement
+                        .GetProperty("_rulesCore")
+                        .GetProperty("competency");
+                    Assert.Equal(
+                        "specialized-skill",
+                        competency.GetProperty("kind").GetString());
+                    Assert.Equal(family, competency.GetProperty("familyName").GetString());
+                    Assert.Equal(specialty, competency.GetProperty("specialty").GetString());
+                    Assert.False(competency.TryGetProperty("isFamily", out _));
+                    Assert.True(competency.GetProperty("supportsRanks").GetBoolean());
+                    Assert.True(competency.GetProperty("supportsClassSkillState").GetBoolean());
+                }
+
+                var knowledge = await ReadByNativeNameAsync(
+                    db,
+                    packageKey,
+                    "Knowledge (arcana)");
+                Assert.Equal("skill", knowledge.EntityType);
+                Assert.Equal("Arcana", knowledge.NormalizedName);
+                using (var document = JsonDocument.Parse(knowledge.ContentJson))
+                {
+                    var competency = document.RootElement
+                        .GetProperty("_rulesCore")
+                        .GetProperty("competency");
+                    Assert.Equal("skill", competency.GetProperty("kind").GetString());
+                    Assert.False(competency.TryGetProperty("familyName", out _));
+                    Assert.False(competency.TryGetProperty("specialty", out _));
+                    Assert.False(competency.TryGetProperty("isFamily", out _));
+                }
+            }
+            finally
+            {
+                await DeletePackageAsync(db, packageKey);
+            }
+        }
+    }
+
+    [Fact]
     public async Task SharedAlchemyFacetsKeepSeparateCanonicalIdentities()
     {
         var db = await OpenDatabaseAsync();
