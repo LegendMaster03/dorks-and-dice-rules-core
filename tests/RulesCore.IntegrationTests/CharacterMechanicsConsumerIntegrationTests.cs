@@ -1256,9 +1256,13 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 result.Resources,
                 value => value.ResourceKey == $"resource.hit-die.{conceptKey}");
             Assert.Equal(5, hitDice.MaximumValue);
-            Assert.Equal(CharacterResolutionStates.RollRequired, Assert.Single(
+            var maximumHp = Assert.Single(
                 result.Mechanics,
-                value => value.MechanicKey == "health.maximum-hp").State);
+                value => value.MechanicKey == "health.maximum-hp");
+            Assert.Equal(CharacterResolutionStates.MissingCharacterInput, maximumHp.State);
+            Assert.Contains(
+                $"health.hit-point-gain.{conceptKey}.level-1",
+                maximumHp.MissingCharacterInputs);
             Assert.Contains(
                 result.Features,
                 value => value.DisplayName == "Opening Feature"
@@ -1502,6 +1506,14 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     Advancements:
                     [
                         new CharacterAdvancementFactInput(conceptKey, 5)
+                    ],
+                    HitPointGains:
+                    [
+                        new CharacterHitPointGainInput(conceptKey, 1, 8),
+                        new CharacterHitPointGainInput(conceptKey, 2, 5),
+                        new CharacterHitPointGainInput(conceptKey, 3, 5),
+                        new CharacterHitPointGainInput(conceptKey, 4, 5),
+                        new CharacterHitPointGainInput(conceptKey, 5, 5)
                     ]),
                 userId: null);
 
@@ -1531,9 +1543,12 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 result.Resources,
                 value => value.ResourceKey == $"resource.hit-die.{conceptKey}");
             Assert.Equal(5, hitDice.MaximumValue);
-            Assert.Equal(CharacterResolutionStates.RollRequired, Assert.Single(
+            var maximumHp = Assert.Single(
                 result.Mechanics,
-                value => value.MechanicKey == "health.maximum-hp").State);
+                value => value.MechanicKey == "health.maximum-hp");
+            Assert.Equal(CharacterResolutionStates.Resolved, maximumHp.State);
+            Assert.Equal(33, maximumHp.NumericValue);
+            Assert.Equal(5, maximumHp.Contributions.Count);
             Assert.Contains(
                 result.Capabilities,
                 value => value.CapabilityKey == "spellcasting");
