@@ -63,6 +63,19 @@ internal static class CharacterStructuredProficiencyProjector
 
             foreach (var property in entry.EnumerateObject())
             {
+                if (string.Equals(category, "weapons", StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(property.Name, "all", StringComparison.OrdinalIgnoreCase)
+                    && TryProjectWeaponFilter(
+                        rule,
+                        context,
+                        property.Value,
+                        pathPrefix,
+                        fieldName,
+                        entryIndex))
+                {
+                    continue;
+                }
+
                 if (property.Value.ValueKind == JsonValueKind.True)
                 {
                     AddQualification(
@@ -98,6 +111,62 @@ internal static class CharacterStructuredProficiencyProjector
 
             entryIndex++;
         }
+    }
+
+    private static bool TryProjectWeaponFilter(
+        CharacterProjectionRule rule,
+        CharacterProjectionContext context,
+        JsonElement expression,
+        string pathPrefix,
+        string fieldName,
+        int entryIndex)
+    {
+        if (expression.ValueKind != JsonValueKind.Object
+            || !CharacterProjectionJson.TryGetProperty(expression, "fromFilter", out var filterValue)
+            || filterValue.ValueKind != JsonValueKind.String
+            || string.IsNullOrWhiteSpace(filterValue.GetString()))
+        {
+            return false;
+        }
+
+        var filter = filterValue.GetString()!.Trim();
+        if (!context.TryMatchWeaponFilter(filter, out var matches))
+        {
+            return false;
+        }
+
+        if (matches.Count == 0)
+        {
+            var key = $"qualification.weapons.source-expression.all.{entryIndex}";
+            context.Qualifications[key] = new CharacterQualificationView(
+                key,
+                "weapons",
+                $"Weapons matching {filter}",
+                null,
+                CharacterResolutionStates.SourceUnavailable,
+                [rule.Catalog.ConceptKey],
+                rule.Provenance);
+            context.Conflicts.Add(new CharacterProjectionConflictView(
+                $"conflict.{pathPrefix}.{fieldName}.{entryIndex}.all",
+                "source-unavailable",
+                $"{rule.Catalog.DisplayName} defines a weapon proficiency filter that Rules Core can evaluate, but no accessible effective weapon concepts match '{filter}'.",
+                [],
+                [rule.Catalog.ConceptKey]));
+            return true;
+        }
+
+        foreach (var weapon in matches)
+        {
+            AddQualification(
+                rule,
+                context,
+                "weapons",
+                weapon.DisplayName,
+                CharacterResolutionStates.Resolved,
+                true);
+        }
+
+        return true;
     }
 
     private static void ProjectTools(
