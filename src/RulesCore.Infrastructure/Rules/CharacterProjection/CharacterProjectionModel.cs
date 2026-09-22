@@ -125,7 +125,10 @@ internal sealed class CharacterProjectionContext
     public HashSet<string> DerivedClassSkillTypes { get; } = new(Keys);
     public bool HasDerivedClassSkillData { get; set; }
     public Dictionary<string, string> RuleDisplayNames { get; } = new(Keys);
+    public Dictionary<string, string> RuleEntityTypes { get; } = new(Keys);
     public Dictionary<string, string> CompetencyConceptKeysByDisplayName { get; } = new(Keys);
+    public string? StartingClassConceptKey { get; private set; }
+    public bool StartingClassChoiceRequired { get; private set; }
     public Dictionary<string, CharacterChoiceOptionView> CompetencyChoiceOptionsByName { get; } =
         new(Keys);
     public Dictionary<string, CharacterChoiceOptionView> SkillChoiceOptionsByConceptKey { get; } =
@@ -165,13 +168,133 @@ internal sealed class CharacterProjectionContext
         ?? 0;
 
 
-    public void RegisterRuleIdentity(string conceptKey, string displayName)
+    public void RegisterRuleIdentity(
+        string conceptKey,
+        string displayName,
+        string entityType)
     {
-        if (string.IsNullOrWhiteSpace(conceptKey) || string.IsNullOrWhiteSpace(displayName))
+        if (string.IsNullOrWhiteSpace(conceptKey)
+            || string.IsNullOrWhiteSpace(displayName)
+            || string.IsNullOrWhiteSpace(entityType))
         {
             return;
         }
-        RuleDisplayNames[conceptKey.Trim()] = displayName.Trim();
+
+        var normalized = conceptKey.Trim();
+        RuleDisplayNames[normalized] = displayName.Trim();
+        RuleEntityTypes[normalized] = entityType.Trim();
+    }
+
+    public void ResolveStartingClass()
+    {
+        const string choiceKey = "advancement.starting-class";
+        var classConceptKeys = (Request.Advancements ?? [])
+            .Where(value => value.Level > 0)
+            .Select(value => value.ConceptKey?.Trim())
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Cast<string>()
+            .Where(value =>
+                RuleEntityTypes.TryGetValue(value, out var entityType)
+                && string.Equals(entityType, "class", StringComparison.OrdinalIgnoreCase))
+            .Distinct(Keys)
+            .OrderBy(value => value, StringComparer.Ordinal)
+            .ToArray();
+
+        if (classConceptKeys.Length == 0)
+        {
+            return;
+        }
+        if (classConceptKeys.Length == 1)
+        {
+            StartingClassConceptKey = classConceptKeys[0];
+            return;
+        }
+
+        var options = classConceptKeys
+            .Select(value => new CharacterChoiceOptionView(
+                value,
+                RuleDisplayNames.GetValueOrDefault(value) ?? CharacterProjectionJson.Humanize(value),
+                value))
+            .ToArray();
+
+        var supplied = StringFacts.GetValueOrDefault(choiceKey);
+        if (string.IsNullOrWhiteSpace(supplied))
+        {
+            supplied = Choices.GetValueOrDefault(choiceKey);
+        }
+
+        var selected = options.FirstOrDefault(value =>
+            string.Equals(value.Value, supplied?.Trim(), StringComparison.OrdinalIgnoreCase)
+            || string.Equals(value.DisplayName, supplied?.Trim(), StringComparison.OrdinalIgnoreCase));
+        if (selected is not null)
+        {
+            StartingClassConceptKey = selected.Value;
+            ChoiceViews[choiceKey] = new CharacterChoiceView(
+                choiceKey,
+                "choice-group.advancement.starting-class",
+                "Starting Class",
+                "starting-class",
+                CharacterResolutionStates.Resolved,
+                options,
+                selected.Value,
+                selected.Value,
+                EmptyProvenance());
+            return;
+        }
+
+        StartingClassChoiceRequired = true;
+        ChoiceViews[choiceKey] = new CharacterChoiceView(
+            choiceKey,
+            "choice-group.advancement.starting-class",
+            "Starting Class",
+            "starting-class",
+            CharacterResolutionStates.ChoiceRequired,
+            options,
+            supplied,
+            null,
+            EmptyProvenance());
+        Mechanics[choiceKey] = new CharacterResolvedMechanicView(
+            choiceKey,
+            "advancement",
+            "Starting Class",
+            CharacterResolutionStates.ChoiceRequired,
+            null,
+            null,
+            null,
+            [],
+            [],
+            [choiceKey],
+            [],
+            [],
+            EmptyProvenance());
+
+        if (!string.IsNullOrWhiteSpace(supplied))
+        {
+            Conflicts.Add(new CharacterProjectionConflictView(
+                "conflict.advancement.starting-class",
+                "invalid-runtime-choice",
+                $"Starting class '{supplied}' is not one of the Character's selected base classes.",
+                [choiceKey],
+                classConceptKeys));
+        }
+    }
+
+    public bool? IsStartingClass(string conceptKey)
+    {
+        if (!RuleEntityTypes.TryGetValue(conceptKey, out var entityType)
+            || !string.Equals(entityType, "class", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+        if (StartingClassChoiceRequired)
+        {
+            return null;
+        }
+        return StartingClassConceptKey is not null
+            && string.Equals(
+                StartingClassConceptKey,
+                conceptKey,
+                StringComparison.OrdinalIgnoreCase);
     }
 
     public void RegisterCompetencyIdentity(

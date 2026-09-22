@@ -143,10 +143,11 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
             context.StandardProficiencyLevel = checked(context.StandardProficiencyLevel + Math.Max(level, 0));
         }
 
-        ProjectSavingThrowTraining(rule, context);
+        var startingClass = context.IsStartingClass(rule.Catalog.ConceptKey);
+        ProjectSavingThrowTraining(rule, context, startingClass);
         ProjectHitDie(rule, context, level);
         ProjectSpellcasting(rule, context, level);
-        ProjectStartingQualifications(rule, context);
+        ProjectClassQualifications(rule, context, startingClass);
         ProjectClassFeatures(rule, context, level);
         ProjectNormalizedThreeXClass(rule, context, level);
     }
@@ -337,7 +338,8 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
 
     private static void ProjectSavingThrowTraining(
         CharacterProjectionRule rule,
-        CharacterProjectionContext context)
+        CharacterProjectionContext context,
+        bool? startingClass)
     {
         var values = CharacterProjectionJson.Strings(rule.Document, "proficiency");
         if (values.Count == 0)
@@ -349,7 +351,14 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
             return;
         }
 
+        // A native 5.x saving-throw proficiency field establishes the standard
+        // proficiency progression even when this class is not the starting class.
         context.UsesStandardProficiency = true;
+        if (startingClass != true)
+        {
+            return;
+        }
+
         foreach (var raw in values)
         {
             var ability = CharacterProjectionJson.NormalizeAbilityKey(raw);
@@ -522,14 +531,45 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
         return false;
     }
 
-    private static void ProjectStartingQualifications(
+    private static void ProjectClassQualifications(
         CharacterProjectionRule rule,
-        CharacterProjectionContext context)
+        CharacterProjectionContext context,
+        bool? startingClass)
     {
-        if (!CharacterProjectionJson.TryGetProperty(rule.Document, "startingProficiencies", out var proficiencies)
-            || proficiencies.ValueKind != JsonValueKind.Object)
+        if (startingClass is null)
         {
             return;
+        }
+
+        JsonElement proficiencies;
+        var pathPrefix = "starting-proficiencies";
+        if (startingClass == true)
+        {
+            if (!CharacterProjectionJson.TryGetProperty(
+                    rule.Document,
+                    "startingProficiencies",
+                    out proficiencies)
+                || proficiencies.ValueKind != JsonValueKind.Object)
+            {
+                return;
+            }
+        }
+        else
+        {
+            if (!CharacterProjectionJson.TryGetProperty(
+                    rule.Document,
+                    "multiclassing",
+                    out var multiclassing)
+                || multiclassing.ValueKind != JsonValueKind.Object
+                || !CharacterProjectionJson.TryGetProperty(
+                    multiclassing,
+                    "proficienciesGained",
+                    out proficiencies)
+                || proficiencies.ValueKind != JsonValueKind.Object)
+            {
+                return;
+            }
+            pathPrefix = "multiclass-proficiencies";
         }
 
         CharacterStartingProficiencyProjector.ProjectSkills(
@@ -540,7 +580,7 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
             rule,
             context,
             proficiencies,
-            "starting-proficiencies");
+            pathPrefix);
 
         foreach (var category in proficiencies.EnumerateObject()
                      .Where(value => !string.Equals(

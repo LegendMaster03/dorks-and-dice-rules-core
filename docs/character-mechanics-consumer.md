@@ -314,3 +314,9 @@ The bulk Character projection treats a 5e.tools `ability` array as alternate abi
 Within the selected set, fixed numeric adjustments are applied directly. `choose.from` supports source-defined `count` and `amount`, while `choose.weighted` creates one distinct ability selection per source weight (for example +2 and +1). Duplicate selections inside the same weighted/uniform group are explicit conflicts. Missing choices mark only the ability scores that the unresolved source choice can affect; unrelated abilities remain resolved.
 
 Ability choices are returned through the same generic `choices` contract used for proficiencies, with stable keys, legal options, selected values, source concept, and provenance. Unknown choice shapes are preserved as `source-unavailable` rather than guessed.
+
+## Starting class and multiclass proficiencies
+
+When exactly one selected base-class advancement has a positive level, Rules Core treats it as the starting class automatically. When more than one base class is present, the Character must identify the starting class with the `advancement.starting-class` runtime choice (or the same key in string facts). The projection does not infer the starting class from request order. The generic `choices` response exposes the legal selected base-class options.
+
+Only the starting class grants its native `proficiency`/`savingThrows` proficiencies and `startingProficiencies`. Other selected base classes instead project `multiclassing.proficienciesGained`, including the normalized skill/tool/weapon/armor choice paths supported by Character projection. Standard proficiency bonus still uses the total supplied base-class advancement levels. If the starting class is unresolved, starting-only and multiclass-only grants are withheld and the projection reports `choice-required` rather than over-granting Character capabilities.
