@@ -73,6 +73,10 @@ internal sealed class CharacterProjectionContext
         EquippedItems = new HashSet<string>(
             request.EquippedItemConceptKeys?.Select(Normalize) ?? [],
             Keys);
+        InventoryItems = new HashSet<string>(
+            request.ItemConceptKeys?.Select(Normalize) ?? [],
+            Keys);
+        InventoryItems.UnionWith(EquippedItems);
         KnownSpells = new HashSet<string>(
             request.KnownSpellConceptKeys?.Select(Normalize) ?? [],
             Keys);
@@ -115,6 +119,7 @@ internal sealed class CharacterProjectionContext
     public CharacterRulesProjectionRequest Request { get; }
     public HashSet<string> SelectedConcepts { get; }
     public HashSet<string> EquippedItems { get; }
+    public HashSet<string> InventoryItems { get; }
     public HashSet<string> KnownSpells { get; }
     public HashSet<string> PreparedSpells { get; }
     public HashSet<string> ActiveConditions { get; }
@@ -180,6 +185,7 @@ internal sealed class CharacterProjectionContext
     public Dictionary<string, CharacterQualificationView> Qualifications { get; } = new(Keys);
     public Dictionary<string, CharacterActionView> Actions { get; } = new(Keys);
     public Dictionary<string, CharacterFeatureView> Features { get; } = new(Keys);
+    public Dictionary<string, CharacterEquipmentDefinitionView> Equipment { get; } = new(Keys);
     public Dictionary<string, CharacterResourceView> Resources { get; } = new(Keys);
     public Dictionary<string, CharacterSpellcastingView> Spellcasting { get; } = new(Keys);
     public Dictionary<string, CharacterProcedureView> Procedures { get; } = new(Keys);
@@ -1011,7 +1017,10 @@ internal sealed class CharacterProjectionContext
         string kind,
         string state,
         string? sourceConceptKey,
-        CharacterMechanicProvenanceView provenance)
+        CharacterMechanicProvenanceView provenance,
+        string? grantingSourceKind = null,
+        int? acquisitionLevel = null,
+        string? occurrenceKey = null)
     {
         var normalized = Normalize(featureKey);
         Features[normalized] = new CharacterFeatureView(
@@ -1021,7 +1030,10 @@ internal sealed class CharacterProjectionContext
             state,
             sourceConceptKey,
             [],
-            provenance);
+            provenance,
+            occurrenceKey ?? normalized,
+            grantingSourceKind ?? kind,
+            acquisitionLevel);
     }
 
     public void AddEffect(CharacterRuleEffectView effect)
@@ -1044,6 +1056,10 @@ internal sealed class CharacterProjectionContext
             && effect.TargetKey.EndsWith(".score", StringComparison.OrdinalIgnoreCase))
         {
             var ability = effect.TargetKey["ability.".Length..^".score".Length];
+            var temporary =
+                !string.IsNullOrWhiteSpace(effect.ConditionKey)
+                || (effect.SourceConceptKey is not null
+                    && ActiveConditions.Contains(effect.SourceConceptKey));
             AddAbilityContribution(
                 ability,
                 new CharacterMechanicContributionView(
@@ -1053,7 +1069,9 @@ internal sealed class CharacterProjectionContext
                     value,
                     null,
                     effect.SourceConceptKey,
-                    effect.Provenance));
+                    effect.Provenance,
+                    temporary ? "temporary" : "persistent",
+                    effect.ConditionKey));
         }
     }
 
@@ -1180,6 +1198,26 @@ internal static class CharacterProjectionJson
         }
         return value.ValueKind == JsonValueKind.String
             && int.TryParse(value.GetString(), out number)
+                ? number
+                : null;
+    }
+
+    public static decimal? Decimal(JsonElement element, string name)
+    {
+        if (!TryGetProperty(element, name, out var value))
+        {
+            return null;
+        }
+        if (value.ValueKind == JsonValueKind.Number && value.TryGetDecimal(out var number))
+        {
+            return number;
+        }
+        return value.ValueKind == JsonValueKind.String
+            && decimal.TryParse(
+                value.GetString(),
+                System.Globalization.NumberStyles.Number,
+                System.Globalization.CultureInfo.InvariantCulture,
+                out number)
                 ? number
                 : null;
     }
