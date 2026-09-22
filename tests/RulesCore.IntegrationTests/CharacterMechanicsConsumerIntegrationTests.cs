@@ -1973,6 +1973,12 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 global.Movement,
                 value => value.MovementKey == "movement.walk");
             Assert.Equal(30, globalWalk.Value);
+            var speciesFeature = Assert.Single(
+                global.Features,
+                value => value.FeatureKey == $"feature.{conceptKey}");
+            Assert.Equal("race", speciesFeature.GrantingSourceKind);
+            Assert.Equal(conceptKey, speciesFeature.SourceConceptKey);
+            Assert.Equal(speciesFeature.FeatureKey, speciesFeature.OccurrenceKey);
 
             var campaign = await projection.ResolveCampaignAsync(
                 campaignId,
@@ -3270,14 +3276,20 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     ]),
                 userId: null);
 
-            Assert.Contains(
+            var pathInitiate = Assert.Single(
                 result.Features,
                 value => value.DisplayName == "Path Initiate"
                     && value.State == CharacterResolutionStates.Resolved);
-            Assert.Contains(
+            Assert.Equal("subclass", pathInitiate.GrantingSourceKind);
+            Assert.Equal(3, pathInitiate.AcquisitionLevel);
+            Assert.Equal(conceptKey, pathInitiate.SourceConceptKey);
+
+            var pathAdept = Assert.Single(
                 result.Features,
                 value => value.DisplayName == "Path Adept"
                     && value.State == CharacterResolutionStates.Resolved);
+            Assert.Equal("subclass", pathAdept.GrantingSourceKind);
+            Assert.Equal(6, pathAdept.AcquisitionLevel);
             Assert.DoesNotContain(
                 result.Features,
                 value => value.DisplayName == "Path Master");
