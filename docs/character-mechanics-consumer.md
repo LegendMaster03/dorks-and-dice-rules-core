@@ -300,3 +300,9 @@ The bulk Character projection exposes rule-defined selections as `choices` rathe
 `startingProficiencies.skills` and top-level `skillProficiencies` use the same normalized choice path. Fixed source skill proficiencies become Character training directly. A 5e.tools `choose.from` group becomes one choice slot per required selection, and `any: N` is populated from the effective accessible skill competency catalog. Fixed boolean grants and a choice can coexist in one source object. Duplicate selections within one source group and values outside the legal option set are explicit conflicts. When an option resolves to a canonical competency, selecting it feeds the Rules Core competency calculation directly; the Character Sheet does not need to mirror that selection into `TrainingKeys`.
 
 Missing choices do not imply non-proficiency. Competencies that could still be selected remain unresolved until the Character supplies the choice or a complete external training-state set.
+
+## Structured proficiency projection
+
+The bulk Character projection reads 5e.tools `weaponProficiencies`, `armorProficiencies`, and `toolProficiencies` in addition to the human-facing `weapons`, `armor`, and `tools` arrays. Fixed boolean weapon and armor entries become qualifications/capabilities. Structured filter expressions such as a filtered martial-weapon set remain `applicable-unresolved`; Rules Core does not expand a source filter into broader grants unless the filter semantics are normalized.
+
+Fixed named tool entries resolve against the accessible canonical tool competency catalog and feed Character training directly. `anyTool: N` becomes N ordinary choice slots populated from that catalog. Narrower category quantities such as `anyArtisansTool` or `anyMusicalInstrument` are reported as `source-unavailable` choices until tool-category metadata exists to generate a trustworthy legal option set. This preserves the source requirement without presenting an invented list.

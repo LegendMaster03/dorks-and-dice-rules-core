@@ -603,6 +603,11 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
             rule,
             context,
             proficiencies);
+        CharacterStructuredProficiencyProjector.Project(
+            rule,
+            context,
+            proficiencies,
+            "starting-proficiencies");
 
         foreach (var category in proficiencies.EnumerateObject()
                      .Where(value => !string.Equals(
@@ -1070,6 +1075,11 @@ internal sealed class GenericCharacterRuleProjectionModule : ICharacterRuleProje
                 rule,
                 context,
                 rule.Document);
+            CharacterStructuredProficiencyProjector.Project(
+                rule,
+                context,
+                rule.Document,
+                "source-proficiencies");
         }
 
         if (context.ActiveConditions.Contains(rule.Catalog.ConceptKey))

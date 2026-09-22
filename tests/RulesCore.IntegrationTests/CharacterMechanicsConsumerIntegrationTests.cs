@@ -2864,6 +2864,253 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task CharacterProjectionUsesStructuredWeaponArmorAndToolProficiencies()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-structured-profs-{token}";
+        var classConceptKey = $"class.structured-profs-{token}";
+        var thievesConceptKey = $"tool.thieves-tools-{token}";
+        var herbalismConceptKey = $"tool.herbalism-kit-{token}";
+        var actor = $"character-structured-profs-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"PRF{token}";
+            var classRaw = JsonSerializer.Serialize(new
+            {
+                name = "Structured Proficiency Class",
+                source = sourceCode,
+                hd = new { number = 1, faces = 8 },
+                proficiency = new[] { "dex", "wis" },
+                startingProficiencies = new
+                {
+                    weaponProficiencies = new object[]
+                    {
+                        new
+                        {
+                            simple = true,
+                            all = new { fromFilter = "type=martial weapon|property=light;finesse" }
+                        }
+                    },
+                    armorProficiencies = new object[]
+                    {
+                        new { light = true, shield = true }
+                    },
+                    toolProficiencies = new object[]
+                    {
+                        new Dictionary<string, object>
+                        {
+                            ["thieves' tools"] = true,
+                            ["anyTool"] = 1,
+                            ["anyArtisansTool"] = 1
+                        }
+                    }
+                }
+            });
+            var thievesRaw = JsonSerializer.Serialize(new
+            {
+                name = "Thieves' Tools",
+                source = sourceCode,
+                ability = "dex"
+            });
+            var herbalismRaw = JsonSerializer.Serialize(new
+            {
+                name = "Herbalism Kit",
+                source = sourceCode,
+                ability = "wis"
+            });
+
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Structured Proficiency Fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"structured-profs-{token}.json",
+                            Encoding.UTF8.GetBytes("{}"),
+                            $"integration:structured-profs:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "class",
+                                "Structured Proficiency Class",
+                                sourceCode,
+                                $"class|Structured Proficiency Class|{sourceCode}",
+                                classRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "tool",
+                                "Thieves' Tools",
+                                sourceCode,
+                                $"tool|Thieves' Tools|{sourceCode}",
+                                thievesRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "tool",
+                                "Herbalism Kit",
+                                sourceCode,
+                                $"tool|Herbalism Kit|{sourceCode}",
+                                herbalismRaw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Structured Proficiency Fixture {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2014, 8, 19))
+                        ])));
+            packageId = imported.PackageId;
+            var byName = imported.Entities.ToDictionary(value => value.Name, StringComparer.Ordinal);
+            var definitions = new[]
+            {
+                (Key: classConceptKey, Entity: byName["Structured Proficiency Class"]),
+                (Key: thievesConceptKey, Entity: byName["Thieves' Tools"]),
+                (Key: herbalismConceptKey, Entity: byName["Herbalism Kit"])
+            };
+            var concepts = new Dictionary<string, RuleConceptView>(StringComparer.Ordinal);
+            foreach (var definition in definitions)
+            {
+                var created = await globalRules.CreateConceptAsync(
+                    new CreateRuleConceptRequest(
+                        definition.Key,
+                        definition.Entity.EntityType,
+                        definition.Entity.Name),
+                    actor);
+                concepts[definition.Key] = created.Value;
+                await globalRules.BindSourceEntityAsync(
+                    created.Value.Id,
+                    new BindRuleConceptSourceRequest(definition.Entity.EntityId),
+                    actor);
+            }
+
+            var entityIds = definitions.Select(value => value.Entity.EntityId).ToArray();
+            var revisionIds = await db.SourceEntityRevisions
+                .Where(value => entityIds.Contains(value.SourceEntityId))
+                .ToDictionaryAsync(value => value.SourceEntityId, value => value.Id);
+            foreach (var definition in definitions)
+            {
+                await globalRules.SetDecisionAsync(
+                    concepts[definition.Key].Id,
+                    new SetGlobalRuleDecisionRequest(
+                        revisionIds[definition.Entity.EntityId],
+                        "Structured proficiency fixture."),
+                    actor);
+            }
+            await globalRules.PublishAsync(actor);
+
+            CharacterRulesProjectionRequest Request(
+                IReadOnlyList<CharacterRuntimeChoiceInput>? choices = null) =>
+                new(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 10,
+                        ["dexterity"] = 14,
+                        ["constitution"] = 12,
+                        ["intelligence"] = 10,
+                        ["wisdom"] = 12,
+                        ["charisma"] = 10
+                    },
+                    Advancements:
+                    [
+                        new CharacterAdvancementFactInput(classConceptKey, 5)
+                    ],
+                    Choices: choices);
+
+            var unresolved = await projection.ResolveGlobalAsync(
+                Request(),
+                userId: null);
+
+            Assert.Contains(
+                unresolved.Qualifications,
+                value => value.QualificationKey == "qualification.weapons.simple"
+                    && value.IsQualified == true);
+            Assert.Contains(
+                unresolved.Qualifications,
+                value => value.QualificationKey == "qualification.armor.light"
+                    && value.IsQualified == true);
+            Assert.Contains(
+                unresolved.Qualifications,
+                value => value.QualificationKey == "qualification.armor.shield"
+                    && value.IsQualified == true);
+            Assert.Contains(
+                unresolved.Qualifications,
+                value => value.QualificationKey.StartsWith(
+                    "qualification.weapons.source-expression.",
+                    StringComparison.Ordinal)
+                    && value.State == CharacterResolutionStates.ApplicableUnresolved);
+
+            var thieves = Assert.Single(
+                unresolved.Mechanics,
+                value => value.MechanicKey == $"competency.{thievesConceptKey}");
+            Assert.Equal(CharacterResolutionStates.Resolved, thieves.State);
+            Assert.Equal(5, thieves.NumericValue);
+
+            var anyTool = Assert.Single(
+                unresolved.Choices,
+                value => value.Kind == "tool-proficiency"
+                    && value.ChoiceKey.Contains("anytool", StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(CharacterResolutionStates.ChoiceRequired, anyTool.State);
+            Assert.Equal(2, anyTool.Options.Count);
+            var herbalismOption = Assert.Single(
+                anyTool.Options,
+                value => value.ConceptKey == herbalismConceptKey);
+
+            var artisan = Assert.Single(
+                unresolved.Choices,
+                value => value.Kind == "tool-proficiency"
+                    && value.ChoiceKey.Contains(
+                        "anyartisanstool",
+                        StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(CharacterResolutionStates.SourceUnavailable, artisan.State);
+            Assert.Empty(artisan.Options);
+
+            var selected = await projection.ResolveGlobalAsync(
+                Request(
+                [
+                    new CharacterRuntimeChoiceInput(
+                        anyTool.ChoiceKey,
+                        herbalismOption.Value)
+                ]),
+                userId: null);
+            var herbalism = Assert.Single(
+                selected.Mechanics,
+                value => value.MechanicKey == $"competency.{herbalismConceptKey}");
+            Assert.Equal(CharacterResolutionStates.Resolved, herbalism.State);
+            Assert.Equal(4, herbalism.NumericValue);
+            Assert.Contains(
+                selected.Qualifications,
+                value => value.Category == "tools"
+                    && value.DisplayName == "Herbalism Kit"
+                    && value.IsQualified == true);
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
     private static HttpRequestMessage HostedRequest(HttpMethod method, string path, string ticket)
     {
         var request = new HttpRequestMessage(method, path);

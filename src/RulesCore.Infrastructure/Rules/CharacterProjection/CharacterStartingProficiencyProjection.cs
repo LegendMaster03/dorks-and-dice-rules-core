@@ -200,14 +200,17 @@ internal static class CharacterStartingProficiencyProjector
         return true;
     }
 
-    private static void ProjectChoiceGroup(
+    internal static void ProjectChoiceGroup(
         CharacterProjectionRule rule,
         CharacterProjectionContext context,
         string pathKey,
         int groupIndex,
         int count,
         IReadOnlyList<CharacterChoiceOptionView> options,
-        string sourceShape)
+        string sourceShape,
+        string kind = "skill-proficiency",
+        string optionLabel = "Skill Proficiency",
+        Action<CharacterChoiceOptionView>? onSelected = null)
     {
         var groupKey =
             $"choice-group.{rule.Catalog.ConceptKey}.{pathKey}.{groupIndex}";
@@ -229,8 +232,8 @@ internal static class CharacterStartingProficiencyProjector
             var choiceKey =
                 $"choice.{rule.Catalog.ConceptKey}.{pathKey}.{groupIndex}.{slot}";
             var displayName = count == 1
-                ? $"{rule.Catalog.DisplayName} Skill Proficiency"
-                : $"{rule.Catalog.DisplayName} Skill Proficiency {slot + 1} of {count}";
+                ? $"{rule.Catalog.DisplayName} {optionLabel}"
+                : $"{rule.Catalog.DisplayName} {optionLabel} {slot + 1} of {count}";
 
             if (sourceUnavailable)
             {
@@ -238,7 +241,7 @@ internal static class CharacterStartingProficiencyProjector
                     choiceKey,
                     groupKey,
                     displayName,
-                    "skill-proficiency",
+                    kind,
                     CharacterResolutionStates.SourceUnavailable,
                     options,
                     null,
@@ -253,7 +256,7 @@ internal static class CharacterStartingProficiencyProjector
                     choiceKey,
                     groupKey,
                     displayName,
-                    "skill-proficiency",
+                    kind,
                     CharacterResolutionStates.ChoiceRequired,
                     options,
                     null,
@@ -269,7 +272,7 @@ internal static class CharacterStartingProficiencyProjector
                     choiceKey,
                     groupKey,
                     displayName,
-                    "skill-proficiency",
+                    kind,
                     CharacterResolutionStates.ChoiceRequired,
                     options,
                     supplied,
@@ -291,7 +294,7 @@ internal static class CharacterStartingProficiencyProjector
                     choiceKey,
                     groupKey,
                     displayName,
-                    "skill-proficiency",
+                    kind,
                     CharacterResolutionStates.ChoiceRequired,
                     options,
                     selected.Value,
@@ -316,10 +319,17 @@ internal static class CharacterStartingProficiencyProjector
                 selected.Value,
                 rule.Catalog.ConceptKey,
                 rule.Provenance);
-            context.AddSkillTraining(
-                selected,
-                rule.Catalog.ConceptKey,
-                rule.Provenance);
+            if (onSelected is null)
+            {
+                context.AddSkillTraining(
+                    selected,
+                    rule.Catalog.ConceptKey,
+                    rule.Provenance);
+            }
+            else
+            {
+                onSelected(selected);
+            }
         }
     }
 

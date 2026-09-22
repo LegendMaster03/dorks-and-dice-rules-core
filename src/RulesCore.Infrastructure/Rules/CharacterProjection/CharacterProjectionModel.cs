@@ -129,6 +129,8 @@ internal sealed class CharacterProjectionContext
         new(Keys);
     public Dictionary<string, CharacterChoiceOptionView> SkillChoiceOptionsByConceptKey { get; } =
         new(Keys);
+    public Dictionary<string, CharacterChoiceOptionView> ToolChoiceOptionsByConceptKey { get; } =
+        new(Keys);
     public Dictionary<string, CharacterWeaponAttackProfile> WeaponAttacks { get; } = new(Keys);
     public Dictionary<string, CharacterSpellSlotProgression> SpellSlotProgressions { get; } = new(Keys);
 
@@ -218,6 +220,13 @@ internal sealed class CharacterProjectionContext
         {
             SkillChoiceOptionsByConceptKey[normalizedConceptKey] = option;
         }
+        else if (string.Equals(
+                     competencyKind,
+                     CharacterCompetencyKinds.Tool,
+                     StringComparison.OrdinalIgnoreCase))
+        {
+            ToolChoiceOptionsByConceptKey[normalizedConceptKey] = option;
+        }
     }
 
     public CharacterChoiceOptionView ResolveSkillChoiceOption(string sourceValue)
@@ -254,6 +263,40 @@ internal sealed class CharacterProjectionContext
             .ThenBy(value => value.Value, StringComparer.Ordinal)
             .ToArray();
 
+    public CharacterChoiceOptionView ResolveToolChoiceOption(string sourceValue)
+    {
+        var normalized = Normalize(sourceValue);
+        if (CompetencyChoiceOptionsByName.TryGetValue(normalized, out var direct)
+            && direct.ConceptKey is not null
+            && ToolChoiceOptionsByConceptKey.ContainsKey(direct.ConceptKey))
+        {
+            return direct;
+        }
+
+        var normalizedName = NormalizeName(normalized);
+        var byName = ToolChoiceOptionsByConceptKey.Values
+            .FirstOrDefault(option =>
+                string.Equals(
+                    NormalizeName(option.DisplayName),
+                    normalizedName,
+                    StringComparison.Ordinal)
+                || string.Equals(
+                    NormalizeName(option.Value.Split('.').LastOrDefault() ?? option.Value),
+                    normalizedName,
+                    StringComparison.Ordinal));
+        return byName
+            ?? new CharacterChoiceOptionView(
+                normalized,
+                CharacterProjectionJson.Humanize(normalized),
+                null);
+    }
+
+    public IReadOnlyList<CharacterChoiceOptionView> AllToolChoiceOptions() =>
+        ToolChoiceOptionsByConceptKey.Values
+            .OrderBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(value => value.Value, StringComparer.Ordinal)
+            .ToArray();
+
     public void AddSkillTraining(
         CharacterChoiceOptionView option,
         string sourceConceptKey,
@@ -266,6 +309,30 @@ internal sealed class CharacterProjectionContext
         Qualifications[qualificationKey] = new CharacterQualificationView(
             qualificationKey,
             "skills",
+            option.DisplayName,
+            true,
+            CharacterResolutionStates.Resolved,
+            [sourceConceptKey],
+            provenance);
+        AddCapability(
+            qualificationKey,
+            option.DisplayName,
+            sourceConceptKey,
+            provenance);
+    }
+
+    public void AddToolTraining(
+        CharacterChoiceOptionView option,
+        string sourceConceptKey,
+        CharacterMechanicProvenanceView provenance)
+    {
+        var trainingKey = option.ConceptKey ?? option.Value;
+        TrainingKeys.Add(trainingKey);
+
+        var qualificationKey = $"qualification.tools.{Slug(option.DisplayName)}";
+        Qualifications[qualificationKey] = new CharacterQualificationView(
+            qualificationKey,
+            "tools",
             option.DisplayName,
             true,
             CharacterResolutionStates.Resolved,
