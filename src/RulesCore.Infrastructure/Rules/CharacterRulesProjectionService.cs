@@ -1050,10 +1050,15 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
         var shieldBonus = shields.SingleOrDefault()?.NumericValue ?? 0;
         var other = context.IntegerFacts.GetValueOrDefault("defense.ac.other");
+        var openContributions = CollectOpenMechanicContributions(
+            context,
+            "defense.ac.contribution.");
+        var openContributionTotal = openContributions.Sum(value => value.NumericValue ?? 0);
 
         if (armor.Length == 0)
         {
-            var total = checked(10 + dexterityModifier + shieldBonus + other);
+            var total = checked(
+                10 + dexterityModifier + shieldBonus + other + openContributionTotal);
             var contributions = new List<CharacterMechanicContributionView>
             {
                 new(
@@ -1085,6 +1090,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             {
                 contributions.Add(Contribution("defense.ac.other", "Other modifiers", other));
             }
+            contributions.AddRange(openContributions);
 
             context.Mechanics["defense.ac.unarmored-base"] = new CharacterResolvedMechanicView(
                 "defense.ac.unarmored-base",
@@ -1169,7 +1175,12 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             return;
         }
 
-        var armoredTotal = checked(armorBase + dexterityContribution + shieldBonus + other);
+        var armoredTotal = checked(
+            armorBase
+            + dexterityContribution
+            + shieldBonus
+            + other
+            + openContributionTotal);
         var armoredContributions = new List<CharacterMechanicContributionView>
         {
             new(
@@ -1201,6 +1212,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         {
             armoredContributions.Add(Contribution("defense.ac.other", "Other modifiers", other));
         }
+        armoredContributions.AddRange(openContributions);
 
         context.Mechanics["defense.ac.armor-base"] = new CharacterResolvedMechanicView(
             "defense.ac.armor-base",
@@ -1468,6 +1480,19 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             context.IntegerFacts.GetValueOrDefault("defense.ac.deflection-bonus");
         var dodgeContribution =
             context.IntegerFacts.GetValueOrDefault("defense.ac.dodge-contribution");
+        var openTotalContributions = CollectOpenMechanicContributions(
+            context,
+            "defense.ac.contribution.");
+        var openTotal = openTotalContributions.Sum(value => value.NumericValue ?? 0);
+        var openTouchContributions = CollectOpenMechanicContributions(
+            context,
+            "defense.ac.touch.contribution.");
+        var openTouchTotal = openTouchContributions.Sum(value => value.NumericValue ?? 0);
+        var openFlatFootedContributions = CollectOpenMechanicContributions(
+            context,
+            "defense.ac.flat-footed.contribution.");
+        var openFlatFootedTotal =
+            openFlatFootedContributions.Sum(value => value.NumericValue ?? 0);
 
         var preserveExistingAcConflict =
             context.Mechanics.TryGetValue("defense.ac.total", out var existingArmorClass)
@@ -1492,7 +1517,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     + naturalArmorBonus
                     + deflectionBonus
                     + dodgeContribution
-                    + other),
+                    + other
+                    + openTotal),
                 null,
                 null,
                 [],
@@ -1520,7 +1546,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                         "defense.ac.dodge-contribution",
                         "Dodge contribution",
                         dodgeContribution),
-                    Contribution("defense.ac.other", "Other modifiers", other)
+                    Contribution("defense.ac.other", "Other modifiers", other),
+                    .. openTotalContributions
                 ],
                 CharacterProjectionContext.EmptyProvenance());
         }
@@ -1540,7 +1567,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     + sizeModifier
                     + deflectionBonus
                     + dodgeContribution
-                    + touchOther),
+                    + touchOther
+                    + openTouchTotal),
                 null,
                 null,
                 [],
@@ -1565,7 +1593,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     Contribution(
                         "defense.ac.touch.other",
                         "Other applicable modifiers",
-                        touchOther)
+                        touchOther),
+                    .. openTouchContributions
                 ],
                 CharacterProjectionContext.EmptyProvenance());
         }
@@ -1607,7 +1636,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                         + naturalArmorBonus
                         + deflectionBonus
                         + flatFootedDodgeContribution
-                        + flatFootedOther),
+                        + flatFootedOther
+                        + openFlatFootedTotal),
                     null,
                     null,
                     [],
@@ -1647,11 +1677,76 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                         Contribution(
                             "defense.ac.flat-footed.other",
                             "Other applicable modifiers",
-                            flatFootedOther)
+                            flatFootedOther),
+                        .. openFlatFootedContributions
                     ],
                     CharacterProjectionContext.EmptyProvenance());
         }
     }
+
+    private static IReadOnlyList<CharacterMechanicContributionView> CollectOpenMechanicContributions(
+        CharacterProjectionContext context,
+        string targetPrefix)
+    {
+        var result = new List<CharacterMechanicContributionView>();
+
+        foreach (var (key, value) in context.IntegerFacts
+                     .Where(pair => pair.Key.StartsWith(
+                         targetPrefix,
+                         StringComparison.OrdinalIgnoreCase))
+                     .OrderBy(pair => pair.Key, StringComparer.OrdinalIgnoreCase))
+        {
+            if (key.Length <= targetPrefix.Length)
+            {
+                continue;
+            }
+            result.Add(Contribution(
+                key,
+                CharacterProjectionJson.Humanize(key),
+                value));
+        }
+
+        foreach (var effect in context.Effects
+                     .Where(value =>
+                         string.Equals(
+                             value.Kind,
+                             CharacterEffectKinds.MechanicContribution,
+                             StringComparison.OrdinalIgnoreCase)
+                         && string.Equals(
+                             value.Operation,
+                             CharacterEffectOperations.Add,
+                             StringComparison.OrdinalIgnoreCase)
+                         && value.NumericValue.HasValue
+                         && value.TargetKey.StartsWith(
+                             targetPrefix,
+                             StringComparison.OrdinalIgnoreCase)
+                         && IsEffectActive(context, value))
+                     .OrderBy(value => value.EffectKey, StringComparer.OrdinalIgnoreCase))
+        {
+            result.Add(new CharacterMechanicContributionView(
+                effect.EffectKey,
+                CharacterProjectionJson.Humanize(effect.TargetKey),
+                effect.Operation,
+                effect.NumericValue,
+                effect.TextValue,
+                effect.SourceConceptKey,
+                effect.Provenance,
+                !string.IsNullOrWhiteSpace(effect.ConditionKey)
+                    ? "temporary"
+                    : "persistent",
+                effect.ConditionKey));
+        }
+
+        return result;
+    }
+
+    private static bool IsEffectActive(
+        CharacterProjectionContext context,
+        CharacterRuleEffectView effect) =>
+        string.IsNullOrWhiteSpace(effect.ConditionKey)
+        || context.ActiveConditions.Contains(effect.ConditionKey)
+        || (context.BooleanFacts.TryGetValue(effect.ConditionKey, out var active)
+            && active);
 
     private static bool TryThreeXArmorClassSizeModifier(
         string? sizeCategory,
