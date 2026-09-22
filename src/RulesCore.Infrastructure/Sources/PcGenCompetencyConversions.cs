@@ -35,7 +35,7 @@ internal static class PcGenCompetencyConversions
         {
             ["Pick Pocket"] = Skill("Pick Pocket", "Sleight of Hand"),
             ["Wilderness Lore"] = Skill("Wilderness Lore", "Survival"),
-            ["Alchemy"] = Tool("Alchemy", "Alchemist's Supplies")
+            ["Alchemy"] = RelatedTool("Alchemy", "Alchemist's Supplies")
         };
 
     public static PcGenCompetencyConversion? Resolve(string sourceName, string? edition)
@@ -88,8 +88,20 @@ internal static class PcGenCompetencyConversions
         return true;
     }
 
+    internal static bool IsExactIdentityTranslation(PcGenCompetencyConversion conversion) =>
+        conversion.Relationship is "direct-equivalence" or "direct-cross-type"
+        && string.IsNullOrWhiteSpace(conversion.Scope);
+
     private static PcGenCompetencyConversion Skill(string sourceName, string targetName) =>
         new(sourceName, targetName, "skill", "direct-equivalence");
+
+    private static PcGenCompetencyConversion RelatedTool(string sourceName, string targetName) =>
+        new(
+            sourceName,
+            targetName,
+            "tool",
+            "related-competency",
+            PreserveSourceMechanicalName: true);
 
     private static PcGenCompetencyConversion Tool(
         string sourceName,
