@@ -1856,6 +1856,143 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
     }
 
     [Fact]
+    public async Task CharacterProjectionExposesSpellCastingMetadata()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-spell-detail-{token}";
+        var conceptKey = $"spell.example-ward-{token}";
+        var actor = $"character-spell-detail-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"SPD{token}";
+            var raw = JsonSerializer.Serialize(new
+            {
+                name = "Example Ward",
+                source = sourceCode,
+                level = 3,
+                school = "A",
+                time = new object[]
+                {
+                    new { number = 1, unit = "action" }
+                },
+                range = new
+                {
+                    type = "point",
+                    distance = new { type = "feet", amount = 60 }
+                },
+                components = new
+                {
+                    v = true,
+                    s = true,
+                    m = "a pearl worth 50 gp"
+                },
+                duration = new object[]
+                {
+                    new
+                    {
+                        type = "timed",
+                        duration = new { type = "minute", amount = 1 },
+                        concentration = true
+                    }
+                },
+                meta = new { ritual = true }
+            });
+
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Character Spell Detail {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"spell-detail-{token}.json",
+                            Encoding.UTF8.GetBytes(raw),
+                            $"integration:character-spell-detail:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "spell",
+                                "Example Ward",
+                                sourceCode,
+                                $"spell|Example Ward|{sourceCode}",
+                                raw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Character Spell Detail {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2014, 8, 19))
+                        ])));
+            packageId = imported.PackageId;
+            var source = Assert.Single(imported.Entities);
+
+            var concept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(conceptKey, source.EntityType, source.Name),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                concept.Value.Id,
+                new BindRuleConceptSourceRequest(source.EntityId),
+                actor);
+            var revisionId = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == source.EntityId)
+                .Select(value => value.Id)
+                .SingleAsync();
+            await globalRules.SetDecisionAsync(
+                concept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionId,
+                    "Spell detail fixture."),
+                actor);
+            await globalRules.PublishAsync(actor);
+
+            var result = await projection.ResolveGlobalAsync(
+                new CharacterRulesProjectionRequest(
+                    KnownSpellConceptKeys: [conceptKey]),
+                userId: null);
+
+            var action = Assert.Single(
+                result.Actions,
+                value => value.ActionKey == $"action.spell.{conceptKey}");
+            Assert.Equal(conceptKey, action.SourceConceptKey);
+            Assert.Equal(3, action.SpellLevel);
+            Assert.Equal("A", action.SpellSchool);
+            Assert.Equal("1 action", action.CastingTime);
+            Assert.Equal("60 feet", action.Range);
+            Assert.Equal(["V", "S", "M"], action.SpellComponents);
+            Assert.Equal("a pearl worth 50 gp", action.MaterialComponent);
+            Assert.Equal("1 minute", action.Duration);
+            Assert.True(action.Ritual);
+            Assert.True(action.Concentration);
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
+    [Fact]
     public async Task CharacterProjectionUsesEffectiveCampaignOverrideDocument()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
