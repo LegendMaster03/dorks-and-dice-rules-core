@@ -163,6 +163,10 @@ internal sealed class CharacterProjectionContext
         new(Keys);
     public Dictionary<string, HashSet<string>> ToolChoiceConceptKeysByCategory { get; } =
         new(Keys);
+    public Dictionary<string, CharacterChoiceOptionView> LanguageChoiceOptionsByConceptKey { get; } =
+        new(Keys);
+    public Dictionary<string, HashSet<string>> LanguageChoiceConceptKeysByCategory { get; } =
+        new(Keys);
     public Dictionary<string, CharacterWeaponCatalogEntry> WeaponCatalog { get; } = new(Keys);
     public Dictionary<string, CharacterWeaponAttackProfile> WeaponAttacks { get; } = new(Keys);
     public Dictionary<string, CharacterSpellSlotProgression> SpellSlotProgressions { get; } = new(Keys);
@@ -525,6 +529,40 @@ internal sealed class CharacterProjectionContext
         return true;
     }
 
+    public void RegisterLanguageChoiceIdentity(
+        string conceptKey,
+        string displayName,
+        string? categoryKey)
+    {
+        if (string.IsNullOrWhiteSpace(conceptKey)
+            || string.IsNullOrWhiteSpace(displayName))
+        {
+            return;
+        }
+
+        var normalizedConceptKey = conceptKey.Trim();
+        LanguageChoiceOptionsByConceptKey[normalizedConceptKey] =
+            new CharacterChoiceOptionView(
+                normalizedConceptKey,
+                displayName.Trim(),
+                normalizedConceptKey);
+
+        if (string.IsNullOrWhiteSpace(categoryKey))
+        {
+            return;
+        }
+
+        var normalizedCategory = Normalize(categoryKey);
+        if (!LanguageChoiceConceptKeysByCategory.TryGetValue(
+                normalizedCategory,
+                out var conceptKeys))
+        {
+            conceptKeys = new HashSet<string>(Keys);
+            LanguageChoiceConceptKeysByCategory[normalizedCategory] = conceptKeys;
+        }
+        conceptKeys.Add(normalizedConceptKey);
+    }
+
     public CharacterChoiceOptionView ResolveSkillChoiceOption(string sourceValue)
     {
         var normalized = Normalize(sourceValue);
@@ -611,6 +649,79 @@ internal sealed class CharacterProjectionContext
             .OrderBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
             .ThenBy(value => value.Value, StringComparer.Ordinal)
             .ToArray();
+    }
+
+    public CharacterChoiceOptionView ResolveLanguageChoiceOption(string sourceValue)
+    {
+        var normalized = Normalize(sourceValue);
+        if (LanguageChoiceOptionsByConceptKey.TryGetValue(normalized, out var direct))
+        {
+            return direct;
+        }
+
+        var normalizedName = NormalizeName(normalized);
+        var byName = LanguageChoiceOptionsByConceptKey.Values
+            .FirstOrDefault(option =>
+                string.Equals(
+                    NormalizeName(option.DisplayName),
+                    normalizedName,
+                    StringComparison.Ordinal)
+                || string.Equals(
+                    NormalizeName(option.Value.Split('.').LastOrDefault() ?? option.Value),
+                    normalizedName,
+                    StringComparison.Ordinal));
+        return byName
+            ?? new CharacterChoiceOptionView(
+                normalized,
+                CharacterProjectionJson.Humanize(normalized),
+                null);
+    }
+
+    public IReadOnlyList<CharacterChoiceOptionView> AllLanguageChoiceOptions() =>
+        LanguageChoiceOptionsByConceptKey.Values
+            .OrderBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(value => value.Value, StringComparer.Ordinal)
+            .ToArray();
+
+    public IReadOnlyList<CharacterChoiceOptionView> LanguageChoiceOptionsForCategory(
+        string categoryKey)
+    {
+        var normalizedCategory = Normalize(categoryKey);
+        if (!LanguageChoiceConceptKeysByCategory.TryGetValue(
+                normalizedCategory,
+                out var conceptKeys))
+        {
+            return [];
+        }
+
+        return conceptKeys
+            .Select(value => LanguageChoiceOptionsByConceptKey.GetValueOrDefault(value))
+            .Where(value => value is not null)
+            .Cast<CharacterChoiceOptionView>()
+            .OrderBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(value => value.Value, StringComparer.Ordinal)
+            .ToArray();
+    }
+
+    public void AddLanguageKnowledge(
+        CharacterChoiceOptionView option,
+        string sourceConceptKey,
+        CharacterMechanicProvenanceView provenance)
+    {
+        var qualificationKey = $"qualification.languages.{Slug(option.DisplayName)}";
+        Qualifications[qualificationKey] = new CharacterQualificationView(
+            qualificationKey,
+            "languages",
+            option.DisplayName,
+            true,
+            CharacterResolutionStates.Resolved,
+            [sourceConceptKey],
+            provenance);
+        AddCapability(
+            qualificationKey,
+            option.DisplayName,
+            sourceConceptKey,
+            provenance);
     }
 
     public void AddSkillTraining(
