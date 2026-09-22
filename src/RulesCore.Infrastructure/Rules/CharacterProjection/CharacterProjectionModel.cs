@@ -932,8 +932,8 @@ internal sealed class CharacterProjectionContext
                     Contributions = existing.Contributions
                         .Append(contribution)
                         .GroupBy(
-                            value => new { value.ContributionKey, value.SourceConceptKey },
-                            EqualityComparer<object>.Default)
+                            value => $"{value.ContributionKey}\n{value.SourceConceptKey}",
+                            StringComparer.Ordinal)
                         .Select(group => group.First())
                         .ToArray()
                 };
