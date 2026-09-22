@@ -153,6 +153,8 @@ internal sealed class CharacterProjectionContext
         new(Keys);
     public Dictionary<string, CharacterChoiceOptionView> ToolChoiceOptionsByConceptKey { get; } =
         new(Keys);
+    public Dictionary<string, HashSet<string>> ToolChoiceConceptKeysByCategory { get; } =
+        new(Keys);
     public Dictionary<string, CharacterWeaponAttackProfile> WeaponAttacks { get; } = new(Keys);
     public Dictionary<string, CharacterSpellSlotProgression> SpellSlotProgressions { get; } = new(Keys);
     public Dictionary<string, CharacterPactMagicProgression> PactMagicProgressions { get; } = new(Keys);
@@ -373,6 +375,33 @@ internal sealed class CharacterProjectionContext
         }
     }
 
+    public void RegisterToolChoiceCategory(
+        string conceptKey,
+        string categoryKey)
+    {
+        if (string.IsNullOrWhiteSpace(conceptKey)
+            || string.IsNullOrWhiteSpace(categoryKey))
+        {
+            return;
+        }
+
+        var normalizedConceptKey = conceptKey.Trim();
+        if (!ToolChoiceOptionsByConceptKey.ContainsKey(normalizedConceptKey))
+        {
+            return;
+        }
+
+        var normalizedCategory = Normalize(categoryKey);
+        if (!ToolChoiceConceptKeysByCategory.TryGetValue(
+                normalizedCategory,
+                out var conceptKeys))
+        {
+            conceptKeys = new HashSet<string>(Keys);
+            ToolChoiceConceptKeysByCategory[normalizedCategory] = conceptKeys;
+        }
+        conceptKeys.Add(normalizedConceptKey);
+    }
+
     public CharacterChoiceOptionView ResolveSkillChoiceOption(string sourceValue)
     {
         var normalized = Normalize(sourceValue);
@@ -440,6 +469,26 @@ internal sealed class CharacterProjectionContext
             .OrderBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
             .ThenBy(value => value.Value, StringComparer.Ordinal)
             .ToArray();
+
+    public IReadOnlyList<CharacterChoiceOptionView> ToolChoiceOptionsForCategory(
+        string categoryKey)
+    {
+        var normalizedCategory = Normalize(categoryKey);
+        if (!ToolChoiceConceptKeysByCategory.TryGetValue(
+                normalizedCategory,
+                out var conceptKeys))
+        {
+            return [];
+        }
+
+        return conceptKeys
+            .Select(value => ToolChoiceOptionsByConceptKey.GetValueOrDefault(value))
+            .Where(value => value is not null)
+            .Cast<CharacterChoiceOptionView>()
+            .OrderBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(value => value.Value, StringComparer.Ordinal)
+            .ToArray();
+    }
 
     public void AddSkillTraining(
         CharacterChoiceOptionView option,
