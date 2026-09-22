@@ -222,7 +222,7 @@ internal static class CharacterStartingProficiencyProjector
             context.Conflicts.Add(new CharacterProjectionConflictView(
                 $"conflict.{groupKey}.options",
                 "source-unavailable",
-                $"{rule.Catalog.DisplayName} requires {count} skill proficiency choice(s), but only {options.Count} available option(s) can be represented for source choice shape '{sourceShape}'.",
+                $"{rule.Catalog.DisplayName} requires {count} {optionLabel.ToLowerInvariant()} choice(s), but only {options.Count} available option(s) can be represented for source choice shape '{sourceShape}'.",
                 [],
                 [rule.Catalog.ConceptKey]));
         }
