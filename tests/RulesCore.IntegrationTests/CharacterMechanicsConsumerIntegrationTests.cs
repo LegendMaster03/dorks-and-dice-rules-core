@@ -2145,6 +2145,13 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 global.Movement,
                 value => value.MovementKey == "movement.walk");
             Assert.Equal(30, globalWalk.Value);
+            var size = Assert.Single(
+                global.Mechanics,
+                value => value.MechanicKey == "character.size-category");
+            Assert.Equal("Medium", size.TextValue);
+            var sizeContribution = Assert.Single(size.Contributions);
+            Assert.Equal(conceptKey, sizeContribution.SourceConceptKey);
+            Assert.Equal("Medium", sizeContribution.TextValue);
             var speciesFeature = Assert.Single(
                 global.Features,
                 value => value.FeatureKey == $"feature.{conceptKey}");

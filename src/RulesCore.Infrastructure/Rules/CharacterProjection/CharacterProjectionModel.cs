@@ -884,31 +884,110 @@ internal sealed class CharacterProjectionContext
 
     public void AddSizeCategory(
         string sizeCategory,
-        string sourceConceptKey)
+        string sourceConceptKey,
+        CharacterMechanicProvenanceView provenance)
     {
         if (string.IsNullOrWhiteSpace(sizeCategory))
         {
             return;
         }
 
-        var normalized = sizeCategory.Trim().ToUpperInvariant();
+        const string mechanicKey = "character.size-category";
+        var normalized = NormalizeSizeCategory(sizeCategory);
+        var contribution = new CharacterMechanicContributionView(
+            $"{sourceConceptKey}.size-category",
+            "Size category",
+            CharacterEffectOperations.Set,
+            null,
+            normalized,
+            sourceConceptKey,
+            provenance);
+
         if (SizeCategory is null)
         {
             SizeCategory = normalized;
+            Mechanics[mechanicKey] = new CharacterResolvedMechanicView(
+                mechanicKey,
+                "character-metadata",
+                "Size",
+                CharacterResolutionStates.Resolved,
+                null,
+                normalized,
+                null,
+                [],
+                [],
+                [],
+                [],
+                [contribution],
+                provenance);
             return;
         }
+
         if (string.Equals(SizeCategory, normalized, StringComparison.OrdinalIgnoreCase))
         {
+            if (Mechanics.TryGetValue(mechanicKey, out var existing))
+            {
+                Mechanics[mechanicKey] = existing with
+                {
+                    Contributions = existing.Contributions
+                        .Append(contribution)
+                        .GroupBy(
+                            value => new { value.ContributionKey, value.SourceConceptKey },
+                            EqualityComparer<object>.Default)
+                        .Select(group => group.First())
+                        .ToArray()
+                };
+            }
             return;
         }
+
+        var existingContributions = Mechanics.TryGetValue(mechanicKey, out var current)
+            ? current.Contributions
+            : [];
+        var contributions = existingContributions.Append(contribution).ToArray();
+        Mechanics[mechanicKey] = new CharacterResolvedMechanicView(
+            mechanicKey,
+            "character-metadata",
+            "Size",
+            CharacterResolutionStates.Conflict,
+            null,
+            null,
+            null,
+            [],
+            [],
+            [],
+            [],
+            contributions,
+            EmptyProvenance());
 
         Conflicts.Add(new CharacterProjectionConflictView(
             "conflict.character-size",
             CharacterResolutionStates.Conflict,
             $"Selected Character rules provide conflicting size categories '{SizeCategory}' and '{normalized}'.",
-            ["combat.grapple"],
-            [sourceConceptKey]));
+            [mechanicKey, "combat.grapple"],
+            contributions
+                .Select(value => value.SourceConceptKey)
+                .Where(value => value is not null)
+                .Cast<string>()
+                .Distinct(Keys)
+                .OrderBy(value => value, StringComparer.Ordinal)
+                .ToArray()));
     }
+
+    private static string NormalizeSizeCategory(string value) =>
+        value.Trim().ToUpperInvariant() switch
+        {
+            "F" or "FINE" => "Fine",
+            "D" or "DIMINUTIVE" => "Diminutive",
+            "T" or "TINY" => "Tiny",
+            "S" or "SMALL" => "Small",
+            "M" or "MEDIUM" => "Medium",
+            "L" or "LARGE" => "Large",
+            "H" or "HUGE" => "Huge",
+            "G" or "GARGANTUAN" => "Gargantuan",
+            "C" or "COLOSSAL" => "Colossal",
+            _ => value.Trim()
+        };
 
     public void AddThreeXSaveContribution(
         string saveKey,

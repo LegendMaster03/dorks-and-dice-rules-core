@@ -52,7 +52,10 @@ internal sealed class RaceCharacterRuleProjectionModule : ICharacterRuleProjecti
 
         if (!string.IsNullOrWhiteSpace(value))
         {
-            context.AddSizeCategory(value, rule.Catalog.ConceptKey);
+            context.AddSizeCategory(
+                value,
+                rule.Catalog.ConceptKey,
+                rule.Provenance);
         }
     }
 
