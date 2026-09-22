@@ -1156,8 +1156,8 @@ internal static class RulesCoreContentTranslation
 
         var isThreeX = string.Equals(edition, "3e", StringComparison.OrdinalIgnoreCase)
             || string.Equals(edition, "3.5e", StringComparison.OrdinalIgnoreCase);
-        var effectiveType = !string.IsNullOrWhiteSpace(competencyConversion?.TargetType)
-            && string.IsNullOrWhiteSpace(competencyConversion.Scope)
+        var effectiveType = competencyConversion is not null
+            && PcGenCompetencyConversions.IsExactIdentityTranslation(competencyConversion)
                 ? competencyConversion.TargetType
                 : normalizedEntityType;
         JsonObject metadata;
