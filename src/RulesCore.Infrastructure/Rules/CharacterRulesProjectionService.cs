@@ -96,6 +96,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 rule.Catalog.DisplayName,
                 rule.Catalog.EntityType);
             RegisterToolChoiceCategory(context, rule);
+            RegisterLanguageChoiceIdentity(context, rule);
             RegisterWeaponCatalogEntry(context, rule);
         }
         context.ResolveStartingClass();
@@ -177,6 +178,37 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         {
             context.RegisterToolChoiceCategory(rule.Catalog.ConceptKey, category);
         }
+    }
+
+    private static void RegisterLanguageChoiceIdentity(
+        CharacterProjectionContext context,
+        CharacterProjectionRule rule)
+    {
+        if (!string.Equals(
+                rule.Catalog.EntityType,
+                "language",
+                StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        string? category = null;
+        if (CharacterProjectionJson.TryGetProperty(rule.Document, "_rulesCore", out var rulesCore)
+            && CharacterProjectionJson.TryGetProperty(rulesCore, "languageCategory", out var normalized)
+            && normalized.ValueKind == JsonValueKind.String
+            && !string.IsNullOrWhiteSpace(normalized.GetString()))
+        {
+            category = normalized.GetString()!.Trim();
+        }
+        else
+        {
+            category = CharacterProjectionJson.String(rule.Document, "type");
+        }
+
+        context.RegisterLanguageChoiceIdentity(
+            rule.Catalog.ConceptKey,
+            rule.Catalog.DisplayName,
+            category);
     }
 
     private static void RegisterWeaponCatalogEntry(
