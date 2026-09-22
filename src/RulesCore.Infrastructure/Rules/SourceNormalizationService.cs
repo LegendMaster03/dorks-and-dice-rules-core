@@ -194,7 +194,9 @@ public sealed class SourceNormalizationService(RulesCoreDbContext dbContext)
         var existingBindings = await dbContext.RuleConceptSourceBindings
             .AsNoTracking()
             .Include(value => value.RuleConcept)
-            .Where(value => value.CanonicalEntityId == canonicalEntityId)
+            .Where(value =>
+                value.CanonicalEntityId == canonicalEntityId
+                || value.SourceEntityId == sourceEntityId)
             .ToArrayAsync(cancellationToken);
 
         if (existingBindings.Length > 0)

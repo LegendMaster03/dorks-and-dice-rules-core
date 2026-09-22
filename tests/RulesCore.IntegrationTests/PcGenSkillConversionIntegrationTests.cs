@@ -528,6 +528,16 @@ public sealed class PcGenSkillConversionIntegrationTests
                     .SingleAsync(value => value.Id == stableConceptId);
                 Assert.Equal("tool.alchemists-supplies", concept.Key);
 
+                var postMigrationCandidates = await normalization.GetCandidatesAsync(
+                    actor,
+                    entityType: "skill",
+                    query: "Craft (alchemy)");
+                Assert.DoesNotContain(
+                    postMigrationCandidates,
+                    value => value.SourceEntityId == source.EntityId);
+                await Assert.ThrowsAsync<InvalidOperationException>(() =>
+                    normalization.AcceptAsync(source.EntityId, actor));
+
                 var catalog = await new CharacterMechanicsConsumerService(db)
                     .GetGlobalAsync(userId: null);
                 var legacyMechanic = Assert.Single(
