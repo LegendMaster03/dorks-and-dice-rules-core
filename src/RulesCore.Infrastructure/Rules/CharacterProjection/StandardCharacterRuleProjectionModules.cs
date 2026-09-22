@@ -851,7 +851,8 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
                     "advancement-feature",
                     CharacterResolutionStates.ApplicableUnresolved,
                     rule.Catalog.ConceptKey,
-                    rule.Provenance);
+                    rule.Provenance,
+                    rule.Catalog.EntityType);
                 continue;
             }
 
@@ -869,7 +870,9 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
                 "advancement-feature",
                 CharacterResolutionStates.Resolved,
                 rule.Catalog.ConceptKey,
-                rule.Provenance);
+                rule.Provenance,
+                rule.Catalog.EntityType,
+                acquisitionLevel);
         }
     }
 
