@@ -117,18 +117,19 @@ The current direct skill-to-skill set is:
 - `Sleight of Hand` -> `Sleight of Hand`;
 - `Survival` -> `Survival`.
 
-The following apply only when the source publication is identified as 3e/3.0:
+The following exact skill-to-skill translations apply only when the source publication is identified as 3e/3.0:
 
 - `Pick Pocket` -> `Sleight of Hand`;
-- `Wilderness Lore` -> `Survival`;
-- `Alchemy` -> `Alchemist's Supplies`.
+- `Wilderness Lore` -> `Survival`.
+
+3e `Alchemy` is deliberately **not** an exact translation to `Alchemist's Supplies`. The source defines Alchemy as a ranked skill, while later rules define Alchemist's Supplies as a tool proficiency. Rules Core preserves the canonical/source-native `Alchemy` skill identity and records a directional `related-competency` relationship to `Alchemist's Supplies` so a consumer can explain the cross-edition relationship without merging the mechanics.
 
 The reviewed direct cross-type translations are:
 
 - `Craft (alchemy)` -> `Alchemist's Supplies`;
 - `Forgery` -> `Forgery Kit`.
 
-These unscoped mappings set `NormalizedSourceRecord.CanonicalIdentityKey` to a stable reviewed competency identity used only during canonical reconciliation. That identity is not source evidence and is not injected into `ContentJson`. Consequently, once `Deception` is bound to a Rules Layer concept, a later 3.x `Bluff` import can resolve to the same canonical competency without changing the source-native record or requiring a second Rules Lawyer binding.
+The exact unscoped mappings above set `NormalizedSourceRecord.CanonicalIdentityKey` to a stable reviewed competency identity used only during canonical reconciliation. Non-identity relationships such as 3e Alchemy -> Alchemist's Supplies do not set a shared canonical identity key. That identity is not source evidence and is not injected into `ContentJson`. Consequently, once `Deception` is bound to a Rules Layer concept, a later 3.x `Bluff` import can resolve to the same canonical competency without changing the source-native record or requiring a second Rules Lawyer binding.
 
 `Open Lock` -> `Thieves' Tools` remains intentionally different. It is limited to the `open-lock` scope, so `Open Lock` remains its own normalized competency and records only the scoped relationship under `_rulesCore.competencyConversion`. This prevents an Open Lock proficiency from becoming full Thieves' Tools proficiency.
 
