@@ -2506,6 +2506,234 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
     }
 
     [Fact]
+    public async Task CharacterProjectionCombinesStandardCasterProgressionsByEffectiveLevel()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        await using var factory = new WebApplicationFactory<Program>();
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var packageKey = $"character-projection-multiclass-slots-{token}";
+        var fullConceptKey = $"class.full-slot-caster-{token}";
+        var halfConceptKey = $"class.half-slot-caster-{token}";
+        var actor = $"character-multiclass-slots-{token}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            await using var scope = factory.Services.CreateAsyncScope();
+            var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+            var projection = scope.ServiceProvider.GetRequiredService<ICharacterRulesProjectionService>();
+
+            var sourceCode = $"MCS{token}";
+            var fullRows = new[]
+            {
+                new[] { 2, 0, 0 },
+                new[] { 3, 0, 0 },
+                new[] { 4, 2, 0 },
+                new[] { 4, 3, 0 },
+                new[] { 4, 3, 2 }
+            };
+            var halfRows = new[]
+            {
+                new[] { 0, 0, 0 },
+                new[] { 2, 0, 0 },
+                new[] { 3, 0, 0 },
+                new[] { 3, 0, 0 },
+                new[] { 4, 2, 0 },
+                new[] { 4, 2, 0 },
+                new[] { 4, 3, 0 },
+                new[] { 4, 3, 0 },
+                new[] { 4, 3, 2 },
+                new[] { 4, 3, 2 }
+            };
+            var fullRaw = JsonSerializer.Serialize(new
+            {
+                name = "Full Slot Caster",
+                source = sourceCode,
+                hd = new { number = 1, faces = 6 },
+                proficiency = new[] { "int", "wis" },
+                spellcastingAbility = "int",
+                casterProgression = "full",
+                classTableGroups = new object[]
+                {
+                    new
+                    {
+                        title = "Spell Slots per Spell Level",
+                        colLabels = new[] { "1st", "2nd", "3rd" },
+                        rowsSpellProgression = fullRows
+                    }
+                }
+            });
+            var halfRaw = JsonSerializer.Serialize(new
+            {
+                name = "Half Slot Caster",
+                source = sourceCode,
+                hd = new { number = 1, faces = 10 },
+                proficiency = new[] { "wis", "cha" },
+                spellcastingAbility = "wis",
+                casterProgression = "1/2",
+                classTableGroups = new object[]
+                {
+                    new
+                    {
+                        title = "Spell Slots per Spell Level",
+                        colLabels = new[] { "1st", "2nd", "3rd" },
+                        rowsSpellProgression = halfRows
+                    }
+                }
+            });
+
+            var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    packageKey,
+                    $"Character Multiclass Slot Fixture {token}",
+                    "integration-test",
+                    "test-only",
+                    true,
+                    new NormalizedSourceRepresentation(
+                        FiveEToolsSourceFormatAdapter.Format,
+                        new SourceRepresentationArtifact(
+                            $"multiclass-slots-{token}.json",
+                            Encoding.UTF8.GetBytes("{}"),
+                            $"integration:character-multiclass-slots:{token}"),
+                        [
+                            new NormalizedSourceRecord(
+                                "class",
+                                "Full Slot Caster",
+                                sourceCode,
+                                $"class|Full Slot Caster|{sourceCode}",
+                                fullRaw,
+                                PublicationLocalKey: sourceCode),
+                            new NormalizedSourceRecord(
+                                "class",
+                                "Half Slot Caster",
+                                sourceCode,
+                                $"class|Half Slot Caster|{sourceCode}",
+                                halfRaw,
+                                PublicationLocalKey: sourceCode)
+                        ],
+                        [
+                            new NormalizedSourcePublication(
+                                sourceCode,
+                                $"Character Multiclass Slot Fixture {token}",
+                                "Integration Test Press",
+                                "5e",
+                                new DateOnly(2014, 8, 19))
+                        ])));
+            packageId = imported.PackageId;
+            var byName = imported.Entities.ToDictionary(value => value.Name, StringComparer.Ordinal);
+            var fullSource = byName["Full Slot Caster"];
+            var halfSource = byName["Half Slot Caster"];
+
+            var fullConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    fullConceptKey,
+                    fullSource.EntityType,
+                    fullSource.Name),
+                actor);
+            var halfConcept = await globalRules.CreateConceptAsync(
+                new CreateRuleConceptRequest(
+                    halfConceptKey,
+                    halfSource.EntityType,
+                    halfSource.Name),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                fullConcept.Value.Id,
+                new BindRuleConceptSourceRequest(fullSource.EntityId),
+                actor);
+            await globalRules.BindSourceEntityAsync(
+                halfConcept.Value.Id,
+                new BindRuleConceptSourceRequest(halfSource.EntityId),
+                actor);
+
+            var revisionIds = await db.SourceEntityRevisions
+                .Where(value =>
+                    value.SourceEntityId == fullSource.EntityId
+                    || value.SourceEntityId == halfSource.EntityId)
+                .ToDictionaryAsync(value => value.SourceEntityId, value => value.Id);
+            await globalRules.SetDecisionAsync(
+                fullConcept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionIds[fullSource.EntityId],
+                    "Full caster slot table fixture."),
+                actor);
+            await globalRules.SetDecisionAsync(
+                halfConcept.Value.Id,
+                new SetGlobalRuleDecisionRequest(
+                    revisionIds[halfSource.EntityId],
+                    "Half caster slot table fixture."),
+                actor);
+            await globalRules.PublishAsync(actor);
+
+            var result = await projection.ResolveGlobalAsync(
+                new CharacterRulesProjectionRequest(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 10,
+                        ["dexterity"] = 12,
+                        ["constitution"] = 14,
+                        ["intelligence"] = 18,
+                        ["wisdom"] = 16,
+                        ["charisma"] = 10
+                    },
+                    Advancements:
+                    [
+                        new CharacterAdvancementFactInput(fullConceptKey, 3),
+                        new CharacterAdvancementFactInput(halfConceptKey, 4)
+                    ],
+                    Choices:
+                    [
+                        new CharacterRuntimeChoiceInput(
+                            "advancement.starting-class",
+                            fullConceptKey)
+                    ]),
+                userId: null);
+
+            Assert.Equal(4, Assert.Single(
+                result.Resources,
+                value => value.ResourceKey == "resource.spell-slot.1").MaximumValue);
+            Assert.Equal(3, Assert.Single(
+                result.Resources,
+                value => value.ResourceKey == "resource.spell-slot.2").MaximumValue);
+            Assert.Equal(2, Assert.Single(
+                result.Resources,
+                value => value.ResourceKey == "resource.spell-slot.3").MaximumValue);
+            Assert.DoesNotContain(
+                result.Conflicts,
+                value => value.ConflictKey == "conflict.spellcasting.multiclass-slots");
+
+            var firstLevel = Assert.Single(
+                result.Resources,
+                value => value.ResourceKey == "resource.spell-slot.1");
+            Assert.Contains(
+                firstLevel.MaximumContributions,
+                value => value.ContributionKey ==
+                    $"{fullConceptKey}.effective-caster-level"
+                    && value.NumericValue == 3);
+            Assert.Contains(
+                firstLevel.MaximumContributions,
+                value => value.ContributionKey ==
+                    $"{halfConceptKey}.effective-caster-level"
+                    && value.NumericValue == 2);
+            Assert.Contains(
+                firstLevel.MaximumContributions,
+                value => value.TextValue == "effective-caster-level:5");
+        }
+        finally
+        {
+            await using var cleanupScope = factory.Services.CreateAsyncScope();
+            await CleanupAsync(
+                cleanupScope.ServiceProvider.GetRequiredService<RulesCoreDbContext>(),
+                packageId);
+        }
+    }
+
+    [Fact]
     public async Task CharacterProjectionResolvesNativeSubclassFeatureLevels()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
