@@ -288,10 +288,22 @@ public sealed class BaselineBootstrapIntegrationTests
             var competencyProfiles = competencyMechanics
                 .SelectMany(value => value.Competency!.Profiles)
                 .ToArray();
-            Assert.Contains(
+            Assert.DoesNotContain(
                 competencyProfiles,
-                value => value.FamilyName == "Knowledge"
-                    && !string.IsNullOrWhiteSpace(value.Specialty));
+                value => string.Equals(
+                    value.FamilyName,
+                    "Knowledge",
+                    StringComparison.OrdinalIgnoreCase));
+            var arcana = Assert.Single(
+                competencyMechanics,
+                value => value.ConceptKey == "skill.arcana");
+            Assert.All(
+                arcana.Competency!.Profiles,
+                value =>
+                {
+                    Assert.Null(value.FamilyName);
+                    Assert.Null(value.Specialty);
+                });
 
             var balance = Assert.Single(
                 competencyMechanics,
@@ -299,10 +311,10 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Equal("dexterity", balance.Competency!.GoverningAbilityKey);
 
             // The checked-in SRD3/SRD35 snapshots have generic Craft, Perform, and Profession
-            // entries. SRD3 has Alchemy, which converges directly to Alchemist's Supplies, but
-            // that native record is not a Craft (...) specialty. Do not fabricate specialty
-            // metadata that is absent from the reviewed source corpus. Translation coverage
-            // below verifies all four parenthetical specialty families independently.
+            // entries. SRD3 also has ranked Alchemy, which remains a skill facet of the shared
+            // Alchemy learned competency. The reviewed corpus does not contain a matching
+            // Alchemist's Supplies tool row or Craft (alchemy) specialty, so bootstrap must not
+            // fabricate either facet from absent source evidence.
             Assert.Contains("skill.craft", publishedCompetencyKeys);
             Assert.Contains("skill.perform", publishedCompetencyKeys);
             Assert.Contains("skill.profession", publishedCompetencyKeys);
@@ -603,16 +615,22 @@ public sealed class BaselineBootstrapIntegrationTests
 
             var mechanics = await new CharacterMechanicsConsumerService(db)
                 .GetGlobalAsync(userId: null);
-            var knowledge = mechanics.Mechanics.First(value =>
-                value.Competency?.FamilyName == "Knowledge"
-                && value.ConceptKey is not null
-                && value.ConceptKey.StartsWith("skill.", StringComparison.Ordinal)
-                && !value.ConceptKey.StartsWith("skill.knowledge-", StringComparison.Ordinal));
-            var correctedKey = knowledge.ConceptKey!;
-            var legacyKey = "skill.knowledge-" + correctedKey["skill.".Length..];
+            var knowledge = Assert.Single(
+                mechanics.Mechanics,
+                value => value.ConceptKey == "skill.arcana");
+            Assert.NotNull(knowledge.Competency);
+            Assert.All(
+                knowledge.Competency!.Profiles,
+                value =>
+                {
+                    Assert.Null(value.FamilyName);
+                    Assert.Null(value.Specialty);
+                });
+            const string correctedKey = "skill.arcana";
+            const string legacyKey = "skill.knowledge-arcana";
             var concept = await db.RuleConcepts.SingleAsync(value => value.Key == correctedKey);
             concept.Key = legacyKey;
-            concept.DisplayName = $"Knowledge ({knowledge.DisplayName})";
+            concept.DisplayName = "Knowledge (arcana)";
             await db.SaveChangesAsync();
             db.ChangeTracker.Clear();
 
