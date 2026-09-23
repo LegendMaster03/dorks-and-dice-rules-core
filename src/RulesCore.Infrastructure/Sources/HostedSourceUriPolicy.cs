@@ -10,34 +10,43 @@ namespace RulesCore.Infrastructure.Sources;
 /// </summary>
 internal static class HostedSourceUriPolicy
 {
-    internal static void ValidateShape(Uri uri)
+    internal static void ValidateShape(Uri uri) =>
+        ValidateShape(uri, "Hosted source");
+
+    internal static void ValidateShape(Uri uri, string sourceLabel)
     {
         if (!string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
         {
-            throw new ArgumentException("Hosted source URIs must use HTTPS.");
+            throw new ArgumentException($"{sourceLabel} URIs must use HTTPS.");
         }
         if (!string.IsNullOrEmpty(uri.UserInfo))
         {
-            throw new ArgumentException("Hosted source URIs can not contain embedded credentials.");
+            throw new ArgumentException($"{sourceLabel} URIs can not contain embedded credentials.");
         }
         if (string.Equals(uri.DnsSafeHost, "localhost", StringComparison.OrdinalIgnoreCase)
             || uri.AbsoluteUri.Length > 2000)
         {
-            throw new ArgumentException("Hosted source URI is not allowed.");
+            throw new ArgumentException($"{sourceLabel} URI is not allowed.");
         }
     }
 
+    internal static Task EnsureRemoteSafeAsync(
+        Uri uri,
+        CancellationToken cancellationToken) =>
+        EnsureRemoteSafeAsync(uri, "Hosted source", cancellationToken);
+
     internal static async Task EnsureRemoteSafeAsync(
         Uri uri,
+        string sourceLabel,
         CancellationToken cancellationToken)
     {
-        ValidateShape(uri);
+        ValidateShape(uri, sourceLabel);
         if (IPAddress.TryParse(uri.DnsSafeHost, out var literal))
         {
             if (!IsPublicAddress(literal))
             {
                 throw new InvalidOperationException(
-                    $"Hosted source address '{uri.DnsSafeHost}' is not a public network address.");
+                    $"{sourceLabel} address '{uri.DnsSafeHost}' is not a public network address.");
             }
             return;
         }
@@ -52,7 +61,7 @@ internal static class HostedSourceUriPolicy
         catch (SocketException exception)
         {
             throw new HttpRequestException(
-                $"Hosted source host '{uri.DnsSafeHost}' could not be resolved.",
+                $"{sourceLabel} host '{uri.DnsSafeHost}' could not be resolved.",
                 exception);
         }
 
@@ -60,7 +69,7 @@ internal static class HostedSourceUriPolicy
             || addresses.Any(address => !IsPublicAddress(address)))
         {
             throw new InvalidOperationException(
-                $"Hosted source host '{uri.DnsSafeHost}' resolves to a non-public network address.");
+                $"{sourceLabel} host '{uri.DnsSafeHost}' resolves to a non-public network address.");
         }
     }
 
