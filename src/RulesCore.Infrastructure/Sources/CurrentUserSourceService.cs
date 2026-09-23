@@ -167,9 +167,8 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         }
 
         var originKey = Fingerprint(Encoding.UTF8.GetBytes(originIdentity));
-        var bundleFingerprint = SourceBundleFingerprint(representations);
-        var packageKey = SharedPackageKey(bundleFingerprint);
-        var packageDisplayName = $"Shared user source {bundleFingerprint[..16]}";
+        var packageKey = SharedPackageKey(originIdentity);
+        var packageDisplayName = $"Shared user source {originKey[..16]}";
         const string packageProvider = "user-source";
 
         var reusable = await TryReadReusablePackageAsync(
@@ -455,7 +454,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         var stored = await dbContext.SourceRepresentations
             .AsNoTracking()
             .Where(value => value.SourcePackageId == legacy.Id)
-            .Select(value => new { value.FormatKey, value.FileName, value.ContentSha256 })
+            .Select(value => new { value.FormatKey, value.OriginIdentity, value.ContentSha256 })
             .ToArrayAsync(cancellationToken);
         if (stored.Length == 0) return false;
 
@@ -465,7 +464,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         if (stored.Any(value => !expected.Contains(
                 RepresentationStorageIdentity(
                     value.FormatKey,
-                    value.FileName,
+                    value.OriginIdentity,
                     value.ContentSha256))))
         {
             return false;
@@ -497,68 +496,67 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         var stored = await dbContext.SourceRepresentations
             .AsNoTracking()
             .Where(value => value.SourcePackageId == package.Id)
-            .Select(value => new { value.FormatKey, value.FileName, value.ContentSha256 })
+            .Select(value => new { value.FormatKey, value.OriginIdentity, value.ContentSha256 })
             .ToArrayAsync(cancellationToken);
-        var expected = representations
-            .Select(RepresentationStorageIdentity)
-            .OrderBy(value => value, StringComparer.Ordinal)
-            .ToArray();
         var actual = stored
             .Select(value => RepresentationStorageIdentity(
                 value.FormatKey,
-                value.FileName,
+                value.OriginIdentity,
                 value.ContentSha256))
-            .OrderBy(value => value, StringComparer.Ordinal)
-            .ToArray();
-        if (!expected.SequenceEqual(actual, StringComparer.Ordinal)) return null;
-
-        var entityCount = await dbContext.SourceEntities
-            .AsNoTracking()
-            .CountAsync(value => value.SourcePackageId == package.Id, cancellationToken);
-        if (entityCount == 0) return null;
-
-        var sourceCodes = await dbContext.SourceEntities
-            .AsNoTracking()
-            .Where(value => value.SourcePackageId == package.Id && value.SourceCode != null)
-            .Select(value => value.SourceCode!)
-            .Distinct()
-            .OrderBy(value => value)
-            .ToArrayAsync(cancellationToken);
-        return (package.Id, entityCount, sourceCodes);
-    }
-
-    internal static string SourceBundleFingerprint(
-        IReadOnlyList<NormalizedSourceRepresentation> representations)
-    {
-        if (representations.Count == 0)
-        {
-            throw new ArgumentException(
-                "A source bundle must contain at least one representation.",
-                nameof(representations));
-        }
-        var identities = representations
+            .ToHashSet(StringComparer.Ordinal);
+        var expected = representations
             .Select(RepresentationStorageIdentity)
-            .OrderBy(value => value, StringComparer.Ordinal);
-        return Fingerprint(Encoding.UTF8.GetBytes(string.Join("\n", identities)));
+            .ToArray();
+        if (expected.Any(value => !actual.Contains(value))) return null;
+
+        var currentEntities = representations
+            .SelectMany(value => value.Records.Select(record =>
+                $"{value.FormatKey}\n{record.NativeKey}"))
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+        if (currentEntities.Length == 0) return null;
+
+        var sourceCodes = representations
+            .SelectMany(value => value.Records)
+            .Select(value => value.SourceCode)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        return (package.Id, currentEntities.Length, sourceCodes);
     }
 
-    internal static string SharedPackageKey(string bundleFingerprint) =>
-        $"user-content-{bundleFingerprint}";
+    internal static string SharedPackageKey(string originIdentity) =>
+        $"user-origin-{Fingerprint(Encoding.UTF8.GetBytes(originIdentity))}";
+
+    internal static string PackageOriginIdentity(string representationOriginIdentity)
+    {
+        if (representationOriginIdentity.StartsWith("web:", StringComparison.Ordinal))
+        {
+            var separator = representationOriginIdentity.IndexOf('#', 4);
+            return separator < 0
+                ? representationOriginIdentity
+                : representationOriginIdentity[..separator];
+        }
+
+        return representationOriginIdentity;
+    }
 
     private static string RepresentationStorageIdentity(NormalizedSourceRepresentation representation)
     {
         var contentHash = Fingerprint(representation.Artifact.Content);
         return RepresentationStorageIdentity(
             representation.FormatKey,
-            representation.Artifact.FileName,
+            representation.Artifact.OriginIdentity,
             contentHash);
     }
 
     private static string RepresentationStorageIdentity(
         string formatKey,
-        string fileName,
+        string originIdentity,
         string contentHash) =>
-        $"{formatKey}\n{fileName}\n{contentHash}";
+        $"{formatKey}\n{originIdentity}\n{contentHash}";
 
     public async Task<CurrentUserSourceView?> RefreshAsync(
         string currentUserId,
