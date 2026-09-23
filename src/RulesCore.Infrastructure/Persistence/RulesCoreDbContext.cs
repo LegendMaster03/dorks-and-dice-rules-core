@@ -104,11 +104,17 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
             entity.Property(value => value.ContentJson).HasColumnName("content_json").HasColumnType("jsonb");
             entity.Property(value => value.LocatorKey).HasColumnName("locator_key").HasMaxLength(500);
             entity.Property(value => value.ImportedAt).HasColumnName("imported_at");
+            entity.Property(value => value.NormalizationVersion).HasColumnName("normalization_version");
+            entity.Property(value => value.NormalizationAttemptVersion).HasColumnName("normalization_attempt_version");
+            entity.Property(value => value.NormalizationAttemptedAt).HasColumnName("normalization_attempted_at");
+            entity.Property(value => value.NormalizationError).HasColumnName("normalization_error").HasMaxLength(1000);
             entity.HasIndex(value => new { value.SourceEntityId, value.RevisionNumber })
                 .IsUnique()
                 .HasDatabaseName("ux_source_entity_revision_number");
             entity.HasIndex(value => value.Fingerprint).HasDatabaseName("ix_source_entity_revision_fingerprint");
             entity.HasIndex(value => value.SourceRepresentationId).HasDatabaseName("ix_source_entity_revision_representation");
+            entity.HasIndex(value => new { value.NormalizationVersion, value.NormalizationAttemptVersion })
+                .HasDatabaseName("ix_source_entity_revision_normalization");
             entity.HasOne(value => value.SourceEntity)
                 .WithMany(value => value.Revisions)
                 .HasForeignKey(value => value.SourceEntityId)

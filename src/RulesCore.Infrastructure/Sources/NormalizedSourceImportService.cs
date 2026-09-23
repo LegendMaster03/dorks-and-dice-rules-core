@@ -39,10 +39,9 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
 
         foreach (var record in request.Representation.Records)
         {
-            var translated = RulesCoreContentTranslation.TranslateRecord(request.Representation, record);
-            var normalized = TrustedCanonicalAliasPolicy.Apply(
+            var normalized = TranslateAndNormalizeRecord(
                 request.Representation,
-                NormalizeRecord(translated));
+                record);
             translatedRecords.Add(normalized);
             translatedCount++;
             if (ShouldReport(translatedCount, request.Representation.Records.Count))
@@ -181,7 +180,11 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                     RawJson = normalized.RawJson,
                     ContentJson = normalized.ContentJson,
                     LocatorKey = normalized.LocatorKey,
-                    ImportedAt = DateTimeOffset.UtcNow
+                    ImportedAt = DateTimeOffset.UtcNow,
+                    NormalizationVersion = SourceNormalizationVersion.Current,
+                    NormalizationAttemptVersion = SourceNormalizationVersion.Current,
+                    NormalizationAttemptedAt = DateTimeOffset.UtcNow,
+                    NormalizationError = null
                 };
                 dbContext.SourceEntityRevisions.Add(latest);
                 await dbContext.SaveChangesAsync(cancellationToken);
@@ -192,12 +195,20 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                 // Translator improvements are Rules Core interpretation changes, not native
                 // source revisions. Update only ContentJson on the existing native revision.
                 latest.ContentJson = normalized.ContentJson;
+                MarkNormalizationCurrent(latest);
                 await dbContext.SaveChangesAsync(cancellationToken);
                 translationOnlyUpdate = true;
                 translationOnlyUpdates++;
             }
             else
             {
+                if (latest!.NormalizationVersion < SourceNormalizationVersion.Current
+                    || latest.NormalizationAttemptVersion < SourceNormalizationVersion.Current
+                    || latest.NormalizationError is not null)
+                {
+                    MarkNormalizationCurrent(latest);
+                    await dbContext.SaveChangesAsync(cancellationToken);
+                }
                 unchangedEntities++;
             }
 
@@ -494,7 +505,27 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
             SET canonical_publication_id = EXCLUDED.canonical_publication_id;
             """, cancellationToken);
 
-    private static NormalizedSourceRecord NormalizeRecord(NormalizedSourceRecord record)
+    internal static NormalizedSourceRecord TranslateAndNormalizeRecord(
+        NormalizedSourceRepresentation representation,
+        NormalizedSourceRecord record)
+    {
+        var translated = RulesCoreContentTranslation.TranslateRecord(
+            representation,
+            record);
+        return TrustedCanonicalAliasPolicy.Apply(
+            representation,
+            NormalizeRecord(translated));
+    }
+
+    private static void MarkNormalizationCurrent(SourceEntityRevision revision)
+    {
+        revision.NormalizationVersion = SourceNormalizationVersion.Current;
+        revision.NormalizationAttemptVersion = SourceNormalizationVersion.Current;
+        revision.NormalizationAttemptedAt = DateTimeOffset.UtcNow;
+        revision.NormalizationError = null;
+    }
+
+    internal static NormalizedSourceRecord NormalizeRecord(NormalizedSourceRecord record)
     {
         var contentJson = string.IsNullOrWhiteSpace(record.ContentJson)
             ? null
@@ -534,7 +565,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
         return normalized;
     }
 
-    private static string SemanticFingerprint(NormalizedSourceRecord record) =>
+    internal static string SemanticFingerprint(NormalizedSourceRecord record) =>
         string.IsNullOrWhiteSpace(record.CanonicalIdentityKey)
             ? CanonicalSourceIdentity.SemanticFingerprint(SemanticDocument(record))
             : ExactCompetencyTranslationPolicy.CanonicalFingerprint(record.CanonicalIdentityKey);
@@ -630,7 +661,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
         }
     }
 
-    private static string CanonicalJsonFingerprint(string json)
+    internal static string CanonicalJsonFingerprint(string json)
     {
         using var document = JsonDocument.Parse(json);
         using var stream = new MemoryStream();
@@ -700,7 +731,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
         return JsonElement.DeepEquals(leftDocument.RootElement, rightDocument.RootElement);
     }
 
-    private static bool JsonEquivalentOptional(string? left, string? right)
+    internal static bool JsonEquivalentOptional(string? left, string? right)
     {
         if (string.IsNullOrWhiteSpace(left) || string.IsNullOrWhiteSpace(right))
             return string.IsNullOrWhiteSpace(left) && string.IsNullOrWhiteSpace(right);

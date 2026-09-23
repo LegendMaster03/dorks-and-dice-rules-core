@@ -82,6 +82,57 @@ public static class HostedSourceEndpointExtensions
             }
         });
 
+        app.MapGet("/api/global/rules/source-normalization", async (
+            string? packageKey,
+            HttpContext httpContext,
+            ISourceNormalizationMaintenanceService maintenance,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireRulesLawyer(httpContext, out _);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(await maintenance.GetStatusAsync(
+                packageKey,
+                cancellationToken));
+        });
+
+        app.MapPost("/api/global/rules/source-normalization/reconcile", async (
+            int? limit,
+            bool? retryFailed,
+            string? packageKey,
+            HttpContext httpContext,
+            ISourceNormalizationMaintenanceService maintenance,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireRulesLawyer(httpContext, out _);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            try
+            {
+                var result = await maintenance.ReconcileAsync(
+                    limit ?? 25,
+                    retryFailed ?? false,
+                    packageKey,
+                    cancellationToken);
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(result);
+            }
+            catch (ArgumentOutOfRangeException exception)
+            {
+                return Results.Problem(
+                    title: "Invalid source-normalization maintenance request",
+                    detail: exception.Message,
+                    statusCode: StatusCodes.Status400BadRequest);
+            }
+        });
+
         app.MapGet("/api/global/rules/hosted-sources", async (
             bool? includeDisabled,
             HttpContext httpContext,

@@ -20,6 +20,7 @@ if (hasDatabase)
     builder.Services.AddScoped<IRulesCoreSchemaInitializer, RulesCoreSchemaInitializer>();
     builder.Services.AddScoped<ISourceImportService, SourceImportService>();
     builder.Services.AddScoped<INormalizedSourceImportService, NormalizedSourceImportService>();
+    builder.Services.AddScoped<ISourceNormalizationMaintenanceService, SourceNormalizationMaintenanceService>();
     builder.Services.AddSingleton<ISourceFormatAdapter, FiveEToolsSourceFormatAdapter>();
     builder.Services.AddSingleton<ISourceFormatAdapter, PcGenSourceFormatAdapter>();
     builder.Services.AddSingleton<ISourceFormatAdapter, PdfSourceFormatAdapter>();

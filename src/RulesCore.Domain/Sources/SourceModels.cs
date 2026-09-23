@@ -67,6 +67,13 @@ public sealed class SourceEntityRevision
     public string? LocatorKey { get; set; }
     public DateTimeOffset ImportedAt { get; set; }
 
+    // RawJson and Fingerprint are immutable native-source history. These fields track only
+    // the derived Rules Core interpretation persisted in ContentJson.
+    public int NormalizationVersion { get; set; }
+    public int NormalizationAttemptVersion { get; set; }
+    public DateTimeOffset? NormalizationAttemptedAt { get; set; }
+    public string? NormalizationError { get; set; }
+
     public SourceEntity SourceEntity { get; set; } = null!;
     public SourceRepresentation SourceRepresentation { get; set; } = null!;
 

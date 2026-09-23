@@ -23,12 +23,16 @@ internal sealed class CurrentUserSourceRefreshBackground(
                 var processedImportJob = await ProcessNextImportJobAsync(stoppingToken);
                 if (processedImportJob) continue;
 
+                var processedNormalization =
+                    await ProcessNextNormalizationBackfillAsync(stoppingToken);
+
                 if (DateTimeOffset.UtcNow >= nextRefreshSweep)
                 {
                     await RunRefreshSweepAsync(stoppingToken);
                     nextRefreshSweep = DateTimeOffset.UtcNow.AddHours(1);
                 }
 
+                if (processedNormalization) continue;
                 await Task.Delay(TimeSpan.FromSeconds(2), stoppingToken);
             }
         }
@@ -236,6 +240,48 @@ internal sealed class CurrentUserSourceRefreshBackground(
                 }
             }
             return true;
+        }
+    }
+
+    private async Task<bool> ProcessNextNormalizationBackfillAsync(
+        CancellationToken stoppingToken)
+    {
+        try
+        {
+            await using var scope = scopeFactory.CreateAsyncScope();
+            var maintenance = scope.ServiceProvider
+                .GetRequiredService<ISourceNormalizationMaintenanceService>();
+            var result = await maintenance.ReconcileAsync(
+                limit: 1,
+                retryFailed: false,
+                packageKey: null,
+                cancellationToken: stoppingToken);
+            if (result.AttemptedRevisionCount == 0)
+            {
+                return false;
+            }
+
+            if (result.FailedRevisionCount > 0)
+            {
+                var failure = result.Failures[0];
+                logger.LogWarning(
+                    "Rules Core could not backfill source revision {RevisionId} ({EntityName}): {Message}",
+                    failure.SourceEntityRevisionId,
+                    failure.EntityName,
+                    failure.Message);
+            }
+            return true;
+        }
+        catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
+        {
+            throw;
+        }
+        catch (Exception exception)
+        {
+            logger.LogError(
+                exception,
+                "Automatic Rules Core source-normalization backfill failed.");
+            return false;
         }
     }
 
