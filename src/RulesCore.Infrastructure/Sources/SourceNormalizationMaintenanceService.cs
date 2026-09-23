@@ -165,6 +165,7 @@ public sealed class SourceNormalizationMaintenanceService(
                 .SingleAsync(value => value.Id == revision.SourceEntityId, cancellationToken);
             var representation = await dbContext.SourceRepresentations
                 .AsNoTracking()
+                .Include(value => value.ContentBlob)
                 .SingleAsync(value => value.Id == revision.SourceRepresentationId, cancellationToken);
 
             var candidate = await BuildCandidateAsync(
@@ -272,7 +273,7 @@ public sealed class SourceNormalizationMaintenanceService(
     {
         var artifact = new SourceRepresentationArtifact(
             representation.FileName,
-            representation.ContentBytes.ToArray(),
+            representation.ContentBlob.ContentBytes.ToArray(),
             representation.OriginIdentity,
             representation.SourceUri,
             representation.MediaType);
