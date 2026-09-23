@@ -1675,6 +1675,18 @@ internal static class CharacterCoreMechanicsResolver
             var competencyConceptKey = mechanic.ConceptKey
                 ?? throw new InvalidOperationException(
                     $"Competency mechanic '{mechanic.MechanicKey}' does not expose a concept key.");
+            var universal = FindUniversalCompetency(catalog, mechanic);
+            var stateKeys = BuildCompetencyStateKeys(
+                mechanic,
+                competencyConceptKey,
+                universal,
+                includeTrainingStateKey: false);
+            var trainingStateKeys = BuildCompetencyStateKeys(
+                mechanic,
+                competencyConceptKey,
+                universal,
+                includeTrainingStateKey: true);
+    
             context.RegisterCompetencyIdentity(
                 mechanic.DisplayName,
                 competencyConceptKey,
@@ -1724,14 +1736,17 @@ internal static class CharacterCoreMechanicsResolver
     
             var contributions = new List<CharacterMechanicContributionView>
             {
-                CharacterProjectionResolutionHelpers.Contribution($"ability.{ability}.modifier", $"{CharacterProjectionJson.Humanize(ability)} modifier", abilityModifier)
+                CharacterProjectionResolutionHelpers.Contribution(
+                    $"ability.{ability}.modifier",
+                    $"{CharacterProjectionJson.Humanize(ability)} modifier",
+                    abilityModifier)
             };
             var total = abilityModifier;
+            var rankValue = 0;
     
             if (profile.SupportsClassSkillState)
             {
-                var explicitClassSkill = context.ClassSkillKeys.Contains(competencyConceptKey)
-                    || context.ClassSkillKeys.Contains(mechanic.MechanicKey);
+                var explicitClassSkill = stateKeys.Any(context.ClassSkillKeys.Contains);
                 var derivedSources = context.FindClassSkillGrantSources(
                     mechanic.DisplayName,
                     profile.FamilyName);
@@ -1756,24 +1771,29 @@ internal static class CharacterCoreMechanicsResolver
             if (profile.SupportsRanks)
             {
                 if (!context.HasCompetencyRanksInput
-                    || !context.CompetencyRanks.TryGetValue(competencyConceptKey, out var ranks))
+                    || !TryFindCompetencyRanks(
+                        context.CompetencyRanks,
+                        stateKeys,
+                        out var rankStateKey,
+                        out rankValue))
                 {
                     context.Mechanics[mechanic.MechanicKey] = CharacterProjectionResolutionHelpers.Unresolved(
                         mechanic.MechanicKey,
                         "competency",
                         mechanic.DisplayName,
                         CharacterResolutionStates.MissingCharacterInput,
-                        [$"{competencyConceptKey}.ranks"],
+                        [$"{stateKeys[0]}.ranks"],
                         provenance: mechanic.Provenance ?? CharacterProjectionResolutionHelpers.Provenance(mechanic.SourceAttributions));
                     continue;
                 }
-                total = checked(total + ranks);
-                contributions.Add(CharacterProjectionResolutionHelpers.Contribution(
-                    $"{competencyConceptKey}.ranks",
-                    "Ranks",
-                    ranks));
     
-                if (profile.TrainedOnly == true && ranks <= 0)
+                total = checked(total + rankValue);
+                contributions.Add(CharacterProjectionResolutionHelpers.Contribution(
+                    $"{rankStateKey}.ranks",
+                    "Ranks",
+                    rankValue));
+    
+                if (profile.TrainedOnly == true && rankValue <= 0)
                 {
                     context.Mechanics[mechanic.MechanicKey] = CharacterProjectionResolutionHelpers.Unresolved(
                         mechanic.MechanicKey,
@@ -1786,9 +1806,13 @@ internal static class CharacterCoreMechanicsResolver
                 }
             }
     
-            if (profile.SupportsTrainingState)
+            var usesProficiencyTraining = string.Equals(
+                profile.EvaluationProfileKey,
+                "proficiency-competency",
+                StringComparison.OrdinalIgnoreCase);
+            if (profile.SupportsTrainingState && usesProficiencyTraining)
             {
-                var trained = context.TrainingKeys.Contains(competencyConceptKey);
+                var trained = trainingStateKeys.Any(context.TrainingKeys.Contains);
                 if (!trained && !context.HasTrainingInput)
                 {
                     context.Mechanics[mechanic.MechanicKey] = CharacterProjectionResolutionHelpers.Unresolved(
@@ -1796,7 +1820,19 @@ internal static class CharacterCoreMechanicsResolver
                         "competency",
                         mechanic.DisplayName,
                         CharacterResolutionStates.MissingCharacterInput,
-                        [$"{competencyConceptKey}.trained"],
+                        [$"{trainingStateKeys[0]}.trained"],
+                        provenance: mechanic.Provenance ?? CharacterProjectionResolutionHelpers.Provenance(mechanic.SourceAttributions));
+                    continue;
+                }
+    
+                if (profile.TrainedOnly == true && !trained)
+                {
+                    context.Mechanics[mechanic.MechanicKey] = CharacterProjectionResolutionHelpers.Unresolved(
+                        mechanic.MechanicKey,
+                        "competency",
+                        mechanic.DisplayName,
+                        CharacterResolutionStates.MissingCapability,
+                        missingCapabilities: [$"competency.trained.{competencyConceptKey}"],
                         provenance: mechanic.Provenance ?? CharacterProjectionResolutionHelpers.Provenance(mechanic.SourceAttributions));
                     continue;
                 }
@@ -1814,8 +1850,12 @@ internal static class CharacterCoreMechanicsResolver
                             provenance: mechanic.Provenance ?? CharacterProjectionResolutionHelpers.Provenance(mechanic.SourceAttributions));
                         continue;
                     }
+    
                     total = checked(total + proficiency);
-                    contributions.Add(CharacterProjectionResolutionHelpers.Contribution("proficiency.standard", "Training proficiency", proficiency));
+                    contributions.Add(CharacterProjectionResolutionHelpers.Contribution(
+                        "proficiency.standard",
+                        "Training proficiency",
+                        proficiency));
                 }
             }
     
@@ -1823,7 +1863,10 @@ internal static class CharacterCoreMechanicsResolver
             total = checked(total + other);
             if (other != 0)
             {
-                contributions.Add(CharacterProjectionResolutionHelpers.Contribution($"{mechanic.MechanicKey}.other", "Other modifiers", other));
+                contributions.Add(CharacterProjectionResolutionHelpers.Contribution(
+                    $"{mechanic.MechanicKey}.other",
+                    "Other modifiers",
+                    other));
             }
     
             context.Mechanics[mechanic.MechanicKey] = new CharacterResolvedMechanicView(
@@ -1875,6 +1918,107 @@ internal static class CharacterCoreMechanicsResolver
         }
     }
     
+    private static CharacterUniversalCompetencyView? FindUniversalCompetency(
+        CharacterMechanicsCatalogView catalog,
+        CharacterMechanicView mechanic) =>
+        catalog.Competencies?.FirstOrDefault(value =>
+            string.Equals(
+                value.SemanticKey,
+                mechanic.MechanicKey,
+                StringComparison.OrdinalIgnoreCase)
+            || value.MechanicKeys.Contains(
+                mechanic.MechanicKey,
+                StringComparer.OrdinalIgnoreCase)
+            || value.CompatibilityMechanicKeys.Contains(
+                mechanic.MechanicKey,
+                StringComparer.OrdinalIgnoreCase));
+    
+    private static IReadOnlyList<string> BuildCompetencyStateKeys(
+        CharacterMechanicView mechanic,
+        string competencyConceptKey,
+        CharacterUniversalCompetencyView? universal,
+        bool includeTrainingStateKey)
+    {
+        var keys = new List<string>();
+    
+        static void Add(List<string> values, string? value)
+        {
+            if (string.IsNullOrWhiteSpace(value)
+                || values.Contains(value, StringComparer.OrdinalIgnoreCase))
+            {
+                return;
+            }
+    
+            values.Add(value);
+        }
+    
+        static string? StripMechanicPrefix(string value)
+        {
+            const string prefix = "competency.";
+            return value.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
+                ? value[prefix.Length..]
+                : null;
+        }
+    
+        Add(keys, competencyConceptKey);
+        Add(keys, mechanic.MechanicKey);
+        Add(keys, universal?.SemanticKey);
+    
+        if (universal is not null)
+        {
+            foreach (var compatibilityKey in universal.CompatibilityMechanicKeys)
+            {
+                Add(keys, compatibilityKey);
+                Add(keys, StripMechanicPrefix(compatibilityKey));
+            }
+    
+            if (includeTrainingStateKey)
+            {
+                Add(keys, universal.TrainingStateKey);
+            }
+        }
+    
+        return keys;
+    }
+    
+    private static bool TryFindCompetencyRanks(
+        IReadOnlyDictionary<string, int> ranks,
+        IReadOnlyList<string> keys,
+        out string matchedKey,
+        out int value)
+    {
+        foreach (var key in keys)
+        {
+            if (ranks.TryGetValue(key, out value))
+            {
+                matchedKey = key;
+                return true;
+            }
+        }
+    
+        matchedKey = keys[0];
+        value = 0;
+        return false;
+    }
+    
+    private static CharacterCompetencyProfileView? SelectProfile(
+        CharacterCompetencyDefinitionView competency,
+        CharacterProjectionContext context)
+    {
+        var compatible = competency.Profiles
+            .Where(profile => profile.RequiredCapabilityKeys.All(context.Capabilities.Contains))
+            .ToArray();
+    
+        return compatible.SingleOrDefault(profile =>
+                   profile.SourceEntityRevisionId == competency.DefaultProfileSourceEntityRevisionId)
+            ?? compatible
+                .OrderBy(profile => profile.RequiredCapabilityKeys.Count)
+                .ThenBy(profile => profile.ProfileKey, StringComparer.Ordinal)
+                .ThenBy(profile => profile.SourceEntityRevisionId)
+                .FirstOrDefault();
+    }
+    
+
     private static CharacterCompetencyProfileView? SelectProfile(
         CharacterCompetencyDefinitionView competency,
         CharacterProjectionContext context)
