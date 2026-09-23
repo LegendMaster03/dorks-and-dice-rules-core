@@ -339,18 +339,24 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         }
 
         mechanics = AttachStaticRelationships(mechanics);
+        mechanics = UniversalCompetencyProjection.ApplySemanticIdentity(mechanics);
         mechanics = AttachCompetencyIdentityFacets(mechanics);
+
+        var orderedMechanics = mechanics
+            .OrderBy(value => value.Kind, StringComparer.Ordinal)
+            .ThenBy(value => value.DisplayName, StringComparer.Ordinal)
+            .ThenBy(value => value.MechanicKey, StringComparer.Ordinal)
+            .ToArray();
+        var universalCompetencies =
+            UniversalCompetencyProjection.BuildCatalog(orderedMechanics);
 
         return new CharacterMechanicsCatalogView(
             rules.Scope,
             rules.CampaignId,
             rules.RevisionNumber,
             rules.PublishedAt,
-            mechanics
-                .OrderBy(value => value.Kind, StringComparer.Ordinal)
-                .ThenBy(value => value.DisplayName, StringComparer.Ordinal)
-                .ThenBy(value => value.MechanicKey, StringComparer.Ordinal)
-                .ToArray());
+            orderedMechanics,
+            universalCompetencies);
     }
 
     private static CharacterMechanicsBatchEvaluationView EvaluateBatchFromCatalog(
@@ -1213,7 +1219,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         var selectedProfile = BuildCompetencyProfile(
             rule.SourceEntityRevisionId,
             rule.EntityType,
-            rule.SourceEntityName,
+            ReadSourceNativeName(selectedMechanicalJson) ?? rule.SourceEntityName,
             selectedMechanicalJson,
             selectedGameEdition);
 
@@ -1443,26 +1449,15 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         var familyName = current["familyName"]?.GetValue<string>();
         var specialty = current["specialty"]?.GetValue<string>();
         var isFamily = current["isFamily"]?.GetValue<bool>() ?? false;
-        if (string.IsNullOrWhiteSpace(familyName)
-            && string.IsNullOrWhiteSpace(specialty)
-            && !isFamily)
-        {
-            return profile;
-        }
-
         var currentKind = current["kind"]?.GetValue<string>();
         return profile with
         {
             CompetencyKind = string.IsNullOrWhiteSpace(currentKind)
                 ? profile.CompetencyKind
                 : currentKind,
-            FamilyName = string.IsNullOrWhiteSpace(profile.FamilyName)
-                ? familyName
-                : profile.FamilyName,
-            Specialty = string.IsNullOrWhiteSpace(profile.Specialty)
-                ? specialty
-                : profile.Specialty,
-            IsFamily = profile.IsFamily || isFamily
+            FamilyName = familyName,
+            Specialty = specialty,
+            IsFamily = isFamily
         };
     }
 
@@ -1799,6 +1794,32 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             && supplied == input.IncludeWhenBooleanValue.Value;
     }
 
+    private static string? ReadSourceNativeName(string? mechanicalJson)
+    {
+        if (string.IsNullOrWhiteSpace(mechanicalJson))
+        {
+            return null;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(mechanicalJson);
+            if (!document.RootElement.TryGetProperty("_rulesCore", out var rulesCore)
+                || rulesCore.ValueKind != JsonValueKind.Object
+                || !rulesCore.TryGetProperty("context", out var context)
+                || context.ValueKind != JsonValueKind.Object)
+            {
+                return null;
+            }
+
+            return ReadString(context, "nativeName");
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
+    }
+
     private static string? ReadNativeName(string? mechanicalJson)
     {
         if (string.IsNullOrWhiteSpace(mechanicalJson))
@@ -2131,10 +2152,13 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     ReferenceUri: reader.IsDBNull(15) ? null : reader.GetString(15),
                     PresentationRequired: false,
                     ReferenceLinkRequired: false);
+                var mechanicalJson =
+                    string.IsNullOrWhiteSpace(contentJson) ? rawJson : contentJson;
                 var profile = BuildCompetencyProfile(
                     revisionId,
                     entityType,
-                    string.IsNullOrWhiteSpace(contentJson) ? rawJson : contentJson,
+                    ReadSourceNativeName(mechanicalJson),
+                    mechanicalJson,
                     gameEdition,
                     [attribution]);
                 if (profile is null)
@@ -2195,7 +2219,9 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             .ToArrayAsync(cancellationToken);
         return revisions.ToDictionary(
             value => value.Id,
-            value => value.GetMechanicalContentJson());
+            value => string.IsNullOrWhiteSpace(value.ContentJson)
+                ? value.RawJson
+                : value.ContentJson!);
     }
 
     private async Task<IReadOnlyDictionary<string, string>> ReadProvidersAsync(

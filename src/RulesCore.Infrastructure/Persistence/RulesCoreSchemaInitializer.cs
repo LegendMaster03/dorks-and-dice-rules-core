@@ -112,7 +112,7 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
 
     // Bump this value whenever startup-owned schema SQL changes. The persisted marker
     // makes a schema revision effectively one-time across replicas and restarts.
-    private const string CurrentSchemaRevision = "2026-09-21-canonical-schema-concurrency-v1";
+    private const string CurrentSchemaRevision = "2026-09-23-source-normalization-backfill-v1";
 
     // "DNDRCSCH" encoded as a signed 64-bit key. PostgreSQL advisory locks
     // coordinate independent Rules Core processes that share the same database.

@@ -361,7 +361,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             // The consumer must recover current family semantics from preserved source identity
             // without requiring a destructive re-import of immutable source revisions.
             var legacyFamilyEntityIds = imported.Entities
-                .Where(value => value.Name is "Craft" or "Craft (blacksmithing)" or "Craft (alchemy)")
+                .Where(value => value.Name is "The planes" or "Craft" or "Craft (blacksmithing)" or "Craft (alchemy)")
                 .Select(value => value.EntityId)
                 .ToArray();
             var legacyFamilyRevisions = await db.SourceEntityRevisions
@@ -371,9 +371,26 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             {
                 var root = JsonNode.Parse(revision.ContentJson!)!.AsObject();
                 var competency = root["_rulesCore"]!["competency"]!.AsObject();
-                competency.Remove("familyName");
-                competency.Remove("specialty");
-                competency.Remove("isFamily");
+                var sourceEntityName = await db.SourceEntities
+                    .Where(value => value.Id == revision.SourceEntityId)
+                    .Select(value => value.Name)
+                    .SingleAsync();
+
+                if (sourceEntityName == "The planes")
+                {
+                    // Older normalization modeled Knowledge(X) as one family. Current policy
+                    // translates Knowledge(X) directly to X, so stale family metadata must not
+                    // survive merely because the immutable revision predates that decision.
+                    competency["familyName"] = "Knowledge";
+                    competency["specialty"] = "the planes";
+                    competency["isFamily"] = false;
+                }
+                else
+                {
+                    competency.Remove("familyName");
+                    competency.Remove("specialty");
+                    competency.Remove("isFamily");
+                }
                 revision.ContentJson = root.ToJsonString();
             }
             await db.SaveChangesAsync();
@@ -580,7 +597,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.NotNull(craft.Competency);
             Assert.Equal(CharacterCompetencyKinds.SpecializedSkill, craft.Competency!.CompetencyKind);
             Assert.Equal("Craft", craft.Competency.FamilyName);
-            Assert.Equal("blacksmithing", craft.Competency.Specialty);
+            Assert.Equal("Blacksmithing", craft.Competency.Specialty);
             Assert.True(craft.Competency.SupportsRanks);
 
             var alchemy = Assert.Single(
@@ -591,7 +608,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 CharacterCompetencyKinds.SpecializedSkill,
                 alchemy.Competency!.CompetencyKind);
             Assert.Equal("Craft", alchemy.Competency.FamilyName);
-            Assert.Equal("alchemy", alchemy.Competency.Specialty);
+            Assert.Equal("Alchemy", alchemy.Competency.Specialty);
             Assert.Equal("alchemy", alchemy.Competency.IdentityKey);
             Assert.Equal("Alchemy", alchemy.Competency.IdentityName);
             Assert.Equal(
@@ -1305,6 +1322,8 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             {
                 Assert.Equal("alchemy", competency.IdentityKey);
                 Assert.Equal("Alchemy", competency.IdentityName);
+                Assert.Equal("Craft", competency.FamilyName);
+                Assert.Equal("Alchemy", competency.Specialty);
                 Assert.Equal("competency.alchemy.training", competency.SharedTrainingKey);
                 Assert.Equal(2, competency.Facets!.Count);
 
@@ -1327,6 +1346,25 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     "competency.tool.alchemists-supplies",
                     toolFacet.MechanicKeys!);
             }
+
+            var semanticAlchemy = Assert.Single(
+                catalog.Competencies
+                    ?? throw new InvalidOperationException(
+                        "Universal competency catalog was not projected."),
+                value => value.SemanticKey == "competency.alchemy");
+            Assert.Equal("Alchemy", semanticAlchemy.DisplayName);
+            Assert.Equal("Craft", semanticAlchemy.FamilyName);
+            Assert.Equal("competency.alchemy.training", semanticAlchemy.TrainingStateKey);
+            Assert.Equal(
+                [
+                    "competency.skill.craft-alchemy",
+                    "competency.tool.alchemists-supplies"
+                ],
+                semanticAlchemy.MechanicKeys);
+            Assert.Equal(2, semanticAlchemy.Facets.Count);
+            Assert.Equal(2, semanticAlchemy.Profiles.Count);
+            Assert.Contains("Craft (alchemy)", semanticAlchemy.SourceAliases);
+            Assert.Contains("Alchemist's Supplies", semanticAlchemy.SourceAliases);
 
             var skillProfile = Assert.Single(skill.Competency!.Profiles);
             Assert.True(skillProfile.SupportsRanks);

@@ -10,12 +10,15 @@ const ABILITIES = [
 ];
 
 const SIZE_LABELS = new Map([
+    ["F", "Fine"],
+    ["D", "Diminutive"],
     ["T", "Tiny"],
     ["S", "Small"],
     ["M", "Medium"],
     ["L", "Large"],
     ["H", "Huge"],
-    ["G", "Gargantuan"]
+    ["G", "Gargantuan"],
+    ["C", "Colossal"]
 ]);
 
 const ALIGNMENT_LABELS = new Map([

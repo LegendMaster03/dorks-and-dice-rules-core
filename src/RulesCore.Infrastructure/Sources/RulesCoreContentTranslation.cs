@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using RulesCore.Application.Sources;
+using RulesCore.Domain.Rules;
 
 namespace RulesCore.Infrastructure.Sources;
 
@@ -977,10 +978,9 @@ internal static class RulesCoreContentTranslation
             return;
         }
 
-        var normalized = size.Value.Trim().ToUpperInvariant();
-        if (normalized is "T" or "S" or "M" or "L" or "H" or "G")
+        if (UniversalSizeCategories.TryResolve(size.Value, out var semanticSize))
         {
-            content["size"] = new JsonArray(normalized);
+            content["size"] = new JsonArray(semanticSize.SourceCode);
             mapped.Add(size.Index);
         }
     }

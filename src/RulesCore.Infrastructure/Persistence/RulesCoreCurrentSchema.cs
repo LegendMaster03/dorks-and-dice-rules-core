@@ -17,6 +17,16 @@ internal static class RulesCoreCurrentSchema
     private const string PostgresCurrentSchema = """
         ALTER TABLE source_entity_revision
             ADD COLUMN IF NOT EXISTS content_json jsonb NULL;
+        ALTER TABLE source_entity_revision
+            ADD COLUMN IF NOT EXISTS normalization_version integer NOT NULL DEFAULT 0;
+        ALTER TABLE source_entity_revision
+            ADD COLUMN IF NOT EXISTS normalization_attempt_version integer NOT NULL DEFAULT 0;
+        ALTER TABLE source_entity_revision
+            ADD COLUMN IF NOT EXISTS normalization_attempted_at timestamp with time zone NULL;
+        ALTER TABLE source_entity_revision
+            ADD COLUMN IF NOT EXISTS normalization_error varchar(1000) NULL;
+        CREATE INDEX IF NOT EXISTS ix_source_entity_revision_normalization
+            ON source_entity_revision(normalization_version, normalization_attempt_version);
 
         CREATE TABLE IF NOT EXISTS canonical_entity (
             canonical_entity_id uuid NOT NULL,

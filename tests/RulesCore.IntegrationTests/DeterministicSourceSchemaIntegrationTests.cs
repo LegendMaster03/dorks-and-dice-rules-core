@@ -50,6 +50,21 @@ public sealed class DeterministicSourceSchemaIntegrationTests
             Assert.Equal("NO", await ColumnNullableAsync(
                 db,
                 schema,
+                "source_entity_revision",
+                "normalization_version"));
+            Assert.Equal("NO", await ColumnNullableAsync(
+                db,
+                schema,
+                "source_entity_revision",
+                "normalization_attempt_version"));
+            Assert.Equal("YES", await ColumnNullableAsync(
+                db,
+                schema,
+                "source_entity_revision",
+                "normalization_error"));
+            Assert.Equal("NO", await ColumnNullableAsync(
+                db,
+                schema,
                 "rule_concept_source_binding",
                 "canonical_entity_id"));
             Assert.Equal("YES", await ColumnNullableAsync(
@@ -66,6 +81,10 @@ public sealed class DeterministicSourceSchemaIntegrationTests
                 db,
                 schema,
                 "ux_source_entity_occurrence_binding_revision"));
+            Assert.True(await IndexExistsAsync(
+                db,
+                schema,
+                "ix_source_entity_revision_normalization"));
             Assert.True(await IndexExistsAsync(
                 db,
                 schema,

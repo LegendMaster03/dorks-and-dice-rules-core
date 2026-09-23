@@ -7,17 +7,6 @@ namespace RulesCore.Infrastructure.Rules;
 
 internal static class RuleBrowserSummaryProjector
 {
-    private static readonly IReadOnlyDictionary<string, string> SizeNames =
-        new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-        {
-            ["T"] = "Tiny",
-            ["S"] = "Small",
-            ["M"] = "Medium",
-            ["L"] = "Large",
-            ["H"] = "Huge",
-            ["G"] = "Gargantuan"
-        };
-
     private static readonly IReadOnlyDictionary<string, string> SchoolNames =
         new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
@@ -123,16 +112,14 @@ internal static class RuleBrowserSummaryProjector
             var sizes = value.EnumerateArray()
                 .Select(ReadScalar)
                 .Where(item => !string.IsNullOrWhiteSpace(item))
-                .Select(item => SizeNames.TryGetValue(item!, out var display) ? display : item!)
+                .Select(item => UniversalSizeCategories.Normalize(item!))
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .ToArray();
             return sizes.Length == 0 ? null : string.Join("/", sizes);
         }
 
         var scalar = ReadScalar(value);
-        return scalar is not null && SizeNames.TryGetValue(scalar, out var mapped)
-            ? mapped
-            : scalar;
+        return scalar is null ? null : UniversalSizeCategories.Normalize(scalar);
     }
 
     private static string? ReadSpellLevel(JsonElement document)
