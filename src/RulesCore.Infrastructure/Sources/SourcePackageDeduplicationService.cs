@@ -35,7 +35,15 @@ public sealed class SourcePackageDeduplicationService(RulesCoreDbContext dbConte
             var packages = await ReadCandidatesAsync(connection, cancellationToken);
             var groups = packages
                 .Where(value => value.Representations.Count > 0)
-                .GroupBy(value => BundleFingerprint(value.Representations), StringComparer.Ordinal)
+                .Select(value => new
+                {
+                    Package = value,
+                    OriginIdentity = PackageOriginIdentity(value.Representations)
+                })
+                .Where(value => value.OriginIdentity is not null)
+                .GroupBy(
+                    value => $"{value.OriginIdentity}\n{BundleFingerprint(value.Package.Representations)}",
+                    StringComparer.Ordinal)
                 .ToArray();
 
             var consolidated = 0;
@@ -45,9 +53,11 @@ public sealed class SourcePackageDeduplicationService(RulesCoreDbContext dbConte
             foreach (var group in groups)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                var fingerprint = group.Key;
-                var desiredKey = CurrentUserSourceService.SharedPackageKey(fingerprint);
+                var originIdentity = group.First().OriginIdentity!;
+                var originFingerprint = Fingerprint(originIdentity);
+                var desiredKey = CurrentUserSourceService.SharedPackageKey(originIdentity);
                 var members = group
+                    .Select(value => value.Package)
                     .OrderBy(value => value.CreatedAt)
                     .ThenBy(value => value.Id)
                     .ToArray();
@@ -88,7 +98,7 @@ public sealed class SourcePackageDeduplicationService(RulesCoreDbContext dbConte
                         WHERE source_package_id = @package_id;
                         """;
                     AddParameter(rename, "@package_key", desiredKey);
-                    AddParameter(rename, "@display_name", $"Shared user source {fingerprint[..16]}");
+                    AddParameter(rename, "@display_name", $"Shared user source {originFingerprint[..16]}");
                     AddParameter(rename, "@package_id", keeper.Id);
                     renamed += await rename.ExecuteNonQueryAsync(cancellationToken);
                 }
@@ -102,7 +112,7 @@ public sealed class SourcePackageDeduplicationService(RulesCoreDbContext dbConte
                             license = NULL
                         WHERE source_package_id = @package_id;
                         """;
-                    AddParameter(normalize, "@display_name", $"Shared user source {fingerprint[..16]}");
+                    AddParameter(normalize, "@display_name", $"Shared user source {originFingerprint[..16]}");
                     AddParameter(normalize, "@package_id", keeper.Id);
                     await normalize.ExecuteNonQueryAsync(cancellationToken);
                 }
@@ -146,7 +156,7 @@ public sealed class SourcePackageDeduplicationService(RulesCoreDbContext dbConte
                 package.package_key,
                 package.created_at,
                 representation.format_key,
-                representation.file_name,
+                representation.origin_identity,
                 representation.content_sha256
             FROM source_package package
             LEFT JOIN source_representation representation
@@ -160,7 +170,7 @@ public sealed class SourcePackageDeduplicationService(RulesCoreDbContext dbConte
                     FROM current_user_source registration
                     WHERE registration.source_package_id = package.source_package_id)
             ORDER BY package.created_at, package.source_package_id,
-                     representation.format_key, representation.file_name,
+                     representation.format_key, representation.origin_identity,
                      representation.content_sha256;
             """;
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -386,15 +396,27 @@ public sealed class SourcePackageDeduplicationService(RulesCoreDbContext dbConte
         return Convert.ToBoolean(await command.ExecuteScalarAsync(cancellationToken));
     }
 
+    private static string? PackageOriginIdentity(
+        IReadOnlyCollection<StoredRepresentation> representations)
+    {
+        var origins = representations
+            .Select(value => CurrentUserSourceService.PackageOriginIdentity(value.OriginIdentity))
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+        return origins.Length == 1 ? origins[0] : null;
+    }
+
     private static string BundleFingerprint(IReadOnlyCollection<StoredRepresentation> representations)
     {
         var identities = representations
-            .Select(value => $"{value.FormatKey}\n{value.FileName}\n{value.ContentSha256}")
+            .Select(value => $"{value.FormatKey}\n{value.OriginIdentity}\n{value.ContentSha256}")
             .OrderBy(value => value, StringComparer.Ordinal);
-        return Convert.ToHexString(
-                SHA256.HashData(Encoding.UTF8.GetBytes(string.Join("\n", identities))))
-            .ToLowerInvariant();
+        return Fingerprint(string.Join("\n", identities));
     }
+
+    private static string Fingerprint(string value) =>
+        Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(value)))
+            .ToLowerInvariant();
 
     private static async Task<bool> RelationExistsAsync(
         DbConnection connection,
@@ -425,6 +447,6 @@ public sealed class SourcePackageDeduplicationService(RulesCoreDbContext dbConte
 
     private sealed record StoredRepresentation(
         string FormatKey,
-        string FileName,
+        string OriginIdentity,
         string ContentSha256);
 }
