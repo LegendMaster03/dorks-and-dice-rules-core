@@ -71,6 +71,9 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
         await using var transaction = await dbContext.Database.BeginTransactionAsync(
             IsolationLevel.Serializable,
             cancellationToken);
+        await dbContext.Database.ExecuteSqlInterpolatedAsync(
+            $"SELECT pg_advisory_xact_lock(hashtextextended({packageKey}, 0));",
+            cancellationToken);
         var package = await dbContext.SourcePackages
             .SingleOrDefaultAsync(value => value.Key == packageKey, cancellationToken);
         if (package is null)

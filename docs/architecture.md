@@ -76,7 +76,7 @@ Core invariant:
 
 > Recognition may be shared. Permission must not be shared.
 
-Two users may independently import representations of the same publication and reuse the same canonical publication/entity identities while retaining separate packages, representation/provenance rows, source entities, revisions, and grants. Byte-identical physical artifacts share one content-addressed `SourceContentBlob`; blob reuse does not merge packages, grants, source URLs, filenames, or import history. Runtime substitution may use an accessible representation of the same canonical entity, but it must never expose another user's inaccessible representation.
+Current-user source packages are shared by logical source origin rather than by account. Identical uploads therefore converge by content identity, and users importing the same Web source URL point at the same package, representations, entities, and revisions while retaining independent registrations and grants. Byte-identical artifacts from different logical origins still share one content-addressed `SourceContentBlob` without merging those origins. Runtime access remains grant-scoped; sharing stored source data does not grant another account access to it.
 
 ## Rules Layers
 
@@ -101,7 +101,7 @@ UI visibility is not an authorization boundary. API and runtime resolution paths
 
 Rules Core uses external PostgreSQL. Original artifact bytes are stored once in `source_content_blob`, keyed by SHA-256. `source_representation` retains package-scoped provenance, format, origin, URI/media metadata, byte length, and the content digest that references the shared blob. Other relational tables store package access, source-native identities and revisions, canonical recognition metadata, Rules Layer decisions, and published rulesets.
 
-Content-addressed reuse is deliberately below the authorization boundary: deduplicating bytes never deduplicates grants or exposes another package's representation/provenance. Import responses do not disclose whether another account already caused a blob to exist.
+Deduplication is deliberately below the authorization boundary. A shared current-user package may have grants for several accounts, while each account retains its own registration metadata such as the submitted Web URL and refresh state. Different origins that happen to contain identical bytes share only the content blob. Import responses do not disclose which other accounts, if any, already reference the same package or blob.
 
 ## Bootstrap and maintenance
 

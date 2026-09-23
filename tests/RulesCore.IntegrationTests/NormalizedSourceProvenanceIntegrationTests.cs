@@ -34,7 +34,7 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
                 firstUserId,
                 new AddCurrentUserSourceRequest(
                     CurrentUserSourceKinds.Upload,
-                    FileName: "first-name.pdf")
+                    FileName: "shared-source.pdf")
                 {
                     ContentBase64 = Convert.ToBase64String(bytes)
                 });
@@ -42,42 +42,33 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
                 secondUserId,
                 new AddCurrentUserSourceRequest(
                     CurrentUserSourceKinds.Upload,
-                    FileName: "second-name.pdf")
+                    FileName: "renamed-shared-source.pdf")
                 {
                     ContentBase64 = Convert.ToBase64String(bytes)
                 });
 
-            Assert.NotEqual(first.SourcePackageId, second.SourcePackageId);
+            Assert.Equal(first.SourcePackageId, second.SourcePackageId);
             Assert.True(await grants.HasGrantAsync(firstUserId, first.SourcePackageId));
-            Assert.False(await grants.HasGrantAsync(firstUserId, second.SourcePackageId));
-            Assert.True(await grants.HasGrantAsync(secondUserId, second.SourcePackageId));
-            Assert.False(await grants.HasGrantAsync(secondUserId, first.SourcePackageId));
+            Assert.True(await grants.HasGrantAsync(secondUserId, first.SourcePackageId));
 
-            var firstRepresentation = await db.SourceRepresentations
+            var representation = await db.SourceRepresentations
                 .AsNoTracking()
                 .SingleAsync(value => value.SourcePackageId == first.SourcePackageId);
-            var secondRepresentation = await db.SourceRepresentations
-                .AsNoTracking()
-                .SingleAsync(value => value.SourcePackageId == second.SourcePackageId);
 
-            Assert.NotEqual(firstRepresentation.Id, secondRepresentation.Id);
-            Assert.Equal(firstRepresentation.ContentSha256, secondRepresentation.ContentSha256);
             Assert.Equal(
                 1,
                 await db.SourceContentBlobs.CountAsync(
-                    value => value.Sha256 == firstRepresentation.ContentSha256));
+                    value => value.Sha256 == representation.ContentSha256));
+            Assert.Equal(
+                1,
+                await db.SourceRepresentations.CountAsync(
+                    value => value.SourcePackageId == first.SourcePackageId));
             Assert.Equal(bytes, await ReadRepresentationBytesAsync(db, first.SourcePackageId));
             Assert.Equal(bytes, await ReadRepresentationBytesAsync(db, second.SourcePackageId));
-
-            await db.SourcePackages
-                .Where(value => value.Id == first.SourcePackageId)
-                .ExecuteDeleteAsync();
-
             Assert.Equal(
-                1,
-                await db.SourceContentBlobs.CountAsync(
-                    value => value.Sha256 == secondRepresentation.ContentSha256));
-            Assert.Equal(bytes, await ReadRepresentationBytesAsync(db, second.SourcePackageId));
+                2,
+                await db.UserSourceGrants.CountAsync(
+                    value => value.SourcePackageId == first.SourcePackageId));
         }
     }
 
