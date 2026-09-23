@@ -27,8 +27,8 @@ internal static class CharacterCoreMechanicsResolver
         CharacterAbilityMechanicsResolver.ResolveAbilities(context);
         CharacterAbilityMechanicsResolver.ResolveProficiency(context);
         CharacterWeaponAttackResolver.Resolve(context);
-        CharacterDefenseCombatResolver.ResolveArmorClass(context);
-        CharacterDefenseCombatResolver.ResolveThreeXCombatMechanics(context);
+        CharacterArmorClassResolver.Resolve(context);
+        CharacterThreeXCombatResolver.Resolve(context);
         CharacterInitiativeSaveResolver.ResolveInitiative(context);
         CharacterInitiativeSaveResolver.ResolveAbilitySavingThrows(context);
         CharacterCompetencyResolver.Resolve(context, mechanicCatalog);
