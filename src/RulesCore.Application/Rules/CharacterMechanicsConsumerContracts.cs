@@ -5,7 +5,24 @@ public sealed record CharacterMechanicsCatalogView(
     Guid? CampaignId,
     int? RevisionNumber,
     DateTimeOffset? PublishedAt,
-    IReadOnlyList<CharacterMechanicView> Mechanics);
+    IReadOnlyList<CharacterMechanicView> Mechanics,
+    IReadOnlyList<CharacterUniversalCompetencyView>? Competencies = null);
+
+public sealed record CharacterUniversalCompetencyView(
+    string SemanticKey,
+    string IdentityKey,
+    string DisplayName,
+    string? FamilyName,
+    bool IsFamily,
+    string? TrainingStateKey,
+    IReadOnlyList<string> ChildCompetencyKeys,
+    IReadOnlyList<string> MechanicKeys,
+    IReadOnlyList<string> CompatibilityMechanicKeys,
+    IReadOnlyList<string> SourceAliases,
+    IReadOnlyList<CharacterCompetencyProfileView> Profiles,
+    IReadOnlyList<CharacterCompetencyFacetView> Facets,
+    IReadOnlyList<CharacterCompetencyRelationshipView> RelatedCompetencies,
+    IReadOnlyList<CharacterMechanicSourceAttributionView> SourceAttributions);
 
 public sealed record CharacterMechanicView(
     string MechanicKey,

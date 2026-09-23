@@ -977,19 +977,7 @@ internal sealed class CharacterProjectionContext
     }
 
     public static string NormalizeSizeCategory(string value) =>
-        value.Trim().ToUpperInvariant() switch
-        {
-            "F" or "FINE" => "Fine",
-            "D" or "DIMINUTIVE" => "Diminutive",
-            "T" or "TINY" => "Tiny",
-            "S" or "SMALL" => "Small",
-            "M" or "MEDIUM" => "Medium",
-            "L" or "LARGE" => "Large",
-            "H" or "HUGE" => "Huge",
-            "G" or "GARGANTUAN" => "Gargantuan",
-            "C" or "COLOSSAL" => "Colossal",
-            _ => value.Trim()
-        };
+        UniversalSizeCategories.Normalize(value);
 
     public void AddThreeXSaveContribution(
         string saveKey,

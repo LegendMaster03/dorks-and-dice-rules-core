@@ -1876,20 +1876,14 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         string? sizeCategory,
         out int modifier)
     {
-        modifier = sizeCategory?.Trim().ToUpperInvariant() switch
+        if (!UniversalSizeCategories.TryResolve(sizeCategory, out var size))
         {
-            "F" or "FINE" => 8,
-            "D" or "DIMINUTIVE" => 4,
-            "T" or "TINY" => 2,
-            "S" or "SMALL" => 1,
-            "M" or "MEDIUM" => 0,
-            "L" or "LARGE" => -1,
-            "H" or "HUGE" => -2,
-            "G" or "GARGANTUAN" => -4,
-            "C" or "COLOSSAL" => -8,
-            _ => int.MinValue
-        };
-        return modifier != int.MinValue;
+            modifier = default;
+            return false;
+        }
+
+        modifier = size.ThreeXArmorClassModifier;
+        return true;
     }
 
     private static void ResolveThreeXGrapple(CharacterProjectionContext context)
@@ -1958,20 +1952,14 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
     private static bool TryThreeXSizeModifier(string? sizeCategory, out int modifier)
     {
-        modifier = sizeCategory?.Trim().ToUpperInvariant() switch
+        if (!UniversalSizeCategories.TryResolve(sizeCategory, out var size))
         {
-            "F" or "FINE" => -16,
-            "D" or "DIMINUTIVE" => -12,
-            "T" or "TINY" => -8,
-            "S" or "SMALL" => -4,
-            "M" or "MEDIUM" => 0,
-            "L" or "LARGE" => 4,
-            "H" or "HUGE" => 8,
-            "G" or "GARGANTUAN" => 12,
-            "C" or "COLOSSAL" => 16,
-            _ => int.MinValue
-        };
-        return modifier != int.MinValue;
+            modifier = default;
+            return false;
+        }
+
+        modifier = size.ThreeXGrappleModifier;
+        return true;
     }
 
     private static void ResolveInitiative(CharacterProjectionContext context)

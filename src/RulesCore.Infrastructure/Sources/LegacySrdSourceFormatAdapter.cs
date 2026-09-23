@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using RulesCore.Application.Sources;
+using RulesCore.Domain.Rules;
 
 namespace RulesCore.Infrastructure.Sources;
 
@@ -170,17 +171,6 @@ internal static class LegacySrdMechanicalTranslator
     private static readonly Regex SkillHeadingAbility = new(
         @"\((?<ability>Str(?:ength)?|Dex(?:terity)?|Con(?:stitution)?|Int(?:elligence)?|Wis(?:dom)?|Cha(?:risma)?|None)(?:\s*;[^)]*)?\)\s*$",
         RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
-
-    private static readonly IReadOnlyDictionary<string, string> SizeCodes =
-        new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
-        {
-            ["Tiny"] = "T",
-            ["Small"] = "S",
-            ["Medium"] = "M",
-            ["Large"] = "L",
-            ["Huge"] = "H",
-            ["Gargantuan"] = "G"
-        };
 
     // Only creature types with a faithful common 5e-derived type field are mapped here.
     // 3.x-only types such as Animal, Outsider, Monstrous Humanoid, and Vermin remain in
@@ -465,7 +455,10 @@ internal static class LegacySrdMechanicalTranslator
     {
         var normalized = value.Trim();
         threeX["size"] = normalized;
-        if (SizeCodes.TryGetValue(normalized, out var code)) content["size"] = new JsonArray(code);
+        if (UniversalSizeCategories.TryResolve(normalized, out var semanticSize))
+        {
+            content["size"] = new JsonArray(semanticSize.SourceCode);
+        }
     }
 
     private static void MapType(JsonObject content, JsonObject threeX, string value)

@@ -339,18 +339,24 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         }
 
         mechanics = AttachStaticRelationships(mechanics);
+        mechanics = UniversalCompetencyProjection.ApplySemanticIdentity(mechanics);
         mechanics = AttachCompetencyIdentityFacets(mechanics);
+
+        var orderedMechanics = mechanics
+            .OrderBy(value => value.Kind, StringComparer.Ordinal)
+            .ThenBy(value => value.DisplayName, StringComparer.Ordinal)
+            .ThenBy(value => value.MechanicKey, StringComparer.Ordinal)
+            .ToArray();
+        var universalCompetencies =
+            UniversalCompetencyProjection.BuildCatalog(orderedMechanics);
 
         return new CharacterMechanicsCatalogView(
             rules.Scope,
             rules.CampaignId,
             rules.RevisionNumber,
             rules.PublishedAt,
-            mechanics
-                .OrderBy(value => value.Kind, StringComparer.Ordinal)
-                .ThenBy(value => value.DisplayName, StringComparer.Ordinal)
-                .ThenBy(value => value.MechanicKey, StringComparer.Ordinal)
-                .ToArray());
+            orderedMechanics,
+            universalCompetencies);
     }
 
     private static CharacterMechanicsBatchEvaluationView EvaluateBatchFromCatalog(
