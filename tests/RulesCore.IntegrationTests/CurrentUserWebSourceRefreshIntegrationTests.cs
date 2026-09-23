@@ -52,15 +52,16 @@ public sealed class CurrentUserWebSourceRefreshIntegrationTests
             httpClient);
         var url = $"https://8.8.8.8/origin-refresh-{token}.json";
 
-        CurrentUserSourceView first;
+        Guid? packageId = null;
         try
         {
-            first = await sources.AddAsync(
+            var first = await sources.AddAsync(
                 userId,
                 new AddCurrentUserSourceRequest(
                     CurrentUserSourceKinds.Web,
                     Url: url));
 
+            packageId = first.SourcePackageId;
             handler.Content = secondContent;
             var refreshed = await sources.RefreshAsync(userId, first.Id);
 
@@ -85,13 +86,11 @@ public sealed class CurrentUserWebSourceRefreshIntegrationTests
         }
         finally
         {
-            var package = await db.SourcePackages
-                .SingleOrDefaultAsync(value =>
-                    value.Key == CurrentUserSourceService.SharedPackageKey($"web:{url}"));
-            if (package is not null)
+            if (packageId.HasValue)
             {
-                db.SourcePackages.Remove(package);
-                await db.SaveChangesAsync();
+                await db.SourcePackages
+                    .Where(value => value.Id == packageId.Value)
+                    .ExecuteDeleteAsync();
             }
         }
     }
