@@ -151,3 +151,37 @@ The complete seeding workbench is not a runtime dependency and is not required i
 There are no production user source uploads requiring preservation at this stage. The source-related schema may therefore be reset/rebuilt during this redesign. Bundled SRDs and development imports are reproducible.
 
 The migration must not casually destroy unrelated account, campaign, or site data. Source tables and Rules Layer rows that directly reference source entity/revision IDs may require coordinated reset/rebootstrap; that implication must be explicit before deployment.
+
+
+## Retroactive normalization
+
+Rules Core versions the derived normalization persisted on each `SourceEntityRevision`.
+`RawJson`, the native fingerprint, the source revision number, and the physical
+`SourceRepresentation` bytes remain immutable.
+
+When the current normalization version is newer than the version stored on a revision,
+Rules Core can replay the current adapter/translator over the preserved source evidence.
+A successful replay may update `ContentJson` and the revision's canonical semantic
+association, but it does not create a native source revision.
+
+New imports are stamped with `SourceNormalizationVersion.Current`. Existing rows created
+before this mechanism begin at version `0` and are backfilled automatically by the
+idle source-maintenance worker. User import jobs retain priority over background
+normalization work.
+
+Failures are recorded per revision for the current normalization version rather than
+retried continuously. Rules Lawyer maintenance can inspect status and explicitly retry
+failed revisions through:
+
+- `GET /api/global/rules/source-normalization`
+- `POST /api/global/rules/source-normalization/reconcile`
+
+Both endpoints accept an optional `packageKey`; the reconcile endpoint also accepts
+`limit` and `retryFailed`.
+
+A translation-only backfill is possible only when the current interpretation can be
+derived from the preserved native record or its stored representation. If a future
+adapter change alters native record boundaries or native identity itself, Rules Core
+reports that revision as requiring a local source reparse. The original representation
+bytes are still retained, so this does not inherently require reacquiring the source
+from the network.

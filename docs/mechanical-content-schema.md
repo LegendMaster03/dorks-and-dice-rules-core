@@ -12,6 +12,13 @@ The intended flow is:
 
 `SourceEntityRevision.RawJson` remains the immutable source-native record. `SourceEntityRevision.ContentJson` is the translated mechanical body. Native revision fingerprints are calculated from `RawJson`, never from translation output.
 
+`ContentJson` is explicitly versioned derived state. Translator improvements can be
+replayed over existing revisions without changing `RawJson`, the native fingerprint,
+or the native revision number. `normalization_version` records the last successfully
+applied interpretation version; failed attempts are retained separately so background
+maintenance does not loop indefinitely. Increment `SourceNormalizationVersion.Current`
+whenever a translation/normalization change must be applied retroactively.
+
 ## Upstream 5e.tools review
 
 The reference review was performed against the upstream 5e.tools corpus in `5etools-mirror-3/5etools-src` and the schema-template/schema tooling in `TheGiddyLimit/5etools-utils`. Representative structures were checked for:
