@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -335,6 +336,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 "Move Silently\tKEYSTAT:DEX\tUSEUNTRAINED:YES\tACHECK:YES",
                 "Stealth\tKEYSTAT:DEX\tUSEUNTRAINED:YES\tACHECK:YES",
                 "Knowledge (the planes)\tKEYSTAT:INT\tUSEUNTRAINED:NO\tACHECK:NO",
+                "Craft\tKEYSTAT:INT\tUSEUNTRAINED:YES\tACHECK:NO",
                 "Craft (blacksmithing)\tKEYSTAT:INT\tUSEUNTRAINED:YES\tACHECK:NO",
                 "Craft (alchemy)\tKEYSTAT:INT\tUSEUNTRAINED:YES\tACHECK:NO"
             ]);
@@ -355,12 +357,34 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     representation));
             packageId = imported.PackageId;
 
+            // Simulate source revisions translated before family taxonomy metadata existed.
+            // The consumer must recover current family semantics from preserved source identity
+            // without requiring a destructive re-import of immutable source revisions.
+            var legacyFamilyEntityIds = imported.Entities
+                .Where(value => value.Name is "Craft" or "Craft (blacksmithing)" or "Craft (alchemy)")
+                .Select(value => value.EntityId)
+                .ToArray();
+            var legacyFamilyRevisions = await db.SourceEntityRevisions
+                .Where(value => legacyFamilyEntityIds.Contains(value.SourceEntityId))
+                .ToArrayAsync();
+            foreach (var revision in legacyFamilyRevisions)
+            {
+                var root = JsonNode.Parse(revision.ContentJson!)!.AsObject();
+                var competency = root["_rulesCore"]!["competency"]!.AsObject();
+                competency.Remove("familyName");
+                competency.Remove("specialty");
+                competency.Remove("isFamily");
+                revision.ContentJson = root.ToJsonString();
+            }
+            await db.SaveChangesAsync();
+
             foreach (var (name, conceptKey) in new[]
                      {
                          ("Hide", "skill.hide"),
                          ("Move Silently", "skill.move-silently"),
                          ("Stealth", "skill.stealth"),
                          ("The planes", "skill.the-planes"),
+                         ("Craft", "skill.craft"),
                          ("Craft (blacksmithing)", "skill.craft-blacksmithing"),
                          ("Craft (alchemy)", "skill.craft-alchemy")
                      })
@@ -540,6 +564,15 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal("intelligence", specialized.Competency.GoverningAbilityKey);
             Assert.True(specialized.Competency.TrainedOnly);
             Assert.False(specialized.Competency.ArmorCheckPenaltyApplies);
+
+            var craftFamily = Assert.Single(
+                catalog.Mechanics,
+                value => value.MechanicKey == "competency.skill.craft");
+            Assert.NotNull(craftFamily.Competency);
+            Assert.Equal(CharacterCompetencyKinds.Skill, craftFamily.Competency!.CompetencyKind);
+            Assert.Equal("Craft", craftFamily.Competency.FamilyName);
+            Assert.Null(craftFamily.Competency.Specialty);
+            Assert.True(craftFamily.Competency.IsFamily);
 
             var craft = Assert.Single(
                 catalog.Mechanics,

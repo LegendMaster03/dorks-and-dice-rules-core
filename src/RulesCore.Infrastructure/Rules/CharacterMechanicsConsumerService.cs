@@ -1213,6 +1213,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         var selectedProfile = BuildCompetencyProfile(
             rule.SourceEntityRevisionId,
             rule.EntityType,
+            rule.SourceEntityName,
             selectedMechanicalJson,
             selectedGameEdition);
 
@@ -1357,6 +1358,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
     private static CharacterCompetencyProfileView? BuildCompetencyProfile(
         Guid sourceEntityRevisionId,
         string entityType,
+        string? sourceEntityName,
         string? mechanicalJson,
         string? gameEdition,
         IReadOnlyList<CharacterMechanicSourceAttributionView>? sourceAttributions = null)
@@ -1367,7 +1369,11 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
             sourceAttributions);
         if (normalized is not null)
         {
-            return normalized;
+            return ApplyCurrentThreeXFamilyTaxonomy(
+                normalized,
+                sourceEntityName,
+                entityType,
+                gameEdition);
         }
 
         if (!IsLaterEdition(gameEdition))
@@ -1415,6 +1421,49 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 ? null
                 : $"competency.{facetIdentity.IdentityKey}.training",
             RelatedCompetencies: []);
+    }
+
+    private static CharacterCompetencyProfileView ApplyCurrentThreeXFamilyTaxonomy(
+        CharacterCompetencyProfileView profile,
+        string? sourceEntityName,
+        string entityType,
+        string? gameEdition)
+    {
+        if (string.IsNullOrWhiteSpace(sourceEntityName)
+            || !(string.Equals(gameEdition, "3e", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(gameEdition, "3.5e", StringComparison.OrdinalIgnoreCase)))
+        {
+            return profile;
+        }
+
+        var current = RulesCoreContentTranslation.BuildThreeXCompetencyMetadata(
+            sourceEntityName,
+            entityType,
+            gameEdition!);
+        var familyName = current["familyName"]?.GetValue<string>();
+        var specialty = current["specialty"]?.GetValue<string>();
+        var isFamily = current["isFamily"]?.GetValue<bool>() ?? false;
+        if (string.IsNullOrWhiteSpace(familyName)
+            && string.IsNullOrWhiteSpace(specialty)
+            && !isFamily)
+        {
+            return profile;
+        }
+
+        var currentKind = current["kind"]?.GetValue<string>();
+        return profile with
+        {
+            CompetencyKind = string.IsNullOrWhiteSpace(currentKind)
+                ? profile.CompetencyKind
+                : currentKind,
+            FamilyName = string.IsNullOrWhiteSpace(profile.FamilyName)
+                ? familyName
+                : profile.FamilyName,
+            Specialty = string.IsNullOrWhiteSpace(profile.Specialty)
+                ? specialty
+                : profile.Specialty,
+            IsFamily = profile.IsFamily || isFamily
+        };
     }
 
     private static CharacterCompetencyProfileView? ParseNormalizedCompetencyMetadata(
