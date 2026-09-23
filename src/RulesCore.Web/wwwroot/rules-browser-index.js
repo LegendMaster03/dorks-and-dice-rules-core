@@ -1,6 +1,5 @@
 import { element } from "./ui.js";
 
-]);
 export const RULE_FAMILY_TABS = [
     ["", "All Content"],
     ["monster", "Bestiary"],
@@ -18,26 +17,6 @@ export const RULE_FAMILY_TABS = [
     ["skill", "Skills"],
     ["houseRule", "House Rules"],
     ["rule", "Other Rules"]
-];
-
-const ENTITY_TYPES = [
-    ["", "All"],
-    ["monster", "Monsters"],
-    ["spell", "Spells"],
-
-    ["class", "Classes"],
-    ["subclass", "Subclasses"],
-    ["prestigeClass", "Prestige classes"],
-    ["feat", "Feats"],
-    ["background", "Backgrounds"],
-    ["optionalfeature", "Options & features"],
-    ["race", "Races"],
-    ["species", "Species"],
-    ["item", "Items"],
-    ["condition", "Conditions"],
-    ["skill", "Skills"],
-    ["houseRule", "House rules"],
-    ["rule", "Other rules"]
 ];
 
 const BROWSER_COLUMNS = new Map([
@@ -113,7 +92,6 @@ const BROWSER_COLUMNS = new Map([
         { key: "source", label: "Base", width: "minmax(3.5rem, .55fr)" }
     ]]
 ]);
-
 
 export function libraryTitle(entityType) {
     const normalized = entityType ?? "";
@@ -251,10 +229,10 @@ export function renderContinuousIndexFooter(
     container.append(button);
 }
 
-
 function humanizeEntityType(entityType) {
-    return String(entityType ?? "")
+    const value = String(entityType ?? "");
+    if (!value) return "Rule";
+    return value
         .replace(/([a-z])([A-Z])/g, "$1 $2")
-        .replace(/[-_]/g, " ")
-        .replace(/\b\w/g, value => value.toUpperCase());
+        .replace(/^./, match => match.toUpperCase());
 }
