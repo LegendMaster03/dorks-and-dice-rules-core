@@ -133,6 +133,8 @@ These axes remain independent:
 - global source disposition determines whether an otherwise accessible package participates in global Rules Lawyer normalization/automatic adjudication;
 - Dorks & Dice roles determine who may use administrative or Rules Lawyer controls.
 
+A future active-source selection layer is deliberately separate from all of these. Selection answers whether an accessible canonical publication participates in the current personal/campaign content context; it does not grant access, change global disposition, or rewrite a published Rules Layer decision. The planned category/default/override model is documented in `source-selection-architecture.md`.
+
 Ignoring a package for global rules does not delete its representations, entities, revisions, grants, or canonical identities. Revoking a grant does not rewrite acquisition history. Canonical recognition does not broaden either authorization boundary.
 
 ## Development database policy

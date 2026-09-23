@@ -32,6 +32,20 @@ View-level enhancement remains responsible for presentation that depends on the 
 
 Shared layout primitives live in `ui.js`. Page leads, panels, toolbars, and fields should use those primitives when a feature needs custom markup instead of re-creating Bootstrap card spacing independently. The compact Rules Library remains a specialized list/detail workspace, but its density and spacing define the default direction for the rest of the Rules Core workspace.
 
+## Frontend module ownership
+
+The frontend follows the same coordinator-plus-focused-modules rule as the backend.
+
+- `rules-browser.js` owns Rules Library state, loading, selection, and view coordination.
+- `rules-browser-index.js` owns family tabs, browser columns, dense index rows, and continuous-list controls.
+- `rules-browser-detail.js` owns effective/source-version detail, comparison, ruling status, and provenance presentation.
+- `rules-browser-routing.js` owns Rules Library URL/scope parsing and history updates.
+- `rule-renderers.js` is the stable renderer registry facade.
+- `rule-renderers-specialized.js` owns entity-specific renderers.
+- `rule-renderer-support.js` owns shared structured-content rendering and formatting utilities.
+
+Feature modules may remain larger when they own one coherent workflow. New cross-view presentation behavior belongs in shared primitives or the UX shell rather than being copied into each feature.
+
 ## Idempotence
 
 Presentation functions must be safe to repeat against unchanged rendered state:
