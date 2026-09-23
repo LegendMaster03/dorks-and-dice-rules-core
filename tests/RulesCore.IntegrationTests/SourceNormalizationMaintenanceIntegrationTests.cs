@@ -95,7 +95,11 @@ public sealed class SourceNormalizationMaintenanceIntegrationTests
                     .SingleAsync(value => value.Id == revisionId);
                 Assert.Equal(revisionNumber, current.RevisionNumber);
                 Assert.Equal(nativeFingerprint, current.Fingerprint);
-                Assert.Equal(nativeRawJson, current.RawJson);
+                Assert.True(
+                    JsonNode.DeepEquals(
+                        JsonNode.Parse(nativeRawJson),
+                        JsonNode.Parse(current.RawJson)),
+                    "Backfill changed the immutable native RawJson document.");
                 Assert.Equal(SourceNormalizationVersion.Current, current.NormalizationVersion);
                 Assert.Equal(
                     SourceNormalizationVersion.Current,
