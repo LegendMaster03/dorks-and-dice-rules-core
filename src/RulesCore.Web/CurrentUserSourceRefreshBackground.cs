@@ -14,7 +14,6 @@ internal sealed class CurrentUserSourceRefreshBackground(
     {
         try
         {
-            await ConsolidateDuplicateSourcePackagesAsync(stoppingToken);
             await RequeueInterruptedImportJobsAsync(stoppingToken);
             await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
             var nextRefreshSweep = DateTimeOffset.UtcNow.AddMinutes(10);
@@ -40,25 +39,6 @@ internal sealed class CurrentUserSourceRefreshBackground(
         catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
         {
             // Normal application shutdown.
-        }
-    }
-
-    private async Task ConsolidateDuplicateSourcePackagesAsync(CancellationToken stoppingToken)
-    {
-        await using var scope = scopeFactory.CreateAsyncScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
-        var result = await new SourcePackageDeduplicationService(dbContext)
-            .ConsolidateAsync(stoppingToken);
-        if (result.ConsolidatedPackageCount > 0
-            || result.RenamedSharedPackageCount > 0
-            || result.RetainedReferencedDuplicateCount > 0)
-        {
-            logger.LogInformation(
-                "Rules Core source deduplication scanned {CandidateCount} private package(s), consolidated {ConsolidatedCount}, normalized {RenamedCount} shared package key(s), and retained {RetainedCount} referenced duplicate(s).",
-                result.CandidatePackageCount,
-                result.ConsolidatedPackageCount,
-                result.RenamedSharedPackageCount,
-                result.RetainedReferencedDuplicateCount);
         }
     }
 
