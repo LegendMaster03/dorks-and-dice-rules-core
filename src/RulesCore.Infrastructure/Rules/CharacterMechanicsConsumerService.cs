@@ -1755,6 +1755,4 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         string? GameEdition,
         string? ReleaseKind,
         DateOnly? PublicationDate);
-
-    }
 }
