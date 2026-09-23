@@ -2,8 +2,10 @@ import {
     alertNode,
     badge,
     clear,
+    actionBar,
     describeError,
     element,
+    sectionHeading as compactSectionHeading,
     setButtonBusy
 } from "./ui.js";
 
@@ -38,12 +40,13 @@ export function installSourceAdministration(app) {
 
 async function renderSourceAdministration(app, container) {
     clear(container);
-    container.append(element("div", { className: "card card-body mb-3" },
-        element("h3", { className: "h5 mb-1", text: "Source administration" }),
-        element("p", { className: "text-body-secondary mb-0", text: "Preview, validate, and import immutable 5e.tools-shaped source documents. Source identity and D&D edition are recorded separately; import is a Dev control-plane operation. Before an uploaded copy is accepted, Rules Core checks whether its selected source-code partition is already covered by a Rules Lawyer-managed canonical hosted source." })));
-
     const formCard = element("div", { className: "card card-body" });
     const form = element("form");
+    form.append(compactSectionHeading({
+        title: "Manual source import",
+        description: "This is a Dev control-plane operation. Preview the exact immutable source payload before importing; normal account source acquisition belongs in Add Source.",
+        level: 4
+    }));
     const packageControls = packageFields();
     const releaseControls = releaseFields();
     const json = element("textarea", {
@@ -54,13 +57,13 @@ async function renderSourceAdministration(app, container) {
     });
 
     form.append(
-        sectionHeading("Package"),
+        compactSectionHeading({ title: "Package", level: 4 }),
         packageControls.row,
-        sectionHeading("Work, release, and game edition"),
+        compactSectionHeading({ title: "Work, release, and game edition", level: 4 }),
         releaseControls.row,
         element("div", { className: "alert alert-secondary py-2 small" },
             "Use the current canonical game-edition labels (for example 5e and 5.5e). Legacy 2014/2024 labels remain accepted by the backend for older imported datasets and are normalized to 5e/5.5e. The release key identifies this source release; it is not the D&D edition. If one physical JSON file aggregates multiple 5e.tools source codes, use the optional source-code filter to import each logical work/release separately from the same document."),
-        sectionHeading("Source document"),
+        compactSectionHeading({ title: "Source document", level: 4 }),
         element("div", { className: "mb-3" },
             element("label", { className: "form-label fw-semibold", text: "5e.tools-shaped JSON" }),
             json,
@@ -69,7 +72,7 @@ async function renderSourceAdministration(app, container) {
     const previewButton = element("button", { type: "button", className: "btn btn-outline-primary me-2", text: "Preview import" });
     const importButton = element("button", { type: "submit", className: "btn btn-primary", text: "Import source document", disabled: true });
     const result = element("div", { className: "mt-3" });
-    form.append(previewButton, importButton, result);
+    form.append(actionBar(previewButton, importButton), result);
     formCard.append(form);
     container.append(formCard);
 
@@ -244,8 +247,6 @@ function parseSourceCodes(value) {
     const values = value.split(",").map(code => code.trim()).filter(Boolean);
     return values.length ? [...new Set(values)] : null;
 }
-
-function sectionHeading(text) { return element("h4", { className: "h6 text-body-secondary text-uppercase mt-1 mb-2", text }); }
 
 function renderHostedMatchCard(app, hosted, blocked, overrideAction = null) {
     const card = element("div", { className: "card card-body border-warning mb-3" },

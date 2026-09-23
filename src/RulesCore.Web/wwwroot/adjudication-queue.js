@@ -6,7 +6,10 @@ import {
     definitionList,
     describeError,
     element,
+    field,
+    filterBar,
     formatDate,
+    sectionHeading,
     setButtonBusy
 } from "./ui.js";
 
@@ -45,37 +48,25 @@ function createQueueCard(app, container) {
         className: "card card-body mb-3",
         attributes: { "aria-labelledby": "rules-core-adjudication-queue-heading" }
     });
-    const heading = element("div", {
-        className: "d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3"
-    });
-    const title = element("div", {},
-        element("h3", {
-            id: "rules-core-adjudication-queue-heading",
-            className: "h5 mb-1",
-            text: "Adjudication Queue"
-        }),
-        element("p", {
-            className: "text-body-secondary mb-0",
-            text: "Opening or refreshing the queue does not run discovery or create new work. The server may reconcile existing work against current decisions and publication state. Run deterministic discovery explicitly when you want Rules Core to discover new work and apply eligible deterministic decisions."
-        }));
-    const actions = element("div", { className: "d-flex flex-wrap gap-2" });
     const discover = element("button", {
         type: "button",
-        className: "btn btn-outline-primary",
+        className: "btn btn-sm btn-outline-primary",
         text: "Run deterministic discovery",
         ariaLabel: "Run deterministic adjudication discovery"
     });
     const refresh = element("button", {
         type: "button",
-        className: "btn btn-outline-secondary",
-        text: "Refresh queue",
+        className: "btn btn-sm btn-outline-secondary",
+        text: "Refresh",
         ariaLabel: "Refresh adjudication queue without running discovery"
     });
-    actions.append(discover, refresh);
-    heading.append(title, actions);
-    card.append(heading);
+    card.append(sectionHeading({
+        id: "rules-core-adjudication-queue-heading",
+        title: "Adjudication Queue",
+        description: "Opening or refreshing the queue does not run discovery or create new work. The server may reconcile existing work against current decisions and publication state. Run deterministic discovery explicitly when you want Rules Core to discover new work and apply eligible deterministic decisions.",
+        actions: [discover, refresh]
+    }));
 
-    const filters = element("div", { className: "row g-2 mb-3" });
     const kind = selectField("Work kind", "Adjudication work kind", [
         ["", "All work kinds"],
         ...Object.entries(KIND_LABELS).map(([value, label]) => [value, label])
@@ -84,10 +75,7 @@ function createQueueCard(app, container) {
         ["", "All outstanding states"],
         ...Object.entries(STATE_LABELS).map(([value, label]) => [value, label])
     ]);
-    kind.group.classList.add("col-md-6");
-    state.group.classList.add("col-md-6");
-    filters.append(kind.group, state.group);
-    card.append(filters);
+    card.append(filterBar(kind.group, state.group));
 
     const status = element("div", { className: "small text-body-secondary mb-2" });
     const discoveryFeedback = element("div", { className: "mb-2" });
@@ -577,8 +565,12 @@ function stateBadge(state) {
 }
 
 function selectField(label, ariaLabel, options) {
-    const select = element("select", { className: "form-select", ariaLabel });
-    for (const [value, text] of options) select.append(element("option", { value, text }));
-    const group = element("div", {}, element("label", { className: "form-label fw-semibold", text: label }), select);
-    return { group, select };
+    const select = element("select", {
+        className: "form-select form-select-sm",
+        ariaLabel
+    });
+    for (const [value, text] of options) {
+        select.append(element("option", { value, text }));
+    }
+    return { group: field(label, select), select };
 }

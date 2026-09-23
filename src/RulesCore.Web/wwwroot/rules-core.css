@@ -137,13 +137,156 @@
 }
 
 .rules-core-panel.card-body,
+.rules-core-panel > .card-body,
 .rules-core-main .card-body {
-    padding: 1rem 1.1rem;
+    padding: .82rem .9rem;
 }
 
 .rules-core-main .card {
     border-color: var(--rules-core-border);
     border-radius: .85rem;
+}
+
+.rules-core-page-lead:not(.card) {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .15rem .1rem .55rem;
+}
+
+.rules-core-page-lead-copy {
+    min-width: 0;
+}
+
+.rules-core-page-title {
+    margin: 0;
+    font-size: clamp(1.18rem, 1.5vw, 1.5rem);
+    font-weight: 750;
+    line-height: 1.15;
+    letter-spacing: -.018em;
+}
+
+.rules-core-page-description {
+    max-width: 64rem;
+    margin: .2rem 0 0;
+    color: var(--bs-secondary-color);
+    font-size: .82rem;
+    line-height: 1.42;
+}
+
+.rules-core-page-actions {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    gap: .4rem;
+    align-items: center;
+}
+
+.rules-core-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    align-items: end;
+    padding: .48rem .55rem;
+    border: 1px solid var(--rules-core-border);
+    border-radius: .58rem;
+    background: var(--rules-core-surface-subtle);
+}
+
+.rules-core-section-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: .75rem;
+    margin-bottom: .65rem;
+}
+
+.rules-core-section-heading-copy {
+    min-width: 0;
+}
+
+.rules-core-section-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 750;
+    line-height: 1.25;
+}
+
+.rules-core-section-description {
+    max-width: 64rem;
+    margin: .16rem 0 0;
+    color: var(--bs-secondary-color);
+    font-size: .76rem;
+    line-height: 1.38;
+}
+
+.rules-core-section-actions,
+.rules-core-action-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    align-items: center;
+}
+
+.rules-core-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    align-items: end;
+    padding: .45rem .5rem;
+    margin-bottom: .65rem;
+    border-block: 1px solid var(--rules-core-border);
+    background: color-mix(in srgb, var(--rules-core-surface-subtle) 74%, transparent);
+}
+
+.rules-core-filter-bar > .rules-core-field {
+    flex: 1 1 12rem;
+}
+
+.rules-core-list-detail-workspace {
+    display: grid;
+    grid-template-columns: minmax(15rem, 22rem) minmax(0, 1fr);
+    gap: .55rem;
+    min-width: 0;
+}
+
+.rules-core-list-detail-list,
+.rules-core-list-detail-detail {
+    min-width: 0;
+    border: 1px solid var(--rules-core-border);
+    border-radius: .58rem;
+    background: var(--rules-core-surface);
+}
+
+.rules-core-list-detail-list {
+    overflow: auto;
+}
+
+.rules-core-list-detail-detail {
+    padding: .65rem .75rem;
+}
+
+.rules-core-field {
+    display: grid;
+    gap: .2rem;
+    min-width: 0;
+    margin: 0;
+}
+
+.rules-core-field-label,
+.rules-core-field-help {
+    color: var(--bs-secondary-color);
+    font-size: .68rem;
+}
+
+.rules-core-field-label {
+    font-weight: 700;
+}
+
+.rules-core-field-help {
+    font-weight: 400;
+    line-height: 1.3;
 }
 
 .rules-core-page-lead.card {
@@ -179,7 +322,7 @@
 .rules-core-main > .card + section,
 .rules-core-main > section + .card,
 .rules-core-main > section + section {
-    margin-top: 1rem;
+    margin-top: .65rem;
 }
 
 .rules-core-sources-hero {
@@ -1290,5 +1433,31 @@ button.rules-core-workflow-step {
     .rules-core-library-revision {
         white-space: normal;
         text-align: left;
+    }
+}
+
+@media (max-width: 700px) {
+    .rules-core-page-lead:not(.card),
+    .rules-core-section-heading {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .rules-core-page-actions,
+    .rules-core-section-actions {
+        width: 100%;
+    }
+
+    .rules-core-filter-bar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .rules-core-filter-bar > .rules-core-field {
+        width: 100%;
+    }
+
+    .rules-core-list-detail-workspace {
+        grid-template-columns: 1fr;
     }
 }

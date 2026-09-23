@@ -5,7 +5,11 @@ public sealed class RuleBrowserAssetTests
     [Fact]
     public void BrowserConsumesToolRelativeRoutingContract()
     {
-        var content = ReadWebAsset("rules-browser.js");
+        var content = ReadWebAssets(
+            "rules-browser.js",
+            "rules-browser-index.js",
+            "rules-browser-detail.js",
+            "rules-browser-routing.js");
 
         Assert.Contains("toolRoute", content, StringComparison.Ordinal);
         Assert.Contains("toolBasePath", content, StringComparison.Ordinal);
@@ -90,7 +94,10 @@ public sealed class RuleBrowserAssetTests
     [Fact]
     public void MonsterRendererIsRegisteredAsSpecializedRuleRenderer()
     {
-        var content = ReadWebAsset("rule-renderers.js");
+        var content = ReadWebAssets(
+            "rule-renderers.js",
+            "rule-renderer-support.js",
+            "rule-renderers-specialized.js");
 
         Assert.Contains("[\"monster\", renderMonster]", content, StringComparison.Ordinal);
         Assert.Contains("Legendary Actions", content, StringComparison.Ordinal);
@@ -98,6 +105,11 @@ public sealed class RuleBrowserAssetTests
         Assert.Contains("abilityDatum(\"Save\"", content, StringComparison.Ordinal);
         Assert.Contains("hasAbilitySaveModel", content, StringComparison.Ordinal);
     }
+
+    private static string ReadWebAssets(params string[] filenames) =>
+        string.Join(
+            Environment.NewLine,
+            filenames.Select(ReadWebAsset));
 
     private static string ReadWebAsset(string filename)
     {

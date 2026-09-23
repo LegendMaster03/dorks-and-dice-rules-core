@@ -1,9 +1,13 @@
 import {
+    actionBar,
     alertNode,
     describeError,
     element,
+    field,
     formatDate,
-    setButtonBusy
+    sectionHeading,
+    setButtonBusy,
+    toolbar
 } from "./ui.js";
 
 const DORKS_MODE = "dorks-and-dice";
@@ -32,12 +36,11 @@ async function buildAddSourceCard(app) {
     const card = element("section", {
         className: "card card-body mb-3 rules-core-panel rules-core-add-source"
     });
-    card.append(element("div", { className: "mb-3" },
-        element("h4", { className: "h5 mb-1", text: "Add Source" }),
-        element("p", {
-            className: "small text-body-secondary mb-0",
-            text: "Add a compatible file or Web source. Rules Core detects the format and records publication provenance for you."
-        })));
+    card.append(sectionHeading({
+        title: "Add Source",
+        description: "Add a compatible file or Web source. Rules Core detects the format and records publication provenance for you.",
+        level: 4
+    }));
 
     let currentKind = "web";
     const webMode = element("button", {
@@ -50,36 +53,30 @@ async function buildAddSourceCard(app) {
         className: "btn btn-sm btn-outline-secondary",
         text: "Upload file"
     });
-    const modeGroup = element("div", {
-        className: "btn-group mb-3",
-        role: "group",
-        ariaLabel: "Source type"
-    }, webMode, uploadMode);
+    const modeGroup = toolbar(webMode, uploadMode);
+    modeGroup.setAttribute("role", "group");
+    modeGroup.setAttribute("aria-label", "Source type");
 
-    const form = element("form", { className: "row g-2 align-items-end" });
+    const form = element("form", { className: "rules-core-toolbar mt-2" });
     const url = element("input", {
         type: "url",
-        className: "form-control",
+        className: "form-control form-control-sm",
         placeholder: "https://github.com/5etools-mirror-3/5etools-src/tree/main/data"
     });
-    const urlGroup = element("div", { className: "col-md-9" },
-        element("label", { className: "form-label fw-semibold", text: "Web source URL" }),
-        url);
+    const urlGroup = field("Web source URL", url);
 
     const file = element("input", {
         type: "file",
-        className: "form-control"
+        className: "form-control form-control-sm"
     });
-    const fileGroup = element("div", { className: "col-md-9 d-none" },
-        element("label", { className: "form-label fw-semibold", text: "Source file" }),
-        file);
+    const fileGroup = field("Source file", file, { className: "d-none" });
 
     const addButton = element("button", {
         type: "submit",
-        className: "btn btn-primary w-100",
+        className: "btn btn-sm btn-primary",
         text: "Add source"
     });
-    const actionGroup = element("div", { className: "col-md-3" }, addButton);
+    const actionGroup = actionBar(addButton);
     const result = element("div", { className: "mt-3" });
     const existing = element("div", { className: "mt-2" });
 

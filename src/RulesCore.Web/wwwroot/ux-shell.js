@@ -1,4 +1,4 @@
-import { element, enhanceRenderedFragment } from "./ui.js";
+import { element, enhanceRenderedFragment, pageLead } from "./ui.js";
 import { RULE_FAMILY_TABS } from "./rules-browser.js";
 
 const WORKSPACE_NAV_ITEMS = [
@@ -64,6 +64,16 @@ const NAV_GROUPS = [
 ];
 
 const VIEW_META = {
+    sources: {
+        eyebrow: "Source Layer",
+        title: "Sources",
+        description: "Manage source access and inspect immutable source records. Import and maintenance remain separate from normal rule browsing."
+    },
+    "version-review": {
+        eyebrow: "Adjudication",
+        title: "Cross-version review",
+        description: "Compare likely versions of the same conceptual rule across publications, playtests, editions, and source histories before recording explicit relationships or decisions."
+    },
     global: {
         eyebrow: "Rules Layer",
         title: "Rules Lawyer",
@@ -323,7 +333,10 @@ export function enhanceRenderedView(app, container) {
     enhanceRenderedFragment(container);
 
     if (VIEW_META[app.activeView] && !container.querySelector(":scope > .rules-core-generated-page-lead")) {
-        container.prepend(pageLead(VIEW_META[app.activeView]));
+        container.prepend(pageLead({
+            ...VIEW_META[app.activeView],
+            className: "rules-core-generated-page-lead"
+        }));
     }
 
     if (app.activeView === "global") {
@@ -345,13 +358,6 @@ export function enhanceRenderedView(app, container) {
 
     enhanceRenderedFragment(container);
     return container;
-}
-
-function pageLead(meta) {
-    return element("section", { className: "rules-core-generated-page-lead" },
-        element("div", { className: "rules-core-eyebrow", text: meta.eyebrow }),
-        element("h2", { text: meta.title }),
-        element("p", { className: "text-body-secondary", text: meta.description }));
 }
 
 function addCampaignSiteLink(app, container) {

@@ -2,8 +2,10 @@ import {
     alertNode,
     badge,
     clear,
+    actionBar,
     describeError,
     element,
+    sectionHeading as compactSectionHeading,
     setButtonBusy
 } from "./ui.js";
 
@@ -37,10 +39,6 @@ export function installHostedSourceAuthoring(app) {
 
 async function renderHostedSources(app, container) {
     clear(container);
-    container.append(element("div", { className: "card card-body mb-3" },
-        element("h3", { className: "h5 mb-1", text: "Source maintenance" }),
-        element("p", { className: "text-body-secondary mb-0", text: "Reprocess bundled snapshots when Rules Core interpretation changes, or manage canonical live source locations. Bundled reprocessing and hosted refresh are deliberately separate operations." })));
-
     const result = element("div", { className: "mb-3" });
     const bundled = await renderBundledSrdMaintenance(app, result);
     const editor = buildEditor(app, result);
@@ -53,10 +51,9 @@ async function renderBundledSrdMaintenance(app, result) {
     const sources = await app.api.getBundledSrds();
     const card = element("div", { className: "card card-body mb-3" });
     card.append(
-        element("h3", { className: "h5 mb-1", text: "Bundled SRD maintenance" }),
-        element("p", {
-            className: "text-body-secondary mb-2",
-            text: "Reprocess uses the bundled snapshot already shipped with Rules Core and does not fetch upstream. It reruns the current adapter, mechanical translation, persistence, and canonical reconciliation against the preserved Source Layer identity."
+        compactSectionHeading({
+            title: "Bundled SRD maintenance",
+            description: "Reprocess uses the bundled snapshot already shipped with Rules Core and does not fetch upstream. It reruns the current adapter, mechanical translation, persistence, and canonical reconciliation against the preserved Source Layer identity."
         }),
         alertNode(
             "info",
@@ -111,9 +108,10 @@ async function renderBundledSrdMaintenance(app, result) {
 function buildEditor(app, result) {
     const card = element("div", { className: "card card-body mb-3" });
     const form = element("form");
-    card.append(
-        element("h3", { className: "h5 mb-1", text: "Hosted source definitions" }),
-        element("p", { className: "text-body-secondary", text: "Register canonical live source locations once. Refreshing fetches the current remote documents and writes only changed immutable Source Layer revisions; runtime rules never depend on the remote host remaining online." }));
+    card.append(compactSectionHeading({
+        title: "Hosted source definitions",
+        description: "Register canonical live source locations once. Refreshing fetches the current remote documents and writes only changed immutable Source Layer revisions; runtime rules never depend on the remote host remaining online."
+    }));
     const definitionKey = textField("Definition key", "5etools-srd51", "col-lg-3", true);
     const displayName = textField("Display name", "SRD 5.1 public corpus", "col-lg-3", true);
     const formatKind = selectField("Import format", FORMAT_KINDS, "col-lg-3", value => value);
@@ -142,7 +140,7 @@ function buildEditor(app, result) {
     isEnabled.checked = true;
 
     form.append(
-        sectionHeading("Identity"),
+        compactSectionHeading({ title: "Identity", level: 4 }),
         element("div", { className: "row g-3 mb-3" }, definitionKey.group, displayName.group, formatKind.group, packageKey.group),
         element("div", { className: "row g-3 mb-4" },
             packageDisplayName.group,
@@ -150,14 +148,14 @@ function buildEditor(app, result) {
             license.group,
             checkboxGroup("Public source", isPublic),
             checkboxGroup("Enabled", isEnabled)),
-        sectionHeading("Logical work and release"),
+        compactSectionHeading({ title: "Logical work and release", level: 4 }),
         element("div", { className: "row g-3 mb-3" }, workKey.group, workDisplayName.group, editionKey.group, editionDisplayName.group),
         element("div", { className: "row g-3 mb-4" },
             gameEdition.group,
             releaseKind.group,
             element("div", { className: "col-lg-3" }, element("label", { className: "form-label fw-semibold", text: "Publication date" }), publicationDate),
             sourceCodes.group),
-        sectionHeading("Canonical live resources"),
+        compactSectionHeading({ title: "Canonical live resources", level: 4 }),
         element("div", { className: "mb-3" },
             element("label", { className: "form-label fw-semibold", text: "Resources" }),
             resources,
@@ -166,7 +164,7 @@ function buildEditor(app, result) {
 
     const saveButton = element("button", { type: "submit", className: "btn btn-primary me-2", text: "Save hosted source" });
     const resetButton = element("button", { type: "button", className: "btn btn-outline-secondary", text: "New definition" });
-    form.append(saveButton, resetButton);
+    form.append(actionBar(saveButton, resetButton));
     card.append(form);
 
     form.addEventListener("submit", async event => {

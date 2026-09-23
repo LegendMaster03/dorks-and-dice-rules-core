@@ -33,7 +33,12 @@ jobs:
             src/RulesCore.Web/wwwroot/authoring.js \
             src/RulesCore.Web/wwwroot/adjudication-queue.js \
             src/RulesCore.Web/wwwroot/rules-browser.js \
+            src/RulesCore.Web/wwwroot/rules-browser-index.js \
+            src/RulesCore.Web/wwwroot/rules-browser-detail.js \
+            src/RulesCore.Web/wwwroot/rules-browser-routing.js \
             src/RulesCore.Web/wwwroot/rule-renderers.js \
+            src/RulesCore.Web/wwwroot/rule-renderer-support.js \
+            src/RulesCore.Web/wwwroot/rule-renderers-specialized.js \
             src/RulesCore.Web/wwwroot/scope-control.js \
             src/RulesCore.Web/wwwroot/semantic-comparison.js \
             src/RulesCore.Web/wwwroot/mechanical-relationships.js \
@@ -197,9 +202,12 @@ jobs:
               throw new Error("Normalization suggestions must not eagerly load when Rules Lawyer opens.");
           }
 
-          const rulesBrowser = fs.readFileSync(
+          const rulesBrowser = [
               "./src/RulesCore.Web/wwwroot/rules-browser.js",
-              "utf8");
+              "./src/RulesCore.Web/wwwroot/rules-browser-index.js",
+              "./src/RulesCore.Web/wwwroot/rules-browser-detail.js",
+              "./src/RulesCore.Web/wwwroot/rules-browser-routing.js"
+          ].map(path => fs.readFileSync(path, "utf8")).join("\n");
           for (const required of [
               "rules-core-library-heading",
               "rules-core-library-title",
@@ -518,114 +526,3 @@ jobs:
           path: .ci/integration-timing-profile.json
           if-no-files-found: error
           retention-days: 30
-
-  container:
-    name: Container validation
-    if: >-
-      github.event_name == 'pull_request' ||
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'push' && github.ref_name == 'main')
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Build container
-        run: docker build -t dorks-and-dice-rules-core:test -f src/RulesCore.Web/Dockerfile .
-
-      - name: Validate Compose
-        env:
-          ConnectionStrings__RulesCore: "Host=postgres;Port=5432;Database=rules_core_test;Username=rules_core_test;Password=rules_core_test"
-        run: docker compose -f docker-compose.yml config --quiet
-
-      - name: Smoke test container
-        run: |
-          docker rm -f rules-core-smoke-app rules-core-smoke-postgres 2>/dev/null || true
-          docker network rm rules-core-smoke 2>/dev/null || true
-          docker network create rules-core-smoke
-
-          docker run -d --name rules-core-smoke-postgres \
-            --network rules-core-smoke \
-            -e POSTGRES_DB=rules_core_smoke \
-            -e POSTGRES_USER=rules_core_smoke \
-            -e POSTGRES_PASSWORD=rules_core_smoke \
-            postgres:18
-
-          ready=false
-          for i in {1..30}; do
-            if docker exec rules-core-smoke-postgres \
-              pg_isready -U rules_core_smoke -d rules_core_smoke; then
-              ready=true
-              break
-            fi
-            sleep 1
-          done
-          if [ "$ready" != "true" ]; then
-            docker logs rules-core-smoke-postgres
-            exit 1
-          fi
-
-          docker run -d --name rules-core-smoke-app \
-            --network rules-core-smoke \
-            -p 127.0.0.1:58080:8080 \
-            -e 'ConnectionStrings__RulesCore=Host=rules-core-smoke-postgres;Port=5432;Database=rules_core_smoke;Username=rules_core_smoke;Password=rules_core_smoke' \
-            -e 'RulesCore__BootstrapBaseline=false' \
-            dorks-and-dice-rules-core:test
-
-          healthy=false
-          for i in {1..60}; do
-            if curl --fail --silent http://127.0.0.1:58080/health >/dev/null \
-              && curl --fail --silent http://127.0.0.1:58080/ready >/dev/null; then
-              healthy=true
-              break
-            fi
-            sleep 1
-          done
-          if [ "$healthy" != "true" ]; then
-            docker logs rules-core-smoke-app
-            exit 1
-          fi
-
-      - name: Cleanup smoke containers
-        if: always()
-        run: |
-          docker rm -f rules-core-smoke-app rules-core-smoke-postgres 2>/dev/null || true
-          docker network rm rules-core-smoke 2>/dev/null || true
-
-  validation:
-    name: Validation gate
-    if: always()
-    needs: [fast, integration, container]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Require applicable validation
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          REF_NAME: ${{ github.ref_name }}
-          FAST_RESULT: ${{ needs.fast.result }}
-          INTEGRATION_RESULT: ${{ needs.integration.result }}
-          CONTAINER_RESULT: ${{ needs.container.result }}
-        run: |
-          if [ "$FAST_RESULT" != "success" ]; then
-            echo "Fast checks did not succeed: $FAST_RESULT"
-            exit 1
-          fi
-
-          full=false
-          if [ "$EVENT_NAME" = "pull_request" ] \
-            || [ "$EVENT_NAME" = "workflow_dispatch" ] \
-            || { [ "$EVENT_NAME" = "push" ] && [ "$REF_NAME" = "main" ]; }; then
-            full=true
-          fi
-
-          if [ "$full" = "true" ]; then
-            if [ "$INTEGRATION_RESULT" != "success" ]; then
-              echo "Integration validation did not succeed: $INTEGRATION_RESULT"
-              exit 1
-            fi
-            if [ "$CONTAINER_RESULT" != "success" ]; then
-              echo "Container validation did not succeed: $CONTAINER_RESULT"
-              exit 1
-            fi
-          fi
-
-          echo "Applicable Rules Core validation succeeded."

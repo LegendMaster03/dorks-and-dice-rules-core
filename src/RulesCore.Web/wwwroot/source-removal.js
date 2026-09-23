@@ -1,8 +1,11 @@
 import {
+    actionBar,
     alertNode,
     clear,
     describeError,
     element,
+    field,
+    sectionHeading,
     setButtonBusy
 } from "./ui.js";
 
@@ -50,13 +53,11 @@ async function buildSourceRemovalPanel(app, notice) {
     const panel = element("section", {
         className: "card card-body mb-3 rules-core-panel rules-core-source-removal"
     });
-    panel.append(
-        element("div", { className: "mb-3" },
-            element("h4", { className: "h5 mb-1", text: "Manage source access" }),
-            element("p", {
-                className: "small text-body-secondary mb-0",
-                text: "Removing a source revokes your access and removes its account registration. Stored Source Layer evidence, canonical identity, revision history, and Rules Layer decisions are retained. Re-adding the same source later can reuse that existing identity and history."
-            })));
+    panel.append(sectionHeading({
+        title: "Manage source access",
+        description: "Removing a source revokes your access and removes its account registration. Stored Source Layer evidence, canonical identity, revision history, and Rules Layer decisions are retained. Re-adding the same source later can reuse that existing identity and history.",
+        level: 4
+    }));
 
     if (notice) {
         panel.append(alertNode(notice.kind ?? "success", notice.message));
@@ -77,7 +78,7 @@ async function buildSourceRemovalPanel(app, notice) {
             .filter(Boolean));
     const result = element("div", { className: "mt-2" });
     const select = element("select", {
-        className: "form-select",
+        className: "form-select form-select-sm",
         ariaLabel: "Added source to remove"
     });
     for (const source of sources) {
@@ -90,7 +91,7 @@ async function buildSourceRemovalPanel(app, notice) {
 
     const removeButton = element("button", {
         type: "button",
-        className: "btn btn-outline-danger",
+        className: "btn btn-sm btn-outline-danger",
         text: "Remove source"
     });
     const state = element("div", { className: "small text-body-secondary mt-2" });
@@ -139,11 +140,9 @@ async function buildSourceRemovalPanel(app, notice) {
     });
 
     panel.append(
-        element("div", { className: "row g-2 align-items-end" },
-            element("div", { className: "col-md-9" },
-                element("label", { className: "form-label fw-semibold", text: "Added source" }),
-                select),
-            element("div", { className: "col-md-3" }, removeButton)),
+        element("div", { className: "rules-core-toolbar" },
+            field("Added source", select),
+            actionBar(removeButton)),
         state,
         result);
     return panel;

@@ -109,6 +109,21 @@ Baseline bootstrap hydrates reviewed public SRD snapshots and the Dorks & Dice h
 
 The 3e/3.5e developer reconciliation workflow uses the same persistent adapters and canonical stores as normal imports. Its reusable output is canonical identity knowledge, not a global cache of restricted source bodies.
 
+## Implementation module boundaries
+
+Rules Core keeps externally consumed contracts stable while organizing implementations by responsibility.
+
+- Web composition is registered through focused service groups for persistence, sources, rules, Character mechanics, and bootstrap rather than one expanding `Program.cs` registration block.
+- Character-facing services are coordinators. Catalog construction, evaluation, source/provenance loading, support parsing, resolved-rules reading, and projection families live in focused modules behind the same public application contracts.
+- Character projection separates abilities/proficiency, weapons, standard Armor Class, 3.x combat, initiative/saves, competencies, spellcasting, health, prerequisites, legacy placeholders, and source-rule projection modules. Shared state remains in the projection context instead of being duplicated across resolvers.
+- Adjudication keeps workflow/state transitions separate from persistence and evidence/query construction.
+- Source registration/import orchestration remains separate from remote HTTP/GitHub acquisition. Hosted and current-user remote resolvers share one remote-URI safety policy without sharing authorization state.
+- Source format adapters remain independent implementations behind the adapter registry.
+
+A long file is not split solely by size. Cohesive translation pipelines, import transactions, schema initialization, and shared projection state may remain substantial when dividing them would scatter one responsibility.
+
 ## Frontend boundary
 
-The frontend is intentionally downstream of these contracts. Application-owned DOM uses the explicit render lifecycle documented in `frontend-render-lifecycle.md`. Backend source, canonical, and Rules Layer contracts should stabilize before the deferred UI pass is updated to expose new reconciliation and source-model behavior.
+The frontend is intentionally downstream of backend contracts and uses the explicit render lifecycle documented in `frontend-render-lifecycle.md`. The shared UI vocabulary now includes compact page leads, section headings, toolbars, filter/action bars, fields, and list/detail workspaces.
+
+The Rules Library follows the same coordinator/module pattern as the backend: browser state/loading, index rendering, detail/version comparison, and routing are separate modules. Rule rendering exposes a small registry facade over shared rendering support and specialized entity renderers. Maintenance and source-management views use the same compact primitives without forcing every workflow into the Rules Library's list/detail interaction model.

@@ -80,7 +80,12 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("normalizedImportProgress", sourceAdd, StringComparison.Ordinal);
         Assert.Contains("progressDetailText", sourceAdd, StringComparison.Ordinal);
 
-        var rulesBrowser = await GetAssetAsync(client, "/rules-browser.js", "javascript");
+        var rulesBrowser = string.Join(
+            Environment.NewLine,
+            await GetAssetAsync(client, "/rules-browser.js", "javascript"),
+            await GetAssetAsync(client, "/rules-browser-index.js", "javascript"),
+            await GetAssetAsync(client, "/rules-browser-detail.js", "javascript"),
+            await GetAssetAsync(client, "/rules-browser-routing.js", "javascript"));
         Assert.DoesNotContain("One concept per row", rulesBrowser, StringComparison.Ordinal);
         Assert.DoesNotContain("Press J/K to navigate", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Press F or / to focus search. Use J/K to move through results.", rulesBrowser, StringComparison.Ordinal);
@@ -144,7 +149,11 @@ public sealed class EmbeddedModuleAssetsIntegrationTests
         Assert.Contains("toolBasePath", rulesBrowser, StringComparison.Ordinal);
         Assert.Contains("Override", rulesBrowser, StringComparison.Ordinal);
 
-        var renderers = await GetAssetAsync(client, "/rule-renderers.js", "javascript");
+        var renderers = string.Join(
+            Environment.NewLine,
+            await GetAssetAsync(client, "/rule-renderers.js", "javascript"),
+            await GetAssetAsync(client, "/rule-renderer-support.js", "javascript"),
+            await GetAssetAsync(client, "/rule-renderers-specialized.js", "javascript"));
         Assert.Contains("[\"monster\", renderMonster]", renderers, StringComparison.Ordinal);
         Assert.Contains("[\"spell\", renderSpell]", renderers, StringComparison.Ordinal);
         Assert.Contains("[\"class\", renderClass]", renderers, StringComparison.Ordinal);
