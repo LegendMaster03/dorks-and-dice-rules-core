@@ -7,7 +7,8 @@ import {
     formatDate,
     sectionHeading,
     setButtonBusy,
-    toolbar
+    toolbar,
+    workspaceSection
 } from "./ui.js";
 
 const DORKS_MODE = "dorks-and-dice";
@@ -33,9 +34,7 @@ export function installSourceAdd(app) {
 }
 
 async function buildAddSourceCard(app) {
-    const card = element("section", {
-        className: "card card-body mb-3 rules-core-panel rules-core-add-source"
-    });
+    const card = workspaceSection({ className: "rules-core-add-source" });
     card.append(sectionHeading({
         title: "Add Source",
         description: "Add a compatible file or Web source. Rules Core detects the format and records publication provenance for you.",

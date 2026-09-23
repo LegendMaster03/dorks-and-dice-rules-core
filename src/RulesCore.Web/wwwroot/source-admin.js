@@ -6,7 +6,8 @@ import {
     describeError,
     element,
     sectionHeading as compactSectionHeading,
-    setButtonBusy
+    setButtonBusy,
+    workspaceSection
 } from "./ui.js";
 
 const DEV_ROLE = "Dev";
@@ -40,7 +41,7 @@ export function installSourceAdministration(app) {
 
 async function renderSourceAdministration(app, container) {
     clear(container);
-    const formCard = element("div", { className: "card card-body" });
+    const formCard = workspaceSection({ className: "rules-core-source-admin-form" });
     const form = element("form");
     form.append(compactSectionHeading({
         title: "Manual source import",
@@ -249,7 +250,7 @@ function parseSourceCodes(value) {
 }
 
 function renderHostedMatchCard(app, hosted, blocked, overrideAction = null) {
-    const card = element("div", { className: "card card-body border-warning mb-3" },
+    const card = workspaceSection({ className: "rules-core-result-section is-warning" },
         element("div", { className: "d-flex flex-wrap gap-2 align-items-center mb-2" },
             element("h4", { className: "h6 mb-0", text: blocked ? "Canonical hosted source found" : "Hosted source overlap found" }),
             badge(hosted.fullyCovered ? "Fully covered" : "Partial coverage", "warning")),
@@ -284,7 +285,7 @@ function renderHostedMatchCard(app, hosted, blocked, overrideAction = null) {
 }
 
 function renderPreviewResult(container, preview) {
-    const card = element("div", { className: `card card-body ${preview.canImport ? "border-success" : "border-danger"}` });
+    const card = workspaceSection({ className: `rules-core-result-section ${preview.canImport ? "is-success" : "is-danger"}` });
     card.append(
         element("div", { className: "d-flex flex-wrap gap-2 align-items-center mb-2" },
             element("h4", { className: "h6 mb-0", text: "Import preview" }),
@@ -312,7 +313,7 @@ function renderPreviewResult(container, preview) {
 function renderImportResult(container, imported, isPublic) {
     const created = imported.entities.filter(entity => entity.createdRevision).length;
     const unchanged = imported.entities.length - created;
-    const card = element("div", { className: "card card-body border-success" });
+    const card = workspaceSection({ className: "rules-core-result-section is-success" });
     card.append(
         element("div", { className: "d-flex flex-wrap gap-2 align-items-center mb-2" },
             element("h4", { className: "h6 mb-0", text: "Import complete" }),

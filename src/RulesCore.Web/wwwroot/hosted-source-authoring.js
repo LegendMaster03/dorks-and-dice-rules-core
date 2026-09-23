@@ -6,7 +6,8 @@ import {
     describeError,
     element,
     sectionHeading as compactSectionHeading,
-    setButtonBusy
+    setButtonBusy,
+    workspaceSection
 } from "./ui.js";
 
 const RULES_LAWYER_ROLE = "Rules Lawyer";
@@ -49,7 +50,7 @@ async function renderHostedSources(app, container) {
 
 async function renderBundledSrdMaintenance(app, result) {
     const sources = await app.api.getBundledSrds();
-    const card = element("div", { className: "card card-body mb-3" });
+    const card = workspaceSection({});
     card.append(
         compactSectionHeading({
             title: "Bundled SRD maintenance",
@@ -106,7 +107,7 @@ async function renderBundledSrdMaintenance(app, result) {
 }
 
 function buildEditor(app, result) {
-    const card = element("div", { className: "card card-body mb-3" });
+    const card = workspaceSection({});
     const form = element("form");
     card.append(compactSectionHeading({
         title: "Hosted source definitions",
@@ -248,7 +249,7 @@ async function renderCatalog(app, container, editor, result) {
     if (!container) return;
     clear(container);
     const definitions = await app.api.getHostedSources(true);
-    const card = element("div", { className: "card card-body" },
+    const card = workspaceSection({},
         element("div", { className: "d-flex justify-content-between align-items-center mb-3" },
             element("h4", { className: "h6 mb-0", text: "Registered hosted sources" }),
             badge(`${definitions.length} definitions`, "secondary")));

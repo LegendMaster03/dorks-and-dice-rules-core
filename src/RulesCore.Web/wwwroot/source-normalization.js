@@ -1,10 +1,15 @@
 import {
+    actionBar,
     alertNode,
     badge,
     describeError,
     element,
+    field,
+    filterBar,
     formatDate,
+    sectionHeading,
     setButtonBusy,
+    workspaceSection,
     DEFAULT_PAGE_SIZE,
     paginationControls
 } from "./ui.js";
@@ -31,35 +36,24 @@ export function installSourceNormalization(app) {
 }
 
 function createNormalizationCard(app, container) {
-    const card = element("div", { className: "card card-body mb-3" });
-    const heading = element("div", {
-        className: "d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3"
-    });
-    heading.append(
-        element("div", {},
-            element("h3", { className: "h5 mb-1", text: "Normalize imported sources" }),
-            element("p", {
-                className: "text-body-secondary mb-0",
-                text: "Review deterministic concept suggestions for accessible source entities that are not bound yet. Binding remains deliberate; mechanically identical cross-edition rules may then resolve automatically, while publication remains explicit. Large or irrelevant source packages can be ignored for global rules work without deleting them or changing the uploader's access."
-            })),
-        badge("Rules Lawyer review", "primary"));
-    card.append(heading);
+    const card = workspaceSection({ className: "rules-core-normalization" });
+    card.append(sectionHeading({
+        title: "Normalize imported sources",
+        description: "Review deterministic concept suggestions for accessible source entities that are not bound yet. Binding remains deliberate; mechanically identical cross-edition rules may then resolve automatically, while publication remains explicit. Large or irrelevant source packages can be ignored for global rules work without deleting them or changing the uploader's access.",
+        actions: [badge("Rules Lawyer review", "primary")]
+    }));
 
     const ignored = element("div", { className: "mb-3" });
     card.append(ignored);
 
-    const filters = element("div", { className: "row g-2 align-items-end mb-3" });
-    const type = inputGroup("Entity type", "spell, skill, class…", "col-lg-3");
-    const query = inputGroup("Search", "Name, source, work, edition…", "col-lg-6");
-    const searchColumn = element("div", { className: "col-lg-3 d-grid" });
+    const type = inputGroup("Entity type", "spell, skill, class…");
+    const query = inputGroup("Search", "Name, source, work, edition…");
     const searchButton = element("button", {
         type: "button",
-        className: "btn btn-outline-primary",
+        className: "btn btn-sm btn-outline-primary",
         text: "Review suggestions"
     });
-    searchColumn.append(searchButton);
-    filters.append(type.group, query.group, searchColumn);
-    card.append(filters);
+    card.append(filterBar(type.group, query.group, actionBar(searchButton)));
 
     card.append(element("div", {
         className: "small text-body-secondary mb-3",
@@ -307,15 +301,11 @@ function suggestionBadge(kind) {
     }
 }
 
-function inputGroup(label, placeholder, columnClass) {
+function inputGroup(label, placeholder) {
     const input = element("input", {
-        className: "form-control",
+        className: "form-control form-control-sm",
         type: "text",
         placeholder
     });
-    const group = element("div", { className: columnClass });
-    group.append(
-        element("label", { className: "form-label fw-semibold", text: label }),
-        input);
-    return { group, input };
+    return { group: field(label, input), input };
 }

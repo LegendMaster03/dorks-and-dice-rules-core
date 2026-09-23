@@ -7,7 +7,8 @@ import {
     element,
     formatDate,
     formatJson,
-    setButtonBusy
+    setButtonBusy,
+    workspaceSection
 } from "./ui.js";
 
 export function installSourceRevisionReview(app) {
@@ -137,7 +138,7 @@ async function renderPreview(app, container, conceptId) {
     container.append(toolbar);
 
     const loading = element("div", {
-        className: "card card-body text-body-secondary",
+        className: "rules-core-loading-state",
         text: "Comparing source revisions…"
     });
     container.append(loading);
@@ -252,7 +253,7 @@ function createRejectButton(app, container, preview) {
 
 function renderPreviewSummary(preview) {
     const update = preview.update;
-    const card = element("div", { className: "card card-body mb-3" });
+    const card = workspaceSection({ className: "rules-core-source-revision-summary" });
     card.append(
         element("h3", { className: "h5 mb-2", text: update.displayName }),
         element("div", {

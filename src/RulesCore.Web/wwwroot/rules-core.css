@@ -182,6 +182,31 @@
     color: var(--bs-secondary-color);
 }
 
+.rules-core-result-section {
+    padding-left: .72rem;
+    border-left: .2rem solid var(--rules-core-border);
+}
+
+.rules-core-result-section.is-warning {
+    border-left-color: var(--bs-warning);
+}
+
+.rules-core-result-section.is-success {
+    border-left-color: var(--bs-success);
+}
+
+.rules-core-result-section.is-danger {
+    border-left-color: var(--bs-danger);
+}
+
+.rules-core-bundled-sources .rules-core-source-grid:empty::before {
+    display: block;
+    grid-column: 1 / -1;
+    padding: .5rem 0;
+    color: var(--bs-secondary-color);
+    content: "Loading bundled source status…";
+}
+
 .rules-core-page-lead:not(.card) {
     display: flex;
     align-items: end;

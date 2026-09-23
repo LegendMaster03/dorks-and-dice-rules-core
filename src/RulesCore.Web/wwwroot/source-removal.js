@@ -6,7 +6,8 @@ import {
     element,
     field,
     sectionHeading,
-    setButtonBusy
+    setButtonBusy,
+    workspaceSection
 } from "./ui.js";
 
 const DORKS_MODE = "dorks-and-dice";
@@ -43,16 +44,13 @@ async function buildSourceRemovalPanel(app, notice) {
             app.api.getCurrentUserSourceImportJobs()
         ]);
     } catch (error) {
-        return element("section", {
-            className: "card card-body mb-3 rules-core-panel rules-core-source-removal"
-        }, alertNode("warning", `Source access controls could not be loaded: ${describeError(error)}`));
+        return workspaceSection({ className: "rules-core-source-removal" },
+            alertNode("warning", `Source access controls could not be loaded: ${describeError(error)}`));
     }
 
     if (!sources.length && !notice) return null;
 
-    const panel = element("section", {
-        className: "card card-body mb-3 rules-core-panel rules-core-source-removal"
-    });
+    const panel = workspaceSection({ className: "rules-core-source-removal" });
     panel.append(sectionHeading({
         title: "Manage source access",
         description: "Removing a source revokes your access and removes its account registration. Stored Source Layer evidence, canonical identity, revision history, and Rules Layer decisions are retained. Re-adding the same source later can reuse that existing identity and history.",

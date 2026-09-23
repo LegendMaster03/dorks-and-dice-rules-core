@@ -111,9 +111,6 @@ export function installSourceLibrary(app) {
         await app.render();
     };
 
-    app.renderHeader = () => renderHeader(app);
-    app.renderNavigation = () => renderNavigation(app);
-
     const renderActiveView = app.renderActiveView.bind(app);
     app.renderActiveView = async container => {
         if (app.activeView === "sources") {
@@ -126,9 +123,6 @@ export function installSourceLibrary(app) {
         }
 
         await renderActiveView(container);
-        if (app.activeView === "global" && app.canEditGlobal) {
-            prependRulesLawyerWorkflow(app, container);
-        }
     };
 
     window.addEventListener("popstate", async event => {
@@ -160,70 +154,6 @@ export function installSourceLibrary(app) {
     }, { capture: true });
 }
 
-function renderHeader(app) {
-    const card = element("div", { className: "card card-body rules-core-header" });
-    card.append(element("div", {
-        className: "d-flex flex-wrap align-items-start justify-content-between gap-3"
-    },
-        element("div", {},
-            element("div", { className: "rules-core-eyebrow", text: "DORKS & DICE RULES" }),
-            element("h2", { className: "h3 mb-1", text: "Rules Core" }),
-            element("p", {
-                className: "text-body-secondary mb-0",
-                text: "Explore source material, review cross-edition rules, and publish the rules your table actually uses."
-            })),
-        element("div", { className: "text-end small" },
-            element("div", { className: "fw-semibold", text: app.session.user?.displayName ?? "Guest" }),
-            element("div", {
-                className: "text-body-secondary",
-                text: app.session.user?.displayName ? "Signed in" : "Public library access"
-            }))));
-    return card;
-}
-
-function renderNavigation(app) {
-    const shell = element("div", { className: "rules-core-nav-shell" });
-    const primary = element("div", { className: "rules-core-nav-primary" });
-    if (app.canBrowseRules) primary.append(sourceAwareNavButton(app, "Library", "library"));
-    if (app.canBrowseSourceLibrary) primary.append(sourceAwareNavButton(app, "Sources", "sources"));
-    if (app.canEditGlobal) primary.append(sourceAwareNavButton(app, "Rules Lawyer", "global"));
-    if (app.canReviewVersions) primary.append(sourceAwareNavButton(app, "Cross-version Review", "version-review"));
-    if (app.canEditCampaign) primary.append(sourceAwareNavButton(app, "Campaign Rules", "campaign"));
-    shell.append(primary);
-
-    if (app.canManageHostedSources || app.canAdministerSources) {
-        const advanced = element("details", { className: "rules-core-advanced-nav" });
-        const actions = element("div", { className: "rules-core-advanced-actions" });
-        if (app.canManageHostedSources) actions.append(advancedNavButton(app, "Hosted source definitions", "hosted-sources"));
-        if (app.canAdministerSources) actions.append(advancedNavButton(app, "Manual source import & access", "source-admin"));
-        advanced.append(element("summary", { text: "Advanced" }), actions);
-        shell.append(advanced);
-    }
-    return shell;
-}
-
-function sourceAwareNavButton(app, label, view) {
-    const button = app.navButton(label, view);
-    button.addEventListener("click", () => {
-        if (view === "sources") {
-            app.libraryDeepLink = null;
-            app.libraryRouteActive = true;
-            pushSourceToolRoute(app, "/sources");
-        } else if (app.libraryRouteActive) {
-            app.libraryDeepLink = null;
-            app.libraryRouteActive = false;
-            pushSourceToolRoute(app, "/");
-        }
-    }, { capture: true });
-    return button;
-}
-
-function advancedNavButton(app, label, view) {
-    const button = sourceAwareNavButton(app, label, view);
-    button.classList.add("w-100", "text-start");
-    return button;
-}
-
 async function renderSourceLibrary(app, container) {
     clear(container);
     if (app.libraryNotice) {
@@ -231,9 +161,8 @@ async function renderSourceLibrary(app, container) {
         app.libraryNotice = null;
     }
 
-    const bundledLoad = renderBuiltInSources(app, container, BUNDLED_SRDS);
+    void renderBuiltInSources(app, container, BUNDLED_SRDS);
     await renderSourceBrowser(app, container);
-    await bundledLoad;
 }
 
 async function renderBuiltInSources(app, container, definitions) {
@@ -698,32 +627,6 @@ function metric(label, value) {
     return element("div", { className: "rules-core-metric" },
         element("div", { className: "rules-core-metric-value", text: value }),
         element("div", { className: "rules-core-metric-label", text: label }));
-}
-
-function prependRulesLawyerWorkflow(app, container) {
-    if (container.querySelector(".rules-core-workflow")) return;
-    const card = element("div", { className: "card card-body mb-3 rules-core-workflow" },
-        element("div", { className: "d-flex flex-wrap justify-content-between gap-3 align-items-center" },
-            element("div", {},
-                element("h3", { className: "h5 mb-1", text: "Rules Lawyer workflow" }),
-                element("div", { className: "text-body-secondary small", text: "Source material stays separate until you explicitly bind, decide, and publish." })),
-            element("div", { className: "rules-core-workflow-steps" },
-                workflowStep("1", "Sources", "Browse and inspect", async () => {
-                    await app.viewNavigation?.sources?.();
-                }),
-                workflowStep("2", "Normalize", "Review suggestions"),
-                workflowStep("3", "Decide", "Select or consolidate"),
-                workflowStep("4", "Publish", "Create global revision"))));
-    container.prepend(card);
-}
-
-function workflowStep(number, title, description, onClick = null) {
-    const options = { className: `rules-core-workflow-step${onClick ? " rules-core-workflow-step-action" : ""}` };
-    const node = element(onClick ? "button" : "div", onClick ? { ...options, type: "button" } : options,
-        element("span", { className: "rules-core-workflow-number", text: number }),
-        element("span", {}, element("strong", { text: title }), element("small", { text: description })));
-    if (onClick) node.addEventListener("click", onClick);
-    return node;
 }
 
 function presentFragment(app, container) {
