@@ -210,4 +210,5 @@ internal static class CharacterSupportAttributionReader
         string WorkDisplayName,
         string? GameEdition,
         string? ReleaseKind,
+        DateOnly? PublicationDate);
 }
