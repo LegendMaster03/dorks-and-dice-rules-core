@@ -92,6 +92,27 @@ public static class KnownUniversalCompetencies
         Profession("Woodcutter")
     ];
 
+    private static readonly IReadOnlyDictionary<string, IReadOnlyList<string>> ReviewedSourceAliases =
+        new Dictionary<string, IReadOnlyList<string>>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["deception"] = ["Bluff", "Deception"],
+            ["persuasion"] = ["Diplomacy", "Persuasion"],
+            ["animal-handling"] = ["Handle Animal", "Animal Handling"],
+            ["medicine"] = ["Heal", "Medicine"],
+            ["intimidation"] = ["Intimidate", "Intimidation"],
+            ["insight"] = ["Sense Motive", "Insight"],
+            ["sleight-of-hand"] = ["Pick Pocket", "Sleight of Hand"],
+            ["survival"] = ["Wilderness Lore", "Survival"],
+            ["arcana"] = ["Knowledge (Arcana)", "Arcana"],
+            ["history"] = ["Knowledge (History)", "History"],
+            ["nature"] = ["Knowledge (Nature)", "Nature"],
+            ["religion"] = ["Knowledge (Religion)", "Religion"],
+            ["psionics"] = ["Knowledge (Psionics)", "Psionics"],
+            ["the-planes"] = ["Knowledge (the planes)", "The Planes"],
+            ["alchemy"] = ["Alchemy", "Craft (alchemy)", "Alchemist's Supplies"],
+            ["forgery"] = ["Forgery", "Forgery Kit"]
+        };
+
     private static readonly IReadOnlyDictionary<string, UniversalCompetencyAlias> LegacyConceptAliases =
         new Dictionary<string, UniversalCompetencyAlias>(StringComparer.OrdinalIgnoreCase)
         {
@@ -188,6 +209,20 @@ public static class KnownUniversalCompetencies
         }
 
         return null;
+    }
+
+    public static IReadOnlyList<string> SourceAliases(string identityKey)
+    {
+        var normalized = NormalizeIdentityKey(identityKey);
+        var definitionAliases = FindByIdentityKey(normalized)?.SourceAliases ?? [];
+        var reviewedAliases = ReviewedSourceAliases.TryGetValue(normalized, out var values)
+            ? values
+            : [];
+        return definitionAliases
+            .Concat(reviewedAliases)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
     }
 
     public static IReadOnlyList<string> CompatibilityConceptKeys(string identityKey)

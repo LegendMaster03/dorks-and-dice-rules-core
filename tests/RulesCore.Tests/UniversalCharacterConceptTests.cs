@@ -105,6 +105,16 @@ public sealed class UniversalCharacterConceptTests
         Assert.Contains("Craft (alchemy)", alchemy.SourceAliases!);
         Assert.Contains("Alchemist's Supplies", alchemy.SourceAliases!);
         Assert.Equal("competency.alchemy.training", alchemy.TrainingStateKey);
+
+        Assert.Equal(
+            ["Bluff", "Deception"],
+            KnownUniversalCompetencies.SourceAliases("deception"));
+        Assert.Equal(
+            ["Forgery", "Forgery Kit"],
+            KnownUniversalCompetencies.SourceAliases("forgery"));
+        Assert.Equal(
+            ["Knowledge (Arcana)", "Arcana"].OrderBy(value => value, StringComparer.OrdinalIgnoreCase),
+            KnownUniversalCompetencies.SourceAliases("arcana"));
     }
 
     [Fact]

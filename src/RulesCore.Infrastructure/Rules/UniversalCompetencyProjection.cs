@@ -148,7 +148,7 @@ internal static class UniversalCompetencyProjection
                                 value,
                                 StringComparison.OrdinalIgnoreCase)))
                         .ToArray(),
-                SourceAliases: known?.SourceAliases ?? [],
+                SourceAliases: KnownUniversalCompetencies.SourceAliases(identityKey),
                 Profiles: profiles,
                 Facets: facets,
                 RelatedCompetencies: relationships,
@@ -178,7 +178,7 @@ internal static class UniversalCompetencyProjection
                     KnownUniversalCompetencies.CompatibilityConceptKeys(definition.IdentityKey)
                         .Select(value => $"competency.{value}")
                         .ToArray(),
-                SourceAliases: definition.SourceAliases ?? [],
+                SourceAliases: KnownUniversalCompetencies.SourceAliases(definition.IdentityKey),
                 Profiles: [],
                 Facets: [],
                 RelatedCompetencies: [],
