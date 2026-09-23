@@ -148,22 +148,14 @@ internal sealed class CurrentUserSourceRefreshBackground(
                 await ReportProgressAsync(
                     new CurrentUserSourceImportProgress(
                         "preparing",
-                        Detail: "Preparing a clean import attempt"),
+                        Detail: "Preparing import; previously completed source files will be reused"),
                     stoppingToken);
-                var cleanup = new IncompleteCurrentUserSourceImportCleanupService(dbContext);
-                var resetPartial = await cleanup.CleanupWebAddAsync(
-                    job.UserId,
-                    job.Url,
-                    stoppingToken);
-                if (resetPartial)
-                {
-                    await ReportProgressAsync(
-                        new CurrentUserSourceImportProgress(
-                            "preparing",
-                            Detail: "Removed incomplete data from the previous failed attempt"),
-                        stoppingToken);
-                }
 
+                // Add imports are intentionally resumable. Each normalized representation
+                // commits atomically, so a shutdown can leave a valid prefix of a large
+                // source tree in the private package. Do not delete that work before retry.
+                // AddAsync uses the same deterministic package/origin identities and the
+                // normalized importer reuses committed representations/entities/revisions.
                 source = await sourceService.AddAsync(
                     job.UserId,
                     new AddCurrentUserSourceRequest(
@@ -212,24 +204,10 @@ internal sealed class CurrentUserSourceRefreshBackground(
                     var jobs = new CurrentUserSourceImportJobService(dbContext);
                     await jobs.FailAsync(job.Id, exception, stoppingToken);
 
-                    if (string.Equals(
-                            job.Operation,
-                            CurrentUserSourceImportJobOperations.Add,
-                            StringComparison.Ordinal))
-                    {
-                        try
-                        {
-                            var cleanup = new IncompleteCurrentUserSourceImportCleanupService(dbContext);
-                            await cleanup.CleanupWebAddAsync(job.UserId, job.Url, stoppingToken);
-                        }
-                        catch (Exception cleanupException)
-                        {
-                            logger.LogWarning(
-                                cleanupException,
-                                "Rules Core could not clean incomplete Web source data for failed job {JobId}; the next retry will attempt cleanup again.",
-                                job.Id);
-                        }
-                    }
+                    // Retain committed representations from failed Add jobs. A later retry
+                    // can resume from those immutable units instead of downloading/persisting
+                    // the complete source tree again. Explicit maintenance can still remove
+                    // an abandoned incomplete package when desired.
                 }
                 catch (Exception recordException)
                 {

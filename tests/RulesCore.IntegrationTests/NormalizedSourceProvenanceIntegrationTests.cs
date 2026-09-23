@@ -14,6 +14,74 @@ namespace RulesCore.IntegrationTests;
 public sealed class NormalizedSourceProvenanceIntegrationTests
 {
     [Fact]
+    public async Task IdenticalPrivateImportsShareOnePhysicalContentBlobAcrossUsers()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var legacyImporter = new SourceImportService(db);
+            var grants = new SourceGrantService(db);
+            var sources = new CurrentUserSourceService(db, legacyImporter, grants);
+            var firstUserId = $"blob-owner-a-{Guid.NewGuid():N}";
+            var secondUserId = $"blob-owner-b-{Guid.NewGuid():N}";
+            var bytes = BuildPdf(
+                "Title: Shared Physical Fixture",
+                "Publisher: Table Press",
+                "The same physical bytes must not be stored twice.");
+
+            var first = await sources.AddAsync(
+                firstUserId,
+                new AddCurrentUserSourceRequest(
+                    CurrentUserSourceKinds.Upload,
+                    FileName: "first-name.pdf")
+                {
+                    ContentBase64 = Convert.ToBase64String(bytes)
+                });
+            var second = await sources.AddAsync(
+                secondUserId,
+                new AddCurrentUserSourceRequest(
+                    CurrentUserSourceKinds.Upload,
+                    FileName: "second-name.pdf")
+                {
+                    ContentBase64 = Convert.ToBase64String(bytes)
+                });
+
+            Assert.NotEqual(first.SourcePackageId, second.SourcePackageId);
+            Assert.True(await grants.HasGrantAsync(firstUserId, first.SourcePackageId));
+            Assert.False(await grants.HasGrantAsync(firstUserId, second.SourcePackageId));
+            Assert.True(await grants.HasGrantAsync(secondUserId, second.SourcePackageId));
+            Assert.False(await grants.HasGrantAsync(secondUserId, first.SourcePackageId));
+
+            var firstRepresentation = await db.SourceRepresentations
+                .AsNoTracking()
+                .SingleAsync(value => value.SourcePackageId == first.SourcePackageId);
+            var secondRepresentation = await db.SourceRepresentations
+                .AsNoTracking()
+                .SingleAsync(value => value.SourcePackageId == second.SourcePackageId);
+
+            Assert.NotEqual(firstRepresentation.Id, secondRepresentation.Id);
+            Assert.Equal(firstRepresentation.ContentSha256, secondRepresentation.ContentSha256);
+            Assert.Equal(
+                1,
+                await db.SourceContentBlobs.CountAsync(
+                    value => value.Sha256 == firstRepresentation.ContentSha256));
+            Assert.Equal(bytes, await ReadRepresentationBytesAsync(db, first.SourcePackageId));
+            Assert.Equal(bytes, await ReadRepresentationBytesAsync(db, second.SourcePackageId));
+
+            await db.SourcePackages
+                .Where(value => value.Id == first.SourcePackageId)
+                .ExecuteDeleteAsync();
+
+            Assert.Equal(
+                1,
+                await db.SourceContentBlobs.CountAsync(
+                    value => value.Sha256 == secondRepresentation.ContentSha256));
+            Assert.Equal(bytes, await ReadRepresentationBytesAsync(db, second.SourcePackageId));
+        }
+    }
+
+    [Fact]
     public async Task CurrentUserPdfUploadUsesByteSafeAdapterPipelineAndOnlyGrantsUploader()
     {
         var db = await OpenDatabaseAsync();
@@ -170,7 +238,15 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
 
     private static Task<byte[]> ReadRepresentationBytesAsync(RulesCoreDbContext db, Guid packageId) =>
         ReadScalarAsync<byte[]>(db,
-            "SELECT content_bytes FROM source_representation WHERE source_package_id = @id ORDER BY imported_at DESC LIMIT 1;",
+            """
+            SELECT blob.content_bytes
+            FROM source_representation representation
+            JOIN source_content_blob blob
+                ON blob.content_sha256 = representation.content_sha256
+            WHERE representation.source_package_id = @id
+            ORDER BY representation.imported_at DESC
+            LIMIT 1;
+            """,
             packageId);
 
     private static Task<Guid> ReadRepresentationIdAsync(RulesCoreDbContext db, Guid packageId) =>
