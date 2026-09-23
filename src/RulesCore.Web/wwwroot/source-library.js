@@ -6,7 +6,9 @@ import {
     definitionList,
     describeError,
     element,
+    field as compactField,
     formatDate,
+    sectionHeading,
 } from "./ui.js";
 import { renderResolvedRule } from "./rule-renderers.js";
 
@@ -338,26 +340,27 @@ function renderSourceCard(app, container, state) {
 
 async function renderSourceBrowser(app, container) {
     const section = element("section", { id: "rules-core-source-browser", className: "card card-body" });
-    section.append(element("div", { className: "d-flex flex-wrap justify-content-between align-items-start gap-2 mb-3" },
-        element("div", {},
-            element("h4", { className: "h5 mb-1", text: "Browse source material" }),
-            element("p", {
-                className: "text-body-secondary mb-0",
-                text: "This is the immutable Source Layer, not the published ruleset. Source-native records remain available alongside their Rules Core mechanical presentation."
-            })),
-        badge("Source Layer", "secondary")));
+    section.append(sectionHeading({
+        level: 4,
+        title: "Browse source material",
+        description: "This is the immutable Source Layer, not the published ruleset. Source-native records remain available alongside their Rules Core mechanical presentation.",
+        actions: [badge("Source Layer", "secondary")]
+    }));
 
-    const form = element("form", { className: "row g-2 align-items-end mb-3" });
-    const type = element("select", { className: "form-select" });
+    const form = element("form", { className: "rules-core-filter-bar" });
+    const type = element("select", { className: "form-select form-select-sm" });
     for (const [value, label] of ENTITY_TYPES) {
         const option = element("option", { value, text: label });
         option.selected = value === app.libraryFilters.entityType;
         type.append(option);
     }
-    const query = element("input", { type: "search", className: "form-control", placeholder: "Name, source code, or package", value: app.libraryFilters.query });
-    const searchButton = element("button", { type: "submit", className: "btn btn-primary w-100", text: "Search" });
-    const monstersButton = element("button", { type: "button", className: "btn btn-outline-primary w-100", text: "Monsters" });
-    form.append(field("Entity type", type, "col-lg-3"), field("Search", query, "col-lg-6"), element("div", { className: "col-lg-2" }, searchButton), element("div", { className: "col-lg-1" }, monstersButton));
+    const query = element("input", { type: "search", className: "form-control form-control-sm", placeholder: "Name, source code, or package", value: app.libraryFilters.query });
+    const searchButton = element("button", { type: "submit", className: "btn btn-sm btn-primary", text: "Search" });
+    const monstersButton = element("button", { type: "button", className: "btn btn-sm btn-outline-primary", text: "Monsters" });
+    form.append(
+        compactField("Entity type", type),
+        compactField("Search", query),
+        element("div", { className: "rules-core-action-bar" }, searchButton, monstersButton));
     section.append(form);
 
     const results = element("div");
@@ -695,12 +698,6 @@ function metric(label, value) {
     return element("div", { className: "rules-core-metric" },
         element("div", { className: "rules-core-metric-value", text: value }),
         element("div", { className: "rules-core-metric-label", text: label }));
-}
-
-function field(label, control, columnClass) {
-    return element("div", { className: columnClass },
-        element("label", { className: "form-label fw-semibold", text: label }),
-        control);
 }
 
 function prependRulesLawyerWorkflow(app, container) {
