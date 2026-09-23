@@ -201,6 +201,20 @@ internal sealed class CurrentUserSourceRefreshBackground(
                     stoppingToken);
             }
 
+            var deduplication = await new SourcePackageDeduplicationService(dbContext)
+                .ConsolidateAsync(stoppingToken);
+            if (deduplication.ConsolidatedPackageCount > 0
+                || deduplication.RenamedSharedPackageCount > 0
+                || deduplication.RetainedReferencedDuplicateCount > 0)
+            {
+                logger.LogInformation(
+                    "Rules Core post-import deduplication scanned {CandidateCount} private package(s), consolidated {ConsolidatedCount}, normalized {RenamedCount} shared package key(s), and retained {RetainedCount} referenced duplicate(s).",
+                    deduplication.CandidatePackageCount,
+                    deduplication.ConsolidatedPackageCount,
+                    deduplication.RenamedSharedPackageCount,
+                    deduplication.RetainedReferencedDuplicateCount);
+            }
+
             await jobs.CompleteAsync(job.Id, source.Id, stoppingToken);
             return true;
         }
