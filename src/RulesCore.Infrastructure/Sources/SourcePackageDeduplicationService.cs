@@ -26,7 +26,8 @@ public sealed class SourcePackageDeduplicationService(RulesCoreDbContext dbConte
 
         try
         {
-            if (!await RelationExistsAsync(connection, "source_representation", cancellationToken))
+            if (!await RelationExistsAsync(connection, "source_representation", cancellationToken)
+                || !await RelationExistsAsync(connection, "current_user_source", cancellationToken))
             {
                 return new SourcePackageDeduplicationResult(0, 0, 0, 0);
             }
@@ -154,6 +155,10 @@ public sealed class SourcePackageDeduplicationService(RulesCoreDbContext dbConte
                 AND (
                     package.package_key LIKE 'user-source-%'
                     OR package.package_key LIKE 'user-content-%')
+                AND EXISTS (
+                    SELECT 1
+                    FROM current_user_source registration
+                    WHERE registration.source_package_id = package.source_package_id)
             ORDER BY package.created_at, package.source_package_id,
                      representation.format_key, representation.file_name,
                      representation.content_sha256;
