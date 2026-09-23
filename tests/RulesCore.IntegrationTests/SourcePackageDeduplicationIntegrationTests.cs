@@ -90,7 +90,7 @@ public sealed class SourcePackageDeduplicationIntegrationTests
             var sharedPackage = await db.SourcePackages
                 .AsNoTracking()
                 .SingleAsync(value => value.Id == sharedPackageId);
-            Assert.StartsWith("user-content-", sharedPackage.Key);
+            Assert.StartsWith("user-origin-", sharedPackage.Key);
             Assert.Equal("user-source", sharedPackage.Provider);
             Assert.Equal(
                 firstEntityCount,
