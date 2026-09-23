@@ -468,26 +468,9 @@ public sealed class HostedSourceService : IHostedSourceService
         HostedSourceUriPolicy.ValidateShape(uri);
         if (string.Equals(kind, HostedSourceResourceKinds.GitHubTree, StringComparison.Ordinal))
         {
-            _ = ParseGitHubTreeUri(uri);
+            HostedSourceRemoteResolver.ValidateGitHubTreeUri(uri);
         }
         return new HostedSourceResourceView(kind, uri.AbsoluteUri);
-    }
-
-    private static void HostedSourceUriPolicy.ValidateShape(Uri uri)
-    {
-        if (!string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
-        {
-            throw new ArgumentException("Hosted source URIs must use HTTPS.");
-        }
-        if (!string.IsNullOrEmpty(uri.UserInfo))
-        {
-            throw new ArgumentException("Hosted source URIs can not contain embedded credentials.");
-        }
-        if (string.Equals(uri.DnsSafeHost, "localhost", StringComparison.OrdinalIgnoreCase)
-            || uri.AbsoluteUri.Length > 2000)
-        {
-            throw new ArgumentException("Hosted source URI is not allowed.");
-        }
     }
 
     private static HostedSourceDefinitionView ReadView(DbDataReader reader)
