@@ -67,6 +67,8 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
             entity.HasIndex(value => new { value.SourcePackageId, value.OriginIdentity, value.ContentSha256 })
                 .IsUnique()
                 .HasDatabaseName("ux_source_representation_identity");
+            entity.HasIndex(value => value.ContentSha256)
+                .HasDatabaseName("ix_source_representation_content_sha256");
             entity.HasIndex(value => new { value.SourcePackageId, value.OriginIdentity, value.ImportedAt })
                 .HasDatabaseName("ix_source_representation_origin_history");
             entity.HasOne(value => value.SourcePackage)
