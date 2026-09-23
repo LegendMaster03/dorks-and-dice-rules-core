@@ -11,6 +11,14 @@ import {
 } from "./ui.js";
 import { renderRuleDetailPane } from "./rules-browser-detail.js";
 import {
+    browserHref,
+    catalogRouteForEntity,
+    currentToolRoute,
+    parseBrowserScopeFromLocation,
+    parseToolRoute,
+    pushToolRoute
+} from "./rules-browser-routing.js";
+import {
     RULE_FAMILY_TABS,
     libraryTitle,
     renderContinuousIndexFooter,
@@ -22,21 +30,6 @@ export { RULE_FAMILY_TABS } from "./rules-browser-index.js";
 
 const DORKS_MODE = "dorks-and-dice";
 const PAGE_SIZE = DEFAULT_PAGE_SIZE;
-const ROUTE_FAMILIES = new Map([
-    ["monsters", "monster"],
-    ["spells", "spell"],
-    ["classes", "class"],
-    ["subclasses", "subclass"],
-    ["prestige-classes", "prestigeClass"],
-    ["feats", "feat"],
-    ["backgrounds", "background"],
-    ["optional-features", "optionalfeature"],
-    ["races", "race"],
-    ["species", "species"],
-    ["items", "item"],
-    ["conditions", "condition"],
-    ["skills", "skill"]
-]);
 const ENTITY_TYPES = [
     ["", "All"],
     ["monster", "Monsters"],
@@ -827,25 +820,6 @@ async function isRuleAvailableInScope(app, conceptKey, scopeValue) {
     }
 }
 
-async function getOptionalRuleVersions(app, conceptKey) {
-    try {
-        return await app.api.getRuleVersions(conceptKey);
-    } catch (error) {
-        if (error?.status === 404) return null;
-        throw error;
-    }
-}
-
-async function getOptionalCampaignBaseline(app, campaignId, conceptKey) {
-    try {
-        return await app.api.backend(
-            `/api/campaigns/${encodeURIComponent(campaignId)}/rules/${encodeURIComponent(conceptKey)}/global-baseline`);
-    } catch (error) {
-        if (error?.status === 404) return null;
-        throw error;
-    }
-}
-
 function scopeLabel(app, scopeValue) {
     if (scopeValue === "global") return "Dorks & Dice";
     return campaignName(app, scopeValue.slice("campaign:".length));
@@ -872,70 +846,4 @@ function humanizeEntityType(entityType) {
     return value
         .replace(/([a-z])([A-Z])/g, "$1 $2")
         .replace(/^./, match => match.toUpperCase());
-}
-
-function parseToolRoute(toolRoute) {
-    if (!toolRoute || toolRoute === "/") return {};
-    const path = String(toolRoute).split(/[?#]/, 1)[0];
-    const segments = path.replace(/^\/+|\/+$/g, "").split("/").filter(Boolean);
-    if (segments.length === 1 && ROUTE_FAMILIES.has(segments[0])) {
-        return { entityType: ROUTE_FAMILIES.get(segments[0]) };
-    }
-    if (segments.length === 2 && ROUTE_FAMILIES.has(segments[0])) {
-        const entityType = ROUTE_FAMILIES.get(segments[0]);
-        return {
-            entityType,
-            conceptKey: `${entityType}.${decodeURIComponent(segments[1])}`
-        };
-    }
-    if (segments.length === 2 && segments[0] === "types") {
-        return { entityType: decodeURIComponent(segments[1]) };
-    }
-    if (segments.length === 2 && segments[0] === "rules") {
-        return { conceptKey: decodeURIComponent(segments[1]) };
-    }
-    return {};
-}
-
-function currentToolRoute(app) {
-    const base = (app.hostContext.toolBasePath ?? "/tools/rules-core").replace(/\/$/, "");
-    const path = window.location.pathname;
-    return path.startsWith(base) ? path.slice(base.length) || "/" : "/";
-}
-
-function parseBrowserScopeFromLocation(app) {
-    const requested = new URLSearchParams(window.location.search).get("scope");
-    if (!requested || requested === "global") return "global";
-    if (!requested.startsWith("campaign:")) return null;
-
-    const campaignId = requested.slice("campaign:".length);
-    return app.campaigns.some(value => String(value.id) === campaignId)
-        ? requested
-        : null;
-}
-
-function browserHref(app, toolRelativePath, scopeValue = app.browserScope) {
-    const base = app.hostContext.toolBasePath ?? "/tools/rules-core";
-    const path = `${base.replace(/\/$/, "")}${toolRelativePath || "/"}`;
-    const parameters = new URLSearchParams(window.location.search);
-    parameters.delete("scope");
-    if (scopeValue?.startsWith("campaign:")) {
-        parameters.set("scope", scopeValue);
-    }
-    const query = parameters.toString();
-    return query ? `${path}?${query}` : path;
-}
-
-function pushToolRoute(app, toolRelativePath, scopeValue = app.browserScope) {
-    const href = browserHref(app, toolRelativePath || "/", scopeValue);
-    const current = `${window.location.pathname}${window.location.search}`;
-    if (current !== href) window.history.pushState({}, "", href);
-}
-
-function catalogRouteForEntity(entityType) {
-    if (!entityType) return "/";
-    for (const [segment, mappedType] of ROUTE_FAMILIES.entries()) {
-        if (mappedType === entityType) return `/${segment}`;
-    }
-    return `/types/${encodeURIComponent(entityType)}`;
 }
