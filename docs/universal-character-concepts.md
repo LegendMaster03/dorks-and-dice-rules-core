@@ -33,6 +33,7 @@ A universal competency entry exposes:
 - compatibility mechanic keys;
 - reviewed source/import aliases;
 - applicable profiles and facets;
+- normalized universal mechanical semantics, including deterministic governing-Ability resolution;
 - relationships;
 - source attribution/provenance.
 
@@ -76,11 +77,23 @@ competency.forgery
 
 The semantic identity does not merge numeric systems. Alchemy can simultaneously have a 3.x ranked-skill profile and a later tool-proficiency profile. Ranks, class-skill state, governing Ability, trained-only behavior, Armor Check Penalty behavior, proficiency contribution, and tool-use rules remain attached to the applicable profile/facet.
 
+At the universal level, Ability aliases such as `wis`/`wisdom` and `int`/`intelligence` normalize to one key. A competency with one known governing Ability reports `fixed`; a competency whose reviewed implementation profiles genuinely disagree reports `varies-by-implementation` plus the complete normalized Ability-key set. Rules Core does not erase a conflict by returning no Ability.
+
 ## Universal competency families
 
 `Craft`, `Perform`, and `Profession` are organizational universal families. A family is not a shared rank pool. Every child is independently addressable and can carry its own source/rule implementation.
 
-The reviewed baseline catalog is deliberately source-backed rather than inferred from arbitrary strings. Additional imported source-defined specialties can still exist, but they do not become reviewed baseline members merely by name similarity.
+The reviewed family rule is also an authoritative Rules-layer mechanical default. A reviewed child inherits these mechanics unless a reviewed specialization explicitly overrides them:
+
+| Family | Governing Ability | Ranks | Class-skill state | Training state | Trained only | Armor Check Penalty | Evaluation |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Craft | Intelligence | yes | yes | yes | no | no | ranked skill |
+| Perform | Charisma | yes | yes | yes | no | no | ranked skill |
+| Profession | Wisdom | yes | yes | yes | yes | no | ranked skill |
+
+These defaults are Rules-layer normalization, not fabricated source records. If a reviewed family member is absent from the effective source-shaped Rule Concepts, Rules Core materializes a usable universal mechanic/profile with `profileOrigin: rules`, no SourceEntity revision attribution, and the stable semantic mechanic key such as `competency.blacksmithing`. Character consumers do not fabricate the profile or infer the family Ability.
+
+The reviewed baseline catalog is deliberately reviewed rather than inferred from arbitrary strings. Additional imported source-defined specialties can still exist, but they do not become reviewed baseline members merely by name similarity.
 
 ### Craft
 
@@ -174,6 +187,10 @@ These are composite relationships, not aliases. The granular universal competenc
 
 `Open Lock` and `Disable Device` also remain separate from unrestricted `Thieves' Tools`. Their relationships are scoped to their corresponding uses. `Disguise` remains distinct from `Disguise Kit` with a related-competency relationship rather than shared unrestricted training identity.
 
+## Speak Language
+
+Historical `Speak Language` source evidence remains preserved, but it is reconciled through the language-proficiency subsystem. It is not projected as an ordinary universal competency or skill mechanic, and Rules Core does not invent a governing Ability for it. Compatibility and source history remain available at the Source/Rules boundary for migration and audit purposes.
+
 ## Migration
 
 The migration strategy is in-place and non-destructive:
@@ -183,8 +200,9 @@ The migration strategy is in-place and non-destructive:
 3. project old concept keys through explicit reviewed semantic aliases;
 4. retain source-shaped `mechanics` entries for evaluation and compatibility;
 5. expose one semantic entry in `competencies` for the Character consumer;
-6. retain compatibility mechanic keys so old Character references can be recognized during migration;
-7. keep facet-specific numeric Character state separate while using the universal training-state key for shared learned identity.
+6. retain compatibility mechanic keys so old Character rank, class-skill, and training references can be recognized during migration;
+7. accept both raw historical concept keys and historical `competency.*` mechanic keys when resolving Character-owned state;
+8. keep facet-specific numeric Character state separate while using the universal training-state key for shared learned identity.
 
 The legacy Knowledge-family cleanup additionally removes obsolete visible `Knowledge` family metadata from older persisted source revisions during Character projection without mutating immutable source evidence.
 

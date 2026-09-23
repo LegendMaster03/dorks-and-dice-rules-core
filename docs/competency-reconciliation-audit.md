@@ -53,7 +53,7 @@ This document classifies the reviewed 3e/3.5e competency corpus for the cross-ed
 | Scry | 7 | Preserved standalone. |
 | Search | 7 | Preserved standalone. |
 | Sense Motive | 2 | Directly normalizes to Insight. |
-| Speak Language | 6 | Transformed into the language-proficiency subsystem. Historical ranks are not converted into arbitrary language selections. |
+| Speak Language | 6 | Transformed into the language-proficiency subsystem. Historical source/rank evidence is preserved for compatibility, but Speak Language is excluded from the ordinary universal competency/skill catalog and receives no fabricated governing Ability. |
 | Spellcraft | 7 | Preserved standalone. |
 | Spot | 3 | Contributor to Perception with Listen. |
 | Swim | 3 | Contributor to Athletics with Climb and Jump. |
@@ -73,7 +73,7 @@ This document classifies the reviewed 3e/3.5e competency corpus for the cross-ed
 
 ## Specialized families
 
-The Character contract has a reviewed universal family catalog independent of whether a particular serialized SRD snapshot emitted every specialty row. The parent family is taxonomy only; children remain independent learned competencies.
+The Character contract has a reviewed universal family catalog independent of whether a particular serialized SRD snapshot emitted every specialty row. The parent family is taxonomy only; children remain independent learned competencies. The Rules layer owns the family defaults: Craft children are Intelligence-based ranked skills, Perform children are Charisma-based ranked skills, and Profession children are Wisdom-based trained-only ranked skills; all retain class-skill and training state and do not apply Armor Check Penalty by default. Missing source-shaped specialty rows are materialized as Rules-layer mechanics without fabricated SourceEntity provenance.
 
 ### Craft
 

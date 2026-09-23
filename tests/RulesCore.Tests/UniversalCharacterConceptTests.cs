@@ -119,6 +119,87 @@ public sealed class UniversalCharacterConceptTests
     }
 
     [Fact]
+    public void ReviewedFamilyMembersInheritAuthoritativeRulesLayerMechanics()
+    {
+        var families = new[]
+        {
+            (Name: "Craft", Count: 20, Ability: "intelligence", TrainedOnly: false),
+            (Name: "Perform", Count: 9, Ability: "charisma", TrainedOnly: false),
+            (Name: "Profession", Count: 25, Ability: "wisdom", TrainedOnly: true)
+        };
+
+        foreach (var family in families)
+        {
+            var members = KnownUniversalCompetencies.FamilyMembers
+                .Where(value => string.Equals(
+                    value.FamilyName,
+                    family.Name,
+                    StringComparison.Ordinal))
+                .ToArray();
+            Assert.Equal(family.Count, members.Length);
+
+            foreach (var member in members)
+            {
+                var mechanics = KnownUniversalCompetencies.ResolveMechanics(member.IdentityKey);
+                Assert.NotNull(mechanics);
+                Assert.Equal(family.Ability, mechanics!.GoverningAbilityKey);
+                Assert.True(mechanics.SupportsRanks);
+                Assert.True(mechanics.SupportsClassSkillState);
+                Assert.True(mechanics.SupportsTrainingState);
+                Assert.Equal(family.TrainedOnly, mechanics.TrainedOnly);
+                Assert.False(mechanics.ArmorCheckPenaltyApplies);
+                Assert.Equal("ranked-skill", mechanics.EvaluationProfileKey);
+                Assert.Equal(CharacterMechanicEvaluationKinds.Sum, mechanics.EvaluationKind);
+                Assert.True(mechanics.CanEvaluate);
+            }
+        }
+    }
+
+    [Fact]
+    public void UniversalAbilityAliasesNormalizeAndKnowledgeNeverBecomesAFamily()
+    {
+        Assert.Equal("strength", KnownUniversalCompetencies.NormalizeAbilityKey("str"));
+        Assert.Equal("strength", KnownUniversalCompetencies.NormalizeAbilityKey("strength"));
+        Assert.Equal("dexterity", KnownUniversalCompetencies.NormalizeAbilityKey("dex"));
+        Assert.Equal("dexterity", KnownUniversalCompetencies.NormalizeAbilityKey("dexterity"));
+        Assert.Equal("constitution", KnownUniversalCompetencies.NormalizeAbilityKey("con"));
+        Assert.Equal("constitution", KnownUniversalCompetencies.NormalizeAbilityKey("constitution"));
+        Assert.Equal("intelligence", KnownUniversalCompetencies.NormalizeAbilityKey("int"));
+        Assert.Equal("intelligence", KnownUniversalCompetencies.NormalizeAbilityKey("intelligence"));
+        Assert.Equal("wisdom", KnownUniversalCompetencies.NormalizeAbilityKey("wis"));
+        Assert.Equal("wisdom", KnownUniversalCompetencies.NormalizeAbilityKey("wisdom"));
+        Assert.Equal("charisma", KnownUniversalCompetencies.NormalizeAbilityKey("cha"));
+        Assert.Equal("charisma", KnownUniversalCompetencies.NormalizeAbilityKey("charisma"));
+
+        Assert.DoesNotContain(
+            KnownUniversalCompetencies.Families,
+            value => string.Equals(
+                value.DisplayName,
+                "Knowledge",
+                StringComparison.OrdinalIgnoreCase));
+        Assert.All(
+            KnownUniversalCompetencies.Catalog,
+            value => Assert.False(string.Equals(
+                value.FamilyName,
+                "Knowledge",
+                StringComparison.OrdinalIgnoreCase)));
+    }
+
+    [Fact]
+    public void SpeakLanguageIsNotAnOrdinaryUniversalCompetency()
+    {
+        Assert.False(
+            KnownUniversalCompetencies.IsOrdinaryCharacterCompetencyIdentity(
+                "speak-language"));
+        Assert.False(
+            KnownUniversalCompetencies.IsOrdinaryCharacterCompetencyIdentity(
+                "competency.speak-language"));
+        Assert.True(
+            KnownUniversalCompetencies.IsOrdinaryCharacterCompetencyIdentity(
+                "arcana"));
+    }
+
+    [Fact]
     public void UniversalSizeCatalogContainsAllNineThreeXCategoriesAndConsequences()
     {
         var expected = new[]
