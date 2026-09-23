@@ -15,6 +15,8 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
 {
     private const int DiscoveryPageSize = 200;
     private readonly RuleAdjudicationWorkStore store = new(dbContext);
+    private readonly RuleAdjudicationEvidenceReader evidence =
+        new(dbContext, new RuleAdjudicationWorkStore(dbContext));
 
     public async Task<RuleAdjudicationDiscoveryView> DiscoverAsync(
         string actorUserId,
@@ -81,8 +83,8 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
 
         foreach (var conceptId in conceptIds)
         {
-            var latestDecision = await GetLatestDecisionAsync(conceptId, cancellationToken);
-            if (latestDecision is not null && await IsUsableDecisionAsync(latestDecision, actor, cancellationToken))
+            var latestDecision = await evidence.GetLatestDecisionAsync(conceptId, cancellationToken);
+            if (latestDecision is not null && await evidence.IsUsableDecisionAsync(latestDecision, actor, cancellationToken))
             {
                 continue;
             }
@@ -169,7 +171,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
         var all = await store.GetAllAsync(cancellationToken);
         foreach (var item in all)
         {
-            if (await CanViewAsync(item, actor, cancellationToken))
+            if (await evidence.CanViewAsync(item, actor, cancellationToken))
             {
                 await ReconcileAsync(item, actor, cancellationToken);
             }
@@ -200,11 +202,11 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
         var results = new List<RuleAdjudicationWorkSummaryView>();
         foreach (var row in rows)
         {
-            if (!await CanViewAsync(row, actor, cancellationToken)) continue;
+            if (!await evidence.CanViewAsync(row, actor, cancellationToken)) continue;
             var current = await ReconcileAsync(row, actor, cancellationToken);
             if (kind is not null && !string.Equals(current.WorkKind, kind, StringComparison.Ordinal)) continue;
             if (state is not null && !string.Equals(current.State, state, StringComparison.Ordinal)) continue;
-            var summary = await BuildSummaryAsync(current, actor, cancellationToken);
+            var summary = await evidence.BuildSummaryAsync(current, actor, cancellationToken);
             if (!includePublishedCompleted
                 && summary.State == RuleAdjudicationWorkStates.Completed
                 && !summary.CompletedButUnpublished)
@@ -231,10 +233,10 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
         var actor = RequireActor(userId);
         await store.EnsureSchemaAsync(cancellationToken);
         var row = await store.GetAsync(workItemId, cancellationToken);
-        if (row is null || !await CanViewAsync(row, actor, cancellationToken)) return null;
+        if (row is null || !await evidence.CanViewAsync(row, actor, cancellationToken)) return null;
         row = await ReconcileAsync(row, actor, cancellationToken);
 
-        var summary = await BuildSummaryAsync(row, actor, cancellationToken);
+        var summary = await evidence.BuildSummaryAsync(row, actor, cancellationToken);
         SourceNormalizationCandidateView? normalizationCandidate = null;
         GlobalRuleAuthoringConceptView? rule = null;
         IReadOnlyList<RuleAdjudicationSourceRevisionEvidenceView> sourceEvidence = [];
@@ -245,16 +247,16 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
 
         if (row.WorkKind == RuleAdjudicationWorkKinds.NormalizationReview && row.SourceEntityId is Guid sourceEntityId)
         {
-            normalizationCandidate = await FindNormalizationCandidateAsync(sourceEntityId, actor, cancellationToken);
+            normalizationCandidate = await evidence.FindNormalizationCandidateAsync(sourceEntityId, actor, cancellationToken);
         }
 
         if (row.RuleConceptId is Guid conceptId
             && row.WorkKind is RuleAdjudicationWorkKinds.GlobalRuleAdjudication or RuleAdjudicationWorkKinds.SourceUpdateReview)
         {
             rule = await new GlobalRulesAuthoringService(dbContext).GetConceptAsync(conceptId, actor, cancellationToken);
-            sourceEvidence = await BuildSourceEvidenceAsync(conceptId, actor, cancellationToken);
-            semanticComparisons = await BuildSemanticComparisonsAsync(conceptId, sourceEvidence, actor, cancellationToken);
-            var latest = await GetLatestDecisionAsync(conceptId, cancellationToken);
+            sourceEvidence = await evidence.BuildSourceEvidenceAsync(conceptId, actor, cancellationToken);
+            semanticComparisons = await evidence.BuildSemanticComparisonsAsync(conceptId, sourceEvidence, actor, cancellationToken);
+            var latest = await evidence.GetLatestDecisionAsync(conceptId, cancellationToken);
             decisionGuard = new RuleAdjudicationDecisionGuardView(latest?.Id, latest?.DecisionNumber);
         }
 
@@ -264,7 +266,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
         if (row.WorkKind == RuleAdjudicationWorkKinds.SourceUpdateReview
             && row.RuleConceptId is Guid sourceUpdateConceptId)
         {
-            var pending = await GetVisiblePendingSourceUpdatesAsync(actor, cancellationToken);
+            var pending = await evidence.GetVisiblePendingSourceUpdatesAsync(actor, cancellationToken);
             if (pending.Any(value => value.RuleConceptId == sourceUpdateConceptId
                 && value.GlobalRuleDecisionId == row.ExpectedGlobalRuleDecisionId
                 && value.LatestSourceEntityRevisionId == row.SourceRevisionId))
@@ -275,7 +277,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
                     cancellationToken);
                 if (sourceUpdate is not null)
                 {
-                    sourceUpdate = await NormalizeSourceUpdateEvidenceAsync(
+                    sourceUpdate = await evidence.NormalizeSourceUpdateEvidenceAsync(
                         sourceUpdate,
                         cancellationToken);
                 }
@@ -324,7 +326,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
         await store.EnsureSchemaAsync(cancellationToken);
         await using var transaction = await dbContext.Database.BeginTransactionAsync(IsolationLevel.Serializable, cancellationToken);
         var row = await store.GetForUpdateAsync(workItemId, cancellationToken);
-        if (row is null || !await CanViewAsync(row, actor, cancellationToken))
+        if (row is null || !await evidence.CanViewAsync(row, actor, cancellationToken))
         {
             await transaction.RollbackAsync(cancellationToken);
             return null;
@@ -333,7 +335,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
             && string.Equals(row.Question, question, StringComparison.Ordinal))
         {
             await transaction.CommitAsync(cancellationToken);
-            return await BuildSummaryAsync(row, actor, cancellationToken);
+            return await evidence.BuildSummaryAsync(row, actor, cancellationToken);
         }
         EnsureVersion(row, request.ExpectedVersion);
         if (row.State is RuleAdjudicationWorkStates.Completed or RuleAdjudicationWorkStates.Deferred or RuleAdjudicationWorkStates.ManualResolutionRequired)
@@ -356,7 +358,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
             dedupeKey: $"clarification-requested:{updated.Version}",
             cancellationToken);
         await transaction.CommitAsync(cancellationToken);
-        return await BuildSummaryAsync(updated, actor, cancellationToken);
+        return await evidence.BuildSummaryAsync(updated, actor, cancellationToken);
     }
 
     public async Task<RuleAdjudicationWorkSummaryView?> AnswerClarificationAsync(
@@ -371,7 +373,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
         await store.EnsureSchemaAsync(cancellationToken);
         await using var transaction = await dbContext.Database.BeginTransactionAsync(IsolationLevel.Serializable, cancellationToken);
         var row = await store.GetForUpdateAsync(workItemId, cancellationToken);
-        if (row is null || !await CanViewAsync(row, actor, cancellationToken))
+        if (row is null || !await evidence.CanViewAsync(row, actor, cancellationToken))
         {
             await transaction.RollbackAsync(cancellationToken);
             return null;
@@ -381,7 +383,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
             && string.Equals(row.Answer, answer, StringComparison.Ordinal))
         {
             await transaction.CommitAsync(cancellationToken);
-            return await BuildSummaryAsync(row, actor, cancellationToken);
+            return await evidence.BuildSummaryAsync(row, actor, cancellationToken);
         }
         EnsureVersion(row, request.ExpectedVersion);
         if (row.State != RuleAdjudicationWorkStates.WaitingForHuman || row.Question is null)
@@ -404,7 +406,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
             dedupeKey: $"clarification-answered:{updated.Version}",
             cancellationToken);
         await transaction.CommitAsync(cancellationToken);
-        return await BuildSummaryAsync(updated, actor, cancellationToken);
+        return await evidence.BuildSummaryAsync(updated, actor, cancellationToken);
     }
 
     public Task<RuleAdjudicationWorkSummaryView?> EscalateAsync(
@@ -481,7 +483,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
         await store.EnsureSchemaAsync(cancellationToken);
         await using var transaction = await dbContext.Database.BeginTransactionAsync(IsolationLevel.Serializable, cancellationToken);
         var row = await store.GetForUpdateAsync(workItemId, cancellationToken);
-        if (row is null || !await CanViewAsync(row, actor, cancellationToken))
+        if (row is null || !await evidence.CanViewAsync(row, actor, cancellationToken))
         {
             await transaction.RollbackAsync(cancellationToken);
             return null;
@@ -491,7 +493,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
             && string.Equals(row.DeferredReason, deferredReason, StringComparison.Ordinal))
         {
             await transaction.CommitAsync(cancellationToken);
-            return await BuildSummaryAsync(row, actor, cancellationToken);
+            return await evidence.BuildSummaryAsync(row, actor, cancellationToken);
         }
         EnsureVersion(row, expectedVersion);
         if (!allowFrom.Contains(row.State))
@@ -517,7 +519,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
             dedupeKey: $"{eventKind}:{updated.Version}",
             cancellationToken);
         await transaction.CommitAsync(cancellationToken);
-        return await BuildSummaryAsync(updated, actor, cancellationToken);
+        return await evidence.BuildSummaryAsync(updated, actor, cancellationToken);
     }
 
     private async Task<StoredRuleAdjudicationWorkItem> ReconcileAsync(
@@ -564,8 +566,8 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
 
         if (row.WorkKind == RuleAdjudicationWorkKinds.GlobalRuleAdjudication && row.RuleConceptId is Guid conceptId)
         {
-            var latest = await GetLatestDecisionAsync(conceptId, cancellationToken);
-            if (latest is null || !await IsUsableDecisionAsync(latest, actor, cancellationToken))
+            var latest = await evidence.GetLatestDecisionAsync(conceptId, cancellationToken);
+            if (latest is null || !await evidence.IsUsableDecisionAsync(latest, actor, cancellationToken))
             {
                 return await ReopenDerivedCompletionAsync(
                     row,
@@ -591,7 +593,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
 
         if (row.WorkKind == RuleAdjudicationWorkKinds.SourceUpdateReview && row.RuleConceptId is Guid updateConceptId)
         {
-            var pending = await GetVisiblePendingSourceUpdatesAsync(actor, cancellationToken);
+            var pending = await evidence.GetVisiblePendingSourceUpdatesAsync(actor, cancellationToken);
             var remainsPending = pending.Any(value => value.RuleConceptId == updateConceptId
                 && value.GlobalRuleDecisionId == row.ExpectedGlobalRuleDecisionId
                 && value.LatestSourceEntityRevisionId == row.SourceRevisionId);
@@ -604,7 +606,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
             }
 
             row = await store.CompleteAsync(row, updateConceptId, cancellationToken);
-            var latest = await GetLatestDecisionAsync(updateConceptId, cancellationToken);
+            var latest = await evidence.GetLatestDecisionAsync(updateConceptId, cancellationToken);
             var rejection = row.ExpectedGlobalRuleDecisionId is Guid expectedDecisionId
                 && row.SourceRevisionId is Guid reviewedRevisionId
                 ? await new SourceRevisionRejectionService(dbContext).GetRecordedAsync(
@@ -686,7 +688,7 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
         GlobalRuleDecision latest,
         CancellationToken cancellationToken)
     {
-        var publication = await GetCurrentPublicationAsync(latest.RuleConceptId, cancellationToken);
+        var publication = await evidence.GetCurrentPublicationAsync(latest.RuleConceptId, cancellationToken);
         if (publication is null || publication.DecisionId != latest.Id) return;
         await store.AppendEventAsync(
             row.Id,
@@ -700,256 +702,6 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
             publication.RulesetRevisionId,
             dedupeKey: $"publication:{publication.RulesetRevisionId:D}:{latest.Id:D}",
             cancellationToken);
-    }
-
-    private async Task<RuleAdjudicationWorkSummaryView> BuildSummaryAsync(
-        StoredRuleAdjudicationWorkItem row,
-        string actor,
-        CancellationToken cancellationToken)
-    {
-        string? conceptKey = null;
-        string? displayName = null;
-        string? entityType = null;
-        if (row.RuleConceptId is Guid conceptId)
-        {
-            var concept = await dbContext.RuleConcepts.AsNoTracking()
-                .SingleOrDefaultAsync(value => value.Id == conceptId, cancellationToken);
-            conceptKey = concept?.Key;
-            displayName = concept?.DisplayName;
-            entityType = concept?.EntityType;
-        }
-        if (displayName is null && row.SourceEntityId is Guid sourceEntityId)
-        {
-            var source = await dbContext.SourceEntities.AsNoTracking()
-                .SingleOrDefaultAsync(value => value.Id == sourceEntityId, cancellationToken);
-            displayName = source?.Name;
-            entityType ??= source?.EntityType;
-        }
-
-        var completedButUnpublished = false;
-        var published = false;
-        if (row.State == RuleAdjudicationWorkStates.Completed && row.RuleConceptId is Guid resolvedConceptId)
-        {
-            var latest = await GetLatestDecisionAsync(resolvedConceptId, cancellationToken);
-            if (latest is not null)
-            {
-                var publication = await GetCurrentPublicationAsync(resolvedConceptId, cancellationToken);
-                published = publication?.DecisionId == latest.Id;
-                completedButUnpublished = !published;
-            }
-        }
-
-        var events = await store.GetEventsAsync(row.Id, cancellationToken);
-        var deterministicReason = events
-            .LastOrDefault(value => value.EventKind is RuleAdjudicationWorkEventKinds.DeterministicResolutionApplied
-                or RuleAdjudicationWorkEventKinds.DeterministicResolutionRequiresReview)?.Message;
-
-        return new RuleAdjudicationWorkSummaryView(
-            row.Id,
-            row.WorkKind,
-            row.State,
-            row.Version,
-            row.RuleConceptId,
-            row.SourceEntityId,
-            conceptKey,
-            displayName,
-            entityType,
-            row.State == RuleAdjudicationWorkStates.WaitingForHuman && row.Question is not null && row.Answer is null,
-            completedButUnpublished,
-            published,
-            deterministicReason,
-            row.ManualReason,
-            row.DeferredReason,
-            row.CreatedAt,
-            row.UpdatedAt);
-    }
-
-    private async Task<IReadOnlyList<RuleAdjudicationSourceRevisionEvidenceView>> BuildSourceEvidenceAsync(
-        Guid conceptId,
-        string actor,
-        CancellationToken cancellationToken)
-    {
-        var sourceIds = await CanonicalRuleBindingStore.GetAccessibleSourceEntityIdsForConceptAsync(
-            dbContext,
-            conceptId,
-            actor,
-            cancellationToken);
-        if (sourceIds.Count == 0) return [];
-        var ignored = (await new GlobalSourceDispositionService(dbContext).GetIgnoredPackageIdsAsync(cancellationToken)).ToHashSet();
-        var sources = await dbContext.SourceEntities
-            .AsNoTracking()
-            .Include(value => value.SourcePackage)
-            .Include(value => value.Revisions)
-            .Where(value => sourceIds.Contains(value.Id) && !ignored.Contains(value.SourcePackageId))
-            .ToArrayAsync(cancellationToken);
-        var results = new List<RuleAdjudicationSourceRevisionEvidenceView>();
-        foreach (var source in sources)
-        {
-            var revision = source.Revisions.OrderByDescending(value => value.RevisionNumber).FirstOrDefault();
-            if (revision is null) continue;
-            var publication = await CanonicalPublicationMetadataReader.ReadAsync(
-                dbContext,
-                source.Id,
-                cancellationToken);
-            var edition = publication?.GameEdition ?? source.FormatKey;
-            using var document = JsonDocument.Parse(revision.GetMechanicalContentJson());
-            results.Add(new RuleAdjudicationSourceRevisionEvidenceView(
-                source.Id,
-                revision.Id,
-                revision.RevisionNumber,
-                revision.Fingerprint,
-                source.Name,
-                source.SourceCode ?? string.Empty,
-                source.SourcePackage.Key,
-                source.SourcePackage.DisplayName,
-                edition,
-                edition,
-                revision.ImportedAt,
-                document.RootElement.Clone()));
-        }
-        return results
-            .OrderBy(value => value.EditionDisplayName, StringComparer.Ordinal)
-            .ThenBy(value => value.SourceCode, StringComparer.Ordinal)
-            .ThenBy(value => value.SourceEntityId)
-            .ToArray();
-    }
-
-    private async Task<IReadOnlyList<RuleSemanticComparisonView>> BuildSemanticComparisonsAsync(
-        Guid conceptId,
-        IReadOnlyList<RuleAdjudicationSourceRevisionEvidenceView> sources,
-        string actor,
-        CancellationToken cancellationToken)
-    {
-        if (sources.Count < 2) return [];
-        var service = new RuleSemanticComparisonService(dbContext);
-        var results = new List<RuleSemanticComparisonView>();
-        for (var left = 0; left < sources.Count - 1; left++)
-        {
-            for (var right = left + 1; right < sources.Count; right++)
-            {
-                var comparison = await service.CompareAsync(
-                    new RuleSemanticComparisonRequest(
-                        new RuleAdjudicationScopeRequest(RuleAdjudicationScopeKinds.Global),
-                        conceptId,
-                        sources[left].SourceEntityRevisionId,
-                        sources[right].SourceEntityRevisionId),
-                    actor,
-                    cancellationToken);
-                if (comparison is not null) results.Add(comparison);
-            }
-        }
-        return results;
-    }
-
-    private async Task<SourceNormalizationCandidateView?> FindNormalizationCandidateAsync(
-        Guid sourceEntityId,
-        string actor,
-        CancellationToken cancellationToken)
-    {
-        var service = new SourceNormalizationService(dbContext);
-        for (var offset = 0; ; offset += DiscoveryPageSize)
-        {
-            var page = await service.GetCandidatesPageAsync(
-                actor,
-                limit: DiscoveryPageSize,
-                offset: offset,
-                cancellationToken: cancellationToken);
-            var candidate = page.SingleOrDefault(value => value.SourceEntityId == sourceEntityId);
-            if (candidate is not null)
-            {
-                var gameEdition = await ReadCanonicalGameEditionAsync(sourceEntityId, cancellationToken);
-                return string.IsNullOrWhiteSpace(gameEdition)
-                    ? candidate
-                    : candidate with
-                    {
-                        EditionKey = gameEdition,
-                        EditionDisplayName = gameEdition
-                    };
-            }
-            if (page.Count < DiscoveryPageSize) return null;
-        }
-    }
-
-    private async Task<SourceRevisionReviewPreviewView> NormalizeSourceUpdateEvidenceAsync(
-        SourceRevisionReviewPreviewView preview,
-        CancellationToken cancellationToken)
-    {
-        var gameEdition = await ReadCanonicalGameEditionAsync(
-            preview.Update.SourceEntityId,
-            cancellationToken);
-        return string.IsNullOrWhiteSpace(gameEdition)
-            ? preview
-            : preview with
-            {
-                Update = preview.Update with
-                {
-                    EditionKey = gameEdition,
-                    EditionDisplayName = gameEdition
-                }
-            };
-    }
-
-    private async Task<string?> ReadCanonicalGameEditionAsync(
-        Guid sourceEntityId,
-        CancellationToken cancellationToken) =>
-        (await CanonicalPublicationMetadataReader.ReadAsync(
-            dbContext,
-            sourceEntityId,
-            cancellationToken))?.GameEdition;
-
-    private async Task<IReadOnlyList<SourceRevisionReviewItemView>> GetVisiblePendingSourceUpdatesAsync(
-        string actor,
-        CancellationToken cancellationToken)
-    {
-        var pending = await new SourceRevisionReviewService(dbContext).GetPendingAsync(actor, cancellationToken);
-        return await new SourceRevisionRejectionService(dbContext).FilterRejectedAsync(pending, cancellationToken);
-    }
-
-    private async Task<bool> CanViewAsync(
-        StoredRuleAdjudicationWorkItem row,
-        string actor,
-        CancellationToken cancellationToken)
-    {
-        if (row.WorkKind == RuleAdjudicationWorkKinds.GlobalRuleAdjudication) return true;
-        if (row.SourceEntityId is not Guid sourceEntityId) return row.RuleConceptId is not null;
-        return await dbContext.SourceEntities.AsNoTracking().AnyAsync(
-            value => value.Id == sourceEntityId
-                && (value.SourcePackage.IsPublic
-                    || value.SourcePackage.UserGrants.Any(grant => grant.UserId == actor)),
-            cancellationToken);
-    }
-
-    private async Task<GlobalRuleDecision?> GetLatestDecisionAsync(Guid conceptId, CancellationToken cancellationToken) =>
-        await dbContext.GlobalRuleDecisions
-            .AsNoTracking()
-            .Where(value => value.RuleConceptId == conceptId)
-            .OrderByDescending(value => value.DecisionNumber)
-            .FirstOrDefaultAsync(cancellationToken);
-
-    private async Task<bool> IsUsableDecisionAsync(
-        GlobalRuleDecision decision,
-        string actor,
-        CancellationToken cancellationToken) =>
-        !RuleAutoResolutionService.IsAutomaticDecision(decision)
-        || await RuleAutoResolutionService.IsCurrentAutomaticDecisionAsync(dbContext, decision, actor, cancellationToken);
-
-    private async Task<CurrentPublication?> GetCurrentPublicationAsync(Guid conceptId, CancellationToken cancellationToken)
-    {
-        var latestRevision = await dbContext.RulesetRevisions.AsNoTracking()
-            .OrderByDescending(value => value.RevisionNumber)
-            .FirstOrDefaultAsync(cancellationToken);
-        if (latestRevision is null) return null;
-        var entry = await dbContext.RulesetRevisionEntries.AsNoTracking()
-            .SingleOrDefaultAsync(
-                value => value.RulesetRevisionId == latestRevision.Id && value.RuleConceptId == conceptId,
-                cancellationToken);
-        return entry is null
-            ? null
-            : new CurrentPublication(
-                latestRevision.Id,
-                latestRevision.RevisionNumber,
-                latestRevision.PublishedByUserId,
-                entry.GlobalRuleDecisionId);
     }
 
     private static RuleDeterministicResolutionEvidenceView? BuildDeterministicEvidence(
@@ -1034,10 +786,5 @@ public sealed class RuleAdjudicationWorkService(RulesCoreDbContext dbContext)
     private static string Hash(string value) =>
         Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(value))).ToLowerInvariant()[..16];
 
-    private sealed record CurrentPublication(
-        Guid RulesetRevisionId,
-        int RevisionNumber,
-        string PublishedByUserId,
-        Guid DecisionId);
-}
 
+}
