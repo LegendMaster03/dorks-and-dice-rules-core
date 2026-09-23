@@ -164,7 +164,8 @@ public sealed class SourcePackageDeduplicationService(RulesCoreDbContext dbConte
             WHERE package.is_public = FALSE
                 AND (
                     package.package_key LIKE 'user-source-%'
-                    OR package.package_key LIKE 'user-content-%')
+                    OR package.package_key LIKE 'user-content-%'
+                    OR package.package_key LIKE 'user-origin-%')
                 AND EXISTS (
                     SELECT 1
                     FROM current_user_source registration
