@@ -133,7 +133,6 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         string displayName;
         string? sourceUrl;
         string originIdentity;
-        string provider;
         IReadOnlyList<NormalizedSourceRepresentation> representations;
 
         if (kind == CurrentUserSourceKinds.Upload)
@@ -153,7 +152,6 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             displayName = fileName;
             sourceUrl = null;
             originIdentity = artifact.OriginIdentity;
-            provider = "user-upload";
         }
         else
         {
@@ -166,14 +164,62 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             displayName = WebSourceDisplayName(uri);
             sourceUrl = uri.AbsoluteUri;
             originIdentity = $"web:{NormalizeWebOrigin(uri)}";
-            provider = uri.Host;
         }
 
         var originKey = Fingerprint(Encoding.UTF8.GetBytes(originIdentity));
-        var packageKey = $"user-source-{Fingerprint(Encoding.UTF8.GetBytes($"{userId}\n{originIdentity}"))[..24]}";
-        var packageDisplayName = kind == CurrentUserSourceKinds.Web
-            ? $"Web source {sourceUrl}"
-            : $"Uploaded source {originKey[..12]}";
+        var packageKey = SharedPackageKey(originIdentity);
+        var packageDisplayName = $"Shared user source {originKey[..16]}";
+        const string packageProvider = "user-source";
+
+        var reusable = await TryReadReusablePackageAsync(
+            packageKey,
+            representations,
+            cancellationToken);
+        if (reusable is not null)
+        {
+            if (progressReporter is not null)
+            {
+                await progressReporter(
+                    new CurrentUserSourceImportProgress(
+                        "finalizing",
+                        reusable.Value.EntityCount,
+                        reusable.Value.EntityCount,
+                        "Reused an existing identical source package",
+                        RecordsDiscovered: reusable.Value.EntityCount,
+                        RecordsTranslated: reusable.Value.EntityCount,
+                        EntitiesPersisted: reusable.Value.EntityCount,
+                        UnchangedEntities: reusable.Value.EntityCount,
+                        RepresentationsStored: 0,
+                        RepresentationsReused: representations.Count),
+                    cancellationToken);
+            }
+
+            await grants.GrantAsync(userId, reusable.Value.PackageId, cancellationToken);
+            await EnsureSchemaAsync(cancellationToken);
+            if (kind == CurrentUserSourceKinds.Web && sourceUrl is not null)
+            {
+                await new IncompleteCurrentUserSourceImportCleanupService(dbContext)
+                    .CleanupWebAddAsync(userId, sourceUrl, cancellationToken);
+            }
+            return await UpsertRegistrationAsync(
+                userId,
+                kind,
+                displayName,
+                sourceUrl,
+                reusable.Value.PackageId,
+                originKey,
+                reusable.Value.SourceCodes,
+                reusable.Value.EntityCount,
+                cancellationToken);
+        }
+
+        await TryAdoptLegacyPackageAsync(
+            userId,
+            originIdentity,
+            packageKey,
+            packageDisplayName,
+            representations,
+            cancellationToken);
 
         Guid? packageId = null;
         var entityCount = 0;
@@ -226,7 +272,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             var importRequest = new ImportNormalizedSourceRequest(
                 packageKey,
                 packageDisplayName,
-                provider,
+                packageProvider,
                 License: null,
                 IsPublic: false,
                 representation);
@@ -272,6 +318,12 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
                 kind == CurrentUserSourceKinds.Web
                     ? "The Web source did not contain any compatible files."
                     : "The uploaded file is not compatible with Rules Core.");
+        }
+
+        if (kind == CurrentUserSourceKinds.Web && sourceUrl is not null)
+        {
+            await new IncompleteCurrentUserSourceImportCleanupService(dbContext)
+                .CleanupWebAddAsync(userId, sourceUrl, cancellationToken);
         }
 
         await grants.GrantAsync(userId, packageId.Value, cancellationToken);
@@ -376,6 +428,135 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             .Select(value => value.LocalKey)
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .Count();
+
+    private async Task<bool> TryAdoptLegacyPackageAsync(
+        string userId,
+        string originIdentity,
+        string sharedPackageKey,
+        string sharedDisplayName,
+        IReadOnlyList<NormalizedSourceRepresentation> representations,
+        CancellationToken cancellationToken)
+    {
+        if (await dbContext.SourcePackages
+            .AsNoTracking()
+            .AnyAsync(value => value.Key == sharedPackageKey, cancellationToken))
+        {
+            return false;
+        }
+
+        var legacyKey =
+            $"user-source-{Fingerprint(Encoding.UTF8.GetBytes($"{userId}\n{originIdentity}"))[..24]}";
+        var legacy = await dbContext.SourcePackages
+            .AsNoTracking()
+            .SingleOrDefaultAsync(value => value.Key == legacyKey, cancellationToken);
+        if (legacy is null) return false;
+
+        var stored = await dbContext.SourceRepresentations
+            .AsNoTracking()
+            .Where(value => value.SourcePackageId == legacy.Id)
+            .Select(value => new { value.FormatKey, value.OriginIdentity, value.ContentSha256 })
+            .ToArrayAsync(cancellationToken);
+        if (stored.Length == 0) return false;
+
+        var expected = representations
+            .Select(RepresentationStorageIdentity)
+            .ToHashSet(StringComparer.Ordinal);
+        if (stored.Any(value => !expected.Contains(
+                RepresentationStorageIdentity(
+                    value.FormatKey,
+                    value.OriginIdentity,
+                    value.ContentSha256))))
+        {
+            return false;
+        }
+
+        var affected = await dbContext.SourcePackages
+            .Where(value => value.Id == legacy.Id && value.Key == legacyKey)
+            .ExecuteUpdateAsync(
+                setters => setters
+                    .SetProperty(value => value.Key, sharedPackageKey)
+                    .SetProperty(value => value.DisplayName, sharedDisplayName)
+                    .SetProperty(value => value.Provider, "user-source")
+                    .SetProperty(value => value.License, (string?)null),
+                cancellationToken);
+        dbContext.ChangeTracker.Clear();
+        return affected == 1;
+    }
+
+    private async Task<(Guid PackageId, int EntityCount, string[] SourceCodes)?> TryReadReusablePackageAsync(
+        string packageKey,
+        IReadOnlyList<NormalizedSourceRepresentation> representations,
+        CancellationToken cancellationToken)
+    {
+        var package = await dbContext.SourcePackages
+            .AsNoTracking()
+            .SingleOrDefaultAsync(value => value.Key == packageKey, cancellationToken);
+        if (package is null) return null;
+
+        var stored = await dbContext.SourceRepresentations
+            .AsNoTracking()
+            .Where(value => value.SourcePackageId == package.Id)
+            .Select(value => new { value.FormatKey, value.OriginIdentity, value.ContentSha256 })
+            .ToArrayAsync(cancellationToken);
+        var actual = stored
+            .Select(value => RepresentationStorageIdentity(
+                value.FormatKey,
+                value.OriginIdentity,
+                value.ContentSha256))
+            .ToHashSet(StringComparer.Ordinal);
+        var expected = representations
+            .Select(RepresentationStorageIdentity)
+            .ToArray();
+        if (expected.Any(value => !actual.Contains(value))) return null;
+
+        var currentEntities = representations
+            .SelectMany(value => value.Records.Select(record =>
+                $"{value.FormatKey}\n{record.NativeKey}"))
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+        if (currentEntities.Length == 0) return null;
+
+        var sourceCodes = representations
+            .SelectMany(value => value.Records)
+            .Select(value => value.SourceCode)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value!)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        return (package.Id, currentEntities.Length, sourceCodes);
+    }
+
+    internal static string SharedPackageKey(string originIdentity) =>
+        $"user-origin-{Fingerprint(Encoding.UTF8.GetBytes(originIdentity))}";
+
+    internal static string PackageOriginIdentity(string representationOriginIdentity)
+    {
+        if (representationOriginIdentity.StartsWith("web:", StringComparison.Ordinal))
+        {
+            var separator = representationOriginIdentity.IndexOf('#', 4);
+            return separator < 0
+                ? representationOriginIdentity
+                : representationOriginIdentity[..separator];
+        }
+
+        return representationOriginIdentity;
+    }
+
+    private static string RepresentationStorageIdentity(NormalizedSourceRepresentation representation)
+    {
+        var contentHash = Fingerprint(representation.Artifact.Content);
+        return RepresentationStorageIdentity(
+            representation.FormatKey,
+            representation.Artifact.OriginIdentity,
+            contentHash);
+    }
+
+    private static string RepresentationStorageIdentity(
+        string formatKey,
+        string originIdentity,
+        string contentHash) =>
+        $"{formatKey}\n{originIdentity}\n{contentHash}";
 
     public async Task<CurrentUserSourceView?> RefreshAsync(
         string currentUserId,
