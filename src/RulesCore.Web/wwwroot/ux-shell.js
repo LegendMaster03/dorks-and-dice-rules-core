@@ -351,11 +351,6 @@ export function enhanceRenderedView(app, container) {
         card.classList.add("rules-core-panel");
     });
 
-    const firstCard = container.querySelector(":scope > .card");
-    if (firstCard && ["sources", "version-review"].includes(app.activeView)) {
-        firstCard.classList.add("rules-core-page-lead");
-    }
-
     enhanceRenderedFragment(container);
     return container;
 }
