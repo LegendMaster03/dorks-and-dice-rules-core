@@ -71,6 +71,9 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
         await using var transaction = await dbContext.Database.BeginTransactionAsync(
             IsolationLevel.Serializable,
             cancellationToken);
+        await dbContext.Database.ExecuteSqlInterpolatedAsync(
+            $"SELECT pg_advisory_xact_lock(hashtextextended({packageKey}, 0));",
+            cancellationToken);
         var package = await dbContext.SourcePackages
             .SingleOrDefaultAsync(value => value.Key == packageKey, cancellationToken);
         if (package is null)
@@ -452,6 +455,27 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
             cancellationToken);
         if (existing is not null) return (existing, true);
 
+        await dbContext.Database.ExecuteSqlInterpolatedAsync($$"""
+            INSERT INTO source_content_blob (
+                content_sha256, content_length, content_bytes, created_at)
+            VALUES (
+                {{contentHash}},
+                {{artifact.Content.LongLength}},
+                {{artifact.Content}},
+                {{DateTimeOffset.UtcNow}})
+            ON CONFLICT (content_sha256) DO NOTHING;
+            """, cancellationToken);
+
+        var storedBlobLength = await dbContext.SourceContentBlobs
+            .Where(value => value.Sha256 == contentHash)
+            .Select(value => value.ContentLength)
+            .SingleAsync(cancellationToken);
+        if (storedBlobLength != artifact.Content.LongLength)
+        {
+            throw new InvalidDataException(
+                "A stored source-content blob has the same SHA-256 digest but a different byte length.");
+        }
+
         var previous = await dbContext.SourceRepresentations
             .Where(value => value.SourcePackageId == packageId && value.OriginIdentity == originIdentity)
             .OrderByDescending(value => value.ImportedAt)
@@ -469,7 +493,6 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
             MediaType = NormalizeOptional(artifact.MediaType, 200),
             ContentSha256 = contentHash,
             ContentLength = artifact.Content.LongLength,
-            ContentBytes = artifact.Content.ToArray(),
             MetadataJson = NormalizeMetadataJson(normalized.MetadataJson),
             ImportedAt = DateTimeOffset.UtcNow
         };

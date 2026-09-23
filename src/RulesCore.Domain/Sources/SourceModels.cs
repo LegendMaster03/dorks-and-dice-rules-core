@@ -17,6 +17,16 @@ public sealed class SourcePackage
     public ICollection<UserSourceGrant> UserGrants { get; set; } = new List<UserSourceGrant>();
 }
 
+public sealed class SourceContentBlob
+{
+    public string Sha256 { get; set; } = string.Empty;
+    public long ContentLength { get; set; }
+    public byte[] ContentBytes { get; set; } = Array.Empty<byte>();
+    public DateTimeOffset CreatedAt { get; set; }
+
+    public ICollection<SourceRepresentation> Representations { get; set; } = new List<SourceRepresentation>();
+}
+
 public sealed class SourceRepresentation
 {
     public Guid Id { get; set; }
@@ -29,11 +39,11 @@ public sealed class SourceRepresentation
     public string? MediaType { get; set; }
     public string ContentSha256 { get; set; } = string.Empty;
     public long ContentLength { get; set; }
-    public byte[] ContentBytes { get; set; } = Array.Empty<byte>();
     public string MetadataJson { get; set; } = "{}";
     public DateTimeOffset ImportedAt { get; set; }
 
     public SourcePackage SourcePackage { get; set; } = null!;
+    public SourceContentBlob ContentBlob { get; set; } = null!;
     public SourceRepresentation? PreviousSourceRepresentation { get; set; }
     public ICollection<SourceRepresentation> SupersedingRepresentations { get; set; } = new List<SourceRepresentation>();
     public ICollection<SourceEntityRevision> EntityRevisions { get; set; } = new List<SourceEntityRevision>();

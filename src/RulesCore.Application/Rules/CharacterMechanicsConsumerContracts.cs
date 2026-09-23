@@ -22,7 +22,24 @@ public sealed record CharacterUniversalCompetencyView(
     IReadOnlyList<CharacterCompetencyProfileView> Profiles,
     IReadOnlyList<CharacterCompetencyFacetView> Facets,
     IReadOnlyList<CharacterCompetencyRelationshipView> RelatedCompetencies,
-    IReadOnlyList<CharacterMechanicSourceAttributionView> SourceAttributions);
+    IReadOnlyList<CharacterMechanicSourceAttributionView> SourceAttributions,
+    CharacterUniversalCompetencyMechanicsView? Mechanics = null);
+
+public sealed record CharacterUniversalGoverningAbilityView(
+    string ResolutionKind,
+    string? FixedAbilityKey,
+    IReadOnlyList<string> AbilityKeys);
+
+public sealed record CharacterUniversalCompetencyMechanicsView(
+    CharacterUniversalGoverningAbilityView GoverningAbility,
+    bool SupportsRanks,
+    bool SupportsClassSkillState,
+    bool SupportsTrainingState,
+    bool? TrainedOnly,
+    bool? ArmorCheckPenaltyApplies,
+    IReadOnlyList<string> EvaluationProfileKeys,
+    IReadOnlyList<string> EvaluationKinds,
+    bool CanEvaluate);
 
 public sealed record CharacterMechanicView(
     string MechanicKey,
@@ -123,7 +140,8 @@ public sealed record CharacterCompetencyProfileView(
     string? IdentityKey = null,
     string? IdentityName = null,
     string? SharedTrainingKey = null,
-    IReadOnlyList<CharacterCompetencyRelationshipView>? RelatedCompetencies = null);
+    IReadOnlyList<CharacterCompetencyRelationshipView>? RelatedCompetencies = null,
+    string ProfileOrigin = "source");
 
 public sealed record CharacterCompetencyDefinitionView(
     string CompetencyKind,

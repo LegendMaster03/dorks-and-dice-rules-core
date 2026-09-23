@@ -258,12 +258,25 @@ public sealed class BaselineBootstrapIntegrationTests
                 .Where(value => value.Competency is not null)
                 .ToArray();
             Assert.NotEmpty(competencyMechanics);
+            var expectedOrdinaryConceptKeys = expectedConceptKeys
+                .Where(value => !string.Equals(
+                    value,
+                    "skill.speak-language",
+                    StringComparison.OrdinalIgnoreCase))
+                .ToHashSet(StringComparer.Ordinal);
             Assert.Equal(
-                expectedConceptKeys.OrderBy(value => value, StringComparer.Ordinal),
+                expectedOrdinaryConceptKeys.OrderBy(value => value, StringComparer.Ordinal),
                 competencyMechanics
+                    .Where(value => value.RuleConceptId.HasValue)
                     .Select(value => value.ConceptKey!)
                     .ToHashSet(StringComparer.Ordinal)
                     .OrderBy(value => value, StringComparer.Ordinal));
+            Assert.DoesNotContain(
+                competencyMechanics,
+                value => string.Equals(
+                    value.Competency?.IdentityKey,
+                    "speak-language",
+                    StringComparison.OrdinalIgnoreCase));
 
             foreach (var definition in KnownMechanicalRelationships.All)
             {
@@ -319,16 +332,60 @@ public sealed class BaselineBootstrapIntegrationTests
             var universalCompetencies = catalog.Competencies
                 ?? throw new InvalidOperationException(
                     "Character mechanics did not expose universal competencies.");
-            foreach (var familyName in new[] { "Craft", "Perform", "Profession" })
+            var familyExpectations = new[]
+            {
+                (Name: "Craft", Count: 20, Ability: "intelligence", TrainedOnly: false),
+                (Name: "Perform", Count: 9, Ability: "charisma", TrainedOnly: false),
+                (Name: "Profession", Count: 25, Ability: "wisdom", TrainedOnly: true)
+            };
+            foreach (var expectation in familyExpectations)
             {
                 var family = Assert.Single(
                     universalCompetencies,
                     value => value.IsFamily
                         && string.Equals(
                             value.DisplayName,
-                            familyName,
+                            expectation.Name,
                             StringComparison.Ordinal));
-                Assert.NotEmpty(family.ChildCompetencyKeys);
+                Assert.Equal(expectation.Count, family.ChildCompetencyKeys.Count);
+
+                var children = universalCompetencies
+                    .Where(value => !value.IsFamily
+                        && string.Equals(
+                            value.FamilyName,
+                            expectation.Name,
+                            StringComparison.Ordinal))
+                    .ToArray();
+                Assert.Equal(expectation.Count, children.Length);
+                Assert.All(
+                    children,
+                    child =>
+                    {
+                        Assert.NotEmpty(child.MechanicKeys);
+                        Assert.NotEmpty(child.Profiles);
+                        Assert.NotEmpty(child.Facets);
+                        Assert.NotNull(child.Mechanics);
+                        Assert.True(child.Mechanics!.CanEvaluate);
+                        Assert.True(child.Mechanics.SupportsRanks);
+                        Assert.True(child.Mechanics.SupportsClassSkillState);
+                        Assert.True(child.Mechanics.SupportsTrainingState);
+                        Assert.Equal(
+                            (bool?)expectation.TrainedOnly,
+                            child.Mechanics.TrainedOnly);
+                        Assert.Equal(false, child.Mechanics.ArmorCheckPenaltyApplies);
+                        Assert.Equal(
+                            "fixed",
+                            child.Mechanics.GoverningAbility.ResolutionKind);
+                        Assert.Equal(
+                            expectation.Ability,
+                            child.Mechanics.GoverningAbility.FixedAbilityKey);
+                        Assert.Equal(
+                            [expectation.Ability],
+                            child.Mechanics.GoverningAbility.AbilityKeys);
+                        Assert.Contains(
+                            "ranked-skill",
+                            child.Mechanics.EvaluationProfileKeys);
+                    });
             }
 
             var universalAlchemy = Assert.Single(
@@ -339,6 +396,99 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Equal(
                 "competency.alchemy.training",
                 universalAlchemy.TrainingStateKey);
+            Assert.NotNull(universalAlchemy.Mechanics);
+            Assert.Equal(
+                "fixed",
+                universalAlchemy.Mechanics!.GoverningAbility.ResolutionKind);
+            Assert.Equal(
+                "intelligence",
+                universalAlchemy.Mechanics.GoverningAbility.FixedAbilityKey);
+
+            var catalogOnlyCraft = universalCompetencies
+                .Where(value => !value.IsFamily
+                    && string.Equals(
+                        value.FamilyName,
+                        "Craft",
+                        StringComparison.Ordinal))
+                .FirstOrDefault(value => value.Profiles.Any(profile =>
+                    string.Equals(
+                        profile.ProfileOrigin,
+                        "rules",
+                        StringComparison.Ordinal)));
+            Assert.NotNull(catalogOnlyCraft);
+            var rulesProfile = Assert.Single(
+                catalogOnlyCraft!.Profiles,
+                value => string.Equals(
+                    value.ProfileOrigin,
+                    "rules",
+                    StringComparison.Ordinal));
+            Assert.Equal(Guid.Empty, rulesProfile.SourceEntityRevisionId);
+            Assert.Empty(rulesProfile.SourceAttributions ?? []);
+            Assert.DoesNotContain(
+                catalogOnlyCraft.Facets.SelectMany(
+                    value => value.ProfileSourceEntityRevisionIds),
+                value => value == Guid.Empty);
+            Assert.Contains(
+                catalog.Mechanics,
+                value => string.Equals(
+                        value.MechanicKey,
+                        catalogOnlyCraft.SemanticKey,
+                        StringComparison.Ordinal)
+                    && value.RuleConceptId is null
+                    && value.SourceAttributions.Count == 0);
+
+            var catalogOnlyEvaluation = await mechanics.EvaluateGlobalAsync(
+                catalogOnlyCraft.SemanticKey,
+                new CharacterMechanicEvaluationRequest(
+                    IntegerInputs: new Dictionary<string, int>
+                    {
+                        ["abilityContribution"] = 3,
+                        ["ranks"] = 4
+                    }),
+                userId: null);
+            Assert.NotNull(catalogOnlyEvaluation);
+            Assert.Equal(7, catalogOnlyEvaluation.Value);
+
+            var oldCraftConceptKey =
+                KnownUniversalCompetencies.CompatibilityConceptKeys(
+                        catalogOnlyCraft.IdentityKey)
+                    .First(value => value.StartsWith(
+                        "skill.craft-",
+                        StringComparison.Ordinal));
+            var characterProjection = new CharacterRulesProjectionService(db);
+            var compatibilityProjection = await characterProjection.ResolveGlobalAsync(
+                new CharacterRulesProjectionRequest(
+                    BaseAbilityScores: new Dictionary<string, int>
+                    {
+                        ["strength"] = 10,
+                        ["dexterity"] = 10,
+                        ["constitution"] = 10,
+                        ["intelligence"] = 14,
+                        ["wisdom"] = 10,
+                        ["charisma"] = 10
+                    },
+                    CompetencyRanks: new Dictionary<string, int>
+                    {
+                        [oldCraftConceptKey] = 5
+                    },
+                    TrainingKeys: [],
+                    ClassSkillKeys: [oldCraftConceptKey]),
+                userId: null);
+            var projectedCatalogOnlyCraft = Assert.Single(
+                compatibilityProjection.Mechanics,
+                value => string.Equals(
+                    value.MechanicKey,
+                    catalogOnlyCraft.SemanticKey,
+                    StringComparison.Ordinal));
+            Assert.Equal(CharacterResolutionStates.Resolved, projectedCatalogOnlyCraft.State);
+            Assert.Equal(7, projectedCatalogOnlyCraft.NumericValue);
+            var projectedClassSkill = Assert.Single(
+                compatibilityProjection.Qualifications,
+                value => string.Equals(
+                    value.QualificationKey,
+                    $"qualification.class-skill.{catalogOnlyCraft.SemanticKey}",
+                    StringComparison.Ordinal));
+            Assert.True(projectedClassSkill.IsQualified);
             Assert.DoesNotContain(
                 universalCompetencies,
                 value => string.Equals(

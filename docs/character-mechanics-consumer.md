@@ -111,9 +111,13 @@ competency.alchemy
     competency.tool.alchemists-supplies
 ```
 
-The two implementation mechanics remain available because a 3.x ranked skill and a later tool proficiency do not share a numeric calculation. The Character consumer does not render them as separate learned competencies and does not infer their relationship. The universal entry already exposes its implementation mechanic keys, compatibility keys, reviewed aliases, profiles, facets, relationships, and provenance.
+The two implementation mechanics remain available because a 3.x ranked skill and a later tool proficiency do not share a numeric calculation. The Character consumer does not render them as separate learned competencies and does not infer their relationship. The universal entry already exposes its implementation mechanic keys, compatibility keys, reviewed aliases, profiles, facets, normalized `mechanics` semantics, relationships, and provenance.
 
-`Craft`, `Perform`, and `Profession` appear as explicit organizational entries whose `childCompetencyKeys` identify independently trainable children. `Knowledge` does not appear as a family.
+The universal `mechanics.governingAbility` contract reports `fixed`, `varies-by-implementation`, or `none`, together with normalized Ability keys. Equivalent source spellings such as `wis` and `wisdom` converge before this resolution. A real conflict remains explicit instead of causing the universal Ability to disappear.
+
+`Craft`, `Perform`, and `Profession` appear as explicit organizational entries whose `childCompetencyKeys` identify independently trainable children. Their reviewed children are mechanically usable even when no effective source-shaped row exists: Rules Core supplies a `profileOrigin: rules` ranked-skill implementation with no fabricated source attribution. `Knowledge` does not appear as a family.
+
+Historical `Speak Language` evidence is handled by the language-proficiency subsystem and is excluded from this ordinary competency surface.
 
 See `docs/universal-character-concepts.md` for the reviewed catalog, alias decisions, migration strategy, and Size model.
 
