@@ -197,6 +197,11 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
 
             await grants.GrantAsync(userId, reusable.Value.PackageId, cancellationToken);
             await EnsureSchemaAsync(cancellationToken);
+            if (kind == CurrentUserSourceKinds.Web && sourceUrl is not null)
+            {
+                await new IncompleteCurrentUserSourceImportCleanupService(dbContext)
+                    .CleanupWebAddAsync(userId, sourceUrl, cancellationToken);
+            }
             return await UpsertRegistrationAsync(
                 userId,
                 kind,
@@ -208,6 +213,14 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
                 reusable.Value.EntityCount,
                 cancellationToken);
         }
+
+        await TryAdoptLegacyPackageAsync(
+            userId,
+            originIdentity,
+            packageKey,
+            packageDisplayName,
+            representations,
+            cancellationToken);
 
         Guid? packageId = null;
         var entityCount = 0;
@@ -306,6 +319,12 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
                 kind == CurrentUserSourceKinds.Web
                     ? "The Web source did not contain any compatible files."
                     : "The uploaded file is not compatible with Rules Core.");
+        }
+
+        if (kind == CurrentUserSourceKinds.Web && sourceUrl is not null)
+        {
+            await new IncompleteCurrentUserSourceImportCleanupService(dbContext)
+                .CleanupWebAddAsync(userId, sourceUrl, cancellationToken);
         }
 
         await grants.GrantAsync(userId, packageId.Value, cancellationToken);
@@ -410,6 +429,60 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             .Select(value => value.LocalKey)
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .Count();
+
+    private async Task<bool> TryAdoptLegacyPackageAsync(
+        string userId,
+        string originIdentity,
+        string sharedPackageKey,
+        string sharedDisplayName,
+        IReadOnlyList<NormalizedSourceRepresentation> representations,
+        CancellationToken cancellationToken)
+    {
+        if (await dbContext.SourcePackages
+            .AsNoTracking()
+            .AnyAsync(value => value.Key == sharedPackageKey, cancellationToken))
+        {
+            return false;
+        }
+
+        var legacyKey =
+            $"user-source-{Fingerprint(Encoding.UTF8.GetBytes($"{userId}\n{originIdentity}"))[..24]}";
+        var legacy = await dbContext.SourcePackages
+            .AsNoTracking()
+            .SingleOrDefaultAsync(value => value.Key == legacyKey, cancellationToken);
+        if (legacy is null) return false;
+
+        var stored = await dbContext.SourceRepresentations
+            .AsNoTracking()
+            .Where(value => value.SourcePackageId == legacy.Id)
+            .Select(value => new { value.FormatKey, value.FileName, value.ContentSha256 })
+            .ToArrayAsync(cancellationToken);
+        if (stored.Length == 0) return false;
+
+        var expected = representations
+            .Select(RepresentationStorageIdentity)
+            .ToHashSet(StringComparer.Ordinal);
+        if (stored.Any(value => !expected.Contains(
+                RepresentationStorageIdentity(
+                    value.FormatKey,
+                    value.FileName,
+                    value.ContentSha256))))
+        {
+            return false;
+        }
+
+        var affected = await dbContext.SourcePackages
+            .Where(value => value.Id == legacy.Id && value.Key == legacyKey)
+            .ExecuteUpdateAsync(
+                setters => setters
+                    .SetProperty(value => value.Key, sharedPackageKey)
+                    .SetProperty(value => value.DisplayName, sharedDisplayName)
+                    .SetProperty(value => value.Provider, "user-source")
+                    .SetProperty(value => value.License, (string?)null),
+                cancellationToken);
+        dbContext.ChangeTracker.Clear();
+        return affected == 1;
+    }
 
     private async Task<(Guid PackageId, int EntityCount, string[] SourceCodes)?> TryReadReusablePackageAsync(
         string packageKey,
