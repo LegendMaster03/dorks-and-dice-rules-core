@@ -313,7 +313,7 @@ public sealed class SourceNormalizationMaintenanceService(
         var recordName = ReadRawString(revision.RawJson, "name") ?? entity.Name;
         var nativeEntityType = ReadRawString(revision.RawJson, "entityType")
             ?? entity.EntityType;
-        var record = new NormalizedSourceRecord(
+        var reconstructedRecord = new NormalizedSourceRecord(
             nativeEntityType,
             recordName,
             entity.SourceCode,
@@ -327,10 +327,10 @@ public sealed class SourceNormalizationMaintenanceService(
             new NormalizedSourceRepresentation(
                 representation.FormatKey,
                 artifact,
-                [record],
+                [reconstructedRecord],
                 publications,
                 representation.MetadataJson),
-            record,
+            reconstructedRecord,
             WasReconstructed: true);
     }
 
