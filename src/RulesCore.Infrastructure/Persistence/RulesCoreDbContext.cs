@@ -7,6 +7,7 @@ namespace RulesCore.Infrastructure.Persistence;
 public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> options) : DbContext(options)
 {
     public DbSet<SourcePackage> SourcePackages => Set<SourcePackage>();
+    public DbSet<SourceContentBlob> SourceContentBlobs => Set<SourceContentBlob>();
     public DbSet<SourceRepresentation> SourceRepresentations => Set<SourceRepresentation>();
     public DbSet<SourceEntity> SourceEntities => Set<SourceEntity>();
     public DbSet<SourceEntityRevision> SourceEntityRevisions => Set<SourceEntityRevision>();
@@ -37,6 +38,16 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
             entity.HasIndex(value => value.Key).IsUnique().HasDatabaseName("ux_source_package_key");
         });
 
+        modelBuilder.Entity<SourceContentBlob>(entity =>
+        {
+            entity.ToTable("source_content_blob");
+            entity.HasKey(value => value.Sha256).HasName("pk_source_content_blob");
+            entity.Property(value => value.Sha256).HasColumnName("content_sha256").HasMaxLength(64);
+            entity.Property(value => value.ContentLength).HasColumnName("content_length");
+            entity.Property(value => value.ContentBytes).HasColumnName("content_bytes").HasColumnType("bytea");
+            entity.Property(value => value.CreatedAt).HasColumnName("created_at");
+        });
+
         modelBuilder.Entity<SourceRepresentation>(entity =>
         {
             entity.ToTable("source_representation");
@@ -51,7 +62,6 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
             entity.Property(value => value.MediaType).HasColumnName("media_type").HasMaxLength(200);
             entity.Property(value => value.ContentSha256).HasColumnName("content_sha256").HasMaxLength(64);
             entity.Property(value => value.ContentLength).HasColumnName("content_length");
-            entity.Property(value => value.ContentBytes).HasColumnName("content_bytes").HasColumnType("bytea");
             entity.Property(value => value.MetadataJson).HasColumnName("metadata_json").HasColumnType("jsonb");
             entity.Property(value => value.ImportedAt).HasColumnName("imported_at");
             entity.HasIndex(value => new { value.SourcePackageId, value.OriginIdentity, value.ContentSha256 })
@@ -63,6 +73,11 @@ public sealed class RulesCoreDbContext(DbContextOptions<RulesCoreDbContext> opti
                 .WithMany(value => value.Representations)
                 .HasForeignKey(value => value.SourcePackageId)
                 .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(value => value.ContentBlob)
+                .WithMany(value => value.Representations)
+                .HasForeignKey(value => value.ContentSha256)
+                .HasPrincipalKey(value => value.Sha256)
+                .OnDelete(DeleteBehavior.Restrict);
             entity.HasOne(value => value.PreviousSourceRepresentation)
                 .WithMany(value => value.SupersedingRepresentations)
                 .HasForeignKey(value => value.PreviousSourceRepresentationId)
