@@ -361,10 +361,12 @@ public sealed class SourceFormatAdapterIntegrationTests
         {
             await using var command = connection.CreateCommand();
             command.CommandText = """
-                SELECT format_key, content_length, content_bytes
-                FROM source_representation
-                WHERE source_package_id = @package_id
-                ORDER BY imported_at DESC
+                SELECT representation.format_key, representation.content_length, blob.content_bytes
+                FROM source_representation representation
+                JOIN source_content_blob blob
+                    ON blob.content_sha256 = representation.content_sha256
+                WHERE representation.source_package_id = @package_id
+                ORDER BY representation.imported_at DESC
                 LIMIT 1;
                 """;
             AddParameter(command, "@package_id", packageId);

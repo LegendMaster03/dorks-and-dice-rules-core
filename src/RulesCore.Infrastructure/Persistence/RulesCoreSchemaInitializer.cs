@@ -112,7 +112,7 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
 
     // Bump this value whenever startup-owned schema SQL changes. The persisted marker
     // makes a schema revision effectively one-time across replicas and restarts.
-    private const string CurrentSchemaRevision = "2026-09-23-source-normalization-backfill-v1";
+    private const string CurrentSchemaRevision = "2026-09-23-source-content-blob-dedup-v1";
 
     // "DNDRCSCH" encoded as a signed 64-bit key. PostgreSQL advisory locks
     // coordinate independent Rules Core processes that share the same database.
@@ -176,6 +176,13 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
         CREATE UNIQUE INDEX IF NOT EXISTS ux_source_package_key
             ON source_package(package_key);
 
+        CREATE TABLE IF NOT EXISTS source_content_blob (
+            content_sha256 varchar(64) NOT NULL,
+            content_length bigint NOT NULL,
+            content_bytes bytea NOT NULL,
+            created_at timestamp with time zone NOT NULL,
+            CONSTRAINT pk_source_content_blob PRIMARY KEY (content_sha256));
+
         CREATE TABLE IF NOT EXISTS source_representation (
             source_representation_id uuid NOT NULL,
             source_package_id uuid NOT NULL,
@@ -187,14 +194,46 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
             media_type varchar(200) NULL,
             content_sha256 varchar(64) NOT NULL,
             content_length bigint NOT NULL,
-            content_bytes bytea NOT NULL,
             metadata_json jsonb NOT NULL,
             imported_at timestamp with time zone NOT NULL,
             CONSTRAINT pk_source_representation PRIMARY KEY (source_representation_id),
             CONSTRAINT fk_source_representation_package FOREIGN KEY (source_package_id)
                 REFERENCES source_package(source_package_id) ON DELETE CASCADE,
+            CONSTRAINT fk_source_representation_content_blob FOREIGN KEY (content_sha256)
+                REFERENCES source_content_blob(content_sha256) ON DELETE RESTRICT,
             CONSTRAINT fk_source_representation_previous FOREIGN KEY (previous_source_representation_id)
                 REFERENCES source_representation(source_representation_id) ON DELETE SET NULL);
+        DO $$
+        BEGIN
+            IF EXISTS (
+                SELECT 1
+                FROM information_schema.columns
+                WHERE table_schema = current_schema()
+                  AND table_name = 'source_representation'
+                  AND column_name = 'content_bytes')
+            THEN
+                INSERT INTO source_content_blob (
+                    content_sha256, content_length, content_bytes, created_at)
+                SELECT DISTINCT ON (content_sha256)
+                    content_sha256,
+                    content_length,
+                    content_bytes,
+                    imported_at
+                FROM source_representation
+                ORDER BY content_sha256, imported_at
+                ON CONFLICT (content_sha256) DO NOTHING;
+
+                ALTER TABLE source_representation DROP COLUMN content_bytes;
+            END IF;
+        END $$;
+
+        ALTER TABLE source_representation
+            DROP CONSTRAINT IF EXISTS fk_source_representation_content_blob;
+        ALTER TABLE source_representation
+            ADD CONSTRAINT fk_source_representation_content_blob
+            FOREIGN KEY (content_sha256)
+            REFERENCES source_content_blob(content_sha256) ON DELETE RESTRICT;
+
         ALTER TABLE source_representation
             DROP CONSTRAINT IF EXISTS fk_source_representation_previous;
         ALTER TABLE source_representation
@@ -203,6 +242,8 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
             REFERENCES source_representation(source_representation_id) ON DELETE SET NULL;
         CREATE UNIQUE INDEX IF NOT EXISTS ux_source_representation_identity
             ON source_representation(source_package_id, origin_identity, content_sha256);
+        CREATE INDEX IF NOT EXISTS ix_source_representation_content_sha256
+            ON source_representation(content_sha256);
         CREATE INDEX IF NOT EXISTS ix_source_representation_origin_history
             ON source_representation(source_package_id, origin_identity, imported_at DESC);
 

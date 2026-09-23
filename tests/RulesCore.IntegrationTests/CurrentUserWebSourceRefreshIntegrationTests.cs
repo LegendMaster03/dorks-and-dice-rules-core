@@ -13,6 +13,89 @@ namespace RulesCore.IntegrationTests;
 public sealed class CurrentUserWebSourceRefreshIntegrationTests
 {
     [Fact]
+    public async Task ChangedWebSourceKeepsSharedOriginPackageAndCreatesNextRevision()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString)) return;
+
+        await using var db = new RulesCoreDbContext(
+            new DbContextOptionsBuilder<RulesCoreDbContext>()
+                .UseNpgsql(connectionString)
+                .Options);
+        await new RulesCoreSchemaInitializer(db).InitializeAsync();
+
+        var token = Guid.NewGuid().ToString("N")[..10];
+        var userId = $"origin-refresh-{token}";
+        var sourceCode = $"OR{token}".ToUpperInvariant();
+        var firstContent = $$"""
+            {
+              "skill": [
+                { "name": "Origin Refresh {{token}}", "source": "{{sourceCode}}", "ability": "int" }
+              ]
+            }
+            """;
+        var secondContent = $$"""
+            {
+              "skill": [
+                { "name": "Origin Refresh {{token}}", "source": "{{sourceCode}}", "ability": "wis" }
+              ]
+            }
+            """;
+
+        var handler = new MutableContentHandler(firstContent);
+        using var httpClient = new HttpClient(handler);
+        var grants = new SourceGrantService(db);
+        var sources = new CurrentUserSourceService(
+            db,
+            new SourceImportService(db),
+            grants,
+            httpClient);
+        var url = $"https://8.8.8.8/origin-refresh-{token}.json";
+
+        Guid? packageId = null;
+        try
+        {
+            var first = await sources.AddAsync(
+                userId,
+                new AddCurrentUserSourceRequest(
+                    CurrentUserSourceKinds.Web,
+                    Url: url));
+
+            packageId = first.SourcePackageId;
+            handler.Content = secondContent;
+            var refreshed = await sources.RefreshAsync(userId, first.Id);
+
+            Assert.NotNull(refreshed);
+            Assert.Equal(first.Id, refreshed!.Id);
+            Assert.Equal(first.SourcePackageId, refreshed.SourcePackageId);
+
+            var entity = await db.SourceEntities
+                .AsNoTracking()
+                .SingleAsync(value =>
+                    value.SourcePackageId == first.SourcePackageId
+                    && value.Name == $"Origin Refresh {token}");
+            var revisions = await db.SourceEntityRevisions
+                .AsNoTracking()
+                .Where(value => value.SourceEntityId == entity.Id)
+                .OrderBy(value => value.RevisionNumber)
+                .ToArrayAsync();
+            Assert.Equal(2, revisions.Length);
+            Assert.Equal(1, revisions[0].RevisionNumber);
+            Assert.Equal(2, revisions[1].RevisionNumber);
+            Assert.NotEqual(revisions[0].Fingerprint, revisions[1].Fingerprint);
+        }
+        finally
+        {
+            if (packageId.HasValue)
+            {
+                await db.SourcePackages
+                    .Where(value => value.Id == packageId.Value)
+                    .ExecuteDeleteAsync();
+            }
+        }
+    }
+
+    [Fact]
     public async Task DueRegistrationsWithSameUnchangedUrlShareOneProbeAndSkipContentRefresh()
     {
         if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore"))) return;
@@ -145,6 +228,26 @@ public sealed class CurrentUserWebSourceRefreshIntegrationTests
         string? UpstreamVersion,
         DateTimeOffset? LastCheckedAt,
         string? LastRefreshError);
+
+    private sealed class MutableContentHandler(string content) : HttpMessageHandler
+    {
+        public string Content { get; set; } = content;
+
+        protected override Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken)
+        {
+            Assert.Equal(HttpMethod.Get, request.Method);
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(Content),
+                RequestMessage = request
+            };
+            response.Content.Headers.ContentType =
+                new MediaTypeHeaderValue("application/json");
+            return Task.FromResult(response);
+        }
+    }
 
     private sealed class CountingHeadHandler(string etag) : HttpMessageHandler
     {

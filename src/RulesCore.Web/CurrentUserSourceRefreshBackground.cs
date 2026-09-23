@@ -14,6 +14,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
     {
         try
         {
+            await ConsolidateDuplicateSourcePackagesAsync(stoppingToken);
             await RequeueInterruptedImportJobsAsync(stoppingToken);
             await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
             var nextRefreshSweep = DateTimeOffset.UtcNow.AddMinutes(10);
@@ -39,6 +40,25 @@ internal sealed class CurrentUserSourceRefreshBackground(
         catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
         {
             // Normal application shutdown.
+        }
+    }
+
+    private async Task ConsolidateDuplicateSourcePackagesAsync(CancellationToken stoppingToken)
+    {
+        await using var scope = scopeFactory.CreateAsyncScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+        var result = await new SourcePackageDeduplicationService(dbContext)
+            .ConsolidateAsync(stoppingToken);
+        if (result.ConsolidatedPackageCount > 0
+            || result.RenamedSharedPackageCount > 0
+            || result.RetainedReferencedDuplicateCount > 0)
+        {
+            logger.LogInformation(
+                "Rules Core source deduplication scanned {CandidateCount} private package(s), consolidated {ConsolidatedCount}, normalized {RenamedCount} shared package key(s), and retained {RetainedCount} referenced duplicate(s).",
+                result.CandidatePackageCount,
+                result.ConsolidatedPackageCount,
+                result.RenamedSharedPackageCount,
+                result.RetainedReferencedDuplicateCount);
         }
     }
 
@@ -148,22 +168,14 @@ internal sealed class CurrentUserSourceRefreshBackground(
                 await ReportProgressAsync(
                     new CurrentUserSourceImportProgress(
                         "preparing",
-                        Detail: "Preparing a clean import attempt"),
+                        Detail: "Preparing import; previously completed source files will be reused"),
                     stoppingToken);
-                var cleanup = new IncompleteCurrentUserSourceImportCleanupService(dbContext);
-                var resetPartial = await cleanup.CleanupWebAddAsync(
-                    job.UserId,
-                    job.Url,
-                    stoppingToken);
-                if (resetPartial)
-                {
-                    await ReportProgressAsync(
-                        new CurrentUserSourceImportProgress(
-                            "preparing",
-                            Detail: "Removed incomplete data from the previous failed attempt"),
-                        stoppingToken);
-                }
 
+                // Add imports are intentionally resumable. Each normalized representation
+                // commits atomically, so a shutdown can leave a valid prefix of a large
+                // source tree in the private package. Do not delete that work before retry.
+                // AddAsync uses the same deterministic package/origin identities and the
+                // normalized importer reuses committed representations/entities/revisions.
                 source = await sourceService.AddAsync(
                     job.UserId,
                     new AddCurrentUserSourceRequest(
@@ -189,6 +201,20 @@ internal sealed class CurrentUserSourceRefreshBackground(
                     stoppingToken);
             }
 
+            var deduplication = await new SourcePackageDeduplicationService(dbContext)
+                .ConsolidateAsync(stoppingToken);
+            if (deduplication.ConsolidatedPackageCount > 0
+                || deduplication.RenamedSharedPackageCount > 0
+                || deduplication.RetainedReferencedDuplicateCount > 0)
+            {
+                logger.LogInformation(
+                    "Rules Core post-import deduplication scanned {CandidateCount} private package(s), consolidated {ConsolidatedCount}, normalized {RenamedCount} shared package key(s), and retained {RetainedCount} referenced duplicate(s).",
+                    deduplication.CandidatePackageCount,
+                    deduplication.ConsolidatedPackageCount,
+                    deduplication.RenamedSharedPackageCount,
+                    deduplication.RetainedReferencedDuplicateCount);
+            }
+
             await jobs.CompleteAsync(job.Id, source.Id, stoppingToken);
             return true;
         }
@@ -212,24 +238,10 @@ internal sealed class CurrentUserSourceRefreshBackground(
                     var jobs = new CurrentUserSourceImportJobService(dbContext);
                     await jobs.FailAsync(job.Id, exception, stoppingToken);
 
-                    if (string.Equals(
-                            job.Operation,
-                            CurrentUserSourceImportJobOperations.Add,
-                            StringComparison.Ordinal))
-                    {
-                        try
-                        {
-                            var cleanup = new IncompleteCurrentUserSourceImportCleanupService(dbContext);
-                            await cleanup.CleanupWebAddAsync(job.UserId, job.Url, stoppingToken);
-                        }
-                        catch (Exception cleanupException)
-                        {
-                            logger.LogWarning(
-                                cleanupException,
-                                "Rules Core could not clean incomplete Web source data for failed job {JobId}; the next retry will attempt cleanup again.",
-                                job.Id);
-                        }
-                    }
+                    // Retain committed representations from failed Add jobs. A later retry
+                    // can resume from those immutable units instead of downloading/persisting
+                    // the complete source tree again. Explicit maintenance can still remove
+                    // an abandoned incomplete package when desired.
                 }
                 catch (Exception recordException)
                 {
