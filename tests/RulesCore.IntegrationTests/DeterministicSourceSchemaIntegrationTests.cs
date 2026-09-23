@@ -91,6 +91,10 @@ public sealed class DeterministicSourceSchemaIntegrationTests
             Assert.True(await IndexExistsAsync(
                 db,
                 schema,
+                "ix_source_representation_content_sha256"));
+            Assert.True(await IndexExistsAsync(
+                db,
+                schema,
                 "ux_source_entity_occurrence_binding_revision"));
             Assert.True(await IndexExistsAsync(
                 db,
