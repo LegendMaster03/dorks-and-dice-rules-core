@@ -203,7 +203,7 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
                 REFERENCES source_content_blob(content_sha256) ON DELETE RESTRICT,
             CONSTRAINT fk_source_representation_previous FOREIGN KEY (previous_source_representation_id)
                 REFERENCES source_representation(source_representation_id) ON DELETE SET NULL);
-        DO $
+        DO $$
         BEGIN
             IF EXISTS (
                 SELECT 1
@@ -225,7 +225,7 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
 
                 ALTER TABLE source_representation DROP COLUMN content_bytes;
             END IF;
-        END $;
+        END $$;
 
         ALTER TABLE source_representation
             DROP CONSTRAINT IF EXISTS fk_source_representation_content_blob;
