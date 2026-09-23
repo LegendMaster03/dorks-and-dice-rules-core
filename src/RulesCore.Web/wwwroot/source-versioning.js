@@ -58,15 +58,6 @@ export function installSourceVersioning(app) {
 
 async function renderVersionReview(app, container) {
     clear(container);
-    const intro = element("div", { className: "card card-body mb-3" });
-    intro.append(
-        element("h3", { className: "h5 mb-1", text: "Cross-version review" }),
-        element("p", {
-            className: "text-body-secondary mb-0",
-            text: "Find likely versions of the same conceptual rule across publications, playtests, D&D editions, and source histories. Suggestions never bind, merge, or publish automatically."
-        }));
-    container.append(intro);
-
     const searchCard = element("div", { className: "card card-body mb-3" });
     const form = element("form", { className: "row g-2 align-items-end" });
     const query = element("input", { type: "search", className: "form-control", placeholder: "Rule name, source, work, or release" });

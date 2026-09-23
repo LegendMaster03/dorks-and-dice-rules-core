@@ -228,16 +228,6 @@ async function renderSourceLibrary(app, container) {
         app.libraryNotice = null;
     }
 
-    container.append(element("div", { className: "card card-body mb-3 rules-core-sources-hero" },
-        element("div", { className: "d-flex flex-wrap justify-content-between align-items-start gap-3" },
-            element("div", {},
-                element("h3", { className: "h4 mb-1", text: "Sources" }),
-                element("p", {
-                    className: "text-body-secondary mb-0",
-                    text: "Manage source access and inspect source records. Importing and source maintenance are intentionally separate from normal rule browsing."
-                })),
-            badge("Source Layer", "primary"))));
-
     await renderBuiltInSources(app, container, BUNDLED_SRDS);
     await renderSourceBrowser(app, container);
 }

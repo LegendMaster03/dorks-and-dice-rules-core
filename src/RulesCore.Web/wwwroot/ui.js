@@ -91,6 +91,56 @@ export function badge(text, kind = "secondary") {
     return element("span", { className: `badge text-bg-${kind}`, text });
 }
 
+export function pageLead({
+    eyebrow = null,
+    title,
+    description = null,
+    actions = [],
+    className = ""
+} = {}) {
+    const copy = element("div", { className: "rules-core-page-lead-copy" });
+    if (eyebrow) {
+        copy.append(element("div", { className: "rules-core-eyebrow", text: eyebrow }));
+    }
+    if (title) {
+        copy.append(element("h2", { className: "rules-core-page-title", text: title }));
+    }
+    if (description) {
+        copy.append(element("p", { className: "rules-core-page-description", text: description }));
+    }
+
+    const lead = element("section", {
+        className: `rules-core-page-lead ${className}`.trim()
+    }, copy);
+
+    const actionNodes = (Array.isArray(actions) ? actions : [actions]).filter(Boolean);
+    if (actionNodes.length) {
+        lead.append(element("div", { className: "rules-core-page-actions" }, actionNodes));
+    }
+    return lead;
+}
+
+export function panel({ className = "", tagName = "section", ariaLabelledBy = null } = {}, ...children) {
+    const attributes = ariaLabelledBy ? { "aria-labelledby": ariaLabelledBy } : undefined;
+    return element(tagName, {
+        className: `card rules-core-panel ${className}`.trim(),
+        attributes
+    }, element("div", { className: "card-body" }, children));
+}
+
+export function toolbar(...children) {
+    return element("div", { className: "rules-core-toolbar" }, children);
+}
+
+export function field(labelText, control, { className = "", helpText = null } = {}) {
+    return element("label", {
+        className: `rules-core-field ${className}`.trim()
+    },
+        element("span", { className: "rules-core-field-label", text: labelText }),
+        control,
+        helpText ? element("span", { className: "rules-core-field-help", text: helpText }) : null);
+}
+
 export function formatDate(value) {
     if (!value) {
         return "—";

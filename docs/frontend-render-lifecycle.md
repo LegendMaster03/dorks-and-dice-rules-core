@@ -30,6 +30,8 @@ This covers partial updates used by the scoped rules browser, Source Library, mo
 
 View-level enhancement remains responsible for presentation that depends on the active Rules Core view rather than an individual fragment, including generated page leads, Rules Lawyer workflow copy, secondary-tool disclosure wrappers, and top-level panel/page-lead treatment.
 
+Shared layout primitives live in `ui.js`. Page leads, panels, toolbars, and fields should use those primitives when a feature needs custom markup instead of re-creating Bootstrap card spacing independently. The compact Rules Library remains a specialized list/detail workspace, but its density and spacing define the default direction for the rest of the Rules Core workspace.
+
 ## Idempotence
 
 Presentation functions must be safe to repeat against unchanged rendered state:
