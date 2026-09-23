@@ -132,6 +132,55 @@ export function toolbar(...children) {
     return element("div", { className: "rules-core-toolbar" }, children);
 }
 
+export function sectionHeading({
+    title,
+    description = null,
+    actions = [],
+    id = null,
+    level = 3,
+    className = ""
+} = {}) {
+    const headingLevel = Math.min(6, Math.max(2, Number(level) || 3));
+    const copy = element("div", { className: "rules-core-section-heading-copy" },
+        element(`h${headingLevel}`, {
+            id,
+            className: "rules-core-section-title",
+            text: title
+        }),
+        description
+            ? element("p", {
+                className: "rules-core-section-description",
+                text: description
+            })
+            : null);
+    const heading = element("div", {
+        className: `rules-core-section-heading ${className}`.trim()
+    }, copy);
+    const actionNodes = (Array.isArray(actions) ? actions : [actions]).filter(Boolean);
+    if (actionNodes.length) {
+        heading.append(element("div", {
+            className: "rules-core-section-actions"
+        }, actionNodes));
+    }
+    return heading;
+}
+
+export function filterBar(...children) {
+    return element("div", { className: "rules-core-filter-bar" }, children);
+}
+
+export function actionBar(...children) {
+    return element("div", { className: "rules-core-action-bar" }, children);
+}
+
+export function listDetailWorkspace(list, detail, { className = "" } = {}) {
+    return element("div", {
+        className: `rules-core-list-detail-workspace ${className}`.trim()
+    },
+        element("section", { className: "rules-core-list-detail-list" }, list),
+        element("section", { className: "rules-core-list-detail-detail" }, detail));
+}
+
 export function field(labelText, control, { className = "", helpText = null } = {}) {
     return element("label", {
         className: `rules-core-field ${className}`.trim()
