@@ -96,7 +96,7 @@ public sealed class CurrentUserSourceDeduplicationRecoveryIntegrationTests
                 .AsNoTracking()
                 .SingleAsync(value => value.Id == legacy.PackageId);
             Assert.Equal(
-                CurrentUserSourceService.SharedPackageKey(originIdentity),
+                $"user-origin-{Fingerprint(originIdentity)}",
                 package.Key);
             Assert.Equal("user-source", package.Provider);
             Assert.True(await grants.HasGrantAsync(userId, legacy.PackageId));
