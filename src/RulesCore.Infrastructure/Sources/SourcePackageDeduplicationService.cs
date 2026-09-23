@@ -190,6 +190,14 @@ public sealed class SourcePackageDeduplicationService(RulesCoreDbContext dbConte
         Guid duplicatePackageId,
         CancellationToken cancellationToken)
     {
+        if (await HasProtectedPackageReferencesAsync(
+                connection,
+                duplicatePackageId,
+                cancellationToken))
+        {
+            return false;
+        }
+
         await using var transaction = await connection.BeginTransactionAsync(
             IsolationLevel.Serializable,
             cancellationToken);
@@ -248,6 +256,20 @@ public sealed class SourcePackageDeduplicationService(RulesCoreDbContext dbConte
                 await registrations.ExecuteNonQueryAsync(cancellationToken);
             }
 
+            if (await RelationExistsAsync(connection, "source_acquisition", cancellationToken, transaction))
+            {
+                await using var acquisitions = connection.CreateCommand();
+                acquisitions.Transaction = transaction;
+                acquisitions.CommandText = """
+                    UPDATE source_acquisition
+                    SET source_package_id = @keeper_package_id
+                    WHERE source_package_id = @duplicate_package_id;
+                    """;
+                AddParameter(acquisitions, "@keeper_package_id", keeperPackageId);
+                AddParameter(acquisitions, "@duplicate_package_id", duplicatePackageId);
+                await acquisitions.ExecuteNonQueryAsync(cancellationToken);
+            }
+
             await using var delete = connection.CreateCommand();
             delete.Transaction = transaction;
             delete.CommandText = """
@@ -271,6 +293,73 @@ public sealed class SourcePackageDeduplicationService(RulesCoreDbContext dbConte
             await transaction.RollbackAsync(CancellationToken.None);
             throw;
         }
+    }
+
+    private static async Task<bool> HasProtectedPackageReferencesAsync(
+        DbConnection connection,
+        Guid packageId,
+        CancellationToken cancellationToken)
+    {
+        if (await RelationExistsAsync(connection, "global_source_disposition", cancellationToken)
+            && await ExistsAsync(
+                connection,
+                """
+                SELECT EXISTS (
+                    SELECT 1
+                    FROM global_source_disposition
+                    WHERE source_package_id = @package_id);
+                """,
+                packageId,
+                cancellationToken))
+        {
+            return true;
+        }
+
+        if (await RelationExistsAsync(connection, "source_package_authority_reference", cancellationToken)
+            && await ExistsAsync(
+                connection,
+                """
+                SELECT EXISTS (
+                    SELECT 1
+                    FROM source_package_authority_reference
+                    WHERE source_package_id = @package_id);
+                """,
+                packageId,
+                cancellationToken))
+        {
+            return true;
+        }
+
+        if (await RelationExistsAsync(connection, "rule_concept_source_binding", cancellationToken)
+            && await ExistsAsync(
+                connection,
+                """
+                SELECT EXISTS (
+                    SELECT 1
+                    FROM rule_concept_source_binding binding
+                    JOIN source_entity entity
+                        ON entity.source_entity_id = binding.source_entity_id
+                    WHERE entity.source_package_id = @package_id);
+                """,
+                packageId,
+                cancellationToken))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private static async Task<bool> ExistsAsync(
+        DbConnection connection,
+        string sql,
+        Guid packageId,
+        CancellationToken cancellationToken)
+    {
+        await using var command = connection.CreateCommand();
+        command.CommandText = sql;
+        AddParameter(command, "@package_id", packageId);
+        return Convert.ToBoolean(await command.ExecuteScalarAsync(cancellationToken));
     }
 
     private static async Task<bool> PackageKeyExistsAsync(
