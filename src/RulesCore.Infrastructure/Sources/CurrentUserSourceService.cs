@@ -133,7 +133,6 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         string displayName;
         string? sourceUrl;
         string originIdentity;
-        string provider;
         IReadOnlyList<NormalizedSourceRepresentation> representations;
 
         if (kind == CurrentUserSourceKinds.Upload)
@@ -153,7 +152,6 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             displayName = fileName;
             sourceUrl = null;
             originIdentity = artifact.OriginIdentity;
-            provider = "user-upload";
         }
         else
         {
@@ -166,14 +164,50 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             displayName = WebSourceDisplayName(uri);
             sourceUrl = uri.AbsoluteUri;
             originIdentity = $"web:{NormalizeWebOrigin(uri)}";
-            provider = uri.Host;
         }
 
         var originKey = Fingerprint(Encoding.UTF8.GetBytes(originIdentity));
-        var packageKey = $"user-source-{Fingerprint(Encoding.UTF8.GetBytes($"{userId}\n{originIdentity}"))[..24]}";
-        var packageDisplayName = kind == CurrentUserSourceKinds.Web
-            ? $"Web source {sourceUrl}"
-            : $"Uploaded source {originKey[..12]}";
+        var bundleFingerprint = SourceBundleFingerprint(representations);
+        var packageKey = SharedPackageKey(bundleFingerprint);
+        var packageDisplayName = $"Shared user source {bundleFingerprint[..16]}";
+        const string packageProvider = "user-source";
+
+        var reusable = await TryReadReusablePackageAsync(
+            packageKey,
+            representations,
+            cancellationToken);
+        if (reusable is not null)
+        {
+            if (progressReporter is not null)
+            {
+                await progressReporter(
+                    new CurrentUserSourceImportProgress(
+                        "finalizing",
+                        reusable.Value.EntityCount,
+                        reusable.Value.EntityCount,
+                        "Reused an existing identical source package",
+                        RecordsDiscovered: reusable.Value.EntityCount,
+                        RecordsTranslated: reusable.Value.EntityCount,
+                        EntitiesPersisted: reusable.Value.EntityCount,
+                        UnchangedEntities: reusable.Value.EntityCount,
+                        RepresentationsStored: 0,
+                        RepresentationsReused: representations.Count),
+                    cancellationToken);
+            }
+
+            await grants.GrantAsync(userId, reusable.Value.PackageId, cancellationToken);
+            await EnsureSchemaAsync(cancellationToken);
+            return await UpsertRegistrationAsync(
+                userId,
+                kind,
+                displayName,
+                sourceUrl,
+                reusable.Value.PackageId,
+                originKey,
+                reusable.Value.SourceCodes,
+                reusable.Value.EntityCount,
+                cancellationToken);
+        }
 
         Guid? packageId = null;
         var entityCount = 0;
@@ -226,7 +260,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             var importRequest = new ImportNormalizedSourceRequest(
                 packageKey,
                 packageDisplayName,
-                provider,
+                packageProvider,
                 License: null,
                 IsPublic: false,
                 representation);
@@ -376,6 +410,80 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             .Select(value => value.LocalKey)
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .Count();
+
+    private async Task<(Guid PackageId, int EntityCount, string[] SourceCodes)?> TryReadReusablePackageAsync(
+        string packageKey,
+        IReadOnlyList<NormalizedSourceRepresentation> representations,
+        CancellationToken cancellationToken)
+    {
+        var package = await dbContext.SourcePackages
+            .AsNoTracking()
+            .SingleOrDefaultAsync(value => value.Key == packageKey, cancellationToken);
+        if (package is null) return null;
+
+        var stored = await dbContext.SourceRepresentations
+            .AsNoTracking()
+            .Where(value => value.SourcePackageId == package.Id)
+            .Select(value => new { value.FormatKey, value.FileName, value.ContentSha256 })
+            .ToArrayAsync(cancellationToken);
+        var expected = representations
+            .Select(RepresentationStorageIdentity)
+            .OrderBy(value => value, StringComparer.Ordinal)
+            .ToArray();
+        var actual = stored
+            .Select(value => RepresentationStorageIdentity(
+                value.FormatKey,
+                value.FileName,
+                value.ContentSha256))
+            .OrderBy(value => value, StringComparer.Ordinal)
+            .ToArray();
+        if (!expected.SequenceEqual(actual, StringComparer.Ordinal)) return null;
+
+        var entityCount = await dbContext.SourceEntities
+            .AsNoTracking()
+            .CountAsync(value => value.SourcePackageId == package.Id, cancellationToken);
+        if (entityCount == 0) return null;
+
+        var sourceCodes = await dbContext.SourceEntities
+            .AsNoTracking()
+            .Where(value => value.SourcePackageId == package.Id && value.SourceCode != null)
+            .Select(value => value.SourceCode!)
+            .Distinct()
+            .OrderBy(value => value)
+            .ToArrayAsync(cancellationToken);
+        return (package.Id, entityCount, sourceCodes);
+    }
+
+    internal static string SourceBundleFingerprint(
+        IReadOnlyList<NormalizedSourceRepresentation> representations)
+    {
+        if (representations.Count == 0)
+        {
+            throw new ArgumentException("A source bundle must contain at least one representation.", nameof(representations));
+        }
+        var identities = representations
+            .Select(RepresentationStorageIdentity)
+            .OrderBy(value => value, StringComparer.Ordinal);
+        return Fingerprint(Encoding.UTF8.GetBytes(string.Join("\n", identities)));
+    }
+
+    internal static string SharedPackageKey(string bundleFingerprint) =>
+        $"user-content-{bundleFingerprint}";
+
+    private static string RepresentationStorageIdentity(NormalizedSourceRepresentation representation)
+    {
+        var contentHash = Fingerprint(representation.Artifact.Content);
+        return RepresentationStorageIdentity(
+            representation.FormatKey,
+            representation.Artifact.FileName,
+            contentHash);
+    }
+
+    private static string RepresentationStorageIdentity(
+        string formatKey,
+        string fileName,
+        string contentHash) =>
+        $"{formatKey}\n{fileName}\n{contentHash}";
 
     public async Task<CurrentUserSourceView?> RefreshAsync(
         string currentUserId,
