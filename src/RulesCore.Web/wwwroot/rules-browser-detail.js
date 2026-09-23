@@ -482,6 +482,25 @@ function appendContributions(container, resolved) {
 }
 
 
+async function getOptionalRuleVersions(app, conceptKey) {
+    try {
+        return await app.api.getRuleVersions(conceptKey);
+    } catch (error) {
+        if (error?.status === 404) return null;
+        throw error;
+    }
+}
+
+async function getOptionalCampaignBaseline(app, campaignId, conceptKey) {
+    try {
+        return await app.api.backend(
+            `/api/campaigns/${encodeURIComponent(campaignId)}/rules/${encodeURIComponent(conceptKey)}/global-baseline`);
+    } catch (error) {
+        if (error?.status === 404) return null;
+        throw error;
+    }
+}
+
 function campaignName(app, campaignId) {
     return app.campaigns.find(value => String(value.id) === String(campaignId))?.name
         ?? "Campaign";
