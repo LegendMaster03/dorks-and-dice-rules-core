@@ -86,7 +86,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             .Select(value => new CharacterProjectionRule(
                 value,
                 value.Document!.Value,
-                EffectiveProvenance(value)))
+                CharacterProjectionResolutionHelpers.EffectiveProvenance(value)))
             .ToArray();
 
         foreach (var rule in projectionRules)
@@ -477,14 +477,14 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
             if (!hasBase)
             {
-                context.Mechanics[scoreKey] = Unresolved(
+                context.Mechanics[scoreKey] = CharacterProjectionResolutionHelpers.Unresolved(
                     scoreKey,
                     "ability-score",
                     $"{CharacterProjectionJson.Humanize(ability)} Score",
                     CharacterResolutionStates.MissingCharacterInput,
                     [baseKey],
                     requiredChoices: requiredChoices);
-                context.Mechanics[modifierKey] = Unresolved(
+                context.Mechanics[modifierKey] = CharacterProjectionResolutionHelpers.Unresolved(
                     modifierKey,
                     "ability-modifier",
                     $"{CharacterProjectionJson.Humanize(ability)} Modifier",
@@ -538,7 +538,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     [],
                     breakdown,
                     CharacterProjectionContext.EmptyProvenance());
-                context.Mechanics[modifierKey] = Unresolved(
+                context.Mechanics[modifierKey] = CharacterProjectionResolutionHelpers.Unresolved(
                     modifierKey,
                     "ability-modifier",
                     $"{CharacterProjectionJson.Humanize(ability)} Modifier",
@@ -702,7 +702,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         const string key = "proficiency.standard";
         if (context.StandardProficiencyLevel <= 0)
         {
-            context.Mechanics[key] = Unresolved(
+            context.Mechanics[key] = CharacterProjectionResolutionHelpers.Unresolved(
                 key,
                 "proficiency",
                 "Proficiency Bonus",
@@ -758,14 +758,14 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             {
                 if (!context.Choices.TryGetValue(choiceKey, out var selectedAbility))
                 {
-                    context.Mechanics[attackKey] = Unresolved(
+                    context.Mechanics[attackKey] = CharacterProjectionResolutionHelpers.Unresolved(
                         attackKey,
                         "attack-bonus",
                         $"{weapon.DisplayName} Attack Bonus",
                         CharacterResolutionStates.ChoiceRequired,
                         requiredChoices: [choiceKey],
                         provenance: weapon.Provenance);
-                    context.Mechanics[damageModifierKey] = Unresolved(
+                    context.Mechanics[damageModifierKey] = CharacterProjectionResolutionHelpers.Unresolved(
                         damageModifierKey,
                         "damage-modifier",
                         $"{weapon.DisplayName} Damage Modifier",
@@ -783,7 +783,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 var normalizedAbility = CharacterProjectionJson.NormalizeAbilityKey(selectedAbility);
                 if (normalizedAbility is not ("strength" or "dexterity"))
                 {
-                    context.Mechanics[attackKey] = Unresolved(
+                    context.Mechanics[attackKey] = CharacterProjectionResolutionHelpers.Unresolved(
                         attackKey,
                         "attack-bonus",
                         $"{weapon.DisplayName} Attack Bonus",
@@ -807,16 +807,16 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             }
 
             if (ability is null
-                || !TryResolvedNumeric(context, $"ability.{ability}.modifier", out var abilityModifier))
+                || !CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, $"ability.{ability}.modifier", out var abilityModifier))
             {
-                context.Mechanics[attackKey] = Unresolved(
+                context.Mechanics[attackKey] = CharacterProjectionResolutionHelpers.Unresolved(
                     attackKey,
                     "attack-bonus",
                     $"{weapon.DisplayName} Attack Bonus",
                     CharacterResolutionStates.MissingCharacterInput,
                     [$"ability.{ability ?? "weapon"}.base"],
                     provenance: weapon.Provenance);
-                context.Mechanics[damageModifierKey] = Unresolved(
+                context.Mechanics[damageModifierKey] = CharacterProjectionResolutionHelpers.Unresolved(
                     damageModifierKey,
                     "damage-modifier",
                     $"{weapon.DisplayName} Damage Modifier",
@@ -839,7 +839,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 + damageOther);
             var damageContributions = new List<CharacterMechanicContributionView>
             {
-                Contribution(
+                CharacterProjectionResolutionHelpers.Contribution(
                     $"ability.{ability}.modifier",
                     $"{CharacterProjectionJson.Humanize(ability)} modifier",
                     abilityModifier)
@@ -857,7 +857,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             }
             if (damageOther != 0)
             {
-                damageContributions.Add(Contribution(
+                damageContributions.Add(CharacterProjectionResolutionHelpers.Contribution(
                     $"damage.{weapon.ConceptKey}.other",
                     "Other damage modifiers",
                     damageOther));
@@ -888,7 +888,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
             if (!proficient.HasValue)
             {
-                context.Mechanics[attackKey] = Unresolved(
+                context.Mechanics[attackKey] = CharacterProjectionResolutionHelpers.Unresolved(
                     attackKey,
                     "attack-bonus",
                     $"{weapon.DisplayName} Attack Bonus",
@@ -905,9 +905,9 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
             var proficiency = 0;
             if (proficient.Value
-                && !TryResolvedNumeric(context, "proficiency.standard", out proficiency))
+                && !CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, "proficiency.standard", out proficiency))
             {
-                context.Mechanics[attackKey] = Unresolved(
+                context.Mechanics[attackKey] = CharacterProjectionResolutionHelpers.Unresolved(
                     attackKey,
                     "attack-bonus",
                     $"{weapon.DisplayName} Attack Bonus",
@@ -931,14 +931,14 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 + attackOther);
             var attackContributions = new List<CharacterMechanicContributionView>
             {
-                Contribution(
+                CharacterProjectionResolutionHelpers.Contribution(
                     $"ability.{ability}.modifier",
                     $"{CharacterProjectionJson.Humanize(ability)} modifier",
                     abilityModifier)
             };
             if (proficient.Value)
             {
-                attackContributions.Add(Contribution(
+                attackContributions.Add(CharacterProjectionResolutionHelpers.Contribution(
                     "proficiency.standard",
                     "Proficiency bonus",
                     proficiency));
@@ -956,7 +956,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             }
             if (attackOther != 0)
             {
-                attackContributions.Add(Contribution(
+                attackContributions.Add(CharacterProjectionResolutionHelpers.Contribution(
                     $"attack.{weapon.ConceptKey}.other",
                     "Other attack modifiers",
                     attackOther));
@@ -1071,7 +1071,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
         if (unclassified.Length > 0)
         {
-            context.Mechanics["defense.ac.total"] = Unresolved(
+            context.Mechanics["defense.ac.total"] = CharacterProjectionResolutionHelpers.Unresolved(
                 "defense.ac.total",
                 "defense",
                 "Armor Class",
@@ -1093,7 +1093,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
         if (armor.Length > 1)
         {
-            context.Mechanics["defense.ac.total"] = Unresolved(
+            context.Mechanics["defense.ac.total"] = CharacterProjectionResolutionHelpers.Unresolved(
                 "defense.ac.total",
                 "defense",
                 "Armor Class",
@@ -1114,7 +1114,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
         if (shields.Length > 1)
         {
-            context.Mechanics["defense.ac.total"] = Unresolved(
+            context.Mechanics["defense.ac.total"] = CharacterProjectionResolutionHelpers.Unresolved(
                 "defense.ac.total",
                 "defense",
                 "Armor Class",
@@ -1133,9 +1133,9 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             return;
         }
 
-        if (!TryResolvedNumeric(context, "ability.dexterity.modifier", out var dexterityModifier))
+        if (!CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, "ability.dexterity.modifier", out var dexterityModifier))
         {
-            context.Mechanics["defense.ac.total"] = Unresolved(
+            context.Mechanics["defense.ac.total"] = CharacterProjectionResolutionHelpers.Unresolved(
                 "defense.ac.total",
                 "defense",
                 "Armor Class",
@@ -1165,7 +1165,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     null,
                     null,
                     CharacterProjectionContext.EmptyProvenance()),
-                Contribution(
+                CharacterProjectionResolutionHelpers.Contribution(
                     "ability.dexterity.modifier",
                     "Dexterity contribution",
                     dexterityModifier)
@@ -1184,7 +1184,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             }
             if (other != 0)
             {
-                contributions.Add(Contribution("defense.ac.other", "Other modifiers", other));
+                contributions.Add(CharacterProjectionResolutionHelpers.Contribution("defense.ac.other", "Other modifiers", other));
             }
             contributions.AddRange(openContributions);
 
@@ -1262,7 +1262,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         };
         if (dexterityContribution == int.MinValue)
         {
-            context.Mechanics["defense.ac.total"] = Unresolved(
+            context.Mechanics["defense.ac.total"] = CharacterProjectionResolutionHelpers.Unresolved(
                 "defense.ac.total",
                 "defense",
                 "Armor Class",
@@ -1287,7 +1287,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 armorEffect.TextValue,
                 armorEffect.SourceConceptKey,
                 armorEffect.Provenance),
-            Contribution(
+            CharacterProjectionResolutionHelpers.Contribution(
                 "ability.dexterity.modifier",
                 "Dexterity contribution",
                 dexterityContribution)
@@ -1306,7 +1306,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         }
         if (other != 0)
         {
-            armoredContributions.Add(Contribution("defense.ac.other", "Other modifiers", other));
+            armoredContributions.Add(CharacterProjectionResolutionHelpers.Contribution("defense.ac.other", "Other modifiers", other));
         }
         armoredContributions.AddRange(openContributions);
 
@@ -1425,7 +1425,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 baseContributions.ToArray(),
                 CharacterProjectionContext.EmptyProvenance());
 
-            if (!TryResolvedNumeric(context, $"ability.{ability}.modifier", out var abilityModifier))
+            if (!CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, $"ability.{ability}.modifier", out var abilityModifier))
             {
                 context.Mechanics[$"save.{save}"] = new CharacterResolvedMechanicView(
                     $"save.{save}",
@@ -1447,14 +1447,14 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             var other = context.IntegerFacts.GetValueOrDefault($"save.{save}.other");
             var contributions = new List<CharacterMechanicContributionView>(baseContributions)
             {
-                Contribution(
+                CharacterProjectionResolutionHelpers.Contribution(
                     $"ability.{ability}.modifier",
                     $"{CharacterProjectionJson.Humanize(ability)} modifier",
                     abilityModifier)
             };
             if (other != 0)
             {
-                contributions.Add(Contribution($"save.{save}.other", "Other modifiers", other));
+                contributions.Add(CharacterProjectionResolutionHelpers.Contribution($"save.{save}.other", "Other modifiers", other));
             }
 
             context.Mechanics[$"save.{save}"] = new CharacterResolvedMechanicView(
@@ -1486,11 +1486,11 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             return;
         }
 
-        if (!TryResolvedNumeric(context, "ability.dexterity.modifier", out var dexterityModifier))
+        if (!CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, "ability.dexterity.modifier", out var dexterityModifier))
         {
             if (resolvesTouch)
             {
-                context.Mechanics["defense.ac.touch"] = Unresolved(
+                context.Mechanics["defense.ac.touch"] = CharacterProjectionResolutionHelpers.Unresolved(
                     "defense.ac.touch",
                     "defense",
                     "Touch Armor Class",
@@ -1499,7 +1499,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             }
             if (resolvesFlatFooted)
             {
-                context.Mechanics["defense.ac.flat-footed"] = Unresolved(
+                context.Mechanics["defense.ac.flat-footed"] = CharacterProjectionResolutionHelpers.Unresolved(
                     "defense.ac.flat-footed",
                     "defense",
                     "Flat-Footed Armor Class",
@@ -1518,7 +1518,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         {
             if (resolvesTouch)
             {
-                context.Mechanics["defense.ac.touch"] = Unresolved(
+                context.Mechanics["defense.ac.touch"] = CharacterProjectionResolutionHelpers.Unresolved(
                     "defense.ac.touch",
                     "defense",
                     "Touch Armor Class",
@@ -1526,7 +1526,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             }
             if (resolvesFlatFooted)
             {
-                context.Mechanics["defense.ac.flat-footed"] = Unresolved(
+                context.Mechanics["defense.ac.flat-footed"] = CharacterProjectionResolutionHelpers.Unresolved(
                     "defense.ac.flat-footed",
                     "defense",
                     "Flat-Footed Armor Class",
@@ -1534,7 +1534,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             }
             if (!context.UsesStandardProficiency)
             {
-                context.Mechanics["defense.ac.total"] = Unresolved(
+                context.Mechanics["defense.ac.total"] = CharacterProjectionResolutionHelpers.Unresolved(
                     "defense.ac.total",
                     "defense",
                     "Armor Class",
@@ -1546,7 +1546,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         {
             if (resolvesTouch)
             {
-                context.Mechanics["defense.ac.touch"] = Unresolved(
+                context.Mechanics["defense.ac.touch"] = CharacterProjectionResolutionHelpers.Unresolved(
                     "defense.ac.touch",
                     "defense",
                     "Touch Armor Class",
@@ -1555,7 +1555,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             }
             if (resolvesFlatFooted)
             {
-                context.Mechanics["defense.ac.flat-footed"] = Unresolved(
+                context.Mechanics["defense.ac.flat-footed"] = CharacterProjectionResolutionHelpers.Unresolved(
                     "defense.ac.flat-footed",
                     "defense",
                     "Flat-Footed Armor Class",
@@ -1564,7 +1564,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             }
             if (!context.UsesStandardProficiency)
             {
-                context.Mechanics["defense.ac.total"] = Unresolved(
+                context.Mechanics["defense.ac.total"] = CharacterProjectionResolutionHelpers.Unresolved(
                     "defense.ac.total",
                     "defense",
                     "Armor Class",
@@ -1650,27 +1650,27 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 [],
                 [],
                 [
-                    Contribution("defense.ac.base", "Base", 10),
-                    Contribution("defense.ac.armor-bonus", "Armor bonus", armorBonus),
-                    Contribution("defense.ac.shield-bonus", "Shield bonus", shieldBonus),
-                    Contribution(
+                    CharacterProjectionResolutionHelpers.Contribution("defense.ac.base", "Base", 10),
+                    CharacterProjectionResolutionHelpers.Contribution("defense.ac.armor-bonus", "Armor bonus", armorBonus),
+                    CharacterProjectionResolutionHelpers.Contribution("defense.ac.shield-bonus", "Shield bonus", shieldBonus),
+                    CharacterProjectionResolutionHelpers.Contribution(
                         "defense.ac.dexterity-contribution",
                         "Dexterity contribution",
                         dexterityContribution),
-                    Contribution("defense.ac.size-modifier", "Size modifier", sizeModifier),
-                    Contribution(
+                    CharacterProjectionResolutionHelpers.Contribution("defense.ac.size-modifier", "Size modifier", sizeModifier),
+                    CharacterProjectionResolutionHelpers.Contribution(
                         "defense.ac.natural-armor-bonus",
                         "Natural armor bonus",
                         naturalArmorBonus),
-                    Contribution(
+                    CharacterProjectionResolutionHelpers.Contribution(
                         "defense.ac.deflection-bonus",
                         "Deflection bonus",
                         deflectionBonus),
-                    Contribution(
+                    CharacterProjectionResolutionHelpers.Contribution(
                         "defense.ac.dodge-contribution",
                         "Dodge contribution",
                         dodgeContribution),
-                    Contribution("defense.ac.other", "Other modifiers", other),
+                    CharacterProjectionResolutionHelpers.Contribution("defense.ac.other", "Other modifiers", other),
                     .. openTotalContributions
                 ],
                 CharacterProjectionContext.EmptyProvenance());
@@ -1700,21 +1700,21 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 [],
                 [],
                 [
-                    Contribution("defense.ac.touch.base", "Base", 10),
-                    Contribution(
+                    CharacterProjectionResolutionHelpers.Contribution("defense.ac.touch.base", "Base", 10),
+                    CharacterProjectionResolutionHelpers.Contribution(
                         "defense.ac.dexterity-contribution",
                         "Dexterity contribution",
                         dexterityContribution),
-                    Contribution("defense.ac.size-modifier", "Size modifier", sizeModifier),
-                    Contribution(
+                    CharacterProjectionResolutionHelpers.Contribution("defense.ac.size-modifier", "Size modifier", sizeModifier),
+                    CharacterProjectionResolutionHelpers.Contribution(
                         "defense.ac.deflection-bonus",
                         "Deflection bonus",
                         deflectionBonus),
-                    Contribution(
+                    CharacterProjectionResolutionHelpers.Contribution(
                         "defense.ac.dodge-contribution",
                         "Dodge contribution",
                         dodgeContribution),
-                    Contribution(
+                    CharacterProjectionResolutionHelpers.Contribution(
                         "defense.ac.touch.other",
                         "Other applicable modifiers",
                         touchOther),
@@ -1725,7 +1725,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
         if (resolvesFlatFooted && conflictingProjectedShields)
         {
-            context.Mechanics["defense.ac.flat-footed"] = Unresolved(
+            context.Mechanics["defense.ac.flat-footed"] = CharacterProjectionResolutionHelpers.Unresolved(
                 "defense.ac.flat-footed",
                 "defense",
                 "Flat-Footed Armor Class",
@@ -1769,36 +1769,36 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     [],
                     [],
                     [
-                        Contribution("defense.ac.flat-footed.base", "Base", 10),
-                        Contribution(
+                        CharacterProjectionResolutionHelpers.Contribution("defense.ac.flat-footed.base", "Base", 10),
+                        CharacterProjectionResolutionHelpers.Contribution(
                             "defense.ac.armor-bonus",
                             "Armor bonus",
                             armorBonus),
-                        Contribution(
+                        CharacterProjectionResolutionHelpers.Contribution(
                             "defense.ac.shield-bonus",
                             "Shield bonus",
                             shieldBonus),
-                        Contribution(
+                        CharacterProjectionResolutionHelpers.Contribution(
                             "defense.ac.flat-footed.dexterity-contribution",
                             "Flat-footed Dexterity contribution",
                             flatFootedDexterityContribution),
-                        Contribution(
+                        CharacterProjectionResolutionHelpers.Contribution(
                             "defense.ac.size-modifier",
                             "Size modifier",
                             sizeModifier),
-                        Contribution(
+                        CharacterProjectionResolutionHelpers.Contribution(
                             "defense.ac.natural-armor-bonus",
                             "Natural armor bonus",
                             naturalArmorBonus),
-                        Contribution(
+                        CharacterProjectionResolutionHelpers.Contribution(
                             "defense.ac.deflection-bonus",
                             "Deflection bonus",
                             deflectionBonus),
-                        Contribution(
+                        CharacterProjectionResolutionHelpers.Contribution(
                             "defense.ac.flat-footed.dodge-contribution",
                             "Flat-footed dodge contribution",
                             flatFootedDodgeContribution),
-                        Contribution(
+                        CharacterProjectionResolutionHelpers.Contribution(
                             "defense.ac.flat-footed.other",
                             "Other applicable modifiers",
                             flatFootedOther),
@@ -1824,7 +1824,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             {
                 continue;
             }
-            result.Add(Contribution(
+            result.Add(CharacterProjectionResolutionHelpers.Contribution(
                 key,
                 CharacterProjectionJson.Humanize(key),
                 value));
@@ -1888,13 +1888,13 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
     private static void ResolveThreeXGrapple(CharacterProjectionContext context)
     {
-        if (!TryResolvedNumeric(context, "combat.base-attack-bonus", out var baseAttackBonus))
+        if (!CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, "combat.base-attack-bonus", out var baseAttackBonus))
         {
             return;
         }
-        if (!TryResolvedNumeric(context, "ability.strength.modifier", out var strengthModifier))
+        if (!CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, "ability.strength.modifier", out var strengthModifier))
         {
-            context.Mechanics["combat.grapple"] = Unresolved(
+            context.Mechanics["combat.grapple"] = CharacterProjectionResolutionHelpers.Unresolved(
                 "combat.grapple",
                 "combat-value",
                 "Grapple",
@@ -1910,7 +1910,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         }
         else if (context.HasSizeCategoryConflict)
         {
-            context.Mechanics["combat.grapple"] = Unresolved(
+            context.Mechanics["combat.grapple"] = CharacterProjectionResolutionHelpers.Unresolved(
                 "combat.grapple",
                 "combat-value",
                 "Grapple",
@@ -1919,7 +1919,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         }
         else if (!TryThreeXSizeModifier(context.SizeCategory, out sizeModifier))
         {
-            context.Mechanics["combat.grapple"] = Unresolved(
+            context.Mechanics["combat.grapple"] = CharacterProjectionResolutionHelpers.Unresolved(
                 "combat.grapple",
                 "combat-value",
                 "Grapple",
@@ -1942,10 +1942,10 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             [],
             [],
             [
-                Contribution("combat.base-attack-bonus", "Base attack bonus", baseAttackBonus),
-                Contribution("ability.strength.modifier", "Strength modifier", strengthModifier),
-                Contribution("combat.grapple.size-modifier", "Size modifier", sizeModifier),
-                Contribution("combat.grapple.other", "Other modifiers", other)
+                CharacterProjectionResolutionHelpers.Contribution("combat.base-attack-bonus", "Base attack bonus", baseAttackBonus),
+                CharacterProjectionResolutionHelpers.Contribution("ability.strength.modifier", "Strength modifier", strengthModifier),
+                CharacterProjectionResolutionHelpers.Contribution("combat.grapple.size-modifier", "Size modifier", sizeModifier),
+                CharacterProjectionResolutionHelpers.Contribution("combat.grapple.other", "Other modifiers", other)
             ],
             CharacterProjectionContext.EmptyProvenance());
     }
@@ -1965,9 +1965,9 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
     private static void ResolveInitiative(CharacterProjectionContext context)
     {
         const string key = "combat.initiative";
-        if (!TryResolvedNumeric(context, "ability.dexterity.modifier", out var dexterity))
+        if (!CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, "ability.dexterity.modifier", out var dexterity))
         {
-            context.Mechanics[key] = Unresolved(
+            context.Mechanics[key] = CharacterProjectionResolutionHelpers.Unresolved(
                 key,
                 "combat-value",
                 "Initiative",
@@ -1990,8 +1990,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             [],
             [],
             [
-                Contribution("ability.dexterity.modifier", "Dexterity modifier", dexterity),
-                Contribution("combat.initiative.other", "Other initiative modifiers", other)
+                CharacterProjectionResolutionHelpers.Contribution("ability.dexterity.modifier", "Dexterity modifier", dexterity),
+                CharacterProjectionResolutionHelpers.Contribution("combat.initiative.other", "Other initiative modifiers", other)
             ],
             CharacterProjectionContext.EmptyProvenance());
     }
@@ -2003,13 +2003,13 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             return;
         }
 
-        var proficiencyResolved = TryResolvedNumeric(context, "proficiency.standard", out var proficiency);
+        var proficiencyResolved = CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, "proficiency.standard", out var proficiency);
         foreach (var ability in StandardAbilities)
         {
             var key = $"save.{ability}";
-            if (!TryResolvedNumeric(context, $"ability.{ability}.modifier", out var modifier))
+            if (!CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, $"ability.{ability}.modifier", out var modifier))
             {
-                context.Mechanics[key] = Unresolved(
+                context.Mechanics[key] = CharacterProjectionResolutionHelpers.Unresolved(
                     key,
                     "saving-throw",
                     $"{CharacterProjectionJson.Humanize(ability)} Saving Throw",
@@ -2021,7 +2021,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             var proficient = context.SaveProficiencyAbilities.Contains(ability);
             if (proficient && !proficiencyResolved)
             {
-                context.Mechanics[key] = Unresolved(
+                context.Mechanics[key] = CharacterProjectionResolutionHelpers.Unresolved(
                     key,
                     "saving-throw",
                     $"{CharacterProjectionJson.Humanize(ability)} Saving Throw",
@@ -2034,15 +2034,15 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             var value = checked(modifier + (proficient ? proficiency : 0) + other);
             var contributions = new List<CharacterMechanicContributionView>
             {
-                Contribution($"ability.{ability}.modifier", $"{CharacterProjectionJson.Humanize(ability)} modifier", modifier)
+                CharacterProjectionResolutionHelpers.Contribution($"ability.{ability}.modifier", $"{CharacterProjectionJson.Humanize(ability)} modifier", modifier)
             };
             if (proficient)
             {
-                contributions.Add(Contribution("proficiency.standard", "Proficiency bonus", proficiency));
+                contributions.Add(CharacterProjectionResolutionHelpers.Contribution("proficiency.standard", "Proficiency bonus", proficiency));
             }
             if (other != 0)
             {
-                contributions.Add(Contribution($"{key}.other", "Other modifiers", other));
+                contributions.Add(CharacterProjectionResolutionHelpers.Contribution($"{key}.other", "Other modifiers", other));
             }
 
             context.Mechanics[key] = new CharacterResolvedMechanicView(
@@ -2087,7 +2087,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             var profile = SelectProfile(competency, context);
             if (profile is null)
             {
-                context.Mechanics[mechanic.MechanicKey] = Unresolved(
+                context.Mechanics[mechanic.MechanicKey] = CharacterProjectionResolutionHelpers.Unresolved(
                     mechanic.MechanicKey,
                     "competency",
                     mechanic.DisplayName,
@@ -2097,37 +2097,37 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                         .Distinct(StringComparer.OrdinalIgnoreCase)
                         .OrderBy(value => value, StringComparer.Ordinal)
                         .ToArray(),
-                    provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                    provenance: mechanic.Provenance ?? CharacterProjectionResolutionHelpers.Provenance(mechanic.SourceAttributions));
                 continue;
             }
 
             if (!profile.CanEvaluate || string.IsNullOrWhiteSpace(profile.GoverningAbilityKey))
             {
-                context.Mechanics[mechanic.MechanicKey] = Unresolved(
+                context.Mechanics[mechanic.MechanicKey] = CharacterProjectionResolutionHelpers.Unresolved(
                     mechanic.MechanicKey,
                     "competency",
                     mechanic.DisplayName,
                     CharacterResolutionStates.ApplicableUnresolved,
-                    provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                    provenance: mechanic.Provenance ?? CharacterProjectionResolutionHelpers.Provenance(mechanic.SourceAttributions));
                 continue;
             }
 
             var ability = CharacterProjectionJson.NormalizeAbilityKey(profile.GoverningAbilityKey);
-            if (!TryResolvedNumeric(context, $"ability.{ability}.modifier", out var abilityModifier))
+            if (!CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, $"ability.{ability}.modifier", out var abilityModifier))
             {
-                context.Mechanics[mechanic.MechanicKey] = Unresolved(
+                context.Mechanics[mechanic.MechanicKey] = CharacterProjectionResolutionHelpers.Unresolved(
                     mechanic.MechanicKey,
                     "competency",
                     mechanic.DisplayName,
                     CharacterResolutionStates.MissingCharacterInput,
                     [$"ability.{ability}.base"],
-                    provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                    provenance: mechanic.Provenance ?? CharacterProjectionResolutionHelpers.Provenance(mechanic.SourceAttributions));
                 continue;
             }
 
             var contributions = new List<CharacterMechanicContributionView>
             {
-                Contribution($"ability.{ability}.modifier", $"{CharacterProjectionJson.Humanize(ability)} modifier", abilityModifier)
+                CharacterProjectionResolutionHelpers.Contribution($"ability.{ability}.modifier", $"{CharacterProjectionJson.Humanize(ability)} modifier", abilityModifier)
             };
             var total = abilityModifier;
 
@@ -2153,7 +2153,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                             ? CharacterResolutionStates.Resolved
                             : CharacterResolutionStates.ApplicableUnresolved,
                         derivedSources,
-                        mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                        mechanic.Provenance ?? CharacterProjectionResolutionHelpers.Provenance(mechanic.SourceAttributions));
             }
 
             if (profile.SupportsRanks)
@@ -2161,30 +2161,30 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 if (!context.HasCompetencyRanksInput
                     || !context.CompetencyRanks.TryGetValue(competencyConceptKey, out var ranks))
                 {
-                    context.Mechanics[mechanic.MechanicKey] = Unresolved(
+                    context.Mechanics[mechanic.MechanicKey] = CharacterProjectionResolutionHelpers.Unresolved(
                         mechanic.MechanicKey,
                         "competency",
                         mechanic.DisplayName,
                         CharacterResolutionStates.MissingCharacterInput,
                         [$"{competencyConceptKey}.ranks"],
-                        provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                        provenance: mechanic.Provenance ?? CharacterProjectionResolutionHelpers.Provenance(mechanic.SourceAttributions));
                     continue;
                 }
                 total = checked(total + ranks);
-                contributions.Add(Contribution(
+                contributions.Add(CharacterProjectionResolutionHelpers.Contribution(
                     $"{competencyConceptKey}.ranks",
                     "Ranks",
                     ranks));
 
                 if (profile.TrainedOnly == true && ranks <= 0)
                 {
-                    context.Mechanics[mechanic.MechanicKey] = Unresolved(
+                    context.Mechanics[mechanic.MechanicKey] = CharacterProjectionResolutionHelpers.Unresolved(
                         mechanic.MechanicKey,
                         "competency",
                         mechanic.DisplayName,
                         CharacterResolutionStates.MissingCapability,
                         missingCapabilities: [$"competency.trained.{competencyConceptKey}"],
-                        provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                        provenance: mechanic.Provenance ?? CharacterProjectionResolutionHelpers.Provenance(mechanic.SourceAttributions));
                     continue;
                 }
             }
@@ -2194,31 +2194,31 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 var trained = context.TrainingKeys.Contains(competencyConceptKey);
                 if (!trained && !context.HasTrainingInput)
                 {
-                    context.Mechanics[mechanic.MechanicKey] = Unresolved(
+                    context.Mechanics[mechanic.MechanicKey] = CharacterProjectionResolutionHelpers.Unresolved(
                         mechanic.MechanicKey,
                         "competency",
                         mechanic.DisplayName,
                         CharacterResolutionStates.MissingCharacterInput,
                         [$"{competencyConceptKey}.trained"],
-                        provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                        provenance: mechanic.Provenance ?? CharacterProjectionResolutionHelpers.Provenance(mechanic.SourceAttributions));
                     continue;
                 }
 
                 if (trained)
                 {
-                    if (!TryResolvedNumeric(context, "proficiency.standard", out var proficiency))
+                    if (!CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, "proficiency.standard", out var proficiency))
                     {
-                        context.Mechanics[mechanic.MechanicKey] = Unresolved(
+                        context.Mechanics[mechanic.MechanicKey] = CharacterProjectionResolutionHelpers.Unresolved(
                             mechanic.MechanicKey,
                             "competency",
                             mechanic.DisplayName,
                             CharacterResolutionStates.MissingCharacterInput,
                             ["advancement.levels"],
-                            provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                            provenance: mechanic.Provenance ?? CharacterProjectionResolutionHelpers.Provenance(mechanic.SourceAttributions));
                         continue;
                     }
                     total = checked(total + proficiency);
-                    contributions.Add(Contribution("proficiency.standard", "Training proficiency", proficiency));
+                    contributions.Add(CharacterProjectionResolutionHelpers.Contribution("proficiency.standard", "Training proficiency", proficiency));
                 }
             }
 
@@ -2226,7 +2226,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             total = checked(total + other);
             if (other != 0)
             {
-                contributions.Add(Contribution($"{mechanic.MechanicKey}.other", "Other modifiers", other));
+                contributions.Add(CharacterProjectionResolutionHelpers.Contribution($"{mechanic.MechanicKey}.other", "Other modifiers", other));
             }
 
             context.Mechanics[mechanic.MechanicKey] = new CharacterResolvedMechanicView(
@@ -2242,7 +2242,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 [],
                 [],
                 contributions,
-                mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                mechanic.Provenance ?? CharacterProjectionResolutionHelpers.Provenance(mechanic.SourceAttributions));
             projected[competencyConceptKey] = total;
         }
 
@@ -2269,7 +2269,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     State = CharacterResolutionStates.Resolved,
                     NumericValue = evaluated.ParentValue,
                     Contributions = relationship.Components.Select(component =>
-                        Contribution(
+                        CharacterProjectionResolutionHelpers.Contribution(
                             $"competency.{component.ConceptKey}",
                             component.DisplayName,
                             projected[component.ConceptKey])).ToArray()
@@ -2311,8 +2311,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                      .ToArray())
         {
             var ability = CharacterProjectionJson.NormalizeAbilityKey(system.CastingAbilityKey!);
-            if (!TryResolvedNumeric(context, $"ability.{ability}.modifier", out var abilityModifier)
-                || !TryResolvedNumeric(context, "proficiency.standard", out var proficiency))
+            if (!CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, $"ability.{ability}.modifier", out var abilityModifier)
+                || !CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, "proficiency.standard", out var proficiency))
             {
                 continue;
             }
@@ -2332,9 +2332,9 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 [],
                 [],
                 [
-                    Contribution("spellcasting.save-dc.base", "Base", 8),
-                    Contribution($"ability.{ability}.modifier", $"{CharacterProjectionJson.Humanize(ability)} modifier", abilityModifier),
-                    Contribution("proficiency.standard", "Proficiency bonus", proficiency)
+                    CharacterProjectionResolutionHelpers.Contribution("spellcasting.save-dc.base", "Base", 8),
+                    CharacterProjectionResolutionHelpers.Contribution($"ability.{ability}.modifier", $"{CharacterProjectionJson.Humanize(ability)} modifier", abilityModifier),
+                    CharacterProjectionResolutionHelpers.Contribution("proficiency.standard", "Proficiency bonus", proficiency)
                 ],
                 system.Provenance);
             context.Mechanics[attackKey] = new CharacterResolvedMechanicView(
@@ -2350,8 +2350,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 [],
                 [],
                 [
-                    Contribution($"ability.{ability}.modifier", $"{CharacterProjectionJson.Humanize(ability)} modifier", abilityModifier),
-                    Contribution("proficiency.standard", "Proficiency bonus", proficiency)
+                    CharacterProjectionResolutionHelpers.Contribution($"ability.{ability}.modifier", $"{CharacterProjectionJson.Humanize(ability)} modifier", abilityModifier),
+                    CharacterProjectionResolutionHelpers.Contribution("proficiency.standard", "Proficiency bonus", proficiency)
                 ],
                 system.Provenance);
         }
@@ -2450,7 +2450,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         {
             case "ability-score":
                 if (string.IsNullOrWhiteSpace(requirement.TargetKey)
-                    || !TryResolvedNumeric(context, requirement.TargetKey, out actual))
+                    || !CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, requirement.TargetKey, out actual))
                 {
                     return requirement with
                     {
@@ -2667,7 +2667,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     [],
                     [],
                     [
-                        Contribution(
+                        CharacterProjectionResolutionHelpers.Contribution(
                             $"spellcasting.spell-points.level-{spellPointProgression.CasterLevel}",
                             $"Spell-point table level {spellPointProgression.CasterLevel}",
                             spellPointProgression.MaximumSlotLevel)
@@ -3135,7 +3135,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         {
             if (context.HitDice.Count > 0)
             {
-                context.Mechanics[key] = Unresolved(
+                context.Mechanics[key] = CharacterProjectionResolutionHelpers.Unresolved(
                     key,
                     "health",
                     "Maximum HP",
@@ -3147,7 +3147,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
         if (profiles.Any(value => value.Faces is null))
         {
-            context.Mechanics[key] = Unresolved(
+            context.Mechanics[key] = CharacterProjectionResolutionHelpers.Unresolved(
                 key,
                 "health",
                 "Maximum HP",
@@ -3211,7 +3211,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
         if (hasConflict)
         {
-            context.Mechanics[key] = Unresolved(
+            context.Mechanics[key] = CharacterProjectionResolutionHelpers.Unresolved(
                 key,
                 "health",
                 "Maximum HP",
@@ -3268,7 +3268,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
         if (hasConflict)
         {
-            context.Mechanics[key] = Unresolved(
+            context.Mechanics[key] = CharacterProjectionResolutionHelpers.Unresolved(
                 key,
                 "health",
                 "Maximum HP",
@@ -3276,14 +3276,14 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             return;
         }
 
-        if (!TryResolvedNumeric(context, "ability.constitution.modifier", out var constitutionModifier))
+        if (!CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, "ability.constitution.modifier", out var constitutionModifier))
         {
             missingInputs.Add("ability.constitution.base");
         }
 
         if (missingInputs.Count > 0)
         {
-            context.Mechanics[key] = Unresolved(
+            context.Mechanics[key] = CharacterProjectionResolutionHelpers.Unresolved(
                 key,
                 "health",
                 "Maximum HP",
@@ -3356,93 +3356,14 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 or "defense.damage-reduction" or "defense.spell-resistance"
                 or "resource.nonlethal-damage")
             {
-                context.Mechanics[mechanic.MechanicKey] = Unresolved(
+                context.Mechanics[mechanic.MechanicKey] = CharacterProjectionResolutionHelpers.Unresolved(
                     mechanic.MechanicKey,
                     mechanic.Kind,
                     mechanic.DisplayName,
                     CharacterResolutionStates.ApplicableUnresolved,
-                    provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                    provenance: mechanic.Provenance ?? CharacterProjectionResolutionHelpers.Provenance(mechanic.SourceAttributions));
             }
         }
     }
 
-    private static bool TryResolvedNumeric(
-        CharacterProjectionContext context,
-        string key,
-        out int value)
-    {
-        value = default;
-        if (!context.Mechanics.TryGetValue(key, out var mechanic)
-            || !string.Equals(mechanic.State, CharacterResolutionStates.Resolved, StringComparison.Ordinal)
-            || mechanic.NumericValue is not int numeric)
-        {
-            return false;
-        }
-        value = numeric;
-        return true;
-    }
-
-    private static CharacterResolvedMechanicView Unresolved(
-        string key,
-        string kind,
-        string displayName,
-        string state,
-        IReadOnlyList<string>? missingInputs = null,
-        IReadOnlyList<string>? missingCapabilities = null,
-        IReadOnlyList<string>? requiredChoices = null,
-        IReadOnlyList<string>? requiredRolls = null,
-        CharacterMechanicProvenanceView? provenance = null) =>
-        new(
-            key,
-            kind,
-            displayName,
-            state,
-            null,
-            null,
-            null,
-            missingInputs ?? [],
-            missingCapabilities ?? [],
-            requiredChoices ?? [],
-            requiredRolls ?? [],
-            [],
-            provenance ?? CharacterProjectionContext.EmptyProvenance());
-
-    private static CharacterMechanicContributionView Contribution(
-        string key,
-        string label,
-        int value) =>
-        new(
-            key,
-            label,
-            CharacterEffectOperations.Add,
-            value,
-            null,
-            null,
-            CharacterProjectionContext.EmptyProvenance());
-
-    private static CharacterMechanicProvenanceView EffectiveProvenance(
-        ResolvedRuleCatalogItemView rule)
-    {
-        var attribution = new CharacterMechanicSourceAttributionView(
-            rule.PackageKey,
-            rule.PackageDisplayName,
-            null,
-            rule.SourceCode,
-            rule.SourceRevisionNumber,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            false,
-            false);
-        return new CharacterMechanicProvenanceView([], [], [attribution]);
-    }
-
-    private static CharacterMechanicProvenanceView Provenance(
-        IReadOnlyList<CharacterMechanicSourceAttributionView> attributions) =>
-        new(attributions, attributions, attributions);
 }
