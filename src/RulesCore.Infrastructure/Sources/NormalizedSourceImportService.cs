@@ -452,7 +452,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
             cancellationToken);
         if (existing is not null) return (existing, true);
 
-        await dbContext.Database.ExecuteSqlInterpolatedAsync($"""
+        await dbContext.Database.ExecuteSqlInterpolatedAsync($$"""
             INSERT INTO source_content_blob (
                 content_sha256, content_length, content_bytes, created_at)
             VALUES (
