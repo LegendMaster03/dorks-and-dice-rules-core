@@ -73,28 +73,40 @@ This document classifies the reviewed 3e/3.5e competency corpus for the cross-ed
 
 ## Specialized families
 
+The Character contract has a reviewed universal family catalog independent of whether a particular serialized SRD snapshot emitted every specialty row. The parent family is taxonomy only; children remain independent learned competencies.
+
 ### Craft
 
-Each `Craft (specialty)` is independently rank-bearing. The parent Craft row is taxonomy/organization, not a replacement for the specialties.
+Reviewed baseline children are:
 
-The current reviewed multi-facet identity is:
+`Alchemy`, `Armorsmithing`, `Basketweaving`, `Blacksmithing`, `Bookbinding`, `Bowmaking`, `Calligraphy`, `Carpentry`, `Cobbling`, `Gemcutting`, `Leatherworking`, `Locksmithing`, `Painting`, `Pottery`, `Sculpting`, `Shipmaking`, `Stonemasonry`, `Trapmaking`, `Weaponsmithing`, and `Weaving`.
+
+Alchemy is one universal learned competency:
 
 ```text
-Alchemy
-  3e skill facet: Alchemy
-  3.5e skill facet: Craft (alchemy)
-  later tool facet: Alchemist's Supplies
+competency.alchemy
+  3e implementation/source alias: Alchemy
+  3.5e implementation/source alias: Craft (alchemy)
+  later implementation/source alias: Alchemist's Supplies
 ```
 
-The checked-in reviewed SRD snapshots expose generic Craft and 3e Alchemy but do not provide enough checked-in specialty evidence to authorize the prospective blacksmithing, brewing, carpentry, leatherworking, masonry, weaving, or similar tool mappings globally. Synthetic integration fixtures such as `Craft (blacksmithing)` prove the family model, not a source-backed modern equivalence. Those mappings remain unresolved until an imported/reviewed source gives a defensible specialty identity.
+Only Alchemy has this reviewed Craft/tool collapse. No other Craft specialty is mapped to a modern tool solely from name similarity.
 
 ### Perform
 
-Perform specialties remain independent ranked competencies. Broad specialties such as Dance, Oratory, Comedy, Acting, and Singing are skill-only unless a reviewed rule establishes another facet. An instrument category does not identify one specific instrument proficiency by itself, so Rules Core does not manufacture a tool facet from category similarity.
+Reviewed baseline children are:
+
+`Act`, `Comedy`, `Dance`, `Keyboard Instruments`, `Oratory`, `Percussion Instruments`, `Sing`, `String Instruments`, and `Wind Instruments`.
+
+These are the independently ranked 3.5 categories. 3e performance forms belong to the older Perform rule implementation and are not promoted into additional independently ranked universal children merely because they were named forms. Instrument categories do not imply one particular later instrument-tool proficiency.
 
 ### Profession
 
-Profession specialties remain independently ranked competencies. Similar occupation/tool names do not establish shared identity.
+Reviewed baseline children are:
+
+`Apothecary`, `Boater`, `Bookkeeper`, `Brewer`, `Cook`, `Driver`, `Farmer`, `Fisher`, `Guide`, `Herbalist`, `Herder`, `Hunter`, `Innkeeper`, `Lumberjack`, `Miller`, `Miner`, `Porter`, `Rancher`, `Sailor`, `Scribe`, `Siege Engineer`, `Stablehand`, `Tanner`, `Teamster`, and `Woodcutter`.
+
+Profession specialties remain independent and are not mapped to tools by occupational-name similarity.
 
 ### Knowledge exception
 
@@ -123,4 +135,6 @@ Shared learned-competency identity is deliberately separate from canonical Sourc
 
 Installations that already persisted the earlier direct cross-type normalization are migrated in place when the same reviewed native record is imported again. The existing SourceEntity ID and native revision identity are retained, and existing Rule Concept/binding IDs and keys are not rewritten. The corrected skill facet is attached through canonical revision lineage, so an existing Character reference such as `competency.tool.alchemists-supplies` continues to resolve while exposing the new shared `Alchemy` training identity and the correct ranked-skill facet mechanics. Fresh imports use the corrected skill identity directly. The same compatibility rule applies to the earlier Forgery -> Forgery Kit direct normalization.
 
-The Character mechanics catalog groups effective facets by `identityKey` and exposes the shared training key, facet types, mechanic keys, profile revision identities, relationships, and provenance. Character-owned ranks and other facet-specific state remain keyed to the facet/profile rather than the shared training identity.
+The Character mechanics catalog now promotes that learned identity into a first-class universal `competencies` surface. One semantic entry exposes the stable semantic key, family, training-state key, reviewed aliases, implementation mechanic keys, profiles/facets, relationships, and provenance. Source-shaped `mechanics` remain available for evaluation and backward compatibility, so Character-owned ranks and other facet-specific numeric state stay keyed to the applicable implementation/profile rather than being converted into the universal training state.
+
+This is an in-place migration: existing SourceEntity and Rule Concept IDs/keys are retained. Compatibility keys allow pre-normalization Character references to resolve during migration. The older source evidence remains immutable.

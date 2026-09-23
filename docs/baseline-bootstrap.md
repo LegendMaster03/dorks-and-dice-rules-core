@@ -127,13 +127,13 @@ Source Layer import does not normally make source content an effective table rul
 
 For eligible skill/tool records, bootstrap uses the normalized Source Layer identity and the ordinary stable concept-key convention. Exact reviewed identity translations such as Bluff -> Deception and Knowledge (X) -> X therefore converge before Rules Layer synchronization.
 
-A shared learned competency is not a canonical alias. Alchemy/Craft (alchemy) and Alchemist's Supplies, or Forgery and Forgery Kit, retain separate skill/tool concept identities. When both facets are effective, the Character mechanics catalog associates them through the learned-competency identity instead of forcing a cross-type Rule Concept binding.
+A shared learned competency is not a canonical source alias. Alchemy/Craft (alchemy) and Alchemist's Supplies, or Forgery and Forgery Kit, retain separate source-shaped Rule Concept implementations where their mechanical contracts differ. The Character mechanics catalog promotes those implementations into one universal semantic competency entry instead of making consumers reconstruct identity from skill/tool rows.
 
 Direct convergence is also distinct from composite relationships. Hide and Move Silently remain independent beside Stealth; Listen and Spot remain independent beside Perception; Climb, Jump, and Swim remain independent beside Athletics; Balance and Tumble remain independent beside Acrobatics. `KnownMechanicalRelationships` supplies the existing derive-parent behavior when all required concepts are present.
 
 The reviewed bootstrap retains the narrow compatibility migration for a bootstrap-owned pre-normalization `Knowledge (X)` concept. Where safe, that concept is re-keyed in place to `X`; concept IDs, bindings, decisions, Campaign references, and immutable ruleset references remain intact.
 
-Generic `Craft`, `Perform`, and `Profession` records remain valid source competencies, and specialized children remain independent. Bootstrap never fabricates specialty rows or modern tool counterparts that are absent from the reviewed source corpus.
+Generic `Craft`, `Perform`, and `Profession` records remain valid source competencies, and specialized children remain independent. Bootstrap does not fabricate source rows or arbitrary modern tool counterparts. Separately, the Rules-layer universal Character catalog always exposes the reviewed Craft/Perform/Profession family-member baseline documented in `docs/universal-character-concepts.md`, even when a particular serialized source snapshot flattened those specialties into a generic family row.
 
 When multiple reviewed implementations map to one exact competency concept, synchronization still uses only deterministic outcomes justified by existing Rules Core policy. Mechanically different implementations that can not be reconciled losslessly remain unresolved for Rules Lawyer adjudication. Existing human decisions remain authoritative, and bootstrap never chooses a source by edition precedence.
 

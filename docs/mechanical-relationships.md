@@ -80,7 +80,7 @@ A Rules Lawyer may record an explicit `independent-parent` override. Relationshi
 
 Competency taxonomy is separate from mechanical composition. `Craft`, `Perform`, and `Profession` may contain independently addressable specialties. A parent family does not contribute a numeric value to a child and does not cause siblings to share ranks.
 
-A shared learned competency is also separate from canonical identity. Reviewed Alchemy and Forgery skill/tool pairs retain distinct Rule Concepts and source identities while exposing a common learned-competency identity and Character-owned training key. Edition-specific ranks, class-skill state, governing Ability, and tool proficiency calculations remain on their own facets.
+A shared learned competency is also separate from canonical source identity. Reviewed Alchemy and Forgery skill/tool implementations retain their source identity and rule-specific profiles while projecting one universal Character competency and one Character-owned training-state key. Edition-specific ranks, class-skill state, governing Ability, and tool proficiency calculations remain on their own facets. The Character Sheet consumes the universal competency entry rather than grouping the implementation Rule Concepts itself.
 
 Scoped relationships remain distinct again: Open Lock and Disable Device relate only specific uses to Thieves' Tools and do not confer unrestricted tool proficiency. Disguise is related to Disguise Kit without asserting shared training identity.
 

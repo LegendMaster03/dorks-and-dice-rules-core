@@ -83,7 +83,8 @@ Current field mappings intentionally cover only defensible equivalences:
 - feat description and `MULT` repeatability map to feat-family fields; the reviewed `PRESTAT`/`PRESKILL`/`PRECLASS` subset and simple `PREMULT` groups are additionally normalized under `_rulesCore.character.prerequisites`, while unsupported prerequisite expressions remain source-specific;
 - equipment weight maps directly, and PCGen `COST` is interpreted according to PCGen semantics: a bare numeric cost is gold pieces and is converted to the 5e.tools copper-piece `value` representation;
 - ordinary race size, walk speed, and racial `BONUS:STAT` modifiers can map to race-family equivalents when faithful;
-- monster size, recognized creature type, supported movement modes, CR, and descriptions can map directly.
+- monster size, recognized creature type, supported movement modes, CR, and descriptions can map directly;
+- Size normalization recognizes the universal Fine/Diminutive/Tiny/Small/Medium/Large/Huge/Gargantuan/Colossal catalog; unknown source-defined Size values remain preserved as unmapped/source-specific evidence rather than being discarded.
 
 ### Normalized PCGen competency metadata
 
@@ -139,6 +140,8 @@ The reviewed shared identities are:
 The shared state is conceptual training/proficiency identity. Facet-specific mechanics do not transfer. A 3.x Alchemy/Craft profile can carry ranks, class-skill state, governing Ability, trained-only behavior, and Armor Check Penalty semantics. The later tool facet uses its own proficiency mechanics. Ranks never become a tool bonus, proficiency bonus never becomes ranks, and class-skill state is never discarded.
 
 The source conversion relationship is `shared-competency-facet`. The normalized competency profile carries `identityKey`, `identityName`, `sharedTrainingKey`, and `facetType`. Later reviewed tool facets receive the same learned-competency identity in the Character mechanics consumer without rewriting their source document.
+
+The Character mechanics contract promotes this identity into the first-class `competencies` catalog. The source-shaped skill/tool Rule Concepts remain implementation mechanics, while one universal semantic entry owns the Character display identity and training-state key. Reviewed direct historical aliases are handled by the same semantic policy. Family membership comes from the reviewed Rules-layer catalog rather than being reconstructed by Character consumers from source names.
 
 ### Scoped and related competency relationships
 

@@ -93,7 +93,29 @@ skill.arcana
 -> competency.skill.arcana
 ```
 
-The original `conceptKey` remains present in the response. The `competency.` mechanic namespace does not replace canonical identity.
+The original `conceptKey` remains present in the response. The source-shaped implementation mechanic namespace is retained for evaluation and compatibility; it is not the Character semantic identity.
+
+### Universal competency surface
+
+The mechanics response also includes a top-level `competencies` catalog. This is the authoritative Character-facing semantic surface. It contains one entry per learned competency, even when more than one source-shaped Rule Concept or mechanical facet implements it.
+
+For example:
+
+```text
+competency.alchemy
+  display: Alchemy
+  family: Craft
+  trainingStateKey: competency.alchemy.training
+  implementation mechanics:
+    competency.skill.craft-alchemy
+    competency.tool.alchemists-supplies
+```
+
+The two implementation mechanics remain available because a 3.x ranked skill and a later tool proficiency do not share a numeric calculation. The Character consumer does not render them as separate learned competencies and does not infer their relationship. The universal entry already exposes its implementation mechanic keys, compatibility keys, reviewed aliases, profiles, facets, relationships, and provenance.
+
+`Craft`, `Perform`, and `Profession` appear as explicit organizational entries whose `childCompetencyKeys` identify independently trainable children. `Knowledge` does not appear as a family.
+
+See `docs/universal-character-concepts.md` for the reviewed catalog, alias decisions, migration strategy, and Size model.
 
 ## Input ownership
 
