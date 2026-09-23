@@ -49,9 +49,7 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
 
             Assert.Equal(first.SourcePackageId, second.SourcePackageId);
             Assert.True(await grants.HasGrantAsync(firstUserId, first.SourcePackageId));
-            Assert.False(await grants.HasGrantAsync(firstUserId, second.SourcePackageId));
-            Assert.True(await grants.HasGrantAsync(secondUserId, second.SourcePackageId));
-            Assert.False(await grants.HasGrantAsync(secondUserId, first.SourcePackageId));
+            Assert.True(await grants.HasGrantAsync(secondUserId, first.SourcePackageId));
 
             var representation = await db.SourceRepresentations
                 .AsNoTracking()
