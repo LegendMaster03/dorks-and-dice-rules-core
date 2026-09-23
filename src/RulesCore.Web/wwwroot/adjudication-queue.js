@@ -63,7 +63,7 @@ function createQueueCard(app, container) {
     card.append(sectionHeading({
         id: "rules-core-adjudication-queue-heading",
         title: "Adjudication Queue",
-        description: "Refreshing reads existing work without creating new items. Run deterministic discovery explicitly when you want Rules Core to discover new work and apply eligible deterministic decisions.",
+        description: "Opening or refreshing the queue does not run discovery or create new work. The server may reconcile existing work against current decisions and publication state. Run deterministic discovery explicitly when you want Rules Core to discover new work and apply eligible deterministic decisions.",
         actions: [discover, refresh]
     }));
 
