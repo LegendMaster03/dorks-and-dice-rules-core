@@ -42,7 +42,7 @@ public sealed class NormalizedSourceProvenanceIntegrationTests
                 secondUserId,
                 new AddCurrentUserSourceRequest(
                     CurrentUserSourceKinds.Upload,
-                    FileName: "shared-source.pdf")
+                    FileName: "renamed-shared-source.pdf")
                 {
                     ContentBase64 = Convert.ToBase64String(bytes)
                 });
