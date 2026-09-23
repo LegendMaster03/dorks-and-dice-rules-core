@@ -27,14 +27,14 @@ public sealed class CurrentUserWebSourceRefreshIntegrationTests
         var token = Guid.NewGuid().ToString("N")[..10];
         var userId = $"origin-refresh-{token}";
         var sourceCode = $"OR{token}".ToUpperInvariant();
-        var firstContent = $"""
+        var firstContent = $$"""
             {
               "skill": [
                 { "name": "Origin Refresh {{token}}", "source": "{{sourceCode}}", "ability": "int" }
               ]
             }
             """;
-        var secondContent = $"""
+        var secondContent = $$"""
             {
               "skill": [
                 { "name": "Origin Refresh {{token}}", "source": "{{sourceCode}}", "ability": "wis" }
