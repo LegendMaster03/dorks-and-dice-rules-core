@@ -12,9 +12,8 @@ namespace RulesCore.Infrastructure.Rules;
 public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbContext)
     : ICharacterMechanicsConsumerService
 {
-    private readonly IResolvedRulesCatalogService resolvedRules =
-        new ResolvedRulesCatalogService(dbContext);
-    private const int PageSize = 500;
+    private readonly CharacterResolvedRulesReader rulesReader =
+        new(new ResolvedRulesCatalogService(dbContext));
     private const string AbilityContributionRole = "ability";
     private const string CompetencyContributionRole = "competency";
 
@@ -23,7 +22,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         bool includeUnavailable = false,
         CancellationToken cancellationToken = default)
     {
-        var rules = await ReadAllGlobalRulesAsync(userId, cancellationToken);
+        var rules = await rulesReader.ReadAllGlobalAsync(userId, cancellationToken);
         return await BuildCatalogAsync(rules, userId, includeUnavailable, cancellationToken);
     }
 
@@ -43,7 +42,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         }
 
         var normalizedUserId = userId.Trim();
-        var rules = await ReadAllCampaignRulesAsync(campaignId, normalizedUserId, cancellationToken);
+        var rules = await rulesReader.ReadAllCampaignAsync(campaignId, normalizedUserId, cancellationToken);
         return await BuildCatalogAsync(
             rules,
             normalizedUserId,
@@ -105,7 +104,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(request);
-        var rules = await ReadAllGlobalRulesAsync(userId, cancellationToken);
+        var rules = await rulesReader.ReadAllGlobalAsync(userId, cancellationToken);
         var catalog = await CharacterSupportCatalogBuilder.BuildAsync(
             dbContext,
             rules,
@@ -121,7 +120,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
     {
         ArgumentNullException.ThrowIfNull(request);
         var normalizedUserId = ValidateCampaignSupportRequest(campaignId, userId);
-        var rules = await ReadAllCampaignRulesAsync(
+        var rules = await rulesReader.ReadAllCampaignAsync(
             campaignId,
             normalizedUserId,
             cancellationToken);
@@ -139,7 +138,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(request);
-        var rules = await ReadAllGlobalRulesAsync(userId, cancellationToken);
+        var rules = await rulesReader.ReadAllGlobalAsync(userId, cancellationToken);
         var catalog = await CharacterSupportCatalogBuilder.BuildAsync(
             dbContext,
             rules,
@@ -159,7 +158,7 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
     {
         ArgumentNullException.ThrowIfNull(request);
         var normalizedUserId = ValidateCampaignSupportRequest(campaignId, userId);
-        var rules = await ReadAllCampaignRulesAsync(
+        var rules = await rulesReader.ReadAllCampaignAsync(
             campaignId,
             normalizedUserId,
             cancellationToken);
@@ -1658,56 +1657,6 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                 value => value.Id,
                 value => value.SourceUri,
                 cancellationToken);
-    }
-
-    private async Task<ResolvedRulesCatalogView> ReadAllGlobalRulesAsync(
-        string? userId,
-        CancellationToken cancellationToken)
-    {
-        var all = new List<ResolvedRuleCatalogItemView>();
-        ResolvedRulesCatalogView? page = null;
-        for (var offset = 0; ; offset += PageSize)
-        {
-            page = await resolvedRules.GetGlobalPageAsync(
-                userId,
-                limit: PageSize,
-                offset: offset,
-                cancellationToken: cancellationToken);
-            all.AddRange(page.Rules);
-            if (page.Rules.Count < PageSize)
-            {
-                break;
-            }
-        }
-
-        page ??= new ResolvedRulesCatalogView("global", null, null, null, 0, [], [], []);
-        return page with { Rules = all };
-    }
-
-    private async Task<ResolvedRulesCatalogView> ReadAllCampaignRulesAsync(
-        Guid campaignId,
-        string userId,
-        CancellationToken cancellationToken)
-    {
-        var all = new List<ResolvedRuleCatalogItemView>();
-        ResolvedRulesCatalogView? page = null;
-        for (var offset = 0; ; offset += PageSize)
-        {
-            page = await resolvedRules.GetCampaignPageAsync(
-                campaignId,
-                userId,
-                limit: PageSize,
-                offset: offset,
-                cancellationToken: cancellationToken);
-            all.AddRange(page.Rules);
-            if (page.Rules.Count < PageSize)
-            {
-                break;
-            }
-        }
-
-        page ??= new ResolvedRulesCatalogView("campaign", campaignId, null, null, 0, [], [], []);
-        return page with { Rules = all };
     }
 
     private static bool IsCompetencyRule(ResolvedRuleCatalogItemView value) =>
