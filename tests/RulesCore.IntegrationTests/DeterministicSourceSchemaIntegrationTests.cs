@@ -35,8 +35,19 @@ public sealed class DeterministicSourceSchemaIntegrationTests
             await new RulesCoreSchemaInitializer(db).InitializeAsync();
 
             Assert.True(await RelationExistsAsync(db, "canonical_entity"));
+            Assert.True(await RelationExistsAsync(db, "source_content_blob"));
             Assert.True(await RelationExistsAsync(db, "source_revision_rejection"));
             Assert.True(await RelationExistsAsync(db, "rule_mechanical_relationship_ruling"));
+            Assert.Equal("NO", await ColumnNullableAsync(
+                db,
+                schema,
+                "source_content_blob",
+                "content_bytes"));
+            Assert.Equal("NO", await ColumnNullableAsync(
+                db,
+                schema,
+                "source_representation",
+                "content_sha256"));
             Assert.Equal("YES", await ColumnNullableAsync(
                 db,
                 schema,
