@@ -82,6 +82,46 @@ public sealed class RuleBrowserAssetTests
     }
 
     [Fact]
+    public void SourcesAndAdjudicationDoNotReintroduceLegacyWorkspaceShells()
+    {
+        var sourceLibrary = ReadWebAsset("source-library.js");
+        var sourceSurfaces = ReadWebAssets(
+            "source-library.js",
+            "source-add.js",
+            "source-removal.js",
+            "source-admin.js",
+            "hosted-source-authoring.js",
+            "source-versioning.js",
+            "source-normalization.js",
+            "source-revision-review.js");
+        var adjudication = ReadWebAssets(
+            "adjudication-queue.js",
+            "authoring.js",
+            "source-normalization.js",
+            "source-revision-review.js");
+        var shell = ReadWebAsset("ux-shell.js");
+
+        Assert.Contains("workspaceSection", sourceSurfaces, StringComparison.Ordinal);
+        Assert.Contains("workspaceSection", adjudication, StringComparison.Ordinal);
+        Assert.DoesNotContain("app.renderHeader = () => renderHeader(app)", sourceLibrary, StringComparison.Ordinal);
+        Assert.DoesNotContain("app.renderNavigation = () => renderNavigation(app)", sourceLibrary, StringComparison.Ordinal);
+        Assert.DoesNotContain("prependRulesLawyerWorkflow", sourceLibrary, StringComparison.Ordinal);
+        Assert.DoesNotContain("firstCard.classList.add(\"rules-core-page-lead\")", shell, StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "card card-body mb-3 rules-core-panel rules-core-add-source",
+            sourceSurfaces,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "card card-body mb-3 rules-core-panel rules-core-source-removal",
+            sourceSurfaces,
+            StringComparison.Ordinal);
+        Assert.DoesNotContain(
+            "className: \"card card-body mb-3\"",
+            adjudication,
+            StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void RulesBrowserInternalScrollChainingPreservesOrientation()
     {
         var content = ReadWebAsset("rules-core.css");
