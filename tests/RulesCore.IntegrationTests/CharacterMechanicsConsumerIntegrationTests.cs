@@ -597,7 +597,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.NotNull(craft.Competency);
             Assert.Equal(CharacterCompetencyKinds.SpecializedSkill, craft.Competency!.CompetencyKind);
             Assert.Equal("Craft", craft.Competency.FamilyName);
-            Assert.Equal("blacksmithing", craft.Competency.Specialty);
+            Assert.Equal("Blacksmithing", craft.Competency.Specialty);
             Assert.True(craft.Competency.SupportsRanks);
 
             var alchemy = Assert.Single(
@@ -608,7 +608,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                 CharacterCompetencyKinds.SpecializedSkill,
                 alchemy.Competency!.CompetencyKind);
             Assert.Equal("Craft", alchemy.Competency.FamilyName);
-            Assert.Equal("alchemy", alchemy.Competency.Specialty);
+            Assert.Equal("Alchemy", alchemy.Competency.Specialty);
             Assert.Equal("alchemy", alchemy.Competency.IdentityKey);
             Assert.Equal("Alchemy", alchemy.Competency.IdentityName);
             Assert.Equal(
