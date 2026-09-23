@@ -652,3 +652,4 @@ internal static class CharacterMechanicsCatalogEvaluator
         }
         return normalized;
 }
+}
