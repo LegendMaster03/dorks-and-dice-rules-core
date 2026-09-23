@@ -4,6 +4,7 @@ import {
     clear,
     describeError,
     element,
+    field as compactField,
     formatJson,
     setButtonBusy,
     DEFAULT_PAGE_SIZE,
@@ -59,14 +60,15 @@ export function installSourceVersioning(app) {
 async function renderVersionReview(app, container) {
     clear(container);
     const searchCard = element("div", { className: "card card-body mb-3" });
-    const form = element("form", { className: "row g-2 align-items-end" });
-    const query = element("input", { type: "search", className: "form-control", placeholder: "Rule name, source, work, or release" });
-    const type = element("input", { type: "text", className: "form-control", placeholder: "Optional entity type" });
+    const form = element("form", { className: "rules-core-filter-bar mb-0" });
+    const query = element("input", { type: "search", className: "form-control form-control-sm", placeholder: "Rule name, source, work, or release" });
+    const type = element("input", { type: "text", className: "form-control form-control-sm", placeholder: "Optional entity type" });
     const results = element("div", { className: "mt-3" });
     form.append(
-        field("Search", query, "col-md-7"),
-        field("Entity type", type, "col-md-3"),
-        element("div", { className: "col-md-2" }, element("button", { type: "submit", className: "btn btn-primary w-100", text: "Search" })));
+        compactField("Search", query),
+        compactField("Entity type", type),
+        element("div", { className: "rules-core-action-bar" },
+            element("button", { type: "submit", className: "btn btn-sm btn-primary", text: "Search" })));
     searchCard.append(form, results);
     container.append(searchCard);
 
