@@ -113,7 +113,8 @@ public sealed class UniversalCharacterConceptTests
             ["Forgery", "Forgery Kit"],
             KnownUniversalCompetencies.SourceAliases("forgery"));
         Assert.Equal(
-            ["Knowledge (Arcana)", "Arcana"].OrderBy(value => value, StringComparer.OrdinalIgnoreCase),
+            new[] { "Knowledge (Arcana)", "Arcana" }
+                .OrderBy(value => value, StringComparer.OrdinalIgnoreCase),
             KnownUniversalCompetencies.SourceAliases("arcana"));
     }
 
