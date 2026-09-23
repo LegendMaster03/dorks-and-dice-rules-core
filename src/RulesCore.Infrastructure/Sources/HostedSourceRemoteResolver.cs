@@ -297,6 +297,9 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
             document.SelectedEntityCount);
     
     
+    internal static void ValidateGitHubTreeUri(Uri uri) =>
+        _ = ParseGitHubTreeUri(uri);
+
     private static GitHubTreeLocation ParseGitHubTreeUri(Uri uri)
     {
         if (!string.Equals(uri.Host, "github.com", StringComparison.OrdinalIgnoreCase))
