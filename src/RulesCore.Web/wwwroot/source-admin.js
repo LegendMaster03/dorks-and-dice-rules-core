@@ -42,6 +42,11 @@ async function renderSourceAdministration(app, container) {
     clear(container);
     const formCard = element("div", { className: "card card-body" });
     const form = element("form");
+    form.append(compactSectionHeading({
+        title: "Manual source import",
+        description: "This is a Dev control-plane operation. Preview the exact immutable source payload before importing; normal account source acquisition belongs in Add Source.",
+        level: 4
+    }));
     const packageControls = packageFields();
     const releaseControls = releaseFields();
     const json = element("textarea", {
