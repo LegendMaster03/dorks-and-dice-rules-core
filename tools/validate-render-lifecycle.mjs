@@ -290,8 +290,10 @@ assert(groupedNavigation.querySelectorAll(".rules-core-nav-menu").length === 4,
 const lifecycleContainer = ui.element("div");
 await lifecycleApp.renderActiveView(lifecycleContainer);
 assert(lifecycleContainer.classList.contains("rules-core-main"), "full active-view renders must install the view shell");
-assert(lifecycleContainer.querySelector(":scope > .card").classList.contains("rules-core-page-lead"),
-    "full active-view renders must run presentation enhancement explicitly");
+assert(lifecycleContainer.querySelectorAll(":scope > .rules-core-generated-page-lead").length === 1,
+    "full active-view renders must create exactly one generated page lead");
+assert(!lifecycleContainer.querySelector(":scope > .card").classList.contains("rules-core-page-lead"),
+    "content panels must not be promoted into page leads");
 
 lifecycleApp.activeView = "global";
 await lifecycleApp.renderGlobalOverview(lifecycleContainer);
