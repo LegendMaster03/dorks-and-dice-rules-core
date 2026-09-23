@@ -1,7 +1,5 @@
 using System.Data;
 using System.Data.Common;
-using System.Net;
-using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -13,14 +11,13 @@ namespace RulesCore.Infrastructure.Sources;
 
 public sealed class HostedSourceService : IHostedSourceService
 {
-    private const long MaxRemoteDocumentBytes = 64L * 1024L * 1024L;
-    private const int MaxResolvedDocuments = 2000;
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
-    private static readonly HttpClient SharedHttpClient = CreateSharedHttpClient();
+    private static readonly HttpClient SharedHttpClient =
+        HostedSourceRemoteResolver.CreateSharedHttpClient();
 
     private readonly RulesCoreDbContext dbContext;
     private readonly ISourceImportService importer;
-    private readonly HttpClient httpClient;
+    private readonly HostedSourceRemoteResolver remoteResolver;
 
     public HostedSourceService(
         RulesCoreDbContext dbContext,
@@ -36,7 +33,7 @@ public sealed class HostedSourceService : IHostedSourceService
     {
         this.dbContext = dbContext;
         this.importer = importer;
-        this.httpClient = httpClient;
+        remoteResolver = new HostedSourceRemoteResolver(httpClient);
     }
 
     public async Task<IReadOnlyList<HostedSourceDefinitionView>> ListAsync(
@@ -337,13 +334,13 @@ public sealed class HostedSourceService : IHostedSourceService
         CancellationToken cancellationToken = default)
     {
         var definition = await RequireEnabledDefinitionAsync(definitionId, cancellationToken);
-        var resolved = await ResolveAsync(definition, cancellationToken);
+        var resolved = await remoteResolver.ResolveAsync(definition, cancellationToken);
         var preview = await importer.Preview5eToolsDocumentAsync(
             BuildImportRequest(definition, resolved.AggregateJson),
             cancellationToken);
         return new HostedSourcePreviewView(
             definition,
-            resolved.Documents.Select(ToView).ToArray(),
+            resolved.Documents,
             preview);
     }
 
@@ -352,13 +349,13 @@ public sealed class HostedSourceService : IHostedSourceService
         CancellationToken cancellationToken = default)
     {
         var definition = await RequireEnabledDefinitionAsync(definitionId, cancellationToken);
-        var resolved = await ResolveAsync(definition, cancellationToken);
+        var resolved = await remoteResolver.ResolveAsync(definition, cancellationToken);
         var import = await importer.Import5eToolsDocumentAsync(
             BuildImportRequest(definition, resolved.AggregateJson),
             cancellationToken);
         return new HostedSourceRefreshView(
             definition,
-            resolved.Documents.Select(ToView).ToArray(),
+            resolved.Documents,
             import);
     }
 
@@ -383,350 +380,6 @@ public sealed class HostedSourceService : IHostedSourceService
         return definition;
     }
 
-    private async Task<ResolvedSourceSet> ResolveAsync(
-        HostedSourceDefinitionView definition,
-        CancellationToken cancellationToken)
-    {
-        var documents = new List<ResolvedSourceDocument>();
-        foreach (var resource in definition.Resources)
-        {
-            switch (resource.Kind)
-            {
-                case HostedSourceResourceKinds.DirectJson:
-                    await AddResolvedDocumentAsync(
-                        definition,
-                        resource.Kind,
-                        resource.Uri,
-                        new Uri(resource.Uri, UriKind.Absolute),
-                        documents,
-                        skipUnsupportedJson: false,
-                        cancellationToken);
-                    break;
-
-                case HostedSourceResourceKinds.JsonIndex:
-                    await ResolveJsonIndexAsync(
-                        definition,
-                        resource,
-                        documents,
-                        cancellationToken);
-                    break;
-
-                case HostedSourceResourceKinds.GitHubTree:
-                    await ResolveGitHubTreeAsync(
-                        definition,
-                        resource,
-                        documents,
-                        cancellationToken);
-                    break;
-
-                default:
-                    throw new NotSupportedException(
-                        $"Hosted source resource kind '{resource.Kind}' is not supported.");
-            }
-        }
-
-        if (documents.Count == 0)
-        {
-            throw new InvalidDataException(
-                "The hosted source did not resolve to any importable entities for its configured source-code filter.");
-        }
-
-        return new ResolvedSourceSet(documents, BuildAggregateJson(documents));
-    }
-
-    private async Task ResolveJsonIndexAsync(
-        HostedSourceDefinitionView definition,
-        HostedSourceResourceView resource,
-        List<ResolvedSourceDocument> documents,
-        CancellationToken cancellationToken)
-    {
-        var indexUri = new Uri(resource.Uri, UriKind.Absolute);
-        var indexJson = await FetchTextAsync(indexUri, cancellationToken);
-        using var indexDocument = JsonDocument.Parse(indexJson);
-        var references = new List<string>();
-        CollectJsonReferences(indexDocument.RootElement, references);
-
-        var resolvedUris = references
-            .Select(value => ResolveIndexReference(indexUri, value))
-            .DistinctBy(value => value.AbsoluteUri, StringComparer.OrdinalIgnoreCase)
-            .OrderBy(value => value.AbsoluteUri, StringComparer.OrdinalIgnoreCase)
-            .ToArray();
-        if (resolvedUris.Length > MaxResolvedDocuments)
-        {
-            throw new InvalidDataException(
-                $"Hosted JSON index expands to {resolvedUris.Length} documents; the maximum is {MaxResolvedDocuments}.");
-        }
-
-        foreach (var resolvedUri in resolvedUris)
-        {
-            await AddResolvedDocumentAsync(
-                definition,
-                resource.Kind,
-                resource.Uri,
-                resolvedUri,
-                documents,
-                skipUnsupportedJson: true,
-                cancellationToken);
-        }
-    }
-
-    private async Task ResolveGitHubTreeAsync(
-        HostedSourceDefinitionView definition,
-        HostedSourceResourceView resource,
-        List<ResolvedSourceDocument> documents,
-        CancellationToken cancellationToken)
-    {
-        var sourceUri = new Uri(resource.Uri, UriKind.Absolute);
-        var tree = ParseGitHubTreeUri(sourceUri);
-        var treeApiUri = new Uri(
-            $"https://api.github.com/repos/{Uri.EscapeDataString(tree.Owner)}/{Uri.EscapeDataString(tree.Repository)}/git/trees/{Uri.EscapeDataString(tree.Reference)}?recursive=1");
-        var treeJson = await FetchTextAsync(treeApiUri, cancellationToken);
-        using var treeDocument = JsonDocument.Parse(treeJson);
-        if (treeDocument.RootElement.TryGetProperty("truncated", out var truncated)
-            && truncated.ValueKind == JsonValueKind.True)
-        {
-            throw new InvalidDataException(
-                "GitHub truncated the repository tree. Configure narrower hosted-source resources instead of importing an incomplete tree.");
-        }
-        if (!treeDocument.RootElement.TryGetProperty("tree", out var entries)
-            || entries.ValueKind != JsonValueKind.Array)
-        {
-            throw new InvalidDataException("GitHub tree response did not contain a tree array.");
-        }
-
-        var prefix = tree.Path.Trim('/');
-        var paths = entries.EnumerateArray()
-            .Where(entry =>
-                entry.TryGetProperty("type", out var type)
-                && type.ValueKind == JsonValueKind.String
-                && string.Equals(type.GetString(), "blob", StringComparison.Ordinal)
-                && entry.TryGetProperty("path", out var path)
-                && path.ValueKind == JsonValueKind.String)
-            .Select(entry => entry.GetProperty("path").GetString()!)
-            .Where(path =>
-                path.EndsWith(".json", StringComparison.OrdinalIgnoreCase)
-                && (string.IsNullOrEmpty(prefix)
-                    || string.Equals(path, prefix, StringComparison.Ordinal)
-                    || path.StartsWith(prefix + "/", StringComparison.Ordinal)))
-            .OrderBy(path => path, StringComparer.Ordinal)
-            .ToArray();
-        if (paths.Length > MaxResolvedDocuments)
-        {
-            throw new InvalidDataException(
-                $"GitHub tree contains {paths.Length} JSON documents beneath the configured path; the maximum is {MaxResolvedDocuments}. Configure a narrower tree or indexes/direct documents.");
-        }
-
-        foreach (var path in paths)
-        {
-            var rawUri = BuildGitHubRawUri(tree, path);
-            await AddResolvedDocumentAsync(
-                definition,
-                resource.Kind,
-                resource.Uri,
-                rawUri,
-                documents,
-                skipUnsupportedJson: true,
-                cancellationToken);
-        }
-    }
-
-    private async Task AddResolvedDocumentAsync(
-        HostedSourceDefinitionView definition,
-        string resourceKind,
-        string resourceUri,
-        Uri resolvedUri,
-        List<ResolvedSourceDocument> documents,
-        bool skipUnsupportedJson,
-        CancellationToken cancellationToken)
-    {
-        if (documents.Count >= MaxResolvedDocuments)
-        {
-            throw new InvalidDataException(
-                $"Hosted source resolved more than {MaxResolvedDocuments} importable documents.");
-        }
-
-        var json = await FetchTextAsync(resolvedUri, cancellationToken);
-        string filtered;
-        int selectedEntityCount;
-        try
-        {
-            filtered = FiveEToolsDocumentInspector.FilterBySourceCodes(
-                json,
-                definition.EditionKey,
-                definition.IncludedSourceCodes,
-                out selectedEntityCount);
-        }
-        catch (Exception exception) when (
-            skipUnsupportedJson
-            && (exception is JsonException || exception is InvalidDataException))
-        {
-            return;
-        }
-
-        if (selectedEntityCount == 0)
-        {
-            return;
-        }
-
-        documents.Add(new ResolvedSourceDocument(
-            resourceKind,
-            resourceUri,
-            resolvedUri.AbsoluteUri,
-            selectedEntityCount,
-            filtered));
-    }
-
-    private async Task<string> FetchTextAsync(Uri uri, CancellationToken cancellationToken)
-    {
-        await EnsureRemoteUriSafeAsync(uri, cancellationToken);
-        using var request = new HttpRequestMessage(HttpMethod.Get, uri);
-        request.Headers.Accept.ParseAdd("application/json, text/json;q=0.9, */*;q=0.1");
-        using var response = await httpClient.SendAsync(
-            request,
-            HttpCompletionOption.ResponseHeadersRead,
-            cancellationToken);
-
-        if ((int)response.StatusCode is >= 300 and < 400)
-        {
-            throw new HttpRequestException(
-                $"Hosted source '{uri}' redirected to another location. Register the final canonical HTTPS URL instead of relying on redirects.");
-        }
-        response.EnsureSuccessStatusCode();
-        if (response.Content.Headers.ContentLength is > MaxRemoteDocumentBytes)
-        {
-            throw new InvalidDataException(
-                $"Hosted source '{uri}' exceeds the {MaxRemoteDocumentBytes / (1024 * 1024)} MiB per-document limit.");
-        }
-
-        var bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
-        if (bytes.LongLength > MaxRemoteDocumentBytes)
-        {
-            throw new InvalidDataException(
-                $"Hosted source '{uri}' exceeds the {MaxRemoteDocumentBytes / (1024 * 1024)} MiB per-document limit.");
-        }
-        return Encoding.UTF8.GetString(bytes);
-    }
-
-    private static async Task EnsureRemoteUriSafeAsync(
-        Uri uri,
-        CancellationToken cancellationToken)
-    {
-        ValidateUriShape(uri);
-        if (IPAddress.TryParse(uri.DnsSafeHost, out var literal))
-        {
-            if (!IsPublicAddress(literal))
-            {
-                throw new InvalidOperationException(
-                    $"Hosted source address '{uri.DnsSafeHost}' is not a public network address.");
-            }
-            return;
-        }
-
-        IPAddress[] addresses;
-        try
-        {
-            addresses = await Dns.GetHostAddressesAsync(uri.DnsSafeHost, cancellationToken);
-        }
-        catch (SocketException exception)
-        {
-            throw new HttpRequestException(
-                $"Hosted source host '{uri.DnsSafeHost}' could not be resolved.",
-                exception);
-        }
-
-        if (addresses.Length == 0 || addresses.Any(address => !IsPublicAddress(address)))
-        {
-            throw new InvalidOperationException(
-                $"Hosted source host '{uri.DnsSafeHost}' resolves to a non-public network address.");
-        }
-    }
-
-    private static bool IsPublicAddress(IPAddress address)
-    {
-        if (address.IsIPv4MappedToIPv6)
-        {
-            address = address.MapToIPv4();
-        }
-        if (IPAddress.IsLoopback(address)
-            || address.Equals(IPAddress.Any)
-            || address.Equals(IPAddress.IPv6Any)
-            || address.Equals(IPAddress.None)
-            || address.Equals(IPAddress.IPv6None))
-        {
-            return false;
-        }
-
-        var bytes = address.GetAddressBytes();
-        if (address.AddressFamily == AddressFamily.InterNetwork)
-        {
-            return !(bytes[0] == 0
-                || bytes[0] == 10
-                || bytes[0] == 127
-                || (bytes[0] == 100 && bytes[1] is >= 64 and <= 127)
-                || (bytes[0] == 169 && bytes[1] == 254)
-                || (bytes[0] == 172 && bytes[1] is >= 16 and <= 31)
-                || (bytes[0] == 192 && bytes[1] == 168)
-                || bytes[0] >= 224);
-        }
-
-        if (address.AddressFamily == AddressFamily.InterNetworkV6)
-        {
-            return !address.IsIPv6LinkLocal
-                && !address.IsIPv6Multicast
-                && !(bytes[0] is 0xfc or 0xfd);
-        }
-
-        return false;
-    }
-
-    private static string BuildAggregateJson(IReadOnlyList<ResolvedSourceDocument> documents)
-    {
-        var buckets = new SortedDictionary<string, List<JsonElement>>(StringComparer.Ordinal);
-        foreach (var resolved in documents)
-        {
-            using var document = JsonDocument.Parse(resolved.Json);
-            foreach (var property in document.RootElement.EnumerateObject())
-            {
-                if (!FiveEToolsDocumentInspector.IsImportableArray(property))
-                {
-                    continue;
-                }
-
-                if (!buckets.TryGetValue(property.Name, out var items))
-                {
-                    items = [];
-                    buckets[property.Name] = items;
-                }
-
-                foreach (var item in property.Value.EnumerateArray())
-                {
-                    if (item.ValueKind == JsonValueKind.Object)
-                    {
-                        items.Add(item.Clone());
-                    }
-                }
-            }
-        }
-
-        using var stream = new MemoryStream();
-        using (var writer = new Utf8JsonWriter(stream))
-        {
-            writer.WriteStartObject();
-            foreach (var bucket in buckets)
-            {
-                writer.WritePropertyName(bucket.Key);
-                writer.WriteStartArray();
-                foreach (var item in bucket.Value)
-                {
-                    item.WriteTo(writer);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-        }
-        return Encoding.UTF8.GetString(stream.ToArray());
-    }
-
     private static Import5eToolsDocumentRequest BuildImportRequest(
         HostedSourceDefinitionView definition,
         string json) =>
@@ -744,13 +397,6 @@ public sealed class HostedSourceService : IHostedSourceService
             definition.GameEdition,
             definition.ReleaseKind,
             definition.PublicationDate);
-
-    private static HostedSourceResolvedDocument ToView(ResolvedSourceDocument document) =>
-        new(
-            document.ResourceKind,
-            document.ResourceUri,
-            document.ResolvedUri,
-            document.SelectedEntityCount);
 
     private static StoredDefinitionConfig NormalizeRequest(SetHostedSourceDefinitionRequest request)
     {
@@ -819,7 +465,7 @@ public sealed class HostedSourceService : IHostedSourceService
         {
             throw new ArgumentException("Hosted source resource URI must be absolute.", nameof(request));
         }
-        ValidateUriShape(uri);
+        HostedSourceUriPolicy.ValidateShape(uri);
         if (string.Equals(kind, HostedSourceResourceKinds.GitHubTree, StringComparison.Ordinal))
         {
             _ = ParseGitHubTreeUri(uri);
@@ -827,7 +473,7 @@ public sealed class HostedSourceService : IHostedSourceService
         return new HostedSourceResourceView(kind, uri.AbsoluteUri);
     }
 
-    private static void ValidateUriShape(Uri uri)
+    private static void HostedSourceUriPolicy.ValidateShape(Uri uri)
     {
         if (!string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
         {
@@ -842,76 +488,6 @@ public sealed class HostedSourceService : IHostedSourceService
         {
             throw new ArgumentException("Hosted source URI is not allowed.");
         }
-    }
-
-    private static GitHubTreeLocation ParseGitHubTreeUri(Uri uri)
-    {
-        if (!string.Equals(uri.Host, "github.com", StringComparison.OrdinalIgnoreCase))
-        {
-            throw new ArgumentException("A github-tree resource must use a github.com tree URL.");
-        }
-        var segments = uri.AbsolutePath
-            .Trim('/')
-            .Split('/', StringSplitOptions.RemoveEmptyEntries)
-            .Select(Uri.UnescapeDataString)
-            .ToArray();
-        if (segments.Length < 4
-            || !string.Equals(segments[2], "tree", StringComparison.OrdinalIgnoreCase))
-        {
-            throw new ArgumentException(
-                "A github-tree resource must use https://github.com/{owner}/{repository}/tree/{ref}/{optional-path}.");
-        }
-
-        return new GitHubTreeLocation(
-            segments[0],
-            segments[1],
-            segments[3],
-            segments.Length > 4 ? string.Join('/', segments.Skip(4)) : string.Empty);
-    }
-
-    private static Uri BuildGitHubRawUri(GitHubTreeLocation tree, string path)
-    {
-        var escapedPath = string.Join('/', path.Split('/').Select(Uri.EscapeDataString));
-        return new Uri(
-            $"https://raw.githubusercontent.com/{Uri.EscapeDataString(tree.Owner)}/{Uri.EscapeDataString(tree.Repository)}/{Uri.EscapeDataString(tree.Reference)}/{escapedPath}");
-    }
-
-    private static void CollectJsonReferences(JsonElement element, ICollection<string> values)
-    {
-        switch (element.ValueKind)
-        {
-            case JsonValueKind.Object:
-                foreach (var property in element.EnumerateObject())
-                {
-                    CollectJsonReferences(property.Value, values);
-                }
-                break;
-            case JsonValueKind.Array:
-                foreach (var item in element.EnumerateArray())
-                {
-                    CollectJsonReferences(item, values);
-                }
-                break;
-            case JsonValueKind.String:
-                var value = element.GetString();
-                if (!string.IsNullOrWhiteSpace(value)
-                    && value.Trim().EndsWith(".json", StringComparison.OrdinalIgnoreCase))
-                {
-                    values.Add(value.Trim());
-                }
-                break;
-        }
-    }
-
-    private static Uri ResolveIndexReference(Uri indexUri, string value)
-    {
-        if (!Uri.TryCreate(indexUri, value, out var resolved))
-        {
-            throw new InvalidDataException(
-                $"JSON index contained an invalid document reference '{value}'.");
-        }
-        ValidateUriShape(resolved);
-        return resolved;
     }
 
     private static HostedSourceDefinitionView ReadView(DbDataReader reader)
@@ -1002,24 +578,6 @@ public sealed class HostedSourceService : IHostedSourceService
         command.Parameters.Add(parameter);
     }
 
-    private static HttpClient CreateSharedHttpClient()
-    {
-        var handler = new SocketsHttpHandler
-        {
-            AllowAutoRedirect = false,
-            UseCookies = false,
-            AutomaticDecompression = DecompressionMethods.GZip
-                | DecompressionMethods.Deflate
-                | DecompressionMethods.Brotli
-        };
-        var client = new HttpClient(handler)
-        {
-            Timeout = TimeSpan.FromSeconds(60)
-        };
-        client.DefaultRequestHeaders.UserAgent.ParseAdd("DorksAndDice-RulesCore/1.0");
-        return client;
-    }
-
     private sealed record StoredDefinitionConfig(
         string DisplayName,
         string FormatKind,
@@ -1040,22 +598,11 @@ public sealed class HostedSourceService : IHostedSourceService
         bool IsEnabled,
         string? Note);
 
-    private sealed record ResolvedSourceDocument(
-        string ResourceKind,
-        string ResourceUri,
-        string ResolvedUri,
-        int SelectedEntityCount,
-        string Json);
 
-    private sealed record ResolvedSourceSet(
-        IReadOnlyList<ResolvedSourceDocument> Documents,
-        string AggregateJson);
 
-    private sealed record GitHubTreeLocation(
-        string Owner,
-        string Repository,
-        string Reference,
-        string Path);
+
+
+
 
     private const string SchemaSql = """
         CREATE TABLE IF NOT EXISTS hosted_source_definition (
