@@ -2152,10 +2152,13 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     ReferenceUri: reader.IsDBNull(15) ? null : reader.GetString(15),
                     PresentationRequired: false,
                     ReferenceLinkRequired: false);
+                var mechanicalJson =
+                    string.IsNullOrWhiteSpace(contentJson) ? rawJson : contentJson;
                 var profile = BuildCompetencyProfile(
                     revisionId,
                     entityType,
-                    string.IsNullOrWhiteSpace(contentJson) ? rawJson : contentJson,
+                    ReadSourceNativeName(mechanicalJson),
+                    mechanicalJson,
                     gameEdition,
                     [attribution]);
                 if (profile is null)
