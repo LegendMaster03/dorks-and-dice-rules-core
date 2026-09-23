@@ -1,7 +1,5 @@
 using System.Data;
 using System.Data.Common;
-using System.Net;
-using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -13,15 +11,14 @@ namespace RulesCore.Infrastructure.Sources;
 
 public sealed class CurrentUserSourceService : ICurrentUserSourceService
 {
-    private const long MaxRemoteDocumentBytes = 64L * 1024L * 1024L;
-    private const int MaxResolvedDocuments = 2000;
-    private static readonly HttpClient SharedHttpClient = CreateSharedHttpClient();
+    private static readonly HttpClient SharedHttpClient =
+        CurrentUserSourceRemoteResolver.CreateSharedHttpClient();
 
     private readonly RulesCoreDbContext dbContext;
     private readonly INormalizedSourceImportService importer;
     private readonly ISourceFormatAdapterRegistry adapters;
     private readonly ISourceGrantService grants;
-    private readonly HttpClient httpClient;
+    private readonly CurrentUserSourceRemoteResolver remoteResolver;
     private readonly Func<CurrentUserSourceImportProgress, CancellationToken, Task>? progressReporter;
 
     // Compatibility constructor retained for existing integration/bootstrap callers while
@@ -67,7 +64,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         this.importer = importer;
         this.adapters = adapters;
         this.grants = grants;
-        this.httpClient = httpClient;
+        remoteResolver = new CurrentUserSourceRemoteResolver(adapters, httpClient);
         this.progressReporter = progressReporter;
     }
 
@@ -156,7 +153,7 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         else
         {
             var uri = RequireWebSourceUri(request.Url);
-            representations = await ResolveWebSourceAsync(uri, cancellationToken);
+            representations = await remoteResolver.ResolveAsync(uri, cancellationToken);
             if (representations.Count == 0)
             {
                 throw new InvalidDataException("The Web source did not contain any compatible files.");
@@ -588,176 +585,6 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
             cancellationToken);
     }
 
-    private async Task<IReadOnlyList<NormalizedSourceRepresentation>> ResolveWebSourceAsync(
-        Uri uri,
-        CancellationToken cancellationToken)
-    {
-        if (string.Equals(uri.Host, "github.com", StringComparison.OrdinalIgnoreCase)
-            && uri.AbsolutePath.Contains("/tree/", StringComparison.OrdinalIgnoreCase))
-        {
-            return await ResolveGitHubTreeAsync(uri, cancellationToken);
-        }
-
-        var fetched = await FetchBytesAsync(uri, cancellationToken);
-        var fileName = Path.GetFileName(uri.AbsolutePath);
-        if (string.IsNullOrWhiteSpace(fileName))
-        {
-            fileName = "web-source";
-        }
-        var artifact = new SourceRepresentationArtifact(
-            fileName,
-            fetched.Bytes,
-            $"web:{NormalizeWebOrigin(uri)}",
-            uri.AbsoluteUri,
-            fetched.MediaType);
-        var representation = adapters.TryRead(artifact);
-        return representation is null ? [] : [representation];
-    }
-
-    private async Task<IReadOnlyList<NormalizedSourceRepresentation>> ResolveGitHubTreeAsync(
-        Uri sourceUri,
-        CancellationToken cancellationToken)
-    {
-        var location = ParseGitHubTreeUri(sourceUri);
-        var snapshot = await ResolveGitHubTreeSnapshotAsync(location, cancellationToken);
-        var treeApiUri = new Uri(
-            $"https://api.github.com/repos/{Uri.EscapeDataString(snapshot.Owner)}/{Uri.EscapeDataString(snapshot.Repository)}/git/trees/{Uri.EscapeDataString(snapshot.TreeSha)}?recursive=1");
-        var treeBytes = await FetchBytesAsync(treeApiUri, cancellationToken);
-        using var treeDocument = JsonDocument.Parse(treeBytes.Bytes);
-        if (treeDocument.RootElement.TryGetProperty("truncated", out var truncated)
-            && truncated.ValueKind == JsonValueKind.True)
-        {
-            throw new InvalidDataException(
-                "GitHub truncated the repository tree. Use a narrower Web-source URL instead of importing an incomplete tree.");
-        }
-        if (!treeDocument.RootElement.TryGetProperty("tree", out var entries)
-            || entries.ValueKind != JsonValueKind.Array)
-        {
-            throw new InvalidDataException("GitHub tree response did not contain a tree array.");
-        }
-
-        var prefix = snapshot.Path.Trim('/');
-        var paths = entries.EnumerateArray()
-            .Where(entry =>
-                entry.TryGetProperty("type", out var type)
-                && type.ValueKind == JsonValueKind.String
-                && string.Equals(type.GetString(), "blob", StringComparison.Ordinal)
-                && entry.TryGetProperty("path", out var path)
-                && path.ValueKind == JsonValueKind.String)
-            .Select(entry => entry.GetProperty("path").GetString()!)
-            .Where(path =>
-                (string.IsNullOrEmpty(prefix)
-                    || string.Equals(path, prefix, StringComparison.Ordinal)
-                    || path.StartsWith(prefix + "/", StringComparison.Ordinal))
-                && adapters.IsCandidateFileName(path))
-            .OrderBy(path => path, StringComparer.Ordinal)
-            .ToArray();
-
-        if (paths.Length == 0)
-        {
-            throw new InvalidDataException("The Web source did not contain any compatible files.");
-        }
-        if (paths.Length > MaxResolvedDocuments)
-        {
-            throw new InvalidDataException(
-                $"The GitHub tree contains {paths.Length} candidate source files beneath the selected path; the maximum is {MaxResolvedDocuments}.");
-        }
-
-        var artifacts = new List<SourceRepresentationArtifact>(paths.Length);
-        foreach (var path in paths)
-        {
-            var rawUri = BuildGitHubRawUri(snapshot, path);
-            FetchedDocument fetched;
-            try
-            {
-                fetched = await FetchBytesAsync(rawUri, cancellationToken);
-            }
-            catch (HttpRequestException)
-            {
-                continue;
-            }
-
-            artifacts.Add(new SourceRepresentationArtifact(
-                path,
-                fetched.Bytes,
-                $"web:{NormalizeWebOrigin(sourceUri)}#{path}",
-                rawUri.AbsoluteUri,
-                fetched.MediaType));
-        }
-
-        var results = adapters.TryReadMany(artifacts);
-        if (results.Count == 0)
-        {
-            throw new InvalidDataException("The Web source did not contain any compatible files.");
-        }
-        return results;
-    }
-
-    private async Task<GitHubTreeSnapshot> ResolveGitHubTreeSnapshotAsync(
-        GitHubTreeLocation tree,
-        CancellationToken cancellationToken)
-    {
-        var commitApiUri = new Uri(
-            $"https://api.github.com/repos/{Uri.EscapeDataString(tree.Owner)}/{Uri.EscapeDataString(tree.Repository)}/commits/{Uri.EscapeDataString(tree.Reference)}");
-        var commitBytes = await FetchBytesAsync(commitApiUri, cancellationToken);
-        using var commitDocument = JsonDocument.Parse(commitBytes.Bytes);
-        var root = commitDocument.RootElement;
-        if (!root.TryGetProperty("sha", out var commitShaValue)
-            || commitShaValue.ValueKind != JsonValueKind.String
-            || string.IsNullOrWhiteSpace(commitShaValue.GetString()))
-        {
-            throw new InvalidDataException("GitHub did not return a commit identity for the Web source.");
-        }
-        if (!root.TryGetProperty("commit", out var commit)
-            || commit.ValueKind != JsonValueKind.Object
-            || !commit.TryGetProperty("tree", out var commitTree)
-            || commitTree.ValueKind != JsonValueKind.Object
-            || !commitTree.TryGetProperty("sha", out var treeShaValue)
-            || treeShaValue.ValueKind != JsonValueKind.String
-            || string.IsNullOrWhiteSpace(treeShaValue.GetString()))
-        {
-            throw new InvalidDataException("GitHub did not return a tree identity for the Web source commit.");
-        }
-
-        return new GitHubTreeSnapshot(
-            tree.Owner,
-            tree.Repository,
-            commitShaValue.GetString()!.Trim(),
-            treeShaValue.GetString()!.Trim(),
-            tree.Path);
-    }
-
-    private async Task<FetchedDocument> FetchBytesAsync(Uri uri, CancellationToken cancellationToken)
-    {
-        await EnsureRemoteUriSafeAsync(uri, cancellationToken);
-        using var request = new HttpRequestMessage(HttpMethod.Get, uri);
-        request.Headers.Accept.ParseAdd("application/pdf, application/json;q=0.9, text/json;q=0.8, */*;q=0.1");
-        request.Headers.UserAgent.ParseAdd("dorks-and-dice-rules-core/1.0");
-        using var response = await httpClient.SendAsync(
-            request,
-            HttpCompletionOption.ResponseHeadersRead,
-            cancellationToken);
-        if ((int)response.StatusCode is >= 300 and < 400)
-        {
-            throw new HttpRequestException(
-                $"Web source '{uri}' redirected to another location. Add the final HTTPS URL instead.");
-        }
-        response.EnsureSuccessStatusCode();
-        if (response.Content.Headers.ContentLength is > MaxRemoteDocumentBytes)
-        {
-            throw new InvalidDataException(
-                $"Web source '{uri}' exceeds the {MaxRemoteDocumentBytes / (1024 * 1024)} MiB per-document limit.");
-        }
-
-        var bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
-        if (bytes.LongLength > MaxRemoteDocumentBytes)
-        {
-            throw new InvalidDataException(
-                $"Web source '{uri}' exceeds the {MaxRemoteDocumentBytes / (1024 * 1024)} MiB per-document limit.");
-        }
-        return new FetchedDocument(bytes, response.Content.Headers.ContentType?.MediaType);
-    }
-
     private async Task<CurrentUserSourceView> UpsertRegistrationAsync(
         string userId,
         string kind,
@@ -923,100 +750,6 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         return uri;
     }
 
-    private static GitHubTreeLocation ParseGitHubTreeUri(Uri uri)
-    {
-        var segments = uri.AbsolutePath
-            .Trim('/')
-            .Split('/', StringSplitOptions.RemoveEmptyEntries)
-            .Select(Uri.UnescapeDataString)
-            .ToArray();
-        if (!string.Equals(uri.Host, "github.com", StringComparison.OrdinalIgnoreCase)
-            || segments.Length < 4
-            || !string.Equals(segments[2], "tree", StringComparison.OrdinalIgnoreCase))
-        {
-            throw new ArgumentException(
-                "A GitHub Web source must use https://github.com/{owner}/{repository}/tree/{ref}/{optional-path}.");
-        }
-        return new GitHubTreeLocation(
-            segments[0],
-            segments[1],
-            segments[3],
-            segments.Length > 4 ? string.Join('/', segments.Skip(4)) : string.Empty);
-    }
-
-    private static Uri BuildGitHubRawUri(GitHubTreeSnapshot snapshot, string path)
-    {
-        var escapedPath = string.Join('/', path.Split('/').Select(Uri.EscapeDataString));
-        return new Uri(
-            $"https://raw.githubusercontent.com/{Uri.EscapeDataString(snapshot.Owner)}/{Uri.EscapeDataString(snapshot.Repository)}/{Uri.EscapeDataString(snapshot.CommitSha)}/{escapedPath}");
-    }
-
-    private static async Task EnsureRemoteUriSafeAsync(Uri uri, CancellationToken cancellationToken)
-    {
-        if (IPAddress.TryParse(uri.DnsSafeHost, out var literal))
-        {
-            if (!IsPublicAddress(literal))
-            {
-                throw new InvalidOperationException(
-                    $"Web source address '{uri.DnsSafeHost}' is not a public network address.");
-            }
-            return;
-        }
-
-        IPAddress[] addresses;
-        try
-        {
-            addresses = await Dns.GetHostAddressesAsync(uri.DnsSafeHost, cancellationToken);
-        }
-        catch (SocketException exception)
-        {
-            throw new HttpRequestException(
-                $"Web source host '{uri.DnsSafeHost}' could not be resolved.",
-                exception);
-        }
-        if (addresses.Length == 0 || addresses.Any(address => !IsPublicAddress(address)))
-        {
-            throw new InvalidOperationException(
-                $"Web source host '{uri.DnsSafeHost}' resolves to a non-public network address.");
-        }
-    }
-
-    private static bool IsPublicAddress(IPAddress address)
-    {
-        if (address.IsIPv4MappedToIPv6)
-        {
-            address = address.MapToIPv4();
-        }
-        if (IPAddress.IsLoopback(address)
-            || address.Equals(IPAddress.Any)
-            || address.Equals(IPAddress.IPv6Any)
-            || address.Equals(IPAddress.None)
-            || address.Equals(IPAddress.IPv6None))
-        {
-            return false;
-        }
-
-        var bytes = address.GetAddressBytes();
-        if (address.AddressFamily == AddressFamily.InterNetwork)
-        {
-            return !(bytes[0] == 0
-                || bytes[0] == 10
-                || bytes[0] == 127
-                || (bytes[0] == 100 && bytes[1] is >= 64 and <= 127)
-                || (bytes[0] == 169 && bytes[1] == 254)
-                || (bytes[0] == 172 && bytes[1] is >= 16 and <= 31)
-                || (bytes[0] == 192 && bytes[1] == 168)
-                || bytes[0] >= 224);
-        }
-        if (address.AddressFamily == AddressFamily.InterNetworkV6)
-        {
-            return !address.IsIPv6LinkLocal
-                && !address.IsIPv6Multicast
-                && !(bytes[0] is 0xfc or 0xfd);
-        }
-        return false;
-    }
-
     private static string WebSourceDisplayName(Uri uri)
     {
         if (string.Equals(uri.Host, "github.com", StringComparison.OrdinalIgnoreCase))
@@ -1081,15 +814,6 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
     private static string Fingerprint(byte[] value) =>
         Convert.ToHexString(SHA256.HashData(value)).ToLowerInvariant();
 
-    private static HttpClient CreateSharedHttpClient() => new(new SocketsHttpHandler
-    {
-        AllowAutoRedirect = false,
-        UseCookies = false
-    })
-    {
-        Timeout = TimeSpan.FromMinutes(2)
-    };
-
     private static string? GetNullableString(DbDataReader reader, string name)
     {
         var ordinal = reader.GetOrdinal(name);
@@ -1112,20 +836,11 @@ public sealed class CurrentUserSourceService : ICurrentUserSourceService
         command.Parameters.Add(parameter);
     }
 
-    private sealed record GitHubTreeLocation(
-        string Owner,
-        string Repository,
-        string Reference,
-        string Path);
 
-    private sealed record GitHubTreeSnapshot(
-        string Owner,
-        string Repository,
-        string CommitSha,
-        string TreeSha,
-        string Path);
 
-    private sealed record FetchedDocument(byte[] Bytes, string? MediaType);
+
+
+
 
     private const string CurrentUserSourceSchemaSql = """
         CREATE TABLE IF NOT EXISTS current_user_source (
