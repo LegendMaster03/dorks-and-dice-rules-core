@@ -361,7 +361,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             // The consumer must recover current family semantics from preserved source identity
             // without requiring a destructive re-import of immutable source revisions.
             var legacyFamilyEntityIds = imported.Entities
-                .Where(value => value.Name is "Craft" or "Craft (blacksmithing)" or "Craft (alchemy)")
+                .Where(value => value.Name is "The planes" or "Craft" or "Craft (blacksmithing)" or "Craft (alchemy)")
                 .Select(value => value.EntityId)
                 .ToArray();
             var legacyFamilyRevisions = await db.SourceEntityRevisions
@@ -371,9 +371,26 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             {
                 var root = JsonNode.Parse(revision.ContentJson!)!.AsObject();
                 var competency = root["_rulesCore"]!["competency"]!.AsObject();
-                competency.Remove("familyName");
-                competency.Remove("specialty");
-                competency.Remove("isFamily");
+                var sourceEntityName = await db.SourceEntities
+                    .Where(value => value.Id == revision.SourceEntityId)
+                    .Select(value => value.Name)
+                    .SingleAsync();
+
+                if (sourceEntityName == "The planes")
+                {
+                    // Older normalization modeled Knowledge(X) as one family. Current policy
+                    // translates Knowledge(X) directly to X, so stale family metadata must not
+                    // survive merely because the immutable revision predates that decision.
+                    competency["familyName"] = "Knowledge";
+                    competency["specialty"] = "the planes";
+                    competency["isFamily"] = false;
+                }
+                else
+                {
+                    competency.Remove("familyName");
+                    competency.Remove("specialty");
+                    competency.Remove("isFamily");
+                }
                 revision.ContentJson = root.ToJsonString();
             }
             await db.SaveChangesAsync();
