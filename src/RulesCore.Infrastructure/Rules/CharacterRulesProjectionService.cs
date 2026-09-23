@@ -2078,6 +2078,18 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             var competencyConceptKey = mechanic.ConceptKey
                 ?? throw new InvalidOperationException(
                     $"Competency mechanic '{mechanic.MechanicKey}' does not expose a concept key.");
+            var universal = FindUniversalCompetency(catalog, mechanic);
+            var stateKeys = BuildCompetencyStateKeys(
+                mechanic,
+                competencyConceptKey,
+                universal,
+                includeTrainingStateKey: false);
+            var trainingStateKeys = BuildCompetencyStateKeys(
+                mechanic,
+                competencyConceptKey,
+                universal,
+                includeTrainingStateKey: true);
+
             context.RegisterCompetencyIdentity(
                 mechanic.DisplayName,
                 competencyConceptKey,
@@ -2127,14 +2139,17 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
             var contributions = new List<CharacterMechanicContributionView>
             {
-                Contribution($"ability.{ability}.modifier", $"{CharacterProjectionJson.Humanize(ability)} modifier", abilityModifier)
+                Contribution(
+                    $"ability.{ability}.modifier",
+                    $"{CharacterProjectionJson.Humanize(ability)} modifier",
+                    abilityModifier)
             };
             var total = abilityModifier;
+            var rankValue = 0;
 
             if (profile.SupportsClassSkillState)
             {
-                var explicitClassSkill = context.ClassSkillKeys.Contains(competencyConceptKey)
-                    || context.ClassSkillKeys.Contains(mechanic.MechanicKey);
+                var explicitClassSkill = stateKeys.Any(context.ClassSkillKeys.Contains);
                 var derivedSources = context.FindClassSkillGrantSources(
                     mechanic.DisplayName,
                     profile.FamilyName);
@@ -2159,24 +2174,29 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             if (profile.SupportsRanks)
             {
                 if (!context.HasCompetencyRanksInput
-                    || !context.CompetencyRanks.TryGetValue(competencyConceptKey, out var ranks))
+                    || !TryFindCompetencyRanks(
+                        context.CompetencyRanks,
+                        stateKeys,
+                        out var rankStateKey,
+                        out rankValue))
                 {
                     context.Mechanics[mechanic.MechanicKey] = Unresolved(
                         mechanic.MechanicKey,
                         "competency",
                         mechanic.DisplayName,
                         CharacterResolutionStates.MissingCharacterInput,
-                        [$"{competencyConceptKey}.ranks"],
+                        [$"{stateKeys[0]}.ranks"],
                         provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
                     continue;
                 }
-                total = checked(total + ranks);
-                contributions.Add(Contribution(
-                    $"{competencyConceptKey}.ranks",
-                    "Ranks",
-                    ranks));
 
-                if (profile.TrainedOnly == true && ranks <= 0)
+                total = checked(total + rankValue);
+                contributions.Add(Contribution(
+                    $"{rankStateKey}.ranks",
+                    "Ranks",
+                    rankValue));
+
+                if (profile.TrainedOnly == true && rankValue <= 0)
                 {
                     context.Mechanics[mechanic.MechanicKey] = Unresolved(
                         mechanic.MechanicKey,
@@ -2189,9 +2209,13 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 }
             }
 
-            if (profile.SupportsTrainingState)
+            var usesProficiencyTraining = string.Equals(
+                profile.EvaluationProfileKey,
+                "proficiency-competency",
+                StringComparison.OrdinalIgnoreCase);
+            if (profile.SupportsTrainingState && usesProficiencyTraining)
             {
-                var trained = context.TrainingKeys.Contains(competencyConceptKey);
+                var trained = trainingStateKeys.Any(context.TrainingKeys.Contains);
                 if (!trained && !context.HasTrainingInput)
                 {
                     context.Mechanics[mechanic.MechanicKey] = Unresolved(
@@ -2199,7 +2223,19 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                         "competency",
                         mechanic.DisplayName,
                         CharacterResolutionStates.MissingCharacterInput,
-                        [$"{competencyConceptKey}.trained"],
+                        [$"{trainingStateKeys[0]}.trained"],
+                        provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
+                    continue;
+                }
+
+                if (profile.TrainedOnly == true && !trained)
+                {
+                    context.Mechanics[mechanic.MechanicKey] = Unresolved(
+                        mechanic.MechanicKey,
+                        "competency",
+                        mechanic.DisplayName,
+                        CharacterResolutionStates.MissingCapability,
+                        missingCapabilities: [$"competency.trained.{competencyConceptKey}"],
                         provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
                     continue;
                 }
@@ -2217,8 +2253,12 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                             provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
                         continue;
                     }
+
                     total = checked(total + proficiency);
-                    contributions.Add(Contribution("proficiency.standard", "Training proficiency", proficiency));
+                    contributions.Add(Contribution(
+                        "proficiency.standard",
+                        "Training proficiency",
+                        proficiency));
                 }
             }
 
@@ -2226,7 +2266,10 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             total = checked(total + other);
             if (other != 0)
             {
-                contributions.Add(Contribution($"{mechanic.MechanicKey}.other", "Other modifiers", other));
+                contributions.Add(Contribution(
+                    $"{mechanic.MechanicKey}.other",
+                    "Other modifiers",
+                    other));
             }
 
             context.Mechanics[mechanic.MechanicKey] = new CharacterResolvedMechanicView(
@@ -2276,6 +2319,89 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 };
             }
         }
+    }
+
+    private static CharacterUniversalCompetencyView? FindUniversalCompetency(
+        CharacterMechanicsCatalogView catalog,
+        CharacterMechanicView mechanic) =>
+        catalog.Competencies?.FirstOrDefault(value =>
+            string.Equals(
+                value.SemanticKey,
+                mechanic.MechanicKey,
+                StringComparison.OrdinalIgnoreCase)
+            || value.MechanicKeys.Contains(
+                mechanic.MechanicKey,
+                StringComparer.OrdinalIgnoreCase)
+            || value.CompatibilityMechanicKeys.Contains(
+                mechanic.MechanicKey,
+                StringComparer.OrdinalIgnoreCase));
+
+    private static IReadOnlyList<string> BuildCompetencyStateKeys(
+        CharacterMechanicView mechanic,
+        string competencyConceptKey,
+        CharacterUniversalCompetencyView? universal,
+        bool includeTrainingStateKey)
+    {
+        var keys = new List<string>();
+
+        static void Add(List<string> values, string? value)
+        {
+            if (string.IsNullOrWhiteSpace(value)
+                || values.Contains(value, StringComparer.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            values.Add(value);
+        }
+
+        static string? StripMechanicPrefix(string value)
+        {
+            const string prefix = "competency.";
+            return value.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
+                ? value[prefix.Length..]
+                : null;
+        }
+
+        Add(keys, competencyConceptKey);
+        Add(keys, mechanic.MechanicKey);
+        Add(keys, universal?.SemanticKey);
+
+        if (universal is not null)
+        {
+            foreach (var compatibilityKey in universal.CompatibilityMechanicKeys)
+            {
+                Add(keys, compatibilityKey);
+                Add(keys, StripMechanicPrefix(compatibilityKey));
+            }
+
+            if (includeTrainingStateKey)
+            {
+                Add(keys, universal.TrainingStateKey);
+            }
+        }
+
+        return keys;
+    }
+
+    private static bool TryFindCompetencyRanks(
+        IReadOnlyDictionary<string, int> ranks,
+        IReadOnlyList<string> keys,
+        out string matchedKey,
+        out int value)
+    {
+        foreach (var key in keys)
+        {
+            if (ranks.TryGetValue(key, out value))
+            {
+                matchedKey = key;
+                return true;
+            }
+        }
+
+        matchedKey = keys[0];
+        value = 0;
+        return false;
     }
 
     private static CharacterCompetencyProfileView? SelectProfile(

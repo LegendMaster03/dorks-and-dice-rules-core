@@ -1,11 +1,25 @@
 namespace RulesCore.Domain.Rules;
 
+public sealed record UniversalCompetencyMechanics(
+    string GoverningAbilityKey,
+    bool SupportsRanks,
+    bool SupportsClassSkillState,
+    bool SupportsTrainingState,
+    bool TrainedOnly,
+    bool ArmorCheckPenaltyApplies,
+    string EvaluationProfileKey,
+    string EvaluationKind,
+    bool CanEvaluate,
+    string CompetencyKind = CharacterCompetencyKinds.Skill,
+    string FacetType = "skill");
+
 public sealed record UniversalCompetencyDefinition(
     string IdentityKey,
     string DisplayName,
     string? FamilyName = null,
     bool IsFamily = false,
-    IReadOnlyList<string>? SourceAliases = null)
+    IReadOnlyList<string>? SourceAliases = null,
+    UniversalCompetencyMechanics? Mechanics = null)
 {
     public string SemanticKey => $"competency.{IdentityKey}";
     public string? TrainingStateKey => IsFamily
@@ -27,9 +41,9 @@ public static class KnownUniversalCompetencies
 {
     private static readonly IReadOnlyList<UniversalCompetencyDefinition> FamilyDefinitions =
     [
-        Family("craft", "Craft"),
-        Family("perform", "Perform"),
-        Family("profession", "Profession")
+        Family("craft", "Craft", RankedFamily("intelligence", trainedOnly: false)),
+        Family("perform", "Perform", RankedFamily("charisma", trainedOnly: false)),
+        Family("profession", "Profession", RankedFamily("wisdom", trainedOnly: true))
     ];
 
     private static readonly IReadOnlyList<UniversalCompetencyDefinition> FamilyMemberDefinitions =
@@ -253,6 +267,79 @@ public static class KnownUniversalCompetencies
             .ToArray();
     }
 
+    public static UniversalCompetencyMechanics? ResolveMechanics(string? identityKey)
+    {
+        var definition = FindByIdentityKey(identityKey);
+        if (definition is null)
+        {
+            return null;
+        }
+
+        if (definition.Mechanics is not null)
+        {
+            return definition.Mechanics with
+            {
+                GoverningAbilityKey =
+                    NormalizeAbilityKey(definition.Mechanics.GoverningAbilityKey)
+                    ?? definition.Mechanics.GoverningAbilityKey
+            };
+        }
+
+        if (string.IsNullOrWhiteSpace(definition.FamilyName))
+        {
+            return null;
+        }
+
+        var family = FamilyDefinitions.FirstOrDefault(value =>
+            string.Equals(
+                value.DisplayName,
+                definition.FamilyName,
+                StringComparison.OrdinalIgnoreCase));
+        if (family?.Mechanics is null)
+        {
+            return null;
+        }
+
+        return family.Mechanics with
+        {
+            GoverningAbilityKey =
+                NormalizeAbilityKey(family.Mechanics.GoverningAbilityKey)
+                ?? family.Mechanics.GoverningAbilityKey
+        };
+    }
+
+    public static string? NormalizeAbilityKey(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        return value.Trim().ToLowerInvariant() switch
+        {
+            "str" or "strength" => "strength",
+            "dex" or "dexterity" => "dexterity",
+            "con" or "constitution" => "constitution",
+            "int" or "intelligence" => "intelligence",
+            "wis" or "wisdom" => "wisdom",
+            "cha" or "charisma" => "charisma",
+            var other => NormalizeIdentityKey(other)
+        };
+    }
+
+    public static bool IsOrdinaryCharacterCompetencyIdentity(string? identityKey)
+    {
+        if (string.IsNullOrWhiteSpace(identityKey))
+        {
+            return false;
+        }
+
+        return !string.Equals(
+            NormalizeIdentityKey(identityKey),
+            "speak-language",
+            StringComparison.OrdinalIgnoreCase);
+    }
+
     public static string NormalizeIdentityKey(string value)
     {
         var normalized = value.Trim();
@@ -292,8 +379,31 @@ public static class KnownUniversalCompetencies
                 .Split('-', StringSplitOptions.RemoveEmptyEntries)
                 .Select(value => char.ToUpperInvariant(value[0]) + value[1..]));
 
-    private static UniversalCompetencyDefinition Family(string key, string name) =>
-        new(key, name, FamilyName: name, IsFamily: true, SourceAliases: [name]);
+    private static UniversalCompetencyDefinition Family(
+        string key,
+        string name,
+        UniversalCompetencyMechanics mechanics) =>
+        new(
+            key,
+            name,
+            FamilyName: name,
+            IsFamily: true,
+            SourceAliases: [name],
+            Mechanics: mechanics);
+
+    private static UniversalCompetencyMechanics RankedFamily(
+        string governingAbilityKey,
+        bool trainedOnly) =>
+        new(
+            NormalizeAbilityKey(governingAbilityKey) ?? governingAbilityKey,
+            SupportsRanks: true,
+            SupportsClassSkillState: true,
+            SupportsTrainingState: true,
+            TrainedOnly: trainedOnly,
+            ArmorCheckPenaltyApplies: false,
+            EvaluationProfileKey: "ranked-skill",
+            EvaluationKind: CharacterMechanicEvaluationKinds.Sum,
+            CanEvaluate: true);
 
     private static UniversalCompetencyDefinition Craft(
         string name,
