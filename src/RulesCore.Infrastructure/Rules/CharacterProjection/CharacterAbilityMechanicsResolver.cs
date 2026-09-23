@@ -9,6 +9,16 @@ namespace RulesCore.Infrastructure.Rules.CharacterProjection;
 /// </summary>
 internal static class CharacterAbilityMechanicsResolver
 {
+    private static readonly string[] StandardAbilities =
+    [
+        "strength",
+        "dexterity",
+        "constitution",
+        "intelligence",
+        "wisdom",
+        "charisma"
+    ];
+
     internal static void ResolveAbilities(CharacterProjectionContext context)
     {
         foreach (var ability in StandardAbilities)
