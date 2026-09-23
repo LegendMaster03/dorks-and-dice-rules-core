@@ -19,6 +19,8 @@ internal static class CharacterAbilityMechanicsResolver
         "charisma"
     ];
 
+    internal static IReadOnlyList<string> StandardAbilityKeys => StandardAbilities;
+
     internal static void ResolveAbilities(CharacterProjectionContext context)
     {
         foreach (var ability in StandardAbilities)

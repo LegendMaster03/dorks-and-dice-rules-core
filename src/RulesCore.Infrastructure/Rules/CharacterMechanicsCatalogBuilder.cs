@@ -27,7 +27,7 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
         var providerByPackageKey = await sourceMetadata.ReadProvidersAsync(rules.Rules, cancellationToken);
         var sourceUriByRevision = await sourceMetadata.ReadSourceUrisAsync(rules.Rules, cancellationToken);
-        var publicationByRevision = await sourceMetadata.ReadPublicationAttributionsAsync(
+        var publicationByRevision = await sourceMetadata.ReadCharacterMechanicsPublicationAttributionsAsync(
             rules.Rules,
             cancellationToken);
         var competencyRules = rules.Rules.Where(IsCompetencyRule).ToArray();

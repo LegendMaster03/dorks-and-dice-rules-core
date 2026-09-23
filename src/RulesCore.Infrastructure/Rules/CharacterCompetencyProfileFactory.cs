@@ -1,6 +1,7 @@
 using System.Text.Json;
 using RulesCore.Application.Rules;
 using RulesCore.Domain.Rules;
+using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.Infrastructure.Rules;
 
@@ -10,6 +11,9 @@ namespace RulesCore.Infrastructure.Rules;
 /// </summary>
 internal static class CharacterCompetencyProfileFactory
 {
+    private const string AbilityContributionRole = "ability";
+    private const string CompetencyContributionRole = "competency";
+
     internal static CharacterCompetencyDefinitionView BuildDefinition(
         ResolvedRuleCatalogItemView rule,
         string? selectedMechanicalJson,

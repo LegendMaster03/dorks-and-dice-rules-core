@@ -51,7 +51,7 @@ internal static class CharacterInitiativeSaveResolver
         }
     
         var proficiencyResolved = CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, "proficiency.standard", out var proficiency);
-        foreach (var ability in StandardAbilities)
+        foreach (var ability in CharacterAbilityMechanicsResolver.StandardAbilityKeys)
         {
             var key = $"save.{ability}";
             if (!CharacterProjectionResolutionHelpers.TryResolvedNumeric(context, $"ability.{ability}.modifier", out var modifier))

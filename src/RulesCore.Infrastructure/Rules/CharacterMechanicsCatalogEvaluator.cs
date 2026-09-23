@@ -626,6 +626,9 @@ internal static class CharacterMechanicsCatalogEvaluator
     }
     
     
+    private static string CompetencyMechanicKey(string conceptKey) =>
+        $"competency.{conceptKey.Trim().ToLowerInvariant()}";
+
     private static string ConceptKeyFromCompetencyMechanicKey(string mechanicKey)
     {
         const string prefix = "competency.";
