@@ -10,7 +10,8 @@ import {
     filterBar,
     formatDate,
     sectionHeading,
-    setButtonBusy
+    setButtonBusy,
+    workspaceSection
 } from "./ui.js";
 
 const STATE_LABELS = {
@@ -44,9 +45,9 @@ export function installAdjudicationQueue(app) {
 }
 
 function createQueueCard(app, container) {
-    const card = element("section", {
-        className: "card card-body mb-3",
-        attributes: { "aria-labelledby": "rules-core-adjudication-queue-heading" }
+    const card = workspaceSection({
+        className: "rules-core-adjudication-queue",
+        ariaLabelledBy: "rules-core-adjudication-queue-heading"
     });
     const discover = element("button", {
         type: "button",
@@ -222,7 +223,7 @@ async function renderWorkItem(app, container, workItemId) {
         onClick: async () => app.renderGlobalOverview(container)
     }));
     const detail = element("div", {}, element("div", {
-        className: "card card-body text-body-secondary",
+        className: "rules-core-loading-state",
         text: "Loading adjudication work…"
     }));
     container.append(toolbar, detail);
@@ -238,7 +239,7 @@ async function renderWorkItem(app, container, workItemId) {
 function renderWorkDetail(app, container, target, detail) {
     target.replaceChildren();
     const work = detail.workItem;
-    const summary = element("section", { className: "card card-body mb-3" },
+    const summary = workspaceSection({},
         element("div", { className: "d-flex flex-wrap justify-content-between gap-3" },
             element("div", {},
                 element("h3", { className: "h5 mb-1", text: work.displayName ?? work.conceptKey ?? "Adjudication work" }),
@@ -271,7 +272,7 @@ function renderWorkDetail(app, container, target, detail) {
 
 function renderWorkflowActions(app, container, detail) {
     const work = detail.workItem;
-    const card = element("section", { className: "card card-body mb-3" },
+    const card = workspaceSection({},
         element("h4", { className: "h6", text: "Workflow actions" }));
     const actions = element("div", { className: "d-flex flex-wrap gap-2 mb-3" });
 
@@ -346,7 +347,7 @@ function renderWorkflowActions(app, container, detail) {
 
 function renderNormalizationEvidence(app, container, detail) {
     const candidate = detail.normalizationCandidate;
-    const card = element("section", { className: "card card-body mb-3" },
+    const card = workspaceSection({},
         element("h4", { className: "h6", text: "Normalization evidence" }),
         definitionList([
             ["Source entity", candidate.name],
@@ -374,7 +375,7 @@ function renderNormalizationEvidence(app, container, detail) {
 
 function renderRuleEvidence(app, container, detail) {
     const rule = detail.rule;
-    const card = element("section", { className: "card card-body mb-3" },
+    const card = workspaceSection({},
         element("div", { className: "d-flex flex-wrap justify-content-between gap-2" },
             element("h4", { className: "h6", text: "Rule adjudication evidence" }),
             badge(`${rule.restrictedBindingCount} restricted binding${rule.restrictedBindingCount === 1 ? "" : "s"}`, rule.restrictedBindingCount ? "warning" : "secondary")),
@@ -433,7 +434,7 @@ function renderRuleEvidence(app, container, detail) {
 function renderSourceUpdateEvidence(app, container, detail) {
     const preview = detail.sourceUpdate;
     const update = preview.update;
-    const card = element("section", { className: "card card-body mb-3" },
+    const card = workspaceSection({},
         element("h4", { className: "h6", text: "Source update review" }),
         definitionList([
             ["Source", `${update.sourceEntityName} · ${update.packageDisplayName}`],
@@ -464,7 +465,7 @@ function renderSourceUpdateEvidence(app, container, detail) {
 }
 
 function renderClarificationHistory(clarification) {
-    const card = element("section", { className: "card card-body mb-3" },
+    const card = workspaceSection({},
         element("h4", { className: "h6", text: "Human clarification" }),
         definitionList([
             ["Question", clarification.question],
@@ -479,7 +480,7 @@ function renderClarificationHistory(clarification) {
 }
 
 function renderAuditHistory(history) {
-    const card = element("section", { className: "card card-body mb-3" },
+    const card = workspaceSection({},
         element("h4", { className: "h6", text: "Workflow history" }));
     if (!history.length) {
         card.append(element("div", { className: "text-body-secondary", text: "No workflow events are recorded." }));

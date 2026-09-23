@@ -7,6 +7,7 @@ import {
     field as compactField,
     formatJson,
     setButtonBusy,
+    workspaceSection,
     DEFAULT_PAGE_SIZE,
     paginationControls
 } from "./ui.js";
@@ -59,7 +60,7 @@ export function installSourceVersioning(app) {
 
 async function renderVersionReview(app, container) {
     clear(container);
-    const searchCard = element("div", { className: "card card-body mb-3" });
+    const searchCard = workspaceSection({ className: "rules-core-version-search" });
     const form = element("form", { className: "rules-core-filter-bar mb-0" });
     const query = element("input", { type: "search", className: "form-control form-control-sm", placeholder: "Rule name, source, work, or release" });
     const type = element("input", { type: "text", className: "form-control form-control-sm", placeholder: "Optional entity type" });

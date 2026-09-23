@@ -10,7 +10,8 @@ import {
     formatJson,
     setButtonBusy,
     DEFAULT_PAGE_SIZE,
-    paginationControls
+    paginationControls,
+    workspaceSection
 } from "./ui.js";
 
 const RULES_LAWYER_ROLE = "Rules Lawyer";
@@ -126,7 +127,7 @@ export class RulesAuthoringApp {
         const overview = await this.api.getGlobalAuthoringOverview();
         clear(container);
 
-        const summary = element("div", { className: "card card-body mb-3" });
+        const summary = workspaceSection({ className: "rules-core-authoring-summary" });
         const top = element("div", {
             className: "d-flex flex-wrap justify-content-between align-items-start gap-3"
         });
@@ -213,7 +214,7 @@ export class RulesAuthoringApp {
 
         table.append(head, body);
         container.append(
-            element("div", { className: "card" }, element("div", { className: "table-responsive" }, table)),
+            element("div", { className: "table-responsive rules-core-workspace-table" }, table),
             paginationControls({
                 page: this.globalPage,
                 itemCount: globalConcepts.length,
@@ -271,7 +272,7 @@ export class RulesAuthoringApp {
         const campaign = this.dmCampaigns.find(value => value.id === this.activeCampaignId);
         const baseline = overview.selectedBaseline;
         const published = overview.latestPublishedRuleset;
-        const summary = element("div", { className: "card card-body mb-3" });
+        const summary = workspaceSection({ className: "rules-core-authoring-summary" });
         const top = element("div", {
             className: "d-flex flex-wrap justify-content-between align-items-start gap-3"
         });
@@ -388,7 +389,7 @@ export class RulesAuthoringApp {
             select.append(option);
         }
 
-        const card = element("div", { className: "card card-body mb-3" });
+        const card = workspaceSection({});
         card.append(
             element("label", { className: "form-label fw-semibold", text: "Campaign" }),
             select);
@@ -428,7 +429,7 @@ export class RulesAuthoringApp {
     }
 
     renderConceptSummary(detail, scope) {
-        const card = element("div", { className: "card card-body mb-3" });
+        const card = workspaceSection({});
         const row = element("div", {
             className: "d-flex flex-wrap justify-content-between gap-3"
         });
@@ -468,7 +469,7 @@ export class RulesAuthoringApp {
 
     createDecisionEditor(scope, detail, container) {
         const current = scope === "global" ? detail.latestDecision : detail.latestCampaignDecision;
-        const card = element("div", { className: "card card-body mb-3" });
+        const card = workspaceSection({});
         card.append(element("h3", {
             className: "h5",
             text: scope === "global" ? "Decision editor" : "Campaign override editor"
@@ -696,7 +697,7 @@ export class RulesAuthoringApp {
     }
 
     renderPreview(container, preview) {
-        const card = element("div", { className: "card card-body border-primary" });
+        const card = workspaceSection({ className: "rules-core-preview" });
         const header = element("div", {
             className: "d-flex flex-wrap justify-content-between gap-2 align-items-center mb-2"
         });
@@ -743,7 +744,7 @@ export class RulesAuthoringApp {
     }
 
     loadingCard(message) {
-        return element("div", { className: "card card-body text-body-secondary", text: message });
+        return element("div", { className: "rules-core-loading-state", text: message });
     }
 
     backButton(onClick) {

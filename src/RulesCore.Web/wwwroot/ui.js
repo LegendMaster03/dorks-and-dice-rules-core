@@ -128,6 +128,24 @@ export function panel({ className = "", tagName = "section", ariaLabelledBy = nu
     }, element("div", { className: "card-body" }, children));
 }
 
+export function workspaceSection({
+    className = "",
+    tagName = "section",
+    id = null,
+    ariaLabelledBy = null,
+    attributes = null
+} = {}, ...children) {
+    const mergedAttributes = {
+        ...(attributes ?? {}),
+        ...(ariaLabelledBy ? { "aria-labelledby": ariaLabelledBy } : {})
+    };
+    return element(tagName, {
+        id,
+        className: `rules-core-workspace-section ${className}`.trim(),
+        attributes: Object.keys(mergedAttributes).length ? mergedAttributes : undefined
+    }, children);
+}
+
 export function toolbar(...children) {
     return element("div", { className: "rules-core-toolbar" }, children);
 }

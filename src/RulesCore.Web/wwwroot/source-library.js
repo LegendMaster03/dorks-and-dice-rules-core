@@ -9,6 +9,7 @@ import {
     field as compactField,
     formatDate,
     sectionHeading,
+    workspaceSection,
 } from "./ui.js";
 import { renderResolvedRule } from "./rule-renderers.js";
 
@@ -230,20 +231,18 @@ async function renderSourceLibrary(app, container) {
         app.libraryNotice = null;
     }
 
-    await renderBuiltInSources(app, container, BUNDLED_SRDS);
+    const bundledLoad = renderBuiltInSources(app, container, BUNDLED_SRDS);
     await renderSourceBrowser(app, container);
+    await bundledLoad;
 }
 
 async function renderBuiltInSources(app, container, definitions) {
-    const section = element("section", { className: "mb-3" });
-    section.append(element("div", {
-        className: "d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2"
-    }, element("div", {},
-        element("h4", { className: "h5 mb-1", text: "Bundled SRDs" }),
-        element("p", {
-            className: "text-body-secondary small mb-0",
-            text: "These reviewed snapshots ship with Rules Core and are hydrated into the public immutable Source Layer during baseline bootstrap. No account, import action, or remote host is required to use them."
-        }))));
+    const section = workspaceSection({ className: "rules-core-bundled-sources" });
+    section.append(sectionHeading({
+        level: 4,
+        title: "Bundled SRDs",
+        description: "These reviewed snapshots ship with Rules Core and are hydrated into the public immutable Source Layer during baseline bootstrap. No account, import action, or remote host is required to use them."
+    }));
 
     const stateHolder = element("div", { className: "rules-core-source-grid" });
     section.append(stateHolder);
@@ -253,7 +252,7 @@ async function renderBuiltInSources(app, container, definitions) {
     const readyCount = states.filter(value => value.ready).length;
     const detectedMonsterCount = states.reduce((sum, value) => sum + value.monsterCount, 0);
     const monsterCountCapped = states.some(value => value.monsterCapped);
-    section.insertBefore(element("div", { className: "rules-core-library-summary card card-body mb-3" },
+    section.insertBefore(element("div", { className: "rules-core-library-summary" },
         element("div", { className: "rules-core-metrics" },
             metric("Bundled SRDs", String(definitions.length)),
             metric("Available locally", `${readyCount}/${definitions.length}`),
@@ -339,7 +338,7 @@ function renderSourceCard(app, container, state) {
 }
 
 async function renderSourceBrowser(app, container) {
-    const section = element("section", { id: "rules-core-source-browser", className: "card card-body" });
+    const section = workspaceSection({ id: "rules-core-source-browser", className: "rules-core-source-browser" });
     section.append(sectionHeading({
         level: 4,
         title: "Browse source material",
@@ -504,8 +503,8 @@ async function renderSourceEntityDetail(app, container, entityId) {
         ]);
         clear(container);
 
-        const readable = element("section", {
-            className: "card card-body mb-3 rules-core-source-readable"
+        const readable = workspaceSection({
+            className: "rules-core-source-readable"
         });
         readable.append(
             element("div", { className: "rules-core-eyebrow", text: "Readable content" }),
@@ -519,8 +518,9 @@ async function renderSourceEntityDetail(app, container, entityId) {
             }));
         container.append(readable);
 
-        const readableNative = element("details", {
-            className: "card card-body mb-3 rules-core-source-native-readable",
+        const readableNative = workspaceSection({
+            tagName: "details",
+            className: "rules-core-source-native-readable",
             attributes: { open: "" }
         });
         readableNative.append(
@@ -546,7 +546,7 @@ async function renderSourceEntityDetail(app, container, entityId) {
         context.append(element("summary", { text: "Source provenance and integration details" }), contextBody);
         container.append(context);
 
-        const native = element("details", { className: "card card-body mb-3" });
+        const native = workspaceSection({ tagName: "details", className: "rules-core-source-raw" });
         native.append(
             element("summary", { className: "fw-semibold", text: "Raw source-native data (advanced)" }),
             element("p", {
@@ -556,7 +556,7 @@ async function renderSourceEntityDetail(app, container, entityId) {
             codeBlock(nativeDocument));
         container.append(native);
 
-        const mechanical = element("details", { className: "card card-body" });
+        const mechanical = workspaceSection({ tagName: "details", className: "rules-core-source-raw" });
         mechanical.append(
             element("summary", { className: "fw-semibold", text: "Raw Rules Core mechanical data (advanced)" }),
             element("p", {
