@@ -177,7 +177,7 @@ public sealed class DeterministicSourceSchemaIntegrationTests
                     imported_at timestamp with time zone NOT NULL);
                 """);
 
-            await db.Database.ExecuteSqlInterpolatedAsync($"""
+            await db.Database.ExecuteSqlInterpolatedAsync($$"""
                 INSERT INTO source_package (
                     source_package_id, package_key, display_name, provider, license, is_public, created_at)
                 VALUES
