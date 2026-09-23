@@ -11,7 +11,8 @@ Rules Core stores four different kinds of information separately:
 ### Access-scoped source material
 
 - `source_package` identifies one imported or bundled package and its distribution metadata.
-- `source_representation` stores one immutable physical representation of that package: format, origin identity, file name, source URI when applicable, media type, SHA-256, byte length, original bytes, adapter metadata, import time, and predecessor representation when the same moving origin changes.
+- `source_content_blob` stores immutable physical artifact bytes once globally, keyed by SHA-256. Byte-identical imports reuse the same blob regardless of account or package.
+- `source_representation` stores the package-scoped representation metadata: format, origin identity, file name, source URI when applicable, media type, SHA-256/blob reference, byte length, adapter metadata, import time, and predecessor representation when the same moving origin changes.
 - `source_entity` identifies a native entity inside a package by `(package, format, native key)`.
 - `source_entity_revision` stores immutable revisions of that native entity. Its raw JSON is the lossless adapter record, not a canonical Dorks & Dice rule document.
 - `source_representation_entity` records which entity revision occurred in a particular physical representation.
@@ -103,7 +104,7 @@ Uploaded files are immutable snapshots. Web sources are moving registrations and
 
 Canonical reconciliation is downstream of valid source ingestion. If canonical identity evidence conflicts, Rules Core keeps the imported representation and native entity revision, records a reconciliation issue, and exposes that issue only through an owning user's source registration. A corrected retry resolves the active issue across that representation lineage without fabricating another source revision.
 
-GitHub tree imports enumerate compatible files and preserve each fetched file as its own source representation. A failed incomplete Web import can be cleaned and retried without converting private source content into shared canonical content.
+GitHub tree imports enumerate compatible files and preserve each fetched file as its own package-scoped source representation. When multiple accounts import byte-identical files, those representation rows reference one shared content blob while their grants and provenance remain independent. A failed incomplete Web import can be cleaned and retried without converting private source access into shared access.
 
 ## Web refresh
 
