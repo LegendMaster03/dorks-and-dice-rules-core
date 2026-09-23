@@ -986,7 +986,11 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             {
                 name = "Deception",
                 source = fiveSource,
-                entries = new[] { "Later-edition Deception fixture." }
+                ability = "wis",
+                entries = new[]
+                {
+                    "Later-edition Deception fixture with an intentionally conflicting fixed Ability."
+                }
             });
             var fiveImport = await importer.ImportAsync(new ImportNormalizedSourceRequest(
                 $"mechanics-deception-5e-{token}",
@@ -1109,6 +1113,20 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Contains(
                 "competency.skill-ranks",
                 threeProfile.RequiredCapabilityKeys);
+
+            var universalDeception = Assert.Single(
+                catalog.Competencies
+                    ?? throw new InvalidOperationException(
+                        "Universal competency catalog was not projected."),
+                value => value.SemanticKey == "competency.deception");
+            Assert.NotNull(universalDeception.Mechanics);
+            Assert.Equal(
+                "varies-by-implementation",
+                universalDeception.Mechanics!.GoverningAbility.ResolutionKind);
+            Assert.Null(universalDeception.Mechanics.GoverningAbility.FixedAbilityKey);
+            Assert.Equal(
+                ["charisma", "wisdom"],
+                universalDeception.Mechanics.GoverningAbility.AbilityKeys);
 
             var laterEvaluation = await mechanics.EvaluateGlobalAsync(
                 "competency.skill.deception",
@@ -1365,6 +1383,22 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal(2, semanticAlchemy.Profiles.Count);
             Assert.Contains("Craft (alchemy)", semanticAlchemy.SourceAliases);
             Assert.Contains("Alchemist's Supplies", semanticAlchemy.SourceAliases);
+            Assert.NotNull(semanticAlchemy.Mechanics);
+            Assert.True(semanticAlchemy.Mechanics!.SupportsRanks);
+            Assert.True(semanticAlchemy.Mechanics.SupportsClassSkillState);
+            Assert.True(semanticAlchemy.Mechanics.SupportsTrainingState);
+            Assert.Equal(
+                "fixed",
+                semanticAlchemy.Mechanics.GoverningAbility.ResolutionKind);
+            Assert.Equal(
+                "intelligence",
+                semanticAlchemy.Mechanics.GoverningAbility.FixedAbilityKey);
+            Assert.Contains(
+                "ranked-skill",
+                semanticAlchemy.Mechanics.EvaluationProfileKeys);
+            Assert.Contains(
+                "proficiency-competency",
+                semanticAlchemy.Mechanics.EvaluationProfileKeys);
 
             var skillProfile = Assert.Single(skill.Competency!.Profiles);
             Assert.True(skillProfile.SupportsRanks);

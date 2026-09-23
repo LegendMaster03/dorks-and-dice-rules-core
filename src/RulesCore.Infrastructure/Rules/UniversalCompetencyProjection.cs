@@ -8,6 +8,18 @@ internal static class UniversalCompetencyProjection
     public static List<CharacterMechanicView> ApplySemanticIdentity(
         List<CharacterMechanicView> mechanics)
     {
+        mechanics.RemoveAll(value =>
+        {
+            if (value.Competency is null)
+            {
+                return false;
+            }
+
+            var identity = ResolveIdentity(value);
+            return !KnownUniversalCompetencies.IsOrdinaryCharacterCompetencyIdentity(
+                identity.IdentityKey);
+        });
+
         for (var index = 0; index < mechanics.Count; index++)
         {
             var mechanic = mechanics[index];
@@ -20,6 +32,9 @@ internal static class UniversalCompetencyProjection
             var profiles = mechanic.Competency.Profiles
                 .Select(profile => profile with
                 {
+                    GoverningAbilityKey =
+                        KnownUniversalCompetencies.NormalizeAbilityKey(
+                            profile.GoverningAbilityKey),
                     FamilyName = identity.FamilyName,
                     Specialty = identity.IsFamily || identity.FamilyName is null
                         ? null
@@ -35,6 +50,9 @@ internal static class UniversalCompetencyProjection
             {
                 Competency = mechanic.Competency with
                 {
+                    GoverningAbilityKey =
+                        KnownUniversalCompetencies.NormalizeAbilityKey(
+                            mechanic.Competency.GoverningAbilityKey),
                     FamilyName = identity.FamilyName,
                     Specialty = identity.IsFamily || identity.FamilyName is null
                         ? null
@@ -48,6 +66,7 @@ internal static class UniversalCompetencyProjection
             };
         }
 
+        AddRulesLayerFamilyMemberMechanics(mechanics);
         return mechanics;
     }
 
@@ -152,7 +171,8 @@ internal static class UniversalCompetencyProjection
                 Profiles: profiles,
                 Facets: facets,
                 RelatedCompetencies: relationships,
-                SourceAttributions: attributions));
+                SourceAttributions: attributions,
+                Mechanics: BuildUniversalMechanics(identityKey, known, profiles)));
         }
 
         var existing = result
@@ -165,6 +185,16 @@ internal static class UniversalCompetencyProjection
                 continue;
             }
 
+            var normalizedMechanics = definition.IsFamily
+                ? null
+                : KnownUniversalCompetencies.ResolveMechanics(definition.IdentityKey);
+            var normalizedProfile = normalizedMechanics is null
+                ? null
+                : BuildRulesLayerProfile(definition, normalizedMechanics);
+            var normalizedFacet = normalizedMechanics is null
+                ? null
+                : BuildRulesLayerFacet(definition, normalizedMechanics);
+
             result.Add(new CharacterUniversalCompetencyView(
                 definition.SemanticKey,
                 definition.IdentityKey,
@@ -173,16 +203,24 @@ internal static class UniversalCompetencyProjection
                 definition.IsFamily,
                 definition.TrainingStateKey,
                 ChildKeys(definition.IdentityKey, definition.IsFamily),
-                MechanicKeys: [],
+                MechanicKeys: normalizedMechanics is null
+                    ? []
+                    : [definition.SemanticKey],
                 CompatibilityMechanicKeys:
                     KnownUniversalCompetencies.CompatibilityConceptKeys(definition.IdentityKey)
                         .Select(value => $"competency.{value}")
                         .ToArray(),
                 SourceAliases: KnownUniversalCompetencies.SourceAliases(definition.IdentityKey),
-                Profiles: [],
-                Facets: [],
+                Profiles: normalizedProfile is null ? [] : [normalizedProfile],
+                Facets: normalizedFacet is null ? [] : [normalizedFacet],
                 RelatedCompetencies: [],
-                SourceAttributions: []));
+                SourceAttributions: [],
+                Mechanics: BuildUniversalMechanics(
+                    definition.IdentityKey,
+                    definition,
+                    normalizedProfile is null
+                        ? []
+                        : [normalizedProfile])));
         }
 
         return result
@@ -191,6 +229,317 @@ internal static class UniversalCompetencyProjection
             .ThenBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
             .ThenBy(value => value.SemanticKey, StringComparer.Ordinal)
             .ToArray();
+    }
+
+    private static void AddRulesLayerFamilyMemberMechanics(
+        List<CharacterMechanicView> mechanics)
+    {
+        var existingIdentities = mechanics
+            .Where(value => value.Competency is not null
+                && !string.IsNullOrWhiteSpace(value.Competency.IdentityKey))
+            .Select(value =>
+                KnownUniversalCompetencies.NormalizeIdentityKey(
+                    value.Competency!.IdentityKey!))
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var definition in KnownUniversalCompetencies.FamilyMembers)
+        {
+            if (existingIdentities.Contains(definition.IdentityKey))
+            {
+                continue;
+            }
+
+            var normalizedMechanics =
+                KnownUniversalCompetencies.ResolveMechanics(definition.IdentityKey);
+            if (normalizedMechanics is null)
+            {
+                continue;
+            }
+
+            mechanics.Add(BuildRulesLayerMechanic(definition, normalizedMechanics));
+            existingIdentities.Add(definition.IdentityKey);
+        }
+    }
+
+    private static CharacterMechanicView BuildRulesLayerMechanic(
+        UniversalCompetencyDefinition definition,
+        UniversalCompetencyMechanics mechanics)
+    {
+        var profile = BuildRulesLayerProfile(definition, mechanics);
+        var facet = BuildRulesLayerFacet(definition, mechanics);
+        var competency = new CharacterCompetencyDefinitionView(
+            mechanics.CompetencyKind,
+            definition.FamilyName,
+            definition.DisplayName,
+            mechanics.GoverningAbilityKey,
+            mechanics.SupportsRanks,
+            mechanics.SupportsClassSkillState,
+            mechanics.SupportsTrainingState,
+            mechanics.TrainedOnly,
+            mechanics.ArmorCheckPenaltyApplies,
+            DefaultProfileSourceEntityRevisionId: Guid.Empty,
+            Profiles: [profile],
+            IdentityKey: definition.IdentityKey,
+            IdentityName: definition.DisplayName,
+            SharedTrainingKey: definition.TrainingStateKey,
+            IsFamily: false,
+            Facets: [facet],
+            RelatedCompetencies: []);
+
+        return new CharacterMechanicView(
+            definition.SemanticKey,
+            CharacterMechanicKinds.Competency,
+            definition.DisplayName,
+            ConceptKey: definition.SemanticKey,
+            RuleConceptId: null,
+            IsAvailableUnderRuleset: true,
+            new CharacterMechanicApplicabilityView(
+                CharacterMechanicApplicabilityKinds.Always,
+                RequiresCharacterState: true,
+                RequiredCapabilityKeys: [],
+                SourcePackageKey: null),
+            mechanics.EvaluationKind,
+            mechanics.CanEvaluate,
+            Constant: 0,
+            TargetInputKey: null,
+            BaseMechanicKey: null,
+            Inputs: profile.Inputs,
+            Relationships: [],
+            ConditionalRollRules: [],
+            BooleanRequirements: [],
+            Check: null,
+            Competency: competency,
+            ContributorGroups: [],
+            SourceAttributions: [],
+            Provenance: null);
+    }
+
+    private static CharacterCompetencyProfileView BuildRulesLayerProfile(
+        UniversalCompetencyDefinition definition,
+        UniversalCompetencyMechanics mechanics)
+    {
+        var inputs = BuildRulesLayerInputs(mechanics);
+        IReadOnlyList<CharacterMechanicBooleanRequirementView> requirements =
+            mechanics.TrainedOnly
+                ? [new CharacterMechanicBooleanRequirementView("isTrained", true)]
+                : [];
+
+        return new CharacterCompetencyProfileView(
+            Guid.Empty,
+            $"rules-universal-{definition.FamilyName?.ToLowerInvariant() ?? "competency"}",
+            RequiredCapabilityKeys: [],
+            mechanics.CompetencyKind,
+            definition.FamilyName,
+            definition.DisplayName,
+            mechanics.GoverningAbilityKey,
+            mechanics.SupportsRanks,
+            mechanics.SupportsClassSkillState,
+            mechanics.SupportsTrainingState,
+            mechanics.TrainedOnly,
+            mechanics.ArmorCheckPenaltyApplies,
+            mechanics.EvaluationProfileKey,
+            mechanics.EvaluationKind,
+            mechanics.CanEvaluate,
+            inputs,
+            requirements,
+            GameEdition: null,
+            SourceAttributions: [],
+            FacetType: mechanics.FacetType,
+            IsFamily: false,
+            IdentityKey: definition.IdentityKey,
+            IdentityName: definition.DisplayName,
+            SharedTrainingKey: definition.TrainingStateKey,
+            RelatedCompetencies: [],
+            ProfileOrigin: "rules");
+    }
+
+    private static CharacterCompetencyFacetView BuildRulesLayerFacet(
+        UniversalCompetencyDefinition definition,
+        UniversalCompetencyMechanics mechanics) =>
+        new(
+            mechanics.FacetType,
+            ProfileSourceEntityRevisionIds: [],
+            mechanics.SupportsRanks,
+            mechanics.SupportsClassSkillState,
+            mechanics.SupportsTrainingState,
+            MechanicKeys: [definition.SemanticKey]);
+
+    private static IReadOnlyList<CharacterMechanicInputView> BuildRulesLayerInputs(
+        UniversalCompetencyMechanics mechanics)
+    {
+        if (!mechanics.CanEvaluate
+            || !string.Equals(
+                mechanics.EvaluationProfileKey,
+                "ranked-skill",
+                StringComparison.Ordinal))
+        {
+            return [];
+        }
+
+        var inputs = new List<CharacterMechanicInputView>
+        {
+            ContributionInput(
+                "abilityContribution",
+                CharacterMechanicInputOrigins.Derived,
+                required: true,
+                contributionRole: "ability"),
+            ContributionInput(
+                "ranks",
+                CharacterMechanicInputOrigins.CharacterState,
+                required: true,
+                contributionRole: "competency")
+        };
+
+        if (mechanics.SupportsClassSkillState)
+        {
+            inputs.Add(StateInput("classSkillState"));
+        }
+        if (mechanics.SupportsTrainingState)
+        {
+            inputs.Add(StateInput("isTrained"));
+        }
+        if (mechanics.ArmorCheckPenaltyApplies)
+        {
+            inputs.Add(ContributionInput(
+                "armorCheckPenaltyAdjustment",
+                CharacterMechanicInputOrigins.Derived,
+                required: false,
+                defaultInteger: 0,
+                contributionRole: "competency"));
+        }
+
+        inputs.Add(ContributionInput(
+            "otherModifier",
+            CharacterMechanicInputOrigins.Derived,
+            required: false,
+            defaultInteger: 0,
+            contributionRole: "competency"));
+        return inputs;
+    }
+
+    private static CharacterMechanicInputView StateInput(string key) =>
+        new(
+            key,
+            CharacterMechanicInputValueKinds.Boolean,
+            CharacterMechanicInputOrigins.CharacterState,
+            Required: false,
+            ParticipatesInValue: false,
+            DefaultInteger: null,
+            IncludeWhenBooleanInputKey: null,
+            IncludeWhenBooleanValue: null);
+
+    private static CharacterMechanicInputView ContributionInput(
+        string key,
+        string origin,
+        bool required,
+        int? defaultInteger = null,
+        string? contributionRole = null) =>
+        new(
+            key,
+            CharacterMechanicInputValueKinds.Integer,
+            origin,
+            required,
+            ParticipatesInValue: true,
+            defaultInteger,
+            IncludeWhenBooleanInputKey: null,
+            IncludeWhenBooleanValue: null,
+            ContributionRole: contributionRole);
+
+    private static CharacterUniversalCompetencyMechanicsView? BuildUniversalMechanics(
+        string identityKey,
+        UniversalCompetencyDefinition? known,
+        IReadOnlyList<CharacterCompetencyProfileView> profiles)
+    {
+        if (known?.IsFamily == true)
+        {
+            return null;
+        }
+
+        var defaults = KnownUniversalCompetencies.ResolveMechanics(identityKey);
+        var defaultAbilities = defaults is null
+            ? Enumerable.Empty<string>()
+            : new[] { defaults.GoverningAbilityKey };
+        var abilityKeys = profiles
+            .Select(value =>
+                KnownUniversalCompetencies.NormalizeAbilityKey(
+                    value.GoverningAbilityKey))
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Cast<string>()
+            .Concat(defaultAbilities)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.Ordinal)
+            .ToArray();
+
+        var governingAbility = new CharacterUniversalGoverningAbilityView(
+            abilityKeys.Length switch
+            {
+                0 => "none",
+                1 => "fixed",
+                _ => "varies-by-implementation"
+            },
+            FixedAbilityKey: abilityKeys.Length == 1 ? abilityKeys[0] : null,
+            AbilityKeys: abilityKeys);
+
+        var defaultProfileKeys = defaults is null
+            ? Enumerable.Empty<string>()
+            : new[] { defaults.EvaluationProfileKey };
+        var evaluationProfileKeys = profiles
+            .Select(value => value.EvaluationProfileKey)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Concat(defaultProfileKeys)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.Ordinal)
+            .ToArray();
+
+        var defaultEvaluationKinds = defaults is null
+            ? Enumerable.Empty<string>()
+            : new[] { defaults.EvaluationKind };
+        var evaluationKinds = profiles
+            .Select(value => value.EvaluationKind)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Concat(defaultEvaluationKinds)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(value => value, StringComparer.Ordinal)
+            .ToArray();
+
+        return new CharacterUniversalCompetencyMechanicsView(
+            governingAbility,
+            SupportsRanks:
+                defaults?.SupportsRanks == true
+                || profiles.Any(value => value.SupportsRanks),
+            SupportsClassSkillState:
+                defaults?.SupportsClassSkillState == true
+                || profiles.Any(value => value.SupportsClassSkillState),
+            SupportsTrainingState:
+                defaults?.SupportsTrainingState == true
+                || profiles.Any(value => value.SupportsTrainingState),
+            TrainedOnly: ResolveBoolean(
+                defaults?.TrainedOnly,
+                profiles.Select(value => value.TrainedOnly)),
+            ArmorCheckPenaltyApplies: ResolveBoolean(
+                defaults?.ArmorCheckPenaltyApplies,
+                profiles.Select(value => value.ArmorCheckPenaltyApplies)),
+            EvaluationProfileKeys: evaluationProfileKeys,
+            EvaluationKinds: evaluationKinds,
+            CanEvaluate:
+                defaults?.CanEvaluate == true
+                || profiles.Any(value => value.CanEvaluate));
+    }
+
+    private static bool? ResolveBoolean(
+        bool? defaultValue,
+        IEnumerable<bool?> profileValues)
+    {
+        var defaultValues = defaultValue.HasValue
+            ? new[] { defaultValue.Value }
+            : Array.Empty<bool>();
+        var values = profileValues
+            .Where(value => value.HasValue)
+            .Select(value => value!.Value)
+            .Concat(defaultValues)
+            .Distinct()
+            .ToArray();
+        return values.Length == 1 ? values[0] : null;
     }
 
     private static ResolvedIdentity ResolveIdentity(CharacterMechanicView mechanic)

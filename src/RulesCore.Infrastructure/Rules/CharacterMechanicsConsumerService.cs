@@ -719,7 +719,13 @@ public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbConte
                     StringComparer.OrdinalIgnoreCase)
                 .Select(facet => new CharacterCompetencyFacetView(
                     facet.Key,
-                    facet.Select(value => value.Profile.SourceEntityRevisionId)
+                    facet.Where(value =>
+                            string.Equals(
+                                value.Profile.ProfileOrigin,
+                                "source",
+                                StringComparison.OrdinalIgnoreCase)
+                            && value.Profile.SourceEntityRevisionId != Guid.Empty)
+                        .Select(value => value.Profile.SourceEntityRevisionId)
                         .Distinct()
                         .OrderBy(value => value)
                         .ToArray(),
