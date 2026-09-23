@@ -242,6 +242,8 @@ public sealed class RulesCoreSchemaInitializer(RulesCoreDbContext dbContext) : I
             REFERENCES source_representation(source_representation_id) ON DELETE SET NULL;
         CREATE UNIQUE INDEX IF NOT EXISTS ux_source_representation_identity
             ON source_representation(source_package_id, origin_identity, content_sha256);
+        CREATE INDEX IF NOT EXISTS ix_source_representation_content_sha256
+            ON source_representation(content_sha256);
         CREATE INDEX IF NOT EXISTS ix_source_representation_origin_history
             ON source_representation(source_package_id, origin_identity, imported_at DESC);
 
