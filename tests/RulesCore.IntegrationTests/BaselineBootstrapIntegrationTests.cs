@@ -310,14 +310,41 @@ public sealed class BaselineBootstrapIntegrationTests
                 value => value.ConceptKey == "skill.balance");
             Assert.Equal("dexterity", balance.Competency!.GoverningAbilityKey);
 
-            // The checked-in SRD3/SRD35 snapshots have generic Craft, Perform, and Profession
-            // entries. SRD3 also has ranked Alchemy, which remains a skill facet of the shared
-            // Alchemy learned competency. The reviewed corpus does not contain a matching
-            // Alchemist's Supplies tool row or Craft (alchemy) specialty, so bootstrap must not
-            // fabricate either facet from absent source evidence.
+            // Universal family taxonomy is a reviewed Rules-layer catalog and therefore does
+            // not depend on whether one serialized SRD snapshot emitted every specialty row.
             Assert.Contains("skill.craft", publishedCompetencyKeys);
             Assert.Contains("skill.perform", publishedCompetencyKeys);
             Assert.Contains("skill.profession", publishedCompetencyKeys);
+
+            var universalCompetencies = catalog.Competencies
+                ?? throw new InvalidOperationException(
+                    "Character mechanics did not expose universal competencies.");
+            foreach (var familyName in new[] { "Craft", "Perform", "Profession" })
+            {
+                var family = Assert.Single(
+                    universalCompetencies,
+                    value => value.IsFamily
+                        && string.Equals(
+                            value.DisplayName,
+                            familyName,
+                            StringComparison.Ordinal));
+                Assert.NotEmpty(family.ChildCompetencyKeys);
+            }
+
+            var universalAlchemy = Assert.Single(
+                universalCompetencies,
+                value => value.SemanticKey == "competency.alchemy");
+            Assert.Equal("Alchemy", universalAlchemy.DisplayName);
+            Assert.Equal("Craft", universalAlchemy.FamilyName);
+            Assert.Equal(
+                "competency.alchemy.training",
+                universalAlchemy.TrainingStateKey);
+            Assert.DoesNotContain(
+                universalCompetencies,
+                value => string.Equals(
+                    value.FamilyName,
+                    "Knowledge",
+                    StringComparison.OrdinalIgnoreCase));
 
             var search = Assert.Single(
                 competencyMechanics,

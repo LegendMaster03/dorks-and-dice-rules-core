@@ -1322,6 +1322,8 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             {
                 Assert.Equal("alchemy", competency.IdentityKey);
                 Assert.Equal("Alchemy", competency.IdentityName);
+                Assert.Equal("Craft", competency.FamilyName);
+                Assert.Equal("Alchemy", competency.Specialty);
                 Assert.Equal("competency.alchemy.training", competency.SharedTrainingKey);
                 Assert.Equal(2, competency.Facets!.Count);
 
@@ -1344,6 +1346,25 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     "competency.tool.alchemists-supplies",
                     toolFacet.MechanicKeys!);
             }
+
+            var semanticAlchemy = Assert.Single(
+                catalog.Competencies
+                    ?? throw new InvalidOperationException(
+                        "Universal competency catalog was not projected."),
+                value => value.SemanticKey == "competency.alchemy");
+            Assert.Equal("Alchemy", semanticAlchemy.DisplayName);
+            Assert.Equal("Craft", semanticAlchemy.FamilyName);
+            Assert.Equal("competency.alchemy.training", semanticAlchemy.TrainingStateKey);
+            Assert.Equal(
+                [
+                    "competency.skill.craft-alchemy",
+                    "competency.tool.alchemists-supplies"
+                ],
+                semanticAlchemy.MechanicKeys);
+            Assert.Equal(2, semanticAlchemy.Facets.Count);
+            Assert.Equal(2, semanticAlchemy.Profiles.Count);
+            Assert.Contains("Craft (alchemy)", semanticAlchemy.SourceAliases);
+            Assert.Contains("Alchemist's Supplies", semanticAlchemy.SourceAliases);
 
             var skillProfile = Assert.Single(skill.Competency!.Profiles);
             Assert.True(skillProfile.SupportsRanks);

@@ -875,6 +875,105 @@ public sealed class PcGenSkillConversionIntegrationTests
         }
     }
 
+
+    [Fact]
+    public async Task PcGenSizeTranslationPromotesAllUniversalCodesAndPreservesUnknownSourceValues()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var packageKey = $"pcgen-size-normalization-{token}";
+            var sourceShort = $"SZ{token}";
+            var fileName = $"data/35e/example/example_races_{token}.lst";
+            var expected = new[]
+            {
+                ("Fine Fixture", "F", "Fine"),
+                ("Diminutive Fixture", "D", "Diminutive"),
+                ("Tiny Fixture", "T", "Tiny"),
+                ("Small Fixture", "S", "Small"),
+                ("Medium Fixture", "M", "Medium"),
+                ("Large Fixture", "L", "Large"),
+                ("Huge Fixture", "H", "Huge"),
+                ("Gargantuan Fixture", "G", "Gargantuan"),
+                ("Colossal Fixture", "C", "Colossal")
+            };
+
+            var text = string.Join('\n',
+                new[] { $"SOURCELONG:Size Translation Fixture {sourceShort}\tSOURCESHORT:{sourceShort}" }
+                    .Concat(expected.Select(value => $"{value.Item1}\tSIZE:{value.Item2}"))
+                    .Concat(["Unknown Size Fixture\tSIZE:X"]));
+            var representation = new PcGenSourceFormatAdapter().TryRead(
+                new SourceRepresentationArtifact(
+                    fileName,
+                    Encoding.UTF8.GetBytes(text),
+                    $"integration:{sourceShort}#{fileName}"))
+                ?? throw new InvalidOperationException("PCGen size fixture was not readable.");
+
+            try
+            {
+                await new NormalizedSourceImportService(db).ImportAsync(
+                    new ImportNormalizedSourceRequest(
+                        packageKey,
+                        $"PCGen size normalization fixture {token}",
+                        "integration-test",
+                        "test-only",
+                        true,
+                        representation));
+
+                var rows = await db.SourceEntityRevisions
+                    .AsNoTracking()
+                    .Include(value => value.SourceEntity)
+                        .ThenInclude(value => value.SourcePackage)
+                    .Where(value => value.SourceEntity.SourcePackage.Key == packageKey)
+                    .ToArrayAsync();
+
+                foreach (var (name, code, semanticName) in expected)
+                {
+                    var revision = Assert.Single(
+                        rows,
+                        value => string.Equals(
+                            value.SourceEntity.Name,
+                            name,
+                            StringComparison.Ordinal));
+                    Assert.NotNull(revision.ContentJson);
+                    using var document = JsonDocument.Parse(revision.ContentJson!);
+                    var size = Assert.Single(
+                        document.RootElement.GetProperty("size").EnumerateArray().ToArray());
+                    Assert.Equal(code, size.GetString());
+                    Assert.Equal(
+                        semanticName,
+                        RulesCore.Domain.Rules.UniversalSizeCategories.Normalize(code));
+                }
+
+                var unknown = Assert.Single(
+                    rows,
+                    value => string.Equals(
+                        value.SourceEntity.Name,
+                        "Unknown Size Fixture",
+                        StringComparison.Ordinal));
+                Assert.NotNull(unknown.ContentJson);
+                using var unknownDocument = JsonDocument.Parse(unknown.ContentJson!);
+                Assert.False(unknownDocument.RootElement.TryGetProperty("size", out _));
+                var unmapped = unknownDocument.RootElement
+                    .GetProperty("_rulesCore")
+                    .GetProperty("pcgen")
+                    .GetProperty("unmappedSegments")
+                    .EnumerateArray()
+                    .ToArray();
+                Assert.Contains(
+                    unmapped,
+                    value => value.GetProperty("tag").GetString() == "SIZE"
+                        && value.GetProperty("value").GetString() == "X");
+            }
+            finally
+            {
+                await DeletePackageAsync(db, packageKey);
+            }
+        }
+    }
+
     private static NormalizedSourceRepresentation LegacySrdRepresentation(
         string token,
         string sourceCode,
