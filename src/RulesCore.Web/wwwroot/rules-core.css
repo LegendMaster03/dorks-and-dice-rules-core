@@ -402,23 +402,22 @@
     gap: .85rem;
 }
 
-.rules-core-source-card {
+.rules-core-source-tile {
     min-width: 0;
+    padding: .72rem .78rem;
+    border: 1px solid var(--rules-core-border);
+    border-radius: .58rem;
+    background: var(--rules-core-surface);
     transition: border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
 }
 
-.rules-core-source-card:hover {
+.rules-core-source-tile:hover {
     border-color: color-mix(in srgb, var(--bs-primary) 28%, var(--rules-core-border));
     box-shadow: 0 .3rem 1rem color-mix(in srgb, var(--bs-body-color) 7%, transparent);
     transform: translateY(-1px);
 }
 
-.rules-core-source-card .card-body {
-    display: grid;
-    gap: .7rem;
-}
-
-.rules-core-source-card-stats,
+.rules-core-source-tile-stats,
 .rules-core-metrics,
 .rules-core-stat-grid,
 .rules-core-ability-grid {
@@ -696,7 +695,7 @@ button.rules-core-workflow-step {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .rules-core-source-card {
+    .rules-core-source-tile {
         transition: none;
     }
 }
