@@ -222,7 +222,7 @@ async function loadDefinitionState(app, definition) {
 
 function renderSourceCard(app, container, state) {
     const definition = state.definition;
-    const card = element("article", { className: "card card-body rules-core-source-card" });
+    const card = element("article", { className: "rules-core-source-tile" });
     card.append(element("div", { className: "d-flex justify-content-between align-items-start gap-2 mb-3" },
         element("div", {},
             element("div", { className: "rules-core-eyebrow", text: definition.gameEdition ?? "D&D" }),
