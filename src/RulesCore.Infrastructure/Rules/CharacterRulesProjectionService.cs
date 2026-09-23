@@ -10,7 +10,6 @@ namespace RulesCore.Infrastructure.Rules;
 public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext)
     : ICharacterRulesProjectionService
 {
-    private const int PageSize = 500;
     private static readonly string[] StandardAbilities =
     [
         "strength",
@@ -21,7 +20,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         "charisma"
     ];
 
-    private readonly ResolvedRulesCatalogService resolvedRules = new(dbContext);
+    private readonly CharacterResolvedRulesReader rulesReader =
+        new(new ResolvedRulesCatalogService(dbContext));
     private readonly CharacterMechanicsConsumerService mechanics = new(dbContext);
 
     private static readonly IReadOnlyList<ICharacterRuleProjectionModule> Modules =
@@ -39,7 +39,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(request);
-        var rules = await ReadAllGlobalRulesAsync(userId, cancellationToken);
+        var rules = await rulesReader.ReadAllGlobalAsync(userId, cancellationToken);
         var mechanicCatalog = await mechanics.GetGlobalAsync(
             userId,
             includeUnavailable: true,
@@ -63,7 +63,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         }
         ArgumentNullException.ThrowIfNull(request);
 
-        var rules = await ReadAllCampaignRulesAsync(campaignId, userId.Trim(), cancellationToken);
+        var rules = await rulesReader.ReadAllCampaignAsync(campaignId, userId.Trim(), cancellationToken);
         var mechanicCatalog = await mechanics.GetCampaignAsync(
             campaignId,
             userId.Trim(),
@@ -3364,63 +3364,6 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     provenance: mechanic.Provenance ?? Provenance(mechanic.SourceAttributions));
             }
         }
-    }
-
-    private async Task<ResolvedRulesCatalogView> ReadAllGlobalRulesAsync(
-        string? userId,
-        CancellationToken cancellationToken)
-    {
-        var first = await resolvedRules.GetGlobalPageAsync(
-            userId,
-            limit: PageSize,
-            offset: 0,
-            cancellationToken: cancellationToken);
-        if (first.TotalCount <= first.Rules.Count)
-        {
-            return first;
-        }
-
-        var all = new List<ResolvedRuleCatalogItemView>(first.Rules);
-        for (var offset = PageSize; offset < first.TotalCount; offset += PageSize)
-        {
-            var page = await resolvedRules.GetGlobalPageAsync(
-                userId,
-                limit: PageSize,
-                offset: offset,
-                cancellationToken: cancellationToken);
-            all.AddRange(page.Rules);
-        }
-        return first with { Rules = all };
-    }
-
-    private async Task<ResolvedRulesCatalogView> ReadAllCampaignRulesAsync(
-        Guid campaignId,
-        string userId,
-        CancellationToken cancellationToken)
-    {
-        var first = await resolvedRules.GetCampaignPageAsync(
-            campaignId,
-            userId,
-            limit: PageSize,
-            offset: 0,
-            cancellationToken: cancellationToken);
-        if (first.TotalCount <= first.Rules.Count)
-        {
-            return first;
-        }
-
-        var all = new List<ResolvedRuleCatalogItemView>(first.Rules);
-        for (var offset = PageSize; offset < first.TotalCount; offset += PageSize)
-        {
-            var page = await resolvedRules.GetCampaignPageAsync(
-                campaignId,
-                userId,
-                limit: PageSize,
-                offset: offset,
-                cancellationToken: cancellationToken);
-            all.AddRange(page.Rules);
-        }
-        return first with { Rules = all };
     }
 
     private static bool TryResolvedNumeric(
