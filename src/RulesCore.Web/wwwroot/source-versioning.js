@@ -226,7 +226,7 @@ function lineageControls(app, source, candidate, refresh) {
 }
 
 function renderConsolidationCard(app, model, container, conceptId) {
-    const card = element("div", { className: "card card-body mt-3" });
+    const card = workspaceSection({ className: "rules-core-version-consolidation" });
     card.append(
         element("h3", { className: "h5 mb-1", text: "Version comparison and consolidation" }),
         element("p", { className: "text-body-secondary", text: "Compare every accessible implementation bound to this concept. Choose one exact revision as the base, then record any other revisions deliberately incorporated or reviewed. Saving creates an append-only decision; publication remains separate." }));
@@ -428,7 +428,7 @@ function decisionPayload(base, mode, patch, note, contributionBox) {
 function renderDecisionPreview(container, preview) {
     clear(container);
     const candidate = preview.candidateDocument ?? preview.candidateResolvedDocument ?? preview.document;
-    container.append(element("div", { className: "card card-body bg-body-tertiary" },
+    container.append(workspaceSection({ className: "rules-core-version-preview" },
         element("h5", { className: "h6", text: "Preview result" }),
         element("div", { className: "small text-body-secondary mb-2", text: `${preview.changes?.length ?? 0} structural change(s). Contribution provenance is saved with the decision but does not alter patch semantics.` }),
         element("pre", { className: "small overflow-auto mb-0", text: formatJson(candidate ?? preview), attributes: { style: "max-height:32rem" } })));
