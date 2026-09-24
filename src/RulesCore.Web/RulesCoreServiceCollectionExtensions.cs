@@ -49,7 +49,9 @@ public static class RulesCoreServiceCollectionExtensions
 
     public static IServiceCollection AddRulesCoreCharacter(this IServiceCollection services)
     {
-        services.AddScoped<ICharacterMechanicsConsumerService, CharacterMechanicsConsumerService>();
+        services.AddScoped<CharacterMechanicsConsumerService>();
+        services.AddScoped<ICharacterMechanicsConsumerService>(provider =>
+            provider.GetRequiredService<CharacterMechanicsConsumerService>());
         services.AddScoped<ICharacterRulesProjectionService, CharacterRulesProjectionService>();
         return services;
     }

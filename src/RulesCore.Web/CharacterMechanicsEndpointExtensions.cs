@@ -10,15 +10,36 @@ public static class CharacterMechanicsEndpointExtensions
         app.MapGet("/api/rules/mechanics", async (
             bool? includeUnavailable,
             HttpContext httpContext,
-            ICharacterMechanicsConsumerService mechanics,
+            CharacterMechanicsConsumerService mechanics,
             CancellationToken cancellationToken) =>
         {
             var userId = HostedToolAuthenticationMiddleware
                 .GetAuthenticationContext(httpContext)?
                 .User.Id;
             httpContext.Response.Headers.CacheControl = "no-store";
-            return Results.Ok(await mechanics.GetGlobalAsync(
+            return Results.Ok(await mechanics.GetGlobalEffectiveAsync(
                 userId,
+                includeUnavailable ?? false,
+                cancellationToken));
+        });
+
+        app.MapGet("/api/admin/rules/mechanics", async (
+            bool? includeUnavailable,
+            HttpContext httpContext,
+            CharacterMechanicsConsumerService mechanics,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireGlobalEdit(
+                httpContext,
+                out var authenticationContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(await mechanics.GetGlobalAsync(
+                authenticationContext!.User.Id,
                 includeUnavailable ?? false,
                 cancellationToken));
         });
@@ -83,7 +104,7 @@ public static class CharacterMechanicsEndpointExtensions
         app.MapPost("/api/rules/mechanics/evaluate", async (
             CharacterMechanicsBatchEvaluationRequest request,
             HttpContext httpContext,
-            ICharacterMechanicsConsumerService mechanics,
+            CharacterMechanicsConsumerService mechanics,
             CancellationToken cancellationToken) =>
         {
             try
@@ -92,7 +113,7 @@ public static class CharacterMechanicsEndpointExtensions
                     .GetAuthenticationContext(httpContext)?
                     .User.Id;
                 httpContext.Response.Headers.CacheControl = "no-store";
-                return Results.Ok(await mechanics.EvaluateGlobalBatchAsync(
+                return Results.Ok(await mechanics.EvaluateGlobalEffectiveBatchAsync(
                     request,
                     userId,
                     cancellationToken));
@@ -119,7 +140,7 @@ public static class CharacterMechanicsEndpointExtensions
             string mechanicKey,
             CharacterMechanicEvaluationRequest request,
             HttpContext httpContext,
-            ICharacterMechanicsConsumerService mechanics,
+            CharacterMechanicsConsumerService mechanics,
             CancellationToken cancellationToken) =>
         {
             try
@@ -128,7 +149,7 @@ public static class CharacterMechanicsEndpointExtensions
                     .GetAuthenticationContext(httpContext)?
                     .User.Id;
                 httpContext.Response.Headers.CacheControl = "no-store";
-                var result = await mechanics.EvaluateGlobalAsync(
+                var result = await mechanics.EvaluateGlobalEffectiveAsync(
                     mechanicKey,
                     request,
                     userId,
@@ -157,10 +178,34 @@ public static class CharacterMechanicsEndpointExtensions
             Guid campaignId,
             bool? includeUnavailable,
             HttpContext httpContext,
-            ICharacterMechanicsConsumerService mechanics,
+            CharacterMechanicsConsumerService mechanics,
             CancellationToken cancellationToken) =>
         {
             var authorizationFailure = RequireCampaignRead(
+                httpContext,
+                campaignId,
+                out var authenticationContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(await mechanics.GetCampaignEffectiveAsync(
+                campaignId,
+                authenticationContext!.User.Id,
+                includeUnavailable ?? false,
+                cancellationToken));
+        });
+
+        app.MapGet("/api/campaigns/{campaignId:guid}/admin/rules/mechanics", async (
+            Guid campaignId,
+            bool? includeUnavailable,
+            HttpContext httpContext,
+            CharacterMechanicsConsumerService mechanics,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireCampaignEdit(
                 httpContext,
                 campaignId,
                 out var authenticationContext);
@@ -262,7 +307,7 @@ public static class CharacterMechanicsEndpointExtensions
             Guid campaignId,
             CharacterMechanicsBatchEvaluationRequest request,
             HttpContext httpContext,
-            ICharacterMechanicsConsumerService mechanics,
+            CharacterMechanicsConsumerService mechanics,
             CancellationToken cancellationToken) =>
         {
             var authorizationFailure = RequireCampaignRead(
@@ -277,7 +322,7 @@ public static class CharacterMechanicsEndpointExtensions
             try
             {
                 httpContext.Response.Headers.CacheControl = "no-store";
-                return Results.Ok(await mechanics.EvaluateCampaignBatchAsync(
+                return Results.Ok(await mechanics.EvaluateCampaignEffectiveBatchAsync(
                     campaignId,
                     request,
                     authenticationContext!.User.Id,
@@ -306,7 +351,7 @@ public static class CharacterMechanicsEndpointExtensions
             string mechanicKey,
             CharacterMechanicEvaluationRequest request,
             HttpContext httpContext,
-            ICharacterMechanicsConsumerService mechanics,
+            CharacterMechanicsConsumerService mechanics,
             CancellationToken cancellationToken) =>
         {
             var authorizationFailure = RequireCampaignRead(
@@ -321,7 +366,7 @@ public static class CharacterMechanicsEndpointExtensions
             try
             {
                 httpContext.Response.Headers.CacheControl = "no-store";
-                var result = await mechanics.EvaluateCampaignAsync(
+                var result = await mechanics.EvaluateCampaignEffectiveAsync(
                     campaignId,
                     mechanicKey,
                     request,
@@ -348,6 +393,37 @@ public static class CharacterMechanicsEndpointExtensions
         });
 
         app.MapCharacterProjectionEndpoints();
+    }
+
+    private static IResult? RequireGlobalEdit(
+        HttpContext httpContext,
+        out ToolHostAuthenticationContext? authenticationContext)
+    {
+        authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
+        if (authenticationContext is null)
+        {
+            return Results.Unauthorized();
+        }
+
+        return RulesAuthority.CanEditGlobalRules(authenticationContext)
+            ? null
+            : Results.StatusCode(StatusCodes.Status403Forbidden);
+    }
+
+    private static IResult? RequireCampaignEdit(
+        HttpContext httpContext,
+        Guid campaignId,
+        out ToolHostAuthenticationContext? authenticationContext)
+    {
+        var readFailure = RequireCampaignRead(httpContext, campaignId, out authenticationContext);
+        if (readFailure is not null)
+        {
+            return readFailure;
+        }
+
+        return RulesAuthority.CanEditCampaignRules(authenticationContext!, campaignId)
+            ? null
+            : Results.StatusCode(StatusCodes.Status403Forbidden);
     }
 
     private static IResult? RequireCampaignRead(
