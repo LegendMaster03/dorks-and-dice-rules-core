@@ -324,7 +324,7 @@ An `independent-parent` ruling keeps the relationship visible but disables compo
 
 ## Loot Tavern Harvesting & Crafting Lite
 
-Rules Core models the reusable mechanical semantics of Loot Tavern's public Harvesting & Crafting Lite release while leaving publisher-owned tables/content in the source layer.
+Rules Core models the reusable mechanical semantics of Loot Tavern's public Harvesting & Crafting Lite release and now exposes the public creature-type Harvesting defaults through a dedicated rules catalog.
 
 Public source reference:
 
@@ -333,6 +333,16 @@ Loot Tavern
 Harvesting & Crafting Lite
 https://www.patreon.com/LootTavern/posts/helianas-and-to-107406117
 ```
+
+The Harvesting catalog is available independently from Character mechanics:
+
+```text
+GET  /api/rules/harvesting
+POST /api/rules/harvesting/resolve
+POST /api/campaigns/{campaignId}/rules/harvesting/resolve
+```
+
+The catalog supplies each supported creature type's associated Rules Core skill concept and its default harvestable components with Component DCs. Resolution by `creatureConceptKey` reads the effective monster rule, derives its creature type, and overlays optional creature-specific Harvesting changes. Resolution by `creatureType` is available when no monster Rule Concept exists. A request may then apply a final manual edit layer for encounter-specific corrections without mutating the published monster rule.
 
 The consumer contract models:
 
@@ -353,7 +363,29 @@ The consumer contract models:
 
 Harvesting & Crafting Lite follows the same external-public-rules boundary used by the Kaiju Fighting Lite integration. Dorks & Dice implements the public mechanical procedure independently and links to the creator-hosted public release. Availability therefore does not depend on a magic package key, a user importing the PDF, or the PDF producing a resolved Rule Concept. The static definitions carry the stable work key `loot-tavern.harvesting-crafting-lite`, provider `Loot Tavern`, publication metadata, and the official creator-hosted URL.
 
-The contract does **not** bundle Harvest tables, creature-type-to-skill tables, component DCs, manufacturing tables, recipes, item data, materials, prose, art, or layout from the publisher release. Source-selected values remain typed `source-input` requirements when the procedure needs them.
+The catalog intentionally separates **creature-type defaults** from **specific-creature changes**. A monster mechanical document may provide:
+
+```json
+{
+  "_rulesCore": {
+    "harvesting": {
+      "removeComponents": ["egg"],
+      "upsertComponents": [
+        {
+          "key": "unique-organ",
+          "displayName": "Unique organ",
+          "componentDc": 25,
+          "quantity": 1
+        }
+      ]
+    }
+  }
+}
+```
+
+`removeComponents` removes impossible/default parts for that creature. `upsertComponents` can modify a default component or add a creature-specific component. The same remove/upsert shape is accepted as a runtime `manualEdits` layer by the resolver, with manual edits applied after stored creature changes. This gives a future Harvesting workspace an editable table even when imported monster data has no Harvesting metadata.
+
+Rules Core still does **not** copy manufacturing tables, recipes, item data, materials, prose, art, or source layout into the generic Character mechanics surface. Those remain separate source/rule concerns. The existing check definitions continue to use typed `source-input` requirements where a procedure needs source-selected runtime context.
 
 Loot Tavern mechanics carry explicit source attribution with `presentationRequired=true` and `referenceLinkRequired=true`, so a downstream consumer can present the required source reference without hard-coding publisher-specific behavior.
 
