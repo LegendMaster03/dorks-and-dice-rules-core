@@ -68,7 +68,8 @@ public sealed record CharacterRecoveryRollView(
     string RollKind,
     string Prompt,
     bool Required,
-    string? MechanicKey);
+    string? MechanicKey,
+    string RollMode = CharacterMechanicRollModes.Normal);
 
 public sealed record CharacterRecoveryEffectView(
     string EffectKey,
@@ -173,7 +174,8 @@ public sealed record CharacterRecoveryRollDefinition(
     string RollKind,
     string Prompt,
     bool Required,
-    string? MechanicKey);
+    string? MechanicKey,
+    string RollMode = CharacterMechanicRollModes.Normal);
 
 public sealed record CharacterRecoveryEffectConditionDefinition(
     string? InputKey,
