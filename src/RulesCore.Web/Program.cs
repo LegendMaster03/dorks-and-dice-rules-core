@@ -14,6 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("RulesCore");
 var hasDatabase = !string.IsNullOrWhiteSpace(connectionString);
 var bootstrapBaseline = builder.Configuration.GetValue("RulesCore:BootstrapBaseline", true);
+
+builder.Services.AddRulesCoreDice();
+
 if (hasDatabase)
 {
     builder.Services
@@ -68,6 +71,7 @@ app.UseMiddleware<HostedToolAuthenticationMiddleware>();
 app.UseStaticFiles();
 
 app.MapHealthChecks("/health");
+app.MapDiceRollEndpoints();
 
 app.MapGet("/ready", async (IServiceProvider services, CancellationToken cancellationToken) =>
 {
@@ -118,6 +122,7 @@ app.MapGet("/api", () => Results.Ok(new
     endpointFamilies = new[]
     {
         "/api/rules",
+        "/api/rules/dice",
         "/api/sources",
         "/api/global/rules",
         "/api/campaigns/{campaignId}/rules",

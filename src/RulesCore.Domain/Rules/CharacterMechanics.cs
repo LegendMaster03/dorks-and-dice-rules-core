@@ -70,7 +70,10 @@ public static class CharacterCompetencyKinds
 
 public static class CharacterMechanicRollModes
 {
-    public const string Disadvantage = "disadvantage";
+    public const string Normal = DiceRollSelectionModes.Normal;
+    public const string Advantage = DiceRollSelectionModes.Advantage;
+    public const string Disadvantage = DiceRollSelectionModes.Disadvantage;
+    public const string Emphasis = DiceRollSelectionModes.Emphasis;
 }
 
 public static class CharacterMechanicRelationshipKinds

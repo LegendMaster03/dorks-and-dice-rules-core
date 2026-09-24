@@ -10,6 +10,12 @@ namespace RulesCore.Web;
 
 public static class RulesCoreServiceCollectionExtensions
 {
+    public static IServiceCollection AddRulesCoreDice(this IServiceCollection services)
+    {
+        services.AddSingleton<IDiceRoller, SecureDiceRoller>();
+        return services;
+    }
+
     public static IServiceCollection AddRulesCorePersistence(
         this IServiceCollection services,
         string connectionString)
