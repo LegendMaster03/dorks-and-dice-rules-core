@@ -956,19 +956,13 @@ public static class KnownCharacterMechanics
             CharacterMechanicEvaluationKinds.Sum,
             0,
             [
-                StringInput("toolKey", CharacterMechanicInputOrigins.SourceInput, true),
+                StringInput("competencyKey", CharacterMechanicInputOrigins.SourceInput, true),
                 StringInput("abilityKey", CharacterMechanicInputOrigins.SourceInput, true),
                 IntegerInput("d20Roll", CharacterMechanicInputOrigins.Runtime, true, true),
                 IntegerInput("abilityModifier", CharacterMechanicInputOrigins.Derived, true, true),
-                IntegerInput(
-                    "toolProficiencyContribution",
-                    CharacterMechanicInputOrigins.Derived,
-                    true,
-                    true,
-                    includeWhenBooleanInputKey: "hasToolProficiency",
-                    includeWhenBooleanValue: true),
+                IntegerInput("competencyContribution", CharacterMechanicInputOrigins.Derived, true, true),
                 IntegerInput("otherModifier", CharacterMechanicInputOrigins.Derived, false, true, 0),
-                BooleanInput("hasToolProficiency", CharacterMechanicInputOrigins.CharacterState, true),
+                BooleanInput("isQualified", CharacterMechanicInputOrigins.CharacterState, true),
                 BooleanInput("hasQualifiedGuidance", CharacterMechanicInputOrigins.Runtime, true),
                 IntegerInput("targetDc", CharacterMechanicInputOrigins.SourceInput, false)
             ],
@@ -977,7 +971,7 @@ public static class KnownCharacterMechanics
             LootTavern,
             [
                 new CharacterMechanicConditionalRollRuleDefinition(
-                    "manufacturing.missing-tool-proficiency-disadvantage",
+                    "manufacturing.unqualified-disadvantage",
                     [
                         new CharacterMechanicBooleanConditionDefinition("hasToolProficiency", false),
                         new CharacterMechanicBooleanConditionDefinition("hasQualifiedGuidance", false)
@@ -992,10 +986,14 @@ public static class KnownCharacterMechanics
                     CharacterCheckAbilityResolutionKinds.RuleResolved),
                 new CharacterCheckCompetencyDefinition(
                     CharacterCheckCompetencyResolutionKinds.RuleResolved,
-                    [CharacterCompetencyKinds.Tool]),
+                    [
+                        CharacterCompetencyKinds.Skill,
+                        CharacterCompetencyKinds.SpecializedSkill,
+                        CharacterCompetencyKinds.Tool
+                    ]),
                 new CharacterCheckCompetencyCompositionDefinition(
-                    "toolKey",
-                    "toolProficiencyContribution"))),
+                    "competencyKey",
+                    "competencyContribution"))),
         new(
             "check.crafting.enchanting",
             CharacterMechanicKinds.Check,

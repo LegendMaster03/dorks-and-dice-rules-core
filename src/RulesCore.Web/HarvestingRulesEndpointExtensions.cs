@@ -43,6 +43,35 @@ public static class HarvestingRulesEndpointExtensions
             }
         });
 
+        app.MapPost("/api/rules/harvesting/outcome", async (
+            HarvestingOutcomeRequest request,
+            HttpContext httpContext,
+            IHarvestingRulesService harvesting,
+            CancellationToken cancellationToken) =>
+        {
+            try
+            {
+                var userId = HostedToolAuthenticationMiddleware
+                    .GetAuthenticationContext(httpContext)?
+                    .User.Id;
+                httpContext.Response.Headers.CacheControl = "no-store";
+                var result = await harvesting.ResolveGlobalOutcomeAsync(
+                    request,
+                    userId,
+                    cancellationToken);
+                return result is null ? Results.NotFound() : Results.Ok(result);
+            }
+            catch (Exception exception) when (
+                exception is ArgumentException
+                or ArgumentOutOfRangeException
+                or KeyNotFoundException
+                or InvalidOperationException
+                or OverflowException)
+            {
+                return InvalidRequest(exception);
+            }
+        });
+
         app.MapPost("/api/campaigns/{campaignId:guid}/rules/harvesting/resolve", async (
             Guid campaignId,
             HarvestingTableResolutionRequest request,
@@ -76,6 +105,45 @@ public static class HarvestingRulesEndpointExtensions
                 return InvalidRequest(exception);
             }
             catch (InvalidOperationException exception)
+            {
+                return InvalidRequest(exception);
+            }
+        });
+
+        app.MapPost("/api/campaigns/{campaignId:guid}/rules/harvesting/outcome", async (
+            Guid campaignId,
+            HarvestingOutcomeRequest request,
+            HttpContext httpContext,
+            IHarvestingRulesService harvesting,
+            CancellationToken cancellationToken) =>
+        {
+            var authenticationContext =
+                HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
+            if (authenticationContext is null)
+            {
+                return Results.Unauthorized();
+            }
+            if (!RulesAuthority.CanAccessCampaignRules(authenticationContext, campaignId))
+            {
+                return Results.NotFound();
+            }
+
+            try
+            {
+                httpContext.Response.Headers.CacheControl = "no-store";
+                var result = await harvesting.ResolveCampaignOutcomeAsync(
+                    campaignId,
+                    request,
+                    authenticationContext.User.Id,
+                    cancellationToken);
+                return result is null ? Results.NotFound() : Results.Ok(result);
+            }
+            catch (Exception exception) when (
+                exception is ArgumentException
+                or ArgumentOutOfRangeException
+                or KeyNotFoundException
+                or InvalidOperationException
+                or OverflowException)
             {
                 return InvalidRequest(exception);
             }

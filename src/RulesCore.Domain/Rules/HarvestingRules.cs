@@ -16,8 +16,8 @@ public sealed record HarvestingComponentDefinition(
 public sealed record HarvestingCreatureTypeDefinition(
     string Key,
     string DisplayName,
-    string SkillConceptKey,
-    string SkillDisplayName,
+    string CompetencyKey,
+    string CompetencyDisplayName,
     IReadOnlyList<HarvestingComponentDefinition> BaseComponents);
 
 public sealed record HarvestingComponentEdit(
@@ -79,7 +79,7 @@ public static class KnownHarvestingRules
 
     private static readonly IReadOnlyList<HarvestingCreatureTypeDefinition> Definitions =
     [
-        Type("aberration", "Aberration", "skill.arcana", "Arcana",
+        Type("aberration", "Aberration", "competency.arcana", "Arcana",
         [
             C("antenna", "Antenna", 5),
             C("eye", "Eye", 5),
@@ -100,7 +100,7 @@ public static class KnownHarvestingRules
             C("hide", "Hide", 20),
             C("main-eye", "Main eye", 20)
         ]),
-        Type("beast", "Beast", "skill.survival", "Survival",
+        Type("beast", "Beast", "competency.survival", "Survival",
         [
             C("antenna", "Antenna", 5),
             C("eye", "Eye", 5),
@@ -129,7 +129,7 @@ public static class KnownHarvestingRules
             C("chitin", "Chitin", 20),
             C("pelt", "Pelt", 20)
         ]),
-        Type("celestial", "Celestial", "skill.religion", "Religion",
+        Type("celestial", "Celestial", "competency.religion", "Religion",
         [
             C("eye", "Eye", 5),
             C("flesh", "Flesh", 5),
@@ -148,7 +148,7 @@ public static class KnownHarvestingRules
             C("skin", "Skin", 20),
             C("soul", "Soul", 25)
         ]),
-        Type("construct", "Construct", "skill.investigation", "Investigation",
+        Type("construct", "Construct", "competency.investigation", "Investigation",
         [
             C("phial-of-blood", "Phial of blood", 5),
             C("phial-of-oil", "Phial of oil", 5),
@@ -163,7 +163,7 @@ public static class KnownHarvestingRules
             C("instructions", "Instructions", 20),
             C("lifespark", "Lifespark", 25)
         ]),
-        Type("dragon", "Dragon", "skill.survival", "Survival",
+        Type("dragon", "Dragon", "competency.survival", "Survival",
         [
             C("eye", "Eye", 5),
             C("flesh", "Flesh", 5),
@@ -179,7 +179,7 @@ public static class KnownHarvestingRules
             C("heart", "Heart", 20),
             C("breath-sac", "Breath sac", 25)
         ]),
-        Type("elemental", "Elemental", "skill.arcana", "Arcana",
+        Type("elemental", "Elemental", "competency.arcana", "Arcana",
         [
             C("eye", "Eye", 5),
             C("primordial-dust", "Primordial dust", 5),
@@ -187,7 +187,7 @@ public static class KnownHarvestingRules
             C("volatile-mote", "Volatile mote of air/earth/fire/water", 15),
             C("core", "Core of air/earth/fire/water", 25)
         ]),
-        Type("fey", "Fey", "skill.arcana", "Arcana",
+        Type("fey", "Fey", "competency.arcana", "Arcana",
         [
             C("antenna", "Antenna", 5),
             C("eye", "Eye", 5),
@@ -216,7 +216,7 @@ public static class KnownHarvestingRules
             C("pelt", "Pelt", 20),
             C("psyche", "Psyche", 25)
         ]),
-        Type("fiend", "Fiend", "skill.religion", "Religion",
+        Type("fiend", "Fiend", "competency.religion", "Religion",
         [
             C("eye", "Eye", 5),
             C("flesh", "Flesh", 5),
@@ -237,7 +237,7 @@ public static class KnownHarvestingRules
             C("skin", "Skin", 20),
             C("soul", "Soul", 25)
         ]),
-        Type("giant", "Giant", "skill.medicine", "Medicine",
+        Type("giant", "Giant", "competency.medicine", "Medicine",
         [
             C("flesh", "Flesh", 5),
             C("nail", "Nail", 5),
@@ -249,7 +249,7 @@ public static class KnownHarvestingRules
             C("liver", "Liver", 15),
             C("skin", "Skin", 20)
         ]),
-        Type("humanoid", "Humanoid", "skill.medicine", "Medicine",
+        Type("humanoid", "Humanoid", "competency.medicine", "Medicine",
         [
             C("eye", "Eye", 5),
             C("phial-of-blood", "Phial of blood", 5),
@@ -263,7 +263,7 @@ public static class KnownHarvestingRules
             C("brain", "Brain", 20),
             C("skin", "Skin", 20)
         ]),
-        Type("monstrosity", "Monstrosity", "skill.survival", "Survival",
+        Type("monstrosity", "Monstrosity", "competency.survival", "Survival",
         [
             C("antenna", "Antenna", 5),
             C("eye", "Eye", 5),
@@ -292,14 +292,14 @@ public static class KnownHarvestingRules
             C("chitin", "Chitin", 20),
             C("pelt", "Pelt", 20)
         ]),
-        Type("ooze", "Ooze", "skill.nature", "Nature",
+        Type("ooze", "Ooze", "competency.nature", "Nature",
         [
             C("phial-of-acid", "Phial of acid", 5),
             C("phial-of-mucus", "Phial of mucus", 10),
             C("vesicle", "Vesicle", 15),
             C("membrane", "Membrane", 20)
         ]),
-        Type("plant", "Plant", "skill.nature", "Nature",
+        Type("plant", "Plant", "competency.nature", "Nature",
         [
             C("phial-of-sap", "Phial of sap", 5),
             C("tuber", "Tuber", 5),
@@ -313,7 +313,7 @@ public static class KnownHarvestingRules
             C("bark", "Bark", 20),
             C("membrane", "Membrane", 20)
         ]),
-        Type("undead", "Undead", "skill.medicine", "Medicine",
+        Type("undead", "Undead", "competency.medicine", "Medicine",
         [
             C("eye", "Eye", 5),
             C("bone", "Bone", 5),
@@ -442,10 +442,10 @@ public static class KnownHarvestingRules
     private static HarvestingCreatureTypeDefinition Type(
         string key,
         string displayName,
-        string skillConceptKey,
-        string skillDisplayName,
+        string competencyKey,
+        string competencyDisplayName,
         IReadOnlyList<HarvestingComponentDefinition> components) =>
-        new(key, displayName, skillConceptKey, skillDisplayName, components);
+        new(key, displayName, competencyKey, competencyDisplayName, components);
 
     private static HarvestingComponentDefinition C(
         string key,

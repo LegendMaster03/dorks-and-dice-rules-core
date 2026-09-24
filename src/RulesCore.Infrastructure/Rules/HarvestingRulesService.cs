@@ -16,8 +16,8 @@ public sealed class HarvestingRulesService(
                 .Select(type => new HarvestingCreatureTypeView(
                     type.Key,
                     type.DisplayName,
-                    type.SkillConceptKey,
-                    type.SkillDisplayName,
+                    type.CompetencyKey,
+                    type.CompetencyDisplayName,
                     type.BaseComponents
                         .Select(component => ToView(
                             new HarvestingResolvedComponent(
@@ -95,6 +95,31 @@ public sealed class HarvestingRulesService(
         return ResolveFromType(request.CreatureType!, request.ManualEdits);
     }
 
+    public async Task<HarvestingOutcomeView?> ResolveGlobalOutcomeAsync(
+        HarvestingOutcomeRequest request,
+        string? userId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        var table = await ResolveGlobalAsync(request.Table, userId, cancellationToken);
+        return table is null ? null : HarvestingOutcomeEvaluator.Evaluate(table, request);
+    }
+
+    public async Task<HarvestingOutcomeView?> ResolveCampaignOutcomeAsync(
+        Guid campaignId,
+        HarvestingOutcomeRequest request,
+        string userId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        var table = await ResolveCampaignAsync(
+            campaignId,
+            request.Table,
+            userId,
+            cancellationToken);
+        return table is null ? null : HarvestingOutcomeEvaluator.Evaluate(table, request);
+    }
+
     private static HarvestingResolvedTableView ResolveFromCreature(
         string conceptKey,
         string displayName,
@@ -155,8 +180,8 @@ public sealed class HarvestingRulesService(
             Source(),
             type.Key,
             type.DisplayName,
-            type.SkillConceptKey,
-            type.SkillDisplayName,
+            type.CompetencyKey,
+            type.CompetencyDisplayName,
             components.Select(ToView).ToArray(),
             creatureConceptKey,
             creatureDisplayName,
