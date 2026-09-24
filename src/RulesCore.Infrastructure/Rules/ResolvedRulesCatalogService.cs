@@ -517,6 +517,10 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             .Select(rule => rule with
             {
                 EntityType = RuleConceptEntityTypes.Normalize(rule.EntityType),
+                Resolution = rule.Resolution
+                    ?? EffectiveRuleResolutionView.Resolved(
+                        rule.SourceEntityRevisionId,
+                        rule.SourceRevisionNumber),
                 Relationships = relationships.TryGetValue(rule.RuleConceptId, out var related)
                     ? related.Select(value => new ResolvedRuleRelationshipView(
                         value.Kind,

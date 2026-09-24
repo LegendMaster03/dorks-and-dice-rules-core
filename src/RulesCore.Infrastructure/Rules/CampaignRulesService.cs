@@ -336,7 +336,15 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             .Where(value => value.CampaignId == campaignId)
             .OrderByDescending(value => value.RevisionNumber)
             .FirstOrDefaultAsync(cancellationToken);
-        if (latestRevision is null) return null;
+        if (latestRevision is null)
+        {
+            return await ResolveFallbackAsync(
+                campaignId,
+                key,
+                normalizedUserId,
+                latestRevision: null,
+                cancellationToken);
+        }
 
         var entry = await dbContext.CampaignRulesetRevisionEntries
             .AsNoTracking()
@@ -348,7 +356,15 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
                 value => value.CampaignRulesetRevisionId == latestRevision.Id
                     && value.RuleConcept.Key == key,
                 cancellationToken);
-        if (entry is null) return null;
+        if (entry is null)
+        {
+            return await ResolveFallbackAsync(
+                campaignId,
+                key,
+                normalizedUserId,
+                latestRevision,
+                cancellationToken);
+        }
 
         var sourceRevision = await AccessibleCanonicalSourceResolver.ResolveRevisionAsync(
             dbContext,
@@ -356,7 +372,15 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             entry.SourceEntityRevisionId,
             normalizedUserId,
             cancellationToken);
-        if (sourceRevision is null) return null;
+        if (sourceRevision is null)
+        {
+            return await ResolveFallbackAsync(
+                campaignId,
+                key,
+                normalizedUserId,
+                latestRevision,
+                cancellationToken);
+        }
 
         var sourceEntity = sourceRevision.SourceEntity;
         var package = sourceEntity.SourcePackage;
@@ -370,7 +394,15 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
         {
             var contributionResolution = await RuleContributionResolution.ResolveAsync(
                 dbContext, globalDecision.Id, normalizedUserId, cancellationToken);
-            if (!contributionResolution.Accessible) return null;
+            if (!contributionResolution.Accessible)
+            {
+                return await ResolveFallbackAsync(
+                    campaignId,
+                    key,
+                    normalizedUserId,
+                    latestRevision,
+                    cancellationToken);
+            }
             globalContributions = contributionResolution.Contributions;
         }
 
@@ -432,7 +464,74 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             package.DisplayName,
             sourceEntity.FormatKey,
             sourceEntity.FormatKey,
-            resolvedDocument);
+            resolvedDocument,
+            EffectiveRuleResolutionView.Resolved(
+                sourceRevision.Id,
+                sourceRevision.RevisionNumber));
+    }
+
+    private async Task<ResolvedCampaignRuleView?> ResolveFallbackAsync(
+        Guid campaignId,
+        string conceptKey,
+        string? userId,
+        CampaignRulesetRevision? latestRevision,
+        CancellationToken cancellationToken)
+    {
+        var fallback = await new EffectiveRuleFallbackResolver(dbContext)
+            .ResolveAsync(conceptKey, userId, cancellationToken);
+        if (fallback is null)
+        {
+            return null;
+        }
+
+        var concept = fallback.Concept;
+        var source = fallback.Source;
+        var revision = fallback.Revision;
+        var baseline = latestRevision?.BaselineSelection?.RulesetRevision;
+        using var document = JsonDocument.Parse(revision.GetMechanicalContentJson());
+
+        return new ResolvedCampaignRuleView(
+            campaignId,
+            concept.Id,
+            concept.Key,
+            RuleConceptEntityTypes.Normalize(concept.EntityType),
+            concept.DisplayName,
+            latestRevision?.RevisionNumber ?? 0,
+            latestRevision?.Fingerprint ?? string.Empty,
+            latestRevision?.PublishedAt ?? DateTimeOffset.MinValue,
+            baseline?.Id ?? Guid.Empty,
+            baseline?.RevisionNumber ?? 0,
+            baseline?.Fingerprint ?? string.Empty,
+            Guid.Empty,
+            0,
+            RuleResolutionStates.UnresolvedFallback,
+            GlobalPatchFingerprint: null,
+            GlobalMergePatch: null,
+            GlobalStructuredPatch: null,
+            GlobalContributions: [],
+            CampaignRuleDecisionId: null,
+            CampaignDecisionNumber: null,
+            EffectiveDecisionKind: RuleResolutionStates.UnresolvedFallback,
+            CampaignDecisionNote: null,
+            CampaignPatchFingerprint: null,
+            CampaignMergePatch: null,
+            CampaignStructuredPatch: null,
+            source.Id,
+            revision.Id,
+            revision.RevisionNumber,
+            revision.Fingerprint,
+            source.Name,
+            source.SourceCode ?? string.Empty,
+            source.SourcePackage.Key,
+            source.SourcePackage.DisplayName,
+            source.SourcePackage.Key,
+            source.SourcePackage.DisplayName,
+            fallback.Publication?.GameEdition ?? source.FormatKey,
+            fallback.Publication?.GameEdition ?? source.FormatKey,
+            document.RootElement.Clone(),
+            EffectiveRuleResolutionView.UnresolvedFallback(
+                revision.Id,
+                revision.RevisionNumber));
     }
 
     private static JsonElement ApplyGlobalPatch(JsonElement source, GlobalRuleDecision decision) => decision.DecisionKind switch

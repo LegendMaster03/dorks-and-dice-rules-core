@@ -317,7 +317,10 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             .AsNoTracking()
             .OrderByDescending(value => value.RevisionNumber)
             .FirstOrDefaultAsync(cancellationToken);
-        if (latestRevision is null) return null;
+        if (latestRevision is null)
+        {
+            return await ResolveFallbackAsync(key, normalizedUserId, null, cancellationToken);
+        }
 
         var entry = await dbContext.RulesetRevisionEntries
             .AsNoTracking()
@@ -327,7 +330,10 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
                 value => value.RulesetRevisionId == latestRevision.Id
                     && value.RuleConcept.Key == key,
                 cancellationToken);
-        if (entry is null) return null;
+        if (entry is null)
+        {
+            return await ResolveFallbackAsync(key, normalizedUserId, latestRevision, cancellationToken);
+        }
 
         var sourceRevision = await AccessibleCanonicalSourceResolver.ResolveRevisionAsync(
             dbContext,
@@ -335,7 +341,10 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             entry.SourceEntityRevisionId,
             normalizedUserId,
             cancellationToken);
-        if (sourceRevision is null) return null;
+        if (sourceRevision is null)
+        {
+            return await ResolveFallbackAsync(key, normalizedUserId, latestRevision, cancellationToken);
+        }
 
         var sourceEntity = sourceRevision.SourceEntity;
         var package = sourceEntity.SourcePackage;
@@ -343,7 +352,10 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         var concept = entry.RuleConcept;
         var contributionResolution = await RuleContributionResolution.ResolveAsync(
             dbContext, decision.Id, normalizedUserId, cancellationToken);
-        if (!contributionResolution.Accessible) return null;
+        if (!contributionResolution.Accessible)
+        {
+            return await ResolveFallbackAsync(key, normalizedUserId, latestRevision, cancellationToken);
+        }
 
         using var sourceDocument = JsonDocument.Parse(sourceRevision.GetMechanicalContentJson());
         var resolvedDocument = ApplyDecisionPatch(sourceDocument.RootElement, decision.DecisionKind, decision.PatchJson);
@@ -380,7 +392,62 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             sourceEntity.FormatKey,
             sourceEntity.FormatKey,
             contributionResolution.Contributions,
-            resolvedDocument);
+            resolvedDocument,
+            EffectiveRuleResolutionView.Resolved(
+                sourceRevision.Id,
+                sourceRevision.RevisionNumber));
+    }
+
+    private async Task<ResolvedRuleView?> ResolveFallbackAsync(
+        string conceptKey,
+        string? userId,
+        RulesetRevision? latestRevision,
+        CancellationToken cancellationToken)
+    {
+        var fallback = await new EffectiveRuleFallbackResolver(dbContext)
+            .ResolveAsync(conceptKey, userId, cancellationToken);
+        if (fallback is null)
+        {
+            return null;
+        }
+
+        var concept = fallback.Concept;
+        var source = fallback.Source;
+        var revision = fallback.Revision;
+        using var document = JsonDocument.Parse(revision.GetMechanicalContentJson());
+
+        return new ResolvedRuleView(
+            concept.Id,
+            concept.Key,
+            RuleConceptEntityTypes.Normalize(concept.EntityType),
+            concept.DisplayName,
+            latestRevision?.RevisionNumber ?? 0,
+            latestRevision?.Fingerprint ?? string.Empty,
+            latestRevision?.PublishedAt ?? DateTimeOffset.MinValue,
+            Guid.Empty,
+            0,
+            RuleResolutionStates.UnresolvedFallback,
+            DecisionNote: null,
+            GlobalPatchFingerprint: null,
+            GlobalMergePatch: null,
+            GlobalStructuredPatch: null,
+            source.Id,
+            revision.Id,
+            revision.RevisionNumber,
+            revision.Fingerprint,
+            source.Name,
+            source.SourceCode ?? string.Empty,
+            source.SourcePackage.Key,
+            source.SourcePackage.DisplayName,
+            source.SourcePackage.Key,
+            source.SourcePackage.DisplayName,
+            fallback.Publication?.GameEdition ?? source.FormatKey,
+            fallback.Publication?.GameEdition ?? source.FormatKey,
+            Contributions: [],
+            document.RootElement.Clone(),
+            EffectiveRuleResolutionView.UnresolvedFallback(
+                revision.Id,
+                revision.RevisionNumber));
     }
 
     public async Task<RuleConceptVersionsView?> GetAccessibleVersionsAsync(
