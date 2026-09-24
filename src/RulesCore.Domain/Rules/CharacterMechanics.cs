@@ -88,7 +88,7 @@ public static class CharacterMechanicRollModes
         return normalized == Normal ? 1 : 2;
     }
 
-    internal static string Normalize(string mode)
+    public static string Normalize(string mode)
     {
         if (string.IsNullOrWhiteSpace(mode))
         {
