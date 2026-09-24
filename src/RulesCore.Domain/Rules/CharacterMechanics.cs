@@ -664,17 +664,6 @@ public static class KnownCharacterMechanics
 {
     public const string LootTavernReferenceKey = "loot-tavern.harvesting-crafting-lite";
 
-    private static readonly IReadOnlyDictionary<string, int> HarvestingHelperLimits =
-        new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
-        {
-            ["Tiny"] = 0,
-            ["Small"] = 1,
-            ["Medium"] = 2,
-            ["Large"] = 4,
-            ["Huge"] = 6,
-            ["Gargantuan"] = 10
-        };
-
     private static readonly CharacterMechanicApplicabilityDefinition Always =
         new(CharacterMechanicApplicabilityKinds.Always, true, []);
 
@@ -848,7 +837,7 @@ public static class KnownCharacterMechanics
             []),
 
         LootCheck(
-            "check.harvesting.assessment",
+            KnownHarvestingRules.AssessmentMechanicKey,
             "Harvesting Assessment Check",
             [
                 StringInput("creatureTypeCompetencyKey", CharacterMechanicInputOrigins.SourceInput, true),
@@ -868,7 +857,7 @@ public static class KnownCharacterMechanics
                     "creatureTypeCompetencyKey",
                     "competencyContribution"))),
         LootCheck(
-            "check.harvesting.carving",
+            KnownHarvestingRules.CarvingMechanicKey,
             "Harvesting Carving Check",
             [
                 StringInput("creatureTypeCompetencyKey", CharacterMechanicInputOrigins.SourceInput, true),
@@ -888,7 +877,7 @@ public static class KnownCharacterMechanics
                     "creatureTypeCompetencyKey",
                     "competencyContribution"))),
         new(
-            "check.harvesting.total",
+            KnownHarvestingRules.TotalMechanicKey,
             CharacterMechanicKinds.Check,
             "Harvesting Check",
             CharacterMechanicEvaluationKinds.Sum,
@@ -908,7 +897,7 @@ public static class KnownCharacterMechanics
                     "harvesting.same-actor-disadvantage",
                     [new CharacterMechanicBooleanConditionDefinition("sameActor", true)],
                     CharacterMechanicRollModes.Disadvantage,
-                    ["check.harvesting.assessment", "check.harvesting.carving"])
+                    [KnownHarvestingRules.AssessmentMechanicKey, KnownHarvestingRules.CarvingMechanicKey])
             ],
             [],
             LootTavernHarvestingCrafting,
@@ -917,7 +906,7 @@ public static class KnownCharacterMechanics
                 new CharacterMechanicContributorGroupDefinition(
                     "helpers",
                     "creatureSize",
-                    HarvestingHelperLimits,
+                    KnownHarvestingRules.HelperLimitsByCreatureSize,
                     [
                         IntegerInput(
                             "proficiencyBonus",
@@ -1044,8 +1033,8 @@ public static class KnownCharacterMechanics
         new(
             "check-composite.harvesting",
             CharacterMechanicRelationshipKinds.CompositeCheck,
-            "check.harvesting.total",
-            ["check.harvesting.assessment", "check.harvesting.carving"],
+            KnownHarvestingRules.TotalMechanicKey,
+            [KnownHarvestingRules.AssessmentMechanicKey, KnownHarvestingRules.CarvingMechanicKey],
             CharacterMechanicCompositionKinds.Sum,
             MechanicalRelationshipDirections.ComponentsToParent)
     ];

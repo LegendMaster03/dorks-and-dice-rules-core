@@ -342,7 +342,9 @@ POST /api/rules/harvesting/resolve
 POST /api/campaigns/{campaignId}/rules/harvesting/resolve
 ```
 
-The catalog supplies each supported creature type's associated Rules Core skill concept and its default harvestable components with Component DCs. Resolution by `creatureConceptKey` reads the effective monster rule, derives its creature type, and overlays optional creature-specific Harvesting changes. Resolution by `creatureType` is available when no monster Rule Concept exists. A request may then apply a final manual edit layer for encounter-specific corrections without mutating the published monster rule.
+The catalog supplies each supported creature type's associated Rules Core skill concept and its default harvestable components with Component DCs. It also exposes the executable Harvesting procedure contract: Assessment and Carving mechanic/Ability identities, default roll mode, same-actor roll rule, creature-size Helper limits, and the ordered cumulative-DC award semantics. Character-oriented clients consume this contract instead of hard-coding Loot Tavern rules in the frontend.
+
+Resolution by `creatureConceptKey` reads the effective monster rule, derives its creature type and normalized Size, and overlays optional creature-specific Harvesting changes. Resolution by `creatureType` is available when no monster Rule Concept exists. A request may then apply a final manual edit layer for encounter-specific corrections without mutating the published monster rule. Type-only fallback intentionally leaves Size unresolved so the workflow can request it explicitly before enforcing Helper limits.
 
 The consumer contract models:
 

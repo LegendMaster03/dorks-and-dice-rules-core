@@ -23,9 +23,29 @@ public sealed record HarvestingCreatureTypeView(
     string SkillDisplayName,
     IReadOnlyList<HarvestingComponentView> DefaultComponents);
 
+public sealed record HarvestingProcedureCheckView(
+    string MechanicKey,
+    string AbilityKey,
+    string AbilityDisplayName,
+    string DefaultRollMode);
+
+public sealed record HarvestingHelperRulesView(
+    IReadOnlyDictionary<string, int> MaximumByCreatureSize,
+    bool StandardHelpActionApplies);
+
+public sealed record HarvestingProcedureView(
+    HarvestingProcedureCheckView Assessment,
+    HarvestingProcedureCheckView Carving,
+    string TotalMechanicKey,
+    string SameActorRollMode,
+    string ComponentDcAggregation,
+    string AwardMode,
+    HarvestingHelperRulesView Helpers);
+
 public sealed record HarvestingRulesCatalogView(
     HarvestingSourceView Source,
-    IReadOnlyList<HarvestingCreatureTypeView> CreatureTypes);
+    IReadOnlyList<HarvestingCreatureTypeView> CreatureTypes,
+    HarvestingProcedureView Procedure);
 
 public sealed record HarvestingComponentEditRequest(
     string Key,
@@ -51,6 +71,7 @@ public sealed record HarvestingResolvedTableView(
     IReadOnlyList<HarvestingComponentView> Components,
     string? CreatureConceptKey = null,
     string? CreatureDisplayName = null,
+    string? CreatureSize = null,
     bool CreatureOverridesApplied = false,
     bool ManualEditsApplied = false);
 

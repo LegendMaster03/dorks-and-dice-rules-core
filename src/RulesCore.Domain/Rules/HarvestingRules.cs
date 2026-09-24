@@ -56,6 +56,27 @@ public static class KnownHarvestingRules
     public const string ReferenceUri =
         "https://www.patreon.com/LootTavern/posts/helianas-and-to-107406117";
 
+    public const string AssessmentMechanicKey = "check.harvesting.assessment";
+    public const string CarvingMechanicKey = "check.harvesting.carving";
+    public const string TotalMechanicKey = "check.harvesting.total";
+    public const string AssessmentAbilityKey = "intelligence";
+    public const string AssessmentAbilityDisplayName = "Intelligence";
+    public const string CarvingAbilityKey = "dexterity";
+    public const string CarvingAbilityDisplayName = "Dexterity";
+    public const string ComponentDcAggregation = "cumulative-in-order";
+    public const string AwardMode = "ordered-prefix";
+
+    public static IReadOnlyDictionary<string, int> HelperLimitsByCreatureSize { get; } =
+        new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["Tiny"] = 0,
+            ["Small"] = 1,
+            ["Medium"] = 2,
+            ["Large"] = 4,
+            ["Huge"] = 6,
+            ["Gargantuan"] = 10
+        };
+
     private static readonly IReadOnlyList<HarvestingCreatureTypeDefinition> Definitions =
     [
         Type("aberration", "Aberration", "skill.arcana", "Arcana",

@@ -37,6 +37,21 @@ public sealed class HarvestingRulesTests
     }
 
     [Fact]
+    public void ProcedureContractKeepsWorkflowSemanticsInRulesCore()
+    {
+        Assert.Equal("check.harvesting.assessment", KnownHarvestingRules.AssessmentMechanicKey);
+        Assert.Equal("intelligence", KnownHarvestingRules.AssessmentAbilityKey);
+        Assert.Equal("check.harvesting.carving", KnownHarvestingRules.CarvingMechanicKey);
+        Assert.Equal("dexterity", KnownHarvestingRules.CarvingAbilityKey);
+        Assert.Equal("check.harvesting.total", KnownHarvestingRules.TotalMechanicKey);
+        Assert.Equal("cumulative-in-order", KnownHarvestingRules.ComponentDcAggregation);
+        Assert.Equal("ordered-prefix", KnownHarvestingRules.AwardMode);
+        Assert.Equal(0, KnownHarvestingRules.HelperLimitsByCreatureSize["Tiny"]);
+        Assert.Equal(2, KnownHarvestingRules.HelperLimitsByCreatureSize["Medium"]);
+        Assert.Equal(10, KnownHarvestingRules.HelperLimitsByCreatureSize["Gargantuan"]);
+    }
+
+    [Fact]
     public void DefaultHarvestablesRetainSourceComponentDcWithoutInventingCreatureSpecificParts()
     {
         var dragon = Required("dragon");
