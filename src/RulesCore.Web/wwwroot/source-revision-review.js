@@ -7,6 +7,7 @@ import {
     element,
     formatDate,
     formatJson,
+    sectionHeading,
     setButtonBusy,
     workspaceSection
 } from "./ui.js";
@@ -39,19 +40,12 @@ export function installSourceRevisionReview(app) {
 }
 
 function renderUpdatesCard(app, container, updates) {
-    const card = element("div", { className: "card mb-3" });
-    const header = element("div", {
-        className: "card-header d-flex flex-wrap justify-content-between align-items-center gap-2"
-    });
-    header.append(
-        element("div", {},
-            element("div", { className: "fw-semibold", text: "Source updates to review" }),
-            element("div", {
-                className: "small text-body-secondary",
-                text: "These current rule decisions pin source revisions that now have newer immutable revisions. Nothing migrates automatically."
-            })),
-        badge(`${updates.length} pending`, "warning"));
-    card.append(header);
+    const card = workspaceSection({ className: "rules-core-source-update-review" });
+    card.append(sectionHeading({
+        title: "Source updates to review",
+        description: "These current rule decisions pin source revisions that now have newer immutable revisions. Nothing migrates automatically.",
+        actions: [badge(`${updates.length} pending`, "warning")]
+    }));
 
     const table = element("table", { className: "table table-hover align-middle mb-0" });
     const head = element("thead");
@@ -115,7 +109,7 @@ function renderUpdatesCard(app, container, updates) {
     }
 
     table.append(head, body);
-    card.append(element("div", { className: "table-responsive" }, table));
+    card.append(element("div", { className: "table-responsive rules-core-workspace-table" }, table));
     return card;
 }
 
@@ -310,14 +304,14 @@ function renderResolvedDocuments(preview) {
 }
 
 function renderChanges(changes) {
-    const card = element("div", { className: "card" });
-    const header = element("div", { className: "card-header fw-semibold" });
-    header.textContent = `Resolved-rule changes (${changes.length})`;
-    card.append(header);
+    const card = workspaceSection({ className: "rules-core-source-change-review" });
+    card.append(sectionHeading({
+        title: `Resolved-rule changes (${changes.length})`
+    }));
 
     if (!changes.length) {
         card.append(element("div", {
-            className: "card-body text-body-secondary",
+            className: "text-body-secondary",
             text: "The newer source revision produces the same resolved rule with the current decision."
         }));
         return card;
@@ -341,7 +335,7 @@ function renderChanges(changes) {
         body.append(changeRow);
     }
     table.append(head, body);
-    card.append(element("div", { className: "table-responsive" }, table));
+    card.append(element("div", { className: "table-responsive rules-core-workspace-table" }, table));
     return card;
 }
 

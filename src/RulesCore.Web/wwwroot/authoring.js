@@ -363,7 +363,7 @@ export class RulesAuthoringApp {
 
         table.append(head, body);
         container.append(
-            element("div", { className: "card" }, element("div", { className: "table-responsive" }, table)),
+            element("div", { className: "table-responsive rules-core-workspace-table" }, table),
             paginationControls({
                 page: this.campaignPage,
                 itemCount: campaignConcepts.length,
