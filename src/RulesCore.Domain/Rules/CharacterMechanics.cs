@@ -411,7 +411,7 @@ public static class CharacterMechanicEvaluator
                 && supplied == condition.ExpectedValue))
             .Select(rule => new AppliedCharacterMechanicRollRule(
                 rule.Key,
-                rule.RollMode,
+                CharacterMechanicRollModes.Normalize(rule.RollMode),
                 rule.TargetMechanicKeys))
             .ToArray();
 
