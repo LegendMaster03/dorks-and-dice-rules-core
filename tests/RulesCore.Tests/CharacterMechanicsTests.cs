@@ -374,7 +374,7 @@ public sealed class CharacterMechanicsTests
     }
 
     [Fact]
-    public void ManufacturingDoesNotTurnMissingToolProficiencyIntoMissingProficiencyData()
+    public void ManufacturingDoesNotTurnUnqualifiedStateIntoMissingCompetencyData()
     {
         var definition = Required("check.crafting.manufacturing");
         var result = CharacterMechanicEvaluator.Evaluate(
@@ -382,7 +382,8 @@ public sealed class CharacterMechanicsTests
             new Dictionary<string, int>(StringComparer.Ordinal)
             {
                 ["d20Roll"] = 11,
-                ["abilityModifier"] = 2
+                ["abilityModifier"] = 2,
+                ["competencyContribution"] = 0
             },
             new Dictionary<string, bool>(StringComparer.Ordinal)
             {
