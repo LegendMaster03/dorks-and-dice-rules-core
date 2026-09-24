@@ -24,12 +24,9 @@ export function installSourceAdd(app) {
         if (app.activeView !== "sources") return;
 
         const card = await buildAddSourceCard(app);
-        const libraryLead = container.querySelector(":scope > .rules-core-sources-hero");
-        if (libraryLead) {
-            libraryLead.after(card);
-        } else {
-            container.prepend(card);
-        }
+        // UX shell installs the generated page lead after feature renderers complete.
+        // Keep self-service source controls first within the feature content.
+        container.prepend(card);
     };
 }
 
