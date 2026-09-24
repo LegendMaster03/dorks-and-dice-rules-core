@@ -393,6 +393,31 @@ Helper handling uses the general contributor-group contract. The Character backe
 
 For an eligible Helper, Rules Core validates the contributor count against the mechanic's context table, performs the full-or-fractional contribution and rounding, and adds the result to the Harvesting total. The request never contains one opaque `helperBonus`. The group also explicitly reports `standardHelpActionApplies=false`; an ordinary Help-action flag is not interpreted as a substitute for Helper participation.
 
+## D20 roll-selection modes
+
+Rules Core treats Normal, Advantage, Disadvantage, and Emphasis as peer d20
+selection modes:
+
+- `normal`: generate one d20 and use it;
+- `advantage`: generate two d20s and use the higher value;
+- `disadvantage`: generate two d20s and use the lower value;
+- `emphasis`: generate two d20s and use the value furthest from 10.
+
+Rules Core owns these semantics and may attach a mode to a mechanic through
+`conditionalRollRules`. It does **not** centralize random-number generation.
+Each consuming Tool generates its own d20 values locally and applies the same
+selection contract.
+
+A Tool must allow the user to override the rule-derived mode before rolling.
+The rule-derived mode remains useful context; a manual override changes the
+effective mode for that roll rather than rewriting the Rules Layer.
+
+For Emphasis, equally distant results such as 7 and 13 are a genuine selection
+tie under the stated rule. The canonical selector preserves the first generated
+die as its deterministic selected value and reports `selectionTied=true`, so a
+consumer can show both raw dice instead of silently inventing an additional
+game rule.
+
 ## Provenance and access
 
 A competency mechanic derived from a resolved Rules Layer concept carries only provenance already accessible to the current consumer:

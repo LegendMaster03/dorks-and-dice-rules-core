@@ -247,10 +247,11 @@ The extension has three independent arrays:
           "rolls": [
             {
               "key": "recoveryRoll",
-              "rollKind": "die",
+              "rollKind": "d20",
               "prompt": "Roll recovery.",
               "required": true,
-              "mechanicKey": "check.example-recovery"
+              "mechanicKey": "check.example-recovery",
+              "rollMode": "normal"
             }
           ],
           "effects": [
@@ -324,6 +325,8 @@ Qualifications carry a typed `stateInput` rather than a fixed proficiency boolea
 `_rulesCore.pcgen.unmappedSegments` is also rule-bearing: those values represent mechanics that have not been translated into a faithful 5e.tools field. They remain in the rule-bearing view for mechanical inspection even when the separate canonical competency identity causes edition-specific representations to reconcile to the same competency.
 
 The extension is subordinate to the complete `RawJson`; it is not a replacement 3.x ontology. Unsupported source fragments and operations remain separate source evidence until a translator can construct a legitimate mechanical entity.
+
+Recovery roll definitions may optionally set `rollMode` to `normal`, `advantage`, `disadvantage`, or `emphasis`. Consumers use that as the rule-derived default but must allow a user to override the mode at roll time. `rollKind: "d20"` indicates that the standard d20 selection semantics apply. A consumer may always accept a manually entered result from physical dice instead of generating dice automatically.
 
 ## Legacy SemanticJson field
 

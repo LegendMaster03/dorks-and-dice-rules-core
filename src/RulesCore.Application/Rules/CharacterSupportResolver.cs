@@ -772,7 +772,13 @@ public static class CharacterSupportResolver
 
     private static CharacterRecoveryRollView ToRollView(
         CharacterRecoveryRollDefinition value) =>
-        new(value.Key, value.RollKind, value.Prompt, value.Required, value.MechanicKey);
+        new(
+            value.Key,
+            value.RollKind,
+            value.Prompt,
+            value.Required,
+            value.MechanicKey,
+            CharacterMechanicRollModes.Normalize(value.RollMode));
 
     private static bool TryGetCaseInsensitive<T>(
         IReadOnlyDictionary<string, T>? values,

@@ -106,6 +106,35 @@ public sealed class CharacterSupportResolverTests
     }
 
     [Fact]
+    public void RecoveryRollsPreserveRuleDerivedRollModeForConsumers()
+    {
+        var procedure = Recovery(
+            "recovery.roll-mode",
+            "Mode-aware Recovery",
+            CharacterRecoveryPresentationRoles.ShortRest,
+            rolls:
+            [
+                new CharacterRecoveryRollDefinition(
+                    "save",
+                    "d20",
+                    "Roll the save.",
+                    true,
+                    "check.recovery",
+                    CharacterMechanicRollModes.Emphasis)
+            ]);
+
+        var result = CharacterSupportResolver.ResolveRecovery(
+            Catalog(recovery: [procedure]),
+            procedure.Key,
+            new CharacterRecoveryResolutionRequest());
+
+        Assert.NotNull(result);
+        var roll = Assert.Single(result!.PendingRolls);
+        Assert.Equal("d20", roll.RollKind);
+        Assert.Equal(CharacterMechanicRollModes.Emphasis, roll.RollMode);
+    }
+
+    [Fact]
     public void RecoveryResolutionReturnsStructuredEffectsChoicesRollsAndRejectsOpaqueOutcomes()
     {
         var procedure = Recovery(

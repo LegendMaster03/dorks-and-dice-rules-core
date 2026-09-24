@@ -358,12 +358,21 @@ internal static class CharacterSupportDefinitionParser
             {
                 RequireObject(value, "recovery roll");
                 var key = RequireString(value, "key", "Recovery roll");
+                var rollMode = ReadOptionalString(value, "rollMode")
+                    ?? CharacterMechanicRollModes.Normal;
+                if (!CharacterMechanicRollModes.IsKnown(rollMode))
+                {
+                    throw new InvalidDataException(
+                        $"Recovery roll '{key}' uses unsupported roll mode '{rollMode}'.");
+                }
+
                 return new CharacterRecoveryRollDefinition(
                     key,
                     RequireString(value, "rollKind", $"Recovery roll '{key}'"),
                     RequireString(value, "prompt", $"Recovery roll '{key}'"),
                     ReadOptionalBoolean(value, "required") ?? true,
-                    ReadOptionalString(value, "mechanicKey"));
+                    ReadOptionalString(value, "mechanicKey"),
+                    CharacterMechanicRollModes.Normalize(rollMode));
             })
             .ToArray();
         EnsureUniqueKeys(rolls.Select(value => value.Key), "recovery roll");
