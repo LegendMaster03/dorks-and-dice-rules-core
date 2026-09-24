@@ -63,7 +63,6 @@ public static class HarvestingRulesEndpointExtensions
             }
             catch (Exception exception) when (
                 exception is ArgumentException
-                or ArgumentOutOfRangeException
                 or KeyNotFoundException
                 or InvalidOperationException
                 or OverflowException)
@@ -140,7 +139,6 @@ public static class HarvestingRulesEndpointExtensions
             }
             catch (Exception exception) when (
                 exception is ArgumentException
-                or ArgumentOutOfRangeException
                 or KeyNotFoundException
                 or InvalidOperationException
                 or OverflowException)
