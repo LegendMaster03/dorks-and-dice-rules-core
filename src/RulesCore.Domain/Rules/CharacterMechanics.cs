@@ -973,7 +973,7 @@ public static class KnownCharacterMechanics
                 new CharacterMechanicConditionalRollRuleDefinition(
                     "manufacturing.unqualified-disadvantage",
                     [
-                        new CharacterMechanicBooleanConditionDefinition("hasToolProficiency", false),
+                        new CharacterMechanicBooleanConditionDefinition("isQualified", false),
                         new CharacterMechanicBooleanConditionDefinition("hasQualifiedGuidance", false)
                     ],
                     CharacterMechanicRollModes.Disadvantage,
