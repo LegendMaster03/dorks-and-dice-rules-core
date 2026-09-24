@@ -571,6 +571,81 @@ public sealed class CharacterMechanicsTests
                 && value.IncludeWhenBooleanValue != true);
     }
 
+    [Theory]
+    [InlineData(CharacterMechanicRollModes.Normal, 1)]
+    [InlineData(CharacterMechanicRollModes.Advantage, 2)]
+    [InlineData(CharacterMechanicRollModes.Disadvantage, 2)]
+    [InlineData(CharacterMechanicRollModes.Emphasis, 2)]
+    public void RollModesDeclareTheirD20RollCount(string mode, int expected)
+    {
+        Assert.True(CharacterMechanicRollModes.IsKnown(mode));
+        Assert.Equal(expected, CharacterMechanicRollModes.RequiredD20RollCount(mode));
+    }
+
+    [Fact]
+    public void AdvantageTakesTheHigherD20()
+    {
+        var result = CharacterMechanicD20Selector.Select(
+            CharacterMechanicRollModes.Advantage,
+            [7, 16]);
+
+        Assert.Equal(16, result.SelectedValue);
+        Assert.Equal(1, result.SelectedIndex);
+        Assert.False(result.SelectionTied);
+    }
+
+    [Fact]
+    public void DisadvantageTakesTheLowerD20()
+    {
+        var result = CharacterMechanicD20Selector.Select(
+            CharacterMechanicRollModes.Disadvantage,
+            [7, 16]);
+
+        Assert.Equal(7, result.SelectedValue);
+        Assert.Equal(0, result.SelectedIndex);
+        Assert.False(result.SelectionTied);
+    }
+
+    [Fact]
+    public void EmphasisTakesTheD20FurthestFromTen()
+    {
+        var result = CharacterMechanicD20Selector.Select(
+            CharacterMechanicRollModes.Emphasis,
+            [4, 13]);
+
+        Assert.Equal(4, result.SelectedValue);
+        Assert.Equal(0, result.SelectedIndex);
+        Assert.False(result.SelectionTied);
+    }
+
+    [Fact]
+    public void EmphasisReportsAnEqualDistanceTieWithoutInventingATiebreakRule()
+    {
+        var result = CharacterMechanicD20Selector.Select(
+            CharacterMechanicRollModes.Emphasis,
+            [7, 13]);
+
+        Assert.True(result.SelectionTied);
+        Assert.Equal([7, 13], result.Rolls);
+        Assert.Equal(7, result.SelectedValue);
+        Assert.Equal(0, result.SelectedIndex);
+    }
+
+    [Fact]
+    public void NormalRollModeUsesExactlyOneD20()
+    {
+        var result = CharacterMechanicD20Selector.Select(
+            CharacterMechanicRollModes.Normal,
+            [12]);
+
+        Assert.Equal(12, result.SelectedValue);
+        Assert.False(result.SelectionTied);
+        Assert.Throws<ArgumentException>(() =>
+            CharacterMechanicD20Selector.Select(
+                CharacterMechanicRollModes.Normal,
+                [12, 17]));
+    }
+
     [Fact]
     public void MechanicKindsDistinguishSavingThrowsDefensesAndCombatValues()
     {

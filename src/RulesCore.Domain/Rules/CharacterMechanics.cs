@@ -70,7 +70,120 @@ public static class CharacterCompetencyKinds
 
 public static class CharacterMechanicRollModes
 {
+    public const string Normal = "normal";
+    public const string Advantage = "advantage";
     public const string Disadvantage = "disadvantage";
+    public const string Emphasis = "emphasis";
+
+    public static IReadOnlyList<string> All { get; } =
+        [Normal, Advantage, Disadvantage, Emphasis];
+
+    public static bool IsKnown(string? value) =>
+        !string.IsNullOrWhiteSpace(value)
+        && All.Contains(value.Trim(), StringComparer.OrdinalIgnoreCase);
+
+    public static int RequiredD20RollCount(string mode)
+    {
+        var normalized = Normalize(mode);
+        return normalized == Normal ? 1 : 2;
+    }
+
+    internal static string Normalize(string mode)
+    {
+        if (string.IsNullOrWhiteSpace(mode))
+        {
+            throw new ArgumentException("Roll mode can not be blank.", nameof(mode));
+        }
+
+        var normalized = mode.Trim().ToLowerInvariant();
+        if (!IsKnown(normalized))
+        {
+            throw new ArgumentException(
+                $"Unknown roll mode '{mode}'. Expected one of: {string.Join(", ", All)}.",
+                nameof(mode));
+        }
+
+        return normalized;
+    }
+}
+
+public sealed record CharacterMechanicD20Selection(
+    string RollMode,
+    IReadOnlyList<int> Rolls,
+    int SelectedIndex,
+    int SelectedValue,
+    bool SelectionTied);
+
+/// <summary>
+/// Canonical Dorks & Dice d20 selection semantics. Tools keep their own random-number
+/// generation; this pure selector defines how already-generated d20 results are chosen.
+/// </summary>
+public static class CharacterMechanicD20Selector
+{
+    public static CharacterMechanicD20Selection Select(
+        string rollMode,
+        IReadOnlyList<int> rolls)
+    {
+        ArgumentNullException.ThrowIfNull(rolls);
+
+        var mode = CharacterMechanicRollModes.Normalize(rollMode);
+        var required = CharacterMechanicRollModes.RequiredD20RollCount(mode);
+        if (rolls.Count != required)
+        {
+            throw new ArgumentException(
+                $"Roll mode '{mode}' requires exactly {required} d20 roll(s).",
+                nameof(rolls));
+        }
+
+        for (var index = 0; index < rolls.Count; index++)
+        {
+            if (rolls[index] is < 1 or > 20)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(rolls),
+                    $"d20 roll at index {index} must be from 1 through 20.");
+            }
+        }
+
+        if (mode == CharacterMechanicRollModes.Normal)
+        {
+            return new CharacterMechanicD20Selection(
+                mode,
+                rolls.ToArray(),
+                0,
+                rolls[0],
+                false);
+        }
+
+        var first = rolls[0];
+        var second = rolls[1];
+        var firstScore = mode switch
+        {
+            CharacterMechanicRollModes.Advantage => first,
+            CharacterMechanicRollModes.Disadvantage => -first,
+            CharacterMechanicRollModes.Emphasis => Math.Abs(first - 10),
+            _ => throw new InvalidOperationException($"Unsupported roll mode '{mode}'.")
+        };
+        var secondScore = mode switch
+        {
+            CharacterMechanicRollModes.Advantage => second,
+            CharacterMechanicRollModes.Disadvantage => -second,
+            CharacterMechanicRollModes.Emphasis => Math.Abs(second - 10),
+            _ => throw new InvalidOperationException($"Unsupported roll mode '{mode}'.")
+        };
+
+        // Equal selection scores have no rules-defined winner. Preserve the first generated
+        // result as the deterministic selected value and report the tie explicitly so a
+        // consuming UI can show both raw dice rather than silently inventing a tiebreaker.
+        var tied = firstScore == secondScore;
+        var selectedIndex = secondScore > firstScore ? 1 : 0;
+        return new CharacterMechanicD20Selection(
+            mode,
+            rolls.ToArray(),
+            selectedIndex,
+            rolls[selectedIndex],
+            tied);
+    }
 }
 
 public static class CharacterMechanicRelationshipKinds
