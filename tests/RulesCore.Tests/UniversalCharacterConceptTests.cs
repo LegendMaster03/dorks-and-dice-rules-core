@@ -92,6 +92,15 @@ public sealed class UniversalCharacterConceptTests
         Assert.Equal(
             new UniversalCompetencyAlias("alchemy", "Alchemy"),
             KnownUniversalCompetencies.ResolveLegacyConceptKey("tool.alchemists-supplies"));
+        Assert.Equal(
+            new UniversalCompetencyAlias("calligraphy", "Calligraphy"),
+            KnownUniversalCompetencies.ResolveLegacyConceptKey("tool.calligraphers-supplies"));
+        Assert.Equal(
+            new UniversalCompetencyAlias("glassblowing", "Glassblowing"),
+            KnownUniversalCompetencies.ResolveLegacyConceptKey("tool.glassblowers-tools"));
+        Assert.Equal(
+            new UniversalCompetencyAlias("smithing", "Smithing"),
+            KnownUniversalCompetencies.ResolveLegacyConceptKey("tool.smiths-tools"));
 
         Assert.Null(KnownUniversalCompetencies.ResolveLegacyConceptKey("skill.hide"));
         Assert.Null(KnownUniversalCompetencies.ResolveLegacyConceptKey("skill.move-silently"));
@@ -112,6 +121,21 @@ public sealed class UniversalCharacterConceptTests
         Assert.Equal(
             ["Forgery", "Forgery Kit"],
             KnownUniversalCompetencies.SourceAliases("forgery"));
+        Assert.Equal(
+            ["Glassblower's Tools"],
+            KnownUniversalCompetencies.SourceAliases("glassblowing"));
+        Assert.Equal(
+            "supporting",
+            KnownUniversalCompetencies.FindByIdentityKey("craft")!.PresentationCategory);
+        Assert.Equal(
+            "supporting",
+            KnownUniversalCompetencies.FindByIdentityKey("blacksmithing")!.PresentationCategory);
+        Assert.Equal(
+            "competency",
+            KnownUniversalCompetencies.FindByIdentityKey("calligraphy")!.PresentationCategory);
+        Assert.Equal(
+            "skill",
+            KnownUniversalCompetencies.FindByIdentityKey("dance")!.PresentationCategory);
         Assert.Equal(
             new[] { "Knowledge (Arcana)", "Arcana" }
                 .OrderBy(value => value, StringComparer.OrdinalIgnoreCase),

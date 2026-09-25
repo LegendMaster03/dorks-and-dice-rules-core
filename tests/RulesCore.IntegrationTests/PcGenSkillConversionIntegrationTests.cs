@@ -34,6 +34,15 @@ public sealed class PcGenSkillConversionIntegrationTests
     private static readonly (string Source, string Target, string IdentityKey, string IdentityName)[] SharedToolFacets =
     [
         ("Craft (alchemy)", "Alchemist's Supplies", "alchemy", "Alchemy"),
+        ("Craft (calligraphy)", "Calligrapher's Supplies", "calligraphy", "Calligraphy"),
+        ("Craft (carpentry)", "Carpenter's Tools", "carpentry", "Carpentry"),
+        ("Craft (cobbling)", "Cobbler's Tools", "cobbling", "Cobbling"),
+        ("Craft (gemcutting)", "Jeweler's Tools", "gemcutting", "Gemcutting"),
+        ("Craft (leatherworking)", "Leatherworker's Tools", "leatherworking", "Leatherworking"),
+        ("Craft (painting)", "Painter's Supplies", "painting", "Painting"),
+        ("Craft (pottery)", "Potter's Tools", "pottery", "Pottery"),
+        ("Craft (stonemasonry)", "Mason's Tools", "stonemasonry", "Stonemasonry"),
+        ("Craft (weaving)", "Weaver's Tools", "weaving", "Weaving"),
         ("Forgery", "Forgery Kit", "forgery", "Forgery")
     ];
 
@@ -49,6 +58,62 @@ public sealed class PcGenSkillConversionIntegrationTests
         "Spellcraft",
         "Craft (blacksmithing)"
     ];
+
+    [Theory]
+    [InlineData("Glassblower's Tools", "glassblowing", "Glassblowing")]
+    [InlineData("Cartographer's Tools", "cartography", "Cartography")]
+    [InlineData("Poisoner's Kit", "poisoning", "Poisoning")]
+    [InlineData("Thieves' Tools", "thieves-tools", "Thieves' Tools")]
+    public void LaterToolOnlyCompetenciesReceiveStandaloneUniversalIdentity(
+        string toolName,
+        string identityKey,
+        string identityName)
+    {
+        var profile = BuildCompetencyProfileForTest(
+            Guid.NewGuid(),
+            "tool",
+            toolName,
+            JsonSerializer.Serialize(new { name = toolName }),
+            "5e");
+
+        Assert.NotNull(profile);
+        Assert.Equal(identityKey, profile!.IdentityKey);
+        Assert.Equal(identityName, profile.IdentityName);
+        Assert.Equal("tool", profile.FacetType);
+        Assert.False(profile.SupportsRanks);
+        Assert.True(profile.SupportsTrainingState);
+        Assert.Equal($"competency.{identityKey}.training", profile.SharedTrainingKey);
+    }
+
+    [Fact]
+    public void SmithsToolsRemainIndependentAndRelatedToMultipleCraftSpecialties()
+    {
+        var profile = BuildCompetencyProfileForTest(
+            Guid.NewGuid(),
+            "tool",
+            "Smith's Tools",
+            JsonSerializer.Serialize(new { name = "Smith's Tools" }),
+            "5.5e");
+
+        Assert.NotNull(profile);
+        Assert.Equal("smithing", profile!.IdentityKey);
+        Assert.Equal("Smithing", profile.IdentityName);
+        Assert.False(profile.SupportsRanks);
+        Assert.Equal(
+            ["Armorsmithing", "Blacksmithing", "Weaponsmithing"],
+            profile.RelatedCompetencies!
+                .Select(value => value.TargetName)
+                .OrderBy(value => value, StringComparer.Ordinal)
+                .ToArray());
+        Assert.All(
+            profile.RelatedCompetencies!,
+            value =>
+            {
+                Assert.Equal("related-competency", value.Kind);
+                Assert.Equal("competency", value.TargetType);
+                Assert.False(value.SharesTrainingState);
+            });
+    }
 
     [Fact]
     public async Task SpecializedCompetencyFamiliesAreTaxonomyWhileKnowledgeNormalizesDirectly()
@@ -972,6 +1037,33 @@ public sealed class PcGenSkillConversionIntegrationTests
                 await DeletePackageAsync(db, packageKey);
             }
         }
+    }
+
+    private static RulesCore.Application.Rules.CharacterCompetencyProfileView? BuildCompetencyProfileForTest(
+        Guid sourceEntityRevisionId,
+        string entityType,
+        string? sourceEntityName,
+        string? mechanicalJson,
+        string? gameEdition)
+    {
+        var factoryType = typeof(RulesCoreDbContext).Assembly.GetType(
+            "RulesCore.Infrastructure.Rules.CharacterCompetencyProfileFactory",
+            throwOnError: true)!;
+        var method = factoryType.GetMethod(
+            "BuildProfile",
+            System.Reflection.BindingFlags.Static
+                | System.Reflection.BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("Competency profile factory method was not found.");
+        return method.Invoke(
+            null,
+            [
+                sourceEntityRevisionId,
+                entityType,
+                sourceEntityName,
+                mechanicalJson,
+                gameEdition,
+                null
+            ]) as RulesCore.Application.Rules.CharacterCompetencyProfileView;
     }
 
     private static NormalizedSourceRepresentation LegacySrdRepresentation(

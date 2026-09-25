@@ -35,7 +35,8 @@ A universal competency entry exposes:
 - applicable profiles and facets;
 - normalized universal mechanical semantics, including deterministic governing-Ability resolution;
 - relationships;
-- source attribution/provenance.
+- source attribution/provenance;
+- open-ended `presentationCategory` metadata supplied by Rules Core for consumer placement, including `skill`, Character-facing `competency`, and non-row `supporting`.
 
 Consumers should render and store semantic competency identity from `competencies`. They should use the listed implementation mechanic/profile when a calculation is required. They should not rebuild semantic identity by grouping `skill.*` and `tool.*` records themselves.
 
@@ -62,18 +63,23 @@ The reviewed direct historical aliases are:
 
 The Knowledge rule is a reviewed pattern: `Knowledge (X)` maps to semantic competency `X`. Knowledge is not a visible Character family.
 
-The reviewed cross-source skill/tool identities are:
+The reviewed cross-source skill/tool shared identities are:
 
-```text
-competency.alchemy
-  aliases: Alchemy, Craft (alchemy), Alchemist's Supplies
-  family: Craft
-  training state: competency.alchemy.training
+| Universal competency | Reviewed source/import aliases |
+| --- | --- |
+| Alchemy | Alchemy; Craft (alchemy); Alchemist's Supplies |
+| Calligraphy | Craft (calligraphy); Calligrapher's Supplies |
+| Carpentry | Craft (carpentry); Carpenter's Tools |
+| Cobbling | Craft (cobbling); Cobbler's Tools |
+| Gemcutting | Craft (gemcutting); Jeweler's Tools |
+| Leatherworking | Craft (leatherworking); Leatherworker's Tools |
+| Painting | Craft (painting); Painter's Supplies |
+| Pottery | Craft (pottery); Potter's Tools |
+| Stonemasonry | Craft (stonemasonry); Mason's Tools |
+| Weaving | Craft (weaving); Weaver's Tools |
+| Forgery | Forgery; Forgery Kit |
 
-competency.forgery
-  aliases: Forgery, Forgery Kit
-  training state: competency.forgery.training
-```
+A universal identity does not require aliases from multiple editions. Source-defined tools and other trainable capabilities can establish their own universal competency without a historical skill counterpart. Rules Core does not invent a source-native `Craft (...)` or other historical record to fill such a gap.
 
 The semantic identity does not merge numeric systems. Alchemy can simultaneously have a 3.x ranked-skill profile and a later tool-proficiency profile. Ranks, class-skill state, governing Ability, trained-only behavior, Armor Check Penalty behavior, proficiency contribution, and tool-use rules remain attached to the applicable profile/facet.
 
@@ -81,7 +87,9 @@ At the universal level, Ability aliases such as `wis`/`wisdom` and `int`/`intell
 
 ## Universal competency families
 
-`Craft`, `Perform`, and `Profession` are organizational universal families. A family is not a shared rank pool. Every child is independently addressable and can carry its own source/rule implementation.
+`Craft`, `Perform`, and `Profession` are organizational universal families. The Craft family itself and Craft-only historical specialties are `supporting` presentation identities: they continue to supply rules, ranks, and reconciliation facets without becoming a visible Character-facing competency list. Reviewed shared Craft/tool identities remain universal competencies and can be presented once under their normalized identity.
+
+A family is not a shared rank pool. Every child is independently addressable and can carry its own source/rule implementation.
 
 The reviewed family rule is also an authoritative Rules-layer mechanical default. A reviewed child inherits these mechanics unless a reviewed specialization explicitly overrides them:
 
@@ -120,7 +128,11 @@ Reviewed baseline membership:
 - Weaponsmithing
 - Weaving
 
-Alchemy is the reviewed cross-era identity case: 3e `Alchemy`, 3.5e `Craft (alchemy)`, and later `Alchemist's Supplies` are source/rule interpretations of one learned competency. No equivalent modern tool mapping is inferred for the other Craft children solely from a similar name.
+Reviewed shared Craft/tool identities are limited to Alchemy, Calligraphy, Carpentry, Cobbling, Gemcutting, Leatherworking, Painting, Pottery, Stonemasonry, and Weaving. This is explicit policy, not a name-matching rule.
+
+Other reviewed later tools remain independent universal competencies when one later proficiency spans several historical specialties or when the historical concept is only related. Smithing is independent from Blacksmithing/Armorsmithing/Weaponsmithing; Tinkering is independent from Locksmithing/Trapmaking; Woodcarving is independent from Bowmaking/Carpentry. Brewing, Cooking, Herbalism, and Navigation likewise remain distinct from related Profession specialties.
+
+Standalone tool-only identities such as Glassblowing, Cartography, Poisoning, Thieves' Tools, musical instruments, gaming sets, and future source-defined tools require no fabricated Craft history.
 
 ### Perform
 

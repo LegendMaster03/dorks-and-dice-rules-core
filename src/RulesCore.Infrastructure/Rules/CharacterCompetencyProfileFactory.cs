@@ -233,7 +233,15 @@ internal static class CharacterCompetencyProfileFactory
             SharedTrainingKey: facetIdentity is null
                 ? null
                 : $"competency.{facetIdentity.IdentityKey}.training",
-            RelatedCompetencies: []);
+            RelatedCompetencies: facetIdentity?.RelatedCompetencies?
+                .Select(value => new CharacterCompetencyRelationshipView(
+                    value.Kind,
+                    value.TargetType,
+                    value.TargetName,
+                    value.Scope,
+                    value.SharesTrainingState))
+                .ToArray()
+                ?? []);
     }
     
     private static CharacterCompetencyProfileView ApplyCurrentThreeXFamilyTaxonomy(

@@ -19,7 +19,8 @@ public sealed record UniversalCompetencyDefinition(
     string? FamilyName = null,
     bool IsFamily = false,
     IReadOnlyList<string>? SourceAliases = null,
-    UniversalCompetencyMechanics? Mechanics = null)
+    UniversalCompetencyMechanics? Mechanics = null,
+    string PresentationCategory = "skill")
 {
     public string SemanticKey => $"competency.{IdentityKey}";
     public string? TrainingStateKey => IsFamily
@@ -41,33 +42,37 @@ public static class KnownUniversalCompetencies
 {
     private static readonly IReadOnlyList<UniversalCompetencyDefinition> FamilyDefinitions =
     [
-        Family("craft", "Craft", RankedFamily("intelligence", trainedOnly: false)),
+        Family(
+            "craft",
+            "Craft",
+            RankedFamily("intelligence", trainedOnly: false),
+            presentationCategory: "supporting"),
         Family("perform", "Perform", RankedFamily("charisma", trainedOnly: false)),
         Family("profession", "Profession", RankedFamily("wisdom", trainedOnly: true))
     ];
 
     private static readonly IReadOnlyList<UniversalCompetencyDefinition> FamilyMemberDefinitions =
     [
-        Craft("Alchemy", "Craft (alchemy)", "Alchemist's Supplies"),
-        Craft("Armorsmithing"),
-        Craft("Basketweaving"),
-        Craft("Bookbinding"),
-        Craft("Bowmaking"),
-        Craft("Blacksmithing"),
-        Craft("Calligraphy"),
-        Craft("Carpentry"),
-        Craft("Cobbling"),
-        Craft("Gemcutting"),
-        Craft("Leatherworking"),
-        Craft("Locksmithing"),
-        Craft("Painting"),
-        Craft("Pottery"),
-        Craft("Sculpting"),
-        Craft("Shipmaking"),
-        Craft("Stonemasonry"),
-        Craft("Trapmaking"),
-        Craft("Weaponsmithing"),
-        Craft("Weaving"),
+        CraftCompetency("Alchemy", "Craft (alchemy)", "Alchemist's Supplies"),
+        CraftSupporting("Armorsmithing"),
+        CraftSupporting("Basketweaving"),
+        CraftSupporting("Bookbinding"),
+        CraftSupporting("Bowmaking"),
+        CraftSupporting("Blacksmithing"),
+        CraftCompetency("Calligraphy", "Calligrapher\'s Supplies"),
+        CraftCompetency("Carpentry", "Carpenter\'s Tools"),
+        CraftCompetency("Cobbling", "Cobbler\'s Tools"),
+        CraftCompetency("Gemcutting", "Jeweler\'s Tools"),
+        CraftCompetency("Leatherworking", "Leatherworker\'s Tools"),
+        CraftSupporting("Locksmithing"),
+        CraftCompetency("Painting", "Painter\'s Supplies"),
+        CraftCompetency("Pottery", "Potter\'s Tools"),
+        CraftSupporting("Sculpting"),
+        CraftSupporting("Shipmaking"),
+        CraftCompetency("Stonemasonry", "Mason\'s Tools"),
+        CraftSupporting("Trapmaking"),
+        CraftSupporting("Weaponsmithing"),
+        CraftCompetency("Weaving", "Weaver\'s Tools"),
 
         Perform("Act"),
         Perform("Comedy"),
@@ -124,6 +129,27 @@ public static class KnownUniversalCompetencies
             ["psionics"] = ["Knowledge (Psionics)", "Psionics"],
             ["the-planes"] = ["Knowledge (the planes)", "The Planes"],
             ["alchemy"] = ["Alchemy", "Craft (alchemy)", "Alchemist's Supplies"],
+            ["calligraphy"] = ["Craft (calligraphy)", "Calligrapher's Supplies"],
+            ["carpentry"] = ["Craft (carpentry)", "Carpenter's Tools"],
+            ["cobbling"] = ["Craft (cobbling)", "Cobbler's Tools"],
+            ["gemcutting"] = ["Craft (gemcutting)", "Jeweler's Tools"],
+            ["leatherworking"] = ["Craft (leatherworking)", "Leatherworker's Tools"],
+            ["painting"] = ["Craft (painting)", "Painter's Supplies"],
+            ["pottery"] = ["Craft (pottery)", "Potter's Tools"],
+            ["stonemasonry"] = ["Craft (stonemasonry)", "Mason's Tools"],
+            ["weaving"] = ["Craft (weaving)", "Weaver's Tools"],
+            ["brewing"] = ["Brewer's Supplies"],
+            ["cartography"] = ["Cartographer's Tools"],
+            ["cooking"] = ["Cook's Utensils"],
+            ["glassblowing"] = ["Glassblower's Tools"],
+            ["herbalism"] = ["Herbalism Kit"],
+            ["navigation"] = ["Navigator's Tools"],
+            ["poisoning"] = ["Poisoner's Kit"],
+            ["smithing"] = ["Smith's Tools"],
+            ["tinkering"] = ["Tinker's Tools"],
+            ["woodcarving"] = ["Woodcarver's Tools"],
+            ["disguise-kit"] = ["Disguise Kit"],
+            ["thieves-tools"] = ["Thieves' Tools"],
             ["forgery"] = ["Forgery", "Forgery Kit"]
         };
 
@@ -141,6 +167,27 @@ public static class KnownUniversalCompetencies
             ["skill.alchemy"] = new("alchemy", "Alchemy"),
             ["skill.craft-alchemy"] = new("alchemy", "Alchemy"),
             ["tool.alchemists-supplies"] = new("alchemy", "Alchemy"),
+            ["tool.calligraphers-supplies"] = new("calligraphy", "Calligraphy"),
+            ["tool.carpenters-tools"] = new("carpentry", "Carpentry"),
+            ["tool.cobblers-tools"] = new("cobbling", "Cobbling"),
+            ["tool.jewelers-tools"] = new("gemcutting", "Gemcutting"),
+            ["tool.leatherworkers-tools"] = new("leatherworking", "Leatherworking"),
+            ["tool.painters-supplies"] = new("painting", "Painting"),
+            ["tool.potters-tools"] = new("pottery", "Pottery"),
+            ["tool.masons-tools"] = new("stonemasonry", "Stonemasonry"),
+            ["tool.weavers-tools"] = new("weaving", "Weaving"),
+            ["tool.brewers-supplies"] = new("brewing", "Brewing"),
+            ["tool.cartographers-tools"] = new("cartography", "Cartography"),
+            ["tool.cooks-utensils"] = new("cooking", "Cooking"),
+            ["tool.glassblowers-tools"] = new("glassblowing", "Glassblowing"),
+            ["tool.herbalism-kit"] = new("herbalism", "Herbalism"),
+            ["tool.navigators-tools"] = new("navigation", "Navigation"),
+            ["tool.poisoners-kit"] = new("poisoning", "Poisoning"),
+            ["tool.smiths-tools"] = new("smithing", "Smithing"),
+            ["tool.tinkers-tools"] = new("tinkering", "Tinkering"),
+            ["tool.woodcarvers-tools"] = new("woodcarving", "Woodcarving"),
+            ["tool.disguise-kit"] = new("disguise-kit", "Disguise Kit"),
+            ["tool.thieves-tools"] = new("thieves-tools", "Thieves' Tools"),
             ["skill.forgery"] = new("forgery", "Forgery"),
             ["tool.forgery-kit"] = new("forgery", "Forgery")
         };
@@ -382,14 +429,16 @@ public static class KnownUniversalCompetencies
     private static UniversalCompetencyDefinition Family(
         string key,
         string name,
-        UniversalCompetencyMechanics mechanics) =>
+        UniversalCompetencyMechanics mechanics,
+        string presentationCategory = "skill") =>
         new(
             key,
             name,
             FamilyName: name,
             IsFamily: true,
             SourceAliases: [name],
-            Mechanics: mechanics);
+            Mechanics: mechanics,
+            PresentationCategory: presentationCategory);
 
     private static UniversalCompetencyMechanics RankedFamily(
         string governingAbilityKey,
@@ -405,10 +454,15 @@ public static class KnownUniversalCompetencies
             EvaluationKind: CharacterMechanicEvaluationKinds.Sum,
             CanEvaluate: true);
 
-    private static UniversalCompetencyDefinition Craft(
+    private static UniversalCompetencyDefinition CraftCompetency(
         string name,
         params string[] additionalAliases) =>
-        Member("Craft", name, additionalAliases);
+        Member("Craft", name, additionalAliases, presentationCategory: "competency");
+
+    private static UniversalCompetencyDefinition CraftSupporting(
+        string name,
+        params string[] additionalAliases) =>
+        Member("Craft", name, additionalAliases, presentationCategory: "supporting");
 
     private static UniversalCompetencyDefinition Perform(
         string name,
@@ -423,7 +477,8 @@ public static class KnownUniversalCompetencies
     private static UniversalCompetencyDefinition Member(
         string family,
         string name,
-        IReadOnlyList<string> additionalAliases)
+        IReadOnlyList<string> additionalAliases,
+        string presentationCategory = "skill")
     {
         var aliases = new[]
             {
@@ -438,6 +493,7 @@ public static class KnownUniversalCompetencies
             name,
             family,
             IsFamily: false,
-            aliases);
+            aliases,
+            PresentationCategory: presentationCategory);
     }
 }

@@ -11,9 +11,16 @@ This document classifies the reviewed 3e/3.5e competency corpus for the cross-ed
 5. **Scoped or related competency relationship** — concepts overlap but are not the same learned competency for unrestricted proficiency.
 6. **Transformed rules subsystem** — the historical function belongs to another normalized subsystem rather than a modern skill row.
 7. **Preserved standalone historical competency** — no lossless reviewed convergence is currently established.
-8. **Unresolved / Rules Lawyer review** — plausible transformations exist, but current evidence/modeling does not justify selecting one.
+8. **Standalone universal competency** — a source-defined trainable capability establishes a universal identity even when no cross-edition counterpart exists.
+9. **Unresolved / Rules Lawyer review** — plausible transformations exist, but current evidence/modeling does not justify selecting one.
 
 `Craft`, `Perform`, and `Profession` additionally use **family taxonomy**: the parent organizes independently addressable specialties and is not a shared rank pool. `Knowledge` deliberately does not use visible family taxonomy.
+
+## Universal identity invariant
+
+A universal competency does not require a 3e/3.5e counterpart. A later tool proficiency, kit, musical instrument, gaming set, third-party proficiency, or manual/custom capability can establish an independently trainable universal competency on its own. If a later source supplies a reviewed equivalent, Rules Core can add that facet to the existing universal identity without rewriting source history.
+
+Rules Core never fabricates a historical `Craft (...)`, `Profession (...)`, or other source representation to make a later proficiency fit the model. Source-native history remains truthful. Similar names are evidence to review, not sufficient proof of shared identity.
 
 ## Reviewed corpus
 
@@ -81,16 +88,44 @@ Reviewed baseline children are:
 
 `Alchemy`, `Armorsmithing`, `Basketweaving`, `Blacksmithing`, `Bookbinding`, `Bowmaking`, `Calligraphy`, `Carpentry`, `Cobbling`, `Gemcutting`, `Leatherworking`, `Locksmithing`, `Painting`, `Pottery`, `Sculpting`, `Shipmaking`, `Stonemasonry`, `Trapmaking`, `Weaponsmithing`, and `Weaving`.
 
-Alchemy is one universal learned competency:
+The following Craft/tool mappings are reviewed shared identities. The Craft facet retains ranked-skill mechanics; the tool facet retains tool-proficiency mechanics:
 
-```text
-competency.alchemy
-  3e implementation/source alias: Alchemy
-  3.5e implementation/source alias: Craft (alchemy)
-  later implementation/source alias: Alchemist's Supplies
-```
+| Universal competency | Historical facet | Later tool facet |
+| --- | --- | --- |
+| Alchemy | Alchemy / Craft (alchemy) | Alchemist's Supplies |
+| Calligraphy | Craft (calligraphy) | Calligrapher's Supplies |
+| Carpentry | Craft (carpentry) | Carpenter's Tools |
+| Cobbling | Craft (cobbling) | Cobbler's Tools |
+| Gemcutting | Craft (gemcutting) | Jeweler's Tools |
+| Leatherworking | Craft (leatherworking) | Leatherworker's Tools |
+| Painting | Craft (painting) | Painter's Supplies |
+| Pottery | Craft (pottery) | Potter's Tools |
+| Stonemasonry | Craft (stonemasonry) | Mason's Tools |
+| Weaving | Craft (weaving) | Weaver's Tools |
 
-Only Alchemy has this reviewed Craft/tool collapse. No other Craft specialty is mapped to a modern tool solely from name similarity.
+These mappings are explicit reviewed policy. Rules Core does not generalize them into a rule that similarly named Craft specialties and tools are always identical.
+
+### Later tool and kit audit
+
+| Later source representation | Universal competency | Classification / relationship |
+| --- | --- | --- |
+| Brewer's Supplies | Brewing | Standalone; related to Profession (brewer), not shared training |
+| Cartographer's Tools | Cartography | Standalone |
+| Cook's Utensils | Cooking | Standalone; related to Profession (cook), not shared training |
+| Glassblower's Tools | Glassblowing | Standalone; no fabricated Craft (glassblowing) history |
+| Herbalism Kit | Herbalism | Standalone; related to Profession (herbalist) and Apothecary |
+| Navigator's Tools | Navigation | Standalone; related to Guide and Sailor |
+| Poisoner's Kit | Poisoning | Standalone |
+| Smith's Tools | Smithing | Standalone; related to Blacksmithing, Armorsmithing, and Weaponsmithing |
+| Tinker's Tools | Tinkering | Standalone; related to Locksmithing and Trapmaking |
+| Woodcarver's Tools | Woodcarving | Standalone; related to Bowmaking and Carpentry |
+| Disguise Kit | Disguise Kit | Standalone; related to the historical Disguise skill |
+| Thieves' Tools | Thieves' Tools | Standalone; Open Lock and Disable Device retain scoped-use relationships |
+| Forgery Kit | Forgery | Shared identity with the historical Forgery skill |
+
+Musical instrument proficiencies and gaming-set proficiencies remain source-native standalone universal competencies unless a specific source-supported relationship is reviewed. Broad Perform categories are not automatically equated to particular instruments. No reviewed gaming-set historical equivalent is currently established.
+
+The current Loot Tavern Harvesting & Crafting consumer rules select a tool through the generic Rules Core tool-competency contract. The reviewed current source model does not require a new named Loot Tavern-only tool competency here; any genuinely distinct source-defined proficiency can enter the universal catalog through the same source-driven path later.
 
 ### Perform
 
@@ -122,6 +157,12 @@ Knowledge (the planes) -> The planes
 ```
 
 The source-native Knowledge name and older-edition profile/provenance remain available, but the Character-facing competency identity is the specialty itself.
+
+## Character presentation classification
+
+Rules Core supplies an open-ended `presentationCategory` on universal competencies. Ordinary and historical skill-style competencies use `skill`. Character-facing tool-backed identities, standalone tools, and other nonordinary learned capabilities use `competency`. Source/rules-layer competency identities that exist only to support reconciliation use `supporting`. Character consumers must use this semantic metadata rather than parsing names such as `Craft (...)`, `Kit`, `Supplies`, or `Tools`.
+
+The Character Sheet therefore presents ordinary skills and composite skill relationships in **Skills**. Character-facing `competency` entries appear under **Proficiencies & Training** in a Competencies subsection. The generic Craft family and Craft-only 3.x specialties are supporting inputs rather than visible competency rows; reviewed shared Craft/tool identities such as Alchemy appear once under their normalized universal identity. `Perform` and `Profession` remain skill-presented unless a reviewed later capability changes the universal identity's presentation classification.
 
 ## Shared identity versus numeric mechanics
 

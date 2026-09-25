@@ -141,8 +141,19 @@ Some historical skills and later tool proficiencies represent different mechanic
 
 The reviewed shared identities are:
 
-- 3e `Alchemy`, 3.5e `Craft (alchemy)`, and later `Alchemist's Supplies` -> shared learned competency `Alchemy`;
-- `Forgery` and later `Forgery Kit` -> shared learned competency `Forgery`.
+- 3e `Alchemy`, 3.5e `Craft (alchemy)`, and later `Alchemist's Supplies` -> `Alchemy`;
+- `Craft (calligraphy)` and `Calligrapher's Supplies` -> `Calligraphy`;
+- `Craft (carpentry)` and `Carpenter's Tools` -> `Carpentry`;
+- `Craft (cobbling)` and `Cobbler's Tools` -> `Cobbling`;
+- `Craft (gemcutting)` and `Jeweler's Tools` -> `Gemcutting`;
+- `Craft (leatherworking)` and `Leatherworker's Tools` -> `Leatherworking`;
+- `Craft (painting)` and `Painter's Supplies` -> `Painting`;
+- `Craft (pottery)` and `Potter's Tools` -> `Pottery`;
+- `Craft (stonemasonry)` and `Mason's Tools` -> `Stonemasonry`;
+- `Craft (weaving)` and `Weaver's Tools` -> `Weaving`;
+- `Forgery` and later `Forgery Kit` -> `Forgery`.
+
+Other later tool proficiencies can establish standalone universal competencies without a 3.x facet. Current reviewed standalone identities include Brewing, Cartography, Cooking, Glassblowing, Herbalism, Navigation, Poisoning, Smithing, Tinkering, Woodcarving, Disguise Kit, and Thieves' Tools. Source-native musical-instrument and gaming-set proficiencies likewise remain valid standalone competencies unless a specific reviewed relationship is added.
 
 The shared state is conceptual training/proficiency identity. Facet-specific mechanics do not transfer. A 3.x Alchemy/Craft profile can carry ranks, class-skill state, governing Ability, trained-only behavior, and Armor Check Penalty semantics. The later tool facet uses its own proficiency mechanics. Ranks never become a tool bonus, proficiency bonus never becomes ranks, and class-skill state is never discarded.
 
@@ -162,7 +173,7 @@ These relationships preserve the historical ranked skill and do not grant unrest
 
 The clean many-to-one consolidations Hide/Move Silently -> Stealth, Listen/Spot -> Perception, Balance/Tumble -> Acrobatics, and Climb/Jump/Swim -> Athletics remain distinct source-native competencies. Rules Layer represents those consolidations separately as directional `composite-skill` relationships; they are not competency families or shared facets.
 
-`Perform` specialties remain independent specialized competencies and are not collapsed into modern `Performance`. Instrument-specific tool facets may be established only when source evidence identifies a defensible instrument correspondence. `Profession (...)` specialties likewise remain independent. Non-alchemy Craft specialties are not mapped to modern tools from name similarity alone.
+`Perform` specialties remain independent specialized competencies and are not collapsed into modern `Performance`. Instrument-specific tool facets may be established only when source evidence identifies a defensible instrument correspondence. `Profession (...)` specialties likewise remain independent. Craft/tool shared identity is an explicit reviewed mapping, never a name-similarity rule; Smith's Tools, Woodcarver's Tools, and Tinker's Tools remain independent because each relates to multiple historical Craft specialties.
 
 The complete reviewed classification is maintained in `docs/competency-reconciliation-audit.md`.
 
