@@ -516,7 +516,7 @@ public sealed class ResolvedRulesCatalogIntegrationTests
     }
 
     [Fact]
-    public async Task LibraryVersionReadsDoNotExposeUnpublishedConceptBindings()
+    public async Task RulesLawyerVersionReadsCanInspectUnpublishedConceptBindings()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
         if (string.IsNullOrWhiteSpace(connectionString))
@@ -582,7 +582,11 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                        "lawyer-ticket"))
             using (var versionsResponse = await client.SendAsync(versionsRequest))
             {
-                Assert.Equal(HttpStatusCode.NotFound, versionsResponse.StatusCode);
+                Assert.Equal(HttpStatusCode.OK, versionsResponse.StatusCode);
+                var versions = (await versionsResponse.Content
+                    .ReadFromJsonAsync<RuleConceptVersionsView>())!;
+                Assert.Equal(conceptKey, versions.ConceptKey);
+                Assert.Single(versions.Versions);
             }
 
             using var comparisonRequest = HostedJsonRequest(
@@ -591,7 +595,7 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 "lawyer-ticket",
                 new RuleSourceComparisonRequest(conceptId, revisionId, revisionId));
             using var comparisonResponse = await client.SendAsync(comparisonRequest);
-            Assert.Equal(HttpStatusCode.NotFound, comparisonResponse.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, comparisonResponse.StatusCode);
         }
         finally
         {
@@ -609,7 +613,14 @@ public sealed class ResolvedRulesCatalogIntegrationTests
         }
 
         var authenticationClient = new FakeToolHostAuthenticationClient(
-            new Dictionary<string, ToolHostAuthenticationContext>());
+            new Dictionary<string, ToolHostAuthenticationContext>
+            {
+                ["lawyer-ticket"] = Context(
+                    "rules-lawyer",
+                    campaignId: null,
+                    campaignRole: null,
+                    globalRoles: ["Rules Lawyer"])
+            });
         await using var factory = CreateFactory(authenticationClient);
         using var client = factory.CreateClient(new WebApplicationFactoryClientOptions
         {

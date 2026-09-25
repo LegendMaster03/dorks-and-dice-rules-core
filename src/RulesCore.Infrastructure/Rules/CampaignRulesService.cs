@@ -374,12 +374,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             cancellationToken);
         if (sourceRevision is null)
         {
-            return await ResolveFallbackAsync(
-                campaignId,
-                key,
-                normalizedUserId,
-                latestRevision,
-                cancellationToken);
+            return null;
         }
 
         var sourceEntity = sourceRevision.SourceEntity;
@@ -396,12 +391,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
                 dbContext, globalDecision.Id, normalizedUserId, cancellationToken);
             if (!contributionResolution.Accessible)
             {
-                return await ResolveFallbackAsync(
-                    campaignId,
-                    key,
-                    normalizedUserId,
-                    latestRevision,
-                    cancellationToken);
+                return null;
             }
             globalContributions = contributionResolution.Contributions;
         }

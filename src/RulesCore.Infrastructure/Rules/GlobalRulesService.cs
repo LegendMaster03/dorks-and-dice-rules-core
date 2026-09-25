@@ -343,7 +343,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             cancellationToken);
         if (sourceRevision is null)
         {
-            return await ResolveFallbackAsync(key, normalizedUserId, latestRevision, cancellationToken);
+            return null;
         }
 
         var sourceEntity = sourceRevision.SourceEntity;
@@ -354,7 +354,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
             dbContext, decision.Id, normalizedUserId, cancellationToken);
         if (!contributionResolution.Accessible)
         {
-            return await ResolveFallbackAsync(key, normalizedUserId, latestRevision, cancellationToken);
+            return null;
         }
 
         using var sourceDocument = JsonDocument.Parse(sourceRevision.GetMechanicalContentJson());
