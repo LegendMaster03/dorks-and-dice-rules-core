@@ -122,7 +122,8 @@ public sealed class UniversalCharacterConceptTests
             ["Forgery", "Forgery Kit"],
             KnownUniversalCompetencies.SourceAliases("forgery"));
         Assert.Equal(
-            ["Glassblower's Tools"],
+            new[] { "Glassblower's Tools", "Glassblowing" }
+                .OrderBy(value => value, StringComparer.OrdinalIgnoreCase),
             KnownUniversalCompetencies.SourceAliases("glassblowing"));
         Assert.Equal(
             "supporting",
