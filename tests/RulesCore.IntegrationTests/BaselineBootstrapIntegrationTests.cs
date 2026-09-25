@@ -401,6 +401,7 @@ public sealed class BaselineBootstrapIntegrationTests
                 "competency.tinkering",
                 "competency.woodcarving",
                 "competency.disguise-kit",
+                "competency.forgery",
                 "competency.thieves-tools"
             };
             foreach (var semanticKey in expectedStandaloneCompetencies)
