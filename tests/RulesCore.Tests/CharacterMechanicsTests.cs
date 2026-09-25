@@ -374,7 +374,7 @@ public sealed class CharacterMechanicsTests
     }
 
     [Fact]
-    public void ManufacturingDoesNotTurnMissingToolProficiencyIntoMissingProficiencyData()
+    public void ManufacturingDoesNotTurnUnqualifiedStateIntoMissingCompetencyData()
     {
         var definition = Required("check.crafting.manufacturing");
         var result = CharacterMechanicEvaluator.Evaluate(
@@ -382,16 +382,17 @@ public sealed class CharacterMechanicsTests
             new Dictionary<string, int>(StringComparer.Ordinal)
             {
                 ["d20Roll"] = 11,
-                ["abilityModifier"] = 2
+                ["abilityModifier"] = 2,
+                ["competencyContribution"] = 0
             },
             new Dictionary<string, bool>(StringComparer.Ordinal)
             {
-                ["hasToolProficiency"] = false,
+                ["isQualified"] = false,
                 ["hasQualifiedGuidance"] = false
             },
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
-                ["toolKey"] = "tool.example",
+                ["competencyKey"] = "competency.blacksmithing",
                 ["abilityKey"] = "dexterity"
             });
 
@@ -473,12 +474,20 @@ public sealed class CharacterMechanicsTests
             CharacterCheckAbilityResolutionKinds.RuleResolved,
             manufacturing.Check!.Ability.ResolutionKind);
         Assert.Equal(
-            new[] { CharacterCompetencyKinds.Tool },
+            new[]
+            {
+                CharacterCompetencyKinds.Skill,
+                CharacterCompetencyKinds.SpecializedSkill,
+                CharacterCompetencyKinds.Tool
+            },
             manufacturing.Check.Competency.AllowedCompetencyKinds);
         Assert.NotNull(manufacturing.Check.CompetencyComposition);
         Assert.Equal(
-            "toolProficiencyContribution",
-            manufacturing.Check.CompetencyComposition!.ContributionInputKey);
+            "competencyKey",
+            manufacturing.Check.CompetencyComposition!.ConceptKeyInputKey);
+        Assert.Equal(
+            "competencyContribution",
+            manufacturing.Check.CompetencyComposition.ContributionInputKey);
 
         var enchanting = Required("check.crafting.enchanting");
         Assert.NotNull(enchanting.Check);
@@ -495,7 +504,7 @@ public sealed class CharacterMechanicsTests
     }
 
     [Fact]
-    public void ManufacturingOnlyRequiresToolProficiencyContributionWhenProficient()
+    public void ManufacturingUsesUniversalCompetencyQualification()
     {
         var definition = Required("check.crafting.manufacturing");
 
@@ -504,16 +513,17 @@ public sealed class CharacterMechanicsTests
             new Dictionary<string, int>(StringComparer.Ordinal)
             {
                 ["d20Roll"] = 8,
-                ["abilityModifier"] = 3
+                ["abilityModifier"] = 3,
+                ["competencyContribution"] = 0
             },
             new Dictionary<string, bool>(StringComparer.Ordinal)
             {
-                ["hasToolProficiency"] = false,
+                ["isQualified"] = false,
                 ["hasQualifiedGuidance"] = false
             },
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
-                ["toolKey"] = "tool.example",
+                ["competencyKey"] = "competency.blacksmithing",
                 ["abilityKey"] = "intelligence"
             });
         Assert.Equal(11, unproficient.Value);
@@ -525,16 +535,16 @@ public sealed class CharacterMechanicsTests
             {
                 ["d20Roll"] = 8,
                 ["abilityModifier"] = 3,
-                ["toolProficiencyContribution"] = 2
+                ["competencyContribution"] = 2
             },
             new Dictionary<string, bool>(StringComparer.Ordinal)
             {
-                ["hasToolProficiency"] = true,
+                ["isQualified"] = true,
                 ["hasQualifiedGuidance"] = false
             },
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
-                ["toolKey"] = "tool.example",
+                ["competencyKey"] = "competency.blacksmithing",
                 ["abilityKey"] = "intelligence"
             });
         Assert.Equal(13, proficient.Value);
@@ -542,7 +552,7 @@ public sealed class CharacterMechanicsTests
     }
 
     [Fact]
-    public void QualifiedGuidanceRemovesManufacturingDisadvantageWithoutGrantingToolProficiency()
+    public void QualifiedGuidanceRemovesManufacturingDisadvantageWithoutChangingQualification()
     {
         var definition = Required("check.crafting.manufacturing");
         var result = CharacterMechanicEvaluator.Evaluate(
@@ -550,25 +560,26 @@ public sealed class CharacterMechanicsTests
             new Dictionary<string, int>(StringComparer.Ordinal)
             {
                 ["d20Roll"] = 9,
-                ["abilityModifier"] = 3
+                ["abilityModifier"] = 3,
+                ["competencyContribution"] = 0
             },
             new Dictionary<string, bool>(StringComparer.Ordinal)
             {
-                ["hasToolProficiency"] = false,
+                ["isQualified"] = false,
                 ["hasQualifiedGuidance"] = true
             },
             new Dictionary<string, string>(StringComparer.Ordinal)
             {
-                ["toolKey"] = "tool.example",
+                ["competencyKey"] = "competency.blacksmithing",
                 ["abilityKey"] = "intelligence"
             });
 
         Assert.Equal(12, result.Value);
         Assert.Empty(result.AppliedRollRules);
-        Assert.DoesNotContain(
+        Assert.Contains(
             definition.Inputs.Where(value => value.ParticipatesInValue),
-            value => value.Key == "toolProficiencyContribution"
-                && value.IncludeWhenBooleanValue != true);
+            value => value.Key == "competencyContribution"
+                && value.IncludeWhenBooleanInputKey is null);
     }
 
     [Theory]

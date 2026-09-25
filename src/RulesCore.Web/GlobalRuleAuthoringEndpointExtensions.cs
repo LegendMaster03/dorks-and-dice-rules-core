@@ -19,6 +19,7 @@ public static class GlobalRuleAuthoringEndpointExtensions
         app.MapResolvedRulesCatalogEndpoints();
         app.MapCharacterMechanicsEndpoints();
         app.MapHarvestingRulesEndpoints();
+        app.MapCraftingRulesEndpoints();
         app.MapRuleWorkspaceEndpoints();
         app.MapMechanicalRelationshipEndpoints();
         app.MapSourceRevisionReviewEndpoints();

@@ -16,8 +16,8 @@ public sealed class HarvestingRulesService(
                 .Select(type => new HarvestingCreatureTypeView(
                     type.Key,
                     type.DisplayName,
-                    type.SkillConceptKey,
-                    type.SkillDisplayName,
+                    type.CompetencyKey,
+                    type.CompetencyDisplayName,
                     type.BaseComponents
                         .Select(component => ToView(
                             new HarvestingResolvedComponent(
@@ -27,7 +27,8 @@ public sealed class HarvestingRulesService(
                                 component.Quantity,
                                 HarvestingComponentOrigins.Base)))
                         .ToArray()))
-                .ToArray());
+                .ToArray(),
+            Procedure());
 
     public async Task<HarvestingResolvedTableView?> ResolveGlobalAsync(
         HarvestingTableResolutionRequest request,
@@ -94,6 +95,31 @@ public sealed class HarvestingRulesService(
         return ResolveFromType(request.CreatureType!, request.ManualEdits);
     }
 
+    public async Task<HarvestingOutcomeView?> ResolveGlobalOutcomeAsync(
+        HarvestingOutcomeRequest request,
+        string? userId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        var table = await ResolveGlobalAsync(request.Table, userId, cancellationToken);
+        return table is null ? null : HarvestingOutcomeEvaluator.Evaluate(table, request);
+    }
+
+    public async Task<HarvestingOutcomeView?> ResolveCampaignOutcomeAsync(
+        Guid campaignId,
+        HarvestingOutcomeRequest request,
+        string userId,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+        var table = await ResolveCampaignAsync(
+            campaignId,
+            request.Table,
+            userId,
+            cancellationToken);
+        return table is null ? null : HarvestingOutcomeEvaluator.Evaluate(table, request);
+    }
+
     private static HarvestingResolvedTableView ResolveFromCreature(
         string conceptKey,
         string displayName,
@@ -111,13 +137,15 @@ public sealed class HarvestingRulesService(
         var creatureType = ReadCreatureType(document)
             ?? throw new InvalidOperationException(
                 $"Monster '{conceptKey}' does not expose a recognized creature type.");
+        var creatureSize = ReadCreatureSize(document);
 
         return Resolve(
             creatureType,
             creatureEdits,
             ConvertEdits(manualEdits),
             conceptKey,
-            displayName);
+            displayName,
+            creatureSize);
     }
 
     private static HarvestingResolvedTableView ResolveFromType(
@@ -128,6 +156,7 @@ public sealed class HarvestingRulesService(
             null,
             ConvertEdits(manualEdits),
             null,
+            null,
             null);
 
     private static HarvestingResolvedTableView Resolve(
@@ -135,7 +164,8 @@ public sealed class HarvestingRulesService(
         HarvestingTableEdits? creatureEdits,
         HarvestingTableEdits? manualEdits,
         string? creatureConceptKey,
-        string? creatureDisplayName)
+        string? creatureDisplayName,
+        string? creatureSize)
     {
         var type = KnownHarvestingRules.FindCreatureType(creatureTypeKey)
             ?? throw new ArgumentException(
@@ -150,11 +180,12 @@ public sealed class HarvestingRulesService(
             Source(),
             type.Key,
             type.DisplayName,
-            type.SkillConceptKey,
-            type.SkillDisplayName,
+            type.CompetencyKey,
+            type.CompetencyDisplayName,
             components.Select(ToView).ToArray(),
             creatureConceptKey,
             creatureDisplayName,
+            creatureSize,
             HasEdits(creatureEdits),
             HasEdits(manualEdits));
     }
@@ -198,6 +229,46 @@ public sealed class HarvestingRulesService(
             && explicitType.ValueKind == JsonValueKind.String
                 ? explicitType.GetString()
                 : null;
+    }
+
+    private static string? ReadCreatureSize(JsonElement document)
+    {
+        if (!TryGet(document, "size", out var size))
+        {
+            return null;
+        }
+
+        var values = new List<string>();
+        if (size.ValueKind == JsonValueKind.String)
+        {
+            if (!string.IsNullOrWhiteSpace(size.GetString()))
+            {
+                values.Add(size.GetString()!);
+            }
+        }
+        else if (size.ValueKind == JsonValueKind.Array)
+        {
+            foreach (var item in size.EnumerateArray())
+            {
+                if (item.ValueKind == JsonValueKind.String
+                    && !string.IsNullOrWhiteSpace(item.GetString()))
+                {
+                    values.Add(item.GetString()!);
+                }
+            }
+        }
+
+        var normalized = values
+            .Select(UniversalSizeCategories.Normalize)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        return normalized.Length switch
+        {
+            0 => null,
+            1 => normalized[0],
+            _ => throw new InvalidOperationException(
+                "Monster Harvesting resolution requires one effective creature size.")
+        };
     }
 
     private static HarvestingTableEdits? ReadCreatureEdits(JsonElement document)
@@ -315,6 +386,28 @@ public sealed class HarvestingRulesService(
             component.ComponentDc,
             component.Quantity,
             component.Origin);
+
+    private static HarvestingProcedureView Procedure() =>
+        new(
+            new HarvestingProcedureCheckView(
+                KnownHarvestingRules.AssessmentMechanicKey,
+                KnownHarvestingRules.AssessmentAbilityKey,
+                KnownHarvestingRules.AssessmentAbilityDisplayName,
+                CharacterMechanicRollModes.Normal),
+            new HarvestingProcedureCheckView(
+                KnownHarvestingRules.CarvingMechanicKey,
+                KnownHarvestingRules.CarvingAbilityKey,
+                KnownHarvestingRules.CarvingAbilityDisplayName,
+                CharacterMechanicRollModes.Normal),
+            KnownHarvestingRules.TotalMechanicKey,
+            CharacterMechanicRollModes.Disadvantage,
+            KnownHarvestingRules.ComponentDcAggregation,
+            KnownHarvestingRules.AwardMode,
+            new HarvestingHelperRulesView(
+                new Dictionary<string, int>(
+                    KnownHarvestingRules.HelperLimitsByCreatureSize,
+                    StringComparer.OrdinalIgnoreCase),
+                StandardHelpActionApplies: false));
 
     private static HarvestingSourceView Source() =>
         new(

@@ -5,35 +5,50 @@ namespace RulesCore.Tests;
 public sealed class HarvestingRulesTests
 {
     [Fact]
-    public void PublicCreatureTypeCatalogUsesStableRulesCoreSkillConcepts()
+    public void PublicCreatureTypeCatalogUsesUniversalCompetencyConcepts()
     {
         var expected = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
-            ["aberration"] = "skill.arcana",
-            ["beast"] = "skill.survival",
-            ["celestial"] = "skill.religion",
-            ["construct"] = "skill.investigation",
-            ["dragon"] = "skill.survival",
-            ["elemental"] = "skill.arcana",
-            ["fey"] = "skill.arcana",
-            ["fiend"] = "skill.religion",
-            ["giant"] = "skill.medicine",
-            ["humanoid"] = "skill.medicine",
-            ["monstrosity"] = "skill.survival",
-            ["ooze"] = "skill.nature",
-            ["plant"] = "skill.nature",
-            ["undead"] = "skill.medicine"
+            ["aberration"] = "competency.arcana",
+            ["beast"] = "competency.survival",
+            ["celestial"] = "competency.religion",
+            ["construct"] = "competency.investigation",
+            ["dragon"] = "competency.survival",
+            ["elemental"] = "competency.arcana",
+            ["fey"] = "competency.arcana",
+            ["fiend"] = "competency.religion",
+            ["giant"] = "competency.medicine",
+            ["humanoid"] = "competency.medicine",
+            ["monstrosity"] = "competency.survival",
+            ["ooze"] = "competency.nature",
+            ["plant"] = "competency.nature",
+            ["undead"] = "competency.medicine"
         };
 
         Assert.Equal(expected.Count, KnownHarvestingRules.CreatureTypes.Count);
-        foreach (var (creatureType, skillConceptKey) in expected)
+        foreach (var (creatureType, competencyKey) in expected)
         {
             var definition = KnownHarvestingRules.FindCreatureType(creatureType);
             Assert.NotNull(definition);
-            Assert.Equal(skillConceptKey, definition!.SkillConceptKey);
+            Assert.Equal(competencyKey, definition!.CompetencyKey);
             Assert.NotEmpty(definition.BaseComponents);
             Assert.All(definition.BaseComponents, component => Assert.True(component.ComponentDc > 0));
         }
+    }
+
+    [Fact]
+    public void ProcedureContractKeepsWorkflowSemanticsInRulesCore()
+    {
+        Assert.Equal("check.harvesting.assessment", KnownHarvestingRules.AssessmentMechanicKey);
+        Assert.Equal("intelligence", KnownHarvestingRules.AssessmentAbilityKey);
+        Assert.Equal("check.harvesting.carving", KnownHarvestingRules.CarvingMechanicKey);
+        Assert.Equal("dexterity", KnownHarvestingRules.CarvingAbilityKey);
+        Assert.Equal("check.harvesting.total", KnownHarvestingRules.TotalMechanicKey);
+        Assert.Equal("cumulative-in-order", KnownHarvestingRules.ComponentDcAggregation);
+        Assert.Equal("ordered-prefix", KnownHarvestingRules.AwardMode);
+        Assert.Equal(0, KnownHarvestingRules.HelperLimitsByCreatureSize["Tiny"]);
+        Assert.Equal(2, KnownHarvestingRules.HelperLimitsByCreatureSize["Medium"]);
+        Assert.Equal(10, KnownHarvestingRules.HelperLimitsByCreatureSize["Gargantuan"]);
     }
 
     [Fact]
