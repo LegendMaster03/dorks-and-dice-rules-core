@@ -282,6 +282,7 @@ public sealed record CharacterRulesProjectionView(
     IReadOnlyList<CharacterProjectionConflictView> Conflicts,
     IReadOnlyList<CharacterEquipmentDefinitionView> Equipment,
     IReadOnlyList<CharacterUniversalCompetencyView>? Competencies = null,
+    IReadOnlyList<CharacterMechanicRelationshipView>? CompetencyRelationships = null,
     IReadOnlyList<CharacterRuleResolutionView>? RuleResolutions = null);
 
 public interface ICharacterRulesProjectionService

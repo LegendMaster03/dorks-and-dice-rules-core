@@ -135,6 +135,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             context.Conflicts.OrderBy(value => value.ConflictKey, StringComparer.Ordinal).ToArray(),
             context.Equipment.Values.OrderBy(value => value.ItemKey, StringComparer.Ordinal).ToArray(),
             effectiveMechanicCatalog.Competencies,
+            ProjectCompetencyRelationships(effectiveMechanicCatalog),
             rules.Rules
                 .Where(value => value.Resolution is not null)
                 .Select(value => new CharacterRuleResolutionView(
@@ -146,5 +147,14 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 .OrderBy(value => value.ConceptKey, StringComparer.Ordinal)
                 .ToArray());
     }
+
+    private static IReadOnlyList<CharacterMechanicRelationshipView> ProjectCompetencyRelationships(
+        CharacterMechanicsCatalogView catalog) =>
+        catalog.Mechanics
+            .Where(value => value.Competency is not null)
+            .SelectMany(value => value.Relationships)
+            .DistinctBy(value => value.RelationshipKey, StringComparer.Ordinal)
+            .OrderBy(value => value.RelationshipKey, StringComparer.Ordinal)
+            .ToArray();
 
 }
