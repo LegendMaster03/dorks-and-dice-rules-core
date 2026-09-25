@@ -21,7 +21,7 @@ public static class CraftingOutcomeEvaluator
             ? CharacterMechanicRollModes.Disadvantage
             : CharacterMechanicRollModes.Normal;
 
-        var total = request.D20Roll is int roll
+        int? total = request.D20Roll is int roll
             ? checked(roll + competency.AbilityContribution + competency.CompetencyContribution + request.OtherModifier)
             : null;
 
@@ -39,8 +39,8 @@ public static class CraftingOutcomeEvaluator
             request.D20Roll,
             total,
             request.TargetDc,
-            total.HasValue && request.TargetDc.HasValue
-                ? total.Value >= request.TargetDc.Value
+            total is int totalValue && request.TargetDc is int targetDc
+                ? totalValue >= targetDc
                 : null);
     }
 
@@ -59,7 +59,7 @@ public static class CraftingOutcomeEvaluator
         var spellcastingAbility = ResolveSpellcastingAbility(projection, request.SpellcastingKey);
         var abilityModifier = ResolveAbilityModifier(projection, spellcastingAbility);
 
-        var total = request.D20Roll is int roll
+        int? total = request.D20Roll is int roll
             ? checked(roll + abilityModifier + competency.CompetencyContribution + request.OtherModifier)
             : null;
 
