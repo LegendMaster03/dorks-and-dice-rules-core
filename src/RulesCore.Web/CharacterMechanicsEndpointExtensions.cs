@@ -1,5 +1,6 @@
 using RulesCore.Application.Hosting;
 using RulesCore.Application.Rules;
+using RulesCore.Infrastructure.Rules;
 
 namespace RulesCore.Web;
 
