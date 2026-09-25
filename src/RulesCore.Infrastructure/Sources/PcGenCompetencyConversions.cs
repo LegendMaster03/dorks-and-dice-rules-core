@@ -29,6 +29,51 @@ internal static class PcGenCompetencyConversions
                 "Alchemist's Supplies",
                 "alchemy",
                 "Alchemy"),
+            ["Craft (calligraphy)"] = SharedToolFacet(
+                "Craft (calligraphy)",
+                "Calligrapher's Supplies",
+                "calligraphy",
+                "Calligraphy"),
+            ["Craft (carpentry)"] = SharedToolFacet(
+                "Craft (carpentry)",
+                "Carpenter's Tools",
+                "carpentry",
+                "Carpentry"),
+            ["Craft (cobbling)"] = SharedToolFacet(
+                "Craft (cobbling)",
+                "Cobbler's Tools",
+                "cobbling",
+                "Cobbling"),
+            ["Craft (gemcutting)"] = SharedToolFacet(
+                "Craft (gemcutting)",
+                "Jeweler's Tools",
+                "gemcutting",
+                "Gemcutting"),
+            ["Craft (leatherworking)"] = SharedToolFacet(
+                "Craft (leatherworking)",
+                "Leatherworker's Tools",
+                "leatherworking",
+                "Leatherworking"),
+            ["Craft (painting)"] = SharedToolFacet(
+                "Craft (painting)",
+                "Painter's Supplies",
+                "painting",
+                "Painting"),
+            ["Craft (pottery)"] = SharedToolFacet(
+                "Craft (pottery)",
+                "Potter's Tools",
+                "pottery",
+                "Pottery"),
+            ["Craft (stonemasonry)"] = SharedToolFacet(
+                "Craft (stonemasonry)",
+                "Mason's Tools",
+                "stonemasonry",
+                "Stonemasonry"),
+            ["Craft (weaving)"] = SharedToolFacet(
+                "Craft (weaving)",
+                "Weaver's Tools",
+                "weaving",
+                "Weaving"),
             ["Forgery"] = SharedToolFacet(
                 "Forgery",
                 "Forgery Kit",

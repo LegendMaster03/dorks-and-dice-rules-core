@@ -99,6 +99,8 @@ The original `conceptKey` remains present in the response. The source-shaped imp
 
 The mechanics response also includes a top-level `competencies` catalog. This is the authoritative Character-facing semantic surface. It contains one entry per learned competency, even when more than one source-shaped Rule Concept or mechanical facet implements it.
 
+A universal competency does not require a cross-edition equivalent. A tool-only, kit, instrument, gaming-set, third-party, or manual/custom capability can be a valid universal competency by itself. Rules Core does not fabricate a historical skill or Craft specialty merely to provide a second facet.
+
 For example:
 
 ```text
@@ -111,7 +113,9 @@ competency.alchemy
     competency.tool.alchemists-supplies
 ```
 
-The two implementation mechanics remain available because a 3.x ranked skill and a later tool proficiency do not share a numeric calculation. The Character consumer does not render them as separate learned competencies and does not infer their relationship. The universal entry already exposes its implementation mechanic keys, compatibility keys, reviewed aliases, profiles, facets, normalized `mechanics` semantics, relationships, and provenance.
+The two implementation mechanics remain available because a 3.x ranked skill and a later tool proficiency do not share a numeric calculation. The Character consumer does not render them as separate learned competencies and does not infer their relationship. The universal entry already exposes its implementation mechanic keys, compatibility keys, reviewed aliases, profiles, facets, normalized `mechanics` semantics, relationships, provenance, and open-ended `presentationCategory`.
+
+`presentationCategory` is Rules Core-owned semantic placement metadata. `skill` identifies ordinary skill presentation. `competency` identifies Craft/tool and other broader learned-capability presentation. Future non-`skill` values remain valid open categories. Consumers must not recover this classification by matching words such as `Craft`, `Tools`, `Kit`, or `Supplies`.
 
 The universal `mechanics.governingAbility` contract reports `fixed`, `varies-by-implementation`, or `none`, together with normalized Ability keys. Equivalent source spellings such as `wis` and `wisdom` converge before this resolution. A real conflict remains explicit instead of causing the universal Ability to disappear.
 
@@ -260,7 +264,7 @@ A family hierarchy and a composite competency can look similar in a nested UI, b
 
 ### Shared competency facets
 
-A learned competency can have more than one mechanical facet without making those facets numerically equivalent. The current reviewed examples are Alchemy and Forgery.
+A learned competency can have more than one mechanical facet without making those facets numerically equivalent. Reviewed shared identities include Alchemy, Forgery, Calligraphy, Carpentry, Cobbling, Gemcutting, Leatherworking, Painting, Pottery, Stonemasonry, and Weaving. The complete reviewed mapping and deliberately separate tool relationships are maintained in `docs/competency-reconciliation-audit.md`.
 
 For Alchemy, the catalog can expose both:
 
