@@ -36,7 +36,7 @@ A universal competency entry exposes:
 - normalized universal mechanical semantics, including deterministic governing-Ability resolution;
 - relationships;
 - source attribution/provenance;
-- open-ended `presentationCategory` metadata supplied by Rules Core for consumer placement.
+- open-ended `presentationCategory` metadata supplied by Rules Core for consumer placement, including `skill`, Character-facing `competency`, and non-row `supporting`.
 
 Consumers should render and store semantic competency identity from `competencies`. They should use the listed implementation mechanic/profile when a calculation is required. They should not rebuild semantic identity by grouping `skill.*` and `tool.*` records themselves.
 
@@ -86,6 +86,8 @@ The semantic identity does not merge numeric systems. Alchemy can simultaneously
 At the universal level, Ability aliases such as `wis`/`wisdom` and `int`/`intelligence` normalize to one key. A competency with one known governing Ability reports `fixed`; a competency whose reviewed implementation profiles genuinely disagree reports `varies-by-implementation` plus the complete normalized Ability-key set. Rules Core does not erase a conflict by returning no Ability.
 
 ## Universal competency families
+
+`Craft`, `Perform`, and `Profession` are organizational universal families. The Craft family itself and Craft-only historical specialties are `supporting` presentation identities: they continue to supply rules, ranks, and reconciliation facets without becoming a visible Character-facing competency list. Reviewed shared Craft/tool identities remain universal competencies and can be presented once under their normalized identity.
 
 `Craft`, `Perform`, and `Profession` are organizational universal families. A family is not a shared rank pool. Every child is independently addressable and can carry its own source/rule implementation.
 
