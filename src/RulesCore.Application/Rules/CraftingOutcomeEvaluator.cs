@@ -25,6 +25,8 @@ public static class CraftingOutcomeEvaluator
             ? checked(roll + competency.AbilityContribution + competency.CompetencyContribution + request.OtherModifier)
             : null;
 
+        var outcome = ResolveManufacturingOutcome(total, request.TargetDc);
+
         return new CraftingCheckResolutionView(
             "manufacturing",
             "Manufacturing Check",
@@ -39,9 +41,12 @@ public static class CraftingOutcomeEvaluator
             request.D20Roll,
             total,
             request.TargetDc,
-            total is int totalValue && request.TargetDc is int targetDc
-                ? totalValue >= targetDc
-                : null);
+            outcome.MeetsTarget,
+            outcome.Kind,
+            outcome.Margin,
+            FlawCount: null,
+            outcome.InputsConsumed,
+            outcome.ProducesFunctionalOutput);
     }
 
     public static CraftingCheckResolutionView ResolveEnchanting(
@@ -63,6 +68,8 @@ public static class CraftingOutcomeEvaluator
             ? checked(roll + abilityModifier + competency.CompetencyContribution + request.OtherModifier)
             : null;
 
+        var outcome = ResolveEnchantingOutcome(total, request.TargetDc);
+
         return new CraftingCheckResolutionView(
             "enchanting",
             "Enchanting Check",
@@ -77,9 +84,78 @@ public static class CraftingOutcomeEvaluator
             request.D20Roll,
             total,
             request.TargetDc,
-            total.HasValue && request.TargetDc.HasValue
-                ? total.Value >= request.TargetDc.Value
-                : null);
+            outcome.MeetsTarget,
+            outcome.Kind,
+            outcome.Margin,
+            outcome.FlawCount,
+            outcome.InputsConsumed,
+            outcome.ProducesFunctionalOutput);
+    }
+
+    private static CraftingOutcome ResolveManufacturingOutcome(
+        int? total,
+        int? targetDc)
+    {
+        if (total is not int totalValue || targetDc is not int dc)
+        {
+            return CraftingOutcome.Pending;
+        }
+
+        var margin = checked(totalValue - dc);
+        return margin >= 0
+            ? new CraftingOutcome(
+                CraftingOutcomeKinds.Completed,
+                true,
+                margin,
+                null,
+                InputsConsumed: true,
+                ProducesFunctionalOutput: true)
+            : new CraftingOutcome(
+                CraftingOutcomeKinds.Failed,
+                false,
+                margin,
+                null,
+                InputsConsumed: true,
+                ProducesFunctionalOutput: false);
+    }
+
+    private static CraftingOutcome ResolveEnchantingOutcome(
+        int? total,
+        int? targetDc)
+    {
+        if (total is not int totalValue || targetDc is not int dc)
+        {
+            return CraftingOutcome.Pending;
+        }
+
+        var margin = checked(totalValue - dc);
+        if (margin <= -13)
+        {
+            return new CraftingOutcome(
+                CraftingOutcomeKinds.Destroyed,
+                false,
+                margin,
+                FlawCount: null,
+                InputsConsumed: true,
+                ProducesFunctionalOutput: false);
+        }
+
+        var flaws = margin switch
+        {
+            >= 0 => 0,
+            >= -4 => 1,
+            >= -8 => 2,
+            _ => 3
+        };
+        return new CraftingOutcome(
+            flaws == 0
+                ? CraftingOutcomeKinds.Completed
+                : CraftingOutcomeKinds.CompletedWithFlaws,
+            margin >= 0,
+            margin,
+            flaws,
+            InputsConsumed: true,
+            ProducesFunctionalOutput: true);
     }
 
     private static CraftingCompetencyInput ResolveCreatureTypeCompetency(string? creatureType)
@@ -218,6 +294,24 @@ public static class CraftingOutcomeEvaluator
         return normalized.StartsWith("competency.", StringComparison.OrdinalIgnoreCase)
             ? normalized
             : $"competency.{normalized}";
+    }
+
+    private sealed record CraftingOutcome(
+        string Kind,
+        bool? MeetsTarget,
+        int? Margin,
+        int? FlawCount,
+        bool InputsConsumed,
+        bool ProducesFunctionalOutput)
+    {
+        public static CraftingOutcome Pending { get; } =
+            new(
+                CraftingOutcomeKinds.Pending,
+                MeetsTarget: null,
+                Margin: null,
+                FlawCount: null,
+                InputsConsumed: false,
+                ProducesFunctionalOutput: false);
     }
 
     private sealed record ResolvedCompetency(
