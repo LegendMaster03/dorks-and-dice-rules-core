@@ -254,6 +254,13 @@ public sealed record CharacterProjectionConflictView(
     IReadOnlyList<string> RelatedMechanicKeys,
     IReadOnlyList<string> RelatedConceptKeys);
 
+public sealed record CharacterRuleResolutionView(
+    string ConceptKey,
+    string State,
+    bool RequiresAdjudication,
+    Guid SourceEntityRevisionId,
+    int SourceRevisionNumber);
+
 public sealed record CharacterRulesProjectionView(
     string Scope,
     Guid? CampaignId,
@@ -273,7 +280,9 @@ public sealed record CharacterRulesProjectionView(
     IReadOnlyList<CharacterChoiceView> Choices,
     IReadOnlyList<CharacterPrerequisiteView> Prerequisites,
     IReadOnlyList<CharacterProjectionConflictView> Conflicts,
-    IReadOnlyList<CharacterEquipmentDefinitionView> Equipment);
+    IReadOnlyList<CharacterEquipmentDefinitionView> Equipment,
+    IReadOnlyList<CharacterUniversalCompetencyView>? Competencies = null,
+    IReadOnlyList<CharacterRuleResolutionView>? RuleResolutions = null);
 
 public interface ICharacterRulesProjectionService
 {

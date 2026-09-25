@@ -502,7 +502,16 @@ internal static class UniversalCompetencyProjection
             .OrderBy(value => value, StringComparer.Ordinal)
             .ToArray();
 
+        var competencyKind = defaults?.CompetencyKind
+            ?? profiles
+                .Select(value => value.CompetencyKind)
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .SingleOrDefault()
+            ?? CharacterCompetencyKinds.Skill;
+
         return new CharacterUniversalCompetencyMechanicsView(
+            competencyKind,
             governingAbility,
             SupportsRanks:
                 defaults?.SupportsRanks == true

@@ -33,7 +33,12 @@ public sealed class ResolvedRulesCatalogIntegrationTests
             ["ungranted-ticket"] = Context("ungranted-reader", campaignId: null, campaignRole: null),
             ["player-granted-ticket"] = Context("player-granted", campaignId, "Player"),
             ["player-ungranted-ticket"] = Context("player-ungranted", campaignId, "Player"),
-            ["outsider-ticket"] = Context("outsider", campaignId: null, campaignRole: null)
+            ["outsider-ticket"] = Context("outsider", campaignId: null, campaignRole: null),
+            ["lawyer-ticket"] = Context(
+                "rules-lawyer",
+                campaignId: null,
+                campaignRole: null,
+                globalRoles: ["Rules Lawyer"])
         });
 
         await using var factory = CreateFactory(authenticationClient);
@@ -145,8 +150,11 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 Assert.Equal("INT", ability.Value);
             }
 
-            using (var publicVersions = await client.GetAsync(
-                       $"/api/rules/{Uri.EscapeDataString(publicConceptKey)}/versions"))
+            using (var publicVersionsRequest = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/rules/{Uri.EscapeDataString(publicConceptKey)}/versions",
+                       "lawyer-ticket"))
+            using (var publicVersions = await client.SendAsync(publicVersionsRequest))
             {
                 Assert.Equal(HttpStatusCode.OK, publicVersions.StatusCode);
                 Assert.Equal("no-store", publicVersions.Headers.CacheControl?.ToString());
@@ -168,13 +176,13 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                        "ungranted-ticket"))
             using (var deniedPrivateVersionsResponse = await client.SendAsync(deniedPrivateVersionsRequest))
             {
-                Assert.Equal(HttpStatusCode.NotFound, deniedPrivateVersionsResponse.StatusCode);
+                Assert.Equal(HttpStatusCode.Forbidden, deniedPrivateVersionsResponse.StatusCode);
             }
 
             using (var grantedPrivateVersionsRequest = HostedRequest(
                        HttpMethod.Get,
                        $"/api/rules/{Uri.EscapeDataString(privateConceptKey)}/versions",
-                       "granted-ticket"))
+                       "lawyer-ticket"))
             using (var grantedPrivateVersionsResponse = await client.SendAsync(grantedPrivateVersionsRequest))
             {
                 Assert.Equal(HttpStatusCode.OK, grantedPrivateVersionsResponse.StatusCode);
@@ -377,7 +385,14 @@ public sealed class ResolvedRulesCatalogIntegrationTests
         }
 
         var authenticationClient = new FakeToolHostAuthenticationClient(
-            new Dictionary<string, ToolHostAuthenticationContext>());
+            new Dictionary<string, ToolHostAuthenticationContext>
+            {
+                ["lawyer-ticket"] = Context(
+                    "rules-lawyer",
+                    campaignId: null,
+                    campaignRole: null,
+                    globalRoles: ["Rules Lawyer"])
+            });
         await using var factory = CreateFactory(authenticationClient);
         using var client = factory.CreateClient(new WebApplicationFactoryClientOptions
         {
@@ -501,7 +516,7 @@ public sealed class ResolvedRulesCatalogIntegrationTests
     }
 
     [Fact]
-    public async Task LibraryVersionReadsDoNotExposeUnpublishedConceptBindings()
+    public async Task RulesLawyerVersionReadsCanInspectUnpublishedConceptBindings()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
         if (string.IsNullOrWhiteSpace(connectionString))
@@ -510,7 +525,14 @@ public sealed class ResolvedRulesCatalogIntegrationTests
         }
 
         var authenticationClient = new FakeToolHostAuthenticationClient(
-            new Dictionary<string, ToolHostAuthenticationContext>());
+            new Dictionary<string, ToolHostAuthenticationContext>
+            {
+                ["lawyer-ticket"] = Context(
+                    "rules-lawyer",
+                    campaignId: null,
+                    campaignRole: null,
+                    globalRoles: ["Rules Lawyer"])
+            });
         await using var factory = CreateFactory(authenticationClient);
         using var client = factory.CreateClient(new WebApplicationFactoryClientOptions
         {
@@ -554,16 +576,26 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                     "rules-lawyer");
             }
 
-            using (var versionsResponse = await client.GetAsync(
-                       $"/api/rules/{Uri.EscapeDataString(conceptKey)}/versions"))
+            using (var versionsRequest = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/rules/{Uri.EscapeDataString(conceptKey)}/versions",
+                       "lawyer-ticket"))
+            using (var versionsResponse = await client.SendAsync(versionsRequest))
             {
-                Assert.Equal(HttpStatusCode.NotFound, versionsResponse.StatusCode);
+                Assert.Equal(HttpStatusCode.OK, versionsResponse.StatusCode);
+                var versions = (await versionsResponse.Content
+                    .ReadFromJsonAsync<RuleConceptVersionsView>())!;
+                Assert.Equal(conceptKey, versions.ConceptKey);
+                Assert.Single(versions.Versions);
             }
 
-            using var comparisonResponse = await client.PostAsJsonAsync(
+            using var comparisonRequest = HostedJsonRequest(
+                HttpMethod.Post,
                 "/api/rules/comparison",
+                "lawyer-ticket",
                 new RuleSourceComparisonRequest(conceptId, revisionId, revisionId));
-            Assert.Equal(HttpStatusCode.NotFound, comparisonResponse.StatusCode);
+            using var comparisonResponse = await client.SendAsync(comparisonRequest);
+            Assert.Equal(HttpStatusCode.OK, comparisonResponse.StatusCode);
         }
         finally
         {
@@ -581,7 +613,14 @@ public sealed class ResolvedRulesCatalogIntegrationTests
         }
 
         var authenticationClient = new FakeToolHostAuthenticationClient(
-            new Dictionary<string, ToolHostAuthenticationContext>());
+            new Dictionary<string, ToolHostAuthenticationContext>
+            {
+                ["lawyer-ticket"] = Context(
+                    "rules-lawyer",
+                    campaignId: null,
+                    campaignRole: null,
+                    globalRoles: ["Rules Lawyer"])
+            });
         await using var factory = CreateFactory(authenticationClient);
         using var client = factory.CreateClient(new WebApplicationFactoryClientOptions
         {
@@ -649,8 +688,11 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 await globalRules.PublishAsync("rules-lawyer");
             }
 
-            using (var versionsResponse = await client.GetAsync(
-                       $"/api/rules/{Uri.EscapeDataString(conceptKey)}/versions"))
+            using (var versionsRequest = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/rules/{Uri.EscapeDataString(conceptKey)}/versions",
+                       "lawyer-ticket"))
+            using (var versionsResponse = await client.SendAsync(versionsRequest))
             {
                 Assert.Equal(HttpStatusCode.OK, versionsResponse.StatusCode);
                 var versions = await versionsResponse.Content.ReadFromJsonAsync<RuleConceptVersionsView>();
@@ -660,14 +702,27 @@ public sealed class ResolvedRulesCatalogIntegrationTests
                 Assert.Contains(versions.Versions, value => value.SourceCode == "VER-B");
             }
 
-            var comparisonRequest = new RuleSourceComparisonRequest(
-                (await client.GetFromJsonAsync<RuleConceptVersionsView>(
-                    $"/api/rules/{Uri.EscapeDataString(conceptKey)}/versions"))!.RuleConceptId,
-                firstRevisionId,
-                secondRevisionId);
-            using var comparisonResponse = await client.PostAsJsonAsync(
+            Guid ruleConceptId;
+            using (var conceptVersionsRequest = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/rules/{Uri.EscapeDataString(conceptKey)}/versions",
+                       "lawyer-ticket"))
+            using (var conceptVersionsResponse = await client.SendAsync(conceptVersionsRequest))
+            {
+                var versions = (await conceptVersionsResponse.Content
+                    .ReadFromJsonAsync<RuleConceptVersionsView>())!;
+                ruleConceptId = versions.RuleConceptId;
+            }
+
+            using var comparisonRequest = HostedJsonRequest(
+                HttpMethod.Post,
                 "/api/rules/comparison",
-                comparisonRequest);
+                "lawyer-ticket",
+                new RuleSourceComparisonRequest(
+                    ruleConceptId,
+                    firstRevisionId,
+                    secondRevisionId));
+            using var comparisonResponse = await client.SendAsync(comparisonRequest);
             Assert.Equal(HttpStatusCode.OK, comparisonResponse.StatusCode);
             var comparison = await comparisonResponse.Content
                 .ReadFromJsonAsync<RuleSemanticComparisonView>();
@@ -705,16 +760,28 @@ public sealed class ResolvedRulesCatalogIntegrationTests
         return request;
     }
 
+    private static HttpRequestMessage HostedJsonRequest<T>(
+        HttpMethod method,
+        string path,
+        string ticket,
+        T body)
+    {
+        var request = HostedRequest(method, path, ticket);
+        request.Content = JsonContent.Create(body);
+        return request;
+    }
+
     private static ToolHostAuthenticationContext Context(
         string userId,
         Guid? campaignId,
-        string? campaignRole) =>
+        string? campaignRole,
+        IReadOnlyList<string>? globalRoles = null) =>
         new(
             ContractVersion: 1,
             ToolSlug: "rules-core",
             SiteMode: "dorks-and-dice",
             User: new ToolHostUserContext(userId, userId),
-            GlobalRoles: [],
+            GlobalRoles: globalRoles ?? [],
             Campaigns: campaignId is not null && campaignRole is not null
                 ? [new ToolHostCampaignContext(campaignId.Value, "Browser Campaign", campaignRole)]
                 : []);

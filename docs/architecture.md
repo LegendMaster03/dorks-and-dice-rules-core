@@ -127,3 +127,34 @@ A long file is not split solely by size. Cohesive translation pipelines, import 
 The frontend is intentionally downstream of backend contracts and uses the explicit render lifecycle documented in `frontend-render-lifecycle.md`. The shared UI vocabulary now includes compact page leads, section headings, toolbars, filter/action bars, fields, and list/detail workspaces.
 
 The Rules Library follows the same coordinator/module pattern as the backend: browser state/loading, index rendering, detail/version comparison, and routing are separate modules. Rule rendering exposes a small registry facade over shared rendering support and specialized entity renderers. Maintenance and source-management views use the same compact primitives without forcing every workflow into the Rules Library's list/detail interaction model.
+
+## Runtime consumer API boundary
+
+Rules Core is the authoritative runtime rule-resolution boundary. The Source Layer preserves immutable source truth and provenance. The Rules Layer owns adjudication, published global rulings, and campaign overrides. Rules Core combines those inputs into the effective rule consumed by game tools.
+
+Normal game tools consume effective results only. They do not receive competing source/profile implementations and do not select an edition, source revision, competency profile, or facet as a second rules engine. Provenance on an effective result is still valid and should identify the selected source/ruling without exposing alternatives as consumer choices.
+
+Rules Lawyer and authorized DM/admin surfaces are intentionally richer. They may inspect source revisions, competing implementations, profiles, facets, semantic differences, and adjudication state because those details are inputs to a Rules Core decision rather than runtime choices for a game tool.
+
+When no formal effective ruling exists, Rules Core selects one accessible, non-ignored source revision deterministically and returns it as a temporary effective result with `resolution.state = "unresolved-fallback"`, `isFallback = true`, and `requiresAdjudication = true`. The fallback is not persisted as a Rules Lawyer decision. A later published ruling replaces it automatically on the next request.
+
+Consumers must not persist Rules Core rulings as their own authoritative rule cache. Ordinary HTTP/runtime caching may still be used where safe, but the next Rules Core request is authoritative.
+
+### API classification
+
+Normal tool-consumer surfaces include:
+
+- `GET /api/rules` and `GET /api/rules/{conceptKey}`;
+- campaign equivalents under `/api/campaigns/{campaignId}/rules`;
+- `POST /api/rules/character-mechanics/resolve` and its campaign equivalent;
+- `GET /api/rules/mechanics` and generic mechanic evaluation routes only through their effective-only compatibility DTO/validation boundary;
+- Character support and recovery semantic operations.
+
+Rules Lawyer/admin surfaces include:
+
+- `GET /api/rules/{conceptKey}/versions`;
+- `GET /api/admin/rules/mechanics`;
+- `GET /api/campaigns/{campaignId}/admin/rules/mechanics`;
+- source comparison, authoring, adjudication, normalization, and publication workflows already protected by their existing authority checks.
+
+Internal services retain rich source/profile/provenance contracts. Hiding alternatives from normal consumers does not delete or collapse that information inside Rules Core.

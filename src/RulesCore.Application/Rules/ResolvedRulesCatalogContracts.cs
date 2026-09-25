@@ -51,7 +51,8 @@ public sealed record ResolvedRuleCatalogItemView(
     string EditionDisplayName,
     IReadOnlyList<ResolvedRuleBrowserFieldView> BrowserFields,
     IReadOnlyList<ResolvedRuleRelationshipView> Relationships,
-    [property: JsonIgnore] JsonElement? Document = null)
+    [property: JsonIgnore] JsonElement? Document = null,
+    EffectiveRuleResolutionView? Resolution = null)
 {
     public RuleLinkTargetView BrowserLink => RuleBrowserRoutes.ForConcept(EntityType, ConceptKey);
 }

@@ -77,7 +77,7 @@ Published rules are also available through access-aware catalogs. `GET /api/rule
 
 The embedded Rules Library is the normal browsing surface for Dorks & Dice rules. It presents one stable concept per list row, keeps the effective Dorks & Dice rule selected by default, and exposes accessible source versions as alternate detail tabs instead of duplicating the concept in the search results. Import and source-management controls live in the separate Sources workspace.
 
-`GET /api/rules/{conceptKey}/versions` supplies the accessible source-version tabs. `POST /api/rules/comparison` provides read-only semantic differences between two accessible versions without granting mutation authority. Rules Lawyers and campaign DMs can transition from that comparison into their existing global or campaign ruling editors.
+`GET /api/rules/{conceptKey}/versions` and `POST /api/rules/comparison` are Rules Lawyer/admin inspection surfaces for source-version tabs and semantic differences. Normal game tools consume the effective resolved rule and do not receive source alternatives from which to choose an implementation.
 
 See `docs/rules-browser.md` for the list/detail workspace, routes, version browsing, comparison behavior, campaign membership rules, source-access filtering, and specialized entity renderers.
 

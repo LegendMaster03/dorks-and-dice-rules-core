@@ -107,7 +107,7 @@ Server endpoints independently authorize the requested scope. UI selection is ne
 
 Manual adjudication uses a common semantic comparison model rather than asking the user to discover differences in two raw JSON documents.
 
-`POST /api/rules/comparison` is the read-only comparison endpoint used by the Rules Library. It compares two accessible source revisions already bound to the same Rules Layer concept and does not require adjudication authority. Anonymous callers may compare public source versions; authenticated callers may additionally compare restricted versions for which they independently hold source access.
+`POST /api/rules/comparison` is the Rules Lawyer comparison endpoint used by the Rules Library when adjudicating source differences. It compares two accessible source revisions already bound to the same Rules Layer concept and requires global Rules Lawyer authority. Normal tool consumers do not receive source alternatives to compare.
 
 `POST /api/workspace/comparison` remains the adjudication endpoint. It carries an explicit global or campaign scope and requires authority to mutate that scope before returning the same semantic comparison model.
 

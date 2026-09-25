@@ -23,7 +23,8 @@ public sealed record CharacterUniversalCompetencyView(
     IReadOnlyList<CharacterCompetencyFacetView> Facets,
     IReadOnlyList<CharacterCompetencyRelationshipView> RelatedCompetencies,
     IReadOnlyList<CharacterMechanicSourceAttributionView> SourceAttributions,
-    CharacterUniversalCompetencyMechanicsView? Mechanics = null);
+    CharacterUniversalCompetencyMechanicsView? Mechanics = null,
+    EffectiveRuleResolutionView? Resolution = null);
 
 public sealed record CharacterUniversalGoverningAbilityView(
     string ResolutionKind,
@@ -31,6 +32,7 @@ public sealed record CharacterUniversalGoverningAbilityView(
     IReadOnlyList<string> AbilityKeys);
 
 public sealed record CharacterUniversalCompetencyMechanicsView(
+    string CompetencyKind,
     CharacterUniversalGoverningAbilityView GoverningAbility,
     bool SupportsRanks,
     bool SupportsClassSkillState,
@@ -62,7 +64,8 @@ public sealed record CharacterMechanicView(
     CharacterCompetencyDefinitionView? Competency,
     IReadOnlyList<CharacterMechanicContributorGroupView> ContributorGroups,
     IReadOnlyList<CharacterMechanicSourceAttributionView> SourceAttributions,
-    CharacterMechanicProvenanceView? Provenance = null);
+    CharacterMechanicProvenanceView? Provenance = null,
+    EffectiveRuleResolutionView? Resolution = null);
 
 public sealed record CharacterMechanicApplicabilityView(
     string Kind,

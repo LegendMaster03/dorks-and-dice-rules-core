@@ -41,7 +41,6 @@ public static class RulesCoreServiceCollectionExtensions
         services.AddScoped<IGlobalRulesService, GlobalRulesService>();
         services.AddScoped<ICampaignRulesService, CampaignRulesService>();
         services.AddScoped<IHarvestingRulesService, HarvestingRulesService>();
-        services.AddScoped<ICraftingRulesService, CraftingRulesService>();
         services.AddScoped<IRulePatchPreviewService, RulePatchPreviewService>();
         services.AddScoped<IGlobalRulesAuthoringService, GlobalRulesAuthoringService>();
         services.AddScoped<ICampaignRulesAuthoringService, CampaignRulesAuthoringService>();
@@ -50,7 +49,9 @@ public static class RulesCoreServiceCollectionExtensions
 
     public static IServiceCollection AddRulesCoreCharacter(this IServiceCollection services)
     {
-        services.AddScoped<ICharacterMechanicsConsumerService, CharacterMechanicsConsumerService>();
+        services.AddScoped<CharacterMechanicsConsumerService>();
+        services.AddScoped<ICharacterMechanicsConsumerService>(provider =>
+            provider.GetRequiredService<CharacterMechanicsConsumerService>());
         services.AddScoped<ICharacterRulesProjectionService, CharacterRulesProjectionService>();
         return services;
     }
