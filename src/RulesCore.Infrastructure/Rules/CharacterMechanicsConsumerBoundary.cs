@@ -151,6 +151,7 @@ public static class CharacterMechanicsConsumerBoundary
 
         var effective = EffectiveCompetencyValues(universal.IdentityKey, competency);
         var mechanics = new CharacterUniversalCompetencyMechanicsView(
+            effective.CompetencyKind,
             new CharacterUniversalGoverningAbilityView(
                 string.IsNullOrWhiteSpace(effective.GoverningAbilityKey) ? "none" : "fixed",
                 effective.GoverningAbilityKey,

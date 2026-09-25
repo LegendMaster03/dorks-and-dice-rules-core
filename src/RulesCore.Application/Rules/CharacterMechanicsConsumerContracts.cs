@@ -32,6 +32,7 @@ public sealed record CharacterUniversalGoverningAbilityView(
     IReadOnlyList<string> AbilityKeys);
 
 public sealed record CharacterUniversalCompetencyMechanicsView(
+    string CompetencyKind,
     CharacterUniversalGoverningAbilityView GoverningAbility,
     bool SupportsRanks,
     bool SupportsClassSkillState,

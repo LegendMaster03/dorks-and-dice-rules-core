@@ -87,6 +87,11 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
                     Assert.Empty(competency.Profiles);
                     Assert.Empty(competency.Facets);
                     Assert.Empty(competency.CompatibilityMechanicKeys);
+                    if (!competency.IsFamily)
+                    {
+                        Assert.False(string.IsNullOrWhiteSpace(
+                            competency.Mechanics?.CompetencyKind));
+                    }
                 });
             Assert.All(
                 catalog.Mechanics.Where(value => value.Competency is not null),
