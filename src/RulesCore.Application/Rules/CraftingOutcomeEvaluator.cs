@@ -118,8 +118,8 @@ public static class CraftingOutcomeEvaluator
                 "manual",
                 input.Manual.DisplayName.Trim(),
                 input.Manual.IsQualified,
-                includeGoverningAbility ? input.Manual.Contribution : 0,
-                includeGoverningAbility ? 0 : input.Manual.Contribution,
+                0,
+                input.Manual.Contribution,
                 true);
         }
 
