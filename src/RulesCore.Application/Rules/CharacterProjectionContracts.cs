@@ -91,7 +91,8 @@ public sealed record CharacterResolvedMechanicView(
     IReadOnlyList<string> RequiredChoices,
     IReadOnlyList<string> RequiredRolls,
     IReadOnlyList<CharacterMechanicContributionView> Contributions,
-    CharacterMechanicProvenanceView Provenance);
+    CharacterMechanicProvenanceView Provenance,
+    CharacterContextualHelpView? Help = null);
 
 public sealed record CharacterRuleEffectView(
     string EffectKey,
@@ -136,6 +137,11 @@ public sealed record CharacterQualificationView(
     IReadOnlyList<string> GrantedByConceptKeys,
     CharacterMechanicProvenanceView Provenance);
 
+public sealed record CharacterAttackResolutionView(
+    string? TargetDefenseKey,
+    string RollMode,
+    IReadOnlyList<string> TargetStateKeys);
+
 public sealed record CharacterActionView(
     string ActionKey,
     string DisplayName,
@@ -159,7 +165,8 @@ public sealed record CharacterActionView(
     string? MaterialComponent = null,
     string? Duration = null,
     bool? Ritual = null,
-    bool? Concentration = null);
+    bool? Concentration = null,
+    CharacterAttackResolutionView? AttackResolution = null);
 
 public sealed record CharacterFeatureView(
     string FeatureKey,

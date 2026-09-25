@@ -1,5 +1,12 @@
 namespace RulesCore.Application.Rules;
 
+public sealed record CharacterContextualHelpView(
+    string TopicKey,
+    string DisplayName,
+    string ShortText,
+    string? FullText,
+    string Prominence);
+
 public sealed record CharacterMechanicsCatalogView(
     string Scope,
     Guid? CampaignId,
@@ -66,7 +73,8 @@ public sealed record CharacterMechanicView(
     IReadOnlyList<CharacterMechanicContributorGroupView> ContributorGroups,
     IReadOnlyList<CharacterMechanicSourceAttributionView> SourceAttributions,
     CharacterMechanicProvenanceView? Provenance = null,
-    EffectiveRuleResolutionView? Resolution = null);
+    EffectiveRuleResolutionView? Resolution = null,
+    CharacterContextualHelpView? Help = null);
 
 public sealed record CharacterMechanicApplicabilityView(
     string Kind,
