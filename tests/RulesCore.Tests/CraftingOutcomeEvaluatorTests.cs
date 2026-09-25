@@ -183,7 +183,7 @@ public sealed class CraftingOutcomeEvaluatorTests
                 CreatureType: "aberration",
                 D20Roll: 6,
                 OtherModifier: otherModifier,
-                TargetDc: 17));
+                TargetDc: 21));
 
         Assert.Equal(expectedOutcome, result.Outcome);
         Assert.Equal(expectedMargin, result.Margin);
