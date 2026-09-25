@@ -69,7 +69,7 @@ public sealed class PcGenSkillConversionIntegrationTests
         string identityKey,
         string identityName)
     {
-        var profile = CharacterCompetencyProfileFactory.BuildProfile(
+        var profile = BuildCompetencyProfileForTest(
             Guid.NewGuid(),
             "tool",
             toolName,
@@ -88,7 +88,7 @@ public sealed class PcGenSkillConversionIntegrationTests
     [Fact]
     public void SmithsToolsRemainIndependentAndRelatedToMultipleCraftSpecialties()
     {
-        var profile = CharacterCompetencyProfileFactory.BuildProfile(
+        var profile = BuildCompetencyProfileForTest(
             Guid.NewGuid(),
             "tool",
             "Smith's Tools",
@@ -1037,6 +1037,33 @@ public sealed class PcGenSkillConversionIntegrationTests
                 await DeletePackageAsync(db, packageKey);
             }
         }
+    }
+
+    private static RulesCore.Application.Rules.CharacterCompetencyProfileView? BuildCompetencyProfileForTest(
+        Guid sourceEntityRevisionId,
+        string entityType,
+        string? sourceEntityName,
+        string? mechanicalJson,
+        string? gameEdition)
+    {
+        var factoryType = typeof(RulesCoreDbContext).Assembly.GetType(
+            "RulesCore.Infrastructure.Rules.CharacterCompetencyProfileFactory",
+            throwOnError: true)!;
+        var method = factoryType.GetMethod(
+            "BuildProfile",
+            System.Reflection.BindingFlags.Static
+                | System.Reflection.BindingFlags.NonPublic)
+            ?? throw new InvalidOperationException("Competency profile factory method was not found.");
+        return method.Invoke(
+            null,
+            [
+                sourceEntityRevisionId,
+                entityType,
+                sourceEntityName,
+                mechanicalJson,
+                gameEdition,
+                null
+            ]) as RulesCore.Application.Rules.CharacterCompetencyProfileView;
     }
 
     private static NormalizedSourceRepresentation LegacySrdRepresentation(
