@@ -124,6 +124,7 @@ public static class KnownUniversalCompetencies
         StandaloneCompetency("Tinkering", "Tinker's Tools"),
         StandaloneCompetency("Woodcarving", "Woodcarver's Tools"),
         StandaloneCompetency("Disguise Kit"),
+        StandaloneCompetency("Forgery", "Forgery Kit"),
         StandaloneCompetency("Thieves' Tools")
     ];
 
