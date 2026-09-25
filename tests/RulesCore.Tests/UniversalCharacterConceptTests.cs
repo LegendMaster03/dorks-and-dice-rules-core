@@ -144,7 +144,7 @@ public sealed class UniversalCharacterConceptTests
     }
 
     [Fact]
-    public void ReviewedStandaloneToolIdentitiesAreFirstClassCatalogCompetencies()
+    public void ReviewedNonFamilyBaselineIdentitiesAreFirstClassCatalogCompetencies()
     {
         var expected = new[]
         {
@@ -159,6 +159,7 @@ public sealed class UniversalCharacterConceptTests
             ("tinkering", "Tinkering", "Tinker's Tools"),
             ("woodcarving", "Woodcarving", "Woodcarver's Tools"),
             ("disguise-kit", "Disguise Kit", "Disguise Kit"),
+            ("forgery", "Forgery", "Forgery Kit"),
             ("thieves-tools", "Thieves' Tools", "Thieves' Tools")
         };
 
