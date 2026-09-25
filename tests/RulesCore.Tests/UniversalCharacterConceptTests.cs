@@ -143,6 +143,41 @@ public sealed class UniversalCharacterConceptTests
     }
 
     [Fact]
+    public void ReviewedStandaloneToolIdentitiesAreFirstClassCatalogCompetencies()
+    {
+        var expected = new[]
+        {
+            ("brewing", "Brewing", "Brewer's Supplies"),
+            ("cartography", "Cartography", "Cartographer's Tools"),
+            ("cooking", "Cooking", "Cook's Utensils"),
+            ("glassblowing", "Glassblowing", "Glassblower's Tools"),
+            ("herbalism", "Herbalism", "Herbalism Kit"),
+            ("navigation", "Navigation", "Navigator's Tools"),
+            ("poisoning", "Poisoning", "Poisoner's Kit"),
+            ("smithing", "Smithing", "Smith's Tools"),
+            ("tinkering", "Tinkering", "Tinker's Tools"),
+            ("woodcarving", "Woodcarving", "Woodcarver's Tools"),
+            ("disguise-kit", "Disguise Kit", "Disguise Kit"),
+            ("thieves-tools", "Thieves' Tools", "Thieves' Tools")
+        };
+
+        Assert.Equal(expected.Length, KnownUniversalCompetencies.Standalone.Count);
+        foreach (var (identityKey, displayName, sourceAlias) in expected)
+        {
+            var definition = KnownUniversalCompetencies.FindByIdentityKey(identityKey);
+            Assert.NotNull(definition);
+            Assert.Equal(displayName, definition!.DisplayName);
+            Assert.Null(definition.FamilyName);
+            Assert.False(definition.IsFamily);
+            Assert.Equal("competency", definition.PresentationCategory);
+            Assert.Contains(sourceAlias, KnownUniversalCompetencies.SourceAliases(identityKey));
+            Assert.Contains(
+                KnownUniversalCompetencies.Catalog,
+                value => value.IdentityKey == identityKey);
+        }
+    }
+
+    [Fact]
     public void ReviewedFamilyMembersInheritAuthoritativeRulesLayerMechanics()
     {
         var families = new[]
