@@ -41,7 +41,7 @@ public static class CraftingOutcomeEvaluator
             competency.IsQualified,
             rollMode,
             competency.CompetencyContribution,
-            competency.AbilityContribution,
+            manufacturingAbility,
             request.OtherModifier,
             request.D20Roll,
             total,
