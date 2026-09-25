@@ -26,6 +26,15 @@ public sealed record EnchantingResolutionRequest(
     int OtherModifier = 0,
     int? TargetDc = null);
 
+public static class CraftingOutcomeKinds
+{
+    public const string Pending = "pending";
+    public const string Completed = "completed";
+    public const string Failed = "failed";
+    public const string CompletedWithFlaws = "completed-with-flaws";
+    public const string Destroyed = "destroyed";
+}
+
 public sealed record CraftingCheckResolutionView(
     string ProcedureKey,
     string DisplayName,
@@ -40,7 +49,12 @@ public sealed record CraftingCheckResolutionView(
     int? D20Roll,
     int? Total,
     int? TargetDc,
-    bool? MeetsTarget);
+    bool? MeetsTarget,
+    string Outcome = CraftingOutcomeKinds.Pending,
+    int? Margin = null,
+    int? FlawCount = null,
+    bool InputsConsumed = false,
+    bool ProducesFunctionalOutput = false);
 
 public interface ICraftingRulesService
 {
