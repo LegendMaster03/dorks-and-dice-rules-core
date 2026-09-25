@@ -160,9 +160,9 @@ The source-native Knowledge name and older-edition profile/provenance remain ava
 
 ## Character presentation classification
 
-Rules Core supplies an open-ended `presentationCategory` on universal competencies. Ordinary and historical skill-style competencies use `skill`. Craft-family competencies, tool-backed identities, standalone tools, and other nonordinary learned capabilities use `competency`. Character consumers must use this semantic metadata rather than parsing names such as `Craft (...)`, `Kit`, `Supplies`, or `Tools`.
+Rules Core supplies an open-ended `presentationCategory` on universal competencies. Ordinary and historical skill-style competencies use `skill`. Character-facing tool-backed identities, standalone tools, and other nonordinary learned capabilities use `competency`. Source/rules-layer competency identities that exist only to support reconciliation use `supporting`. Character consumers must use this semantic metadata rather than parsing names such as `Craft (...)`, `Kit`, `Supplies`, or `Tools`.
 
-The Character Sheet therefore presents ordinary skills and composite skill relationships in **Skills**, while Craft/tool and other broader learned capabilities appear in **Competencies**. A shared Craft/tool identity appears once. `Perform` and `Profession` remain skill-presented unless a reviewed tool facet or later policy makes a particular universal identity a broader competency.
+The Character Sheet therefore presents ordinary skills and composite skill relationships in **Skills**. Character-facing `competency` entries appear under **Proficiencies & Training** in a Competencies subsection. The generic Craft family and Craft-only 3.x specialties are supporting inputs rather than visible competency rows; reviewed shared Craft/tool identities such as Alchemy appear once under their normalized universal identity. `Perform` and `Profession` remain skill-presented unless a reviewed later capability changes the universal identity's presentation classification.
 
 ## Shared identity versus numeric mechanics
 
