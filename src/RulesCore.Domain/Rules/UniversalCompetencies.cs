@@ -46,33 +46,33 @@ public static class KnownUniversalCompetencies
             "craft",
             "Craft",
             RankedFamily("intelligence", trainedOnly: false),
-            presentationCategory: "competency"),
+            presentationCategory: "supporting"),
         Family("perform", "Perform", RankedFamily("charisma", trainedOnly: false)),
         Family("profession", "Profession", RankedFamily("wisdom", trainedOnly: true))
     ];
 
     private static readonly IReadOnlyList<UniversalCompetencyDefinition> FamilyMemberDefinitions =
     [
-        Craft("Alchemy", "Craft (alchemy)", "Alchemist's Supplies"),
-        Craft("Armorsmithing"),
-        Craft("Basketweaving"),
-        Craft("Bookbinding"),
-        Craft("Bowmaking"),
-        Craft("Blacksmithing"),
-        Craft("Calligraphy", "Calligrapher\'s Supplies"),
-        Craft("Carpentry", "Carpenter\'s Tools"),
-        Craft("Cobbling", "Cobbler\'s Tools"),
-        Craft("Gemcutting", "Jeweler\'s Tools"),
-        Craft("Leatherworking", "Leatherworker\'s Tools"),
-        Craft("Locksmithing"),
-        Craft("Painting", "Painter\'s Supplies"),
-        Craft("Pottery", "Potter\'s Tools"),
-        Craft("Sculpting"),
-        Craft("Shipmaking"),
-        Craft("Stonemasonry", "Mason\'s Tools"),
-        Craft("Trapmaking"),
-        Craft("Weaponsmithing"),
-        Craft("Weaving", "Weaver\'s Tools"),
+        CraftCompetency("Alchemy", "Craft (alchemy)", "Alchemist's Supplies"),
+        CraftSupporting("Armorsmithing"),
+        CraftSupporting("Basketweaving"),
+        CraftSupporting("Bookbinding"),
+        CraftSupporting("Bowmaking"),
+        CraftSupporting("Blacksmithing"),
+        CraftCompetency("Calligraphy", "Calligrapher\'s Supplies"),
+        CraftCompetency("Carpentry", "Carpenter\'s Tools"),
+        CraftCompetency("Cobbling", "Cobbler\'s Tools"),
+        CraftCompetency("Gemcutting", "Jeweler\'s Tools"),
+        CraftCompetency("Leatherworking", "Leatherworker\'s Tools"),
+        CraftSupporting("Locksmithing"),
+        CraftCompetency("Painting", "Painter\'s Supplies"),
+        CraftCompetency("Pottery", "Potter\'s Tools"),
+        CraftSupporting("Sculpting"),
+        CraftSupporting("Shipmaking"),
+        CraftCompetency("Stonemasonry", "Mason\'s Tools"),
+        CraftSupporting("Trapmaking"),
+        CraftSupporting("Weaponsmithing"),
+        CraftCompetency("Weaving", "Weaver\'s Tools"),
 
         Perform("Act"),
         Perform("Comedy"),
@@ -454,10 +454,15 @@ public static class KnownUniversalCompetencies
             EvaluationKind: CharacterMechanicEvaluationKinds.Sum,
             CanEvaluate: true);
 
-    private static UniversalCompetencyDefinition Craft(
+    private static UniversalCompetencyDefinition CraftCompetency(
         string name,
         params string[] additionalAliases) =>
         Member("Craft", name, additionalAliases, presentationCategory: "competency");
+
+    private static UniversalCompetencyDefinition CraftSupporting(
+        string name,
+        params string[] additionalAliases) =>
+        Member("Craft", name, additionalAliases, presentationCategory: "supporting");
 
     private static UniversalCompetencyDefinition Perform(
         string name,
