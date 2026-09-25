@@ -123,7 +123,7 @@ These mappings are explicit reviewed policy. Rules Core does not generalize them
 | Thieves' Tools | Thieves' Tools | Standalone; Open Lock and Disable Device retain scoped-use relationships |
 | Forgery Kit | Forgery | Shared identity with the historical Forgery skill |
 
-Musical instrument proficiencies and gaming-set proficiencies remain source-native standalone universal competencies unless a specific source-supported relationship is reviewed. Broad Perform categories are not automatically equated to particular instruments. No reviewed gaming-set historical equivalent is currently established.
+The twelve reviewed standalone tool identities are baseline universal-catalog members even when no source-shaped tool row is active. Musical instrument proficiencies and gaming-set proficiencies remain source-native standalone universal competencies unless a specific source-supported relationship is reviewed. Broad Perform categories are not automatically equated to particular instruments. No reviewed gaming-set historical equivalent is currently established.
 
 The current Loot Tavern Harvesting & Crafting consumer rules select a tool through the generic Rules Core tool-competency contract. The reviewed current source model does not require a new named Loot Tavern-only tool competency here; any genuinely distinct source-defined proficiency can enter the universal catalog through the same source-driven path later.
 
