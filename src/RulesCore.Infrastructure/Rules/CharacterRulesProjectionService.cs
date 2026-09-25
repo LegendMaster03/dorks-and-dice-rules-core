@@ -150,6 +150,10 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     value.Resolution.SourceEntityRevisionId,
                     value.Resolution.SourceRevisionNumber))
                 .OrderBy(value => value.ConceptKey, StringComparer.Ordinal)
+                .ToArray(),
+            HelpTopics: KnownCharacterContextualHelp.All
+                .Select(value => CharacterContextualHelpProjection.For(value.TopicKey)!)
+                .OrderBy(value => value.TopicKey, StringComparer.Ordinal)
                 .ToArray());
     }
 
