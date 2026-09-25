@@ -163,6 +163,32 @@ public static class CraftingOutcomeEvaluator
             ProducesFunctionalOutput: true);
     }
 
+    private static int ResolveManufacturingAbility(
+        CharacterRulesProjectionView projection,
+        ManufacturingResolutionRequest request,
+        ResolvedCompetency competency)
+    {
+        var hasAbilityKey = !string.IsNullOrWhiteSpace(request.AbilityKey);
+        var hasManualAbility = request.ManualAbilityModifier is not null;
+        if (hasAbilityKey && hasManualAbility)
+        {
+            throw new ArgumentException(
+                "Supply either a resolved Character Ability or a manual Ability modifier for Manufacturing, not both.");
+        }
+
+        if (hasAbilityKey)
+        {
+            return ResolveAbilityModifier(projection, request.AbilityKey!);
+        }
+
+        if (request.ManualAbilityModifier is int manualAbility)
+        {
+            return manualAbility;
+        }
+
+        return competency.AbilityContribution;
+    }
+
     private static CraftingCompetencyInput ResolveCreatureTypeCompetency(string? creatureType)
     {
         var definition = KnownHarvestingRules.FindCreatureType(creatureType);
