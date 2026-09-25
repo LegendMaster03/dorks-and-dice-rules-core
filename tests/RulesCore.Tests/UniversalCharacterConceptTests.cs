@@ -122,7 +122,8 @@ public sealed class UniversalCharacterConceptTests
             ["Forgery", "Forgery Kit"],
             KnownUniversalCompetencies.SourceAliases("forgery"));
         Assert.Equal(
-            ["Glassblower's Tools"],
+            new[] { "Glassblower's Tools", "Glassblowing" }
+                .OrderBy(value => value, StringComparer.OrdinalIgnoreCase),
             KnownUniversalCompetencies.SourceAliases("glassblowing"));
         Assert.Equal(
             "supporting",
@@ -140,6 +141,42 @@ public sealed class UniversalCharacterConceptTests
             new[] { "Knowledge (Arcana)", "Arcana" }
                 .OrderBy(value => value, StringComparer.OrdinalIgnoreCase),
             KnownUniversalCompetencies.SourceAliases("arcana"));
+    }
+
+    [Fact]
+    public void ReviewedNonFamilyBaselineIdentitiesAreFirstClassCatalogCompetencies()
+    {
+        var expected = new[]
+        {
+            ("brewing", "Brewing", "Brewer's Supplies"),
+            ("cartography", "Cartography", "Cartographer's Tools"),
+            ("cooking", "Cooking", "Cook's Utensils"),
+            ("glassblowing", "Glassblowing", "Glassblower's Tools"),
+            ("herbalism", "Herbalism", "Herbalism Kit"),
+            ("navigation", "Navigation", "Navigator's Tools"),
+            ("poisoning", "Poisoning", "Poisoner's Kit"),
+            ("smithing", "Smithing", "Smith's Tools"),
+            ("tinkering", "Tinkering", "Tinker's Tools"),
+            ("woodcarving", "Woodcarving", "Woodcarver's Tools"),
+            ("disguise-kit", "Disguise Kit", "Disguise Kit"),
+            ("forgery", "Forgery", "Forgery Kit"),
+            ("thieves-tools", "Thieves' Tools", "Thieves' Tools")
+        };
+
+        Assert.Equal(expected.Length, KnownUniversalCompetencies.Standalone.Count);
+        foreach (var (identityKey, displayName, sourceAlias) in expected)
+        {
+            var definition = KnownUniversalCompetencies.FindByIdentityKey(identityKey);
+            Assert.NotNull(definition);
+            Assert.Equal(displayName, definition!.DisplayName);
+            Assert.Null(definition.FamilyName);
+            Assert.False(definition.IsFamily);
+            Assert.Equal("competency", definition.PresentationCategory);
+            Assert.Contains(sourceAlias, KnownUniversalCompetencies.SourceAliases(identityKey));
+            Assert.Contains(
+                KnownUniversalCompetencies.Catalog,
+                value => value.IdentityKey == identityKey);
+        }
     }
 
     [Fact]

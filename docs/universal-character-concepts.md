@@ -132,7 +132,7 @@ Reviewed shared Craft/tool identities are limited to Alchemy, Calligraphy, Carpe
 
 Other reviewed later tools remain independent universal competencies when one later proficiency spans several historical specialties or when the historical concept is only related. Smithing is independent from Blacksmithing/Armorsmithing/Weaponsmithing; Tinkering is independent from Locksmithing/Trapmaking; Woodcarving is independent from Bowmaking/Carpentry. Brewing, Cooking, Herbalism, and Navigation likewise remain distinct from related Profession specialties.
 
-Standalone tool-only identities such as Glassblowing, Cartography, Poisoning, Thieves' Tools, musical instruments, gaming sets, and future source-defined tools require no fabricated Craft history.
+Reviewed standalone tool-only identities such as Brewing, Cartography, Cooking, Glassblowing, Herbalism, Navigation, Poisoning, Smithing, Tinkering, Woodcarving, Disguise Kit, and Thieves' Tools are first-class members of the universal catalog and do not depend on an active source-shaped tool row to exist. Forgery is likewise materialized as a reviewed non-family baseline identity because its historical Forgery skill and later Forgery Kit are already established as shared facets of the same learned competency. Musical instruments, gaming sets, and future source-defined tools enter the same universal model from their source-native records without fabricated Craft history.
 
 ### Perform
 

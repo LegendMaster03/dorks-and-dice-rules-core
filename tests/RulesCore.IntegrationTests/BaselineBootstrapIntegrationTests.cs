@@ -388,6 +388,32 @@ public sealed class BaselineBootstrapIntegrationTests
                     });
             }
 
+            var expectedStandaloneCompetencies = new[]
+            {
+                "competency.brewing",
+                "competency.cartography",
+                "competency.cooking",
+                "competency.glassblowing",
+                "competency.herbalism",
+                "competency.navigation",
+                "competency.poisoning",
+                "competency.smithing",
+                "competency.tinkering",
+                "competency.woodcarving",
+                "competency.disguise-kit",
+                "competency.forgery",
+                "competency.thieves-tools"
+            };
+            foreach (var semanticKey in expectedStandaloneCompetencies)
+            {
+                var standalone = Assert.Single(
+                    universalCompetencies,
+                    value => value.SemanticKey == semanticKey);
+                Assert.False(standalone.IsFamily);
+                Assert.Null(standalone.FamilyName);
+                Assert.Equal("competency", standalone.PresentationCategory);
+            }
+
             var universalAlchemy = Assert.Single(
                 universalCompetencies,
                 value => value.SemanticKey == "competency.alchemy");

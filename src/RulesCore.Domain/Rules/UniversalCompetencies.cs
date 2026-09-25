@@ -111,6 +111,23 @@ public static class KnownUniversalCompetencies
         Profession("Woodcutter")
     ];
 
+    private static readonly IReadOnlyList<UniversalCompetencyDefinition> StandaloneDefinitions =
+    [
+        StandaloneCompetency("Brewing", "Brewer's Supplies"),
+        StandaloneCompetency("Cartography", "Cartographer's Tools"),
+        StandaloneCompetency("Cooking", "Cook's Utensils"),
+        StandaloneCompetency("Glassblowing", "Glassblower's Tools"),
+        StandaloneCompetency("Herbalism", "Herbalism Kit"),
+        StandaloneCompetency("Navigation", "Navigator's Tools"),
+        StandaloneCompetency("Poisoning", "Poisoner's Kit"),
+        StandaloneCompetency("Smithing", "Smith's Tools"),
+        StandaloneCompetency("Tinkering", "Tinker's Tools"),
+        StandaloneCompetency("Woodcarving", "Woodcarver's Tools"),
+        StandaloneCompetency("Disguise Kit"),
+        StandaloneCompetency("Forgery", "Forgery Kit"),
+        StandaloneCompetency("Thieves' Tools")
+    ];
+
     private static readonly IReadOnlyDictionary<string, IReadOnlyList<string>> ReviewedSourceAliases =
         new Dictionary<string, IReadOnlyList<string>>(StringComparer.OrdinalIgnoreCase)
         {
@@ -194,8 +211,12 @@ public static class KnownUniversalCompetencies
 
     public static IReadOnlyList<UniversalCompetencyDefinition> Families => FamilyDefinitions;
     public static IReadOnlyList<UniversalCompetencyDefinition> FamilyMembers => FamilyMemberDefinitions;
+    public static IReadOnlyList<UniversalCompetencyDefinition> Standalone => StandaloneDefinitions;
     public static IReadOnlyList<UniversalCompetencyDefinition> Catalog { get; } =
-        FamilyDefinitions.Concat(FamilyMemberDefinitions).ToArray();
+        FamilyDefinitions
+            .Concat(FamilyMemberDefinitions)
+            .Concat(StandaloneDefinitions)
+            .ToArray();
 
     public static UniversalCompetencyDefinition? FindByIdentityKey(string? identityKey)
     {
@@ -453,6 +474,18 @@ public static class KnownUniversalCompetencies
             EvaluationProfileKey: "ranked-skill",
             EvaluationKind: CharacterMechanicEvaluationKinds.Sum,
             CanEvaluate: true);
+
+    private static UniversalCompetencyDefinition StandaloneCompetency(
+        string name,
+        params string[] additionalAliases) =>
+        new(
+            NormalizeIdentityKey(name),
+            name,
+            SourceAliases: new[] { name }
+                .Concat(additionalAliases)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray(),
+            PresentationCategory: "competency");
 
     private static UniversalCompetencyDefinition CraftCompetency(
         string name,
