@@ -24,7 +24,8 @@ public sealed record CharacterUniversalCompetencyView(
     IReadOnlyList<CharacterCompetencyRelationshipView> RelatedCompetencies,
     IReadOnlyList<CharacterMechanicSourceAttributionView> SourceAttributions,
     CharacterUniversalCompetencyMechanicsView? Mechanics = null,
-    EffectiveRuleResolutionView? Resolution = null);
+    EffectiveRuleResolutionView? Resolution = null,
+    string PresentationCategory = "skill");
 
 public sealed record CharacterUniversalGoverningAbilityView(
     string ResolutionKind,

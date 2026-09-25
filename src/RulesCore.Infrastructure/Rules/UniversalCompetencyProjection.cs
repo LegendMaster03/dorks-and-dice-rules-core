@@ -172,7 +172,12 @@ internal static class UniversalCompetencyProjection
                 Facets: facets,
                 RelatedCompetencies: relationships,
                 SourceAttributions: attributions,
-                Mechanics: BuildUniversalMechanics(identityKey, known, profiles)));
+                Mechanics: BuildUniversalMechanics(identityKey, known, profiles),
+                PresentationCategory: ResolvePresentationCategory(
+                    known,
+                    familyName,
+                    profiles,
+                    facets)));
         }
 
         var existing = result
@@ -220,7 +225,8 @@ internal static class UniversalCompetencyProjection
                     definition,
                     normalizedProfile is null
                         ? []
-                        : [normalizedProfile])));
+                        : [normalizedProfile]),
+                PresentationCategory: definition.PresentationCategory));
         }
 
         return result
@@ -533,6 +539,45 @@ internal static class UniversalCompetencyProjection
             CanEvaluate:
                 defaults?.CanEvaluate == true
                 || profiles.Any(value => value.CanEvaluate));
+    }
+
+    private static string ResolvePresentationCategory(
+        UniversalCompetencyDefinition? known,
+        string? familyName,
+        IReadOnlyList<CharacterCompetencyProfileView> profiles,
+        IReadOnlyList<CharacterCompetencyFacetView> facets)
+    {
+        if (!string.IsNullOrWhiteSpace(known?.PresentationCategory))
+        {
+            return known.PresentationCategory;
+        }
+
+        if (string.Equals(familyName, "Craft", StringComparison.OrdinalIgnoreCase)
+            || facets.Any(value =>
+                string.Equals(value.FacetType, "tool", StringComparison.OrdinalIgnoreCase))
+            || profiles.Any(value =>
+                string.Equals(
+                    value.CompetencyKind,
+                    CharacterCompetencyKinds.Tool,
+                    StringComparison.OrdinalIgnoreCase)))
+        {
+            return "competency";
+        }
+
+        var kinds = profiles
+            .Select(value => value.CompetencyKind)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        return kinds.Length > 0
+            && kinds.All(value =>
+                string.Equals(value, CharacterCompetencyKinds.Skill, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(
+                    value,
+                    CharacterCompetencyKinds.SpecializedSkill,
+                    StringComparison.OrdinalIgnoreCase))
+                ? "skill"
+                : "competency";
     }
 
     private static bool? ResolveBoolean(
