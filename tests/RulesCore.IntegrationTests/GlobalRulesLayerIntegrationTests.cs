@@ -375,6 +375,173 @@ public sealed class GlobalRulesLayerIntegrationTests
         }
     }
 
+
+    [Fact]
+    public async Task UnresolvedConceptUsesOneLatestFallbackUntilPublishedDecisionReplacesIt()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            return;
+        }
+
+        var authenticationClient = new FakeToolHostAuthenticationClient(
+            new Dictionary<string, ToolHostAuthenticationContext>
+            {
+                ["lawyer-ticket"] = Context(
+                    "rules-lawyer",
+                    "Rules Lawyer",
+                    "dorks-and-dice",
+                    ["Rules Lawyer"])
+            });
+
+        await using var factory = CreateFactory(authenticationClient);
+        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false
+        });
+
+        var packageKey = $"unresolved-fallback-{Guid.NewGuid():N}";
+        var conceptKey = $"skill.unresolved-fallback-{Guid.NewGuid():N}";
+        Guid packageId = Guid.Empty;
+
+        try
+        {
+            Guid sourceEntityId;
+            Guid firstRevisionId;
+            Guid secondRevisionId;
+            RuleConceptView concept;
+
+            await using (var scope = factory.Services.CreateAsyncScope())
+            {
+                var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
+                var rules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+                var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+
+                var first = await importer.Import5eToolsDocumentAsync(
+                    SourceRequest(packageKey, isPublic: true, versionMarker: "fallback-one"));
+                packageId = first.PackageId;
+                sourceEntityId = first.Entities.Single().EntityId;
+                firstRevisionId = await db.SourceEntityRevisions
+                    .Where(value => value.SourceEntityId == sourceEntityId)
+                    .Select(value => value.Id)
+                    .SingleAsync();
+
+                var second = await importer.Import5eToolsDocumentAsync(
+                    SourceRequest(packageKey, isPublic: true, versionMarker: "fallback-two"));
+                Assert.Equal(2, second.Entities.Single().RevisionNumber);
+                secondRevisionId = await db.SourceEntityRevisions
+                    .Where(value => value.SourceEntityId == sourceEntityId
+                        && value.RevisionNumber == 2)
+                    .Select(value => value.Id)
+                    .SingleAsync();
+
+                concept = (await rules.CreateConceptAsync(
+                    new CreateRuleConceptRequest(conceptKey, "skill", "Unresolved Fallback"),
+                    "rules-lawyer")).Value;
+                await rules.BindSourceEntityAsync(
+                    concept.Id,
+                    new BindRuleConceptSourceRequest(sourceEntityId),
+                    "rules-lawyer");
+            }
+
+            using (var unresolvedResponse = await client.GetAsync(
+                       $"/api/rules/{Uri.EscapeDataString(conceptKey)}"))
+            {
+                Assert.Equal(HttpStatusCode.OK, unresolvedResponse.StatusCode);
+                var unresolved = (await unresolvedResponse.Content
+                    .ReadFromJsonAsync<ResolvedRuleView>())!;
+                Assert.NotNull(unresolved.Resolution);
+                Assert.Equal(
+                    RuleResolutionStates.UnresolvedFallback,
+                    unresolved.Resolution.State);
+                Assert.True(unresolved.Resolution.IsFallback);
+                Assert.True(unresolved.Resolution.RequiresAdjudication);
+                Assert.Equal(secondRevisionId, unresolved.SourceEntityRevisionId);
+                Assert.Equal(2, unresolved.SourceRevisionNumber);
+                Assert.Equal(
+                    "fallback-two",
+                    unresolved.Document.GetProperty("versionMarker").GetString());
+                Assert.Empty(unresolved.Contributions);
+            }
+
+            using (var catalogResponse = await client.GetAsync(
+                       $"/api/rules?q={Uri.EscapeDataString("Unresolved Fallback")}"))
+            {
+                Assert.Equal(HttpStatusCode.OK, catalogResponse.StatusCode);
+                var catalog = (await catalogResponse.Content
+                    .ReadFromJsonAsync<ResolvedRulesCatalogView>())!;
+                var unresolved = Assert.Single(
+                    catalog.Rules,
+                    value => value.ConceptKey == conceptKey);
+                Assert.NotNull(unresolved.Resolution);
+                Assert.Equal(
+                    RuleResolutionStates.UnresolvedFallback,
+                    unresolved.Resolution.State);
+                Assert.Equal(secondRevisionId, unresolved.SourceEntityRevisionId);
+            }
+
+            using (var anonymousVersions = await client.GetAsync(
+                       $"/api/rules/{Uri.EscapeDataString(conceptKey)}/versions"))
+            {
+                Assert.Equal(HttpStatusCode.Unauthorized, anonymousVersions.StatusCode);
+            }
+
+            using (var lawyerVersionsRequest = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/rules/{Uri.EscapeDataString(conceptKey)}/versions",
+                       "lawyer-ticket"))
+            using (var lawyerVersionsResponse = await client.SendAsync(lawyerVersionsRequest))
+            {
+                Assert.Equal(HttpStatusCode.OK, lawyerVersionsResponse.StatusCode);
+                var versions = (await lawyerVersionsResponse.Content
+                    .ReadFromJsonAsync<RuleConceptVersionsView>())!;
+                Assert.NotEmpty(versions.Versions);
+            }
+
+            using (var decisionRequest = HostedJsonRequest(
+                       HttpMethod.Put,
+                       $"/api/global/rules/concepts/{concept.Id}/decision",
+                       "lawyer-ticket",
+                       new SetGlobalRuleDecisionRequest(
+                           firstRevisionId,
+                           "Deliberately publish the older source revision.")))
+            using (var decisionResponse = await client.SendAsync(decisionRequest))
+            {
+                Assert.Equal(HttpStatusCode.OK, decisionResponse.StatusCode);
+            }
+
+            using (var publishRequest = HostedRequest(
+                       HttpMethod.Post,
+                       "/api/global/rules/publish",
+                       "lawyer-ticket"))
+            using (var publishResponse = await client.SendAsync(publishRequest))
+            {
+                Assert.Equal(HttpStatusCode.OK, publishResponse.StatusCode);
+            }
+
+            using (var resolvedResponse = await client.GetAsync(
+                       $"/api/rules/{Uri.EscapeDataString(conceptKey)}"))
+            {
+                Assert.Equal(HttpStatusCode.OK, resolvedResponse.StatusCode);
+                var resolved = (await resolvedResponse.Content
+                    .ReadFromJsonAsync<ResolvedRuleView>())!;
+                Assert.NotNull(resolved.Resolution);
+                Assert.Equal(RuleResolutionStates.Resolved, resolved.Resolution.State);
+                Assert.False(resolved.Resolution.IsFallback);
+                Assert.False(resolved.Resolution.RequiresAdjudication);
+                Assert.Equal(firstRevisionId, resolved.SourceEntityRevisionId);
+                Assert.Equal(
+                    "fallback-one",
+                    resolved.Document.GetProperty("versionMarker").GetString());
+            }
+        }
+        finally
+        {
+            await CleanupAsync(factory, packageId);
+        }
+    }
+
     private static WebApplicationFactory<Program> CreateFactory(
         IToolHostAuthenticationClient authenticationClient) =>
         new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>

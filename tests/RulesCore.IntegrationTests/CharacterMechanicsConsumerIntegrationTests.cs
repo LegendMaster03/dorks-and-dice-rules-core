@@ -80,6 +80,23 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.True(attribution.PresentationRequired);
             Assert.True(attribution.ReferenceLinkRequired);
 
+            Assert.All(
+                catalog.Competencies ?? [],
+                competency =>
+                {
+                    Assert.Empty(competency.Profiles);
+                    Assert.Empty(competency.Facets);
+                    Assert.Empty(competency.CompatibilityMechanicKeys);
+                });
+            Assert.All(
+                catalog.Mechanics.Where(value => value.Competency is not null),
+                mechanic =>
+                {
+                    Assert.Empty(mechanic.Competency!.Profiles);
+                    Assert.Empty(mechanic.Competency.Facets ?? []);
+                    Assert.Null(mechanic.Competency.DefaultProfileSourceEntityRevisionId);
+                });
+
             var helpers = Assert.Single(harvesting.ContributorGroups);
             Assert.Equal("helpers", helpers.Key);
             Assert.Equal("creatureSize", helpers.MaximumCountStringInputKey);
@@ -237,6 +254,11 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             Assert.Equal(2, batch.Evaluations.Count);
             Assert.Equal(15, batch.Evaluations[0].Evaluation!.Value);
             Assert.Equal(6, batch.Evaluations[1].Evaluation!.Value);
+        }
+
+        using (var anonymousAdmin = await client.GetAsync("/api/admin/rules/mechanics"))
+        {
+            Assert.Equal(HttpStatusCode.Unauthorized, anonymousAdmin.StatusCode);
         }
 
         using (var anonymousCampaign = await client.GetAsync(

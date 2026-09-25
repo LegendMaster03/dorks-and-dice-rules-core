@@ -545,3 +545,12 @@ Ability choices are returned through the same generic `choices` contract used fo
 When exactly one selected base-class advancement has a positive level, Rules Core treats it as the starting class automatically. When more than one base class is present, the Character must identify the starting class with the `advancement.starting-class` runtime choice (or the same key in string facts). The projection does not infer the starting class from request order. The generic `choices` response exposes the legal selected base-class options.
 
 Only the starting class grants its native `proficiency`/`savingThrows` proficiencies and `startingProficiencies`. Other selected base classes instead project `multiclassing.proficienciesGained`, including the normalized skill/tool/weapon/armor choice paths supported by Character projection. Standard proficiency bonus still uses the total supplied base-class advancement levels. If the starting class is unresolved, starting-only and multiclass-only grants are withheld and the projection reports `choice-required` rather than over-granting Character capabilities.
+
+
+## Effective-only consumer contract
+
+Normal Character consumers receive the universal competency after Rules Core has selected its effective implementation. Consumer catalog responses therefore do not expose competing `profiles`, `facets`, compatibility mechanic keys, or a caller-selectable source revision. Generic mechanic evaluation accepts only mechanic keys present in the effective consumer catalog and ignores any source-profile selector in a request rather than treating it as resolution authority.
+
+The detailed mechanic/profile catalog still exists for Rules Core internals and authorized adjudication. Global Rules Lawyers may inspect it at `GET /api/admin/rules/mechanics`; campaign DMs may inspect the campaign-scoped detailed catalog at `GET /api/campaigns/{campaignId}/admin/rules/mechanics`.
+
+The resolved Character projection includes the effective universal competencies and per-concept `ruleResolutions`. An unresolved rule remains usable but is explicitly marked `unresolved-fallback`; a later Rules Core publication is visible on the next projection request without a Character-owned migration or authoritative rules cache.
