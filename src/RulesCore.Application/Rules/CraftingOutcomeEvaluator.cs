@@ -21,8 +21,13 @@ public static class CraftingOutcomeEvaluator
             ? CharacterMechanicRollModes.Disadvantage
             : CharacterMechanicRollModes.Normal;
 
+        var manufacturingAbility = ResolveManufacturingAbility(
+            projection,
+            request,
+            competency);
+
         int? total = request.D20Roll is int roll
-            ? checked(roll + competency.AbilityContribution + competency.CompetencyContribution + request.OtherModifier)
+            ? checked(roll + manufacturingAbility + competency.CompetencyContribution + request.OtherModifier)
             : null;
 
         var outcome = ResolveManufacturingOutcome(total, request.TargetDc);
