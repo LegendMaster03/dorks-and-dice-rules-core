@@ -34,6 +34,10 @@ public sealed class CraftingOutcomeEvaluatorTests
         Assert.Equal(4, result.CompetencyContribution);
         Assert.Equal(19, result.Total);
         Assert.True(result.MeetsTarget);
+        Assert.Equal(CraftingOutcomeKinds.Completed, result.Outcome);
+        Assert.Equal(1, result.Margin);
+        Assert.True(result.InputsConsumed);
+        Assert.True(result.ProducesFunctionalOutput);
         Assert.False(result.ManualCompetency);
     }
 
@@ -126,6 +130,92 @@ public sealed class CraftingOutcomeEvaluatorTests
         Assert.Equal(4, result.CompetencyContribution);
         Assert.Equal(18, result.Total);
         Assert.True(result.MeetsTarget);
+        Assert.Equal(CraftingOutcomeKinds.Completed, result.Outcome);
+        Assert.Equal(1, result.Margin);
+        Assert.Equal(0, result.FlawCount);
+        Assert.True(result.InputsConsumed);
+        Assert.True(result.ProducesFunctionalOutput);
+    }
+
+    [Theory]
+    [InlineData(4, "completed-with-flaws", -4, 1, true)]
+    [InlineData(0, "completed-with-flaws", -8, 2, true)]
+    [InlineData(-4, "completed-with-flaws", -12, 3, true)]
+    [InlineData(-5, "destroyed", -13, null, false)]
+    public void Enchanting_classifies_failed_check_outcomes(
+        int otherModifier,
+        string expectedOutcome,
+        int expectedMargin,
+        int? expectedFlaws,
+        bool producesOutput)
+    {
+        var projection = Projection(
+            [
+                Mechanic(
+                    "competency.arcana",
+                    "Arcana",
+                    4,
+                    [Contribution("proficiency.standard", 4)]),
+                Mechanic(
+                    "ability.intelligence.modifier",
+                    "Intelligence modifier",
+                    3,
+                    [])
+            ],
+            [
+                new CharacterSpellcastingView(
+                    "spellcasting.wizard",
+                    "Wizard Spellcasting",
+                    "resolved",
+                    "intelligence",
+                    null,
+                    null,
+                    null,
+                    [],
+                    [],
+                    Provenance())
+            ]);
+
+        var result = CraftingOutcomeEvaluator.ResolveEnchanting(
+            projection,
+            new EnchantingResolutionRequest(
+                new CharacterRulesProjectionRequest(),
+                CreatureType: "aberration",
+                D20Roll: 6,
+                OtherModifier: otherModifier,
+                TargetDc: 17));
+
+        Assert.Equal(expectedOutcome, result.Outcome);
+        Assert.Equal(expectedMargin, result.Margin);
+        Assert.Equal(expectedFlaws, result.FlawCount);
+        Assert.True(result.InputsConsumed);
+        Assert.Equal(producesOutput, result.ProducesFunctionalOutput);
+    }
+
+    [Fact]
+    public void Manufacturing_failure_consumes_inputs_without_functional_output()
+    {
+        var projection = Projection(
+            [
+                Mechanic(
+                    "competency.blacksmithing",
+                    "Blacksmithing",
+                    4,
+                    [Contribution("competency.blacksmithing.ranks", 4)])
+            ]);
+
+        var result = CraftingOutcomeEvaluator.ResolveManufacturing(
+            projection,
+            new ManufacturingResolutionRequest(
+                new CharacterRulesProjectionRequest(),
+                new CraftingCompetencyInput("blacksmithing"),
+                D20Roll: 5,
+                TargetDc: 15));
+
+        Assert.Equal(CraftingOutcomeKinds.Failed, result.Outcome);
+        Assert.Equal(-6, result.Margin);
+        Assert.True(result.InputsConsumed);
+        Assert.False(result.ProducesFunctionalOutput);
     }
 
     private static CharacterRulesProjectionView Projection(
