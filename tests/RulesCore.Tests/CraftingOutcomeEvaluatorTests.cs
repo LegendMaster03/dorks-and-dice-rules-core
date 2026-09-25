@@ -42,6 +42,62 @@ public sealed class CraftingOutcomeEvaluatorTests
     }
 
     [Fact]
+    public void Manufacturing_can_use_source_selected_character_ability()
+    {
+        var projection = Projection(
+            [
+                Mechanic(
+                    "competency.blacksmithing",
+                    "Blacksmithing",
+                    6,
+                    [
+                        Contribution("ability.intelligence.modifier", 2),
+                        Contribution("competency.blacksmithing.ranks", 4)
+                    ]),
+                Mechanic(
+                    "ability.strength.modifier",
+                    "Strength modifier",
+                    3,
+                    [])
+            ]);
+
+        var result = CraftingOutcomeEvaluator.ResolveManufacturing(
+            projection,
+            new ManufacturingResolutionRequest(
+                new CharacterRulesProjectionRequest(),
+                new CraftingCompetencyInput("blacksmithing"),
+                D20Roll: 10,
+                TargetDc: 17,
+                AbilityKey: "strength"));
+
+        Assert.Equal(3, result.AbilityContribution);
+        Assert.Equal(4, result.CompetencyContribution);
+        Assert.Equal(17, result.Total);
+        Assert.Equal(CraftingOutcomeKinds.Completed, result.Outcome);
+    }
+
+    [Fact]
+    public void Manufacturing_can_use_manual_ability_modifier()
+    {
+        var result = CraftingOutcomeEvaluator.ResolveManufacturing(
+            Projection([]),
+            new ManufacturingResolutionRequest(
+                new CharacterRulesProjectionRequest(),
+                new CraftingCompetencyInput(
+                    Manual: new CraftingManualCompetencyInput(
+                        "Glassblowing",
+                        2,
+                        true)),
+                D20Roll: 10,
+                TargetDc: 15,
+                ManualAbilityModifier: 3));
+
+        Assert.Equal(3, result.AbilityContribution);
+        Assert.Equal(2, result.CompetencyContribution);
+        Assert.Equal(15, result.Total);
+    }
+
+    [Fact]
     public void Manufacturing_unqualified_without_guidance_uses_disadvantage()
     {
         var projection = Projection(
