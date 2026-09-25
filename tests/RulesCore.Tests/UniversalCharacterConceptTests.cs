@@ -125,6 +125,12 @@ public sealed class UniversalCharacterConceptTests
             ["Glassblower's Tools"],
             KnownUniversalCompetencies.SourceAliases("glassblowing"));
         Assert.Equal(
+            "supporting",
+            KnownUniversalCompetencies.FindByIdentityKey("craft")!.PresentationCategory);
+        Assert.Equal(
+            "supporting",
+            KnownUniversalCompetencies.FindByIdentityKey("blacksmithing")!.PresentationCategory);
+        Assert.Equal(
             "competency",
             KnownUniversalCompetencies.FindByIdentityKey("calligraphy")!.PresentationCategory);
         Assert.Equal(
