@@ -99,7 +99,7 @@ public sealed class RuleWorkspaceAuthorizationIntegrationTests
             Guid.NewGuid());
         using var response = await client.PostAsJsonAsync("/api/rules/comparison", payload);
 
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
     }
 
     private static WebApplicationFactory<Program> CreateFactory(IToolHostAuthenticationClient authenticationClient) =>

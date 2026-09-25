@@ -46,11 +46,20 @@ public static class RuleWorkspaceEndpointExtensions
             CancellationToken cancellationToken) =>
         {
             var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
+            if (authenticationContext is null)
+            {
+                return Results.Unauthorized();
+            }
+            if (!RulesAuthority.CanEditGlobalRules(authenticationContext))
+            {
+                return Results.StatusCode(StatusCodes.Status403Forbidden);
+            }
+
             try
             {
                 var comparison = await new RuleSemanticComparisonService(dbContext).CompareSourcesAsync(
                     request,
-                    authenticationContext?.User.Id,
+                    authenticationContext.User.Id,
                     cancellationToken);
                 if (comparison is null)
                 {

@@ -159,7 +159,8 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                 Provenance: new CharacterMechanicProvenanceView(
                     canonicalAttributions,
                     mechanicalProfileAttributions,
-                    effectiveRuleAttributions)));
+                    effectiveRuleAttributions),
+                Resolution: rule.Resolution));
         }
     
         mechanics = AttachStaticRelationships(mechanics);

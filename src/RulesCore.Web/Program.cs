@@ -215,11 +215,17 @@ if (hasDatabase)
         IGlobalRulesService rules,
         CancellationToken cancellationToken) =>
     {
+        var authorizationFailure = RequireGlobalRulesAuthority(
+            httpContext,
+            out var authenticationContext);
+        if (authorizationFailure is not null)
+        {
+            return authorizationFailure;
+        }
+
         try
         {
-            var userId = HostedToolAuthenticationMiddleware
-                .GetAuthenticationContext(httpContext)?
-                .User.Id;
+            var userId = authenticationContext!.User.Id;
             httpContext.Response.Headers.CacheControl = "no-store";
             var versions = await rules.GetAccessibleVersionsAsync(
                 conceptKey,

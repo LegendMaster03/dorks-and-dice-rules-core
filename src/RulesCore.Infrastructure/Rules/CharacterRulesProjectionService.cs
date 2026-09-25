@@ -68,6 +68,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         CharacterMechanicsCatalogView mechanicCatalog)
     {
         var context = new CharacterProjectionContext(request);
+        var effectiveMechanicCatalog =
+            CharacterMechanicsConsumerBoundary.ProjectEffective(mechanicCatalog);
         CharacterCoreMechanicsResolver.SeedCallerCapabilities(context);
         CharacterProjectionCatalogRegistrar.RegisterMechanicCatalogIdentities(context, mechanicCatalog);
 
@@ -131,7 +133,18 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             context.ChoiceViews.Values.OrderBy(value => value.ChoiceKey, StringComparer.Ordinal).ToArray(),
             context.Prerequisites.Values.OrderBy(value => value.ConceptKey, StringComparer.Ordinal).ToArray(),
             context.Conflicts.OrderBy(value => value.ConflictKey, StringComparer.Ordinal).ToArray(),
-            context.Equipment.Values.OrderBy(value => value.ItemKey, StringComparer.Ordinal).ToArray());
+            context.Equipment.Values.OrderBy(value => value.ItemKey, StringComparer.Ordinal).ToArray(),
+            effectiveMechanicCatalog.Competencies,
+            rules.Rules
+                .Where(value => value.Resolution is not null)
+                .Select(value => new CharacterRuleResolutionView(
+                    value.ConceptKey,
+                    value.Resolution!.State,
+                    value.Resolution.RequiresAdjudication,
+                    value.Resolution.SourceEntityRevisionId,
+                    value.Resolution.SourceRevisionNumber))
+                .OrderBy(value => value.ConceptKey, StringComparer.Ordinal)
+                .ToArray());
     }
 
 }
