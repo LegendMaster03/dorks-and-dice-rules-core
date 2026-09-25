@@ -89,7 +89,7 @@ At the universal level, Ability aliases such as `wis`/`wisdom` and `int`/`intell
 
 `Craft`, `Perform`, and `Profession` are organizational universal families. The Craft family itself and Craft-only historical specialties are `supporting` presentation identities: they continue to supply rules, ranks, and reconciliation facets without becoming a visible Character-facing competency list. Reviewed shared Craft/tool identities remain universal competencies and can be presented once under their normalized identity.
 
-`Craft`, `Perform`, and `Profession` are organizational universal families. A family is not a shared rank pool. Every child is independently addressable and can carry its own source/rule implementation.
+A family is not a shared rank pool. Every child is independently addressable and can carry its own source/rule implementation.
 
 The reviewed family rule is also an authoritative Rules-layer mechanical default. A reviewed child inherits these mechanics unless a reviewed specialization explicitly overrides them:
 
