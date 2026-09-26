@@ -558,3 +558,23 @@ Normal Character consumers receive the universal competency after Rules Core has
 The detailed mechanic/profile catalog still exists for Rules Core internals and authorized adjudication. Global Rules Lawyers may inspect it at `GET /api/admin/rules/mechanics`; campaign DMs may inspect the campaign-scoped detailed catalog at `GET /api/campaigns/{campaignId}/admin/rules/mechanics`.
 
 The resolved Character projection includes the effective universal competencies and per-concept `ruleResolutions`. An unresolved rule remains usable but is explicitly marked `unresolved-fallback`; a later Rules Core publication is visible on the next projection request without a Character-owned migration or authoritative rules cache.
+
+
+## Contextual mechanic help and attack resolution context
+
+Rules Core owns player-facing semantic help. Character-facing projections attach a `help` object to known mechanics with a stable topic key, concise text, optional detail text, and a `standard` or `prominent` presentation hint. Consumers decide whether and how to render that help. A standard hint allows learning-oriented interfaces to expose help broadly without requiring a permanent icon in the normal sheet; a prominent hint identifies uncommon or conditional mechanics that merit an ordinary contextual-help affordance.
+
+Help is keyed by semantic identity rather than display-label parsing. In addition to mechanic keys, Rules Core defines reusable topics for structural competency concepts such as `competency.class-skill`, `competency.trained-only`, and `competency.armor-check-penalty`.
+
+Normalized `_rulesCore.character.actions` may also provide explicit attack-resolution context:
+
+```json
+{
+  "attackMechanic": "attack.example",
+  "targetDefense": "defense.ac.touch",
+  "rollMode": "normal",
+  "targetStates": ["state.touch-attack"]
+}
+```
+
+`targetDefense`, `rollMode`, and `targetStates` are orthogonal. Rules Core does not translate advantage into Flat-Footed Armor Class, does not translate a spell attack into Touch Armor Class, and does not collapse being flat-footed into every circumstance that denies a Dexterity-based defense. If a source does not establish a target defense, the projection leaves it unspecified rather than inferring one from action type or prose.
