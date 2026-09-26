@@ -160,7 +160,8 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                     canonicalAttributions,
                     mechanicalProfileAttributions,
                     effectiveRuleAttributions),
-                Resolution: rule.Resolution));
+                Resolution: rule.Resolution,
+                Help: CharacterContextualHelpProjection.For(mechanicKey)));
         }
     
         mechanics = AttachStaticRelationships(mechanics);
@@ -496,7 +497,8 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                             requirement.ExpectedValue)).ToArray(),
                     group.StandardHelpActionApplies))
                 .ToArray(),
-            sourceAttributions);
+            sourceAttributions,
+            Help: CharacterContextualHelpProjection.For(definition.Key));
     }
     
     private static bool IsAvailable(

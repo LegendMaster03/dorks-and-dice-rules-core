@@ -299,8 +299,31 @@ internal sealed class GenericCharacterRuleProjectionModule : ICharacterRuleProje
                 CharacterProjectionJson.String(item, "resource"),
                 CharacterProjectionJson.Integer(item, "resourceCost"),
                 CharacterProjectionJson.Strings(item, "requiredCapabilities"),
-                rule.Provenance);
+                rule.Provenance,
+                AttackResolution: ProjectAttackResolution(item));
         }
+    }
+
+    private static CharacterAttackResolutionView? ProjectAttackResolution(JsonElement action)
+    {
+        var targetDefense = CharacterProjectionJson.String(action, "targetDefense");
+        var rollMode = CharacterProjectionJson.String(action, "rollMode");
+        var targetStates = CharacterProjectionJson.Strings(action, "targetStates");
+        if (string.IsNullOrWhiteSpace(targetDefense)
+            && string.IsNullOrWhiteSpace(rollMode)
+            && targetStates.Count == 0)
+        {
+            return null;
+        }
+
+        var normalized = CharacterAttackResolutionSemantics.Create(
+            targetDefense,
+            rollMode,
+            targetStates);
+        return new CharacterAttackResolutionView(
+            normalized.TargetDefenseKey,
+            normalized.RollMode,
+            normalized.TargetStateKeys);
     }
 
     private static void ProjectProcedures(
