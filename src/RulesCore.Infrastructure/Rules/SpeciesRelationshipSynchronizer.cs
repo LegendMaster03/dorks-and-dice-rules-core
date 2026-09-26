@@ -15,7 +15,6 @@ internal static class SpeciesRelationshipSynchronizer
         CancellationToken cancellationToken = default)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(actorUserId);
-        await RuleConceptRelationshipStore.EnsureSchemaAsync(dbContext, cancellationToken);
 
         IDbContextTransaction? ownedTransaction = null;
         if (dbContext.Database.CurrentTransaction is null)
