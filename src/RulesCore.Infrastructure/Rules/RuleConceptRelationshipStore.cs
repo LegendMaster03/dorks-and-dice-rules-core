@@ -41,10 +41,6 @@ internal static class RuleConceptRelationshipStore
         RulesCoreDbContext dbContext,
         CancellationToken cancellationToken = default)
     {
-        // Schema DDL is owned by RulesCoreSchemaInitializer so concurrent request
-        // paths can not race on CREATE/ALTER statements. Keep the legacy runtime
-        // backfill contract, however: a database missing the backfill marker must
-        // reconstruct subclass-parent relationships on the first catalog access.
         if (await HasCompletedBackfillAsync(dbContext, cancellationToken))
         {
             return;
@@ -63,6 +59,7 @@ internal static class RuleConceptRelationshipStore
         CancellationToken cancellationToken = default)
     {
         await SynchronizeSubclassParentsCoreAsync(dbContext, actorUserId, cancellationToken);
+        await SpeciesRelationshipSynchronizer.SynchronizeAsync(dbContext, actorUserId, cancellationToken);
         await MarkBackfillCompletedAsync(dbContext, cancellationToken);
     }
 
