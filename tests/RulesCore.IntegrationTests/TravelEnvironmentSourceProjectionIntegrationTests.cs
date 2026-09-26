@@ -104,7 +104,7 @@ public sealed class TravelEnvironmentSourceProjectionIntegrationTests
         ResolvedRuleCatalogItemView rule,
         string json)
     {
-        var type = typeof(Program).Assembly.GetType(
+        var type = typeof(RulesCore.Infrastructure.Rules.ResolvedRulesCatalogService).Assembly.GetType(
             "RulesCore.Infrastructure.Rules.TravelEnvironmentProfileFactory",
             throwOnError: true)!;
         var method = type.GetMethod(

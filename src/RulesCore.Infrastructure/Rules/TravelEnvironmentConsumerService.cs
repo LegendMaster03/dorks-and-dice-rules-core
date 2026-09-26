@@ -5,17 +5,16 @@ using RulesCore.Infrastructure.Persistence;
 
 namespace RulesCore.Infrastructure.Rules;
 
-public sealed class TravelEnvironmentConsumerService(
-    RulesCoreDbContext dbContext,
-    IResolvedRulesCatalogService resolvedRules)
+public sealed class TravelEnvironmentConsumerService(RulesCoreDbContext dbContext)
     : ITravelEnvironmentConsumerService
 {
+    private readonly ResolvedRulesSnapshotReader rulesReader =
+        new(new ResolvedRulesCatalogService(dbContext));
     public async Task<TravelEnvironmentCatalogView> GetGlobalAsync(
         string? userId,
         CancellationToken cancellationToken = default)
     {
-        var rules = await new ResolvedRulesSnapshotReader(resolvedRules)
-            .ReadAllGlobalAsync(userId, cancellationToken);
+        var rules = await rulesReader.ReadAllGlobalAsync(userId, cancellationToken);
         return await BuildCatalogAsync(rules, cancellationToken);
     }
 
@@ -29,8 +28,10 @@ public sealed class TravelEnvironmentConsumerService(
             throw new ArgumentException("User ID can not be blank.", nameof(userId));
         }
 
-        var rules = await new ResolvedRulesSnapshotReader(resolvedRules)
-            .ReadAllCampaignAsync(campaignId, userId.Trim(), cancellationToken);
+        var rules = await rulesReader.ReadAllCampaignAsync(
+            campaignId,
+            userId.Trim(),
+            cancellationToken);
         return await BuildCatalogAsync(rules, cancellationToken);
     }
 
