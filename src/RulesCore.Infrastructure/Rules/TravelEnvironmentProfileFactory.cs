@@ -165,7 +165,10 @@ internal static class TravelEnvironmentProfileFactory
             FactorSemantic: "distance-multiplier",
             Scale: "overland"),
         BuildForcedMarch(dcPerExtraHour: 1),
-        BuildThreeEMountVehicleRates()
+        BuildThreeEMountVehicleRates(),
+        BuildThreeEHamperedMovement(),
+        BuildDownstreamCurrentSpeedBonus(),
+        BuildGuidedFloatDuration("raft-or-barge", "keelboat")
     ];
 
     private static IReadOnlyList<TravelEnvironmentMechanicDefinition> BuildThreeFiveOverland() =>
@@ -217,8 +220,8 @@ internal static class TravelEnvironmentProfileFactory
         BuildForcedMarch(dcPerExtraHour: 2),
         BuildThreeFiveMountVehicleRates(),
         BuildThreeFiveHamperedMovement(),
-        BuildThreeFiveDownstreamCurrentSpeedBonus(),
-        BuildThreeFiveGuidedFloatDuration()
+        BuildDownstreamCurrentSpeedBonus(),
+        BuildGuidedFloatDuration("raft-or-barge", "keelboat", "rowboat")
     ];
 
     private static TravelEnvironmentMechanicDefinition BuildWalkDistanceTable() =>
@@ -369,9 +372,52 @@ internal static class TravelEnvironmentProfileFactory
             Scale: "overland");
     }
 
+    private static TravelEnvironmentMechanicDefinition BuildThreeEHamperedMovement()
+    {
+        var obstructionFactors = new (string Key, decimal Factor)[]
+        {
+            ("none", 1m),
+            ("moderate", .75m),
+            ("heavy", .5m)
+        };
+        var surfaceFactors = new (string Key, decimal Factor)[]
+        {
+            ("none", 1m),
+            ("bad", .5m),
+            ("very-bad", .25m)
+        };
+        var visibilityFactors = new (bool Applies, decimal Factor)[]
+        {
+            (false, 1m),
+            (true, .5m)
+        };
+        var rows = obstructionFactors
+            .SelectMany(obstruction => surfaceFactors.SelectMany(surface =>
+                visibilityFactors.Select(visibility => Factor(
+                    obstruction.Factor * surface.Factor * visibility.Factor,
+                    ("obstruction", obstruction.Key),
+                    ("surface", surface.Key),
+                    ("poor-visibility", visibility.Applies.ToString())))))
+            .ToArray();
+
+        return new TravelEnvironmentMechanicDefinition(
+            "travel.environment.hampered-movement",
+            TravelEnvironmentMechanicKinds.DistanceFactor,
+            "Hampered movement distance",
+            TravelEnvironmentResolutionKinds.LookupFactor,
+            [
+                StringInput("obstruction", true, "none", "moderate", "heavy"),
+                StringInput("surface", true, "none", "bad", "very-bad"),
+                BooleanInput("poor-visibility", true)
+            ],
+            FactorRows: rows,
+            FactorSemantic: "distance-multiplier",
+            Scale: "movement-distance");
+    }
+
     private static TravelEnvironmentMechanicDefinition BuildThreeFiveHamperedMovement() =>
         new(
-            "travel.environment.hampered-movement-cost",
+            "travel.environment.hampered-movement",
             TravelEnvironmentMechanicKinds.MovementCostFactor,
             "Hampered movement cost",
             TravelEnvironmentResolutionKinds.LookupFactor,
@@ -394,7 +440,7 @@ internal static class TravelEnvironmentProfileFactory
             FactorSemantic: "movement-cost-multiplier",
             Scale: "movement-space");
 
-    private static TravelEnvironmentMechanicDefinition BuildThreeFiveDownstreamCurrentSpeedBonus() =>
+    private static TravelEnvironmentMechanicDefinition BuildDownstreamCurrentSpeedBonus() =>
         new(
             "travel.water.downstream-current-speed-bonus",
             TravelEnvironmentMechanicKinds.DistanceRate,
@@ -407,24 +453,31 @@ internal static class TravelEnvironmentProfileFactory
             ],
             Scale: "overland");
 
-    private static TravelEnvironmentMechanicDefinition BuildThreeFiveGuidedFloatDuration() =>
-        new(
+    private static TravelEnvironmentMechanicDefinition BuildGuidedFloatDuration(params string[] travelModes)
+    {
+        var quantities = travelModes
+            .Select(mode => Quantity(
+                14m,
+                "hours",
+                "day",
+                ("travel-mode", mode),
+                ("guided", "True"),
+                ("traveling-downstream", "True")))
+            .ToArray();
+
+        return new TravelEnvironmentMechanicDefinition(
             "travel.water.guided-downstream-float-duration",
             TravelEnvironmentMechanicKinds.Duration,
             "Additional guided downstream float duration",
             TravelEnvironmentResolutionKinds.LookupQuantity,
             [
-                StringInput("travel-mode", true, "raft-or-barge", "keelboat", "rowboat"),
+                StringInput("travel-mode", true, travelModes),
                 BooleanInput("guided", true),
                 BooleanInput("traveling-downstream", true)
             ],
-            QuantityRows:
-            [
-                Quantity(14m, "hours", "day", ("travel-mode", "raft-or-barge"), ("guided", "True"), ("traveling-downstream", "True")),
-                Quantity(14m, "hours", "day", ("travel-mode", "keelboat"), ("guided", "True"), ("traveling-downstream", "True")),
-                Quantity(14m, "hours", "day", ("travel-mode", "rowboat"), ("guided", "True"), ("traveling-downstream", "True"))
-            ],
+            QuantityRows: quantities,
             Scale: "overland");
+    }
 
     private static IReadOnlyList<TravelEnvironmentMechanicDefinition> BuildThreeFiveNavigation()
     {
@@ -548,12 +601,6 @@ internal static class TravelEnvironmentProfileFactory
         new(
             selectors.Select(value => new TravelEnvironmentSelector(value.Key, value.Value)).ToArray(),
             new TravelEnvironmentQuantity(value, unit, perUnit));
-
-    private static TravelEnvironmentQuantityRow Quantity(
-        decimal value,
-        string unit,
-        string perUnit = null!) =>
-        new([], new TravelEnvironmentQuantity(value, unit, perUnit));
 
     private static TravelEnvironmentFactorRow Factor(
         decimal factor,
