@@ -9,7 +9,7 @@ namespace RulesCore.Infrastructure.Rules;
 /// <summary>
 /// Materializes the effective rule documents for a published global or campaign scope.
 /// </summary>
-internal static class CharacterSupportEffectiveDocumentReader
+internal static class EffectiveRuleDocumentReader
 {
     internal static async Task<IReadOnlyDictionary<Guid, JsonElement>> ReadAsync(
         RulesCoreDbContext dbContext,
@@ -130,4 +130,17 @@ internal static class CharacterSupportEffectiveDocumentReader
         _ => source.Clone()
     };
     
+}
+
+
+/// <summary>
+/// Compatibility facade for existing Character support projections.
+/// </summary>
+internal static class CharacterSupportEffectiveDocumentReader
+{
+    internal static Task<IReadOnlyDictionary<Guid, System.Text.Json.JsonElement>> ReadAsync(
+        RulesCore.Infrastructure.Persistence.RulesCoreDbContext dbContext,
+        RulesCore.Application.Rules.ResolvedRulesCatalogView rules,
+        CancellationToken cancellationToken) =>
+        EffectiveRuleDocumentReader.ReadAsync(dbContext, rules, cancellationToken);
 }

@@ -148,7 +148,8 @@ Normal tool-consumer surfaces include:
 - campaign equivalents under `/api/campaigns/{campaignId}/rules`;
 - `POST /api/rules/character-mechanics/resolve` and its campaign equivalent;
 - `GET /api/rules/mechanics` and generic mechanic evaluation routes only through their effective-only compatibility DTO/validation boundary;
-- Character support and recovery semantic operations.
+- Character support and recovery semantic operations;
+- travel/environment effective catalog and resolution routes under `/api/rules/travel-environment` and their campaign equivalents. Travel definitions are structured in Rules Core; expedition state remains downstream.
 
 Rules Lawyer/admin surfaces include:
 
@@ -158,3 +159,6 @@ Rules Lawyer/admin surfaces include:
 - source comparison, authoring, adjudication, normalization, and publication workflows already protected by their existing authority checks.
 
 Internal services retain rich source/profile/provenance contracts. Hiding alternatives from normal consumers does not delete or collapse that information inside Rules Core.
+
+
+See `travel-environment-mechanics.md` for the travel/environment consumer contract, reviewed source projections, and Hex Crawl integration boundary.

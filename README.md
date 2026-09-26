@@ -110,6 +110,8 @@ Current campaign endpoints:
 
 See `docs/rules-layer.md` for global and campaign concept identity, patch semantics, preview/diff, publication, migration, authority, and resolution behavior. See `docs/authoring-workflow.md` for both global Rules Lawyer and campaign DM authoring state machines.
 
+Rules Core also exposes an effective-only travel/environment mechanics contract for downstream expedition tools. It preserves source/work/edition provenance, typed quantities and factors, and adjudication/conflict state without requiring Hex Crawl to parse source prose or choose an edition. See `docs/travel-environment-mechanics.md`.
+
 ## Deployment
 
 Pushes to `main` trigger `.github/workflows/deploy.yml`, which follows the same self-hosted deployment pattern as the main Dorks & Dice site. The workflow runs the test suite against disposable PostgreSQL 18, builds and smoke-tests `dorks-and-dice-rules-core:latest`, then recreates the production container through Docker Compose.
