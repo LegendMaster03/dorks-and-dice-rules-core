@@ -227,6 +227,20 @@ public sealed class RulesCoreBaselineBootstrapper(
                     competencySync.Conflicts.Select(value => $"- {value}")));
         }
 
+        var characterBuildSync = await new ReviewedBundledCharacterBuildBaselineSynchronizer(
+                dbContext,
+                globalRules)
+            .SynchronizeAsync(cancellationToken);
+        if (characterBuildSync.Conflicts.Count > 0)
+        {
+            throw new InvalidOperationException(
+                "Reviewed bundled SRD Character-building baseline synchronization requires Rules Lawyer review:"
+                + Environment.NewLine
+                + string.Join(
+                    Environment.NewLine,
+                    characterBuildSync.Conflicts.Select(value => $"- {value}")));
+        }
+
         PublishedRulesetRevisionView? publishedRuleset = null;
         if (await HasUnpublishedBootstrapDecisionAsync(cancellationToken)
             && await dbContext.GlobalRuleDecisions.AsNoTracking().AnyAsync(cancellationToken))
@@ -305,7 +319,7 @@ public sealed class RulesCoreBaselineBootstrapper(
 
         // The six Dorks & Dice house rules remain a fresh-install seed. An established Rules
         // Layer is never back-filled with house rules it did not already adopt. Reviewed SRD
-        // competency synchronization is separate and runs for both fresh and existing installs.
+        // baseline synchronization is separate and runs for both fresh and existing installs.
         if (hasNonBaselineConcept || hasPublishedRuleset || hasNonBootstrapDecision)
         {
             return false;
