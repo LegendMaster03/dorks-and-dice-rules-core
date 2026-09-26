@@ -109,17 +109,22 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         CharacterPrerequisiteResolver.Resolve(context);
         CharacterLegacyMechanicsResolver.Resolve(context, mechanicCatalog);
 
+        var projectedMechanics = context.Mechanics.Values
+            .Where(value => context.ShouldIncludeMechanic(value.MechanicKey))
+            .Select(value => value.Help is null
+                ? value with { Help = CharacterContextualHelpProjection.For(value.MechanicKey) }
+                : value)
+            .OrderBy(value => value.Kind, StringComparer.Ordinal)
+            .ThenBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(value => value.MechanicKey, StringComparer.Ordinal)
+            .ToArray();
+
         return new CharacterRulesProjectionView(
             rules.Scope,
             rules.CampaignId,
             rules.RevisionNumber,
             rules.PublishedAt,
-            context.Mechanics.Values
-                .Where(value => context.ShouldIncludeMechanic(value.MechanicKey))
-                .OrderBy(value => value.Kind, StringComparer.Ordinal)
-                .ThenBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
-                .ThenBy(value => value.MechanicKey, StringComparer.Ordinal)
-                .ToArray(),
+            projectedMechanics,
             context.CapabilityViews.Values.OrderBy(value => value.CapabilityKey, StringComparer.Ordinal).ToArray(),
             context.Grants.OrderBy(value => value.GrantKey, StringComparer.Ordinal).ToArray(),
             context.Effects.OrderBy(value => value.EffectKey, StringComparer.Ordinal).ToArray(),
@@ -145,6 +150,10 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                     value.Resolution.SourceEntityRevisionId,
                     value.Resolution.SourceRevisionNumber))
                 .OrderBy(value => value.ConceptKey, StringComparer.Ordinal)
+                .ToArray(),
+            HelpTopics: KnownCharacterContextualHelp.All
+                .Select(value => CharacterContextualHelpProjection.For(value.TopicKey)!)
+                .OrderBy(value => value.TopicKey, StringComparer.Ordinal)
                 .ToArray());
     }
 
