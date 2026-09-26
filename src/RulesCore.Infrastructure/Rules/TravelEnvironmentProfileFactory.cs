@@ -215,7 +215,10 @@ internal static class TravelEnvironmentProfileFactory
             FactorSemantic: "distance-multiplier",
             Scale: "overland"),
         BuildForcedMarch(dcPerExtraHour: 2),
-        BuildThreeFiveMountVehicleRates()
+        BuildThreeFiveMountVehicleRates(),
+        BuildThreeFiveHamperedMovement(),
+        BuildThreeFiveDownstreamCurrentSpeedBonus(),
+        BuildThreeFiveGuidedFloatDuration()
     ];
 
     private static TravelEnvironmentMechanicDefinition BuildWalkDistanceTable() =>
@@ -366,6 +369,63 @@ internal static class TravelEnvironmentProfileFactory
             Scale: "overland");
     }
 
+    private static TravelEnvironmentMechanicDefinition BuildThreeFiveHamperedMovement() =>
+        new(
+            "travel.environment.hampered-movement-cost",
+            TravelEnvironmentMechanicKinds.MovementCostFactor,
+            "Hampered movement cost",
+            TravelEnvironmentResolutionKinds.LookupFactor,
+            [
+                BooleanInput("difficult-terrain", true),
+                BooleanInput("obstacle", true),
+                BooleanInput("poor-visibility", true)
+            ],
+            FactorRows:
+            [
+                Factor(1m, ("difficult-terrain", "False"), ("obstacle", "False"), ("poor-visibility", "False")),
+                Factor(2m, ("difficult-terrain", "True"), ("obstacle", "False"), ("poor-visibility", "False")),
+                Factor(2m, ("difficult-terrain", "False"), ("obstacle", "True"), ("poor-visibility", "False")),
+                Factor(2m, ("difficult-terrain", "False"), ("obstacle", "False"), ("poor-visibility", "True")),
+                Factor(4m, ("difficult-terrain", "True"), ("obstacle", "True"), ("poor-visibility", "False")),
+                Factor(4m, ("difficult-terrain", "True"), ("obstacle", "False"), ("poor-visibility", "True")),
+                Factor(4m, ("difficult-terrain", "False"), ("obstacle", "True"), ("poor-visibility", "True")),
+                Factor(8m, ("difficult-terrain", "True"), ("obstacle", "True"), ("poor-visibility", "True"))
+            ],
+            FactorSemantic: "movement-cost-multiplier",
+            Scale: "movement-space");
+
+    private static TravelEnvironmentMechanicDefinition BuildThreeFiveDownstreamCurrentSpeedBonus() =>
+        new(
+            "travel.water.downstream-current-speed-bonus",
+            TravelEnvironmentMechanicKinds.DistanceRate,
+            "Typical downstream current speed bonus",
+            TravelEnvironmentResolutionKinds.LookupQuantity,
+            [],
+            QuantityRows:
+            [
+                Quantity(3m, "miles", "hour")
+            ],
+            Scale: "overland");
+
+    private static TravelEnvironmentMechanicDefinition BuildThreeFiveGuidedFloatDuration() =>
+        new(
+            "travel.water.guided-downstream-float-duration",
+            TravelEnvironmentMechanicKinds.Duration,
+            "Additional guided downstream float duration",
+            TravelEnvironmentResolutionKinds.LookupQuantity,
+            [
+                StringInput("travel-mode", true, "raft-or-barge", "keelboat", "rowboat"),
+                BooleanInput("guided", true),
+                BooleanInput("traveling-downstream", true)
+            ],
+            QuantityRows:
+            [
+                Quantity(14m, "hours", "day", ("travel-mode", "raft-or-barge"), ("guided", "True"), ("traveling-downstream", "True")),
+                Quantity(14m, "hours", "day", ("travel-mode", "keelboat"), ("guided", "True"), ("traveling-downstream", "True")),
+                Quantity(14m, "hours", "day", ("travel-mode", "rowboat"), ("guided", "True"), ("traveling-downstream", "True"))
+            ],
+            Scale: "overland");
+
     private static IReadOnlyList<TravelEnvironmentMechanicDefinition> BuildThreeFiveNavigation()
     {
         var options = new[]
@@ -452,10 +512,7 @@ internal static class TravelEnvironmentProfileFactory
             TravelEnvironmentResolutionKinds.ThresholdFactor,
             [
                 IntegerInput("elevation-feet", true),
-                new TravelEnvironmentInputDefinition(
-                    "subject-to-high-altitude-travel-cost",
-                    TravelEnvironmentInputValueKinds.Boolean,
-                    true)
+                BooleanInput("subject-to-high-altitude-travel-cost", true)
             ],
             ThresholdFactor: new TravelEnvironmentThresholdFactorDefinition(
                 "elevation-feet",
@@ -467,6 +524,9 @@ internal static class TravelEnvironmentProfileFactory
 
     private static TravelEnvironmentInputDefinition IntegerInput(string key, bool required) =>
         new(key, TravelEnvironmentInputValueKinds.Integer, required);
+
+    private static TravelEnvironmentInputDefinition BooleanInput(string key, bool required) =>
+        new(key, TravelEnvironmentInputValueKinds.Boolean, required);
 
     private static TravelEnvironmentInputDefinition StringInput(
         string key,
@@ -488,6 +548,12 @@ internal static class TravelEnvironmentProfileFactory
         new(
             selectors.Select(value => new TravelEnvironmentSelector(value.Key, value.Value)).ToArray(),
             new TravelEnvironmentQuantity(value, unit, perUnit));
+
+    private static TravelEnvironmentQuantityRow Quantity(
+        decimal value,
+        string unit,
+        string perUnit = null!) =>
+        new([], new TravelEnvironmentQuantity(value, unit, perUnit));
 
     private static TravelEnvironmentFactorRow Factor(
         decimal factor,

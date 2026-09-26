@@ -19,7 +19,7 @@ public sealed class TravelEnvironmentSourceProjectionIntegrationTests
         var threeFive = Definitions(
             Rule("rule.overland-movement.3-5e", "Overland Movement", "SRD35"),
             """
-            {"name":"Overland Movement","source":"SRD35","body":"Table: Terrain and Overland Movement. Forced March."}
+            {"name":"Overland Movement","source":"SRD35","body":"Table: Terrain and Overland Movement. Forced March. Hampered Movement. If going downstream, add the speed of the current. The vehicle can also float an additional 14 hours, if someone can guide it."}
             """);
 
         Assert.Contains(threeE, value => value.MechanicKey == "travel.overland.walk-distance");
@@ -54,6 +54,56 @@ public sealed class TravelEnvironmentSourceProjectionIntegrationTests
                     ["route"] = "road-or-trail"
                 }));
         Assert.Equal(.75m, mountainRoad.Factor);
+
+        var hampered = threeFive.Single(value => value.MechanicKey == "travel.environment.hampered-movement-cost");
+        var compoundedHampering = TravelEnvironmentMechanicEvaluator.Evaluate(
+            hampered,
+            new TravelEnvironmentResolutionInput(
+                BooleanInputs: new Dictionary<string, bool>
+                {
+                    ["difficult-terrain"] = true,
+                    ["obstacle"] = true,
+                    ["poor-visibility"] = false
+                }));
+        Assert.Equal(4m, compoundedHampering.Factor);
+        Assert.Equal("movement-cost-multiplier", hampered.FactorSemantic);
+
+        var currentBonus = threeFive.Single(value => value.MechanicKey == "travel.water.downstream-current-speed-bonus");
+        var currentBonusResult = TravelEnvironmentMechanicEvaluator.Evaluate(currentBonus);
+        Assert.Equal(3m, currentBonusResult.Quantity?.Value);
+        Assert.Equal("miles", currentBonusResult.Quantity?.Unit);
+        Assert.Equal("hour", currentBonusResult.Quantity?.PerUnit);
+
+        var guidedFloat = threeFive.Single(value => value.MechanicKey == "travel.water.guided-downstream-float-duration");
+        var guidedFloatResult = TravelEnvironmentMechanicEvaluator.Evaluate(
+            guidedFloat,
+            new TravelEnvironmentResolutionInput(
+                BooleanInputs: new Dictionary<string, bool>
+                {
+                    ["guided"] = true,
+                    ["traveling-downstream"] = true
+                },
+                StringInputs: new Dictionary<string, string>
+                {
+                    ["travel-mode"] = "rowboat"
+                }));
+        Assert.Equal(14m, guidedFloatResult.Quantity?.Value);
+        Assert.Equal("hours", guidedFloatResult.Quantity?.Unit);
+        Assert.Equal("day", guidedFloatResult.Quantity?.PerUnit);
+
+        var unguidedFloatResult = TravelEnvironmentMechanicEvaluator.Evaluate(
+            guidedFloat,
+            new TravelEnvironmentResolutionInput(
+                BooleanInputs: new Dictionary<string, bool>
+                {
+                    ["guided"] = false,
+                    ["traveling-downstream"] = true
+                },
+                StringInputs: new Dictionary<string, string>
+                {
+                    ["travel-mode"] = "rowboat"
+                }));
+        Assert.Equal(TravelEnvironmentEvaluationStates.NotApplicable, unguidedFloatResult.State);
     }
 
     [Fact]

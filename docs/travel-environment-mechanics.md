@@ -87,6 +87,23 @@ Important material differences are preserved:
 
 The hourly hustle-distance table is identical for the reviewed base speeds, so the stable `travel.overland.hustle-distance` definition can merge provenance when both editions are effective.
 
+The reviewed 3.5e source also projects mechanics that fit the existing generic contract without requiring a new effect engine:
+
+- `travel.environment.hampered-movement-cost`
+  - required booleans: `difficult-terrain`, `obstacle`, and `poor-visibility`;
+  - each applicable condition contributes the source x2 additional movement cost;
+  - the source-specific multiplication rule is preserved exactly, producing x1, x2, x4, or x8 from the explicit applicability inputs;
+  - scale is `movement-space`, not expedition distance.
+- `travel.water.downstream-current-speed-bonus`
+  - source typical downstream current contribution: 3 miles per hour;
+  - this is the additive current-speed contribution described by the source, not a replacement vehicle rate.
+- `travel.water.guided-downstream-float-duration`
+  - applies to `raft-or-barge`, `keelboat`, and `rowboat`;
+  - requires explicit `guided` and `traveling-downstream` booleans;
+  - resolves to the source-defined additional 14 hours of floating per day when both applicability conditions are true.
+
+The 14-hour duration is exposed directly instead of hard-coding the source's derived +42-mile example. This preserves the duration rule independently of the actual current speed used by a downstream travel consumer.
+
 If both editions are independently made effective under separate Rules Layer concepts, identical mechanics can reconcile at the consumer boundary while materially different mechanics become `conflicted`. No edition precedence is invented.
 
 ### SRD 3.5e — Getting Lost
@@ -119,7 +136,7 @@ The check uses stable competency concept key `skill.survival` and records the so
 
 The consequence keys are descriptive mechanical outputs only. Rules Core does not choose a random direction, persist that direction, decide whether the party is lost, or clear lost state.
 
-The source-specific +2 bonus from sufficient Knowledge (geography/local) ranks is not yet encoded. That requires a reviewed character-capability interaction contract rather than a hard-coded Hex Crawl exception.
+The source-specific +2 bonus from sufficient Knowledge (geography/local) ranks is not yet encoded. The source also grants +4 to the set-new-course Survival check when conditions suddenly improve while the party is lost. Both are check modifiers and require a reviewed modifier/capability composition contract rather than converting bonuses into artificial DC reductions.
 
 ### SRD 5.2.1 — Difficult Terrain
 
@@ -162,20 +179,21 @@ Character Sheet can continue to own character movement modes and character state
 
 ## Deferred mechanics for a later cycle
 
-The following source-supported areas were reviewed but are intentionally not implemented in this foundation cycle because they need additional generalized contracts rather than isolated travel special cases:
+The remaining source-supported areas are intentionally not implemented in this cycle because they need additional generalized contracts rather than isolated travel special cases:
 
 - extended-hustle endurance consequences, including source-specific damage progression and fatigue state;
 - forced-march damage/fatigue application after a failed check;
-- mounted forced-march and hustle endurance consequences;
+- mounted hustle endurance, mounted forced-march automatic failure, lethal damage, and resulting fatigue;
 - 3.5e Knowledge (geography/local) rank-based navigation modifiers;
+- the 3.5e +4 set-new-course check bonus when conditions suddenly improve while lost;
 - automatic composition of Navigator's Tools or other tool/competency proficiency into navigation checks;
-- persistent lost state, deviation, random-direction selection, regaining bearings, and navigation state transitions, which remain Hex Crawl responsibilities;
-- weather and visibility effects that modify checks, movement, attacks, perception, damage, or other systems;
+- persistent lost state, deviation, random-direction selection, unmistakable-landmark recovery, destination recovery, and other navigation state transitions, which remain Hex Crawl responsibilities;
+- weather and visibility effects that modify checks, movement, attacks, perception, damage, or other systems beyond the directly modeled 3.5e hampered-movement multiplier;
 - environmental damage, saves, conditions, exposure, exhaustion/fatigue, and similar effects that require a generalized effect/consequence contract;
 - encumbrance and carrying-state composition with Character movement capabilities;
 - difficult-terrain exceptions and special movement capabilities such as climb/swim-specific exemptions;
-- mount endurance, rider/load constraints, and actual mount occurrence state;
-- vehicle handling, crew/passenger constraints, currents, wind, and other vehicle/water-travel interactions;
+- rider/load occurrence state and character-specific mount capability composition;
+- vehicle handling, crew/passenger constraints, significant-current upstream restrictions, towing, variable current speed, wind, and other vehicle/water-travel interactions not representable as the current source-backed rates/durations;
 - source-defined travel responsibilities such as foraging, mapping, and scouting where the checked-in corpus does not yet provide a reviewed normalized mechanic contract;
 - 5e/5.5e character features that modify travel, which need character-capability/modifier composition rather than copying feature prose into the generic evaluator;
 - additional B/X, AD&D, or other source mechanics that are not currently present in the Rules Core source corpus.
@@ -188,9 +206,10 @@ These are intentionally unresolved rather than filled with invented defaults:
 
 - The checked-in 5e SRD corpus does not currently expose one reviewed top-level general Travel Pace entity comparable to the 3.x overland movement rules, so no 5e/5.5e universal expedition pace table is fabricated.
 - 5e Ranger Natural Explorer contains travel interactions, but those benefits should enter through a reviewed character-capability/modifier contract rather than be copied into the generic travel evaluator.
-- Navigator's Tools and similar tool/competency interactions are already represented in the universal competency model, but the first travel contract does not yet compose tool proficiency automatically into navigation checks.
-- The 3.5e Knowledge (geography/local) modifier for getting lost remains a character-capability interaction gap.
-- Weather, visibility, exhaustion/fatigue, encumbrance, difficult-terrain exceptions, mount endurance, vehicle handling, water current, and special movement features require additional source-specific profiles or interaction hooks.
+- Navigator's Tools and similar tool/competency interactions are already represented in the universal competency model, but the travel contract does not yet compose tool proficiency automatically into navigation checks.
+- The 3.5e Knowledge (geography/local) modifier and improved-conditions +4 modifier remain check-modifier composition gaps.
+- Weather, visibility, exhaustion/fatigue, encumbrance, difficult-terrain exceptions, mount endurance, vehicle handling, and special movement features require additional source-specific profiles or interaction hooks.
+- The 3.5e source supplies a typical 3-mile-per-hour downstream current contribution and 14 additional guided floating hours; actual non-typical current speed, significant-current upstream restrictions, towing, and navigation/handling state remain consumer or future-contract inputs.
 - 3e and 3.5e overland movement differ materially. Rules Core does not select one merely because it is newer.
 - DM-authored travel rates remain valid Hex Crawl inputs. They are not overwritten by the source-backed catalog.
 
@@ -205,6 +224,8 @@ A first integration can:
 3. use the `travel.navigation.*` mechanics to obtain source-backed DC/cadence/consequence metadata while Hex Crawl still owns navigation rolls and lost-state transitions;
 4. use `travel.overland.forced-march-check` for source-backed endurance DCs;
 5. optionally use `travel.overland.hustle-distance` where the expedition explicitly chooses the source-defined hustle mode, without assuming the unimplemented endurance consequences;
-6. surface `requires-adjudication` or `conflicted` mechanics as Rules Core configuration issues rather than choosing a profile in Hex Crawl.
+6. resolve `travel.environment.hampered-movement-cost` when a 3.5e movement-space procedure explicitly supplies the three applicability booleans;
+7. use `travel.water.downstream-current-speed-bonus` and `travel.water.guided-downstream-float-duration` when the expedition explicitly uses the reviewed 3.5e river-watercraft procedure;
+8. surface `requires-adjudication` or `conflicted` mechanics as Rules Core configuration issues rather than choosing a profile in Hex Crawl.
 
-Mounts, vehicles, weather, character-feature interactions, and generalized consequences can be layered in after those paths are stable.
+Character-dependent modifiers, generalized consequences, and the remaining vehicle/environment interactions should be layered in only after their reusable contracts exist.
