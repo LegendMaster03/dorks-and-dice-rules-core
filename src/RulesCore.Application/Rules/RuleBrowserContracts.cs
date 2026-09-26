@@ -22,27 +22,53 @@ public static class RuleBrowserRoutes
             ["feat"] = "feats",
             ["background"] = "backgrounds",
             ["optionalfeature"] = "optional-features",
-            ["race"] = "races",
             ["species"] = "species",
+            ["subspecies"] = "subspecies",
             ["item"] = "items",
             ["condition"] = "conditions",
             ["skill"] = "skills"
         };
 
     private static readonly IReadOnlyDictionary<string, string> SegmentToEntityType =
-        EntityTypeToSegment.ToDictionary(value => value.Value, value => value.Key, StringComparer.OrdinalIgnoreCase);
+        new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["monsters"] = "monster",
+            ["spells"] = "spell",
+            ["classes"] = "class",
+            ["subclasses"] = "subclass",
+            ["prestige-classes"] = "prestigeclass",
+            ["feats"] = "feat",
+            ["backgrounds"] = "background",
+            ["optional-features"] = "optionalfeature",
+            ["species"] = "species",
+            ["subspecies"] = "subspecies",
+            ["items"] = "item",
+            ["conditions"] = "condition",
+            ["skills"] = "skill",
+            // Legacy deep links remain resolvable, but normal navigation no longer emits them.
+            ["races"] = "species",
+            ["subraces"] = "subspecies"
+        };
 
     public static RuleLinkTargetView ForConcept(string entityType, string conceptKey)
     {
-        var normalizedType = RequireText(entityType, nameof(entityType)).ToLowerInvariant();
+        var normalizedType = NormalizeEntityType(RequireText(entityType, nameof(entityType)));
         var normalizedKey = RequireText(conceptKey, nameof(conceptKey)).ToLowerInvariant();
 
         if (EntityTypeToSegment.TryGetValue(normalizedType, out var segment))
         {
             var prefix = normalizedType + ".";
-            var routeKey = normalizedKey.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
-                ? normalizedKey[prefix.Length..]
-                : normalizedKey;
+            if (!normalizedKey.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+            {
+                // Persisted legacy keys such as race.elf remain stable identities. Use the generic
+                // route instead of fabricating a species.race.elf identity from the canonical type.
+                return new RuleLinkTargetView(
+                    ToolSlug,
+                    $"/rules/{Uri.EscapeDataString(normalizedKey)}",
+                    normalizedKey);
+            }
+
+            var routeKey = normalizedKey[prefix.Length..];
             return new RuleLinkTargetView(
                 ToolSlug,
                 $"/{segment}/{Uri.EscapeDataString(routeKey)}",
@@ -57,7 +83,7 @@ public static class RuleBrowserRoutes
 
     public static string CatalogPath(string entityType)
     {
-        var normalizedType = RequireText(entityType, nameof(entityType)).ToLowerInvariant();
+        var normalizedType = NormalizeEntityType(RequireText(entityType, nameof(entityType)));
         return EntityTypeToSegment.TryGetValue(normalizedType, out var segment)
             ? $"/{segment}"
             : $"/types/{Uri.EscapeDataString(normalizedType)}";
@@ -122,11 +148,23 @@ public static class RuleBrowserRoutes
         if (segments.Length == 2
             && string.Equals(segments[0], "types", StringComparison.OrdinalIgnoreCase))
         {
-            var dynamicType = Uri.UnescapeDataString(segments[1]).Trim().ToLowerInvariant();
+            var dynamicType = NormalizeEntityType(Uri.UnescapeDataString(segments[1]).Trim());
             return string.IsNullOrWhiteSpace(dynamicType) ? null : dynamicType;
         }
 
         return null;
+    }
+
+    private static string NormalizeEntityType(string value)
+    {
+        var normalized = value.Trim().ToLowerInvariant();
+        return normalized switch
+        {
+            "race" => "species",
+            "subrace" => "subspecies",
+            "prestigeclass" => "prestigeclass",
+            _ => normalized
+        };
     }
 
     private static string StripQueryAndFragment(string path)
