@@ -24,6 +24,17 @@ public sealed class TravelEnvironmentSourceProjectionIntegrationTests
 
         Assert.Contains(threeE, value => value.MechanicKey == "travel.overland.walk-distance");
         Assert.Contains(threeFive, value => value.MechanicKey == "travel.overland.walk-distance");
+        Assert.Contains(threeE, value => value.MechanicKey == "travel.overland.hustle-distance");
+        Assert.Contains(threeFive, value => value.MechanicKey == "travel.overland.hustle-distance");
+
+        var hustle = threeFive.Single(value => value.MechanicKey == "travel.overland.hustle-distance");
+        var hustleResult = TravelEnvironmentMechanicEvaluator.Evaluate(
+            hustle,
+            new TravelEnvironmentResolutionInput(
+                IntegerInputs: new Dictionary<string, int> { ["base-speed-feet"] = 30 }));
+        Assert.Equal(6m, hustleResult.Quantity?.Value);
+        Assert.Equal("miles", hustleResult.Quantity?.Unit);
+        Assert.Equal("hour", hustleResult.Quantity?.PerUnit);
 
         var threeEForcedMarch = threeE.Single(value => value.MechanicKey == "travel.overland.forced-march-check");
         var threeFiveForcedMarch = threeFive.Single(value => value.MechanicKey == "travel.overland.forced-march-check");
@@ -46,16 +57,18 @@ public sealed class TravelEnvironmentSourceProjectionIntegrationTests
     }
 
     [Fact]
-    public void ReviewedThreeFiveNavigationProjectsSurvivalDcAndCadence()
+    public void ReviewedThreeFiveNavigationProjectsLostStateChecksWithoutOwningLostState()
     {
         var definitions = Definitions(
             Rule("rule.wilderness.3-5e", "WILDERNESS, WEATHER, & ENVIRONMENT", "SRD35"),
             """
-            {"name":"WILDERNESS, WEATHER, & ENVIRONMENT","source":"SRD35","body":"### Getting Lost. Chance to Get Lost. Survival DC."}
+            {"name":"WILDERNESS, WEATHER, & ENVIRONMENT","source":"SRD35","body":"### Getting Lost. Chance to Get Lost. Survival DC. Recognizing that You’re Lost. Setting a New Course."}
             """);
-        var navigation = Assert.Single(definitions);
 
-        var result = TravelEnvironmentMechanicEvaluator.Evaluate(
+        Assert.Equal(3, definitions.Count);
+
+        var navigation = definitions.Single(value => value.MechanicKey == "travel.navigation.avoid-getting-lost");
+        var navigationResult = TravelEnvironmentMechanicEvaluator.Evaluate(
             navigation,
             new TravelEnvironmentResolutionInput(
                 StringListInputs: new Dictionary<string, IReadOnlyList<string>>
@@ -63,10 +76,32 @@ public sealed class TravelEnvironmentSourceProjectionIntegrationTests
                     ["risk-factors"] = ["mountain-with-map", "poor-visibility", "forest"]
                 }));
 
-        Assert.Equal("travel.navigation.avoid-getting-lost", navigation.MechanicKey);
-        Assert.Equal(15, result.Check?.Dc);
-        Assert.Equal("skill.survival", result.Check?.CompetencyConceptKey);
-        Assert.Equal("once-per-hour-or-portion", result.Check?.Cadence);
+        Assert.Equal(15, navigationResult.Check?.Dc);
+        Assert.Equal("skill.survival", navigationResult.Check?.CompetencyConceptKey);
+        Assert.Equal("once-per-hour-or-portion", navigationResult.Check?.Cadence);
+
+        var recognize = definitions.Single(value => value.MechanicKey == "travel.navigation.recognize-lost");
+        var missingRecognitionInput = TravelEnvironmentMechanicEvaluator.Evaluate(recognize);
+        Assert.Equal(TravelEnvironmentEvaluationStates.InputRequired, missingRecognitionInput.State);
+        Assert.Equal(["random-travel-hours"], missingRecognitionInput.MissingInputKeys);
+
+        var recognitionResult = TravelEnvironmentMechanicEvaluator.Evaluate(
+            recognize,
+            new TravelEnvironmentResolutionInput(
+                IntegerInputs: new Dictionary<string, int> { ["random-travel-hours"] = 3 }));
+        Assert.Equal(17, recognitionResult.Check?.Dc);
+        Assert.Equal("skill.survival", recognitionResult.Check?.CompetencyConceptKey);
+        Assert.Equal("once-per-hour-of-random-travel", recognitionResult.Check?.Cadence);
+        Assert.Equal("remain-unaware-lost", recognitionResult.Check?.FailureConsequenceKey);
+
+        var setCourse = definitions.Single(value => value.MechanicKey == "travel.navigation.set-new-course");
+        var setCourseResult = TravelEnvironmentMechanicEvaluator.Evaluate(
+            setCourse,
+            new TravelEnvironmentResolutionInput(
+                IntegerInputs: new Dictionary<string, int> { ["random-travel-hours"] = 3 }));
+        Assert.Equal(21, setCourseResult.Check?.Dc);
+        Assert.Equal("skill.survival", setCourseResult.Check?.CompetencyConceptKey);
+        Assert.Equal("choose-random-direction", setCourseResult.Check?.FailureConsequenceKey);
     }
 
     [Fact]

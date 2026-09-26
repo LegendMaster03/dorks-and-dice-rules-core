@@ -97,9 +97,11 @@ internal static class TravelEnvironmentProfileFactory
         if (string.Equals(sourceCode, "SRD35", StringComparison.Ordinal)
             && string.Equals(sourceName, "WILDERNESS, WEATHER, & ENVIRONMENT", StringComparison.Ordinal)
             && ContainsBody(document, "Chance to Get Lost")
-            && ContainsBody(document, "Survival DC"))
+            && ContainsBody(document, "Survival DC")
+            && ContainsBody(document, "Recognizing that")
+            && ContainsBody(document, "Setting a New Course"))
         {
-            return [BuildThreeFiveNavigation()];
+            return BuildThreeFiveNavigation();
         }
 
         if (string.Equals(sourceCode, "SRD52", StringComparison.Ordinal)
@@ -123,6 +125,7 @@ internal static class TravelEnvironmentProfileFactory
     private static IReadOnlyList<TravelEnvironmentMechanicDefinition> BuildThreeEOverland() =>
     [
         BuildWalkDistanceTable(),
+        BuildHustleDistanceTable(),
         BuildTravelDayDurationTable(),
         new(
             "travel.overland.terrain-distance-factor",
@@ -168,6 +171,7 @@ internal static class TravelEnvironmentProfileFactory
     private static IReadOnlyList<TravelEnvironmentMechanicDefinition> BuildThreeFiveOverland() =>
     [
         BuildWalkDistanceTable(),
+        BuildHustleDistanceTable(),
         BuildTravelDayDurationTable(),
         new(
             "travel.overland.terrain-distance-factor",
@@ -234,6 +238,22 @@ internal static class TravelEnvironmentProfileFactory
                 Quantity(16m, "miles", "day", ("base-speed-feet", "20"), ("period", "day")),
                 Quantity(24m, "miles", "day", ("base-speed-feet", "30"), ("period", "day")),
                 Quantity(32m, "miles", "day", ("base-speed-feet", "40"), ("period", "day"))
+            ],
+            Scale: "overland");
+
+    private static TravelEnvironmentMechanicDefinition BuildHustleDistanceTable() =>
+        new(
+            "travel.overland.hustle-distance",
+            TravelEnvironmentMechanicKinds.DistanceRate,
+            "Overland hustling distance",
+            TravelEnvironmentResolutionKinds.LookupQuantity,
+            [IntegerInput("base-speed-feet", true)],
+            QuantityRows:
+            [
+                Quantity(3m, "miles", "hour", ("base-speed-feet", "15")),
+                Quantity(4m, "miles", "hour", ("base-speed-feet", "20")),
+                Quantity(6m, "miles", "hour", ("base-speed-feet", "30")),
+                Quantity(8m, "miles", "hour", ("base-speed-feet", "40"))
             ],
             Scale: "overland");
 
@@ -346,7 +366,7 @@ internal static class TravelEnvironmentProfileFactory
             Scale: "overland");
     }
 
-    private static TravelEnvironmentMechanicDefinition BuildThreeFiveNavigation()
+    private static IReadOnlyList<TravelEnvironmentMechanicDefinition> BuildThreeFiveNavigation()
     {
         var options = new[]
         {
@@ -357,24 +377,60 @@ internal static class TravelEnvironmentProfileFactory
             new TravelEnvironmentCheckOption("mountain-without-map", 12),
             new TravelEnvironmentCheckOption("forest", 15)
         };
-        return new TravelEnvironmentMechanicDefinition(
-            "travel.navigation.avoid-getting-lost",
-            TravelEnvironmentMechanicKinds.CheckDc,
-            "Avoid getting lost",
-            TravelEnvironmentResolutionKinds.MaximumApplicableCheckDc,
-            [new TravelEnvironmentInputDefinition(
-                "risk-factors",
-                TravelEnvironmentInputValueKinds.StringList,
-                true,
-                options.Select(value => value.Key).ToArray())],
-            MaximumCheck: new TravelEnvironmentMaximumCheckDefinition(
-                "risk-factors",
-                options,
-                null,
-                "skill.survival",
-                "once-per-hour-or-portion",
-                "become-lost"),
-            Scale: "local-or-overland");
+
+        return
+        [
+            new TravelEnvironmentMechanicDefinition(
+                "travel.navigation.avoid-getting-lost",
+                TravelEnvironmentMechanicKinds.CheckDc,
+                "Avoid getting lost",
+                TravelEnvironmentResolutionKinds.MaximumApplicableCheckDc,
+                [new TravelEnvironmentInputDefinition(
+                    "risk-factors",
+                    TravelEnvironmentInputValueKinds.StringList,
+                    true,
+                    options.Select(value => value.Key).ToArray())],
+                MaximumCheck: new TravelEnvironmentMaximumCheckDefinition(
+                    "risk-factors",
+                    options,
+                    null,
+                    "skill.survival",
+                    "once-per-hour-or-portion",
+                    "become-lost"),
+                Scale: "local-or-overland"),
+            new TravelEnvironmentMechanicDefinition(
+                "travel.navigation.recognize-lost",
+                TravelEnvironmentMechanicKinds.CheckDc,
+                "Recognize that the party is lost",
+                TravelEnvironmentResolutionKinds.LinearCheckDc,
+                [IntegerInput("random-travel-hours", true)],
+                LinearCheck: new TravelEnvironmentLinearCheckDefinition(
+                    20,
+                    "random-travel-hours",
+                    -1,
+                    1,
+                    null,
+                    "skill.survival",
+                    "once-per-hour-of-random-travel",
+                    "remain-unaware-lost"),
+                Scale: "local-or-overland"),
+            new TravelEnvironmentMechanicDefinition(
+                "travel.navigation.set-new-course",
+                TravelEnvironmentMechanicKinds.CheckDc,
+                "Set a new course while lost",
+                TravelEnvironmentResolutionKinds.LinearCheckDc,
+                [IntegerInput("random-travel-hours", true)],
+                LinearCheck: new TravelEnvironmentLinearCheckDefinition(
+                    15,
+                    "random-travel-hours",
+                    2,
+                    0,
+                    null,
+                    "skill.survival",
+                    "when-setting-new-course",
+                    "choose-random-direction"),
+                Scale: "local-or-overland")
+        ];
     }
 
     private static TravelEnvironmentMechanicDefinition BuildFiveTwoDifficultTerrain() =>
