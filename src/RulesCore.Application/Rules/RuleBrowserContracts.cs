@@ -36,7 +36,7 @@ public static class RuleBrowserRoutes
             ["spells"] = "spell",
             ["classes"] = "class",
             ["subclasses"] = "subclass",
-            ["prestige-classes"] = "prestigeclass",
+            ["prestige-classes"] = "prestigeClass",
             ["feats"] = "feat",
             ["backgrounds"] = "background",
             ["optional-features"] = "optionalfeature",
@@ -126,7 +126,7 @@ public static class RuleBrowserRoutes
         }
 
         entityType = resolvedType;
-        conceptKey = $"{resolvedType}.{routeKey}";
+        conceptKey = $"{resolvedType}.{routeKey}".ToLowerInvariant();
         return true;
     }
 
@@ -162,7 +162,6 @@ public static class RuleBrowserRoutes
         {
             "race" => "species",
             "subrace" => "subspecies",
-            "prestigeclass" => "prestigeclass",
             _ => normalized
         };
     }
