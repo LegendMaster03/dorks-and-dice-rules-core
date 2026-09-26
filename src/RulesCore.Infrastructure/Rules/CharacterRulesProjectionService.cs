@@ -16,7 +16,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 
     private static readonly IReadOnlyList<ICharacterRuleProjectionModule> Modules =
     [
-        new RaceCharacterRuleProjectionModule(),
+        new SpeciesCharacterRuleProjectionModule(),
         new ClassCharacterRuleProjectionModule(),
         new ItemCharacterRuleProjectionModule(),
         new SpellCharacterRuleProjectionModule(),
@@ -156,5 +156,4 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             .DistinctBy(value => value.RelationshipKey, StringComparer.Ordinal)
             .OrderBy(value => value.RelationshipKey, StringComparer.Ordinal)
             .ToArray();
-
 }
