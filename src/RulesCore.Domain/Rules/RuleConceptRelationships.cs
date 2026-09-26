@@ -5,6 +5,8 @@ public static class RuleConceptEntityTypes
     public const string Class = "class";
     public const string Subclass = "subclass";
     public const string PrestigeClass = "prestigeClass";
+    public const string Species = "species";
+    public const string Subspecies = "subspecies";
 
     public static string Normalize(string value)
     {
@@ -31,6 +33,16 @@ public static class RuleConceptEntityTypes
         {
             return PrestigeClass;
         }
+        if (string.Equals(normalized, Species, StringComparison.OrdinalIgnoreCase)
+            || string.Equals(normalized, "race", StringComparison.OrdinalIgnoreCase))
+        {
+            return Species;
+        }
+        if (string.Equals(normalized, Subspecies, StringComparison.OrdinalIgnoreCase)
+            || string.Equals(normalized, "subrace", StringComparison.OrdinalIgnoreCase))
+        {
+            return Subspecies;
+        }
 
         return normalized.ToLowerInvariant();
     }
@@ -39,4 +51,5 @@ public static class RuleConceptEntityTypes
 public static class RuleConceptRelationshipKinds
 {
     public const string ParentClass = "parent-class";
+    public const string ParentSpecies = "parent-species";
 }
