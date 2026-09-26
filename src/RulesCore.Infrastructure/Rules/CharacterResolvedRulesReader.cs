@@ -4,9 +4,10 @@ namespace RulesCore.Infrastructure.Rules;
 
 /// <summary>
 /// Reads complete global or campaign resolved-rules catalogs across the paged public
-/// catalog service. Consumers should not duplicate pagination or scope reconstruction.
+/// catalog service. Consumer domains should reuse this reader rather than duplicate
+/// pagination or scope reconstruction.
 /// </summary>
-internal sealed class CharacterResolvedRulesReader(
+internal sealed class ResolvedRulesSnapshotReader(
     IResolvedRulesCatalogService resolvedRules)
 {
     private const int PageSize = 500;
@@ -76,4 +77,25 @@ internal sealed class CharacterResolvedRulesReader(
             []);
         return page with { Rules = all };
     }
+}
+
+/// <summary>
+/// Compatibility wrapper for the established Character consumer. New consumer domains
+/// should use <see cref="ResolvedRulesSnapshotReader"/> directly.
+/// </summary>
+internal sealed class CharacterResolvedRulesReader(
+    IResolvedRulesCatalogService resolvedRules)
+{
+    private readonly ResolvedRulesSnapshotReader inner = new(resolvedRules);
+
+    internal Task<ResolvedRulesCatalogView> ReadAllGlobalAsync(
+        string? userId,
+        CancellationToken cancellationToken) =>
+        inner.ReadAllGlobalAsync(userId, cancellationToken);
+
+    internal Task<ResolvedRulesCatalogView> ReadAllCampaignAsync(
+        Guid campaignId,
+        string userId,
+        CancellationToken cancellationToken) =>
+        inner.ReadAllCampaignAsync(campaignId, userId, cancellationToken);
 }
