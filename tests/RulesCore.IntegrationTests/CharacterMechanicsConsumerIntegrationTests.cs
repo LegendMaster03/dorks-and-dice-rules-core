@@ -2520,7 +2520,7 @@ public sealed class CharacterMechanicsConsumerIntegrationTests
             var speciesFeature = Assert.Single(
                 global.Features,
                 value => value.FeatureKey == $"feature.{conceptKey}");
-            Assert.Equal("race", speciesFeature.GrantingSourceKind);
+            Assert.Equal("species", speciesFeature.GrantingSourceKind);
             Assert.Equal(conceptKey, speciesFeature.SourceConceptKey);
             Assert.Equal(speciesFeature.FeatureKey, speciesFeature.OccurrenceKey);
 
