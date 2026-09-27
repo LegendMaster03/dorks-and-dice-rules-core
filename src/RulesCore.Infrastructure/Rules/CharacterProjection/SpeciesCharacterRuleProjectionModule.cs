@@ -4,19 +4,21 @@ using RulesCore.Domain.Rules;
 
 namespace RulesCore.Infrastructure.Rules.CharacterProjection;
 
-internal sealed class RaceCharacterRuleProjectionModule : ICharacterRuleProjectionModule
+internal sealed class SpeciesCharacterRuleProjectionModule : ICharacterRuleProjectionModule
 {
     public bool Handles(CharacterProjectionRule rule, CharacterProjectionContext context) =>
         context.IsSelected(rule.Catalog.ConceptKey)
-        && (string.Equals(rule.Catalog.EntityType, "race", StringComparison.OrdinalIgnoreCase)
-            || string.Equals(rule.Catalog.EntityType, "species", StringComparison.OrdinalIgnoreCase));
+        && (string.Equals(rule.Catalog.EntityType, RuleConceptEntityTypes.Species, StringComparison.OrdinalIgnoreCase)
+            || string.Equals(rule.Catalog.EntityType, RuleConceptEntityTypes.Subspecies, StringComparison.OrdinalIgnoreCase));
 
     public void Project(CharacterProjectionRule rule, CharacterProjectionContext context)
     {
         context.AddFeature(
             $"feature.{rule.Catalog.ConceptKey}",
             rule.Catalog.DisplayName,
-            "race-species",
+            string.Equals(rule.Catalog.EntityType, RuleConceptEntityTypes.Subspecies, StringComparison.OrdinalIgnoreCase)
+                ? "subspecies"
+                : "species",
             CharacterResolutionStates.Resolved,
             rule.Catalog.ConceptKey,
             rule.Provenance,
@@ -25,7 +27,6 @@ internal sealed class RaceCharacterRuleProjectionModule : ICharacterRuleProjecti
         ProjectSize(rule, context);
         ProjectMovement(rule, context);
     }
-
 
     private static void ProjectSize(
         CharacterProjectionRule rule,
@@ -101,13 +102,11 @@ internal sealed class RaceCharacterRuleProjectionModule : ICharacterRuleProjecti
             return;
         }
 
-        var normalizedSelection =
-            CharacterProjectionContext.NormalizeSizeCategory(selected);
-        var resolved = normalized.FirstOrDefault(value =>
-            string.Equals(
-                value,
-                normalizedSelection,
-                StringComparison.OrdinalIgnoreCase));
+        var normalizedSelection = CharacterProjectionContext.NormalizeSizeCategory(selected);
+        var resolved = normalized.FirstOrDefault(value => string.Equals(
+            value,
+            normalizedSelection,
+            StringComparison.OrdinalIgnoreCase));
         if (resolved is null)
         {
             context.ChoiceViews[choiceKey] = new CharacterChoiceView(
@@ -153,10 +152,7 @@ internal sealed class RaceCharacterRuleProjectionModule : ICharacterRuleProjecti
             resolved,
             rule.Catalog.ConceptKey,
             rule.Provenance);
-        context.AddSizeCategory(
-            resolved,
-            rule.Catalog.ConceptKey,
-            rule.Provenance);
+        context.AddSizeCategory(resolved, rule.Catalog.ConceptKey, rule.Provenance);
     }
 
     private static void ProjectMovement(CharacterProjectionRule rule, CharacterProjectionContext context)
@@ -220,6 +216,4 @@ internal sealed class RaceCharacterRuleProjectionModule : ICharacterRuleProjecti
                 rule.Provenance);
         }
     }
-
 }
-

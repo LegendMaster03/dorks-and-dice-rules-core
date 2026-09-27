@@ -72,7 +72,7 @@ public sealed class LegacyNormalizationIntegrationTests
             Assert.Equal(2, candidates.Count);
             Assert.All(candidates, value =>
             {
-                Assert.Equal("race.dwarf", value.SuggestedConceptKey);
+                Assert.Equal("species.dwarf", value.SuggestedConceptKey);
                 Assert.Equal(SourceNormalizationSuggestionKinds.NewConcept, value.SuggestionKind);
             });
 
@@ -80,7 +80,7 @@ public sealed class LegacyNormalizationIntegrationTests
             Assert.NotNull(acceptedThree);
             Assert.True(acceptedThree!.CreatedConcept);
             Assert.True(acceptedThree.CreatedBinding);
-            Assert.Equal("race.dwarf", acceptedThree.Concept.Key);
+            Assert.Equal("species.dwarf", acceptedThree.Concept.Key);
 
             var remaining = await normalizer.GetCandidatesAsync(
                 "rules-lawyer",

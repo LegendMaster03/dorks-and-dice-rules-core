@@ -40,8 +40,6 @@ public sealed class BaselineBootstrapIntegrationTests
         await ResetAsync(db);
         try
         {
-            // Simulate an installation upgraded from the old bootstrap path. Only an exact,
-            // untouched historical seed is stale bootstrap state and may be retired.
             var historicalSeed = HistoricalHostedDefinition("builtin-wotc-srd-5-1");
             await hostedService.SetAsync(
                 "builtin-wotc-srd-5-1",
@@ -136,9 +134,6 @@ public sealed class BaselineBootstrapIntegrationTests
                 new SetGlobalRuleDecisionRequest(selectedRevision, "User-maintained baseline decision."),
                 "rules-lawyer");
 
-            // A revision-1 definition under a reserved key is still deliberate configuration
-            // when any content differs from the historical bootstrap seed. Do not delete it
-            // merely because it was created by the old bootstrap actor.
             var modifiedBootstrap = await hostedService.SetAsync(
                 "builtin-wotc-srd-5-1",
                 historicalSeed with { Note = "Locally modified bootstrap-owned source policy" },
@@ -161,7 +156,6 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Equal(BootstrapActor, retainedBootstrap.CreatedByUserId);
             Assert.Equal("Locally modified bootstrap-owned source policy", retainedBootstrap.Note);
 
-            // A later Rules Lawyer revision is also deliberate policy and must remain intact.
             var revised = await hostedService.SetAsync(
                 "builtin-wotc-srd-5-1",
                 historicalSeed with { Note = "Rules Lawyer retained source policy" },
@@ -323,8 +317,6 @@ public sealed class BaselineBootstrapIntegrationTests
                 value => value.ConceptKey == "skill.balance");
             Assert.Equal("dexterity", balance.Competency!.GoverningAbilityKey);
 
-            // Universal family taxonomy is a reviewed Rules-layer catalog and therefore does
-            // not depend on whether one serialized SRD snapshot emitted every specialty row.
             Assert.Contains("skill.craft", publishedCompetencyKeys);
             Assert.Contains("skill.perform", publishedCompetencyKeys);
             Assert.Contains("skill.profession", publishedCompetencyKeys);
@@ -369,22 +361,12 @@ public sealed class BaselineBootstrapIntegrationTests
                         Assert.True(child.Mechanics.SupportsRanks);
                         Assert.True(child.Mechanics.SupportsClassSkillState);
                         Assert.True(child.Mechanics.SupportsTrainingState);
-                        Assert.Equal(
-                            (bool?)expectation.TrainedOnly,
-                            child.Mechanics.TrainedOnly);
+                        Assert.Equal((bool?)expectation.TrainedOnly, child.Mechanics.TrainedOnly);
                         Assert.Equal(false, child.Mechanics.ArmorCheckPenaltyApplies);
-                        Assert.Equal(
-                            "fixed",
-                            child.Mechanics.GoverningAbility.ResolutionKind);
-                        Assert.Equal(
-                            expectation.Ability,
-                            child.Mechanics.GoverningAbility.FixedAbilityKey);
-                        Assert.Equal(
-                            [expectation.Ability],
-                            child.Mechanics.GoverningAbility.AbilityKeys);
-                        Assert.Contains(
-                            "ranked-skill",
-                            child.Mechanics.EvaluationProfileKeys);
+                        Assert.Equal("fixed", child.Mechanics.GoverningAbility.ResolutionKind);
+                        Assert.Equal(expectation.Ability, child.Mechanics.GoverningAbility.FixedAbilityKey);
+                        Assert.Equal([expectation.Ability], child.Mechanics.GoverningAbility.AbilityKeys);
+                        Assert.Contains("ranked-skill", child.Mechanics.EvaluationProfileKeys);
                     });
             }
 
@@ -419,47 +401,28 @@ public sealed class BaselineBootstrapIntegrationTests
                 value => value.SemanticKey == "competency.alchemy");
             Assert.Equal("Alchemy", universalAlchemy.DisplayName);
             Assert.Equal("Craft", universalAlchemy.FamilyName);
-            Assert.Equal(
-                "competency.alchemy.training",
-                universalAlchemy.TrainingStateKey);
+            Assert.Equal("competency.alchemy.training", universalAlchemy.TrainingStateKey);
             Assert.NotNull(universalAlchemy.Mechanics);
-            Assert.Equal(
-                "fixed",
-                universalAlchemy.Mechanics!.GoverningAbility.ResolutionKind);
-            Assert.Equal(
-                "intelligence",
-                universalAlchemy.Mechanics.GoverningAbility.FixedAbilityKey);
+            Assert.Equal("fixed", universalAlchemy.Mechanics!.GoverningAbility.ResolutionKind);
+            Assert.Equal("intelligence", universalAlchemy.Mechanics.GoverningAbility.FixedAbilityKey);
 
             var catalogOnlyCraft = universalCompetencies
                 .Where(value => !value.IsFamily
-                    && string.Equals(
-                        value.FamilyName,
-                        "Craft",
-                        StringComparison.Ordinal))
+                    && string.Equals(value.FamilyName, "Craft", StringComparison.Ordinal))
                 .FirstOrDefault(value => value.Profiles.Any(profile =>
-                    string.Equals(
-                        profile.ProfileOrigin,
-                        "rules",
-                        StringComparison.Ordinal)));
+                    string.Equals(profile.ProfileOrigin, "rules", StringComparison.Ordinal)));
             Assert.NotNull(catalogOnlyCraft);
             var rulesProfile = Assert.Single(
                 catalogOnlyCraft!.Profiles,
-                value => string.Equals(
-                    value.ProfileOrigin,
-                    "rules",
-                    StringComparison.Ordinal));
+                value => string.Equals(value.ProfileOrigin, "rules", StringComparison.Ordinal));
             Assert.Equal(Guid.Empty, rulesProfile.SourceEntityRevisionId);
             Assert.Empty(rulesProfile.SourceAttributions ?? []);
             Assert.DoesNotContain(
-                catalogOnlyCraft.Facets.SelectMany(
-                    value => value.ProfileSourceEntityRevisionIds),
+                catalogOnlyCraft.Facets.SelectMany(value => value.ProfileSourceEntityRevisionIds),
                 value => value == Guid.Empty);
             Assert.Contains(
                 catalog.Mechanics,
-                value => string.Equals(
-                        value.MechanicKey,
-                        catalogOnlyCraft.SemanticKey,
-                        StringComparison.Ordinal)
+                value => string.Equals(value.MechanicKey, catalogOnlyCraft.SemanticKey, StringComparison.Ordinal)
                     && value.RuleConceptId is null
                     && value.SourceAttributions.Count == 0);
 
@@ -475,12 +438,8 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.NotNull(catalogOnlyEvaluation);
             Assert.Equal(7, catalogOnlyEvaluation.Value);
 
-            var oldCraftConceptKey =
-                KnownUniversalCompetencies.CompatibilityConceptKeys(
-                        catalogOnlyCraft.IdentityKey)
-                    .First(value => value.StartsWith(
-                        "skill.craft-",
-                        StringComparison.Ordinal));
+            var oldCraftConceptKey = KnownUniversalCompetencies.CompatibilityConceptKeys(catalogOnlyCraft.IdentityKey)
+                .First(value => value.StartsWith("skill.craft-", StringComparison.Ordinal));
             var characterProjection = new CharacterRulesProjectionService(db);
             var compatibilityProjection = await characterProjection.ResolveGlobalAsync(
                 new CharacterRulesProjectionRequest(
@@ -502,10 +461,7 @@ public sealed class BaselineBootstrapIntegrationTests
                 userId: null);
             var projectedCatalogOnlyCraft = Assert.Single(
                 compatibilityProjection.Mechanics,
-                value => string.Equals(
-                    value.MechanicKey,
-                    catalogOnlyCraft.SemanticKey,
-                    StringComparison.Ordinal));
+                value => string.Equals(value.MechanicKey, catalogOnlyCraft.SemanticKey, StringComparison.Ordinal));
             Assert.Equal(CharacterResolutionStates.Resolved, projectedCatalogOnlyCraft.State);
             Assert.Equal(7, projectedCatalogOnlyCraft.NumericValue);
             var projectedClassSkill = Assert.Single(
@@ -517,10 +473,7 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.True(projectedClassSkill.IsQualified);
             Assert.DoesNotContain(
                 universalCompetencies,
-                value => string.Equals(
-                    value.FamilyName,
-                    "Knowledge",
-                    StringComparison.OrdinalIgnoreCase));
+                value => string.Equals(value.FamilyName, "Knowledge", StringComparison.OrdinalIgnoreCase));
 
             var search = Assert.Single(
                 competencyMechanics,
@@ -554,14 +507,11 @@ public sealed class BaselineBootstrapIntegrationTests
                 .ToArrayAsync();
             if (psionicSourceNames.Length > 0)
             {
-                var psionicKeys = await ReadReviewedCompetencyConceptKeysAsync(
-                    db,
-                    psionicSourceNames);
+                var psionicKeys = await ReadReviewedCompetencyConceptKeysAsync(db, psionicSourceNames);
                 Assert.NotEmpty(psionicKeys);
                 Assert.True(psionicKeys.All(publishedCompetencyKeys.Contains));
 
-                if (psionicSourceNames.Any(value =>
-                        string.Equals(value, "Psionics", StringComparison.OrdinalIgnoreCase)))
+                if (psionicSourceNames.Any(value => string.Equals(value, "Psionics", StringComparison.OrdinalIgnoreCase)))
                 {
                     Assert.Contains("skill.psionics", publishedCompetencyKeys);
                     Assert.DoesNotContain("skill.knowledge-psionics", publishedCompetencyKeys);
@@ -592,7 +542,6 @@ public sealed class BaselineBootstrapIntegrationTests
         {
             await bootstrapper.EnsureAsync();
             var fixture = await FindReviewedMultiImplementationCompetencyAsync(db);
-
             await ClearRulesLayerAsync(db);
             await MakeReviewedCompetencyConflictAsync(db, fixture);
 
@@ -675,9 +624,6 @@ public sealed class BaselineBootstrapIntegrationTests
             var conflictedConcept = await db.RuleConcepts.SingleAsync(value => value.Key == fixture.ConceptKey);
             Assert.True(await db.RuleConceptSourceBindings.AnyAsync(value => value.RuleConceptId == conflictedConcept.Id));
             Assert.False(await db.GlobalRuleDecisions.AnyAsync(value => value.RuleConceptId == conflictedConcept.Id));
-
-            // Safe decisions are allowed to persist as unpublished work for a later successful
-            // synchronization. The failed invocation must not turn them into an immutable revision.
             Assert.True(await db.GlobalRuleDecisions.CountAsync() > 6);
         }
         finally
@@ -744,23 +690,21 @@ public sealed class BaselineBootstrapIntegrationTests
         await ResetAsync(db);
         try
         {
-            // Hydrate the reviewed Source Layer once, then reduce only the Rules Layer to the
-            // historical production shape: the six Dorks & Dice house rules in revision 1.
             await bootstrapper.EnsureAsync();
-            var competencyConceptIds = await db.RuleConcepts
-                .Where(value => value.EntityType == "skill" || value.EntityType == "tool")
+            var nonHouseRuleConceptIds = await db.RuleConcepts
+                .Where(value => value.EntityType != "houserule")
                 .Select(value => value.Id)
                 .ToArrayAsync();
             await db.RulesetRevisionEntries.ExecuteDeleteAsync();
             await db.RulesetRevisions.ExecuteDeleteAsync();
             await db.GlobalRuleDecisions
-                .Where(value => competencyConceptIds.Contains(value.RuleConceptId))
+                .Where(value => nonHouseRuleConceptIds.Contains(value.RuleConceptId))
                 .ExecuteDeleteAsync();
             await db.RuleConceptSourceBindings
-                .Where(value => competencyConceptIds.Contains(value.RuleConceptId))
+                .Where(value => nonHouseRuleConceptIds.Contains(value.RuleConceptId))
                 .ExecuteDeleteAsync();
             await db.RuleConcepts
-                .Where(value => competencyConceptIds.Contains(value.Id))
+                .Where(value => nonHouseRuleConceptIds.Contains(value.Id))
                 .ExecuteDeleteAsync();
             db.ChangeTracker.Clear();
 
@@ -816,11 +760,8 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Equal(decisionCount, await db.GlobalRuleDecisions.CountAsync());
             Assert.Equal(2, await db.RulesetRevisions.CountAsync());
 
-            var mechanics = await new CharacterMechanicsConsumerService(db)
-                .GetGlobalAsync(userId: null);
-            var knowledge = Assert.Single(
-                mechanics.Mechanics,
-                value => value.ConceptKey == "skill.arcana");
+            var mechanics = await new CharacterMechanicsConsumerService(db).GetGlobalAsync(userId: null);
+            var knowledge = Assert.Single(mechanics.Mechanics, value => value.ConceptKey == "skill.arcana");
             Assert.NotNull(knowledge.Competency);
             Assert.All(
                 knowledge.Competency!.Profiles,
@@ -895,9 +836,7 @@ public sealed class BaselineBootstrapIntegrationTests
             Assert.Equal(human.Value.Id, latest.Id);
             Assert.Equal(human.Value.DecisionNumber, latest.DecisionNumber);
             Assert.Equal("rules-lawyer", latest.CreatedByUserId);
-            Assert.Equal(
-                2,
-                await db.GlobalRuleDecisions.CountAsync(value => value.RuleConceptId == search.Id));
+            Assert.Equal(2, await db.GlobalRuleDecisions.CountAsync(value => value.RuleConceptId == search.Id));
             Assert.Equal(revisionCount, await db.RulesetRevisions.CountAsync());
         }
         finally
@@ -913,9 +852,7 @@ public sealed class BaselineBootstrapIntegrationTests
         var type = typeof(RulesCoreBaselineBootstrapper).Assembly.GetType(
             "RulesCore.Infrastructure.Bootstrap.ReviewedBundledCompetencyBaselineSynchronizer",
             throwOnError: true)!;
-        var constructor = type.GetConstructors(
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-            .Single();
+        var constructor = type.GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic).Single();
         var instance = constructor.Invoke([db, globalRules]);
         var method = type.GetMethod(
             "SynchronizeAsync",
@@ -1064,21 +1001,21 @@ public sealed class BaselineBootstrapIntegrationTests
         RulesCoreDbContext db,
         IGlobalRulesService globalRules)
     {
-        var competencyConceptIds = await db.RuleConcepts
-            .Where(value => value.EntityType == "skill" || value.EntityType == "tool")
+        var nonHouseRuleConceptIds = await db.RuleConcepts
+            .Where(value => value.EntityType != "houserule")
             .Select(value => value.Id)
             .ToArrayAsync();
 
         await db.RulesetRevisionEntries.ExecuteDeleteAsync();
         await db.RulesetRevisions.ExecuteDeleteAsync();
         await db.GlobalRuleDecisions
-            .Where(value => competencyConceptIds.Contains(value.RuleConceptId))
+            .Where(value => nonHouseRuleConceptIds.Contains(value.RuleConceptId))
             .ExecuteDeleteAsync();
         await db.RuleConceptSourceBindings
-            .Where(value => competencyConceptIds.Contains(value.RuleConceptId))
+            .Where(value => nonHouseRuleConceptIds.Contains(value.RuleConceptId))
             .ExecuteDeleteAsync();
         await db.RuleConcepts
-            .Where(value => competencyConceptIds.Contains(value.Id))
+            .Where(value => nonHouseRuleConceptIds.Contains(value.Id))
             .ExecuteDeleteAsync();
         db.ChangeTracker.Clear();
 

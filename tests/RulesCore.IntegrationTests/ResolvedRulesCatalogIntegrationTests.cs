@@ -505,9 +505,9 @@ public sealed class ResolvedRulesCatalogIntegrationTests
             var characterClass = catalog.Rules.Single(value => value.EntityType == "class");
             Assert.Equal("d8", BrowserField(characterClass, "hitDie"));
 
-            var race = catalog.Rules.Single(value => value.EntityType == "race");
-            Assert.Equal("DEX +2, WIS +1", BrowserField(race, "ability"));
-            Assert.Equal("Medium", BrowserField(race, "size"));
+            var species = catalog.Rules.Single(value => value.EntityType == "species");
+            Assert.Equal("DEX +2, WIS +1", BrowserField(species, "ability"));
+            Assert.Equal("Medium", BrowserField(species, "size"));
         }
         finally
         {
