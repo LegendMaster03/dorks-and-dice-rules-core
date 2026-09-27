@@ -747,20 +747,20 @@ public sealed class BaselineBootstrapIntegrationTests
             // Hydrate the reviewed Source Layer once, then reduce only the Rules Layer to the
             // historical production shape: the six Dorks & Dice house rules in revision 1.
             await bootstrapper.EnsureAsync();
-            var competencyConceptIds = await db.RuleConcepts
-                .Where(value => value.EntityType == "skill" || value.EntityType == "tool")
+            var nonHouseRuleConceptIds = await db.RuleConcepts
+                .Where(value => value.EntityType != "houseRule")
                 .Select(value => value.Id)
                 .ToArrayAsync();
             await db.RulesetRevisionEntries.ExecuteDeleteAsync();
             await db.RulesetRevisions.ExecuteDeleteAsync();
             await db.GlobalRuleDecisions
-                .Where(value => competencyConceptIds.Contains(value.RuleConceptId))
+                .Where(value => nonHouseRuleConceptIds.Contains(value.RuleConceptId))
                 .ExecuteDeleteAsync();
             await db.RuleConceptSourceBindings
-                .Where(value => competencyConceptIds.Contains(value.RuleConceptId))
+                .Where(value => nonHouseRuleConceptIds.Contains(value.RuleConceptId))
                 .ExecuteDeleteAsync();
             await db.RuleConcepts
-                .Where(value => competencyConceptIds.Contains(value.Id))
+                .Where(value => nonHouseRuleConceptIds.Contains(value.Id))
                 .ExecuteDeleteAsync();
             db.ChangeTracker.Clear();
 
@@ -1064,21 +1064,21 @@ public sealed class BaselineBootstrapIntegrationTests
         RulesCoreDbContext db,
         IGlobalRulesService globalRules)
     {
-        var competencyConceptIds = await db.RuleConcepts
-            .Where(value => value.EntityType == "skill" || value.EntityType == "tool")
+        var nonHouseRuleConceptIds = await db.RuleConcepts
+            .Where(value => value.EntityType != "houseRule")
             .Select(value => value.Id)
             .ToArrayAsync();
 
         await db.RulesetRevisionEntries.ExecuteDeleteAsync();
         await db.RulesetRevisions.ExecuteDeleteAsync();
         await db.GlobalRuleDecisions
-            .Where(value => competencyConceptIds.Contains(value.RuleConceptId))
+            .Where(value => nonHouseRuleConceptIds.Contains(value.RuleConceptId))
             .ExecuteDeleteAsync();
         await db.RuleConceptSourceBindings
-            .Where(value => competencyConceptIds.Contains(value.RuleConceptId))
+            .Where(value => nonHouseRuleConceptIds.Contains(value.RuleConceptId))
             .ExecuteDeleteAsync();
         await db.RuleConcepts
-            .Where(value => competencyConceptIds.Contains(value.Id))
+            .Where(value => nonHouseRuleConceptIds.Contains(value.Id))
             .ExecuteDeleteAsync();
         db.ChangeTracker.Clear();
 
