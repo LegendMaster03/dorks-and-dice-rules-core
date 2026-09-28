@@ -9,8 +9,8 @@ namespace RulesCore.Infrastructure.Hosting;
 public sealed class DorksAndDiceToolHostAuthenticationClient(HttpClient httpClient)
     : IToolHostAuthenticationClient
 {
-    public const string ExpectedToolSlug = "rules-core";
-    public const string ExpectedIntrospectionPath = "/tool-host/rules-core/api/introspect";
+    public const string ExpectedToolKey = "rules-core";
+    public const string ExpectedIntrospectionPath = "/tool-host/registrations/rules-core/api/introspect";
 
     private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 
@@ -73,7 +73,7 @@ public sealed class DorksAndDiceToolHostAuthenticationClient(HttpClient httpClie
                 $"Unsupported Tool Host authentication contract version '{context.ContractVersion}'.");
         }
 
-        if (!string.Equals(context.ToolSlug, ExpectedToolSlug, StringComparison.Ordinal))
+        if (!string.Equals(context.ToolKey, ExpectedToolKey, StringComparison.Ordinal))
         {
             throw new InvalidDataException("Tool Host authentication context was issued for another Tool.");
         }
