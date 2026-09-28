@@ -1,5 +1,9 @@
 # Dorks & Dice Rules Core
 
+Rules Core is the authoritative **headless rules service** for Dorks & Dice. It owns normalized rules data, source ingestion and provenance, source grants, global and campaign Rules Layers, adjudication, immutable revisions, publication, resolution, PostgreSQL persistence, and the stable APIs consumed by other Tools.
+
+The human-facing Rules Library and Rules Lawyer presentation application now live in [`LegendMaster03/dorks-and-dice-rules-wiki`](https://github.com/LegendMaster03/dorks-and-dice-rules-wiki). Rules Wiki calls this service through the Site Tool-to-Tool delegation boundary; it does not duplicate Rules Core persistence or authorization state.
+
 Rules Core is the independent rules aggregation, normalization, adjudication, and API service for Dorks & Dice.
 
 ## Initial stack

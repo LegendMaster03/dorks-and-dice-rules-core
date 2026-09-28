@@ -18,7 +18,7 @@ public sealed class RuleBrowserContractTests
     {
         var link = RuleBrowserRoutes.ForConcept(entityType, conceptKey);
 
-        Assert.Equal("rules-core", link.ToolSlug);
+        Assert.Equal("rules-wiki", link.ToolSlug);
         Assert.Equal(expectedPath, link.ToolRelativePath);
         Assert.Equal(conceptKey, link.RouteIdentity);
     }
