@@ -8,7 +8,7 @@ namespace RulesCore.IntegrationTests;
 public sealed class ToolHostAuthenticationClientTests
 {
     [Fact]
-    public async Task ValidIntrospectionContextIsAccepted()
+    public async Task ValidHeadlessServiceIntrospectionContextIsAccepted()
     {
         var handler = new StubHandler(_ => new HttpResponseMessage(HttpStatusCode.OK)
         {
@@ -16,7 +16,7 @@ public sealed class ToolHostAuthenticationClientTests
                 """
                 {
                   "contractVersion": 1,
-                  "toolSlug": "rules-core",
+                  "toolKey": "rules-core",
                   "siteMode": "dorks-and-dice",
                   "user": { "id": "user-123", "displayName": "Rules Lawyer" },
                   "globalRoles": ["Rules Lawyer"],
@@ -43,6 +43,8 @@ public sealed class ToolHostAuthenticationClientTests
             DorksAndDiceToolHostAuthenticationClient.ExpectedIntrospectionPath);
 
         Assert.NotNull(context);
+        Assert.Equal("rules-core", context.ToolKey);
+        Assert.Null(context.ToolSlug);
         Assert.Equal("user-123", context.User.Id);
         Assert.True(context.HasGlobalRole("Rules Lawyer"));
         Assert.True(context.HasCampaignRole(
@@ -75,7 +77,7 @@ public sealed class ToolHostAuthenticationClientTests
     }
 
     [Fact]
-    public async Task IntrospectionPathCanNotRedirectAuthenticationToAnotherTarget()
+    public async Task UnexpectedIntrospectionPathIsRejectedBeforeRequest()
     {
         var handler = new StubHandler(_ => new HttpResponseMessage(HttpStatusCode.OK));
         using var httpClient = new HttpClient(handler)
@@ -86,13 +88,13 @@ public sealed class ToolHostAuthenticationClientTests
 
         await Assert.ThrowsAsync<InvalidDataException>(() => client.RedeemAsync(
             "ticket-123",
-            "//attacker.example/introspect"));
+            "/tool-host/registrations/other/api/introspect"));
 
         Assert.Null(handler.LastRequest);
     }
 
     [Fact]
-    public async Task ContextForAnotherToolIsRejected()
+    public async Task ContextForAnotherRegistrationKeyIsRejected()
     {
         var handler = new StubHandler(_ => new HttpResponseMessage(HttpStatusCode.OK)
         {
@@ -100,7 +102,37 @@ public sealed class ToolHostAuthenticationClientTests
                 """
                 {
                   "contractVersion": 1,
-                  "toolSlug": "another-tool",
+                  "toolKey": "another-tool",
+                  "siteMode": "dorks-and-dice",
+                  "user": { "id": "user-123", "displayName": "User" },
+                  "globalRoles": [],
+                  "campaigns": []
+                }
+                """,
+                Encoding.UTF8,
+                "application/json")
+        });
+        using var httpClient = new HttpClient(handler)
+        {
+            BaseAddress = new Uri("http://dorks-and-dice-site:8080")
+        };
+        var client = new DorksAndDiceToolHostAuthenticationClient(httpClient);
+
+        await Assert.ThrowsAsync<InvalidDataException>(() => client.RedeemAsync(
+            "ticket-123",
+            DorksAndDiceToolHostAuthenticationClient.ExpectedIntrospectionPath));
+    }
+
+    [Fact]
+    public async Task ContextWithoutStableRegistrationKeyIsRejected()
+    {
+        var handler = new StubHandler(_ => new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent(
+                """
+                {
+                  "contractVersion": 1,
+                  "toolSlug": "rules-core",
                   "siteMode": "dorks-and-dice",
                   "user": { "id": "user-123", "displayName": "User" },
                   "globalRoles": [],

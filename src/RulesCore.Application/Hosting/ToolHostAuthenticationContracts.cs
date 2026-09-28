@@ -17,12 +17,14 @@ public sealed record ToolHostCampaignContext(
 
 public sealed record ToolHostAuthenticationContext(
     int ContractVersion,
-    string ToolSlug,
+    string? ToolSlug,
     string SiteMode,
     ToolHostUserContext User,
     IReadOnlyList<string> GlobalRoles,
     IReadOnlyList<ToolHostCampaignContext> Campaigns)
 {
+    public string? ToolKey { get; init; }
+
     public bool HasGlobalRole(string role) =>
         GlobalRoles.Contains(role, StringComparer.Ordinal);
 
