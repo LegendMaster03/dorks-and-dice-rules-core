@@ -1,0 +1,264 @@
+name: Complete Rules Core headless split
+
+on:
+  push:
+    branches: [ "feature/rules-wiki-split" ]
+    paths: [ ".github/workflows/migrate-headless-rules-core.yml" ]
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Rules Core split branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/rules-wiki-split
+          fetch-depth: 0
+
+      - name: Check out Rules Wiki migration
+        uses: actions/checkout@v4
+        with:
+          repository: LegendMaster03/dorks-and-dice-rules-wiki
+          ref: feature/rules-wiki-split
+          path: .migration/rules-wiki
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Verify Rules Wiki owns the presentation layer
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f .migration/rules-wiki/src/RulesWiki.Web/wwwroot/app.js
+          test -f .migration/rules-wiki/src/RulesWiki.Web/wwwroot/rules-browser.js
+          test -f .migration/rules-wiki/src/RulesWiki.Web/wwwroot/source-library.js
+          grep -q '/tools/rules-wiki' .migration/rules-wiki/src/RulesWiki.Web/wwwroot/rules-browser-routing.js
+
+      - name: Convert Rules Core to a headless service
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          rm -rf src/RulesCore.Web/wwwroot
+          rm -f \
+            tools/validate-monster-renderer.mjs \
+            tools/validate-render-lifecycle.mjs \
+            tools/validate-structured-rule-renderers.mjs \
+            tools/validate-workspace-routing.mjs \
+            tests/RulesCore.IntegrationTests/EmbeddedModuleAssetsIntegrationTests.cs \
+            tests/RulesCore.IntegrationTests/RuleBrowserAssetTests.cs \
+            tests/RulesCore.IntegrationTests/SourceImportNotificationAssetTests.cs \
+            docs/frontend-render-lifecycle.md \
+            docs/ux-guidelines.md
+
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          program = Path('src/RulesCore.Web/Program.cs')
+          text = program.read_text()
+          text = text.replace('app.UseMiddleware<HostedToolAuthenticationMiddleware>();\napp.UseStaticFiles();\n',
+                              'app.UseMiddleware<HostedToolAuthenticationMiddleware>();\n')
+          text = text.replace('    module = "/app.js",\n', '')
+          program.write_text(text)
+
+          routes = Path('src/RulesCore.Application/Rules/RuleBrowserContracts.cs')
+          text = routes.read_text().replace('public const string ToolSlug = "rules-core";',
+                                            'public const string ToolSlug = "rules-wiki";')
+          routes.write_text(text)
+
+          tests = Path('tests/RulesCore.Tests/RuleBrowserContractTests.cs')
+          text = tests.read_text().replace('Assert.Equal("rules-core", link.ToolSlug);',
+                                           'Assert.Equal("rules-wiki", link.ToolSlug);')
+          tests.write_text(text)
+
+          validation = Path('.github/workflows/validate.yml')
+          text = validation.read_text()
+          pattern = re.compile(r'\n      - name: Validate browser modules\n.*?\n      - name: Restore\n', re.S)
+          replacement = '''\n      - name: Enforce headless service boundary\n        run: |\n          test ! -d src/RulesCore.Web/wwwroot\n          if grep -R "UseStaticFiles" -n src/RulesCore.Web; then\n            echo "Rules Core must not serve the Rules Wiki presentation layer."\n            exit 1\n          fi\n\n      - name: Restore\n'''
+          text, count = pattern.subn(replacement, text, count=1)
+          if count != 1:
+              raise SystemExit('Could not locate browser-module validation block.')
+          validation.write_text(text)
+
+          readme = Path('README.md')
+          text = readme.read_text()
+          marker = '# Dorks & Dice Rules Core\n'
+          statement = '''\nRules Core is the authoritative **headless rules service** for Dorks & Dice. It owns normalized rules data, source ingestion and provenance, source grants, global and campaign Rules Layers, adjudication, immutable revisions, publication, resolution, PostgreSQL persistence, and the stable APIs consumed by other Tools.\n\nThe human-facing Rules Library and Rules Lawyer presentation application now live in [`LegendMaster03/dorks-and-dice-rules-wiki`](https://github.com/LegendMaster03/dorks-and-dice-rules-wiki). Rules Wiki calls this service through the Site Tool-to-Tool delegation boundary; it does not duplicate Rules Core persistence or authorization state.\n'''
+          if statement not in text:
+              text = text.replace(marker, marker + statement, 1)
+          readme.write_text(text)
+          PY
+
+          cat > docs/rules-browser.md <<'DOC'
+          # Browser-link contract
+
+          Rules Core remains authoritative for canonical rule identities and for the API
+          data that describes those rules. Human-readable browser pages are owned by Rules
+          Wiki.
+
+          API responses that expose `browserLink` continue to return the same three-part
+          contract:
+
+          - `toolSlug`: now `rules-wiki`;
+          - `toolRelativePath`: the existing stable path such as
+            `/monsters/ancient-red-dragon`, `/conditions/prone`, or
+            `/rules/{conceptKey}`;
+          - `routeIdentity`: the canonical Rules Core concept key.
+
+          Changing `toolSlug` does not change concept keys, source IDs, rule IDs, API routes,
+          or Rules Layer semantics. Consumers should continue treating `browserLink` as an
+          opaque navigation target instead of constructing `/tools/...` URLs themselves.
+
+          Legacy route parsing remains in Rules Core because it is part of the stable link
+          contract and regression tests. The presentation and Embedded Module route state
+          live in Rules Wiki.
+          DOC
+
+          cat > docs/api-boundaries.md <<'DOC'
+          # API ownership after the Rules Wiki split
+
+          The split changes presentation ownership, not the Rules Core API contract. Existing
+          routes keep their paths, request/response contracts, authentication, provenance,
+          source filtering, and authorization semantics.
+
+          ## 1. Stable external API
+
+          These endpoint families remain supported for Character Sheet, Block Initiative,
+          Hex Crawl, future game Tools, and other non-Wiki consumers:
+
+          - `/api/rules` and `/api/rules/{conceptKey}` resolved-rule/catalog reads;
+          - `/api/campaigns/{campaignId}/rules` resolved campaign-rule reads;
+          - source-accessible catalog/entity reads under `/api/sources`;
+          - character mechanics and character projection endpoints mapped by
+            `CharacterMechanicsEndpointExtensions` and `CharacterProjectionEndpointExtensions`;
+          - crafting and harvesting resolution endpoints mapped by
+            `CraftingRulesEndpointExtensions` and `HarvestingRulesEndpointExtensions`;
+          - mechanical relationship endpoints mapped by
+            `MechanicalRelationshipEndpointExtensions`;
+          - other published resolution contracts exposed by
+            `ResolvedRulesCatalogEndpointExtensions`.
+
+          `browserLink` remains part of the external response contract, but its human-facing
+          Tool target is `rules-wiki`.
+
+          ## 2. Rules Wiki / first-party internal API
+
+          The existing endpoints used by the migrated presentation remain in Rules Core and
+          are reached through delegated Tool-to-Tool access. They are not redesigned by this
+          migration. This includes:
+
+          - global and campaign rule authoring, preview, comparison, and publication;
+          - Rules Lawyer/adjudication work queues and workspace scope endpoints;
+          - source browser, current-user source, source revision review, normalization,
+            versioning, hosted-source, acquisition, and source-administration workflows;
+          - source-update review and campaign baseline authoring.
+
+          A later change may consolidate presentation-specific aggregates only after the split
+          is stable.
+
+          ## 3. Administrative/service API
+
+          Administrative source import/control-plane endpoints remain in Rules Core because
+          source ingestion, normalization, grants, and persistence remain Rules Core domain
+          responsibilities. `/api` remains service metadata.
+
+          ## 4. Hosting and health API
+
+          - `/health` is the process health endpoint.
+          - `/ready` verifies Rules Core PostgreSQL readiness.
+          - `/api/integration/session` exposes the target-scoped Tool Host authentication
+            context to authorized backend callers.
+          - `/` is service metadata only and no longer advertises a frontend module.
+
+          Rules Core does not serve static UI assets after this split.
+          DOC
+
+          cat > docs/rules-wiki-delegation.md <<'DOC'
+          # Rules Wiki delegation boundary
+
+          Normal browser traffic follows this path:
+
+          `browser -> Site Tool Host -> rules-wiki -> Site delegation endpoint -> rules-core`
+
+          The Site authenticates the browser request to Rules Wiki and supplies a short-lived,
+          server-only delegation capability when the `rules-wiki` Tool registration is
+          allowlisted to target `rules-core`. Rules Wiki never returns that capability to the
+          browser. Its backend uses the capability only to call the Site delegation endpoint.
+
+          The Site then issues the normal target-scoped authentication ticket for Rules Core.
+          Rules Core redeems that ticket through its existing introspection middleware, so the
+          established stable user ID, global roles, campaign roles, source grants, Rules
+          Lawyer authority, campaign DM authority, and restricted-source filtering remain
+          authoritative here.
+
+          Rules Wiki has no source-grant database and no parallel authorization model.
+          Rules Core continues using its existing external PostgreSQL database.
+
+          ## Deployment gate
+
+          The repository split can be developed and validated before deployment, but merge and
+          production rollout require Site support for a headless/non-navigable `rules-core`
+          service registration. That registration must remain available for upstream routing,
+          health checks, authentication/introspection, and delegation while exposing no normal
+          Tool navigation/page. The `rules-wiki` registration is the public Embedded Module v2
+          Tool with delegation target `rules-core`.
+          DOC
+
+          cat > docs/tool-hosting.md <<'DOC'
+          # Tool Host integration
+
+          Rules Core is a backend delegation target. It continues to consume the standard
+          Tool Host authentication ticket and introspection path, validates the target-scoped
+          context, and derives user/global/campaign authority exactly as before the split.
+
+          Rules Core is not the browser Tool. Human-facing links emitted by Rules Core use
+          `toolSlug: rules-wiki` plus the stable tool-relative route. Rules Wiki owns the
+          Embedded Module lifecycle and converts that route into browser state.
+
+          Production registration of Rules Core is blocked until the Site supports an enabled,
+          health-checked, authenticatable, delegatable service registration that is not
+          navigable and does not require a public UI slug. Do not emulate this with a hidden
+          normal Tool registration.
+          DOC
+
+          cat > docs/persistence-and-authorization-ownership.md <<'DOC'
+          # Persistence and authorization ownership
+
+          Rules Core owns the existing PostgreSQL database, source ingestion state, normalized
+          source records, provenance, source grants, Rules Layers, adjudication work, immutable
+          revisions, and publication state. Those records do not move to Rules Wiki.
+
+          Rules Wiki is stateless aside from ordinary process memory. It forwards authenticated
+          UI requests to Rules Core through Site delegation and relies on Rules Core for every
+          source-access and rules-authority decision.
+          DOC
+
+          rm -rf .migration
+
+      - name: Validate headless Rules Core
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -d src/RulesCore.Web/wwwroot
+          ! grep -R 'module = "/app.js"' -n src/RulesCore.Web
+          ! grep -R 'public const string ToolSlug = "rules-core"' -n src
+          dotnet restore dorks-and-dice-rules-core.slnx
+          dotnet test tests/RulesCore.Tests/RulesCore.Tests.csproj --configuration Release --no-restore
+          dotnet build src/RulesCore.Web/RulesCore.Web.csproj --configuration Release --no-restore
+          docker build -t dorks-and-dice-rules-core:split -f src/RulesCore.Web/Dockerfile .
+
+      - name: Commit headless split
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/migrate-headless-rules-core.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Split Rules Wiki presentation from Rules Core"
+          git push origin HEAD:feature/rules-wiki-split
