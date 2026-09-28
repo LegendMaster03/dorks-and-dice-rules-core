@@ -9,7 +9,7 @@ public sealed record RuleLinkTargetView(
 
 public static class RuleBrowserRoutes
 {
-    public const string ToolSlug = "rules-core";
+    public const string ToolSlug = "rules-wiki";
 
     private static readonly IReadOnlyDictionary<string, string> EntityTypeToSegment =
         new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)

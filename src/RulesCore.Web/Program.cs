@@ -65,7 +65,6 @@ if (hasDatabase)
 }
 
 app.UseMiddleware<HostedToolAuthenticationMiddleware>();
-app.UseStaticFiles();
 
 app.MapHealthChecks("/health");
 
@@ -105,7 +104,6 @@ app.MapGet("/", () => Results.Ok(new
 {
     service = "Dorks & Dice Rules Core",
     status = "running",
-    module = "/app.js",
     health = "/health",
     readiness = "/ready",
     api = "/api"

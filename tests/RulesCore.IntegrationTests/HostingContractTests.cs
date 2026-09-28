@@ -23,13 +23,10 @@ public sealed class HostingContractTests : IClassFixture<WebApplicationFactory<P
     }
 
     [Fact]
-    public async Task EmbeddedModuleEntryPointIsAvailable()
+    public async Task LegacyEmbeddedModuleEntryPointIsNotAvailable()
     {
         using var response = await _client.GetAsync("/app.js");
-        var content = await response.Content.ReadAsStringAsync();
-
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        Assert.Contains("tool-root", content, StringComparison.Ordinal);
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
     [Fact]
