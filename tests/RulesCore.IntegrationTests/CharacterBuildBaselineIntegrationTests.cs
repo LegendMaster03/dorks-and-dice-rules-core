@@ -88,6 +88,30 @@ public sealed class CharacterBuildBaselineIntegrationTests
                 relationship => Assert.Equal(
                     RuleConceptEntityTypes.Species,
                     relationship.RelatedEntityType));
+
+            var catalogSubspecies = Assert.Single(
+                subspeciesCatalog.Rules.Where(value => value.Relationships.Any(relationship =>
+                    string.Equals(
+                        relationship.Kind,
+                        RuleConceptRelationshipKinds.ParentSpecies,
+                        StringComparison.Ordinal))));
+            var catalogParent = Assert.Single(catalogSubspecies.Relationships.Where(relationship =>
+                string.Equals(
+                    relationship.Kind,
+                    RuleConceptRelationshipKinds.ParentSpecies,
+                    StringComparison.Ordinal)));
+            var directRules = new RelationshipAwareGlobalRulesService(globalRules, db);
+            var directSubspecies = await directRules.ResolveLatestAsync(
+                catalogSubspecies.ConceptKey,
+                userId: null);
+            Assert.NotNull(directSubspecies);
+            var directParent = Assert.Single(directSubspecies!.Relationships!, relationship =>
+                string.Equals(
+                    relationship.Kind,
+                    RuleConceptRelationshipKinds.ParentSpecies,
+                    StringComparison.Ordinal));
+            Assert.Equal(catalogParent.RelatedConceptKey, directParent.RelatedConceptKey);
+            Assert.Equal(RuleConceptEntityTypes.Species, directParent.RelatedEntityType);
         }
         finally
         {
