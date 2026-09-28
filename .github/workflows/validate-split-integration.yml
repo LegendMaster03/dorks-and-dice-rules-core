@@ -1,0 +1,76 @@
+name: Validate Rules Core split integration
+
+on:
+  push:
+    branches: [ "feature/rules-wiki-split" ]
+    paths: [ ".github/workflows/validate-split-integration.yml" ]
+
+jobs:
+  integration:
+    name: Integration shard ${{ matrix.shard }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Start isolated PostgreSQL
+        run: |
+          docker rm -f rules-core-split-integration-${{ matrix.shard }} 2>/dev/null || true
+          docker run -d --name rules-core-split-integration-${{ matrix.shard }} \
+            -p 127.0.0.1:55432:5432 \
+            -e POSTGRES_DB=rules_core_test \
+            -e POSTGRES_USER=rules_core_test \
+            -e POSTGRES_PASSWORD=rules_core_test \
+            postgres:18
+          ready=false
+          for i in {1..30}; do
+            if docker exec rules-core-split-integration-${{ matrix.shard }} pg_isready -U rules_core_test -d rules_core_test; then
+              ready=true
+              break
+            fi
+            sleep 1
+          done
+          if [ "$ready" != "true" ]; then
+            docker logs rules-core-split-integration-${{ matrix.shard }}
+            exit 1
+          fi
+
+      - name: Restore and build integration tests
+        run: |
+          dotnet restore dorks-and-dice-rules-core.slnx
+          dotnet build tests/RulesCore.IntegrationTests/RulesCore.IntegrationTests.csproj --configuration Release --no-restore
+
+      - name: Discover integration shard
+        id: shard
+        run: |
+          dotnet test tests/RulesCore.IntegrationTests/RulesCore.IntegrationTests.csproj \
+            --configuration Release --no-build --no-restore --list-tests > /tmp/rules-core-integration-tests.txt
+          FILTER="$(python3 tools/create-integration-test-shard-filter.py \
+            --shard "${{ matrix.shard }}" --shard-count 9 < /tmp/rules-core-integration-tests.txt)"
+          if [ -z "$FILTER" ]; then
+            echo "Integration shard filter is empty."
+            exit 1
+          fi
+          echo "filter=$FILTER" >> "$GITHUB_OUTPUT"
+
+      - name: Run integration shard
+        env:
+          ConnectionStrings__RulesCore: Host=127.0.0.1;Port=55432;Database=rules_core_test;Username=rules_core_test;Password=rules_core_test
+          RulesCore__BootstrapBaseline: "false"
+        run: >-
+          dotnet test tests/RulesCore.IntegrationTests/RulesCore.IntegrationTests.csproj
+          --configuration Release
+          --no-build
+          --no-restore
+          --filter "${{ steps.shard.outputs.filter }}"
+          --logger "console;verbosity=normal"
+
+      - name: Cleanup isolated PostgreSQL
+        if: always()
+        run: docker rm -f rules-core-split-integration-${{ matrix.shard }} 2>/dev/null || true
