@@ -110,7 +110,8 @@ public sealed record ResolvedRuleView(
     string EditionDisplayName,
     IReadOnlyList<ResolvedRuleContributionView> Contributions,
     JsonElement Document,
-    EffectiveRuleResolutionView? Resolution = null)
+    EffectiveRuleResolutionView? Resolution = null,
+    IReadOnlyList<ResolvedRuleRelationshipView>? Relationships = null)
 {
     public RuleLinkTargetView BrowserLink => RuleBrowserRoutes.ForConcept(EntityType, ConceptKey);
 }

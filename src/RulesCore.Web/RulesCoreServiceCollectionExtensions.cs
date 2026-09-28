@@ -38,7 +38,8 @@ public static class RulesCoreServiceCollectionExtensions
 
     public static IServiceCollection AddRulesCoreRules(this IServiceCollection services)
     {
-        services.AddScoped<IGlobalRulesService, GlobalRulesService>();
+        services.AddScoped<GlobalRulesService>();
+        services.AddScoped<IGlobalRulesService, RelationshipAwareGlobalRulesService>();
         services.AddScoped<ICampaignRulesService, CampaignRulesService>();
         services.AddScoped<IHarvestingRulesService, HarvestingRulesService>();
         services.AddScoped<ICraftingRulesService, CraftingRulesService>();
