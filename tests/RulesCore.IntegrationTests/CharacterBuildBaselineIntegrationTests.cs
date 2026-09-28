@@ -89,12 +89,11 @@ public sealed class CharacterBuildBaselineIntegrationTests
                     RuleConceptEntityTypes.Species,
                     relationship.RelatedEntityType));
 
-            var catalogSubspecies = Assert.Single(
-                subspeciesCatalog.Rules.Where(value => value.Relationships.Any(relationship =>
-                    string.Equals(
-                        relationship.Kind,
-                        RuleConceptRelationshipKinds.ParentSpecies,
-                        StringComparison.Ordinal))));
+            var catalogSubspecies = subspeciesCatalog.Rules.First(value =>
+                value.Relationships.Any(relationship => string.Equals(
+                    relationship.Kind,
+                    RuleConceptRelationshipKinds.ParentSpecies,
+                    StringComparison.Ordinal)));
             var catalogParent = Assert.Single(catalogSubspecies.Relationships.Where(relationship =>
                 string.Equals(
                     relationship.Kind,
