@@ -249,9 +249,7 @@ public static class WikiReferenceEndpointExtensions
             overrides,
             cancellationToken);
 
-        var requestedType = string.IsNullOrWhiteSpace(entityType)
-            ? null
-            : WikiReferenceCatalogService.NormalizeCategory(entityType.Trim());
+        var requestedType = NormalizeReferenceCategory(entityType);
         IEnumerable<WikiReferenceItemView> filtered = overrides;
         if (requestedType is not null)
         {
@@ -376,6 +374,18 @@ public static class WikiReferenceEndpointExtensions
             values[key] = references;
         }
         references.Add(referenceIdentity);
+    }
+
+    private static string? NormalizeReferenceCategory(string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return null;
+        var normalized = value.Trim();
+        return normalized.ToLowerInvariant() switch
+        {
+            "race" => "species",
+            "subrace" => "subspecies",
+            _ => normalized
+        };
     }
 
     private static IResult? RequireCampaignRead(
