@@ -4,9 +4,13 @@ The Rules Layer records Dorks & Dice adjudication separately from immutable sour
 
 ## Stable concepts
 
-`rule_concept` provides the source-independent identity for a rule concept. A concept has a stable normalized key, an entity type, a display name, and creation audit information. Source-specific implementations are attached through `rule_concept_source_binding` rather than making a source record itself the canonical rule identity.
+`rule_concept` provides the source-independent identity for a rule concept. A concept has a stable normalized key, an entity type, a display name, and creation audit information. The concept entity type is stable anchor metadata for authoring and direct source binding; it is not required to equal the category of every historical variation that can later become effective through authoritative canonical history.
 
-This allows multiple editions or providers to implement the same concept while preserving their individual provenance.
+Direct source-specific implementations are attached through `rule_concept_source_binding`. Those direct bindings remain mechanically type-coherent: a source whose normalized entity type differs from the concept can not be directly bound merely because its name matches.
+
+A directly bound canonical entity also establishes the concept's authoritative evolving history. Canonical entities connected through transitive `revision` or `rename` relationships participate in that same history, including a related variation whose mechanical category changed across editions. `variant` and `reprint` relationships do not by themselves make another canonical entity interchangeable for Rules Layer resolution.
+
+This allows multiple editions or providers to implement the same evolving logical concept while preserving provenance and mechanical category distinctions. For example, a concept anchored by a 3.5e `prestigeClass` source may legitimately resolve to a 5e `subclass` revision when canonical revision/rename evidence establishes that they are the same evolving concept. The direct binding remains type-coherent, while the selected source determines the effective category.
 
 ## Global decisions
 
@@ -17,6 +21,8 @@ A `global_rule_decision` is an append-only adjudication for one concept. Current
 - `json-rule-patch` - use one exact source revision as the immutable base and apply an optional object merge plus ordered, item-aware array operations.
 
 Every global decision records a monotonically increasing decision number, the exact base source revision, optional adjudication note, stable Dorks & Dice user ID, and timestamp. Patch decisions additionally store the canonical patch document and its SHA-256 fingerprint.
+
+A selected source revision must belong to the concept's authoritative canonical `revision`/`rename` history. A same-name source with no such identity evidence is rejected. A `variant` or `reprint` relationship alone is also insufficient. This preserves strict identity semantics while allowing legitimate cross-category edition evolution.
 
 Selecting an exact source revision is intentional. If the same source entity is imported again and receives revision 2, a decision based on revision 1 does not silently move. A Rules Lawyer must explicitly create a new decision using revision 2 before a later published ruleset uses it.
 
@@ -83,7 +89,13 @@ Source-content access remains independent. Global mutation responses use source/
 
 `GET /api/rules/{conceptKey}` resolves against the latest published global ruleset. The response includes concept identity, global ruleset revision/fingerprint, global decision provenance, exact source revision provenance, optional patch provenance, package/work/edition provenance, and the final resolved document.
 
+The resolved `EntityType` describes the selected effective source variation, normalized at the rules boundary. It therefore changes when a legitimate cross-category history selects a different mechanical category. Selecting a 3.5e Prestige Class variation reports `prestigeClass`; selecting its authoritative 5e Subclass revision reports `subclass`. The RuleConcept's immutable entity type remains separate anchor metadata and is not used to mislabel the effective variation.
+
+Terminology aliases normalize to canonical combined-system categories: `race` and `species` resolve as `species`; `subrace` and `subspecies` resolve as `subspecies`.
+
 Before returning the resolved document, Rules Core applies Source Layer access control to the pinned source revision. Public source packages are readable anonymously. Restricted packages require a `user_source_grant` for the stable hosted user ID. A Rules Lawyer without that grant receives the same not-found result as a user querying a missing rule. Conversely, a user with a source grant may read the resolved rule without gaining Rules Lawyer mutation authority.
+
+The resolved catalog `GET /api/rules` follows the same effective-category rule for item `EntityType`, category filtering, and category facets. Its route and response shape remain the consumer-facing contract; Phase 2.5 does not turn it into the complete Wiki history API.
 
 ## Campaign baseline selection
 
@@ -105,7 +117,7 @@ If the latest selected global revision is selected again, the operation is idemp
 - `json-merge-patch` - apply a campaign-authored merge patch on top of the resolved global baseline document;
 - `json-rule-patch` - apply a campaign-authored structured patch, including item-aware array operations, on top of the resolved global baseline document.
 
-A `select-source` decision may only choose a source entity already bound to the global concept. It bypasses global patching because the campaign has deliberately selected a different source implementation.
+A `select-source` campaign decision may choose any accessible source revision in the concept's authoritative canonical `revision`/`rename` history. The selected source does not need a separate mismatched direct binding when canonical history already proves concept identity. An unrelated same-name source and a `variant`/`reprint`-only source remain invalid. `select-source` bypasses global patching because the campaign has deliberately selected a different source implementation.
 
 Patch decisions do not choose a separate source revision. They compose on top of the selected global baseline. The deterministic resolution order is:
 
@@ -150,9 +162,11 @@ Source-content access remains a separate axis. A DM may have authority to select
 
 The response includes campaign publication provenance, the pinned global baseline revision, global decision/patch provenance, optional campaign-decision/patch provenance, exact effective source revision provenance, package/work/edition provenance, and the final composed document.
 
+Its resolved `EntityType` follows the campaign's exact effective source variation using the same canonical terminology normalization as global resolution. A campaign `select-source` override can therefore move the effective category from `subclass` back to `prestigeClass`, or forward again, when the selected revision belongs to the concept's authoritative revision/rename history. An inherited campaign remains on its pinned global baseline until the campaign deliberately changes and republishes its baseline.
+
 ## Preview and diff
 
-Rules Core can evaluate a candidate global or campaign decision before that decision is persisted. Preview uses the same pinned source revisions, merge semantics, structured array operations, source-binding rules, and campaign composition order as publication.
+Rules Core can evaluate a candidate global or campaign decision before that decision is persisted. Preview uses the same pinned source revisions, merge semantics, structured array operations, source-binding/history rules, and campaign composition order as publication.
 
 A preview response contains:
 
@@ -182,8 +196,9 @@ Global mutation and authoring endpoints:
 
 The global preview and decision endpoints accept the same decision request shape. Source-only requests preview/select the exact source revision. Supplying `mergePatch` previews/creates a `json-merge-patch` decision. Supplying `structuredPatch` previews/creates a `json-rule-patch` decision. A request can not supply both patch forms.
 
-Global resolved read endpoint:
+Global resolved read endpoints:
 
+- `GET /api/rules`
 - `GET /api/rules/{conceptKey}`
 
 Campaign endpoints:
@@ -192,11 +207,12 @@ Campaign endpoints:
 - `POST /api/campaigns/{campaignId}/rules/concepts/{conceptId}/preview`
 - `PUT /api/campaigns/{campaignId}/rules/concepts/{conceptId}/decision`
 - `POST /api/campaigns/{campaignId}/rules/publish`
+- `GET /api/campaigns/{campaignId}/rules`
 - `GET /api/campaigns/{campaignId}/rules/{conceptKey}`
 
 Campaign preview and decision requests use `decisionKind` to choose `select-source`, `inherit-global`, `json-merge-patch`, or `json-rule-patch`. Patch decisions leave `sourceEntityRevisionId` null. `json-merge-patch` uses `mergePatch`; `json-rule-patch` uses `structuredPatch`.
 
-The current implementation establishes exact source selection, authored object merge/replace/delete semantics, item-aware array composition, non-persisting preview/diff, immutable global publication, deliberate campaign migration, and campaign-specific composition. Arbitrary campaign-only concepts, temporary/session overrides, richer multi-field selectors/set-style array operations, rollback UI, and broader authoring workflows remain later layers built on the immutable publication model.
+The current implementation establishes exact source selection, authoritative revision/rename-history participation, authored object merge/replace/delete semantics, item-aware array composition, non-persisting preview/diff, immutable global publication, deliberate campaign migration, and campaign-specific composition. Arbitrary campaign-only concepts, temporary/session overrides, richer multi-field selectors/set-style array operations, rollback UI, and broader authoring workflows remain later layers built on the immutable publication model.
 
 ## Rules Wiki reference reads are not Rules Layer decisions
 
@@ -204,8 +220,8 @@ Rules Wiki also needs to browse accessible source history before every source-ba
 
 A Wiki reference may be backed only by accessible canonical source history. Reading such a reference does not create a `rule_concept`, `global_rule_decision`, campaign decision, or publication. If no published global/campaign selection applies, the reference read model chooses a deterministic accessible fallback for presentation and labels it `unresolved-fallback`; that choice is not an adjudication and is never persisted by the read.
 
-When a published Rules Layer selection does apply, the Wiki reference uses that accessible selected source revision as its effective variation. Campaign references preserve the existing inherited-versus-override publication semantics.
+When a published Rules Layer selection applies, the Wiki reference uses that accessible selected source revision as its effective variation. Its effective category follows that selected variation. Campaign references preserve the existing inherited-versus-override publication semantics.
 
 Ordinary users may read accessible reference history and request read-only semantic comparison without gaining Rules Lawyer or campaign-DM mutation authority. Source grants remain an independent hard boundary: inaccessible source variations are omitted from reference rows, facets, counts, detail, history, fallback selection, and comparison.
 
-The effective consumer APIs remain unchanged. Source-only Wiki references do not appear in `/api/rules` merely because they can be browsed in Rules Wiki.
+The resolved consumer API routes and response shapes remain compatible with other Tools. Phase 2.5 changes the meaning of resolved `EntityType` where required so it consistently reports the selected effective variation's category rather than the concept anchor category. Source-only Wiki references still do not appear in `/api/rules` merely because they can be browsed in Rules Wiki.
