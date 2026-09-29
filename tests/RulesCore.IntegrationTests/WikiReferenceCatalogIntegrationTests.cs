@@ -42,14 +42,15 @@ public sealed class WikiReferenceCatalogIntegrationTests
         var token = Guid.NewGuid().ToString("N")[..10];
         var packageIds = new List<Guid>();
         var canonicalIds = new HashSet<Guid>();
-        Guid crossConceptId = Guid.Empty;
+        Guid prestigeConceptId = Guid.Empty;
+        Guid subclassConceptId = Guid.Empty;
         Guid prestigeRevisionId = Guid.Empty;
         Guid subclass5RevisionId = Guid.Empty;
         Guid subclass55RevisionId = Guid.Empty;
 
         try
         {
-            PublishedRulesetRevisionView globalRevision;
+            PublishedRulesetRevisionView initialGlobalRevision;
             await using (var scope = factory.Services.CreateAsyncScope())
             {
                 var importer = scope.ServiceProvider.GetRequiredService<ISourceImportService>();
@@ -80,13 +81,13 @@ public sealed class WikiReferenceCatalogIntegrationTests
                     $"wiki-race-{token}", "race", $"Elf Fixture {token}", "RACE5", "5e", true,
                     new DateOnly(2014, 8, 1), "race");
                 var species = await ImportAsync(importer, packageIds,
-                    $"wiki-species-{token}", "race", $"Elf Fixture {token}", "SPECIES55", "5.5e", true,
+                    $"wiki-species-{token}", "species", $"Elf Fixture {token}", "SPECIES55", "5.5e", true,
                     new DateOnly(2024, 9, 1), "species");
                 var subrace = await ImportAsync(importer, packageIds,
                     $"wiki-subrace-{token}", "subrace", $"High Fixture {token}", "SUBRACE5", "5e", true,
                     new DateOnly(2014, 8, 1), "subrace");
                 var subspecies = await ImportAsync(importer, packageIds,
-                    $"wiki-subspecies-{token}", "subrace", $"High Fixture {token}", "SUBSPECIES55", "5.5e", true,
+                    $"wiki-subspecies-{token}", "subspecies", $"High Fixture {token}", "SUBSPECIES55", "5.5e", true,
                     new DateOnly(2024, 9, 1), "subspecies");
 
                 var variantA = await ImportAsync(importer, packageIds,
@@ -123,39 +124,65 @@ public sealed class WikiReferenceCatalogIntegrationTests
                 subclass5RevisionId = await GetRevisionIdAsync(db, subclass5.EntityId);
                 subclass55RevisionId = await GetRevisionIdAsync(db, subclass55.EntityId);
 
-                var concept = await globalRules.CreateConceptAsync(
+                var prestigeConcept = await globalRules.CreateConceptAsync(
+                    new CreateRuleConceptRequest(
+                        $"prestige-class.arcane-fixture-{token}",
+                        RuleConceptEntityTypes.PrestigeClass,
+                        $"Arcane Fixture {token}"),
+                    "rules-lawyer");
+                prestigeConceptId = prestigeConcept.Value.Id;
+                await globalRules.BindSourceEntityAsync(
+                    prestigeConceptId,
+                    new BindRuleConceptSourceRequest(prestige.EntityId),
+                    "rules-lawyer");
+
+                var subclassConcept = await globalRules.CreateConceptAsync(
                     new CreateRuleConceptRequest(
                         $"subclass.arcane-fixture-{token}",
                         RuleConceptEntityTypes.Subclass,
                         $"Arcane Fixture {token}"),
                     "rules-lawyer");
-                crossConceptId = concept.Value.Id;
+                subclassConceptId = subclassConcept.Value.Id;
                 await globalRules.BindSourceEntityAsync(
-                    crossConceptId,
+                    subclassConceptId,
                     new BindRuleConceptSourceRequest(subclass5.EntityId),
                     "rules-lawyer");
                 await globalRules.BindSourceEntityAsync(
-                    crossConceptId,
+                    subclassConceptId,
                     new BindRuleConceptSourceRequest(subclass55.EntityId),
                     "rules-lawyer");
-                await globalRules.SetDecisionAsync(
-                    crossConceptId,
-                    new SetGlobalRuleDecisionRequest(subclass5RevisionId, "Global fixture chooses 5e."),
+
+                await Assert.ThrowsAsync<InvalidOperationException>(() =>
+                    globalRules.BindSourceEntityAsync(
+                        subclassConceptId,
+                        new BindRuleConceptSourceRequest(prestige.EntityId),
+                        "rules-lawyer"));
+
+                var subclassDecision = await globalRules.SetDecisionAsync(
+                    subclassConceptId,
+                    new SetGlobalRuleDecisionRequest(subclass5RevisionId, "Initial subclass ruling."),
                     "rules-lawyer");
-                globalRevision = await globalRules.PublishAsync("rules-lawyer");
+                var prestigeDecision = await globalRules.SetDecisionAsync(
+                    prestigeConceptId,
+                    new SetGlobalRuleDecisionRequest(prestigeRevisionId, "Initial cross-category ruling chooses 3.5e."),
+                    "rules-lawyer");
+                await SetGlobalDecisionCreatedAtAsync(db, subclassDecision.Value.Id, new DateTimeOffset(2026, 1, 1, 0, 0, 0, TimeSpan.Zero));
+                await SetGlobalDecisionCreatedAtAsync(db, prestigeDecision.Value.Id, new DateTimeOffset(2026, 1, 2, 0, 0, 0, TimeSpan.Zero));
+                initialGlobalRevision = await globalRules.PublishAsync("rules-lawyer");
 
                 await campaignRules.SelectBaselineAsync(
                     campaignId,
-                    new SelectCampaignRulesetBaselineRequest(globalRevision.Id),
+                    new SelectCampaignRulesetBaselineRequest(initialGlobalRevision.Id),
                     "campaign-dm");
-                await campaignRules.SetDecisionAsync(
+                var campaignDecision = await campaignRules.SetDecisionAsync(
                     campaignId,
-                    crossConceptId,
+                    subclassConceptId,
                     new SetCampaignRuleDecisionRequest(
                         CampaignRuleDecisionKinds.SelectSource,
                         subclass55RevisionId,
-                        "Campaign fixture chooses 5.5e."),
+                        "Campaign fixture chooses 5.5e Subclass."),
                     "campaign-dm");
+                await SetCampaignDecisionCreatedAtAsync(db, campaignDecision.Id, new DateTimeOffset(2026, 1, 3, 0, 0, 0, TimeSpan.Zero));
                 await campaignRules.PublishAsync(campaignId, "campaign-dm");
             }
 
@@ -197,8 +224,10 @@ public sealed class WikiReferenceCatalogIntegrationTests
                 Assert.Equal(HttpStatusCode.OK, crossResponse.StatusCode);
                 var catalog = (await crossResponse.Content.ReadFromJsonAsync<WikiReferenceCatalogView>())!;
                 crossReference = Assert.Single(catalog.References);
-                Assert.Equal("subclass", crossReference.EffectiveCategory);
-                Assert.Equal("5e", crossReference.EffectiveEditionKey);
+                Assert.Equal(prestigeConceptId, crossReference.RuleConceptId);
+                Assert.Equal("prestigeClass", crossReference.EffectiveCategory);
+                Assert.Equal("3.5e", crossReference.EffectiveEditionKey);
+                Assert.Equal(prestigeRevisionId, crossReference.EffectiveVariation.SourceEntityRevisionId);
                 Assert.Equal(WikiReferenceResolutionStates.Resolved, crossReference.ResolutionState);
                 Assert.Contains(crossReference.CategoryHistory, value => value.Category == "prestigeClass");
                 Assert.Contains(crossReference.CategoryHistory, value => value.Category == "subclass");
@@ -208,25 +237,27 @@ public sealed class WikiReferenceCatalogIntegrationTests
                        $"/api/wiki/references?entityType=prestigeClass&categoryMode=effective&q={Uri.EscapeDataString($"Arcane Fixture {token}")}"))
             {
                 var catalog = (await effectivePrestige.Content.ReadFromJsonAsync<WikiReferenceCatalogView>())!;
-                Assert.Empty(catalog.References);
+                Assert.Single(catalog.References);
             }
             using (var effectiveSubclass = await client.GetAsync(
                        $"/api/wiki/references?entityType=subclass&categoryMode=effective&q={Uri.EscapeDataString($"Arcane Fixture {token}")}"))
             {
                 var catalog = (await effectiveSubclass.Content.ReadFromJsonAsync<WikiReferenceCatalogView>())!;
-                Assert.Single(catalog.References);
+                Assert.Empty(catalog.References);
             }
 
             var encodedReference = Uri.EscapeDataString(crossReference.ReferenceIdentity);
             using (var detailResponse = await client.GetAsync($"/api/wiki/references/{encodedReference}"))
             {
                 Assert.Equal(HttpStatusCode.OK, detailResponse.StatusCode);
-                var detail = (await detailResponse.Content.ReadFromJsonAsync<WikiReferenceDetailView>())!;
+                var json = await detailResponse.Content.ReadAsStringAsync();
+                Assert.DoesNotContain("nativeEntityType", json, StringComparison.OrdinalIgnoreCase);
+                var detail = JsonSerializer.Deserialize<WikiReferenceDetailView>(json, new JsonSerializerOptions(JsonSerializerDefaults.Web))!;
                 Assert.Equal(3, detail.Variations.Count);
-                Assert.Contains(detail.Variations, value => value.NativeEntityType == "prestigeClass" && value.EditionKey == "3.5e");
-                Assert.Contains(detail.Variations, value => value.NativeEntityType == "subclass" && value.EditionKey == "5e");
-                Assert.Contains(detail.Variations, value => value.NativeEntityType == "subclass" && value.EditionKey == "5.5e");
-                Assert.Equal(subclass5RevisionId, detail.Reference.EffectiveVariation.SourceEntityRevisionId);
+                Assert.Contains(detail.Variations, value => value.Category == "prestigeClass" && value.EditionKey == "3.5e");
+                Assert.Contains(detail.Variations, value => value.Category == "subclass" && value.EditionKey == "5e");
+                Assert.Contains(detail.Variations, value => value.Category == "subclass" && value.EditionKey == "5.5e");
+                Assert.Equal(prestigeRevisionId, detail.Reference.EffectiveVariation.SourceEntityRevisionId);
             }
 
             using (var comparisonResponse = await client.PostAsJsonAsync(
@@ -246,7 +277,9 @@ public sealed class WikiReferenceCatalogIntegrationTests
             {
                 var catalog = (await speciesResponse.Content.ReadFromJsonAsync<WikiReferenceCatalogView>())!;
                 var elf = Assert.Single(catalog.References.Where(value => value.DisplayName == $"Elf Fixture {token}"));
-                Assert.Contains(elf.CategoryHistory, value => value.Category == "species");
+                Assert.Single(elf.CategoryHistory);
+                Assert.Equal("species", elf.CategoryHistory[0].Category);
+                Assert.Equal("species", elf.EffectiveCategory);
                 Assert.Equal("5.5e", elf.EffectiveEditionKey);
             }
             using (var raceAliasResponse = await client.GetAsync(
@@ -259,7 +292,10 @@ public sealed class WikiReferenceCatalogIntegrationTests
                        $"/api/wiki/references?entityType=subspecies&categoryMode=any&q={token}"))
             {
                 var catalog = (await subspeciesResponse.Content.ReadFromJsonAsync<WikiReferenceCatalogView>())!;
-                Assert.Single(catalog.References.Where(value => value.DisplayName == $"High Fixture {token}"));
+                var high = Assert.Single(catalog.References.Where(value => value.DisplayName == $"High Fixture {token}"));
+                Assert.Single(high.CategoryHistory);
+                Assert.Equal("subspecies", high.CategoryHistory[0].Category);
+                Assert.Equal("subspecies", high.EffectiveCategory);
             }
             using (var subraceAliasResponse = await client.GetAsync(
                        $"/api/wiki/references?entityType=subrace&categoryMode=any&q={token}"))
@@ -309,10 +345,14 @@ public sealed class WikiReferenceCatalogIntegrationTests
                 Assert.Equal(HttpStatusCode.OK, campaignResponse.StatusCode);
                 var catalog = (await campaignResponse.Content.ReadFromJsonAsync<WikiReferenceCatalogView>())!;
                 var reference = Assert.Single(catalog.References);
+                Assert.Equal(crossReference.ReferenceIdentity, reference.ReferenceIdentity);
+                Assert.Equal(subclassConceptId, reference.RuleConceptId);
                 Assert.Equal(WikiReferenceResolutionStates.CampaignOverride, reference.ResolutionState);
                 Assert.True(reference.HasCampaignOverride);
                 Assert.Equal(subclass55RevisionId, reference.EffectiveVariation.SourceEntityRevisionId);
+                Assert.Equal("subclass", reference.EffectiveCategory);
                 Assert.Equal("5.5e", reference.EffectiveEditionKey);
+                Assert.Contains(reference.CategoryHistory, value => value.Category == "prestigeClass");
             }
             using (var overridesRequest = HostedRequest(
                        HttpMethod.Get,
@@ -324,11 +364,67 @@ public sealed class WikiReferenceCatalogIntegrationTests
                 var catalog = (await overridesResponse.Content.ReadFromJsonAsync<WikiReferenceCatalogView>())!;
                 var reference = Assert.Single(catalog.References);
                 Assert.Equal(crossReference.ReferenceIdentity, reference.ReferenceIdentity);
+                Assert.Contains(catalog.SourceFacets, facet => facet.Value == "THREEFIVE");
+                Assert.Contains(catalog.SourceFacets, facet => facet.Value == "FIVEFIVE");
+                Assert.Contains(catalog.EditionFacets, facet => facet.Value == "3.5e");
+                Assert.Contains(catalog.EditionFacets, facet => facet.Value == "5.5e");
+            }
+
+            await using (var scope = factory.Services.CreateAsyncScope())
+            {
+                var globalRules = scope.ServiceProvider.GetRequiredService<IGlobalRulesService>();
+                var db = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+                var changed = await globalRules.SetDecisionAsync(
+                    subclassConceptId,
+                    new SetGlobalRuleDecisionRequest(subclass5RevisionId, "Later published ruling chooses 5e Subclass."),
+                    "rules-lawyer");
+                await SetGlobalDecisionCreatedAtAsync(db, changed.Value.Id, new DateTimeOffset(2026, 1, 4, 0, 0, 0, TimeSpan.Zero));
+                await globalRules.PublishAsync("rules-lawyer");
+            }
+
+            using (var switchedResponse = await client.GetAsync(
+                       $"/api/wiki/references?entityType=subclass&categoryMode=effective&q={Uri.EscapeDataString($"Arcane Fixture {token}")}"))
+            {
+                Assert.Equal(HttpStatusCode.OK, switchedResponse.StatusCode);
+                var catalog = (await switchedResponse.Content.ReadFromJsonAsync<WikiReferenceCatalogView>())!;
+                var switched = Assert.Single(catalog.References);
+                Assert.Equal(crossReference.ReferenceIdentity, switched.ReferenceIdentity);
+                Assert.Equal(subclassConceptId, switched.RuleConceptId);
+                Assert.Equal("subclass", switched.EffectiveCategory);
+                Assert.Equal("5e", switched.EffectiveEditionKey);
+                Assert.Equal(subclass5RevisionId, switched.EffectiveVariation.SourceEntityRevisionId);
+                Assert.Contains(switched.CategoryHistory, value => value.Category == "prestigeClass");
+            }
+            using (var switchedPrestige = await client.GetAsync(
+                       $"/api/wiki/references?entityType=prestigeClass&categoryMode=effective&q={Uri.EscapeDataString($"Arcane Fixture {token}")}"))
+            {
+                var catalog = (await switchedPrestige.Content.ReadFromJsonAsync<WikiReferenceCatalogView>())!;
+                Assert.Empty(catalog.References);
+            }
+            using (var historicalPrestige = await client.GetAsync(
+                       $"/api/wiki/references?entityType=prestigeClass&categoryMode=any&q={Uri.EscapeDataString($"Arcane Fixture {token}")}"))
+            {
+                var catalog = (await historicalPrestige.Content.ReadFromJsonAsync<WikiReferenceCatalogView>())!;
+                Assert.Single(catalog.References);
+            }
+
+            using (var pinnedCampaignRequest = HostedRequest(
+                       HttpMethod.Get,
+                       $"/api/campaigns/{campaignId}/wiki/references?q={Uri.EscapeDataString($"Arcane Fixture {token}")}",
+                       "campaign-ticket"))
+            using (var pinnedCampaignResponse = await client.SendAsync(pinnedCampaignRequest))
+            {
+                var catalog = (await pinnedCampaignResponse.Content.ReadFromJsonAsync<WikiReferenceCatalogView>())!;
+                var reference = Assert.Single(catalog.References);
+                Assert.Equal(crossReference.ReferenceIdentity, reference.ReferenceIdentity);
+                Assert.Equal("subclass", reference.EffectiveCategory);
+                Assert.Equal("5.5e", reference.EffectiveEditionKey);
+                Assert.Equal(WikiReferenceResolutionStates.CampaignOverride, reference.ResolutionState);
             }
 
             using (var deniedMutation = HostedRequest(
                        HttpMethod.Put,
-                       $"/api/global/rules/concepts/{crossConceptId}/decision",
+                       $"/api/global/rules/concepts/{subclassConceptId}/decision",
                        "granted-ticket"))
             {
                 deniedMutation.Content = JsonContent.Create(new SetGlobalRuleDecisionRequest(
@@ -343,6 +439,22 @@ public sealed class WikiReferenceCatalogIntegrationTests
             await CleanupAsync(factory, packageIds, canonicalIds);
         }
     }
+
+    private static Task<int> SetGlobalDecisionCreatedAtAsync(
+        RulesCoreDbContext db,
+        Guid decisionId,
+        DateTimeOffset createdAt) =>
+        db.GlobalRuleDecisions
+            .Where(value => value.Id == decisionId)
+            .ExecuteUpdateAsync(setters => setters.SetProperty(value => value.CreatedAt, createdAt));
+
+    private static Task<int> SetCampaignDecisionCreatedAtAsync(
+        RulesCoreDbContext db,
+        Guid decisionId,
+        DateTimeOffset createdAt) =>
+        db.CampaignRuleDecisions
+            .Where(value => value.Id == decisionId)
+            .ExecuteUpdateAsync(setters => setters.SetProperty(value => value.CreatedAt, createdAt));
 
     private static async Task<(Guid PackageId, Guid EntityId)> ImportAsync(
         ISourceImportService importer,

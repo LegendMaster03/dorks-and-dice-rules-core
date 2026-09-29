@@ -43,6 +43,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             sourceCode,
             packageKey,
             edition,
+            overridesOnly: false,
             limit,
             offset,
             cancellationToken);
@@ -72,6 +73,38 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             sourceCode,
             packageKey,
             edition,
+            overridesOnly: false,
+            limit,
+            offset,
+            cancellationToken);
+    }
+
+    public Task<WikiReferenceCatalogView> GetCampaignOverridesCatalogAsync(
+        Guid campaignId,
+        string userId,
+        string? entityType,
+        string? categoryMode,
+        string? query,
+        string? sourceCode,
+        string? packageKey,
+        string? edition,
+        int limit,
+        int offset,
+        CancellationToken cancellationToken = default)
+    {
+        if (campaignId == Guid.Empty) throw new ArgumentException("Campaign ID can not be empty.", nameof(campaignId));
+        var normalizedUserId = NormalizeRequiredUserId(userId);
+        return GetCatalogAsync(
+            "campaign",
+            campaignId,
+            normalizedUserId,
+            entityType,
+            categoryMode,
+            query,
+            sourceCode,
+            packageKey,
+            edition,
+            overridesOnly: true,
             limit,
             offset,
             cancellationToken);
@@ -134,6 +167,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         string? sourceCode,
         string? packageKey,
         string? edition,
+        bool overridesOnly,
         int limit,
         int offset,
         CancellationToken cancellationToken)
@@ -148,7 +182,9 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         var normalizedEdition = NormalizeEdition(normalizedEditionInput);
 
         var state = await BuildStateAsync(scope, campaignId, userId, cancellationToken);
-        IEnumerable<ReferenceGroup> filtered = state.Groups;
+        IEnumerable<ReferenceGroup> filtered = overridesOnly
+            ? state.Groups.Where(group => group.Item.HasCampaignOverride)
+            : state.Groups;
 
         if (normalizedQuery is not null)
         {
@@ -200,7 +236,17 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             .OrderBy(group => group.Item.DisplayName, StringComparer.OrdinalIgnoreCase)
             .ThenBy(group => group.Item.ReferenceIdentity, StringComparer.Ordinal)
             .ToArray();
-        var page = all.Skip(offset).Take(limit).Select(group => group.Item).ToArray();
+        var pageGroups = all.Skip(offset).Take(limit).ToArray();
+
+        // Mechanical documents are intentionally page-scoped. Grouping, authorization, search,
+        // totals and facets operate on lightweight metadata; the potentially large content_json/
+        // raw_json payloads are loaded only for effective rows returned on this page.
+        var documents = await ReadDocumentsAsync(
+            pageGroups.Select(group => group.EffectiveVariation.SourceEntityRevisionId).ToArray(),
+            cancellationToken);
+        var page = pageGroups
+            .Select(group => HydrateCatalogItem(group, documents))
+            .ToArray();
 
         return new WikiReferenceCatalogView(
             scope,
@@ -229,6 +275,11 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         var group = FindGroup(state, normalizedReferenceIdentity);
         if (group is null) return null;
 
+        // Detail/history is where complete mechanical documents are needed. Load only the
+        // accessible variations in this logical history rather than the complete corpus.
+        var documents = await ReadDocumentsAsync(
+            group.Variations.Select(value => value.SourceEntityRevisionId).ToArray(),
+            cancellationToken);
         var variations = group.Variations
             .OrderByDescending(value => value.PublicationDate.HasValue)
             .ThenByDescending(value => value.PublicationDate)
@@ -237,10 +288,13 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             .ThenBy(value => value.SourceCode, StringComparer.Ordinal)
             .Select(value => ToDetailVariation(
                 value,
+                RequireDocument(documents, value.SourceEntityRevisionId),
                 value.SourceEntityRevisionId == group.Item.EffectiveVariation.SourceEntityRevisionId))
             .ToArray();
 
-        var effectiveDocument = group.EffectiveVariation.Document;
+        var effectiveDocument = RequireDocument(
+            documents,
+            group.EffectiveVariation.SourceEntityRevisionId);
         if (group.Item.ConceptKey is not null
             && group.Item.ResolutionState != WikiReferenceResolutionStates.UnresolvedFallback)
         {
@@ -263,10 +317,11 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             }
         }
 
+        var reference = HydrateCatalogItem(group, documents);
         return new WikiReferenceDetailView(
             scope,
             campaignId,
-            group.Item,
+            reference,
             variations,
             effectiveDocument);
     }
@@ -313,8 +368,16 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             var bindings = conceptBindings
                 .Where(value => componentIds.Contains(value.CanonicalEntityId))
                 .GroupBy(value => value.RuleConceptId)
-                .Select(value => value.First())
+                .Select(group => group
+                    .OrderBy(value => value.CreatedAt)
+                    .ThenBy(value => value.CanonicalEntityId)
+                    .First())
                 .ToArray();
+            var identityBinding = bindings
+                .OrderBy(value => value.CreatedAt)
+                .ThenBy(value => value.ConceptKey, StringComparer.Ordinal)
+                .ThenBy(value => value.RuleConceptId)
+                .FirstOrDefault();
             var accessibleRevisionIds = componentVariations
                 .Select(value => value.SourceEntityRevisionId)
                 .ToHashSet();
@@ -328,12 +391,16 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
                 .ToArray();
 
             VariationRecord effectiveVariation;
-            ConceptBinding? preferredBinding = null;
+            ConceptBinding? preferredBinding;
             string resolutionState;
             bool hasCampaignOverride = false;
 
             if (effectiveCandidates.Length > 0)
             {
+                // A logical history can span mechanically distinct RuleConcepts. Each concept
+                // remains type-coherent; the Wiki representative is selected from explicit,
+                // published Rules Layer decisions. Campaign overrides outrank inherited entries,
+                // then the most recently authored published decision wins deterministically.
                 var selected = effectiveCandidates
                     .Select(value => new
                     {
@@ -342,9 +409,10 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
                         Variation = componentVariations.Single(item =>
                             item.SourceEntityRevisionId == value.Entry.SourceEntityRevisionId)
                     })
-                    .OrderByDescending(value => value.Variation.PublicationDate.HasValue)
-                    .ThenByDescending(value => value.Variation.PublicationDate)
-                    .ThenByDescending(value => EditionRank(value.Variation.EditionKey))
+                    .OrderByDescending(value => value.Entry.HasCampaignOverride)
+                    .ThenByDescending(value => value.Entry.DecisionCreatedAt)
+                    .ThenByDescending(value => value.Entry.DecisionNumber)
+                    .ThenBy(value => value.Entry.DecisionId)
                     .ThenBy(value => value.Binding.ConceptKey, StringComparer.Ordinal)
                     .First();
                 effectiveVariation = selected.Variation;
@@ -360,14 +428,24 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             {
                 effectiveVariation = SelectFallback(componentVariations);
                 preferredBinding = bindings
-                    .OrderBy(value => value.ConceptKey, StringComparer.Ordinal)
+                    .Where(value => string.Equals(
+                        value.EntityType,
+                        effectiveVariation.EntityType,
+                        StringComparison.OrdinalIgnoreCase))
+                    .OrderBy(value => value.CreatedAt)
+                    .ThenBy(value => value.ConceptKey, StringComparer.Ordinal)
                     .FirstOrDefault();
                 resolutionState = WikiReferenceResolutionStates.UnresolvedFallback;
             }
 
-            var referenceIdentity = preferredBinding?.ConceptKey
+            // Logical identity is intentionally independent of which category is effective.
+            // The earliest Rules Layer binding is a stable anchor once a logical history has
+            // entered Rules Layer; source-only histories retain the existing canonical anchor.
+            var referenceIdentity = identityBinding?.ConceptKey
                 ?? $"canonical:{component.OrderBy(value => value).First():N}";
-            var displayName = preferredBinding?.DisplayName ?? effectiveVariation.Name;
+            var displayName = preferredBinding?.DisplayName
+                ?? identityBinding?.DisplayName
+                ?? effectiveVariation.Name;
             var effectiveCategory = effectiveVariation.EntityType;
             var relationships = preferredBinding is not null
                 && outgoing.TryGetValue(preferredBinding.RuleConceptId, out var refs)
@@ -391,7 +469,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
                 hasCampaignOverride,
                 ToSummaryVariation(effectiveVariation, isEffective: true),
                 BuildCategoryHistory(componentVariations),
-                RuleBrowserSummaryProjector.Project(effectiveCategory, effectiveVariation.Document),
+                [],
                 relationships);
             var group = new ReferenceGroup(item, componentVariations, effectiveVariation);
             groups.Add(group);
@@ -436,8 +514,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
                     publication.canonical_key,
                     publication.display_name,
                     publication.game_edition,
-                    publication.publication_date,
-                    COALESCE(revision.content_json, revision.raw_json)::text
+                    publication.publication_date
                 FROM source_entity_occurrence_binding binding
                 JOIN canonical_source_occurrence occurrence
                     ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
@@ -469,8 +546,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             while (await reader.ReadAsync(cancellationToken))
             {
                 var gameEdition = reader.IsDBNull(12) ? string.Empty : reader.GetString(12);
-                var edition = NormalizeEdition(gameEdition) ?? string.Empty;
-                using var document = JsonDocument.Parse(reader.GetString(14));
+                var normalizedEdition = NormalizeEdition(gameEdition) ?? string.Empty;
                 values.Add(new VariationRecord(
                     reader.GetGuid(0),
                     reader.GetGuid(1),
@@ -484,12 +560,50 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
                     reader.GetGuid(9),
                     reader.GetString(10),
                     reader.GetString(11),
-                    edition,
-                    edition,
-                    reader.IsDBNull(13) ? null : reader.GetFieldValue<DateOnly>(13),
-                    document.RootElement.Clone()));
+                    normalizedEdition,
+                    normalizedEdition,
+                    reader.IsDBNull(13) ? null : reader.GetFieldValue<DateOnly>(13)));
             }
             return values;
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
+    private async Task<IReadOnlyDictionary<Guid, JsonElement>> ReadDocumentsAsync(
+        IReadOnlyCollection<Guid> revisionIds,
+        CancellationToken cancellationToken)
+    {
+        var ids = revisionIds
+            .Where(value => value != Guid.Empty)
+            .Distinct()
+            .ToArray();
+        if (ids.Length == 0) return new Dictionary<Guid, JsonElement>();
+
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync(cancellationToken);
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT source_entity_revision_id,
+                       COALESCE(content_json, raw_json)::text
+                FROM source_entity_revision
+                WHERE source_entity_revision_id = ANY(@revision_ids);
+                """;
+            AddParameter(command, "@revision_ids", ids);
+
+            var documents = new Dictionary<Guid, JsonElement>(ids.Length);
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                using var document = JsonDocument.Parse(reader.GetString(1));
+                documents[reader.GetGuid(0)] = document.RootElement.Clone();
+            }
+            return documents;
         }
         finally
         {
@@ -546,7 +660,8 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
                        concept.rule_concept_id,
                        concept.concept_key,
                        concept.entity_type,
-                       concept.display_name
+                       concept.display_name,
+                       concept.created_at
                 FROM rule_concept_source_binding binding
                 JOIN rule_concept concept
                   ON concept.rule_concept_id = binding.rule_concept_id
@@ -562,8 +677,9 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
                     reader.GetGuid(0),
                     reader.GetGuid(1),
                     reader.GetString(2),
-                    reader.GetString(3),
-                    reader.GetString(4)));
+                    NormalizeCategory(reader.GetString(3)),
+                    reader.GetString(4),
+                    reader.GetFieldValue<DateTimeOffset>(5)));
             }
             return values;
         }
@@ -589,7 +705,10 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             {
                 value.RuleConceptId,
                 value.SourceEntityRevisionId,
-                value.GlobalRuleDecision.DecisionKind
+                value.GlobalRuleDecision.DecisionKind,
+                DecisionId = value.GlobalRuleDecision.Id,
+                value.GlobalRuleDecision.DecisionNumber,
+                value.GlobalRuleDecision.CreatedAt
             })
             .ToArrayAsync(cancellationToken);
         return new ScopePublication(
@@ -600,7 +719,10 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
                 value => new EffectiveEntry(
                     value.SourceEntityRevisionId,
                     value.DecisionKind,
-                    HasCampaignOverride: false)));
+                    HasCampaignOverride: false,
+                    value.DecisionId,
+                    value.DecisionNumber,
+                    value.CreatedAt)));
     }
 
     private async Task<ScopePublication> ReadCampaignPublicationAsync(
@@ -626,7 +748,19 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
                     ? CampaignRuleDecisionKinds.InheritGlobal
                     : value.CampaignRuleDecision.DecisionKind,
                 HasCampaignOverride = value.CampaignRuleDecision != null
-                    && value.CampaignRuleDecision.DecisionKind != CampaignRuleDecisionKinds.InheritGlobal
+                    && value.CampaignRuleDecision.DecisionKind != CampaignRuleDecisionKinds.InheritGlobal,
+                CampaignDecisionId = value.CampaignRuleDecision == null
+                    ? (Guid?)null
+                    : value.CampaignRuleDecision.Id,
+                CampaignDecisionNumber = value.CampaignRuleDecision == null
+                    ? (int?)null
+                    : value.CampaignRuleDecision.DecisionNumber,
+                CampaignDecisionCreatedAt = value.CampaignRuleDecision == null
+                    ? (DateTimeOffset?)null
+                    : value.CampaignRuleDecision.CreatedAt,
+                GlobalDecisionId = value.BaselineRulesetRevisionEntry.GlobalRuleDecision.Id,
+                GlobalDecisionNumber = value.BaselineRulesetRevisionEntry.GlobalRuleDecision.DecisionNumber,
+                GlobalDecisionCreatedAt = value.BaselineRulesetRevisionEntry.GlobalRuleDecision.CreatedAt
             })
             .ToArrayAsync(cancellationToken);
         return new ScopePublication(
@@ -637,7 +771,16 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
                 value => new EffectiveEntry(
                     value.SourceEntityRevisionId,
                     value.DecisionKind,
-                    value.HasCampaignOverride)));
+                    value.HasCampaignOverride,
+                    value.HasCampaignOverride
+                        ? value.CampaignDecisionId!.Value
+                        : value.GlobalDecisionId,
+                    value.HasCampaignOverride
+                        ? value.CampaignDecisionNumber!.Value
+                        : value.GlobalDecisionNumber,
+                    value.HasCampaignOverride
+                        ? value.CampaignDecisionCreatedAt!.Value
+                        : value.GlobalDecisionCreatedAt)));
     }
 
     private static IReadOnlyList<HashSet<Guid>> BuildComponents(
@@ -773,6 +916,27 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
     private static ReferenceGroup? FindGroup(ReferenceState state, string referenceIdentity) =>
         state.Lookup.TryGetValue(referenceIdentity, out var group) ? group : null;
 
+    private static WikiReferenceItemView HydrateCatalogItem(
+        ReferenceGroup group,
+        IReadOnlyDictionary<Guid, JsonElement> documents)
+    {
+        var document = RequireDocument(documents, group.EffectiveVariation.SourceEntityRevisionId);
+        return group.Item with
+        {
+            BrowserFields = RuleBrowserSummaryProjector.Project(
+                group.Item.EffectiveCategory,
+                document)
+        };
+    }
+
+    private static JsonElement RequireDocument(
+        IReadOnlyDictionary<Guid, JsonElement> documents,
+        Guid revisionId) =>
+        documents.TryGetValue(revisionId, out var document)
+            ? document
+            : throw new InvalidOperationException(
+                $"Accessible source revision '{revisionId}' disappeared while building the Rules Wiki reference projection.");
+
     private static WikiReferenceVariationSummaryView ToSummaryVariation(VariationRecord value, bool isEffective) =>
         new(
             value.CanonicalEntityId,
@@ -780,7 +944,6 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             value.SourceEntityRevisionId,
             value.SourceRevisionNumber,
             value.Name,
-            value.EntityType,
             value.EntityType,
             value.SourceCode,
             value.PackageKey,
@@ -793,14 +956,16 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             value.PublicationDate,
             isEffective);
 
-    private static WikiReferenceVariationView ToDetailVariation(VariationRecord value, bool isEffective) =>
+    private static WikiReferenceVariationView ToDetailVariation(
+        VariationRecord value,
+        JsonElement document,
+        bool isEffective) =>
         new(
             value.CanonicalEntityId,
             value.SourceEntityId,
             value.SourceEntityRevisionId,
             value.SourceRevisionNumber,
             value.Name,
-            value.EntityType,
             value.EntityType,
             value.SourceCode,
             value.PackageKey,
@@ -812,7 +977,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             value.EditionDisplayName,
             value.PublicationDate,
             isEffective,
-            value.Document);
+            document);
 
     internal static string NormalizeCategory(string entityType) =>
         RuleConceptEntityTypes.Normalize(entityType);
@@ -928,8 +1093,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         string PublicationDisplayName,
         string EditionKey,
         string EditionDisplayName,
-        DateOnly? PublicationDate,
-        JsonElement Document);
+        DateOnly? PublicationDate);
 
     private sealed record HistoryEdge(Guid FromCanonicalEntityId, Guid ToCanonicalEntityId, string Kind);
 
@@ -938,12 +1102,16 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         Guid RuleConceptId,
         string ConceptKey,
         string EntityType,
-        string DisplayName);
+        string DisplayName,
+        DateTimeOffset CreatedAt);
 
     private sealed record EffectiveEntry(
         Guid SourceEntityRevisionId,
         string DecisionKind,
-        bool HasCampaignOverride);
+        bool HasCampaignOverride,
+        Guid DecisionId,
+        int DecisionNumber,
+        DateTimeOffset DecisionCreatedAt);
 
     private sealed record ScopePublication(
         int? RevisionNumber,
