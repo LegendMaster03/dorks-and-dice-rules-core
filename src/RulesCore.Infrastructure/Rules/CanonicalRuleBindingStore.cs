@@ -155,11 +155,16 @@ internal static class CanonicalRuleBindingStore
                     FROM rule_concept_source_binding
                     WHERE rule_concept_id = @concept_id
                     UNION
-                    SELECT relationship.to_canonical_entity_id
+                    SELECT CASE
+                        WHEN relationship.from_canonical_entity_id = parent.canonical_entity_id
+                            THEN relationship.to_canonical_entity_id
+                        ELSE relationship.from_canonical_entity_id
+                    END
                     FROM canonical_entity_relationship relationship
                     JOIN concept_entities parent
                         ON parent.canonical_entity_id = relationship.from_canonical_entity_id
-                    WHERE relationship.relationship_kind = 'revision'
+                        OR parent.canonical_entity_id = relationship.to_canonical_entity_id
+                    WHERE relationship.relationship_kind IN ('revision', 'rename')
                 )
                 SELECT DISTINCT source.source_entity_id
                 FROM source_entity source
@@ -215,11 +220,16 @@ internal static class CanonicalRuleBindingStore
                     FROM rule_concept_source_binding
                     WHERE rule_concept_id = @concept_id
                     UNION
-                    SELECT relationship.to_canonical_entity_id
+                    SELECT CASE
+                        WHEN relationship.from_canonical_entity_id = parent.canonical_entity_id
+                            THEN relationship.to_canonical_entity_id
+                        ELSE relationship.from_canonical_entity_id
+                    END
                     FROM canonical_entity_relationship relationship
                     JOIN concept_entities parent
                         ON parent.canonical_entity_id = relationship.from_canonical_entity_id
-                    WHERE relationship.relationship_kind = 'revision'
+                        OR parent.canonical_entity_id = relationship.to_canonical_entity_id
+                    WHERE relationship.relationship_kind IN ('revision', 'rename')
                 )
                 SELECT DISTINCT source.source_entity_id
                 FROM source_entity source
@@ -325,11 +335,16 @@ internal static class CanonicalRuleBindingStore
                     SELECT DISTINCT canonical_entity_id
                     FROM rule_concept_source_binding
                     UNION
-                    SELECT relationship.to_canonical_entity_id
+                    SELECT CASE
+                        WHEN relationship.from_canonical_entity_id = parent.canonical_entity_id
+                            THEN relationship.to_canonical_entity_id
+                        ELSE relationship.from_canonical_entity_id
+                    END
                     FROM canonical_entity_relationship relationship
                     JOIN bound_entities parent
                         ON parent.canonical_entity_id = relationship.from_canonical_entity_id
-                    WHERE relationship.relationship_kind = 'revision'
+                        OR parent.canonical_entity_id = relationship.to_canonical_entity_id
+                    WHERE relationship.relationship_kind IN ('revision', 'rename')
                 )
                 SELECT DISTINCT source_binding.source_entity_id
                 FROM bound_entities bound
@@ -399,11 +414,17 @@ internal static class CanonicalRuleBindingStore
                     SELECT rule_concept_id, canonical_entity_id
                     FROM rule_concept_source_binding
                     UNION
-                    SELECT parent.rule_concept_id, relationship.to_canonical_entity_id
+                    SELECT parent.rule_concept_id,
+                           CASE
+                               WHEN relationship.from_canonical_entity_id = parent.canonical_entity_id
+                                   THEN relationship.to_canonical_entity_id
+                               ELSE relationship.from_canonical_entity_id
+                           END
                     FROM canonical_entity_relationship relationship
                     JOIN concept_entities parent
                         ON parent.canonical_entity_id = relationship.from_canonical_entity_id
-                    WHERE relationship.relationship_kind = 'revision'
+                        OR parent.canonical_entity_id = relationship.to_canonical_entity_id
+                    WHERE relationship.relationship_kind IN ('revision', 'rename')
                 )
                 SELECT canonical_entity_id, rule_concept_id
                 FROM concept_entities
@@ -455,11 +476,16 @@ internal static class CanonicalRuleBindingStore
                     FROM rule_concept_source_binding
                     WHERE rule_concept_id = @concept_id
                     UNION
-                    SELECT relationship.to_canonical_entity_id
+                    SELECT CASE
+                        WHEN relationship.from_canonical_entity_id = parent.canonical_entity_id
+                            THEN relationship.to_canonical_entity_id
+                        ELSE relationship.from_canonical_entity_id
+                    END
                     FROM canonical_entity_relationship relationship
                     JOIN concept_entities parent
                         ON parent.canonical_entity_id = relationship.from_canonical_entity_id
-                    WHERE relationship.relationship_kind = 'revision'
+                        OR parent.canonical_entity_id = relationship.to_canonical_entity_id
+                    WHERE relationship.relationship_kind IN ('revision', 'rename')
                 )
                 SELECT EXISTS (
                     SELECT 1
