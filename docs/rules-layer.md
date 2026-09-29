@@ -197,3 +197,15 @@ Campaign endpoints:
 Campaign preview and decision requests use `decisionKind` to choose `select-source`, `inherit-global`, `json-merge-patch`, or `json-rule-patch`. Patch decisions leave `sourceEntityRevisionId` null. `json-merge-patch` uses `mergePatch`; `json-rule-patch` uses `structuredPatch`.
 
 The current implementation establishes exact source selection, authored object merge/replace/delete semantics, item-aware array composition, non-persisting preview/diff, immutable global publication, deliberate campaign migration, and campaign-specific composition. Arbitrary campaign-only concepts, temporary/session overrides, richer multi-field selectors/set-style array operations, rollback UI, and broader authoring workflows remain later layers built on the immutable publication model.
+
+## Rules Wiki reference reads are not Rules Layer decisions
+
+Rules Wiki also needs to browse accessible source history before every source-backed concept has a published Rules Layer decision. The first-party `/api/wiki/references` read model is deliberately separate from the effective consumer `/api/rules` contract described above.
+
+A Wiki reference may be backed only by accessible canonical source history. Reading such a reference does not create a `rule_concept`, `global_rule_decision`, campaign decision, or publication. If no published global/campaign selection applies, the reference read model chooses a deterministic accessible fallback for presentation and labels it `unresolved-fallback`; that choice is not an adjudication and is never persisted by the read.
+
+When a published Rules Layer selection does apply, the Wiki reference uses that accessible selected source revision as its effective variation. Campaign references preserve the existing inherited-versus-override publication semantics.
+
+Ordinary users may read accessible reference history and request read-only semantic comparison without gaining Rules Lawyer or campaign-DM mutation authority. Source grants remain an independent hard boundary: inaccessible source variations are omitted from reference rows, facets, counts, detail, history, fallback selection, and comparison.
+
+The effective consumer APIs remain unchanged. Source-only Wiki references do not appear in `/api/rules` merely because they can be browsed in Rules Wiki.
