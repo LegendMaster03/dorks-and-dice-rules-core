@@ -45,7 +45,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
         ValidateLimit(limit);
         ValidateOffset(offset);
         var normalizedUserId = NormalizeOptionalUserId(userId);
-        var normalizedEntityType = NormalizeOptional(entityType)?.ToLowerInvariant();
+        var normalizedEntityType = NormalizeEntityType(entityType);
         var normalizedQuery = NormalizeOptional(query)?.ToLowerInvariant();
         var normalizedSourceCode = NormalizeOptional(sourceCode)?.ToLowerInvariant();
 
@@ -105,7 +105,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                     && value.SourceEntityRevision.SourceEntity.SourceCode.ToLower() == normalizedSourceCode);
             }
             var entityTypeFacetRows = await entityFacetEntries
-                .GroupBy(value => value.RuleConcept.EntityType)
+                .GroupBy(value => value.SourceEntityRevision.SourceEntity.EntityType)
                 .Select(group => new
                 {
                     EntityType = group.Key,
@@ -113,17 +113,17 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 })
                 .ToArrayAsync(cancellationToken);
             entityTypeFacets = entityTypeFacetRows
+                .GroupBy(
+                    value => RuleConceptEntityTypes.Normalize(value.EntityType),
+                    StringComparer.OrdinalIgnoreCase)
+                .Select(group => new ResolvedRuleCatalogEntityTypeFacetView(
+                    group.Key,
+                    group.Sum(value => value.Count)))
                 .OrderBy(value => value.EntityType, StringComparer.OrdinalIgnoreCase)
-                .Select(value => new ResolvedRuleCatalogEntityTypeFacetView(
-                    value.EntityType,
-                    value.Count))
                 .ToArray();
         }
 
-        if (normalizedEntityType is not null)
-        {
-            entries = entries.Where(value => value.RuleConcept.EntityType.ToLower() == normalizedEntityType);
-        }
+        entries = ApplyEntityTypeFilter(entries, normalizedEntityType);
 
         ResolvedRuleCatalogSourceFacetView[] sourceFacets = [];
         if (offset == 0)
@@ -181,7 +181,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
         if (publishedTake > 0)
         {
             rules = await entries
-                .OrderBy(value => value.RuleConcept.EntityType)
+                .OrderBy(value => value.SourceEntityRevision.SourceEntity.EntityType)
                 .ThenBy(value => value.RuleConcept.DisplayName)
                 .ThenBy(value => value.RuleConcept.Key)
                 .ThenBy(value => value.RuleConceptId)
@@ -189,7 +189,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 .Select(value => new ResolvedRuleCatalogItemView(
                     value.RuleConceptId,
                     value.RuleConcept.Key,
-                    value.RuleConcept.EntityType,
+                    value.SourceEntityRevision.SourceEntity.EntityType,
                     value.RuleConcept.DisplayName,
                     value.GlobalRuleDecision.DecisionKind,
                     HasCampaignOverride: false,
@@ -281,7 +281,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
         ValidateLimit(limit);
         ValidateOffset(offset);
         var normalizedUserId = RequireUserId(userId);
-        var normalizedEntityType = NormalizeOptional(entityType)?.ToLowerInvariant();
+        var normalizedEntityType = NormalizeEntityType(entityType);
         var normalizedQuery = NormalizeOptional(query)?.ToLowerInvariant();
         var normalizedSourceCode = NormalizeOptional(sourceCode)?.ToLowerInvariant();
 
@@ -348,7 +348,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                     && value.SourceEntityRevision.SourceEntity.SourceCode.ToLower() == normalizedSourceCode);
             }
             var entityTypeFacetRows = await entityFacetEntries
-                .GroupBy(value => value.RuleConcept.EntityType)
+                .GroupBy(value => value.SourceEntityRevision.SourceEntity.EntityType)
                 .Select(group => new
                 {
                     EntityType = group.Key,
@@ -356,17 +356,17 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 })
                 .ToArrayAsync(cancellationToken);
             entityTypeFacets = entityTypeFacetRows
+                .GroupBy(
+                    value => RuleConceptEntityTypes.Normalize(value.EntityType),
+                    StringComparer.OrdinalIgnoreCase)
+                .Select(group => new ResolvedRuleCatalogEntityTypeFacetView(
+                    group.Key,
+                    group.Sum(value => value.Count)))
                 .OrderBy(value => value.EntityType, StringComparer.OrdinalIgnoreCase)
-                .Select(value => new ResolvedRuleCatalogEntityTypeFacetView(
-                    value.EntityType,
-                    value.Count))
                 .ToArray();
         }
 
-        if (normalizedEntityType is not null)
-        {
-            entries = entries.Where(value => value.RuleConcept.EntityType.ToLower() == normalizedEntityType);
-        }
+        entries = ApplyEntityTypeFilter(entries, normalizedEntityType);
 
         ResolvedRuleCatalogSourceFacetView[] sourceFacets = [];
         if (offset == 0)
@@ -426,7 +426,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
         if (publishedTake > 0)
         {
             rules = await entries
-                .OrderBy(value => value.RuleConcept.EntityType)
+                .OrderBy(value => value.SourceEntityRevision.SourceEntity.EntityType)
                 .ThenBy(value => value.RuleConcept.DisplayName)
                 .ThenBy(value => value.RuleConcept.Key)
                 .ThenBy(value => value.RuleConceptId)
@@ -434,7 +434,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 .Select(value => new ResolvedRuleCatalogItemView(
                     value.RuleConceptId,
                     value.RuleConcept.Key,
-                    value.RuleConcept.EntityType,
+                    value.SourceEntityRevision.SourceEntity.EntityType,
                     value.RuleConcept.DisplayName,
                     value.CampaignRuleDecision == null
                         ? CampaignRuleDecisionKinds.InheritGlobal
@@ -579,10 +579,11 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             var resolvedDocument = document.RootElement.Clone();
             var edition = ResolvedRuleCatalogEditionMetadata.Normalize(
                 fallback.Publication?.GameEdition);
+            var effectiveEntityType = RuleConceptEntityTypes.Normalize(source.EntityType);
             result.Add(new ResolvedRuleCatalogItemView(
                 concept.Id,
                 concept.Key,
-                RuleConceptEntityTypes.Normalize(concept.EntityType),
+                effectiveEntityType,
                 concept.DisplayName,
                 RuleResolutionStates.UnresolvedFallback,
                 HasCampaignOverride: false,
@@ -595,7 +596,7 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 source.SourcePackage.DisplayName,
                 edition,
                 edition,
-                RuleBrowserSummaryProjector.Project(concept.EntityType, resolvedDocument),
+                RuleBrowserSummaryProjector.Project(effectiveEntityType, resolvedDocument),
                 Relationships: [],
                 Document: resolvedDocument,
                 Resolution: EffectiveRuleResolutionView.UnresolvedFallback(
@@ -603,7 +604,13 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                     revision.RevisionNumber)));
         }
 
-        return await AttachRelationshipsAsync(result, cancellationToken);
+        return await AttachRelationshipsAsync(
+            result
+                .OrderBy(value => value.EntityType, StringComparer.OrdinalIgnoreCase)
+                .ThenBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
+                .ThenBy(value => value.ConceptKey, StringComparer.Ordinal)
+                .ToArray(),
+            cancellationToken);
     }
 
     private static ResolvedRuleCatalogItemView[] FilterFallbackItems(
@@ -626,9 +633,9 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                 .Select(group => new ResolvedRuleCatalogEntityTypeFacetView(
                     group.Key,
                     group.Count())))
-            .GroupBy(value => value.EntityType, StringComparer.OrdinalIgnoreCase)
+            .GroupBy(value => RuleConceptEntityTypes.Normalize(value.EntityType), StringComparer.OrdinalIgnoreCase)
             .Select(group => new ResolvedRuleCatalogEntityTypeFacetView(
-                group.First().EntityType,
+                group.Key,
                 group.Sum(value => value.Count)))
             .OrderBy(value => value.EntityType, StringComparer.OrdinalIgnoreCase)
             .ToArray();
@@ -807,6 +814,52 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             .ToArray();
     }
 
+    private static IQueryable<RulesetRevisionEntry> ApplyEntityTypeFilter(
+        IQueryable<RulesetRevisionEntry> entries,
+        string? entityType)
+    {
+        if (entityType is null)
+        {
+            return entries;
+        }
+
+        var comparison = entityType.ToLowerInvariant();
+        return entityType switch
+        {
+            RuleConceptEntityTypes.Species => entries.Where(value =>
+                value.SourceEntityRevision.SourceEntity.EntityType.ToLower() == RuleConceptEntityTypes.Species
+                || value.SourceEntityRevision.SourceEntity.EntityType.ToLower() == "race"),
+            RuleConceptEntityTypes.Subspecies => entries.Where(value =>
+                value.SourceEntityRevision.SourceEntity.EntityType.ToLower() == RuleConceptEntityTypes.Subspecies
+                || value.SourceEntityRevision.SourceEntity.EntityType.ToLower() == "subrace"),
+            _ => entries.Where(value =>
+                value.SourceEntityRevision.SourceEntity.EntityType.ToLower() == comparison)
+        };
+    }
+
+    private static IQueryable<CampaignRulesetRevisionEntry> ApplyEntityTypeFilter(
+        IQueryable<CampaignRulesetRevisionEntry> entries,
+        string? entityType)
+    {
+        if (entityType is null)
+        {
+            return entries;
+        }
+
+        var comparison = entityType.ToLowerInvariant();
+        return entityType switch
+        {
+            RuleConceptEntityTypes.Species => entries.Where(value =>
+                value.SourceEntityRevision.SourceEntity.EntityType.ToLower() == RuleConceptEntityTypes.Species
+                || value.SourceEntityRevision.SourceEntity.EntityType.ToLower() == "race"),
+            RuleConceptEntityTypes.Subspecies => entries.Where(value =>
+                value.SourceEntityRevision.SourceEntity.EntityType.ToLower() == RuleConceptEntityTypes.Subspecies
+                || value.SourceEntityRevision.SourceEntity.EntityType.ToLower() == "subrace"),
+            _ => entries.Where(value =>
+                value.SourceEntityRevision.SourceEntity.EntityType.ToLower() == comparison)
+        };
+    }
+
     private static void ValidateLimit(int limit)
     {
         if (limit is < 1 or > 500)
@@ -825,6 +878,12 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
 
     private static string? NormalizeOptional(string? value) =>
         string.IsNullOrWhiteSpace(value) ? null : value.Trim();
+
+    private static string? NormalizeEntityType(string? value)
+    {
+        var normalized = NormalizeOptional(value);
+        return normalized is null ? null : RuleConceptEntityTypes.Normalize(normalized);
+    }
 
     private static string? NormalizeOptionalUserId(string? value)
     {
