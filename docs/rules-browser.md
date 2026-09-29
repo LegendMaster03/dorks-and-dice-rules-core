@@ -28,25 +28,39 @@ Rules Wiki uses the first-party reference endpoints:
 
 A Wiki reference can exist before a `RuleConcept` or published Rules Layer decision exists. Such a reference receives a stable Core-owned identity derived from its accessible canonical history and uses `/references/{referenceIdentity}` as its browser route. Creating or reading that identity does not create a Rules Layer concept or decision.
 
-Reference histories group canonical entities connected by `revision` or `rename`. `variant` and `reprint` relationships do not collapse into the same evolving history. Every variation retains its exact source revision and provenance.
+Reference histories group canonical entities connected by authoritative `revision` or `rename` relationships. Those relationships are traversed across the complete history component, so an older or newer member is still the same evolving logical history. `variant` and `reprint` relationships do not grant same-history resolution semantics or collapse into that evolving history. Every variation retains its exact source revision and provenance.
 
-A variation has one canonical mechanical category. Legacy naming aliases such as Race/Species and Subrace/Subspecies normalize to the same category. Genuine mechanical category changes, such as Prestige Class to Subclass, remain distinct in history. The immutable source record still retains its original source terminology; the Wiki contract does not expose a second `NativeEntityType` presentation field.
+A variation has one canonical mechanical category. Terminology aliases such as Race -> Species and Subrace -> Subspecies normalize into one canonical mechanical category. The immutable source record still retains its original source terminology, but the Wiki contract exposes only the canonical `Category` rather than a second `NativeEntityType` presentation field.
+
+A logical concept history may also span mechanically distinct categories such as Prestige Class and Subclass. Those categories remain distinct; the selected effective variation determines the effective category for the current rules scope. The Rules Layer concept keeps its original type as stable anchor metadata, while the resolved consumer `EntityType` and Wiki `EffectiveCategory` describe the selected variation.
 
 Search, Source, Package, Edition, category, and campaign-override filtering are evaluated over the complete accessible reference set in Rules Core. Facets and counts come from that same server-authoritative set rather than from one client page. Full mechanical JSON is loaded only for effective rows on the requested page or for the variations in a requested detail/history view.
 
-## Effective/default reference selection
+## Rules Layer participation and effective/default selection
 
-A logical history can contain more than one mechanically distinct Rules Layer concept. Rules Core does not weaken concept/source entity-type validation to combine those concepts.
+Direct `rule_concept_source_binding` remains type-coherent. A `prestigeClass` source can not be directly bound to a `subclass` concept merely because the names match.
 
-For global browsing, the representative effective variation is selected from applicable accessible entries in the published global ruleset. If more than one concept in the logical history is published, the most recently authored published Rules Layer decision determines the representative category and variation. Source publication date does not choose between competing published concepts.
+A mechanically different variation may nevertheless participate in that concept when authoritative canonical identity evidence places it in the same evolving history as a directly bound canonical entity. Current same-history evidence is the transitive `revision`/`rename` component. `variant` and `reprint` alone do not make a different-category source selectable for the concept.
 
-For campaign browsing, an explicit published campaign override in the logical history takes precedence over inherited global entries. If several concepts have campaign overrides, the most recently authored published campaign decision determines the representative. Without an applicable campaign override, the campaign inherits the same published-global decision ordering from its pinned baseline.
+This keeps arbitrary mismatched-type binding invalid while allowing legitimate edition evolution such as:
 
-Changing the representative from a 3.5e `prestigeClass` decision to a 5e `subclass` decision changes the effective category for that scope without rewriting either historical variation or binding one concept to a source of the wrong mechanical type.
+```text
+3.5e  prestigeClass
+  -> revision history
+5e    subclass
+  -> rename/revision history
+5.5e  subclass
+```
 
-If no published selection applies, the reference service chooses a deterministic accessible fallback from authoritative publication/version metadata. The fallback is labeled `unresolved-fallback`; it is a browsing default only and is never persisted as a Rules Layer decision by a read.
+A published global decision selects one exact source revision from that authoritative concept history. Its selected source determines the effective category. Changing the decision from the 3.5e variation to the 5e variation therefore changes the effective category from `prestigeClass` to `subclass` without rewriting the historical categories or mutating the concept's anchor type.
 
-This Wiki fallback does not broaden `/api/rules`. Source-only references remain outside the effective consumer catalog until the Rules Layer establishes the corresponding consumer rule.
+A campaign is evaluated against its pinned global baseline. An explicit published campaign `select-source` override may select another revision/rename-history member of the same concept, including one with a different mechanical category. The campaign effective category follows that selected variation. `inherit-global` continues to follow the pinned baseline rather than the newest global publication.
+
+Reference browsing and Rules Layer resolution are separate facts: the Wiki may show every accessible historical variation, while the resolved consumer API exposes only the effective/default variation for the selected scope.
+
+If no published selection applies, the reference service chooses a deterministic accessible fallback from authoritative publication/version metadata. The fallback is labeled `unresolved-fallback`; it is a browsing/default result only and is never persisted as a Rules Layer decision by a read. Its effective category is the category of the selected fallback variation.
+
+This Wiki fallback does not broaden `/api/rules` into a complete source browser. Source-only references with no Rules Layer concept remain outside the effective consumer catalog merely because they can be browsed in Rules Wiki.
 
 ## Source-access boundary
 
