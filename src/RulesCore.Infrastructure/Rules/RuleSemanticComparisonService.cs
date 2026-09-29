@@ -76,14 +76,33 @@ public sealed class RuleSemanticComparisonService(RulesCoreDbContext dbContext)
             cancellationToken);
     }
 
+    /// <summary>
+    /// Compares two already-authorized source revisions without requiring Rules Lawyer authority
+    /// or a published RuleConcept. The caller must separately establish that the revisions belong
+    /// to the same logical reference history.
+    /// </summary>
+    public Task<RuleSemanticComparisonView?> CompareAccessibleSourcesAsync(
+        Guid leftSourceEntityRevisionId,
+        Guid rightSourceEntityRevisionId,
+        string? userId,
+        CancellationToken cancellationToken = default) =>
+        CompareCoreAsync(
+            Guid.Empty,
+            leftSourceEntityRevisionId,
+            rightSourceEntityRevisionId,
+            string.IsNullOrWhiteSpace(userId) ? null : userId.Trim(),
+            cancellationToken,
+            requireConceptBinding: false);
+
     private async Task<RuleSemanticComparisonView?> CompareCoreAsync(
         Guid ruleConceptId,
         Guid leftSourceEntityRevisionId,
         Guid rightSourceEntityRevisionId,
         string? userId,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        bool requireConceptBinding = true)
     {
-        if (ruleConceptId == Guid.Empty
+        if ((requireConceptBinding && ruleConceptId == Guid.Empty)
             || leftSourceEntityRevisionId == Guid.Empty
             || rightSourceEntityRevisionId == Guid.Empty)
         {
@@ -114,15 +133,18 @@ public sealed class RuleSemanticComparisonService(RulesCoreDbContext dbContext)
             return null;
         }
 
-        foreach (var revision in revisions)
+        if (requireConceptBinding)
         {
-            if (!await CanonicalRuleBindingStore.IsSourceEntityBoundAsync(
-                    dbContext,
-                    ruleConceptId,
-                    revision.SourceEntityId,
-                    cancellationToken))
+            foreach (var revision in revisions)
             {
-                return null;
+                if (!await CanonicalRuleBindingStore.IsSourceEntityBoundAsync(
+                        dbContext,
+                        ruleConceptId,
+                        revision.SourceEntityId,
+                        cancellationToken))
+                {
+                    return null;
+                }
             }
         }
 
