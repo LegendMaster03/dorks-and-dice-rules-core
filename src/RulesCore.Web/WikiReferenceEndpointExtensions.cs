@@ -1,5 +1,6 @@
 using RulesCore.Application.Hosting;
 using RulesCore.Application.Rules;
+using RulesCore.Domain.Rules;
 using RulesCore.Infrastructure.Persistence;
 using RulesCore.Infrastructure.Rules;
 
@@ -376,17 +377,8 @@ public static class WikiReferenceEndpointExtensions
         references.Add(referenceIdentity);
     }
 
-    private static string? NormalizeReferenceCategory(string? value)
-    {
-        if (string.IsNullOrWhiteSpace(value)) return null;
-        var normalized = value.Trim();
-        return normalized.ToLowerInvariant() switch
-        {
-            "race" => "species",
-            "subrace" => "subspecies",
-            _ => normalized
-        };
-    }
+    private static string? NormalizeReferenceCategory(string? value) =>
+        string.IsNullOrWhiteSpace(value) ? null : RuleConceptEntityTypes.Normalize(value);
 
     private static IResult? RequireCampaignRead(
         HttpContext httpContext,

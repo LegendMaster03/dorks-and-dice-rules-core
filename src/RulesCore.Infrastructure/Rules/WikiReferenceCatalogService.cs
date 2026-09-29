@@ -16,6 +16,11 @@ namespace RulesCore.Infrastructure.Rules;
 public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
 {
     private const int MaximumLimit = 500;
+    private const int MaximumEntityTypeLength = 120;
+    private const int MaximumQueryLength = 500;
+    private const int MaximumFilterLength = 256;
+    private const int MaximumReferenceIdentityLength = 512;
+    private const int MaximumUserIdLength = 200;
 
     public Task<WikiReferenceCatalogView> GetGlobalCatalogAsync(
         string? userId,
@@ -56,11 +61,11 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         CancellationToken cancellationToken = default)
     {
         if (campaignId == Guid.Empty) throw new ArgumentException("Campaign ID can not be empty.", nameof(campaignId));
-        if (string.IsNullOrWhiteSpace(userId)) throw new ArgumentException("User ID can not be blank.", nameof(userId));
+        var normalizedUserId = NormalizeRequiredUserId(userId);
         return GetCatalogAsync(
             "campaign",
             campaignId,
-            userId.Trim(),
+            normalizedUserId,
             entityType,
             categoryMode,
             query,
@@ -90,11 +95,11 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         CancellationToken cancellationToken = default)
     {
         if (campaignId == Guid.Empty) throw new ArgumentException("Campaign ID can not be empty.", nameof(campaignId));
-        if (string.IsNullOrWhiteSpace(userId)) throw new ArgumentException("User ID can not be blank.", nameof(userId));
+        var normalizedUserId = NormalizeRequiredUserId(userId);
         return GetDetailAsync(
             "campaign",
             campaignId,
-            userId.Trim(),
+            normalizedUserId,
             referenceIdentity,
             cancellationToken);
     }
@@ -107,12 +112,13 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         CancellationToken cancellationToken = default)
     {
         if (leftRevisionId == Guid.Empty || rightRevisionId == Guid.Empty) return false;
+        var normalizedReferenceIdentity = NormalizeRequiredReferenceIdentity(referenceIdentity);
         var state = await BuildStateAsync(
             "global",
             campaignId: null,
             NormalizeOptionalUserId(userId),
             cancellationToken);
-        var group = FindGroup(state, referenceIdentity);
+        var group = FindGroup(state, normalizedReferenceIdentity);
         if (group is null) return false;
         var revisionIds = group.Variations.Select(value => value.SourceEntityRevisionId).ToHashSet();
         return revisionIds.Contains(leftRevisionId) && revisionIds.Contains(rightRevisionId);
@@ -134,13 +140,12 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
     {
         ValidatePage(limit, offset);
         var normalizedCategoryMode = WikiReferenceCategoryModes.Normalize(categoryMode);
-        var normalizedEntityType = NormalizeOptional(entityType) is { } requestedType
-            ? NormalizeCategory(requestedType)
-            : null;
-        var normalizedQuery = NormalizeOptional(query)?.ToLowerInvariant();
-        var normalizedSource = NormalizeOptional(sourceCode);
-        var normalizedPackage = NormalizeOptional(packageKey);
-        var normalizedEdition = NormalizeEdition(edition);
+        var normalizedEntityType = NormalizeOptionalCategory(entityType);
+        var normalizedQuery = NormalizeOptional(query, nameof(query), MaximumQueryLength)?.ToLowerInvariant();
+        var normalizedSource = NormalizeOptional(sourceCode, nameof(sourceCode), MaximumFilterLength);
+        var normalizedPackage = NormalizeOptional(packageKey, nameof(packageKey), MaximumFilterLength);
+        var normalizedEditionInput = NormalizeOptional(edition, nameof(edition), MaximumFilterLength);
+        var normalizedEdition = NormalizeEdition(normalizedEditionInput);
 
         var state = await BuildStateAsync(scope, campaignId, userId, cancellationToken);
         IEnumerable<ReferenceGroup> filtered = state.Groups;
@@ -218,13 +223,10 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         string referenceIdentity,
         CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(referenceIdentity))
-        {
-            throw new ArgumentException("Reference identity can not be blank.", nameof(referenceIdentity));
-        }
+        var normalizedReferenceIdentity = NormalizeRequiredReferenceIdentity(referenceIdentity);
 
         var state = await BuildStateAsync(scope, campaignId, userId, cancellationToken);
-        var group = FindGroup(state, referenceIdentity.Trim());
+        var group = FindGroup(state, normalizedReferenceIdentity);
         if (group is null) return null;
 
         var variations = group.Variations
@@ -366,7 +368,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             var referenceIdentity = preferredBinding?.ConceptKey
                 ?? $"canonical:{component.OrderBy(value => value).First():N}";
             var displayName = preferredBinding?.DisplayName ?? effectiveVariation.Name;
-            var effectiveCategory = NormalizeCategory(effectiveVariation.NativeEntityType);
+            var effectiveCategory = effectiveVariation.EntityType;
             var relationships = preferredBinding is not null
                 && outgoing.TryGetValue(preferredBinding.RuleConceptId, out var refs)
                 ? refs.Select(value => new ResolvedRuleRelationshipView(
@@ -460,7 +462,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
                          source.source_code,
                          revision.revision_number;
                 """;
-            AddParameter(command, "@user_id", (object?)userId ?? DBNull.Value);
+            AddNullableStringParameter(command, "@user_id", userId);
 
             var values = new List<VariationRecord>();
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -475,7 +477,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
                     reader.GetGuid(2),
                     reader.GetInt32(3),
                     reader.GetString(4),
-                    reader.GetString(5),
+                    NormalizeCategory(reader.GetString(5)),
                     reader.GetString(6),
                     reader.GetString(7),
                     reader.GetString(8),
@@ -680,7 +682,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
     private static IReadOnlyList<WikiReferenceCategoryHistoryView> BuildCategoryHistory(
         IReadOnlyCollection<VariationRecord> variations) =>
         variations
-            .GroupBy(value => NormalizeCategory(value.NativeEntityType), StringComparer.OrdinalIgnoreCase)
+            .GroupBy(value => value.EntityType, StringComparer.OrdinalIgnoreCase)
             .OrderBy(value => value.Key, StringComparer.OrdinalIgnoreCase)
             .Select(group => new WikiReferenceCategoryHistoryView(
                 group.Key,
@@ -701,7 +703,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         {
             var categories = categoryMode == WikiReferenceCategoryModes.Effective
                 ? [group.Item.EffectiveCategory]
-                : group.Variations.Select(value => NormalizeCategory(value.NativeEntityType)).Distinct(StringComparer.OrdinalIgnoreCase);
+                : group.Variations.Select(value => value.EntityType).Distinct(StringComparer.OrdinalIgnoreCase);
             foreach (var category in categories)
             {
                 counts[category] = counts.GetValueOrDefault(category) + 1;
@@ -748,7 +750,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         mode == WikiReferenceCategoryModes.Effective
             ? string.Equals(group.Item.EffectiveCategory, entityType, StringComparison.OrdinalIgnoreCase)
             : group.Variations.Any(value => string.Equals(
-                NormalizeCategory(value.NativeEntityType),
+                value.EntityType,
                 entityType,
                 StringComparison.OrdinalIgnoreCase));
 
@@ -778,8 +780,8 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             value.SourceEntityRevisionId,
             value.SourceRevisionNumber,
             value.Name,
-            value.NativeEntityType,
-            NormalizeCategory(value.NativeEntityType),
+            value.EntityType,
+            value.EntityType,
             value.SourceCode,
             value.PackageKey,
             value.PackageDisplayName,
@@ -798,8 +800,8 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             value.SourceEntityRevisionId,
             value.SourceRevisionNumber,
             value.Name,
-            value.NativeEntityType,
-            NormalizeCategory(value.NativeEntityType),
+            value.EntityType,
+            value.EntityType,
             value.SourceCode,
             value.PackageKey,
             value.PackageDisplayName,
@@ -812,15 +814,13 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             isEffective,
             value.Document);
 
-    internal static string NormalizeCategory(string entityType)
+    internal static string NormalizeCategory(string entityType) =>
+        RuleConceptEntityTypes.Normalize(entityType);
+
+    internal static string? NormalizeOptionalCategory(string? value)
     {
-        var normalized = (entityType ?? string.Empty).Trim();
-        return normalized.ToLowerInvariant() switch
-        {
-            "race" => "species",
-            "subrace" => "subspecies",
-            _ => normalized
-        };
+        var normalized = NormalizeOptional(value, "entityType", MaximumEntityTypeLength);
+        return normalized is null ? null : NormalizeCategory(normalized);
     }
 
     private static string? NormalizeEdition(string? value)
@@ -848,10 +848,44 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         return -1;
     }
 
-    private static string? NormalizeOptional(string? value) =>
-        string.IsNullOrWhiteSpace(value) ? null : value.Trim();
+    private static string? NormalizeOptional(string? value, string parameterName, int maximumLength)
+    {
+        if (string.IsNullOrWhiteSpace(value)) return null;
+        return ValidateInput(value.Trim(), parameterName, maximumLength);
+    }
 
-    private static string? NormalizeOptionalUserId(string? value) => NormalizeOptional(value);
+    private static string NormalizeRequired(string? value, string parameterName, int maximumLength)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException($"'{parameterName}' can not be blank.", parameterName);
+        }
+        return ValidateInput(value.Trim(), parameterName, maximumLength);
+    }
+
+    private static string ValidateInput(string value, string parameterName, int maximumLength)
+    {
+        if (value.Length > maximumLength)
+        {
+            throw new ArgumentException(
+                $"'{parameterName}' can not exceed {maximumLength} characters.",
+                parameterName);
+        }
+        if (value.Any(char.IsControl))
+        {
+            throw new ArgumentException($"'{parameterName}' can not contain control characters.", parameterName);
+        }
+        return value;
+    }
+
+    private static string? NormalizeOptionalUserId(string? value) =>
+        NormalizeOptional(value, "userId", MaximumUserIdLength);
+
+    private static string NormalizeRequiredUserId(string? value) =>
+        NormalizeRequired(value, "userId", MaximumUserIdLength);
+
+    private static string NormalizeRequiredReferenceIdentity(string? value) =>
+        NormalizeRequired(value, "referenceIdentity", MaximumReferenceIdentityLength);
 
     private static void ValidatePage(int limit, int offset)
     {
@@ -860,6 +894,15 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             throw new ArgumentOutOfRangeException(nameof(limit), $"Limit must be between 1 and {MaximumLimit}.");
         }
         if (offset < 0) throw new ArgumentOutOfRangeException(nameof(offset), "Offset can not be negative.");
+    }
+
+    private static void AddNullableStringParameter(DbCommand command, string name, string? value)
+    {
+        var parameter = command.CreateParameter();
+        parameter.ParameterName = name;
+        parameter.DbType = DbType.String;
+        parameter.Value = (object?)value ?? DBNull.Value;
+        command.Parameters.Add(parameter);
     }
 
     private static void AddParameter(DbCommand command, string name, object value)
@@ -876,7 +919,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         Guid SourceEntityRevisionId,
         int SourceRevisionNumber,
         string Name,
-        string NativeEntityType,
+        string EntityType,
         string SourceCode,
         string PackageKey,
         string PackageDisplayName,

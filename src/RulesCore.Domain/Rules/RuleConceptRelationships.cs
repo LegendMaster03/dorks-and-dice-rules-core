@@ -20,6 +20,10 @@ public static class RuleConceptEntityTypes
         {
             throw new ArgumentException("Rule concept entity type can not exceed 120 characters.", nameof(value));
         }
+        if (normalized.Any(char.IsControl))
+        {
+            throw new ArgumentException("Rule concept entity type can not contain control characters.", nameof(value));
+        }
 
         if (string.Equals(normalized, Class, StringComparison.OrdinalIgnoreCase))
         {
