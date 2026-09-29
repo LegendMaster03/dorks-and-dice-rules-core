@@ -80,13 +80,13 @@ public sealed class WikiReferenceCatalogIntegrationTests
                     $"wiki-race-{token}", "race", $"Elf Fixture {token}", "RACE5", "5e", true,
                     new DateOnly(2014, 8, 1), "race");
                 var species = await ImportAsync(importer, packageIds,
-                    $"wiki-species-{token}", "species", $"Elf Fixture {token}", "SPECIES55", "5.5e", true,
+                    $"wiki-species-{token}", "race", $"Elf Fixture {token}", "SPECIES55", "5.5e", true,
                     new DateOnly(2024, 9, 1), "species");
                 var subrace = await ImportAsync(importer, packageIds,
                     $"wiki-subrace-{token}", "subrace", $"High Fixture {token}", "SUBRACE5", "5e", true,
                     new DateOnly(2014, 8, 1), "subrace");
                 var subspecies = await ImportAsync(importer, packageIds,
-                    $"wiki-subspecies-{token}", "subspecies", $"High Fixture {token}", "SUBSPECIES55", "5.5e", true,
+                    $"wiki-subspecies-{token}", "subrace", $"High Fixture {token}", "SUBSPECIES55", "5.5e", true,
                     new DateOnly(2024, 9, 1), "subspecies");
 
                 var variantA = await ImportAsync(importer, packageIds,
