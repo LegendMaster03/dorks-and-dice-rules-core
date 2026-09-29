@@ -132,9 +132,15 @@ The Rules Library follows the same coordinator/module pattern as the backend: br
 
 Rules Wiki needs a complete human-reference view that spans accessible source history even when some source concepts have not entered the Rules Layer. That read model sits downstream of Source Layer access and canonical recognition but does not become another adjudication layer.
 
-The first-party `/api/wiki/references` endpoints group accessible canonical histories for browsing, history, facets, search, category membership, and read-only semantic comparison. `revision` and `rename` relationships can form one evolving logical reference; `variant` and `reprint` remain distinct. Each variation retains its exact source revision, native entity type, canonical publication, edition, package, and source provenance.
+The first-party `/api/wiki/references` endpoints group accessible canonical histories for browsing, history, facets, search, category membership, and read-only semantic comparison. `revision` and `rename` relationships can form one evolving logical reference; `variant` and `reprint` remain distinct. Each variation retains its exact source revision, canonical publication, edition, package, and source provenance while exposing one canonical mechanical category.
 
-When a published global or campaign Rules Layer selection applies to a reference and the selected source revision is accessible to the caller, that selection is the effective variation. Otherwise the Wiki read model chooses a deterministic newest accessible fallback for presentation and labels it `unresolved-fallback`. The fallback does not create a `RuleConcept`, decision, or publication and does not turn source-only material into an effective consumer rule.
+Terminology aliases that describe the same mechanical category normalize completely for Wiki presentation: Race/Species becomes `species`, and Subrace/Subspecies becomes `subspecies`. Immutable raw source data still preserves its original source terminology. Mechanically distinct categories remain distinct, so a 3.5e `prestigeClass` variation is not rewritten as a 5e `subclass` variation merely because both belong to one logical history.
+
+When one logical history contains multiple published RuleConcepts, the representative effective variation is chosen from explicit published Rules Layer decisions rather than source publication recency. The most recently authored published global decision determines the global representative. In campaign scope, a published campaign override outranks inherited candidates, and the most recently authored published override determines the representative if several concepts are overridden. RuleConcept/source entity-type validation remains unchanged.
+
+If no published selection applies, the Wiki read model chooses a deterministic newest accessible fallback for presentation and labels it `unresolved-fallback`. The fallback does not create a `RuleConcept`, decision, or publication and does not turn source-only material into an effective consumer rule.
+
+Catalog construction applies authorization and logical grouping over lightweight metadata. Full mechanical documents are loaded only for effective variations on the requested page; detail/history loads the documents for that one accessible logical history. Campaign `overridesOnly` filtering is evaluated in the same authoritative read model rather than reconstructing facets with per-reference detail requests.
 
 The source grant boundary applies before grouping and before any facet/count/detail/comparison result is produced. Canonical identity may be shared globally, but inaccessible source material can not leak through reference membership, counts, history, fallback selection, or comparison.
 
@@ -171,6 +177,5 @@ Rules Lawyer/admin surfaces include:
 - source comparison, authoring, adjudication, normalization, and publication workflows already protected by their existing authority checks.
 
 Internal services retain rich source/profile/provenance contracts. Hiding alternatives from normal consumers does not delete or collapse that information inside Rules Core.
-
 
 See `travel-environment-mechanics.md` for the travel/environment consumer contract, reviewed source projections, and Hex Crawl integration boundary.

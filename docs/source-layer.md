@@ -130,14 +130,16 @@ Rules Wiki is a reference browser over all source material the current request m
 
 One Wiki row represents one logical reference history. A logical reference may exist without a published `RuleConcept`. The current read model groups source occurrences that already share one `canonical_entity` and follows reviewed `revision` and `rename` relationships as same-history evidence. `variant` and `reprint` relationships remain related-but-distinct by default; they are not collapsed merely because a relationship exists. This prevents loose name/source matching from manufacturing identity.
 
-Each accessible variation retains its source-native entity type, publication, edition, source code, package, source revision, and preserved document. Browser normalization of `race` to `species` and `subrace` to `subspecies` does not erase the source-era native type from history or provenance.
+A variation has one canonical mechanical category. `race` and `species` normalize to `species`; `subrace` and `subspecies` normalize to `subspecies`. Immutable raw source data still preserves source-era terminology and provenance, but the Wiki reference contract does not carry a second presentation-level category for that terminology.
 
-Logical identity and source category are separate facts. A history can therefore contain, for example, a 3.5e `prestigeClass` variation and a later 5e `subclass` variation without rewriting either source occurrence or weakening Rules Layer binding validation. Category queries support two meanings:
+Genuine mechanical category changes remain distinct. A logical history may therefore contain a 3.5e `prestigeClass` variation and later 5e/5.5e `subclass` variations without rewriting either source occurrence or weakening Rules Layer binding validation. Category queries support two meanings:
 
-- **any variation**: at least one accessible variation has the requested browser category;
+- **any variation**: at least one accessible variation has the requested canonical category;
 - **effective in scope**: the currently effective/default variation has the requested category.
 
-The reference catalog applies source grants before grouping, search, facets, counts, fallback selection, and history projection. Inaccessible packages therefore do not contribute content or metadata to the caller's Wiki view. A stable `canonical:{id}` member identity may be used as a source-only deep link; all accessible members of the same projected history are accepted as route aliases, so an existing deep link continues to resolve if later access reveals more of that history.
+If multiple mechanically distinct RuleConcepts in the same logical history are present in a published scope, the representative effective variation comes from explicit Rules Layer decisions rather than source publication recency. The most recently authored published global decision determines the global representative. In campaign scope, an explicit published campaign override outranks inherited entries; among multiple overrides, the most recently authored published campaign decision determines the representative. Each RuleConcept remains bound only to mechanically coherent source categories.
+
+The reference catalog applies source grants before grouping, search, facets, counts, fallback selection, and history projection. Inaccessible packages therefore do not contribute content or metadata to the caller's Wiki view. Catalog requests operate on lightweight source/publication metadata and load full mechanical documents only for effective rows on the returned page. Detail/history requests load full documents only for variations in that logical reference. A stable `canonical:{id}` member identity may be used as a source-only deep link; all accessible members of the same projected history are accepted as route aliases, so an existing deep link continues to resolve if later access reveals more of that history.
 
 ## Source grants, acquisition, and disposition
 
