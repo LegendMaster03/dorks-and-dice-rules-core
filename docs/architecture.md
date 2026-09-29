@@ -128,6 +128,18 @@ The frontend is intentionally downstream of backend contracts and uses the expli
 
 The Rules Library follows the same coordinator/module pattern as the backend: browser state/loading, index rendering, detail/version comparison, and routing are separate modules. Rule rendering exposes a small registry facade over shared rendering support and specialized entity renderers. Maintenance and source-management views use the same compact primitives without forcing every workflow into the Rules Library's list/detail interaction model.
 
+## Rules Wiki reference read model
+
+Rules Wiki needs a complete human-reference view that spans accessible source history even when some source concepts have not entered the Rules Layer. That read model sits downstream of Source Layer access and canonical recognition but does not become another adjudication layer.
+
+The first-party `/api/wiki/references` endpoints group accessible canonical histories for browsing, history, facets, search, category membership, and read-only semantic comparison. `revision` and `rename` relationships can form one evolving logical reference; `variant` and `reprint` remain distinct. Each variation retains its exact source revision, native entity type, canonical publication, edition, package, and source provenance.
+
+When a published global or campaign Rules Layer selection applies to a reference and the selected source revision is accessible to the caller, that selection is the effective variation. Otherwise the Wiki read model chooses a deterministic newest accessible fallback for presentation and labels it `unresolved-fallback`. The fallback does not create a `RuleConcept`, decision, or publication and does not turn source-only material into an effective consumer rule.
+
+The source grant boundary applies before grouping and before any facet/count/detail/comparison result is produced. Canonical identity may be shared globally, but inaccessible source material can not leak through reference membership, counts, history, fallback selection, or comparison.
+
+This read model is intentionally separate from `/api/rules`. Game Tools continue to consume the effective consumer API and do not receive source-only reference records merely because Rules Wiki can browse them.
+
 ## Runtime consumer API boundary
 
 Rules Core is the authoritative runtime rule-resolution boundary. The Source Layer preserves immutable source truth and provenance. The Rules Layer owns adjudication, published global rulings, and campaign overrides. Rules Core combines those inputs into the effective rule consumed by game tools.
