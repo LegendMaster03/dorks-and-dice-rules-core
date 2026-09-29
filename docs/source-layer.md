@@ -124,6 +124,21 @@ Anonymous requests see only public packages. Authenticated requests add restrict
 
 Canonical publication/entity tables are not an alternate source-content API. Reconciliation issue reads are likewise scoped through the caller's current-user source registration rather than exposed as a global source-content endpoint.
 
+## Rules Wiki reference read model
+
+Rules Wiki is a reference browser over all source material the current request may legitimately read. Rules Core projects that view through the first-party `/api/wiki/references` endpoint family instead of exposing canonical tables directly or broadening `/api/rules`.
+
+One Wiki row represents one logical reference history. A logical reference may exist without a published `RuleConcept`. The current read model groups source occurrences that already share one `canonical_entity` and follows reviewed `revision` and `rename` relationships as same-history evidence. `variant` and `reprint` relationships remain related-but-distinct by default; they are not collapsed merely because a relationship exists. This prevents loose name/source matching from manufacturing identity.
+
+Each accessible variation retains its source-native entity type, publication, edition, source code, package, source revision, and preserved document. Browser normalization of `race` to `species` and `subrace` to `subspecies` does not erase the source-era native type from history or provenance.
+
+Logical identity and source category are separate facts. A history can therefore contain, for example, a 3.5e `prestigeClass` variation and a later 5e `subclass` variation without rewriting either source occurrence or weakening Rules Layer binding validation. Category queries support two meanings:
+
+- **any variation**: at least one accessible variation has the requested browser category;
+- **effective in scope**: the currently effective/default variation has the requested category.
+
+The reference catalog applies source grants before grouping, search, facets, counts, fallback selection, and history projection. Inaccessible packages therefore do not contribute content or metadata to the caller's Wiki view. A stable `canonical:{id}` member identity may be used as a source-only deep link; all accessible members of the same projected history are accepted as route aliases, so an existing deep link continues to resolve if later access reveals more of that history.
+
 ## Source grants, acquisition, and disposition
 
 These axes remain independent:
