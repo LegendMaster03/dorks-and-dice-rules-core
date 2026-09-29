@@ -94,6 +94,16 @@ public sealed record WikiReferenceItemView(
     IReadOnlyList<ResolvedRuleBrowserFieldView> BrowserFields,
     IReadOnlyList<ResolvedRuleRelationshipView> Relationships)
 {
+    public string SourceCode => EffectiveVariation.SourceCode;
+    public string PackageKey => EffectiveVariation.PackageKey;
+    public string PackageDisplayName => EffectiveVariation.PackageDisplayName;
+    public string EditionKey => EffectiveEditionKey;
+    public string EditionDisplayName => EffectiveEditionDisplayName;
+    public Guid SourceEntityId => EffectiveVariation.SourceEntityId;
+    public Guid SourceEntityRevisionId => EffectiveVariation.SourceEntityRevisionId;
+    public int SourceRevisionNumber => EffectiveVariation.SourceRevisionNumber;
+    public string SourceEntityName => EffectiveVariation.Name;
+
     public RuleLinkTargetView BrowserLink => ConceptKey is not null
         ? RuleBrowserRoutes.ForConcept(EntityType, ConceptKey)
         : new RuleLinkTargetView(
