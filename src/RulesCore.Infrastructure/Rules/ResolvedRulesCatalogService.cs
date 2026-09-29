@@ -200,13 +200,17 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                     value.SourceEntityRevision.SourceEntity.SourceCode ?? string.Empty,
                     value.SourceEntityRevision.SourceEntity.SourcePackage.Key,
                     value.SourceEntityRevision.SourceEntity.SourcePackage.DisplayName,
-                    value.SourceEntityRevision.SourceEntity.FormatKey,
-                    value.SourceEntityRevision.SourceEntity.FormatKey,
+                    string.Empty,
+                    string.Empty,
                     (IReadOnlyList<ResolvedRuleBrowserFieldView>)null!,
                     (IReadOnlyList<ResolvedRuleRelationshipView>)null!,
                     null))
                 .Take(publishedTake)
                 .ToArrayAsync(cancellationToken);
+            rules = await ResolvedRuleCatalogEditionMetadata.AttachAsync(
+                dbContext,
+                rules,
+                cancellationToken);
             rules = await AttachRelationshipsAsync(rules, cancellationToken);
             rules = await AttachGlobalBrowserFieldsAsync(
                 revision.Id,
@@ -444,13 +448,17 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
                     value.SourceEntityRevision.SourceEntity.SourceCode ?? string.Empty,
                     value.SourceEntityRevision.SourceEntity.SourcePackage.Key,
                     value.SourceEntityRevision.SourceEntity.SourcePackage.DisplayName,
-                    value.SourceEntityRevision.SourceEntity.FormatKey,
-                    value.SourceEntityRevision.SourceEntity.FormatKey,
+                    string.Empty,
+                    string.Empty,
                     (IReadOnlyList<ResolvedRuleBrowserFieldView>)null!,
                     (IReadOnlyList<ResolvedRuleRelationshipView>)null!,
                     null))
                 .Take(publishedTake)
                 .ToArrayAsync(cancellationToken);
+            rules = await ResolvedRuleCatalogEditionMetadata.AttachAsync(
+                dbContext,
+                rules,
+                cancellationToken);
             rules = await AttachRelationshipsAsync(rules, cancellationToken);
             rules = await AttachCampaignBrowserFieldsAsync(
                 revision.Id,
@@ -569,7 +577,8 @@ public sealed class ResolvedRulesCatalogService(RulesCoreDbContext dbContext)
             var revision = fallback.Revision;
             using var document = JsonDocument.Parse(revision.GetMechanicalContentJson());
             var resolvedDocument = document.RootElement.Clone();
-            var edition = fallback.Publication?.GameEdition ?? source.FormatKey;
+            var edition = ResolvedRuleCatalogEditionMetadata.Normalize(
+                fallback.Publication?.GameEdition);
             result.Add(new ResolvedRuleCatalogItemView(
                 concept.Id,
                 concept.Key,
