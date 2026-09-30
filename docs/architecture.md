@@ -6,6 +6,26 @@ Rules Core is a separately deployable Dorks & Dice Tool. It owns source ingestio
 
 The central architectural boundary is that **source material is preserved independently from canonical recognition and independently from Rules Layer adjudication**.
 
+## Rules Wiki integration boundary
+
+Rules Wiki is not a consumer of Rules Core's public API.
+
+The standing integration rule is:
+
+> **Every Rules Wiki -> Rules Core request uses the private first-party Tool-to-Tool API. Rules Wiki must not call Rules Core's stable external consumer API.**
+
+The normal hosted path is:
+
+`browser -> Rules Wiki -> Site Tool-to-Tool delegation -> Rules Core internal API`
+
+Rules Wiki has this unique internal access because it is the first-party human presentation and authoring application for Rules Core. Public Rules Core APIs exist for other Dorks & Dice Tools and independent consumers. A Rules Wiki requirement is therefore never, by itself, justification for adding a capability to the public API.
+
+Wiki-specific reference catalogs, source/history detail, semantic comparison support, class-family relationships, presentation projections, Rules Lawyer workflows, source administration, and other human-facing support contracts remain internal Tool-to-Tool contracts. If Rules Wiki needs semantic information that it can not derive safely, Rules Core should add or extend the internal contract. Promotion to the public API requires a separately reviewed independent non-Wiki consumer need.
+
+The internal boundary does not bypass domain authorization. Rules Core still enforces the delegated user's source grants, campaign membership, Rules Lawyer authority, campaign-DM authority, publication state, and all other applicable rules. The Site delegation capability establishes the allowed Tool-to-Tool caller; it does not replace end-user authorization.
+
+Rules Core may reuse the same application/domain services behind internal and external HTTP contracts. Network/API compatibility is still separate: Rules Wiki depends only on the internal contract, never on the public route simply because an equivalent operation exists there.
+
 ## Content pipeline
 
 ```text
@@ -97,6 +117,8 @@ Rules Core must answer two independent questions for every relevant operation:
 
 UI visibility is not an authorization boundary. API and runtime resolution paths enforce both requirements independently.
 
+For internal Rules Wiki requests, Rules Core additionally verifies that the request arrived through the authorized first-party Tool-to-Tool boundary. That caller restriction is independent from, and additive to, the delegated user's domain authorization.
+
 ## Database and runtime storage
 
 Rules Core uses external PostgreSQL. Original artifact bytes are stored once in `source_content_blob`, keyed by SHA-256. `source_representation` retains package-scoped provenance, format, origin, URI/media metadata, byte length, and the content digest that references the shared blob. Other relational tables store package access, source-native identities and revisions, canonical recognition metadata, Rules Layer decisions, and published rulesets.
@@ -124,15 +146,17 @@ A long file is not split solely by size. Cohesive translation pipelines, import 
 
 ## Frontend boundary
 
-The frontend is intentionally downstream of backend contracts and uses the explicit render lifecycle documented in `frontend-render-lifecycle.md`. The shared UI vocabulary now includes compact page leads, section headings, toolbars, filter/action bars, fields, and list/detail workspaces.
+The human frontend is owned by Rules Wiki. Rules Core remains headless. Presentation uses the explicit render lifecycle documented in the Rules Wiki repository and does not make Rules Core a browser application again.
 
-The Rules Library follows the same coordinator/module pattern as the backend: browser state/loading, index rendering, detail/version comparison, and routing are separate modules. Rule rendering exposes a small registry facade over shared rendering support and specialized entity renderers. Maintenance and source-management views use the same compact primitives without forcing every workflow into the Rules Library's list/detail interaction model.
+Rules Core supplies authoritative semantics through the private Rules Wiki Tool-to-Tool contracts and supplies stable external consumer contracts to other Tools. Those are separate compatibility surfaces even when they reuse the same underlying domain services.
 
 ## Rules Wiki reference read model
 
 Rules Wiki needs a complete human-reference view that spans accessible source history even when some source concepts have not entered the Rules Layer. That read model sits downstream of Source Layer access and canonical recognition but does not become another adjudication layer.
 
-The first-party `/api/wiki/references` endpoints group accessible canonical histories for browsing, history, facets, search, category membership, and read-only semantic comparison. `revision` and `rename` relationships can form one evolving logical reference; `variant` and `reprint` remain distinct. Each variation retains its exact source revision, canonical publication, edition, package, and source provenance while exposing one canonical mechanical category.
+The first-party reference read model is an **internal Rules Wiki Tool-to-Tool contract**, not part of Rules Core's public consumer API. It groups accessible canonical histories for browsing, history, facets, search, category membership, read-only semantic comparison, class-family relationships, and other presentation support. Existing `/api/wiki/...` route names are historical implementation details and do not make those contracts external.
+
+`revision` and `rename` relationships can form one evolving logical reference; `variant` and `reprint` remain distinct. Each variation retains its exact source revision, canonical publication, edition, package, and source provenance while exposing one canonical mechanical category.
 
 Canonical source-only histories use stable `canonical:{canonicalEntityId}` identities. Accessible source occurrences whose canonical reconciliation is intentionally unresolved and whose `canonical_entity_id` remains null stay browseable as isolated provisional histories using deterministic `occurrence:{canonicalSourceOccurrenceId}` identities. They are never grouped by loose name matching, and reading either kind of source-only identity does not create a `RuleConcept` or Rules Layer decision.
 
@@ -146,7 +170,7 @@ Catalog construction applies authorization and logical grouping over lightweight
 
 The source grant boundary applies before grouping and before any facet/count/detail/comparison result is produced. Canonical identity may be shared globally, but inaccessible source material can not leak through reference membership, counts, history, fallback selection, or comparison.
 
-This read model is intentionally separate from `/api/rules`. Game Tools continue to consume the effective consumer API and do not receive source-only reference records merely because Rules Wiki can browse them.
+This read model is intentionally separate from `/api/rules`. Game Tools may consume the effective public consumer API. Rules Wiki does not consume `/api/rules` or any other public consumer endpoint; it uses its internal read model instead.
 
 ## Runtime consumer API boundary
 
@@ -154,7 +178,9 @@ Rules Core is the authoritative runtime rule-resolution boundary. The Source Lay
 
 Normal game tools consume effective results only. They do not receive competing source/profile implementations and do not select an edition, source revision, competency profile, or facet as a second rules engine. Provenance on an effective result is still valid and should identify the selected source/ruling without exposing alternatives as consumer choices.
 
-Rules Lawyer and authorized DM/admin surfaces are intentionally richer. They may inspect source revisions, competing implementations, profiles, facets, semantic differences, and adjudication state because those details are inputs to a Rules Core decision rather than runtime choices for a game tool.
+Rules Wiki is explicitly **not** one of these public API consumers. It uses the private first-party Tool-to-Tool API because it must inspect and administer richer Rules Core state for human presentation.
+
+Rules Lawyer and authorized DM/admin surfaces are intentionally richer. They may inspect source revisions, competing implementations, profiles, facets, semantic differences, and adjudication state because those details are inputs to a Rules Core decision rather than runtime choices for a game tool. Rules Wiki reaches these surfaces through the internal API only.
 
 When no formal effective ruling exists, Rules Core selects one accessible, non-ignored source revision deterministically and returns it as a temporary effective result with `resolution.state = "unresolved-fallback"`, `isFallback = true`, and `requiresAdjudication = true`. The fallback is not persisted as a Rules Lawyer decision. A later published ruling replaces it automatically on the next request.
 
@@ -162,7 +188,7 @@ Consumers must not persist Rules Core rulings as their own authoritative rule ca
 
 ### API classification
 
-Normal tool-consumer surfaces include:
+Normal external tool-consumer surfaces include:
 
 - `GET /api/rules` and `GET /api/rules/{conceptKey}`;
 - campaign equivalents under `/api/campaigns/{campaignId}/rules`;
@@ -171,13 +197,10 @@ Normal tool-consumer surfaces include:
 - Character support and recovery semantic operations;
 - travel/environment effective catalog and resolution routes under `/api/rules/travel-environment` and their campaign equivalents. Travel definitions are structured in Rules Core; expedition state remains downstream.
 
-Rules Lawyer/admin surfaces include:
+These routes are not Rules Wiki dependencies.
 
-- `GET /api/rules/{conceptKey}/versions`;
-- `GET /api/admin/rules/mechanics`;
-- `GET /api/campaigns/{campaignId}/admin/rules/mechanics`;
-- source comparison, authoring, adjudication, normalization, and publication workflows already protected by their existing authority checks.
+Rules Wiki internal surfaces include all reference browsing, source/history inspection, version comparison, authoring, adjudication, normalization, source administration, and Wiki-specific presentation projections. They must require the first-party Tool-to-Tool boundary in addition to their normal user/source/campaign authority checks.
 
 Internal services retain rich source/profile/provenance contracts. Hiding alternatives from normal consumers does not delete or collapse that information inside Rules Core.
 
-See `travel-environment-mechanics.md` for the travel/environment consumer contract, reviewed source projections, and Hex Crawl integration boundary.
+See `docs/api-boundaries.md` for the normative external-versus-internal API rule. See `travel-environment-mechanics.md` for the travel/environment consumer contract, reviewed source projections, and Hex Crawl integration boundary.
