@@ -39,7 +39,7 @@ public static class ResolvedRulesCatalogEndpointExtensions
             {
                 return InvalidRequest(exception.Message);
             }
-        });
+        }).PublicRulesCoreApi();
 
         app.MapGet("/api/campaigns/{campaignId:guid}/rules", async (
             Guid campaignId,
@@ -81,7 +81,7 @@ public static class ResolvedRulesCatalogEndpointExtensions
             {
                 return InvalidRequest(exception.Message);
             }
-        });
+        }).PublicRulesCoreApi();
     }
 
     private static IResult? RequireCampaignRulesReadAuthority(
