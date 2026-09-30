@@ -9,7 +9,7 @@ public static class WikiReferenceEndpointExtensions
 {
     public static void MapWikiReferenceEndpoints(this WebApplication app)
     {
-        app.MapGet("/internal/wiki/references", async (
+        app.MapGet("/api/wiki/references", async (
             string? entityType,
             string? categoryMode,
             string? q,
@@ -47,7 +47,7 @@ public static class WikiReferenceEndpointExtensions
             }
         });
 
-        app.MapGet("/internal/wiki/references/{referenceIdentity}", async (
+        app.MapGet("/api/wiki/references/{referenceIdentity}", async (
             string referenceIdentity,
             HttpContext httpContext,
             RulesCoreDbContext dbContext,
@@ -72,7 +72,7 @@ public static class WikiReferenceEndpointExtensions
             }
         });
 
-        app.MapGet("/internal/wiki/references/{referenceIdentity}/class-family", async (
+        app.MapGet("/api/wiki/references/{referenceIdentity}/class-family", async (
             string referenceIdentity,
             HttpContext httpContext,
             RulesCoreDbContext dbContext,
@@ -97,7 +97,7 @@ public static class WikiReferenceEndpointExtensions
             }
         });
 
-        app.MapGet("/internal/wiki/campaigns/{campaignId:guid}/references", async (
+        app.MapGet("/api/campaigns/{campaignId:guid}/wiki/references", async (
             Guid campaignId,
             string? entityType,
             string? categoryMode,
@@ -152,7 +152,7 @@ public static class WikiReferenceEndpointExtensions
             }
         });
 
-        app.MapGet("/internal/wiki/campaigns/{campaignId:guid}/references/{referenceIdentity}", async (
+        app.MapGet("/api/campaigns/{campaignId:guid}/wiki/references/{referenceIdentity}", async (
             Guid campaignId,
             string referenceIdentity,
             HttpContext httpContext,
@@ -179,7 +179,7 @@ public static class WikiReferenceEndpointExtensions
             }
         });
 
-        app.MapGet("/internal/wiki/campaigns/{campaignId:guid}/references/{referenceIdentity}/class-family", async (
+        app.MapGet("/api/campaigns/{campaignId:guid}/wiki/references/{referenceIdentity}/class-family", async (
             Guid campaignId,
             string referenceIdentity,
             HttpContext httpContext,
@@ -206,7 +206,7 @@ public static class WikiReferenceEndpointExtensions
             }
         });
 
-        app.MapPost("/internal/wiki/references/comparison", async (
+        app.MapPost("/api/wiki/references/comparison", async (
             WikiReferenceComparisonRequest request,
             HttpContext httpContext,
             RulesCoreDbContext dbContext,
