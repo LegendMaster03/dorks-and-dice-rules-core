@@ -18,6 +18,11 @@ public sealed class HostedToolAuthenticationMiddleware(RequestDelegate next)
 
         if (!hasTicketHeader && !hasIntrospectionHeader)
         {
+            if (!RulesCoreApiBoundary.Authorize(httpContext, authenticationContext: null))
+            {
+                return;
+            }
+
             await next(httpContext);
             return;
         }
@@ -76,6 +81,12 @@ public sealed class HostedToolAuthenticationMiddleware(RequestDelegate next)
 
         httpContext.Items[ContextItemKey] = authenticationContext;
         httpContext.User = BuildPrincipal(authenticationContext);
+
+        if (!RulesCoreApiBoundary.Authorize(httpContext, authenticationContext))
+        {
+            return;
+        }
+
         await next(httpContext);
     }
 
