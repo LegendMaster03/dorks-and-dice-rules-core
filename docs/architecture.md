@@ -128,6 +128,26 @@ The frontend is intentionally downstream of backend contracts and uses the expli
 
 The Rules Library follows the same coordinator/module pattern as the backend: browser state/loading, index rendering, detail/version comparison, and routing are separate modules. Rule rendering exposes a small registry facade over shared rendering support and specialized entity renderers. Maintenance and source-management views use the same compact primitives without forcing every workflow into the Rules Library's list/detail interaction model.
 
+## Rules Wiki reference read model
+
+Rules Wiki needs a complete human-reference view that spans accessible source history even when some source concepts have not entered the Rules Layer. That read model sits downstream of Source Layer access and canonical recognition but does not become another adjudication layer.
+
+The first-party `/api/wiki/references` endpoints group accessible canonical histories for browsing, history, facets, search, category membership, and read-only semantic comparison. `revision` and `rename` relationships can form one evolving logical reference; `variant` and `reprint` remain distinct. Each variation retains its exact source revision, canonical publication, edition, package, and source provenance while exposing one canonical mechanical category.
+
+Canonical source-only histories use stable `canonical:{canonicalEntityId}` identities. Accessible source occurrences whose canonical reconciliation is intentionally unresolved and whose `canonical_entity_id` remains null stay browseable as isolated provisional histories using deterministic `occurrence:{canonicalSourceOccurrenceId}` identities. They are never grouped by loose name matching, and reading either kind of source-only identity does not create a `RuleConcept` or Rules Layer decision.
+
+Terminology aliases that describe the same mechanical category normalize completely for Wiki presentation: Race/Species becomes `species`, and Subrace/Subspecies becomes `subspecies`. Immutable raw source data still preserves its original source terminology. Mechanically distinct categories remain distinct, so a 3.5e `prestigeClass` variation is not rewritten as a 5e `subclass` variation merely because both belong to one logical history.
+
+A revision/rename history has one authoritative Rules Layer anchor. When legacy data contains multiple RuleConcepts bound within the same history component, Rules Core prefers a RuleConcept bound to a root canonical entity in the directed history graph. Stable concept-key ordering is used only as a deterministic compatibility fallback when a unique rooted binding is unavailable. Decision creation timestamps do not select which RuleConcept represents the history. Published global or campaign decisions select the effective source variation for the authoritative concept; they do not establish history ownership.
+
+If no published selection applies, the Wiki read model chooses a deterministic newest accessible fallback for presentation and labels it `unresolved-fallback`. The fallback does not create a `RuleConcept`, decision, or publication and does not turn source-only material into an effective consumer rule.
+
+Catalog construction applies authorization and logical grouping over lightweight metadata. Full mechanical documents are loaded only for the variation projected into each requested catalog row; detail/history loads the documents for that one accessible logical history. `EffectiveVariation` is the source variation selected by the current global/campaign/default rules scope. `BrowseVariation` is the variation used to populate the current catalog row. In `categoryMode=effective`, they normally coincide. In `categoryMode=any`, source, package, edition, type-specific browser fields, and row metadata come from a historical variation that matched the requested browse category and applicable filters, while `EffectiveCategory` continues to describe the effective rules type. Campaign `overridesOnly` filtering is evaluated in the same authoritative read model rather than reconstructing facets with per-reference detail requests.
+
+The source grant boundary applies before grouping and before any facet/count/detail/comparison result is produced. Canonical identity may be shared globally, but inaccessible source material can not leak through reference membership, counts, history, fallback selection, or comparison.
+
+This read model is intentionally separate from `/api/rules`. Game Tools continue to consume the effective consumer API and do not receive source-only reference records merely because Rules Wiki can browse them.
+
 ## Runtime consumer API boundary
 
 Rules Core is the authoritative runtime rule-resolution boundary. The Source Layer preserves immutable source truth and provenance. The Rules Layer owns adjudication, published global rulings, and campaign overrides. Rules Core combines those inputs into the effective rule consumed by game tools.
@@ -159,6 +179,5 @@ Rules Lawyer/admin surfaces include:
 - source comparison, authoring, adjudication, normalization, and publication workflows already protected by their existing authority checks.
 
 Internal services retain rich source/profile/provenance contracts. Hiding alternatives from normal consumers does not delete or collapse that information inside Rules Core.
-
 
 See `travel-environment-mechanics.md` for the travel/environment consumer contract, reviewed source projections, and Hex Crawl integration boundary.

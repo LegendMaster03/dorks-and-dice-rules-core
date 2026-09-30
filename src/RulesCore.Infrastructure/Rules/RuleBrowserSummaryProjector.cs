@@ -46,6 +46,10 @@ internal static class RuleBrowserSummaryProjector
                 Add(fields, "hitDie", "Hit Die", ReadHitDie(document));
                 break;
 
+            case RuleConceptEntityTypes.PrestigeClass:
+                Add(fields, "prerequisite", "Prerequisite", ReadDisplayScalar(document, "prerequisite"));
+                break;
+
             case "race":
             case "species":
                 Add(fields, "ability", "Ability", ReadAbility(document));

@@ -17,6 +17,7 @@ public static class GlobalRuleAuthoringEndpointExtensions
         app.MapSourceNormalizationEndpoints();
         app.MapSourceVersioningEndpoints();
         app.MapResolvedRulesCatalogEndpoints();
+        app.MapWikiReferenceEndpoints();
         app.MapCharacterMechanicsEndpoints();
         app.MapTravelEnvironmentEndpoints();
         app.MapHarvestingRulesEndpoints();

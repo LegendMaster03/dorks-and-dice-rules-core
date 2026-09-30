@@ -124,7 +124,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
                     cancellationToken))
             {
                 throw new InvalidOperationException(
-                    "The selected source revision belongs to a canonical entity that is not bound to this rule concept.");
+                    "The selected source revision does not belong to this rule concept's authoritative revision/rename history.");
             }
             selectedSourceEntityRevisionId = sourceRevision.Id;
         }
@@ -420,7 +420,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             campaignId,
             concept.Id,
             concept.Key,
-            concept.EntityType,
+            RuleConceptEntityTypes.Normalize(sourceEntity.EntityType),
             concept.DisplayName,
             latestRevision.RevisionNumber,
             latestRevision.Fingerprint,
@@ -484,7 +484,7 @@ public sealed class CampaignRulesService(RulesCoreDbContext dbContext) : ICampai
             campaignId,
             concept.Id,
             concept.Key,
-            RuleConceptEntityTypes.Normalize(concept.EntityType),
+            RuleConceptEntityTypes.Normalize(source.EntityType),
             concept.DisplayName,
             latestRevision?.RevisionNumber ?? 0,
             latestRevision?.Fingerprint ?? string.Empty,

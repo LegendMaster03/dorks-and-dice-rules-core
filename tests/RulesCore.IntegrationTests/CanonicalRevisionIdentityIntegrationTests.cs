@@ -148,7 +148,7 @@ public sealed class CanonicalRevisionIdentityIntegrationTests
                         concept.Id,
                         new SetGlobalRuleDecisionRequest(revision2Id, "Variants require an explicit Rules binding."),
                         actor));
-                Assert.Contains("not bound to this rule concept", exception.Message, StringComparison.Ordinal);
+                Assert.Contains("authoritative revision/rename history", exception.Message, StringComparison.Ordinal);
             }
             finally
             {

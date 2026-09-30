@@ -34,17 +34,22 @@ internal sealed class CanonicalEntityRevisionClosureStore(RulesCoreDbContext dbC
             {
                 await using var command = connection.CreateCommand();
                 command.CommandText = """
-                    WITH RECURSIVE revision_closure(canonical_entity_id) AS (
+                    WITH RECURSIVE history_closure(canonical_entity_id) AS (
                         SELECT CAST(@root_id AS uuid)
                         UNION
-                        SELECT relationship.to_canonical_entity_id
+                        SELECT CASE
+                            WHEN relationship.from_canonical_entity_id = parent.canonical_entity_id
+                                THEN relationship.to_canonical_entity_id
+                            ELSE relationship.from_canonical_entity_id
+                        END
                         FROM canonical_entity_relationship relationship
-                        JOIN revision_closure parent
+                        JOIN history_closure parent
                             ON parent.canonical_entity_id = relationship.from_canonical_entity_id
-                        WHERE relationship.relationship_kind = 'revision'
+                            OR parent.canonical_entity_id = relationship.to_canonical_entity_id
+                        WHERE relationship.relationship_kind IN ('revision', 'rename')
                     )
                     SELECT canonical_entity_id
-                    FROM revision_closure
+                    FROM history_closure
                     ORDER BY canonical_entity_id;
                     """;
                 AddParameter(command, "@root_id", root);

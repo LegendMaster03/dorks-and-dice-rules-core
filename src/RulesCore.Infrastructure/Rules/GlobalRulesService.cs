@@ -181,7 +181,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
                 cancellationToken))
         {
             throw new InvalidOperationException(
-                "The selected source revision belongs to a canonical entity that is not bound to this rule concept.");
+                "The selected source revision does not belong to this rule concept's authoritative revision/rename history.");
         }
 
         await ValidateContributionsAsync(ruleConceptId, contributions, actor, cancellationToken);
@@ -367,7 +367,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         return new ResolvedRuleView(
             concept.Id,
             concept.Key,
-            RuleConceptEntityTypes.Normalize(concept.EntityType),
+            RuleConceptEntityTypes.Normalize(sourceEntity.EntityType),
             concept.DisplayName,
             latestRevision.RevisionNumber,
             latestRevision.Fingerprint,
@@ -419,7 +419,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
         return new ResolvedRuleView(
             concept.Id,
             concept.Key,
-            RuleConceptEntityTypes.Normalize(concept.EntityType),
+            RuleConceptEntityTypes.Normalize(source.EntityType),
             concept.DisplayName,
             latestRevision?.RevisionNumber ?? 0,
             latestRevision?.Fingerprint ?? string.Empty,
@@ -594,7 +594,7 @@ public sealed class GlobalRulesService(RulesCoreDbContext dbContext) : IGlobalRu
                     cancellationToken))
             {
                 throw new InvalidOperationException(
-                    "Every consolidation contribution must come from a canonical entity bound to this rule concept.");
+                    "Every consolidation contribution must come from this rule concept's authoritative revision/rename history.");
             }
             var package = revision.SourceEntity.SourcePackage;
             if (!package.IsPublic && !package.UserGrants.Any(grant => grant.UserId == actorUserId))

@@ -90,7 +90,7 @@ public sealed class CampaignRuleBaselineService(RulesCoreDbContext dbContext)
             campaignId,
             concept.Id,
             concept.Key,
-            concept.EntityType,
+            RuleConceptEntityTypes.Normalize(source.EntityType),
             concept.DisplayName,
             baselineRevision.RevisionNumber,
             baselineRevision.Fingerprint,

@@ -44,7 +44,7 @@ Canonical identity is global identity metadata, not global source content. **Rul
 
 Rules concepts bind to canonical entities rather than directly to private package entities. An exact `source_entity_revision` is still retained where a decision needs reproducibility and provenance.
 
-A directed `revision` relationship extends a concept to later revisions of its bound canonical entity. `variant`, `reprint`, and `rename` relationships do not automatically extend that binding. Runtime resolution still requires an accessible source implementation; canonical identity never bypasses `user_source_grant`.
+Authoritative directed `revision` and `rename` relationships extend one evolving Rules Layer history across canonical entities. Either relationship can make a later or renamed canonical entity participate in the same concept history when the implementation's history-closure rules are satisfied. `variant` and `reprint` do not automatically grant interchangeable Rules Layer resolution semantics. Runtime resolution still requires an accessible source implementation; canonical identity never bypasses `user_source_grant`.
 
 ## Native identity and revisions
 
@@ -123,6 +123,25 @@ The ordinary read endpoints remain source-access scoped:
 Anonymous requests see only public packages. Authenticated requests add restricted packages having a matching `user_source_grant`. A restricted entity without a grant behaves as not found and is omitted from search results.
 
 Canonical publication/entity tables are not an alternate source-content API. Reconciliation issue reads are likewise scoped through the caller's current-user source registration rather than exposed as a global source-content endpoint.
+
+## Rules Wiki reference read model
+
+Rules Wiki is a reference browser over all source material the current request may legitimately read. Rules Core projects that view through the first-party `/api/wiki/references` endpoint family instead of exposing canonical tables directly or broadening `/api/rules`.
+
+One Wiki row represents one logical reference history. A logical reference may exist without a published `RuleConcept`. Canonicalized histories group source occurrences that share canonical identity and follow authoritative `revision` and `rename` relationships as same-history evidence. `variant` and `reprint` relationships remain related-but-distinct by default; they are not collapsed merely because a relationship exists. This prevents loose name/source matching from manufacturing identity.
+
+Canonical source-only histories use stable `canonical:{canonicalEntityId}` reference identities. Accessible source occurrences whose reconciliation remains unresolved and whose `canonical_entity_id` is still null remain browseable as isolated provisional histories with deterministic `occurrence:{canonicalSourceOccurrenceId}` identities. They are not grouped with other records by loose name matching. Reading either source-only form does not create a `RuleConcept` or Rules Layer decision.
+
+A variation has one canonical mechanical category. `race` and `species` normalize to `species`; `subrace` and `subspecies` normalize to `subspecies`. Immutable raw source data still preserves source-era terminology and provenance, but the Wiki reference contract does not carry a second presentation-level category for that terminology.
+
+Genuine mechanical category changes remain distinct. A logical history may therefore contain a 3.5e `prestigeClass` variation and later 5e/5.5e `subclass` variations without rewriting either source occurrence or weakening direct Rules Layer binding validation. This is mechanical evolution inside one authoritative history, not terminology normalization. Category queries support two meanings:
+
+- **any variation**: at least one accessible variation has the requested canonical category;
+- **effective in scope**: the currently effective/default variation has the requested category.
+
+A revision/rename history has one authoritative Rules Layer anchor. When legacy data contains multiple RuleConcepts bound within the same history component, Rules Core prefers a RuleConcept bound to a root canonical entity in the directed history graph. Stable concept-key ordering is used only as a deterministic compatibility fallback when a unique rooted binding is unavailable. Decision creation timestamps do not determine which RuleConcept owns the history. Published global and campaign decisions select the effective source variation for that authoritative concept; they do not select the identity representative.
+
+The reference catalog applies source grants before grouping, search, facets, counts, fallback selection, and history projection. Inaccessible packages therefore do not contribute content or metadata to the caller's Wiki view. Catalog requests operate on lightweight source/publication metadata and load full mechanical documents only for the variation projected into each returned row. `EffectiveVariation` is the variation selected by the current global/campaign/default scope. `BrowseVariation` supplies the row's source, package, edition, and browser-field projection. In `categoryMode=effective`, the two normally coincide. In `categoryMode=any`, `BrowseVariation` is selected from the historical variation that matched the requested browse category and applicable source/package/edition filters while `EffectiveCategory` continues to report the effective rules type. Detail/history requests load full documents only for variations in that logical reference. All accessible canonical members of a projected history remain accepted as route aliases, so an existing deep link continues to resolve if later access reveals more of that history.
 
 ## Source grants, acquisition, and disposition
 
