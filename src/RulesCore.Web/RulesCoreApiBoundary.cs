@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Routing;
 using RulesCore.Application.Hosting;
 
 namespace RulesCore.Web;
@@ -22,44 +23,61 @@ public static class RulesCoreApiEndpointConventionExtensions
 }
 
 /// <summary>
-/// Enforces the transport-level boundary between Rules Core's public consumer API and the
-/// private first-party Rules Wiki API. Private endpoints require a Site-issued delegated target
-/// context whose immediate source is Rules Wiki. End-user/domain authorization remains the
-/// responsibility of the endpoint and underlying services.
+/// Transport-level authorization for Rules Core API surfaces. Public consumer endpoints must be
+/// explicitly marked. Existing public endpoints still mapped directly in Program.cs are listed
+/// explicitly until they are moved into focused endpoint modules. Everything else under /api is
+/// private to the Rules Wiki first-party delegation boundary.
 /// </summary>
-public sealed class RulesCoreApiBoundaryMiddleware(RequestDelegate next)
+public static class RulesCoreApiBoundary
 {
     public const string RulesWikiToolKey = "rules-wiki";
 
-    public async Task InvokeAsync(HttpContext httpContext)
+    private static readonly HashSet<string> LegacyProgramPublicRoutePatterns = new(
+        StringComparer.Ordinal)
+    {
+        "/api",
+        "/api/integration/session",
+        "/api/sources",
+        "/api/sources/entities",
+        "/api/sources/entities/{entityId:guid}",
+        "/api/rules/{conceptKey}",
+        "/api/campaigns/{campaignId:guid}/rules/{conceptKey}"
+    };
+
+    public static bool Authorize(
+        HttpContext httpContext,
+        ToolHostAuthenticationContext? authenticationContext)
     {
         var endpoint = httpContext.GetEndpoint();
         if (endpoint is null || !httpContext.Request.Path.StartsWithSegments("/api"))
         {
-            await next(httpContext);
-            return;
+            return true;
         }
 
         if (endpoint.Metadata.GetMetadata<PublicRulesCoreApiMetadata>() is not null)
         {
-            await next(httpContext);
-            return;
+            return true;
         }
 
-        var authenticationContext =
-            HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
+        if (endpoint is RouteEndpoint routeEndpoint
+            && routeEndpoint.RoutePattern.RawText is { } routePattern
+            && LegacyProgramPublicRoutePatterns.Contains(routePattern))
+        {
+            return true;
+        }
+
         if (authenticationContext is null)
         {
             httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            return;
+            return false;
         }
 
         if (!authenticationContext.IsDelegatedFrom(RulesWikiToolKey))
         {
             httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
-            return;
+            return false;
         }
 
-        await next(httpContext);
+        return true;
     }
 }
