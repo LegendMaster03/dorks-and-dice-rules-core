@@ -39,6 +39,29 @@ public sealed record WikiReferenceCategoryHistoryView(
     string Category,
     IReadOnlyList<string> Editions);
 
+public sealed record WikiReferenceAdvancementFeatureView(
+    string Name,
+    int? Level,
+    string? FeatureReference);
+
+/// <summary>
+/// Projects the shared Core class-family feature-reference interpretation into the private
+/// Rules Wiki presentation DTO. Parsing itself lives in ClassFamilyFeatureReferenceParser and is
+/// also consumed by character projection.
+/// </summary>
+public static class WikiReferenceClassFamilyProjection
+{
+    public static IReadOnlyList<WikiReferenceAdvancementFeatureView> ProjectAdvancementFeatures(
+        string? category,
+        JsonElement document) =>
+        ClassFamilyFeatureReferenceParser.Project(category, document)
+            .Select(feature => new WikiReferenceAdvancementFeatureView(
+                feature.Name,
+                feature.Level,
+                feature.FeatureReference))
+            .ToArray();
+}
+
 public sealed record WikiReferenceVariationSummaryView(
     Guid? CanonicalEntityId,
     Guid SourceEntityId,
@@ -74,7 +97,11 @@ public sealed record WikiReferenceVariationView(
     string EditionDisplayName,
     DateOnly? PublicationDate,
     bool IsEffective,
-    JsonElement Document);
+    JsonElement Document)
+{
+    public IReadOnlyList<WikiReferenceAdvancementFeatureView> AdvancementFeatures =>
+        WikiReferenceClassFamilyProjection.ProjectAdvancementFeatures(Category, Document);
+}
 
 public sealed record WikiReferenceItemView(
     string ReferenceIdentity,
@@ -133,7 +160,13 @@ public sealed record WikiReferenceDetailView(
     Guid? CampaignId,
     WikiReferenceItemView Reference,
     IReadOnlyList<WikiReferenceVariationView> Variations,
-    JsonElement EffectiveDocument);
+    JsonElement EffectiveDocument)
+{
+    public IReadOnlyList<WikiReferenceAdvancementFeatureView> EffectiveAdvancementFeatures =>
+        WikiReferenceClassFamilyProjection.ProjectAdvancementFeatures(
+            Reference.EffectiveCategory,
+            EffectiveDocument);
+}
 
 public sealed record WikiReferenceComparisonRequest(
     string ReferenceIdentity,

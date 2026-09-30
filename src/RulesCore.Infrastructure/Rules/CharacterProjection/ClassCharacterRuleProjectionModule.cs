@@ -37,7 +37,6 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
         ProjectNormalizedThreeXClass(rule, context, level);
     }
 
-
     private static void ProjectNormalizedThreeXClass(
         CharacterProjectionRule rule,
         CharacterProjectionContext context,
@@ -258,8 +257,6 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
             return;
         }
 
-        // A native 5.x saving-throw proficiency field establishes the standard
-        // proficiency progression even when this class is not the starting class.
         context.UsesStandardProficiency = true;
         if (startingClass != true)
         {
@@ -682,58 +679,20 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
         CharacterProjectionContext context,
         int level)
     {
-        JsonElement features;
         var isSubclass = string.Equals(
             rule.Catalog.EntityType,
             "subclass",
             StringComparison.OrdinalIgnoreCase);
-        if (isSubclass)
+
+        foreach (var feature in ClassFamilyFeatureReferenceParser.Project(
+                     rule.Catalog.EntityType,
+                     rule.Document))
         {
-            if (!CharacterProjectionJson.TryGetProperty(
-                    rule.Document,
-                    "subclassFeatures",
-                    out features))
+            if (feature.Level is not int acquisitionLevel)
             {
-                return;
-            }
-        }
-        else if (!CharacterProjectionJson.TryGetProperty(
-                     rule.Document,
-                     "classFeatures",
-                     out features)
-                 && !CharacterProjectionJson.TryGetProperty(
-                     rule.Document,
-                     "prestigeClassFeatures",
-                     out features))
-        {
-            return;
-        }
-
-        var entries = features.ValueKind == JsonValueKind.Array
-            ? features.EnumerateArray().ToArray()
-            : [features];
-
-        var index = 0;
-        foreach (var entry in entries)
-        {
-            var parsed = TryReadAdvancementFeature(
-                entry,
-                isSubclass,
-                out var displayName,
-                out var acquisitionLevel,
-                out var featureReference);
-            if (!parsed)
-            {
-                var fallback = ReadFeatureDisplayName(entry, isSubclass);
-                if (string.IsNullOrWhiteSpace(fallback))
-                {
-                    index++;
-                    continue;
-                }
-
                 context.AddFeature(
-                    $"feature.{rule.Catalog.ConceptKey}.progression.unresolved.{index++}",
-                    fallback,
+                    $"feature.{rule.Catalog.ConceptKey}.progression.unresolved.{feature.SourceIndex}",
+                    feature.Name,
                     "advancement-feature",
                     CharacterResolutionStates.ApplicableUnresolved,
                     rule.Catalog.ConceptKey,
@@ -744,112 +703,24 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
 
             if (acquisitionLevel > level || level <= 0)
             {
-                index++;
                 continue;
             }
 
             var key =
-                $"feature.{rule.Catalog.ConceptKey}.level-{acquisitionLevel}.{Slug(displayName)}.{index++}";
+                $"feature.{rule.Catalog.ConceptKey}.level-{acquisitionLevel}.{Slug(feature.Name)}.{feature.SourceIndex}";
             context.AddFeature(
                 key,
-                displayName,
+                feature.Name,
                 "advancement-feature",
                 CharacterResolutionStates.Resolved,
                 rule.Catalog.ConceptKey,
                 rule.Provenance,
                 rule.Catalog.EntityType,
                 acquisitionLevel,
-                featureDefinition: featureReference is null
+                featureDefinition: feature.FeatureReference is null
                     ? null
-                    : context.ResolveFeatureReference(featureReference, isSubclass));
+                    : context.ResolveFeatureReference(feature.FeatureReference, isSubclass));
         }
-    }
-
-    private static bool TryReadAdvancementFeature(
-        JsonElement entry,
-        bool isSubclass,
-        out string displayName,
-        out int acquisitionLevel,
-        out string? featureReference)
-    {
-        displayName = string.Empty;
-        acquisitionLevel = 0;
-        featureReference = null;
-
-        string? reference = null;
-        if (entry.ValueKind == JsonValueKind.String)
-        {
-            reference = entry.GetString();
-        }
-        else if (entry.ValueKind == JsonValueKind.Object)
-        {
-            var referenceProperty = isSubclass
-                ? "subclassFeature"
-                : "classFeature";
-            reference = CharacterProjectionJson.String(entry, referenceProperty);
-
-            if (string.IsNullOrWhiteSpace(reference))
-            {
-                var directName = CharacterProjectionJson.String(entry, "name");
-                var directLevel = CharacterProjectionJson.Integer(entry, "level");
-                if (!string.IsNullOrWhiteSpace(directName)
-                    && directLevel is > 0)
-                {
-                    displayName = directName.Trim();
-                    acquisitionLevel = directLevel.Value;
-                    return true;
-                }
-            }
-        }
-
-        if (string.IsNullOrWhiteSpace(reference))
-        {
-            return false;
-        }
-
-        var parts = reference.Split('|');
-        var levelIndex = isSubclass ? 5 : 3;
-        if (parts.Length <= levelIndex
-            || string.IsNullOrWhiteSpace(parts[0])
-            || !int.TryParse(parts[levelIndex], out var parsedLevel)
-            || parsedLevel <= 0)
-        {
-            return false;
-        }
-
-        displayName = parts[0].Trim();
-        acquisitionLevel = parsedLevel;
-        featureReference = reference.Trim();
-        return true;
-    }
-
-    private static string? ReadFeatureDisplayName(
-        JsonElement entry,
-        bool isSubclass)
-    {
-        if (entry.ValueKind == JsonValueKind.String)
-        {
-            return entry.GetString()?
-                .Split('|', 2)[0]
-                .Trim();
-        }
-        if (entry.ValueKind != JsonValueKind.Object)
-        {
-            return null;
-        }
-
-        var directName = CharacterProjectionJson.String(entry, "name");
-        if (!string.IsNullOrWhiteSpace(directName))
-        {
-            return directName.Trim();
-        }
-
-        var reference = CharacterProjectionJson.String(
-            entry,
-            isSubclass ? "subclassFeature" : "classFeature");
-        return string.IsNullOrWhiteSpace(reference)
-            ? null
-            : reference.Split('|', 2)[0].Trim();
     }
 
     private static string Slug(string value) =>
@@ -858,4 +729,3 @@ internal sealed class ClassCharacterRuleProjectionModule : ICharacterRuleProject
             value.Trim().ToLowerInvariant()
                 .Split([' ', '/', '_', '-'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
 }
-

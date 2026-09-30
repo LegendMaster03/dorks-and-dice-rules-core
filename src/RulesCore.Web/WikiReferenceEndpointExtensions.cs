@@ -68,6 +68,29 @@ public static class WikiReferenceEndpointExtensions
             }
         });
 
+        app.MapGet("/api/wiki/references/{referenceIdentity}/class-family", async (
+            string referenceIdentity,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            try
+            {
+                var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
+                var relationships = await new WikiReferenceClassFamilyService(dbContext).GetGlobalAsync(
+                    authenticationContext?.User.Id,
+                    referenceIdentity,
+                    cancellationToken);
+                if (relationships is null) return Results.NotFound();
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(relationships);
+            }
+            catch (ArgumentException exception)
+            {
+                return BadRequest(exception);
+            }
+        });
+
         app.MapGet("/api/campaigns/{campaignId:guid}/wiki/references", async (
             Guid campaignId,
             string? entityType,
@@ -143,6 +166,33 @@ public static class WikiReferenceEndpointExtensions
                 if (detail is null) return Results.NotFound();
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(detail);
+            }
+            catch (ArgumentException exception)
+            {
+                return BadRequest(exception);
+            }
+        });
+
+        app.MapGet("/api/campaigns/{campaignId:guid}/wiki/references/{referenceIdentity}/class-family", async (
+            Guid campaignId,
+            string referenceIdentity,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            var authenticationFailure = RequireCampaignRead(httpContext, campaignId, out var authenticationContext);
+            if (authenticationFailure is not null) return authenticationFailure;
+
+            try
+            {
+                var relationships = await new WikiReferenceClassFamilyService(dbContext).GetCampaignAsync(
+                    campaignId,
+                    authenticationContext!.User.Id,
+                    referenceIdentity,
+                    cancellationToken);
+                if (relationships is null) return Results.NotFound();
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(relationships);
             }
             catch (ArgumentException exception)
             {
