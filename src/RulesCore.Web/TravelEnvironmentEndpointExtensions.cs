@@ -17,7 +17,7 @@ public static class TravelEnvironmentEndpointExtensions
                 .User.Id;
             httpContext.Response.Headers.CacheControl = "no-store";
             return Results.Ok(await travel.GetGlobalAsync(userId, cancellationToken));
-        });
+        }).PublicRulesCoreApi();
 
         app.MapPost("/api/rules/travel-environment/{mechanicKey}/resolve", async (
             string mechanicKey,
@@ -51,7 +51,7 @@ public static class TravelEnvironmentEndpointExtensions
             {
                 return InvalidTravelRequest(exception);
             }
-        });
+        }).PublicRulesCoreApi();
 
         app.MapGet("/api/campaigns/{campaignId:guid}/rules/travel-environment", async (
             Guid campaignId,
@@ -73,7 +73,7 @@ public static class TravelEnvironmentEndpointExtensions
                 campaignId,
                 authenticationContext!.User.Id,
                 cancellationToken));
-        });
+        }).PublicRulesCoreApi();
 
         app.MapPost("/api/campaigns/{campaignId:guid}/rules/travel-environment/{mechanicKey}/resolve", async (
             Guid campaignId,
@@ -115,7 +115,7 @@ public static class TravelEnvironmentEndpointExtensions
             {
                 return InvalidTravelRequest(exception);
             }
-        });
+        }).PublicRulesCoreApi();
     }
 
     private static IResult? RequireCampaignRead(
