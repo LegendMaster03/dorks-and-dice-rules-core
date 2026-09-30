@@ -41,7 +41,15 @@ public static class RulesCoreApiBoundary
         "/api/sources/entities",
         "/api/sources/entities/{entityId:guid}",
         "/api/rules/{conceptKey}",
-        "/api/campaigns/{campaignId:guid}/rules/{conceptKey}"
+        "/api/campaigns/{campaignId:guid}/rules/{conceptKey}",
+        "/api/rules/mechanics",
+        "/api/rules/character-mechanics/resolve",
+        "/api/rules/mechanics/evaluate",
+        "/api/rules/mechanics/{mechanicKey}/evaluate",
+        "/api/campaigns/{campaignId:guid}/rules/mechanics",
+        "/api/campaigns/{campaignId:guid}/rules/character-mechanics/resolve",
+        "/api/campaigns/{campaignId:guid}/rules/mechanics/evaluate",
+        "/api/campaigns/{campaignId:guid}/rules/mechanics/{mechanicKey}/evaluate"
     };
 
     public static bool Authorize(
