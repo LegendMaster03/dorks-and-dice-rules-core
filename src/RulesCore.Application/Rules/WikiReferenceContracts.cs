@@ -40,7 +40,7 @@ public sealed record WikiReferenceCategoryHistoryView(
     IReadOnlyList<string> Editions);
 
 public sealed record WikiReferenceVariationSummaryView(
-    Guid CanonicalEntityId,
+    Guid? CanonicalEntityId,
     Guid SourceEntityId,
     Guid SourceEntityRevisionId,
     int SourceRevisionNumber,
@@ -58,7 +58,7 @@ public sealed record WikiReferenceVariationSummaryView(
     bool IsEffective);
 
 public sealed record WikiReferenceVariationView(
-    Guid CanonicalEntityId,
+    Guid? CanonicalEntityId,
     Guid SourceEntityId,
     Guid SourceEntityRevisionId,
     int SourceRevisionNumber,
@@ -88,19 +88,20 @@ public sealed record WikiReferenceItemView(
     string ResolutionState,
     bool HasCampaignOverride,
     WikiReferenceVariationSummaryView EffectiveVariation,
+    WikiReferenceVariationSummaryView BrowseVariation,
     IReadOnlyList<WikiReferenceCategoryHistoryView> CategoryHistory,
     IReadOnlyList<ResolvedRuleBrowserFieldView> BrowserFields,
     IReadOnlyList<ResolvedRuleRelationshipView> Relationships)
 {
-    public string SourceCode => EffectiveVariation.SourceCode;
-    public string PackageKey => EffectiveVariation.PackageKey;
-    public string PackageDisplayName => EffectiveVariation.PackageDisplayName;
-    public string EditionKey => EffectiveEditionKey;
-    public string EditionDisplayName => EffectiveEditionDisplayName;
-    public Guid SourceEntityId => EffectiveVariation.SourceEntityId;
-    public Guid SourceEntityRevisionId => EffectiveVariation.SourceEntityRevisionId;
-    public int SourceRevisionNumber => EffectiveVariation.SourceRevisionNumber;
-    public string SourceEntityName => EffectiveVariation.Name;
+    public string SourceCode => BrowseVariation.SourceCode;
+    public string PackageKey => BrowseVariation.PackageKey;
+    public string PackageDisplayName => BrowseVariation.PackageDisplayName;
+    public string EditionKey => BrowseVariation.EditionKey;
+    public string EditionDisplayName => BrowseVariation.EditionDisplayName;
+    public Guid SourceEntityId => BrowseVariation.SourceEntityId;
+    public Guid SourceEntityRevisionId => BrowseVariation.SourceEntityRevisionId;
+    public int SourceRevisionNumber => BrowseVariation.SourceRevisionNumber;
+    public string SourceEntityName => BrowseVariation.Name;
 
     public RuleLinkTargetView BrowserLink => ConceptKey is not null
         ? RuleBrowserRoutes.ForConcept(EntityType, ConceptKey)
