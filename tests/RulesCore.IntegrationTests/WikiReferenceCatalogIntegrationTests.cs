@@ -38,6 +38,8 @@ public sealed class WikiReferenceCatalogIntegrationTests
             });
         await using var factory = CreateFactory(authenticationClient);
         using var client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        client.DefaultRequestHeaders.Add(ToolHostAuthenticationHeaders.Ticket, "ungranted-ticket");
+        client.DefaultRequestHeaders.Add(ToolHostAuthenticationHeaders.IntrospectionPath, IntrospectionPath);
 
         var token = Guid.NewGuid().ToString("N")[..10];
         var packageIds = new List<Guid>();
@@ -660,7 +662,12 @@ public sealed class WikiReferenceCatalogIntegrationTests
             GlobalRoles: globalRoles ?? [],
             Campaigns: campaignId is not null && campaignRole is not null
                 ? [new ToolHostCampaignContext(campaignId.Value, "Wiki Reference Campaign", campaignRole)]
-                : []);
+                : [])
+        {
+            ToolKey = "rules-core",
+            DelegatedFromToolKey = "rules-wiki",
+            DelegatedFromToolSlug = "rules-wiki"
+        };
 
     private static async Task CleanupAsync(
         WebApplicationFactory<Program> factory,
