@@ -86,6 +86,46 @@ internal static class FiveEToolsNativeIdentity
         return new FiveEToolsNativeIdentityValue(nativeKey, identityJson);
     }
 
+    internal static bool TryCreateSubclassParentClassNativeKey(
+        string nativeIdentityJson,
+        out string nativeKey)
+    {
+        nativeKey = string.Empty;
+        if (string.IsNullOrWhiteSpace(nativeIdentityJson))
+        {
+            return false;
+        }
+
+        try
+        {
+            using var document = JsonDocument.Parse(nativeIdentityJson);
+            var root = document.RootElement;
+            if (root.ValueKind != JsonValueKind.Object
+                || !root.TryGetProperty("entityType", out var entityType)
+                || entityType.ValueKind != JsonValueKind.String
+                || !string.Equals(entityType.GetString(), "subclass", StringComparison.Ordinal)
+                || !root.TryGetProperty("className", out var className)
+                || className.ValueKind != JsonValueKind.String
+                || string.IsNullOrWhiteSpace(className.GetString())
+                || !root.TryGetProperty("classSource", out var classSource)
+                || classSource.ValueKind != JsonValueKind.String
+                || string.IsNullOrWhiteSpace(classSource.GetString()))
+            {
+                return false;
+            }
+
+            // This is the exact native key produced by Create for a normal 5e.tools Class.
+            // Keeping the projection here makes the source adapter, rather than a consumer,
+            // authoritative for the Subclass -> Class source relationship identity.
+            nativeKey = $"class|{classSource.GetString()!.Trim()}|{className.GetString()!.Trim()}|";
+            return true;
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
+    }
+
     private static void Add(
         ICollection<KeyValuePair<string, string?>> fields,
         JsonElement item,
