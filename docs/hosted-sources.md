@@ -4,7 +4,7 @@ Hosted source definitions let Rules Core use a canonical remote representation f
 
 ## Authority and lifecycle
 
-A user with the global **Rules Lawyer** role can create and revise hosted source definitions, preview the configured remote material, and refresh it into the Source Layer. Definition changes are append-only: saving changed configuration creates a new definition revision, while saving identical configuration is idempotent.
+A user with the Dorks & Dice mode-scoped **Rules Lawyer** role can create and revise hosted source definitions, preview the configured remote material, and refresh it into the Source Layer. Definition changes are append-only: saving changed configuration creates a new definition revision, while saving identical configuration is idempotent.
 
 Refreshing a hosted source does **not** make resolved rules depend on the remote server. Rules Core fetches the configured documents, normalizes them through the definition's import adapter, and passes the resulting entities through the normal immutable Source Layer importer. Identical entities remain unchanged; changed entities receive a new immutable source revision.
 

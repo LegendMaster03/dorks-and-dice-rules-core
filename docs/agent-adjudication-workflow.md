@@ -1,6 +1,6 @@
 # Agent-assisted adjudication workflow
 
-Rules Core exposes a structured adjudication queue for authenticated global Rules Lawyers. The queue is designed for both humans and an external Rules Lawyer agent. Rules Core does not host or invoke an LLM. It remains the authority for source access, deterministic compatibility policy, decision validation, provenance, and publication.
+Rules Core exposes a structured adjudication queue for authenticated Dorks & Dice mode-scoped Rules Lawyers. The queue is designed for both humans and an external Rules Lawyer agent. Rules Core does not host or invoke an LLM. It remains the authority for source access, deterministic compatibility policy, decision validation, provenance, and publication.
 
 ## Responsibility boundary
 
@@ -110,7 +110,7 @@ Restricted source contents are never copied into workflow events. The existing R
 
 ## Authorization and source access
 
-Every adjudication endpoint requires ordinary global Rules Lawyer authority. That authority does not grant source access.
+Every adjudication endpoint requires ordinary Dorks & Dice mode-scoped Rules Lawyer authority. That authority does not grant source access.
 
 Source grants remain independent:
 

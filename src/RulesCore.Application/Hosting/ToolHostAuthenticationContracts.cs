@@ -25,8 +25,17 @@ public sealed record ToolHostAuthenticationContext(
 {
     public string? ToolKey { get; init; }
 
+    /// <summary>
+    /// Effective account roles scoped to SiteMode. Null identifies an older Site payload that
+    /// predates this additive version-1 field; an empty collection is an authoritative no-role result.
+    /// </summary>
+    public IReadOnlyList<string>? ScopedRoles { get; init; }
+
     public bool HasGlobalRole(string role) =>
         GlobalRoles.Contains(role, StringComparer.Ordinal);
+
+    public bool HasScopedRole(string role) =>
+        ScopedRoles?.Contains(role, StringComparer.Ordinal) == true;
 
     public bool HasCampaignRole(Guid campaignId, string role) =>
         Campaigns.Any(campaign =>

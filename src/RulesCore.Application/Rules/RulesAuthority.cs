@@ -10,7 +10,7 @@ public static class RulesAuthority
 
     public static bool CanEditGlobalRules(ToolHostAuthenticationContext context) =>
         string.Equals(context.SiteMode, DorksAndDiceMode, StringComparison.Ordinal)
-        && context.HasGlobalRole(RulesLawyerRole);
+        && HasRulesLawyerAuthority(context);
 
     public static bool CanAccessCampaignRules(
         ToolHostAuthenticationContext context,
@@ -37,4 +37,9 @@ public static class RulesAuthority
             _ => false
         };
     }
+
+    private static bool HasRulesLawyerAuthority(ToolHostAuthenticationContext context) =>
+        context.ScopedRoles is not null
+            ? context.HasScopedRole(RulesLawyerRole)
+            : context.HasGlobalRole(RulesLawyerRole);
 }

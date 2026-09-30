@@ -71,7 +71,7 @@ This establishes a stable point-in-time global ruleset that campaigns deliberate
 Global Rules Layer mutation is accepted only when the request arrived through the authenticated Dorks & Dice Tool gateway and the redeemed context satisfies both conditions:
 
 1. active site mode is `dorks-and-dice`;
-2. effective global roles include `Rules Lawyer`.
+2. effective roles scoped to that site mode include `Rules Lawyer`.
 
 Direct/standalone mutation requests return unauthorized. An authenticated user without Rules Lawyer authority, or a Rules Lawyer operating in another site mode, receives forbidden.
 

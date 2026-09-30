@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Rules Core is a separately deployable Dorks & Dice Tool. It owns source ingestion and storage, canonical source recognition, Rules Layer decisions, source-access grants, ruleset revisions, and rule resolution. The main Dorks & Dice site owns account identity, global site roles, campaign membership and authority, site-mode resolution, and Tool registration/routing.
+Rules Core is a separately deployable Dorks & Dice Tool. It owns source ingestion and storage, canonical source recognition, Rules Layer decisions, source-access grants, ruleset revisions, and rule resolution. The main Dorks & Dice site owns account identity, global site roles, mode-scoped account roles, campaign membership and authority, site-mode resolution, and Tool registration/routing.
 
 The central architectural boundary is that **source material is preserved independently from canonical recognition and independently from Rules Layer adjudication**.
 
@@ -92,7 +92,7 @@ A `RuleConcept` is deliberately separate from canonical source identity. Canonic
 
 Rules Core must answer two independent questions for every relevant operation:
 
-- **May this identity make this change?** Global Rules Lawyer authority or campaign-scoped authority comes from Dorks & Dice.
+- **May this identity make this change?** Dorks & Dice mode-scoped Rules Lawyer authority or campaign-scoped authority comes from Dorks & Dice.
 - **May this identity access this source content?** Source grants are enforced by Rules Core against `SourcePackage`.
 
 UI visibility is not an authorization boundary. API and runtime resolution paths enforce both requirements independently.
