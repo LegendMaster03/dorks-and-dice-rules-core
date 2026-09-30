@@ -26,6 +26,13 @@ public sealed record ToolHostAuthenticationContext(
     public string? ToolKey { get; init; }
 
     /// <summary>
+    /// Immediate Tool-to-Tool delegation source supplied by the Site for delegated target
+    /// contexts. Normal browser-to-Tool authentication contexts leave these fields null.
+    /// </summary>
+    public string? DelegatedFromToolKey { get; init; }
+    public string? DelegatedFromToolSlug { get; init; }
+
+    /// <summary>
     /// Effective account roles scoped to SiteMode. Null identifies an older Site payload that
     /// predates this additive version-1 field; an empty collection is an authoritative no-role result.
     /// </summary>
@@ -41,6 +48,10 @@ public sealed record ToolHostAuthenticationContext(
         Campaigns.Any(campaign =>
             campaign.Id == campaignId
             && string.Equals(campaign.Role, role, StringComparison.Ordinal));
+
+    public bool IsDelegatedFrom(string toolKey) =>
+        string.Equals(DelegatedFromToolKey, toolKey, StringComparison.OrdinalIgnoreCase)
+        || string.Equals(DelegatedFromToolSlug, toolKey, StringComparison.OrdinalIgnoreCase);
 }
 
 public interface IToolHostAuthenticationClient
