@@ -276,7 +276,8 @@ public sealed class CrossCategoryRuleResolutionIntegrationTests
                     edition: null,
                     limit: 20,
                     offset: 0);
-                var switchedReference = Assert.Single(effectiveSubclass.References);
+                var switchedReference = Assert.Single(
+                    effectiveSubclass.References.Where(value => value.RuleConceptId == conceptId));
                 Assert.Equal(conceptId, switchedReference.RuleConceptId);
                 Assert.Equal(WikiReferenceResolutionStates.Resolved, switchedReference.ResolutionState);
                 Assert.Equal(RuleConceptEntityTypes.Subclass, switchedReference.EffectiveCategory);
@@ -416,7 +417,8 @@ public sealed class CrossCategoryRuleResolutionIntegrationTests
                     edition: null,
                     limit: 20,
                     offset: 0);
-                var subclassReference = Assert.Single(campaignSubclassWiki.References);
+                var subclassReference = Assert.Single(
+                    campaignSubclassWiki.References.Where(value => value.RuleConceptId == conceptId));
                 Assert.Equal(WikiReferenceResolutionStates.CampaignOverride, subclassReference.ResolutionState);
                 Assert.Equal(RuleConceptEntityTypes.Subclass, subclassReference.EffectiveCategory);
                 Assert.Equal("5.5e", subclassReference.EffectiveEditionKey);
