@@ -133,15 +133,16 @@ public sealed class WikiReferenceClassFamilyIntegrationTests
             Assert.Equal("Shared School", publicWizardChild.DisplayName);
             Assert.Null(publicWizardChild.RuleConceptId);
 
-            var unrelatedFighterChild = Assert.Single(
-                publicSubclasses.Entities,
-                value => value.EntityType == "subclass"
-                    && value.Name == "Shared School"
-                    && value.SourceCode == "EXP-FTR");
-            var visibleChildSourceIds = anonymousFamily.Subclasses
-                .Select(value => value.ReferenceIdentity)
-                .ToArray();
-            Assert.DoesNotContain(unrelatedFighterChild.EntityId.ToString(), visibleChildSourceIds);
+            var publicWizardChildDetail = await wiki.GetGlobalDetailAsync(
+                userId: null,
+                publicWizardChild.ReferenceIdentity);
+            Assert.NotNull(publicWizardChildDetail);
+            Assert.Contains(
+                publicWizardChildDetail!.Variations,
+                value => value.SourceCode == "EXP-WIZ");
+            Assert.DoesNotContain(
+                publicWizardChildDetail.Variations,
+                value => value.SourceCode == "EXP-FTR");
 
             var childFamily = await family.GetGlobalAsync(null, publicWizardChild.ReferenceIdentity);
             Assert.NotNull(childFamily);
