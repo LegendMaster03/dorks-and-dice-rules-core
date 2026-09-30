@@ -15,6 +15,33 @@ namespace RulesCore.IntegrationTests;
 public sealed class WikiReferenceClassFamilyAdvancementIntegrationTests
 {
     [Fact]
+    public void PrestigeClassFeatureProjectionPreservesExistingClassFeaturePrecedence()
+    {
+        using var both = JsonDocument.Parse("""
+            {
+              "classFeatures": ["Legacy Feature|Prestige|SRC|1"],
+              "prestigeClassFeatures": ["Prestige Feature|Prestige|SRC|1"]
+            }
+            """);
+
+        var projected = ClassFamilyFeatureReferenceParser.Project("prestigeClass", both.RootElement);
+        var feature = Assert.Single(projected);
+        Assert.Equal("Legacy Feature", feature.Name);
+        Assert.Equal(1, feature.Level);
+
+        using var prestigeOnly = JsonDocument.Parse("""
+            {
+              "prestigeClassFeatures": ["Prestige Feature|Prestige|SRC|1"]
+            }
+            """);
+
+        var fallback = ClassFamilyFeatureReferenceParser.Project("prestigeClass", prestigeOnly.RootElement);
+        var fallbackFeature = Assert.Single(fallback);
+        Assert.Equal("Prestige Feature", fallbackFeature.Name);
+        Assert.Equal(1, fallbackFeature.Level);
+    }
+
+    [Fact]
     public async Task NativeFiveXImportsExposeAuthoritativeWikiAdvancementMetadataAndMatchCharacterProjection()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
