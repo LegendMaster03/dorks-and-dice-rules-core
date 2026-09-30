@@ -11,6 +11,9 @@ public sealed class HostedToolAuthenticationMiddleware(RequestDelegate next)
         HttpContext httpContext,
         IToolHostAuthenticationClient authenticationClient)
     {
+        var isRulesWikiSharedRequest = httpContext.Request.Path.StartsWithSegments(
+            RulesWikiInternalApiBoundary.SharedPrefix,
+            StringComparison.Ordinal);
         var tickets = httpContext.Request.Headers[ToolHostAuthenticationHeaders.Ticket];
         var introspectionPaths = httpContext.Request.Headers[ToolHostAuthenticationHeaders.IntrospectionPath];
         var hasTicketHeader = tickets.Count > 0;
@@ -18,6 +21,12 @@ public sealed class HostedToolAuthenticationMiddleware(RequestDelegate next)
 
         if (!hasTicketHeader && !hasIntrospectionHeader)
         {
+            if (isRulesWikiSharedRequest)
+            {
+                httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+                return;
+            }
+
             await next(httpContext);
             return;
         }
@@ -72,6 +81,21 @@ public sealed class HostedToolAuthenticationMiddleware(RequestDelegate next)
         {
             httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
             return;
+        }
+
+        if (isRulesWikiSharedRequest)
+        {
+            if (!RulesWikiInternalApiBoundary.IsRulesWikiCaller(authenticationContext)
+                || !RulesWikiInternalApiBoundary.TryMapSharedPath(httpContext.Request.Path, out var corePath))
+            {
+                httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+                return;
+            }
+
+            // The private adapter deliberately reuses the existing application endpoint handlers
+            // in-process. Rules Wiki never calls the public HTTP path; the rewrite occurs only after
+            // Site has authenticated the immediate delegating Tool as Rules Wiki.
+            httpContext.Request.Path = corePath;
         }
 
         httpContext.Items[ContextItemKey] = authenticationContext;
