@@ -25,7 +25,10 @@ public static class ClassFamilyFeatureReferenceParser
         {
             "class" => new[] { "classFeatures" },
             "subclass" => new[] { "subclassFeatures" },
-            "prestigeclass" => new[] { "prestigeClassFeatures", "classFeatures" },
+            // Preserve the existing Character Sheet contract: prestige-class records historically
+            // preferred classFeatures when both source properties were present. Fall back to
+            // prestigeClassFeatures only when classFeatures is absent.
+            "prestigeclass" => new[] { "classFeatures", "prestigeClassFeatures" },
             _ => []
         };
         if (propertyNames.Length == 0 || document.ValueKind != JsonValueKind.Object)
