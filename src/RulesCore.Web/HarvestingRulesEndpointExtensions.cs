@@ -13,7 +13,7 @@ public static class HarvestingRulesEndpointExtensions
         {
             httpContext.Response.Headers.CacheControl = "no-store";
             return Results.Ok(harvesting.GetCatalog());
-        });
+        }).PublicRulesCoreApi();
 
         app.MapPost("/api/rules/harvesting/resolve", async (
             HarvestingTableResolutionRequest request,
@@ -41,7 +41,7 @@ public static class HarvestingRulesEndpointExtensions
             {
                 return InvalidRequest(exception);
             }
-        });
+        }).PublicRulesCoreApi();
 
         app.MapPost("/api/rules/harvesting/outcome", async (
             HarvestingOutcomeRequest request,
@@ -69,7 +69,7 @@ public static class HarvestingRulesEndpointExtensions
             {
                 return InvalidRequest(exception);
             }
-        });
+        }).PublicRulesCoreApi();
 
         app.MapPost("/api/campaigns/{campaignId:guid}/rules/harvesting/resolve", async (
             Guid campaignId,
@@ -107,7 +107,7 @@ public static class HarvestingRulesEndpointExtensions
             {
                 return InvalidRequest(exception);
             }
-        });
+        }).PublicRulesCoreApi();
 
         app.MapPost("/api/campaigns/{campaignId:guid}/rules/harvesting/outcome", async (
             Guid campaignId,
@@ -145,7 +145,7 @@ public static class HarvestingRulesEndpointExtensions
             {
                 return InvalidRequest(exception);
             }
-        });
+        }).PublicRulesCoreApi();
     }
 
     private static IResult InvalidRequest(Exception exception) =>
