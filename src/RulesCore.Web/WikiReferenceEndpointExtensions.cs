@@ -9,7 +9,7 @@ public static class WikiReferenceEndpointExtensions
 {
     public static void MapWikiReferenceEndpoints(this WebApplication app)
     {
-        app.MapGet("/api/wiki/references", async (
+        app.MapGet("/internal/wiki/references", async (
             string? entityType,
             string? categoryMode,
             string? q,
@@ -22,11 +22,13 @@ public static class WikiReferenceEndpointExtensions
             RulesCoreDbContext dbContext,
             CancellationToken cancellationToken) =>
         {
+            var callerFailure = RequireInternalCaller(httpContext, out var authenticationContext);
+            if (callerFailure is not null) return callerFailure;
+
             try
             {
-                var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
                 var catalog = await new WikiReferenceCatalogService(dbContext).GetGlobalCatalogAsync(
-                    authenticationContext?.User.Id,
+                    authenticationContext!.User.Id,
                     entityType,
                     categoryMode,
                     q,
@@ -45,17 +47,19 @@ public static class WikiReferenceEndpointExtensions
             }
         });
 
-        app.MapGet("/api/wiki/references/{referenceIdentity}", async (
+        app.MapGet("/internal/wiki/references/{referenceIdentity}", async (
             string referenceIdentity,
             HttpContext httpContext,
             RulesCoreDbContext dbContext,
             CancellationToken cancellationToken) =>
         {
+            var callerFailure = RequireInternalCaller(httpContext, out var authenticationContext);
+            if (callerFailure is not null) return callerFailure;
+
             try
             {
-                var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
                 var detail = await new WikiReferenceCatalogService(dbContext).GetGlobalDetailAsync(
-                    authenticationContext?.User.Id,
+                    authenticationContext!.User.Id,
                     referenceIdentity,
                     cancellationToken);
                 if (detail is null) return Results.NotFound();
@@ -68,17 +72,19 @@ public static class WikiReferenceEndpointExtensions
             }
         });
 
-        app.MapGet("/api/wiki/references/{referenceIdentity}/class-family", async (
+        app.MapGet("/internal/wiki/references/{referenceIdentity}/class-family", async (
             string referenceIdentity,
             HttpContext httpContext,
             RulesCoreDbContext dbContext,
             CancellationToken cancellationToken) =>
         {
+            var callerFailure = RequireInternalCaller(httpContext, out var authenticationContext);
+            if (callerFailure is not null) return callerFailure;
+
             try
             {
-                var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
                 var relationships = await new WikiReferenceClassFamilyService(dbContext).GetGlobalAsync(
-                    authenticationContext?.User.Id,
+                    authenticationContext!.User.Id,
                     referenceIdentity,
                     cancellationToken);
                 if (relationships is null) return Results.NotFound();
@@ -91,7 +97,7 @@ public static class WikiReferenceEndpointExtensions
             }
         });
 
-        app.MapGet("/api/campaigns/{campaignId:guid}/wiki/references", async (
+        app.MapGet("/internal/wiki/campaigns/{campaignId:guid}/references", async (
             Guid campaignId,
             string? entityType,
             string? categoryMode,
@@ -146,7 +152,7 @@ public static class WikiReferenceEndpointExtensions
             }
         });
 
-        app.MapGet("/api/campaigns/{campaignId:guid}/wiki/references/{referenceIdentity}", async (
+        app.MapGet("/internal/wiki/campaigns/{campaignId:guid}/references/{referenceIdentity}", async (
             Guid campaignId,
             string referenceIdentity,
             HttpContext httpContext,
@@ -173,7 +179,7 @@ public static class WikiReferenceEndpointExtensions
             }
         });
 
-        app.MapGet("/api/campaigns/{campaignId:guid}/wiki/references/{referenceIdentity}/class-family", async (
+        app.MapGet("/internal/wiki/campaigns/{campaignId:guid}/references/{referenceIdentity}/class-family", async (
             Guid campaignId,
             string referenceIdentity,
             HttpContext httpContext,
@@ -200,16 +206,18 @@ public static class WikiReferenceEndpointExtensions
             }
         });
 
-        app.MapPost("/api/wiki/references/comparison", async (
+        app.MapPost("/internal/wiki/references/comparison", async (
             WikiReferenceComparisonRequest request,
             HttpContext httpContext,
             RulesCoreDbContext dbContext,
             CancellationToken cancellationToken) =>
         {
+            var callerFailure = RequireInternalCaller(httpContext, out var authenticationContext);
+            if (callerFailure is not null) return callerFailure;
+
             try
             {
-                var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
-                var userId = authenticationContext?.User.Id;
+                var userId = authenticationContext!.User.Id;
                 var references = new WikiReferenceCatalogService(dbContext);
                 if (!await references.ReferenceContainsRevisionsAsync(
                         userId,
@@ -238,14 +246,24 @@ public static class WikiReferenceEndpointExtensions
         });
     }
 
+    private static IResult? RequireInternalCaller(
+        HttpContext httpContext,
+        out ToolHostAuthenticationContext? authenticationContext)
+    {
+        authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
+        return RulesWikiInternalApiBoundary.IsRulesWikiCaller(authenticationContext)
+            ? null
+            : Results.NotFound();
+    }
+
     private static IResult? RequireCampaignRead(
         HttpContext httpContext,
         Guid campaignId,
         out ToolHostAuthenticationContext? authenticationContext)
     {
-        authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
-        if (authenticationContext is null) return Results.Unauthorized();
-        return RulesAuthority.CanAccessCampaignRules(authenticationContext, campaignId)
+        var callerFailure = RequireInternalCaller(httpContext, out authenticationContext);
+        if (callerFailure is not null) return callerFailure;
+        return RulesAuthority.CanAccessCampaignRules(authenticationContext!, campaignId)
             ? null
             : Results.NotFound();
     }
