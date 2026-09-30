@@ -22,13 +22,11 @@ public static class WikiReferenceEndpointExtensions
             RulesCoreDbContext dbContext,
             CancellationToken cancellationToken) =>
         {
-            var callerFailure = RequireInternalCaller(httpContext, out var authenticationContext);
-            if (callerFailure is not null) return callerFailure;
-
             try
             {
+                var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
                 var catalog = await new WikiReferenceCatalogService(dbContext).GetGlobalCatalogAsync(
-                    authenticationContext!.User.Id,
+                    authenticationContext?.User.Id,
                     entityType,
                     categoryMode,
                     q,
@@ -53,13 +51,11 @@ public static class WikiReferenceEndpointExtensions
             RulesCoreDbContext dbContext,
             CancellationToken cancellationToken) =>
         {
-            var callerFailure = RequireInternalCaller(httpContext, out var authenticationContext);
-            if (callerFailure is not null) return callerFailure;
-
             try
             {
+                var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
                 var detail = await new WikiReferenceCatalogService(dbContext).GetGlobalDetailAsync(
-                    authenticationContext!.User.Id,
+                    authenticationContext?.User.Id,
                     referenceIdentity,
                     cancellationToken);
                 if (detail is null) return Results.NotFound();
@@ -78,13 +74,11 @@ public static class WikiReferenceEndpointExtensions
             RulesCoreDbContext dbContext,
             CancellationToken cancellationToken) =>
         {
-            var callerFailure = RequireInternalCaller(httpContext, out var authenticationContext);
-            if (callerFailure is not null) return callerFailure;
-
             try
             {
+                var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
                 var relationships = await new WikiReferenceClassFamilyService(dbContext).GetGlobalAsync(
-                    authenticationContext!.User.Id,
+                    authenticationContext?.User.Id,
                     referenceIdentity,
                     cancellationToken);
                 if (relationships is null) return Results.NotFound();
@@ -212,12 +206,10 @@ public static class WikiReferenceEndpointExtensions
             RulesCoreDbContext dbContext,
             CancellationToken cancellationToken) =>
         {
-            var callerFailure = RequireInternalCaller(httpContext, out var authenticationContext);
-            if (callerFailure is not null) return callerFailure;
-
             try
             {
-                var userId = authenticationContext!.User.Id;
+                var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
+                var userId = authenticationContext?.User.Id;
                 var references = new WikiReferenceCatalogService(dbContext);
                 if (!await references.ReferenceContainsRevisionsAsync(
                         userId,
@@ -246,24 +238,14 @@ public static class WikiReferenceEndpointExtensions
         });
     }
 
-    private static IResult? RequireInternalCaller(
-        HttpContext httpContext,
-        out ToolHostAuthenticationContext? authenticationContext)
-    {
-        authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
-        return RulesWikiInternalApiBoundary.IsRulesWikiCaller(authenticationContext)
-            ? null
-            : Results.NotFound();
-    }
-
     private static IResult? RequireCampaignRead(
         HttpContext httpContext,
         Guid campaignId,
         out ToolHostAuthenticationContext? authenticationContext)
     {
-        var callerFailure = RequireInternalCaller(httpContext, out authenticationContext);
-        if (callerFailure is not null) return callerFailure;
-        return RulesAuthority.CanAccessCampaignRules(authenticationContext!, campaignId)
+        authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
+        if (authenticationContext is null) return Results.Unauthorized();
+        return RulesAuthority.CanAccessCampaignRules(authenticationContext, campaignId)
             ? null
             : Results.NotFound();
     }
