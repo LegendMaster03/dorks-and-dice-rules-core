@@ -22,7 +22,7 @@ public static class CharacterMechanicsEndpointExtensions
                 userId,
                 includeUnavailable ?? false,
                 cancellationToken));
-        });
+        }).PublicRulesCoreApi();
 
         app.MapGet("/api/admin/rules/mechanics", async (
             bool? includeUnavailable,
@@ -58,7 +58,7 @@ public static class CharacterMechanicsEndpointExtensions
                 new CharacterSupportProjectionRequest(),
                 userId,
                 cancellationToken));
-        });
+        }).PublicRulesCoreApi();
 
         app.MapPost("/api/rules/mechanics/support", async (
             CharacterSupportProjectionRequest request,
@@ -74,7 +74,7 @@ public static class CharacterMechanicsEndpointExtensions
                 request,
                 userId,
                 cancellationToken));
-        });
+        }).PublicRulesCoreApi();
 
         app.MapPost("/api/rules/mechanics/recovery/{procedureKey}/resolve", async (
             string procedureKey,
@@ -100,7 +100,7 @@ public static class CharacterMechanicsEndpointExtensions
             {
                 return InvalidSupportRequest(exception);
             }
-        });
+        }).PublicRulesCoreApi();
 
         app.MapPost("/api/rules/mechanics/evaluate", async (
             CharacterMechanicsBatchEvaluationRequest request,
@@ -135,7 +135,7 @@ public static class CharacterMechanicsEndpointExtensions
             {
                 return InvalidEvaluation(exception);
             }
-        });
+        }).PublicRulesCoreApi();
 
         app.MapPost("/api/rules/mechanics/{mechanicKey}/evaluate", async (
             string mechanicKey,
@@ -173,7 +173,7 @@ public static class CharacterMechanicsEndpointExtensions
             {
                 return InvalidEvaluation(exception);
             }
-        });
+        }).PublicRulesCoreApi();
 
         app.MapGet("/api/campaigns/{campaignId:guid}/rules/mechanics", async (
             Guid campaignId,
@@ -197,7 +197,7 @@ public static class CharacterMechanicsEndpointExtensions
                 authenticationContext!.User.Id,
                 includeUnavailable ?? false,
                 cancellationToken));
-        });
+        }).PublicRulesCoreApi();
 
         app.MapGet("/api/campaigns/{campaignId:guid}/admin/rules/mechanics", async (
             Guid campaignId,
@@ -244,7 +244,7 @@ public static class CharacterMechanicsEndpointExtensions
                 new CharacterSupportProjectionRequest(),
                 authenticationContext!.User.Id,
                 cancellationToken));
-        });
+        }).PublicRulesCoreApi();
 
         app.MapPost("/api/campaigns/{campaignId:guid}/rules/mechanics/support", async (
             Guid campaignId,
@@ -268,7 +268,7 @@ public static class CharacterMechanicsEndpointExtensions
                 request,
                 authenticationContext!.User.Id,
                 cancellationToken));
-        });
+        }).PublicRulesCoreApi();
 
         app.MapPost("/api/campaigns/{campaignId:guid}/rules/mechanics/recovery/{procedureKey}/resolve", async (
             Guid campaignId,
@@ -302,7 +302,7 @@ public static class CharacterMechanicsEndpointExtensions
             {
                 return InvalidSupportRequest(exception);
             }
-        });
+        }).PublicRulesCoreApi();
 
         app.MapPost("/api/campaigns/{campaignId:guid}/rules/mechanics/evaluate", async (
             Guid campaignId,
@@ -345,7 +345,7 @@ public static class CharacterMechanicsEndpointExtensions
             {
                 return InvalidEvaluation(exception);
             }
-        });
+        }).PublicRulesCoreApi();
 
         app.MapPost("/api/campaigns/{campaignId:guid}/rules/mechanics/{mechanicKey}/evaluate", async (
             Guid campaignId,
@@ -391,7 +391,7 @@ public static class CharacterMechanicsEndpointExtensions
             {
                 return InvalidEvaluation(exception);
             }
-        });
+        }).PublicRulesCoreApi();
 
         app.MapCharacterProjectionEndpoints();
     }
