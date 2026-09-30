@@ -36,7 +36,7 @@ public static class CharacterProjectionEndpointExtensions
             {
                 return InvalidProjection(exception);
             }
-        });
+        }).PublicRulesCoreApi();
 
         app.MapPost("/api/campaigns/{campaignId:guid}/rules/character-mechanics/resolve", async (
             Guid campaignId,
@@ -77,7 +77,7 @@ public static class CharacterProjectionEndpointExtensions
             {
                 return InvalidProjection(exception);
             }
-        });
+        }).PublicRulesCoreApi();
     }
 
     private static IResult InvalidProjection(Exception exception) =>
