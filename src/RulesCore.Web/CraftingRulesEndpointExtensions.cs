@@ -17,7 +17,7 @@ public static class CraftingRulesEndpointExtensions
                 token => crafting.ResolveGlobalManufacturingAsync(
                     request,
                     token,
-                    cancellationToken)));
+                    cancellationToken))).PublicRulesCoreApi();
 
         app.MapPost("/api/rules/crafting/enchanting/resolve", async (
             EnchantingResolutionRequest request,
@@ -29,7 +29,7 @@ public static class CraftingRulesEndpointExtensions
                 token => crafting.ResolveGlobalEnchantingAsync(
                     request,
                     token,
-                    cancellationToken)));
+                    cancellationToken))).PublicRulesCoreApi();
 
         app.MapPost("/api/campaigns/{campaignId:guid}/rules/crafting/manufacturing/resolve", async (
             Guid campaignId,
@@ -44,7 +44,7 @@ public static class CraftingRulesEndpointExtensions
                     campaignId,
                     request,
                     userId,
-                    cancellationToken)));
+                    cancellationToken))).PublicRulesCoreApi();
 
         app.MapPost("/api/campaigns/{campaignId:guid}/rules/crafting/enchanting/resolve", async (
             Guid campaignId,
@@ -59,7 +59,7 @@ public static class CraftingRulesEndpointExtensions
                     campaignId,
                     request,
                     userId,
-                    cancellationToken)));
+                    cancellationToken))).PublicRulesCoreApi();
     }
 
     private static async Task<IResult> ResolveGlobal(
