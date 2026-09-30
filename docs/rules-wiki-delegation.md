@@ -11,9 +11,9 @@ browser. Its backend uses the capability only to call the Site delegation endpoi
 
 The Site then issues the normal target-scoped authentication ticket for Rules Core.
 Rules Core redeems that ticket through its existing introspection middleware, so the
-established stable user ID, global roles, campaign roles, source grants, Rules
-Lawyer authority, campaign DM authority, and restricted-source filtering remain
-authoritative here.
+established stable user ID, global roles, active-mode scoped roles, campaign roles,
+source grants, Rules Lawyer authority, campaign DM authority, and restricted-source
+filtering remain authoritative here.
 
 Rules Wiki has no source-grant database and no parallel authorization model.
 Rules Core continues using its existing external PostgreSQL database.

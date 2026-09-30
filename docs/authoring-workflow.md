@@ -109,11 +109,11 @@ The baseline global decision exposes Rules Layer provenance and authored patch m
 
 ## Authorization boundaries
 
-Global authoring endpoints require the same global change authority as global mutation:
+Global authoring endpoints require the same Dorks & Dice mode-scoped change authority as global mutation:
 
 - authenticated Tool Host context;
 - active site mode `dorks-and-dice`;
-- effective global role `Rules Lawyer`.
+- effective role `Rules Lawyer` scoped to that active site mode.
 
 Anonymous global requests return unauthorized. Authenticated users without Rules Lawyer authority, including a Rules Lawyer operating in another site mode, return forbidden.
 
