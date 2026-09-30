@@ -26,6 +26,18 @@ public sealed record ToolHostAuthenticationContext(
     public string? ToolKey { get; init; }
 
     /// <summary>
+    /// Stable registration key of the immediate source Tool when this request was created through
+    /// Site Tool-to-Tool delegation. Null means the request was issued directly to Rules Core.
+    /// </summary>
+    public string? DelegatedFromToolKey { get; init; }
+
+    /// <summary>
+    /// Optional source Tool slug accompanying DelegatedFromToolKey. The stable key is authoritative
+    /// for first-party caller checks.
+    /// </summary>
+    public string? DelegatedFromToolSlug { get; init; }
+
+    /// <summary>
     /// Effective account roles scoped to SiteMode. Null identifies an older Site payload that
     /// predates this additive version-1 field; an empty collection is an authoritative no-role result.
     /// </summary>
