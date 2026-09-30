@@ -375,18 +375,34 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             conceptBindings.Select(value => value.RuleConceptId).Distinct().ToArray(),
             cancellationToken);
 
-        var groups = new List<ReferenceGroup>();
+        // Most reference histories are singleton components. Scanning every accessible variation,
+        // concept binding, and history edge once per component makes state construction quadratic
+        // as the corpus grows. Build lookup tables once and assemble each component from its members.
+        var variationsByGroupingId = variations
+            .GroupBy(value => value.GroupingEntityId)
+            .ToDictionary(group => group.Key, group => group.ToArray());
+        var bindingsByCanonicalId = conceptBindings
+            .GroupBy(value => value.CanonicalEntityId)
+            .ToDictionary(group => group.Key, group => group.ToArray());
+        var incomingHistoryIds = historyEdges
+            .Select(value => value.ToCanonicalEntityId)
+            .ToHashSet();
+
+        var groups = new List<ReferenceGroup>(components.Count);
         var lookup = new Dictionary<string, ReferenceGroup>(StringComparer.OrdinalIgnoreCase);
-        foreach (var component in components)
+        foreach (var componentIds in components)
         {
-            var componentIds = component.ToHashSet();
-            var componentVariations = variations
-                .Where(value => componentIds.Contains(value.GroupingEntityId))
+            var componentVariations = componentIds
+                .SelectMany(value => variationsByGroupingId.TryGetValue(value, out var matches)
+                    ? matches
+                    : Array.Empty<VariationRecord>())
                 .ToArray();
             if (componentVariations.Length == 0) continue;
 
-            var bindings = conceptBindings
-                .Where(value => componentIds.Contains(value.CanonicalEntityId))
+            var bindings = componentIds
+                .SelectMany(value => bindingsByCanonicalId.TryGetValue(value, out var matches)
+                    ? matches
+                    : Array.Empty<ConceptBinding>())
                 .GroupBy(value => value.RuleConceptId)
                 .Select(group => group
                     .OrderBy(value => value.ConceptKey, StringComparer.Ordinal)
@@ -398,7 +414,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             // bound to a root canonical entity in the directed history graph; fall back to a stable
             // concept-key ordering only when legacy data does not provide a unique rooted binding.
             // Published-decision timestamps never choose which concept represents the history.
-            var identityBinding = SelectAuthoritativeBinding(componentIds, bindings, historyEdges);
+            var identityBinding = SelectAuthoritativeBinding(componentIds, bindings, incomingHistoryIds);
             var accessibleRevisionIds = componentVariations
                 .Select(value => value.SourceEntityRevisionId)
                 .ToHashSet();
@@ -436,7 +452,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             }
 
             var referenceIdentity = identityBinding?.ConceptKey
-                ?? SourceOnlyReferenceIdentity(componentVariations, historyEdges);
+                ?? SourceOnlyReferenceIdentity(componentVariations, incomingHistoryIds);
             var displayName = preferredBinding?.DisplayName
                 ?? identityBinding?.DisplayName
                 ?? effectiveVariation.Name;
@@ -793,17 +809,12 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
     private static ConceptBinding? SelectAuthoritativeBinding(
         IReadOnlySet<Guid> component,
         IReadOnlyCollection<ConceptBinding> bindings,
-        IReadOnlyCollection<HistoryEdge> edges)
+        IReadOnlySet<Guid> incomingHistoryIds)
     {
         if (bindings.Count == 0) return null;
 
-        var incoming = edges
-            .Where(value => component.Contains(value.FromCanonicalEntityId)
-                && component.Contains(value.ToCanonicalEntityId))
-            .Select(value => value.ToCanonicalEntityId)
-            .ToHashSet();
         var roots = component
-            .Where(value => !incoming.Contains(value))
+            .Where(value => !incomingHistoryIds.Contains(value))
             .ToHashSet();
         var rootBinding = bindings
             .Where(value => roots.Contains(value.CanonicalEntityId))
@@ -820,7 +831,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
 
     private static string SourceOnlyReferenceIdentity(
         IReadOnlyCollection<VariationRecord> variations,
-        IReadOnlyCollection<HistoryEdge> edges)
+        IReadOnlySet<Guid> incomingHistoryIds)
     {
         var canonicalIds = variations
             .Where(value => value.CanonicalEntityId.HasValue)
@@ -829,14 +840,8 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             .ToArray();
         if (canonicalIds.Length > 0)
         {
-            var component = canonicalIds.ToHashSet();
-            var incoming = edges
-                .Where(value => component.Contains(value.FromCanonicalEntityId)
-                    && component.Contains(value.ToCanonicalEntityId))
-                .Select(value => value.ToCanonicalEntityId)
-                .ToHashSet();
             var anchor = canonicalIds
-                .Where(value => !incoming.Contains(value))
+                .Where(value => !incomingHistoryIds.Contains(value))
                 .OrderBy(value => value)
                 .FirstOrDefault();
             if (anchor == Guid.Empty) anchor = canonicalIds.OrderBy(value => value).First();
