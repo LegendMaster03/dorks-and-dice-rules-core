@@ -9,7 +9,9 @@ services:
   # The private ingress uses the same Rules Core image and database, but it is not
   # attached to dorks-and-dice-backend. The source Tool reaches it only through the
   # explicitly configured private network. The restricted control-plane network exists
-  # solely so the private instance can redeem Site-issued target tickets.
+  # solely so the private instance can redeem Site-issued target tickets. Database
+  # access uses a separate dependency network so the private ingress does not need the
+  # shared Tool backend merely to reach PostgreSQL.
   rules-core-private:
     image: dorks-and-dice-rules-core:latest
     container_name: dorks-and-dice-rules-core-private
@@ -22,6 +24,7 @@ services:
     networks:
       - rules-core-private-tunnel
       - dorks-and-dice-tool-control-plane
+      - rules-core-database
 
 networks:
   rules-core-private-tunnel:
@@ -30,3 +33,6 @@ networks:
   dorks-and-dice-tool-control-plane:
     external: true
     name: "${ToolHosting__ControlPlaneNetwork:-dorks-and-dice-tool-control-plane}"
+  rules-core-database:
+    external: true
+    name: "${RulesCorePrivate__DatabaseNetwork:-dorks-and-dice-rules-core-db}"
