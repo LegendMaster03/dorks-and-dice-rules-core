@@ -49,7 +49,14 @@ internal static class CharacterAdvancementLimitProjector
                     rule.Provenance)],
                 rule.Provenance);
 
-            var level = context.AdvancementLevel(rule.Catalog.ConceptKey);
+            var highestOccurrenceLevel = (context.Request.Advancements ?? [])
+                .Where(value => string.Equals(
+                    value.ConceptKey,
+                    rule.Catalog.ConceptKey,
+                    StringComparison.OrdinalIgnoreCase))
+                .Select(value => value.Level)
+                .DefaultIfEmpty(0)
+                .Max();
             var conflictKey = $"conflict.{rule.Catalog.ConceptKey}.maximum-level";
 
             // Older normalized Class projection already emitted this conflict for explicit
@@ -58,7 +65,7 @@ internal static class CharacterAdvancementLimitProjector
             context.Conflicts.RemoveAll(value =>
                 string.Equals(value.ConflictKey, conflictKey, StringComparison.Ordinal));
 
-            if (level <= maximumLevel)
+            if (highestOccurrenceLevel <= maximumLevel)
             {
                 continue;
             }
@@ -66,7 +73,7 @@ internal static class CharacterAdvancementLimitProjector
             context.Conflicts.Add(new CharacterProjectionConflictView(
                 conflictKey,
                 "maximum-level",
-                $"{rule.Catalog.DisplayName} is limited to {maximumLevel} levels by the effective rule, but the Character supplies level {level}.",
+                $"{rule.Catalog.DisplayName} is limited to {maximumLevel} levels by the effective rule, but an occurrence supplies level {highestOccurrenceLevel}.",
                 [],
                 [rule.Catalog.ConceptKey]));
         }
