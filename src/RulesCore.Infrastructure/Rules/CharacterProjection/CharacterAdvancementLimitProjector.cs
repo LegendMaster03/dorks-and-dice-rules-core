@@ -1,0 +1,113 @@
+using System.Text.Json;
+using RulesCore.Application.Rules;
+using RulesCore.Domain.Rules;
+
+namespace RulesCore.Infrastructure.Rules.CharacterProjection;
+
+/// <summary>
+/// Projects finite effective progression limits for independently leveled Class-family concepts.
+/// A limit is rules data, not a Character Sheet constant. Rules Core prefers an explicit normalized
+/// maximum and otherwise derives a maximum only from a finite per-level effective progression table.
+/// </summary>
+internal static class CharacterAdvancementLimitProjector
+{
+    internal static void Project(
+        IReadOnlyList<CharacterProjectionRule> rules,
+        CharacterProjectionContext context)
+    {
+        foreach (var rule in rules.Where(rule =>
+                     context.IsSelected(rule.Catalog.ConceptKey)
+                     && (string.Equals(rule.Catalog.EntityType, "class", StringComparison.OrdinalIgnoreCase)
+                         || string.Equals(rule.Catalog.EntityType, "prestigeClass", StringComparison.OrdinalIgnoreCase))))
+        {
+            var maximumLevel = ResolveMaximumLevel(rule.Document);
+            if (maximumLevel is not > 0)
+            {
+                continue;
+            }
+
+            var mechanicKey = $"advancement.{rule.Catalog.ConceptKey}.maximum-level";
+            context.Mechanics[mechanicKey] = new CharacterResolvedMechanicView(
+                mechanicKey,
+                "advancement",
+                $"{rule.Catalog.DisplayName} Maximum Level",
+                CharacterResolutionStates.Resolved,
+                maximumLevel,
+                null,
+                "level",
+                [],
+                [],
+                [],
+                [],
+                [new CharacterMechanicContributionView(
+                    mechanicKey,
+                    $"{rule.Catalog.DisplayName} effective progression",
+                    CharacterEffectOperations.Set,
+                    maximumLevel,
+                    null,
+                    rule.Catalog.ConceptKey,
+                    rule.Provenance)],
+                rule.Provenance);
+
+            var level = context.AdvancementLevel(rule.Catalog.ConceptKey);
+            if (level <= maximumLevel)
+            {
+                continue;
+            }
+
+            var conflictKey = $"conflict.{rule.Catalog.ConceptKey}.maximum-level";
+            if (context.Conflicts.Any(value =>
+                    string.Equals(value.ConflictKey, conflictKey, StringComparison.Ordinal)))
+            {
+                continue;
+            }
+
+            context.Conflicts.Add(new CharacterProjectionConflictView(
+                conflictKey,
+                "maximum-level",
+                $"{rule.Catalog.DisplayName} is limited to {maximumLevel} levels by the effective rule, but the Character supplies level {level}.",
+                [],
+                [rule.Catalog.ConceptKey]));
+        }
+    }
+
+    internal static int? ResolveMaximumLevel(JsonElement document)
+    {
+        if (document.ValueKind != JsonValueKind.Object)
+        {
+            return null;
+        }
+
+        if (CharacterProjectionJson.TryGetProperty(document, "_rulesCore", out var rulesCore)
+            && CharacterProjectionJson.TryGetProperty(rulesCore, "character", out var character))
+        {
+            var explicitMaximum = CharacterProjectionJson.Integer(character, "maximumLevel");
+            if (explicitMaximum is > 0)
+            {
+                return explicitMaximum;
+            }
+        }
+
+        if (!CharacterProjectionJson.TryGetProperty(document, "classTableGroups", out var groups)
+            || groups.ValueKind != JsonValueKind.Array)
+        {
+            return null;
+        }
+
+        var rowCounts = groups.EnumerateArray()
+            .Where(group => group.ValueKind == JsonValueKind.Object)
+            .Select(group =>
+            {
+                if (!CharacterProjectionJson.TryGetProperty(group, "rows", out var rows)
+                    || rows.ValueKind != JsonValueKind.Array)
+                {
+                    return 0;
+                }
+                return rows.GetArrayLength();
+            })
+            .Where(count => count > 0)
+            .ToArray();
+
+        return rowCounts.Length == 0 ? null : rowCounts.Max();
+    }
+}
