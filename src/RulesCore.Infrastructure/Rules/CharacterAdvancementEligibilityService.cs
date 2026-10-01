@@ -1,4 +1,3 @@
-using System.Text.Json;
 using RulesCore.Application.Rules;
 using RulesCore.Infrastructure.Rules.CharacterProjection;
 
@@ -9,7 +8,7 @@ public sealed class CharacterAdvancementEligibilityService(
     ICharacterRulesProjectionService projection)
     : ICharacterAdvancementEligibilityService
 {
-    private readonly ResolvedRulesSnapshotReader rules = new(resolvedRules);
+    private const int CandidatePageSize = 200;
 
     public async Task<CharacterAdvancementEligibilityView?> EvaluateGlobalAsync(
         CharacterAdvancementEligibilityRequest request,
@@ -17,19 +16,21 @@ public sealed class CharacterAdvancementEligibilityService(
         CancellationToken cancellationToken = default)
     {
         ValidateRequest(request);
-        var catalog = await rules.ReadAllGlobalAsync(userId, cancellationToken);
-        var candidate = FindCandidate(catalog, request.CandidateConceptKey);
-        if (candidate is null)
+        var lookup = await FindGlobalCandidateAsync(
+            request.CandidateConceptKey,
+            userId,
+            cancellationToken);
+        if (lookup.Candidate is null)
         {
             return null;
         }
 
-        ValidateCandidateKind(candidate);
+        ValidateCandidateKind(lookup.Candidate);
         var projected = await projection.ResolveGlobalAsync(
-            SelectCandidate(request.Character, candidate.ConceptKey),
+            SelectCandidate(request.Character, lookup.Candidate.ConceptKey),
             userId,
             cancellationToken);
-        return BuildView(catalog, candidate, request, projected);
+        return BuildView(lookup.Catalog, lookup.Candidate, request, projected);
     }
 
     public async Task<CharacterAdvancementEligibilityView?> EvaluateCampaignAsync(
@@ -48,23 +49,74 @@ public sealed class CharacterAdvancementEligibilityService(
         }
 
         ValidateRequest(request);
-        var catalog = await rules.ReadAllCampaignAsync(
+        var normalizedUserId = userId.Trim();
+        var lookup = await FindCampaignCandidateAsync(
             campaignId,
-            userId.Trim(),
+            request.CandidateConceptKey,
+            normalizedUserId,
             cancellationToken);
-        var candidate = FindCandidate(catalog, request.CandidateConceptKey);
-        if (candidate is null)
+        if (lookup.Candidate is null)
         {
             return null;
         }
 
-        ValidateCandidateKind(candidate);
+        ValidateCandidateKind(lookup.Candidate);
         var projected = await projection.ResolveCampaignAsync(
             campaignId,
-            SelectCandidate(request.Character, candidate.ConceptKey),
-            userId.Trim(),
+            SelectCandidate(request.Character, lookup.Candidate.ConceptKey),
+            normalizedUserId,
             cancellationToken);
-        return BuildView(catalog, candidate, request, projected);
+        return BuildView(lookup.Catalog, lookup.Candidate, request, projected);
+    }
+
+    private async Task<CandidateLookup> FindGlobalCandidateAsync(
+        string conceptKey,
+        string? userId,
+        CancellationToken cancellationToken)
+    {
+        var normalized = conceptKey.Trim();
+        ResolvedRulesCatalogView? lastPage = null;
+        for (var offset = 0; ; offset += CandidatePageSize)
+        {
+            var page = await resolvedRules.GetGlobalPageAsync(
+                userId,
+                query: normalized,
+                limit: CandidatePageSize,
+                offset: offset,
+                cancellationToken: cancellationToken);
+            lastPage = page;
+            var candidate = FindCandidate(page, normalized);
+            if (candidate is not null || page.Rules.Count < CandidatePageSize)
+            {
+                return new CandidateLookup(page, candidate);
+            }
+        }
+    }
+
+    private async Task<CandidateLookup> FindCampaignCandidateAsync(
+        Guid campaignId,
+        string conceptKey,
+        string userId,
+        CancellationToken cancellationToken)
+    {
+        var normalized = conceptKey.Trim();
+        ResolvedRulesCatalogView? lastPage = null;
+        for (var offset = 0; ; offset += CandidatePageSize)
+        {
+            var page = await resolvedRules.GetCampaignPageAsync(
+                campaignId,
+                userId,
+                query: normalized,
+                limit: CandidatePageSize,
+                offset: offset,
+                cancellationToken: cancellationToken);
+            lastPage = page;
+            var candidate = FindCandidate(page, normalized);
+            if (candidate is not null || page.Rules.Count < CandidatePageSize)
+            {
+                return new CandidateLookup(page, candidate);
+            }
+        }
     }
 
     private static CharacterAdvancementEligibilityView BuildView(
@@ -148,7 +200,7 @@ public sealed class CharacterAdvancementEligibilityService(
         }
 
         var parent = parents[0];
-        var requiredLevel = SubclassAcquisitionLevel(candidate);
+        var requiredLevel = CharacterSubclassAdvancementProjector.AcquisitionLevel(candidate);
         var (currentLevel, ambiguousOccurrence) = ParentClassLevel(
             request.Character,
             parent.RelatedConceptKey,
@@ -206,33 +258,6 @@ public sealed class CharacterAdvancementEligibilityService(
         };
     }
 
-    private static int? SubclassAcquisitionLevel(ResolvedRuleCatalogItemView candidate)
-    {
-        if (candidate.Document is not JsonElement document
-            || document.ValueKind != JsonValueKind.Object)
-        {
-            return null;
-        }
-
-        if (TryGetProperty(document, "_rulesCore", out var rulesCore)
-            && TryGetProperty(rulesCore, "character", out var character))
-        {
-            var normalized = ReadPositiveInteger(character, "acquisitionLevel")
-                ?? ReadPositiveInteger(character, "subclassAcquisitionLevel");
-            if (normalized is not null)
-            {
-                return normalized;
-            }
-        }
-
-        var levels = ClassFamilyFeatureReferenceParser
-            .Project("subclass", document)
-            .Where(value => value.Level is > 0)
-            .Select(value => value.Level!.Value)
-            .ToArray();
-        return levels.Length == 0 ? null : levels.Min();
-    }
-
     private static CharacterRulesProjectionRequest SelectCandidate(
         CharacterRulesProjectionRequest character,
         string candidateConceptKey)
@@ -257,7 +282,7 @@ public sealed class CharacterAdvancementEligibilityService(
         string conceptKey) =>
         catalog.Rules.FirstOrDefault(value => string.Equals(
             value.ConceptKey,
-            conceptKey.Trim(),
+            conceptKey,
             StringComparison.OrdinalIgnoreCase));
 
     private static void ValidateCandidateKind(ResolvedRuleCatalogItemView candidate)
@@ -282,49 +307,7 @@ public sealed class CharacterAdvancementEligibilityService(
         }
     }
 
-    private static int? ReadPositiveInteger(JsonElement element, string name)
-    {
-        if (!TryGetProperty(element, name, out var value))
-        {
-            return null;
-        }
-        if (value.ValueKind == JsonValueKind.Number
-            && value.TryGetInt32(out var numeric)
-            && numeric > 0)
-        {
-            return numeric;
-        }
-        if (value.ValueKind == JsonValueKind.String
-            && int.TryParse(value.GetString(), out numeric)
-            && numeric > 0)
-        {
-            return numeric;
-        }
-        return null;
-    }
-
-    private static bool TryGetProperty(
-        JsonElement element,
-        string name,
-        out JsonElement value)
-    {
-        if (element.ValueKind == JsonValueKind.Object
-            && element.TryGetProperty(name, out value))
-        {
-            return true;
-        }
-        if (element.ValueKind == JsonValueKind.Object)
-        {
-            foreach (var property in element.EnumerateObject())
-            {
-                if (string.Equals(property.Name, name, StringComparison.OrdinalIgnoreCase))
-                {
-                    value = property.Value;
-                    return true;
-                }
-            }
-        }
-        value = default;
-        return false;
-    }
+    private sealed record CandidateLookup(
+        ResolvedRulesCatalogView Catalog,
+        ResolvedRuleCatalogItemView? Candidate);
 }
