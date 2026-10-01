@@ -9,8 +9,10 @@ public sealed class HostedToolAuthenticationMiddleware(RequestDelegate next)
 
     public async Task InvokeAsync(
         HttpContext httpContext,
-        IToolHostAuthenticationClient authenticationClient)
+        IToolHostAuthenticationClient authenticationClient,
+        IConfiguration configuration)
     {
+        var surfaceMode = RulesCoreApiBoundary.ResolveMode(configuration);
         var tickets = httpContext.Request.Headers[ToolHostAuthenticationHeaders.Ticket];
         var introspectionPaths = httpContext.Request.Headers[ToolHostAuthenticationHeaders.IntrospectionPath];
         var hasTicketHeader = tickets.Count > 0;
@@ -18,6 +20,14 @@ public sealed class HostedToolAuthenticationMiddleware(RequestDelegate next)
 
         if (!hasTicketHeader && !hasIntrospectionHeader)
         {
+            if (!RulesCoreApiBoundary.Authorize(
+                    httpContext,
+                    authenticationContext: null,
+                    surfaceMode))
+            {
+                return;
+            }
+
             await next(httpContext);
             return;
         }
@@ -76,6 +86,12 @@ public sealed class HostedToolAuthenticationMiddleware(RequestDelegate next)
 
         httpContext.Items[ContextItemKey] = authenticationContext;
         httpContext.User = BuildPrincipal(authenticationContext);
+
+        if (!RulesCoreApiBoundary.Authorize(httpContext, authenticationContext, surfaceMode))
+        {
+            return;
+        }
+
         await next(httpContext);
     }
 

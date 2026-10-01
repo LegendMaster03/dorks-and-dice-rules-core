@@ -26,6 +26,21 @@ public sealed record ToolHostAuthenticationContext(
     public string? ToolKey { get; init; }
 
     /// <summary>
+    /// Immediate ordinary Tool-to-Tool delegation source supplied by the Site for delegated
+    /// target contexts. These fields do not grant access to private APIs.
+    /// </summary>
+    public string? DelegatedFromToolKey { get; init; }
+    public string? DelegatedFromToolSlug { get; init; }
+
+    /// <summary>
+    /// Immediate source Tool for a Site-authorized private tunnel context. These fields are
+    /// emitted only after the Site has authorized an explicit deployment-level source-to-target
+    /// private relationship.
+    /// </summary>
+    public string? PrivateTunnelSourceToolKey { get; init; }
+    public string? PrivateTunnelSourceToolSlug { get; init; }
+
+    /// <summary>
     /// Effective account roles scoped to SiteMode. Null identifies an older Site payload that
     /// predates this additive version-1 field; an empty collection is an authoritative no-role result.
     /// </summary>
@@ -41,6 +56,9 @@ public sealed record ToolHostAuthenticationContext(
         Campaigns.Any(campaign =>
             campaign.Id == campaignId
             && string.Equals(campaign.Role, role, StringComparison.Ordinal));
+
+    public bool HasPrivateTunnelSource =>
+        !string.IsNullOrWhiteSpace(PrivateTunnelSourceToolKey);
 }
 
 public interface IToolHostAuthenticationClient

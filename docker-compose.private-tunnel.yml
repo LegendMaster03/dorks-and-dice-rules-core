@@ -1,0 +1,32 @@
+services:
+  # When this overlay is enabled, the existing Rules Core service becomes the stable
+  # public consumer ingress. It remains on the normal backend network but can not serve
+  # private API routes even if a private target credential is presented to it.
+  rules-core:
+    environment:
+      RulesCore__ApiSurface: "PublicOnly"
+
+  # The private ingress uses the same Rules Core image and database, but it is not
+  # attached to dorks-and-dice-backend. The source Tool reaches it only through the
+  # explicitly configured private network. The restricted control-plane network exists
+  # solely so the private instance can redeem Site-issued target tickets.
+  rules-core-private:
+    image: dorks-and-dice-rules-core:latest
+    container_name: dorks-and-dice-rules-core-private
+    restart: unless-stopped
+    environment:
+      ConnectionStrings__RulesCore: "${ConnectionStrings__RulesCore:?ConnectionStrings__RulesCore must be configured}"
+      ToolHost__BaseUrl: "${RulesCorePrivate__ToolHostBaseUrl:-http://dorks-and-dice-site:8080}"
+      RulesCore__ApiSurface: "PrivateOnly"
+      RulesCore__BootstrapBaseline: "false"
+    networks:
+      - rules-core-private-tunnel
+      - dorks-and-dice-tool-control-plane
+
+networks:
+  rules-core-private-tunnel:
+    external: true
+    name: "${RulesCorePrivate__Network:?RulesCorePrivate__Network must be configured}"
+  dorks-and-dice-tool-control-plane:
+    external: true
+    name: "${ToolHosting__ControlPlaneNetwork:-dorks-and-dice-tool-control-plane}"

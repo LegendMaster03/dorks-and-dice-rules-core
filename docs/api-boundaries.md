@@ -1,65 +1,80 @@
-# API ownership after the Rules Wiki split
+# Rules Core API boundaries
 
-The Rules Wiki split establishes a strict API boundary between Rules Core's stable
-external consumer API and the private first-party API used by Rules Wiki.
+Rules Core has two deliberately separate HTTP surfaces:
 
-The central invariant is:
+1. a stable public consumer API for ordinary Dorks & Dice Tools and independent Rules Core consumers; and
+2. a private first-party API reachable only through explicitly configured source-to-target private Tool tunnels.
 
-> **Rules Wiki does not consume Rules Core's public/external API. Every Rules Wiki -> Rules Core request uses the delegated first-party internal Tool-to-Tool API.**
+The central invariants are:
 
-This is a standing architectural rule, not a preference for new work. The public API
-exists for other Dorks & Dice Tools and independent Rules Core consumers. Rules Wiki
-has a unique delegated Tool-to-Tool relationship with Rules Core and therefore has no
-reason to depend on the public consumer surface.
+> **Rules Wiki does not consume Rules Core's public API. Rules Wiki reaches Rules Core directly through its private deployment tunnel.**
 
-A capability needed only by Rules Wiki must not be added to the external API merely
-because it needs an HTTP contract. It belongs to the internal Rules Wiki API. An
-internal handler may reuse the same Rules Core application/domain services as an
-external endpoint, but the network contract exposed to Rules Wiki remains internal.
-Promotion of an internal capability to the external API requires a separately reviewed,
-independent non-Wiki consumer need.
+> **Ordinary Tool-to-Tool delegation does not grant access to Rules Core private APIs.**
 
-## 1. Stable external API
+> **Rules Wiki is a UI application, not an API gateway. Rules Wiki does not proxy Rules Core APIs or expose a general API of its own.**
 
-These endpoint families remain supported for Character Sheet, Block Initiative,
-Hex Crawl, future game Tools, and other non-Wiki consumers:
+These are standing architectural rules. A capability needed only by Rules Wiki must not be added to the public Rules Core API merely because Rules Wiki needs an HTTP contract. Promotion of a private capability to the public API requires a separately reviewed consumer need outside the private integration.
 
-- `/api/rules` and `/api/rules/{conceptKey}` resolved-rule/catalog reads;
-- `/api/campaigns/{campaignId}/rules` resolved campaign-rule reads;
-- source-accessible catalog/entity reads under `/api/sources`;
-- character mechanics and character projection endpoints mapped by
-  `CharacterMechanicsEndpointExtensions` and `CharacterProjectionEndpointExtensions`;
-- crafting and harvesting resolution endpoints mapped by
-  `CraftingRulesEndpointExtensions` and `HarvestingRulesEndpointExtensions`;
-- mechanical relationship endpoints mapped by
-  `MechanicalRelationshipEndpointExtensions`;
-- other published resolution contracts exposed by
-  `ResolvedRulesCatalogEndpointExtensions`.
+## Migration activation
 
-`/api/rules` is intentionally a resolved consumer contract. It exposes the effective
-published ruleset expected by game Tools. Rules Wiki must not use it for browsing,
-detail, comparison, fallback, source-history, or any other Wiki workflow even when the
-same information could technically be obtained from it.
+The boundary implementation is intentionally deployable before Rules Wiki is migrated. `RulesCore:ApiSurface` defaults to `Compatibility`, which preserves the current API reachability and ordinary delegation behavior so merging the foundation does not break the live Wiki.
 
-`browserLink` remains part of the external response contract, but its human-facing
-Tool target is `rules-wiki`.
+The hardened modes are:
 
-## 2. Rules Wiki first-party internal API
+- `Combined` — public endpoints remain reachable while private endpoints require Site-issued private-tunnel provenance;
+- `PublicOnly` — only the stable public API is served; private API routes return `404`;
+- `PrivateOnly` — only private API routes are served and they require Site-issued private-tunnel provenance; public API routes return `404`.
 
-Rules Core owns the semantic read/write models used by Rules Wiki, but Rules Wiki
-reaches them only through delegated Tool-to-Tool access. These contracts are private
-first-party integration surfaces between `rules-wiki` and `rules-core`; they are not
-part of Rules Core's stable external compatibility promise.
+The coordinated Rules Wiki migration activates `PublicOnly` on the shared Rules Core ingress and `PrivateOnly` on the pair-specific Rules Wiki -> Rules Core ingress. `Compatibility` is a migration state, not the final architecture.
 
-The browser never calls Rules Core directly. The normal path is:
+## 1. Stable public consumer API
 
-`browser -> Rules Wiki -> Site Tool-to-Tool delegation -> Rules Core internal API`
+The public API exists for Character Sheet, Block Initiative, Hex Crawl, future game Tools, and other consumers that do not have a private integration with Rules Core.
 
-The delegation capability remains server-side. Rules Core still enforces the delegated
-user's source grants, campaign membership, Rules Lawyer authority, campaign-DM
-authority, publication state, and every other domain authorization requirement. Internal
-means restricted to the first-party Tool relationship; it does not mean authorization-
-free.
+Published consumer endpoint families include resolved rule/catalog reads and game-mechanics resolution contracts such as:
+
+- `/api/rules` and `/api/rules/{conceptKey}`;
+- `/api/campaigns/{campaignId}/rules` and resolved campaign-rule reads;
+- the published source/catalog reads under `/api/sources`;
+- character mechanics and character projection contracts;
+- crafting and harvesting resolution contracts; and
+- travel/environment resolution contracts.
+
+`/api/rules` is intentionally a resolved consumer contract. It exposes the effective published ruleset expected by game Tools. Rules Wiki must not use it for browsing, detail, comparison, fallback, source history, authoring, or other Wiki workflows even when equivalent information could technically be reconstructed from it.
+
+When a hardened API-surface mode is active, the transport boundary is private-by-default. Existing public route patterns are explicitly listed by `RulesCoreApiBoundary`, and future public routes may be deliberately marked with `PublicRulesCoreApi`. A newly mapped `/api` route is therefore private unless its public status is an explicit code change.
+
+This protects the stable public contract from accidental expansion to satisfy first-party UI needs.
+
+## 2. Private first-party API
+
+Rules Core owns the semantic read/write models used by Rules Wiki. Those contracts are private Rules Core interfaces and are not part of the stable public compatibility promise.
+
+The deployment path is:
+
+```text
+browser -> Rules Wiki
+             |
+             | direct private source-to-target tunnel
+             v
+          Rules Core private API
+```
+
+Site remains the identity and authorization control plane, not the HTTP data plane for the Rules Wiki -> Rules Core request. A Rules Wiki backend request obtains a short-lived Rules Core target-scoped authentication ticket through the Site control plane, then sends the actual request directly to Rules Core over the configured private deployment path. Rules Core redeems the ticket through Site introspection and receives trusted private-tunnel source provenance.
+
+A private relationship is configured independently for each source/target pair. If another Tool needs a private Rules Core integration, that Tool receives its own explicitly configured private tunnel. It does not inherit private access because it can use normal Tool delegation or because it can consume the public Rules Core API.
+
+With a hardened API-surface mode active, the transport boundary behaves as follows:
+
+- a public Rules Core endpoint is reachable according to its normal endpoint authorization rules;
+- a private endpoint without Tool authentication returns `401`;
+- a private endpoint with ordinary Tool authentication or ordinary Tool-to-Tool delegation returns `403`;
+- a private endpoint requires a target-scoped context carrying Site-issued private-tunnel provenance; and
+- domain authorization still applies after the transport boundary is crossed.
+
+Private does not mean authorization-free. Rules Core continues to enforce source grants, campaign membership, Rules Lawyer authority, campaign-DM authority, publication state, and every other domain authorization requirement.
+
+Historically some private read routes use `/api/wiki/...` names. Route spelling does not make a contract public. Those are Rules Core private API routes for the Rules Wiki integration and must remain behind the private transport boundary.
 
 The existing Wiki reference read model includes contracts for:
 
@@ -67,112 +82,72 @@ The existing Wiki reference read model includes contracts for:
 - reading accessible source/history detail for one logical reference;
 - campaign-scoped reference browsing and detail;
 - read-only semantic comparison;
-- class-family and other presentation-support relationships;
+- class-family and other presentation-support relationships; and
 - presentation projections that are semantically unsafe for Rules Wiki to derive.
 
-Historically some of these routes use `/api/wiki/...` names. Route spelling alone does
-not make a contract external. Wiki-specific routes must be protected and treated as
-internal Tool-to-Tool contracts. New work must not make them generally consumable in
-order to satisfy a Rules Wiki requirement.
-
-Rules Wiki authoring and maintenance capabilities are part of the same internal
-boundary, including:
+Rules Wiki authoring and maintenance capabilities are part of the same private boundary, including:
 
 - global and campaign rule authoring, preview, comparison, and publication;
-- Rules Lawyer/adjudication work queues and workspace scope endpoints;
-- source browser, current-user source, source revision review, normalization,
-  versioning, hosted-source, acquisition, and source-administration workflows;
+- Rules Lawyer/adjudication work queues and workspace scope operations;
+- source browser, current-user source, source revision review, normalization, versioning, hosted-source, acquisition, and source-administration workflows;
 - source-update review and campaign baseline authoring.
 
-There is no architectural distinction where Wiki read APIs are public but Wiki mutation
-APIs are internal. **All Rules Wiki -> Rules Core APIs are internal.**
+There is no architectural distinction where Wiki read APIs are public but Wiki mutation APIs are private. **All Rules Wiki -> Rules Core APIs are private.**
 
 ### Reference-read semantics
 
-Rules Core remains authoritative for source grants, canonical identity, publication and
-edition metadata, source occurrence history, concept relationships, effective global and
-campaign resolution, unresolved fallback selection, server-authoritative facets, and
-semantic comparison. Rules Wiki renders those semantics; it does not reconstruct them
-from raw source records.
+Rules Core remains authoritative for source grants, canonical identity, publication and edition metadata, source occurrence history, concept relationships, effective global and campaign resolution, unresolved fallback selection, server-authoritative facets, and semantic comparison. Rules Wiki renders those semantics; it does not reconstruct them from public consumer records.
 
-Canonical source-only histories use stable `canonical:{canonicalEntityId}` reference
-identities. Accessible occurrences that are still unresolved by canonical reconciliation
-remain browseable as isolated provisional histories using deterministic
-`occurrence:{canonicalSourceOccurrenceId}` identities. They are not grouped through
-loose name matching. Reading either identity does not create a RuleConcept, Rules
-Layer decision, or publication.
+Canonical source-only histories use stable `canonical:{canonicalEntityId}` reference identities. Accessible occurrences that are still unresolved by canonical reconciliation remain browseable as isolated provisional histories using deterministic `occurrence:{canonicalSourceOccurrenceId}` identities. They are not grouped through loose name matching. Reading either identity does not create a RuleConcept, Rules Layer decision, or publication.
 
-Authoritative `revision` and `rename` relationships form the evolving logical history
-used for Rules Layer participation. `variant` and `reprint` do not automatically make
-another canonical entity interchangeable for effective selection. If legacy data has
-multiple RuleConcepts bound inside one revision/rename component, the history
-representative is selected semantically: prefer a concept bound to a root canonical
-entity in the directed history graph, then use stable concept-key ordering only as a
-deterministic compatibility fallback when a unique rooted binding is unavailable.
-Decision creation timestamps do not choose the history representative.
+Authoritative `revision` and `rename` relationships form the evolving logical history used for Rules Layer participation. `variant` and `reprint` do not automatically make another canonical entity interchangeable for effective selection. If legacy data has multiple RuleConcepts bound inside one revision/rename component, the history representative is selected semantically: prefer a concept bound to a root canonical entity in the directed history graph, then use stable concept-key ordering only as a deterministic compatibility fallback when a unique rooted binding is unavailable. Decision creation timestamps do not choose the history representative.
 
-Source grants remain the content-read authorization boundary. A source package that
-is not accessible to the delegated user identity must not leak through reference
-results, search, facets, counts, history, comparison, fallback selection, or canonical
-grouping.
+Source grants remain the content-read authorization boundary. A source package that is not accessible to the delegated user identity must not leak through reference results, search, facets, counts, history, comparison, fallback selection, or canonical grouping.
 
-Reading accessible source variations is not a Rules Lawyer operation. Rules Lawyer or
-campaign authority is still required by the mutation, adjudication, and publication
-services. Read-only comparison reuses Rules Core's semantic comparison implementation
-while preserving source-access checks.
+Reading accessible source variations is not a Rules Lawyer operation. Rules Lawyer or campaign authority is still required by mutation, adjudication, and publication services. Read-only comparison reuses Rules Core's semantic comparison implementation while preserving source-access checks.
 
-The effective/default reference variation is a scope projection, not a second source
-history. A published Rules Layer decision on the authoritative history anchor selects
-the exact effective source variation when one exists. If no applicable decision exists,
-Rules Core deterministically selects the newest accessible applicable variation as an
-unresolved fallback without creating or persisting a rule decision.
+The effective/default reference variation is a scope projection, not a second source history. A published Rules Layer decision on the authoritative history anchor selects the exact effective source variation when one exists. If no applicable decision exists, Rules Core deterministically selects the newest accessible applicable variation as an unresolved fallback without creating or persisting a rule decision.
 
-Catalog rows distinguish two variation roles. `EffectiveVariation` is the variation
-selected by the current global/campaign/default rules scope. `BrowseVariation` is the
-variation whose source, package, edition, and type-specific browser metadata populate
-the current catalog row. In `categoryMode=effective`, they normally coincide. In
-`categoryMode=any`, the browse projection comes from a historical variation matching
-the requested browse category and applicable source/package/edition filters while
-`EffectiveCategory` continues to report the effective rules type. Full mechanical JSON
-is hydrated only for the variation projected into each requested catalog row; detail
-and history hydrate the accessible variations in that one logical reference.
+Catalog rows distinguish two variation roles. `EffectiveVariation` is the variation selected by the current global/campaign/default rules scope. `BrowseVariation` is the variation whose source, package, edition, and type-specific browser metadata populate the current catalog row. In `categoryMode=effective`, they normally coincide. In `categoryMode=any`, the browse projection comes from a historical variation matching the requested browse category and applicable source/package/edition filters while `EffectiveCategory` continues to report the effective rules type. Full mechanical JSON is hydrated only for the variation projected into each requested catalog row; detail and history hydrate the accessible variations in that one logical reference.
 
-Terminology normalization remains distinct from mechanical-category evolution.
-`race`/`species` normalize to `species`, and `subrace`/`subspecies` normalize to
-`subspecies`. By contrast, a `prestigeClass` -> `subclass` transition remains a real
-change of mechanical category even when authoritative revision/rename history proves
-that the variations are successive forms of one evolving logical concept.
+Terminology normalization remains distinct from mechanical-category evolution. `race`/`species` normalize to `species`, and `subrace`/`subspecies` normalize to `subspecies`. By contrast, a `prestigeClass` -> `subclass` transition remains a real change of mechanical category even when authoritative revision/rename history proves that the variations are successive forms of one evolving logical concept.
 
-## 3. Browser-facing Rules Wiki API versus Rules Core internal API
+## 3. Rules Wiki is not an API gateway
 
-Rules Wiki may expose its own browser-facing `/api/*` routes as part of the Rules Wiki
-application contract. Those routes terminate at Rules Wiki. The thin Rules Wiki backend
-adapter then calls Rules Core through the internal Tool-to-Tool boundary.
+Rules Wiki is the UI frontend for Rules Core, but it is not a transparent or path-for-path proxy for Rules Core.
 
-A browser-facing Rules Wiki route and a Rules Core internal route do not need to share
-the same path or DTO. Rules Wiki may preserve browser compatibility while the internal
-contract evolves with the first-party integration.
+The browser interacts with the Rules Wiki web application. Rules Wiki server-side code uses focused internal clients to call the Rules Core private API over its private tunnel. Rules Wiki must not implement `/api/{**path}` forwarding, mirror the Rules Core route tree, or relay arbitrary Rules Core requests on behalf of the browser.
 
-Rules Wiki must not implement its backend adapter as a dependency on Rules Core's
-stable external API. If an external and internal operation share semantics, Rules Core
-should reuse application/domain services behind both boundaries rather than requiring
-Rules Wiki to call the public endpoint.
+If browser-side interaction requires a server action in Rules Wiki, that action remains part of the Rules Wiki application implementation rather than creating a general Rules Wiki API surface. The Rules Wiki backend chooses the specific Rules Core operation it needs and performs it through the private client.
 
-## 4. Administrative/service API
+If a public and private operation share semantics, Rules Core should reuse application/domain services behind both boundaries rather than requiring Rules Wiki to call the public endpoint.
 
-Administrative source import/control-plane capabilities remain Rules Core domain
-responsibilities. Whether a particular administrative operation is available to Rules
-Wiki is determined through the internal Tool-to-Tool contract and normal authority
-checks, not by broadening the external API.
+## 4. Site control plane and private-tunnel provenance
+
+Site remains authoritative for Tool identity and target-scoped user context.
+
+Normal Tool delegation and private tunnels are separate relationships:
+
+- normal delegation uses the registered Tool delegation allowlist and may use the Site delegation gateway;
+- private tunnel authorization is deployment configuration for one explicit source/target pair;
+- normal delegation provenance (`DelegatedFromToolKey`) does not satisfy the Rules Core private API boundary; and
+- private access requires `PrivateTunnelSourceToolKey` in the target-scoped context issued by Site.
+
+Rules Core trusts the private-tunnel provenance only because it comes from redemption of a short-lived target-scoped Site ticket. A caller can not grant itself private access by supplying an HTTP header or source Tool name directly.
+
+The private network path and the target-scoped identity check are complementary controls. Network reachability alone is not private authorization, and a valid identity credential does not replace deployment isolation.
+
+## 5. Administrative/service API
+
+Administrative source import and control-plane capabilities remain Rules Core domain responsibilities. Whether a particular administrative operation is available to a first-party Tool is determined through its private integration and normal authority checks, not by broadening the public API.
 
 `/api` remains service metadata.
 
-## 5. Hosting and health API
+## 6. Hosting and health API
 
 - `/health` is the process health endpoint.
 - `/ready` verifies Rules Core PostgreSQL readiness.
-- `/api/integration/session` exposes the target-scoped Tool Host authentication
-  context to authorized backend callers.
+- `/api/integration/session` exposes the target-scoped Tool Host authentication context to authorized backend callers.
 - `/` is service metadata only and does not advertise a frontend module.
 
 Rules Core does not serve Rules Wiki static UI assets.
