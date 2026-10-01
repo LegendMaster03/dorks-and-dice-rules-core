@@ -31,7 +31,7 @@ public static class SourceImportExecutionPolicy
             StringComparison.Ordinal)
             ? LockMode.Exclusive
             : LockMode.Shared;
-        var state = LockStates.GetOrCreateValue(dbContext);
+        var state = LockStates.GetValue(dbContext, static _ => new LockState());
         var connection = dbContext.Database.GetDbConnection();
 
         // A pooled connection reset releases PostgreSQL session advisory locks. If a caller closed
