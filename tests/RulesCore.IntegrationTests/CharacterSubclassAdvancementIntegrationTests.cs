@@ -167,6 +167,32 @@ public sealed class CharacterSubclassAdvancementIntegrationTests
             Assert.Contains(tooEarlyStructuralSelection.Conflicts, value =>
                 value.Kind == "subclass-acquisition-level"
                 && value.RelatedConceptKeys.Contains(acceptedSubclass.Concept.Key));
+
+            var exaggeratedSubclassLevel = await projection.ResolveGlobalAsync(
+                new CharacterRulesProjectionRequest(
+                    Advancements:
+                    [
+                        new CharacterAdvancementFactInput(
+                            acceptedClass.Concept.Key,
+                            3,
+                            OccurrenceKey: "class-occurrence"),
+                        new CharacterAdvancementFactInput(
+                            acceptedSubclass.Concept.Key,
+                            7,
+                            OccurrenceKey: "subclass-occurrence",
+                            ParentConceptKey: acceptedClass.Concept.Key)
+                    ]),
+                userId: null);
+            Assert.Contains(exaggeratedSubclassLevel.Conflicts, value =>
+                value.Kind == "subclass-parent-level-mismatch"
+                && value.RelatedConceptKeys.Contains(acceptedSubclass.Concept.Key));
+            Assert.Contains(exaggeratedSubclassLevel.Features, value =>
+                value.SourceConceptKey == acceptedSubclass.Concept.Key
+                && value.DisplayName == "Path Initiate"
+                && value.AcquisitionLevel == 3);
+            Assert.DoesNotContain(exaggeratedSubclassLevel.Features, value =>
+                value.SourceConceptKey == acceptedSubclass.Concept.Key
+                && value.DisplayName == "Path Mastery");
         }
         finally
         {
