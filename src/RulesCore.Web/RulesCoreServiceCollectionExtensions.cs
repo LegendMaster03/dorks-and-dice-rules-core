@@ -44,6 +44,7 @@ public static class RulesCoreServiceCollectionExtensions
         services.AddScoped<GlobalRulesService>();
         services.AddScoped<IGlobalRulesService, RelationshipAwareGlobalRulesService>();
         services.AddScoped<ICampaignRulesService, CampaignRulesService>();
+        services.AddScoped<IResolvedRulesCatalogService, ResolvedRulesCatalogService>();
         services.AddScoped<IHarvestingRulesService, HarvestingRulesService>();
         services.AddScoped<ICraftingRulesService, CraftingRulesService>();
         services.AddScoped<ITravelEnvironmentConsumerService, TravelEnvironmentConsumerService>();
@@ -59,6 +60,7 @@ public static class RulesCoreServiceCollectionExtensions
         services.AddScoped<ICharacterMechanicsConsumerService>(provider =>
             provider.GetRequiredService<CharacterMechanicsConsumerService>());
         services.AddScoped<ICharacterRulesProjectionService, CharacterRulesProjectionService>();
+        services.AddScoped<ICharacterAdvancementEligibilityService, CharacterAdvancementEligibilityService>();
         return services;
     }
 
