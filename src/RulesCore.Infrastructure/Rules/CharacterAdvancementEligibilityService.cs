@@ -1,3 +1,4 @@
+using System.Text.Json;
 using RulesCore.Application.Rules;
 using RulesCore.Infrastructure.Rules.CharacterProjection;
 
@@ -75,7 +76,6 @@ public sealed class CharacterAdvancementEligibilityService(
         CancellationToken cancellationToken)
     {
         var normalized = conceptKey.Trim();
-        ResolvedRulesCatalogView? lastPage = null;
         for (var offset = 0; ; offset += CandidatePageSize)
         {
             var page = await resolvedRules.GetGlobalPageAsync(
@@ -84,7 +84,6 @@ public sealed class CharacterAdvancementEligibilityService(
                 limit: CandidatePageSize,
                 offset: offset,
                 cancellationToken: cancellationToken);
-            lastPage = page;
             var candidate = FindCandidate(page, normalized);
             if (candidate is not null || page.Rules.Count < CandidatePageSize)
             {
@@ -100,7 +99,6 @@ public sealed class CharacterAdvancementEligibilityService(
         CancellationToken cancellationToken)
     {
         var normalized = conceptKey.Trim();
-        ResolvedRulesCatalogView? lastPage = null;
         for (var offset = 0; ; offset += CandidatePageSize)
         {
             var page = await resolvedRules.GetCampaignPageAsync(
@@ -110,7 +108,6 @@ public sealed class CharacterAdvancementEligibilityService(
                 limit: CandidatePageSize,
                 offset: offset,
                 cancellationToken: cancellationToken);
-            lastPage = page;
             var candidate = FindCandidate(page, normalized);
             if (candidate is not null || page.Rules.Count < CandidatePageSize)
             {
@@ -146,6 +143,11 @@ public sealed class CharacterAdvancementEligibilityService(
         bool? prerequisiteSatisfied = prerequisite is null
             ? true
             : prerequisite.Satisfied;
+        var prerequisiteDefinitionKnown = !string.Equals(
+                candidate.EntityType,
+                "prestigeClass",
+                StringComparison.OrdinalIgnoreCase)
+            || HasCompletePrestigePrerequisiteDefinition(candidate);
         var resolutionKnown = candidate.Resolution?.RequiresAdjudication != true;
         bool? eligible;
         if (parentSatisfied == false
@@ -156,6 +158,7 @@ public sealed class CharacterAdvancementEligibilityService(
         }
         else if (parentSatisfied is null
                  || prerequisiteSatisfied is null
+                 || !prerequisiteDefinitionKnown
                  || !resolutionKnown)
         {
             eligible = null;
@@ -256,6 +259,21 @@ public sealed class CharacterAdvancementEligibilityService(
             1 => (matches[0].Level, false),
             _ => (null, true)
         };
+    }
+
+    private static bool HasCompletePrestigePrerequisiteDefinition(
+        ResolvedRuleCatalogItemView candidate)
+    {
+        if (candidate.Document is not JsonElement document
+            || document.ValueKind != JsonValueKind.Object
+            || !CharacterProjectionJson.TryGetProperty(document, "_rulesCore", out var rulesCore)
+            || !CharacterProjectionJson.TryGetProperty(rulesCore, "character", out var character)
+            || !CharacterProjectionJson.TryGetProperty(character, "prerequisitesComplete", out var complete))
+        {
+            return false;
+        }
+
+        return complete.ValueKind == JsonValueKind.True;
     }
 
     private static CharacterRulesProjectionRequest SelectCandidate(
