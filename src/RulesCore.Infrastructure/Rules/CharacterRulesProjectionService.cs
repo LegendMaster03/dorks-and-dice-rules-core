@@ -90,6 +90,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             CharacterProjectionCatalogRegistrar.RegisterRuleMetadata(context, rule);
         }
         context.ResolveStartingClass();
+        CharacterSubclassAdvancementProjector.Project(projectionRules, context);
 
         foreach (var rule in projectionRules)
         {
