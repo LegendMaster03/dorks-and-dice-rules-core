@@ -80,7 +80,7 @@ public sealed class CharacterAdvancementEligibilityServiceTests
     }
 
     [Fact]
-    public async Task PrestigeEligibilityEvaluatesSimpleNamedFeatRequirementsFromEffectiveSourceEvidence()
+    public async Task PrestigeEligibilityConsumesNormalizedFeatRequirement()
     {
         var prestigeConceptKey = "prestigeClass.loremaster";
         var featConceptKey = "feat.skill-focus-knowledge";
@@ -88,26 +88,19 @@ public sealed class CharacterAdvancementEligibilityServiceTests
             prestigeConceptKey,
             "prestigeClass",
             "Loremaster",
-            """
-            {
-              "_rulesCore": {
-                "pcgen": {
-                  "unmappedSegments": [
-                    { "tag": "PREFEAT", "value": "1,Skill Focus (Knowledge)" }
-                  ]
-                }
-              }
-            }
-            """,
-            []);
-        var feat = Rule(
-            featConceptKey,
-            "feat",
-            "Skill Focus (Knowledge)",
             "{}",
             []);
-        var catalog = new FakeCatalog(candidate, feat);
-        var projection = new RecordingProjectionService();
+        var catalog = new FakeCatalog(candidate);
+        var projection = new RecordingProjectionService(request =>
+        {
+            var ownsFeat = request.SelectedConcepts?.Any(value =>
+                string.Equals(value.ConceptKey, featConceptKey, StringComparison.OrdinalIgnoreCase)) == true;
+            return Projection(
+                [NormalizedFeatPrerequisite(
+                    prestigeConceptKey,
+                    [(featConceptKey, "Skill Focus (Knowledge)", ownsFeat)],
+                    matchCount: 1)]);
+        });
         var service = new CharacterAdvancementEligibilityService(catalog, projection);
 
         var missing = await service.EvaluateGlobalAsync(
@@ -152,7 +145,7 @@ public sealed class CharacterAdvancementEligibilityServiceTests
     }
 
     [Fact]
-    public async Task PrestigeEligibilitySupportsNOfMNamedFeatRequirements()
+    public async Task PrestigeEligibilityPreservesNormalizedNOfMFeatRequirements()
     {
         var prestigeConceptKey = "prestigeClass.feat-master";
         var firstFeatKey = "feat.first";
@@ -162,26 +155,25 @@ public sealed class CharacterAdvancementEligibilityServiceTests
             prestigeConceptKey,
             "prestigeClass",
             "Feat Master",
-            """
-            {
-              "_rulesCore": {
-                "pcgen": {
-                  "unmappedSegments": [
-                    { "tag": "PREFEAT", "value": "2,First Feat,Second Feat,Third Feat" }
-                  ]
-                }
-              }
-            }
-            """,
+            "{}",
             []);
-        var catalog = new FakeCatalog(
-            candidate,
-            Rule(firstFeatKey, "feat", "First Feat", "{}", []),
-            Rule(secondFeatKey, "feat", "Second Feat", "{}", []),
-            Rule(thirdFeatKey, "feat", "Third Feat", "{}", []));
-        var service = new CharacterAdvancementEligibilityService(
-            catalog,
-            new RecordingProjectionService());
+        var catalog = new FakeCatalog(candidate);
+        var projection = new RecordingProjectionService(request =>
+        {
+            var selected = new HashSet<string>(
+                request.SelectedConcepts?.Select(value => value.ConceptKey) ?? [],
+                StringComparer.OrdinalIgnoreCase);
+            return Projection(
+                [NormalizedFeatPrerequisite(
+                    prestigeConceptKey,
+                    [
+                        (firstFeatKey, "First Feat", selected.Contains(firstFeatKey)),
+                        (secondFeatKey, "Second Feat", selected.Contains(secondFeatKey)),
+                        (thirdFeatKey, "Third Feat", selected.Contains(thirdFeatKey))
+                    ],
+                    matchCount: 2)]);
+        });
+        var service = new CharacterAdvancementEligibilityService(catalog, projection);
 
         var result = await service.EvaluateGlobalAsync(
             new CharacterAdvancementEligibilityRequest(
@@ -200,6 +192,34 @@ public sealed class CharacterAdvancementEligibilityServiceTests
         Assert.Equal(3, prerequisite.Requirements.Count);
         Assert.All(prerequisite.Requirements, value => Assert.Equal(2, value.GroupMatchCount));
         Assert.Equal(2, prerequisite.Requirements.Count(value => value.Satisfied == true));
+    }
+
+    private static CharacterPrerequisiteView NormalizedFeatPrerequisite(
+        string conceptKey,
+        IReadOnlyList<(string ConceptKey, string DisplayName, bool Owned)> feats,
+        int matchCount)
+    {
+        var satisfiedCount = feats.Count(value => value.Owned);
+        var satisfied = satisfiedCount >= matchCount;
+        return new CharacterPrerequisiteView(
+            conceptKey,
+            CharacterResolutionStates.Resolved,
+            satisfied,
+            feats.Select((feat, index) => new CharacterPrerequisiteRequirementView(
+                $"{conceptKey}.prerequisite.feat.{index}",
+                "feat",
+                feat.ConceptKey,
+                ">=",
+                1,
+                feat.DisplayName,
+                feat.Owned,
+                CharacterResolutionStates.Resolved,
+                feat.Owned
+                    ? $"Feat '{feat.DisplayName}' is present."
+                    : $"Feat '{feat.DisplayName}' is not present.",
+                $"{conceptKey}.prerequisite.feats",
+                matchCount)).ToArray(),
+            EmptyProvenance());
     }
 
     private static ResolvedRuleCatalogItemView Rule(
@@ -253,6 +273,9 @@ public sealed class CharacterAdvancementEligibilityServiceTests
             Prerequisites: prerequisites ?? [],
             Conflicts: [],
             Equipment: []);
+
+    private static CharacterMechanicProvenanceView EmptyProvenance() =>
+        new([], [], []);
 
     private sealed class RecordingProjectionService(
         Func<CharacterRulesProjectionRequest, CharacterRulesProjectionView>? result = null)
