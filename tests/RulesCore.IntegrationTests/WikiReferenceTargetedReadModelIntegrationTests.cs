@@ -70,6 +70,7 @@ public sealed class WikiReferenceTargetedReadModelIntegrationTests
                     true,
                     new DateOnly(2003, 7, 1),
                     9));
+                packageIds.AddRange([old.PackageId, current.PackageId, privateOnly.PackageId, provisional.PackageId]);
 
                 var oldEntity = Assert.Single(old.Entities);
                 var currentEntity = Assert.Single(current.Entities);
