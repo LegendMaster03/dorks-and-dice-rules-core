@@ -22,16 +22,19 @@ public static class RulesCoreServiceCollectionExtensions
 
     public static IServiceCollection AddRulesCoreSources(this IServiceCollection services)
     {
-        services.AddScoped<ISourceImportService, SourceImportService>();
-        services.AddScoped<INormalizedSourceImportService, NormalizedSourceImportService>();
+        services.AddScoped<SourceImportService>();
+        services.AddScoped<ISourceImportService, ReconciledSourceImportService>();
+        services.AddScoped<NormalizedSourceImportService>();
+        services.AddScoped<INormalizedSourceImportService, ReconciledNormalizedSourceImportService>();
         services.AddScoped<ISourceNormalizationMaintenanceService, SourceNormalizationMaintenanceService>();
-        services.AddSingleton<ISourceFormatAdapter, FiveEToolsSourceFormatAdapter>();
+        services.AddSingleton<ISourceFormatAdapter, FiveEToolsCompanionSourceFormatAdapter>();
         services.AddSingleton<ISourceFormatAdapter, PcGenSourceFormatAdapter>();
         services.AddSingleton<ISourceFormatAdapter, PdfSourceFormatAdapter>();
         services.AddSingleton<ISourceFormatAdapterRegistry, SourceFormatAdapterRegistry>();
         services.AddScoped<ISourceCatalogService, SourceCatalogService>();
         services.AddScoped<ISourceEntitySearchService, SourceEntitySearchService>();
         services.AddScoped<ISourceGrantService, SourceGrantService>();
+        services.AddHostedService<CanonicalDataReconciliationStartupService>();
         services.AddHostedService<CurrentUserSourceRefreshBackground>();
         return services;
     }

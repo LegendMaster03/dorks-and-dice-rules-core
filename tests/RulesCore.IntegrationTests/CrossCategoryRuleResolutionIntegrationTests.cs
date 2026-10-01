@@ -84,7 +84,7 @@ public sealed class CrossCategoryRuleResolutionIntegrationTests
                     importer, packageIds,
                     $"cross-unrelated-{token}",
                     RuleConceptEntityTypes.Subclass,
-                    displayName,
+                    $"Unrelated Transition Fixture {token}",
                     "UNRELATED",
                     "5e",
                     new DateOnly(2014, 8, 2),
@@ -161,12 +161,12 @@ public sealed class CrossCategoryRuleResolutionIntegrationTests
                         new BindRuleConceptSourceRequest(unrelated.EntityId),
                         "rules-lawyer"));
 
-                // Same name is insufficient, and variant/reprint relationships do not grant
+                // Unrelated identities and variant/reprint relationships do not grant
                 // authoritative same-history resolution semantics.
                 await Assert.ThrowsAsync<InvalidOperationException>(() =>
                     globalRules.SetDecisionAsync(
                         conceptId,
-                        new SetGlobalRuleDecisionRequest(unrelatedRevisionId, "Must reject unrelated same-name source."),
+                        new SetGlobalRuleDecisionRequest(unrelatedRevisionId, "Must reject unrelated source."),
                         "rules-lawyer"));
                 await Assert.ThrowsAsync<InvalidOperationException>(() =>
                     globalRules.SetDecisionAsync(

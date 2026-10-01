@@ -21,144 +21,152 @@ public sealed class CanonicalBootstrapReconciliationService(RulesCoreDbContext d
         var normalized = Normalize(request);
 
         await EnsureSchemaAsync(cancellationToken);
-        await using var transaction = await dbContext.Database.BeginTransactionAsync(
-            IsolationLevel.Serializable,
-            cancellationToken);
-
-        var current = await ReadCoreAsync(
-            normalized.AliasScheme,
-            normalized.AliasValue,
-            normalized.SemanticFingerprint,
-            cancellationToken);
-        if (current is not null
-            && !string.Equals(
-                current.Classification,
-                CanonicalBootstrapReconciliationClassifications.Unresolved,
-                StringComparison.Ordinal)
-            && !SameOutcome(current, normalized)
-            && !CanRefineRelationshipOutcome(current, normalized))
+        CanonicalBootstrapReconciliationView stored;
+        await using (var transaction = await dbContext.Database.BeginTransactionAsync(
+                         IsolationLevel.Serializable,
+                         cancellationToken))
         {
-            throw new InvalidOperationException(
-                "A finalized bootstrap reconciliation can not be silently replaced. " +
-                "Use a new semantic fingerprint or an explicit corrective migration.");
-        }
-
-        await ValidateCanonicalEntityAsync(normalized.CanonicalEntityId, cancellationToken);
-        await ValidateCanonicalEntityAsync(normalized.RelatedCanonicalEntityId, cancellationToken);
-
-        if (CanonicalBootstrapReconciliationClassifications.RegistersExactIdentityAlias(normalized.Classification))
-        {
-            if (!normalized.CanonicalEntityId.HasValue)
-            {
-                throw new ArgumentException(
-                    "An exact bootstrap identity requires a canonical entity ID.",
-                    nameof(request));
-            }
-            if (normalized.RelatedCanonicalEntityId.HasValue)
-            {
-                throw new ArgumentException(
-                    "An exact bootstrap identity can not also specify a related canonical entity.",
-                    nameof(request));
-            }
-            if (normalized.Confidence != 1.0)
-            {
-                throw new ArgumentException(
-                    "A trusted canonical alias requires a fully confirmed bootstrap decision.",
-                    nameof(request));
-            }
-
-            await RegisterTrustedAliasAsync(normalized, cancellationToken);
-        }
-        else if (CanonicalBootstrapReconciliationClassifications.DefinesCanonicalRelationship(normalized.Classification)
-                 && normalized.Confidence == 1.0)
-        {
-            if (!normalized.CanonicalEntityId.HasValue || !normalized.RelatedCanonicalEntityId.HasValue)
-            {
-                throw new ArgumentException(
-                    "A fully confirmed bootstrap relationship requires both the classified canonical entity " +
-                    "and its predecessor/base canonical entity.",
-                    nameof(request));
-            }
-
-            await RegisterTrustedAliasAsync(normalized, cancellationToken);
-            await new CanonicalEntityRelationshipStore(dbContext).RelateAsync(
-                normalized.RelatedCanonicalEntityId.Value,
-                normalized.CanonicalEntityId.Value,
-                normalized.Classification,
-                normalized.EvidenceKind,
-                normalized.Confidence,
+            var current = await ReadCoreAsync(
+                normalized.AliasScheme,
+                normalized.AliasValue,
+                normalized.SemanticFingerprint,
                 cancellationToken);
+            if (current is not null
+                && !string.Equals(
+                    current.Classification,
+                    CanonicalBootstrapReconciliationClassifications.Unresolved,
+                    StringComparison.Ordinal)
+                && !SameOutcome(current, normalized)
+                && !CanRefineRelationshipOutcome(current, normalized))
+            {
+                throw new InvalidOperationException(
+                    "A finalized bootstrap reconciliation can not be silently replaced. " +
+                    "Use a new semantic fingerprint or an explicit corrective migration.");
+            }
+
+            await ValidateCanonicalEntityAsync(normalized.CanonicalEntityId, cancellationToken);
+            await ValidateCanonicalEntityAsync(normalized.RelatedCanonicalEntityId, cancellationToken);
+
+            if (CanonicalBootstrapReconciliationClassifications.RegistersExactIdentityAlias(normalized.Classification))
+            {
+                if (!normalized.CanonicalEntityId.HasValue)
+                {
+                    throw new ArgumentException(
+                        "An exact bootstrap identity requires a canonical entity ID.",
+                        nameof(request));
+                }
+                if (normalized.RelatedCanonicalEntityId.HasValue)
+                {
+                    throw new ArgumentException(
+                        "An exact bootstrap identity can not also specify a related canonical entity.",
+                        nameof(request));
+                }
+                if (normalized.Confidence != 1.0)
+                {
+                    throw new ArgumentException(
+                        "A trusted canonical alias requires a fully confirmed bootstrap decision.",
+                        nameof(request));
+                }
+
+                await RegisterTrustedAliasAsync(normalized, cancellationToken);
+            }
+            else if (CanonicalBootstrapReconciliationClassifications.DefinesCanonicalRelationship(normalized.Classification)
+                     && normalized.Confidence == 1.0)
+            {
+                if (!normalized.CanonicalEntityId.HasValue || !normalized.RelatedCanonicalEntityId.HasValue)
+                {
+                    throw new ArgumentException(
+                        "A fully confirmed bootstrap relationship requires both the classified canonical entity " +
+                        "and its predecessor/base canonical entity.",
+                        nameof(request));
+                }
+
+                await RegisterTrustedAliasAsync(normalized, cancellationToken);
+                await new CanonicalEntityRelationshipStore(dbContext).RelateAsync(
+                    normalized.RelatedCanonicalEntityId.Value,
+                    normalized.CanonicalEntityId.Value,
+                    normalized.Classification,
+                    normalized.EvidenceKind,
+                    normalized.Confidence,
+                    cancellationToken);
+            }
+
+            var now = DateTimeOffset.UtcNow;
+            var id = current?.Id ?? Guid.NewGuid();
+            var createdAt = current?.CreatedAt ?? now;
+            var connection = dbContext.Database.GetDbConnection();
+            await using (var command = connection.CreateCommand())
+            {
+                command.CommandText = """
+                    INSERT INTO canonical_bootstrap_reconciliation (
+                        canonical_bootstrap_reconciliation_id,
+                        alias_scheme,
+                        alias_value,
+                        semantic_fingerprint,
+                        classification,
+                        canonical_entity_id,
+                        related_canonical_entity_id,
+                        evidence_kind,
+                        confidence,
+                        notes,
+                        decided_by,
+                        created_at,
+                        updated_at)
+                    VALUES (
+                        @id,
+                        @alias_scheme,
+                        @alias_value,
+                        @semantic_fingerprint,
+                        @classification,
+                        @canonical_entity_id,
+                        @related_canonical_entity_id,
+                        @evidence_kind,
+                        @confidence,
+                        @notes,
+                        @decided_by,
+                        @created_at,
+                        @updated_at)
+                    ON CONFLICT (alias_scheme, alias_value, semantic_fingerprint)
+                    DO UPDATE SET
+                        classification = EXCLUDED.classification,
+                        canonical_entity_id = EXCLUDED.canonical_entity_id,
+                        related_canonical_entity_id = EXCLUDED.related_canonical_entity_id,
+                        evidence_kind = EXCLUDED.evidence_kind,
+                        confidence = EXCLUDED.confidence,
+                        notes = EXCLUDED.notes,
+                        decided_by = EXCLUDED.decided_by,
+                        updated_at = EXCLUDED.updated_at;
+                    """;
+                AddParameter(command, "@id", id);
+                AddParameter(command, "@alias_scheme", normalized.AliasScheme);
+                AddParameter(command, "@alias_value", normalized.AliasValue);
+                AddParameter(command, "@semantic_fingerprint", normalized.SemanticFingerprint);
+                AddParameter(command, "@classification", normalized.Classification);
+                AddParameter(command, "@canonical_entity_id", normalized.CanonicalEntityId);
+                AddParameter(command, "@related_canonical_entity_id", normalized.RelatedCanonicalEntityId);
+                AddParameter(command, "@evidence_kind", normalized.EvidenceKind);
+                AddParameter(command, "@confidence", normalized.Confidence);
+                AddParameter(command, "@notes", normalized.Notes);
+                AddParameter(command, "@decided_by", normalized.DecidedBy);
+                AddParameter(command, "@created_at", createdAt);
+                AddParameter(command, "@updated_at", now);
+                await command.ExecuteNonQueryAsync(cancellationToken);
+            }
+
+            stored = await ReadCoreAsync(
+                normalized.AliasScheme,
+                normalized.AliasValue,
+                normalized.SemanticFingerprint,
+                cancellationToken)
+                ?? throw new InvalidOperationException("Bootstrap reconciliation was not readable after persistence.");
+            await transaction.CommitAsync(cancellationToken);
         }
 
-        var now = DateTimeOffset.UtcNow;
-        var id = current?.Id ?? Guid.NewGuid();
-        var createdAt = current?.CreatedAt ?? now;
-        var connection = dbContext.Database.GetDbConnection();
-        await using (var command = connection.CreateCommand())
+        if (DefinesHistorySeparation(normalized))
         {
-            command.CommandText = """
-                INSERT INTO canonical_bootstrap_reconciliation (
-                    canonical_bootstrap_reconciliation_id,
-                    alias_scheme,
-                    alias_value,
-                    semantic_fingerprint,
-                    classification,
-                    canonical_entity_id,
-                    related_canonical_entity_id,
-                    evidence_kind,
-                    confidence,
-                    notes,
-                    decided_by,
-                    created_at,
-                    updated_at)
-                VALUES (
-                    @id,
-                    @alias_scheme,
-                    @alias_value,
-                    @semantic_fingerprint,
-                    @classification,
-                    @canonical_entity_id,
-                    @related_canonical_entity_id,
-                    @evidence_kind,
-                    @confidence,
-                    @notes,
-                    @decided_by,
-                    @created_at,
-                    @updated_at)
-                ON CONFLICT (alias_scheme, alias_value, semantic_fingerprint)
-                DO UPDATE SET
-                    classification = EXCLUDED.classification,
-                    canonical_entity_id = EXCLUDED.canonical_entity_id,
-                    related_canonical_entity_id = EXCLUDED.related_canonical_entity_id,
-                    evidence_kind = EXCLUDED.evidence_kind,
-                    confidence = EXCLUDED.confidence,
-                    notes = EXCLUDED.notes,
-                    decided_by = EXCLUDED.decided_by,
-                    updated_at = EXCLUDED.updated_at;
-                """;
-            AddParameter(command, "@id", id);
-            AddParameter(command, "@alias_scheme", normalized.AliasScheme);
-            AddParameter(command, "@alias_value", normalized.AliasValue);
-            AddParameter(command, "@semantic_fingerprint", normalized.SemanticFingerprint);
-            AddParameter(command, "@classification", normalized.Classification);
-            AddParameter(command, "@canonical_entity_id", normalized.CanonicalEntityId);
-            AddParameter(command, "@related_canonical_entity_id", normalized.RelatedCanonicalEntityId);
-            AddParameter(command, "@evidence_kind", normalized.EvidenceKind);
-            AddParameter(command, "@confidence", normalized.Confidence);
-            AddParameter(command, "@notes", normalized.Notes);
-            AddParameter(command, "@decided_by", normalized.DecidedBy);
-            AddParameter(command, "@created_at", createdAt);
-            AddParameter(command, "@updated_at", now);
-            await command.ExecuteNonQueryAsync(cancellationToken);
+            await ReconcileSeparatedHistoryAsync(normalized, cancellationToken);
         }
 
-        var stored = await ReadCoreAsync(
-            normalized.AliasScheme,
-            normalized.AliasValue,
-            normalized.SemanticFingerprint,
-            cancellationToken)
-            ?? throw new InvalidOperationException("Bootstrap reconciliation was not readable after persistence.");
-        await transaction.CommitAsync(cancellationToken);
         return stored;
     }
 
@@ -179,6 +187,66 @@ public sealed class CanonicalBootstrapReconciliationService(RulesCoreDbContext d
         try
         {
             return await ReadCoreAsync(scheme, value, fingerprint, cancellationToken);
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
+    private static bool DefinesHistorySeparation(NormalizedRequest normalized) =>
+        normalized.Confidence == 1.0
+        && normalized.CanonicalEntityId.HasValue
+        && normalized.RelatedCanonicalEntityId.HasValue
+        && normalized.Classification is
+            CanonicalBootstrapReconciliationClassifications.SameNameDifferentEntity
+            or CanonicalBootstrapReconciliationClassifications.Variant
+            or CanonicalBootstrapReconciliationClassifications.Reprint;
+
+    private async Task ReconcileSeparatedHistoryAsync(
+        NormalizedRequest normalized,
+        CancellationToken cancellationToken)
+    {
+        var canonicalIds = new[]
+        {
+            normalized.CanonicalEntityId!.Value,
+            normalized.RelatedCanonicalEntityId!.Value
+        };
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync(cancellationToken);
+        try
+        {
+            var sourceEntityIds = new List<Guid>();
+            await using (var command = connection.CreateCommand())
+            {
+                command.CommandText = """
+                    SELECT DISTINCT binding.source_entity_id
+                    FROM source_entity_occurrence_binding binding
+                    JOIN canonical_source_occurrence occurrence
+                        ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
+                    WHERE occurrence.canonical_entity_id = ANY(@canonical_ids);
+                    """;
+                AddParameter(command, "@canonical_ids", canonicalIds);
+                await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+                while (await reader.ReadAsync(cancellationToken))
+                {
+                    sourceEntityIds.Add(reader.GetGuid(0));
+                }
+            }
+
+            if (sourceEntityIds.Count != 0)
+            {
+                await new CanonicalReferenceHistoryReconciliationService(dbContext)
+                    .ReconcileSourceEntitiesAsync(sourceEntityIds, cancellationToken);
+            }
+            else
+            {
+                // A canonical-only corrective decision is rare, but it must still take precedence
+                // immediately even when no current source occurrence can be used to target by name.
+                await new CanonicalReferenceHistoryReconciliationService(dbContext)
+                    .ReconcileAllAsync(cancellationToken);
+            }
         }
         finally
         {

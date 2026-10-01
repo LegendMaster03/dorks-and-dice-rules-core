@@ -1,3 +1,4 @@
+using System.Globalization;
 using RulesCore.Application.Hosting;
 using RulesCore.Application.Rules;
 using RulesCore.Infrastructure.Persistence;
@@ -25,7 +26,8 @@ public static class WikiReferenceEndpointExtensions
             try
             {
                 var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
-                var catalog = await new WikiReferenceCatalogService(dbContext).GetGlobalCatalogAsync(
+                var service = new WikiReferenceCatalogService(dbContext);
+                var catalog = await service.GetGlobalCatalogAsync(
                     authenticationContext?.User.Id,
                     entityType,
                     categoryMode,
@@ -36,6 +38,7 @@ public static class WikiReferenceEndpointExtensions
                     limit ?? 200,
                     offset ?? 0,
                     cancellationToken);
+                AddWikiServerTiming(httpContext, service);
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(catalog);
             }
@@ -54,13 +57,38 @@ public static class WikiReferenceEndpointExtensions
             try
             {
                 var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
-                var detail = await new WikiReferenceCatalogService(dbContext).GetGlobalDetailAsync(
+                var service = new WikiReferenceCatalogService(dbContext);
+                var detail = await service.GetGlobalDetailAsync(
                     authenticationContext?.User.Id,
                     referenceIdentity,
                     cancellationToken);
+                AddWikiServerTiming(httpContext, service);
                 if (detail is null) return Results.NotFound();
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(detail);
+            }
+            catch (ArgumentException exception)
+            {
+                return BadRequest(exception);
+            }
+        });
+
+        app.MapGet("/api/wiki/references/{referenceIdentity}/companion-content", async (
+            string referenceIdentity,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            try
+            {
+                var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
+                var content = await new WikiReferenceCompanionContentService(dbContext).GetGlobalAsync(
+                    authenticationContext?.User.Id,
+                    referenceIdentity,
+                    cancellationToken);
+                if (content is null) return Results.NotFound();
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(content);
             }
             catch (ArgumentException exception)
             {
@@ -137,6 +165,7 @@ public static class WikiReferenceEndpointExtensions
                         limit ?? 200,
                         offset ?? 0,
                         cancellationToken);
+                AddWikiServerTiming(httpContext, service);
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(catalog);
             }
@@ -158,14 +187,43 @@ public static class WikiReferenceEndpointExtensions
 
             try
             {
-                var detail = await new WikiReferenceCatalogService(dbContext).GetCampaignDetailAsync(
+                var service = new WikiReferenceCatalogService(dbContext);
+                var detail = await service.GetCampaignDetailAsync(
                     campaignId,
                     authenticationContext!.User.Id,
                     referenceIdentity,
                     cancellationToken);
+                AddWikiServerTiming(httpContext, service);
                 if (detail is null) return Results.NotFound();
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(detail);
+            }
+            catch (ArgumentException exception)
+            {
+                return BadRequest(exception);
+            }
+        });
+
+        app.MapGet("/api/campaigns/{campaignId:guid}/wiki/references/{referenceIdentity}/companion-content", async (
+            Guid campaignId,
+            string referenceIdentity,
+            HttpContext httpContext,
+            RulesCoreDbContext dbContext,
+            CancellationToken cancellationToken) =>
+        {
+            var authenticationFailure = RequireCampaignRead(httpContext, campaignId, out var authenticationContext);
+            if (authenticationFailure is not null) return authenticationFailure;
+
+            try
+            {
+                var content = await new WikiReferenceCompanionContentService(dbContext).GetCampaignAsync(
+                    campaignId,
+                    authenticationContext!.User.Id,
+                    referenceIdentity,
+                    cancellationToken);
+                if (content is null) return Results.NotFound();
+                httpContext.Response.Headers.CacheControl = "no-store";
+                return Results.Ok(content);
             }
             catch (ArgumentException exception)
             {
@@ -236,6 +294,19 @@ public static class WikiReferenceEndpointExtensions
                 return BadRequest(exception);
             }
         });
+    }
+
+    private static void AddWikiServerTiming(
+        HttpContext httpContext,
+        WikiReferenceCatalogService service)
+    {
+        var value = string.Format(
+            CultureInfo.InvariantCulture,
+            "rules-wiki-query;dur={0:0.###}, rules-wiki-docs;dur={1:0.###}, rules-wiki-total;dur={2:0.###}",
+            service.LastQueryMilliseconds,
+            service.LastDocumentMilliseconds,
+            service.LastTotalMilliseconds);
+        httpContext.Response.Headers.Append("Server-Timing", value);
     }
 
     private static IResult? RequireCampaignRead(

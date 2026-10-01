@@ -34,6 +34,24 @@ public sealed record NormalizedSourceRecord(
     public string? CanonicalIdentityKey { get; init; }
 }
 
+public sealed record NormalizedSourceCompanionTarget(
+    string EntityType,
+    string Name,
+    string SourceCode,
+    string EvidenceKind);
+
+/// <summary>
+/// Source-owned descriptive/presentation content associated with a rule entity but not itself a
+/// rule-bearing entity. The raw payload remains lossless and package-scoped for authorization.
+/// </summary>
+public sealed record NormalizedSourceCompanionContent(
+    string CompanionKind,
+    string Name,
+    string SourceCode,
+    string NativeKey,
+    string RawJson,
+    IReadOnlyList<NormalizedSourceCompanionTarget> Targets);
+
 public sealed record NormalizedSourcePublication(
     string LocalKey,
     string DisplayName,
@@ -47,7 +65,10 @@ public sealed record NormalizedSourceRepresentation(
     SourceRepresentationArtifact Artifact,
     IReadOnlyList<NormalizedSourceRecord> Records,
     IReadOnlyList<NormalizedSourcePublication>? Publications = null,
-    string? MetadataJson = null);
+    string? MetadataJson = null)
+{
+    public IReadOnlyList<NormalizedSourceCompanionContent> CompanionContents { get; init; } = [];
+}
 
 public interface ISourceFormatAdapter
 {

@@ -122,6 +122,8 @@ internal static class RulesCoreCurrentSchema
             CONSTRAINT ck_canonical_entity_relationship_confidence CHECK (confidence >= 0 AND confidence <= 1));
         CREATE UNIQUE INDEX IF NOT EXISTS ux_canonical_entity_relationship_identity
             ON canonical_entity_relationship(from_canonical_entity_id, to_canonical_entity_id, relationship_kind);
+        CREATE INDEX IF NOT EXISTS ix_canonical_entity_relationship_from_kind
+            ON canonical_entity_relationship(from_canonical_entity_id, relationship_kind, to_canonical_entity_id);
         CREATE INDEX IF NOT EXISTS ix_canonical_entity_relationship_to
             ON canonical_entity_relationship(to_canonical_entity_id, relationship_kind);
 
@@ -238,6 +240,8 @@ internal static class RulesCoreCurrentSchema
             ON rule_concept_source_binding(rule_concept_id, source_entity_id);
         CREATE UNIQUE INDEX IF NOT EXISTS ux_rule_concept_source_binding_concept_canonical_entity
             ON rule_concept_source_binding(rule_concept_id, canonical_entity_id);
+        CREATE INDEX IF NOT EXISTS ix_rule_concept_source_binding_canonical_entity
+            ON rule_concept_source_binding(canonical_entity_id, rule_concept_id);
 
         CREATE TABLE IF NOT EXISTS source_revision_rejection (
             source_revision_rejection_id uuid NOT NULL,

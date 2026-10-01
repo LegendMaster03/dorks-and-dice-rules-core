@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Globalization;
 using System.Security.Claims;
 using RulesCore.Application.Hosting;
 
@@ -45,6 +47,7 @@ public sealed class HostedToolAuthenticationMiddleware(RequestDelegate next)
         }
 
         ToolHostAuthenticationContext? authenticationContext;
+        var introspectionTimer = Stopwatch.StartNew();
         try
         {
             authenticationContext = await authenticationClient.RedeemAsync(
@@ -76,6 +79,15 @@ public sealed class HostedToolAuthenticationMiddleware(RequestDelegate next)
         {
             httpContext.Response.StatusCode = StatusCodes.Status504GatewayTimeout;
             return;
+        }
+        finally
+        {
+            introspectionTimer.Stop();
+            httpContext.Response.Headers.Append(
+                "Server-Timing",
+                string.Create(
+                    CultureInfo.InvariantCulture,
+                    $"rules-auth;dur={introspectionTimer.Elapsed.TotalMilliseconds:0.###}"));
         }
 
         if (authenticationContext is null)

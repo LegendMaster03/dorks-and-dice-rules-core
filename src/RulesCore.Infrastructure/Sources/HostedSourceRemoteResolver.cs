@@ -34,7 +34,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
                         skipUnsupportedJson: false,
                         cancellationToken);
                     break;
-    
+
                 case HostedSourceResourceKinds.JsonIndex:
                     await ResolveJsonIndexAsync(
                         definition,
@@ -42,7 +42,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
                         documents,
                         cancellationToken);
                     break;
-    
+
                 case HostedSourceResourceKinds.GitHubTree:
                     await ResolveGitHubTreeAsync(
                         definition,
@@ -50,22 +50,22 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
                         documents,
                         cancellationToken);
                     break;
-    
+
                 default:
                     throw new NotSupportedException(
                         $"Hosted source resource kind '{resource.Kind}' is not supported.");
             }
         }
-    
+
         if (documents.Count == 0)
         {
             throw new InvalidDataException(
                 "The hosted source did not resolve to any importable entities for its configured source-code filter.");
         }
-    
+
         return new HostedSourceRemoteResolution(documents.Select(ToView).ToArray(), BuildAggregateJson(documents));
     }
-    
+
     private async Task ResolveJsonIndexAsync(
         HostedSourceDefinitionView definition,
         HostedSourceResourceView resource,
@@ -77,7 +77,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
         using var indexDocument = JsonDocument.Parse(indexJson);
         var references = new List<string>();
         CollectJsonReferences(indexDocument.RootElement, references);
-    
+
         var resolvedUris = references
             .Select(value => ResolveIndexReference(indexUri, value))
             .DistinctBy(value => value.AbsoluteUri, StringComparer.OrdinalIgnoreCase)
@@ -88,7 +88,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
             throw new InvalidDataException(
                 $"Hosted JSON index expands to {resolvedUris.Length} documents; the maximum is {MaxResolvedDocuments}.");
         }
-    
+
         foreach (var resolvedUri in resolvedUris)
         {
             await AddResolvedDocumentAsync(
@@ -101,7 +101,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
                 cancellationToken);
         }
     }
-    
+
     private async Task ResolveGitHubTreeAsync(
         HostedSourceDefinitionView definition,
         HostedSourceResourceView resource,
@@ -125,7 +125,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
         {
             throw new InvalidDataException("GitHub tree response did not contain a tree array.");
         }
-    
+
         var prefix = tree.Path.Trim('/');
         var paths = entries.EnumerateArray()
             .Where(entry =>
@@ -147,7 +147,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
             throw new InvalidDataException(
                 $"GitHub tree contains {paths.Length} JSON documents beneath the configured path; the maximum is {MaxResolvedDocuments}. Configure a narrower tree or indexes/direct documents.");
         }
-    
+
         foreach (var path in paths)
         {
             var rawUri = BuildGitHubRawUri(tree, path);
@@ -161,7 +161,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
                 cancellationToken);
         }
     }
-    
+
     private async Task AddResolvedDocumentAsync(
         HostedSourceDefinitionView definition,
         string resourceKind,
@@ -176,7 +176,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
             throw new InvalidDataException(
                 $"Hosted source resolved more than {MaxResolvedDocuments} importable documents.");
         }
-    
+
         var json = await FetchTextAsync(resolvedUri, cancellationToken);
         string filtered;
         int selectedEntityCount;
@@ -194,12 +194,12 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
         {
             return;
         }
-    
+
         if (selectedEntityCount == 0)
         {
             return;
         }
-    
+
         documents.Add(new ResolvedSourceDocument(
             resourceKind,
             resourceUri,
@@ -207,7 +207,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
             selectedEntityCount,
             filtered));
     }
-    
+
     private async Task<string> FetchTextAsync(Uri uri, CancellationToken cancellationToken)
     {
         await HostedSourceUriPolicy.EnsureRemoteSafeAsync(uri, cancellationToken);
@@ -217,7 +217,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
             request,
             HttpCompletionOption.ResponseHeadersRead,
             cancellationToken);
-    
+
         if ((int)response.StatusCode is >= 300 and < 400)
         {
             throw new HttpRequestException(
@@ -229,7 +229,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
             throw new InvalidDataException(
                 $"Hosted source '{uri}' exceeds the {MaxRemoteDocumentBytes / (1024 * 1024)} MiB per-document limit.");
         }
-    
+
         var bytes = await response.Content.ReadAsByteArrayAsync(cancellationToken);
         if (bytes.LongLength > MaxRemoteDocumentBytes)
         {
@@ -238,8 +238,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
         }
         return Encoding.UTF8.GetString(bytes);
     }
-    
-    
+
     private static string BuildAggregateJson(IReadOnlyList<ResolvedSourceDocument> documents)
     {
         var buckets = new SortedDictionary<string, List<JsonElement>>(StringComparer.Ordinal);
@@ -248,17 +247,17 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
             using var document = JsonDocument.Parse(resolved.Json);
             foreach (var property in document.RootElement.EnumerateObject())
             {
-                if (!FiveEToolsDocumentInspector.IsImportableArray(property))
+                if (!FiveEToolsDocumentInspector.IsSourceBearingArray(property))
                 {
                     continue;
                 }
-    
+
                 if (!buckets.TryGetValue(property.Name, out var items))
                 {
                     items = [];
                     buckets[property.Name] = items;
                 }
-    
+
                 foreach (var item in property.Value.EnumerateArray())
                 {
                     if (item.ValueKind == JsonValueKind.Object)
@@ -268,7 +267,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
                 }
             }
         }
-    
+
         using var stream = new MemoryStream();
         using (var writer = new Utf8JsonWriter(stream))
         {
@@ -287,16 +286,14 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
         }
         return Encoding.UTF8.GetString(stream.ToArray());
     }
-    
-    
+
     private static HostedSourceResolvedDocument ToView(ResolvedSourceDocument document) =>
         new(
             document.ResourceKind,
             document.ResourceUri,
             document.ResolvedUri,
             document.SelectedEntityCount);
-    
-    
+
     internal static void ValidateGitHubTreeUri(Uri uri) =>
         _ = ParseGitHubTreeUri(uri);
 
@@ -317,21 +314,21 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
             throw new ArgumentException(
                 "A github-tree resource must use https://github.com/{owner}/{repository}/tree/{ref}/{optional-path}.");
         }
-    
+
         return new GitHubTreeLocation(
             segments[0],
             segments[1],
             segments[3],
             segments.Length > 4 ? string.Join('/', segments.Skip(4)) : string.Empty);
     }
-    
+
     private static Uri BuildGitHubRawUri(GitHubTreeLocation tree, string path)
     {
         var escapedPath = string.Join('/', path.Split('/').Select(Uri.EscapeDataString));
         return new Uri(
             $"https://raw.githubusercontent.com/{Uri.EscapeDataString(tree.Owner)}/{Uri.EscapeDataString(tree.Repository)}/{Uri.EscapeDataString(tree.Reference)}/{escapedPath}");
     }
-    
+
     private static void CollectJsonReferences(JsonElement element, ICollection<string> values)
     {
         switch (element.ValueKind)
@@ -358,7 +355,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
                 break;
         }
     }
-    
+
     private static Uri ResolveIndexReference(Uri indexUri, string value)
     {
         if (!Uri.TryCreate(indexUri, value, out var resolved))
@@ -369,8 +366,7 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
         HostedSourceUriPolicy.ValidateShape(resolved);
         return resolved;
     }
-    
-    
+
     internal static HttpClient CreateSharedHttpClient()
     {
         var handler = new SocketsHttpHandler
@@ -388,22 +384,19 @@ internal sealed class HostedSourceRemoteResolver(HttpClient httpClient)
         client.DefaultRequestHeaders.UserAgent.ParseAdd("DorksAndDice-RulesCore/1.0");
         return client;
     }
-    
-    
+
     private sealed record ResolvedSourceDocument(
         string ResourceKind,
         string ResourceUri,
         string ResolvedUri,
         int SelectedEntityCount,
         string Json);
-    
-    
+
     private sealed record GitHubTreeLocation(
         string Owner,
         string Repository,
         string Reference,
         string Path);
-    
 }
 
 internal sealed record HostedSourceRemoteResolution(
