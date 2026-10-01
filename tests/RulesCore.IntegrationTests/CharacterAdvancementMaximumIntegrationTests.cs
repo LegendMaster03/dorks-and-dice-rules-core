@@ -14,7 +14,7 @@ namespace RulesCore.IntegrationTests;
 public sealed class CharacterAdvancementMaximumIntegrationTests
 {
     [Fact]
-    public async Task CharacterProjectionDerivesFiniteMaximumFromEffectivePerLevelTable()
+    public async Task CharacterProjectionUsesOneMaximumContractForExplicitAndPerLevelProgressions()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
         if (string.IsNullOrWhiteSpace(connectionString)) return;
@@ -29,7 +29,8 @@ public sealed class CharacterAdvancementMaximumIntegrationTests
         var actor = $"advancement-maximum-{token}";
         var packageKey = $"advancement-maximum-{token}";
         var sourceCode = $"AM{token}";
-        var className = $"Finite Adept {token}";
+        var tableClassName = $"Finite Table Adept {token}";
+        var explicitClassName = $"Finite Explicit Adept {token}";
         var importer = new SourceImportService(db);
         var normalization = new SourceNormalizationService(db);
         var globalRules = new GlobalRulesService(db);
@@ -51,67 +52,64 @@ public sealed class CharacterAdvancementMaximumIntegrationTests
                     {
                       "class": [
                         {
-                          "name": "{{className}}",
+                          "name": "{{tableClassName}}",
                           "source": "{{sourceCode}}",
                           "hd": { "number": 1, "faces": 8 },
                           "classFeatures": [
-                            "First Feature|{{className}}|{{sourceCode}}|1",
-                            "Second Feature|{{className}}|{{sourceCode}}|2"
+                            "First Feature|{{tableClassName}}|{{sourceCode}}|1",
+                            "Second Feature|{{tableClassName}}|{{sourceCode}}|2"
                           ],
                           "classTableGroups": [
                             {
-                              "colLabels": ["Progression"],
-                              "rows": [[1], [2]]
+                              "colLabels": ["1st"],
+                              "rowsSpellProgression": [[1], [2]]
                             }
                           ]
+                        },
+                        {
+                          "name": "{{explicitClassName}}",
+                          "source": "{{sourceCode}}",
+                          "hd": { "number": 1, "faces": 8 },
+                          "classFeatures": [
+                            "First Feature|{{explicitClassName}}|{{sourceCode}}|1"
+                          ],
+                          "_rulesCore": {
+                            "character": {
+                              "maximumLevel": 2
+                            }
+                          }
                         }
                       ]
                     }
                     """,
                 GameEdition: "5e"));
 
-            var classEntity = Assert.Single(imported.Entities, value =>
-                value.EntityType == RuleConceptEntityTypes.Class);
-            var acceptedClass = (await normalization.AcceptAsync(classEntity.EntityId, actor))!;
-            var revisionId = await db.SourceEntityRevisions
-                .Where(value => value.SourceEntityId == classEntity.EntityId)
-                .Select(value => value.Id)
-                .SingleAsync();
+            var classEntities = imported.Entities
+                .Where(value => value.EntityType == RuleConceptEntityTypes.Class)
+                .ToDictionary(value => value.Name, StringComparer.Ordinal);
+            Assert.Equal(2, classEntities.Count);
+
+            var tableEntity = classEntities[tableClassName];
+            var explicitEntity = classEntities[explicitClassName];
+            var acceptedTable = (await normalization.AcceptAsync(tableEntity.EntityId, actor))!;
+            var acceptedExplicit = (await normalization.AcceptAsync(explicitEntity.EntityId, actor))!;
+            var revisions = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == tableEntity.EntityId
+                    || value.SourceEntityId == explicitEntity.EntityId)
+                .ToDictionaryAsync(value => value.SourceEntityId, value => value.Id);
+
             await globalRules.SetDecisionAsync(
-                acceptedClass.Concept.Id,
-                new SetGlobalRuleDecisionRequest(revisionId, "Publish finite Class fixture."),
+                acceptedTable.Concept.Id,
+                new SetGlobalRuleDecisionRequest(revisions[tableEntity.EntityId], "Publish table maximum fixture."),
+                actor);
+            await globalRules.SetDecisionAsync(
+                acceptedExplicit.Concept.Id,
+                new SetGlobalRuleDecisionRequest(revisions[explicitEntity.EntityId], "Publish explicit maximum fixture."),
                 actor);
             await globalRules.PublishAsync(actor);
 
-            var atMaximum = await projection.ResolveGlobalAsync(
-                new CharacterRulesProjectionRequest(
-                    Advancements:
-                    [
-                        new CharacterAdvancementFactInput(
-                            acceptedClass.Concept.Key,
-                            2,
-                            OccurrenceKey: "class-occurrence")
-                    ]),
-                userId: null);
-            var maximum = Assert.Single(atMaximum.Mechanics, value =>
-                value.MechanicKey == $"advancement.{acceptedClass.Concept.Key}.maximum-level");
-            Assert.Equal(2, maximum.NumericValue);
-            Assert.DoesNotContain(atMaximum.Conflicts, value =>
-                value.ConflictKey == $"conflict.{acceptedClass.Concept.Key}.maximum-level");
-
-            var aboveMaximum = await projection.ResolveGlobalAsync(
-                new CharacterRulesProjectionRequest(
-                    Advancements:
-                    [
-                        new CharacterAdvancementFactInput(
-                            acceptedClass.Concept.Key,
-                            3,
-                            OccurrenceKey: "class-occurrence")
-                    ]),
-                userId: null);
-            Assert.Contains(aboveMaximum.Conflicts, value =>
-                value.ConflictKey == $"conflict.{acceptedClass.Concept.Key}.maximum-level"
-                && value.Kind == "maximum-level");
+            await AssertMaximumContractAsync(projection, acceptedTable.Concept.Key, 2);
+            await AssertMaximumContractAsync(projection, acceptedExplicit.Concept.Key, 2);
         }
         finally
         {
@@ -124,6 +122,42 @@ public sealed class CharacterAdvancementMaximumIntegrationTests
                 await db.SaveChangesAsync();
             }
         }
+    }
+
+    private static async Task AssertMaximumContractAsync(
+        ICharacterRulesProjectionService projection,
+        string conceptKey,
+        int expectedMaximum)
+    {
+        var atMaximum = await projection.ResolveGlobalAsync(
+            new CharacterRulesProjectionRequest(
+                Advancements:
+                [
+                    new CharacterAdvancementFactInput(
+                        conceptKey,
+                        expectedMaximum,
+                        OccurrenceKey: "class-occurrence")
+                ]),
+            userId: null);
+        var maximum = Assert.Single(atMaximum.Mechanics, value =>
+            value.MechanicKey == $"advancement.{conceptKey}.maximum-level");
+        Assert.Equal(expectedMaximum, maximum.NumericValue);
+        Assert.DoesNotContain(atMaximum.Conflicts, value =>
+            value.ConflictKey == $"conflict.{conceptKey}.maximum-level");
+
+        var aboveMaximum = await projection.ResolveGlobalAsync(
+            new CharacterRulesProjectionRequest(
+                Advancements:
+                [
+                    new CharacterAdvancementFactInput(
+                        conceptKey,
+                        expectedMaximum + 1,
+                        OccurrenceKey: "class-occurrence")
+                ]),
+            userId: null);
+        var conflict = Assert.Single(aboveMaximum.Conflicts, value =>
+            value.ConflictKey == $"conflict.{conceptKey}.maximum-level");
+        Assert.Equal("maximum-level", conflict.Kind);
     }
 
     private static async Task ResetRulesAsync(RulesCoreDbContext db)
