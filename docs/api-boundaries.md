@@ -15,6 +15,18 @@ The central invariants are:
 
 These are standing architectural rules. A capability needed only by Rules Wiki must not be added to the public Rules Core API merely because Rules Wiki needs an HTTP contract. Promotion of a private capability to the public API requires a separately reviewed consumer need outside the private integration.
 
+## Migration activation
+
+The boundary implementation is intentionally deployable before Rules Wiki is migrated. `RulesCore:ApiSurface` defaults to `Compatibility`, which preserves the current API reachability and ordinary delegation behavior so merging the foundation does not break the live Wiki.
+
+The hardened modes are:
+
+- `Combined` — public endpoints remain reachable while private endpoints require Site-issued private-tunnel provenance;
+- `PublicOnly` — only the stable public API is served; private API routes return `404`;
+- `PrivateOnly` — only private API routes are served and they require Site-issued private-tunnel provenance; public API routes return `404`.
+
+The coordinated Rules Wiki migration activates `PublicOnly` on the shared Rules Core ingress and `PrivateOnly` on the pair-specific Rules Wiki -> Rules Core ingress. `Compatibility` is a migration state, not the final architecture.
+
 ## 1. Stable public consumer API
 
 The public API exists for Character Sheet, Block Initiative, Hex Crawl, future game Tools, and other consumers that do not have a private integration with Rules Core.
@@ -30,7 +42,7 @@ Published consumer endpoint families include resolved rule/catalog reads and gam
 
 `/api/rules` is intentionally a resolved consumer contract. It exposes the effective published ruleset expected by game Tools. Rules Wiki must not use it for browsing, detail, comparison, fallback, source history, authoring, or other Wiki workflows even when equivalent information could technically be reconstructed from it.
 
-The transport boundary is private-by-default. Existing public route patterns are explicitly listed by `RulesCoreApiBoundary`, and future public routes may be deliberately marked with `PublicRulesCoreApi`. A newly mapped `/api` route is therefore private unless its public status is an explicit code change.
+When a hardened API-surface mode is active, the transport boundary is private-by-default. Existing public route patterns are explicitly listed by `RulesCoreApiBoundary`, and future public routes may be deliberately marked with `PublicRulesCoreApi`. A newly mapped `/api` route is therefore private unless its public status is an explicit code change.
 
 This protects the stable public contract from accidental expansion to satisfy first-party UI needs.
 
@@ -52,7 +64,7 @@ Site remains the identity and authorization control plane, not the HTTP data pla
 
 A private relationship is configured independently for each source/target pair. If another Tool needs a private Rules Core integration, that Tool receives its own explicitly configured private tunnel. It does not inherit private access because it can use normal Tool delegation or because it can consume the public Rules Core API.
 
-At the transport boundary:
+With a hardened API-surface mode active, the transport boundary behaves as follows:
 
 - a public Rules Core endpoint is reachable according to its normal endpoint authorization rules;
 - a private endpoint without Tool authentication returns `401`;
