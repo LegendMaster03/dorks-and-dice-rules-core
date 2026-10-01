@@ -48,6 +48,8 @@ The current resolver prefers normalized acquisition metadata when available and 
 
 The normal Character mechanics projection also emits a Class-bound `subclass` choice when the supplied parent Class occurrence reaches an effective Subclass acquisition level. Before that threshold no Subclass choice is emitted. Once a compatible Subclass has been structurally attached, the same projection validates that it belongs to the parent Class and was not acquired before its effective threshold. Choice identity includes the parent advancement occurrence when the caller supplies one, so a consumer can bind the decision to the correct Class occurrence.
 
+Subclass progression does not own an independent level. Before mechanics are projected, Rules Core normalizes a supplied Subclass advancement fact to the effective parent Class level. A conflicting supplied Subclass level produces an explicit conflict rather than allowing higher-level Subclass features to be projected early. When there is exactly one matching parent Class occurrence, an omitted `parentConceptKey` can be inferred for compatibility; ambiguous parent occurrences remain unresolved/conflicted.
+
 Character Sheet should therefore use two public contracts together:
 
 1. prospective Character mechanics projection identifies that the proposed Class level creates a required Subclass decision;
@@ -70,7 +72,9 @@ Existing grouped prerequisite semantics are preserved, including `N of M` groups
 
 Source-specific Prestige Class data is responsible for entering that normalized prerequisite model before the public eligibility contract consumes it. The eligibility service does not parse source-native prerequisite syntax. Unsupported or not-yet-normalized prerequisite expressions therefore remain unresolved rather than being guessed.
 
-This public support does not imply that every Prestige Class has complete effective prerequisite data. Character Sheet should not build the Prestige Class acquisition UI until the applicable Prestige Class data is ready.
+A normalized Prestige Class prerequisite definition is considered authoritative for positive eligibility only when `_rulesCore.character.prerequisitesComplete` is `true`. Until that readiness marker is present, Rules Core still returns any known normalized requirements and can report a definite failure when one of those requirements is unsatisfied, but it will not report the candidate as eligible merely because the remaining requirements have not been entered yet. If all currently known requirements are satisfied while the definition is incomplete, the eligibility state is `unresolved`.
+
+This public support therefore does not imply that every Prestige Class already has complete effective prerequisite data. The endpoint and requirement vocabulary can be integrated independently of the later data-completion work. Character Sheet should not build the Prestige Class acquisition UI until the applicable Prestige Class data is ready.
 
 ## Effective progression maximums
 
@@ -80,7 +84,7 @@ The normal Character mechanics projection exposes a finite per-progression maxim
 
 Rules Core prefers an explicit normalized effective `maximumLevel`. When no explicit maximum exists, it may derive the maximum from a finite effective per-level progression table. If neither representation establishes a finite maximum, no maximum-level mechanic is emitted.
 
-If a supplied independently leveled Class or Prestige Class exceeds the effective maximum, projection emits a blocking `maximum-level` conflict for that concept.
+If a supplied independently leveled Class or Prestige Class occurrence exceeds the effective maximum, projection emits a blocking `maximum-level` conflict for that concept. The maximum applies to each progression occurrence, not to the sum of multiple occurrences that happen to use the same concept.
 
 This is not a total Character-level limit and there is no universal level-20 assumption. Subclasses do not own an independent progression maximum because their effective level follows the parent Class occurrence. Campaign rules can change the effective progression data, and campaign-scoped projection returns the resulting Campaign-effective maximum.
 
