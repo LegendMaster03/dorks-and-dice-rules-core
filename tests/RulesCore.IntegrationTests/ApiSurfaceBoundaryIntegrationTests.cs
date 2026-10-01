@@ -16,6 +16,22 @@ public sealed class ApiSurfaceBoundaryIntegrationTests
     private const string IntrospectionPath = "/tool-host/registrations/rules-core/api/introspect";
 
     [Fact]
+    public async Task CompatibilityModePreservesExistingDelegatedPrivateCallsUntilMigration()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString)) return;
+
+        await using var factory = Factory(AuthenticationClient());
+        using var client = Client(factory);
+        using var request = HostedRequest(
+            "/api/wiki/references?limit=1",
+            "ordinary-delegation-ticket");
+        using var response = await client.SendAsync(request);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Fact]
     public async Task PrivateApiRequiresPrivateTunnelWhilePublicApiRemainsAvailable()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
@@ -23,7 +39,7 @@ public sealed class ApiSurfaceBoundaryIntegrationTests
 
         var authenticationClient = AuthenticationClient();
 
-        await using var factory = Factory(authenticationClient);
+        await using var factory = Factory(authenticationClient, RulesCoreApiSurfaceMode.Combined);
         using var client = Client(factory);
 
         using (var anonymousInternal = await client.GetAsync("/api/wiki/references?limit=1"))
