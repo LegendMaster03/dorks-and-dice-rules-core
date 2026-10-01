@@ -43,9 +43,6 @@ jobs:
             -e POSTGRES_PASSWORD=rules_core_test \
             postgres:18
 
-          # A fresh official PostgreSQL container briefly runs a temporary server during
-          # initialization. Probe immediately, but require several consecutive SQL queries
-          # to succeed so a transient initialization server can not satisfy readiness.
           consecutive=0
           for i in {1..45}; do
             result=$(docker exec dorks-and-dice-rules-core-test-postgres \
@@ -78,8 +75,6 @@ jobs:
             -e ConnectionStrings__RulesCore='Host=dorks-and-dice-rules-core-test-postgres;Port=5432;Database=rules_core_test;Username=rules_core_test;Password=rules_core_test' \
             dorks-and-dice-rules-core:latest
 
-          # Full tests already passed in Validate Rules Core. The deployment runner only
-          # verifies that the built image starts and becomes ready against PostgreSQL.
           ready=false
           for i in {1..20}; do
             if [ "$(docker inspect -f '{{.State.Running}}' dorks-and-dice-rules-core-smoketest 2>/dev/null)" != "true" ]; then
@@ -127,77 +122,107 @@ jobs:
             exit 1
           fi
 
+          if ! grep -q '^RulesCorePrivate__Network=' "$ENV_FILE"; then
+            echo "Rules Core private deployment configuration is missing: RulesCorePrivate__Network"
+            exit 1
+          fi
+
           docker compose \
             --project-name dorks-and-dice-rules-core \
             --env-file "$ENV_FILE" \
             -f docker-compose.yml \
+            -f docker-compose.private-tunnel.yml \
             config >/dev/null
 
-          docker rm -f dorks-and-dice-rules-core 2>/dev/null || true
-
           docker compose \
             --project-name dorks-and-dice-rules-core \
             --env-file "$ENV_FILE" \
             -f docker-compose.yml \
+            -f docker-compose.private-tunnel.yml \
             up -d --force-recreate --remove-orphans
 
-      - name: Verify deployed service
+      - name: Verify deployed services
         timeout-minutes: 32
         run: |
-          # Translator-version upgrades can require a one-time local reprocessing pass over
-          # bundled legacy SRDs before ASP.NET starts accepting requests. Bound each probe so
-          # an unopened application port can not consume the entire verification timeout.
+          ENV_FILE=/mnt/HDDs/www/dorks-and-dice-rules-core/.env
+          PRIVATE_NETWORK=$(grep '^RulesCorePrivate__Network=' "$ENV_FILE" | tail -n 1 | cut -d= -f2-)
+          if [ -z "$PRIVATE_NETWORK" ]; then
+            echo "RulesCorePrivate__Network is missing."
+            exit 1
+          fi
+
           deadline=$((SECONDS + 1800))
           initial_restarts=$(docker inspect -f '{{.RestartCount}}' dorks-and-dice-rules-core 2>/dev/null || echo 0)
+          initial_private_restarts=$(docker inspect -f '{{.RestartCount}}' dorks-and-dice-rules-core-private 2>/dev/null || echo 0)
           attempt=0
-          ready=false
+          public_ready=false
+          private_ready=false
 
           while [ "$SECONDS" -lt "$deadline" ]; do
             attempt=$((attempt + 1))
 
-            if ! docker inspect dorks-and-dice-rules-core >/dev/null 2>&1; then
-              echo "Deployed Rules Core container is missing."
-              exit 1
-            fi
+            for container in dorks-and-dice-rules-core dorks-and-dice-rules-core-private; do
+              if ! docker inspect "$container" >/dev/null 2>&1; then
+                echo "Deployed Rules Core container is missing: $container"
+                exit 1
+              fi
+              state=$(docker inspect -f '{{.State.Status}}' "$container" 2>/dev/null || echo unknown)
+              if [ "$state" = "exited" ] || [ "$state" = "dead" ]; then
+                echo "$container entered state '$state'."
+                docker logs --tail 200 "$container" || true
+                exit 1
+              fi
+            done
 
-            state=$(docker inspect -f '{{.State.Status}}' dorks-and-dice-rules-core 2>/dev/null || echo unknown)
             restarts=$(docker inspect -f '{{.RestartCount}}' dorks-and-dice-rules-core 2>/dev/null || echo 0)
-
-            if [ "$state" = "exited" ] || [ "$state" = "dead" ]; then
-              echo "Deployed Rules Core container entered state '$state'."
-              docker logs --tail 200 dorks-and-dice-rules-core || true
-              exit 1
-            fi
-
+            private_restarts=$(docker inspect -f '{{.RestartCount}}' dorks-and-dice-rules-core-private 2>/dev/null || echo 0)
             if [ "$restarts" -ge $((initial_restarts + 3)) ]; then
-              echo "Deployed Rules Core is crash-looping (restart count $restarts)."
+              echo "Public Rules Core is crash-looping (restart count $restarts)."
               docker logs --tail 200 dorks-and-dice-rules-core || true
               exit 1
             fi
+            if [ "$private_restarts" -ge $((initial_private_restarts + 3)) ]; then
+              echo "Private Rules Core is crash-looping (restart count $private_restarts)."
+              docker logs --tail 200 dorks-and-dice-rules-core-private || true
+              exit 1
+            fi
 
-            response=$(timeout 8s docker run --rm \
+            public_response=$(timeout 8s docker run --rm \
               --network dorks-and-dice-backend \
               curlimages/curl:8.12.1 \
               --connect-timeout 2 \
               --max-time 5 \
               -fsS http://dorks-and-dice-rules-core:8080/ready 2>/dev/null || true)
+            if echo "$public_response" | grep -q '"status":"ready"'; then
+              public_ready=true
+            fi
 
-            if echo "$response" | grep -q '"status":"ready"'; then
-              echo "$response"
-              ready=true
-              break
+            private_response=$(timeout 8s docker run --rm \
+              --network "$PRIVATE_NETWORK" \
+              curlimages/curl:8.12.1 \
+              --connect-timeout 2 \
+              --max-time 5 \
+              -fsS http://dorks-and-dice-rules-core-private:8080/ready 2>/dev/null || true)
+            if echo "$private_response" | grep -q '"status":"ready"'; then
+              private_ready=true
+            fi
+
+            if [ "$public_ready" = "true" ] && [ "$private_ready" = "true" ]; then
+              echo "$public_response"
+              echo "$private_response"
+              exit 0
             fi
 
             if [ $((attempt % 30)) -eq 0 ]; then
-              echo "Rules Core is still starting after ${attempt} readiness probes; state=$state restarts=$restarts."
+              echo "Rules Core is still starting; public_ready=$public_ready private_ready=$private_ready public_restarts=$restarts private_restarts=$private_restarts."
               docker logs --tail 40 dorks-and-dice-rules-core || true
+              docker logs --tail 40 dorks-and-dice-rules-core-private || true
             fi
 
             sleep 1
           done
 
-          if [ "$ready" != "true" ]; then
-            echo "Deployed Rules Core did not become ready within 30 minutes."
-            docker logs --tail 200 dorks-and-dice-rules-core || true
-            exit 1
-          fi
+          echo "Rules Core public/private deployment did not become ready within 30 minutes."
+          docker logs --tail 200 dorks-and-dice-rules-core || true
+          docker logs --tail 200 dorks-and-dice-rules-core-private || true
+          exit 1

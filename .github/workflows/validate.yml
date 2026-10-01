@@ -42,6 +42,55 @@ jobs:
           python3 tools/create-integration-test-shard-filter.py --self-test
           python3 tools/summarize-integration-test-timings.py --self-test
 
+      - name: Validate private tunnel Compose boundary
+        env:
+          ConnectionStrings__RulesCore: Host=postgres;Port=5432;Database=rules_core_test;Username=rules_core_test;Password=rules_core_test
+          RulesCorePrivate__Network: rules-wiki-rules-core-test
+        run: |
+          docker compose -f docker-compose.yml config >/dev/null
+          docker compose \
+            -f docker-compose.yml \
+            -f docker-compose.private-tunnel.yml \
+            config --format json > /tmp/rules-core-compose.json
+
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          config = json.loads(Path('/tmp/rules-core-compose.json').read_text())
+          services = config['services']
+
+          public = services['rules-core']
+          private = services['rules-core-private']
+
+          if public['environment'].get('RulesCore__ApiSurface') != 'PublicOnly':
+              raise SystemExit('Public Rules Core ingress must render RulesCore__ApiSurface=PublicOnly.')
+          if private['environment'].get('RulesCore__ApiSurface') != 'PrivateOnly':
+              raise SystemExit('Private Rules Core ingress must render RulesCore__ApiSurface=PrivateOnly.')
+
+          private_networks = set(private.get('networks', {}))
+          required = {
+              'rules-core-private-tunnel',
+              'dorks-and-dice-tool-control-plane',
+              'rules-core-database',
+          }
+          missing = required - private_networks
+          if missing:
+              raise SystemExit(f'Private Rules Core ingress is missing networks: {sorted(missing)}')
+          if 'dorks-and-dice-backend' in private_networks:
+              raise SystemExit('Private Rules Core ingress must not join dorks-and-dice-backend.')
+
+          public_networks = set(public.get('networks', {}))
+          if 'dorks-and-dice-backend' not in public_networks:
+              raise SystemExit('Public Rules Core ingress must remain on dorks-and-dice-backend.')
+          if 'rules-core-private-tunnel' in public_networks:
+              raise SystemExit('Public Rules Core ingress must not join the private pair network.')
+
+          networks = config['networks']
+          if networks['rules-core-database'].get('name') != 'dorks-and-dice-rules-core-db':
+              raise SystemExit('Private database network default rendered unexpectedly.')
+          PY
+
       - name: Unit tests
         run: >-
           dotnet test tests/RulesCore.Tests/RulesCore.Tests.csproj
