@@ -48,6 +48,7 @@ public sealed class CharacterFeatPrerequisiteIntegrationTests
                   "name": "{{prestigeName}}",
                   "_rulesCore": {
                     "character": {
+                      "prerequisitesComplete": true,
                       "prerequisites": [
                         {
                           "key": "prerequisite.feat",
