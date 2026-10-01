@@ -70,6 +70,18 @@ Simple PCGen `PREFEAT` evidence that has not yet moved into the general source t
 
 This public support does not imply that every Prestige Class has complete effective prerequisite data. Character Sheet should not build the Prestige Class acquisition UI until the applicable Prestige Class data is ready.
 
+## Effective progression maximums
+
+The normal Character mechanics projection exposes a finite per-progression maximum as the resolved mechanic:
+
+`advancement.{conceptKey}.maximum-level`
+
+Rules Core prefers an explicit normalized effective `maximumLevel`. When no explicit maximum exists, it may derive the maximum from a finite effective per-level progression table. If neither representation establishes a finite maximum, no maximum-level mechanic is emitted.
+
+If a supplied independently leveled Class or Prestige Class exceeds the effective maximum, projection emits a blocking `maximum-level` conflict for that concept.
+
+This is not a total Character-level limit and there is no universal level-20 assumption. Subclasses do not own an independent progression maximum because their effective level follows the parent Class occurrence. Campaign rules can change the effective progression data, and campaign-scoped projection returns the resulting Campaign-effective maximum.
+
 ## Scope
 
 A consumer chooses the appropriate endpoint from its active rules scope:
