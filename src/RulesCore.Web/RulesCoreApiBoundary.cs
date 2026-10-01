@@ -3,6 +3,13 @@ using RulesCore.Application.Hosting;
 
 namespace RulesCore.Web;
 
+public enum RulesCoreApiSurfaceMode
+{
+    Combined,
+    PublicOnly,
+    PrivateOnly
+}
+
 /// <summary>
 /// Marker for Rules Core endpoints that are deliberately part of the stable consumer API.
 /// Unmarked /api endpoints are private by default unless they are one of the existing public route
@@ -34,6 +41,8 @@ public static class RulesCoreApiEndpointConventionExtensions
 /// </summary>
 public static class RulesCoreApiBoundary
 {
+    public const string ApiSurfaceConfigurationKey = "RulesCore:ApiSurface";
+
     private static readonly HashSet<string> PublicRoutePatterns = new(StringComparer.Ordinal)
     {
         "/api",
@@ -72,9 +81,29 @@ public static class RulesCoreApiBoundary
         "/api/campaigns/{campaignId:guid}/rules/travel-environment/{mechanicKey}/resolve"
     };
 
+    public static RulesCoreApiSurfaceMode ResolveMode(IConfiguration configuration)
+    {
+        ArgumentNullException.ThrowIfNull(configuration);
+        var configured = configuration[ApiSurfaceConfigurationKey];
+        if (string.IsNullOrWhiteSpace(configured))
+        {
+            return RulesCoreApiSurfaceMode.Combined;
+        }
+
+        if (Enum.TryParse<RulesCoreApiSurfaceMode>(configured, ignoreCase: true, out var mode)
+            && Enum.IsDefined(mode))
+        {
+            return mode;
+        }
+
+        throw new InvalidOperationException(
+            $"{ApiSurfaceConfigurationKey} must be Combined, PublicOnly, or PrivateOnly.");
+    }
+
     public static bool Authorize(
         HttpContext httpContext,
-        ToolHostAuthenticationContext? authenticationContext)
+        ToolHostAuthenticationContext? authenticationContext,
+        RulesCoreApiSurfaceMode surfaceMode)
     {
         var endpoint = httpContext.GetEndpoint();
         if (endpoint is null || !httpContext.Request.Path.StartsWithSegments("/api"))
@@ -82,14 +111,21 @@ public static class RulesCoreApiBoundary
             return true;
         }
 
-        if (endpoint.Metadata.GetMetadata<PublicRulesCoreApiMetadata>() is not null)
+        var isPublic = IsPublicEndpoint(endpoint);
+
+        if (surfaceMode == RulesCoreApiSurfaceMode.PublicOnly && !isPublic)
         {
-            return true;
+            httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            return false;
         }
 
-        if (endpoint is RouteEndpoint routeEndpoint
-            && routeEndpoint.RoutePattern.RawText is { } routePattern
-            && PublicRoutePatterns.Contains(routePattern))
+        if (surfaceMode == RulesCoreApiSurfaceMode.PrivateOnly && isPublic)
+        {
+            httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            return false;
+        }
+
+        if (isPublic)
         {
             return true;
         }
@@ -107,5 +143,17 @@ public static class RulesCoreApiBoundary
         }
 
         return true;
+    }
+
+    private static bool IsPublicEndpoint(Endpoint endpoint)
+    {
+        if (endpoint.Metadata.GetMetadata<PublicRulesCoreApiMetadata>() is not null)
+        {
+            return true;
+        }
+
+        return endpoint is RouteEndpoint routeEndpoint
+            && routeEndpoint.RoutePattern.RawText is { } routePattern
+            && PublicRoutePatterns.Contains(routePattern);
     }
 }
