@@ -80,7 +80,7 @@ public sealed class CharacterAdvancementEligibilityServiceTests
     }
 
     [Fact]
-    public async Task PrestigeEligibilityPreservesOwnedFeatsAndReturnsProjectedRequirements()
+    public async Task PrestigeEligibilityEvaluatesSimpleNamedFeatRequirementsFromEffectiveSourceEvidence()
     {
         var prestigeConceptKey = "prestigeClass.loremaster";
         var featConceptKey = "feat.skill-focus-knowledge";
@@ -88,37 +88,44 @@ public sealed class CharacterAdvancementEligibilityServiceTests
             prestigeConceptKey,
             "prestigeClass",
             "Loremaster",
+            """
+            {
+              "_rulesCore": {
+                "pcgen": {
+                  "unmappedSegments": [
+                    { "tag": "PREFEAT", "value": "1,Skill Focus (Knowledge)" }
+                  ]
+                }
+              }
+            }
+            """,
+            []);
+        var feat = Rule(
+            featConceptKey,
+            "feat",
+            "Skill Focus (Knowledge)",
             "{}",
             []);
-        var catalog = new FakeCatalog(candidate);
-        var projection = new RecordingProjectionService(
-            request =>
-            {
-                var ownsFeat = (request.SelectedConcepts ?? []).Any(value =>
-                    value.ConceptKey == featConceptKey);
-                var requirement = new CharacterPrerequisiteRequirementView(
-                    "prestigeClass.loremaster.prerequisite.0.0",
-                    "feat",
-                    featConceptKey,
-                    ">=",
-                    1,
-                    "Skill Focus (Knowledge)",
-                    ownsFeat,
-                    CharacterResolutionStates.Resolved,
-                    ownsFeat ? "Required feat is owned." : "Required feat is missing.",
-                    "prestigeClass.loremaster.prerequisite-group.0",
-                    1);
-                return Projection(
-                    [new CharacterPrerequisiteView(
-                        prestigeConceptKey,
-                        CharacterResolutionStates.Resolved,
-                        ownsFeat,
-                        [requirement],
-                        EmptyProvenance())]);
-            });
+        var catalog = new FakeCatalog(candidate, feat);
+        var projection = new RecordingProjectionService();
         var service = new CharacterAdvancementEligibilityService(catalog, projection);
 
-        var result = await service.EvaluateGlobalAsync(
+        var missing = await service.EvaluateGlobalAsync(
+            new CharacterAdvancementEligibilityRequest(
+                prestigeConceptKey,
+                new CharacterRulesProjectionRequest()),
+            userId: null);
+
+        Assert.NotNull(missing);
+        Assert.False(missing!.Eligible);
+        Assert.Equal(CharacterAdvancementEligibilityStates.Ineligible, missing.State);
+        var missingPrerequisite = Assert.IsType<CharacterPrerequisiteView>(missing.Prerequisites);
+        var missingFeat = Assert.Single(missingPrerequisite.Requirements);
+        Assert.Equal("feat", missingFeat.Kind);
+        Assert.Equal(featConceptKey, missingFeat.TargetKey);
+        Assert.False(missingFeat.Satisfied);
+
+        var owned = await service.EvaluateGlobalAsync(
             new CharacterAdvancementEligibilityRequest(
                 prestigeConceptKey,
                 new CharacterRulesProjectionRequest(
@@ -128,13 +135,13 @@ public sealed class CharacterAdvancementEligibilityServiceTests
                     ])),
             userId: null);
 
-        Assert.NotNull(result);
-        Assert.True(result!.Eligible);
-        Assert.Equal(CharacterAdvancementEligibilityStates.Eligible, result.State);
-        var prerequisite = Assert.IsType<CharacterPrerequisiteView>(result.Prerequisites);
-        var featRequirement = Assert.Single(prerequisite.Requirements);
-        Assert.Equal("feat", featRequirement.Kind);
-        Assert.True(featRequirement.Satisfied);
+        Assert.NotNull(owned);
+        Assert.True(owned!.Eligible);
+        Assert.Equal(CharacterAdvancementEligibilityStates.Eligible, owned.State);
+        var ownedPrerequisite = Assert.IsType<CharacterPrerequisiteView>(owned.Prerequisites);
+        var ownedFeat = Assert.Single(ownedPrerequisite.Requirements);
+        Assert.Equal("feat", ownedFeat.Kind);
+        Assert.True(ownedFeat.Satisfied);
         Assert.NotNull(projection.LastGlobalRequest);
         Assert.Contains(
             projection.LastGlobalRequest!.SelectedConcepts!,
@@ -142,6 +149,57 @@ public sealed class CharacterAdvancementEligibilityServiceTests
         Assert.Contains(
             projection.LastGlobalRequest.SelectedConcepts!,
             value => value.ConceptKey == prestigeConceptKey);
+    }
+
+    [Fact]
+    public async Task PrestigeEligibilitySupportsNOfMNamedFeatRequirements()
+    {
+        var prestigeConceptKey = "prestigeClass.feat-master";
+        var firstFeatKey = "feat.first";
+        var secondFeatKey = "feat.second";
+        var thirdFeatKey = "feat.third";
+        var candidate = Rule(
+            prestigeConceptKey,
+            "prestigeClass",
+            "Feat Master",
+            """
+            {
+              "_rulesCore": {
+                "pcgen": {
+                  "unmappedSegments": [
+                    { "tag": "PREFEAT", "value": "2,First Feat,Second Feat,Third Feat" }
+                  ]
+                }
+              }
+            }
+            """,
+            []);
+        var catalog = new FakeCatalog(
+            candidate,
+            Rule(firstFeatKey, "feat", "First Feat", "{}", []),
+            Rule(secondFeatKey, "feat", "Second Feat", "{}", []),
+            Rule(thirdFeatKey, "feat", "Third Feat", "{}", []));
+        var service = new CharacterAdvancementEligibilityService(
+            catalog,
+            new RecordingProjectionService());
+
+        var result = await service.EvaluateGlobalAsync(
+            new CharacterAdvancementEligibilityRequest(
+                prestigeConceptKey,
+                new CharacterRulesProjectionRequest(
+                    SelectedConcepts:
+                    [
+                        new CharacterSelectedConceptInput(firstFeatKey),
+                        new CharacterSelectedConceptInput(thirdFeatKey)
+                    ])),
+            userId: null);
+
+        Assert.NotNull(result);
+        Assert.True(result!.Eligible);
+        var prerequisite = Assert.IsType<CharacterPrerequisiteView>(result.Prerequisites);
+        Assert.Equal(3, prerequisite.Requirements.Count);
+        Assert.All(prerequisite.Requirements, value => Assert.Equal(2, value.GroupMatchCount));
+        Assert.Equal(2, prerequisite.Requirements.Count(value => value.Satisfied == true));
     }
 
     private static ResolvedRuleCatalogItemView Rule(
@@ -195,9 +253,6 @@ public sealed class CharacterAdvancementEligibilityServiceTests
             Prerequisites: prerequisites ?? [],
             Conflicts: [],
             Equipment: []);
-
-    private static CharacterMechanicProvenanceView EmptyProvenance() =>
-        new([], [], []);
 
     private sealed class RecordingProjectionService(
         Func<CharacterRulesProjectionRequest, CharacterRulesProjectionView>? result = null)
