@@ -46,7 +46,14 @@ Subclass eligibility is evaluated against the effective `parent-class` relations
 
 The current resolver prefers normalized acquisition metadata when available and otherwise derives the threshold from the effective Subclass progression. This derivation remains internal to Rules Core.
 
-Character Sheet should use the ordinary public rules catalog to discover effective Subclasses and their `parent-class` relationships, then use the eligibility endpoint to evaluate a candidate for the current Character and scope.
+The normal Character mechanics projection also emits a Class-bound `subclass` choice when the supplied parent Class occurrence reaches an effective Subclass acquisition level. Before that threshold no Subclass choice is emitted. Once a compatible Subclass has been structurally attached, the same projection validates that it belongs to the parent Class and was not acquired before its effective threshold. Choice identity includes the parent advancement occurrence when the caller supplies one, so a consumer can bind the decision to the correct Class occurrence.
+
+Character Sheet should therefore use two public contracts together:
+
+1. prospective Character mechanics projection identifies that the proposed Class level creates a required Subclass decision;
+2. the ordinary public rules catalog discovers effective Subclasses related by `parent-class`, and the eligibility endpoint evaluates those candidates for that Character and rules scope.
+
+This keeps the decision trigger and candidate legality in Rules Core while leaving Character Sheet responsible for presenting the choice and persisting the accepted occurrence.
 
 ## Prestige Class
 
