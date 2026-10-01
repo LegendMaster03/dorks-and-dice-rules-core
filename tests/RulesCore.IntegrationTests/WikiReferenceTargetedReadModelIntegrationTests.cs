@@ -35,6 +35,7 @@ public sealed class WikiReferenceTargetedReadModelIntegrationTests
                     db);
                 var name = $"Targeted Detail Fixture {token}";
                 var old = await importer.ImportAsync(Request(
+                    packageIds,
                     $"targeted-old-{token}",
                     name,
                     "TD3",
@@ -43,6 +44,7 @@ public sealed class WikiReferenceTargetedReadModelIntegrationTests
                     new DateOnly(2000, 1, 1),
                     7));
                 var current = await importer.ImportAsync(Request(
+                    packageIds,
                     $"targeted-current-{token}",
                     name,
                     "TD5",
@@ -51,6 +53,7 @@ public sealed class WikiReferenceTargetedReadModelIntegrationTests
                     new DateOnly(2014, 8, 19),
                     11));
                 var privateOnly = await importer.ImportAsync(Request(
+                    packageIds,
                     $"targeted-private-{token}",
                     $"Private Targeted Fixture {token}",
                     "TDPRIVATE",
@@ -59,6 +62,7 @@ public sealed class WikiReferenceTargetedReadModelIntegrationTests
                     new DateOnly(2014, 8, 20),
                     13));
                 var provisional = await importer.ImportAsync(Request(
+                    packageIds,
                     $"targeted-provisional-{token}",
                     $"Provisional Targeted Fixture {token}",
                     "TDPROVISIONAL",
@@ -66,7 +70,6 @@ public sealed class WikiReferenceTargetedReadModelIntegrationTests
                     true,
                     new DateOnly(2003, 7, 1),
                     9));
-                packageIds.AddRange([old.PackageId, current.PackageId, privateOnly.PackageId, provisional.PackageId]);
 
                 var oldEntity = Assert.Single(old.Entities);
                 var currentEntity = Assert.Single(current.Entities);
@@ -189,6 +192,7 @@ public sealed class WikiReferenceTargetedReadModelIntegrationTests
     }
 
     private static ImportNormalizedSourceRequest Request(
+        ICollection<Guid> packageIds,
         string packageKey,
         string name,
         string sourceCode,
@@ -379,6 +383,10 @@ public sealed class WikiReferenceTargetedReadModelIntegrationTests
         await db.GlobalRuleDecisions.ExecuteDeleteAsync();
         await db.RuleConceptSourceBindings.ExecuteDeleteAsync();
         await db.RuleConcepts.ExecuteDeleteAsync();
+
+        // ExecuteDelete bypasses the change tracker, while the services above have tracked the
+        // publication graph. Clear those stale tracked relationships before deleting source packages.
+        db.ChangeTracker.Clear();
 
         if (packageIds.Count > 0)
         {
