@@ -217,20 +217,22 @@ public sealed class CanonicalBootstrapReconciliationService(RulesCoreDbContext d
         if (openedHere) await connection.OpenAsync(cancellationToken);
         try
         {
-            await using var command = connection.CreateCommand();
-            command.CommandText = """
-                SELECT DISTINCT binding.source_entity_id
-                FROM source_entity_occurrence_binding binding
-                JOIN canonical_source_occurrence occurrence
-                    ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
-                WHERE occurrence.canonical_entity_id = ANY(@canonical_ids);
-                """;
-            AddParameter(command, "@canonical_ids", canonicalIds);
             var sourceEntityIds = new List<Guid>();
-            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            while (await reader.ReadAsync(cancellationToken))
+            await using (var command = connection.CreateCommand())
             {
-                sourceEntityIds.Add(reader.GetGuid(0));
+                command.CommandText = """
+                    SELECT DISTINCT binding.source_entity_id
+                    FROM source_entity_occurrence_binding binding
+                    JOIN canonical_source_occurrence occurrence
+                        ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
+                    WHERE occurrence.canonical_entity_id = ANY(@canonical_ids);
+                    """;
+                AddParameter(command, "@canonical_ids", canonicalIds);
+                await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+                while (await reader.ReadAsync(cancellationToken))
+                {
+                    sourceEntityIds.Add(reader.GetGuid(0));
+                }
             }
 
             if (sourceEntityIds.Count != 0)
