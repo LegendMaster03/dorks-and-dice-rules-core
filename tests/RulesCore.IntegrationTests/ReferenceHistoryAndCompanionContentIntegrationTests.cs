@@ -59,6 +59,58 @@ public sealed class ReferenceHistoryAndCompanionContentIntegrationTests
     }
 
     [Fact]
+    public async Task RestrictedMiddleVariationPreservesAccessibleLogicalHistoryWithoutLeakingSource()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..10];
+            var importer = new NormalizedSourceImportService(db);
+            var name = $"Hidden Bridge {token}";
+            var firstSource = $"HB3{token}";
+            var middleSource = $"HB35{token}";
+            var lastSource = $"HB5{token}";
+
+            var first = await importer.ImportAsync(Request(
+                $"hidden-bridge-first-{token}", "monster", name, firstSource, "3e", true, 7));
+            var middle = await importer.ImportAsync(Request(
+                $"hidden-bridge-middle-{token}", "monster", name, middleSource, "3.5e", false, 9));
+            var last = await importer.ImportAsync(Request(
+                $"hidden-bridge-last-{token}", "monster", name, lastSource, "5e", true, 12));
+
+            var firstCanonical = await CanonicalEntityIdAsync(db, Assert.Single(first.Entities).EntityId);
+            var middleCanonical = await CanonicalEntityIdAsync(db, Assert.Single(middle.Entities).EntityId);
+            var lastCanonical = await CanonicalEntityIdAsync(db, Assert.Single(last.Entities).EntityId);
+            await RelateHistoryAsync(db, firstCanonical, middleCanonical);
+            await RelateHistoryAsync(db, middleCanonical, lastCanonical);
+
+            var anonymousCatalog = await CatalogAsync(db, null, name);
+            var anonymousReference = Assert.Single(
+                anonymousCatalog.References.Where(value => value.DisplayName == name));
+            var anonymousDetail = await new WikiReferenceCatalogService(db)
+                .GetGlobalDetailAsync(null, anonymousReference.ReferenceIdentity);
+            Assert.NotNull(anonymousDetail);
+            Assert.Equal(2, anonymousDetail!.Variations.Count);
+            Assert.Contains(anonymousDetail.Variations, value => value.SourceCode == firstSource);
+            Assert.Contains(anonymousDetail.Variations, value => value.SourceCode == lastSource);
+            Assert.DoesNotContain(anonymousDetail.Variations, value => value.SourceCode == middleSource);
+
+            await new SourceGrantService(db).GrantAsync("hidden-history-reader", middle.PackageId);
+            var grantedCatalog = await CatalogAsync(db, "hidden-history-reader", name);
+            var grantedReference = Assert.Single(
+                grantedCatalog.References.Where(value => value.DisplayName == name));
+            Assert.Equal(anonymousReference.ReferenceIdentity, grantedReference.ReferenceIdentity);
+
+            var grantedDetail = await new WikiReferenceCatalogService(db)
+                .GetGlobalDetailAsync("hidden-history-reader", grantedReference.ReferenceIdentity);
+            Assert.NotNull(grantedDetail);
+            Assert.Equal(3, grantedDetail!.Variations.Count);
+            Assert.Contains(grantedDetail.Variations, value => value.SourceCode == middleSource);
+        }
+    }
+
+    [Fact]
     public async Task ExplicitHomonymSeparationSurvivesRepeatedBackfillAndPreservesRulesDecision()
     {
         var db = await OpenDatabaseAsync();
@@ -221,6 +273,67 @@ public sealed class ReferenceHistoryAndCompanionContentIntegrationTests
                 .GetGlobalAsync(null, legacyReference.ReferenceIdentity))!;
             Assert.Contains(legacyCompanions.Contents, value => value.CompanionKind == "monsterFluff");
             Assert.NotNull(Assert.Single(legacyTarget.Entities));
+        }
+    }
+
+    [Fact]
+    public async Task CompanionAttachmentCanCrossPackagesWithoutInheritingCompanionVisibility()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..10];
+            var sourceCode = $"XPK{token}";
+            var name = $"Cross Package Fluff {token}";
+            var importer = new ReconciledNormalizedSourceImportService(new NormalizedSourceImportService(db), db);
+
+            await importer.ImportAsync(Request(
+                $"cross-package-mechanics-{token}",
+                "monster",
+                name,
+                sourceCode,
+                "5e",
+                true,
+                13));
+
+            var companionOnly = ReadFiveETools(
+                $"cross-package-fluff-{token}.json",
+                sourceCode,
+                name,
+                includeRaceAndSpell: false,
+                hitPoints: 13) with
+            {
+                Records = []
+            };
+            var companionImport = await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                $"cross-package-fluff-{token}",
+                $"Cross Package Fluff {token}",
+                "integration-test",
+                null,
+                false,
+                companionOnly));
+            Assert.Empty(await db.SourceEntities
+                .Where(value => value.SourcePackageId == companionImport.PackageId)
+                .ToArrayAsync());
+
+            var anonymousReference = Assert.Single(
+                (await CatalogAsync(db, null, name)).References.Where(value => value.DisplayName == name));
+            var anonymousCompanions = await new WikiReferenceCompanionContentService(db)
+                .GetGlobalAsync(null, anonymousReference.ReferenceIdentity);
+            Assert.NotNull(anonymousCompanions);
+            Assert.Empty(anonymousCompanions!.Contents);
+
+            await new SourceGrantService(db).GrantAsync("cross-package-reader", companionImport.PackageId);
+            var grantedReference = Assert.Single(
+                (await CatalogAsync(db, "cross-package-reader", name)).References.Where(value => value.DisplayName == name));
+            Assert.Equal(anonymousReference.ReferenceIdentity, grantedReference.ReferenceIdentity);
+            var grantedCompanions = await new WikiReferenceCompanionContentService(db)
+                .GetGlobalAsync("cross-package-reader", grantedReference.ReferenceIdentity);
+            Assert.NotNull(grantedCompanions);
+            var fluff = Assert.Single(grantedCompanions!.Contents);
+            Assert.Equal("monsterFluff", fluff.CompanionKind);
+            Assert.Equal(sourceCode, fluff.SourceCode);
         }
     }
 
@@ -450,6 +563,49 @@ public sealed class ReferenceHistoryAndCompanionContentIntegrationTests
                 """;
             AddParameter(command, "@source_entity_id", sourceEntityId);
             return Convert.ToBoolean(await command.ExecuteScalarAsync());
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
+    private static async Task RelateHistoryAsync(
+        RulesCoreDbContext db,
+        Guid fromCanonicalEntityId,
+        Guid toCanonicalEntityId)
+    {
+        var connection = db.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync();
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                INSERT INTO canonical_entity_relationship (
+                    canonical_entity_relationship_id,
+                    from_canonical_entity_id,
+                    to_canonical_entity_id,
+                    relationship_kind,
+                    evidence_kind,
+                    confidence,
+                    created_at)
+                VALUES (
+                    @id,
+                    @from_id,
+                    @to_id,
+                    'revision',
+                    'integration-hidden-bridge',
+                    1.0,
+                    @created_at)
+                ON CONFLICT (from_canonical_entity_id, to_canonical_entity_id, relationship_kind)
+                DO NOTHING;
+                """;
+            AddParameter(command, "@id", Guid.NewGuid());
+            AddParameter(command, "@from_id", fromCanonicalEntityId);
+            AddParameter(command, "@to_id", toCanonicalEntityId);
+            AddParameter(command, "@created_at", DateTimeOffset.UtcNow);
+            await command.ExecuteNonQueryAsync();
         }
         finally
         {

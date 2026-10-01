@@ -351,9 +351,10 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
                 new ScopePublication(null, null, new Dictionary<Guid, EffectiveEntry>()));
         }
 
-        // Canonicalized histories use canonical-entity relationships. Accessible occurrences that
-        // are intentionally unresolved by reconciliation remain isolated provisional histories,
-        // keyed by their canonical-source-occurrence id. They are still browseable and deep-linkable.
+        // Authorization filters source variations, not logical-history connectivity. Traverse the
+        // complete revision/rename component seeded by accessible canonical entities, then project
+        // only accessible variations into those components. A hidden middle variation therefore
+        // can preserve identity/history without leaking its source package or mechanical document.
         var groupingIds = variations
             .Select(value => value.GroupingEntityId)
             .Distinct()
@@ -452,7 +453,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             }
 
             var referenceIdentity = identityBinding?.ConceptKey
-                ?? SourceOnlyReferenceIdentity(componentVariations, incomingHistoryIds);
+                ?? SourceOnlyReferenceIdentity(componentIds, componentVariations, incomingHistoryIds);
             var displayName = preferredBinding?.DisplayName
                 ?? identityBinding?.DisplayName
                 ?? effectiveVariation.Name;
@@ -644,11 +645,29 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         {
             await using var command = connection.CreateCommand();
             command.CommandText = """
-                SELECT from_canonical_entity_id, to_canonical_entity_id, relationship_kind
-                FROM canonical_entity_relationship
-                WHERE relationship_kind IN ('revision', 'rename')
-                  AND from_canonical_entity_id = ANY(@canonical_ids)
-                  AND to_canonical_entity_id = ANY(@canonical_ids);
+                WITH RECURSIVE reachable(canonical_entity_id) AS (
+                    SELECT unnest(CAST(@canonical_ids AS uuid[]))
+                    UNION
+                    SELECT CASE
+                               WHEN relationship.from_canonical_entity_id = reachable.canonical_entity_id
+                                   THEN relationship.to_canonical_entity_id
+                               ELSE relationship.from_canonical_entity_id
+                           END
+                    FROM reachable
+                    JOIN canonical_entity_relationship relationship
+                      ON relationship.relationship_kind IN ('revision', 'rename')
+                     AND (relationship.from_canonical_entity_id = reachable.canonical_entity_id
+                       OR relationship.to_canonical_entity_id = reachable.canonical_entity_id)
+                )
+                SELECT relationship.from_canonical_entity_id,
+                       relationship.to_canonical_entity_id,
+                       relationship.relationship_kind
+                FROM canonical_entity_relationship relationship
+                WHERE relationship.relationship_kind IN ('revision', 'rename')
+                  AND relationship.from_canonical_entity_id IN (
+                      SELECT canonical_entity_id FROM reachable)
+                  AND relationship.to_canonical_entity_id IN (
+                      SELECT canonical_entity_id FROM reachable);
                 """;
             AddParameter(command, "@canonical_ids", canonicalEntityIds.ToArray());
             var values = new List<HistoryEdge>();
@@ -779,7 +798,16 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         IReadOnlyList<Guid> groupingEntityIds,
         IReadOnlyList<HistoryEdge> edges)
     {
-        var parent = groupingEntityIds.ToDictionary(value => value, value => value);
+        var visibleIds = groupingEntityIds.ToHashSet();
+        var allIds = groupingEntityIds
+            .Concat(edges.SelectMany(value => new[]
+            {
+                value.FromCanonicalEntityId,
+                value.ToCanonicalEntityId
+            }))
+            .Distinct()
+            .ToArray();
+        var parent = allIds.ToDictionary(value => value, value => value);
         Guid Find(Guid value)
         {
             while (parent[value] != value)
@@ -791,7 +819,6 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
         }
         void Union(Guid left, Guid right)
         {
-            if (!parent.ContainsKey(left) || !parent.ContainsKey(right)) return;
             var leftRoot = Find(left);
             var rightRoot = Find(right);
             if (leftRoot == rightRoot) return;
@@ -800,9 +827,10 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
             parent[otherRoot] = selectedRoot;
         }
         foreach (var edge in edges) Union(edge.FromCanonicalEntityId, edge.ToCanonicalEntityId);
-        return groupingEntityIds
+        return allIds
             .GroupBy(Find)
             .Select(group => group.ToHashSet())
+            .Where(component => component.Overlaps(visibleIds))
             .ToArray();
     }
 
@@ -830,21 +858,18 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
     }
 
     private static string SourceOnlyReferenceIdentity(
+        IReadOnlySet<Guid> component,
         IReadOnlyCollection<VariationRecord> variations,
         IReadOnlySet<Guid> incomingHistoryIds)
     {
-        var canonicalIds = variations
-            .Where(value => value.CanonicalEntityId.HasValue)
-            .Select(value => value.CanonicalEntityId!.Value)
-            .Distinct()
-            .ToArray();
-        if (canonicalIds.Length > 0)
+        var hasCanonicalVariation = variations.Any(value => value.CanonicalEntityId.HasValue);
+        if (hasCanonicalVariation)
         {
-            var anchor = canonicalIds
+            var anchor = component
                 .Where(value => !incomingHistoryIds.Contains(value))
                 .OrderBy(value => value)
                 .FirstOrDefault();
-            if (anchor == Guid.Empty) anchor = canonicalIds.OrderBy(value => value).First();
+            if (anchor == Guid.Empty) anchor = component.OrderBy(value => value).First();
             return $"canonical:{anchor:N}";
         }
 
