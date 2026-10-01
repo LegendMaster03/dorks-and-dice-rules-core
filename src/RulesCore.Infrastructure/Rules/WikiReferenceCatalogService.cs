@@ -780,8 +780,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
                             @value) > 0
                         OR strpos(
                             'occurrence:' || replace(lower(occurrence.canonical_source_occurrence_id::text), '-', ''),
-                            @value) > 0)))
-                  );
+                            @value) > 0)));
                 """;
             AddNullableStringParameter(command, "@user_id", userId);
             AddParameter(command, "@criterion", criterion switch
@@ -860,7 +859,7 @@ public sealed class WikiReferenceCatalogService(RulesCoreDbContext dbContext)
                         SELECT 1
                         FROM user_source_grant grant_row
                         WHERE grant_row.source_package_id = package.source_package_id
-                          AND grant_row.user_id = @user_id))
+                          AND grant_row.user_id = @user_id)))
                   AND (@restrict = FALSE
                     OR occurrence.canonical_entity_id = ANY(@canonical_ids)
                     OR occurrence.canonical_source_occurrence_id = ANY(@occurrence_ids))
