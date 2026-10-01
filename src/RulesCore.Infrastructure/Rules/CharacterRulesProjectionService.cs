@@ -102,6 +102,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             }
         }
 
+        CharacterSubclassAdvancementProjector.Project(projectionRules, context);
         CharacterCoreMechanicsResolver.Resolve(context, mechanicCatalog);
         CharacterSpellcastingResolver.ResolveMechanics(context);
         CharacterSpellcastingResolver.ResolveResources(context);
