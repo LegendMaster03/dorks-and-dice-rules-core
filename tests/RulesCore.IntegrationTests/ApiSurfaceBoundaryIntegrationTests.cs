@@ -1,9 +1,12 @@
 using System.Net;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using RulesCore.Application.Hosting;
+using RulesCore.Web;
 
 namespace RulesCore.IntegrationTests;
 
@@ -18,30 +21,10 @@ public sealed class ApiSurfaceBoundaryIntegrationTests
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
         if (string.IsNullOrWhiteSpace(connectionString)) return;
 
-        var authenticationClient = new FakeToolHostAuthenticationClient(
-            new Dictionary<string, ToolHostAuthenticationContext>
-            {
-                ["direct-ticket"] = Context("direct-user"),
-                ["ordinary-delegation-ticket"] = Context(
-                    "delegated-user",
-                    delegatedFromToolKey: "rules-wiki"),
-                ["private-tunnel-ticket"] = Context(
-                    "private-user",
-                    privateTunnelSourceToolKey: "rules-wiki")
-            });
+        var authenticationClient = AuthenticationClient();
 
-        await using var factory = new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
-        {
-            builder.ConfigureTestServices(services =>
-            {
-                services.RemoveAll<IToolHostAuthenticationClient>();
-                services.AddSingleton<IToolHostAuthenticationClient>(authenticationClient);
-            });
-        });
-        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions
-        {
-            AllowAutoRedirect = false
-        });
+        await using var factory = Factory(authenticationClient);
+        using var client = Client(factory);
 
         using (var anonymousInternal = await client.GetAsync("/api/wiki/references?limit=1"))
         {
@@ -75,6 +58,86 @@ public sealed class ApiSurfaceBoundaryIntegrationTests
             Assert.Equal(HttpStatusCode.OK, publicResponse.StatusCode);
         }
     }
+
+    [Fact]
+    public async Task SplitIngressModesDoNotExposeTheOtherApiSurface()
+    {
+        var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
+        if (string.IsNullOrWhiteSpace(connectionString)) return;
+
+        var authenticationClient = AuthenticationClient();
+
+        await using (var publicFactory = Factory(
+            authenticationClient,
+            RulesCoreApiSurfaceMode.PublicOnly))
+        using (var publicClient = Client(publicFactory))
+        {
+            using var publicResponse = await publicClient.GetAsync("/api/rules?limit=1");
+            Assert.Equal(HttpStatusCode.OK, publicResponse.StatusCode);
+
+            using var privateRequest = HostedRequest(
+                "/api/wiki/references?limit=1",
+                "private-tunnel-ticket");
+            using var privateResponse = await publicClient.SendAsync(privateRequest);
+            Assert.Equal(HttpStatusCode.NotFound, privateResponse.StatusCode);
+        }
+
+        await using (var privateFactory = Factory(
+            authenticationClient,
+            RulesCoreApiSurfaceMode.PrivateOnly))
+        using (var privateClient = Client(privateFactory))
+        {
+            using var publicResponse = await privateClient.GetAsync("/api/rules?limit=1");
+            Assert.Equal(HttpStatusCode.NotFound, publicResponse.StatusCode);
+
+            using var privateRequest = HostedRequest(
+                "/api/wiki/references?limit=1",
+                "private-tunnel-ticket");
+            using var privateResponse = await privateClient.SendAsync(privateRequest);
+            Assert.Equal(HttpStatusCode.OK, privateResponse.StatusCode);
+        }
+    }
+
+    private static FakeToolHostAuthenticationClient AuthenticationClient() =>
+        new(new Dictionary<string, ToolHostAuthenticationContext>
+        {
+            ["direct-ticket"] = Context("direct-user"),
+            ["ordinary-delegation-ticket"] = Context(
+                "delegated-user",
+                delegatedFromToolKey: "rules-wiki"),
+            ["private-tunnel-ticket"] = Context(
+                "private-user",
+                privateTunnelSourceToolKey: "rules-wiki")
+        });
+
+    private static WebApplicationFactory<Program> Factory(
+        IToolHostAuthenticationClient authenticationClient,
+        RulesCoreApiSurfaceMode? surfaceMode = null) =>
+        new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
+        {
+            if (surfaceMode.HasValue)
+            {
+                builder.ConfigureAppConfiguration((_, configuration) =>
+                {
+                    configuration.AddInMemoryCollection(new Dictionary<string, string?>
+                    {
+                        [RulesCoreApiBoundary.ApiSurfaceConfigurationKey] = surfaceMode.Value.ToString()
+                    });
+                });
+            }
+
+            builder.ConfigureTestServices(services =>
+            {
+                services.RemoveAll<IToolHostAuthenticationClient>();
+                services.AddSingleton(authenticationClient);
+            });
+        });
+
+    private static HttpClient Client(WebApplicationFactory<Program> factory) =>
+        factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false
+        });
 
     private static HttpRequestMessage HostedRequest(string path, string ticket)
     {
