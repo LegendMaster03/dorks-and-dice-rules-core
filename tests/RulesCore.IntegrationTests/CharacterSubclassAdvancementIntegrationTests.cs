@@ -161,7 +161,8 @@ public sealed class CharacterSubclassAdvancementIntegrationTests
                             acceptedSubclass.Concept.Key,
                             2,
                             OccurrenceKey: "subclass-occurrence",
-                            ParentConceptKey: acceptedClass.Concept.Key)
+                            ParentConceptKey: acceptedClass.Concept.Key,
+                            ParentOccurrenceKey: "class-occurrence")
                     ]),
                 userId: null);
             Assert.Contains(tooEarlyStructuralSelection.Conflicts, value =>
@@ -180,7 +181,8 @@ public sealed class CharacterSubclassAdvancementIntegrationTests
                             acceptedSubclass.Concept.Key,
                             7,
                             OccurrenceKey: "subclass-occurrence",
-                            ParentConceptKey: acceptedClass.Concept.Key)
+                            ParentConceptKey: acceptedClass.Concept.Key,
+                            ParentOccurrenceKey: "class-occurrence")
                     ]),
                 userId: null);
             Assert.Contains(exaggeratedSubclassLevel.Conflicts, value =>
@@ -193,6 +195,41 @@ public sealed class CharacterSubclassAdvancementIntegrationTests
             Assert.DoesNotContain(exaggeratedSubclassLevel.Features, value =>
                 value.SourceConceptKey == acceptedSubclass.Concept.Key
                 && value.DisplayName == "Path Mastery");
+
+            var occurrenceBoundSubclass = await projection.ResolveGlobalAsync(
+                new CharacterRulesProjectionRequest(
+                    Advancements:
+                    [
+                        new CharacterAdvancementFactInput(
+                            acceptedClass.Concept.Key,
+                            3,
+                            OccurrenceKey: "class-occurrence-a"),
+                        new CharacterAdvancementFactInput(
+                            acceptedClass.Concept.Key,
+                            7,
+                            OccurrenceKey: "class-occurrence-b"),
+                        new CharacterAdvancementFactInput(
+                            acceptedSubclass.Concept.Key,
+                            99,
+                            OccurrenceKey: "subclass-occurrence-b",
+                            ParentConceptKey: acceptedClass.Concept.Key,
+                            ParentOccurrenceKey: "class-occurrence-b")
+                    ]),
+                userId: null);
+            Assert.Contains(occurrenceBoundSubclass.Conflicts, value =>
+                value.Kind == "subclass-parent-level-mismatch"
+                && value.RelatedConceptKeys.Contains(acceptedSubclass.Concept.Key));
+            var firstOccurrenceChoice = Assert.Single(occurrenceBoundSubclass.Choices, value =>
+                value.ChoiceKey.Contains("class-occurrence-a", StringComparison.Ordinal));
+            var secondOccurrenceChoice = Assert.Single(occurrenceBoundSubclass.Choices, value =>
+                value.ChoiceKey.Contains("class-occurrence-b", StringComparison.Ordinal));
+            Assert.Equal(CharacterResolutionStates.ChoiceRequired, firstOccurrenceChoice.State);
+            Assert.Equal(CharacterResolutionStates.Resolved, secondOccurrenceChoice.State);
+            Assert.Equal(acceptedSubclass.Concept.Key, secondOccurrenceChoice.SelectedValue);
+            Assert.Contains(occurrenceBoundSubclass.Features, value =>
+                value.SourceConceptKey == acceptedSubclass.Concept.Key
+                && value.DisplayName == "Path Mastery"
+                && value.AcquisitionLevel == 7);
         }
         finally
         {
