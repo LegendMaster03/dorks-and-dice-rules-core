@@ -407,7 +407,13 @@ public sealed class ReferenceHistoryMergeReadinessIntegrationTests
                 """;
             AddParameter(command, "@key", CanonicalDataReconciliationService.StartupBackfillKey);
             var value = await command.ExecuteScalarAsync();
-            return value is DateTimeOffset completedAt ? completedAt : null;
+            return value switch
+            {
+                DateTimeOffset completedAt => completedAt,
+                DateTime completedAt => new DateTimeOffset(
+                    DateTime.SpecifyKind(completedAt, DateTimeKind.Utc)),
+                _ => null
+            };
         }
         finally
         {
