@@ -96,7 +96,9 @@ public sealed class CharacterAdvancementEligibilityService(
             parentSatisfied = parent?.Satisfied;
         }
 
-        var prerequisiteSatisfied = prerequisite?.Satisfied ?? true;
+        bool? prerequisiteSatisfied = prerequisite is null
+            ? true
+            : prerequisite.Satisfied;
         var resolutionKnown = candidate.Resolution?.RequiresAdjudication != true;
         bool? eligible;
         if (parentSatisfied == false
