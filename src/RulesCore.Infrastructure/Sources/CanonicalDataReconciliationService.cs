@@ -10,6 +10,9 @@ public sealed class CanonicalDataReconciliationService(RulesCoreDbContext dbCont
 {
     public async Task ReconcileExistingCorpusAsync(CancellationToken cancellationToken = default)
     {
+        var relationships = new CanonicalEntityRelationshipStore(dbContext);
+        await relationships.EnsureSchemaAsync(cancellationToken);
+
         var companions = new SourceCompanionContentStore(dbContext);
         await companions.EnsureSchemaAsync(cancellationToken);
         await companions.MigrateLegacyStandaloneFluffAsync(cancellationToken);
