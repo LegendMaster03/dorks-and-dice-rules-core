@@ -45,8 +45,8 @@ public sealed class CharacterAdvancementMaximumIntegrationTests
                 IsPublic: true,
                 WorkKey: $"advancement-maximum-work-{token}",
                 WorkDisplayName: $"Advancement Maximum Work {token}",
-                EditionKey: "fixture",
-                EditionDisplayName: "Fixture",
+                EditionKey: "5e",
+                EditionDisplayName: "5e",
                 Json: $$"""
                     {
                       "class": [
@@ -68,7 +68,7 @@ public sealed class CharacterAdvancementMaximumIntegrationTests
                       ]
                     }
                     """,
-                GameEdition: "fixture"));
+                GameEdition: "5e"));
 
             var classEntity = Assert.Single(imported.Entities, value =>
                 value.EntityType == RuleConceptEntityTypes.Class);
