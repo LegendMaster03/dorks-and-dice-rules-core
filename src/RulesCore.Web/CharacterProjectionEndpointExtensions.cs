@@ -78,6 +78,8 @@ public static class CharacterProjectionEndpointExtensions
                 return InvalidProjection(exception);
             }
         });
+
+        app.MapCharacterAdvancementEligibilityEndpoints();
     }
 
     private static IResult InvalidProjection(Exception exception) =>
