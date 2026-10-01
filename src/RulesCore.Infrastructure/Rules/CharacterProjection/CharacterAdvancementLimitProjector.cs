@@ -50,14 +50,15 @@ internal static class CharacterAdvancementLimitProjector
                 rule.Provenance);
 
             var level = context.AdvancementLevel(rule.Catalog.ConceptKey);
-            if (level <= maximumLevel)
-            {
-                continue;
-            }
-
             var conflictKey = $"conflict.{rule.Catalog.ConceptKey}.maximum-level";
-            if (context.Conflicts.Any(value =>
-                    string.Equals(value.ConflictKey, conflictKey, StringComparison.Ordinal)))
+
+            // Older normalized Class projection already emitted this conflict for explicit
+            // maximumLevel data. Replace that legacy-shaped result so every effective maximum,
+            // regardless of its internal representation, exposes one stable public conflict kind.
+            context.Conflicts.RemoveAll(value =>
+                string.Equals(value.ConflictKey, conflictKey, StringComparison.Ordinal));
+
+            if (level <= maximumLevel)
             {
                 continue;
             }
@@ -96,18 +97,23 @@ internal static class CharacterAdvancementLimitProjector
 
         var rowCounts = groups.EnumerateArray()
             .Where(group => group.ValueKind == JsonValueKind.Object)
-            .Select(group =>
-            {
-                if (!CharacterProjectionJson.TryGetProperty(group, "rows", out var rows)
-                    || rows.ValueKind != JsonValueKind.Array)
-                {
-                    return 0;
-                }
-                return rows.GetArrayLength();
-            })
+            .SelectMany(PerLevelRowCounts)
             .Where(count => count > 0)
             .ToArray();
 
         return rowCounts.Length == 0 ? null : rowCounts.Max();
+    }
+
+    private static IEnumerable<int> PerLevelRowCounts(JsonElement group)
+    {
+        foreach (var propertyName in new[] { "rows", "rowsSpellProgression" })
+        {
+            if (CharacterProjectionJson.TryGetProperty(group, propertyName, out var rows)
+                && rows.ValueKind == JsonValueKind.Array
+                && rows.GetArrayLength() > 0)
+            {
+                yield return rows.GetArrayLength();
+            }
+        }
     }
 }
