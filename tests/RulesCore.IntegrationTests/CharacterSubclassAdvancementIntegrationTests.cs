@@ -46,8 +46,8 @@ public sealed class CharacterSubclassAdvancementIntegrationTests
                 IsPublic: true,
                 WorkKey: $"subclass-advancement-work-{token}",
                 WorkDisplayName: $"Subclass Advancement Work {token}",
-                EditionKey: "fixture",
-                EditionDisplayName: "Fixture",
+                EditionKey: "5e",
+                EditionDisplayName: "5e",
                 Json: $$"""
                     {
                       "class": [
@@ -75,7 +75,7 @@ public sealed class CharacterSubclassAdvancementIntegrationTests
                       ]
                     }
                     """,
-                GameEdition: "fixture"));
+                GameEdition: "5e"));
 
             var classEntity = Assert.Single(imported.Entities, value => value.EntityType == RuleConceptEntityTypes.Class);
             var subclassEntity = Assert.Single(imported.Entities, value => value.EntityType == RuleConceptEntityTypes.Subclass);
