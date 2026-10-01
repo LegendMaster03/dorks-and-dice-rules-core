@@ -34,6 +34,7 @@ public static class RulesCoreServiceCollectionExtensions
         services.AddScoped<ISourceCatalogService, SourceCatalogService>();
         services.AddScoped<ISourceEntitySearchService, SourceEntitySearchService>();
         services.AddScoped<ISourceGrantService, SourceGrantService>();
+        services.AddSingleton<CanonicalDataReconciliationMaintenanceJob>();
         services.AddHostedService<CurrentUserSourceRefreshBackground>();
         return services;
     }
