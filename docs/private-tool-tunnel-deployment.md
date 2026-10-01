@@ -81,7 +81,7 @@ Ordinary Tools join none of these networks unless they are explicitly a peer in 
 
 Both public and private Rules Core instances use the same Rules Core database, but the private ingress must not join `dorks-and-dice-backend` merely to reach PostgreSQL.
 
-`docker-compose.private-tunnel.yml` therefore attaches `dorks-and-dice-rules-core-private` to the restricted database network declared by `RulesCorePrivate__DatabaseNetwork`.
+`docker-compose.private-tunnel.yml` therefore attaches `dorks-and-dice-rules-core-private` to the restricted database network selected by `RulesCorePrivate__DatabaseNetwork`. When that setting is omitted, the overlay uses the production-safe default `dorks-and-dice-rules-core-db`.
 
 The PostgreSQL peer is managed outside this repository. On the current TrueNAS deployment, the PostgreSQL container serves multiple applications and remains attached to `dorks-and-dice-backend` for those existing consumers. Adding the database dependency network gives PostgreSQL a second network interface; it does not move the container or remove the existing backend attachment.
 
@@ -101,16 +101,16 @@ Rules Core deployment should fail rather than attach the private ingress to the 
 
 ## Core configuration
 
-The production environment file must provide:
+The production environment file must provide the pair-network identity:
 
 ```text
 RulesCorePrivate__Network=dorks-and-dice-private-rules-wiki-rules-core
-RulesCorePrivate__DatabaseNetwork=dorks-and-dice-rules-core-db
 ```
 
 The current optional/defaulted settings are:
 
 ```text
+RulesCorePrivate__DatabaseNetwork=dorks-and-dice-rules-core-db
 RulesCorePrivate__ToolHostBaseUrl=http://dorks-and-dice-site:8080
 ToolHosting__ControlPlaneNetwork=dorks-and-dice-tool-control-plane
 ```
@@ -150,7 +150,7 @@ docker-compose.yml
 docker-compose.private-tunnel.yml
 ```
 
-The workflow validates that the private pair and database network settings are present, recreates the public and private services together, and verifies readiness on both network surfaces.
+The workflow validates that the private pair-network setting is present, recreates the public and private services together, and verifies readiness on both network surfaces. The database dependency network uses the overlay default unless deployment configuration overrides it.
 
 A deployment workflow that uses only `docker-compose.yml` would remove `rules-core-private` with `--remove-orphans` and revert the public service to the unsplit configuration. That is why overlay use belongs in CI/CD rather than an operator-only command sequence.
 
