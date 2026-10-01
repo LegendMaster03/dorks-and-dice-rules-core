@@ -47,7 +47,7 @@ internal static class CharacterSubclassAdvancementProjector
                         relationship.RelatedConceptKey,
                         classAdvancement.ConceptKey,
                         StringComparison.OrdinalIgnoreCase)))
-                .Select(rule => new SubclassCandidate(rule, AcquisitionLevel(rule)))
+                .Select(rule => new SubclassCandidate(rule, AcquisitionLevel(rule.Catalog)))
                 .ToArray();
             if (compatible.Length == 0)
             {
@@ -230,10 +230,15 @@ internal static class CharacterSubclassAdvancementProjector
             : $"advancement.{classAdvancement.ConceptKey}.{occurrence}.subclass";
     }
 
-    internal static int? AcquisitionLevel(CharacterProjectionRule rule)
+    internal static int? AcquisitionLevel(ResolvedRuleCatalogItemView rule)
     {
-        if (rule.Document.ValueKind == JsonValueKind.Object
-            && CharacterProjectionJson.TryGetProperty(rule.Document, "_rulesCore", out var rulesCore)
+        if (rule.Document is not JsonElement document
+            || document.ValueKind != JsonValueKind.Object)
+        {
+            return null;
+        }
+
+        if (CharacterProjectionJson.TryGetProperty(document, "_rulesCore", out var rulesCore)
             && CharacterProjectionJson.TryGetProperty(rulesCore, "character", out var character))
         {
             var normalized = CharacterProjectionJson.Integer(character, "acquisitionLevel")
@@ -245,7 +250,7 @@ internal static class CharacterSubclassAdvancementProjector
         }
 
         var levels = ClassFamilyFeatureReferenceParser
-            .Project(rule.Catalog.EntityType, rule.Document)
+            .Project(rule.EntityType, document)
             .Where(feature => feature.Level is > 0)
             .Select(feature => feature.Level!.Value)
             .ToArray();
