@@ -51,17 +51,8 @@ internal static class CharacterSubclassAdvancementNormalizer
             }
 
             var parent = parents[0];
-            if (string.IsNullOrWhiteSpace(advancement.ParentConceptKey))
-            {
-                normalized.Add(advancement with { Level = 0 });
-                conflicts.Add(Conflict(
-                    rule.ConceptKey,
-                    parent.RelatedConceptKey,
-                    "subclass-parent-missing",
-                    $"Subclass '{rule.DisplayName}' must be attached to its parent Class '{parent.RelatedDisplayName}'."));
-                continue;
-            }
-            if (!string.Equals(
+            if (!string.IsNullOrWhiteSpace(advancement.ParentConceptKey)
+                && !string.Equals(
                     advancement.ParentConceptKey.Trim(),
                     parent.RelatedConceptKey,
                     StringComparison.OrdinalIgnoreCase))
@@ -112,7 +103,11 @@ internal static class CharacterSubclassAdvancementNormalizer
                     "subclass-parent-level-mismatch",
                     $"Subclass '{rule.DisplayName}' supplied level {advancement.Level}, but its parent Class '{parent.RelatedDisplayName}' is level {parentLevel}. Subclass progression follows the parent Class."));
             }
-            normalized.Add(advancement with { Level = parentLevel });
+            normalized.Add(advancement with
+            {
+                Level = parentLevel,
+                ParentConceptKey = parent.RelatedConceptKey
+            });
         }
 
         return new CharacterSubclassAdvancementNormalization(
