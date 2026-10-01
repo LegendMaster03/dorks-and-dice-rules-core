@@ -62,6 +62,7 @@ internal static class CharacterSubclassAdvancementProjector
                         value.ParentConceptKey,
                         classAdvancement.ConceptKey,
                         StringComparison.OrdinalIgnoreCase)
+                    && ParentOccurrenceMatches(value, classAdvancement)
                     && ruleByConcept.TryGetValue(value.ConceptKey, out var selectedRule)
                     && string.Equals(
                         selectedRule.Catalog.EntityType,
@@ -130,7 +131,7 @@ internal static class CharacterSubclassAdvancementProjector
                     supplied);
                 AddConflict(
                     context,
-                    classAdvancement.ConceptKey,
+                    classAdvancement,
                     supplied,
                     "invalid-runtime-choice",
                     $"'{supplied}' is not an available Subclass for {classRule.Catalog.DisplayName} at level {classAdvancement.Level}.");
@@ -166,7 +167,7 @@ internal static class CharacterSubclassAdvancementProjector
         {
             AddConflict(
                 context,
-                classAdvancement.ConceptKey,
+                classAdvancement,
                 structurallySelected.ConceptKey,
                 "subclass-parent-mismatch",
                 $"Selected Subclass '{structurallySelected.ConceptKey}' is not compatible with {classRule.Catalog.DisplayName}.");
@@ -176,7 +177,7 @@ internal static class CharacterSubclassAdvancementProjector
         {
             AddConflict(
                 context,
-                classAdvancement.ConceptKey,
+                classAdvancement,
                 structurallySelected.ConceptKey,
                 "subclass-acquisition-unresolved",
                 $"Rules Core can not determine the effective acquisition level for {selectedCandidate.Rule.Catalog.DisplayName}.");
@@ -197,11 +198,26 @@ internal static class CharacterSubclassAdvancementProjector
         {
             AddConflict(
                 context,
-                classAdvancement.ConceptKey,
+                classAdvancement,
                 selectedCandidate.Rule.Catalog.ConceptKey,
                 "subclass-acquisition-level",
                 $"{selectedCandidate.Rule.Catalog.DisplayName} becomes available at {classRule.Catalog.DisplayName} level {acquisitionLevel}; the current Class level is {classAdvancement.Level}.");
         }
+    }
+
+    private static bool ParentOccurrenceMatches(
+        CharacterAdvancementFactInput subclassAdvancement,
+        CharacterAdvancementFactInput classAdvancement)
+    {
+        if (string.IsNullOrWhiteSpace(subclassAdvancement.ParentOccurrenceKey))
+        {
+            return true;
+        }
+
+        return string.Equals(
+            subclassAdvancement.ParentOccurrenceKey.Trim(),
+            classAdvancement.OccurrenceKey?.Trim(),
+            StringComparison.Ordinal);
     }
 
     private static CharacterChoiceView Choice(
@@ -259,12 +275,15 @@ internal static class CharacterSubclassAdvancementProjector
 
     private static void AddConflict(
         CharacterProjectionContext context,
-        string classConceptKey,
+        CharacterAdvancementFactInput classAdvancement,
         string subclassConceptKey,
         string kind,
         string message)
     {
-        var conflictKey = $"conflict.advancement.{classConceptKey}.subclass.{kind}";
+        var occurrenceSegment = string.IsNullOrWhiteSpace(classAdvancement.OccurrenceKey)
+            ? string.Empty
+            : $".{classAdvancement.OccurrenceKey.Trim()}";
+        var conflictKey = $"conflict.advancement.{classAdvancement.ConceptKey}{occurrenceSegment}.subclass.{kind}";
         if (context.Conflicts.Any(value =>
                 string.Equals(value.ConflictKey, conflictKey, StringComparison.Ordinal)))
         {
@@ -276,7 +295,7 @@ internal static class CharacterSubclassAdvancementProjector
             kind,
             message,
             [],
-            [classConceptKey, subclassConceptKey]));
+            [classAdvancement.ConceptKey, subclassConceptKey]));
     }
 
     private sealed record SubclassCandidate(
