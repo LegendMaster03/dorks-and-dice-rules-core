@@ -1,5 +1,6 @@
 using System.Text.Json;
 using RulesCore.Application.Rules;
+using RulesCore.Infrastructure.Rules.CharacterProjection;
 
 namespace RulesCore.Infrastructure.Rules;
 
@@ -72,11 +73,16 @@ public sealed class CharacterAdvancementEligibilityService(
         CharacterAdvancementEligibilityRequest request,
         CharacterRulesProjectionView projected)
     {
-        var prerequisite = projected.Prerequisites.FirstOrDefault(value =>
+        var projectedPrerequisite = projected.Prerequisites.FirstOrDefault(value =>
             string.Equals(
                 value.ConceptKey,
                 candidate.ConceptKey,
                 StringComparison.OrdinalIgnoreCase));
+        var prerequisite = CharacterCandidatePrerequisiteSupplement.Project(
+            candidate,
+            catalog,
+            request.Character,
+            projectedPrerequisite);
         var conflicts = projected.Conflicts
             .Where(value => value.RelatedConceptKeys.Any(key =>
                 string.Equals(key, candidate.ConceptKey, StringComparison.OrdinalIgnoreCase)))
