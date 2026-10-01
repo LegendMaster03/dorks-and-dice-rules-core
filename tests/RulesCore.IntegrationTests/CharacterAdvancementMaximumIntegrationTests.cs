@@ -145,6 +145,23 @@ public sealed class CharacterAdvancementMaximumIntegrationTests
         Assert.DoesNotContain(atMaximum.Conflicts, value =>
             value.ConflictKey == $"conflict.{conceptKey}.maximum-level");
 
+        var twoOccurrencesAtMaximum = await projection.ResolveGlobalAsync(
+            new CharacterRulesProjectionRequest(
+                Advancements:
+                [
+                    new CharacterAdvancementFactInput(
+                        conceptKey,
+                        expectedMaximum,
+                        OccurrenceKey: "class-occurrence-a"),
+                    new CharacterAdvancementFactInput(
+                        conceptKey,
+                        expectedMaximum,
+                        OccurrenceKey: "class-occurrence-b")
+                ]),
+            userId: null);
+        Assert.DoesNotContain(twoOccurrencesAtMaximum.Conflicts, value =>
+            value.ConflictKey == $"conflict.{conceptKey}.maximum-level");
+
         var aboveMaximum = await projection.ResolveGlobalAsync(
             new CharacterRulesProjectionRequest(
                 Advancements:
