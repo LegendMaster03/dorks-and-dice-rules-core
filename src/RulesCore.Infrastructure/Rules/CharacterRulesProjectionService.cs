@@ -67,7 +67,11 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         ResolvedRulesCatalogView rules,
         CharacterMechanicsCatalogView mechanicCatalog)
     {
-        var context = new CharacterProjectionContext(request);
+        var subclassNormalization = CharacterSubclassAdvancementNormalizer.Normalize(
+            request,
+            rules.Rules);
+        var context = new CharacterProjectionContext(subclassNormalization.Request);
+        context.Conflicts.AddRange(subclassNormalization.Conflicts);
         var effectiveMechanicCatalog =
             CharacterMechanicsConsumerBoundary.ProjectEffective(mechanicCatalog);
         CharacterCoreMechanicsResolver.SeedCallerCapabilities(context);
