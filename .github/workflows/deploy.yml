@@ -122,12 +122,10 @@ jobs:
             exit 1
           fi
 
-          for required_key in RulesCorePrivate__Network RulesCorePrivate__DatabaseNetwork; do
-            if ! grep -q "^${required_key}=" "$ENV_FILE"; then
-              echo "Rules Core private deployment configuration is missing: ${required_key}"
-              exit 1
-            fi
-          done
+          if ! grep -q '^RulesCorePrivate__Network=' "$ENV_FILE"; then
+            echo "Rules Core private deployment configuration is missing: RulesCorePrivate__Network"
+            exit 1
+          fi
 
           docker compose \
             --project-name dorks-and-dice-rules-core \
