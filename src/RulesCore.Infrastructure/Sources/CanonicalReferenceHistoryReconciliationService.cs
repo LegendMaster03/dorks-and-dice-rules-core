@@ -9,7 +9,8 @@ namespace RulesCore.Infrastructure.Sources;
 /// <summary>
 /// Reconciles logical reference histories without destructively merging canonical entities.
 /// Same normalized names and compatible categories are connected by revision history by default;
-/// persisted same-name-different-entity decisions prevent automatic bridges across homonyms.
+/// persisted same-name-different-entity decisions and explicit variant/reprint relationships
+/// prevent automatic bridges across identities that are known to remain distinct.
 /// </summary>
 internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDbContext dbContext)
 {
@@ -130,7 +131,7 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
             var separationRightRoot = union.Find(separation.RightId);
             if (separationLeftRoot == separationRightRoot)
             {
-                // An authoritative non-automatic relationship already connects this pair. Do not
+                // An authoritative same-history relationship already connects this pair. Do not
                 // make the conflict worse, but do not rewrite authoritative history here either.
                 continue;
             }
@@ -299,7 +300,13 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
                   AND canonical_entity_id IS NOT NULL
                   AND related_canonical_entity_id IS NOT NULL
                   AND canonical_entity_id = ANY(@ids)
-                  AND related_canonical_entity_id = ANY(@ids);
+                  AND related_canonical_entity_id = ANY(@ids)
+                UNION
+                SELECT from_canonical_entity_id, to_canonical_entity_id
+                FROM canonical_entity_relationship
+                WHERE relationship_kind IN ('variant', 'reprint')
+                  AND from_canonical_entity_id = ANY(@ids)
+                  AND to_canonical_entity_id = ANY(@ids);
                 """;
             AddParameter(command, "@ids", canonicalEntityIds.ToArray());
             var rows = new List<SeparationRow>();

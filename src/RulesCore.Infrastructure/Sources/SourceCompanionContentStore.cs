@@ -122,10 +122,32 @@ internal sealed class SourceCompanionContentStore(RulesCoreDbContext dbContext)
             return;
         }
 
-        var packageIds = contents.Select(value => value.SourcePackageId).Distinct().ToArray();
+        var targetsByContent = contents.ToDictionary(
+            value => value.Id,
+            value => DeserializeTargets(value.TargetIdentityJson));
+        var targetTypes = targetsByContent.Values
+            .SelectMany(value => value)
+            .Select(value => value.EntityType)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var targetSourceCodes = targetsByContent.Values
+            .SelectMany(value => value)
+            .Select(value => value.SourceCode)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        if (targetTypes.Length == 0 || targetSourceCodes.Length == 0)
+        {
+            return;
+        }
+
+        // Companion ownership and authorization remain package-scoped, but the rule-bearing target
+        // can legitimately have been imported through another package. Resolve by source-native
+        // identity rather than requiring companion and mechanics to share a SourcePackage row.
         var entities = await dbContext.SourceEntities
             .AsNoTracking()
-            .Where(value => packageIds.Contains(value.SourcePackageId))
+            .Where(value => targetTypes.Contains(value.EntityType)
+                && value.SourceCode != null
+                && targetSourceCodes.Contains(value.SourceCode))
             .Select(value => new CandidateEntity(
                 value.Id,
                 value.SourcePackageId,
@@ -151,13 +173,17 @@ internal sealed class SourceCompanionContentStore(RulesCoreDbContext dbContext)
         {
             foreach (var content in contents)
             {
-                var targets = DeserializeTargets(content.TargetIdentityJson);
+                if (!targetsByContent.TryGetValue(content.Id, out var targets))
+                {
+                    continue;
+                }
+
                 foreach (var target in targets)
                 {
                     var targetType = CanonicalSourceIdentity.NormalizeIdentityPart(target.EntityType);
                     var targetName = CanonicalSourceIdentity.NormalizeIdentityPart(target.Name);
                     var targetSource = CanonicalSourceIdentity.NormalizeIdentityPart(target.SourceCode);
-                    foreach (var entity in entities.Where(value => value.SourcePackageId == content.SourcePackageId))
+                    foreach (var entity in entities)
                     {
                         if (!string.Equals(
                                 CanonicalSourceIdentity.NormalizeIdentityPart(entity.EntityType),
@@ -335,12 +361,12 @@ internal sealed class SourceCompanionContentStore(RulesCoreDbContext dbContext)
                   AND (
                         package.is_public
                         OR (
-                            @user_id IS NOT NULL
+                            CAST(@user_id AS text) IS NOT NULL
                             AND EXISTS (
                                 SELECT 1
                                 FROM user_source_grant grant_row
                                 WHERE grant_row.source_package_id = package.source_package_id
-                                  AND grant_row.user_id = @user_id)))
+                                  AND grant_row.user_id = CAST(@user_id AS text))))
                 ORDER BY content.source_companion_content_id,
                          attachment.source_entity_revision_id DESC;
                 """;
