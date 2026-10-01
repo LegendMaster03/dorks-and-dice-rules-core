@@ -20,16 +20,19 @@ public sealed class CanonicalDataReconciliationService(RulesCoreDbContext dbCont
 
     public async Task RunStartupBackfillAsync(CancellationToken cancellationToken = default)
     {
-        await EnsureStartupBackfillSchemaAsync(cancellationToken);
-
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
         if (openedHere) await connection.OpenAsync(cancellationToken);
         try
         {
+            // Acquire ownership before even creating the marker table. PostgreSQL's
+            // CREATE TABLE IF NOT EXISTS can still race at the catalog level when two fresh
+            // processes execute it concurrently against a database that has never run this
+            // backfill.
             await SetStartupLockAsync(connection, acquire: true, cancellationToken);
             try
             {
+                await EnsureStartupBackfillSchemaAsync(cancellationToken);
                 if (await HasCompletedStartupBackfillAsync(connection, cancellationToken))
                 {
                     return;
