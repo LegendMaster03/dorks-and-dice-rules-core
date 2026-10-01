@@ -80,6 +80,32 @@ public sealed class CharacterAdvancementEligibilityServiceTests
     }
 
     [Fact]
+    public async Task PrestigeEligibilityRemainsUnresolvedUntilPrerequisiteDefinitionIsComplete()
+    {
+        var prestigeConceptKey = "prestigeClass.incomplete";
+        var candidate = Rule(
+            prestigeConceptKey,
+            "prestigeClass",
+            "Incomplete Prestige",
+            "{}",
+            []);
+        var service = new CharacterAdvancementEligibilityService(
+            new FakeCatalog(candidate),
+            new RecordingProjectionService());
+
+        var result = await service.EvaluateGlobalAsync(
+            new CharacterAdvancementEligibilityRequest(
+                prestigeConceptKey,
+                new CharacterRulesProjectionRequest()),
+            userId: null);
+
+        Assert.NotNull(result);
+        Assert.Equal(CharacterAdvancementEligibilityStates.Unresolved, result!.State);
+        Assert.Null(result.Eligible);
+        Assert.Null(result.Prerequisites);
+    }
+
+    [Fact]
     public async Task PrestigeEligibilityConsumesNormalizedFeatRequirement()
     {
         var prestigeConceptKey = "prestigeClass.loremaster";
@@ -88,7 +114,7 @@ public sealed class CharacterAdvancementEligibilityServiceTests
             prestigeConceptKey,
             "prestigeClass",
             "Loremaster",
-            "{}",
+            CompletePrestigeDocument(),
             []);
         var catalog = new FakeCatalog(candidate);
         var projection = new RecordingProjectionService(request =>
@@ -155,7 +181,7 @@ public sealed class CharacterAdvancementEligibilityServiceTests
             prestigeConceptKey,
             "prestigeClass",
             "Feat Master",
-            "{}",
+            CompletePrestigeDocument(),
             []);
         var catalog = new FakeCatalog(candidate);
         var projection = new RecordingProjectionService(request =>
@@ -193,6 +219,17 @@ public sealed class CharacterAdvancementEligibilityServiceTests
         Assert.All(prerequisite.Requirements, value => Assert.Equal(2, value.GroupMatchCount));
         Assert.Equal(2, prerequisite.Requirements.Count(value => value.Satisfied == true));
     }
+
+    private static string CompletePrestigeDocument() =>
+        """
+        {
+          "_rulesCore": {
+            "character": {
+              "prerequisitesComplete": true
+            }
+          }
+        }
+        """;
 
     private static CharacterPrerequisiteView NormalizedFeatPrerequisite(
         string conceptKey,
