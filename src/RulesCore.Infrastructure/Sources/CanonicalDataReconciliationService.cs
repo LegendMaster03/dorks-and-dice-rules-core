@@ -18,6 +18,47 @@ public sealed class CanonicalDataReconciliationService(RulesCoreDbContext dbCont
     public Task ReconcileExistingCorpusAsync(CancellationToken cancellationToken = default) =>
         ReconcileExistingCorpusCoreAsync(cancellationToken);
 
+    public async Task<DateTimeOffset?> GetStartupBackfillCompletedAtAsync(
+        CancellationToken cancellationToken = default)
+    {
+        var connection = dbContext.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync(cancellationToken);
+        try
+        {
+            await using (var existsCommand = connection.CreateCommand())
+            {
+                existsCommand.CommandText =
+                    "SELECT to_regclass('public.canonical_data_reconciliation_backfill') IS NOT NULL;";
+                if (!Convert.ToBoolean(await existsCommand.ExecuteScalarAsync(cancellationToken)))
+                {
+                    return null;
+                }
+            }
+
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT completed_at
+                FROM canonical_data_reconciliation_backfill
+                WHERE backfill_key = @key;
+                """;
+            AddParameter(command, "@key", StartupBackfillKey);
+            var value = await command.ExecuteScalarAsync(cancellationToken);
+            return value switch
+            {
+                DateTimeOffset dateTimeOffset => dateTimeOffset,
+                DateTime dateTime => new DateTimeOffset(DateTime.SpecifyKind(dateTime, DateTimeKind.Utc)),
+                null or DBNull => null,
+                _ => throw new InvalidOperationException(
+                    "The canonical-data reconciliation completion timestamp has an unexpected database type.")
+            };
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
     public async Task RunStartupBackfillAsync(CancellationToken cancellationToken = default)
     {
         var connection = dbContext.Database.GetDbConnection();
