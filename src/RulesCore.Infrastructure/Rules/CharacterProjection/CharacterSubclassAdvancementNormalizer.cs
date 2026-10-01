@@ -83,7 +83,30 @@ internal static class CharacterSubclassAdvancementNormalizer
                     $"Subclass '{rule.DisplayName}' can not progress without its parent Class '{parent.RelatedDisplayName}'."));
                 continue;
             }
-            if (parentAdvancements.Length > 1)
+
+            CharacterAdvancementFactInput? parentAdvancement;
+            if (!string.IsNullOrWhiteSpace(advancement.ParentOccurrenceKey))
+            {
+                parentAdvancement = parentAdvancements.FirstOrDefault(value => string.Equals(
+                    value.OccurrenceKey?.Trim(),
+                    advancement.ParentOccurrenceKey.Trim(),
+                    StringComparison.Ordinal));
+                if (parentAdvancement is null)
+                {
+                    normalized.Add(advancement with { Level = 0 });
+                    conflicts.Add(Conflict(
+                        rule.ConceptKey,
+                        parent.RelatedConceptKey,
+                        "subclass-parent-occurrence-missing",
+                        $"Subclass '{rule.DisplayName}' refers to parent occurrence '{advancement.ParentOccurrenceKey}', but no matching '{parent.RelatedDisplayName}' occurrence was supplied."));
+                    continue;
+                }
+            }
+            else if (parentAdvancements.Length == 1)
+            {
+                parentAdvancement = parentAdvancements[0];
+            }
+            else
             {
                 normalized.Add(advancement with { Level = 0 });
                 conflicts.Add(Conflict(
@@ -94,19 +117,20 @@ internal static class CharacterSubclassAdvancementNormalizer
                 continue;
             }
 
-            var parentLevel = parentAdvancements[0].Level;
+            var parentLevel = parentAdvancement.Level;
             if (advancement.Level != parentLevel)
             {
                 conflicts.Add(Conflict(
                     rule.ConceptKey,
                     parent.RelatedConceptKey,
                     "subclass-parent-level-mismatch",
-                    $"Subclass '{rule.DisplayName}' supplied level {advancement.Level}, but its parent Class '{parent.RelatedDisplayName}' is level {parentLevel}. Subclass progression follows the parent Class."));
+                    $"Subclass '{rule.DisplayName}' supplied level {advancement.Level}, but its parent Class '{parent.RelatedDisplayName}' occurrence is level {parentLevel}. Subclass progression follows the parent Class."));
             }
             normalized.Add(advancement with
             {
                 Level = parentLevel,
-                ParentConceptKey = parent.RelatedConceptKey
+                ParentConceptKey = parent.RelatedConceptKey,
+                ParentOccurrenceKey = parentAdvancement.OccurrenceKey
             });
         }
 
