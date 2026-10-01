@@ -5,6 +5,7 @@ namespace RulesCore.Web;
 
 public enum RulesCoreApiSurfaceMode
 {
+    Compatibility,
     Combined,
     PublicOnly,
     PrivateOnly
@@ -12,8 +13,7 @@ public enum RulesCoreApiSurfaceMode
 
 /// <summary>
 /// Marker for Rules Core endpoints that are deliberately part of the stable consumer API.
-/// Unmarked /api endpoints are private by default unless they are one of the existing public route
-/// patterns retained below.
+/// Unmarked /api endpoints are private by default once the hardened API boundary is activated.
 /// </summary>
 public sealed class PublicRulesCoreApiMetadata
 {
@@ -32,12 +32,15 @@ public static class RulesCoreApiEndpointConventionExtensions
 
 /// <summary>
 /// Transport-level separation between the stable Rules Core consumer API and first-party private
-/// API surfaces. Existing public routes are enumerated explicitly. Any new /api route is private
-/// unless it is deliberately marked public or added to the public route set.
+/// API surfaces. Existing public routes are enumerated explicitly. Once hardened mode is enabled,
+/// any new /api route is private unless it is deliberately marked public or added to the public
+/// route set.
 ///
-/// Private access requires a target-scoped authentication context that the Site created through an
-/// explicitly configured private tunnel. Ordinary Tool delegation provenance is intentionally not
-/// sufficient.
+/// Compatibility mode is the migration-safe default so this foundation can be deployed before the
+/// current Rules Wiki delegation path is replaced. Combined, PublicOnly, and PrivateOnly modes
+/// enforce the private boundary. Private access then requires a target-scoped authentication
+/// context that the Site created through an explicitly configured private tunnel. Ordinary Tool
+/// delegation provenance is intentionally not sufficient.
 /// </summary>
 public static class RulesCoreApiBoundary
 {
@@ -87,7 +90,7 @@ public static class RulesCoreApiBoundary
         var configured = configuration[ApiSurfaceConfigurationKey];
         if (string.IsNullOrWhiteSpace(configured))
         {
-            return RulesCoreApiSurfaceMode.Combined;
+            return RulesCoreApiSurfaceMode.Compatibility;
         }
 
         if (Enum.TryParse<RulesCoreApiSurfaceMode>(configured, ignoreCase: true, out var mode)
@@ -97,7 +100,7 @@ public static class RulesCoreApiBoundary
         }
 
         throw new InvalidOperationException(
-            $"{ApiSurfaceConfigurationKey} must be Combined, PublicOnly, or PrivateOnly.");
+            $"{ApiSurfaceConfigurationKey} must be Compatibility, Combined, PublicOnly, or PrivateOnly.");
     }
 
     public static bool Authorize(
@@ -107,6 +110,11 @@ public static class RulesCoreApiBoundary
     {
         var endpoint = httpContext.GetEndpoint();
         if (endpoint is null || !httpContext.Request.Path.StartsWithSegments("/api"))
+        {
+            return true;
+        }
+
+        if (surfaceMode == RulesCoreApiSurfaceMode.Compatibility)
         {
             return true;
         }
