@@ -8,7 +8,8 @@ public sealed record CharacterAdvancementFactInput(
     string ConceptKey,
     int Level,
     string? OccurrenceKey = null,
-    string? ParentConceptKey = null);
+    string? ParentConceptKey = null,
+    string? ParentOccurrenceKey = null);
 
 public sealed record CharacterRuntimeChoiceInput(
     string ChoiceKey,
@@ -63,90 +64,112 @@ public sealed record CharacterRulesProjectionRequest(
     IReadOnlyList<string>? ItemConceptKeys = null);
 
 public sealed record CharacterMechanicProvenanceView(
-    IReadOnlyList<CharacterMechanicSourceAttributionView> CanonicalConcept,
-    IReadOnlyList<CharacterMechanicSourceAttributionView> MechanicalProfile,
-    IReadOnlyList<CharacterMechanicSourceAttributionView> EffectiveRule);
+    IReadOnlyList<string> ConceptKeys,
+    IReadOnlyList<Guid> SourceEntityRevisionIds,
+    IReadOnlyList<Guid> RuleConceptSourceBindingIds);
 
 public sealed record CharacterMechanicContributionView(
     string ContributionKey,
-    string Label,
+    string SourceLabel,
     string Operation,
-    int? NumericValue,
+    decimal? NumericValue,
     string? TextValue,
     string? SourceConceptKey,
-    CharacterMechanicProvenanceView? Provenance = null,
-    string? StateKind = null,
-    string? ConditionKey = null);
+    CharacterMechanicProvenanceView Provenance);
+
+public sealed record CharacterMechanicRelationshipView(
+    string RelationshipKey,
+    string Kind,
+    string? ParentMechanicKey,
+    string? ChildMechanicKey,
+    string? SourceMechanicKey,
+    string? TargetMechanicKey,
+    string? SourceConceptKey,
+    string? TargetConceptKey,
+    CharacterMechanicProvenanceView Provenance);
 
 public sealed record CharacterResolvedMechanicView(
     string MechanicKey,
     string Kind,
     string DisplayName,
     string State,
-    int? NumericValue,
+    decimal? NumericValue,
     string? TextValue,
     string? Unit,
-    IReadOnlyList<string> MissingCharacterInputs,
-    IReadOnlyList<string> MissingCapabilities,
     IReadOnlyList<string> RequiredChoices,
-    IReadOnlyList<string> RequiredRolls,
+    IReadOnlyList<string> RequiredInputs,
+    IReadOnlyList<string> RequiredCapabilities,
+    IReadOnlyList<string> RelatedMechanicKeys,
     IReadOnlyList<CharacterMechanicContributionView> Contributions,
     CharacterMechanicProvenanceView Provenance,
     CharacterContextualHelpView? Help = null);
 
-public sealed record CharacterRuleEffectView(
-    string EffectKey,
-    string Kind,
-    string Operation,
-    string TargetKey,
-    int? NumericValue,
-    string? TextValue,
-    string? ConditionKey,
-    string? SourceConceptKey,
-    CharacterMechanicProvenanceView Provenance);
-
 public sealed record CharacterCapabilityView(
     string CapabilityKey,
     string DisplayName,
-    IReadOnlyList<string> GrantedByConceptKeys,
+    string State,
     CharacterMechanicProvenanceView Provenance);
 
 public sealed record CharacterGrantView(
     string GrantKey,
     string Kind,
-    string TargetKey,
     string DisplayName,
-    string? SourceConceptKey,
+    string State,
+    string? TargetConceptKey,
+    string? TargetMechanicKey,
+    CharacterMechanicProvenanceView Provenance);
+
+public sealed record CharacterRuleEffectView(
+    string EffectKey,
+    string Operation,
+    string? TargetMechanicKey,
+    decimal? NumericValue,
+    string? TextValue,
+    string? Condition,
     CharacterMechanicProvenanceView Provenance);
 
 public sealed record CharacterMovementModeView(
     string MovementKey,
     string DisplayName,
     string State,
-    int? Value,
+    decimal? Speed,
     string? Unit,
-    IReadOnlyList<CharacterMechanicContributionView> Contributions,
+    string? GoverningMechanicKey,
     CharacterMechanicProvenanceView Provenance);
 
 public sealed record CharacterQualificationView(
     string QualificationKey,
-    string Category,
     string DisplayName,
-    bool? IsQualified,
     string State,
-    IReadOnlyList<string> GrantedByConceptKeys,
+    bool? Qualified,
+    IReadOnlyList<string> RequiredMechanicKeys,
+    IReadOnlyList<string> RequiredCapabilityKeys,
     CharacterMechanicProvenanceView Provenance);
 
 public sealed record CharacterAttackResolutionView(
-    string? TargetDefenseKey,
-    string RollMode,
-    IReadOnlyList<string> TargetStateKeys);
+    string AttackKind,
+    string? AttackAbilityMechanicKey,
+    string? AttackAbilityKey,
+    string? AttackBonusMechanicKey,
+    string? AttackBonusExpression,
+    string? DamageAbilityMechanicKey,
+    string? DamageAbilityKey,
+    bool AddsAbilityModifierToDamage,
+    string? DamageModifierExpression,
+    string? SaveAbilityKey,
+    string? SaveDcMechanicKey,
+    string? SaveDcExpression,
+    string? Recharge,
+    string? AreaOfEffectShape,
+    decimal? AreaOfEffectSize,
+    string? AreaOfEffectUnit);
 
 public sealed record CharacterActionView(
     string ActionKey,
     string DisplayName,
-    string? ActionType,
+    string Kind,
     string State,
+    string? ActionEconomy,
     string? AttackMechanicKey,
     string? DamageExpression,
     string? DamageType,
