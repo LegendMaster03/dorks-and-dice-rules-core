@@ -7,69 +7,24 @@ public static class FiveEToolsDocumentInspector
 {
     public const string AccountSourceFallbackCode = "user-source";
 
-    // These are the entity arrays accepted by the JSON source representation adapter. Most are
-    // native 5e.tools families. prestigeClass and npcClass are canonical legacy extensions emitted
-    // by the 3.x SRD normalization pipeline so they can use the same stored-source import path.
-    // Generic arrays such as "data" are deliberately excluded; corpus bodies are handled separately
-    // by the corpus adapter once their book/adventure identity is known.
+    // Rule-bearing entity arrays accepted by the JSON source representation adapter. Confirmed
+    // descriptive companion arrays are deliberately excluded and modeled separately below.
     private static readonly HashSet<string> KnownEntityArrays = new(StringComparer.OrdinalIgnoreCase)
     {
-        "action",
-        "adventure",
-        "background",
-        "baseitem",
-        "bastion",
-        "book",
-        "boon",
-        "card",
-        "charoption",
-        "citation",
-        "class",
-        "classFeature",
-        "condition",
-        "cult",
-        "deck",
-        "deity",
-        "disease",
-        "encounter",
-        "facility",
-        "feat",
-        "hazard",
-        "item",
-        "itemEntry",
-        "itemGroup",
-        "language",
-        "legendaryGroup",
-        "magicvariant",
-        "monster",
+        "action", "adventure", "background", "baseitem", "bastion", "book", "boon", "card",
+        "charoption", "citation", "class", "classFeature", "condition", "cult", "deck", "deity",
+        "disease", "encounter", "facility", "feat", "hazard", "item", "itemEntry", "itemGroup",
+        "language", "legendaryGroup", "magicvariant", "monster", "name", "npcClass", "object",
+        "optionalfeature", "prestigeClass", "psionic", "quickref", "race", "recipe", "reward",
+        "sense", "skill", "species", "spell", "status", "subclass", "subclassFeature", "subrace",
+        "subspecies", "table", "tableGroup", "trap", "variantrule", "vehicle", "vehicleUpgrade"
+    };
+
+    private static readonly HashSet<string> KnownCompanionArrays = new(StringComparer.OrdinalIgnoreCase)
+    {
         "monsterFluff",
-        "name",
-        "npcClass",
-        "object",
-        "optionalfeature",
-        "prestigeClass",
-        "psionic",
-        "quickref",
-        "race",
         "raceFluff",
-        "recipe",
-        "reward",
-        "sense",
-        "skill",
-        "species",
-        "spell",
-        "spellFluff",
-        "status",
-        "subclass",
-        "subclassFeature",
-        "subrace",
-        "subspecies",
-        "table",
-        "tableGroup",
-        "trap",
-        "variantrule",
-        "vehicle",
-        "vehicleUpgrade"
+        "spellFluff"
     };
 
     public static IReadOnlyList<string> DiscoverSourceCodes(
@@ -88,7 +43,7 @@ public static class FiveEToolsDocumentInspector
         var codes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var property in document.RootElement.EnumerateObject())
         {
-            if (!IsImportableArray(property))
+            if (!IsSourceBearingArray(property))
             {
                 continue;
             }
@@ -131,7 +86,10 @@ public static class FiveEToolsDocumentInspector
         var included = NormalizeSourceCodes(includedSourceCodes);
         if (included.Count == 0)
         {
-            selectedEntityCount = CountImportableEntities(document.RootElement);
+            // Legacy callers use this count to decide whether a filtered document is worth
+            // retaining. Companion-only documents therefore count as selected source records even
+            // though companions are not rule-bearing entities.
+            selectedEntityCount = CountSelectedSourceRecords(document.RootElement);
             return json;
         }
 
@@ -145,12 +103,13 @@ public static class FiveEToolsDocumentInspector
             foreach (var property in document.RootElement.EnumerateObject())
             {
                 writer.WritePropertyName(property.Name);
-                if (!IsImportableArray(property))
+                if (!IsSourceBearingArray(property))
                 {
                     property.Value.WriteTo(writer);
                     continue;
                 }
 
+                var isRuleEntityArray = IsImportableArray(property);
                 writer.WriteStartArray();
                 foreach (var item in property.Value.EnumerateArray())
                 {
@@ -166,7 +125,8 @@ public static class FiveEToolsDocumentInspector
 
                     var sourceCode = GetSourceCode(item, fallbackSourceCode);
                     if (!included.Contains(sourceCode)
-                        || (applyOfficialMembership
+                        || (isRuleEntityArray
+                            && applyOfficialMembership
                             && !OfficialSrdMembershipCatalog.IsManuallyConfirmed(
                                 sourceCode,
                                 property.Name,
@@ -220,6 +180,13 @@ public static class FiveEToolsDocumentInspector
         KnownEntityArrays.Contains(property.Name)
         && property.Value.ValueKind == JsonValueKind.Array;
 
+    public static bool IsCompanionArray(JsonProperty property) =>
+        KnownCompanionArrays.Contains(property.Name)
+        && property.Value.ValueKind == JsonValueKind.Array;
+
+    public static bool IsSourceBearingArray(JsonProperty property) =>
+        IsImportableArray(property) || IsCompanionArray(property);
+
     private static bool TryGetExplicitSourceCode(JsonElement item, out string sourceCode)
     {
         sourceCode = string.Empty;
@@ -241,12 +208,12 @@ public static class FiveEToolsDocumentInspector
         string.Equals(value?.Trim(), "5.1", StringComparison.OrdinalIgnoreCase)
         || string.Equals(value?.Trim(), "5.2.1", StringComparison.OrdinalIgnoreCase);
 
-    private static int CountImportableEntities(JsonElement root)
+    private static int CountSelectedSourceRecords(JsonElement root)
     {
         var count = 0;
         foreach (var property in root.EnumerateObject())
         {
-            if (!IsImportableArray(property))
+            if (!IsSourceBearingArray(property))
             {
                 continue;
             }
