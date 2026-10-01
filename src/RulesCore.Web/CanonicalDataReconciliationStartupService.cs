@@ -6,8 +6,9 @@ using RulesCore.Infrastructure.Sources;
 namespace RulesCore.Web;
 
 /// <summary>
-/// One-shot startup reconciliation for data-model corrections that must also apply to an existing
-/// corpus. Each operation is idempotent so repeated process starts do not manufacture new history.
+/// Runs the versioned canonical-data backfill once per database. Database serialization inside the
+/// reconciliation service prevents the public and private Rules Core ingress processes from doing
+/// the same full-corpus work concurrently during deployment.
 /// </summary>
 public sealed class CanonicalDataReconciliationStartupService(IServiceScopeFactory scopeFactory)
     : IHostedService
@@ -17,7 +18,7 @@ public sealed class CanonicalDataReconciliationStartupService(IServiceScopeFacto
         await using var scope = scopeFactory.CreateAsyncScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
         await new CanonicalDataReconciliationService(dbContext)
-            .ReconcileExistingCorpusAsync(cancellationToken);
+            .RunStartupBackfillAsync(cancellationToken);
     }
 
     public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
