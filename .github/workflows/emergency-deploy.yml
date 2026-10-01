@@ -1,0 +1,47 @@
+name: Emergency Deploy Rules Core
+
+on:
+  push:
+    branches: [ main ]
+
+concurrency:
+  group: dorks-and-dice-rules-core-emergency
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, dorks-and-dice-rules-core]
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t dorks-and-dice-rules-core:latest -f src/RulesCore.Web/Dockerfile .
+
+      - name: Deploy
+        run: |
+          ENV_FILE=/mnt/HDDs/www/dorks-and-dice-rules-core/.env
+          docker compose \
+            --project-name dorks-and-dice-rules-core \
+            --env-file "$ENV_FILE" \
+            -f docker-compose.yml \
+            -f docker-compose.private-tunnel.yml \
+            up -d --force-recreate --remove-orphans
+
+      - name: Verify
+        run: |
+          ENV_FILE=/mnt/HDDs/www/dorks-and-dice-rules-core/.env
+          PRIVATE_NETWORK=$(grep '^RulesCorePrivate__Network=' "$ENV_FILE" | tail -n 1 | cut -d= -f2-)
+          for i in {1..90}; do
+            public=$(docker run --rm --network dorks-and-dice-backend curlimages/curl:8.12.1 -fsS --max-time 5 http://dorks-and-dice-rules-core:8080/ready 2>/dev/null || true)
+            private=$(docker run --rm --network "$PRIVATE_NETWORK" curlimages/curl:8.12.1 -fsS --max-time 5 http://dorks-and-dice-rules-core-private:8080/ready 2>/dev/null || true)
+            if echo "$public" | grep -q '"status":"ready"' && echo "$private" | grep -q '"status":"ready"'; then
+              echo "$public"
+              echo "$private"
+              exit 0
+            fi
+            sleep 2
+          done
+          docker logs --tail 200 dorks-and-dice-rules-core || true
+          docker logs --tail 200 dorks-and-dice-rules-core-private || true
+          exit 1
