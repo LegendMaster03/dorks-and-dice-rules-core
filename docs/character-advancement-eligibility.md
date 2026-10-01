@@ -51,22 +51,24 @@ The normal Character mechanics projection also emits a Class-bound `subclass` ch
 Character Sheet should therefore use two public contracts together:
 
 1. prospective Character mechanics projection identifies that the proposed Class level creates a required Subclass decision;
-2. the ordinary public rules catalog discovers effective Subclasses related by `parent-class`, and the eligibility endpoint evaluates those candidates for that Character and rules scope.
+2. the ordinary public rules catalog discovers effective Subclasses related by `parent-class`, and the eligibility endpoint evaluates the selected candidate for that Character and rules scope.
+
+A resolved runtime `subclass` choice means that a structurally available option was selected. It does not replace candidate eligibility evaluation. A consumer must not persist the Subclass occurrence unless the corresponding eligibility result is `eligible`.
 
 This keeps the decision trigger and candidate legality in Rules Core while leaving Character Sheet responsible for presenting the choice and persisting the accepted occurrence.
 
 ## Prestige Class
 
-Prestige Class eligibility uses the same effective prerequisite model as Character mechanics projection. Currently executable prerequisite kinds include:
+Prestige Class eligibility uses the same normalized effective prerequisite model as Character mechanics projection. Currently executable prerequisite kinds include:
 
 - ability score;
 - competency/skill ranks;
 - Class level;
-- simple named feat possession.
+- feat possession.
 
 Existing grouped prerequisite semantics are preserved, including `N of M` groups.
 
-Simple PCGen `PREFEAT` evidence that has not yet moved into the general source translator is normalized internally by the eligibility service into ordinary `feat` prerequisite entries. It is never exposed to public consumers as PCGen syntax. Complex feat selectors or source expressions that have not been reviewed remain unresolved rather than being guessed.
+Source-specific Prestige Class data is responsible for entering that normalized prerequisite model before the public eligibility contract consumes it. The eligibility service does not parse source-native prerequisite syntax. Unsupported or not-yet-normalized prerequisite expressions therefore remain unresolved rather than being guessed.
 
 This public support does not imply that every Prestige Class has complete effective prerequisite data. Character Sheet should not build the Prestige Class acquisition UI until the applicable Prestige Class data is ready.
 
