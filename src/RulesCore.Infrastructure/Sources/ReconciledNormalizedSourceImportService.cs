@@ -96,90 +96,115 @@ public sealed class ReconciledNormalizedSourceImportService(
             throw new InvalidDataException("Source representation content can not be empty.");
         }
         var contentSha = Convert.ToHexString(SHA256.HashData(artifact.Content)).ToLowerInvariant();
+        var blobLockIdentity = $"rules-core-source-content:{contentSha}";
 
-        await using var transaction = await dbContext.Database.BeginTransactionAsync(
-            IsolationLevel.Serializable,
-            cancellationToken);
+        // Package locking alone does not serialize two different packages that carry identical
+        // companion-only bytes. Acquire the global content lock before opening the serializable
+        // transaction so a waiter does not inherit a snapshot taken before the winning blob insert.
         await dbContext.Database.ExecuteSqlInterpolatedAsync(
-            $"SELECT pg_advisory_xact_lock(hashtextextended({packageKey}, 0));",
+            $"SELECT pg_advisory_lock(hashtextextended({blobLockIdentity}, 0));",
             cancellationToken);
-
-        var package = await dbContext.SourcePackages
-            .SingleOrDefaultAsync(value => value.Key == packageKey, cancellationToken);
-        if (package is null)
+        try
         {
-            package = new SourcePackage
-            {
-                Id = Guid.NewGuid(),
-                Key = packageKey,
-                DisplayName = Require(request.PackageDisplayName, 300),
-                Provider = Require(request.Provider, 200),
-                License = NormalizeOptional(request.License, 300),
-                IsPublic = request.IsPublic,
-                CreatedAt = DateTimeOffset.UtcNow
-            };
-            dbContext.SourcePackages.Add(package);
-            await dbContext.SaveChangesAsync(cancellationToken);
-        }
-        else
-        {
-            EnsurePackageMatches(package, request);
-        }
-
-        if (!await dbContext.SourceContentBlobs.AnyAsync(value => value.Sha256 == contentSha, cancellationToken))
-        {
-            dbContext.SourceContentBlobs.Add(new SourceContentBlob
-            {
-                Sha256 = contentSha,
-                ContentLength = artifact.Content.LongLength,
-                ContentBytes = artifact.Content,
-                CreatedAt = DateTimeOffset.UtcNow
-            });
-            await dbContext.SaveChangesAsync(cancellationToken);
-        }
-
-        var representation = await dbContext.SourceRepresentations
-            .SingleOrDefaultAsync(value => value.SourcePackageId == package.Id
-                && value.OriginIdentity == artifact.OriginIdentity
-                && value.ContentSha256 == contentSha,
+            await using var transaction = await dbContext.Database.BeginTransactionAsync(
+                IsolationLevel.Serializable,
                 cancellationToken);
-        if (representation is null)
-        {
-            var previousId = await dbContext.SourceRepresentations
-                .Where(value => value.SourcePackageId == package.Id
-                    && value.OriginIdentity == artifact.OriginIdentity)
-                .OrderByDescending(value => value.ImportedAt)
-                .Select(value => (Guid?)value.Id)
-                .FirstOrDefaultAsync(cancellationToken);
-            representation = new SourceRepresentation
-            {
-                Id = Guid.NewGuid(),
-                SourcePackageId = package.Id,
-                PreviousSourceRepresentationId = previousId,
-                FormatKey = Require(request.Representation.FormatKey, 80),
-                OriginIdentity = Require(artifact.OriginIdentity, 2000),
-                FileName = Require(artifact.FileName, 500),
-                SourceUri = NormalizeOptional(artifact.SourceUri, 2000),
-                MediaType = NormalizeOptional(artifact.MediaType, 200),
-                ContentSha256 = contentSha,
-                ContentLength = artifact.Content.LongLength,
-                MetadataJson = request.Representation.MetadataJson ?? "{}",
-                ImportedAt = DateTimeOffset.UtcNow
-            };
-            dbContext.SourceRepresentations.Add(representation);
-            await dbContext.SaveChangesAsync(cancellationToken);
-        }
+            await dbContext.Database.ExecuteSqlInterpolatedAsync(
+                $"SELECT pg_advisory_xact_lock(hashtextextended({packageKey}, 0));",
+                cancellationToken);
 
-        await transaction.CommitAsync(cancellationToken);
-        return new NormalizedSourceImportResult(
-            package.Id,
-            [],
-            [],
-            request.Representation.CompanionContents
-                .Select(value => value.SourceCode)
-                .Distinct(StringComparer.OrdinalIgnoreCase)
-                .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
-                .ToArray());
+            var package = await dbContext.SourcePackages
+                .SingleOrDefaultAsync(value => value.Key == packageKey, cancellationToken);
+            if (package is null)
+            {
+                package = new SourcePackage
+                {
+                    Id = Guid.NewGuid(),
+                    Key = packageKey,
+                    DisplayName = Require(request.PackageDisplayName, 300),
+                    Provider = Require(request.Provider, 200),
+                    License = NormalizeOptional(request.License, 300),
+                    IsPublic = request.IsPublic,
+                    CreatedAt = DateTimeOffset.UtcNow
+                };
+                dbContext.SourcePackages.Add(package);
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
+            else
+            {
+                EnsurePackageMatches(package, request);
+            }
+
+            await dbContext.Database.ExecuteSqlInterpolatedAsync($$"""
+                INSERT INTO source_content_blob (
+                    content_sha256, content_length, content_bytes, created_at)
+                VALUES (
+                    {{contentSha}},
+                    {{artifact.Content.LongLength}},
+                    {{artifact.Content}},
+                    {{DateTimeOffset.UtcNow}})
+                ON CONFLICT (content_sha256) DO NOTHING;
+                """, cancellationToken);
+
+            var storedBlobLength = await dbContext.SourceContentBlobs
+                .Where(value => value.Sha256 == contentSha)
+                .Select(value => value.ContentLength)
+                .SingleAsync(cancellationToken);
+            if (storedBlobLength != artifact.Content.LongLength)
+            {
+                throw new InvalidDataException(
+                    "A stored source-content blob has the same SHA-256 digest but a different byte length.");
+            }
+
+            var representation = await dbContext.SourceRepresentations
+                .SingleOrDefaultAsync(value => value.SourcePackageId == package.Id
+                    && value.OriginIdentity == artifact.OriginIdentity
+                    && value.ContentSha256 == contentSha,
+                    cancellationToken);
+            if (representation is null)
+            {
+                var previousId = await dbContext.SourceRepresentations
+                    .Where(value => value.SourcePackageId == package.Id
+                        && value.OriginIdentity == artifact.OriginIdentity)
+                    .OrderByDescending(value => value.ImportedAt)
+                    .Select(value => (Guid?)value.Id)
+                    .FirstOrDefaultAsync(cancellationToken);
+                representation = new SourceRepresentation
+                {
+                    Id = Guid.NewGuid(),
+                    SourcePackageId = package.Id,
+                    PreviousSourceRepresentationId = previousId,
+                    FormatKey = Require(request.Representation.FormatKey, 80),
+                    OriginIdentity = Require(artifact.OriginIdentity, 2000),
+                    FileName = Require(artifact.FileName, 500),
+                    SourceUri = NormalizeOptional(artifact.SourceUri, 2000),
+                    MediaType = NormalizeOptional(artifact.MediaType, 200),
+                    ContentSha256 = contentSha,
+                    ContentLength = artifact.Content.LongLength,
+                    MetadataJson = request.Representation.MetadataJson ?? "{}",
+                    ImportedAt = DateTimeOffset.UtcNow
+                };
+                dbContext.SourceRepresentations.Add(representation);
+                await dbContext.SaveChangesAsync(cancellationToken);
+            }
+
+            await transaction.CommitAsync(cancellationToken);
+            return new NormalizedSourceImportResult(
+                package.Id,
+                [],
+                [],
+                request.Representation.CompanionContents
+                    .Select(value => value.SourceCode)
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .OrderBy(value => value, StringComparer.OrdinalIgnoreCase)
+                    .ToArray());
+        }
+        finally
+        {
+            await dbContext.Database.ExecuteSqlInterpolatedAsync(
+                $"SELECT pg_advisory_unlock(hashtextextended({blobLockIdentity}, 0));",
+                CancellationToken.None);
+        }
     }
 
     private static void EnsurePackageMatches(SourcePackage package, ImportNormalizedSourceRequest request)
