@@ -10,6 +10,39 @@ public static class SourceAdministrationEndpointExtensions
 {
     public static void MapSourceAdministrationEndpoints(this WebApplication app)
     {
+        app.MapGet("/api/source-admin/import/reconciliation", async (
+            HttpContext httpContext,
+            CanonicalDataReconciliationMaintenanceJob maintenance,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireCorpusReconciliationAuthority(httpContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(await maintenance.GetStatusAsync(cancellationToken));
+        });
+
+        app.MapPost("/api/source-admin/import/reconciliation", async (
+            HttpContext httpContext,
+            CanonicalDataReconciliationMaintenanceJob maintenance,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireCorpusReconciliationAuthority(httpContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            var result = await maintenance.StartAsync(cancellationToken);
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return result.Started
+                ? Results.Accepted("/api/source-admin/import/reconciliation", result.Status)
+                : Results.Ok(result.Status);
+        });
+
         app.MapPost("/api/source-admin/import/preview", async (
             SourceAdminImportRequest request,
             HttpContext httpContext,
@@ -198,6 +231,19 @@ public static class SourceAdministrationEndpointExtensions
                 return AccessConflict(exception.Message);
             }
         });
+    }
+
+    private static IResult? RequireCorpusReconciliationAuthority(HttpContext httpContext)
+    {
+        var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext);
+        if (authenticationContext is null)
+        {
+            return Results.Unauthorized();
+        }
+
+        return SourceAdministrationAuthority.CanReconcileExistingCorpus(authenticationContext)
+            ? null
+            : Results.StatusCode(StatusCodes.Status403Forbidden);
     }
 
     private static IResult? RequireSourceAdministrationAuthority(
