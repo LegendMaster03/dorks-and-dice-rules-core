@@ -61,7 +61,7 @@ ToolHosting__ControlPlaneNetwork=dorks-and-dice-tool-control-plane
 
 `RulesCorePrivate__ToolHostBaseUrl` must resolve from the restricted control-plane network. It is used only for Site ticket introspection.
 
-The private instance sets `RulesCore__BootstrapBaseline=false` because the public and private instances share the same Rules Core database and baseline ownership remains with the normal deployment instance.
+The private instance sets `RulesCore__BootstrapBaseline=false` because the public and private instances share the same Rules Core database and baseline ownership remains with the normal deployment instance. Schema initialization remains safe when both instances start together because Rules Core already coordinates startup schema work with a PostgreSQL advisory lock and persisted schema revision.
 
 ## Starting the split deployment
 
@@ -96,6 +96,14 @@ ToolHosting:PrivateTunnels:{sourceToolKey}:{index} = {targetToolKey}
 For example, the Rules Wiki relationship is `rules-wiki -> rules-core`.
 
 The source uses Site only to exchange its short-lived source capability for a target-scoped Rules Core ticket. The actual Rules Core API request travels directly over the source/target private network.
+
+Private target tickets use the target's stable key-scoped introspection path, for example:
+
+```text
+/tool-host/registrations/rules-core/api/introspect
+```
+
+That path is intentionally independent of any historical application slug or UI integration metadata.
 
 ## Security invariants
 
