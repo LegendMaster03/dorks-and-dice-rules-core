@@ -17,7 +17,7 @@ internal static class CharacterPrerequisiteResolver
             var evaluated = prerequisite.Requirements
                 .Select(requirement => EvaluatePrerequisiteRequirement(context, requirement))
                 .ToArray();
-    
+
             var groupResults = evaluated
                 .GroupBy(requirement => requirement.GroupKey ?? requirement.RequirementKey, StringComparer.Ordinal)
                 .Select(group =>
@@ -35,7 +35,7 @@ internal static class CharacterPrerequisiteResolver
                     return result;
                 })
                 .ToArray();
-    
+
             bool? overall = groupResults.Any(value => value == false)
                 ? false
                 : groupResults.All(value => value == true)
@@ -44,7 +44,7 @@ internal static class CharacterPrerequisiteResolver
             var state = overall.HasValue
                 ? CharacterResolutionStates.Resolved
                 : CharacterResolutionStates.ApplicableUnresolved;
-    
+
             var resolved = prerequisite with
             {
                 State = state,
@@ -52,7 +52,7 @@ internal static class CharacterPrerequisiteResolver
                 Requirements = evaluated
             };
             context.Prerequisites[conceptKey] = resolved;
-    
+
             context.Qualifications[$"qualification.prerequisite.{conceptKey}"] =
                 new CharacterQualificationView(
                     $"qualification.prerequisite.{conceptKey}",
@@ -62,7 +62,7 @@ internal static class CharacterPrerequisiteResolver
                     state,
                     [],
                     prerequisite.Provenance);
-    
+
             if (overall == false && context.IsSelected(conceptKey))
             {
                 var conflictKey = $"conflict.prerequisite.{conceptKey}";
@@ -79,7 +79,7 @@ internal static class CharacterPrerequisiteResolver
             }
         }
     }
-    
+
     private static CharacterPrerequisiteRequirementView EvaluatePrerequisiteRequirement(
         CharacterProjectionContext context,
         CharacterPrerequisiteRequirementView requirement)
@@ -94,7 +94,7 @@ internal static class CharacterPrerequisiteResolver
                 Reason = "The normalized prerequisite uses an operator or value shape that the Character resolver does not yet evaluate."
             };
         }
-    
+
         int actual;
         string actualDescription;
         switch (requirement.Kind)
@@ -112,7 +112,7 @@ internal static class CharacterPrerequisiteResolver
                 }
                 actualDescription = requirement.TargetKey;
                 break;
-    
+
             case "skill-ranks":
                 if (!context.HasCompetencyRanksInput
                     || string.IsNullOrWhiteSpace(requirement.TextValue)
@@ -130,7 +130,7 @@ internal static class CharacterPrerequisiteResolver
                 }
                 actualDescription = competencyConceptKey ?? requirement.TextValue;
                 break;
-    
+
             case "class-level":
                 if (string.IsNullOrWhiteSpace(requirement.TextValue)
                     || !context.TryFindAdvancementLevel(requirement.TextValue, out actual))
@@ -144,7 +144,31 @@ internal static class CharacterPrerequisiteResolver
                 }
                 actualDescription = requirement.TextValue;
                 break;
-    
+
+            case "feat":
+            case "feat-possession":
+                var featIdentity = requirement.TargetKey ?? requirement.TextValue;
+                if (string.IsNullOrWhiteSpace(featIdentity))
+                {
+                    return requirement with
+                    {
+                        Satisfied = null,
+                        State = CharacterResolutionStates.ApplicableUnresolved,
+                        Reason = "The normalized feat prerequisite does not identify the required feat."
+                    };
+                }
+
+                actual = context.SelectedConcepts.Any(conceptKey =>
+                    context.RuleEntityTypes.TryGetValue(conceptKey, out var entityType)
+                    && string.Equals(entityType, "feat", StringComparison.OrdinalIgnoreCase)
+                    && (string.Equals(conceptKey, featIdentity, StringComparison.OrdinalIgnoreCase)
+                        || (context.RuleDisplayNames.TryGetValue(conceptKey, out var displayName)
+                            && string.Equals(displayName, featIdentity, StringComparison.OrdinalIgnoreCase))))
+                    ? 1
+                    : 0;
+                actualDescription = $"Feat '{featIdentity}' possession";
+                break;
+
             default:
                 return requirement with
                 {
@@ -153,7 +177,7 @@ internal static class CharacterPrerequisiteResolver
                     Reason = $"Prerequisite kind '{requirement.Kind}' is preserved but is not yet executable."
                 };
         }
-    
+
         var satisfied = actual >= threshold;
         return requirement with
         {
@@ -162,5 +186,4 @@ internal static class CharacterPrerequisiteResolver
             Reason = $"{actualDescription} is {actual}; requirement is >= {threshold}."
         };
     }
-    
 }

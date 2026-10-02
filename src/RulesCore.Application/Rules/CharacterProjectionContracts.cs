@@ -8,7 +8,8 @@ public sealed record CharacterAdvancementFactInput(
     string ConceptKey,
     int Level,
     string? OccurrenceKey = null,
-    string? ParentConceptKey = null);
+    string? ParentConceptKey = null,
+    string? ParentOccurrenceKey = null);
 
 public sealed record CharacterRuntimeChoiceInput(
     string ChoiceKey,
