@@ -13,8 +13,6 @@ public sealed class HostedToolAuthenticationMiddleware(RequestDelegate next)
         IToolHostAuthenticationClient authenticationClient,
         IConfiguration configuration)
     {
-        RulesCoreServerTiming.EnsureRequestTiming(httpContext);
-
         var surfaceMode = RulesCoreApiBoundary.ResolveMode(configuration);
         var tickets = httpContext.Request.Headers[ToolHostAuthenticationHeaders.Ticket];
         var introspectionPaths = httpContext.Request.Headers[ToolHostAuthenticationHeaders.IntrospectionPath];
