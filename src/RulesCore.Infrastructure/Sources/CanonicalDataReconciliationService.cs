@@ -101,7 +101,8 @@ public sealed class CanonicalDataReconciliationService(RulesCoreDbContext dbCont
         var companions = new SourceCompanionContentStore(dbContext);
         await companions.EnsureSchemaAsync(cancellationToken);
         await new LegacyStandaloneFluffMigrationService(dbContext).MigrateAsync(cancellationToken);
-        await companions.ResolvePendingAsync(null, cancellationToken);
+        await new HistoricalCompanionContentReconciliationService(dbContext)
+            .ResolvePendingAsync(cancellationToken);
         await new CanonicalReferenceHistoryReconciliationService(dbContext)
             .ReconcileAllAsync(cancellationToken);
     }
