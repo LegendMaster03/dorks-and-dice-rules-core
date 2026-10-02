@@ -19,6 +19,7 @@ public sealed class ThreeXSourceNormalizationMaintenanceRegressionTests
         {
             var token = Guid.NewGuid().ToString("N")[..12];
             var packageKey = $"pcgen-race-maintenance-{token}";
+            var speciesPackageKey = $"species-history-maintenance-{token}";
             var campaignPath = $"data/35e/example/{token}/fixture.pcc";
             var racePath = $"data/35e/example/{token}/monsters/fixture_races.lst";
             var adapter = new PcGenSourceFormatAdapter();
@@ -50,7 +51,8 @@ public sealed class ThreeXSourceNormalizationMaintenanceRegressionTests
 
             try
             {
-                var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                var importer = new NormalizedSourceImportService(db);
+                var imported = await importer.ImportAsync(
                     new ImportNormalizedSourceRequest(
                         packageKey,
                         $"PCGen race maintenance fixture {token}",
@@ -69,18 +71,20 @@ public sealed class ThreeXSourceNormalizationMaintenanceRegressionTests
                     db,
                     revision.Id);
 
-                var speciesFingerprint = CanonicalSourceIdentity.SemanticFingerprint(
-                    "{\"name\":\"Goblin\",\"size\":[\"S\"]}");
-                var speciesCanonical = await new CanonicalEntityStore(db).ResolveAsync(
-                    new CanonicalSourceOccurrenceEvidence(
-                        "species",
-                        "Goblin",
-                        LocatorKey: null,
-                        speciesFingerprint));
+                var speciesImport = await importer.ImportAsync(
+                    SpeciesFixture(speciesPackageKey, token));
+                var speciesEntity = Assert.Single(speciesImport.Entities);
+                var speciesRevisionId = await db.SourceEntityRevisions
+                    .Where(value => value.SourceEntityId == speciesEntity.EntityId)
+                    .Select(value => value.Id)
+                    .SingleAsync();
+                var speciesCanonicalId = await ReadBoundCanonicalEntityAsync(
+                    db,
+                    speciesRevisionId);
                 Assert.False(await HasSameHistoryRelationshipAsync(
                     db,
                     correctedRaceCanonicalId,
-                    speciesCanonical.Id));
+                    speciesCanonicalId));
 
                 const string staleMonsterContent = """
                     {
@@ -181,15 +185,54 @@ public sealed class ThreeXSourceNormalizationMaintenanceRegressionTests
                 Assert.True(await HasSameHistoryRelationshipAsync(
                     db,
                     repairedRaceCanonicalId,
-                    speciesCanonical.Id));
+                    speciesCanonicalId));
             }
             finally
             {
                 await db.SourcePackages
-                    .Where(value => value.Key == packageKey)
+                    .Where(value => value.Key == packageKey || value.Key == speciesPackageKey)
                     .ExecuteDeleteAsync();
             }
         }
+    }
+
+    private static ImportNormalizedSourceRequest SpeciesFixture(
+        string packageKey,
+        string token)
+    {
+        const string publicationKey = "species-publication";
+        const string content = "{\"name\":\"Goblin\",\"source\":\"TEST\",\"size\":[\"S\"]}";
+        var record = new NormalizedSourceRecord(
+            "species",
+            "Goblin",
+            "TEST",
+            $"species|goblin|{token}",
+            content,
+            PublicationLocalKey: publicationKey,
+            NativeIdentityJson: "{}")
+        {
+            ContentJson = content
+        };
+        var representation = new NormalizedSourceRepresentation(
+            "integration-species",
+            new SourceRepresentationArtifact(
+                $"species-{token}.json",
+                Encoding.UTF8.GetBytes(content),
+                $"test:species-history:{token}"),
+            [record],
+            [new NormalizedSourcePublication(
+                publicationKey,
+                $"Species History Fixture {token}",
+                "Integration Test Press",
+                "5e",
+                new DateOnly(2014, 1, 1))]);
+        return new ImportNormalizedSourceRequest(
+            packageKey,
+            $"Species history maintenance fixture {token}",
+            "integration-test",
+            "test-only",
+            true,
+            representation);
     }
 
     private static async Task<Guid> ReadBoundCanonicalEntityAsync(
