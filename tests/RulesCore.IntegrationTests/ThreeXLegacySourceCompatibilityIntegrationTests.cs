@@ -65,6 +65,80 @@ public sealed class ThreeXLegacySourceCompatibilityIntegrationTests
         }
     }
 
+    [Fact]
+    public async Task ReviewedThreeEHtmlSpellFieldsReplayThroughBulkNormalization()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            const string body = """
+                <p>Conjuration (Creation) [Acid]</p>
+                <p>Level: Sor/Wiz 2</p>
+                <p>Components: V, S, M</p>
+                <p>Casting Time: 1 standard action</p>
+                <p>Range: Long</p>
+                <p>Duration: Instantaneous</p>
+                <p>Saving Throw: None</p>
+                <p>Spell Resistance: No</p>
+                """;
+            var json = JsonSerializer.Serialize(new
+            {
+                spell = new[]
+                {
+                    new
+                    {
+                        name = "Acid Arrow",
+                        source = "SRD3",
+                        uniqueId = "spell-acid-arrow-html",
+                        documentUri = "https://example.invalid/spellsa.htm#acid-arrow",
+                        body
+                    }
+                }
+            });
+            var representation = new LegacySrdSourceFormatAdapter().TryRead(
+                new SourceRepresentationArtifact(
+                    "srd-3e.json",
+                    Encoding.UTF8.GetBytes(json),
+                    $"test:three-x-legacy-html:{token}"));
+            Assert.NotNull(representation);
+
+            var result = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    $"three-x-legacy-html-{token}",
+                    "3.x legacy HTML fixture",
+                    "integration-test",
+                    "test-only",
+                    false,
+                    representation!));
+            var imported = Assert.Single(result.Entities);
+            var contentJson = await db.SourceEntityRevisions
+                .AsNoTracking()
+                .Where(value => value.SourceEntityId == imported.EntityId)
+                .OrderByDescending(value => value.RevisionNumber)
+                .Select(value => value.ContentJson)
+                .FirstAsync();
+            Assert.False(string.IsNullOrWhiteSpace(contentJson));
+
+            using var content = JsonDocument.Parse(contentJson!);
+            Assert.Equal(2, content.RootElement.GetProperty("level").GetInt32());
+            Assert.Equal("C", content.RootElement.GetProperty("school").GetString());
+            Assert.True(content.RootElement.GetProperty("components").GetProperty("v").GetBoolean());
+            Assert.True(content.RootElement.GetProperty("components").GetProperty("s").GetBoolean());
+            Assert.Equal(
+                "instant",
+                Assert.Single(content.RootElement.GetProperty("duration").EnumerateArray())
+                    .GetProperty("type").GetString());
+
+            var threeX = content.RootElement.GetProperty("_rulesCore").GetProperty("threeX");
+            Assert.Equal("1 standard action", threeX.GetProperty("castingTime").GetString());
+            Assert.Equal("Long", threeX.GetProperty("range").GetString());
+            Assert.Equal("None", threeX.GetProperty("savingThrow").GetString());
+            Assert.Equal("No", threeX.GetProperty("spellResistance").GetString());
+        }
+    }
+
     private static async Task<RulesCoreDbContext?> OpenDatabaseAsync()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
