@@ -191,7 +191,7 @@ public sealed class MechanicalContentIntegrationTests
                 "test-only",
                 false,
                 FiveEToolsFixture(token)));
-            await importer.ImportAsync(new ImportNormalizedSourceRequest(
+            await importer.ImportAsync(new ImportNormalizedSourceImportRequest(
                 pcgenPackage,
                 $"PCGen mechanical fixture {token}",
                 "integration-test",
@@ -202,10 +202,10 @@ public sealed class MechanicalContentIntegrationTests
             var five = await LatestContentByTypeAsync(db, fivePackage);
             var pcgen = await LatestContentByTypeAsync(db, pcgenPackage);
             Assert.Equal(new[] { "feat", "item", "monster", "spell" }, five.Keys.Order().ToArray());
-            Assert.Equal(new[] { "feat", "item", "monster", "spell" }, pcgen.Keys.Order().ToArray());
+            Assert.Equal(new[] { "feat", "item", "race", "spell" }, pcgen.Keys.Order().ToArray());
 
             AssertFamilyFields(five["monster"], "name", "source", "size", "type", "speed", "cr", "entries");
-            AssertFamilyFields(pcgen["monster"], "name", "source", "size", "type", "speed", "cr", "entries");
+            AssertFamilyFields(pcgen["race"], "name", "source", "size", "speed", "ability", "entries");
             AssertFamilyFields(five["spell"], "name", "source", "level", "school", "entries");
             AssertFamilyFields(pcgen["spell"], "name", "source", "level", "school", "entries");
             AssertFamilyFields(five["feat"], "name", "source", "entries", "repeatable");
@@ -214,32 +214,41 @@ public sealed class MechanicalContentIntegrationTests
             AssertFamilyFields(pcgen["item"], "name", "source", "entries", "weight", "value");
 
             Assert.True(five["monster"].TryGetProperty("futureUpstreamField", out _));
-            var monsterContext = pcgen["monster"].GetProperty("_rulesCore").GetProperty("context");
-            Assert.Equal("3.5e", monsterContext.GetProperty("edition").GetString());
-            Assert.Equal(PcGenSourceFormatAdapter.Format, monsterContext.GetProperty("sourceFormat").GetString());
-            Assert.Equal("race", monsterContext.GetProperty("nativeEntityType").GetString());
-            Assert.Equal("monster", monsterContext.GetProperty("translatedEntityType").GetString());
+            var raceContext = pcgen["race"].GetProperty("_rulesCore").GetProperty("context");
+            Assert.Equal("3.5e", raceContext.GetProperty("edition").GetString());
+            Assert.Equal(PcGenSourceFormatAdapter.Format, raceContext.GetProperty("sourceFormat").GetString());
+            Assert.Equal("race", raceContext.GetProperty("nativeEntityType").GetString());
+            Assert.False(raceContext.TryGetProperty("translatedEntityType", out _));
             Assert.Equal(1500, pcgen["item"].GetProperty("value").GetInt32());
-            Assert.False(pcgen["monster"].TryGetProperty("str", out _));
-            Assert.False(pcgen["monster"].TryGetProperty("dex", out _));
-            Assert.False(pcgen["monster"].TryGetProperty("ac", out _));
-            Assert.False(pcgen["monster"].TryGetProperty("hp", out _));
+            Assert.False(pcgen["race"].TryGetProperty("str", out _));
+            Assert.False(pcgen["race"].TryGetProperty("dex", out _));
+            Assert.False(pcgen["race"].TryGetProperty("ac", out _));
+            Assert.False(pcgen["race"].TryGetProperty("hp", out _));
+            Assert.False(pcgen["race"].TryGetProperty("cr", out _));
+            Assert.False(pcgen["race"].TryGetProperty("type", out _));
 
-            var monsterUnmapped = pcgen["monster"]
+            var racialAbility = Assert.Single(pcgen["race"].GetProperty("ability").EnumerateArray());
+            Assert.Equal(-2, racialAbility.GetProperty("str").GetInt32());
+            Assert.Equal(4, racialAbility.GetProperty("dex").GetInt32());
+
+            var raceUnmapped = pcgen["race"]
                 .GetProperty("_rulesCore")
                 .GetProperty("pcgen")
                 .GetProperty("unmappedSegments")
                 .EnumerateArray()
                 .ToArray();
-            Assert.Contains(monsterUnmapped, value =>
+            Assert.DoesNotContain(raceUnmapped, value =>
                 value.GetProperty("tag").GetString() == "BONUS"
                 && value.GetProperty("value").GetString() == "STAT|STR|-2");
-            Assert.Contains(monsterUnmapped, value =>
+            Assert.Contains(raceUnmapped, value =>
                 value.GetProperty("tag").GetString() == "BONUS"
                 && value.GetProperty("value").GetString() == "COMBAT|AC|1|TYPE=NaturalArmor");
-            Assert.Contains(monsterUnmapped, value =>
+            Assert.Contains(raceUnmapped, value =>
                 value.GetProperty("tag").GetString() == "MONSTERCLASS"
                 && value.GetProperty("value").GetString() == "Humanoid:1");
+            Assert.Contains(raceUnmapped, value =>
+                value.GetProperty("tag").GetString() == "CR"
+                && value.GetProperty("value").GetString() == "1/4");
 
             var featExtension = pcgen["feat"].GetProperty("_rulesCore");
             Assert.Equal(
@@ -261,13 +270,13 @@ public sealed class MechanicalContentIntegrationTests
                 value.GetProperty("tag").GetString() == "PREMULT"
                 && value.GetProperty("value").GetString() == "1,[PRESTAT:1,STR=13]");
 
-            var monsterSource = await db.SourceEntities
+            var raceSource = await db.SourceEntities
                 .AsNoTracking()
                 .SingleAsync(value =>
                     value.SourcePackage.Key == pcgenPackage
                     && value.Name == "PCGen Goblin");
-            Assert.Equal("monster", monsterSource.EntityType);
-            Assert.StartsWith("pcgen|race|", monsterSource.NativeKey, StringComparison.Ordinal);
+            Assert.Equal("race", raceSource.EntityType);
+            Assert.StartsWith("pcgen|race|", raceSource.NativeKey, StringComparison.Ordinal);
 
             var featSource = await db.SourceEntities
                 .AsNoTracking()
