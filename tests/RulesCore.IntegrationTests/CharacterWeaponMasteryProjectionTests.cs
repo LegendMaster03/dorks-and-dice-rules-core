@@ -110,6 +110,22 @@ public sealed class CharacterWeaponMasteryProjectionTests
     }
 
     [Theory]
+    [InlineData("simple", true)]
+    [InlineData("SIMPLE", true)]
+    [InlineData("martial", true)]
+    [InlineData("Martial", true)]
+    [InlineData("exotic", false)]
+    [InlineData(null, false)]
+    public void MasteryEligibilityRestrictsWeaponCategoriesToSimpleAndMartial(
+        string? weaponCategory,
+        bool expected)
+    {
+        Assert.Equal(
+            expected,
+            (bool)Invoke("IsSimpleOrMartialCategory", weaponCategory)!);
+    }
+
+    [Theory]
     [InlineData("Paladin", 2)]
     [InlineData("Ranger", 2)]
     [InlineData("Rogue", 2)]
