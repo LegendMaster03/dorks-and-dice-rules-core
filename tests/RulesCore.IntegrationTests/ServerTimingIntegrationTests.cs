@@ -39,7 +39,7 @@ public sealed class ServerTimingIntegrationTests
         AssertMetric(metrics, "rules-core-auth");
         AssertMetric(metrics, "rules-core-db");
         AssertMetric(metrics, "rules-core-reference-query");
-        AssertMetric(metrics, "rules-core-reference-docs");
+        AssertMetric(metrics, "rules-core-reference-materialize");
         AssertMetric(metrics, "rules-core-reference-total");
 
         Assert.DoesNotContain("rules-auth", metrics.Keys);
