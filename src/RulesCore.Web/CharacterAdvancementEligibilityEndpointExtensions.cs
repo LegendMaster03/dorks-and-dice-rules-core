@@ -3,14 +3,14 @@ using RulesCore.Application.Rules;
 
 namespace RulesCore.Web;
 
-public static class CharacterProjectionEndpointExtensions
+public static class CharacterAdvancementEligibilityEndpointExtensions
 {
-    public static void MapCharacterProjectionEndpoints(this WebApplication app)
+    public static void MapCharacterAdvancementEligibilityEndpoints(this WebApplication app)
     {
-        app.MapPost("/api/rules/character-mechanics/resolve", async (
-            CharacterRulesProjectionRequest request,
+        app.MapPost("/api/rules/character-advancement/eligibility", async (
+            CharacterAdvancementEligibilityRequest request,
             HttpContext httpContext,
-            ICharacterRulesProjectionService projection,
+            ICharacterAdvancementEligibilityService eligibility,
             CancellationToken cancellationToken) =>
         {
             try
@@ -19,30 +19,31 @@ public static class CharacterProjectionEndpointExtensions
                     .GetAuthenticationContext(httpContext)?
                     .User.Id;
                 httpContext.Response.Headers.CacheControl = "no-store";
-                return Results.Ok(await projection.ResolveGlobalAsync(
+                var result = await eligibility.EvaluateGlobalAsync(
                     request,
                     userId,
-                    cancellationToken));
+                    cancellationToken);
+                return result is null ? Results.NotFound() : Results.Ok(result);
             }
             catch (ArgumentException exception)
             {
-                return InvalidProjection(exception);
+                return InvalidEligibilityRequest(exception);
             }
             catch (InvalidOperationException exception)
             {
-                return InvalidProjection(exception);
+                return InvalidEligibilityRequest(exception);
             }
             catch (OverflowException exception)
             {
-                return InvalidProjection(exception);
+                return InvalidEligibilityRequest(exception);
             }
-        });
+        }).PublicRulesCoreApi();
 
-        app.MapPost("/api/campaigns/{campaignId:guid}/rules/character-mechanics/resolve", async (
+        app.MapPost("/api/campaigns/{campaignId:guid}/rules/character-advancement/eligibility", async (
             Guid campaignId,
-            CharacterRulesProjectionRequest request,
+            CharacterAdvancementEligibilityRequest request,
             HttpContext httpContext,
-            ICharacterRulesProjectionService projection,
+            ICharacterAdvancementEligibilityService eligibility,
             CancellationToken cancellationToken) =>
         {
             var authenticationContext = HostedToolAuthenticationMiddleware
@@ -59,32 +60,31 @@ public static class CharacterProjectionEndpointExtensions
             try
             {
                 httpContext.Response.Headers.CacheControl = "no-store";
-                return Results.Ok(await projection.ResolveCampaignAsync(
+                var result = await eligibility.EvaluateCampaignAsync(
                     campaignId,
                     request,
                     authenticationContext.User.Id,
-                    cancellationToken));
+                    cancellationToken);
+                return result is null ? Results.NotFound() : Results.Ok(result);
             }
             catch (ArgumentException exception)
             {
-                return InvalidProjection(exception);
+                return InvalidEligibilityRequest(exception);
             }
             catch (InvalidOperationException exception)
             {
-                return InvalidProjection(exception);
+                return InvalidEligibilityRequest(exception);
             }
             catch (OverflowException exception)
             {
-                return InvalidProjection(exception);
+                return InvalidEligibilityRequest(exception);
             }
-        });
-
-        app.MapCharacterAdvancementEligibilityEndpoints();
+        }).PublicRulesCoreApi();
     }
 
-    private static IResult InvalidProjection(Exception exception) =>
+    private static IResult InvalidEligibilityRequest(Exception exception) =>
         Results.Problem(
-            title: "Invalid Character mechanics projection",
+            title: "Invalid Character advancement eligibility request",
             detail: exception.Message,
             statusCode: StatusCodes.Status400BadRequest);
 }
