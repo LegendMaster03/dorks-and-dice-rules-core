@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Reflection;
 using System.Text.Json;
+using RulesCore.Application.Rules;
 using RulesCore.Infrastructure.Rules;
 
 namespace RulesCore.IntegrationTests;
@@ -123,6 +125,35 @@ public sealed class CharacterWeaponMasteryProjectionTests
         Assert.Equal(
             expected,
             (bool)Invoke("IsSimpleOrMartialCategory", weaponCategory)!);
+    }
+
+    [Fact]
+    public void ResolvedMasteryProjectsAStableWeaponCapability()
+    {
+        var assembly = typeof(CharacterRulesProjectionService).Assembly;
+        var contextType = assembly.GetType(
+            "RulesCore.Infrastructure.Rules.CharacterProjection.CharacterProjectionContext",
+            throwOnError: true)!;
+        var context = Activator.CreateInstance(
+            contextType,
+            new object?[] { new CharacterRulesProjectionRequest() })!;
+        var provenance = new CharacterMechanicProvenanceView([], [], []);
+
+        Invoke(
+            "AddMasteryCapability",
+            context,
+            "item:longsword",
+            "Longsword",
+            "Sap",
+            "class:fighter",
+            provenance);
+
+        var capabilityViews = Assert.IsAssignableFrom<IDictionary>(
+            contextType.GetProperty("CapabilityViews")!.GetValue(context));
+        var capability = Assert.IsType<CharacterCapabilityView>(
+            capabilityViews["weapon-mastery.item:longsword"]);
+        Assert.Equal("Longsword — Sap Mastery", capability.DisplayName);
+        Assert.Equal(["class:fighter"], capability.GrantedByConceptKeys);
     }
 
     [Theory]
