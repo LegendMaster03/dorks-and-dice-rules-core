@@ -26,8 +26,8 @@ public sealed class CharacterWeaponMasteryProjectionTests
             }
             """);
 
-        Assert.Equal(3, Invoke<int?>("ReadTableMasteryCount", document.RootElement, 1));
-        Assert.Equal(4, Invoke<int?>("ReadTableMasteryCount", document.RootElement, 4));
+        Assert.Equal(3, (int?)Invoke("ReadTableMasteryCount", document.RootElement, 1));
+        Assert.Equal(4, (int?)Invoke("ReadTableMasteryCount", document.RootElement, 4));
     }
 
     [Fact]
@@ -43,8 +43,8 @@ public sealed class CharacterWeaponMasteryProjectionTests
             }
             """);
 
-        Assert.False(Invoke<bool>("HasActiveWeaponMasteryFeature", document.RootElement, 1));
-        Assert.True(Invoke<bool>("HasActiveWeaponMasteryFeature", document.RootElement, 2));
+        Assert.False((bool)Invoke("HasActiveWeaponMasteryFeature", document.RootElement, 1)!);
+        Assert.True((bool)Invoke("HasActiveWeaponMasteryFeature", document.RootElement, 2)!);
     }
 
     [Theory]
@@ -56,10 +56,10 @@ public sealed class CharacterWeaponMasteryProjectionTests
         string className,
         int? expected)
     {
-        Assert.Equal(expected, Invoke<int?>("FixedMasteryCount", className));
+        Assert.Equal(expected, (int?)Invoke("FixedMasteryCount", className));
     }
 
-    private static T Invoke<T>(string methodName, params object?[] arguments)
+    private static object? Invoke(string methodName, params object?[] arguments)
     {
         var projector = typeof(CharacterRulesProjectionService).Assembly.GetType(
             "RulesCore.Infrastructure.Rules.CharacterProjection.CharacterWeaponMasteryProjector",
@@ -68,6 +68,6 @@ public sealed class CharacterWeaponMasteryProjectionTests
             methodName,
             BindingFlags.Static | BindingFlags.NonPublic);
         Assert.NotNull(method);
-        return Assert.IsType<T>(method!.Invoke(null, arguments));
+        return method!.Invoke(null, arguments);
     }
 }
