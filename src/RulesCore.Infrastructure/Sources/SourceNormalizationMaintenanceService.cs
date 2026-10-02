@@ -235,6 +235,8 @@ public sealed class SourceNormalizationMaintenanceService(
                     cancellationToken,
                     normalized.CanonicalAliases,
                     allowTranslationOnlyReassociation: true);
+                await new CanonicalReferenceHistoryReconciliationService(dbContext)
+                    .ReconcileSourceEntitiesAsync([entity.Id], cancellationToken);
                 canonicalReassociated = true;
             }
 
