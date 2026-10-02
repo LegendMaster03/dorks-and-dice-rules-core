@@ -16,7 +16,7 @@ Rules Core must not emit `dnd-*`; that namespace is reserved for the Site platfo
 | --- | --- |
 | `rules-core` | Whole Rules Core request duration from the earliest Rules Core request boundary until response headers are committed. |
 | `rules-core-auth` | Time spent redeeming the Site-issued Tool authentication ticket for the request. |
-| `rules-core-db` | Aggregate Entity Framework Core database command-execution duration recorded during the request. |
+| `rules-core-db` | Aggregate Npgsql database-operation duration recorded during the request, excluding physical connection-open spans. |
 | `rules-core-reference-query` | Query-stage duration reported by the Rules Core reference catalog service. |
 | `rules-core-reference-docs` | Mechanical-document/materialization-stage duration reported by the reference catalog service. |
 | `rules-core-reference-total` | Total operation duration reported by the reference catalog service. |
@@ -25,9 +25,13 @@ The reference metrics describe backend work performed by Rules Core for its refe
 
 ## Database metric semantics
 
-`rules-core-db` is accumulated through an Entity Framework Core command interceptor and represents command execution reported by EF Core. It is intentionally not described as all data-access time: application-side object materialization, domain transformation, and any row streaming that occurs outside the command execution event can add additional request time.
+Rules Core contains both Entity Framework Core queries and infrastructure code that executes PostgreSQL commands directly. `rules-core-db` therefore uses Npgsql's built-in `ActivitySource` rather than an EF-only interceptor so both paths are represented.
 
-The metric is request-scoped. Startup schema/bootstrap work and background jobs do not have an HTTP timing context and therefore do not contribute to a browser request's `rules-core-db` value.
+The listener requests propagation-only activity data. Rules Core does not request or expose SQL text, query parameters, database names, connection identifiers, or other Npgsql enrichment data for this metric. Physical connection-open activities are excluded; command/COPY-style database operations executed while a Rules Core HTTP request is active contribute their elapsed duration.
+
+The metric is request-scoped. Startup schema/bootstrap work and background jobs do not have an active Rules Core request timing state and therefore do not contribute to a browser or Tool request's `rules-core-db` value.
+
+`rules-core-db` still must not be interpreted as all time attributable to persistence. Application-side materialization, domain transformation, connection acquisition, and other non-command work can contribute to `rules-core` without appearing in `rules-core-db`.
 
 ## Composition
 
@@ -42,6 +46,8 @@ Server-Timing: rules-core-auth;dur=3.2, rules-core-reference-query;dur=8.7, rule
 ```
 
 When that response reaches a client through the Site proxy, Site may additionally append its own `dnd-site` metric.
+
+For Rules Wiki traffic, Rules Core is reached over the private Tool tunnel data path rather than through the Site HTTP proxy. Rules Core therefore makes the timing information available to its direct caller; exposing those downstream timings on a Rules Wiki browser response is a separate Rules Wiki propagation concern rather than something the Site can infer from the private data path.
 
 The component metrics overlap and must not be summed blindly. `rules-core` is the authoritative wall-clock request-to-headers duration for the Rules Core layer.
 
