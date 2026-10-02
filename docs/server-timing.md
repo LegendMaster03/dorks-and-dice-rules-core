@@ -16,7 +16,7 @@ Rules Core must not emit `dnd-*`; that namespace is reserved for the Site platfo
 | --- | --- |
 | `rules-core` | Whole Rules Core request duration from the earliest Rules Core request boundary until response headers are committed. |
 | `rules-core-auth` | Time spent redeeming the Site-issued Tool authentication ticket for the request. |
-| `rules-core-db` | Aggregate Npgsql database-operation duration recorded during the request, excluding physical connection-open spans. |
+| `rules-core-db` | Aggregate Npgsql database-operation duration recorded during the request before response headers are committed, excluding physical connection-open spans. |
 | `rules-core-reference-query` | Query-stage duration reported by the Rules Core reference catalog service. |
 | `rules-core-reference-materialize` | Reference materialization stage, including document loading/projection and effective-rule resolution where the requested reference requires it. |
 | `rules-core-reference-total` | Total operation duration reported by the reference catalog service. |
@@ -27,7 +27,9 @@ The reference metrics describe backend work performed by Rules Core for its refe
 
 Rules Core contains both Entity Framework Core queries and infrastructure code that executes PostgreSQL commands directly. `rules-core-db` therefore uses Npgsql's built-in `ActivitySource` rather than an EF-only interceptor so both paths are represented.
 
-The listener requests propagation-only activity data. Rules Core does not request or expose SQL text, query parameters, database names, connection identifiers, or other Npgsql enrichment data for this metric. Physical connection-open activities are excluded; command/COPY-style database operations executed while a Rules Core HTTP request is active contribute their elapsed duration.
+The listener requests propagation-only activity data. Rules Core does not request or expose SQL text, query parameters, database names, connection identifiers, or other Npgsql enrichment data for this metric. Physical connection-open activities are excluded; command/COPY-style database operations completed while the Rules Core request timing state is active contribute their elapsed duration.
+
+Each Npgsql activity retains the request timing state under which it started, so an activity completing through an asynchronous continuation can not be attributed to a different concurrent request. The database accumulator is frozen when response headers are committed, matching the point at which `Server-Timing` itself becomes immutable. Database work still in flight after that boundary is not included.
 
 The metric is request-scoped. Startup schema/bootstrap work and background jobs do not have an active Rules Core request timing state and therefore do not contribute to a browser or Tool request's `rules-core-db` value.
 
@@ -35,9 +37,9 @@ The metric is request-scoped. Startup schema/bootstrap work and background jobs 
 
 ## Composition
 
-`RulesCoreServerTimingMiddleware` is the first Rules Core request middleware. It creates the request timing state before authentication or endpoint work begins. A single `Response.OnStarting` callback emits the whole-request metric and the accumulated database metric.
+`RulesCoreServerTimingMiddleware` is the first Rules Core request middleware. It creates the request timing state before authentication or endpoint work begins. A single `Response.OnStarting` callback freezes the request-scoped database accumulator and emits the database and whole-request metrics.
 
-Authentication and reference-catalog code add their component timings through the same timing helper. Existing header values are appended rather than replaced. Timing lifecycle ownership remains separate from authentication so replacing or reordering authentication does not silently remove whole-request instrumentation.
+Authentication and reference-catalog code add their component timings through the same timing helper. Existing header values are appended rather than replaced. Timing lifecycle ownership remains separate from authentication so replacing or reordering authentication does not silently remove whole-request instrumentation. The timing middleware also clears its ambient request state when the request pipeline exits, including paths that never start a response.
 
 A request can therefore return values similar to:
 
