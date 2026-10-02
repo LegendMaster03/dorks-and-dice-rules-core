@@ -14,15 +14,9 @@ internal static class TrustedCanonicalAliasPolicy
         ArgumentNullException.ThrowIfNull(representation);
         ArgumentNullException.ThrowIfNull(record);
 
-        // Source-format interpretation corrections and exact competency translations are
-        // importer concerns, not trusted-lineage concerns. Apply them for every supported
-        // representation before adding any source-lineage alias.
-        record = ThreeXSourceNormalizationPolicy.Apply(representation, record);
-        record = ThreeXBulkTranslationPolicy.Apply(representation, record);
-        record = ThreeXLegacySourceCompatibilityPolicy.Apply(representation, record);
-        record = ThreeXPcGenSupplementPolicy.Apply(representation, record);
-        record = ThreeXPcGenNormalizationCleanupPolicy.Apply(representation, record);
-        record = ExactCompetencyTranslationPolicy.Apply(representation, record);
+        // Source normalization is an importer concern. Apply it before adding any trusted
+        // source-lineage alias so canonical identity sees the reviewed mechanical projection.
+        record = SourceRecordNormalizationPolicy.Apply(representation, record);
 
         if (string.IsNullOrWhiteSpace(record.ContentJson)
             || !TrustedSourceLineageRegistry.TryResolveScheme(
