@@ -72,8 +72,13 @@ public sealed class ThreeXSourceNormalizationRegressionTests
             Assert.NotNull(revision.ContentJson);
             using var document = JsonDocument.Parse(revision.ContentJson!);
             Assert.Equal("Goblin", document.RootElement.GetProperty("name").GetString());
-            Assert.Equal(30, document.RootElement.GetProperty("speed").GetProperty("walk").GetInt32());
-            Assert.Equal(2, document.RootElement.GetProperty("ability").GetProperty("dex").GetInt32());
+            Assert.Equal(30, document.RootElement.GetProperty("speed").GetInt32());
+            var ability = Assert.Single(document.RootElement.GetProperty("ability").EnumerateArray());
+            Assert.Equal(-2, ability.GetProperty("str").GetInt32());
+            Assert.Equal(2, ability.GetProperty("dex").GetInt32());
+            Assert.Equal(-2, ability.GetProperty("cha").GetInt32());
+            Assert.False(document.RootElement.TryGetProperty("cr", out _));
+            Assert.False(document.RootElement.TryGetProperty("type", out _));
 
             var unmapped = document.RootElement
                 .GetProperty("_rulesCore")
@@ -84,86 +89,111 @@ public sealed class ThreeXSourceNormalizationRegressionTests
             Assert.Contains(unmapped, value =>
                 string.Equals(value.GetProperty("tag").GetString(), "MONSTERCLASS", StringComparison.OrdinalIgnoreCase));
             Assert.Contains(unmapped, value =>
+                string.Equals(value.GetProperty("tag").GetString(), "RACETYPE", StringComparison.OrdinalIgnoreCase));
+            Assert.Contains(unmapped, value =>
                 string.Equals(value.GetProperty("tag").GetString(), "CR", StringComparison.OrdinalIgnoreCase));
         }
     }
 
     [Fact]
-    public void LegacySrdMonsterHtmlTableNormalizesStatsWithoutExposingRawMarkupAsDescription()
+    public async Task LegacySrdMonsterHtmlTableNormalizesStatsWithoutExposingRawMarkupAsDescription()
     {
-        const string body = """
-            <table data-debug="no-caption" class="full-width-table"><tbody>
-            <tr><td></td><td>Goblin, 1st-Level Warrior</td></tr>
-            <tr><td></td><td>Small Humanoid (Goblinoid)</td></tr>
-            <tr><th>Hit Dice:</th><td>1d8+1 (5 hp)</td></tr>
-            <tr><th>Initiative:</th><td>+1</td></tr>
-            <tr><th>Speed:</th><td>30 ft. (6 squares)</td></tr>
-            <tr><th>Armor Class:</th><td>15 (+1 size, +1 Dex, +2 leather armor, +1 light shield), touch 12, flat-footed 14</td></tr>
-            <tr><th>Base Attack/Grapple:</th><td>+1/-3</td></tr>
-            <tr><th>Abilities:</th><td>Str 11, Dex 13, Con 12, Int 10, Wis 9, Cha 6</td></tr>
-            <tr><th>Saves:</th><td>Fort +3, Ref +1, Will -1</td></tr>
-            <tr><th>Challenge Rating:</th><td>1/3</td></tr>
-            </tbody></table>
-            A goblin stands 3 to 3-1/2 feet tall and weighs 40 to 45 pounds.
-            ### Combat
-            Goblins favor ambushes and overwhelming numbers.
-            """;
-        var json = JsonSerializer.Serialize(new
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
         {
-            monster = new[]
+            const string body = """
+                <table data-debug="no-caption" class="full-width-table"><tbody>
+                <tr><td></td><td>Goblin, 1st-Level Warrior</td></tr>
+                <tr><td></td><td>Small Humanoid (Goblinoid)</td></tr>
+                <tr><th>Hit Dice:</th><td>1d8+1 (5 hp)</td></tr>
+                <tr><th>Initiative:</th><td>+1</td></tr>
+                <tr><th>Speed:</th><td>30 ft. (6 squares)</td></tr>
+                <tr><th>Armor Class:</th><td>15 (+1 size, +1 Dex, +2 leather armor, +1 light shield), touch 12, flat-footed 14</td></tr>
+                <tr><th>Base Attack/Grapple:</th><td>+1/-3</td></tr>
+                <tr><th>Abilities:</th><td>Str 11, Dex 13, Con 12, Int 10, Wis 9, Cha 6</td></tr>
+                <tr><th>Saves:</th><td>Fort +3, Ref +1, Will -1</td></tr>
+                <tr><th>Challenge Rating:</th><td>1/3</td></tr>
+                </tbody></table>
+                A goblin stands 3 to 3-1/2 feet tall and weighs 40 to 45 pounds.
+                ### Combat
+                Goblins favor ambushes and overwhelming numbers.
+                """;
+            var json = JsonSerializer.Serialize(new
             {
-                new
+                monster = new[]
                 {
-                    name = "Goblin",
-                    source = "SRD35",
-                    uniqueId = "monster-goblin",
-                    documentUri = "https://example.invalid/srd35/monsters/goblin",
-                    body
+                    new
+                    {
+                        name = "Goblin",
+                        source = "SRD35",
+                        uniqueId = "monster-goblin",
+                        documentUri = "https://example.invalid/srd35/monsters/goblin",
+                        body
+                    }
                 }
-            }
-        });
-        var representation = new LegacySrdSourceFormatAdapter().TryRead(
-            new SourceRepresentationArtifact(
-                "srd-3-5e.json",
-                Encoding.UTF8.GetBytes(json),
-                "test:legacy-srd35-html-monster"));
+            });
+            var representation = new LegacySrdSourceFormatAdapter().TryRead(
+                new SourceRepresentationArtifact(
+                    "srd-3-5e.json",
+                    Encoding.UTF8.GetBytes(json),
+                    $"test:legacy-srd35-html-monster:{Guid.NewGuid():N}"));
 
-        Assert.NotNull(representation);
-        var record = Assert.Single(representation!.Records);
-        Assert.Equal("monster", record.EntityType);
-        Assert.NotNull(record.ContentJson);
+            Assert.NotNull(representation);
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var result = await new NormalizedSourceImportService(db).ImportAsync(
+                new ImportNormalizedSourceRequest(
+                    $"legacy-srd-html-normalization-{token}",
+                    "Legacy SRD HTML normalization regression",
+                    "Rules Core",
+                    License: null,
+                    IsPublic: false,
+                    representation!));
 
-        using var document = JsonDocument.Parse(record.ContentJson!);
-        var root = document.RootElement;
-        Assert.Equal("S", Assert.Single(root.GetProperty("size").EnumerateArray()).GetString());
-        Assert.Equal("humanoid", root.GetProperty("type").GetString());
-        Assert.Equal(30, root.GetProperty("speed").GetProperty("walk").GetInt32());
-        Assert.Equal(15, Assert.Single(root.GetProperty("ac").EnumerateArray()).GetInt32());
-        Assert.Equal(5, root.GetProperty("hp").GetProperty("average").GetInt32());
-        Assert.Equal("1d8+1", root.GetProperty("hp").GetProperty("formula").GetString());
-        Assert.Equal(11, root.GetProperty("str").GetInt32());
-        Assert.Equal(13, root.GetProperty("dex").GetInt32());
-        Assert.Equal(12, root.GetProperty("con").GetInt32());
-        Assert.Equal(10, root.GetProperty("int").GetInt32());
-        Assert.Equal(9, root.GetProperty("wis").GetInt32());
-        Assert.Equal(6, root.GetProperty("cha").GetInt32());
-        Assert.Equal("1/3", root.GetProperty("cr").GetString());
+            var imported = Assert.Single(result.Entities);
+            Assert.Equal("monster", imported.EntityType);
+            var revision = await db.SourceEntityRevisions
+                .AsNoTracking()
+                .Where(value => value.SourceEntityId == imported.EntityId)
+                .OrderByDescending(value => value.RevisionNumber)
+                .FirstAsync();
+            Assert.NotNull(revision.ContentJson);
 
-        var entries = root.GetProperty("entries").EnumerateArray()
-            .Select(value => value.GetString() ?? string.Empty)
-            .ToArray();
-        var readable = string.Join("\n", entries);
-        Assert.DoesNotContain("<table", readable, StringComparison.OrdinalIgnoreCase);
-        Assert.DoesNotContain("<tr", readable, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("A goblin stands", readable, StringComparison.Ordinal);
-        Assert.Contains("### Combat", readable, StringComparison.Ordinal);
+            using var document = JsonDocument.Parse(revision.ContentJson!);
+            var root = document.RootElement;
+            Assert.Equal("S", Assert.Single(root.GetProperty("size").EnumerateArray()).GetString());
+            Assert.Equal("humanoid", root.GetProperty("type").GetString());
+            Assert.Equal(30, root.GetProperty("speed").GetProperty("walk").GetInt32());
+            Assert.Equal(15, Assert.Single(root.GetProperty("ac").EnumerateArray()).GetInt32());
+            Assert.Equal(5, root.GetProperty("hp").GetProperty("average").GetInt32());
+            Assert.Equal("1d8+1", root.GetProperty("hp").GetProperty("formula").GetString());
+            Assert.Equal(11, root.GetProperty("str").GetInt32());
+            Assert.Equal(13, root.GetProperty("dex").GetInt32());
+            Assert.Equal(12, root.GetProperty("con").GetInt32());
+            Assert.Equal(10, root.GetProperty("int").GetInt32());
+            Assert.Equal(9, root.GetProperty("wis").GetInt32());
+            Assert.Equal(6, root.GetProperty("cha").GetInt32());
+            Assert.Equal("1/3", root.GetProperty("cr").GetString());
 
-        var sourceBody = root
-            .GetProperty("_rulesCore")
-            .GetProperty("threeX")
-            .GetProperty("sourceBody")
-            .GetString();
-        Assert.Contains("<table", sourceBody, StringComparison.OrdinalIgnoreCase);
+            var entries = root.GetProperty("entries").EnumerateArray()
+                .Select(value => value.GetString() ?? string.Empty)
+                .ToArray();
+            var readable = string.Join("\n", entries);
+            Assert.DoesNotContain("<table", readable, StringComparison.OrdinalIgnoreCase);
+            Assert.DoesNotContain("<tr", readable, StringComparison.OrdinalIgnoreCase);
+            Assert.Contains("A goblin stands", readable, StringComparison.Ordinal);
+            Assert.Contains("### Combat", readable, StringComparison.Ordinal);
+
+            var threeX = root
+                .GetProperty("_rulesCore")
+                .GetProperty("threeX");
+            Assert.Equal(1, threeX.GetProperty("baseAttackBonus").GetInt32());
+            Assert.Equal(-3, threeX.GetProperty("grapple").GetInt32());
+            Assert.Equal(3, threeX.GetProperty("saves").GetProperty("fortitude").GetInt32());
+            Assert.Equal(1, threeX.GetProperty("saves").GetProperty("reflex").GetInt32());
+            Assert.Equal(-1, threeX.GetProperty("saves").GetProperty("will").GetInt32());
+            Assert.Contains("<table", threeX.GetProperty("sourceBody").GetString(), StringComparison.OrdinalIgnoreCase);
+        }
     }
 
     private static SourceRepresentationArtifact Artifact(string path, string text) =>
@@ -171,7 +201,7 @@ public sealed class ThreeXSourceNormalizationRegressionTests
             Path.GetFileName(path),
             Encoding.UTF8.GetBytes(text.Replace("\r\n", "\n", StringComparison.Ordinal)),
             $"test:three-x-normalization#{path}",
-            SourceUri: $"https://raw.githubusercontent.com/PCGen/pcgen/master/{path}",
+            SourceUri: $"https://example.invalid/{path}",
             MediaType: "text/plain");
 
     private static async Task<RulesCoreDbContext?> OpenDatabaseAsync()
