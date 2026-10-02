@@ -29,7 +29,7 @@ internal sealed class EffectiveRuleFallbackResolver(RulesCoreDbContext dbContext
         string? userId,
         CancellationToken cancellationToken = default)
     {
-        var sourceIds = await CanonicalRuleBindingStore.GetAccessibleSourceEntityIdsForConceptAsync(
+        var sourceIds = await CanonicalRuleFallbackSourceReader.GetAccessibleSourceEntityIdsAsync(
             dbContext,
             concept.Id,
             userId,
