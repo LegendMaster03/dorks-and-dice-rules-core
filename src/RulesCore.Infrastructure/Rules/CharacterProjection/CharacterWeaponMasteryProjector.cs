@@ -4,14 +4,16 @@ using RulesCore.Application.Rules;
 namespace RulesCore.Infrastructure.Rules.CharacterProjection;
 
 /// <summary>
-/// Projects the 2024 Weapon Mastery class feature as ordinary Rules Core runtime choices.
-/// Weapon mastery properties and scalable selection counts come from structured source data;
-/// the fixed-count classes use reviewed source semantics only after an active Weapon Mastery
-/// feature has been confirmed on the class.
+/// Projects 2024 Weapon Mastery grants as ordinary Rules Core runtime choices.
+/// Weapon mastery properties and scalable class selection counts come from structured source data;
+/// fixed class and feat grants use reviewed source semantics after the relevant source feature has
+/// been confirmed.
 /// </summary>
 internal static class CharacterWeaponMasteryProjector
 {
     private const string MasteryLabel = "Weapon Mastery";
+    private const string WeaponMasterFeatName = "Weapon Master";
+    private const string RevisedPlayersHandbookSource = "XPHB";
 
     internal static void Project(
         IReadOnlyList<CharacterProjectionRule> rules,
@@ -23,6 +25,15 @@ internal static class CharacterWeaponMasteryProjector
             return;
         }
 
+        ProjectClassMasteries(rules, context, masteryByWeapon);
+        ProjectWeaponMasterFeat(rules, context, masteryByWeapon);
+    }
+
+    private static void ProjectClassMasteries(
+        IReadOnlyList<CharacterProjectionRule> rules,
+        CharacterProjectionContext context,
+        IReadOnlyDictionary<string, MasteryWeapon> masteryByWeapon)
+    {
         foreach (var rule in rules.Where(value =>
                      string.Equals(value.Catalog.EntityType, "class", StringComparison.OrdinalIgnoreCase)
                      && context.IsSelected(value.Catalog.ConceptKey)))
@@ -42,15 +53,9 @@ internal static class CharacterWeaponMasteryProjector
             }
 
             var classKey = NormalizeClassKey(masteryClassName);
-            var options = masteryByWeapon.Values
-                .Where(value => IsEligibleWeapon(classKey, value.Weapon, context))
-                .Select(value => new CharacterChoiceOptionView(
-                    value.Weapon.ConceptKey,
-                    $"{value.Weapon.DisplayName} — {value.MasteryProperty}",
-                    value.Weapon.ConceptKey))
-                .OrderBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
-                .ThenBy(value => value.Value, StringComparer.Ordinal)
-                .ToArray();
+            var options = BuildOptions(
+                masteryByWeapon.Values.Where(value =>
+                    IsEligibleWeapon(classKey, value.Weapon, context)));
 
             CharacterStartingProficiencyProjector.ProjectChoiceGroup(
                 rule,
@@ -65,6 +70,44 @@ internal static class CharacterWeaponMasteryProjector
                 onSelected: _ => { });
         }
     }
+
+    private static void ProjectWeaponMasterFeat(
+        IReadOnlyList<CharacterProjectionRule> rules,
+        CharacterProjectionContext context,
+        IReadOnlyDictionary<string, MasteryWeapon> masteryByWeapon)
+    {
+        foreach (var rule in rules.Where(value =>
+                     string.Equals(value.Catalog.EntityType, "feat", StringComparison.OrdinalIgnoreCase)
+                     && context.IsSelected(value.Catalog.ConceptKey)
+                     && IsWeaponMasterFeat(value.Document)))
+        {
+            var options = BuildOptions(
+                masteryByWeapon.Values.Where(value =>
+                    HasWeaponProficiency(context, value.Weapon)));
+
+            CharacterStartingProficiencyProjector.ProjectChoiceGroup(
+                rule,
+                context,
+                pathKey: "weapon-mastery",
+                groupIndex: 0,
+                count: 1,
+                options,
+                sourceShape: "weapon-master-feat",
+                kind: "weapon-mastery",
+                optionLabel: MasteryLabel,
+                onSelected: _ => { });
+        }
+    }
+
+    private static CharacterChoiceOptionView[] BuildOptions(IEnumerable<MasteryWeapon> weapons) =>
+        weapons
+            .Select(value => new CharacterChoiceOptionView(
+                value.Weapon.ConceptKey,
+                $"{value.Weapon.DisplayName} — {value.MasteryProperty}",
+                value.Weapon.ConceptKey))
+            .OrderBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(value => value.Value, StringComparer.Ordinal)
+            .ToArray();
 
     private static IReadOnlyDictionary<string, MasteryWeapon> BuildWeaponMasteryCatalog(
         IReadOnlyList<CharacterProjectionRule> rules,
@@ -124,11 +167,24 @@ internal static class CharacterWeaponMasteryProjector
             var acquisitionLevel = parts.Reverse()
                 .Select(value => int.TryParse(value, out var parsed) ? parsed : (int?)null)
                 .FirstOrDefault(value => value.HasValue);
-            return !acquisitionLevel.HasValue || classLevel >= acquisitionLevel.Value;
+            if (!acquisitionLevel.HasValue || classLevel >= acquisitionLevel.Value)
+            {
+                return true;
+            }
         }
 
         return false;
     }
+
+    private static bool IsWeaponMasterFeat(JsonElement featDocument) =>
+        string.Equals(
+            CharacterProjectionJson.String(featDocument, "name"),
+            WeaponMasterFeatName,
+            StringComparison.OrdinalIgnoreCase)
+        && string.Equals(
+            CharacterProjectionJson.String(featDocument, "source"),
+            RevisedPlayersHandbookSource,
+            StringComparison.OrdinalIgnoreCase);
 
     private static IEnumerable<string> EnumerateFeatureReferences(JsonElement element)
     {
