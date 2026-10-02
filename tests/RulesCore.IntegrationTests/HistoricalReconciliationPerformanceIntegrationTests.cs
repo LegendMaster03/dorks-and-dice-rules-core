@@ -62,7 +62,7 @@ public sealed class HistoricalReconciliationPerformanceIntegrationTests
     }
 
     [Fact]
-    public async Task InterruptedLegacyMigrationIsRecoveredWithoutRewritingPersistedCompanionContent()
+    public async Task PersistedPartialStateIsRecoveredWithoutRewritingCompanionContent()
     {
         var db = await OpenDatabaseAsync();
         if (db is null) return;
@@ -87,19 +87,22 @@ public sealed class HistoricalReconciliationPerformanceIntegrationTests
                 .Select(value => value.Id)
                 .SingleAsync();
 
-            Assert.True(await HasCanonicalBindingAsync(db, legacyRevisionId));
-
-            // Simulate interruption after legacy rows have been converted and their canonical
-            // bindings removed, but before the corpus-wide attachment pass has run.
-            await new LegacyStandaloneFluffMigrationService(db).MigrateAsync();
+            var reconciliation = new CanonicalDataReconciliationService(db);
+            await reconciliation.ReconcileExistingCorpusAsync();
 
             Assert.False(await HasCanonicalBindingAsync(db, legacyRevisionId));
             Assert.Equal(1, await CountCompanionsForPackageAsync(db, legacy.PackageId));
-            Assert.Empty(await ReadAttachmentVersionsAsync(db, legacy.PackageId));
+            Assert.NotEmpty(await ReadAttachmentVersionsAsync(db, legacy.PackageId));
             var persistedContentVersions = await ReadContentVersionsAsync(db, legacy.PackageId);
             Assert.Single(persistedContentVersions);
 
-            await new CanonicalDataReconciliationService(db).ReconcileExistingCorpusAsync();
+            // Reconstruct the durable state left by an interruption after companion persistence and
+            // canonical-binding removal but before the corpus-wide attachment pass completes. The
+            // next public reconciliation must reuse the existing content row and restore attachment.
+            await DeleteAttachmentsForPackageAsync(db, legacy.PackageId);
+            Assert.Empty(await ReadAttachmentVersionsAsync(db, legacy.PackageId));
+
+            await reconciliation.ReconcileExistingCorpusAsync();
 
             Assert.NotEmpty(await ReadAttachmentVersionsAsync(db, legacy.PackageId));
             Assert.Equal(
@@ -227,6 +230,29 @@ public sealed class HistoricalReconciliationPerformanceIntegrationTests
             await using var reader = await command.ExecuteReaderAsync();
             while (await reader.ReadAsync()) values.Add(reader.GetString(0));
             return values;
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
+    private static async Task DeleteAttachmentsForPackageAsync(RulesCoreDbContext db, Guid packageId)
+    {
+        var connection = db.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync();
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                DELETE FROM source_companion_attachment attachment
+                USING source_companion_content content
+                WHERE content.source_companion_content_id = attachment.source_companion_content_id
+                  AND content.source_package_id = @package_id;
+                """;
+            AddParameter(command, "@package_id", packageId);
+            await command.ExecuteNonQueryAsync();
         }
         finally
         {
