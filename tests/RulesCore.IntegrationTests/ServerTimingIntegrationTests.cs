@@ -46,7 +46,7 @@ public sealed class ServerTimingIntegrationTests
         Assert.DoesNotContain("rules-wiki-query", metrics.Keys);
         Assert.DoesNotContain("rules-wiki-docs", metrics.Keys);
         Assert.DoesNotContain("rules-wiki-total", metrics.Keys);
-        Assert.DoesNotContain(metrics.Keys, name => name.StartsWith("dnd-", StringComparison.Ordinal));
+        Assert.DoesNotContain(metrics.Keys, name => name.StartsWith("platform-", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -64,7 +64,7 @@ public sealed class ServerTimingIntegrationTests
         var metrics = ReadMetrics(response);
         AssertMetric(metrics, "rules-core");
         Assert.DoesNotContain("rules-core-auth", metrics.Keys);
-        Assert.DoesNotContain(metrics.Keys, name => name.StartsWith("dnd-", StringComparison.Ordinal));
+        Assert.DoesNotContain(metrics.Keys, name => name.StartsWith("platform-", StringComparison.Ordinal));
     }
 
     [Fact]
