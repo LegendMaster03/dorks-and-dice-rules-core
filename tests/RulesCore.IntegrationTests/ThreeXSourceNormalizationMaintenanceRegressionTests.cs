@@ -69,6 +69,19 @@ public sealed class ThreeXSourceNormalizationMaintenanceRegressionTests
                     db,
                     revision.Id);
 
+                var speciesFingerprint = CanonicalSourceIdentity.SemanticFingerprint(
+                    "{\"name\":\"Goblin\",\"size\":[\"S\"]}");
+                var speciesCanonical = await new CanonicalEntityStore(db).ResolveAsync(
+                    new CanonicalSourceOccurrenceEvidence(
+                        "species",
+                        "Goblin",
+                        LocatorKey: null,
+                        speciesFingerprint));
+                Assert.False(await HasSameHistoryRelationshipAsync(
+                    db,
+                    correctedRaceCanonicalId,
+                    speciesCanonical.Id));
+
                 const string staleMonsterContent = """
                     {
                       "name":"Goblin",
@@ -165,6 +178,10 @@ public sealed class ThreeXSourceNormalizationMaintenanceRegressionTests
                     db,
                     staleMonsterCanonicalId,
                     repairedRaceCanonicalId));
+                Assert.True(await HasSameHistoryRelationshipAsync(
+                    db,
+                    repairedRaceCanonicalId,
+                    speciesCanonical.Id));
             }
             finally
             {
