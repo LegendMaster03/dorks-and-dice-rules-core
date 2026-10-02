@@ -1,7 +1,5 @@
-using System.Data.Common;
 using System.Diagnostics;
 using System.Globalization;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace RulesCore.Web;
 
@@ -15,27 +13,38 @@ public static class RulesCoreServerTiming
     public const string ReferenceDocumentsMetricName = "rules-core-reference-docs";
     public const string ReferenceTotalMetricName = "rules-core-reference-total";
 
+    private const string NpgsqlActivitySourceName = "Npgsql";
+    private const string NpgsqlConnectionActivityPrefix = "CONNECT ";
+
     private static readonly object RequestStateKey = new();
+    private static readonly AsyncLocal<RequestTimingState?> CurrentRequestState = new();
+    private static readonly Lazy<ActivityListener> NpgsqlActivityListener = new(
+        CreateNpgsqlActivityListener,
+        LazyThreadSafetyMode.ExecutionAndPublication);
 
     public static void EnsureRequestTiming(HttpContext httpContext)
     {
-        if (httpContext.Items.ContainsKey(RequestStateKey))
+        if (httpContext.Items.TryGetValue(RequestStateKey, out var existing)
+            && existing is RequestTimingState existingState)
         {
+            CurrentRequestState.Value = existingState;
             return;
         }
 
+        EnsureNpgsqlActivityListener();
+
         var state = new RequestTimingState(Stopwatch.GetTimestamp());
         httpContext.Items[RequestStateKey] = state;
+        CurrentRequestState.Value = state;
 
         httpContext.Response.OnStarting(() =>
         {
-            var databaseTicks = state.DatabaseTicks;
-            if (databaseTicks > 0)
+            if (state.DatabaseOperationCount > 0)
             {
                 AppendDuration(
                     httpContext,
                     DatabaseMetricName,
-                    TimeSpan.FromTicks(databaseTicks).TotalMilliseconds);
+                    TimeSpan.FromTicks(state.DatabaseTicks).TotalMilliseconds);
             }
 
             AppendDuration(
@@ -44,18 +53,17 @@ public static class RulesCoreServerTiming
                 Stopwatch.GetElapsedTime(state.StartedAt).TotalMilliseconds);
             return Task.CompletedTask;
         });
-    }
 
-    public static void AddDatabaseDuration(HttpContext? httpContext, TimeSpan duration)
-    {
-        if (httpContext is null
-            || !httpContext.Items.TryGetValue(RequestStateKey, out var value)
-            || value is not RequestTimingState state)
+        httpContext.Response.OnCompleted(() =>
         {
-            return;
-        }
+            state.Complete();
+            if (ReferenceEquals(CurrentRequestState.Value, state))
+            {
+                CurrentRequestState.Value = null;
+            }
 
-        state.AddDatabaseTicks(duration.Ticks);
+            return Task.CompletedTask;
+        });
     }
 
     public static void AppendDuration(
@@ -72,101 +80,54 @@ public static class RulesCoreServerTiming
         httpContext.Response.Headers.Append(HeaderName, metric);
     }
 
+    private static void EnsureNpgsqlActivityListener() =>
+        _ = NpgsqlActivityListener.Value;
+
+    private static ActivityListener CreateNpgsqlActivityListener()
+    {
+        var listener = new ActivityListener
+        {
+            ShouldListenTo = static source =>
+                source.Name.Equals(NpgsqlActivitySourceName, StringComparison.Ordinal),
+            Sample = static (ref ActivityCreationOptions<ActivityContext> options) =>
+                SampleNpgsqlActivity(options.Name),
+            SampleUsingParentId = static (ref ActivityCreationOptions<string> options) =>
+                SampleNpgsqlActivity(options.Name),
+            ActivityStopped = static activity =>
+                CurrentRequestState.Value?.AddDatabaseDuration(activity.Duration)
+        };
+
+        ActivitySource.AddActivityListener(listener);
+        return listener;
+    }
+
+    private static ActivitySamplingResult SampleNpgsqlActivity(string activityName) =>
+        activityName.StartsWith(NpgsqlConnectionActivityPrefix, StringComparison.Ordinal)
+            ? ActivitySamplingResult.None
+            : ActivitySamplingResult.PropagationData;
+
     private sealed class RequestTimingState(long startedAt)
     {
         private long _databaseTicks;
+        private long _databaseOperationCount;
+        private int _active = 1;
 
         public long StartedAt { get; } = startedAt;
         public long DatabaseTicks => Interlocked.Read(ref _databaseTicks);
+        public long DatabaseOperationCount => Interlocked.Read(ref _databaseOperationCount);
 
-        public void AddDatabaseTicks(long ticks)
+        public void AddDatabaseDuration(TimeSpan duration)
         {
-            if (ticks > 0)
+            if (Volatile.Read(ref _active) == 0 || duration < TimeSpan.Zero)
             {
-                Interlocked.Add(ref _databaseTicks, ticks);
+                return;
             }
+
+            Interlocked.Add(ref _databaseTicks, duration.Ticks);
+            Interlocked.Increment(ref _databaseOperationCount);
         }
-    }
-}
 
-public sealed class RulesCoreDbCommandTimingInterceptor(IHttpContextAccessor httpContextAccessor)
-    : DbCommandInterceptor
-{
-    public override DbDataReader ReaderExecuted(
-        DbCommand command,
-        CommandExecutedEventData eventData,
-        DbDataReader result)
-    {
-        Record(eventData.Duration);
-        return result;
+        public void Complete() =>
+            Interlocked.Exchange(ref _active, 0);
     }
-
-    public override ValueTask<DbDataReader> ReaderExecutedAsync(
-        DbCommand command,
-        CommandExecutedEventData eventData,
-        DbDataReader result,
-        CancellationToken cancellationToken = default)
-    {
-        Record(eventData.Duration);
-        return ValueTask.FromResult(result);
-    }
-
-    public override int NonQueryExecuted(
-        DbCommand command,
-        CommandExecutedEventData eventData,
-        int result)
-    {
-        Record(eventData.Duration);
-        return result;
-    }
-
-    public override ValueTask<int> NonQueryExecutedAsync(
-        DbCommand command,
-        CommandExecutedEventData eventData,
-        int result,
-        CancellationToken cancellationToken = default)
-    {
-        Record(eventData.Duration);
-        return ValueTask.FromResult(result);
-    }
-
-    public override object? ScalarExecuted(
-        DbCommand command,
-        CommandExecutedEventData eventData,
-        object? result)
-    {
-        Record(eventData.Duration);
-        return result;
-    }
-
-    public override ValueTask<object?> ScalarExecutedAsync(
-        DbCommand command,
-        CommandExecutedEventData eventData,
-        object? result,
-        CancellationToken cancellationToken = default)
-    {
-        Record(eventData.Duration);
-        return ValueTask.FromResult(result);
-    }
-
-    public override void CommandFailed(
-        DbCommand command,
-        CommandErrorEventData eventData)
-    {
-        Record(eventData.Duration);
-    }
-
-    public override Task CommandFailedAsync(
-        DbCommand command,
-        CommandErrorEventData eventData,
-        CancellationToken cancellationToken = default)
-    {
-        Record(eventData.Duration);
-        return Task.CompletedTask;
-    }
-
-    private void Record(TimeSpan duration) =>
-        RulesCoreServerTiming.AddDatabaseDuration(
-            httpContextAccessor.HttpContext,
-            duration);
 }
