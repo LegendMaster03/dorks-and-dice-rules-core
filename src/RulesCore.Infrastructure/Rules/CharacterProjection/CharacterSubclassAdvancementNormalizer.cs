@@ -157,7 +157,8 @@ internal static class CharacterSubclassAdvancementNormalizer
             .Where(item => !string.IsNullOrWhiteSpace(item.Advancement.ParentConceptKey))
             .Where(item =>
                 rulesByConcept.TryGetValue(item.Advancement.ConceptKey, out var rule)
-                && string.Equals(rule.EntityType, "subclass", StringComparison.OrdinalIgnoreCase))
+                && string.Equals(rule.EntityType, "subclass", StringComparison.OrdinalIgnoreCase)
+                && HasAuthoritativeParentClass(rule, item.Advancement.ParentConceptKey!))
             .GroupBy(item => (
                 ParentConceptKey: item.Advancement.ParentConceptKey!.Trim(),
                 ParentOccurrenceKey: item.Advancement.ParentOccurrenceKey?.Trim() ?? string.Empty))
@@ -198,6 +199,22 @@ internal static class CharacterSubclassAdvancementNormalizer
         return advancements
             .Where((_, index) => !rejectedIndexes.Contains(index))
             .ToList();
+    }
+
+    private static bool HasAuthoritativeParentClass(
+        ResolvedRuleCatalogItemView rule,
+        string parentConceptKey)
+    {
+        var parents = rule.Relationships
+            .Where(value =>
+                string.Equals(value.Kind, "parent-class", StringComparison.OrdinalIgnoreCase)
+                && string.Equals(value.RelatedEntityType, "class", StringComparison.OrdinalIgnoreCase))
+            .ToArray();
+        return parents.Length == 1
+            && string.Equals(
+                parents[0].RelatedConceptKey,
+                parentConceptKey.Trim(),
+                StringComparison.OrdinalIgnoreCase);
     }
 
     private static CharacterProjectionConflictView Conflict(

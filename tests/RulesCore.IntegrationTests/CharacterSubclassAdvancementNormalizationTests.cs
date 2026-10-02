@@ -64,6 +64,45 @@ public sealed class CharacterSubclassAdvancementNormalizationTests
         Assert.Contains(subclassConceptKey, conflict.RelatedConceptKeys);
     }
 
+    [Fact]
+    public void UnresolvedParentMetadataDoesNotTurnCallerParentHintsIntoStructuralBindings()
+    {
+        var classConceptKey = "class.legacy-mage";
+        var subclassConceptKey = "subclass.legacy-path";
+        var subclassRule = Rule(
+            subclassConceptKey,
+            "subclass",
+            "Legacy Path",
+            []);
+        var request = new CharacterRulesProjectionRequest(
+            Advancements:
+            [
+                new CharacterAdvancementFactInput(
+                    subclassConceptKey,
+                    4,
+                    OccurrenceKey: "legacy-a",
+                    ParentConceptKey: classConceptKey),
+                new CharacterAdvancementFactInput(
+                    subclassConceptKey,
+                    4,
+                    OccurrenceKey: "legacy-b",
+                    ParentConceptKey: classConceptKey)
+            ]);
+
+        var normalization = Normalize(request, [subclassRule]);
+        var normalizedRequest = Property<CharacterRulesProjectionRequest>(
+            normalization,
+            "Request");
+        var conflicts = Property<IReadOnlyList<CharacterProjectionConflictView>>(
+            normalization,
+            "Conflicts");
+
+        Assert.Equal(2, normalizedRequest.Advancements!.Count);
+        Assert.All(normalizedRequest.Advancements, value => Assert.Equal(4, value.Level));
+        Assert.DoesNotContain(conflicts, value => value.Kind == "subclass-selection-multiple");
+        Assert.Equal(2, conflicts.Count(value => value.Kind == "subclass-parent-unresolved"));
+    }
+
     private static object Normalize(
         CharacterRulesProjectionRequest request,
         IReadOnlyList<ResolvedRuleCatalogItemView> rules)
