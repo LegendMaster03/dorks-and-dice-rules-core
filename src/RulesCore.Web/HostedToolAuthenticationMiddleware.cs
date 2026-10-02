@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.Globalization;
 using System.Security.Claims;
 using RulesCore.Application.Hosting;
 
@@ -83,11 +82,10 @@ public sealed class HostedToolAuthenticationMiddleware(RequestDelegate next)
         finally
         {
             introspectionTimer.Stop();
-            httpContext.Response.Headers.Append(
-                "Server-Timing",
-                string.Create(
-                    CultureInfo.InvariantCulture,
-                    $"rules-auth;dur={introspectionTimer.Elapsed.TotalMilliseconds:0.###}"));
+            RulesCoreServerTiming.AppendDuration(
+                httpContext,
+                RulesCoreServerTiming.AuthenticationMetricName,
+                introspectionTimer.Elapsed.TotalMilliseconds);
         }
 
         if (authenticationContext is null)
