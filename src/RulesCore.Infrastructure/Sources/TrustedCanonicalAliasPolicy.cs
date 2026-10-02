@@ -19,6 +19,7 @@ internal static class TrustedCanonicalAliasPolicy
         // representation before adding any source-lineage alias.
         record = ThreeXSourceNormalizationPolicy.Apply(representation, record);
         record = ThreeXBulkTranslationPolicy.Apply(representation, record);
+        record = ThreeXPcGenSupplementPolicy.Apply(representation, record);
         record = ExactCompetencyTranslationPolicy.Apply(representation, record);
 
         if (string.IsNullOrWhiteSpace(record.ContentJson)
