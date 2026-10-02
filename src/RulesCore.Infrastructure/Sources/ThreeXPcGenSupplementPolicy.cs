@@ -87,6 +87,7 @@ internal static class ThreeXPcGenSupplementPolicy
 
         var naturalArmorBonus = 0;
         var hasNaturalArmorBonus = false;
+        var saveBonuses = new JsonArray();
         foreach (var bonus in All(segments, "BONUS"))
         {
             var parts = bonus.Value.Split('|', StringSplitOptions.TrimEntries);
@@ -109,6 +110,28 @@ internal static class ThreeXPcGenSupplementPolicy
             {
                 naturalArmorBonus += armor;
                 hasNaturalArmorBonus = true;
+                continue;
+            }
+
+            if (parts.Length >= 3
+                && string.Equals(parts[0], "SAVE", StringComparison.OrdinalIgnoreCase))
+            {
+                var saves = new JsonArray();
+                foreach (var save in parts[1].Split(
+                             ',',
+                             StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                {
+                    saves.Add(save);
+                }
+                var entry = new JsonObject
+                {
+                    ["saves"] = saves,
+                    ["value"] = parts[2]
+                };
+                var type = parts.Skip(3)
+                    .FirstOrDefault(value => value.StartsWith("TYPE=", StringComparison.OrdinalIgnoreCase));
+                if (type is not null) entry["type"] = type[5..];
+                saveBonuses.Add(entry);
             }
         }
         if (darkvision.HasValue)
@@ -118,6 +141,10 @@ internal static class ThreeXPcGenSupplementPolicy
         if (hasNaturalArmorBonus)
         {
             threeX["naturalArmorBonus"] = naturalArmorBonus;
+        }
+        if (saveBonuses.Count > 0)
+        {
+            threeX["racialSaveBonuses"] = saveBonuses;
         }
 
         var favoredClass = Last(segments, "FAVCLASS");
@@ -134,6 +161,19 @@ internal static class ThreeXPcGenSupplementPolicy
             var array = new JsonArray();
             foreach (var value in values.Distinct(StringComparer.OrdinalIgnoreCase)) array.Add(value);
             if (array.Count > 0) threeX["raceSubtypes"] = array;
+        }
+
+        var pcgenTypes = All(segments, "TYPE")
+            .SelectMany(value => value.Value.Split(
+                '.',
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        if (pcgenTypes.Length > 0)
+        {
+            var array = new JsonArray();
+            foreach (var value in pcgenTypes) array.Add(value);
+            threeX["pcgenTypes"] = array;
         }
 
         var automaticLanguages = new List<string>();
@@ -231,6 +271,54 @@ internal static class ThreeXPcGenSupplementPolicy
             }
         }
 
+        var extraSkillPoints = Last(segments, "XTRASKILLPTSPERLVL");
+        if (extraSkillPoints is not null
+            && int.TryParse(extraSkillPoints.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var extraPoints))
+        {
+            threeX["extraSkillPointsPerLevel"] = extraPoints;
+        }
+
+        var unencumberedMovement = Last(segments, "UNENCUMBEREDMOVE");
+        if (unencumberedMovement is not null)
+        {
+            var values = unencumberedMovement.Value.Split(
+                '|',
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            var array = new JsonArray();
+            foreach (var value in values) array.Add(value);
+            if (array.Count > 0) threeX["unencumberedMovement"] = array;
+        }
+
+        var abilityMinimums = new JsonObject();
+        foreach (var defined in All(segments, "DEFINESTAT"))
+        {
+            var parts = defined.Value.Split('|', StringSplitOptions.TrimEntries);
+            if (parts.Length >= 3
+                && string.Equals(parts[0], "MINVALUE", StringComparison.OrdinalIgnoreCase)
+                && TryAbility(parts[1], out var ability)
+                && int.TryParse(parts[2], NumberStyles.Integer, CultureInfo.InvariantCulture, out var minimum))
+            {
+                abilityMinimums[ability] = minimum;
+            }
+        }
+        if (abilityMinimums.Count > 0) threeX["abilityMinimums"] = abilityMinimums;
+
+        var templateChoices = new List<string>();
+        foreach (var template in All(segments, "TEMPLATE"))
+        {
+            var value = template.Value.Trim();
+            if (!value.StartsWith("CHOOSE:", StringComparison.OrdinalIgnoreCase)) continue;
+            templateChoices.AddRange(value[7..].Split(
+                '|',
+                StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
+        }
+        if (templateChoices.Count > 0)
+        {
+            var array = new JsonArray();
+            foreach (var value in templateChoices.Distinct(StringComparer.OrdinalIgnoreCase)) array.Add(value);
+            threeX["templateChoices"] = array;
+        }
+
         CopyLast(threeX, segments, "FACE", "space");
         CopyLast(threeX, segments, "REACH", "reach");
         CopyLast(threeX, segments, "DR", "damageReduction");
@@ -243,6 +331,13 @@ internal static class ThreeXPcGenSupplementPolicy
             && legCount >= 0)
         {
             threeX["legs"] = legCount;
+        }
+        var hands = Last(segments, "HANDS");
+        if (hands is not null
+            && int.TryParse(hands.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var handCount)
+            && handCount >= 0)
+        {
+            threeX["hands"] = handCount;
         }
     }
 
@@ -297,6 +392,21 @@ internal static class ThreeXPcGenSupplementPolicy
         {
             threeX[property] = value.Value;
         }
+    }
+
+    private static bool TryAbility(string value, out string ability)
+    {
+        ability = value.Trim().ToLowerInvariant() switch
+        {
+            "str" or "strength" => "str",
+            "dex" or "dexterity" => "dex",
+            "con" or "constitution" => "con",
+            "int" or "intelligence" => "int",
+            "wis" or "wisdom" => "wis",
+            "cha" or "charisma" => "cha",
+            _ => string.Empty
+        };
+        return ability.Length > 0;
     }
 
     private static bool TryReadSegments(string rawJson, out IReadOnlyList<Segment> segments)
