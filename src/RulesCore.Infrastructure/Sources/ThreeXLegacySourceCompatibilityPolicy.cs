@@ -44,14 +44,14 @@ internal static class ThreeXLegacySourceCompatibilityPolicy
                     CultureInfo.InvariantCulture,
                     out var magnitude)
                 || magnitude < 0
-                || !TryAbility(match.Groups["ability"].Value, out var ability))
+                || !TryAbility(match.Groups["ability"].Value, out var abilityKey))
             {
                 continue;
             }
 
             var sign = match.Groups["sign"].Value[0];
             var amount = sign == '+' ? magnitude : -magnitude;
-            adjustments[ability] = adjustments.GetValueOrDefault(ability) + amount;
+            adjustments[abilityKey] = adjustments.GetValueOrDefault(abilityKey) + amount;
         }
 
         if (adjustments.Count == 0)
