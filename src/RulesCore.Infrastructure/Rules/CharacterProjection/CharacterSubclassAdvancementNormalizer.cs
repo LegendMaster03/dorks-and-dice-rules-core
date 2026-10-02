@@ -41,7 +41,12 @@ internal static class CharacterSubclassAdvancementNormalizer
                 .ToArray();
             if (parents.Length != 1)
             {
-                normalized.Add(advancement with { Level = 0 });
+                // Preserve legacy/native projection when the effective ruleset does not yet carry
+                // one authoritative parent relationship. The conflict remains blocking for
+                // acquisition/eligibility, but erasing the caller-supplied level here would also
+                // erase otherwise valid source-native feature projection before the relationship
+                // metadata can be reconciled.
+                normalized.Add(advancement);
                 conflicts.Add(Conflict(
                     rule.ConceptKey,
                     advancement.ParentConceptKey,
