@@ -18,6 +18,7 @@ internal static class TrustedCanonicalAliasPolicy
         // importer concerns, not trusted-lineage concerns. Apply them for every supported
         // representation before adding any source-lineage alias.
         record = ThreeXSourceNormalizationPolicy.Apply(representation, record);
+        record = ThreeXBulkTranslationPolicy.Apply(representation, record);
         record = ExactCompetencyTranslationPolicy.Apply(representation, record);
 
         if (string.IsNullOrWhiteSpace(record.ContentJson)
