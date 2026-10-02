@@ -64,6 +64,7 @@ if (hasDatabase)
     }
 }
 
+app.UseMiddleware<RulesCoreServerTimingMiddleware>();
 app.UseMiddleware<HostedToolAuthenticationMiddleware>();
 
 app.MapHealthChecks("/health");
