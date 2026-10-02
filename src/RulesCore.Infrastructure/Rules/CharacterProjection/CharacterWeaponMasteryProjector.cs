@@ -33,14 +33,15 @@ internal static class CharacterWeaponMasteryProjector
                 continue;
             }
 
+            var masteryClassName = MasteryClassName(rule.Document, rule.Catalog.DisplayName);
             var count = ReadTableMasteryCount(rule.Document, classLevel)
-                ?? FixedMasteryCount(rule.Catalog.DisplayName);
+                ?? FixedMasteryCount(masteryClassName);
             if (count is null or <= 0)
             {
                 continue;
             }
 
-            var classKey = NormalizeClassKey(rule.Catalog.DisplayName);
+            var classKey = NormalizeClassKey(masteryClassName);
             var options = masteryByWeapon.Values
                 .Where(value => IsEligibleWeapon(classKey, value.Weapon, context))
                 .Select(value => new CharacterChoiceOptionView(
@@ -225,6 +226,14 @@ internal static class CharacterWeaponMasteryProjector
             return ReadIntegerCell(nested);
         }
         return null;
+    }
+
+    private static string MasteryClassName(JsonElement classDocument, string fallbackDisplayName)
+    {
+        var sourceName = CharacterProjectionJson.String(classDocument, "name");
+        return string.IsNullOrWhiteSpace(sourceName)
+            ? fallbackDisplayName
+            : sourceName.Trim();
     }
 
     private static int? FixedMasteryCount(string className) =>
