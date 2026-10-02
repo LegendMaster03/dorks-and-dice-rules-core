@@ -110,7 +110,7 @@ PCGen is the first persistent 3.x structured source translator.
 
 Game-mode projection currently recognizes 3e and 35e as `3e` and `3.5e`. An exact `yyyy-MM-dd` source date can become canonical publication-date evidence. A partial source date such as `2003-07` remains preserved raw metadata and is not converted into an invented exact day.
 
-PCC reference tags identify the native PCGen family, but translation can refine that family using strong record evidence. In particular, official 3.x data commonly carries feats through `ABILITY` files with `CATEGORY:FEAT`, and monster definitions through `RACE` files in monster source sets.
+PCC reference tags identify the native PCGen family, but translation can refine that family using strong record evidence. In particular, official 3.x data commonly carries feats through `ABILITY` files with `CATEGORY:FEAT`. PCGen also uses `RACE` records as racial or creature chassis, including in monster-oriented source sets. A `MONSTERCLASS` tag or monster-oriented path describes how that race participates in creature construction; neither is evidence that the record is a complete monster stat block.
 
 ### LST files
 
@@ -118,16 +118,15 @@ Supported single-line families are parsed into source-native records with stable
 
 Recognized records are then translated into the same family-shaped `ContentJson` contract used by native 5e.tools content. The translator maps only mechanics with a defensible equivalent and stores unmapped 3.x-specific material under `_rulesCore.pcgen.unmappedSegments`.
 
-The current translator follows actual PCGen conventions. For skill competencies it also normalizes understood `KEYSTAT`, `USEUNTRAINED`, `ACHECK`, specialty, rank-support, and class-skill-state semantics into `_rulesCore.competency`. The original tag/value evidence remains preserved in the native record and under `_rulesCore.pcgen.unmappedSegments`; downstream Character consumers do not need to parse PCGen syntax.
+For skill competencies it also normalizes understood `KEYSTAT`, `USEUNTRAINED`, `ACHECK`, specialty, rank-support, and class-skill-state semantics into `_rulesCore.competency`. The original tag/value evidence remains preserved in the native record and under `_rulesCore.pcgen.unmappedSegments`; downstream Character consumers do not need to parse PCGen syntax.
 
 The current translator follows actual PCGen conventions:
 
-
 - `ABILITY` + `CATEGORY:FEAT` becomes the feat family without changing the native key;
-- monster `RACE` records are recognized from `MONSTERCLASS` or strong monster-source path evidence;
+- PCGen `RACE` records remain race/species chassis even when they contain `MONSTERCLASS` or live in monster-oriented source paths;
 - spell level is derived from `CLASSES`/`DOMAINS` only when the assignments identify one unambiguous level;
 - bare numeric equipment `COST` is gold pieces in PCGen and is converted to the 5e.tools copper-piece value representation;
-- monster racial `BONUS:STAT`, natural-armor bonuses, and `MONSTERCLASS` racial hit-die declarations are preserved as 3.x mechanics instead of being misrepresented as final 5e ability scores, total AC, or HP.
+- racial `BONUS:STAT`, natural-armor bonuses, `RACETYPE`/`RACESUBTYPE`, and `MONSTERCLASS` declarations are translated or preserved as race/chassis mechanics instead of being misrepresented as a complete monster's final ability scores, total AC, HP, or attacks.
 
 A direct book-local PCC reference can provide publication context for an LST file. A shared list referenced by multiple publications may provide entity-family information but remains publication-unassociated when ownership is ambiguous.
 
@@ -172,7 +171,7 @@ Canonical identity remains separate from both native representation and mechanic
 
 Translated mechanical fingerprints can contribute to exact-identity reconciliation, but translation context such as source format or edition is excluded from the rule-bearing comparison. Unmapped source mechanics remain significant. Cross-format reuse with different mechanical fingerprints requires trusted lineage/reconciliation evidence rather than name-only matching.
 
-Mechanical changes in one native source lineage remain explicit relationships or revisions as appropriate. A strong alias can not be used to collapse a mechanically changed source revision into its prior canonical entity.
+Mechanical changes in one native source lineage remain explicit relationships or revisions as appropriate. A strong alias can not be used to collapse a mechanically changed source revision into its prior canonical entity. Translation-only reassociation preserves a revision-history bridge only when the old and corrected canonical categories are compatible; correcting a category bug must not join otherwise separate reference histories.
 
 Canonical reconciliation conflicts are isolated from native ingestion. A valid `SourcePackage`, `SourceRepresentation`, `SourceEntity`, and `SourceEntityRevision` remain committed when one publication group can not be reconciled safely. The conflict is persisted as representation-scoped `source_reconciliation_issue` metadata and returned by the normalized import result.
 
@@ -190,9 +189,9 @@ Translated `ContentJson` does not weaken this boundary. Rules Layer and source-b
 
 A Web source re-enters the same adapter pipeline on refresh. GitHub tree sources enumerate candidate files, fetch each physical artifact separately, and use the batch-adapter path when a format needs cross-file context such as PCGen PCC-to-LST references or 5e.tools corpus metadata.
 
-GitHub tree version checks use commit identity. Other HTTP sources use available `ETag`/`Last-Modified` metadata. A full re-import is skipped when the upstream version has not changed.
+GitHub tree version checks use commit identity. Other HTTP sources use available `ETag`/`Last-Modified` metadata. A full source refresh is skipped when the upstream version has not changed. Rules Core normalization-version maintenance is independent of source refresh: translator corrections can be replayed over preserved native revisions without pretending the upstream source changed.
 
-The refresh worker is an ASP.NET hosted service and queued import processor; there is no detached fire-and-forget import path.
+The refresh worker is an ASP.NET hosted service and queued import processor; there is no detached fire-and-forget import path. When no import job is waiting, the same worker continuously drains pending source-normalization backfill work.
 
 ## First-import seeding boundary
 
