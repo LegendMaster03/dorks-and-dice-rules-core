@@ -12,8 +12,7 @@ namespace RulesCore.Infrastructure.Sources;
 /// Replays the current Rules Core interpretation over immutable source-native revisions.
 ///
 /// RawJson, native fingerprints, revision numbers, and representation bytes are never rewritten.
-/// Derived ContentJson, reviewed normalized SourceEntity identity, and canonical semantic
-/// association may change when Rules Core corrects its interpretation of preserved source evidence.
+/// Only derived ContentJson and canonical semantic association may change.
 /// </summary>
 public sealed class SourceNormalizationMaintenanceService(
     RulesCoreDbContext dbContext,
@@ -197,12 +196,6 @@ public sealed class SourceNormalizationMaintenanceService(
                     + "from the preserved native record without reparsing its source representation.");
             }
 
-            if (IsReviewedSourceIdentityMigration(entity, normalized))
-            {
-                entity.EntityType = normalized.EntityType;
-                entity.Name = normalized.Name;
-            }
-
             var contentUpdated = !NormalizedSourceImportService.JsonEquivalentOptional(
                 revision.ContentJson,
                 normalized.ContentJson);
@@ -235,8 +228,6 @@ public sealed class SourceNormalizationMaintenanceService(
                     cancellationToken,
                     normalized.CanonicalAliases,
                     allowTranslationOnlyReassociation: true);
-                await new CanonicalReferenceHistoryReconciliationService(dbContext)
-                    .ReconcileSourceEntitiesAsync([entity.Id], cancellationToken);
                 canonicalReassociated = true;
             }
 
@@ -273,22 +264,6 @@ public sealed class SourceNormalizationMaintenanceService(
                 Failure: failure);
         }
     }
-
-    private static bool IsReviewedSourceIdentityMigration(
-        SourceEntity entity,
-        NormalizedSourceRecord normalized) =>
-        (string.Equals(
-                entity.FormatKey,
-                LegacySrdSourceFormatAdapter.Format,
-                StringComparison.Ordinal)
-            && ExactCompetencyTranslationPolicy.IsReviewedLegacyCompetencyMigration(
-                entity.EntityType,
-                entity.Name,
-                normalized))
-        || ExactCompetencyTranslationPolicy.IsReviewedSharedFacetMigration(
-            entity.EntityType,
-            entity.Name,
-            normalized);
 
     private async Task<TranslationCandidate> BuildCandidateAsync(
         SourceEntity entity,
