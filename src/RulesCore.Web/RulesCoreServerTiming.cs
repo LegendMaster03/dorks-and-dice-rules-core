@@ -15,6 +15,7 @@ public static class RulesCoreServerTiming
 
     private const string NpgsqlActivitySourceName = "Npgsql";
     private const string NpgsqlConnectionActivityPrefix = "CONNECT ";
+    private const string RequestStateActivityPropertyName = "RulesCore.ServerTiming.RequestState";
 
     private static readonly object RequestStateKey = new();
     private static readonly AsyncLocal<RequestTimingState?> CurrentRequestState = new();
@@ -39,12 +40,15 @@ public static class RulesCoreServerTiming
 
         httpContext.Response.OnStarting(() =>
         {
-            if (state.DatabaseOperationCount > 0)
+            var databaseSnapshot = state.CompleteAndSnapshot();
+            ClearCurrentRequestState(state);
+
+            if (databaseSnapshot.OperationCount > 0)
             {
                 AppendDuration(
                     httpContext,
                     DatabaseMetricName,
-                    TimeSpan.FromTicks(state.DatabaseTicks).TotalMilliseconds);
+                    TimeSpan.FromTicks(databaseSnapshot.Ticks).TotalMilliseconds);
             }
 
             AppendDuration(
@@ -56,14 +60,21 @@ public static class RulesCoreServerTiming
 
         httpContext.Response.OnCompleted(() =>
         {
-            state.Complete();
-            if (ReferenceEquals(CurrentRequestState.Value, state))
-            {
-                CurrentRequestState.Value = null;
-            }
-
+            CompleteRequestTiming(httpContext);
             return Task.CompletedTask;
         });
+    }
+
+    public static void CompleteRequestTiming(HttpContext httpContext)
+    {
+        if (!httpContext.Items.TryGetValue(RequestStateKey, out var existing)
+            || existing is not RequestTimingState state)
+        {
+            return;
+        }
+
+        state.Complete();
+        ClearCurrentRequestState(state);
     }
 
     public static void AppendDuration(
@@ -93,8 +104,17 @@ public static class RulesCoreServerTiming
                 SampleNpgsqlActivity(options.Name),
             SampleUsingParentId = static (ref ActivityCreationOptions<string> options) =>
                 SampleNpgsqlActivity(options.Name),
+            ActivityStarted = static activity =>
+            {
+                var state = CurrentRequestState.Value;
+                if (state is { IsActive: true })
+                {
+                    activity.SetCustomProperty(RequestStateActivityPropertyName, state);
+                }
+            },
             ActivityStopped = static activity =>
-                CurrentRequestState.Value?.AddDatabaseDuration(activity.Duration)
+                (activity.GetCustomProperty(RequestStateActivityPropertyName) as RequestTimingState)?
+                    .AddDatabaseDuration(activity.Duration)
         };
 
         ActivitySource.AddActivityListener(listener);
@@ -114,29 +134,70 @@ public static class RulesCoreServerTiming
         return ActivitySamplingResult.PropagationData;
     }
 
+    private static void ClearCurrentRequestState(RequestTimingState state)
+    {
+        if (ReferenceEquals(CurrentRequestState.Value, state))
+        {
+            CurrentRequestState.Value = null;
+        }
+    }
+
     private sealed class RequestTimingState(long startedAt)
     {
+        private readonly object _gate = new();
         private long _databaseTicks;
         private long _databaseOperationCount;
-        private int _active = 1;
+        private bool _active = true;
 
         public long StartedAt { get; } = startedAt;
-        public long DatabaseTicks => Interlocked.Read(ref _databaseTicks);
-        public long DatabaseOperationCount => Interlocked.Read(ref _databaseOperationCount);
-        public bool IsActive => Volatile.Read(ref _active) != 0;
+
+        public bool IsActive
+        {
+            get
+            {
+                lock (_gate)
+                {
+                    return _active;
+                }
+            }
+        }
 
         public void AddDatabaseDuration(TimeSpan duration)
         {
-            if (!IsActive || duration < TimeSpan.Zero)
+            if (duration < TimeSpan.Zero)
             {
                 return;
             }
 
-            Interlocked.Add(ref _databaseTicks, duration.Ticks);
-            Interlocked.Increment(ref _databaseOperationCount);
+            lock (_gate)
+            {
+                if (!_active)
+                {
+                    return;
+                }
+
+                _databaseTicks += duration.Ticks;
+                _databaseOperationCount++;
+            }
         }
 
-        public void Complete() =>
-            Interlocked.Exchange(ref _active, 0);
+        public DatabaseTimingSnapshot CompleteAndSnapshot()
+        {
+            lock (_gate)
+            {
+                _active = false;
+                return new DatabaseTimingSnapshot(_databaseTicks, _databaseOperationCount);
+            }
+        }
+
+        public void Complete()
+        {
+            lock (_gate)
+            {
+                _active = false;
+            }
+        }
     }
+
+    private readonly record struct DatabaseTimingSnapshot(long Ticks, long OperationCount);
 }
