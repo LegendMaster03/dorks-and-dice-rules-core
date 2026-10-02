@@ -1,4 +1,3 @@
-using System.Globalization;
 using RulesCore.Application.Hosting;
 using RulesCore.Application.Rules;
 using RulesCore.Infrastructure.Persistence;
@@ -38,7 +37,7 @@ public static class WikiReferenceEndpointExtensions
                     limit ?? 200,
                     offset ?? 0,
                     cancellationToken);
-                AddWikiServerTiming(httpContext, service);
+                AddReferenceServerTiming(httpContext, service);
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(catalog);
             }
@@ -62,7 +61,7 @@ public static class WikiReferenceEndpointExtensions
                     authenticationContext?.User.Id,
                     referenceIdentity,
                     cancellationToken);
-                AddWikiServerTiming(httpContext, service);
+                AddReferenceServerTiming(httpContext, service);
                 if (detail is null) return Results.NotFound();
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(detail);
@@ -165,7 +164,7 @@ public static class WikiReferenceEndpointExtensions
                         limit ?? 200,
                         offset ?? 0,
                         cancellationToken);
-                AddWikiServerTiming(httpContext, service);
+                AddReferenceServerTiming(httpContext, service);
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(catalog);
             }
@@ -193,7 +192,7 @@ public static class WikiReferenceEndpointExtensions
                     authenticationContext!.User.Id,
                     referenceIdentity,
                     cancellationToken);
-                AddWikiServerTiming(httpContext, service);
+                AddReferenceServerTiming(httpContext, service);
                 if (detail is null) return Results.NotFound();
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(detail);
@@ -296,17 +295,22 @@ public static class WikiReferenceEndpointExtensions
         });
     }
 
-    private static void AddWikiServerTiming(
+    private static void AddReferenceServerTiming(
         HttpContext httpContext,
         WikiReferenceCatalogService service)
     {
-        var value = string.Format(
-            CultureInfo.InvariantCulture,
-            "rules-wiki-query;dur={0:0.###}, rules-wiki-docs;dur={1:0.###}, rules-wiki-total;dur={2:0.###}",
-            service.LastQueryMilliseconds,
-            service.LastDocumentMilliseconds,
+        RulesCoreServerTiming.AppendDuration(
+            httpContext,
+            RulesCoreServerTiming.ReferenceQueryMetricName,
+            service.LastQueryMilliseconds);
+        RulesCoreServerTiming.AppendDuration(
+            httpContext,
+            RulesCoreServerTiming.ReferenceDocumentsMetricName,
+            service.LastDocumentMilliseconds);
+        RulesCoreServerTiming.AppendDuration(
+            httpContext,
+            RulesCoreServerTiming.ReferenceTotalMetricName,
             service.LastTotalMilliseconds);
-        httpContext.Response.Headers.Append("Server-Timing", value);
     }
 
     private static IResult? RequireCampaignRead(
