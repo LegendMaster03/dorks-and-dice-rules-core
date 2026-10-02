@@ -191,7 +191,7 @@ public sealed class MechanicalContentIntegrationTests
                 "test-only",
                 false,
                 FiveEToolsFixture(token)));
-            await importer.ImportAsync(new ImportNormalizedSourceImportRequest(
+            await importer.ImportAsync(new ImportNormalizedSourceRequest(
                 pcgenPackage,
                 $"PCGen mechanical fixture {token}",
                 "integration-test",
