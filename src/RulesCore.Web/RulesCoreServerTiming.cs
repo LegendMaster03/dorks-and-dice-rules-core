@@ -10,7 +10,7 @@ public static class RulesCoreServerTiming
     public const string AuthenticationMetricName = "rules-core-auth";
     public const string DatabaseMetricName = "rules-core-db";
     public const string ReferenceQueryMetricName = "rules-core-reference-query";
-    public const string ReferenceDocumentsMetricName = "rules-core-reference-docs";
+    public const string ReferenceMaterializationMetricName = "rules-core-reference-materialize";
     public const string ReferenceTotalMetricName = "rules-core-reference-total";
 
     private const string NpgsqlActivitySourceName = "Npgsql";
