@@ -83,7 +83,8 @@ internal static class CharacterWeaponMasteryProjector
         {
             var options = BuildOptions(
                 masteryByWeapon.Values.Where(value =>
-                    HasWeaponProficiency(context, value.Weapon)));
+                    IsSimpleOrMartialCategory(value.Weapon.WeaponCategory)
+                    && HasWeaponProficiency(context, value.Weapon)));
 
             CharacterStartingProficiencyProjector.ProjectChoiceGroup(
                 rule,
@@ -302,14 +303,25 @@ internal static class CharacterWeaponMasteryProjector
     private static bool IsEligibleWeapon(
         string classKey,
         CharacterWeaponCatalogEntry weapon,
-        CharacterProjectionContext context) =>
-        classKey switch
+        CharacterProjectionContext context)
+    {
+        if (!IsSimpleOrMartialCategory(weapon.WeaponCategory))
+        {
+            return false;
+        }
+
+        return classKey switch
         {
             "fighter" => true,
             "barbarian" => string.Equals(weapon.ItemType, "M", StringComparison.OrdinalIgnoreCase),
             "paladin" or "ranger" or "rogue" => HasWeaponProficiency(context, weapon),
             _ => false
         };
+    }
+
+    private static bool IsSimpleOrMartialCategory(string? weaponCategory) =>
+        string.Equals(weaponCategory, "simple", StringComparison.OrdinalIgnoreCase)
+        || string.Equals(weaponCategory, "martial", StringComparison.OrdinalIgnoreCase);
 
     private static bool HasWeaponProficiency(
         CharacterProjectionContext context,
