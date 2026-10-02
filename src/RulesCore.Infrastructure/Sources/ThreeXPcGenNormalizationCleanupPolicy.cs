@@ -100,7 +100,10 @@ internal static class ThreeXPcGenNormalizationCleanupPolicy
 
     private static bool IsTranslatedRace(string tag, string value)
     {
-        if (tag is "VISION" or "FAVCLASS" or "RACETYPE" or "RACESUBTYPE" or "LANGBONUS" or "CR")
+        if (tag is
+            "VISION" or "FAVCLASS" or "RACETYPE" or "RACESUBTYPE" or "LANGBONUS" or "CR"
+            or "LEVELADJUSTMENT" or "STARTFEATS" or "MONSTERCLASS" or "HITDICEADVANCEMENT"
+            or "FACE" or "REACH" or "DR" or "SR" or "NATURALATTACKS" or "LEGS")
         {
             return true;
         }
@@ -112,10 +115,19 @@ internal static class ThreeXPcGenNormalizationCleanupPolicy
         if (tag == "BONUS")
         {
             var parts = value.Split('|', StringSplitOptions.TrimEntries);
-            return parts.Length >= 3
+            if (parts.Length >= 3
                 && string.Equals(parts[0], "VAR", StringComparison.OrdinalIgnoreCase)
                 && string.Equals(parts[1], "DarkvisionRange", StringComparison.OrdinalIgnoreCase)
-                && int.TryParse(parts[2], out _);
+                && int.TryParse(parts[2], out _))
+            {
+                return true;
+            }
+            return parts.Length >= 4
+                && string.Equals(parts[0], "COMBAT", StringComparison.OrdinalIgnoreCase)
+                && string.Equals(parts[1], "AC", StringComparison.OrdinalIgnoreCase)
+                && int.TryParse(parts[2], out _)
+                && parts.Skip(3).Any(item =>
+                    string.Equals(item, "TYPE=NaturalArmor", StringComparison.OrdinalIgnoreCase));
         }
         return false;
     }
