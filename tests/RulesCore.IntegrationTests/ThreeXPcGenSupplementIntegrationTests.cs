@@ -32,7 +32,7 @@ public sealed class ThreeXPcGenSupplementIntegrationTests
                     """),
                 Artifact(
                     $"{root}/races.lst",
-                    "Goblin\tFAVCLASS:Rogue\tSIZE:S\tMOVE:Walk,30\tBONUS:STAT|STR|-2\tBONUS:STAT|DEX|2\tBONUS:VAR|DarkvisionRange|60|TYPE=Base\tAUTO:LANG|Goblin\tLANGBONUS:Common\tRACETYPE:Humanoid\tRACESUBTYPE:Goblinoid\tCR:1/2")
+                    "Goblin\tFAVCLASS:Rogue\tSTARTFEATS:1\tSIZE:S\tMOVE:Walk,30\tUNENCUMBEREDMOVE:HeavyLoad|HeavyArmor\tFACE:5\tREACH:5\tLANGBONUS:Common\tBONUS:STAT|STR|-2\tBONUS:STAT|DEX|2\tBONUS:VAR|DarkvisionRange|60|TYPE=Base\tBONUS:SAVE|Fortitude,Reflex,Will|1|TYPE=Racial\tAUTO:LANG|Goblin\tLEGS:2\tHANDS:2\tDEFINESTAT:MINVALUE|INT|3\tRACETYPE:Humanoid\tRACESUBTYPE:Goblinoid\tTYPE:Humanoid.PC.Base\tTEMPLATE:CHOOSE:Normal Goblin|Goblin Cavalry\tXTRASKILLPTSPERLVL:1\tCR:1/2")
             ]);
             var representation = Assert.Single(
                 representations,
@@ -70,12 +70,29 @@ public sealed class ThreeXPcGenSupplementIntegrationTests
                 "Goblinoid",
                 threeX.GetProperty("raceSubtypes").EnumerateArray().Select(value => value.GetString()));
             Assert.Contains(
+                "PC",
+                threeX.GetProperty("pcgenTypes").EnumerateArray().Select(value => value.GetString()));
+            Assert.Contains(
                 "Goblin",
                 threeX.GetProperty("automaticLanguages").EnumerateArray().Select(value => value.GetString()));
             Assert.Contains(
                 "Common",
                 threeX.GetProperty("bonusLanguages").EnumerateArray().Select(value => value.GetString()));
             Assert.Equal("1/2", threeX.GetProperty("racialChallengeRating").GetString());
+            Assert.Equal(1, threeX.GetProperty("startingFeats").GetInt32());
+            Assert.Equal(2, threeX.GetProperty("legs").GetInt32());
+            Assert.Equal(2, threeX.GetProperty("hands").GetInt32());
+            Assert.Equal(1, threeX.GetProperty("extraSkillPointsPerLevel").GetInt32());
+            Assert.Equal(3, threeX.GetProperty("abilityMinimums").GetProperty("int").GetInt32());
+            Assert.Contains(
+                "HeavyArmor",
+                threeX.GetProperty("unencumberedMovement").EnumerateArray().Select(value => value.GetString()));
+            Assert.Contains(
+                "Goblin Cavalry",
+                threeX.GetProperty("templateChoices").EnumerateArray().Select(value => value.GetString()));
+            var saveBonus = Assert.Single(threeX.GetProperty("racialSaveBonuses").EnumerateArray());
+            Assert.Equal("1", saveBonus.GetProperty("value").GetString());
+            Assert.Equal("Racial", saveBonus.GetProperty("type").GetString());
             Assert.False(rootElement.TryGetProperty("cr", out _));
             Assert.False(rootElement.TryGetProperty("type", out _));
         }
