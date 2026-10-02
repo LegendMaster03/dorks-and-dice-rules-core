@@ -67,7 +67,11 @@ internal static class CharacterWeaponMasteryProjector
                 sourceShape: "weapon-mastery",
                 kind: "weapon-mastery",
                 optionLabel: MasteryLabel,
-                onSelected: _ => { });
+                onSelected: selected => ProjectMasteryCapability(
+                    context,
+                    rule,
+                    masteryByWeapon,
+                    selected));
         }
     }
 
@@ -96,7 +100,11 @@ internal static class CharacterWeaponMasteryProjector
                 sourceShape: "weapon-master-feat",
                 kind: "weapon-mastery",
                 optionLabel: MasteryLabel,
-                onSelected: _ => { });
+                onSelected: selected => ProjectMasteryCapability(
+                    context,
+                    rule,
+                    masteryByWeapon,
+                    selected));
         }
     }
 
@@ -109,6 +117,45 @@ internal static class CharacterWeaponMasteryProjector
             .OrderBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
             .ThenBy(value => value.Value, StringComparer.Ordinal)
             .ToArray();
+
+    private static void ProjectMasteryCapability(
+        CharacterProjectionContext context,
+        CharacterProjectionRule sourceRule,
+        IReadOnlyDictionary<string, MasteryWeapon> masteryByWeapon,
+        CharacterChoiceOptionView selected)
+    {
+        var weaponConceptKey = selected.ConceptKey ?? selected.Value;
+        if (!masteryByWeapon.TryGetValue(weaponConceptKey, out var mastery))
+        {
+            return;
+        }
+
+        AddMasteryCapability(
+            context,
+            mastery.Weapon.ConceptKey,
+            mastery.Weapon.DisplayName,
+            mastery.MasteryProperty,
+            sourceRule.Catalog.ConceptKey,
+            sourceRule.Provenance);
+    }
+
+    private static void AddMasteryCapability(
+        CharacterProjectionContext context,
+        string weaponConceptKey,
+        string weaponDisplayName,
+        string masteryProperty,
+        string sourceConceptKey,
+        CharacterMechanicProvenanceView provenance)
+    {
+        context.AddCapability(
+            MasteryCapabilityKey(weaponConceptKey),
+            $"{weaponDisplayName} — {masteryProperty} Mastery",
+            sourceConceptKey,
+            provenance);
+    }
+
+    private static string MasteryCapabilityKey(string weaponConceptKey) =>
+        $"weapon-mastery.{weaponConceptKey.Trim()}";
 
     private static IReadOnlyDictionary<string, MasteryWeapon> BuildWeaponMasteryCatalog(
         IReadOnlyList<CharacterProjectionRule> rules,
