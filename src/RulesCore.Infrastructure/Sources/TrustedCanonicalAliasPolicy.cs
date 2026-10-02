@@ -21,6 +21,7 @@ internal static class TrustedCanonicalAliasPolicy
         record = ThreeXBulkTranslationPolicy.Apply(representation, record);
         record = ThreeXLegacySourceCompatibilityPolicy.Apply(representation, record);
         record = ThreeXPcGenSupplementPolicy.Apply(representation, record);
+        record = ThreeXPcGenNormalizationCleanupPolicy.Apply(representation, record);
         record = ExactCompetencyTranslationPolicy.Apply(representation, record);
 
         if (string.IsNullOrWhiteSpace(record.ContentJson)
