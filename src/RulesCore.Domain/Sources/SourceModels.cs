@@ -93,9 +93,9 @@ public sealed class SourceEntityRevision
 }
 
 /// <summary>
-/// Produces the rule-bearing view of translated mechanical content. Rules Core translation
-/// context remains persisted in ContentJson for inspection, but source-format/edition context
-/// must not make otherwise identical mechanics compare as different rules.
+/// Produces the rule-bearing view of translated mechanical content. Translation context and exact
+/// source-body provenance remain persisted in ContentJson for inspection, but neither may make
+/// otherwise identical mechanics compare as different rules.
 /// </summary>
 public static class RulesMechanicalContent
 {
@@ -108,8 +108,15 @@ public static class RulesMechanicalContent
 
         var root = JsonNode.Parse(json) as JsonObject
             ?? throw new InvalidDataException("Mechanical content must have a JSON object root.");
-        if (root["_rulesCore"] is not JsonObject extension
-            || !extension.ContainsKey("context"))
+        if (root["_rulesCore"] is not JsonObject extension)
+        {
+            return json;
+        }
+
+        var hasContext = extension.ContainsKey("context");
+        var hasSourceBody = extension["threeX"] is JsonObject threeX
+            && threeX.ContainsKey("sourceBody");
+        if (!hasContext && !hasSourceBody)
         {
             return json;
         }
@@ -117,6 +124,14 @@ public static class RulesMechanicalContent
         var normalized = (JsonObject)root.DeepClone();
         var normalizedExtension = (JsonObject)normalized["_rulesCore"]!;
         normalizedExtension.Remove("context");
+        if (normalizedExtension["threeX"] is JsonObject normalizedThreeX)
+        {
+            normalizedThreeX.Remove("sourceBody");
+            if (normalizedThreeX.Count == 0)
+            {
+                normalizedExtension.Remove("threeX");
+            }
+        }
         if (normalizedExtension.Count == 0)
         {
             normalized.Remove("_rulesCore");
