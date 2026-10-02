@@ -257,6 +257,14 @@ internal static class ExactCompetencyTranslationPolicy
         string currentName,
         NormalizedSourceRecord translatedRecord)
     {
+        if (IsReviewedPcGenRaceIdentityCorrection(
+                currentEntityType,
+                currentName,
+                translatedRecord))
+        {
+            return true;
+        }
+
         if (!string.Equals(currentEntityType, "tool", StringComparison.OrdinalIgnoreCase)
             || string.IsNullOrWhiteSpace(currentName)
             || !string.Equals(translatedRecord.EntityType, "skill", StringComparison.OrdinalIgnoreCase)
@@ -303,6 +311,53 @@ internal static class ExactCompetencyTranslationPolicy
                 && string.Equals(
                     conversion.TargetName,
                     currentName,
+                    StringComparison.OrdinalIgnoreCase);
+        }
+        catch (JsonException)
+        {
+            return false;
+        }
+    }
+
+    private static bool IsReviewedPcGenRaceIdentityCorrection(
+        string currentEntityType,
+        string currentName,
+        NormalizedSourceRecord translatedRecord)
+    {
+        if (!string.Equals(currentEntityType, "monster", StringComparison.OrdinalIgnoreCase)
+            || !string.Equals(translatedRecord.EntityType, "race", StringComparison.OrdinalIgnoreCase)
+            || string.IsNullOrWhiteSpace(currentName)
+            || !string.Equals(currentName, translatedRecord.Name, StringComparison.OrdinalIgnoreCase)
+            || string.IsNullOrWhiteSpace(translatedRecord.ContentJson)
+            || string.IsNullOrWhiteSpace(translatedRecord.RawJson))
+        {
+            return false;
+        }
+
+        try
+        {
+            using var contentDocument = JsonDocument.Parse(translatedRecord.ContentJson);
+            if (!contentDocument.RootElement.TryGetProperty("_rulesCore", out var rulesCore)
+                || rulesCore.ValueKind != JsonValueKind.Object
+                || !rulesCore.TryGetProperty("context", out var context)
+                || context.ValueKind != JsonValueKind.Object
+                || !string.Equals(
+                    ReadString(context, "sourceFormat"),
+                    PcGenSourceFormatAdapter.Format,
+                    StringComparison.Ordinal)
+                || !string.Equals(
+                    ReadString(context, "nativeEntityType"),
+                    "race",
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            using var rawDocument = JsonDocument.Parse(translatedRecord.RawJson);
+            return rawDocument.RootElement.ValueKind == JsonValueKind.Object
+                && string.Equals(
+                    ReadString(rawDocument.RootElement, "entityType"),
+                    "race",
                     StringComparison.OrdinalIgnoreCase);
         }
         catch (JsonException)
