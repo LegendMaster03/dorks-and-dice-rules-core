@@ -28,6 +28,7 @@ public sealed class CharacterFeatPrerequisiteIntegrationTests
         var token = Guid.NewGuid().ToString("N")[..8];
         var actor = $"feat-prerequisite-{token}";
         var packageKey = $"feat-prerequisite-{token}";
+        var publicationKey = $"publication-{token}";
         var featName = $"Required Feat {token}";
         var prestigeName = $"Feat Prestige {token}";
         var importer = new NormalizedSourceImportService(db);
@@ -79,7 +80,8 @@ public sealed class CharacterFeatPrerequisiteIntegrationTests
                         featName,
                         "TEST",
                         $"feat|{token}",
-                        featContent)
+                        featContent,
+                        PublicationLocalKey: publicationKey)
                     {
                         ContentJson = featContent
                     },
@@ -88,10 +90,17 @@ public sealed class CharacterFeatPrerequisiteIntegrationTests
                         prestigeName,
                         "TEST",
                         $"prestige-class|{token}",
-                        prestigeContent)
+                        prestigeContent,
+                        PublicationLocalKey: publicationKey)
                     {
                         ContentJson = prestigeContent
                     }
+                ],
+                [
+                    new NormalizedSourcePublication(
+                        publicationKey,
+                        $"Feat prerequisite fixture {token}",
+                        Publisher: "integration-test")
                 ]);
             var imported = await importer.ImportAsync(new ImportNormalizedSourceRequest(
                 packageKey,
