@@ -184,12 +184,21 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
                 normalizedFingerprint,
                 StringComparison.Ordinal))
         {
-            await new CanonicalEntityRelationshipStore(dbContext).RelateRevisionAsync(
+            var priorCanonicalEntity = await canonicalEntities.ReadAsync(
                 priorAssociation.CanonicalEntityId,
-                canonicalEntityId,
-                "source-revision-lineage",
-                1.0,
                 cancellationToken);
+            if (priorCanonicalEntity is not null
+                && CanonicalReferenceHistoryPolicy.AreCategoriesCompatible(
+                    priorCanonicalEntity.EntityType,
+                    occurrenceEvidence.EntityType))
+            {
+                await new CanonicalEntityRelationshipStore(dbContext).RelateRevisionAsync(
+                    priorAssociation.CanonicalEntityId,
+                    canonicalEntityId,
+                    "source-revision-lineage",
+                    1.0,
+                    cancellationToken);
+            }
         }
 
         await BindAsync(
@@ -554,15 +563,24 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
                     && existingCanonicalEntityId.HasValue
                     && existingCanonicalEntityId.Value != canonicalEntityId)
                 {
-                    // A translator-only update changes Rules Core's interpretation, not the
-                    // source-native revision. Preserve bindings made against the prior
-                    // interpretation through the existing revision relationship graph.
-                    await new CanonicalEntityRelationshipStore(dbContext).RelateRevisionAsync(
+                    var existingCanonicalEntity = await new CanonicalEntityStore(dbContext).ReadAsync(
                         existingCanonicalEntityId.Value,
-                        canonicalEntityId,
-                        "translation-only-reconciliation",
-                        1.0,
                         cancellationToken);
+                    if (existingCanonicalEntity is not null
+                        && CanonicalReferenceHistoryPolicy.AreCategoriesCompatible(
+                            existingCanonicalEntity.EntityType,
+                            evidence.EntityType))
+                    {
+                        // Preserve a translator-only move as revision history only when both
+                        // interpretations describe compatible categories. A corrected type bug
+                        // such as monster -> race must not join otherwise separate histories.
+                        await new CanonicalEntityRelationshipStore(dbContext).RelateRevisionAsync(
+                            existingCanonicalEntityId.Value,
+                            canonicalEntityId,
+                            "translation-only-reconciliation",
+                            1.0,
+                            cancellationToken);
+                    }
                 }
                 return;
             }
