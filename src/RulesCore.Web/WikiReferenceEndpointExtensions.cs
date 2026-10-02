@@ -305,7 +305,7 @@ public static class WikiReferenceEndpointExtensions
             service.LastQueryMilliseconds);
         RulesCoreServerTiming.AppendDuration(
             httpContext,
-            RulesCoreServerTiming.ReferenceDocumentsMetricName,
+            RulesCoreServerTiming.ReferenceMaterializationMetricName,
             service.LastDocumentMilliseconds);
         RulesCoreServerTiming.AppendDuration(
             httpContext,
