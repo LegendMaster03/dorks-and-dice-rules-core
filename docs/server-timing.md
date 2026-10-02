@@ -18,7 +18,7 @@ Rules Core must not emit `dnd-*`; that namespace is reserved for the Site platfo
 | `rules-core-auth` | Time spent redeeming the Site-issued Tool authentication ticket for the request. |
 | `rules-core-db` | Aggregate Npgsql database-operation duration recorded during the request, excluding physical connection-open spans. |
 | `rules-core-reference-query` | Query-stage duration reported by the Rules Core reference catalog service. |
-| `rules-core-reference-docs` | Mechanical-document/materialization-stage duration reported by the reference catalog service. |
+| `rules-core-reference-materialize` | Reference materialization stage, including document loading/projection and effective-rule resolution where the requested reference requires it. |
 | `rules-core-reference-total` | Total operation duration reported by the reference catalog service. |
 
 The reference metrics describe backend work performed by Rules Core for its reference APIs. They do not represent a built-in Wiki UI. Rules Wiki is a separate Tool that consumes Rules Core through the private Tool-tunnel architecture.
@@ -42,7 +42,7 @@ Authentication and reference-catalog code add their component timings through th
 A request can therefore return values similar to:
 
 ```text
-Server-Timing: rules-core-auth;dur=3.2, rules-core-reference-query;dur=8.7, rules-core-reference-docs;dur=1.9, rules-core-reference-total;dur=11.0, rules-core-db;dur=9.4, rules-core;dur=15.8
+Server-Timing: rules-core-auth;dur=3.2, rules-core-reference-query;dur=8.7, rules-core-reference-materialize;dur=1.9, rules-core-reference-total;dur=11.0, rules-core-db;dur=9.4, rules-core;dur=15.8
 ```
 
 When that response reaches a client through the Site proxy, Site may additionally append its own `dnd-site` metric.
