@@ -124,7 +124,7 @@ internal static class CanonicalRuleFallbackSourceReader
         var parameter = command.CreateParameter();
         parameter.ParameterName = name;
         parameter.DbType = DbType.String;
-        parameter.Value = value ?? DBNull.Value;
+        parameter.Value = value is null ? DBNull.Value : value;
         command.Parameters.Add(parameter);
     }
 }
