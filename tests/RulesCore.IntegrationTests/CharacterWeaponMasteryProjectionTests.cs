@@ -47,6 +47,31 @@ public sealed class CharacterWeaponMasteryProjectionTests
         Assert.True((bool)Invoke("HasActiveWeaponMasteryFeature", document.RootElement, 2)!);
     }
 
+    [Fact]
+    public void MasteryClassIdentityUsesSourceNameInsteadOfPresentationLabel()
+    {
+        using var document = JsonDocument.Parse(
+            """
+            {
+              "name": "Rogue"
+            }
+            """);
+
+        Assert.Equal(
+            "Rogue",
+            (string?)Invoke("MasteryClassName", document.RootElement, "Renamed Class"));
+    }
+
+    [Fact]
+    public void MasteryClassIdentityFallsBackWhenSourceNameIsUnavailable()
+    {
+        using var document = JsonDocument.Parse("{}");
+
+        Assert.Equal(
+            "Fighter",
+            (string?)Invoke("MasteryClassName", document.RootElement, "Fighter"));
+    }
+
     [Theory]
     [InlineData("Paladin", 2)]
     [InlineData("Ranger", 2)]
