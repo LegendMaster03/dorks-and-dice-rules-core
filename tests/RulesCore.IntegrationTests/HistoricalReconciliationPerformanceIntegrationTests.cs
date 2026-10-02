@@ -13,7 +13,7 @@ namespace RulesCore.IntegrationTests;
 public sealed class HistoricalReconciliationPerformanceIntegrationTests
 {
     [Fact]
-    public async Task RepeatedHistoricalReconciliationDoesNotRewriteUnchangedCompanionAttachments()
+    public async Task RepeatedHistoricalReconciliationDoesNotRewriteUnchangedCompanionRows()
     {
         var db = await OpenDatabaseAsync();
         if (db is null) return;
@@ -44,13 +44,67 @@ public sealed class HistoricalReconciliationPerformanceIntegrationTests
             await reconciliation.ReconcileExistingCorpusAsync();
 
             Assert.False(await HasCanonicalBindingAsync(db, legacyRevisionId));
-            var firstVersions = await ReadAttachmentVersionsAsync(db, legacy.PackageId);
-            Assert.NotEmpty(firstVersions);
+            var firstAttachmentVersions = await ReadAttachmentVersionsAsync(db, legacy.PackageId);
+            var firstContentVersions = await ReadContentVersionsAsync(db, legacy.PackageId);
+            Assert.NotEmpty(firstAttachmentVersions);
+            Assert.Single(firstContentVersions);
 
             await reconciliation.ReconcileExistingCorpusAsync();
 
-            var secondVersions = await ReadAttachmentVersionsAsync(db, legacy.PackageId);
-            Assert.Equal(firstVersions, secondVersions);
+            Assert.Equal(
+                firstAttachmentVersions,
+                await ReadAttachmentVersionsAsync(db, legacy.PackageId));
+            Assert.Equal(
+                firstContentVersions,
+                await ReadContentVersionsAsync(db, legacy.PackageId));
+            Assert.Equal(1, await CountCompanionsForPackageAsync(db, legacy.PackageId));
+        }
+    }
+
+    [Fact]
+    public async Task InterruptedLegacyMigrationIsRecoveredWithoutRewritingPersistedCompanionContent()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..10];
+            var name = $"Historical Restart {token}";
+            var sourceCode = $"HR{token}";
+            var importer = new NormalizedSourceImportService(db);
+
+            await importer.ImportAsync(TargetRequest(
+                $"historical-restart-target-{token}",
+                name,
+                sourceCode));
+            var legacy = await importer.ImportAsync(LegacyFluffRequest(
+                $"historical-restart-fluff-{token}",
+                name,
+                sourceCode));
+            var legacyEntityId = Assert.Single(legacy.Entities).EntityId;
+            var legacyRevisionId = await db.SourceEntityRevisions
+                .Where(value => value.SourceEntityId == legacyEntityId)
+                .Select(value => value.Id)
+                .SingleAsync();
+
+            Assert.True(await HasCanonicalBindingAsync(db, legacyRevisionId));
+
+            // Simulate interruption after legacy rows have been converted and their canonical
+            // bindings removed, but before the corpus-wide attachment pass has run.
+            await new LegacyStandaloneFluffMigrationService(db).MigrateAsync();
+
+            Assert.False(await HasCanonicalBindingAsync(db, legacyRevisionId));
+            Assert.Equal(1, await CountCompanionsForPackageAsync(db, legacy.PackageId));
+            Assert.Empty(await ReadAttachmentVersionsAsync(db, legacy.PackageId));
+            var persistedContentVersions = await ReadContentVersionsAsync(db, legacy.PackageId);
+            Assert.Single(persistedContentVersions);
+
+            await new CanonicalDataReconciliationService(db).ReconcileExistingCorpusAsync();
+
+            Assert.NotEmpty(await ReadAttachmentVersionsAsync(db, legacy.PackageId));
+            Assert.Equal(
+                persistedContentVersions,
+                await ReadContentVersionsAsync(db, legacy.PackageId));
             Assert.Equal(1, await CountCompanionsForPackageAsync(db, legacy.PackageId));
         }
     }
@@ -139,6 +193,34 @@ public sealed class HistoricalReconciliationPerformanceIntegrationTests
                     ON content.source_companion_content_id = attachment.source_companion_content_id
                 WHERE content.source_package_id = @package_id
                 ORDER BY attachment.source_companion_attachment_id;
+                """;
+            AddParameter(command, "@package_id", packageId);
+            var values = new List<string>();
+            await using var reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync()) values.Add(reader.GetString(0));
+            return values;
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
+    private static async Task<IReadOnlyList<string>> ReadContentVersionsAsync(
+        RulesCoreDbContext db,
+        Guid packageId)
+    {
+        var connection = db.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync();
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT source_companion_content_id::text || ':' || xmin::text
+                FROM source_companion_content
+                WHERE source_package_id = @package_id
+                ORDER BY source_companion_content_id;
                 """;
             AddParameter(command, "@package_id", packageId);
             var values = new List<string>();
