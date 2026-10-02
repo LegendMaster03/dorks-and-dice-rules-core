@@ -97,9 +97,9 @@ internal sealed class LegacyStandaloneFluffMigrationService(RulesCoreDbContext d
             if (openedHere) await connection.CloseAsync();
         }
 
-        // CanonicalDataReconciliationService performs one corpus-wide ResolvePendingAsync after
-        // this migration returns. Keeping resolution there also covers pending companions that did
-        // not originate from legacy fluff rows.
+        // CanonicalDataReconciliationService performs one corpus-wide historical attachment pass
+        // after this migration returns. Keeping resolution there also covers pending companions
+        // that did not originate from legacy fluff rows.
         return migratedRevisionIds.Count;
     }
 
