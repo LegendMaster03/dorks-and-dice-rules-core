@@ -48,6 +48,22 @@ public sealed class CharacterWeaponMasteryProjectionTests
     }
 
     [Fact]
+    public void WeaponMasteryFeatureReferenceChecksAllMatchingEntries()
+    {
+        using var document = JsonDocument.Parse(
+            """
+            {
+              "classFeatures": [
+                "Weapon Mastery|Fighter|XPHB|5",
+                "Weapon Mastery|Fighter|XPHB|1"
+              ]
+            }
+            """);
+
+        Assert.True((bool)Invoke("HasActiveWeaponMasteryFeature", document.RootElement, 1)!);
+    }
+
+    [Fact]
     public void MasteryClassIdentityUsesSourceNameInsteadOfPresentationLabel()
     {
         using var document = JsonDocument.Parse(
@@ -70,6 +86,27 @@ public sealed class CharacterWeaponMasteryProjectionTests
         Assert.Equal(
             "Fighter",
             (string?)Invoke("MasteryClassName", document.RootElement, "Fighter"));
+    }
+
+    [Theory]
+    [InlineData("Weapon Master", "XPHB", true)]
+    [InlineData("Weapon Master", "xphb", true)]
+    [InlineData("Weapon Master", "PHB", false)]
+    [InlineData("Great Weapon Master", "XPHB", false)]
+    public void WeaponMasterFeatRecognitionDistinguishes2024FromLegacySource(
+        string name,
+        string source,
+        bool expected)
+    {
+        using var document = JsonDocument.Parse(
+            $$"""
+            {
+              "name": "{{name}}",
+              "source": "{{source}}"
+            }
+            """);
+
+        Assert.Equal(expected, (bool)Invoke("IsWeaponMasterFeat", document.RootElement)!);
     }
 
     [Theory]
