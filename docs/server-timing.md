@@ -1,6 +1,6 @@
 # Rules Core Server-Timing instrumentation
 
-Rules Core is a headless Dorks & Dice service. It emits standard HTTP `Server-Timing` metrics so requests can be decomposed across the Site platform and Rules Core without coupling either service to a separate telemetry backend.
+Rules Core is a headless Dorks & Dice service. It emits standard HTTP `Server-Timing` metrics so requests can be decomposed across the shared Site platform and Rules Core without coupling either service to a separate telemetry backend.
 
 The authoritative cross-Tool contract is maintained by the Site repository in `docs/server-timing.md`. This document records the Rules Core-specific implementation and metric semantics.
 
@@ -11,20 +11,20 @@ Rules Core instrumentation is intentionally additive rather than required for th
 When Site directly proxies Rules Core, Site already knows the registered Tool key and measures the upstream request from dispatch until Rules Core returns response headers. Site can therefore expose values such as:
 
 ```text
-Server-Timing: dnd-site;dur=5.1, dnd-tool;desc="rules-core";dur=21.3, dnd-total;dur=26.4
+Server-Timing: platform-site;dur=5.1, platform-tool;desc="rules-core";dur=21.3, platform-total;dur=26.4
 ```
 
 without any `Server-Timing` implementation inside Rules Core.
 
-Rules Core's own metrics provide the deeper explanation of that `dnd-tool` interval. With this implementation enabled, the same outer response can additionally contain values such as `rules-core`, `rules-core-db`, and `rules-core-auth`. `dnd-tool` remains the Site-observed dependency duration and can include transport/request-upload latency outside Rules Core's own request-pipeline measurement.
+Rules Core's own metrics provide the deeper explanation of that `platform-tool` interval. With this implementation enabled, the same outer response can additionally contain values such as `rules-core`, `rules-core-db`, and `rules-core-auth`. `platform-tool` remains the Site-observed dependency duration and can include transport/request-upload latency outside Rules Core's own request-pipeline measurement.
 
-Rules Core must not emit or attempt to reproduce `dnd-*` values. Those are platform observations owned by Site.
+Rules Core must not emit or attempt to reproduce `platform-*` values. Those are shared platform observations owned by Site.
 
 ## Metric namespace
 
 Rules Core owns the `rules-core` Tool key and therefore the `rules-core` / `rules-core-*` timing namespace.
 
-Rules Core must not emit `dnd-*`; that namespace is reserved for the Site platform.
+Rules Core must not emit `platform-*`; that namespace is reserved for the shared Site platform.
 
 ## Metrics
 
@@ -63,7 +63,7 @@ A direct Rules Core response can therefore return values similar to:
 Server-Timing: rules-core-auth;dur=3.2, rules-core-reference-query;dur=8.7, rules-core-reference-materialize;dur=1.9, rules-core-reference-total;dur=11.0, rules-core-db;dur=9.4, rules-core;dur=15.8
 ```
 
-When Site directly proxies that response, Site preserves those values and independently adds `dnd-site`, `dnd-tool;desc="rules-core"`, and `dnd-total`.
+When Site directly proxies that response, Site preserves those values and independently adds `platform-site`, `platform-tool;desc="rules-core"`, and `platform-total`.
 
 For Rules Wiki traffic, Rules Core is reached over the private Tool tunnel data path rather than through the Site HTTP proxy. Rules Core therefore makes the timing information available to its direct caller; exposing those downstream timings on a Rules Wiki browser response is a separate Rules Wiki propagation concern rather than something the Site can infer from the private data path.
 
