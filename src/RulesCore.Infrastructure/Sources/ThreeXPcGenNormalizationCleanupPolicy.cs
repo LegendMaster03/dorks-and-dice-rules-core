@@ -102,10 +102,27 @@ internal static class ThreeXPcGenNormalizationCleanupPolicy
     {
         if (tag is
             "VISION" or "FAVCLASS" or "RACETYPE" or "RACESUBTYPE" or "LANGBONUS" or "CR"
-            or "LEVELADJUSTMENT" or "STARTFEATS" or "MONSTERCLASS" or "HITDICEADVANCEMENT"
-            or "FACE" or "REACH" or "DR" or "SR" or "NATURALATTACKS" or "LEGS")
+            or "LEVELADJUSTMENT" or "MONSTERCLASS" or "HITDICEADVANCEMENT"
+            or "FACE" or "REACH" or "DR" or "SR" or "NATURALATTACKS" or "TYPE"
+            or "UNENCUMBEREDMOVE")
         {
             return true;
+        }
+        if (tag is "STARTFEATS" or "LEGS" or "HANDS" or "XTRASKILLPTSPERLVL")
+        {
+            return int.TryParse(value, out _);
+        }
+        if (tag == "DEFINESTAT")
+        {
+            var parts = value.Split('|', StringSplitOptions.TrimEntries);
+            return parts.Length >= 3
+                && string.Equals(parts[0], "MINVALUE", StringComparison.OrdinalIgnoreCase)
+                && IsAbility(parts[1])
+                && int.TryParse(parts[2], out _);
+        }
+        if (tag == "TEMPLATE")
+        {
+            return value.Trim().StartsWith("CHOOSE:", StringComparison.OrdinalIgnoreCase);
         }
         if (tag == "AUTO")
         {
@@ -122,12 +139,17 @@ internal static class ThreeXPcGenNormalizationCleanupPolicy
             {
                 return true;
             }
-            return parts.Length >= 4
+            if (parts.Length >= 4
                 && string.Equals(parts[0], "COMBAT", StringComparison.OrdinalIgnoreCase)
                 && string.Equals(parts[1], "AC", StringComparison.OrdinalIgnoreCase)
                 && int.TryParse(parts[2], out _)
                 && parts.Skip(3).Any(item =>
-                    string.Equals(item, "TYPE=NaturalArmor", StringComparison.OrdinalIgnoreCase));
+                    string.Equals(item, "TYPE=NaturalArmor", StringComparison.OrdinalIgnoreCase)))
+            {
+                return true;
+            }
+            return parts.Length >= 3
+                && string.Equals(parts[0], "SAVE", StringComparison.OrdinalIgnoreCase);
         }
         return false;
     }
@@ -151,6 +173,11 @@ internal static class ThreeXPcGenNormalizationCleanupPolicy
         }
         return false;
     }
+
+    private static bool IsAbility(string value) =>
+        value.Trim().ToLowerInvariant() is
+            "str" or "strength" or "dex" or "dexterity" or "con" or "constitution"
+            or "int" or "intelligence" or "wis" or "wisdom" or "cha" or "charisma";
 
     private static bool TryString(JsonObject value, string name, out string result)
     {
