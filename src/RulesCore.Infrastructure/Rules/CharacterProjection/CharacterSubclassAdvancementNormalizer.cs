@@ -139,9 +139,65 @@ internal static class CharacterSubclassAdvancementNormalizer
             });
         }
 
+        normalized = RejectMultipleSubclassBindings(normalized, rulesByConcept, conflicts);
+
         return new CharacterSubclassAdvancementNormalization(
             request with { Advancements = normalized },
             conflicts);
+    }
+
+    private static List<CharacterAdvancementFactInput> RejectMultipleSubclassBindings(
+        List<CharacterAdvancementFactInput> advancements,
+        IReadOnlyDictionary<string, ResolvedRuleCatalogItemView> rulesByConcept,
+        List<CharacterProjectionConflictView> conflicts)
+    {
+        var duplicateBindings = advancements
+            .Select((advancement, index) => (Advancement: advancement, Index: index))
+            .Where(item => item.Advancement.Level > 0)
+            .Where(item => !string.IsNullOrWhiteSpace(item.Advancement.ParentConceptKey))
+            .Where(item =>
+                rulesByConcept.TryGetValue(item.Advancement.ConceptKey, out var rule)
+                && string.Equals(rule.EntityType, "subclass", StringComparison.OrdinalIgnoreCase))
+            .GroupBy(item => (
+                ParentConceptKey: item.Advancement.ParentConceptKey!.Trim(),
+                ParentOccurrenceKey: item.Advancement.ParentOccurrenceKey?.Trim() ?? string.Empty))
+            .Where(group => group.Count() > 1)
+            .ToArray();
+        if (duplicateBindings.Length == 0)
+        {
+            return advancements;
+        }
+
+        var rejectedIndexes = new HashSet<int>();
+        foreach (var group in duplicateBindings)
+        {
+            foreach (var item in group)
+            {
+                rejectedIndexes.Add(item.Index);
+            }
+
+            var subclassConceptKeys = group
+                .Select(item => item.Advancement.ConceptKey)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .OrderBy(value => value, StringComparer.Ordinal)
+                .ToArray();
+            var occurrenceSegment = string.IsNullOrWhiteSpace(group.Key.ParentOccurrenceKey)
+                ? string.Empty
+                : $".{group.Key.ParentOccurrenceKey}";
+            var parentDescription = string.IsNullOrWhiteSpace(group.Key.ParentOccurrenceKey)
+                ? $"Class '{group.Key.ParentConceptKey}'"
+                : $"Class '{group.Key.ParentConceptKey}' occurrence '{group.Key.ParentOccurrenceKey}'";
+            conflicts.Add(new CharacterProjectionConflictView(
+                $"conflict.advancement.{group.Key.ParentConceptKey}{occurrenceSegment}.subclass-selection-multiple",
+                "subclass-selection-multiple",
+                $"More than one Subclass advancement is bound to {parentDescription}. A Class occurrence can have only one Subclass.",
+                [],
+                [group.Key.ParentConceptKey, .. subclassConceptKeys]));
+        }
+
+        return advancements
+            .Where((_, index) => !rejectedIndexes.Contains(index))
+            .ToList();
     }
 
     private static CharacterProjectionConflictView Conflict(
