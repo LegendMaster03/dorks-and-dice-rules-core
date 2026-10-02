@@ -101,10 +101,18 @@ public static class RulesCoreServerTiming
         return listener;
     }
 
-    private static ActivitySamplingResult SampleNpgsqlActivity(string activityName) =>
-        activityName.StartsWith(NpgsqlConnectionActivityPrefix, StringComparison.Ordinal)
-            ? ActivitySamplingResult.None
-            : ActivitySamplingResult.PropagationData;
+    private static ActivitySamplingResult SampleNpgsqlActivity(string activityName)
+    {
+        var state = CurrentRequestState.Value;
+        if (state is null
+            || !state.IsActive
+            || activityName.StartsWith(NpgsqlConnectionActivityPrefix, StringComparison.Ordinal))
+        {
+            return ActivitySamplingResult.None;
+        }
+
+        return ActivitySamplingResult.PropagationData;
+    }
 
     private sealed class RequestTimingState(long startedAt)
     {
@@ -115,10 +123,11 @@ public static class RulesCoreServerTiming
         public long StartedAt { get; } = startedAt;
         public long DatabaseTicks => Interlocked.Read(ref _databaseTicks);
         public long DatabaseOperationCount => Interlocked.Read(ref _databaseOperationCount);
+        public bool IsActive => Volatile.Read(ref _active) != 0;
 
         public void AddDatabaseDuration(TimeSpan duration)
         {
-            if (Volatile.Read(ref _active) == 0 || duration < TimeSpan.Zero)
+            if (!IsActive || duration < TimeSpan.Zero)
             {
                 return;
             }
