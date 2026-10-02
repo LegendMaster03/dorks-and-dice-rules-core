@@ -43,6 +43,40 @@ public static class SourceAdministrationEndpointExtensions
                 : Results.Ok(result.Status);
         });
 
+        app.MapGet("/api/source-admin/import/rule-concept-coverage", async (
+            HttpContext httpContext,
+            RuleConceptCoverageMaintenanceJob maintenance,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireCorpusReconciliationAuthority(httpContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return Results.Ok(await maintenance.GetStatusAsync(cancellationToken));
+        });
+
+        app.MapPost("/api/source-admin/import/rule-concept-coverage", async (
+            HttpContext httpContext,
+            RuleConceptCoverageMaintenanceJob maintenance,
+            CancellationToken cancellationToken) =>
+        {
+            var authorizationFailure = RequireCorpusReconciliationAuthority(httpContext);
+            if (authorizationFailure is not null)
+            {
+                return authorizationFailure;
+            }
+
+            var authenticationContext = HostedToolAuthenticationMiddleware.GetAuthenticationContext(httpContext)!;
+            var result = await maintenance.StartAsync(authenticationContext.User.Id, cancellationToken);
+            httpContext.Response.Headers.CacheControl = "no-store";
+            return result.Started
+                ? Results.Accepted("/api/source-admin/import/rule-concept-coverage", result.Status)
+                : Results.Ok(result.Status);
+        });
+
         app.MapPost("/api/source-admin/import/preview", async (
             SourceAdminImportRequest request,
             HttpContext httpContext,
