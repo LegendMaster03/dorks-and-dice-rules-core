@@ -374,7 +374,8 @@ internal static class ThreeXSourceNormalizationPolicy
                 .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
             if (subtypes.Length > 0)
             {
-                threeX["creatureSubtypes"] = new JsonArray(subtypes.Select(JsonValue.Create).ToArray());
+                threeX["creatureSubtypes"] = new JsonArray(
+                    subtypes.Select(value => JsonValue.Create(value)).ToArray());
             }
         }
     }
