@@ -50,6 +50,24 @@ public sealed class ServerTimingIntegrationTests
     }
 
     [Fact]
+    public async Task HealthRequestWithoutTicketReportsWholeRequestTimingWithoutAuthenticationTiming()
+    {
+        await using var factory = CreateFactory();
+        using var client = factory.CreateClient(new WebApplicationFactoryClientOptions
+        {
+            AllowAutoRedirect = false
+        });
+
+        using var response = await client.GetAsync("/health");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        var metrics = ReadMetrics(response);
+        AssertMetric(metrics, "rules-core");
+        Assert.DoesNotContain("rules-core-auth", metrics.Keys);
+        Assert.DoesNotContain(metrics.Keys, name => name.StartsWith("dnd-", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public async Task HandledAuthenticationErrorStillReportsOneWholeRequestMetric()
     {
         await using var factory = CreateFactory();
