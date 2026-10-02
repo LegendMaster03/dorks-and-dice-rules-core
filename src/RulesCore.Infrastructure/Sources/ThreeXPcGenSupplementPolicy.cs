@@ -85,6 +85,8 @@ internal static class ThreeXPcGenSupplementPolicy
             threeX["vision"] = vision.Value;
         }
 
+        var naturalArmorBonus = 0;
+        var hasNaturalArmorBonus = false;
         foreach (var bonus in All(segments, "BONUS"))
         {
             var parts = bonus.Value.Split('|', StringSplitOptions.TrimEntries);
@@ -95,11 +97,27 @@ internal static class ThreeXPcGenSupplementPolicy
                 && feet > 0)
             {
                 darkvision = feet;
+                continue;
+            }
+
+            if (parts.Length >= 4
+                && string.Equals(parts[0], "COMBAT", StringComparison.OrdinalIgnoreCase)
+                && string.Equals(parts[1], "AC", StringComparison.OrdinalIgnoreCase)
+                && int.TryParse(parts[2], NumberStyles.Integer, CultureInfo.InvariantCulture, out var armor)
+                && parts.Skip(3).Any(value =>
+                    string.Equals(value, "TYPE=NaturalArmor", StringComparison.OrdinalIgnoreCase)))
+            {
+                naturalArmorBonus += armor;
+                hasNaturalArmorBonus = true;
             }
         }
         if (darkvision.HasValue)
         {
             content["darkvision"] = darkvision.Value;
+        }
+        if (hasNaturalArmorBonus)
+        {
+            threeX["naturalArmorBonus"] = naturalArmorBonus;
         }
 
         var favoredClass = Last(segments, "FAVCLASS");
@@ -111,10 +129,10 @@ internal static class ThreeXPcGenSupplementPolicy
         if (raceSubtype is not null)
         {
             var values = raceSubtype.Value.Split(
-                ',',
+                [',', '|'],
                 StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
             var array = new JsonArray();
-            foreach (var value in values) array.Add(value);
+            foreach (var value in values.Distinct(StringComparer.OrdinalIgnoreCase)) array.Add(value);
             if (array.Count > 0) threeX["raceSubtypes"] = array;
         }
 
@@ -149,6 +167,83 @@ internal static class ThreeXPcGenSupplementPolicy
 
         var challengeRating = Last(segments, "CR");
         if (challengeRating is not null) threeX["racialChallengeRating"] = challengeRating.Value;
+
+        var levelAdjustment = Last(segments, "LEVELADJUSTMENT");
+        if (levelAdjustment is not null)
+        {
+            threeX["levelAdjustment"] = int.TryParse(
+                levelAdjustment.Value,
+                NumberStyles.Integer,
+                CultureInfo.InvariantCulture,
+                out var adjustment)
+                ? adjustment
+                : levelAdjustment.Value;
+        }
+
+        var startFeats = Last(segments, "STARTFEATS");
+        if (startFeats is not null
+            && int.TryParse(startFeats.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var featCount)
+            && featCount >= 0)
+        {
+            threeX["startingFeats"] = featCount;
+        }
+
+        var monsterClass = Last(segments, "MONSTERCLASS");
+        if (monsterClass is not null)
+        {
+            var parts = monsterClass.Value.Split(':', 2, StringSplitOptions.TrimEntries);
+            if (parts.Length == 2
+                && !string.IsNullOrWhiteSpace(parts[0])
+                && int.TryParse(parts[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out var levels)
+                && levels >= 0)
+            {
+                threeX["racialHitDice"] = new JsonObject
+                {
+                    ["type"] = parts[0],
+                    ["levels"] = levels
+                };
+            }
+            else
+            {
+                threeX["racialHitDiceText"] = monsterClass.Value;
+            }
+        }
+
+        var advancement = Last(segments, "HITDICEADVANCEMENT");
+        if (advancement is not null)
+        {
+            var values = advancement.Value.Split(
+                    ',',
+                    StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Select(value => int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var number)
+                    ? (int?)number
+                    : null)
+                .ToArray();
+            if (values.Length > 0 && values.All(value => value.HasValue))
+            {
+                var array = new JsonArray();
+                foreach (var value in values) array.Add(value!.Value);
+                threeX["hitDiceAdvancement"] = array;
+            }
+            else
+            {
+                threeX["hitDiceAdvancementText"] = advancement.Value;
+            }
+        }
+
+        CopyLast(threeX, segments, "FACE", "space");
+        CopyLast(threeX, segments, "REACH", "reach");
+        CopyLast(threeX, segments, "DR", "damageReduction");
+        CopyLast(threeX, segments, "SR", "spellResistance");
+        CopyLast(threeX, segments, "NATURALATTACKS", "naturalAttacks");
+
+        var legs = Last(segments, "LEGS");
+        if (legs is not null
+            && int.TryParse(legs.Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var legCount)
+            && legCount >= 0)
+        {
+            threeX["legs"] = legCount;
+        }
     }
 
     private static void MapSpell(JsonObject threeX, IReadOnlyList<Segment> segments)
