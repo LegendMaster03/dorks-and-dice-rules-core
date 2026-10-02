@@ -14,8 +14,12 @@ public static class RulesCoreServiceCollectionExtensions
         this IServiceCollection services,
         string connectionString)
     {
-        services.AddDbContext<RulesCoreDbContext>(
-            options => options.UseNpgsql(connectionString));
+        services.AddHttpContextAccessor();
+        services.AddSingleton<RulesCoreDbCommandTimingInterceptor>();
+        services.AddDbContext<RulesCoreDbContext>((serviceProvider, options) =>
+            options
+                .UseNpgsql(connectionString)
+                .AddInterceptors(serviceProvider.GetRequiredService<RulesCoreDbCommandTimingInterceptor>()));
         services.AddScoped<IRulesCoreSchemaInitializer, RulesCoreSchemaInitializer>();
         return services;
     }
