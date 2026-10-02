@@ -1,3 +1,4 @@
+using System.Data;
 using System.Text;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
@@ -92,6 +93,133 @@ public sealed class ThreeXSourceNormalizationRegressionTests
                 string.Equals(value.GetProperty("tag").GetString(), "RACETYPE", StringComparison.OrdinalIgnoreCase));
             Assert.Contains(unmapped, value =>
                 string.Equals(value.GetProperty("tag").GetString(), "CR", StringComparison.OrdinalIgnoreCase));
+        }
+    }
+
+    [Fact]
+    public async Task ReimportRepairsPreviouslyMonsterShapedPcGenRaceWithoutCreatingCrossCategoryHistory()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var packageKey = $"pcgen-race-reimport-{token}";
+            var adapter = new PcGenSourceFormatAdapter();
+            var representations = adapter.TryReadMany(
+            [
+                Artifact(
+                    $"data/35e/example/{token}/fixture.pcc",
+                    """
+                    CAMPAIGN:3.5 Reimport Fixture
+                    GAMEMODE:35e
+                    PUBNAMELONG:Integration Test Press
+                    SOURCELONG:3.5 Reimport Fixture
+                    SOURCESHORT:R35
+                    RACE:monsters/fixture_races.lst
+                    """),
+                Artifact(
+                    $"data/35e/example/{token}/monsters/fixture_races.lst",
+                    """
+                    Goblin	FAVCLASS:Rogue	STARTFEATS:1	SIZE:S	MOVE:Walk,30	BONUS:STAT|STR|-2	BONUS:STAT|DEX|2	BONUS:STAT|CHA|-2	MONSTERCLASS:Humanoid:1	RACETYPE:Humanoid	RACESUBTYPE:Goblinoid	TYPE:Humanoid	CR:1/2
+                    """)
+            ]);
+            var representation = Assert.Single(
+                representations,
+                value => string.Equals(value.Artifact.FileName, "fixture_races.lst", StringComparison.Ordinal));
+            var request = new ImportNormalizedSourceRequest(
+                packageKey,
+                $"PCGen race reimport fixture {token}",
+                "integration-test",
+                "test-only",
+                false,
+                representation);
+
+            var inner = new NormalizedSourceImportService(db);
+            var first = await inner.ImportAsync(request);
+            var imported = Assert.Single(first.Entities);
+            var entity = await db.SourceEntities.SingleAsync(value => value.Id == imported.EntityId);
+            var revision = await db.SourceEntityRevisions
+                .SingleAsync(value => value.SourceEntityId == entity.Id);
+            var raceCanonicalId = await ReadBoundCanonicalEntityAsync(db, revision.Id);
+
+            const string staleMonsterContent = """
+                {
+                  "name":"Goblin",
+                  "source":"R35",
+                  "size":["S"],
+                  "type":"humanoid",
+                  "speed":30,
+                  "cr":"1/2",
+                  "_rulesCore":{
+                    "context":{
+                      "edition":"3.5e",
+                      "sourceFormat":"pcgen-data",
+                      "nativeEntityType":"race",
+                      "translatedEntityType":"monster"
+                    }
+                  }
+                }
+                """;
+            var staleFingerprint = CanonicalSourceIdentity.SemanticFingerprint(staleMonsterContent);
+            var publication = Assert.Single(representation.Publications!);
+            await new CanonicalSourceRepresentationService(db).AssociateSourceEntityAsync(
+                entity.Id,
+                revision.Id,
+                new CanonicalPublicationEvidence(
+                    publication.DisplayName,
+                    publication.Publisher,
+                    publication.GameEdition,
+                    publication.PublicationDate,
+                    publication.ExternalIdentifiers,
+                    [staleFingerprint]),
+                new CanonicalSourceOccurrenceEvidence(
+                    "monster",
+                    "Goblin",
+                    revision.LocatorKey,
+                    staleFingerprint),
+                representation.FormatKey,
+                canonicalAliases: null,
+                allowTranslationOnlyReassociation: true);
+            var staleMonsterCanonicalId = await ReadBoundCanonicalEntityAsync(db, revision.Id);
+            Assert.NotEqual(raceCanonicalId, staleMonsterCanonicalId);
+
+            entity.EntityType = "monster";
+            revision.ContentJson = staleMonsterContent;
+            await db.SaveChangesAsync();
+            db.ChangeTracker.Clear();
+
+            var importer = new ReconciledNormalizedSourceImportService(
+                new NormalizedSourceImportService(db),
+                db);
+            var repaired = await importer.ImportAsync(request);
+            var repairedEntityView = Assert.Single(repaired.Entities);
+            Assert.Equal(imported.EntityId, repairedEntityView.EntityId);
+            Assert.Equal("race", repairedEntityView.EntityType);
+
+            var repairedEntity = await db.SourceEntities
+                .AsNoTracking()
+                .SingleAsync(value => value.Id == imported.EntityId);
+            Assert.Equal("race", repairedEntity.EntityType);
+            Assert.Equal(
+                1,
+                await db.SourceEntityRevisions.CountAsync(
+                    value => value.SourceEntityId == imported.EntityId));
+
+            var repairedRevision = await db.SourceEntityRevisions
+                .AsNoTracking()
+                .SingleAsync(value => value.SourceEntityId == imported.EntityId);
+            using var repairedDocument = JsonDocument.Parse(repairedRevision.ContentJson!);
+            Assert.True(repairedDocument.RootElement.TryGetProperty("ability", out _));
+            Assert.False(repairedDocument.RootElement.TryGetProperty("cr", out _));
+            Assert.False(repairedDocument.RootElement.TryGetProperty("type", out _));
+
+            var repairedCanonicalId = await ReadBoundCanonicalEntityAsync(db, repairedRevision.Id);
+            Assert.Equal(raceCanonicalId, repairedCanonicalId);
+            Assert.False(await HasSameHistoryRelationshipAsync(
+                db,
+                staleMonsterCanonicalId,
+                repairedCanonicalId));
         }
     }
 
@@ -193,6 +321,70 @@ public sealed class ThreeXSourceNormalizationRegressionTests
             Assert.Equal(1, threeX.GetProperty("saves").GetProperty("reflex").GetInt32());
             Assert.Equal(-1, threeX.GetProperty("saves").GetProperty("will").GetInt32());
             Assert.Contains("<table", threeX.GetProperty("sourceBody").GetString(), StringComparison.OrdinalIgnoreCase);
+        }
+    }
+
+    private static async Task<Guid> ReadBoundCanonicalEntityAsync(
+        RulesCoreDbContext db,
+        Guid revisionId)
+    {
+        var connection = db.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync();
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT occurrence.canonical_entity_id
+                FROM source_entity_occurrence_binding binding
+                JOIN canonical_source_occurrence occurrence
+                  ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
+                WHERE binding.source_entity_revision_id = @revision_id;
+                """;
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = "@revision_id";
+            parameter.Value = revisionId;
+            command.Parameters.Add(parameter);
+            return (Guid)(await command.ExecuteScalarAsync()
+                ?? throw new InvalidOperationException("The source revision is not canonically bound."));
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
+        }
+    }
+
+    private static async Task<bool> HasSameHistoryRelationshipAsync(
+        RulesCoreDbContext db,
+        Guid left,
+        Guid right)
+    {
+        var connection = db.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync();
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT EXISTS (
+                    SELECT 1
+                    FROM canonical_entity_relationship
+                    WHERE relationship_kind IN ('revision', 'rename')
+                      AND ((from_canonical_entity_id = @left AND to_canonical_entity_id = @right)
+                        OR (from_canonical_entity_id = @right AND to_canonical_entity_id = @left)));
+                """;
+            foreach (var (name, value) in new[] { ("@left", left), ("@right", right) })
+            {
+                var parameter = command.CreateParameter();
+                parameter.ParameterName = name;
+                parameter.Value = value;
+                command.Parameters.Add(parameter);
+            }
+            return Convert.ToBoolean(await command.ExecuteScalarAsync());
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
         }
     }
 
