@@ -316,7 +316,7 @@ internal static class CharacterStartingProficiencyProjector
                 choiceKey,
                 groupKey,
                 displayName,
-                "skill-proficiency",
+                kind,
                 CharacterResolutionStates.Resolved,
                 options,
                 selected.Value,
