@@ -35,9 +35,9 @@ The metric is request-scoped. Startup schema/bootstrap work and background jobs 
 
 ## Composition
 
-The timing state is created at the beginning of `HostedToolAuthenticationMiddleware`, which is currently the first Rules Core request middleware. A single `Response.OnStarting` callback emits the whole-request metric and the accumulated database metric.
+`RulesCoreServerTimingMiddleware` is the first Rules Core request middleware. It creates the request timing state before authentication or endpoint work begins. A single `Response.OnStarting` callback emits the whole-request metric and the accumulated database metric.
 
-Authentication and reference-catalog code add their component timings through the same timing helper. Existing header values are appended rather than replaced.
+Authentication and reference-catalog code add their component timings through the same timing helper. Existing header values are appended rather than replaced. Timing lifecycle ownership remains separate from authentication so replacing or reordering authentication does not silently remove whole-request instrumentation.
 
 A request can therefore return values similar to:
 
