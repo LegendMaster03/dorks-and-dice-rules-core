@@ -19,6 +19,15 @@ public sealed class RuleConceptEntityTypeNormalizationTests
     }
 
     [Theory]
+    [InlineData("sidekickClass")]
+    [InlineData("SIDEKICKCLASS")]
+    [InlineData(" sidekickclass ")]
+    public void SidekickClassNormalizesToCanonicalApiName(string input)
+    {
+        Assert.Equal(RuleConceptEntityTypes.SidekickClass, RuleConceptEntityTypes.Normalize(input));
+    }
+
+    [Theory]
     [InlineData("")]
     [InlineData("   ")]
     [InlineData("ra\nce")]

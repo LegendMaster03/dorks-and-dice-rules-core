@@ -80,7 +80,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         var projectionRules = rules.Rules
             .Where(value => value.Document is not null)
             .Select(value => new CharacterProjectionRule(
-                value,
+                CharacterMechanicalCatalog(value),
                 value.Document!.Value,
                 CharacterProjectionResolutionHelpers.EffectiveProvenance(value)))
             .ToArray();
@@ -164,6 +164,15 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
                 .OrderBy(value => value.TopicKey, StringComparer.Ordinal)
                 .ToArray());
     }
+
+    private static ResolvedRuleCatalogItemView CharacterMechanicalCatalog(
+        ResolvedRuleCatalogItemView rule) =>
+        string.Equals(
+            rule.EntityType,
+            RuleConceptEntityTypes.SidekickClass,
+            StringComparison.OrdinalIgnoreCase)
+            ? rule with { EntityType = RuleConceptEntityTypes.Class }
+            : rule;
 
     private static IReadOnlyList<CharacterMechanicRelationshipView> ProjectCompetencyRelationships(
         CharacterMechanicsCatalogView catalog) =>

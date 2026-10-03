@@ -176,6 +176,7 @@ public sealed class SourceNormalizationMaintenanceService(
             var normalized = NormalizedSourceImportService.TranslateAndNormalizeRecord(
                 candidate.Representation,
                 candidate.Record);
+            NormalizedSourceImportService.EnsureEntityIdentityMatches(entity, normalized);
 
             if (!string.Equals(
                     NormalizedSourceImportService.CanonicalJsonFingerprint(normalized.RawJson),
