@@ -13,7 +13,11 @@ namespace RulesCore.Infrastructure.Sources;
 public sealed class CanonicalDataReconciliationService(RulesCoreDbContext dbContext)
 {
     public const string StartupBackfillKey = "reference-history-companion-v2";
-    private const string StartupLockIdentity = "rules-core-canonical-data-reconciliation-v2";
+
+    // Keep the original lock identity across backfill versions so old and new ingress processes
+    // remain mutually exclusive during a rolling deployment while their durable completion keys
+    // can advance independently.
+    private const string StartupLockIdentity = "rules-core-canonical-data-reconciliation-v1";
 
     public Task ReconcileExistingCorpusAsync(CancellationToken cancellationToken = default) =>
         ReconcileExistingCorpusCoreAsync(cancellationToken);
