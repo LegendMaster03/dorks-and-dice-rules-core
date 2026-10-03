@@ -1,13 +1,13 @@
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using RulesCore.Application.Rules;
 
 namespace RulesCore.Infrastructure.Rules.CharacterProjection;
 
 /// <summary>
-/// Projects starting equipment from the already-resolved Class and Background rules. This projector
-/// does not select a source revision or edition. Source reconciliation has already happened before
-/// Character projection; the only remaining choices are Character decisions defined by the
-/// effective rule itself.
+/// Projects starting equipment from already-resolved Class and Background rules. Source/version
+/// reconciliation has already happened before Character projection; only Character decisions that
+/// remain in the effective rule are exposed here.
 /// </summary>
 internal static class CharacterStartingEquipmentProjector
 {
@@ -20,11 +20,49 @@ internal static class CharacterStartingEquipmentProjector
         IReadOnlyList<CharacterProjectionRule> rules,
         CharacterProjectionContext context)
     {
+        if (context.StartingClassChoiceRequired)
+        {
+            return;
+        }
+
         var itemCatalog = BuildItemCatalog(rules);
+        var startingClass = rules.FirstOrDefault(rule =>
+            string.Equals(rule.Catalog.EntityType, "class", StringComparison.OrdinalIgnoreCase)
+            && context.IsStartingClass(rule.Catalog.ConceptKey) == true);
+
+        var projectBackground = true;
+        if (startingClass is not null
+            && CharacterProjectionJson.TryGetProperty(
+                startingClass.Document,
+                "startingEquipment",
+                out var classStartingEquipment))
+        {
+            var outcome = ProjectClassStartingEquipment(
+                startingClass,
+                context,
+                classStartingEquipment,
+                itemCatalog);
+            if (outcome is StartingEquipmentOutcome.Unresolved or StartingEquipmentOutcome.Gold)
+            {
+                projectBackground = false;
+            }
+            else if (outcome == StartingEquipmentOutcome.Equipment)
+            {
+                projectBackground = ReadBoolean(
+                    classStartingEquipment,
+                    "additionalFromBackground") ?? true;
+            }
+        }
+
+        if (!projectBackground)
+        {
+            return;
+        }
 
         foreach (var rule in rules)
         {
-            if (!ShouldProject(rule, context)
+            if (!string.Equals(rule.Catalog.EntityType, "background", StringComparison.OrdinalIgnoreCase)
+                || !context.IsSelected(rule.Catalog.ConceptKey)
                 || !CharacterProjectionJson.TryGetProperty(
                     rule.Document,
                     "startingEquipment",
@@ -33,24 +71,198 @@ internal static class CharacterStartingEquipmentProjector
                 continue;
             }
 
-            ProjectStartingEquipment(rule, context, startingEquipment, itemCatalog);
+            ProjectEquipmentData(rule, context, startingEquipment, itemCatalog);
         }
     }
 
-    private static bool ShouldProject(
+    private static StartingEquipmentOutcome ProjectClassStartingEquipment(
         CharacterProjectionRule rule,
-        CharacterProjectionContext context)
+        CharacterProjectionContext context,
+        JsonElement startingEquipment,
+        ItemCatalog itemCatalog)
     {
-        if (string.Equals(rule.Catalog.EntityType, "class", StringComparison.OrdinalIgnoreCase))
+        var goldAlternative = CharacterProjectionJson.String(startingEquipment, "goldAlternative");
+        if (string.IsNullOrWhiteSpace(goldAlternative))
         {
-            return context.IsStartingClass(rule.Catalog.ConceptKey) == true;
+            ProjectEquipmentData(rule, context, startingEquipment, itemCatalog);
+            return StartingEquipmentOutcome.Equipment;
         }
 
-        return string.Equals(rule.Catalog.EntityType, "background", StringComparison.OrdinalIgnoreCase)
-            && context.IsSelected(rule.Catalog.ConceptKey);
+        var selectedMethod = ProjectMethodChoice(rule, context, goldAlternative);
+        if (selectedMethod is null)
+        {
+            return StartingEquipmentOutcome.Unresolved;
+        }
+
+        if (string.Equals(selectedMethod, "equipment", StringComparison.OrdinalIgnoreCase))
+        {
+            ProjectEquipmentData(rule, context, startingEquipment, itemCatalog);
+            return StartingEquipmentOutcome.Equipment;
+        }
+
+        ProjectGoldAlternative(rule, context, goldAlternative);
+        return StartingEquipmentOutcome.Gold;
     }
 
-    private static void ProjectStartingEquipment(
+    private static string? ProjectMethodChoice(
+        CharacterProjectionRule rule,
+        CharacterProjectionContext context,
+        string goldAlternative)
+    {
+        string? selectedMethod = null;
+        var displayExpression = GoldExpressionDisplay(goldAlternative);
+        CharacterStartingProficiencyProjector.ProjectChoiceGroup(
+            rule,
+            context,
+            pathKey: "starting-equipment-method",
+            groupIndex: 0,
+            count: 1,
+            options:
+            [
+                new CharacterChoiceOptionView("equipment", "Starting equipment", null),
+                new CharacterChoiceOptionView("gold", $"Starting gold ({displayExpression})", null)
+            ],
+            sourceShape: "starting-equipment-method",
+            kind: ChoiceKind,
+            optionLabel: "Starting Equipment Method",
+            onSelected: selected => selectedMethod = selected.Value);
+        return selectedMethod;
+    }
+
+    private static void ProjectGoldAlternative(
+        CharacterProjectionRule rule,
+        CharacterProjectionContext context,
+        string sourceExpression)
+    {
+        var mechanicKey = $"starting-equipment.gold.{rule.Catalog.ConceptKey}";
+        var rollKey = $"starting-equipment.gold-roll.{rule.Catalog.ConceptKey}";
+        if (!TryParseGoldAlternative(sourceExpression, out var gold))
+        {
+            AddSourceUnavailableConflict(
+                rule,
+                context,
+                "starting-equipment.gold-alternative",
+                $"Starting-gold expression '{sourceExpression}' can not be represented as a supported dice expression.");
+            context.Mechanics[mechanicKey] = new CharacterResolvedMechanicView(
+                mechanicKey,
+                "starting-equipment",
+                "Starting Gold",
+                CharacterResolutionStates.SourceUnavailable,
+                null,
+                GoldExpressionDisplay(sourceExpression),
+                "gp",
+                [],
+                [],
+                [],
+                [],
+                [],
+                rule.Provenance);
+            return;
+        }
+
+        if (!context.Rolls.TryGetValue(rollKey, out var rolled))
+        {
+            context.Mechanics[mechanicKey] = new CharacterResolvedMechanicView(
+                mechanicKey,
+                "starting-equipment",
+                "Starting Gold",
+                CharacterResolutionStates.RollRequired,
+                null,
+                gold.DisplayExpression,
+                "gp",
+                [],
+                [],
+                [],
+                [rollKey],
+                [],
+                rule.Provenance);
+            return;
+        }
+
+        var minimum = gold.DiceCount;
+        var maximum = checked(gold.DiceCount * gold.DieFaces);
+        if (rolled < minimum || rolled > maximum)
+        {
+            context.Conflicts.Add(new CharacterProjectionConflictView(
+                $"conflict.{rollKey}",
+                "invalid-runtime-roll",
+                $"Starting-gold roll {rolled} for {rule.Catalog.DisplayName} must be between {minimum} and {maximum} for {gold.DiceCount}d{gold.DieFaces}.",
+                [mechanicKey],
+                [rule.Catalog.ConceptKey]));
+            context.Mechanics[mechanicKey] = new CharacterResolvedMechanicView(
+                mechanicKey,
+                "starting-equipment",
+                "Starting Gold",
+                CharacterResolutionStates.Conflict,
+                null,
+                gold.DisplayExpression,
+                "gp",
+                [],
+                [],
+                [],
+                [],
+                [],
+                rule.Provenance);
+            return;
+        }
+
+        var goldPieces = (long)rolled * gold.Multiplier;
+        if (goldPieces > int.MaxValue)
+        {
+            AddSourceUnavailableConflict(
+                rule,
+                context,
+                "starting-equipment.gold-alternative.quantity",
+                "Resolved starting gold exceeds the supported grant quantity.");
+            context.Mechanics[mechanicKey] = new CharacterResolvedMechanicView(
+                mechanicKey,
+                "starting-equipment",
+                "Starting Gold",
+                CharacterResolutionStates.SourceUnavailable,
+                null,
+                gold.DisplayExpression,
+                "gp",
+                [],
+                [],
+                [],
+                [],
+                [],
+                rule.Provenance);
+            return;
+        }
+
+        AddGrant(
+            context,
+            rule,
+            $"grant.{rule.Catalog.ConceptKey}.starting-equipment.gold",
+            CurrencyGrantKind,
+            "gp",
+            "GP",
+            (int)goldPieces);
+        context.Mechanics[mechanicKey] = new CharacterResolvedMechanicView(
+            mechanicKey,
+            "starting-equipment",
+            "Starting Gold",
+            CharacterResolutionStates.Resolved,
+            (int)goldPieces,
+            gold.DisplayExpression,
+            "gp",
+            [],
+            [],
+            [],
+            [],
+            [new CharacterMechanicContributionView(
+                rollKey,
+                $"{rule.Catalog.DisplayName} starting-gold roll",
+                "set",
+                (int)goldPieces,
+                $"rolled {rolled}; {gold.DisplayExpression}",
+                rule.Catalog.ConceptKey,
+                rule.Provenance)],
+            rule.Provenance);
+    }
+
+    private static void ProjectEquipmentData(
         CharacterProjectionRule rule,
         CharacterProjectionContext context,
         JsonElement startingEquipment,
@@ -277,14 +489,21 @@ internal static class CharacterStartingEquipmentProjector
             handled = true;
         }
 
+        var equipmentTypes = CharacterProjectionJson.Strings(entry, "equipmentTypes")
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .ToList();
         var equipmentType = CharacterProjectionJson.String(entry, "equipmentType");
         if (!string.IsNullOrWhiteSpace(equipmentType))
+        {
+            equipmentTypes.Insert(0, equipmentType);
+        }
+        if (equipmentTypes.Count > 0)
         {
             ProjectEquipmentTypeChoices(
                 rule,
                 context,
                 itemCatalog,
-                equipmentType,
+                equipmentTypes,
                 quantity,
                 path);
             handled = true;
@@ -369,11 +588,18 @@ internal static class CharacterStartingEquipmentProjector
         CharacterProjectionRule rule,
         CharacterProjectionContext context,
         ItemCatalog itemCatalog,
-        string equipmentType,
+        IReadOnlyList<string> equipmentTypes,
         int quantity,
         string path)
     {
-        var candidates = itemCatalog.ForEquipmentType(equipmentType)
+        var normalizedTypes = equipmentTypes
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Select(value => value.Trim())
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var candidates = normalizedTypes
+            .SelectMany(itemCatalog.ForEquipmentType)
+            .DistinctBy(item => item.Rule.Catalog.ConceptKey, StringComparer.OrdinalIgnoreCase)
             .Select(item => new CharacterChoiceOptionView(
                 item.Rule.Catalog.ConceptKey,
                 item.Rule.Catalog.DisplayName,
@@ -382,6 +608,10 @@ internal static class CharacterStartingEquipmentProjector
             .ThenBy(option => option.Value, StringComparer.Ordinal)
             .ToArray();
 
+        var sourceShape = string.Join("|", normalizedTypes);
+        var label = string.Join(
+            " or ",
+            normalizedTypes.Select(CharacterProjectionJson.Humanize));
         for (var slot = 0; slot < quantity; slot++)
         {
             var slotPath = $"starting-equipment-item.{path}.{slot}";
@@ -392,9 +622,9 @@ internal static class CharacterStartingEquipmentProjector
                 groupIndex: 0,
                 count: 1,
                 candidates,
-                sourceShape: equipmentType,
+                sourceShape,
                 kind: ChoiceKind,
-                optionLabel: CharacterProjectionJson.Humanize(equipmentType),
+                optionLabel: label,
                 onSelected: selected =>
                 {
                     var selectedItem = itemCatalog.ByConceptKey(selected.ConceptKey ?? selected.Value);
@@ -509,7 +739,14 @@ internal static class CharacterStartingEquipmentProjector
             var quantity = CharacterProjectionJson.Integer(entry, "quantity") ?? 1;
             var displayName = CharacterProjectionJson.String(entry, "displayName");
             var itemReference = CharacterProjectionJson.String(entry, "item");
+            var equipmentTypes = CharacterProjectionJson.Strings(entry, "equipmentTypes")
+                .Where(value => !string.IsNullOrWhiteSpace(value))
+                .ToList();
             var equipmentType = CharacterProjectionJson.String(entry, "equipmentType");
+            if (!string.IsNullOrWhiteSpace(equipmentType))
+            {
+                equipmentTypes.Insert(0, equipmentType);
+            }
             var special = CharacterProjectionJson.String(entry, "special");
             if (!string.IsNullOrWhiteSpace(itemReference))
             {
@@ -518,9 +755,11 @@ internal static class CharacterStartingEquipmentProjector
                     displayName ?? item?.Rule.Catalog.DisplayName ?? NativeName(itemReference),
                     quantity));
             }
-            else if (!string.IsNullOrWhiteSpace(equipmentType))
+            else if (equipmentTypes.Count > 0)
             {
-                parts.Add(WithQuantity(CharacterProjectionJson.Humanize(equipmentType), quantity));
+                parts.Add(WithQuantity(
+                    string.Join(" or ", equipmentTypes.Select(CharacterProjectionJson.Humanize)),
+                    quantity));
             }
             else if (!string.IsNullOrWhiteSpace(special))
             {
@@ -559,6 +798,50 @@ internal static class CharacterStartingEquipmentProjector
         return parts.Count == 0 ? "0 CP" : string.Join(" ", parts);
     }
 
+    private static bool TryParseGoldAlternative(
+        string sourceExpression,
+        out GoldAlternative alternative)
+    {
+        var display = GoldExpressionDisplay(sourceExpression);
+        var match = Regex.Match(
+            display,
+            @"(?<count>\d+)\s*d\s*(?<faces>\d+)(?:\s*(?:×|x|\*)\s*(?<multiplier>\d+))?",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+        if (!match.Success
+            || !int.TryParse(match.Groups["count"].Value, out var count)
+            || !int.TryParse(match.Groups["faces"].Value, out var faces)
+            || count <= 0
+            || faces <= 0)
+        {
+            alternative = default!;
+            return false;
+        }
+
+        var multiplier = 1;
+        if (match.Groups["multiplier"].Success
+            && (!int.TryParse(match.Groups["multiplier"].Value, out multiplier)
+                || multiplier <= 0))
+        {
+            alternative = default!;
+            return false;
+        }
+
+        alternative = new GoldAlternative(count, faces, multiplier, display);
+        return true;
+    }
+
+    private static string GoldExpressionDisplay(string sourceExpression)
+    {
+        var value = sourceExpression.Trim();
+        if (value.StartsWith("{@dice ", StringComparison.OrdinalIgnoreCase)
+            && value.EndsWith('}'))
+        {
+            value = value[7..^1];
+            value = value.Split('|', 2, StringSplitOptions.TrimEntries)[0];
+        }
+        return value;
+    }
+
     private static bool TryReadInt64(JsonElement element, string propertyName, out long value)
     {
         value = 0;
@@ -572,6 +855,26 @@ internal static class CharacterStartingEquipmentProjector
         }
         return property.ValueKind == JsonValueKind.String
             && long.TryParse(property.GetString(), out value);
+    }
+
+    private static bool? ReadBoolean(JsonElement element, string propertyName)
+    {
+        if (!CharacterProjectionJson.TryGetProperty(element, propertyName, out var property))
+        {
+            return null;
+        }
+        if (property.ValueKind == JsonValueKind.True)
+        {
+            return true;
+        }
+        if (property.ValueKind == JsonValueKind.False)
+        {
+            return false;
+        }
+        return property.ValueKind == JsonValueKind.String
+            && bool.TryParse(property.GetString(), out var parsed)
+                ? parsed
+                : null;
     }
 
     private static void AddSourceUnavailableConflict(
@@ -598,7 +901,8 @@ internal static class CharacterStartingEquipmentProjector
                 CharacterProjectionJson.String(rule.Document, "name") ?? rule.Catalog.DisplayName,
                 CharacterProjectionJson.String(rule.Document, "source") ?? rule.Catalog.SourceCode,
                 NormalizeItemType(CharacterProjectionJson.String(rule.Document, "type")),
-                CharacterProjectionJson.String(rule.Document, "weaponCategory")))
+                CharacterProjectionJson.String(rule.Document, "weaponCategory"),
+                CharacterProjectionJson.String(rule.Document, "scfType")))
             .ToArray());
 
     private static string? NormalizeItemType(string? value) =>
@@ -619,12 +923,19 @@ internal static class CharacterStartingEquipmentProjector
                     [' ', '/', '_', '-', '|', '.', ':'],
                     StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
 
+    private sealed record GoldAlternative(
+        int DiceCount,
+        int DieFaces,
+        int Multiplier,
+        string DisplayExpression);
+
     private sealed record ItemCatalogEntry(
         CharacterProjectionRule Rule,
         string NativeName,
         string NativeSource,
         string? ItemType,
-        string? WeaponCategory);
+        string? WeaponCategory,
+        string? SpellcastingFocusType);
 
     private sealed class ItemCatalog(IReadOnlyList<ItemCatalogEntry> items)
     {
@@ -661,30 +972,58 @@ internal static class CharacterStartingEquipmentProjector
         public IEnumerable<ItemCatalogEntry> ForEquipmentType(string equipmentType)
         {
             var normalized = equipmentType.Trim();
-            if (normalized.StartsWith("weaponMartial", StringComparison.OrdinalIgnoreCase))
+            return normalized.ToLowerInvariant() switch
             {
-                return items.Where(item =>
-                    item.ItemType is "M" or "R"
-                    && string.Equals(item.WeaponCategory, "martial", StringComparison.OrdinalIgnoreCase));
-            }
-            if (normalized.StartsWith("weaponSimple", StringComparison.OrdinalIgnoreCase))
-            {
-                return items.Where(item =>
-                    item.ItemType is "M" or "R"
-                    && string.Equals(item.WeaponCategory, "simple", StringComparison.OrdinalIgnoreCase));
-            }
-
-            var itemType = normalized.ToLowerInvariant() switch
-            {
-                "armorlight" => "LA",
-                "armormedium" => "MA",
-                "armorheavy" => "HA",
-                "shield" => "S",
-                _ => null
+                "weaponany" => Weapons(null, null),
+                "weaponsimple" => Weapons("simple", null),
+                "weaponsimplemelee" => Weapons("simple", "M"),
+                "weaponsimpleranged" => Weapons("simple", "R"),
+                "weaponmartial" => Weapons("martial", null),
+                "weaponmartialmelee" => Weapons("martial", "M"),
+                "weaponmartialranged" => Weapons("martial", "R"),
+                "armorlight" => OfType("LA"),
+                "armormedium" => OfType("MA"),
+                "armorheavy" => OfType("HA"),
+                "shield" => OfType("S"),
+                "instrumentmusical" => OfType("INS"),
+                "toolartisan" => OfType("AT"),
+                "setgaming" => OfType("GS"),
+                "tool" => items.Where(item => item.ItemType is "T" or "AT" or "GS" or "INS"),
+                "focusspellcasting" => OfType("SCF"),
+                "focusspellcastingarcane" => SpellcastingFocus("arcane"),
+                "focusspellcastingholy" => SpellcastingFocus("holy"),
+                "focusspellcastingdruidic" => SpellcastingFocus("druid"),
+                _ => []
             };
-            return itemType is null
-                ? []
-                : items.Where(item => string.Equals(item.ItemType, itemType, StringComparison.OrdinalIgnoreCase));
         }
+
+        private IEnumerable<ItemCatalogEntry> Weapons(string? category, string? itemType) =>
+            items.Where(item =>
+                item.ItemType is "M" or "R"
+                && (category is null
+                    || string.Equals(item.WeaponCategory, category, StringComparison.OrdinalIgnoreCase))
+                && (itemType is null
+                    || string.Equals(item.ItemType, itemType, StringComparison.OrdinalIgnoreCase)));
+
+        private IEnumerable<ItemCatalogEntry> OfType(string itemType) =>
+            items.Where(item => string.Equals(
+                item.ItemType,
+                itemType,
+                StringComparison.OrdinalIgnoreCase));
+
+        private IEnumerable<ItemCatalogEntry> SpellcastingFocus(string focusType) =>
+            items.Where(item =>
+                string.Equals(item.ItemType, "SCF", StringComparison.OrdinalIgnoreCase)
+                && string.Equals(
+                    item.SpellcastingFocusType,
+                    focusType,
+                    StringComparison.OrdinalIgnoreCase));
+    }
+
+    private enum StartingEquipmentOutcome
+    {
+        Unresolved,
+        Equipment,
+        Gold
     }
 }
