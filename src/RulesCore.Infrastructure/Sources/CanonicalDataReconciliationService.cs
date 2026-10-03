@@ -12,8 +12,8 @@ namespace RulesCore.Infrastructure.Sources;
 /// </summary>
 public sealed class CanonicalDataReconciliationService(RulesCoreDbContext dbContext)
 {
-    public const string StartupBackfillKey = "reference-history-companion-v1";
-    private const string StartupLockIdentity = "rules-core-canonical-data-reconciliation-v1";
+    public const string StartupBackfillKey = "reference-history-companion-v2";
+    private const string StartupLockIdentity = "rules-core-canonical-data-reconciliation-v2";
 
     public Task ReconcileExistingCorpusAsync(CancellationToken cancellationToken = default) =>
         ReconcileExistingCorpusCoreAsync(cancellationToken);
