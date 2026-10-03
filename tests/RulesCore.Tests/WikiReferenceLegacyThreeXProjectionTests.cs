@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Rules;
 using RulesCore.Infrastructure.Sources;
 
@@ -30,8 +31,10 @@ public sealed class WikiReferenceLegacyThreeXProjectionTests
                 Encoding.UTF8.GetBytes(source),
                 "test:wiki-phase-4-legacy-spell"));
 
-        var record = Assert.Single(Assert.NotNull(representation).Records);
-        using var document = JsonDocument.Parse(Assert.NotNull(record.ContentJson));
+        Assert.NotNull(representation);
+        var record = Assert.Single(representation!.Records);
+        Assert.NotNull(record.ContentJson);
+        using var document = JsonDocument.Parse(record.ContentJson!);
         var fields = WikiReferenceBrowserProjection.Project("spell", document.RootElement);
 
         AssertField(fields, "school", "Evocation");
@@ -67,8 +70,10 @@ public sealed class WikiReferenceLegacyThreeXProjectionTests
                 Encoding.UTF8.GetBytes(source),
                 "test:wiki-phase-4-legacy-item"));
 
-        var record = Assert.Single(Assert.NotNull(representation).Records);
-        using var document = JsonDocument.Parse(Assert.NotNull(record.ContentJson));
+        Assert.NotNull(representation);
+        var record = Assert.Single(representation!.Records);
+        Assert.NotNull(record.ContentJson);
+        using var document = JsonDocument.Parse(record.ContentJson!);
         var fields = WikiReferenceBrowserProjection.Project("item", document.RootElement);
 
         AssertField(fields, "type", "Wondrous Item");
