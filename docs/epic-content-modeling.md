@@ -10,7 +10,11 @@ uses one canonical vocabulary.
 - 3.x **Epic Feat** -> `feat`, epic tier, canonical term `Epic Feat`.
 - 5.5e **Epic Boon Feat** / 5e.tools category `EB` -> `feat`, epic tier, canonical term `Epic Feat`.
 - The original 5e.tools `EB` category remains in `RawJson`; normalized `ContentJson` exposes
-  `category: "Epic"` and `_rulesCore.epic.sourceTerm: "Epic Boon Feat"`.
+  `category: "Epic"` and canonical epic metadata only.
+
+Source-specific terms such as `EB` and `Epic Boon Feat` deliberately do not enter mechanical
+metadata. Keeping them in `RawJson` preserves provenance without changing semantic fingerprints or
+preventing otherwise equivalent epic mechanics from reconciling across source formats.
 
 Normalizing the category does not assert that similarly named feats from different editions are
 revisions of one another. Canonical history reconciliation still requires its normal evidence.
@@ -54,8 +58,6 @@ Normalized epic content uses `_rulesCore.epic` in `ContentJson`:
   "tier": "epic",
   "kind": "feat | progression | prestige-class | content",
   "canonicalTerm": "Epic Feat",
-  "sourceTerm": "Epic Boon Feat",
-  "sourceCategory": "EB",
   "continuationOf": {
     "entityType": "class",
     "name": "Barbarian"
@@ -66,6 +68,13 @@ Normalized epic content uses `_rulesCore.epic` in `ContentJson`:
 
 Only applicable fields are emitted. No universal minimum character level is stored here because
 3.x Epic Feats and 5.5e Epic Boon Feats do not share the same acquisition level.
+
+## Existing imported data
+
+Epic normalization is source-normalization version 2. The maintenance replay updates derived
+`ContentJson`, canonical source association, and reviewed derived `SourceEntity` type/name
+corrections while preserving native keys, `RawJson`, native fingerprints, source representation
+bytes, and revision numbers.
 
 ## Scope boundary
 
