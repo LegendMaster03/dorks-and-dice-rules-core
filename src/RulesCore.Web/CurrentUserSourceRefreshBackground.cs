@@ -1,3 +1,5 @@
+using System.Data.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using RulesCore.Application.Sources;
 using RulesCore.Infrastructure.Persistence;
@@ -10,24 +12,63 @@ internal sealed class CurrentUserSourceRefreshBackground(
     ILogger<CurrentUserSourceRefreshBackground> logger)
     : BackgroundService
 {
+    private const long SourceMaintenanceAdvisoryLockKey = 0x444E4452434D4149L;
+    private const string TransientNormalizationFailureMarker = "transient failure";
+    private const int MaximumTransientNormalizationRetries = 3;
+    private static readonly TimeSpan CoordinatorElectionInterval = TimeSpan.FromSeconds(2);
+
+    private readonly Dictionary<Guid, int> transientNormalizationRetryCounts = new();
+
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        MaintenanceOwnershipLease? coordinatorLease = null;
         try
         {
-            await ConsolidateDuplicateSourcePackagesAsync(stoppingToken);
-            await RequeueInterruptedImportJobsAsync(stoppingToken);
-            await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+            var nextCoordinatorElection = DateTimeOffset.MinValue;
             var nextRefreshSweep = DateTimeOffset.UtcNow.AddMinutes(10);
 
             while (!stoppingToken.IsCancellationRequested)
             {
-                var processedImportJob = await ProcessNextImportJobAsync(stoppingToken);
-                if (processedImportJob) continue;
+                if (coordinatorLease is not null
+                    && coordinatorLease.Connection.State != System.Data.ConnectionState.Open)
+                {
+                    logger.LogWarning(
+                        "Rules Core source maintenance coordinator lease connection was lost; returning to coordinator election.");
+                    coordinatorLease.Dispose();
+                    coordinatorLease = null;
+                    nextCoordinatorElection = DateTimeOffset.MinValue;
+                }
 
+                var now = DateTimeOffset.UtcNow;
+                if (coordinatorLease is null && now >= nextCoordinatorElection)
+                {
+                    coordinatorLease = await TryAcquireMaintenanceOwnershipLeaseAsync(stoppingToken);
+                    nextCoordinatorElection = now.Add(CoordinatorElectionInterval);
+                    if (coordinatorLease is not null)
+                    {
+                        logger.LogInformation(
+                            "Rules Core source maintenance worker acquired the coordinator lease; import recovery, deduplication, and refresh sweeps are enabled on this process.");
+                        await RequeuePreviouslyFailedTransientNormalizationBackfillsAsync(stoppingToken);
+                        await ConsolidateDuplicateSourcePackagesAsync(stoppingToken);
+                        await RequeueInterruptedImportJobsAsync(stoppingToken);
+                        nextRefreshSweep = DateTimeOffset.UtcNow.AddMinutes(10);
+                    }
+                }
+
+                if (coordinatorLease is not null)
+                {
+                    var processedImportJob = await ProcessNextImportJobAsync(stoppingToken);
+                    if (processedImportJob) continue;
+                }
+
+                // Normalization is deliberately not coordinator-owned. Each Rules Core process
+                // can claim a different revision with FOR UPDATE SKIP LOCKED, so the public and
+                // private ingresses contribute to the same backfill without duplicating work.
                 var processedNormalization =
                     await ProcessNextNormalizationBackfillAsync(stoppingToken);
 
-                if (DateTimeOffset.UtcNow >= nextRefreshSweep)
+                if (coordinatorLease is not null
+                    && DateTimeOffset.UtcNow >= nextRefreshSweep)
                 {
                     await RunRefreshSweepAsync(stoppingToken);
                     nextRefreshSweep = DateTimeOffset.UtcNow.AddHours(1);
@@ -40,6 +81,43 @@ internal sealed class CurrentUserSourceRefreshBackground(
         catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
         {
             // Normal application shutdown.
+        }
+        finally
+        {
+            if (coordinatorLease is not null)
+            {
+                await ReleaseMaintenanceOwnershipAsync(coordinatorLease.Connection);
+                coordinatorLease.Dispose();
+            }
+        }
+    }
+
+    private async Task RequeuePreviouslyFailedTransientNormalizationBackfillsAsync(
+        CancellationToken stoppingToken)
+    {
+        await using var scope = scopeFactory.CreateAsyncScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+        var requeued = await dbContext.SourceEntityRevisions
+            .Where(value =>
+                value.NormalizationVersion < SourceNormalizationVersion.Current
+                && value.NormalizationAttemptVersion >= SourceNormalizationVersion.Current
+                && value.NormalizationError != null
+                && EF.Functions.ILike(
+                    value.NormalizationError,
+                    $"%{TransientNormalizationFailureMarker}%"))
+            .ExecuteUpdateAsync(
+                setters => setters
+                    .SetProperty(
+                        value => value.NormalizationAttemptVersion,
+                        SourceNormalizationVersion.Current - 1)
+                    .SetProperty(value => value.NormalizationError, (string?)null),
+                stoppingToken);
+
+        if (requeued > 0)
+        {
+            logger.LogWarning(
+                "Rules Core requeued {RevisionCount} source-normalization revision(s) that previously failed with a transient database error.",
+                requeued);
         }
     }
 
@@ -281,6 +359,30 @@ internal sealed class CurrentUserSourceRefreshBackground(
                     failure.SourceEntityRevisionId,
                     failure.EntityName,
                     failure.Message);
+
+                if (IsTransientNormalizationFailure(failure.Message))
+                {
+                    var retryCount = transientNormalizationRetryCounts.GetValueOrDefault(
+                        failure.SourceEntityRevisionId) + 1;
+                    transientNormalizationRetryCounts[failure.SourceEntityRevisionId] = retryCount;
+
+                    if (retryCount <= MaximumTransientNormalizationRetries)
+                    {
+                        await RequeueNormalizationRevisionAsync(
+                            failure.SourceEntityRevisionId,
+                            stoppingToken);
+                        logger.LogWarning(
+                            "Rules Core requeued transient source-normalization failure {RevisionId} for retry {RetryCount}/{MaximumRetryCount}.",
+                            failure.SourceEntityRevisionId,
+                            retryCount,
+                            MaximumTransientNormalizationRetries);
+                        return false;
+                    }
+
+                    logger.LogError(
+                        "Rules Core exhausted transient source-normalization retries for revision {RevisionId}.",
+                        failure.SourceEntityRevisionId);
+                }
             }
             return true;
         }
@@ -296,6 +398,30 @@ internal sealed class CurrentUserSourceRefreshBackground(
             return false;
         }
     }
+
+    private async Task RequeueNormalizationRevisionAsync(
+        Guid revisionId,
+        CancellationToken stoppingToken)
+    {
+        await using var scope = scopeFactory.CreateAsyncScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+        await dbContext.SourceEntityRevisions
+            .Where(value =>
+                value.Id == revisionId
+                && value.NormalizationVersion < SourceNormalizationVersion.Current)
+            .ExecuteUpdateAsync(
+                setters => setters
+                    .SetProperty(
+                        value => value.NormalizationAttemptVersion,
+                        SourceNormalizationVersion.Current - 1)
+                    .SetProperty(value => value.NormalizationError, (string?)null),
+                stoppingToken);
+    }
+
+    private static bool IsTransientNormalizationFailure(string message) =>
+        message.Contains(
+            TransientNormalizationFailureMarker,
+            StringComparison.OrdinalIgnoreCase);
 
     private static CurrentUserSourceImportProgress MergeImportProgress(
         CurrentUserSourceImportProgress? previous,
@@ -380,5 +506,76 @@ internal sealed class CurrentUserSourceRefreshBackground(
                 "Rules Core could not requeue interrupted Web source import job {JobId}.",
                 jobId);
         }
+    }
+
+    private async Task<MaintenanceOwnershipLease?> TryAcquireMaintenanceOwnershipLeaseAsync(
+        CancellationToken cancellationToken)
+    {
+        var scope = scopeFactory.CreateScope();
+        try
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
+            var connection = dbContext.Database.GetDbConnection();
+            await connection.OpenAsync(cancellationToken);
+            if (!await TryAcquireMaintenanceOwnershipAsync(connection, cancellationToken))
+            {
+                scope.Dispose();
+                return null;
+            }
+
+            return new MaintenanceOwnershipLease(scope, connection);
+        }
+        catch
+        {
+            scope.Dispose();
+            throw;
+        }
+    }
+
+    private static async Task<bool> TryAcquireMaintenanceOwnershipAsync(
+        DbConnection connection,
+        CancellationToken cancellationToken)
+    {
+        await using var command = connection.CreateCommand();
+        command.CommandText = "SELECT pg_try_advisory_lock(@lock_key);";
+        var parameter = command.CreateParameter();
+        parameter.ParameterName = "@lock_key";
+        parameter.Value = SourceMaintenanceAdvisoryLockKey;
+        command.Parameters.Add(parameter);
+        return await command.ExecuteScalarAsync(cancellationToken) is true;
+    }
+
+    private async Task ReleaseMaintenanceOwnershipAsync(DbConnection connection)
+    {
+        try
+        {
+            if (connection.State != System.Data.ConnectionState.Open)
+            {
+                return;
+            }
+
+            await using var command = connection.CreateCommand();
+            command.CommandText = "SELECT pg_advisory_unlock(@lock_key);";
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = "@lock_key";
+            parameter.Value = SourceMaintenanceAdvisoryLockKey;
+            command.Parameters.Add(parameter);
+            await command.ExecuteScalarAsync(CancellationToken.None);
+        }
+        catch (Exception exception)
+        {
+            logger.LogWarning(
+                exception,
+                "Rules Core could not explicitly release the source maintenance coordinator lease; PostgreSQL will release it when the connection closes.");
+        }
+    }
+
+    private sealed class MaintenanceOwnershipLease(
+        IServiceScope scope,
+        DbConnection connection) : IDisposable
+    {
+        public DbConnection Connection { get; } = connection;
+
+        public void Dispose() => scope.Dispose();
     }
 }
