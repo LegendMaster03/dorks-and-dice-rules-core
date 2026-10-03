@@ -37,6 +37,18 @@ The reviewed legacy SRD makes the distinction mechanically observable: continuat
 normalizer uses that evidence rather than assuming every name beginning with `Epic` is a
 continuation.
 
+## Epic spells
+
+3.5e Epic Spells remain `spell` entities. They do not use the normal fixed `Level:` field, so the
+legacy SRD classifier recognizes the epic spell shape through `Spellcraft DC`, `To Develop`, and
+normal spell fields such as casting time or range. Previously imported epic spell descriptions that
+fell through to generic `rule` records are reviewed source-identity corrections and normalize back
+to `spell`.
+
+The epic tier is presented generically across rule types, so Epic Spells, Epic Feats, epic prestige
+classes, and other correctly typed epic content can expose the same `Tier: Epic` summary without
+consumer-specific exceptions.
+
 ## PCGen
 
 PCGen already models ordinary base-class epic advancement as `.MOD` operations against the base
@@ -75,6 +87,13 @@ Epic normalization is source-normalization version 2. The maintenance replay upd
 `ContentJson`, canonical source association, and reviewed derived `SourceEntity` type/name
 corrections while preserving native keys, `RawJson`, native fingerprints, source representation
 bytes, and revision numbers.
+
+The project is still pre-Rules-Lawyer testing and no manual Rules Lawyer adjudication has occurred.
+Accordingly, this migration does **not** add permanent compatibility machinery to preserve stale
+Rule Concept bindings or published bootstrap rulings created from incorrect epic identities.
+Bootstrap-generated Rules Layer state is disposable at this stage and may be regenerated from the
+corrected Source and Canonical layers before tester access begins. Once manual adjudication starts,
+future migrations must treat those rulings as durable user-authored state.
 
 ## Scope boundary
 
