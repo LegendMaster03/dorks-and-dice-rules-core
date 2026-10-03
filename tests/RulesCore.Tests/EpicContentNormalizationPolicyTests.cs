@@ -40,6 +40,20 @@ public sealed class EpicContentNormalizationPolicyTests
     }
 
     [Fact]
+    public void RuleBrowserSummaryDoesNotConcealRawEpicBoonCategory()
+    {
+        using var raw = JsonDocument.Parse("""
+            {"name":"Boon of Combat Prowess","category":"EB"}
+            """);
+
+        var category = Assert.Single(
+            RuleBrowserSummaryProjector.Project("feat", raw.RootElement)
+                .Where(value => value.Key == "category"));
+
+        Assert.NotEqual("Epic Feat", category.Value);
+    }
+
+    [Fact]
     public void LegacyEpicBaseClassBecomesContinuationProgression()
     {
         const string raw = """
@@ -228,6 +242,32 @@ public sealed class EpicContentNormalizationPolicyTests
         Assert.False(EpicContentNormalizationPolicy.IsReviewedIdentityMigration(
             "class",
             "Ordinary Class",
+            normalized));
+    }
+
+    [Fact]
+    public void IdentityMigrationRejectsUnreviewedEpicClassToPrestigeClassChange()
+    {
+        const string raw = """
+            {
+              "format":"pcgen-data",
+              "kind":"class-record",
+              "path":"data/35e/example/epic/custom_classes.lst",
+              "name":"Custom Epic Class",
+              "entityType":"class",
+              "segments":[
+                {"Index":0,"LineNumber":1,"Level":null,"Tag":"TYPE","Value":"Epic.PC","Raw":"TYPE:Epic.PC"}
+              ]
+            }
+            """;
+        const string content = """
+            {"name":"Custom Epic Class","source":"TEST","_rulesCore":{"epic":{"tier":"epic","kind":"prestige-class"}}}
+            """;
+        var normalized = Record("prestigeClass", "Custom Epic Class", raw, content);
+
+        Assert.False(EpicContentNormalizationPolicy.IsReviewedIdentityMigration(
+            "class",
+            "Custom Epic Class",
             normalized));
     }
 
