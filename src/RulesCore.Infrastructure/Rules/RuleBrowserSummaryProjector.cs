@@ -28,6 +28,7 @@ internal static class RuleBrowserSummaryProjector
     {
         var normalized = RuleConceptEntityTypes.Normalize(entityType);
         var fields = new List<ResolvedRuleBrowserFieldView>();
+        Add(fields, "tier", "Tier", ReadEpicTier(document));
 
         switch (normalized)
         {
@@ -47,17 +48,14 @@ internal static class RuleBrowserSummaryProjector
                 break;
 
             case RuleConceptEntityTypes.ClassProgression:
-                Add(fields, "tier", "Tier", ReadEpicTier(document));
                 Add(fields, "continues", "Continues", ReadEpicContinuationName(document));
                 break;
 
             case RuleConceptEntityTypes.PrestigeClass:
                 Add(fields, "prerequisite", "Prerequisite", ReadDisplayScalar(document, "prerequisite"));
-                Add(fields, "tier", "Tier", ReadEpicTier(document));
                 break;
 
             case RuleConceptEntityTypes.PrestigeClassProgression:
-                Add(fields, "tier", "Tier", ReadEpicTier(document));
                 Add(fields, "continues", "Continues", ReadEpicContinuationName(document));
                 break;
 
