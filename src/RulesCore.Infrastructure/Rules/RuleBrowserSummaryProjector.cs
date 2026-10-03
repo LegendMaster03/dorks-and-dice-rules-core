@@ -233,8 +233,7 @@ internal static class RuleBrowserSummaryProjector
 
         if (!document.TryGetProperty("category", out var value)) return null;
         var scalar = ReadScalar(value);
-        if (string.Equals(scalar, "EB", StringComparison.OrdinalIgnoreCase)
-            || string.Equals(scalar, "Epic", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(scalar, "Epic", StringComparison.OrdinalIgnoreCase))
         {
             return "Epic Feat";
         }
