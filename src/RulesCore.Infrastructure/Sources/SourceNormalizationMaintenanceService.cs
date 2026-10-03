@@ -2,6 +2,7 @@ using System.Data;
 using System.Data.Common;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using RulesCore.Application.Sources;
 using RulesCore.Domain.Sources;
 using RulesCore.Infrastructure.Persistence;
@@ -65,41 +66,24 @@ public sealed class SourceNormalizationMaintenanceService(
         }
 
         SourceImportExecutionPolicy.Apply(dbContext);
-        var query = Scope(
-                dbContext.SourceEntityRevisions.AsNoTracking(),
-                packageKey)
-            .Where(value =>
-                value.NormalizationVersion < SourceNormalizationVersion.Current);
-        if (!retryFailed)
-        {
-            query = query.Where(value =>
-                value.NormalizationAttemptVersion < SourceNormalizationVersion.Current);
-        }
-
-        var revisionIds = await query
-            .OrderBy(value => value.ImportedAt)
-            .ThenBy(value => value.Id)
-            .Select(value => value.Id)
-            .Take(limit)
-            .ToArrayAsync(cancellationToken);
 
         var attempted = 0;
         var updated = 0;
         var unchanged = 0;
         var reassociated = 0;
         var failures = new List<SourceNormalizationFailureView>();
-        foreach (var revisionId in revisionIds)
+        for (var index = 0; index < limit; index++)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var outcome = await ReconcileRevisionAsync(
-                revisionId,
+            var outcome = await ReconcileNextRevisionAsync(
                 retryFailed,
+                packageKey,
                 cancellationToken);
             dbContext.ChangeTracker.Clear();
 
             if (!outcome.Attempted)
             {
-                continue;
+                break;
             }
 
             attempted++;
@@ -135,33 +119,29 @@ public sealed class SourceNormalizationMaintenanceService(
             failures);
     }
 
-    private async Task<RevisionOutcome> ReconcileRevisionAsync(
-        Guid revisionId,
+    private async Task<RevisionOutcome> ReconcileNextRevisionAsync(
         bool retryFailed,
+        string? packageKey,
         CancellationToken cancellationToken)
     {
+        Guid? revisionId = null;
         await using var transaction = await dbContext.Database.BeginTransactionAsync(
             IsolationLevel.Serializable,
             cancellationToken);
         try
         {
-            var revision = await dbContext.SourceEntityRevisions
-                .FromSqlInterpolated($"""
-                    SELECT *
-                    FROM source_entity_revision
-                    WHERE source_entity_revision_id = {revisionId}
-                    FOR UPDATE
-                    """)
-                .SingleAsync(cancellationToken);
-
-            if (revision.NormalizationVersion >= SourceNormalizationVersion.Current
-                || (!retryFailed
-                    && revision.NormalizationAttemptVersion >= SourceNormalizationVersion.Current))
+            revisionId = await ClaimNextRevisionIdAsync(
+                retryFailed,
+                packageKey,
+                cancellationToken);
+            if (revisionId is null)
             {
                 await transaction.CommitAsync(cancellationToken);
-                return RevisionOutcome.Skipped;
+                return RevisionOutcome.NoWork;
             }
 
+            var revision = await dbContext.SourceEntityRevisions
+                .SingleAsync(value => value.Id == revisionId.Value, cancellationToken);
             var entity = await dbContext.SourceEntities
                 .SingleAsync(value => value.Id == revision.SourceEntityId, cancellationToken);
             var representation = await dbContext.SourceRepresentations
@@ -256,8 +236,13 @@ public sealed class SourceNormalizationMaintenanceService(
         {
             await transaction.RollbackAsync(CancellationToken.None);
             dbContext.ChangeTracker.Clear();
+            if (revisionId is null)
+            {
+                throw;
+            }
+
             var failure = await MarkFailureAsync(
-                revisionId,
+                revisionId.Value,
                 exception,
                 cancellationToken);
             return new RevisionOutcome(
@@ -266,6 +251,59 @@ public sealed class SourceNormalizationMaintenanceService(
                 CanonicalReassociated: false,
                 Failure: failure);
         }
+    }
+
+    private async Task<Guid?> ClaimNextRevisionIdAsync(
+        bool retryFailed,
+        string? packageKey,
+        CancellationToken cancellationToken)
+    {
+        var currentTransaction = dbContext.Database.CurrentTransaction
+            ?? throw new InvalidOperationException(
+                "Source normalization work must be claimed inside a database transaction.");
+        var connection = dbContext.Database.GetDbConnection();
+        await using var command = connection.CreateCommand();
+        command.Transaction = currentTransaction.GetDbTransaction();
+        command.CommandText = """
+            SELECT revision.source_entity_revision_id
+            FROM source_entity_revision revision
+            JOIN source_entity entity
+                ON entity.source_entity_id = revision.source_entity_id
+            JOIN source_package package
+                ON package.source_package_id = entity.source_package_id
+            WHERE revision.normalization_version < @current_version
+                AND (@retry_failed
+                    OR revision.normalization_attempt_version < @current_version)
+                AND (@package_key IS NULL OR package.package_key = @package_key)
+                AND NOT EXISTS (
+                    SELECT 1
+                    FROM source_entity_revision earlier
+                    WHERE earlier.source_entity_id = revision.source_entity_id
+                        AND earlier.normalization_version < @current_version
+                        AND (@retry_failed
+                            OR earlier.normalization_attempt_version < @current_version)
+                        AND (
+                            earlier.imported_at < revision.imported_at
+                            OR (
+                                earlier.imported_at = revision.imported_at
+                                AND earlier.source_entity_revision_id
+                                    < revision.source_entity_revision_id)))
+            ORDER BY revision.imported_at, revision.source_entity_revision_id
+            LIMIT 1
+            FOR UPDATE OF revision, entity SKIP LOCKED;
+            """;
+        AddParameter(command, "@current_version", SourceNormalizationVersion.Current);
+        AddParameter(command, "@retry_failed", retryFailed);
+        var packageParameter = command.CreateParameter();
+        packageParameter.ParameterName = "@package_key";
+        packageParameter.DbType = DbType.String;
+        packageParameter.Value = string.IsNullOrWhiteSpace(packageKey)
+            ? DBNull.Value
+            : packageKey.Trim();
+        command.Parameters.Add(packageParameter);
+
+        var result = await command.ExecuteScalarAsync(cancellationToken);
+        return result is Guid id ? id : null;
     }
 
     private async Task<TranslationCandidate> BuildCandidateAsync(
@@ -504,7 +542,7 @@ public sealed class SourceNormalizationMaintenanceService(
         bool CanonicalReassociated,
         SourceNormalizationFailureView? Failure)
     {
-        public static RevisionOutcome Skipped { get; } =
+        public static RevisionOutcome NoWork { get; } =
             new(false, false, false, null);
     }
 }
