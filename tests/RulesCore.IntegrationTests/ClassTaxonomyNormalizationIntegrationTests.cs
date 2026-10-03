@@ -46,26 +46,15 @@ public sealed class ClassTaxonomyNormalizationIntegrationTests
                 "application/json");
             var representation = new FiveEToolsSourceFormatAdapter().TryRead(artifact)
                 ?? throw new InvalidOperationException("The 5e.tools fixture was not readable.");
-
-            var runeNative = Assert.Single(representation.Records, value =>
-                value.Name == "Prestige Class: Rune Scribe");
-            var sidekickNative = Assert.Single(representation.Records, value =>
-                value.Name == "Expert Sidekick");
-            var fighterNative = Assert.Single(representation.Records, value =>
-                value.Name == "Fighter");
             Assert.All(representation.Records, value => Assert.Equal("class", value.EntityType));
 
             try
             {
-                var imported = await new NormalizedSourceImportService(db).ImportAsync(
-                    new ImportNormalizedSourceRequest(
-                        packageKey,
-                        $"Class taxonomy 5e.tools fixture {token}",
-                        "integration-test",
-                        "test-only",
-                        false,
-                        representation));
-
+                var imported = await ImportAsync(
+                    db,
+                    packageKey,
+                    $"Class taxonomy 5e.tools fixture {token}",
+                    representation);
                 var rune = Assert.Single(imported.Entities, value =>
                     value.Name == "Prestige Class: Rune Scribe");
                 var sidekick = Assert.Single(imported.Entities, value =>
@@ -77,36 +66,40 @@ public sealed class ClassTaxonomyNormalizationIntegrationTests
                 Assert.Equal(RuleConceptEntityTypes.SidekickClass, sidekick.EntityType);
                 Assert.Equal(RuleConceptEntityTypes.Class, fighter.EntityType);
 
-                var entities = await db.SourceEntities
+                var sourceEntities = await db.SourceEntities
                     .AsNoTracking()
                     .Where(value => value.SourcePackage.Key == packageKey)
-                    .ToDictionaryAsync(value => value.Name, StringComparer.OrdinalIgnoreCase);
-                Assert.Equal(runeNative.NativeKey, entities[rune.Name].NativeKey);
-                Assert.Equal(sidekickNative.NativeKey, entities[sidekick.Name].NativeKey);
-                Assert.Equal(fighterNative.NativeKey, entities[fighter.Name].NativeKey);
-                Assert.StartsWith("class|", entities[rune.Name].NativeKey, StringComparison.Ordinal);
-                Assert.StartsWith("class|", entities[sidekick.Name].NativeKey, StringComparison.Ordinal);
+                    .ToArrayAsync();
+                var runeSource = Assert.Single(sourceEntities, value => value.Name == rune.Name);
+                var sidekickSource = Assert.Single(sourceEntities, value => value.Name == sidekick.Name);
+                var fighterSource = Assert.Single(sourceEntities, value => value.Name == fighter.Name);
+                Assert.Equal(
+                    Assert.Single(representation.Records, value => value.Name == rune.Name).NativeKey,
+                    runeSource.NativeKey);
+                Assert.Equal(
+                    Assert.Single(representation.Records, value => value.Name == sidekick.Name).NativeKey,
+                    sidekickSource.NativeKey);
+                Assert.Equal(
+                    Assert.Single(representation.Records, value => value.Name == fighter.Name).NativeKey,
+                    fighterSource.NativeKey);
+                Assert.StartsWith("class|", runeSource.NativeKey, StringComparison.Ordinal);
+                Assert.StartsWith("class|", sidekickSource.NativeKey, StringComparison.Ordinal);
 
-                var runeAliases = await ReadBoundCanonicalAliasValuesAsync(db, rune.EntityId);
-                var sidekickAliases = await ReadBoundCanonicalAliasValuesAsync(db, sidekick.EntityId);
-                var fighterAliases = await ReadBoundCanonicalAliasValuesAsync(db, fighter.EntityId);
                 Assert.Contains(
-                    runeAliases,
+                    await ReadBoundCanonicalAliasValuesAsync(db, rune.EntityId),
                     value => value.Contains(
                         "rules-core-class-taxonomy-v1:prestigeclass",
                         StringComparison.Ordinal));
                 Assert.Contains(
-                    sidekickAliases,
+                    await ReadBoundCanonicalAliasValuesAsync(db, sidekick.EntityId),
                     value => value.Contains(
                         "rules-core-class-taxonomy-v1:sidekickclass",
                         StringComparison.Ordinal));
-                Assert.Contains(fighter.NativeKey, fighterAliases);
+                Assert.Contains(fighterSource.NativeKey, await ReadBoundCanonicalAliasValuesAsync(db, fighter.EntityId));
             }
             finally
             {
-                await db.SourcePackages
-                    .Where(value => value.Key == packageKey)
-                    .ExecuteDeleteAsync();
+                await DeletePackageAsync(db, packageKey);
             }
         }
     }
@@ -148,15 +141,14 @@ public sealed class ClassTaxonomyNormalizationIntegrationTests
                   ]
                 }
                 """;
-            var artifact = new SourceRepresentationArtifact(
-                "dragonsclasses.lst",
-                Encoding.UTF8.GetBytes("fixture"),
-                $"github-tree:PCGen/pcgen:data/3e:{token}",
-                "https://raw.githubusercontent.com/PCGen/pcgen/master/data/3e/alderac_entertainment_group/dragons/dragonsclasses.lst",
-                "text/plain");
             var representation = new NormalizedSourceRepresentation(
                 PcGenSourceFormatAdapter.Format,
-                artifact,
+                new SourceRepresentationArtifact(
+                    "dragonsclasses.lst",
+                    Encoding.UTF8.GetBytes("fixture"),
+                    $"github-tree:PCGen/pcgen:data/3e:{token}",
+                    "https://raw.githubusercontent.com/PCGen/pcgen/master/data/3e/alderac_entertainment_group/dragons/dragonsclasses.lst",
+                    "text/plain"),
                 [
                     new NormalizedSourceRecord(
                         "class",
@@ -174,29 +166,24 @@ public sealed class ClassTaxonomyNormalizationIntegrationTests
 
             try
             {
-                var imported = await new NormalizedSourceImportService(db).ImportAsync(
-                    new ImportNormalizedSourceRequest(
-                        packageKey,
-                        $"Class taxonomy PCGen fixture {token}",
-                        "integration-test",
-                        "test-only",
-                        false,
-                        representation));
-
+                var imported = await ImportAsync(
+                    db,
+                    packageKey,
+                    $"Class taxonomy PCGen fixture {token}",
+                    representation);
                 var airLord = Assert.Single(imported.Entities, value => value.Name == "Air Lord");
                 var ordinary = Assert.Single(imported.Entities, value => value.Name == "Ten Level Base Class");
                 Assert.Equal(RuleConceptEntityTypes.PrestigeClass, airLord.EntityType);
                 Assert.Equal(RuleConceptEntityTypes.Class, ordinary.EntityType);
 
-                var airLordEntity = await db.SourceEntities
+                var entity = await db.SourceEntities
                     .AsNoTracking()
                     .SingleAsync(value => value.Id == airLord.EntityId);
-                Assert.Equal("pcgen|class|air-lord", airLordEntity.NativeKey);
-
-                var airLordRevision = await db.SourceEntityRevisions
+                Assert.Equal("pcgen|class|air-lord", entity.NativeKey);
+                var revision = await db.SourceEntityRevisions
                     .AsNoTracking()
                     .SingleAsync(value => value.SourceEntityId == airLord.EntityId);
-                using var document = JsonDocument.Parse(airLordRevision.ContentJson!);
+                using var document = JsonDocument.Parse(revision.ContentJson!);
                 Assert.Equal(
                     RuleConceptEntityTypes.PrestigeClass,
                     document.RootElement
@@ -207,9 +194,7 @@ public sealed class ClassTaxonomyNormalizationIntegrationTests
             }
             finally
             {
-                await db.SourcePackages
-                    .Where(value => value.Key == packageKey)
-                    .ExecuteDeleteAsync();
+                await DeletePackageAsync(db, packageKey);
             }
         }
     }
@@ -236,25 +221,22 @@ public sealed class ClassTaxonomyNormalizationIntegrationTests
                   ]
                 }
                 """;
-            var artifact = new SourceRepresentationArtifact(
-                "class-sidekick.json",
-                Encoding.UTF8.GetBytes(json),
-                $"admin:class-taxonomy-backfill:{token}",
-                "https://raw.githubusercontent.com/5etools-mirror-3/5etools-src/main/data/class/class-sidekick.json",
-                "application/json");
-            var representation = new FiveEToolsSourceFormatAdapter().TryRead(artifact)
+            var representation = new FiveEToolsSourceFormatAdapter().TryRead(
+                new SourceRepresentationArtifact(
+                    "class-sidekick.json",
+                    Encoding.UTF8.GetBytes(json),
+                    $"admin:class-taxonomy-backfill:{token}",
+                    "https://raw.githubusercontent.com/5etools-mirror-3/5etools-src/main/data/class/class-sidekick.json",
+                    "application/json"))
                 ?? throw new InvalidOperationException("The sidekick fixture was not readable.");
 
             try
             {
-                var importer = new NormalizedSourceImportService(db);
-                var imported = await importer.ImportAsync(new ImportNormalizedSourceRequest(
+                var imported = await ImportAsync(
+                    db,
                     packageKey,
                     $"Class taxonomy backfill fixture {token}",
-                    "integration-test",
-                    "test-only",
-                    false,
-                    representation));
+                    representation);
                 var importedEntity = Assert.Single(imported.Entities);
                 Assert.Equal(RuleConceptEntityTypes.SidekickClass, importedEntity.EntityType);
 
@@ -262,7 +244,7 @@ public sealed class ClassTaxonomyNormalizationIntegrationTests
                     .SingleAsync(value => value.Id == importedEntity.EntityId);
                 var revision = await db.SourceEntityRevisions
                     .SingleAsync(value => value.SourceEntityId == entity.Id);
-                var correctedCanonicalId = await ReadBoundCanonicalEntityAsync(db, revision.Id);
+                var canonicalId = await ReadBoundCanonicalEntityAsync(db, revision.Id);
 
                 entity.EntityType = RuleConceptEntityTypes.Class;
                 revision.NormalizationVersion = SourceNormalizationVersion.Current - 1;
@@ -272,13 +254,14 @@ public sealed class ClassTaxonomyNormalizationIntegrationTests
                 await db.SaveChangesAsync();
                 db.ChangeTracker.Clear();
 
-                var registry = new SourceFormatAdapterRegistry(
-                [
-                    new FiveEToolsSourceFormatAdapter(),
-                    new PcGenSourceFormatAdapter(),
-                    new PdfSourceFormatAdapter()
-                ]);
-                var maintenance = new SourceNormalizationMaintenanceService(db, registry);
+                var maintenance = new SourceNormalizationMaintenanceService(
+                    db,
+                    new SourceFormatAdapterRegistry(
+                    [
+                        new FiveEToolsSourceFormatAdapter(),
+                        new PcGenSourceFormatAdapter(),
+                        new PdfSourceFormatAdapter()
+                    ]));
                 var result = await maintenance.ReconcileAsync(
                     limit: 10,
                     retryFailed: false,
@@ -287,32 +270,47 @@ public sealed class ClassTaxonomyNormalizationIntegrationTests
                 Assert.Equal(1, result.AttemptedRevisionCount);
                 Assert.Equal(0, result.FailedRevisionCount);
                 Assert.Equal(1, result.CanonicalReassociationCount);
-
-                var repairedEntity = await db.SourceEntities
-                    .AsNoTracking()
-                    .SingleAsync(value => value.Id == importedEntity.EntityId);
-                Assert.Equal(RuleConceptEntityTypes.SidekickClass, repairedEntity.EntityType);
+                Assert.Equal(
+                    RuleConceptEntityTypes.SidekickClass,
+                    (await db.SourceEntities
+                        .AsNoTracking()
+                        .SingleAsync(value => value.Id == importedEntity.EntityId))
+                    .EntityType);
                 Assert.Equal(
                     1,
                     await db.SourceEntityRevisions.CountAsync(value =>
                         value.SourceEntityId == importedEntity.EntityId));
-
                 var repairedRevision = await db.SourceEntityRevisions
                     .AsNoTracking()
                     .SingleAsync(value => value.SourceEntityId == importedEntity.EntityId);
                 Assert.Equal(SourceNormalizationVersion.Current, repairedRevision.NormalizationVersion);
-                Assert.Equal(
-                    correctedCanonicalId,
-                    await ReadBoundCanonicalEntityAsync(db, repairedRevision.Id));
+                Assert.Equal(canonicalId, await ReadBoundCanonicalEntityAsync(db, repairedRevision.Id));
             }
             finally
             {
-                await db.SourcePackages
-                    .Where(value => value.Key == packageKey)
-                    .ExecuteDeleteAsync();
+                await DeletePackageAsync(db, packageKey);
             }
         }
     }
+
+    private static Task<NormalizedSourceImportResult> ImportAsync(
+        RulesCoreDbContext db,
+        string packageKey,
+        string displayName,
+        NormalizedSourceRepresentation representation) =>
+        new NormalizedSourceImportService(db).ImportAsync(
+            new ImportNormalizedSourceRequest(
+                packageKey,
+                displayName,
+                "integration-test",
+                "test-only",
+                false,
+                representation));
+
+    private static Task DeletePackageAsync(RulesCoreDbContext db, string packageKey) =>
+        db.SourcePackages
+            .Where(value => value.Key == packageKey)
+            .ExecuteDeleteAsync();
 
     private static async Task<IReadOnlyList<string>> ReadBoundCanonicalAliasValuesAsync(
         RulesCoreDbContext db,
@@ -340,13 +338,9 @@ public sealed class ClassTaxonomyNormalizationIntegrationTests
             parameter.ParameterName = "@entity_id";
             parameter.Value = entityId;
             command.Parameters.Add(parameter);
-
             var values = new List<string>();
             await using var reader = await command.ExecuteReaderAsync();
-            while (await reader.ReadAsync())
-            {
-                values.Add(reader.GetString(0));
-            }
+            while (await reader.ReadAsync()) values.Add(reader.GetString(0));
             return values;
         }
         finally
@@ -388,11 +382,7 @@ public sealed class ClassTaxonomyNormalizationIntegrationTests
     private static async Task<RulesCoreDbContext?> OpenDatabaseAsync()
     {
         var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__RulesCore");
-        if (string.IsNullOrWhiteSpace(connectionString))
-        {
-            return null;
-        }
-
+        if (string.IsNullOrWhiteSpace(connectionString)) return null;
         var db = new RulesCoreDbContext(
             new DbContextOptionsBuilder<RulesCoreDbContext>()
                 .UseNpgsql(connectionString)
