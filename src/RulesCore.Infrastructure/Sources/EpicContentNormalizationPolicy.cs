@@ -89,6 +89,14 @@ internal static class EpicContentNormalizationPolicy
             return true;
         }
 
+        if (string.Equals(normalized.EntityType, "spell", StringComparison.OrdinalIgnoreCase)
+            && string.Equals(existingEntityType, "rule", StringComparison.OrdinalIgnoreCase)
+            && string.Equals(existingName.Trim(), normalized.Name, StringComparison.OrdinalIgnoreCase)
+            && IsReviewedLegacyEpicSpellSource(normalized.RawJson))
+        {
+            return true;
+        }
+
         return string.Equals(
                    normalized.EntityType,
                    RuleConceptEntityTypes.PrestigeClass,
@@ -127,6 +135,16 @@ internal static class EpicContentNormalizationPolicy
         var originalHeading = ReadString(source, "originalHeading") ?? record.Name;
         var sourceBody = ReadString(source, "body") ?? string.Empty;
         var isEpicDocument = IsEpicDocument(documentUri);
+
+        if (IsLegacyEpicSpellRecord(record, documentUri, sourceBody))
+        {
+            AddEpicMetadata(content, kind: "content");
+            return record with
+            {
+                EntityType = "spell",
+                ContentJson = Serialize(content)
+            };
+        }
 
         if (IsLegacyContinuation(record, sourceBody, out var continuationName))
         {
@@ -225,6 +243,43 @@ internal static class EpicContentNormalizationPolicy
         AddEpicMetadata(content, kind: "content");
         return record with { ContentJson = Serialize(content) };
     }
+
+    private static bool IsLegacyEpicSpellRecord(
+        NormalizedSourceRecord record,
+        string? documentUri,
+        string sourceBody) =>
+        (string.Equals(record.EntityType, "rule", StringComparison.OrdinalIgnoreCase)
+         || string.Equals(record.EntityType, "spell", StringComparison.OrdinalIgnoreCase))
+        && IsEpicSpellDocument(documentUri)
+        && LooksLikeEpicSpellBody(sourceBody);
+
+    private static bool IsReviewedLegacyEpicSpellSource(string rawJson)
+    {
+        if (!TryParseObject(rawJson, out var source))
+        {
+            return false;
+        }
+
+        return IsEpicSpellDocument(ReadString(source, "documentUri"))
+            && LooksLikeEpicSpellBody(ReadString(source, "body") ?? string.Empty);
+    }
+
+    private static bool IsEpicSpellDocument(string? documentUri)
+    {
+        if (!Uri.TryCreate(documentUri, UriKind.Absolute, out var uri))
+        {
+            return false;
+        }
+
+        return Uri.UnescapeDataString(uri.AbsolutePath)
+            .Contains("epic-spells", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool LooksLikeEpicSpellBody(string body) =>
+        body.Contains("Spellcraft DC:", StringComparison.OrdinalIgnoreCase)
+        && body.Contains("To Develop:", StringComparison.OrdinalIgnoreCase)
+        && (body.Contains("Casting Time:", StringComparison.OrdinalIgnoreCase)
+            || body.Contains("Range:", StringComparison.OrdinalIgnoreCase));
 
     private static bool IsLegacyContinuation(
         NormalizedSourceRecord record,
