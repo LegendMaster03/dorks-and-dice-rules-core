@@ -28,6 +28,7 @@ internal static class RuleBrowserSummaryProjector
     {
         var normalized = RuleConceptEntityTypes.Normalize(entityType);
         var fields = new List<ResolvedRuleBrowserFieldView>();
+        Add(fields, "tier", "Tier", ReadEpicTier(document));
 
         switch (normalized)
         {
@@ -46,8 +47,16 @@ internal static class RuleBrowserSummaryProjector
                 Add(fields, "hitDie", "Hit Die", ReadHitDie(document));
                 break;
 
+            case RuleConceptEntityTypes.ClassProgression:
+                Add(fields, "continues", "Continues", ReadEpicContinuationName(document));
+                break;
+
             case RuleConceptEntityTypes.PrestigeClass:
                 Add(fields, "prerequisite", "Prerequisite", ReadDisplayScalar(document, "prerequisite"));
+                break;
+
+            case RuleConceptEntityTypes.PrestigeClassProgression:
+                Add(fields, "continues", "Continues", ReadEpicContinuationName(document));
                 break;
 
             case "race":
@@ -67,7 +76,7 @@ internal static class RuleBrowserSummaryProjector
                 break;
 
             case "feat":
-                Add(fields, "category", "Category", ReadDisplayScalar(document, "category"));
+                Add(fields, "category", "Category", ReadFeatCategory(document));
                 break;
         }
 
@@ -208,6 +217,53 @@ internal static class RuleBrowserSummaryProjector
         }
 
         return null;
+    }
+
+    private static string? ReadFeatCategory(JsonElement document)
+    {
+        if (TryReadEpicMetadata(document, out var epic)
+            && epic.TryGetProperty("canonicalTerm", out var canonicalTerm)
+            && canonicalTerm.ValueKind == JsonValueKind.String
+            && !string.IsNullOrWhiteSpace(canonicalTerm.GetString()))
+        {
+            return canonicalTerm.GetString();
+        }
+
+        if (!document.TryGetProperty("category", out var value)) return null;
+        var scalar = ReadScalar(value);
+        if (string.Equals(scalar, "Epic", StringComparison.OrdinalIgnoreCase))
+        {
+            return "Epic Feat";
+        }
+        return TitleCase(scalar);
+    }
+
+    private static string? ReadEpicTier(JsonElement document) =>
+        TryReadEpicMetadata(document, out var epic)
+        && epic.TryGetProperty("tier", out var tier)
+        && string.Equals(ReadScalar(tier), "epic", StringComparison.OrdinalIgnoreCase)
+            ? "Epic"
+            : null;
+
+    private static string? ReadEpicContinuationName(JsonElement document)
+    {
+        if (!TryReadEpicMetadata(document, out var epic)
+            || !epic.TryGetProperty("continuationOf", out var continuation)
+            || continuation.ValueKind != JsonValueKind.Object
+            || !continuation.TryGetProperty("name", out var name))
+        {
+            return null;
+        }
+        return ReadScalar(name);
+    }
+
+    private static bool TryReadEpicMetadata(JsonElement document, out JsonElement epic)
+    {
+        epic = default;
+        return document.TryGetProperty("_rulesCore", out var rulesCore)
+            && rulesCore.ValueKind == JsonValueKind.Object
+            && rulesCore.TryGetProperty("epic", out epic)
+            && epic.ValueKind == JsonValueKind.Object;
     }
 
     private static string? ReadDisplayScalar(JsonElement document, string propertyName)

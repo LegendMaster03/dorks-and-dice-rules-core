@@ -3,8 +3,10 @@ namespace RulesCore.Domain.Rules;
 public static class RuleConceptEntityTypes
 {
     public const string Class = "class";
+    public const string ClassProgression = "classProgression";
     public const string Subclass = "subclass";
     public const string PrestigeClass = "prestigeClass";
+    public const string PrestigeClassProgression = "prestigeClassProgression";
     public const string SidekickClass = "sidekickClass";
     public const string Species = "species";
     public const string Subspecies = "subspecies";
@@ -30,6 +32,10 @@ public static class RuleConceptEntityTypes
         {
             return Class;
         }
+        if (string.Equals(normalized, ClassProgression, StringComparison.OrdinalIgnoreCase))
+        {
+            return ClassProgression;
+        }
         if (string.Equals(normalized, Subclass, StringComparison.OrdinalIgnoreCase))
         {
             return Subclass;
@@ -37,6 +43,10 @@ public static class RuleConceptEntityTypes
         if (string.Equals(normalized, PrestigeClass, StringComparison.OrdinalIgnoreCase))
         {
             return PrestigeClass;
+        }
+        if (string.Equals(normalized, PrestigeClassProgression, StringComparison.OrdinalIgnoreCase))
+        {
+            return PrestigeClassProgression;
         }
         if (string.Equals(normalized, SidekickClass, StringComparison.OrdinalIgnoreCase))
         {

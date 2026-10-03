@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="../../src/RulesCore.Domain/RulesCore.Domain.csproj" />
     <ProjectReference Include="../../src/RulesCore.Application/RulesCore.Application.csproj" />
+    <ProjectReference Include="../../src/RulesCore.Infrastructure/RulesCore.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
