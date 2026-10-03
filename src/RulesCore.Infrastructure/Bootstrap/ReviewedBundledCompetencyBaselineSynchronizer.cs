@@ -129,8 +129,16 @@ internal sealed class ReviewedBundledCompetencyBaselineSynchronizer(
                     .ToArrayAsync(cancellationToken);
             }
 
+            // Earlier reviewed competency normalization intentionally persisted some cross-type
+            // implementation concepts (for example Alchemist's Supplies and Forgery Kit) against
+            // the same canonical lineage that now exposes the corrected skill facet. Those Rule
+            // Concept IDs/keys are a compatibility surface and must remain intact. They are not a
+            // Rules Lawyer conflict when the explicit reviewed universal-competency alias policy
+            // proves that both concept keys are implementations of the same learned identity.
             var conflictingBindings = existingCanonicalBindings
-                .Where(value => !string.Equals(value.RuleConcept.Key, group.Key, StringComparison.Ordinal))
+                .Where(value =>
+                    !string.Equals(value.RuleConcept.Key, group.Key, StringComparison.Ordinal)
+                    && !IsReviewedCompatibilityBinding(group.Key, value.RuleConcept.Key))
                 .Select(value => value.RuleConcept.Key)
                 .Distinct(StringComparer.Ordinal)
                 .OrderBy(value => value, StringComparer.Ordinal)
@@ -275,6 +283,21 @@ internal sealed class ReviewedBundledCompetencyBaselineSynchronizer(
             createdBindingCount,
             createdDecisionCount,
             conflicts.OrderBy(value => value, StringComparer.Ordinal).ToArray());
+    }
+
+    private static bool IsReviewedCompatibilityBinding(
+        string targetKey,
+        string existingKey)
+    {
+        var targetAlias = KnownUniversalCompetencies.ResolveLegacyConceptKey(targetKey);
+        if (targetAlias is null)
+        {
+            return false;
+        }
+
+        return KnownUniversalCompetencies
+            .CompatibilityConceptKeys(targetAlias.IdentityKey)
+            .Any(value => string.Equals(value, existingKey, StringComparison.Ordinal));
     }
 
     private async Task<bool> TryMigrateBootstrapKnowledgeConceptAsync(
