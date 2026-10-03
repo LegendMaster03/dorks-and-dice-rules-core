@@ -12,7 +12,8 @@ namespace RulesCore.Infrastructure.Sources;
 /// Replays the current Rules Core interpretation over immutable source-native revisions.
 ///
 /// RawJson, native fingerprints, revision numbers, and representation bytes are never rewritten.
-/// Only derived ContentJson and canonical semantic association may change.
+/// Derived ContentJson, reviewed derived SourceEntity type/name corrections, and canonical semantic
+/// association may change.
 /// </summary>
 public sealed class SourceNormalizationMaintenanceService(
     RulesCoreDbContext dbContext,
@@ -195,6 +196,8 @@ public sealed class SourceNormalizationMaintenanceService(
                     "The current translator can not reconstruct the existing mechanical content "
                     + "from the preserved native record without reparsing its source representation.");
             }
+
+            ApplyReviewedEpicEntityIdentityMigration(entity, normalized);
 
             var contentUpdated = !NormalizedSourceImportService.JsonEquivalentOptional(
                 revision.ContentJson,
@@ -409,6 +412,41 @@ public sealed class SourceNormalizationMaintenanceService(
             row.Id,
             row.SourceEntity.Name,
             row.NormalizationError ?? exception.Message);
+    }
+
+    private static void ApplyReviewedEpicEntityIdentityMigration(
+        SourceEntity entity,
+        NormalizedSourceRecord normalized)
+    {
+        var typeMatches = string.Equals(
+            entity.EntityType,
+            normalized.EntityType,
+            StringComparison.Ordinal);
+        var nameMatches = string.Equals(
+            entity.Name,
+            normalized.Name,
+            StringComparison.Ordinal);
+        if (typeMatches && nameMatches)
+        {
+            return;
+        }
+
+        var sourceCodeMatches = string.Equals(
+            entity.SourceCode,
+            normalized.SourceCode,
+            StringComparison.Ordinal);
+        if (!sourceCodeMatches
+            || !EpicContentNormalizationPolicy.IsReviewedIdentityMigration(
+                entity.EntityType,
+                entity.Name,
+                normalized))
+        {
+            throw new InvalidOperationException(
+                $"Source entity native identity '{entity.NativeKey}' changed immutable identity metadata across normalization versions.");
+        }
+
+        entity.EntityType = normalized.EntityType;
+        entity.Name = normalized.Name;
     }
 
     private static IQueryable<SourceEntityRevision> Scope(
