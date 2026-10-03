@@ -30,8 +30,8 @@ public sealed class EpicContentNormalizationPolicyTests
         Assert.Equal("epic", epic.GetProperty("tier").GetString());
         Assert.Equal("feat", epic.GetProperty("kind").GetString());
         Assert.Equal("Epic Feat", epic.GetProperty("canonicalTerm").GetString());
-        Assert.Equal("Epic Boon Feat", epic.GetProperty("sourceTerm").GetString());
-        Assert.Equal("EB", epic.GetProperty("sourceCategory").GetString());
+        Assert.False(epic.TryGetProperty("sourceTerm", out _));
+        Assert.False(epic.TryGetProperty("sourceCategory", out _));
 
         var category = Assert.Single(
             RuleBrowserSummaryProjector.Project("feat", content.RootElement)
