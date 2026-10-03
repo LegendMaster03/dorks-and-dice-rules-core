@@ -39,6 +39,7 @@ public static class WikiReferenceEndpointExtensions
                     cancellationToken);
                 catalog = await new WikiReferenceBrowserProjectionService(dbContext)
                     .EnrichAsync(catalog, cancellationToken);
+                catalog = WikiReferenceBrowserFieldNormalizer.Normalize(catalog);
                 AddReferenceServerTiming(httpContext, service);
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(catalog);
@@ -168,6 +169,7 @@ public static class WikiReferenceEndpointExtensions
                         cancellationToken);
                 catalog = await new WikiReferenceBrowserProjectionService(dbContext)
                     .EnrichAsync(catalog, cancellationToken);
+                catalog = WikiReferenceBrowserFieldNormalizer.Normalize(catalog);
                 AddReferenceServerTiming(httpContext, service);
                 httpContext.Response.Headers.CacheControl = "no-store";
                 return Results.Ok(catalog);
