@@ -46,12 +46,27 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
             ? historyKeys.ToHashSet(StringComparer.Ordinal)
             : null;
 
-        foreach (var nameGroup in entities
+        foreach (var historyGroup in entities
                      .Where(value => requested is null || requested.Contains(HistoryNameKey(value)))
                      .GroupBy(HistoryNameKey, StringComparer.Ordinal)
-                     .Where(group => group.Count() > 1 && HasRequiredClassBase(group.Key, group)))
+                     .Where(group => group.Count() > 1))
         {
-            await ReconcileNameGroupAsync(nameGroup.ToArray(), cancellationToken);
+            var rows = historyGroup.ToArray();
+            if (HasRequiredClassBase(historyGroup.Key, rows))
+            {
+                await ReconcileNameGroupAsync(rows, cancellationToken);
+                continue;
+            }
+
+            // Keep the pre-existing same-name behavior for independently sourced copies of the
+            // same parenthetical class, even when a plain X record is absent. The base requirement
+            // only prevents different qualifiers (X (A) and X (B)) from being joined by inference.
+            foreach (var exactNameGroup in rows
+                         .GroupBy(value => value.NormalizedName, StringComparer.Ordinal)
+                         .Where(group => group.Count() > 1))
+            {
+                await ReconcileNameGroupAsync(exactNameGroup.ToArray(), cancellationToken);
+            }
         }
     }
 
