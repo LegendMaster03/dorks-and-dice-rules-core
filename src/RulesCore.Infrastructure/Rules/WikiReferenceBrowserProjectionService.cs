@@ -137,7 +137,9 @@ public static class WikiReferenceBrowserProjection
             case "subspecies":
                 Add("speed", "Speed", FormatSpeed(ReadProperty(document, "speed")));
                 Add("creatureType", "Creature Type", ReadSummary(
-                    ReadProperty(document, "creatureType") ?? ReadProperty(document, "type")));
+                    ReadProperty(document, "creatureTypes")
+                    ?? ReadProperty(document, "creatureType")
+                    ?? ReadProperty(document, "type")));
                 Add("languages", "Languages", ReadSummary(ReadProperty(document, "languages")));
                 break;
 
