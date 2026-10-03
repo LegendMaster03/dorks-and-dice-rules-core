@@ -136,6 +136,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                     && value.NativeKey == normalized.NativeKey,
                 cancellationToken);
             var createdEntity = entity is null;
+            var identityMigration = false;
             if (createdEntity)
             {
                 entity = new SourceEntity
@@ -156,10 +157,11 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
             }
             else
             {
-                var migratedIdentity = EnsureEntityIdentityMatches(entity!, normalized);
-                if (migratedIdentity)
+                identityMigration = EnsureEntityIdentityMatches(entity!, normalized);
+                if (identityMigration)
                 {
                     await dbContext.SaveChangesAsync(cancellationToken);
+                    translationOnlyUpdates++;
                 }
             }
 
@@ -170,7 +172,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                 .FirstOrDefaultAsync(cancellationToken);
             var createdRevision = latest is null
                 || !string.Equals(latest.Fingerprint, fingerprint, StringComparison.Ordinal);
-            var translationOnlyUpdate = false;
+            var translationOnlyUpdate = identityMigration;
             if (createdRevision)
             {
                 latest = new SourceEntityRevision
@@ -200,8 +202,11 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                 latest.ContentJson = normalized.ContentJson;
                 MarkNormalizationCurrent(latest);
                 await dbContext.SaveChangesAsync(cancellationToken);
+                if (!translationOnlyUpdate)
+                {
+                    translationOnlyUpdates++;
+                }
                 translationOnlyUpdate = true;
-                translationOnlyUpdates++;
             }
             else
             {
@@ -596,7 +601,7 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
     private static string SemanticDocument(NormalizedSourceRecord record) =>
         string.IsNullOrWhiteSpace(record.ContentJson) ? record.RawJson : record.ContentJson;
 
-    private static bool EnsureEntityIdentityMatches(SourceEntity entity, NormalizedSourceRecord record)
+    internal static bool EnsureEntityIdentityMatches(SourceEntity entity, NormalizedSourceRecord record)
     {
         var sourceCodeMatches = string.Equals(
             entity.SourceCode,
@@ -626,14 +631,17 @@ public sealed class NormalizedSourceImportService(RulesCoreDbContext dbContext) 
                 || ExactCompetencyTranslationPolicy.IsReviewedSharedFacetMigration(
                     entity.EntityType,
                     entity.Name,
+                    record)
+                || ClassTaxonomyNormalizationPolicy.IsReviewedIdentityMigration(
+                    entity.FormatKey,
+                    entity.EntityType,
+                    entity.Name,
                     record));
         if (reviewedIdentityMigration)
         {
-            // The native key, RawJson, and NativeIdentityJson remain unchanged. This corrects
-            // Rules Core's derived normalized competency identity without replacing the source
-            // entity or revision. Existing Rule Concept bindings and Character references can
-            // therefore continue to use their stable IDs/keys while canonical revision-lineage
-            // preserves access to the corrected mechanical profile.
+            // NativeKey, RawJson, and NativeIdentityJson remain unchanged. This corrects a
+            // reviewed Rules Core interpretation without replacing the source entity or native
+            // source revision.
             entity.EntityType = record.EntityType;
             entity.Name = record.Name;
             entityTypeMatches = true;
