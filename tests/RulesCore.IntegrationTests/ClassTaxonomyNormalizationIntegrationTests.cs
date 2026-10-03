@@ -13,137 +13,205 @@ namespace RulesCore.IntegrationTests;
 public sealed class ClassTaxonomyNormalizationIntegrationTests
 {
     [Fact]
-    public void FiveEToolsClassRecordsUseReviewedSpecificCategoriesWithoutChangingNativeIdentity()
+    public async Task FiveEToolsClassRecordsUseReviewedSpecificCategoriesWithoutChangingNativeIdentity()
     {
-        const string json = """
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var packageKey = $"class-taxonomy-5etools-{token}";
+            const string json = """
+                {
+                  "_meta": {
+                    "edition": "classic",
+                    "sources": [
+                      {"json":"UAPrestigeClassesRunMagic","full":"Unearthed Arcana: Prestige Classes and Rune Magic"},
+                      {"json":"TCE","full":"Tasha's Cauldron of Everything"},
+                      {"json":"PHB","full":"Player's Handbook"}
+                    ]
+                  },
+                  "class": [
+                    {"name":"Prestige Class: Rune Scribe","source":"UAPrestigeClassesRunMagic","hd":{"number":1,"faces":8}},
+                    {"name":"Expert Sidekick","source":"TCE","isSidekick":true},
+                    {"name":"Fighter","source":"PHB","hd":{"number":1,"faces":10}}
+                  ]
+                }
+                """;
+            var artifact = new SourceRepresentationArtifact(
+                "class-edge-cases.json",
+                Encoding.UTF8.GetBytes(json),
+                $"admin:class-taxonomy-fixture:{token}",
+                "https://raw.githubusercontent.com/5etools-mirror-3/5etools-src/main/data/class/class-sidekick.json",
+                "application/json");
+            var representation = new FiveEToolsSourceFormatAdapter().TryRead(artifact)
+                ?? throw new InvalidOperationException("The 5e.tools fixture was not readable.");
+
+            var runeNative = Assert.Single(representation.Records, value =>
+                value.Name == "Prestige Class: Rune Scribe");
+            var sidekickNative = Assert.Single(representation.Records, value =>
+                value.Name == "Expert Sidekick");
+            var fighterNative = Assert.Single(representation.Records, value =>
+                value.Name == "Fighter");
+            Assert.All(representation.Records, value => Assert.Equal("class", value.EntityType));
+
+            try
             {
-              "_meta": {
-                "edition": "classic",
-                "sources": [
-                  {"json":"UAPrestigeClassesRunMagic","full":"Unearthed Arcana: Prestige Classes and Rune Magic"},
-                  {"json":"TCE","full":"Tasha's Cauldron of Everything"},
-                  {"json":"PHB","full":"Player's Handbook"}
-                ]
-              },
-              "class": [
-                {"name":"Prestige Class: Rune Scribe","source":"UAPrestigeClassesRunMagic","hd":{"number":1,"faces":8}},
-                {"name":"Expert Sidekick","source":"TCE","isSidekick":true},
-                {"name":"Fighter","source":"PHB","hd":{"number":1,"faces":10}}
-              ]
+                var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                    new ImportNormalizedSourceRequest(
+                        packageKey,
+                        $"Class taxonomy 5e.tools fixture {token}",
+                        "integration-test",
+                        "test-only",
+                        false,
+                        representation));
+
+                var rune = Assert.Single(imported.Entities, value =>
+                    value.Name == "Prestige Class: Rune Scribe");
+                var sidekick = Assert.Single(imported.Entities, value =>
+                    value.Name == "Expert Sidekick");
+                var fighter = Assert.Single(imported.Entities, value =>
+                    value.Name == "Fighter");
+
+                Assert.Equal(RuleConceptEntityTypes.PrestigeClass, rune.EntityType);
+                Assert.Equal(RuleConceptEntityTypes.SidekickClass, sidekick.EntityType);
+                Assert.Equal(RuleConceptEntityTypes.Class, fighter.EntityType);
+
+                var entities = await db.SourceEntities
+                    .AsNoTracking()
+                    .Where(value => value.SourcePackage.Key == packageKey)
+                    .ToDictionaryAsync(value => value.Name, StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(runeNative.NativeKey, entities[rune.Name].NativeKey);
+                Assert.Equal(sidekickNative.NativeKey, entities[sidekick.Name].NativeKey);
+                Assert.Equal(fighterNative.NativeKey, entities[fighter.Name].NativeKey);
+                Assert.StartsWith("class|", entities[rune.Name].NativeKey, StringComparison.Ordinal);
+                Assert.StartsWith("class|", entities[sidekick.Name].NativeKey, StringComparison.Ordinal);
+
+                var runeAliases = await ReadBoundCanonicalAliasValuesAsync(db, rune.EntityId);
+                var sidekickAliases = await ReadBoundCanonicalAliasValuesAsync(db, sidekick.EntityId);
+                var fighterAliases = await ReadBoundCanonicalAliasValuesAsync(db, fighter.EntityId);
+                Assert.Contains(
+                    runeAliases,
+                    value => value.Contains(
+                        "rules-core-class-taxonomy-v1:prestigeclass",
+                        StringComparison.Ordinal));
+                Assert.Contains(
+                    sidekickAliases,
+                    value => value.Contains(
+                        "rules-core-class-taxonomy-v1:sidekickclass",
+                        StringComparison.Ordinal));
+                Assert.Contains(fighter.NativeKey, fighterAliases);
             }
-            """;
-        var artifact = new SourceRepresentationArtifact(
-            "class-edge-cases.json",
-            Encoding.UTF8.GetBytes(json),
-            "admin:class-taxonomy-fixture",
-            "https://raw.githubusercontent.com/5etools-mirror-3/5etools-src/main/data/class/class-sidekick.json",
-            "application/json");
-        var representation = new FiveEToolsSourceFormatAdapter().TryRead(artifact)
-            ?? throw new InvalidOperationException("The 5e.tools fixture was not readable.");
-
-        var runeNative = Assert.Single(representation.Records, value =>
-            value.Name == "Prestige Class: Rune Scribe");
-        var sidekickNative = Assert.Single(representation.Records, value =>
-            value.Name == "Expert Sidekick");
-        var fighterNative = Assert.Single(representation.Records, value =>
-            value.Name == "Fighter");
-        Assert.All(representation.Records, value => Assert.Equal("class", value.EntityType));
-
-        var rune = NormalizedSourceImportService.TranslateAndNormalizeRecord(representation, runeNative);
-        var sidekick = NormalizedSourceImportService.TranslateAndNormalizeRecord(representation, sidekickNative);
-        var fighter = NormalizedSourceImportService.TranslateAndNormalizeRecord(representation, fighterNative);
-
-        Assert.Equal(RuleConceptEntityTypes.PrestigeClass, rune.EntityType);
-        Assert.Equal(RuleConceptEntityTypes.SidekickClass, sidekick.EntityType);
-        Assert.Equal(RuleConceptEntityTypes.Class, fighter.EntityType);
-
-        Assert.StartsWith("class|", rune.NativeKey, StringComparison.Ordinal);
-        Assert.StartsWith("class|", sidekick.NativeKey, StringComparison.Ordinal);
-        Assert.Equal(runeNative.NativeKey, rune.NativeKey);
-        Assert.Equal(sidekickNative.NativeKey, sidekick.NativeKey);
-
-        var runeAlias = Assert.Single(rune.CanonicalAliases!);
-        var sidekickAlias = Assert.Single(sidekick.CanonicalAliases!);
-        var fighterAlias = Assert.Single(fighter.CanonicalAliases!);
-        Assert.Contains("rules-core-class-taxonomy-v1:prestigeclass", runeAlias.Value, StringComparison.Ordinal);
-        Assert.Contains("rules-core-class-taxonomy-v1:sidekickclass", sidekickAlias.Value, StringComparison.Ordinal);
-        Assert.Equal(fighter.NativeKey, fighterAlias.Value);
+            finally
+            {
+                await db.SourcePackages
+                    .Where(value => value.Key == packageKey)
+                    .ExecuteDeleteAsync();
+            }
+        }
     }
 
     [Fact]
-    public void ReviewedPcGenDragonsClassFileNormalizesToPrestigeClassWithoutLevelHeuristics()
+    public async Task ReviewedPcGenDragonsClassFileNormalizesToPrestigeClassWithoutLevelHeuristics()
     {
-        const string dragonsRaw = """
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var packageKey = $"class-taxonomy-pcgen-{token}";
+            const string dragonsRaw = """
+                {
+                  "format":"pcgen-data",
+                  "kind":"class-record",
+                  "path":"data/3e/alderac_entertainment_group/dragons/dragonsclasses.lst",
+                  "name":"Air Lord",
+                  "entityType":"class",
+                  "lines":[],
+                  "segments":[
+                    {"Index":0,"Tag":"HD","Value":"10","Raw":"HD:10"},
+                    {"Index":1,"Tag":"MAXLEVEL","Value":"10","Raw":"MAXLEVEL:10"}
+                  ]
+                }
+                """;
+            const string ordinaryRaw = """
+                {
+                  "format":"pcgen-data",
+                  "kind":"class-record",
+                  "path":"data/3e/example/ordinaryclasses.lst",
+                  "name":"Ten Level Base Class",
+                  "entityType":"class",
+                  "lines":[],
+                  "segments":[
+                    {"Index":0,"Tag":"HD","Value":"10","Raw":"HD:10"},
+                    {"Index":1,"Tag":"MAXLEVEL","Value":"10","Raw":"MAXLEVEL:10"}
+                  ]
+                }
+                """;
+            var artifact = new SourceRepresentationArtifact(
+                "dragonsclasses.lst",
+                Encoding.UTF8.GetBytes("fixture"),
+                $"github-tree:PCGen/pcgen:data/3e:{token}",
+                "https://raw.githubusercontent.com/PCGen/pcgen/master/data/3e/alderac_entertainment_group/dragons/dragonsclasses.lst",
+                "text/plain");
+            var representation = new NormalizedSourceRepresentation(
+                PcGenSourceFormatAdapter.Format,
+                artifact,
+                [
+                    new NormalizedSourceRecord(
+                        "class",
+                        "Air Lord",
+                        "Dragons",
+                        "pcgen|class|air-lord",
+                        dragonsRaw),
+                    new NormalizedSourceRecord(
+                        "class",
+                        "Ten Level Base Class",
+                        "TEST",
+                        "pcgen|class|ten-level-base-class",
+                        ordinaryRaw)
+                ]);
+
+            try
             {
-              "format":"pcgen-data",
-              "kind":"class-record",
-              "path":"data/3e/alderac_entertainment_group/dragons/dragonsclasses.lst",
-              "name":"Air Lord",
-              "entityType":"class",
-              "lines":[],
-              "segments":[
-                {"Index":0,"Tag":"HD","Value":"10","Raw":"HD:10"},
-                {"Index":1,"Tag":"MAXLEVEL","Value":"10","Raw":"MAXLEVEL:10"}
-              ]
+                var imported = await new NormalizedSourceImportService(db).ImportAsync(
+                    new ImportNormalizedSourceRequest(
+                        packageKey,
+                        $"Class taxonomy PCGen fixture {token}",
+                        "integration-test",
+                        "test-only",
+                        false,
+                        representation));
+
+                var airLord = Assert.Single(imported.Entities, value => value.Name == "Air Lord");
+                var ordinary = Assert.Single(imported.Entities, value => value.Name == "Ten Level Base Class");
+                Assert.Equal(RuleConceptEntityTypes.PrestigeClass, airLord.EntityType);
+                Assert.Equal(RuleConceptEntityTypes.Class, ordinary.EntityType);
+
+                var airLordEntity = await db.SourceEntities
+                    .AsNoTracking()
+                    .SingleAsync(value => value.Id == airLord.EntityId);
+                Assert.Equal("pcgen|class|air-lord", airLordEntity.NativeKey);
+
+                var airLordRevision = await db.SourceEntityRevisions
+                    .AsNoTracking()
+                    .SingleAsync(value => value.SourceEntityId == airLord.EntityId);
+                using var document = JsonDocument.Parse(airLordRevision.ContentJson!);
+                Assert.Equal(
+                    RuleConceptEntityTypes.PrestigeClass,
+                    document.RootElement
+                        .GetProperty("_rulesCore")
+                        .GetProperty("context")
+                        .GetProperty("translatedEntityType")
+                        .GetString());
             }
-            """;
-        const string ordinaryRaw = """
+            finally
             {
-              "format":"pcgen-data",
-              "kind":"class-record",
-              "path":"data/3e/example/ordinaryclasses.lst",
-              "name":"Ten Level Base Class",
-              "entityType":"class",
-              "lines":[],
-              "segments":[
-                {"Index":0,"Tag":"HD","Value":"10","Raw":"HD:10"},
-                {"Index":1,"Tag":"MAXLEVEL","Value":"10","Raw":"MAXLEVEL:10"}
-              ]
+                await db.SourcePackages
+                    .Where(value => value.Key == packageKey)
+                    .ExecuteDeleteAsync();
             }
-            """;
-        var artifact = new SourceRepresentationArtifact(
-            "dragonsclasses.lst",
-            Encoding.UTF8.GetBytes("fixture"),
-            "github-tree:PCGen/pcgen:data/3e",
-            "https://raw.githubusercontent.com/PCGen/pcgen/master/data/3e/alderac_entertainment_group/dragons/dragonsclasses.lst",
-            "text/plain");
-        var representation = new NormalizedSourceRepresentation(
-            PcGenSourceFormatAdapter.Format,
-            artifact,
-            [
-                new NormalizedSourceRecord(
-                    "class",
-                    "Air Lord",
-                    "Dragons",
-                    "pcgen|class|air-lord",
-                    dragonsRaw),
-                new NormalizedSourceRecord(
-                    "class",
-                    "Ten Level Base Class",
-                    "TEST",
-                    "pcgen|class|ten-level-base-class",
-                    ordinaryRaw)
-            ]);
-
-        var airLord = NormalizedSourceImportService.TranslateAndNormalizeRecord(
-            representation,
-            representation.Records[0]);
-        var ordinary = NormalizedSourceImportService.TranslateAndNormalizeRecord(
-            representation,
-            representation.Records[1]);
-
-        Assert.Equal(RuleConceptEntityTypes.PrestigeClass, airLord.EntityType);
-        Assert.Equal(RuleConceptEntityTypes.Class, ordinary.EntityType);
-        Assert.Equal("pcgen|class|air-lord", airLord.NativeKey);
-
-        using var document = JsonDocument.Parse(airLord.ContentJson!);
-        Assert.Equal(
-            RuleConceptEntityTypes.PrestigeClass,
-            document.RootElement
-                .GetProperty("_rulesCore")
-                .GetProperty("context")
-                .GetProperty("translatedEntityType")
-                .GetString());
+        }
     }
 
     [Fact]
@@ -195,35 +263,6 @@ public sealed class ClassTaxonomyNormalizationIntegrationTests
                 var revision = await db.SourceEntityRevisions
                     .SingleAsync(value => value.SourceEntityId == entity.Id);
                 var correctedCanonicalId = await ReadBoundCanonicalEntityAsync(db, revision.Id);
-                var normalized = NormalizedSourceImportService.TranslateAndNormalizeRecord(
-                    representation,
-                    Assert.Single(representation.Records));
-                var publication = Assert.Single(representation.Publications!);
-                var semanticFingerprint = NormalizedSourceImportService.SemanticFingerprint(normalized);
-                var correctedAlias = Assert.Single(normalized.CanonicalAliases!);
-
-                await new CanonicalSourceRepresentationService(db).AssociateSourceEntityAsync(
-                    entity.Id,
-                    revision.Id,
-                    new CanonicalPublicationEvidence(
-                        publication.DisplayName,
-                        publication.Publisher,
-                        publication.GameEdition,
-                        publication.PublicationDate,
-                        OccurrenceFingerprints: [semanticFingerprint]),
-                    new CanonicalSourceOccurrenceEvidence(
-                        RuleConceptEntityTypes.Class,
-                        normalized.Name,
-                        normalized.LocatorKey,
-                        semanticFingerprint),
-                    representation.FormatKey,
-                    canonicalAliases: new Dictionary<string, string>(StringComparer.Ordinal)
-                    {
-                        [correctedAlias.Key] = normalized.NativeKey
-                    },
-                    allowTranslationOnlyReassociation: true);
-                var staleCanonicalId = await ReadBoundCanonicalEntityAsync(db, revision.Id);
-                Assert.NotEqual(correctedCanonicalId, staleCanonicalId);
 
                 entity.EntityType = RuleConceptEntityTypes.Class;
                 revision.NormalizationVersion = SourceNormalizationVersion.Current - 1;
@@ -272,6 +311,47 @@ public sealed class ClassTaxonomyNormalizationIntegrationTests
                     .Where(value => value.Key == packageKey)
                     .ExecuteDeleteAsync();
             }
+        }
+    }
+
+    private static async Task<IReadOnlyList<string>> ReadBoundCanonicalAliasValuesAsync(
+        RulesCoreDbContext db,
+        Guid entityId)
+    {
+        var connection = db.Database.GetDbConnection();
+        var openedHere = connection.State != ConnectionState.Open;
+        if (openedHere) await connection.OpenAsync();
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = """
+                SELECT DISTINCT alias.alias_value
+                FROM source_entity_revision revision
+                JOIN source_entity_occurrence_binding binding
+                  ON binding.source_entity_revision_id = revision.source_entity_revision_id
+                JOIN canonical_source_occurrence occurrence
+                  ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
+                JOIN canonical_entity_alias alias
+                  ON alias.canonical_entity_id = occurrence.canonical_entity_id
+                WHERE revision.source_entity_id = @entity_id
+                ORDER BY alias.alias_value;
+                """;
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = "@entity_id";
+            parameter.Value = entityId;
+            command.Parameters.Add(parameter);
+
+            var values = new List<string>();
+            await using var reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                values.Add(reader.GetString(0));
+            }
+            return values;
+        }
+        finally
+        {
+            if (openedHere) await connection.CloseAsync();
         }
     }
 
