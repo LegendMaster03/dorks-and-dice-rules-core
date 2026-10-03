@@ -106,6 +106,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
             }
         }
 
+        CharacterStartingEquipmentProjector.Project(projectionRules, context);
         CharacterWeaponMasteryProjector.Project(projectionRules, context);
         CharacterSubclassAdvancementProjector.Project(projectionRules, context);
         CharacterAdvancementLimitProjector.Project(projectionRules, context);
