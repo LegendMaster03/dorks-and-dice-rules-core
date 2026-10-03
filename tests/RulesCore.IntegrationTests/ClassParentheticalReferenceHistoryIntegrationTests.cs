@@ -41,7 +41,8 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
                         Record(RuleConceptEntityTypes.Class, classBaseName, "BASE", "class-base"),
                         Record(RuleConceptEntityTypes.Class, orphanVariantOneName, "BASE", "orphan-one-first"),
                         Record("item", itemBaseName, "BASE", "item-base")
-                    ]);
+                    ],
+                    reconcileHistory: true);
                 var baseClass = Assert.Single(baseImport.Entities, value => value.Name == classBaseName);
                 var orphanVariantOneFirst = Assert.Single(
                     baseImport.Entities,
@@ -58,7 +59,8 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
                         Record(RuleConceptEntityTypes.Class, orphanVariantOneName, "VARIANT", "orphan-one-second"),
                         Record(RuleConceptEntityTypes.Class, orphanVariantTwoName, "VARIANT", "orphan-two"),
                         Record("item", itemVariantName, "VARIANT", "item-variant")
-                    ]);
+                    ],
+                    reconcileHistory: true);
                 var variantClass = Assert.Single(variantImport.Entities, value => value.Name == classVariantName);
                 var orphanVariantOneSecond = Assert.Single(
                     variantImport.Entities,
@@ -107,9 +109,57 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
             }
             finally
             {
-                await db.SourcePackages
-                    .Where(value => value.Key == basePackageKey || value.Key == variantPackageKey)
-                    .ExecuteDeleteAsync();
+                await DeletePackagesAsync(db, basePackageKey, variantPackageKey);
+            }
+        }
+    }
+
+    [Fact]
+    public async Task ExistingParentheticalClassRecordsJoinDuringCorpusReconciliation()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var classBaseName = $"Artificer {token}";
+            var classVariantName = $"{classBaseName} (Revisited)";
+            var basePackageKey = $"parenthetical-existing-base-{token}";
+            var variantPackageKey = $"parenthetical-existing-variant-{token}";
+
+            try
+            {
+                var baseImport = await ImportAsync(
+                    db,
+                    basePackageKey,
+                    token,
+                    "existing-base",
+                    [Record(RuleConceptEntityTypes.Class, classBaseName, "BASE", "existing-class-base")],
+                    reconcileHistory: false);
+                var variantImport = await ImportAsync(
+                    db,
+                    variantPackageKey,
+                    token,
+                    "existing-variant",
+                    [Record(RuleConceptEntityTypes.Class, classVariantName, "VARIANT", "existing-class-variant")],
+                    reconcileHistory: false);
+
+                var baseCanonicalId = await ReadCanonicalEntityIdAsync(
+                    db,
+                    Assert.Single(baseImport.Entities).EntityId);
+                var variantCanonicalId = await ReadCanonicalEntityIdAsync(
+                    db,
+                    Assert.Single(variantImport.Entities).EntityId);
+                Assert.NotEqual(baseCanonicalId, variantCanonicalId);
+                Assert.False(await HasAutomaticHistoryEdgeAsync(db, baseCanonicalId, variantCanonicalId));
+
+                await new CanonicalDataReconciliationService(db).ReconcileExistingCorpusAsync();
+
+                Assert.True(await HasAutomaticHistoryEdgeAsync(db, baseCanonicalId, variantCanonicalId));
+            }
+            finally
+            {
+                await DeletePackagesAsync(db, basePackageKey, variantPackageKey);
             }
         }
     }
@@ -119,7 +169,8 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
         string packageKey,
         string token,
         string label,
-        IReadOnlyList<NormalizedSourceRecord> records)
+        IReadOnlyList<NormalizedSourceRecord> records,
+        bool reconcileHistory)
     {
         var artifact = new SourceRepresentationArtifact(
             $"parenthetical-{label}-{token}.json",
@@ -136,19 +187,24 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
                     $"Parenthetical class history {label} {token}",
                     "Integration Test",
                     "5e",
-                    label == "base" ? new DateOnly(2020, 1, 1) : new DateOnly(2021, 1, 1))
+                    label.Contains("base", StringComparison.Ordinal)
+                        ? new DateOnly(2020, 1, 1)
+                        : new DateOnly(2021, 1, 1))
             ]);
+        var request = new ImportNormalizedSourceRequest(
+            packageKey,
+            $"Parenthetical class history {label} {token}",
+            "integration-test",
+            "test-only",
+            true,
+            representation);
 
-        return await new ReconciledNormalizedSourceImportService(
-            new NormalizedSourceImportService(db),
-            db).ImportAsync(
-            new ImportNormalizedSourceRequest(
-                packageKey,
-                $"Parenthetical class history {label} {token}",
-                "integration-test",
-                "test-only",
-                true,
-                representation));
+        return reconcileHistory
+            ? await new ReconciledNormalizedSourceImportService(
+                    new NormalizedSourceImportService(db),
+                    db)
+                .ImportAsync(request)
+            : await new NormalizedSourceImportService(db).ImportAsync(request);
     }
 
     private static NormalizedSourceRecord Record(
@@ -166,6 +222,14 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
             raw,
             PublicationLocalKey: "fixture");
     }
+
+    private static Task DeletePackagesAsync(
+        RulesCoreDbContext db,
+        string firstPackageKey,
+        string secondPackageKey) =>
+        db.SourcePackages
+            .Where(value => value.Key == firstPackageKey || value.Key == secondPackageKey)
+            .ExecuteDeleteAsync();
 
     private static async Task<Guid> ReadCanonicalEntityIdAsync(
         RulesCoreDbContext db,
