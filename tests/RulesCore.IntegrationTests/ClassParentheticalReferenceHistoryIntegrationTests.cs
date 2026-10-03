@@ -22,6 +22,9 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
             var token = Guid.NewGuid().ToString("N")[..12];
             var classBaseName = $"Ranger {token}";
             var classVariantName = $"{classBaseName} (Revised)";
+            var orphanBaseName = $"Mystic {token}";
+            var orphanVariantOneName = $"{orphanBaseName} (Alpha)";
+            var orphanVariantTwoName = $"{orphanBaseName} (Beta)";
             var itemBaseName = $"Relic {token}";
             var itemVariantName = $"{itemBaseName} (Revised)";
             var basePackageKey = $"parenthetical-base-{token}";
@@ -36,9 +39,13 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
                     "base",
                     [
                         Record(RuleConceptEntityTypes.Class, classBaseName, "BASE", "class-base"),
+                        Record(RuleConceptEntityTypes.Class, orphanVariantOneName, "BASE", "orphan-one"),
                         Record("item", itemBaseName, "BASE", "item-base")
                     ]);
                 var baseClass = Assert.Single(baseImport.Entities, value => value.Name == classBaseName);
+                var orphanVariantOne = Assert.Single(
+                    baseImport.Entities,
+                    value => value.Name == orphanVariantOneName);
                 var baseItem = Assert.Single(baseImport.Entities, value => value.Name == itemBaseName);
 
                 var variantImport = await ImportAsync(
@@ -48,9 +55,13 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
                     "variant",
                     [
                         Record(RuleConceptEntityTypes.Class, classVariantName, "VARIANT", "class-variant"),
+                        Record(RuleConceptEntityTypes.Class, orphanVariantTwoName, "VARIANT", "orphan-two"),
                         Record("item", itemVariantName, "VARIANT", "item-variant")
                     ]);
                 var variantClass = Assert.Single(variantImport.Entities, value => value.Name == classVariantName);
+                var orphanVariantTwo = Assert.Single(
+                    variantImport.Entities,
+                    value => value.Name == orphanVariantTwoName);
                 var variantItem = Assert.Single(variantImport.Entities, value => value.Name == itemVariantName);
 
                 var baseClassCanonicalId = await ReadCanonicalEntityIdAsync(db, baseClass.EntityId);
@@ -60,6 +71,14 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
                     db,
                     baseClassCanonicalId,
                     variantClassCanonicalId));
+
+                var orphanOneCanonicalId = await ReadCanonicalEntityIdAsync(db, orphanVariantOne.EntityId);
+                var orphanTwoCanonicalId = await ReadCanonicalEntityIdAsync(db, orphanVariantTwo.EntityId);
+                Assert.NotEqual(orphanOneCanonicalId, orphanTwoCanonicalId);
+                Assert.False(await HasAutomaticHistoryEdgeAsync(
+                    db,
+                    orphanOneCanonicalId,
+                    orphanTwoCanonicalId));
 
                 var baseItemCanonicalId = await ReadCanonicalEntityIdAsync(db, baseItem.EntityId);
                 var variantItemCanonicalId = await ReadCanonicalEntityIdAsync(db, variantItem.EntityId);
