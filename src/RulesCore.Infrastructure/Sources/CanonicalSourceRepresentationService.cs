@@ -63,6 +63,23 @@ public sealed class CanonicalSourceRepresentationService(RulesCoreDbContext dbCo
             sourceEntityId,
             sourceEntityRevisionId,
             cancellationToken);
+        if (allowTranslationOnlyReassociation && priorAssociation is not null)
+        {
+            var priorCanonicalEntity = await canonicalEntities.ReadAsync(
+                priorAssociation.CanonicalEntityId,
+                cancellationToken);
+            if (priorCanonicalEntity is not null
+                && !CanonicalReferenceHistoryPolicy.AreCategoriesCompatible(
+                    priorCanonicalEntity.EntityType,
+                    occurrenceEvidence.EntityType))
+            {
+                // Translation-only maintenance can correct a previously misclassified source
+                // entity without creating a native source revision. Do not let another revision
+                // from the same source entity force the corrected occurrence back into the stale
+                // canonical category.
+                priorAssociation = null;
+            }
+        }
         var normalizedFingerprint = occurrenceEvidence.SemanticFingerprint.Trim().ToLowerInvariant();
         var aliasedCanonicalEntityId = await new CanonicalEntityAliasStore(dbContext)
             .ResolveAnyAsync(canonicalAliases, normalizedFingerprint, cancellationToken);
