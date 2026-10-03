@@ -95,7 +95,7 @@ internal static class EpicContentNormalizationPolicy
                    StringComparison.OrdinalIgnoreCase)
                && string.Equals(existingEntityType, RuleConceptEntityTypes.Class, StringComparison.OrdinalIgnoreCase)
                && string.Equals(existingName.Trim(), normalized.Name, StringComparison.OrdinalIgnoreCase)
-               && HasEpicMetadata(normalized.ContentJson);
+               && IsReviewedPcGenEpicPrestigeClassSource(normalized.RawJson);
     }
 
     private static NormalizedSourceRecord NormalizeFiveETools(NormalizedSourceRecord record)
@@ -211,7 +211,8 @@ internal static class EpicContentNormalizationPolicy
             return record with { ContentJson = Serialize(content) };
         }
 
-        if (IsReviewedPcGenEpicPrestigeClass(record, source, path, typeValues))
+        if (string.Equals(record.EntityType, RuleConceptEntityTypes.Class, StringComparison.OrdinalIgnoreCase)
+            && IsReviewedPcGenEpicPrestigeClassSource(source, path, typeValues))
         {
             AddEpicMetadata(content, kind: "prestige-class");
             return record with
@@ -250,14 +251,24 @@ internal static class EpicContentNormalizationPolicy
         return continuationName.Length > 0;
     }
 
-    private static bool IsReviewedPcGenEpicPrestigeClass(
-        NormalizedSourceRecord record,
+    private static bool IsReviewedPcGenEpicPrestigeClassSource(string rawJson)
+    {
+        if (!TryParseObject(rawJson, out var source))
+        {
+            return false;
+        }
+
+        var path = ReadString(source, "path") ?? string.Empty;
+        var typeValues = ReadPcGenTagValues(source, "TYPE");
+        return IsReviewedPcGenEpicPrestigeClassSource(source, path, typeValues);
+    }
+
+    private static bool IsReviewedPcGenEpicPrestigeClassSource(
         JsonObject source,
         string path,
         IReadOnlyList<string> typeValues)
     {
-        if (!string.Equals(record.EntityType, RuleConceptEntityTypes.Class, StringComparison.OrdinalIgnoreCase)
-            || !string.Equals(ReadString(source, "kind"), "class-record", StringComparison.OrdinalIgnoreCase)
+        if (!string.Equals(ReadString(source, "kind"), "class-record", StringComparison.OrdinalIgnoreCase)
             || !PathEndsWith(path, "/rsrd/epic/rsrd_classes_epic.lst"))
         {
             return false;
@@ -353,19 +364,6 @@ internal static class EpicContentNormalizationPolicy
         }
         rulesCore["epic"] = epic;
         content["_rulesCore"] = rulesCore;
-    }
-
-    private static bool HasEpicMetadata(string? contentJson)
-    {
-        if (string.IsNullOrWhiteSpace(contentJson)
-            || !TryParseObject(contentJson, out var content)
-            || content["_rulesCore"] is not JsonObject rulesCore
-            || rulesCore["epic"] is not JsonObject epic)
-        {
-            return false;
-        }
-
-        return string.Equals(ReadString(epic, "tier"), "epic", StringComparison.OrdinalIgnoreCase);
     }
 
     private static bool TryParseObject(string json, out JsonObject value)
