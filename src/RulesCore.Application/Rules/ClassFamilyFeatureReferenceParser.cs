@@ -24,6 +24,7 @@ public static class ClassFamilyFeatureReferenceParser
         var propertyNames = normalizedCategory switch
         {
             "class" => new[] { "classFeatures" },
+            "sidekickclass" => new[] { "classFeatures" },
             "subclass" => new[] { "subclassFeatures" },
             // Preserve the existing Character Sheet contract: prestige-class records historically
             // preferred classFeatures when both source properties were present. Fall back to
