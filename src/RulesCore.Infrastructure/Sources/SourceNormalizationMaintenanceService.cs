@@ -177,6 +177,8 @@ public sealed class SourceNormalizationMaintenanceService(
             var normalized = NormalizedSourceImportService.TranslateAndNormalizeRecord(
                 candidate.Representation,
                 candidate.Record);
+            ApplyReviewedEpicEntityIdentityMigration(entity, normalized);
+            NormalizedSourceImportService.EnsureEntityIdentityMatches(entity, normalized);
 
             if (!string.Equals(
                     NormalizedSourceImportService.CanonicalJsonFingerprint(normalized.RawJson),
@@ -196,8 +198,6 @@ public sealed class SourceNormalizationMaintenanceService(
                     "The current translator can not reconstruct the existing mechanical content "
                     + "from the preserved native record without reparsing its source representation.");
             }
-
-            ApplyReviewedEpicEntityIdentityMigration(entity, normalized);
 
             var contentUpdated = !NormalizedSourceImportService.JsonEquivalentOptional(
                 revision.ContentJson,
@@ -441,8 +441,7 @@ public sealed class SourceNormalizationMaintenanceService(
                 entity.Name,
                 normalized))
         {
-            throw new InvalidOperationException(
-                $"Source entity native identity '{entity.NativeKey}' changed immutable identity metadata across normalization versions.");
+            return;
         }
 
         entity.EntityType = normalized.EntityType;

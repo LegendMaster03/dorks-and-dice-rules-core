@@ -7,6 +7,7 @@ public static class RuleConceptEntityTypes
     public const string Subclass = "subclass";
     public const string PrestigeClass = "prestigeClass";
     public const string PrestigeClassProgression = "prestigeClassProgression";
+    public const string SidekickClass = "sidekickClass";
     public const string Species = "species";
     public const string Subspecies = "subspecies";
 
@@ -46,6 +47,10 @@ public static class RuleConceptEntityTypes
         if (string.Equals(normalized, PrestigeClassProgression, StringComparison.OrdinalIgnoreCase))
         {
             return PrestigeClassProgression;
+        }
+        if (string.Equals(normalized, SidekickClass, StringComparison.OrdinalIgnoreCase))
+        {
+            return SidekickClass;
         }
         if (string.Equals(normalized, Species, StringComparison.OrdinalIgnoreCase)
             || string.Equals(normalized, "race", StringComparison.OrdinalIgnoreCase))
