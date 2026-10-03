@@ -39,11 +39,11 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
                     "base",
                     [
                         Record(RuleConceptEntityTypes.Class, classBaseName, "BASE", "class-base"),
-                        Record(RuleConceptEntityTypes.Class, orphanVariantOneName, "BASE", "orphan-one"),
+                        Record(RuleConceptEntityTypes.Class, orphanVariantOneName, "BASE", "orphan-one-first"),
                         Record("item", itemBaseName, "BASE", "item-base")
                     ]);
                 var baseClass = Assert.Single(baseImport.Entities, value => value.Name == classBaseName);
-                var orphanVariantOne = Assert.Single(
+                var orphanVariantOneFirst = Assert.Single(
                     baseImport.Entities,
                     value => value.Name == orphanVariantOneName);
                 var baseItem = Assert.Single(baseImport.Entities, value => value.Name == itemBaseName);
@@ -55,10 +55,14 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
                     "variant",
                     [
                         Record(RuleConceptEntityTypes.Class, classVariantName, "VARIANT", "class-variant"),
+                        Record(RuleConceptEntityTypes.Class, orphanVariantOneName, "VARIANT", "orphan-one-second"),
                         Record(RuleConceptEntityTypes.Class, orphanVariantTwoName, "VARIANT", "orphan-two"),
                         Record("item", itemVariantName, "VARIANT", "item-variant")
                     ]);
                 var variantClass = Assert.Single(variantImport.Entities, value => value.Name == classVariantName);
+                var orphanVariantOneSecond = Assert.Single(
+                    variantImport.Entities,
+                    value => value.Name == orphanVariantOneName);
                 var orphanVariantTwo = Assert.Single(
                     variantImport.Entities,
                     value => value.Name == orphanVariantTwoName);
@@ -72,12 +76,25 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
                     baseClassCanonicalId,
                     variantClassCanonicalId));
 
-                var orphanOneCanonicalId = await ReadCanonicalEntityIdAsync(db, orphanVariantOne.EntityId);
+                var orphanOneFirstCanonicalId = await ReadCanonicalEntityIdAsync(
+                    db,
+                    orphanVariantOneFirst.EntityId);
+                var orphanOneSecondCanonicalId = await ReadCanonicalEntityIdAsync(
+                    db,
+                    orphanVariantOneSecond.EntityId);
                 var orphanTwoCanonicalId = await ReadCanonicalEntityIdAsync(db, orphanVariantTwo.EntityId);
-                Assert.NotEqual(orphanOneCanonicalId, orphanTwoCanonicalId);
+                Assert.NotEqual(orphanOneFirstCanonicalId, orphanOneSecondCanonicalId);
+                Assert.True(await HasAutomaticHistoryEdgeAsync(
+                    db,
+                    orphanOneFirstCanonicalId,
+                    orphanOneSecondCanonicalId));
                 Assert.False(await HasAutomaticHistoryEdgeAsync(
                     db,
-                    orphanOneCanonicalId,
+                    orphanOneFirstCanonicalId,
+                    orphanTwoCanonicalId));
+                Assert.False(await HasAutomaticHistoryEdgeAsync(
+                    db,
+                    orphanOneSecondCanonicalId,
                     orphanTwoCanonicalId));
 
                 var baseItemCanonicalId = await ReadCanonicalEntityIdAsync(db, baseItem.EntityId);
@@ -140,7 +157,7 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
         string sourceCode,
         string nativeSuffix)
     {
-        var raw = $"{{\"name\":{System.Text.Json.JsonSerializer.Serialize(name)},\"source\":\"{sourceCode}\",\"entries\":[\"fixture\"]}}";
+        var raw = $"{{\"name\":{System.Text.Json.JsonSerializer.Serialize(name)},\"source\":\"{sourceCode}\",\"entries\":[{System.Text.Json.JsonSerializer.Serialize(nativeSuffix)}]}}";
         return new NormalizedSourceRecord(
             entityType,
             name,
