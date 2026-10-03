@@ -96,19 +96,30 @@ public static class WikiReferenceBrowserProjection
         switch (normalized)
         {
             case "spell":
+                Add("school", "School", ReadSummary(
+                    ReadProperty(document, "school")
+                    ?? ReadThreeXField(document, "School")));
                 Add("castingTime", "Casting Time", FormatCastingTime(document));
                 Add("range", "Range", FormatRange(document));
                 Add("components", "Components", FormatComponents(document));
                 Add("duration", "Duration", FormatDuration(document));
                 Add("concentration", "Concentration", FormatConcentration(document));
                 Add("ritual", "Ritual", FormatBoolean(ReadPath(document, "meta", "ritual") ?? ReadProperty(document, "ritual")));
-                Add("subschool", "Subschool", ReadSummary(ReadProperty(document, "subschool")));
+                Add("subschool", "Subschool", ReadSummary(
+                    ReadProperty(document, "subschool")
+                    ?? ReadThreeXField(document, "Subschool")));
                 Add("descriptors", "Descriptors", ReadSummary(
-                    ReadProperty(document, "descriptors") ?? ReadProperty(document, "descriptor")));
+                    ReadProperty(document, "descriptors")
+                    ?? ReadProperty(document, "descriptor")
+                    ?? ReadThreeXField(document, "Descriptors", "Descriptor")));
                 Add("spellList", "Lists / Classes", FormatSpellLists(document));
                 Add("savingThrow", "Saving Throw", ReadSummary(
-                    ReadProperty(document, "savingThrow") ?? ReadProperty(document, "save")));
-                Add("spellResistance", "Spell Resistance", ReadSummary(ReadProperty(document, "spellResistance")));
+                    ReadProperty(document, "savingThrow")
+                    ?? ReadProperty(document, "save")
+                    ?? ReadThreeXField(document, "Saving Throw")));
+                Add("spellResistance", "Spell Resistance", ReadSummary(
+                    ReadProperty(document, "spellResistance")
+                    ?? ReadThreeXField(document, "Spell Resistance")));
                 break;
 
             case "class":
@@ -156,17 +167,31 @@ public static class WikiReferenceBrowserProjection
             case "item":
             case "magicitem":
             case "equipment":
+                Add("type", "Type", ReadSummary(
+                    ReadProperty(document, "type")
+                    ?? ReadThreeXField(document, "Type")));
+                Add("rarity", "Rarity", ReadSummary(
+                    ReadProperty(document, "rarity")
+                    ?? ReadThreeXField(document, "Rarity")));
                 Add("attunement", "Attunement", FormatAttunement(document));
                 Add("weaponCategory", "Weapon Category", ReadSummary(ReadProperty(document, "weaponCategory")));
                 Add("properties", "Properties", ReadSummary(
                     ReadProperty(document, "property") ?? ReadProperty(document, "properties")));
-                Add("value", "Value", FormatCurrency(ReadProperty(document, "value") ?? ReadProperty(document, "cost")));
-                Add("weight", "Weight", FormatWeight(ReadProperty(document, "weight")));
-                Add("charges", "Charges", ReadSummary(ReadProperty(document, "charges")));
+                Add("value", "Value", FormatCurrency(
+                    ReadProperty(document, "value")
+                    ?? ReadProperty(document, "cost")
+                    ?? ReadThreeXField(document, "Price", "Market Price", "Cost")));
+                Add("weight", "Weight", FormatWeight(
+                    ReadProperty(document, "weight")
+                    ?? ReadThreeXField(document, "Weight")));
+                Add("charges", "Charges", ReadSummary(
+                    ReadProperty(document, "charges")
+                    ?? ReadThreeXField(document, "Charges")));
                 Add("enhancement", "Enhancement", ReadSummary(
                     ReadProperty(document, "enhancementBonus")
                     ?? ReadProperty(document, "bonusWeapon")
-                    ?? ReadProperty(document, "bonusAc")));
+                    ?? ReadProperty(document, "bonusAc")
+                    ?? ReadThreeXField(document, "Enhancement Bonus")));
                 break;
         }
 
@@ -177,27 +202,40 @@ public static class WikiReferenceBrowserProjection
         JsonElement document,
         Action<string, string, string?> add)
     {
-        add("hitDie", "Hit Die", FormatHitDie(ReadProperty(document, "hd") ?? ReadProperty(document, "hitDie")));
+        add("hitDie", "Hit Die", FormatHitDie(
+            ReadProperty(document, "hd")
+            ?? ReadProperty(document, "hitDie")
+            ?? ReadThreeXField(document, "Hit Die", "Hit Dice")));
 
         var character = ReadPath(document, "_rulesCore", "character");
-        if (character is null || character.Value.ValueKind != JsonValueKind.Object) return;
-
-        add("bab", "BAB", ReadSummary(ReadProperty(character.Value, "baseAttackProgression")));
-        var saves = ReadProperty(character.Value, "saveProgressions");
-        if (saves is { ValueKind: JsonValueKind.Object })
+        if (character is not null && character.Value.ValueKind == JsonValueKind.Object)
         {
-            add("fortitude", "Fortitude", ReadSummary(ReadProperty(saves.Value, "fortitude")));
-            add("reflex", "Reflex", ReadSummary(ReadProperty(saves.Value, "reflex")));
-            add("will", "Will", ReadSummary(ReadProperty(saves.Value, "will")));
+            add("bab", "BAB", ReadSummary(ReadProperty(character.Value, "baseAttackProgression")));
+            var saves = ReadProperty(character.Value, "saveProgressions");
+            if (saves is { ValueKind: JsonValueKind.Object })
+            {
+                add("fortitude", "Fortitude", ReadSummary(ReadProperty(saves.Value, "fortitude")));
+                add("reflex", "Reflex", ReadSummary(ReadProperty(saves.Value, "reflex")));
+                add("will", "Will", ReadSummary(ReadProperty(saves.Value, "will")));
+            }
+            add("skillPoints", "Skill Points", ReadSummary(
+                ReadProperty(character.Value, "skillPointsPerLevel")
+                ?? ReadProperty(character.Value, "skillPoints")
+                ?? ReadProperty(character.Value, "startingSkillPoints")));
+            add("classSkills", "Class Skills", ReadSummary(ReadProperty(character.Value, "classSkills")));
+            add("spellcasting", "Spellcasting", ReadSummary(
+                ReadProperty(character.Value, "spellcastingProfile")
+                ?? ReadProperty(character.Value, "spellcastingAbility")));
         }
-        add("skillPoints", "Skill Points", ReadSummary(
-            ReadProperty(character.Value, "skillPointsPerLevel")
-            ?? ReadProperty(character.Value, "skillPoints")
-            ?? ReadProperty(character.Value, "startingSkillPoints")));
-        add("classSkills", "Class Skills", ReadSummary(ReadProperty(character.Value, "classSkills")));
-        add("spellcasting", "Spellcasting", ReadSummary(
-            ReadProperty(character.Value, "spellcastingProfile")
-            ?? ReadProperty(character.Value, "spellcastingAbility")));
+
+        add("bab", "BAB", ReadSummary(ReadThreeXField(
+            document,
+            "Base Attack Bonus",
+            "Base Attack Progression")));
+        add("skillPoints", "Skill Points", ReadSummary(ReadThreeXField(
+            document,
+            "Skill Points at Each Level",
+            "Skill Points")));
     }
 
     private static void AddSkillFields(
@@ -224,7 +262,8 @@ public static class WikiReferenceBrowserProjection
     {
         var value = ReadProperty(document, "prerequisite")
             ?? ReadProperty(document, "prerequisites")
-            ?? ReadPath(document, "_rulesCore", "character", "prerequisites");
+            ?? ReadPath(document, "_rulesCore", "character", "prerequisites")
+            ?? ReadThreeXField(document, "Prerequisite", "Prerequisites", "Requirements");
         return ReadSummary(value, 180);
     }
 
@@ -268,12 +307,23 @@ public static class WikiReferenceBrowserProjection
             }
         }
 
+        foreach (var propertyName in new[] { "classLevels", "spellLevels", "levelsByClass", "spellLists" })
+        {
+            var summary = ReadSummary(ReadProperty(document, propertyName), 180);
+            if (HasText(summary)) values.Add(summary!);
+        }
+
+        var legacyLevel = ReadSummary(ReadThreeXField(document, "Level"), 180);
+        if (HasText(legacyLevel)) values.Add(legacyLevel!);
+
         return JoinDistinct(values);
     }
 
     private static string? FormatCastingTime(JsonElement document)
     {
-        var value = ReadProperty(document, "time") ?? ReadProperty(document, "castingTime");
+        var value = ReadProperty(document, "time")
+            ?? ReadProperty(document, "castingTime")
+            ?? ReadThreeXField(document, "Casting Time");
         if (value is null) return null;
         var entries = value.Value.ValueKind == JsonValueKind.Array
             ? value.Value.EnumerateArray().ToArray()
@@ -292,7 +342,8 @@ public static class WikiReferenceBrowserProjection
 
     private static string? FormatRange(JsonElement document)
     {
-        var value = ReadProperty(document, "range");
+        var value = ReadProperty(document, "range")
+            ?? ReadThreeXField(document, "Range");
         if (value is null) return null;
         if (value.Value.ValueKind != JsonValueKind.Object) return ReadSummary(value);
         var type = ReadString(ReadProperty(value.Value, "type"));
@@ -306,7 +357,8 @@ public static class WikiReferenceBrowserProjection
 
     private static string? FormatComponents(JsonElement document)
     {
-        var value = ReadProperty(document, "components");
+        var value = ReadProperty(document, "components")
+            ?? ReadThreeXField(document, "Components");
         if (value is null) return null;
         if (value.Value.ValueKind != JsonValueKind.Object) return ReadSummary(value);
         var parts = new List<string>();
@@ -319,7 +371,8 @@ public static class WikiReferenceBrowserProjection
 
     private static string? FormatDuration(JsonElement document)
     {
-        var value = ReadProperty(document, "duration");
+        var value = ReadProperty(document, "duration")
+            ?? ReadThreeXField(document, "Duration");
         if (value is null) return null;
         var entries = value.Value.ValueKind == JsonValueKind.Array
             ? value.Value.EnumerateArray().ToArray()
@@ -356,8 +409,16 @@ public static class WikiReferenceBrowserProjection
 
     private static string? FormatConcentration(JsonElement document)
     {
-        var duration = ReadProperty(document, "duration");
+        var duration = ReadProperty(document, "duration")
+            ?? ReadThreeXField(document, "Duration");
         if (duration is null) return null;
+        if (duration.Value.ValueKind == JsonValueKind.String)
+        {
+            var text = duration.Value.GetString();
+            return text?.Contains("concentration", StringComparison.OrdinalIgnoreCase) == true
+                ? "Yes"
+                : "No";
+        }
         IEnumerable<JsonElement> entries = duration.Value.ValueKind == JsonValueKind.Array
             ? duration.Value.EnumerateArray().ToArray()
             : new[] { duration.Value };
@@ -403,7 +464,9 @@ public static class WikiReferenceBrowserProjection
 
     private static string? FormatAttunement(JsonElement document)
     {
-        var value = ReadProperty(document, "reqAttune") ?? ReadProperty(document, "attunement");
+        var value = ReadProperty(document, "reqAttune")
+            ?? ReadProperty(document, "attunement")
+            ?? ReadThreeXField(document, "Attunement");
         if (value is null) return null;
         if (value.Value.ValueKind == JsonValueKind.True) return "Required";
         if (value.Value.ValueKind == JsonValueKind.False) return "Not required";
@@ -427,7 +490,10 @@ public static class WikiReferenceBrowserProjection
     private static string? FormatWeight(JsonElement? value)
     {
         var summary = ReadSummary(value);
-        return HasText(summary) ? $"{summary} lb." : null;
+        if (!HasText(summary)) return null;
+        return summary!.Contains("lb", StringComparison.OrdinalIgnoreCase)
+            ? summary
+            : $"{summary} lb.";
     }
 
     private static string? FormatSupport(JsonElement? value) => value is null ? null : FormatBoolean(value);
@@ -468,6 +534,24 @@ public static class WikiReferenceBrowserProjection
             if (current.ValueKind != JsonValueKind.Object || !current.TryGetProperty(name, out current)) return null;
         }
         return current;
+    }
+
+    private static JsonElement? ReadThreeXField(JsonElement document, params string[] names)
+    {
+        var fields = ReadPath(document, "_rulesCore", "threeX", "fields");
+        if (fields is null || fields.Value.ValueKind != JsonValueKind.Object) return null;
+
+        foreach (var name in names)
+        {
+            foreach (var property in fields.Value.EnumerateObject())
+            {
+                if (string.Equals(property.Name, name, StringComparison.OrdinalIgnoreCase))
+                {
+                    return property.Value;
+                }
+            }
+        }
+        return null;
     }
 
     private static string? ReadString(JsonElement? value) =>
