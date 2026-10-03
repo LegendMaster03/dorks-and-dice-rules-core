@@ -10,8 +10,8 @@ namespace RulesCore.Infrastructure.Sources;
 /// Reconciles logical reference histories without destructively merging canonical entities.
 /// Same logical names and compatible categories are connected by revision history by default;
 /// ordinary class names with a trailing parenthetical qualifier (X (Y)) share X's logical-name
-/// key. Persisted same-name-different-entity decisions and explicit variant/reprint relationships
-/// prevent automatic bridges across identities that are known to remain distinct.
+/// key when an ordinary class X exists. Persisted same-name-different-entity decisions and explicit
+/// variant/reprint relationships prevent automatic bridges across identities known to remain distinct.
 /// </summary>
 internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDbContext dbContext)
 {
@@ -49,7 +49,7 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
         foreach (var nameGroup in entities
                      .Where(value => requested is null || requested.Contains(HistoryNameKey(value)))
                      .GroupBy(HistoryNameKey, StringComparer.Ordinal)
-                     .Where(group => group.Count() > 1))
+                     .Where(group => group.Count() > 1 && HasRequiredClassBase(group.Key, group)))
         {
             await ReconcileNameGroupAsync(nameGroup.ToArray(), cancellationToken);
         }
@@ -220,6 +220,7 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
                     WHERE canonical.normalized_name = ANY(@history_keys)
                        OR (
                             canonical.entity_type = @class_entity_type
+                            AND canonical.normalized_name LIKE ANY(@class_history_prefixes)
                             AND STRPOS(canonical.display_name, '(') > 1
                             AND RIGHT(BTRIM(canonical.display_name), 1) = ')')
                     GROUP BY canonical.canonical_entity_id, canonical.entity_type,
@@ -243,8 +244,13 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
                     """;
             if (historyKeys is { Count: > 0 })
             {
-                AddParameter(command, "@history_keys", historyKeys.Distinct(StringComparer.Ordinal).ToArray());
+                var distinctKeys = historyKeys.Distinct(StringComparer.Ordinal).ToArray();
+                AddParameter(command, "@history_keys", distinctKeys);
                 AddParameter(command, "@class_entity_type", ClassEntityType);
+                AddParameter(
+                    command,
+                    "@class_history_prefixes",
+                    distinctKeys.Select(value => $"{value}-%").ToArray());
             }
 
             var rows = new List<EntityRow>();
@@ -275,10 +281,7 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
         string normalizedName,
         string displayName)
     {
-        if (!string.Equals(
-                CanonicalReferenceHistoryPolicy.NormalizeCategory(entityType),
-                ClassEntityType,
-                StringComparison.Ordinal))
+        if (!IsOrdinaryClass(entityType))
         {
             return normalizedName;
         }
@@ -305,6 +308,26 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
         var normalizedBaseName = CanonicalSourceIdentity.NormalizeIdentityPart(baseName);
         return normalizedBaseName.Length == 0 ? normalizedName : normalizedBaseName;
     }
+
+    private static bool HasRequiredClassBase(
+        string historyKey,
+        IEnumerable<EntityRow> entities)
+    {
+        var rows = entities as IReadOnlyCollection<EntityRow> ?? entities.ToArray();
+        var hasParentheticalClass = rows.Any(value =>
+            IsOrdinaryClass(value.EntityType)
+            && !string.Equals(value.NormalizedName, historyKey, StringComparison.Ordinal));
+        return !hasParentheticalClass
+            || rows.Any(value =>
+                IsOrdinaryClass(value.EntityType)
+                && string.Equals(value.NormalizedName, historyKey, StringComparison.Ordinal));
+    }
+
+    private static bool IsOrdinaryClass(string entityType) =>
+        string.Equals(
+            CanonicalReferenceHistoryPolicy.NormalizeCategory(entityType),
+            ClassEntityType,
+            StringComparison.Ordinal);
 
     private async Task<IReadOnlyList<RelationshipRow>> ReadRelationshipsAsync(
         IReadOnlyCollection<Guid> canonicalEntityIds,
