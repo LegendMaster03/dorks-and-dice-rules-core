@@ -111,9 +111,7 @@ internal static class EpicContentNormalizationPolicy
         AddEpicMetadata(
             content,
             kind: "feat",
-            canonicalTerm: EpicFeatCanonicalTerm,
-            sourceTerm: "Epic Boon Feat",
-            sourceCategory: "EB");
+            canonicalTerm: EpicFeatCanonicalTerm);
         return record with { ContentJson = Serialize(content) };
     }
 
@@ -149,7 +147,6 @@ internal static class EpicContentNormalizationPolicy
             AddEpicMetadata(
                 content,
                 kind: "progression",
-                sourceTerm: originalHeading.Trim(),
                 continuationOfEntityType: continuationOfType,
                 continuationOfName: continuationName,
                 startsAfterClassLevel: 20);
@@ -168,8 +165,7 @@ internal static class EpicContentNormalizationPolicy
             AddEpicMetadata(
                 content,
                 kind: "feat",
-                canonicalTerm: EpicFeatCanonicalTerm,
-                sourceTerm: "Epic Feat");
+                canonicalTerm: EpicFeatCanonicalTerm);
             return record with { ContentJson = Serialize(content) };
         }
 
@@ -211,8 +207,7 @@ internal static class EpicContentNormalizationPolicy
             AddEpicMetadata(
                 content,
                 kind: "feat",
-                canonicalTerm: EpicFeatCanonicalTerm,
-                sourceTerm: "Epic Feat");
+                canonicalTerm: EpicFeatCanonicalTerm);
             return record with { ContentJson = Serialize(content) };
         }
 
@@ -334,8 +329,6 @@ internal static class EpicContentNormalizationPolicy
         JsonObject content,
         string kind,
         string? canonicalTerm = null,
-        string? sourceTerm = null,
-        string? sourceCategory = null,
         string? continuationOfEntityType = null,
         string? continuationOfName = null,
         int? startsAfterClassLevel = null)
@@ -345,8 +338,6 @@ internal static class EpicContentNormalizationPolicy
         epic["tier"] = "epic";
         epic["kind"] = kind;
         if (!string.IsNullOrWhiteSpace(canonicalTerm)) epic["canonicalTerm"] = canonicalTerm;
-        if (!string.IsNullOrWhiteSpace(sourceTerm)) epic["sourceTerm"] = sourceTerm;
-        if (!string.IsNullOrWhiteSpace(sourceCategory)) epic["sourceCategory"] = sourceCategory;
         if (!string.IsNullOrWhiteSpace(continuationOfEntityType)
             && !string.IsNullOrWhiteSpace(continuationOfName))
         {
