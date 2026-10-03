@@ -112,7 +112,7 @@ public sealed class ClassTaxonomyCanonicalBackfillIntegrationTests
                 {
                     Assert.Equal(SourceNormalizationVersion.Current, revision.NormalizationVersion);
                     Assert.Equal(
-                        RuleConceptEntityTypes.SidekickClass,
+                        CanonicalSourceIdentity.NormalizeIdentityPart(RuleConceptEntityTypes.SidekickClass),
                         await ReadBoundCanonicalEntityTypeAsync(db, revision.Id));
                 }
             }
