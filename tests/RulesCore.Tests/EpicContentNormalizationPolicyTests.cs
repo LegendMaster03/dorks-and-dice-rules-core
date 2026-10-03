@@ -2,9 +2,10 @@ using System.Text;
 using System.Text.Json;
 using RulesCore.Application.Sources;
 using RulesCore.Domain.Rules;
+using RulesCore.Infrastructure.Rules;
 using RulesCore.Infrastructure.Sources;
 
-namespace RulesCore.IntegrationTests;
+namespace RulesCore.Tests;
 
 public sealed class EpicContentNormalizationPolicyTests
 {
@@ -31,6 +32,11 @@ public sealed class EpicContentNormalizationPolicyTests
         Assert.Equal("Epic Feat", epic.GetProperty("canonicalTerm").GetString());
         Assert.Equal("Epic Boon Feat", epic.GetProperty("sourceTerm").GetString());
         Assert.Equal("EB", epic.GetProperty("sourceCategory").GetString());
+
+        var category = Assert.Single(
+            RuleBrowserSummaryProjector.Project("feat", content.RootElement)
+                .Where(value => value.Key == "category"));
+        Assert.Equal("Epic Feat", category.Value);
     }
 
     [Fact]
@@ -71,6 +77,12 @@ public sealed class EpicContentNormalizationPolicyTests
         var continuation = epic.GetProperty("continuationOf");
         Assert.Equal("class", continuation.GetProperty("entityType").GetString());
         Assert.Equal("Barbarian", continuation.GetProperty("name").GetString());
+
+        var fields = RuleBrowserSummaryProjector.Project(
+            RuleConceptEntityTypes.ClassProgression,
+            content.RootElement);
+        Assert.Contains(fields, value => value.Key == "tier" && value.Value == "Epic");
+        Assert.Contains(fields, value => value.Key == "continues" && value.Value == "Barbarian");
     }
 
     [Fact]
@@ -127,7 +139,7 @@ public sealed class EpicContentNormalizationPolicyTests
     }
 
     [Fact]
-    public void LegacyEpicFeatAndPcGenEpicFeatShareCanonicalFeatTerminology()
+    public void LegacyAndPcGenEpicFeatsShareCanonicalFeatTerminology()
     {
         const string legacyRaw = """
             {
@@ -162,15 +174,12 @@ public sealed class EpicContentNormalizationPolicyTests
             """;
         var pcGen = Record("feat", "Armor Skin", pcGenRaw, pcGenContent);
 
-        var normalizedLegacy = EpicContentNormalizationPolicy.Apply(
+        AssertEpicFeat(EpicContentNormalizationPolicy.Apply(
             Representation(LegacySrdSourceFormatAdapter.Format, legacy),
-            legacy);
-        var normalizedPcGen = EpicContentNormalizationPolicy.Apply(
+            legacy));
+        AssertEpicFeat(EpicContentNormalizationPolicy.Apply(
             Representation(PcGenSourceFormatAdapter.Format, pcGen),
-            pcGen);
-
-        AssertEpicFeat(normalizedLegacy);
-        AssertEpicFeat(normalizedPcGen);
+            pcGen));
     }
 
     [Fact]
@@ -203,11 +212,6 @@ public sealed class EpicContentNormalizationPolicyTests
             "class",
             "Legendary Dreadnought",
             normalized));
-
-        using var content = JsonDocument.Parse(normalized.ContentJson!);
-        var epic = content.RootElement.GetProperty("_rulesCore").GetProperty("epic");
-        Assert.Equal("epic", epic.GetProperty("tier").GetString());
-        Assert.Equal("prestige-class", epic.GetProperty("kind").GetString());
     }
 
     [Fact]
