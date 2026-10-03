@@ -8,16 +8,18 @@ namespace RulesCore.Infrastructure.Sources;
 
 /// <summary>
 /// Reconciles logical reference histories without destructively merging canonical entities.
-/// Same normalized names and compatible categories are connected by revision history by default;
-/// persisted same-name-different-entity decisions and explicit variant/reprint relationships
+/// Same logical names and compatible categories are connected by revision history by default;
+/// ordinary class names with a trailing parenthetical qualifier (X (Y)) share X's logical-name
+/// key. Persisted same-name-different-entity decisions and explicit variant/reprint relationships
 /// prevent automatic bridges across identities that are known to remain distinct.
 /// </summary>
 internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDbContext dbContext)
 {
     internal const string AutomaticEvidenceKind = "normalized-name-compatible-category";
+    private const string ClassEntityType = "class";
 
     public Task ReconcileAllAsync(CancellationToken cancellationToken = default) =>
-        ReconcileNamesAsync(null, cancellationToken);
+        ReconcileHistoryKeysAsync(null, cancellationToken);
 
     public async Task ReconcileSourceEntitiesAsync(
         IReadOnlyCollection<Guid> sourceEntityIds,
@@ -28,20 +30,25 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
             return;
         }
 
-        var names = await ReadCanonicalNamesForSourceEntitiesAsync(sourceEntityIds, cancellationToken);
-        if (names.Count != 0)
+        var historyKeys = await ReadHistoryKeysForSourceEntitiesAsync(sourceEntityIds, cancellationToken);
+        if (historyKeys.Count != 0)
         {
-            await ReconcileNamesAsync(names, cancellationToken);
+            await ReconcileHistoryKeysAsync(historyKeys, cancellationToken);
         }
     }
 
-    private async Task ReconcileNamesAsync(
-        IReadOnlyCollection<string>? normalizedNames,
+    private async Task ReconcileHistoryKeysAsync(
+        IReadOnlyCollection<string>? historyKeys,
         CancellationToken cancellationToken)
     {
-        var entities = await ReadEntitiesAsync(normalizedNames, cancellationToken);
+        var entities = await ReadEntitiesAsync(historyKeys, cancellationToken);
+        var requested = historyKeys is { Count: > 0 }
+            ? historyKeys.ToHashSet(StringComparer.Ordinal)
+            : null;
+
         foreach (var nameGroup in entities
-                     .GroupBy(value => value.NormalizedName, StringComparer.Ordinal)
+                     .Where(value => requested is null || requested.Contains(HistoryNameKey(value)))
+                     .GroupBy(HistoryNameKey, StringComparer.Ordinal)
                      .Where(group => group.Count() > 1))
         {
             await ReconcileNameGroupAsync(nameGroup.ToArray(), cancellationToken);
@@ -145,7 +152,7 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
         return false;
     }
 
-    private async Task<IReadOnlyList<string>> ReadCanonicalNamesForSourceEntitiesAsync(
+    private async Task<IReadOnlyList<string>> ReadHistoryKeysForSourceEntitiesAsync(
         IReadOnlyCollection<Guid> sourceEntityIds,
         CancellationToken cancellationToken)
     {
@@ -156,7 +163,10 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
         {
             await using var command = connection.CreateCommand();
             command.CommandText = """
-                SELECT DISTINCT canonical.normalized_name
+                SELECT DISTINCT
+                    canonical.entity_type,
+                    canonical.normalized_name,
+                    canonical.display_name
                 FROM source_entity_occurrence_binding binding
                 JOIN canonical_source_occurrence occurrence
                     ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
@@ -166,10 +176,16 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
                   AND occurrence.canonical_entity_id IS NOT NULL;
                 """;
             AddParameter(command, "@source_entity_ids", sourceEntityIds.ToArray());
-            var names = new List<string>();
+            var keys = new HashSet<string>(StringComparer.Ordinal);
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            while (await reader.ReadAsync(cancellationToken)) names.Add(reader.GetString(0));
-            return names;
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                keys.Add(HistoryNameKey(
+                    reader.GetString(0),
+                    reader.GetString(1),
+                    reader.GetString(2)));
+            }
+            return keys.ToArray();
         }
         finally
         {
@@ -178,7 +194,7 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
     }
 
     private async Task<IReadOnlyList<EntityRow>> ReadEntitiesAsync(
-        IReadOnlyCollection<string>? normalizedNames,
+        IReadOnlyCollection<string>? historyKeys,
         CancellationToken cancellationToken)
     {
         var connection = dbContext.Database.GetDbConnection();
@@ -187,12 +203,13 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
         try
         {
             await using var command = connection.CreateCommand();
-            command.CommandText = normalizedNames is { Count: > 0 }
+            command.CommandText = historyKeys is { Count: > 0 }
                 ? """
                     SELECT
                         canonical.canonical_entity_id,
                         canonical.entity_type,
                         canonical.normalized_name,
+                        canonical.display_name,
                         canonical.created_at,
                         MIN(publication.publication_date)
                     FROM canonical_entity canonical
@@ -200,15 +217,20 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
                         ON occurrence.canonical_entity_id = canonical.canonical_entity_id
                     LEFT JOIN canonical_publication publication
                         ON publication.canonical_publication_id = occurrence.canonical_publication_id
-                    WHERE canonical.normalized_name = ANY(@normalized_names)
+                    WHERE canonical.normalized_name = ANY(@history_keys)
+                       OR (
+                            canonical.entity_type = @class_entity_type
+                            AND STRPOS(canonical.display_name, '(') > 1
+                            AND RIGHT(BTRIM(canonical.display_name), 1) = ')')
                     GROUP BY canonical.canonical_entity_id, canonical.entity_type,
-                             canonical.normalized_name, canonical.created_at;
+                             canonical.normalized_name, canonical.display_name, canonical.created_at;
                     """
                 : """
                     SELECT
                         canonical.canonical_entity_id,
                         canonical.entity_type,
                         canonical.normalized_name,
+                        canonical.display_name,
                         canonical.created_at,
                         MIN(publication.publication_date)
                     FROM canonical_entity canonical
@@ -217,11 +239,12 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
                     LEFT JOIN canonical_publication publication
                         ON publication.canonical_publication_id = occurrence.canonical_publication_id
                     GROUP BY canonical.canonical_entity_id, canonical.entity_type,
-                             canonical.normalized_name, canonical.created_at;
+                             canonical.normalized_name, canonical.display_name, canonical.created_at;
                     """;
-            if (normalizedNames is { Count: > 0 })
+            if (historyKeys is { Count: > 0 })
             {
-                AddParameter(command, "@normalized_names", normalizedNames.Distinct(StringComparer.Ordinal).ToArray());
+                AddParameter(command, "@history_keys", historyKeys.Distinct(StringComparer.Ordinal).ToArray());
+                AddParameter(command, "@class_entity_type", ClassEntityType);
             }
 
             var rows = new List<EntityRow>();
@@ -232,8 +255,9 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
                     reader.GetGuid(0),
                     reader.GetString(1),
                     reader.GetString(2),
-                    reader.GetFieldValue<DateTimeOffset>(3),
-                    reader.IsDBNull(4) ? null : reader.GetFieldValue<DateOnly>(4)));
+                    reader.GetString(3),
+                    reader.GetFieldValue<DateTimeOffset>(4),
+                    reader.IsDBNull(5) ? null : reader.GetFieldValue<DateOnly>(5)));
             }
             return rows;
         }
@@ -241,6 +265,45 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
         {
             if (openedHere) await connection.CloseAsync();
         }
+    }
+
+    private static string HistoryNameKey(EntityRow entity) =>
+        HistoryNameKey(entity.EntityType, entity.NormalizedName, entity.DisplayName);
+
+    private static string HistoryNameKey(
+        string entityType,
+        string normalizedName,
+        string displayName)
+    {
+        if (!string.Equals(
+                CanonicalReferenceHistoryPolicy.NormalizeCategory(entityType),
+                ClassEntityType,
+                StringComparison.Ordinal))
+        {
+            return normalizedName;
+        }
+
+        var trimmed = displayName.Trim();
+        if (trimmed.Length < 4 || trimmed[^1] != ')')
+        {
+            return normalizedName;
+        }
+
+        var openParenthesis = trimmed.LastIndexOf('(');
+        if (openParenthesis <= 0 || openParenthesis >= trimmed.Length - 2)
+        {
+            return normalizedName;
+        }
+
+        var baseName = trimmed[..openParenthesis].TrimEnd();
+        var qualifier = trimmed[(openParenthesis + 1)..^1].Trim();
+        if (baseName.Length == 0 || qualifier.Length == 0)
+        {
+            return normalizedName;
+        }
+
+        var normalizedBaseName = CanonicalSourceIdentity.NormalizeIdentityPart(baseName);
+        return normalizedBaseName.Length == 0 ? normalizedName : normalizedBaseName;
     }
 
     private async Task<IReadOnlyList<RelationshipRow>> ReadRelationshipsAsync(
@@ -360,6 +423,7 @@ internal sealed class CanonicalReferenceHistoryReconciliationService(RulesCoreDb
         Guid Id,
         string EntityType,
         string NormalizedName,
+        string DisplayName,
         DateTimeOffset CreatedAt,
         DateOnly? EarliestPublicationDate);
     private sealed record RelationshipRow(Guid Id, Guid FromId, Guid ToId, string EvidenceKind);
