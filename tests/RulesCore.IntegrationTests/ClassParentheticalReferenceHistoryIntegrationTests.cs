@@ -174,11 +174,10 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
                 var reference = Assert.Single(catalog.References);
                 Assert.Equal(classBaseName, reference.DisplayName);
                 Assert.Equal(classBaseName, reference.EffectiveVariation.Name);
-                Assert.Equal(2, reference.CategoryHistory
-                    .Single(value => value.Category == RuleConceptEntityTypes.Class)
-                    .Editions.Count == 1
-                        ? reference.EffectiveCategory == RuleConceptEntityTypes.Class ? 2 : 0
-                        : 2);
+                Assert.Equal(RuleConceptEntityTypes.Class, reference.EffectiveCategory);
+                Assert.Contains(
+                    reference.CategoryHistory,
+                    value => value.Category == RuleConceptEntityTypes.Class);
             }
             finally
             {
