@@ -113,8 +113,7 @@ jobs:
     if: >-
       github.event_name == 'pull_request' ||
       github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'push' &&
-        (github.ref_name == 'main' || github.ref_name == 'feature/epic-content-modeling'))
+      (github.event_name == 'push' && github.ref_name == 'main')
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
