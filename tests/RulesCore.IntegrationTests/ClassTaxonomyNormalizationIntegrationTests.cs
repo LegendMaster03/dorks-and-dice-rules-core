@@ -65,8 +65,8 @@ public sealed class ClassTaxonomyNormalizationIntegrationTests
         var runeAlias = Assert.Single(rune.CanonicalAliases!);
         var sidekickAlias = Assert.Single(sidekick.CanonicalAliases!);
         var fighterAlias = Assert.Single(fighter.CanonicalAliases!);
-        Assert.Contains("rules-core-class-taxonomy-v1:prestige-class", runeAlias.Value, StringComparison.Ordinal);
-        Assert.Contains("rules-core-class-taxonomy-v1:sidekick-class", sidekickAlias.Value, StringComparison.Ordinal);
+        Assert.Contains("rules-core-class-taxonomy-v1:prestigeclass", runeAlias.Value, StringComparison.Ordinal);
+        Assert.Contains("rules-core-class-taxonomy-v1:sidekickclass", sidekickAlias.Value, StringComparison.Ordinal);
         Assert.Equal(fighter.NativeKey, fighterAlias.Value);
     }
 
