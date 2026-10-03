@@ -217,7 +217,7 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
                       AND ((from_canonical_entity_id = @left_id AND to_canonical_entity_id = @right_id)
                         OR (from_canonical_entity_id = @right_id AND to_canonical_entity_id = @left_id)));
                 """;
-            AddParameter(command, "@evidence_kind", CanonicalReferenceHistoryReconciliationService.AutomaticEvidenceKind);
+            AddParameter(command, "@evidence_kind", "normalized-name-compatible-category");
             AddParameter(command, "@left_id", left);
             AddParameter(command, "@right_id", right);
             return Convert.ToBoolean(await command.ExecuteScalarAsync());
