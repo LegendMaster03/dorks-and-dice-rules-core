@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using RulesCore.Application.Rules;
+using RulesCore.Domain.Rules;
 
 namespace RulesCore.Infrastructure.Rules.CharacterProjection;
 
@@ -254,7 +255,7 @@ internal static class CharacterStartingEquipmentProjector
             [new CharacterMechanicContributionView(
                 rollKey,
                 $"{rule.Catalog.DisplayName} starting-gold roll",
-                "set",
+                CharacterEffectOperations.Set,
                 (int)goldPieces,
                 $"rolled {rolled}; {gold.DisplayExpression}",
                 rule.Catalog.ConceptKey,
