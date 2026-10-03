@@ -18,7 +18,9 @@ internal static class TrustedCanonicalAliasPolicy
         // importer concerns, not trusted-lineage concerns. Apply them for every supported
         // representation before adding any source-lineage alias.
         record = ThreeXSourceNormalizationPolicy.Apply(representation, record);
+        record = EpicContentNormalizationPolicy.Apply(representation, record);
         record = ExactCompetencyTranslationPolicy.Apply(representation, record);
+        record = ClassTaxonomyNormalizationPolicy.Apply(representation, record);
 
         if (string.IsNullOrWhiteSpace(record.ContentJson)
             || !TrustedSourceLineageRegistry.TryResolveScheme(
@@ -32,7 +34,9 @@ internal static class TrustedCanonicalAliasPolicy
         var aliases = record.CanonicalAliases is null
             ? new Dictionary<string, string>(StringComparer.Ordinal)
             : new Dictionary<string, string>(record.CanonicalAliases, StringComparer.Ordinal);
-        aliases[scheme] = record.NativeKey;
+        aliases[scheme] = ClassTaxonomyNormalizationPolicy.TrustedAliasValue(
+            representation.FormatKey,
+            record);
         return record with { CanonicalAliases = aliases };
     }
 

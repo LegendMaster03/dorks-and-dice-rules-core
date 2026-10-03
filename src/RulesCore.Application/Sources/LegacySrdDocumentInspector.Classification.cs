@@ -22,7 +22,8 @@ public static partial class LegacySrdDocumentInspector
             && level == 2
             && !generic
             && !name.StartsWith("Spells ", StringComparison.OrdinalIgnoreCase)
-            && LooksLikeSpellBody(body))
+            && (LooksLikeSpellBody(body)
+                || (IsEpicSpellDocument(uri) && LooksLikeEpicSpellBody(body))))
         {
             return "spell";
         }
@@ -171,6 +172,9 @@ public static partial class LegacySrdDocumentInspector
                 || fileName.EndsWith(".html", StringComparison.Ordinal));
     }
 
+    private static bool IsEpicSpellDocument(Uri uri) =>
+        uri.AbsolutePath.Contains("epic-spells", StringComparison.OrdinalIgnoreCase);
+
     private static bool IsDomainDocument(Uri uri)
     {
         var path = uri.AbsolutePath.ToLowerInvariant();
@@ -215,6 +219,12 @@ public static partial class LegacySrdDocumentInspector
         body.Contains("Level:", StringComparison.OrdinalIgnoreCase)
         && (body.Contains("Components:", StringComparison.OrdinalIgnoreCase)
             || body.Contains("Casting Time:", StringComparison.OrdinalIgnoreCase)
+            || body.Contains("Range:", StringComparison.OrdinalIgnoreCase));
+
+    private static bool LooksLikeEpicSpellBody(string body) =>
+        body.Contains("Spellcraft DC:", StringComparison.OrdinalIgnoreCase)
+        && body.Contains("To Develop:", StringComparison.OrdinalIgnoreCase)
+        && (body.Contains("Casting Time:", StringComparison.OrdinalIgnoreCase)
             || body.Contains("Range:", StringComparison.OrdinalIgnoreCase));
 
     private static bool LooksLikePowerBody(string body) =>
