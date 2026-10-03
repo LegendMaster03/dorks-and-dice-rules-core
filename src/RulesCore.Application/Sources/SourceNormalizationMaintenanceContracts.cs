@@ -7,7 +7,7 @@ namespace RulesCore.Application.Sources;
 /// </summary>
 public static class SourceNormalizationVersion
 {
-    public const int Current = 1;
+    public const int Current = 2;
 }
 
 public sealed record SourceNormalizationStatusView(

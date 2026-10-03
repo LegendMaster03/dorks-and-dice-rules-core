@@ -257,6 +257,17 @@ internal static class ExactCompetencyTranslationPolicy
         string currentName,
         NormalizedSourceRecord translatedRecord)
     {
+        // This method is the importer's existing reviewed derived-identity migration gate. Epic
+        // continuation/classification corrections use the same stable SourceEntity/native-key
+        // migration semantics as competency/race corrections.
+        if (EpicContentNormalizationPolicy.IsReviewedIdentityMigration(
+                currentEntityType,
+                currentName,
+                translatedRecord))
+        {
+            return true;
+        }
+
         if (IsReviewedPcGenRaceIdentityCorrection(
                 currentEntityType,
                 currentName,
