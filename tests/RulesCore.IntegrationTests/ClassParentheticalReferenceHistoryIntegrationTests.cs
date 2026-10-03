@@ -2,9 +2,11 @@ using System.Data;
 using System.Data.Common;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using RulesCore.Application.Rules;
 using RulesCore.Application.Sources;
 using RulesCore.Domain.Rules;
 using RulesCore.Infrastructure.Persistence;
+using RulesCore.Infrastructure.Rules;
 using RulesCore.Infrastructure.Sources;
 
 namespace RulesCore.IntegrationTests;
@@ -135,14 +137,16 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
                     token,
                     "existing-base",
                     [Record(RuleConceptEntityTypes.Class, classBaseName, "BASE", "existing-class-base")],
-                    reconcileHistory: false);
+                    reconcileHistory: false,
+                    publicationDate: new DateOnly(2025, 1, 1));
                 var variantImport = await ImportAsync(
                     db,
                     variantPackageKey,
                     token,
                     "existing-variant",
                     [Record(RuleConceptEntityTypes.Class, classVariantName, "VARIANT", "existing-class-variant")],
-                    reconcileHistory: false);
+                    reconcileHistory: false,
+                    publicationDate: new DateOnly(2019, 1, 1));
 
                 var baseCanonicalId = await ReadCanonicalEntityIdAsync(
                     db,
@@ -156,6 +160,25 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
                 await new CanonicalDataReconciliationService(db).ReconcileExistingCorpusAsync();
 
                 Assert.True(await HasAutomaticHistoryEdgeAsync(db, baseCanonicalId, variantCanonicalId));
+
+                var catalog = await new WikiReferenceCatalogService(db).GetGlobalCatalogAsync(
+                    userId: null,
+                    entityType: RuleConceptEntityTypes.Class,
+                    categoryMode: WikiReferenceCategoryModes.AnyVariation,
+                    query: classBaseName,
+                    sourceCode: null,
+                    packageKey: null,
+                    edition: null,
+                    limit: 20,
+                    offset: 0);
+                var reference = Assert.Single(catalog.References);
+                Assert.Equal(classBaseName, reference.DisplayName);
+                Assert.Equal(classBaseName, reference.EffectiveVariation.Name);
+                Assert.Equal(2, reference.CategoryHistory
+                    .Single(value => value.Category == RuleConceptEntityTypes.Class)
+                    .Editions.Count == 1
+                        ? reference.EffectiveCategory == RuleConceptEntityTypes.Class ? 2 : 0
+                        : 2);
             }
             finally
             {
@@ -170,7 +193,8 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
         string token,
         string label,
         IReadOnlyList<NormalizedSourceRecord> records,
-        bool reconcileHistory)
+        bool reconcileHistory,
+        DateOnly? publicationDate = null)
     {
         var artifact = new SourceRepresentationArtifact(
             $"parenthetical-{label}-{token}.json",
@@ -187,9 +211,9 @@ public sealed class ClassParentheticalReferenceHistoryIntegrationTests
                     $"Parenthetical class history {label} {token}",
                     "Integration Test",
                     "5e",
-                    label.Contains("base", StringComparison.Ordinal)
+                    publicationDate ?? (label.Contains("base", StringComparison.Ordinal)
                         ? new DateOnly(2020, 1, 1)
-                        : new DateOnly(2021, 1, 1))
+                        : new DateOnly(2021, 1, 1)))
             ]);
         var request = new ImportNormalizedSourceRequest(
             packageKey,
