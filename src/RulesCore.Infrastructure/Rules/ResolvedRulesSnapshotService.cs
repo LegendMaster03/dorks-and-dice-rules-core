@@ -30,6 +30,7 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
                 normalizedUserId,
                 excludedConceptIds: [],
                 cancellationToken);
+            fallbackOnly = await AttachRelationshipsAsync(fallbackOnly, cancellationToken);
             return new ResolvedRulesCatalogView(
                 "global", null, null, null, fallbackOnly.Length, [], [], fallbackOnly);
         }
@@ -84,7 +85,6 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
         }
 
         published = await ResolvedRuleCatalogEditionMetadata.AttachAsync(dbContext, published, cancellationToken);
-        published = await AttachRelationshipsAsync(published, cancellationToken);
 
         var fallbacks = await BuildFallbackItemsAsync(
             normalizedUserId,
@@ -96,6 +96,7 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
             .ThenBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
             .ThenBy(value => value.ConceptKey, StringComparer.Ordinal)
             .ToArray();
+        rules = await AttachRelationshipsAsync(rules, cancellationToken);
 
         return new ResolvedRulesCatalogView(
             "global", null, revision.RevisionNumber, revision.PublishedAt, rules.Length, [], [], rules);
@@ -124,6 +125,7 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
                 normalizedUserId,
                 excludedConceptIds: [],
                 cancellationToken);
+            fallbackOnly = await AttachRelationshipsAsync(fallbackOnly, cancellationToken);
             return new ResolvedRulesCatalogView(
                 "campaign", campaignId, null, null, fallbackOnly.Length, [], [], fallbackOnly);
         }
@@ -189,7 +191,6 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
         }
 
         published = await ResolvedRuleCatalogEditionMetadata.AttachAsync(dbContext, published, cancellationToken);
-        published = await AttachRelationshipsAsync(published, cancellationToken);
 
         var fallbacks = await BuildFallbackItemsAsync(
             normalizedUserId,
@@ -201,6 +202,7 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
             .ThenBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
             .ThenBy(value => value.ConceptKey, StringComparer.Ordinal)
             .ToArray();
+        rules = await AttachRelationshipsAsync(rules, cancellationToken);
 
         return new ResolvedRulesCatalogView(
             "campaign", campaignId, revision.RevisionNumber, revision.PublishedAt, rules.Length, [], [], rules);
@@ -270,7 +272,7 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
                     sourceRevision.RevisionNumber)));
         }
 
-        return await AttachRelationshipsAsync(result, cancellationToken);
+        return result.ToArray();
     }
 
     private async Task<ResolvedRuleCatalogItemView[]> AttachRelationshipsAsync(
