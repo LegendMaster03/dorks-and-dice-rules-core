@@ -25,12 +25,12 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
         var effectivePackageKeys = rules.Rules
             .Select(value => value.PackageKey)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
-        var providerByPackageKey = await sourceMetadata.ReadProvidersAsync(rules.Rules, cancellationToken);
-        var sourceUriByRevision = await sourceMetadata.ReadSourceUrisAsync(rules.Rules, cancellationToken);
-        var publicationByRevision = await sourceMetadata.ReadCharacterMechanicsPublicationAttributionsAsync(
-            rules.Rules,
-            cancellationToken);
         var competencyRules = rules.Rules.Where(IsCompetencyRule).ToArray();
+        var providerByPackageKey = await sourceMetadata.ReadProvidersAsync(competencyRules, cancellationToken);
+        var sourceUriByRevision = await sourceMetadata.ReadSourceUrisAsync(competencyRules, cancellationToken);
+        var publicationByRevision = await sourceMetadata.ReadCharacterMechanicsPublicationAttributionsAsync(
+            competencyRules,
+            cancellationToken);
         var competencyDocuments = await sourceMetadata.ReadMechanicalDocumentsAsync(
             competencyRules,
             cancellationToken);
@@ -38,9 +38,9 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
             competencyRules,
             userId,
             cancellationToken);
-    
+
         var mechanics = new List<CharacterMechanicView>();
-    
+
         foreach (var definition in KnownCharacterMechanics.All)
         {
             var available = IsAvailable(definition, effectivePackageKeys);
@@ -48,12 +48,12 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
             {
                 continue;
             }
-    
+
             mechanics.Add(ToStaticView(definition, available));
         }
-    
+
         var relationshipViews = await BuildCompetencyRelationshipsAsync(
-            rules.Rules,
+            competencyRules,
             cancellationToken);
         var relationshipByMechanic = relationshipViews
             .SelectMany(value => new[] { value.ParentMechanicKey }.Concat(value.ComponentMechanicKeys)
@@ -66,15 +66,14 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                     .OrderBy(value => value.RelationshipKey, StringComparer.Ordinal)
                     .ToArray(),
                 StringComparer.Ordinal);
-    
-        foreach (var rule in rules.Rules
-                     .Where(IsCompetencyRule)
+
+        foreach (var rule in competencyRules
                      .OrderBy(value => value.ConceptKey, StringComparer.Ordinal))
         {
             var mechanicKey = CompetencyMechanicKey(rule.ConceptKey);
             relationshipByMechanic.TryGetValue(mechanicKey, out var relationships);
             relationships ??= [];
-    
+
             var derivation = relationships.SingleOrDefault(value =>
                 string.Equals(value.ParentMechanicKey, mechanicKey, StringComparison.Ordinal)
                 && string.Equals(
@@ -82,7 +81,7 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                     MechanicalRelationshipResolutionKinds.DeriveParent,
                     StringComparison.Ordinal)
                 && value.CanResolve);
-    
+
             var publicationMetadata = publicationByRevision.GetValueOrDefault(
                 rule.SourceEntityRevisionId,
                 []);
@@ -92,7 +91,7 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                 publicationMetadata,
                 competencyProfilesByConcept.GetValueOrDefault(rule.RuleConceptId, []));
             var inputs = BuildCompetencyInputs(derivation, competency);
-    
+
             var sourceUri = sourceUriByRevision.GetValueOrDefault(rule.SourceEntityRevisionId);
             var provider = providerByPackageKey.GetValueOrDefault(rule.PackageKey)
                 ?? rule.PackageDisplayName;
@@ -163,11 +162,11 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                 Resolution: rule.Resolution,
                 Help: CharacterContextualHelpProjection.For(mechanicKey)));
         }
-    
+
         mechanics = AttachStaticRelationships(mechanics);
         mechanics = UniversalCompetencyProjection.ApplySemanticIdentity(mechanics);
         mechanics = AttachCompetencyIdentityFacets(mechanics);
-    
+
         var orderedMechanics = mechanics
             .OrderBy(value => value.Kind, StringComparer.Ordinal)
             .ThenBy(value => value.DisplayName, StringComparer.Ordinal)
@@ -175,7 +174,7 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
             .ToArray();
         var universalCompetencies =
             UniversalCompetencyProjection.BuildCatalog(orderedMechanics);
-    
+
         return new CharacterMechanicsCatalogView(
             rules.Scope,
             rules.CampaignId,
@@ -184,16 +183,15 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
             orderedMechanics,
             universalCompetencies);
     }
-    
+
     private async Task<IReadOnlyList<CharacterMechanicRelationshipView>> BuildCompetencyRelationshipsAsync(
         IReadOnlyList<ResolvedRuleCatalogItemView> rules,
         CancellationToken cancellationToken)
     {
         var byConceptKey = rules
-            .Where(IsCompetencyRule)
             .GroupBy(value => value.ConceptKey, StringComparer.Ordinal)
             .ToDictionary(group => group.Key, group => group.First(), StringComparer.Ordinal);
-    
+
         var result = new List<CharacterMechanicRelationshipView>();
         var service = new MechanicalRelationshipService(dbContext);
         foreach (var definition in KnownMechanicalRelationships.All)
@@ -206,7 +204,7 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
             {
                 continue;
             }
-    
+
             var current = byConceptKey[present[0].ConceptKey];
             var recommendation = (await service.GetForConceptAsync(
                     current.RuleConceptId,
@@ -215,7 +213,7 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                     value.Relationship.Key,
                     definition.Key,
                     StringComparison.Ordinal));
-    
+
             var missing = references
                 .Where(value => !byConceptKey.ContainsKey(value.ConceptKey))
                 .Select(value => CompetencyMechanicKey(value.ConceptKey))
@@ -225,7 +223,7 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                     recommendation.EffectiveResolutionKind,
                     MechanicalRelationshipResolutionKinds.DeriveParent,
                     StringComparison.Ordinal);
-    
+
             result.Add(new CharacterMechanicRelationshipView(
                 definition.Key,
                 definition.Kind,
@@ -239,10 +237,10 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                 canResolve,
                 missing));
         }
-    
+
         return result;
     }
-    
+
     private static List<CharacterMechanicView> AttachStaticRelationships(
         List<CharacterMechanicView> mechanics)
     {
@@ -256,7 +254,7 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
             {
                 continue;
             }
-    
+
             var missing = memberKeys.Where(value => !byKey.ContainsKey(value)).ToArray();
             var relationship = new CharacterMechanicRelationshipView(
                 definition.Key,
@@ -268,7 +266,7 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                 EffectiveResolutionKind: null,
                 CanResolve: missing.Length == 0,
                 MissingMechanicKeys: missing);
-    
+
             foreach (var key in memberKeys.Where(byKey.ContainsKey))
             {
                 var current = byKey[key];
@@ -285,10 +283,10 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                 mechanics[index] = updated;
             }
         }
-    
+
         return mechanics;
     }
-    
+
     private static List<CharacterMechanicView> AttachCompetencyIdentityFacets(
         List<CharacterMechanicView> mechanics)
     {
@@ -300,7 +298,7 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                 StringComparer.OrdinalIgnoreCase)
             .Where(group => group.Count() > 0)
             .ToArray();
-    
+
         foreach (var group in groups)
         {
             var members = group.ToArray();
@@ -340,7 +338,7 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                         .ToArray()))
                 .OrderBy(value => value.FacetType, StringComparer.Ordinal)
                 .ToArray();
-    
+
             var identityNames = members
                 .Select(value => value.Competency!.IdentityName)
                 .Where(value => !string.IsNullOrWhiteSpace(value))
@@ -361,7 +359,7 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                 .ThenBy(value => value.TargetName, StringComparer.Ordinal)
                 .ThenBy(value => value.Scope, StringComparer.Ordinal)
                 .ToArray();
-    
+
             foreach (var member in members)
             {
                 var competency = member.Competency! with
@@ -384,10 +382,10 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                 mechanics[memberIndex] = updated;
             }
         }
-    
+
         return mechanics;
     }
-    
+
     private static CharacterMechanicView ToStaticView(
         CharacterMechanicDefinition definition,
         bool available)
@@ -413,7 +411,7 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                     definition.Source.PresentationRequired,
                     definition.Source.ReferenceLinkRequired)
             ];
-    
+
         return new CharacterMechanicView(
             definition.Key,
             definition.Kind,
@@ -500,7 +498,7 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
             sourceAttributions,
             Help: CharacterContextualHelpProjection.For(definition.Key));
     }
-    
+
     private static bool IsAvailable(
         CharacterMechanicDefinition definition,
         IReadOnlySet<string> effectivePackageKeys) =>
@@ -514,7 +512,7 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                 && effectivePackageKeys.Contains(packageKey),
             _ => false
         };
-    
+
     private static IReadOnlyList<CharacterMechanicInputView> BuildCompetencyInputs(
         CharacterMechanicRelationshipView? derivation,
         CharacterCompetencyDefinitionView competency)
@@ -533,26 +531,26 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
                     IncludeWhenBooleanValue: null))
                 .ToArray();
         }
-    
+
         if (!competency.DefaultProfileSourceEntityRevisionId.HasValue)
         {
             return [];
         }
-    
+
         return competency.Profiles
             .SingleOrDefault(value =>
                 value.SourceEntityRevisionId == competency.DefaultProfileSourceEntityRevisionId.Value)
             ?.Inputs
             ?? [];
     }
-    
+
     private static bool IsCompetencyRule(ResolvedRuleCatalogItemView value) =>
         string.Equals(value.EntityType, "skill", StringComparison.OrdinalIgnoreCase)
         || string.Equals(value.EntityType, "tool", StringComparison.OrdinalIgnoreCase);
-    
+
     private static string CompetencyMechanicKey(string conceptKey) =>
         $"competency.{conceptKey.Trim().ToLowerInvariant()}";
-    
+
     private static string ConceptKeyFromCompetencyMechanicKey(string mechanicKey)
     {
         const string prefix = "competency.";
@@ -564,6 +562,6 @@ internal sealed class CharacterMechanicsCatalogBuilder(RulesCoreDbContext dbCont
         }
         return mechanicKey[prefix.Length..];
     }
-    
+
 
 }
