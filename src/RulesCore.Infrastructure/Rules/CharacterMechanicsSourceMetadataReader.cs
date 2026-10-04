@@ -40,7 +40,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
                     ReferenceLinkRequired: false)
             ];
         }
-    
+
         return publications
             .OrderBy(value => value.WorkDisplayName, StringComparer.Ordinal)
             .ThenBy(value => value.WorkKey, StringComparer.Ordinal)
@@ -62,7 +62,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
                 ReferenceLinkRequired: false))
             .ToArray();
     }
-    
+
     internal async Task<IReadOnlyDictionary<Guid, IReadOnlyList<CharacterMechanicsPublicationAttribution>>> ReadCharacterMechanicsPublicationAttributionsAsync(
         IReadOnlyList<ResolvedRuleCatalogItemView> rules,
         CancellationToken cancellationToken)
@@ -72,14 +72,14 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
         {
             return new Dictionary<Guid, IReadOnlyList<CharacterMechanicsPublicationAttribution>>();
         }
-    
+
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
         if (openedHere)
         {
             await connection.OpenAsync(cancellationToken);
         }
-    
+
         try
         {
             await using var command = connection.CreateCommand();
@@ -99,7 +99,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
                 WHERE binding.source_entity_revision_id = ANY(@revision_ids);
                 """;
             AddParameter(command, "@revision_ids", revisionIds);
-    
+
             var values = new Dictionary<Guid, List<CharacterMechanicsPublicationAttribution>>();
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
@@ -110,7 +110,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
                     publications = [];
                     values.Add(revisionId, publications);
                 }
-    
+
                 publications.Add(new CharacterMechanicsPublicationAttribution(
                     reader.GetString(1),
                     reader.GetString(2),
@@ -118,7 +118,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
                     reader.IsDBNull(4) ? null : reader.GetString(4),
                     reader.IsDBNull(5) ? null : reader.GetFieldValue<DateOnly>(5)));
             }
-    
+
             return values.ToDictionary(
                 value => value.Key,
                 value => (IReadOnlyList<CharacterMechanicsPublicationAttribution>)value.Value
@@ -137,7 +137,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
             }
         }
     }
-    
+
     internal async Task<IReadOnlyDictionary<Guid, IReadOnlyList<CharacterCompetencyProfileView>>> ReadCompetencyProfilesAsync(
         IReadOnlyList<ResolvedRuleCatalogItemView> rules,
         string? userId,
@@ -148,7 +148,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
         {
             return new Dictionary<Guid, IReadOnlyList<CharacterCompetencyProfileView>>();
         }
-    
+
         await CanonicalRuleBindingStore.EnsureSchemaAsync(dbContext, cancellationToken);
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
@@ -156,7 +156,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
         {
             await connection.OpenAsync(cancellationToken);
         }
-    
+
         try
         {
             await using var command = connection.CreateCommand();
@@ -171,13 +171,6 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
                     JOIN concept_entities parent
                         ON parent.canonical_entity_id = relationship.from_canonical_entity_id
                     WHERE relationship.relationship_kind = 'revision'
-                ),
-                latest AS (
-                    SELECT DISTINCT ON (source_entity_id)
-                        source_entity_id,
-                        source_entity_revision_id
-                    FROM source_entity_revision
-                    ORDER BY source_entity_id, revision_number DESC
                 )
                 SELECT DISTINCT
                     concept_entity.rule_concept_id,
@@ -201,10 +194,8 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
                     ON occurrence.canonical_entity_id = concept_entity.canonical_entity_id
                 JOIN source_entity_occurrence_binding occurrence_binding
                     ON occurrence_binding.canonical_source_occurrence_id = occurrence.canonical_source_occurrence_id
-                JOIN latest
-                    ON latest.source_entity_revision_id = occurrence_binding.source_entity_revision_id
                 JOIN source_entity_revision revision
-                    ON revision.source_entity_revision_id = latest.source_entity_revision_id
+                    ON revision.source_entity_revision_id = occurrence_binding.source_entity_revision_id
                 JOIN source_entity source
                     ON source.source_entity_id = revision.source_entity_id
                 JOIN source_representation representation
@@ -213,17 +204,23 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
                     ON publication.canonical_publication_id = occurrence.canonical_publication_id
                 JOIN source_package package
                     ON package.source_package_id = source.source_package_id
-                WHERE package.is_public
+                WHERE NOT EXISTS (
+                    SELECT 1
+                    FROM source_entity_revision newer
+                    WHERE newer.source_entity_id = revision.source_entity_id
+                      AND newer.revision_number > revision.revision_number)
+                  AND (
+                    package.is_public
                     OR (@user_id IS NOT NULL AND EXISTS (
                         SELECT 1
                         FROM user_source_grant grant_row
                         WHERE grant_row.source_package_id = package.source_package_id
-                            AND grant_row.user_id = @user_id))
+                          AND grant_row.user_id = @user_id)))
                 ORDER BY concept_entity.rule_concept_id, revision.source_entity_revision_id;
                 """;
             AddParameter(command, "@concept_ids", conceptIds);
             AddNullableStringParameter(command, "@user_id", NormalizeOptionalUserId(userId));
-    
+
             var profiles = new Dictionary<Guid, List<CharacterCompetencyProfileView>>();
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
@@ -263,7 +260,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
                 {
                     continue;
                 }
-    
+
                 if (!profiles.TryGetValue(conceptId, out var conceptProfiles))
                 {
                     conceptProfiles = [];
@@ -271,7 +268,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
                 }
                 conceptProfiles.Add(profile);
             }
-    
+
             return profiles.ToDictionary(
                 pair => pair.Key,
                 pair => (IReadOnlyList<CharacterCompetencyProfileView>)pair.Value
@@ -300,7 +297,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
             }
         }
     }
-    
+
     internal async Task<IReadOnlyDictionary<Guid, string>> ReadMechanicalDocumentsAsync(
         IReadOnlyList<ResolvedRuleCatalogItemView> rules,
         CancellationToken cancellationToken)
@@ -310,7 +307,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
         {
             return new Dictionary<Guid, string>();
         }
-    
+
         var revisions = await dbContext.SourceEntityRevisions
             .AsNoTracking()
             .Where(value => revisionIds.Contains(value.Id))
@@ -321,7 +318,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
                 ? value.RawJson
                 : value.ContentJson!);
     }
-    
+
     internal async Task<IReadOnlyDictionary<string, string>> ReadProvidersAsync(
         IReadOnlyList<ResolvedRuleCatalogItemView> rules,
         CancellationToken cancellationToken)
@@ -331,7 +328,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
         {
             return new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         }
-    
+
         return await dbContext.SourcePackages
             .AsNoTracking()
             .Where(value => packageKeys.Contains(value.Key))
@@ -341,7 +338,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
                 StringComparer.OrdinalIgnoreCase,
                 cancellationToken);
     }
-    
+
     internal async Task<IReadOnlyDictionary<Guid, string?>> ReadSourceUrisAsync(
         IReadOnlyList<ResolvedRuleCatalogItemView> rules,
         CancellationToken cancellationToken)
@@ -351,7 +348,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
         {
             return new Dictionary<Guid, string?>();
         }
-    
+
         return await dbContext.SourceEntityRevisions
             .AsNoTracking()
             .Where(value => revisionIds.Contains(value.Id))
@@ -365,8 +362,8 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
                 value => value.SourceUri,
                 cancellationToken);
     }
-    
-    
+
+
     private static void AddParameter(DbCommand command, string name, object value)
     {
         var parameter = command.CreateParameter();
@@ -374,7 +371,7 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
         parameter.Value = value;
         command.Parameters.Add(parameter);
     }
-    
+
     private static void AddNullableStringParameter(DbCommand command, string name, string? value)
     {
         var parameter = command.CreateParameter();
@@ -383,8 +380,8 @@ internal sealed class CharacterMechanicsSourceMetadataReader(RulesCoreDbContext 
         parameter.Value = (object?)value ?? DBNull.Value;
         command.Parameters.Add(parameter);
     }
-    
+
     private static string? NormalizeOptionalUserId(string? value) =>
         string.IsNullOrWhiteSpace(value) ? null : value.Trim();
-    
+
 }
