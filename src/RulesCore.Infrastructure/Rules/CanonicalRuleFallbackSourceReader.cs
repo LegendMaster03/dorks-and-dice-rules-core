@@ -16,6 +16,11 @@ internal static class CanonicalRuleFallbackSourceReader
         string? userId,
         CancellationToken cancellationToken = default)
     {
+        if (ruleConceptId == Guid.Empty)
+        {
+            throw new ArgumentException("Rule concept ID can not be empty.", nameof(ruleConceptId));
+        }
+
         var result = await GetAccessibleSourceEntityIdsByConceptAsync(
             dbContext,
             [ruleConceptId],
