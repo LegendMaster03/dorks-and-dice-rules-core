@@ -15,6 +15,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
     private const long SourceMaintenanceAdvisoryLockKey = 0x444E4452434D4149L;
     private const string TransientNormalizationFailureMarker = "transient failure";
     private const int MaximumTransientNormalizationRetries = 3;
+    private const int NormalizationBatchSize = 25;
     private static readonly TimeSpan CoordinatorElectionInterval = TimeSpan.FromSeconds(2);
 
     private readonly Dictionary<Guid, int> transientNormalizationRetryCounts = new();
@@ -64,6 +65,8 @@ internal sealed class CurrentUserSourceRefreshBackground(
                 // Normalization is deliberately not coordinator-owned. Each Rules Core process
                 // can claim a different revision with FOR UPDATE SKIP LOCKED, so the public and
                 // private ingresses contribute to the same backfill without duplicating work.
+                // Process a bounded batch per scope so status aggregation and scope construction
+                // are amortized across multiple revisions instead of repeated for every row.
                 var processedNormalization =
                     await ProcessNextNormalizationBackfillAsync(stoppingToken);
 
@@ -342,7 +345,7 @@ internal sealed class CurrentUserSourceRefreshBackground(
             var maintenance = scope.ServiceProvider
                 .GetRequiredService<ISourceNormalizationMaintenanceService>();
             var result = await maintenance.ReconcileAsync(
-                limit: 1,
+                limit: NormalizationBatchSize,
                 retryFailed: false,
                 packageKey: null,
                 cancellationToken: stoppingToken);
@@ -351,38 +354,39 @@ internal sealed class CurrentUserSourceRefreshBackground(
                 return false;
             }
 
-            if (result.FailedRevisionCount > 0)
+            foreach (var failure in result.Failures)
             {
-                var failure = result.Failures[0];
                 logger.LogWarning(
                     "Rules Core could not backfill source revision {RevisionId} ({EntityName}): {Message}",
                     failure.SourceEntityRevisionId,
                     failure.EntityName,
                     failure.Message);
 
-                if (IsTransientNormalizationFailure(failure.Message))
+                if (!IsTransientNormalizationFailure(failure.Message))
                 {
-                    var retryCount = transientNormalizationRetryCounts.GetValueOrDefault(
-                        failure.SourceEntityRevisionId) + 1;
-                    transientNormalizationRetryCounts[failure.SourceEntityRevisionId] = retryCount;
-
-                    if (retryCount <= MaximumTransientNormalizationRetries)
-                    {
-                        await RequeueNormalizationRevisionAsync(
-                            failure.SourceEntityRevisionId,
-                            stoppingToken);
-                        logger.LogWarning(
-                            "Rules Core requeued transient source-normalization failure {RevisionId} for retry {RetryCount}/{MaximumRetryCount}.",
-                            failure.SourceEntityRevisionId,
-                            retryCount,
-                            MaximumTransientNormalizationRetries);
-                        return false;
-                    }
-
-                    logger.LogError(
-                        "Rules Core exhausted transient source-normalization retries for revision {RevisionId}.",
-                        failure.SourceEntityRevisionId);
+                    continue;
                 }
+
+                var retryCount = transientNormalizationRetryCounts.GetValueOrDefault(
+                    failure.SourceEntityRevisionId) + 1;
+                transientNormalizationRetryCounts[failure.SourceEntityRevisionId] = retryCount;
+
+                if (retryCount <= MaximumTransientNormalizationRetries)
+                {
+                    await RequeueNormalizationRevisionAsync(
+                        failure.SourceEntityRevisionId,
+                        stoppingToken);
+                    logger.LogWarning(
+                        "Rules Core requeued transient source-normalization failure {RevisionId} for retry {RetryCount}/{MaximumRetryCount}.",
+                        failure.SourceEntityRevisionId,
+                        retryCount,
+                        MaximumTransientNormalizationRetries);
+                    continue;
+                }
+
+                logger.LogError(
+                    "Rules Core exhausted transient source-normalization retries for revision {RevisionId}.",
+                    failure.SourceEntityRevisionId);
             }
             return true;
         }
