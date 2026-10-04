@@ -36,7 +36,6 @@ internal static partial class CrossEditionCanonicalNormalizationPolicy
             ["Transmutation"] = "transmutation"
         };
 
-
     private static readonly IReadOnlyDictionary<string, string> FeatCategoryLabels =
         new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
@@ -139,6 +138,7 @@ internal static partial class CrossEditionCanonicalNormalizationPolicy
         {
             context["edition"] = edition;
         }
+        context["canonicalSchemaVersion"] = SchemaVersion;
         extension["context"] = context;
 
         var entityType = record.EntityType.Trim().ToLowerInvariant();
@@ -177,7 +177,6 @@ internal static partial class CrossEditionCanonicalNormalizationPolicy
         }
 
         NormalizeCombat(content, extension);
-        extension["canonicalSchemaVersion"] = SchemaVersion;
         content["_rulesCore"] = extension;
 
         return record with
@@ -1302,6 +1301,7 @@ internal static partial class CrossEditionCanonicalNormalizationPolicy
 
     private static bool TryFirstDecimal(string value, out decimal result)
     {
+        result = 0;
         var match = Regex.Match(value, @"\d[\d,]*(?:\.\d+)?", RegexOptions.CultureInvariant);
         return match.Success
             && decimal.TryParse(
@@ -1313,6 +1313,7 @@ internal static partial class CrossEditionCanonicalNormalizationPolicy
 
     private static bool TryFirstInt(string value, out int result)
     {
+        result = 0;
         var match = SignedInteger().Match(value ?? string.Empty);
         return match.Success
             && int.TryParse(match.Groups["value"].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out result);
