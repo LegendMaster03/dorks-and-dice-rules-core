@@ -17,46 +17,64 @@ internal sealed class RulesCorePerformanceIndexInitializer(
 {
     private const long PerformanceIndexLockKey = 4921946562870068041L;
 
-    private static readonly string[] IndexStatements =
+    private static readonly PerformanceIndexDefinition[] Indexes =
     [
-        """
-        CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_rule_concept_source_binding_canonical_entity
-            ON rule_concept_source_binding(canonical_entity_id, rule_concept_id);
-        """,
-        """
-        CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_rule_concept_source_binding_source_entity
-            ON rule_concept_source_binding(source_entity_id)
-            WHERE source_entity_id IS NOT NULL;
-        """,
-        """
-        CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_ruleset_revision_entry_source_revision
-            ON ruleset_revision_entry(source_entity_revision_id);
-        """,
-        """
-        CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_campaign_ruleset_revision_entry_source_revision
-            ON campaign_ruleset_revision_entry(source_entity_revision_id);
-        """,
-        """
-        CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_source_entity_entity_type
-            ON source_entity(entity_type);
-        """,
-        """
-        CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_source_entity_source_code
-            ON source_entity(source_code)
-            WHERE source_code IS NOT NULL;
-        """,
-        """
-        CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_source_entity_source_code_ci
-            ON source_entity((lower(COALESCE(source_code, ''))));
-        """,
-        """
-        CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_source_package_key_ci
-            ON source_package((lower(package_key)));
-        """,
-        """
-        CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_rule_concept_key_ci
-            ON rule_concept((lower(concept_key)));
-        """
+        new(
+            "ix_rule_concept_source_binding_canonical_entity",
+            """
+            CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_rule_concept_source_binding_canonical_entity
+                ON rule_concept_source_binding(canonical_entity_id, rule_concept_id);
+            """),
+        new(
+            "ix_rule_concept_source_binding_source_entity",
+            """
+            CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_rule_concept_source_binding_source_entity
+                ON rule_concept_source_binding(source_entity_id)
+                WHERE source_entity_id IS NOT NULL;
+            """),
+        new(
+            "ix_ruleset_revision_entry_source_revision",
+            """
+            CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_ruleset_revision_entry_source_revision
+                ON ruleset_revision_entry(source_entity_revision_id);
+            """),
+        new(
+            "ix_campaign_ruleset_revision_entry_source_revision",
+            """
+            CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_campaign_ruleset_revision_entry_source_revision
+                ON campaign_ruleset_revision_entry(source_entity_revision_id);
+            """),
+        new(
+            "ix_source_entity_entity_type",
+            """
+            CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_source_entity_entity_type
+                ON source_entity(entity_type);
+            """),
+        new(
+            "ix_source_entity_source_code",
+            """
+            CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_source_entity_source_code
+                ON source_entity(source_code)
+                WHERE source_code IS NOT NULL;
+            """),
+        new(
+            "ix_source_entity_source_code_ci",
+            """
+            CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_source_entity_source_code_ci
+                ON source_entity((lower(COALESCE(source_code, ''))));
+            """),
+        new(
+            "ix_source_package_key_ci",
+            """
+            CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_source_package_key_ci
+                ON source_package((lower(package_key)));
+            """),
+        new(
+            "ix_rule_concept_key_ci",
+            """
+            CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_rule_concept_key_ci
+                ON rule_concept((lower(concept_key)));
+            """)
     ];
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -80,9 +98,10 @@ internal sealed class RulesCorePerformanceIndexInitializer(
                     return;
                 }
 
-                foreach (var statement in IndexStatements)
+                await DropInvalidIndexesAsync(dbContext, stoppingToken);
+                foreach (var index in Indexes)
                 {
-                    await dbContext.Database.ExecuteSqlRawAsync(statement, stoppingToken);
+                    await dbContext.Database.ExecuteSqlRawAsync(index.Statement, stoppingToken);
                 }
 
                 logger.LogInformation("Rules Core performance indexes are available.");
@@ -116,6 +135,48 @@ internal sealed class RulesCorePerformanceIndexInitializer(
         }
     }
 
+    private static async Task DropInvalidIndexesAsync(
+        RulesCoreDbContext dbContext,
+        CancellationToken cancellationToken)
+    {
+        var connection = dbContext.Database.GetDbConnection();
+        var invalidNames = new List<string>();
+        await using (var command = connection.CreateCommand())
+        {
+            command.CommandText = """
+                SELECT index_class.relname
+                FROM pg_index index_state
+                JOIN pg_class index_class
+                  ON index_class.oid = index_state.indexrelid
+                JOIN pg_namespace index_namespace
+                  ON index_namespace.oid = index_class.relnamespace
+                WHERE NOT index_state.indisvalid
+                  AND index_namespace.nspname = current_schema()
+                  AND index_class.relname = ANY(@index_names);
+                """;
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = "@index_names";
+            parameter.Value = Indexes.Select(value => value.Name).ToArray();
+            command.Parameters.Add(parameter);
+
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                invalidNames.Add(reader.GetString(0));
+            }
+        }
+
+        foreach (var invalidName in invalidNames)
+        {
+            var knownIndex = Indexes.Single(value =>
+                string.Equals(value.Name, invalidName, StringComparison.Ordinal));
+            var quotedName = $"\"{knownIndex.Name.Replace("\"", "\"\"")}\"";
+            await dbContext.Database.ExecuteSqlRawAsync(
+                $"DROP INDEX CONCURRENTLY IF EXISTS {quotedName};",
+                cancellationToken);
+        }
+    }
+
     private static async Task<bool> TryAcquireLockAsync(
         RulesCoreDbContext dbContext,
         CancellationToken cancellationToken)
@@ -134,4 +195,6 @@ internal sealed class RulesCorePerformanceIndexInitializer(
             return result is bool acquired && acquired;
         }
     }
+
+    private sealed record PerformanceIndexDefinition(string Name, string Statement);
 }
