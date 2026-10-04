@@ -68,13 +68,16 @@ internal static class RuleConceptRelationshipStore
         IReadOnlyCollection<Guid> fromRuleConceptIds,
         CancellationToken cancellationToken = default)
     {
-        if (fromRuleConceptIds.Count == 0)
+        var requested = fromRuleConceptIds
+            .Where(value => value != Guid.Empty)
+            .Distinct()
+            .ToArray();
+        if (requested.Length == 0)
         {
             return new Dictionary<Guid, IReadOnlyList<RuleConceptRelationshipReference>>();
         }
 
         await EnsureSchemaAsync(dbContext, cancellationToken);
-        var requested = fromRuleConceptIds.ToHashSet();
         var result = new Dictionary<Guid, List<RuleConceptRelationshipReference>>();
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
@@ -97,18 +100,15 @@ internal static class RuleConceptRelationshipStore
                 FROM rule_concept_relationship relationship
                 JOIN rule_concept related
                   ON related.rule_concept_id = relationship.to_rule_concept_id
+                WHERE relationship.from_rule_concept_id = ANY(@from_rule_concept_ids)
                 ORDER BY relationship.relationship_kind, related.concept_key;
                 """;
+            AddParameter(command, "@from_rule_concept_ids", requested);
 
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {
                 var fromId = reader.GetGuid(0);
-                if (!requested.Contains(fromId))
-                {
-                    continue;
-                }
-
                 if (!result.TryGetValue(fromId, out var relationships))
                 {
                     relationships = [];
