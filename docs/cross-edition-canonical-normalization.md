@@ -28,8 +28,10 @@ Top-level 5e.tools-derived fields remain intact for native compatibility and sou
 They are no longer the only machine-readable location for mechanics normalized into one of the
 structures above.
 
-`_rulesCore.canonicalSchemaVersion` identifies the canonical projection version. It is mechanical
-derived state, not source identity.
+`_rulesCore.context.canonicalSchemaVersion` identifies the translation projection version. It is
+non-rule-bearing interpretation metadata, so ordinary mechanical comparison strips it with the rest
+of `_rulesCore.context` rather than changing semantic identity merely because the projection version
+was incremented.
 
 ## Spell-list and generated lookup ownership
 
@@ -43,6 +45,11 @@ through `NormalizedSourceRepresentation.NormalizationCompanionEvidence`; it is n
 target representation's persisted `CompanionContents`. Canonical spell list rows record
 `evidence: "generated-spell-source-lookup"` when this evidence supplied the grant.
 
+During normalization replay, persisted lookup evidence is rehydrated only from the same source
+package as the target source entity. This prevents a separately licensed package from being baked
+into another package's derived `ContentJson` while still allowing existing imported spells to gain
+the same canonical list semantics as fresh batch imports.
+
 Wiki and other consumers must read `_rulesCore.spell.lists`; they must not query and merge generated
 lookup evidence on every browse request.
 
@@ -53,9 +60,10 @@ eligible for the normal replay pipeline and canonical reconciliation. Raw source
 fingerprints, native revision numbers, batching, parallel workers, and `SKIP LOCKED` work claiming
 remain unchanged.
 
-A replay may change `ContentJson` and the semantic fingerprint because newly understood mechanics
-become rule-bearing. Canonical reconciliation remains responsible for preserving reviewed source
-identity/history rather than creating a source revision.
+A replay may change `ContentJson` and the semantic fingerprint when newly understood mechanics
+become rule-bearing. Translation-version metadata alone is not rule-bearing. Canonical
+reconciliation remains responsible for preserving reviewed source identity/history rather than
+creating a source revision.
 
 ## Conservative normalization rules
 
