@@ -92,9 +92,6 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
             cancellationToken);
         var rules = published
             .Concat(fallbacks)
-            .OrderBy(value => value.EntityType, StringComparer.OrdinalIgnoreCase)
-            .ThenBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
-            .ThenBy(value => value.ConceptKey, StringComparer.Ordinal)
             .ToArray();
         rules = await AttachRelationshipsAsync(rules, cancellationToken);
 
@@ -198,9 +195,6 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
             cancellationToken);
         var rules = published
             .Concat(fallbacks)
-            .OrderBy(value => value.EntityType, StringComparer.OrdinalIgnoreCase)
-            .ThenBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
-            .ThenBy(value => value.ConceptKey, StringComparer.Ordinal)
             .ToArray();
         rules = await AttachRelationshipsAsync(rules, cancellationToken);
 
@@ -272,7 +266,11 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
                     sourceRevision.RevisionNumber)));
         }
 
-        return result.ToArray();
+        return result
+            .OrderBy(value => value.EntityType, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(value => value.DisplayName, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(value => value.ConceptKey, StringComparer.Ordinal)
+            .ToArray();
     }
 
     private async Task<ResolvedRuleCatalogItemView[]> AttachRelationshipsAsync(
