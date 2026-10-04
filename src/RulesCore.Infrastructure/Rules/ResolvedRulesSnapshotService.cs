@@ -26,12 +26,12 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
 
         if (revision is null)
         {
-            var fallbacks = await BuildFallbackItemsAsync(
+            var fallbackOnly = await BuildFallbackItemsAsync(
                 normalizedUserId,
                 excludedConceptIds: [],
                 cancellationToken);
             return new ResolvedRulesCatalogView(
-                "global", null, null, null, fallbacks.Length, [], [], fallbacks);
+                "global", null, null, null, fallbackOnly.Length, [], [], fallbackOnly);
         }
 
         var entries = await dbContext.RulesetRevisionEntries
@@ -120,12 +120,12 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
 
         if (revision is null)
         {
-            var fallbacks = await BuildFallbackItemsAsync(
+            var fallbackOnly = await BuildFallbackItemsAsync(
                 normalizedUserId,
                 excludedConceptIds: [],
                 cancellationToken);
             return new ResolvedRulesCatalogView(
-                "campaign", campaignId, null, null, fallbacks.Length, [], [], fallbacks);
+                "campaign", campaignId, null, null, fallbackOnly.Length, [], [], fallbackOnly);
         }
 
         var entries = await dbContext.CampaignRulesetRevisionEntries
