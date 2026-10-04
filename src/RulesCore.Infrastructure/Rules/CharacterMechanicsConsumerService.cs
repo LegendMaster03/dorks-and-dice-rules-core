@@ -12,8 +12,7 @@ namespace RulesCore.Infrastructure.Rules;
 public sealed class CharacterMechanicsConsumerService(RulesCoreDbContext dbContext)
     : ICharacterMechanicsConsumerService
 {
-    private readonly CharacterResolvedRulesReader rulesReader =
-        new(new ResolvedRulesCatalogService(dbContext));
+    private readonly CharacterResolvedRulesReader rulesReader = new(dbContext);
     private readonly CharacterMechanicsCatalogBuilder catalogBuilder =
         new(dbContext);
 

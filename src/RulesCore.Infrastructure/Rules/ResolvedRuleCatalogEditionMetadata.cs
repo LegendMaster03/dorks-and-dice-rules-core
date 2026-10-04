@@ -68,24 +68,17 @@ internal static class ResolvedRuleCatalogEditionMetadata
         try
         {
             await using var command = connection.CreateCommand();
-            var parameterNames = new string[sourceEntityIds.Count];
-            for (var index = 0; index < sourceEntityIds.Count; index++)
-            {
-                var parameterName = $"@source_entity_id_{index}";
-                parameterNames[index] = parameterName;
-                AddParameter(command, parameterName, sourceEntityIds[index]);
-            }
-
-            command.CommandText = $"""
+            command.CommandText = """
                 SELECT DISTINCT binding.source_entity_id, publication.game_edition
                 FROM source_entity_occurrence_binding binding
                 JOIN canonical_source_occurrence occurrence
                     ON occurrence.canonical_source_occurrence_id = binding.canonical_source_occurrence_id
                 JOIN canonical_publication publication
                     ON publication.canonical_publication_id = occurrence.canonical_publication_id
-                WHERE binding.source_entity_id IN ({string.Join(", ", parameterNames)})
+                WHERE binding.source_entity_id = ANY(@source_entity_ids)
                     AND publication.game_edition IS NOT NULL;
                 """;
+            AddParameter(command, "@source_entity_ids", sourceEntityIds.ToArray());
 
             var candidates = new Dictionary<Guid, List<string?>>();
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);

@@ -8,8 +8,7 @@ namespace RulesCore.Infrastructure.Rules;
 public sealed class TravelEnvironmentConsumerService(RulesCoreDbContext dbContext)
     : ITravelEnvironmentConsumerService
 {
-    private readonly ResolvedRulesSnapshotReader rulesReader =
-        new(new ResolvedRulesCatalogService(dbContext));
+    private readonly ResolvedRulesSnapshotReader rulesReader = new(dbContext);
     public async Task<TravelEnvironmentCatalogView> GetGlobalAsync(
         string? userId,
         CancellationToken cancellationToken = default)
