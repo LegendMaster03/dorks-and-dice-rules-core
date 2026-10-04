@@ -46,6 +46,18 @@ internal sealed class RulesCorePerformanceIndexInitializer(IServiceScopeFactory 
         CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_source_entity_source_code
             ON source_entity(source_code)
             WHERE source_code IS NOT NULL;
+        """,
+        """
+        CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_source_entity_source_code_ci
+            ON source_entity((lower(COALESCE(source_code, ''))));
+        """,
+        """
+        CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_source_package_key_ci
+            ON source_package((lower(package_key)));
+        """,
+        """
+        CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_rule_concept_key_ci
+            ON rule_concept((lower(concept_key)));
         """
     ];
 
