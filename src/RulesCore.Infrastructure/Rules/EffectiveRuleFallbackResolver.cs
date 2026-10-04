@@ -29,20 +29,42 @@ internal sealed class EffectiveRuleFallbackResolver(RulesCoreDbContext dbContext
         string? userId,
         CancellationToken cancellationToken = default)
     {
-        var sourceIds = await CanonicalRuleFallbackSourceReader.GetAccessibleSourceEntityIdsAsync(
-            dbContext,
-            concept.Id,
-            userId,
-            cancellationToken);
-        if (sourceIds.Count == 0)
+        var resolved = await ResolveManyAsync([concept], userId, cancellationToken);
+        return resolved.GetValueOrDefault(concept.Id);
+    }
+
+    internal async Task<IReadOnlyDictionary<Guid, EffectiveRuleFallbackCandidate>> ResolveManyAsync(
+        IReadOnlyCollection<RuleConcept> concepts,
+        string? userId,
+        CancellationToken cancellationToken = default)
+    {
+        var requested = concepts
+            .Where(value => value.Id != Guid.Empty)
+            .DistinctBy(value => value.Id)
+            .ToArray();
+        if (requested.Length == 0)
         {
-            return null;
+            return new Dictionary<Guid, EffectiveRuleFallbackCandidate>();
+        }
+
+        var sourceIdsByConcept = await CanonicalRuleFallbackSourceReader
+            .GetAccessibleSourceEntityIdsByConceptAsync(
+                dbContext,
+                requested.Select(value => value.Id).ToArray(),
+                userId,
+                cancellationToken);
+        if (sourceIdsByConcept.Count == 0)
+        {
+            return new Dictionary<Guid, EffectiveRuleFallbackCandidate>();
         }
 
         var ignoredPackageIds = (await new GlobalSourceDispositionService(dbContext)
                 .GetIgnoredPackageIdsAsync(cancellationToken))
             .ToHashSet();
-
+        var sourceIds = sourceIdsByConcept.Values
+            .SelectMany(value => value)
+            .Distinct()
+            .ToArray();
         var sources = await dbContext.SourceEntities
             .AsNoTracking()
             .Include(value => value.SourcePackage)
@@ -50,38 +72,60 @@ internal sealed class EffectiveRuleFallbackResolver(RulesCoreDbContext dbContext
             .Where(value => sourceIds.Contains(value.Id)
                 && !ignoredPackageIds.Contains(value.SourcePackageId))
             .ToArrayAsync(cancellationToken);
+        var sourcesById = sources.ToDictionary(value => value.Id);
+        var publications = await CanonicalPublicationMetadataBatchReader.ReadAsync(
+            dbContext,
+            sourcesById.Keys.ToArray(),
+            cancellationToken);
+        var conceptsById = requested.ToDictionary(value => value.Id);
+        var result = new Dictionary<Guid, EffectiveRuleFallbackCandidate>();
 
-        var candidates = new List<EffectiveRuleFallbackCandidate>();
-        foreach (var source in sources)
+        foreach (var (conceptId, conceptSourceIds) in sourceIdsByConcept)
         {
-            var revision = source.Revisions
-                .OrderByDescending(value => value.RevisionNumber)
-                .ThenByDescending(value => value.ImportedAt)
-                .FirstOrDefault();
-            if (revision is null)
+            if (!conceptsById.TryGetValue(conceptId, out var concept))
             {
                 continue;
             }
 
-            var publication = await CanonicalPublicationMetadataReader.ReadAsync(
-                dbContext,
-                source.Id,
-                cancellationToken);
-            candidates.Add(new EffectiveRuleFallbackCandidate(
-                concept,
-                source,
-                revision,
-                publication));
+            var candidates = new List<EffectiveRuleFallbackCandidate>();
+            foreach (var sourceId in conceptSourceIds)
+            {
+                if (!sourcesById.TryGetValue(sourceId, out var source))
+                {
+                    continue;
+                }
+                var revision = source.Revisions
+                    .OrderByDescending(value => value.RevisionNumber)
+                    .ThenByDescending(value => value.ImportedAt)
+                    .FirstOrDefault();
+                if (revision is null)
+                {
+                    continue;
+                }
+
+                publications.TryGetValue(source.Id, out var publication);
+                candidates.Add(new EffectiveRuleFallbackCandidate(
+                    concept,
+                    source,
+                    revision,
+                    publication));
+            }
+
+            var selected = candidates
+                .OrderByDescending(value => value.Publication?.PublicationDate ?? DateOnly.MinValue)
+                .ThenByDescending(value => EditionSortKey(value.Publication?.GameEdition))
+                .ThenByDescending(value => value.Revision.RevisionNumber)
+                .ThenByDescending(value => value.Revision.ImportedAt)
+                .ThenBy(value => value.Source.SourceCode ?? string.Empty, StringComparer.OrdinalIgnoreCase)
+                .ThenBy(value => value.Source.Id)
+                .FirstOrDefault();
+            if (selected is not null)
+            {
+                result[conceptId] = selected;
+            }
         }
 
-        return candidates
-            .OrderByDescending(value => value.Publication?.PublicationDate ?? DateOnly.MinValue)
-            .ThenByDescending(value => EditionSortKey(value.Publication?.GameEdition))
-            .ThenByDescending(value => value.Revision.RevisionNumber)
-            .ThenByDescending(value => value.Revision.ImportedAt)
-            .ThenBy(value => value.Source.SourceCode ?? string.Empty, StringComparer.OrdinalIgnoreCase)
-            .ThenBy(value => value.Source.Id)
-            .FirstOrDefault();
+        return result;
     }
 
     private static int EditionSortKey(string? gameEdition) =>

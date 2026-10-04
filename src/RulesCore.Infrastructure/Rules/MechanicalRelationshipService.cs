@@ -9,6 +9,8 @@ namespace RulesCore.Infrastructure.Rules;
 
 public sealed class MechanicalRelationshipService(RulesCoreDbContext dbContext)
 {
+    private RelationshipReadSnapshot? readSnapshot;
+
     public async Task<IReadOnlyList<MechanicalRelationshipRecommendationView>> GetForConceptAsync(
         Guid ruleConceptId,
         CancellationToken cancellationToken = default)
@@ -18,10 +20,8 @@ public sealed class MechanicalRelationshipService(RulesCoreDbContext dbContext)
             throw new ArgumentException("Rule concept ID can not be empty.", nameof(ruleConceptId));
         }
 
-        var concept = await dbContext.RuleConcepts
-            .AsNoTracking()
-            .SingleOrDefaultAsync(value => value.Id == ruleConceptId, cancellationToken);
-        if (concept is null)
+        var snapshot = await GetReadSnapshotAsync(cancellationToken);
+        if (!snapshot.ConceptsById.TryGetValue(ruleConceptId, out var concept))
         {
             return [];
         }
@@ -32,15 +32,9 @@ public sealed class MechanicalRelationshipService(RulesCoreDbContext dbContext)
             return [];
         }
 
-        var recommendations = new List<MechanicalRelationshipRecommendationView>(definitions.Count);
-        foreach (var definition in definitions)
-        {
-            recommendations.Add(await BuildRecommendationAsync(
-                definition,
-                concept.Key,
-                cancellationToken));
-        }
-        return recommendations;
+        return definitions
+            .Select(definition => BuildRecommendation(definition, concept.Key, snapshot))
+            .ToArray();
     }
 
     public async Task<MechanicalRelationshipRecommendationView> SetRulingAsync(
@@ -81,30 +75,39 @@ public sealed class MechanicalRelationshipService(RulesCoreDbContext dbContext)
             """, cancellationToken);
         await transaction.CommitAsync(cancellationToken);
 
-        return await BuildRecommendationAsync(
+        readSnapshot = null;
+        var snapshot = await GetReadSnapshotAsync(cancellationToken);
+        return BuildRecommendation(
             definition,
             definition.Parent.ConceptKey,
-            cancellationToken);
+            snapshot);
     }
 
-    private async Task<MechanicalRelationshipRecommendationView> BuildRecommendationAsync(
-        MechanicalRelationshipDefinition definition,
-        string currentConceptKey,
+    private async Task<RelationshipReadSnapshot> GetReadSnapshotAsync(
         CancellationToken cancellationToken)
     {
-        var references = new[] { definition.Parent }
-            .Concat(definition.Components)
+        if (readSnapshot is not null)
+        {
+            return readSnapshot;
+        }
+
+        var conceptKeys = KnownMechanicalRelationships.All
+            .SelectMany(definition => new[] { definition.Parent }
+                .Concat(definition.Components))
+            .Select(reference => reference.ConceptKey)
+            .Distinct(StringComparer.Ordinal)
             .ToArray();
-        var keys = references.Select(value => value.ConceptKey).ToArray();
         var concepts = await dbContext.RuleConcepts
             .AsNoTracking()
-            .Where(value => keys.Contains(value.Key))
+            .Where(value => conceptKeys.Contains(value.Key))
+            .Select(value => new ConceptSnapshot(value.Id, value.Key))
             .ToArrayAsync(cancellationToken);
+        var conceptsById = concepts.ToDictionary(value => value.Id);
         var conceptsByKey = concepts.ToDictionary(value => value.Key, StringComparer.Ordinal);
         var conceptIds = concepts.Select(value => value.Id).ToArray();
 
-        HashSet<Guid> boundConceptIds = [];
-        HashSet<Guid> decidedConceptIds = [];
+        var boundConceptIds = new HashSet<Guid>();
+        var decidedConceptIds = new HashSet<Guid>();
         if (conceptIds.Length > 0)
         {
             boundConceptIds = (await dbContext.RuleConceptSourceBindings
@@ -123,25 +126,51 @@ public sealed class MechanicalRelationshipService(RulesCoreDbContext dbContext)
                 .ToHashSet();
         }
 
+        var relationshipKeys = KnownMechanicalRelationships.All
+            .Select(value => value.Key)
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+        var latestRulings = await ReadLatestRulingsAsync(
+            relationshipKeys,
+            cancellationToken);
+
+        readSnapshot = new RelationshipReadSnapshot(
+            conceptsById,
+            conceptsByKey,
+            boundConceptIds,
+            decidedConceptIds,
+            latestRulings);
+        return readSnapshot;
+    }
+
+    private static MechanicalRelationshipRecommendationView BuildRecommendation(
+        MechanicalRelationshipDefinition definition,
+        string currentConceptKey,
+        RelationshipReadSnapshot snapshot)
+    {
+        var references = new[] { definition.Parent }
+            .Concat(definition.Components)
+            .ToArray();
+
         MechanicalRelationshipCompetencyStateView State(MechanicalCompetencyReference reference)
         {
-            conceptsByKey.TryGetValue(reference.ConceptKey, out var concept);
+            snapshot.ConceptsByKey.TryGetValue(reference.ConceptKey, out var concept);
             return new MechanicalRelationshipCompetencyStateView(
                 concept?.Id,
                 reference.ConceptKey,
                 reference.EntityType,
                 reference.DisplayName,
-                concept is not null && boundConceptIds.Contains(concept.Id),
-                concept is not null && decidedConceptIds.Contains(concept.Id));
+                concept is not null && snapshot.BoundConceptIds.Contains(concept.Id),
+                concept is not null && snapshot.DecidedConceptIds.Contains(concept.Id));
         }
 
         var parent = State(definition.Parent);
         var components = definition.Components.Select(State).ToArray();
         var missing = references
-            .Where(reference => !conceptsByKey.ContainsKey(reference.ConceptKey))
+            .Where(reference => !snapshot.ConceptsByKey.ContainsKey(reference.ConceptKey))
             .Select(reference => reference.ConceptKey)
             .ToArray();
-        var latestRuling = await ReadLatestRulingAsync(definition.Key, cancellationToken);
+        snapshot.LatestRulings.TryGetValue(definition.Key, out var latestRuling);
         var recommended = MechanicalRelationshipResolutionKinds.DeriveParent;
         var effective = latestRuling?.ResolutionKind ?? recommended;
         var isOverridden = !string.Equals(effective, recommended, StringComparison.Ordinal);
@@ -181,10 +210,15 @@ public sealed class MechanicalRelationshipService(RulesCoreDbContext dbContext)
             explanation);
     }
 
-    private async Task<MechanicalRelationshipRulingView?> ReadLatestRulingAsync(
-        string relationshipKey,
+    private async Task<IReadOnlyDictionary<string, MechanicalRelationshipRulingView>> ReadLatestRulingsAsync(
+        IReadOnlyCollection<string> relationshipKeys,
         CancellationToken cancellationToken)
     {
+        if (relationshipKeys.Count == 0)
+        {
+            return new Dictionary<string, MechanicalRelationshipRulingView>(StringComparer.Ordinal);
+        }
+
         var connection = dbContext.Database.GetDbConnection();
         var openedHere = connection.State != ConnectionState.Open;
         if (openedHere)
@@ -196,7 +230,7 @@ public sealed class MechanicalRelationshipService(RulesCoreDbContext dbContext)
         {
             await using var command = connection.CreateCommand();
             command.CommandText = """
-                SELECT
+                SELECT DISTINCT ON (relationship_key)
                     rule_mechanical_relationship_ruling_id,
                     relationship_key,
                     ruling_number,
@@ -205,25 +239,25 @@ public sealed class MechanicalRelationshipService(RulesCoreDbContext dbContext)
                     created_by_user_id,
                     created_at
                 FROM rule_mechanical_relationship_ruling
-                WHERE relationship_key = @relationship_key
-                ORDER BY ruling_number DESC
-                LIMIT 1;
+                WHERE relationship_key = ANY(@relationship_keys)
+                ORDER BY relationship_key, ruling_number DESC;
                 """;
-            AddParameter(command, "@relationship_key", relationshipKey);
+            AddParameter(command, "@relationship_keys", relationshipKeys.ToArray());
+            var result = new Dictionary<string, MechanicalRelationshipRulingView>(StringComparer.Ordinal);
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-            if (!await reader.ReadAsync(cancellationToken))
+            while (await reader.ReadAsync(cancellationToken))
             {
-                return null;
+                var ruling = new MechanicalRelationshipRulingView(
+                    reader.GetGuid(0),
+                    reader.GetString(1),
+                    reader.GetInt32(2),
+                    reader.GetString(3),
+                    reader.IsDBNull(4) ? null : reader.GetString(4),
+                    reader.GetString(5),
+                    reader.GetFieldValue<DateTimeOffset>(6));
+                result[ruling.RelationshipKey] = ruling;
             }
-
-            return new MechanicalRelationshipRulingView(
-                reader.GetGuid(0),
-                reader.GetString(1),
-                reader.GetInt32(2),
-                reader.GetString(3),
-                reader.IsDBNull(4) ? null : reader.GetString(4),
-                reader.GetString(5),
-                reader.GetFieldValue<DateTimeOffset>(6));
+            return result;
         }
         finally
         {
@@ -279,4 +313,13 @@ public sealed class MechanicalRelationshipService(RulesCoreDbContext dbContext)
         parameter.Value = value;
         command.Parameters.Add(parameter);
     }
+
+    private sealed record ConceptSnapshot(Guid Id, string Key);
+
+    private sealed record RelationshipReadSnapshot(
+        IReadOnlyDictionary<Guid, ConceptSnapshot> ConceptsById,
+        IReadOnlyDictionary<string, ConceptSnapshot> ConceptsByKey,
+        HashSet<Guid> BoundConceptIds,
+        HashSet<Guid> DecidedConceptIds,
+        IReadOnlyDictionary<string, MechanicalRelationshipRulingView> LatestRulings);
 }

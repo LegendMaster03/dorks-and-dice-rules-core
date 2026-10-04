@@ -7,12 +7,6 @@ namespace RulesCore.Infrastructure.Rules;
 
 /// <summary>
 /// Read-optimized canonical-history traversal for unresolved Rules Layer fallback.
-///
-/// The general binding store historically found the latest revision for every Source Entity in
-/// the corpus before joining that global result back to one concept history. That is correct but
-/// becomes prohibitively expensive once reconciliation creates RuleConcept coverage for the full
-/// corpus. This reader starts from the requested concept history instead, walks only that history,
-/// and checks latest-revision status with the indexed (source_entity_id, revision_number) key.
 /// </summary>
 internal static class CanonicalRuleFallbackSourceReader
 {
@@ -22,9 +16,24 @@ internal static class CanonicalRuleFallbackSourceReader
         string? userId,
         CancellationToken cancellationToken = default)
     {
-        if (ruleConceptId == Guid.Empty)
+        var result = await GetAccessibleSourceEntityIdsByConceptAsync(
+            dbContext,
+            [ruleConceptId],
+            userId,
+            cancellationToken);
+        return result.TryGetValue(ruleConceptId, out var ids) ? ids : [];
+    }
+
+    public static async Task<IReadOnlyDictionary<Guid, IReadOnlyList<Guid>>> GetAccessibleSourceEntityIdsByConceptAsync(
+        RulesCoreDbContext dbContext,
+        IReadOnlyCollection<Guid> ruleConceptIds,
+        string? userId,
+        CancellationToken cancellationToken = default)
+    {
+        var conceptIds = ruleConceptIds.Where(value => value != Guid.Empty).Distinct().ToArray();
+        if (conceptIds.Length == 0)
         {
-            throw new ArgumentException("Rule concept ID can not be empty.", nameof(ruleConceptId));
+            return new Dictionary<Guid, IReadOnlyList<Guid>>();
         }
 
         var connection = dbContext.Database.GetDbConnection();
@@ -38,14 +47,14 @@ internal static class CanonicalRuleFallbackSourceReader
         {
             await using var command = connection.CreateCommand();
             command.CommandText = """
-                WITH RECURSIVE concept_entities(canonical_entity_id) AS (
-                    SELECT canonical_entity_id
-                    FROM rule_concept_source_binding
-                    WHERE rule_concept_id = @concept_id
+                WITH RECURSIVE concept_entities(rule_concept_id, canonical_entity_id) AS (
+                    SELECT binding.rule_concept_id, binding.canonical_entity_id
+                    FROM rule_concept_source_binding binding
+                    WHERE binding.rule_concept_id = ANY(@concept_ids)
 
                     UNION
 
-                    SELECT neighbour.canonical_entity_id
+                    SELECT parent.rule_concept_id, neighbour.canonical_entity_id
                     FROM concept_entities parent
                     CROSS JOIN LATERAL (
                         SELECT relationship.to_canonical_entity_id AS canonical_entity_id
@@ -61,7 +70,7 @@ internal static class CanonicalRuleFallbackSourceReader
                           AND relationship.relationship_kind IN ('revision', 'rename')
                     ) neighbour
                 )
-                SELECT DISTINCT source.source_entity_id
+                SELECT DISTINCT concept_entity.rule_concept_id, source.source_entity_id
                 FROM concept_entities concept_entity
                 JOIN canonical_source_occurrence occurrence
                   ON occurrence.canonical_entity_id = concept_entity.canonical_entity_id
@@ -85,19 +94,27 @@ internal static class CanonicalRuleFallbackSourceReader
                         FROM user_source_grant grant_row
                         WHERE grant_row.source_package_id = package.source_package_id
                           AND grant_row.user_id = @user_id)))
-                ORDER BY source.source_entity_id;
+                ORDER BY concept_entity.rule_concept_id, source.source_entity_id;
                 """;
-            AddParameter(command, "@concept_id", ruleConceptId);
+            AddParameter(command, "@concept_ids", conceptIds);
             AddNullableStringParameter(command, "@user_id", NormalizeUserId(userId));
 
-            var ids = new List<Guid>();
+            var values = new Dictionary<Guid, List<Guid>>();
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {
-                ids.Add(reader.GetGuid(0));
+                var conceptId = reader.GetGuid(0);
+                if (!values.TryGetValue(conceptId, out var ids))
+                {
+                    ids = [];
+                    values[conceptId] = ids;
+                }
+                ids.Add(reader.GetGuid(1));
             }
 
-            return ids;
+            return values.ToDictionary(
+                pair => pair.Key,
+                pair => (IReadOnlyList<Guid>)pair.Value);
         }
         finally
         {
