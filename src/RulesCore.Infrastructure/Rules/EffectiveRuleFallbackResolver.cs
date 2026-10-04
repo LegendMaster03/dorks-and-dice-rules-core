@@ -68,14 +68,38 @@ internal sealed class EffectiveRuleFallbackResolver(RulesCoreDbContext dbContext
         var sources = await dbContext.SourceEntities
             .AsNoTracking()
             .Include(value => value.SourcePackage)
-            .Include(value => value.Revisions)
             .Where(value => sourceIds.Contains(value.Id)
                 && !ignoredPackageIds.Contains(value.SourcePackageId))
             .ToArrayAsync(cancellationToken);
         var sourcesById = sources.ToDictionary(value => value.Id);
+
+        var eligibleSourceIds = sourcesById.Keys.ToArray();
+        var latestRevisionNumbers = dbContext.SourceEntityRevisions
+            .AsNoTracking()
+            .Where(value => eligibleSourceIds.Contains(value.SourceEntityId))
+            .GroupBy(value => value.SourceEntityId)
+            .Select(group => new
+            {
+                SourceEntityId = group.Key,
+                LatestRevisionNumber = group.Max(value => value.RevisionNumber)
+            });
+        var latestRevisions = await dbContext.SourceEntityRevisions
+            .AsNoTracking()
+            .Join(
+                latestRevisionNumbers,
+                revision => new { revision.SourceEntityId, revision.RevisionNumber },
+                latest => new
+                {
+                    latest.SourceEntityId,
+                    RevisionNumber = latest.LatestRevisionNumber
+                },
+                (revision, _) => revision)
+            .ToArrayAsync(cancellationToken);
+        var latestRevisionBySourceId = latestRevisions.ToDictionary(value => value.SourceEntityId);
+
         var publications = await CanonicalPublicationMetadataBatchReader.ReadAsync(
             dbContext,
-            sourcesById.Keys.ToArray(),
+            eligibleSourceIds,
             cancellationToken);
         var conceptsById = requested.ToDictionary(value => value.Id);
         var result = new Dictionary<Guid, EffectiveRuleFallbackCandidate>();
@@ -90,15 +114,8 @@ internal sealed class EffectiveRuleFallbackResolver(RulesCoreDbContext dbContext
             var candidates = new List<EffectiveRuleFallbackCandidate>();
             foreach (var sourceId in conceptSourceIds)
             {
-                if (!sourcesById.TryGetValue(sourceId, out var source))
-                {
-                    continue;
-                }
-                var revision = source.Revisions
-                    .OrderByDescending(value => value.RevisionNumber)
-                    .ThenByDescending(value => value.ImportedAt)
-                    .FirstOrDefault();
-                if (revision is null)
+                if (!sourcesById.TryGetValue(sourceId, out var source)
+                    || !latestRevisionBySourceId.TryGetValue(sourceId, out var revision))
                 {
                     continue;
                 }
