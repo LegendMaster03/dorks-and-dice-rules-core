@@ -1,5 +1,3 @@
-using System.Text.Json;
-using Microsoft.EntityFrameworkCore;
 using RulesCore.Application.Rules;
 using RulesCore.Domain.Rules;
 using RulesCore.Infrastructure.Persistence;
@@ -12,7 +10,7 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
 {
     private readonly CharacterResolvedRulesReader rulesReader =
         new(new ResolvedRulesCatalogService(dbContext));
-    private readonly CharacterMechanicsConsumerService mechanics = new(dbContext);
+    private readonly CharacterMechanicsCatalogBuilder mechanics = new(dbContext);
 
     private static readonly IReadOnlyList<ICharacterRuleProjectionModule> Modules =
     [
@@ -30,7 +28,8 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
     {
         ArgumentNullException.ThrowIfNull(request);
         var rules = await rulesReader.ReadAllGlobalAsync(userId, cancellationToken);
-        var mechanicCatalog = await mechanics.GetGlobalAsync(
+        var mechanicCatalog = await mechanics.BuildAsync(
+            rules,
             userId,
             includeUnavailable: true,
             cancellationToken);
@@ -53,10 +52,14 @@ public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext
         }
         ArgumentNullException.ThrowIfNull(request);
 
-        var rules = await rulesReader.ReadAllCampaignAsync(campaignId, userId.Trim(), cancellationToken);
-        var mechanicCatalog = await mechanics.GetCampaignAsync(
+        var normalizedUserId = userId.Trim();
+        var rules = await rulesReader.ReadAllCampaignAsync(
             campaignId,
-            userId.Trim(),
+            normalizedUserId,
+            cancellationToken);
+        var mechanicCatalog = await mechanics.BuildAsync(
+            rules,
+            normalizedUserId,
             includeUnavailable: true,
             cancellationToken);
         return Resolve(request, rules, mechanicCatalog);
