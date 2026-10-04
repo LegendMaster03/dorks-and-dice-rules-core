@@ -18,18 +18,24 @@ internal sealed class ResolvedRulesSnapshotReader(
     {
         var all = new List<ResolvedRuleCatalogItemView>();
         ResolvedRulesCatalogView? page = null;
-        for (var offset = 0; ; offset += PageSize)
+        var offset = 0;
+        while (true)
         {
             page = await resolvedRules.GetGlobalPageAsync(
                 userId,
                 limit: PageSize,
                 offset: offset,
                 cancellationToken: cancellationToken);
+            if (all.Count == 0 && page.TotalCount > 0)
+            {
+                all.Capacity = page.TotalCount;
+            }
             all.AddRange(page.Rules);
-            if (page.Rules.Count < PageSize)
+            if (page.Rules.Count == 0 || all.Count >= page.TotalCount)
             {
                 break;
             }
+            offset += page.Rules.Count;
         }
 
         page ??= new ResolvedRulesCatalogView(
@@ -51,7 +57,8 @@ internal sealed class ResolvedRulesSnapshotReader(
     {
         var all = new List<ResolvedRuleCatalogItemView>();
         ResolvedRulesCatalogView? page = null;
-        for (var offset = 0; ; offset += PageSize)
+        var offset = 0;
+        while (true)
         {
             page = await resolvedRules.GetCampaignPageAsync(
                 campaignId,
@@ -59,11 +66,16 @@ internal sealed class ResolvedRulesSnapshotReader(
                 limit: PageSize,
                 offset: offset,
                 cancellationToken: cancellationToken);
+            if (all.Count == 0 && page.TotalCount > 0)
+            {
+                all.Capacity = page.TotalCount;
+            }
             all.AddRange(page.Rules);
-            if (page.Rules.Count < PageSize)
+            if (page.Rules.Count == 0 || all.Count >= page.TotalCount)
             {
                 break;
             }
+            offset += page.Rules.Count;
         }
 
         page ??= new ResolvedRulesCatalogView(
