@@ -1,104 +1,34 @@
 using RulesCore.Application.Rules;
+using RulesCore.Infrastructure.Persistence;
 
 namespace RulesCore.Infrastructure.Rules;
 
 /// <summary>
-/// Reads complete global or campaign resolved-rules catalogs across the paged public
-/// catalog service. Consumer domains should reuse this reader rather than duplicate
-/// pagination or scope reconstruction.
+/// Reads complete global or campaign resolved-rules snapshots for internal consumers without
+/// walking the paged browser catalog.
 /// </summary>
-internal sealed class ResolvedRulesSnapshotReader(
-    IResolvedRulesCatalogService resolvedRules)
+internal sealed class ResolvedRulesSnapshotReader(RulesCoreDbContext dbContext)
 {
-    private const int PageSize = 500;
+    private readonly ResolvedRulesSnapshotService snapshots = new(dbContext);
 
-    internal async Task<ResolvedRulesCatalogView> ReadAllGlobalAsync(
+    internal Task<ResolvedRulesCatalogView> ReadAllGlobalAsync(
         string? userId,
-        CancellationToken cancellationToken)
-    {
-        var all = new List<ResolvedRuleCatalogItemView>();
-        ResolvedRulesCatalogView? page = null;
-        var offset = 0;
-        while (true)
-        {
-            page = await resolvedRules.GetGlobalPageAsync(
-                userId,
-                limit: PageSize,
-                offset: offset,
-                cancellationToken: cancellationToken);
-            if (all.Count == 0 && page.TotalCount > 0)
-            {
-                all.Capacity = page.TotalCount;
-            }
-            all.AddRange(page.Rules);
-            if (page.Rules.Count == 0 || all.Count >= page.TotalCount)
-            {
-                break;
-            }
-            offset += page.Rules.Count;
-        }
+        CancellationToken cancellationToken) =>
+        snapshots.ReadGlobalAsync(userId, cancellationToken);
 
-        page ??= new ResolvedRulesCatalogView(
-            "global",
-            null,
-            null,
-            null,
-            0,
-            [],
-            [],
-            []);
-        return page with { Rules = all };
-    }
-
-    internal async Task<ResolvedRulesCatalogView> ReadAllCampaignAsync(
+    internal Task<ResolvedRulesCatalogView> ReadAllCampaignAsync(
         Guid campaignId,
         string userId,
-        CancellationToken cancellationToken)
-    {
-        var all = new List<ResolvedRuleCatalogItemView>();
-        ResolvedRulesCatalogView? page = null;
-        var offset = 0;
-        while (true)
-        {
-            page = await resolvedRules.GetCampaignPageAsync(
-                campaignId,
-                userId,
-                limit: PageSize,
-                offset: offset,
-                cancellationToken: cancellationToken);
-            if (all.Count == 0 && page.TotalCount > 0)
-            {
-                all.Capacity = page.TotalCount;
-            }
-            all.AddRange(page.Rules);
-            if (page.Rules.Count == 0 || all.Count >= page.TotalCount)
-            {
-                break;
-            }
-            offset += page.Rules.Count;
-        }
-
-        page ??= new ResolvedRulesCatalogView(
-            "campaign",
-            campaignId,
-            null,
-            null,
-            0,
-            [],
-            [],
-            []);
-        return page with { Rules = all };
-    }
+        CancellationToken cancellationToken) =>
+        snapshots.ReadCampaignAsync(campaignId, userId, cancellationToken);
 }
 
 /// <summary>
-/// Compatibility wrapper for the established Character consumer. New consumer domains
-/// should use <see cref="ResolvedRulesSnapshotReader"/> directly.
+/// Compatibility wrapper for the established Character consumer.
 /// </summary>
-internal sealed class CharacterResolvedRulesReader(
-    IResolvedRulesCatalogService resolvedRules)
+internal sealed class CharacterResolvedRulesReader(RulesCoreDbContext dbContext)
 {
-    private readonly ResolvedRulesSnapshotReader inner = new(resolvedRules);
+    private readonly ResolvedRulesSnapshotReader inner = new(dbContext);
 
     internal Task<ResolvedRulesCatalogView> ReadAllGlobalAsync(
         string? userId,
