@@ -12,6 +12,8 @@ namespace RulesCore.Web;
 internal sealed class RulesCorePerformanceIndexInitializer(IServiceScopeFactory scopeFactory)
     : IHostedService
 {
+    private const long PerformanceIndexLockKey = 4921946562870068041L;
+
     private static readonly string[] IndexStatements =
     [
         """
@@ -51,9 +53,35 @@ internal sealed class RulesCorePerformanceIndexInitializer(IServiceScopeFactory 
     {
         await using var scope = scopeFactory.CreateAsyncScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<RulesCoreDbContext>();
-        foreach (var statement in IndexStatements)
+        await dbContext.Database.OpenConnectionAsync(cancellationToken);
+        var lockAcquired = false;
+        try
         {
-            await dbContext.Database.ExecuteSqlRawAsync(statement, cancellationToken);
+            await dbContext.Database.ExecuteSqlInterpolatedAsync(
+                $"SELECT pg_advisory_lock({PerformanceIndexLockKey});",
+                cancellationToken);
+            lockAcquired = true;
+
+            foreach (var statement in IndexStatements)
+            {
+                await dbContext.Database.ExecuteSqlRawAsync(statement, cancellationToken);
+            }
+        }
+        finally
+        {
+            try
+            {
+                if (lockAcquired)
+                {
+                    await dbContext.Database.ExecuteSqlInterpolatedAsync(
+                        $"SELECT pg_advisory_unlock({PerformanceIndexLockKey});",
+                        CancellationToken.None);
+                }
+            }
+            finally
+            {
+                await dbContext.Database.CloseConnectionAsync();
+            }
         }
     }
 
