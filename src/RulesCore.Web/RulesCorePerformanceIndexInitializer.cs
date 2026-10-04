@@ -101,7 +101,10 @@ internal sealed class RulesCorePerformanceIndexInitializer(
                 await DropInvalidIndexesAsync(dbContext, stoppingToken);
                 foreach (var index in Indexes)
                 {
-                    await dbContext.Database.ExecuteSqlRawAsync(index.Statement, stoppingToken);
+                    await ExecuteMaintenanceCommandAsync(
+                        dbContext,
+                        index.Statement,
+                        stoppingToken);
                 }
 
                 logger.LogInformation("Rules Core performance indexes are available.");
@@ -171,10 +174,24 @@ internal sealed class RulesCorePerformanceIndexInitializer(
             var knownIndex = Indexes.Single(value =>
                 string.Equals(value.Name, invalidName, StringComparison.Ordinal));
             var quotedName = $"\"{knownIndex.Name.Replace("\"", "\"\"")}\"";
-            await dbContext.Database.ExecuteSqlRawAsync(
+            await ExecuteMaintenanceCommandAsync(
+                dbContext,
                 $"DROP INDEX CONCURRENTLY IF EXISTS {quotedName};",
                 cancellationToken);
         }
+    }
+
+    private static async Task ExecuteMaintenanceCommandAsync(
+        RulesCoreDbContext dbContext,
+        string commandText,
+        CancellationToken cancellationToken)
+    {
+        await using var command = dbContext.Database.GetDbConnection().CreateCommand();
+        command.CommandText = commandText;
+        // Concurrent index maintenance can legitimately exceed the normal request command timeout.
+        // Host cancellation remains active so shutdown can still interrupt the operation.
+        command.CommandTimeout = 0;
+        await command.ExecuteNonQueryAsync(cancellationToken);
     }
 
     private static async Task<bool> TryAcquireLockAsync(
