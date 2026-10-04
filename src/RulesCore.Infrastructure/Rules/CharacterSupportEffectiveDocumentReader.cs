@@ -16,6 +16,17 @@ internal static class EffectiveRuleDocumentReader
         ResolvedRulesCatalogView rules,
         CancellationToken cancellationToken)
     {
+        var embeddedDocuments = rules.Rules
+            .Where(value => value.Document is not null)
+            .GroupBy(value => value.RuleConceptId)
+            .ToDictionary(
+                group => group.Key,
+                group => group.First().Document!.Value.Clone());
+        if (embeddedDocuments.Count == rules.Rules.Count)
+        {
+            return embeddedDocuments;
+        }
+
         var conceptIds = rules.Rules
             .Select(value => value.RuleConceptId)
             .ToArray();
