@@ -8,8 +8,7 @@ namespace RulesCore.Infrastructure.Rules;
 public sealed class CharacterRulesProjectionService(RulesCoreDbContext dbContext)
     : ICharacterRulesProjectionService
 {
-    private readonly CharacterResolvedRulesReader rulesReader =
-        new(new ResolvedRulesCatalogService(dbContext));
+    private readonly CharacterResolvedRulesReader rulesReader = new(dbContext);
     private readonly CharacterMechanicsCatalogBuilder mechanics = new(dbContext);
 
     private static readonly IReadOnlyList<ICharacterRuleProjectionModule> Modules =
