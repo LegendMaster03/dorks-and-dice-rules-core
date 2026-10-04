@@ -191,8 +191,6 @@ public sealed class SourceNormalizationMaintenanceIntegrationTests
                 var nativeFingerprint = revision.Fingerprint;
                 var nativeRawJson = revision.RawJson;
 
-                // Simulate the pre-epic-modeling persisted identity while preserving the native
-                // source revision that version 2 will replay.
                 revision.SourceEntity.EntityType = RuleConceptEntityTypes.Class;
                 revision.SourceEntity.Name = "Epic Barbarian";
                 revision.NormalizationVersion = 1;
@@ -243,6 +241,132 @@ public sealed class SourceNormalizationMaintenanceIntegrationTests
                 Assert.Equal(
                     "Barbarian",
                     epic.GetProperty("continuationOf").GetProperty("name").GetString());
+
+                Assert.Equal(
+                    1,
+                    await db.SourceEntityRevisions.CountAsync(
+                        value => value.SourceEntityId == importedEntity.EntityId));
+            }
+            finally
+            {
+                await db.SourcePackages
+                    .Where(value => value.Key == packageKey)
+                    .ExecuteDeleteAsync();
+            }
+        }
+    }
+
+    [Fact]
+    public async Task GeneratedSpellLookupEvidenceIsRehydratedDuringNormalizationReplay()
+    {
+        var db = await OpenDatabaseAsync();
+        if (db is null) return;
+        await using (db)
+        {
+            var token = Guid.NewGuid().ToString("N")[..12];
+            var packageKey = $"spell-lookup-replay-{token}";
+            var spellName = $"Replay Spark {token}";
+            var spellArtifact = new SourceRepresentationArtifact(
+                $"spell-replay-{token}.json",
+                Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new
+                {
+                    spell = new[]
+                    {
+                        new { name = spellName, source = "XPHB", level = 3, school = "V" }
+                    }
+                })),
+                $"integration:spell-replay-{token}:spell");
+            var lookupArtifact = new SourceRepresentationArtifact(
+                "gendata-spell-source-lookup.json",
+                Encoding.UTF8.GetBytes($$"""
+                    {
+                      "xphb": {
+                        "{{spellName.ToLowerInvariant()}}": {
+                          "class": {
+                            "XPHB": {
+                              "Wizard": true
+                            }
+                          }
+                        }
+                      }
+                    }
+                    """),
+                $"integration:spell-replay-{token}:lookup");
+            var representations = new FiveEToolsCompanionSourceFormatAdapter()
+                .TryReadMany([spellArtifact, lookupArtifact]);
+            var spellRepresentation = Assert.Single(representations.Where(value => value.Records.Count == 1));
+            var lookupRepresentation = Assert.Single(representations.Where(value => value.CompanionContents.Count == 1));
+
+            try
+            {
+                var importer = new ReconciledNormalizedSourceImportService(
+                    new NormalizedSourceImportService(db),
+                    db);
+                ImportNormalizedSourceRequest Request(NormalizedSourceRepresentation representation) =>
+                    new(
+                        packageKey,
+                        $"Spell lookup replay {token}",
+                        "integration-test",
+                        "test-only",
+                        true,
+                        representation);
+
+                var imported = await importer.ImportAsync(Request(spellRepresentation));
+                await importer.ImportAsync(Request(lookupRepresentation));
+                var importedEntity = Assert.Single(imported.Entities);
+
+                var revision = await db.SourceEntityRevisions
+                    .SingleAsync(value => value.SourceEntityId == importedEntity.EntityId);
+                var revisionId = revision.Id;
+                var revisionNumber = revision.RevisionNumber;
+                var nativeFingerprint = revision.Fingerprint;
+
+                var staleContent = JsonNode.Parse(revision.ContentJson!)?.AsObject()
+                    ?? throw new InvalidOperationException("Spell fixture content was not a JSON object.");
+                var canonicalSpell = staleContent["_rulesCore"]?["spell"]?.AsObject()
+                    ?? throw new InvalidOperationException("Spell fixture did not receive canonical spell mechanics.");
+                Assert.True(canonicalSpell.Remove("lists"));
+                revision.ContentJson = staleContent.ToJsonString();
+                revision.NormalizationVersion = 0;
+                revision.NormalizationAttemptVersion = 0;
+                revision.NormalizationAttemptedAt = null;
+                revision.NormalizationError = null;
+                await db.SaveChangesAsync();
+                db.ChangeTracker.Clear();
+
+                var registry = new SourceFormatAdapterRegistry(
+                [
+                    new FiveEToolsCompanionSourceFormatAdapter(),
+                    new PcGenSourceFormatAdapter(),
+                    new PdfSourceFormatAdapter()
+                ]);
+                var maintenance = new SourceNormalizationMaintenanceService(db, registry);
+                var result = await maintenance.ReconcileAsync(
+                    limit: 10,
+                    retryFailed: false,
+                    packageKey: packageKey);
+
+                Assert.Equal(1, result.AttemptedRevisionCount);
+                Assert.Equal(1, result.UpdatedContentCount);
+                Assert.Equal(0, result.FailedRevisionCount);
+                Assert.Empty(result.Failures);
+
+                var current = await db.SourceEntityRevisions
+                    .AsNoTracking()
+                    .SingleAsync(value => value.Id == revisionId);
+                Assert.Equal(revisionNumber, current.RevisionNumber);
+                Assert.Equal(nativeFingerprint, current.Fingerprint);
+                Assert.Equal(SourceNormalizationVersion.Current, current.NormalizationVersion);
+
+                using var document = JsonDocument.Parse(current.ContentJson!);
+                var spell = document.RootElement
+                    .GetProperty("_rulesCore")
+                    .GetProperty("spell");
+                var wizard = Assert.Single(spell.GetProperty("lists").EnumerateArray().Where(value =>
+                    value.GetProperty("name").GetString() == "Wizard"));
+                Assert.Equal("class", wizard.GetProperty("kind").GetString());
+                Assert.Equal(3, wizard.GetProperty("level").GetInt32());
+                Assert.Equal("generated-spell-source-lookup", wizard.GetProperty("evidence").GetString());
 
                 Assert.Equal(
                     1,

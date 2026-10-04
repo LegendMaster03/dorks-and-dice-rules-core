@@ -68,6 +68,14 @@ public sealed record NormalizedSourceRepresentation(
     string? MetadataJson = null)
 {
     public IReadOnlyList<NormalizedSourceCompanionContent> CompanionContents { get; init; } = [];
+
+    /// <summary>
+    /// Source companion evidence made available transiently to mechanical normalization. This is
+    /// not additional ownership: CompanionContents remains the authoritative persistence set on
+    /// the physical representation which supplied the bytes. Batch adapters may attach evidence
+    /// here when a generated/index artifact describes a rule-bearing record in another artifact.
+    /// </summary>
+    public IReadOnlyList<NormalizedSourceCompanionContent> NormalizationCompanionEvidence { get; init; } = [];
 }
 
 public interface ISourceFormatAdapter

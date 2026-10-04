@@ -318,6 +318,9 @@ public sealed class SourceNormalizationMaintenanceService(
             representation.OriginIdentity,
             representation.SourceUri,
             representation.MediaType);
+        var normalizationEvidence = await ReadNormalizationCompanionEvidenceAsync(
+            entity,
+            cancellationToken);
 
         var reparsed = string.Equals(
                 representation.FormatKey,
@@ -335,7 +338,10 @@ public sealed class SourceNormalizationMaintenanceService(
                     revision.Fingerprint,
                     StringComparison.Ordinal))
             {
-                return new TranslationCandidate(reparsed, record, WasReconstructed: false);
+                return new TranslationCandidate(
+                    reparsed with { NormalizationCompanionEvidence = normalizationEvidence },
+                    record,
+                    WasReconstructed: false);
             }
         }
 
@@ -371,9 +377,32 @@ public sealed class SourceNormalizationMaintenanceService(
                 artifact,
                 [reconstructedRecord],
                 publications,
-                representation.MetadataJson),
+                representation.MetadataJson)
+            {
+                NormalizationCompanionEvidence = normalizationEvidence
+            },
             reconstructedRecord,
             WasReconstructed: true);
+    }
+
+    private async Task<IReadOnlyList<NormalizedSourceCompanionContent>> ReadNormalizationCompanionEvidenceAsync(
+        SourceEntity entity,
+        CancellationToken cancellationToken)
+    {
+        if (!string.Equals(
+                entity.FormatKey,
+                FiveEToolsSourceFormatAdapter.Format,
+                StringComparison.Ordinal)
+            || !string.Equals(entity.EntityType, "spell", StringComparison.OrdinalIgnoreCase))
+        {
+            return [];
+        }
+
+        return await new SourceNormalizationCompanionEvidenceReader(dbContext)
+            .ReadForSourceEntityAsync(
+                entity.Id,
+                FiveEToolsCompanionSourceFormatAdapter.SpellSourceLookupCompanionKind,
+                cancellationToken);
     }
 
     private async Task<StoredPublication?> ReadBoundPublicationAsync(

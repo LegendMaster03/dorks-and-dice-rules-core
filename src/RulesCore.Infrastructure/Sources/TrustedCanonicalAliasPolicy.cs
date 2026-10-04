@@ -21,6 +21,7 @@ internal static class TrustedCanonicalAliasPolicy
         record = EpicContentNormalizationPolicy.Apply(representation, record);
         record = ExactCompetencyTranslationPolicy.Apply(representation, record);
         record = ClassTaxonomyNormalizationPolicy.Apply(representation, record);
+        record = CrossEditionCanonicalNormalizationPolicy.Apply(representation, record);
 
         if (string.IsNullOrWhiteSpace(record.ContentJson)
             || !TrustedSourceLineageRegistry.TryResolveScheme(

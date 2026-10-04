@@ -4,12 +4,14 @@ using RulesCore.Application.Sources;
 namespace RulesCore.Infrastructure.Sources;
 
 /// <summary>
-/// Adds confirmed 5e.tools companion/fluff semantics around the native adapter. The underlying
-/// adapter remains responsible for normal entity/publication parsing; fluff records are removed
-/// from the rule-bearing record set and preserved as package-owned companion payloads instead.
+/// Adds confirmed 5e.tools companion semantics around the native adapter. The underlying adapter
+/// remains responsible for normal entity/publication parsing; companion records are removed from
+/// the rule-bearing record set and preserved as package-owned source payloads instead.
 /// </summary>
 public sealed class FiveEToolsCompanionSourceFormatAdapter : ISourceFormatBatchAdapter
 {
+    internal const string SpellSourceLookupCompanionKind = "spellSourceLookup";
+
     private readonly FiveEToolsSourceFormatAdapter inner = new();
 
     private static readonly IReadOnlyDictionary<string, string[]> TargetTypes =
@@ -17,7 +19,8 @@ public sealed class FiveEToolsCompanionSourceFormatAdapter : ISourceFormatBatchA
         {
             ["monsterFluff"] = ["monster"],
             ["raceFluff"] = ["race", "species"],
-            ["spellFluff"] = ["spell"]
+            ["spellFluff"] = ["spell"],
+            [SpellSourceLookupCompanionKind] = ["spell"]
         };
 
     public string FormatKey => FiveEToolsSourceFormatAdapter.Format;
@@ -49,7 +52,41 @@ public sealed class FiveEToolsCompanionSourceFormatAdapter : ISourceFormatBatchA
                 results.Add(combined);
             }
         }
-        return results;
+
+        var spellLookup = results
+            .SelectMany(value => value.CompanionContents)
+            .Where(value => string.Equals(
+                value.CompanionKind,
+                SpellSourceLookupCompanionKind,
+                StringComparison.OrdinalIgnoreCase))
+            .ToArray();
+        if (spellLookup.Length == 0)
+        {
+            return results;
+        }
+
+        // Generated spell lookup data is a separate source artifact. Keep ownership/provenance on
+        // that artifact, but make matching evidence available to translation while the corpus is
+        // normalized as a batch. It is not copied into CompanionContents on the spell artifact,
+        // so persistence never lies about which physical source supplied the evidence.
+        return results.Select(representation =>
+        {
+            var spellIdentities = representation.Records
+                .Where(value => string.Equals(value.EntityType, "spell", StringComparison.OrdinalIgnoreCase))
+                .Select(value => SpellIdentity(value.Name, value.SourceCode))
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+            if (spellIdentities.Count == 0)
+            {
+                return representation;
+            }
+
+            var evidence = spellLookup
+                .Where(value => spellIdentities.Contains(SpellIdentity(value.Name, value.SourceCode)))
+                .ToArray();
+            return evidence.Length == 0
+                ? representation
+                : representation with { NormalizationCompanionEvidence = evidence };
+        }).ToArray();
     }
 
     internal static bool IsCompanionKind(string? entityType) =>
@@ -82,9 +119,15 @@ public sealed class FiveEToolsCompanionSourceFormatAdapter : ISourceFormatBatchA
             }
 
             var companions = new List<NormalizedSourceCompanionContent>();
+            if (IsSpellSourceLookupArtifact(artifact.FileName))
+            {
+                companions.AddRange(ReadSpellSourceLookupCompanions(document.RootElement));
+            }
+
             foreach (var property in document.RootElement.EnumerateObject())
             {
                 if (!TargetTypes.TryGetValue(property.Name, out var targetTypes)
+                    || string.Equals(property.Name, SpellSourceLookupCompanionKind, StringComparison.OrdinalIgnoreCase)
                     || property.Value.ValueKind != JsonValueKind.Array)
                 {
                     continue;
@@ -111,7 +154,8 @@ public sealed class FiveEToolsCompanionSourceFormatAdapter : ISourceFormatBatchA
         out NormalizedSourceCompanionContent companion)
     {
         companion = null!;
-        if (!TargetTypes.TryGetValue(companionKind, out var targetTypes))
+        if (!TargetTypes.TryGetValue(companionKind, out var targetTypes)
+            || string.Equals(companionKind, SpellSourceLookupCompanionKind, StringComparison.OrdinalIgnoreCase))
         {
             return false;
         }
@@ -156,6 +200,35 @@ public sealed class FiveEToolsCompanionSourceFormatAdapter : ISourceFormatBatchA
         }
     }
 
+    internal static IReadOnlyList<SpellSourceLookupGrant> ReadSpellSourceLookupGrants(string rawJson)
+    {
+        try
+        {
+            using var document = JsonDocument.Parse(rawJson);
+            if (document.RootElement.ValueKind != JsonValueKind.Object
+                || !document.RootElement.TryGetProperty("access", out var access)
+                || access.ValueKind != JsonValueKind.Object)
+            {
+                return [];
+            }
+
+            var grants = new List<SpellSourceLookupGrant>();
+            AddGrantRows(access, "class", "class", grants);
+            AddGrantRows(access, "classVariant", "class-variant", grants);
+            return grants
+                .DistinctBy(
+                    value => $"{value.Kind}\n{value.Name}\n{value.SourceCode}",
+                    StringComparer.OrdinalIgnoreCase)
+                .OrderBy(value => value.Kind, StringComparer.OrdinalIgnoreCase)
+                .ThenBy(value => value.Name, StringComparer.OrdinalIgnoreCase)
+                .ToArray();
+        }
+        catch (JsonException)
+        {
+            return [];
+        }
+    }
+
     private static NormalizedSourceRepresentation? Combine(
         SourceRepresentationArtifact artifact,
         NormalizedSourceRepresentation? representation,
@@ -185,7 +258,7 @@ public sealed class FiveEToolsCompanionSourceFormatAdapter : ISourceFormatBatchA
         }
 
         // Defensive filtering is retained even if the underlying inspector later stops treating
-        // fluff arrays as importable entity arrays.
+        // companion arrays as importable entity arrays.
         var ruleRecords = representation.Records
             .Where(value => !IsCompanionKind(value.EntityType))
             .ToArray();
@@ -194,6 +267,42 @@ public sealed class FiveEToolsCompanionSourceFormatAdapter : ISourceFormatBatchA
             Records = ruleRecords,
             CompanionContents = companions
         };
+    }
+
+    private static IReadOnlyList<NormalizedSourceCompanionContent> ReadSpellSourceLookupCompanions(
+        JsonElement root)
+    {
+        var companions = new List<NormalizedSourceCompanionContent>();
+        foreach (var sourceProperty in root.EnumerateObject())
+        {
+            if (sourceProperty.Value.ValueKind != JsonValueKind.Object) continue;
+            var sourceCode = sourceProperty.Name.Trim();
+            if (sourceCode.Length == 0) continue;
+
+            foreach (var spellProperty in sourceProperty.Value.EnumerateObject())
+            {
+                if (spellProperty.Value.ValueKind != JsonValueKind.Object) continue;
+                var spellName = spellProperty.Name.Trim();
+                if (spellName.Length == 0) continue;
+
+                var rawJson =
+                    $"{{\"spellSource\":{JsonSerializer.Serialize(sourceCode)},"
+                    + $"\"spellName\":{JsonSerializer.Serialize(spellName)},"
+                    + $"\"access\":{spellProperty.Value.GetRawText()}}}";
+                companions.Add(new NormalizedSourceCompanionContent(
+                    SpellSourceLookupCompanionKind,
+                    spellName,
+                    sourceCode,
+                    $"{SpellSourceLookupCompanionKind}|{sourceCode.ToLowerInvariant()}|{spellName.ToLowerInvariant()}",
+                    rawJson,
+                    [new NormalizedSourceCompanionTarget(
+                        "spell",
+                        spellName,
+                        sourceCode,
+                        "generated-spell-source-lookup")]));
+            }
+        }
+        return companions;
     }
 
     private static bool TryReadCompanion(
@@ -237,9 +346,39 @@ public sealed class FiveEToolsCompanionSourceFormatAdapter : ISourceFormatBatchA
             nativeIdentity.NativeKey,
             item.GetRawText(),
             targets
-                .DistinctBy(value => $"{value.EntityType}\n{value.Name}\n{value.SourceCode}", StringComparer.OrdinalIgnoreCase)
+                .DistinctBy(
+                    value => $"{value.EntityType}\n{value.Name}\n{value.SourceCode}",
+                    StringComparer.OrdinalIgnoreCase)
                 .ToArray());
         return true;
+    }
+
+    private static void AddGrantRows(
+        JsonElement access,
+        string propertyName,
+        string kind,
+        ICollection<SpellSourceLookupGrant> grants)
+    {
+        if (!access.TryGetProperty(propertyName, out var byClassSource)
+            || byClassSource.ValueKind != JsonValueKind.Object)
+        {
+            return;
+        }
+
+        foreach (var source in byClassSource.EnumerateObject())
+        {
+            if (source.Value.ValueKind != JsonValueKind.Object) continue;
+            foreach (var classEntry in source.Value.EnumerateObject())
+            {
+                if (!string.IsNullOrWhiteSpace(classEntry.Name))
+                {
+                    grants.Add(new SpellSourceLookupGrant(
+                        kind,
+                        classEntry.Name.Trim(),
+                        source.Name.Trim()));
+                }
+            }
+        }
     }
 
     private static void AddTargets(
@@ -272,6 +411,20 @@ public sealed class FiveEToolsCompanionSourceFormatAdapter : ISourceFormatBatchA
         return true;
     }
 
+    private static bool IsSpellSourceLookupArtifact(string fileName) =>
+        string.Equals(
+            Path.GetFileName(fileName),
+            "gendata-spell-source-lookup.json",
+            StringComparison.OrdinalIgnoreCase);
+
     private static string ArtifactKey(SourceRepresentationArtifact artifact) =>
         $"{artifact.OriginIdentity}\n{artifact.FileName}";
+
+    private static string SpellIdentity(string name, string? sourceCode) =>
+        $"{sourceCode?.Trim() ?? string.Empty}\n{name.Trim()}";
+
+    internal sealed record SpellSourceLookupGrant(
+        string Kind,
+        string Name,
+        string SourceCode);
 }
