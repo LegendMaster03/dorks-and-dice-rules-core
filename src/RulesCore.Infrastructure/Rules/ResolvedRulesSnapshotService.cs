@@ -31,14 +31,7 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
                 excludedConceptIds: [],
                 cancellationToken);
             return new ResolvedRulesCatalogView(
-                "global",
-                null,
-                null,
-                null,
-                fallbacks.Length,
-                [],
-                [],
-                fallbacks);
+                "global", null, null, null, fallbacks.Length, [], [], fallbacks);
         }
 
         var entries = await dbContext.RulesetRevisionEntries
@@ -63,11 +56,8 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
         for (var index = 0; index < entries.Length; index++)
         {
             var entry = entries[index];
-            using var sourceDocument = JsonDocument.Parse(
-                entry.SourceEntityRevision.GetMechanicalContentJson());
-            var document = ApplyGlobalDecision(
-                sourceDocument.RootElement,
-                entry.GlobalRuleDecision);
+            using var sourceDocument = JsonDocument.Parse(entry.SourceEntityRevision.GetMechanicalContentJson());
+            var document = ApplyGlobalDecision(sourceDocument.RootElement, entry.GlobalRuleDecision);
             var source = entry.SourceEntityRevision.SourceEntity;
             published[index] = new ResolvedRuleCatalogItemView(
                 entry.RuleConceptId,
@@ -93,10 +83,7 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
                     entry.SourceEntityRevision.RevisionNumber));
         }
 
-        published = await ResolvedRuleCatalogEditionMetadata.AttachAsync(
-            dbContext,
-            published,
-            cancellationToken);
+        published = await ResolvedRuleCatalogEditionMetadata.AttachAsync(dbContext, published, cancellationToken);
         published = await AttachRelationshipsAsync(published, cancellationToken);
 
         var fallbacks = await BuildFallbackItemsAsync(
@@ -111,14 +98,7 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
             .ToArray();
 
         return new ResolvedRulesCatalogView(
-            "global",
-            null,
-            revision.RevisionNumber,
-            revision.PublishedAt,
-            rules.Length,
-            [],
-            [],
-            rules);
+            "global", null, revision.RevisionNumber, revision.PublishedAt, rules.Length, [], [], rules);
     }
 
     internal async Task<ResolvedRulesCatalogView> ReadCampaignAsync(
@@ -145,14 +125,7 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
                 excludedConceptIds: [],
                 cancellationToken);
             return new ResolvedRulesCatalogView(
-                "campaign",
-                campaignId,
-                null,
-                null,
-                fallbacks.Length,
-                [],
-                [],
-                fallbacks);
+                "campaign", campaignId, null, null, fallbacks.Length, [], [], fallbacks);
         }
 
         var entries = await dbContext.CampaignRulesetRevisionEntries
@@ -178,14 +151,11 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
         for (var index = 0; index < entries.Length; index++)
         {
             var entry = entries[index];
-            using var sourceDocument = JsonDocument.Parse(
-                entry.SourceEntityRevision.GetMechanicalContentJson());
+            using var sourceDocument = JsonDocument.Parse(entry.SourceEntityRevision.GetMechanicalContentJson());
             var document = sourceDocument.RootElement.Clone();
             if (entry.CampaignRuleDecision?.DecisionKind != CampaignRuleDecisionKinds.SelectSource)
             {
-                document = ApplyGlobalDecision(
-                    document,
-                    entry.BaselineRulesetRevisionEntry.GlobalRuleDecision);
+                document = ApplyGlobalDecision(document, entry.BaselineRulesetRevisionEntry.GlobalRuleDecision);
             }
             if (entry.CampaignRuleDecision is not null)
             {
@@ -198,8 +168,7 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
                 entry.RuleConcept.Key,
                 source.EntityType,
                 entry.RuleConcept.DisplayName,
-                entry.CampaignRuleDecision?.DecisionKind
-                    ?? CampaignRuleDecisionKinds.InheritGlobal,
+                entry.CampaignRuleDecision?.DecisionKind ?? CampaignRuleDecisionKinds.InheritGlobal,
                 entry.CampaignRuleDecision is not null
                     && entry.CampaignRuleDecision.DecisionKind != CampaignRuleDecisionKinds.InheritGlobal,
                 source.Id,
@@ -219,10 +188,7 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
                     entry.SourceEntityRevision.RevisionNumber));
         }
 
-        published = await ResolvedRuleCatalogEditionMetadata.AttachAsync(
-            dbContext,
-            published,
-            cancellationToken);
+        published = await ResolvedRuleCatalogEditionMetadata.AttachAsync(dbContext, published, cancellationToken);
         published = await AttachRelationshipsAsync(published, cancellationToken);
 
         var fallbacks = await BuildFallbackItemsAsync(
@@ -237,14 +203,7 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
             .ToArray();
 
         return new ResolvedRulesCatalogView(
-            "campaign",
-            campaignId,
-            revision.RevisionNumber,
-            revision.PublishedAt,
-            rules.Length,
-            [],
-            [],
-            rules);
+            "campaign", campaignId, revision.RevisionNumber, revision.PublishedAt, rules.Length, [], [], rules);
     }
 
     private async Task<ResolvedRuleCatalogItemView[]> BuildFallbackItemsAsync(
@@ -264,12 +223,19 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
             .ThenBy(value => value.Key)
             .ThenBy(value => value.Id)
             .ToArrayAsync(cancellationToken);
-        var resolver = new EffectiveRuleFallbackResolver(dbContext);
-        var result = new List<ResolvedRuleCatalogItemView>();
+        if (candidates.Length == 0)
+        {
+            return [];
+        }
+
+        var resolved = await new EffectiveRuleFallbackResolver(dbContext).ResolveManyAsync(
+            candidates,
+            userId,
+            cancellationToken);
+        var result = new List<ResolvedRuleCatalogItemView>(resolved.Count);
         foreach (var concept in candidates)
         {
-            var fallback = await resolver.ResolveAsync(concept, userId, cancellationToken);
-            if (fallback is null)
+            if (!resolved.TryGetValue(concept.Id, out var fallback))
             {
                 continue;
             }
@@ -278,8 +244,7 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
             var sourceRevision = fallback.Revision;
             using var document = JsonDocument.Parse(sourceRevision.GetMechanicalContentJson());
             var resolvedDocument = document.RootElement.Clone();
-            var edition = ResolvedRuleCatalogEditionMetadata.Normalize(
-                fallback.Publication?.GameEdition);
+            var edition = ResolvedRuleCatalogEditionMetadata.Normalize(fallback.Publication?.GameEdition);
             var effectiveEntityType = RuleConceptEntityTypes.Normalize(source.EntityType);
             result.Add(new ResolvedRuleCatalogItemView(
                 concept.Id,
@@ -337,23 +302,21 @@ internal sealed class ResolvedRulesSnapshotService(RulesCoreDbContext dbContext)
             .ToArray();
     }
 
-    private static JsonElement ApplyGlobalDecision(
-        JsonElement source,
-        GlobalRuleDecision decision) => decision.DecisionKind switch
-    {
-        RuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(source, decision.PatchJson),
-        RuleDecisionKinds.JsonRulePatch => JsonRulePatch.Apply(source, decision.PatchJson),
-        _ => source.Clone()
-    };
+    private static JsonElement ApplyGlobalDecision(JsonElement source, GlobalRuleDecision decision) =>
+        decision.DecisionKind switch
+        {
+            RuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(source, decision.PatchJson),
+            RuleDecisionKinds.JsonRulePatch => JsonRulePatch.Apply(source, decision.PatchJson),
+            _ => source.Clone()
+        };
 
-    private static JsonElement ApplyCampaignDecision(
-        JsonElement source,
-        CampaignRuleDecision decision) => decision.DecisionKind switch
-    {
-        CampaignRuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(source, decision.PatchJson),
-        CampaignRuleDecisionKinds.JsonRulePatch => JsonRulePatch.Apply(source, decision.PatchJson),
-        _ => source.Clone()
-    };
+    private static JsonElement ApplyCampaignDecision(JsonElement source, CampaignRuleDecision decision) =>
+        decision.DecisionKind switch
+        {
+            CampaignRuleDecisionKinds.JsonMergePatch => JsonMergePatch.Apply(source, decision.PatchJson),
+            CampaignRuleDecisionKinds.JsonRulePatch => JsonRulePatch.Apply(source, decision.PatchJson),
+            _ => source.Clone()
+        };
 
     private static string? NormalizeOptionalUserId(string? value) =>
         string.IsNullOrWhiteSpace(value) ? null : RequireUserId(value);
