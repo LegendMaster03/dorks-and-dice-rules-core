@@ -26,11 +26,6 @@ internal sealed class RulesCorePerformanceIndexInitializer(IServiceScopeFactory 
             WHERE source_entity_id IS NOT NULL;
         """,
         """
-        CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_source_entity_occurrence_binding_revision
-            ON source_entity_occurrence_binding(source_entity_revision_id)
-            WHERE source_entity_revision_id IS NOT NULL;
-        """,
-        """
         CREATE INDEX CONCURRENTLY IF NOT EXISTS ix_ruleset_revision_entry_source_revision
             ON ruleset_revision_entry(source_entity_revision_id);
         """,
