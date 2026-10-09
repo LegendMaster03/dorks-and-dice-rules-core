@@ -61,6 +61,16 @@ The old `docs/epic-content-modeling.md` preserves a record of the legacy impleme
 
 A rule's band/threshold behavior may introduce the mechanic, preserve it without new improvements, continue its progression, evolve its behavior, or terminate its effect; absence of a rule must not be confused with a default transition. Labels such as **Epic Feat**, **Epic Boon**, and **Epic Spell** remain source/catalog descriptors, not a separate level-21 algorithm. Full details and unresolved defaults belong in the [native rules specification](native-rules-design-specification.md), not in persistence or translation assumptions.
 
+## Aspirational play-at-the-table compatibility for existing 5e characters
+
+**Stretch goal, not an implementation commitment:** Beyond conversion of rules/content and beyond ensuring Dorks & Dice characters can choose different levels of complexity, the owner would like a guest who arrives at a one-shot with a preexisting 5e character sheet to be able to play reasonably well **without rebuilding the character**. This may involve DM adjudication and imperfect translations. It must **not become a hidden release gate, a demand for automatic lossless character-state migration, or parallel player-specific 5e combat rules**.
+
+The potential future design is a **thin compatibility bridge**: use the existing sheet as a practical input/reference, respect Dorks & Dice shared encounter rules (including Block Initiative), accept familiar printed stats where their use is meaningful, and provide explicit one-shot GM mapping for absent or incompatible statistics, costs and effects. In particular, **Touch and Flat-Footed AC cannot be inferred to equal ordinary 5e AC**, source features may involve incompatible action costs, and 2014 and 2024 5e characters may not have identical options. DM-visible uncertainties are preferable to fabricated equivalence.
+
+Keep the full Dorks & Dice native game self-contained, and keep rule/content conversion, **preexisting character migration**, and a **paper-sheet one-shot bridge** as three different deliverables. The stretch scenario should remain possible even **without** implementing a persistent import feature. Preserve enough native semantic identities and source-specific procedure fidelity to support the bridge later, but do **not** expand the rewrite's mandatory scope or replace the shared Dorks & Dice mechanics model with edition-specific play modes.
+
+See the [native rules specification's stretch-goal examples](native-rules-design-specification.md#aspirational-stretch-goal--drop-in-5e-character-sheets-for-one-shots).
+
 ## Automated conversion boundary
 
 A versioned adapter should identify a source's **mechanical intent**, map it into native Dorks & Dice concept/procedure/track identities, and retain its original semantics as an implementation variant when the native procedure is not equivalent. Conversion may produce: accepted equivalent, explicitly adapted, additive extension, mutually exclusive alternative, incompatible/conflicted, or unresolved/needs review. The precise accepted status vocabulary is a subsequent schema decision, not a rule to hard-code during game design.
