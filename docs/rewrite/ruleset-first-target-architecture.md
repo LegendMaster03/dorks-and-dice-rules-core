@@ -10,6 +10,11 @@ This is a more fundamental change than moving the existing house-rule baseline i
 
 Compatibility remains a fundamental objective. Moving authority to Dorks & Dice must not erase mechanically important differences, discard imported options, or force false equivalence among editions.
 
+**Game-design prerequisite:** before implementing this target architecture, complete the owner-reviewed [native rules specification](native-rules-design-specification.md). The recovered resolver policy is the starting point, not the entire game. Specify previously unresolved native combat procedures (including combat maneuvers), progression, and other end-to-end gameplay fundamentals in Dorks & Dice terms first. **Level Bands supersede an epic-specific native progression engine.** The architecture must implement the resulting approved game; it must not determine game rules in advance.
+
+**Compatibility premise:** as Pathfinder First Edition was compatible with D&D 3.5e through manual conversion, Dorks & Dice aims for **automated** rule/content conversion from 3e, 3.5e, 5e (2014), and 5.5e (2024) into its own governing rules. PF1e is a potential additional source. Automated conversion includes faithful automatic mappings where provable and explicit review states for ambiguous or incompatible cases; it does not assert that different numeric systems or source rules are identical, or promise lossless migration of every existing character and campaign.
+
+
 ## Clean-slate implementation and licensing
 
 **Starting from scratch means a clean native rules engine and implementation architecture, not discarding existing Dorks & Dice mechanics decisions or treating previous work as absent.** **Greenfield implementation is the default**: author new domain entities, rule-composition semantics, engine code, and persistence without inheriting the old resolver's class structure or database as constraints. Existing source pipelines, fixtures, API contracts, and cross-edition conclusions are reference material and migration targets, not building blocks that must be copied. Retain the historical service unchanged while the replacement is constructed and verified. Inventory the existing solver's adjudications, stable universal concepts, cross-edition relationships, mechanics contracts, and accepted house rules. Distinguish established design policy from incidental translation behavior, temporary fallbacks, and implementation constraints. Reimplement established policy deliberately under the new Dorks & Dice ontology.
@@ -40,6 +45,18 @@ Authoritative references:
 - [CC BY 4.0 terms](https://creativecommons.org/licenses/by/4.0/)
 
 Maintain clear attribution/provenance and a content-use policy for every incorporated source; the ability to implement a mechanic does not automatically permit wholesale reuse of third-party rulebook text, settings, artwork, or marks.
+
+## Generalized Level Bands and advancement-track semantics
+
+The old `docs/epic-content-modeling.md` preserves a record of the legacy implementation's epic normalization; **the new Dorks & Dice ruleset does not use epic as an engine-level special case**. Instead, 20-level **Level Bands** apply to relevant level-based tracks (1–20, 21–40, etc.). Character total level, each class progression, and each separately leveled prestige progression may be in different bands concurrently; a subclass inherits the effective parent-class track. A feature may determine acquisition, effect scaling, and prerequisites from different named tracks.
+
+A rule's band/threshold behavior may introduce the mechanic, preserve it without new improvements, continue its progression, evolve its behavior, or terminate its effect; absence of a rule must not be confused with a default transition. Labels such as **Epic Feat**, **Epic Boon**, and **Epic Spell** remain source/catalog descriptors, not a separate level-21 algorithm. Full details and unresolved defaults belong in the [native rules specification](native-rules-design-specification.md), not in persistence or translation assumptions.
+
+## Automated conversion boundary
+
+A versioned adapter should identify a source's **mechanical intent**, map it into native Dorks & Dice concept/procedure/track identities, and retain its original semantics as an implementation variant when the native procedure is not equivalent. Conversion may produce: accepted equivalent, explicitly adapted, additive extension, mutually exclusive alternative, incompatible/conflicted, or unresolved/needs review. The precise accepted status vocabulary is a subsequent schema decision, not a rule to hard-code during game design.
+
+**Rules-content conversion** is distinct from a future **character/creature/encounter/campaign migration** tool, because converting a class feature definition does not itself decide how an existing character's rank points, levels, used spell slots or encounter conditions should map. Avoid hiding incompatible rule-system assumptions under a “successfully converted” status. Preserve source provenance, grants, history, and permissions.
 
 ## Primary architectural distinction
 
@@ -119,7 +136,7 @@ The evaluator should consume a deterministic compiled/effective rules context, w
 
 - **Alchemy**: a universal learned competency can reconcile 3.x ranked skills and later tool proficiency while preserving their different calculations. The core ruleset determines their interaction in a mixed character.
 - **Target defenses**: Touch AC, Flat-Footed AC, standard Armor Class, advantage/disadvantage, and denied Dexterity are not interchangeable. A core procedure may use or reconcile them only through explicit applicability/compatibility rules.
-- **Classes and advancement**: different advancement progressions, feat cadence, prestige prerequisites, spellcasting progression, and epic content must not be flattened into a 5e-only class schema. The core defines what mixed progression means.
+- **Classes and advancement**: different advancement progressions, feat cadence, prestige prerequisites, spellcasting progression, and historically epic-labeled content must not be flattened into a 5e-only class schema; Level Bands and their per-track transitions govern native advancement. The core defines what mixed progression means.
 - **Third-party rules**: new damage types, subsystems, proficiencies, or procedures need an explicit way to extend the core model, not an assumption that only known SRD categories can exist.
 
 ## Security and integration
@@ -130,11 +147,11 @@ The Dorks & Dice system's public/readable mechanics and imported restricted sour
 
 ## Essential early design deliverables
 
-Before writing replacement mechanics infrastructure, produce:
+Before writing replacement mechanics infrastructure, **finish the owner-led native gameplay design** and then produce:
 
-1. A **recovered Dorks & Dice design specification**: extract and validate game-design decisions already embodied in the resolver, including competency reconciliation, edition-independent concepts, compatibility and additive behavior, rule precedence, and known house rules. Mark each as settled, provisional, or unresolved; fill genuine gaps to define an independent, versioned playable baseline. The six formally seeded house rules are only one subset of that pre-existing design work.
+1. An **owner-reviewed complete Dorks & Dice gameplay specification**: first recover the actual existing decisions (competencies, class taxonomy, advancement, combat, spellcasting, additive behavior, and known house rules), then establish the missing native play procedures and Level Bands **before** comparing outside design alternatives. Mark each as settled, proposed, or unresolved. Include the owner's intended combat-maneuver design and a full playable loop. The six formally seeded house rules are only one subset of the pre-existing design work.
 2. A **mechanical ontology** separating stable system concepts, source implementations, compatible facets, procedures, operators, typed values, triggers, capabilities, and extensions.
-3. A **compatibility and adjudication policy** for import-to-core and import-to-import relations, effective participation, precedence, contradictory mechanics, and approval.
+3. An **automated compatibility and adjudication policy** for 3e/3.5e/5e/5.5e conversions, source-to-core and source-to-source relations, mechanical fidelity, native versus source-specific procedure behavior, effective participation, precedence, contradictory mechanics, explicit unresolved translations, and approval. PF1e remains an optional candidate source.
 4. A **cross-edition acceptance matrix** using 3e/3.5e/5e/5.5e and third-party-shaped fixtures, with pure and mixed-system cases.
 5. A **deterministic runtime execution proposal** with performance budgets and migration/consumer compatibility constraints.
 
