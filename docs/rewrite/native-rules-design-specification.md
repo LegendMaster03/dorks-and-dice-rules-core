@@ -84,13 +84,13 @@ The owner has now made or reaffirmed the following Dorks & Dice combat design de
 | Initiative | **Block Initiative** is already the native initiative system and is implemented separately. Do not choose an initiative system by preferring one of the editions in the comparison. | Established external Dorks & Dice design; integration still needs precise interface contract |
 | Combat defenses | Preserve the existing 3.5-derived **ordinary, Touch and Flat-Footed AC** distinctions already reconciled in Rules Core. Do not silently substitute 5.x advantage/disadvantage or saving throws for these defenses. | Reaffirmed existing design |
 | Opportunity attacks | Source versions use substantially the same underlying concept, with differences in names, triggers, applicability and action restrictions. Reconcile the common intent but **do not treat triggers as identical** or prematurely decide the native trigger policy. | Existing-concept recognition; native details open |
-| Critical success/failure | Critical successes and failures **stack through consecutive extreme natural d20 results**, as the owner described from Fool's Gold. An initial natural 20 is a critical success that calls for another roll; consecutive 20s raise the critical tier. An initial natural 1 is a critical failure that similarly can stack on consecutive natural 1s. | Newly stated owner gameplay rule; remaining cases below |
+| Critical success/failure | **Adapted from Fool's Gold, not invented for Dorks & Dice:** critical successes and failures stack through consecutive extreme natural d20 results. An initial natural 20 is a critical success that calls for another roll; consecutive 20s raise the critical tier. An initial natural 1 is a critical failure that similarly stacks on consecutive natural 1s. The owner also attributes the **triple-critical effects** to Fool's Gold. | Adopted gameplay direction from Fool's Gold; integration details below |
 | Critical-hit damage | In place of simple doubled damage dice, a critical hit uses **maximum damage plus an additional damage roll**. The exact interaction with static damage modifiers and doubled/stacked critical tiers still needs explicit examples. | Owner rule, detailed arithmetic awaiting confirmation |
-| Triple critical success | A triple critical success in combat **reduces the attacked opponent to 0 HP**. | Owner rule |
-| Triple critical failure | A triple critical failure **reduces the failing character to 0 HP**. | Owner rule; precise scope beyond combat open |
+| Triple critical success | A triple critical success in combat **reduces the attacked opponent to 0 HP**. | Fool's Gold-derived consequence adopted by owner |
+| Triple critical failure | A triple critical failure **reduces the failing character to 0 HP**. | Fool's Gold-derived consequence adopted by owner; precise scope beyond combat open |
 | Reaching 0 HP | **5e-style death saving throws remain available** even when reaching 0 HP through a triple critical. This rule must not automatically become a 3.x negative-HP instant-death effect. | Owner rule; edge cases open |
 
-### Critical stacking — owner-described baseline
+### Critical stacking — Fool's Gold mechanic adopted for Dorks & Dice
 
 On a natural **20**, mark a critical success and roll again. Another 20 makes it a **double critical** and prompts another roll. A third consecutive 20 makes it a **triple critical**. In combat, that successful attack puts its target at **0 HP**.
 
@@ -98,7 +98,9 @@ Conversely, natural **1s** can accumulate as critical failures. Three consecutiv
 
 A normal critical damage result uses **maximum damage plus a damage roll**, not the ordinary 5e rule of simply rolling doubled damage dice. Until reviewed, do not assume the exact placement of ability bonuses, damage types, additional feature-granted dice, or attack-specific modifiers. Do not infer an unspecified double-critical damage formula.
 
-**This combines ideas rather than copying any source formula:** the *additional critical roll* resembles 3.x critical confirmation, the hit-point/death-save framework draws from 5.x, and the stacking/extreme outcomes and maximum-plus-roll rule reflect the owner's stated Dorks & Dice design. The repeated rolls are **not** ordinary 3.x confirmation rolls: natural 20s/1s trigger a repeating escalation rather than an attack-roll-vs-AC confirmation.
+**Attribution and adaptation:** Fool's Gold is the source of the consecutive critical-success/failure tiers **and the triple-critical consequences**. Dorks & Dice is **adopting**, not inventing, those rules. The owner's separately proposed **maximum-damage-plus-another-damage-roll** rule modifies normal critical-hit damage; retaining **5e-style death saving throws** integrates the adopted stacking mechanic into Dorks & Dice combat. The additional rolls may superficially resemble 3.x critical confirmation, but should **not** be presented as the origin or mechanism of Fool's Gold stacking: repeated natural 20s/1s escalate severity rather than merely confirming a threatened hit against AC.
+
+**Source-verification boundary:** This specification records the owner's account of the Fool's Gold rules, not a checked transcription of the published source. Before implementing, validate any finer points directly against the relevant licensed source or the owner's intended adaptation. Do not invent a Fool's Gold double-critical effect in the absence of evidence.
 
 ### Critical rule details remaining open
 
