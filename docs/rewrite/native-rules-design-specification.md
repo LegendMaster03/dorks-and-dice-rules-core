@@ -10,6 +10,34 @@ Automated conversion must preserve semantic intent and meaningful mechanical dif
 
 **Different compatibility deliverables must be scoped independently:** (a) source-rule/content conversion into the hosted ruleset; (b) character, creature, encounter, and campaign-state conversion for a future migration workflow; (c) preservation of source-native play behavior versus adoption of Dorks & Dice-native defaults. The requirement for automated rules conversion does not imply that all existing characters or campaigns can be converted losslessly without review.
 
+## Governing design principle — individual choice of complexity, one shared game
+
+**Owner-established design goal (2026-10-09):** A player who prefers the comparative simplicity of D&D 5.x **must be able to play at the same table and in the same encounter** as a player who prefers the mechanical depth of D&D 3.x. **Each player chooses the level of mechanical complexity they personally want to interact with.** Some compromise from both source systems is acceptable, but this is the guiding principle governing those compromises. This requirement takes priority over a maximally faithful simulation of either edition's action economy or combat procedures.
+
+**One authoritative Dorks & Dice ruleset, not parallel editions at the table.** Participants share encounter state, turn/action budgets, spatial relationships, defenses, conditions, damage, and adjudicated effects. Complexity is primarily exposed through **available choices and the detail a player elects to manage**, not by placing different players under contradictory game laws. The game must remain playable without players switching to an entire 3.x or 5.x rules mode.
+
+### Required design outcomes
+
+- **Simple viable path:** A player can choose a straightforward character and reliably take understandable common actions (attack, move, cast, help, defend, interact, attempt a basic shove or grapple where allowed), with concise consequences and no mandatory familiarity with advanced maneuver notation, BAB, CMB/CMD, or the origin edition of another player's abilities.
+- **Deeper optional path:** Another player can opt into a more tactical or rules-dense character: specialized maneuvers, class and weapon feature combinations, detailed positioning, precise action substitution, and more complex advancement options, subject to normal character eligibility and campaign permissions.
+- **Shared outcomes:** A basic shove and an advanced pushing technique may use different activation/check requirements but resolve into the **same forced-movement and positioning rules**. An ordinary attack and a mastered weapon attack use the same target/defense/damage/condition infrastructure.
+- **No automatic mechanical advantage for opting into complexity:** More involved play should grant **meaningful alternative options**, not an unbounded extra pool of actions, stacking bonuses or damage simply because a player selected the more complex procedure. Exact class/build balance is still a distinct evaluation task, not an already proven guarantee.
+- **Limited spillover:** When an advanced player's option affects someone else, the other participant needs to understand **the resulting state and any response required**, not every intermediate rule or source-edition formula that produced it. A GM or tool may handle calculations, but the core tabletop rules must remain understandable without software.
+- **Permission remains real:** The player's desired depth is not permission to use unearned weapon masteries, feats, attack sequences or proficiency benefits. Character features, campaign allowances and resource/action costs still govern which complex options are actually available.
+- **DM scope and campaign defaults:** The GM retains table-wide adjudication and campaign controls; personal preference does not let a player change global combat physics, immunity behavior or opponent defenses in isolation. The goal is player-local optional complexity **within one coherent shared ruleset**, not incompatible player-specific house rules.
+
+### Examples / requirements to test
+
+1. **Mixed-depth attack encounter:** One player makes an ordinary attack with no mastery or declared special maneuver. Another uses a granted weapon mastery, or a detailed attack-replacement maneuver with extra triggers. Both attacks can target the same enemy and feed the same HP, defense and condition model. Only the involved player and GM need the advanced procedure.
+2. **Prone and displacement:** A simple character sees that an opponent has been pushed or knocked Prone and knows the effect. A more invested player may care whether it came from Topple, Trip, Shove, a class feature or spell. The effect's shared resolution is consistent without equating all the procedures that caused it.
+3. **Complex build, simple turn:** A player may own numerous proficiencies, features or derived statistics without having to choose a multi-step maneuver every round. The normal action/movement path must remain available.
+4. **No hidden extra turn:** A 3.x full attack, 2024 Nick or Cleave, 5.x Extra Attack, or other tactical option must not silently grant extra action resources through conversion. Advanced options can trade costs and permissions rather than add free actions.
+5. **Cross-player defense:** A complicated attacker should not force a simpler defender to switch to an alternative edition's attack/defense procedure. The defender receives a normal resolution request and understandable consequence within Dorks & Dice.
+
+### Decisions still needed to realize this principle
+
+The **goal** is established. The **exact mechanical layering is not yet approved**: what everybody can attempt by default; which maneuvers and weapon mastery effects require special character grants; whether a simpler procedure and a more detailed procedure can produce comparable tactical results; what tradeoffs prevent power creep; and how much intermediate detail a GM/Tool must expose. Evaluate these choices for both cognitive burden and balance rather than choosing a source edition wholesale.
+
 ## Game-design status vocabulary
 
 - **Recovered / established:** a previously approved gameplay decision confirmed in existing Rules Core documentation/code or by the owner; cite concrete evidence and retain its meaning.
@@ -189,7 +217,7 @@ These questions refine the unified action economy; **they do not reopen the owne
 
 ## Weapon Mastery and combat-maneuver integration — proposal for review
 
-**Status: comparative design analysis; no new gameplay rule has been approved.** The owner suggested integrating Weapon Mastery during the unification of 3.x / Pathfinder 1e and 5.x combat procedures, but has not determined whether or how its effects belong to the same native maneuver system.
+**Status: comparative design analysis; no Weapon Mastery unification procedure has been approved.** The owner suggested integrating Weapon Mastery during the unification of 3.x / Pathfinder 1e and 5.x combat procedures, but has not determined whether or how its effects belong to the same native maneuver system. **Evaluate all proposed integration against the established individual-complexity principle above:** a simple player must not be required to adopt weapon mastery or advanced maneuver bookkeeping to remain a functional combat participant, while an interested player can engage with the full tactical options allowed by their character.
 
 ### Existing Rules Core implementation is a starting point, not a finished combat evaluator
 
@@ -208,7 +236,7 @@ The legacy `src/RulesCore.Infrastructure/Rules/CharacterProjection/CharacterWeap
 | Cleave | On eligible hit, add an attack against a second target, limited per turn | **Conditional additional attack** |
 | Graze | On a miss, inflict limited damage based on an ability modifier | **Alternate miss consequence** |
 
-**Proposed unification:** the same procedure/outcome vocabulary can serve ordinary maneuvers, weapon masteries, spells, feats and creature traits. A **maneuver** names an intended action/outcome; **mastery** names a granted permission or attack-triggered modifier. Not every mastery property is a maneuver, and not every maneuver requires a weapon or mastery. Acquisition, activation condition, action cost, target eligibility, resistance, effect, duration and per-turn limitations remain independent data about each rule.
+**Proposed unification compatible with player-chosen complexity:** the same procedure/outcome vocabulary can serve ordinary maneuvers, weapon masteries, spells, feats and creature traits. A **maneuver** names an intended action/outcome; **mastery** names a granted permission or attack-triggered modifier. Not every mastery property is a maneuver, and not every maneuver requires a weapon or mastery. Acquisition, activation condition, action cost, target eligibility, resistance, effect, duration and per-turn limitations remain independent data about each rule.
 
 This is analogous to the existing universal-competency approach: a shared concept can have source-specific execution profiles without forcing separate systems or falsely equating incompatible dice/defense calculations. Do not blindly turn Pathfinder CMB/CMD, 3.5 grapple checks, 2014 5e Athletics contests and 2024 mastery effects into one success formula.
 
