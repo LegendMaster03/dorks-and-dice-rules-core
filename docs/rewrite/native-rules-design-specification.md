@@ -82,7 +82,7 @@ The owner has now made or reaffirmed the following Dorks & Dice combat design de
 | Subject | Current owner direction | Status |
 | --- | --- | --- |
 | Initiative | **Block Initiative** is already the native initiative system and is implemented separately. Do not choose an initiative system by preferring one of the editions in the comparison. | Established external Dorks & Dice design; integration still needs precise interface contract |
-| Action economy | **Merge the 3.x/PF1e and 5.x action economies into one native Dorks & Dice system**, recognizing their common functions while making conversion differences explicit. Do not require players to select an edition-wide action economy. | Owner-established design direction; specific budget/timing semantics remain provisional |
+| Action economy | **Merge the 3.x/PF1e and 5.x action economies into one native Dorks & Dice system**, recognizing their common functions while making conversion differences explicit. Do not require players to select an edition-wide action economy. **Use 5.x-style flexible movement as the native baseline**, while retaining rule-specific full-turn/full-round restrictions when expressly required. | Owner-confirmed unified system and movement baseline; other budget/timing semantics remain provisional |
 | Combat defenses | Preserve the existing 3.5-derived **ordinary, Touch and Flat-Footed AC** distinctions already reconciled in Rules Core. Do not silently substitute 5.x advantage/disadvantage or saving throws for these defenses. | Reaffirmed existing design |
 | Opportunity attacks | Source versions use substantially the same underlying concept, with differences in names, triggers, applicability and action restrictions. Reconcile the common intent but **do not treat triggers as identical** or prematurely decide the native trigger policy. | Existing-concept recognition; native details open |
 | Critical success/failure | **Adapted from Fool's Gold, not invented for Dorks & Dice:** critical successes and failures stack through consecutive extreme natural d20 results. An initial natural 20 is a critical success that calls for another roll; consecutive 20s raise the critical tier. An initial natural 1 is a critical failure that similarly stacks on consecutive natural 1s. The owner also attributes the **triple-critical effects** to Fool's Gold. | Adopted gameplay direction from Fool's Gold; integration details below |
@@ -142,22 +142,24 @@ These examples exclude static damage bonuses and other dice deliberately. The ow
 
 ## Unified action economy — design direction and provisional mapping
 
-**Owner direction:** The D&D 3.x / Pathfinder 1e and D&D 5.x action economies are close enough to **merge into a single native Dorks & Dice action economy** rather than remain separate edition-specific turn systems. This is an accepted **structural design decision**. The proposed budget and conversion details below are **working candidates**, not yet confirmed gameplay rules.
+**Owner direction:** The D&D 3.x / Pathfinder 1e and D&D 5.x action economies are close enough to **merge into a single native Dorks & Dice action economy** rather than remain separate edition-specific turn systems. This is an accepted **structural design decision**. The owner has also approved **5.x-style flexible movement as the native baseline**: movement is an independently spendable allowance and may be divided around other permitted activities, including between attacks where the attack/feature permits it. **A particular action or ability can explicitly impose full-turn/full-round restrictions** that constrain ordinary flexible movement. Other budget and conversion details below remain working candidates, not yet confirmed gameplay rules.
 
 | Working native concept | D&D 3.0 / 3.5 / PF1e analogue | D&D 2014 / 2024 analogue | Conversion warning |
 | --- | --- | --- | --- |
 | **Action** | Standard action | Action | Most directly similar, but a 3.x standard attack is not automatically a 5.x Extra Attack action |
-| **Movement / move-type activity** | Move action or move-equivalent action | Movement; occasionally Action to perform some nonmovement activity | 3.x spends its move action on both movement and other tasks; 5.x movement is a separate distance budget. Whether a move-type task consumes movement capacity or an Action is **not decided** |
+| **Movement / move-type activity** | Move action or move-equivalent action | Movement; occasionally Action to perform some nonmovement activity | **Native baseline is independent, splittable 5.x-style movement**, not a mandatory 3.x move action. How an imported nonmovement move-equivalent activity consumes native resources remains **undecided** |
 | **Quick action** (working name) | Swift action (3.5 supplements / PF1e; no universal 3.0 equivalent) | Bonus Action | 5.x requires a specific feature to grant an eligible Bonus Action; a swift action has its own source timing/rules. Map permitted uses, not an unrestricted extra action |
 | **Reaction** | Immediate action / attacks of opportunity | Reaction / opportunity attack | A 3.x immediate action may spend the upcoming swift action; 3.x opportunity attacks may have multiple uses and separate triggers. Do not quietly erase those costs |
 | **Free activity** | Free action or no-action activity | Free activity, one ordinary object interaction, or feature-defined no-action activity | Number and scope of interactions differ; unlimited free object manipulation cannot be inferred |
-| **Full-turn commitment** (working name) | Full-round action | Activities that require, constrain or span the character's turn | A 3.x full attack commonly restricts movement to a 5-foot step, while 5.x Extra Attack permits movement between attacks. They are **not automatically interchangeable** |
+| **Full-turn commitment** (working name) | Full-round action | Activities that require, constrain or span the character's turn | **Keep an explicit full-turn restriction when a particular rule requires it.** A 3.x full attack commonly restricts movement to a 5-foot step, while 5.x Extra Attack permits movement between attacks; they are **not automatically interchangeable** |
 
 ### Why unify the model without flattening timing
 
 The common model should answer **what portion of a turn an activity consumes**, **when it can occur**, **what grants it**, and **what activity it excludes**. A source-defined cost can map to a native cost plus explicit restrictions rather than remain a separate set of edition-specific turn counters.
 
-**Working candidate, for owner review:** Each participant ordinarily has a primary Action, a movement allowance, eligible Quick Actions, reactions to valid triggers and reasonable Free Activities. A Full-Turn Action is a **constraint on those existing resources**, not an extra independent action granted in addition to them. The precise number of Quick Actions and reactions, possible exchanges between Action and movement, and any restricted-turn treatment are not yet approved.
+**Approved movement behavior:** Each participant has a movement allowance independent of the primary Action. In ordinary play, movement can be split before and after other permitted activities; multiple attacks may have movement between them when the applicable attack procedure allows it. A **source-specific full-turn/full-round requirement overrides this flexibility only for that particular activity**. Do not automatically assign a 3.x full attack restriction to a 5.x Extra Attack, or remove an explicit full-round restriction during automated conversion.
+
+**Working candidate, for owner review:** Each participant ordinarily has a primary Action, eligible Quick Actions, reactions to valid triggers and reasonable Free Activities. A Full-Turn Action would be a **constraint on existing resources**, not an extra independent action granted in addition to them. The precise number of Quick Actions and reactions, possible exchanges between primary Action and movement resources, and other restricted-turn treatment are not yet approved.
 
 A 5e-style Extra Attack and a 3.5-style full attack must be allowed to have different movement/attack restrictions even if both present multiple attacks. Likewise, the 3.x five-foot step, move-equivalent actions, free object interactions, swift/immediate resource coupling, and 3.x opportunity-attack counts must be **explicitly reconciled**, not dismissed as synonyms.
 
@@ -177,13 +179,13 @@ Block Initiative remains authoritative for **whose turn or block is active**. Th
 
 ### Specific remaining owner decisions
 
-- **Movement semantics:** Use 5.x-style independently spendable movement (including interleaving), 3.x move-action accounting, or a hybrid? How do nonmovement **move actions** consume that budget?
-- **Full-turn operations:** Which actions actually lock or reduce movement, and is the 3.x 5-foot step preserved under specific source rules or adopted natively?
+- **Move-equivalent conversion:** With independent, splittable 5.x-style movement **now approved**, how do imported nonmovement 3.x **move actions** consume Action, movement allowance, or another resource? The baseline itself is not open.
+- **Full-turn operations:** **Explicit rule-specific full-turn restrictions are preserved.** Which activities impose them, precisely what movement remains permissible, and whether a 3.x five-foot step is permitted only for specified features or generally are still to be defined.
 - **Quick/reaction relationship:** Are Swift and Bonus combined into one slot, and do Immediate Actions use an ordinary Reaction, an upcoming Quick Action, or both? How many opportunity attacks can be made?
 - **Action substitution:** Can a standard Action be converted to additional movement or to a move-equivalent task, and can Action be used to perform an eligible Quick Action?
 - **Eligibility and refresh:** What is the default availability of Quick Action, Free Activities, and Reaction, and when do they replenish under Block Initiative?
 
-These questions refine the unified action economy; **they do not reopen the owner's decision to unify it**.
+These questions refine the unified action economy; **they do not reopen the owner's decisions to unify action economy, use 5.x-style splittable movement by default, or retain explicit full-turn restrictions where a rule requires them**.
 
 ## Combat systems comparative evidence (non-authoritative)
 
