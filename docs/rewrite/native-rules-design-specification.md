@@ -187,6 +187,64 @@ Block Initiative remains authoritative for **whose turn or block is active**. Th
 
 These questions refine the unified action economy; **they do not reopen the owner's decisions to unify action economy, use 5.x-style splittable movement by default, or retain explicit full-turn restrictions where a rule requires them**.
 
+## Weapon Mastery and combat-maneuver integration — proposal for review
+
+**Status: comparative design analysis; no new gameplay rule has been approved.** The owner suggested integrating Weapon Mastery during the unification of 3.x / Pathfinder 1e and 5.x combat procedures, but has not determined whether or how its effects belong to the same native maneuver system.
+
+### Existing Rules Core implementation is a starting point, not a finished combat evaluator
+
+The legacy `src/RulesCore.Infrastructure/Rules/CharacterProjection/CharacterWeaponMasteryProjector.cs` already recognizes 2024 Weapon Mastery from source weapon entries, checks whether the appropriate class feature or feat grants it, projects eligible weapon choices and class-level counts, and creates per-weapon **capabilities** such as `weapon-mastery.item:longsword`. The projector does **not** implement the runtime effects of Push, Topple, Nick, Graze, Cleave, Sap, Slow or Vex. Recover its source-evidenced eligibility and selection logic; do not mistake showing a mastery capability for executing the full effect in combat.
+
+### Shared mechanics and distinct acquisition paths
+
+| 2024 mastery property | Source-native function | Proposed native shared operation |
+| --- | --- | --- |
+| Push | On eligible weapon hit, forced movement; no extra save in this source procedure | **Forced displacement**, also usable by ordinary shove/bull rush, spells and features |
+| Topple | On eligible weapon hit, Constitution save to impose Prone | **Knock prone** effect, shared with trip/shove-to-prone; preserve the separate saving-throw resolution |
+| Sap | On hit, disadvantage to a later enemy attack | **Conditional temporary attack modifier / timed effect** |
+| Slow | On a damaging hit, reduce target movement allowance by a limited amount; repeated instances do not stack by default in source rules | **Temporary movement modifier** |
+| Vex | On a damaging hit, gain advantage on an eligible follow-up attack on the target | **Conditional follow-up attack modifier** |
+| Nick | Relocate the Light-property bonus attack into the Attack action rather than grant another new attack | **Attack scheduling/action-resource substitution** |
+| Cleave | On eligible hit, add an attack against a second target, limited per turn | **Conditional additional attack** |
+| Graze | On a miss, inflict limited damage based on an ability modifier | **Alternate miss consequence** |
+
+**Proposed unification:** the same procedure/outcome vocabulary can serve ordinary maneuvers, weapon masteries, spells, feats and creature traits. A **maneuver** names an intended action/outcome; **mastery** names a granted permission or attack-triggered modifier. Not every mastery property is a maneuver, and not every maneuver requires a weapon or mastery. Acquisition, activation condition, action cost, target eligibility, resistance, effect, duration and per-turn limitations remain independent data about each rule.
+
+This is analogous to the existing universal-competency approach: a shared concept can have source-specific execution profiles without forcing separate systems or falsely equating incompatible dice/defense calculations. Do not blindly turn Pathfinder CMB/CMD, 3.5 grapple checks, 2014 5e Athletics contests and 2024 mastery effects into one success formula.
+
+### Exactly what owner decisions are still needed
+
+**Action-economy alignment (high priority):**
+1. Whether **Quick Actions** unify Bonus/Swift actions into one ordinary turn allowance, and how Immediate actions consume or borrow the same allowance versus Reactions. Block Initiative dictates turn/block ownership; refresh and interruptions require an explicit rule.
+2. How nonmovement 3.x **move-equivalent actions** are charged under approved flexible movement; what full-round restrictions permit; whether primary Action can substitute for movement/Quick Action.
+3. How **BAB iterative attacks, 5.x Extra Attack and feature-created attacks** interact on a mixed character, including whether multiple sources add attacks, override each other or remain alternative attack schedules.
+
+**Maneuver and mastery alignment (high priority):**
+4. The owner's own **combat-maneuver** proposal: which types of maneuvers exist, who can attempt them, which attacks/actions they replace, what resists them and what effects occur.
+5. Should **2024 mastery eligibility and weapon-choice counts** be retained as source-specific class/feat grants, expanded into a universal native weapon-training framework, or both? Weapon proficiency **is not automatically mastery**. Existing class and feat selections should remain meaningful during conversion.
+6. When a **weapon hit** both triggers a mastery (e.g., Push or Topple) and satisfies another ability or maneuver requirement, can multiple effects occur on one attack? Does choosing an attack-replacing maneuver trigger the weapon's normal hit properties? Default stacking/priority must be explicit.
+7. Preserve special activation: **Push** on hit without a separate save, **Topple** on hit followed by a save, **Nick** as relocating—not duplicating—a Light-property attack, **Graze** on miss, and **Cleave** with a per-turn cap. Decide which source-specific behavior becomes Dorks & Dice-native default rather than assuming all use one contest.
+
+**Secondary decisions (after basic native maneuver procedure):**
+8. How timed Mastery effects with **until start/end of next turn** operate under **Block Initiative**, and how often per turn/block limited masteries reset.
+9. How mastery attacks interact with **critical stacking**, especially Graze on a miss caused by a natural 1, additional Cleave/Nick attacks, and criticals involving more than one target.
+10. How DM-selected, campaign-effective rules can modify grants/effects without invalidating legacy source profiles or source attribution.
+
+### Conversion/regression checks to preserve
+
+- A character's class level controls acquisition/number of mastered weapons; weapon proficiency alone does **not** imply access to the corresponding mastery property.
+- A mastered **Topple** does not become an ordinary **Trip** using a different check merely because both cause Prone. A mastered **Push** does not acquire an unintended saving throw.
+- **Nick** does not grant a free third Light attack on top of the bonus attack it relocates. **Cleave** does not duplicate across each attack merely because an Extra Attack, full attack or Action Surge occurs.
+- A 3.5/PF maneuver feature retains its documented attack-replacement or full-round costs under the native flexible movement baseline when applicable.
+- The shared forced-movement/condition executor respects movement limits, immunities, stacking policy and opportunity-attack triggers once the owner has specified those rules.
+
+### References
+
+- [2024 D&D Beyond: Weapon Mastery explained](https://www.dndbeyond.com/posts/1742-your-guide-to-weapon-mastery-in-the-2024-players)
+- [Pathfinder 1e: Combat maneuvers, CMB/CMD](https://www.aonprd.com/Rules.aspx?ID=185)
+- Current Rules Core `src/RulesCore.Infrastructure/Rules/CharacterProjection/CharacterWeaponMasteryProjector.cs` and `tests/RulesCore.IntegrationTests/CharacterWeaponMasteryProjectionTests.cs`
+- [Five-system combat comparison](combat-system-comparison-3x-5x-pf1.md)
+
 ## Combat systems comparative evidence (non-authoritative)
 
 The five-system [combat comparison](combat-system-comparison-3x-5x-pf1.md) documents shared combat intentions and specific differences across D&D 3.0, 3.5, 2014 5e, 2024 5e, and Pathfinder 1e. It covers action economy, surprise, threatened areas, defensive statistics, criticals, conditions, damage, and multiple maneuver procedures. **It does not select the Dorks & Dice combat defaults.** Use it when refining the owner's proposed native combat system, preserving an independent description of owner intent before proposing borrowed mechanics.
