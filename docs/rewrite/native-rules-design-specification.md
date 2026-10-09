@@ -87,15 +87,21 @@ The owner has now made or reaffirmed the following Dorks & Dice combat design de
 | Critical success/failure | **Adapted from Fool's Gold, not invented for Dorks & Dice:** critical successes and failures stack through consecutive extreme natural d20 results. An initial natural 20 is a critical success that calls for another roll; consecutive 20s raise the critical tier. An initial natural 1 is a critical failure that similarly stacks on consecutive natural 1s. The owner also attributes the **triple-critical effects** to Fool's Gold. | Adopted gameplay direction from Fool's Gold; integration details below |
 | Single critical-hit damage | A single critical hit uses **maximum damage plus one additional damage-dice roll**, rather than simply doubling the dice. Static modifiers and bonus dice interactions require a later precision rule. | Owner-stated damage rule |
 | Double critical-hit damage | A double critical hit uses **maximum damage plus two additional damage-dice rolls**, not the same damage as a single critical. For a base `1d8` attack (before modifiers), that is `8 + 2d8`. | Owner-stated damage rule | 
-| Triple critical success | A triple critical success in combat **reduces the attacked opponent to 0 HP**. | Fool's Gold-derived consequence adopted by owner |
+| Triple critical success | A triple critical success in combat **reduces the attacked opponent to 0 HP**; the owner favors requiring **three consecutive natural 20s**, regardless of any expanded critical range. | Fool's Gold-derived consequence adopted by owner; natural-20 threshold preference pending final confirmation |
 | Triple critical failure | A triple critical failure **reduces the failing character to 0 HP**. | Fool's Gold-derived consequence adopted by owner; precise scope beyond combat open |
 | Reaching 0 HP | **5e-style death saving throws remain available** even when reaching 0 HP through a triple critical. This rule must not automatically become a 3.x negative-HP instant-death effect. | Owner rule; edge cases open |
+| Critical failure consequences | A **single or double critical failure** has **GM-adjudicated consequences**, not a required global fumble table. Examples the owner has seen include a spell going wild or a weapon being knocked from its wielder's hand. The **triple failure at 0 HP** remains a specified exception. | Owner gameplay policy; GM determines situational consequences |
+| Scope of critical rules | Whether critical successes/failures apply to attacks alone or also checks, saves, or other rolls is decided **by the DM for the table/campaign**, not as an engine-wide fixed scope. | Owner gameplay policy; DM-owned scope |
+| Escalation rolls | Every follow-up roll used to escalate a critical is a **straight, unmodified d20 roll**, without Advantage, Disadvantage, Emphasis or numeric modifiers. | Owner gameplay rule |
+| Critical chain termination | A roll that does not match the required natural extreme **ends the chain and preserves the tier already reached**; the new value cannot retroactively alter or reverse that tier. | Owner gameplay rule |
 
 ### Critical stacking — Fool's Gold mechanic adopted for Dorks & Dice
 
 On a natural **20**, mark a critical success and roll again. Another 20 makes it a **double critical** and prompts another roll. A third consecutive 20 makes it a **triple critical**. In combat, that successful attack puts its target at **0 HP**.
 
-Conversely, natural **1s** can accumulate as critical failures. Three consecutive 1s produce a **triple critical failure**, putting the failing character at **0 HP**. Death saving throws are retained from the 5e family.
+Conversely, natural **1s** can accumulate as critical failures. The GM adjudicates situational consequences for one or two consecutive natural 1s (for example, a spell going wild or a weapon being knocked from a wielder's hand), rather than following a mandatory critical-fumble table. **Three consecutive natural 1s** produce a **triple critical failure**, putting the failing character at **0 HP**. Death saving throws are retained from the 5e family.
+
+Each escalation attempt is a **single unmodified d20 roll**, with no Advantage, Disadvantage, Emphasis, or numeric modifier. The escalation chain stops as soon as the follow-up result is not another natural 20 (for successes) or natural 1 (for failures). **The previously achieved critical tier is retained**. The follow-up cannot convert a critical success into a failure or vice versa. The **DM sets the scope** for which kinds of d20 rolls at that table can critically succeed or fail.
 
 **Critical damage progression:**
 
@@ -107,16 +113,17 @@ These examples exclude static damage bonuses and other dice deliberately. The ow
 
 **Attribution and adaptation:** Fool's Gold is the source of the consecutive critical-success/failure tiers **and the triple-critical consequences**. Dorks & Dice is **adopting**, not inventing, those rules. The owner's separately stated critical-damage progression uses **maximum damage plus one additional damage-dice roll for a single critical or two for a double critical**; retaining **5e-style death saving throws** integrates the adopted stacking mechanic into Dorks & Dice combat. The additional rolls may superficially resemble 3.x critical confirmation, but should **not** be presented as the origin or mechanism of Fool's Gold stacking: repeated natural 20s/1s escalate severity rather than merely confirming a threatened hit against AC.
 
-**Source-verification boundary:** This specification records the owner's account of the Fool's Gold rules, not a checked transcription of the published source. The **double critical success damage** is now explicitly defined by the owner for Dorks & Dice. Do not infer that this arithmetic is a verbatim Fool's Gold rule without independently checking the relevant source. The double critical *failure* consequence remains undefined.
+**Source-verification boundary:** This specification records the owner's account of the Fool's Gold rules, not a checked transcription of the published source. The **double critical success damage** is explicitly defined by the owner for Dorks & Dice; do not attribute that exact arithmetic to Fool's Gold without independent verification. Single/double critical failure consequences are **intentionally left to the GM**, not awaiting a universal damage or fumble formula.
 
 ### Critical rule details remaining open
 
-1. **Other tier-two and higher consequences:** The double critical **success** damage is decided (maximum damage plus two damage-dice rolls). The **double critical failure** consequence and treatment of further matching natural results beyond a triple remain open.
-2. **Roll mechanics:** Are escalation rolls always unmodified plain d20, or do advantage/disadvantage, Emphasis, rerolls, and class/feat bonuses affect them? Does only a *natural* 20/1 count, even when an expanded threat range or feature grants a critical?
-3. **Termination:** On a nonmatching follow-up roll, is the already achieved tier retained, with no chance that an opposite extreme reverses it?
-4. **Scope:** Are stacked criticals for attack rolls only, or are checks, saves, and other d20 rolls eligible? Does the triple-failure 0-HP consequence apply outside combat?
-5. **Damage:** Define precisely what is maximized and rerolled (weapon dice, extra dice, static modifiers), and how immunities, resistances, damage prevention, and multi-target effects interact.
-6. **0-HP consequences:** Confirm whether the 0-HP effect bypasses damage rolls but still requires a valid affected target, how it interacts with creatures with special death/defeat rules, and whether death saves or other active consequences are modified.
+1. **Expanded critical range:** The owner is **unsure** whether a feature granting a critical on 19 or lower should start a stacking chain. The owner **favors requiring three consecutive natural 20s for a triple critical success**, even if an expanded range can create ordinary criticals. Do not silently equate a sequence such as `19 → 20 → 20` with `20 → 20 → 20`. This is a preference awaiting final adjudication.
+2. **Beyond triple:** What happens, if anything, after the third matching natural 20 or 1? The owner has specified effects through triple, not beyond.
+3. **Damage arithmetic:** Define precisely what is maximized and rerolled (weapon dice, extra dice, static modifiers), and how immunities, resistances, damage prevention, and multi-target effects interact.
+4. **0-HP effects:** Confirm the exact interaction with immunities, special creature abilities, active conditions, and special death/defeat features. Normal death saving throws remain in scope as already established.
+5. **Reroll capabilities:** The escalation die is specified as a straight unmodified d20 without Advantage, Disadvantage or Emphasis. If any abilities explicitly permit rerolling an individual d20 after the fact, their applicability to an escalation die has not been separately addressed.
+
+**Not open:** the DM's ability to decide the scope of criticals; the GM's adjudication of ordinary/double critical-failure consequences; unmodified escalation dice; and preservation of an achieved tier when the follow-up roll does not match. These are user decisions, not unanswered design questions.
 
 ### Native combat regression scenarios
 
@@ -124,6 +131,9 @@ These examples exclude static damage bonuses and other dice deliberately. The ow
 - An attack targets **Touch AC** and is not rewritten into advantage; a Flat-Footed AC effect is not rewritten into a Dexterity saving throw.
 - A natural **20, then non-20** yields a single critical and `max + 1 damage-dice roll`; **20 → 20 → non-20** yields a double critical and `max + 2 damage-dice rolls`; **20 → 20 → 20** yields the combat target at **0 HP**. For base `1d8` damage, the first two are `8 + 1d8` and `8 + 2d8` before modifiers.
 - A natural **1 → 1 → 1** yields the failing character at 0 HP. A surviving combatant's resulting death-save process remains available under the adopted 5e-style dying rules.
+- **1 → non-1** and **1 → 1 → non-1** remain critical failure tiers one and two; the GM adjudicates any narrative or mechanical consequences. **20 → 20 → 1** is a retained double critical **success**, not a critical failure.
+- Escalation dice ignore Advantage, Disadvantage, Emphasis and numeric bonuses/penalties, whatever mode governed the original check. DM-defined campaign scope determines whether a check, save or attack is eligible for criticals; no global attack-only assumption.
+- An initial **19** produced by an expanded critical range must not automatically be counted as a **natural 20** toward a triple critical. Exact chaining eligibility for such a critical remains an open decision.
 - A **normal critical hit** uses maximum-plus-roll damage rather than 2× dice. All still-open arithmetic and critical-tier interaction rules must have approved examples before code implementation.
 - An imported opportunity-attack rule with broader 3.x triggers does not silently rewrite the Dorks & Dice native trigger policy when that policy is established.
 
