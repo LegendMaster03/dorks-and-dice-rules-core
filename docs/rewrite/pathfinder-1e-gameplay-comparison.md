@@ -1,6 +1,6 @@
 # Phase 0 — Pathfinder First Edition gameplay comparison
 
-Status: **Phase 0 decision-recovery cross-check**, 2026-10-09. Owner review indicates that existing Dorks & Dice decisions already address most of the conversion cases in this comparison. **Combat maneuvers are the one identified candidate gameplay-design gap.** Pathfinder 1e remains a comparative reference, not an automatically accepted rules source, mandatory import target, or substitute for settled Dorks & Dice decisions.
+Status: **deferred comparative design reference**, 2026-10-09. Existing Dorks & Dice gameplay decisions already address most of these conversion areas, and the owner intends to describe the native Dorks & Dice system before relying on Pathfinder examples. **Combat maneuvers are one identifiable area needing a fuller native design**, but the owner already has ideas for that area. Pathfinder 1e is an optional later reference for improving any area, not an automatically adopted rules source or a replacement for the owner's design.
 
 ## Purpose and scope
 
@@ -27,9 +27,18 @@ The Dorks & Dice game is being developed from the cross-edition decisions alread
 | Optional mechanical systems | An imported rule may be additive, replace a procedure, or conflict with a Dorks & Dice core procedure; conflicts require policy. | Unchained offers revised action economy, consolidated and grouped skills, variant multiclassing, automatic bonus progression, and alternate attack resolution. | Treat each as a controlled variant/compatibility fixture. Explore structural composition and conflict reporting rather than adopting it. |
 | Skill-level advancement transitions | Mechanics may be introduced, continue, stop advancing, change behavior, or expire at track-specific thresholds. | PF1e Unchained skill unlocks confer new effects at rank thresholds 5, 10, 15, 20. | Supports generalized threshold-triggered mechanics independent of total character-level bands. |
 
+## Design-first sequence (owner-directed)
+
+1. **Recover existing Dorks & Dice mechanics decisions** from code, documentation, and the owner's prior adjudications. Label evidence separately from intended design; avoid treating unimplemented ideas as missing merely because the old service does not support them.
+2. **Establish the native system's basics in the owner's own terms** before looking to other games for solutions. This includes existing domains that the owner wishes to refine and new ideas, especially the proposed combat-maneuver system. Record proposals without converting them immediately into PF1e/CMB/CMD or D&D-specific terminology.
+3. **Review internal coherence and compatibility** across those native decisions. Separate settled policy from proposals and open questions; do not decide for the owner.
+4. **Only then compare Pathfinder 1e** as a potentially valuable source of refinement in any area, including competencies, classes, combat, and advancement. Test possible changes against the native goals and keep rejected alternatives documented as options, not unresolved obligations.
+
+This is an ordering of design work, not a freeze on existing rules or a restriction on consulting references after the core concept is clear.
+
 ## Reassessment: existing design versus new work
 
-The owner confirmed that the existing Dorks & Dice ruleset already addresses most conversion cases presented in the initial Pathfinder comparison. Do **not** turn those cases into a new backlog or reopen previously settled decisions merely because Pathfinder provides a different solution. Existing competencies, subclasses, prestige classes, multiclassing, epic/level-band progression, 3.x defenses, variant/alternative contributions, and skill thresholds remain **recovery and regression subjects**. A particular rule's specification can be established even when old code did not implement it fully.
+The owner confirms that existing Dorks & Dice decisions already address most conversion cases presented here. **This does not mean those designs are frozen or that Pathfinder can not later inspire improvements.** Recover the actual decisions first; invite the owner to describe the intended native system, including developments that were never implemented. Compare Pathfinder alternatives afterward, explicitly highlighting where they might improve, challenge, or extend an existing decision without automatically replacing it. Competencies, subclasses, prestige classes, multiclassing, epic/level-band progression, 3.x defenses, and other implemented areas are existing design foundations, not blank-slate questions.
 
 ### Confirmed existing capabilities relevant to the gap
 
@@ -42,7 +51,7 @@ Repository review found:
 
 The distinction is important: **a grapple modifier is not a complete grapple action procedure**, and a collection of independently imported special attacks is not a unified Dorks & Dice combat-maneuver model.
 
-## Identified design gap — combat maneuvers
+## Native design to document — combat maneuvers
 
 ### What must be recovered before designing anything
 
@@ -52,9 +61,9 @@ Audit how the current Rules Core represents each of these source-native actions 
 - Pathfinder 1e Core Rulebook: bull rush, disarm, grapple, overrun, sunder, and trip using **Combat Maneuver Bonus (CMB)** against **Combat Maneuver Defense (CMD)**. Later PF1e rules include additional maneuver types such as dirty trick, drag, reposition, and steal.
 - 5.x: 2014 grapple/shove via opposed ability checks, compared with SRD 5.2.1 (2024) grapple/shove as Unarmed Strike options resisted by saving throws. These are distinct resolution procedures; a shared outcome label does not make the procedures mechanically identical.
 
-### Design questions requiring approval
+### Design questions to elicit from the owner's proposal
 
-1. **Native Dorks & Dice resolution:** Should combat maneuvers use a unified attacker/defender check (PF-style CMB/CMD), a general attack/contest/save procedure chosen per maneuver, or another rule? No answer is assumed here.
+1. **Native Dorks & Dice resolution:** Record the owner's intended procedures in the owner's own terminology before presenting alternatives from D&D 3.x, 5.x, or Pathfinder. What is common to different maneuvers, and what differs? No predetermined formula, contested roll, saving throw, or CMB/CMD analogue is assumed.
 2. **Maneuver identity and outcome:** Which actions are separate first-class mechanics, which are alternate implementations of one outcome (for example pushing or knocking prone), and which are mechanically distinct?
 3. **Inputs and defenses:** How do BAB, Strength/Dexterity, proficiency, size, other modifiers, special maneuver bonuses, defenses, target states, and applicable conditions contribute? Is CMD a native Dorks & Dice defensive statistic or merely one imported profile?
 4. **Action and consequence semantics:** How do action cost, attacks of opportunity/reactions, reach, size restrictions, movement, prone, grappled, pinned, disarmed objects, damaged equipment, failure consequences, and repeated attempts work?
@@ -73,11 +82,11 @@ The new Dorks & Dice system should expose a **typed maneuver/procedure identity*
 - A feat or feature that modifies one maneuver does not silently modify all maneuvers.
 - Insufficient context or contradictory active procedures return explicit unresolved/conflict states, never a guessed winner.
 
-### Earlier Pathfinder comparisons: retain as regression evidence only
+### Other Pathfinder comparisons: possible later influences
 
-Competency ranks and facets, reviewed composite-skill arithmetic, Craft/Perform/Profession families, class versus subclass versus prestige-class track ownership, archetype-like feature replacements, effective class level, multiclass progression, skill rank thresholds, mythic-like independent tracks, and general epic/level-band transitions are already within the user's established design work. Continue to use Pathfinder examples for verification when useful, but **do not classify them as new unresolved game design merely because the comparison showed an alternative.**
+Competency ranks and facets, reviewed composite-skill arithmetic, Craft/Perform/Profession families, class versus subclass versus prestige-class track ownership, archetype-like feature replacements, effective class level, multiclass progression, skill rank thresholds, independent advancement tracks, and general epic/level-band transitions already have substantial Dorks & Dice design work behind them. Preserve and document that foundation. **After** the user has defined the native system's goals and mechanics, Pathfinder examples may be used to test those decisions or suggest worthwhile changes. Do not treat them as either automatically authoritative or permanently excluded from consideration.
 
-## Existing-design regression scenarios (not newly proposed gameplay rules)
+## Later compatibility and design review scenarios
 
 1. A Dorks & Dice skill has multiple granular 3.x contributors and one modern umbrella concept; verify independent ranks and parent derivation. Compare PF core and Unchained skill entries without losing granularity.
 2. A character multiclasses without either class entering its second 20-level band; total character level can enter that band separately. Verify a level-dependent global benefit and a class-specific effect do not use the same threshold automatically.
@@ -115,4 +124,4 @@ Competency ranks and facets, reviewed composite-skill arithmetic, Craft/Perform/
 
 ## Decision status
 
-**Owner assessment:** the other Pathfinder conversion examples are already substantially covered by established Dorks & Dice gameplay decisions. The only newly identified candidate design gap is **combat maneuvers**. Neither PF1e CMB/CMD nor any specific maneuver policy has been adopted. No gameplay code or new rules were approved or implemented by this document. Retain the other examples only to confirm and recover existing decisions and detect regressions.
+**Owner direction:** begin with the Dorks & Dice design that already exists, and let the owner establish its basic principles and any intended new mechanics before doing more Pathfinder-driven comparison. Pathfinder remains a useful **optional influence across any system area**, including those already substantially designed. Combat maneuvers currently have less developed Rules Core support, and the owner intends to explain ideas for them before outside models are evaluated. Neither PF1e CMB/CMD nor any specific maneuver policy has been adopted. This document approves no new gameplay code or rules.
