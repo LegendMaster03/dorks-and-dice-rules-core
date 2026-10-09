@@ -60,17 +60,22 @@ Authoritative references:
 
 Maintain clear attribution/provenance and a content-use policy for every incorporated source; the ability to implement a mechanic does not automatically permit wholesale reuse of third-party rulebook text, settings, artwork, or marks.
 
-## One native combat-technique framework (approved design direction)
+## Combat-system overlaps to investigate — no merger approved
 
-**Owner direction (2026-10-09):** Instead of implementing combat maneuvers, 2024/Ryoko weapon mastery, and Loot Tavern *Ryoko's Guide* party combo attacks as overlapping independent systems, **synthesize ideas from them into one independently specified Dorks & Dice combat system**. Existing **Block Initiative** provides the shared opportunity to coordinate, while the **harvesting/crafting helper model** provides inspiration for optional participation at varied complexity levels. Those two established tools/mechanics retain their own procedures and responsibilities.
+**Owner correction (2026-10-09):** The owner floated combining ideas from 3.x/PF combat maneuvers, 2024/Ryoko Weapon Mastery and Ryoko combo attacks into one system, then explicitly questioned whether that made sense. The assistant prematurely treated the idea as a confirmed architecture decision and introduced **Combat Techniques** as though it were settled. **Retract that approval: there is no approved unified combat-technique subsystem, vocabulary, execution contract or new runtime boundary.**
 
-**Architecture implication, not approval to write engine code:** A native combat technique should be capable of expressing an ordinary solo action, an advanced maneuver/weapon-triggered effect, and a multi-participant combo **using the same canonical action, targeting, cost, trigger, resolution, outcome, provenance and participation vocabulary**. Outcomes feed a unified condition, HP, attack-sequencing, position and duration engine. Distinct acquisition rights, individual actor resources, normal/Touch/Flat-Footed defenses, source-defined saving throws/opposed checks and restrictions remain expressible without inventing an identical roll procedure for everything.
+The systems have **different gameplay jobs**:
+- **Combat maneuvers:** deliberate actions such as trip, shove, disarm and grapple with particular costs and defenses.
+- **Weapon Mastery:** qualifying weapon/feature properties that trigger attack effects or alter attack timing.
+- **Cooperative combos:** joint participation in coordinated attacks, with its own timing, eligibility, and participant costs.
+- **Block Initiative:** an **already established** turn/coordination system, not an attack or maneuver to fold into a new subsystem.
+- **Loot Tavern harvesting:** a noncombat example of specialized, helper-supported collaboration, **not** a combat-resolution mechanic or universal group bonus.
 
-Do **not** design a discrete `weapon-mastery-runtime`, `3x-maneuver-runtime`, and `ryoko-combo-runtime` each owning overlapping damage/conditions/actions. The native engine must not assume every technique is an attack or a maneuver, or that it is part of a party collaboration. Multi-participant actions need independent participant consent, eligibility, action/resource costs, Block Initiative-aware timing, and a clear shared consequence. No pooled party resource or extra Reaction budget is assumed merely because the move is a combo.
+A common engine may eventually share **ordinary operations** such as calculating attacks, changing conditions, forced movement, assigning costs and managing reactions. **Shared computational infrastructure is not evidence that the game should present one combined rule to players.** Existing source-specific procedures may remain separate if combining them would obscure their differences or make simple play more complicated.
 
-The player's depth of interaction remains optional **across all-basic, all-advanced, and mixed tables**, with some advanced mechanics legitimately more capable; a group of experts can all participate at high complexity, and a table of straightforward players can ignore optional advanced mechanics. Do not build a mandatory one-expert/rest-helpers interface or require numerical parity between simple and advanced choices.
+**Next design step:** Study specific use cases and distinguish genuine overlap from mere conceptual resemblance. Review if any *selected* maneuver, mastery property and combo component should use common underlying rule definitions; retain distinct triggers and costs. Evaluate at all-basic, all-advanced and mixed tables. Obtain explicit owner decisions before promoting any proposed unification to a native gameplay rule or architectural requirement.
 
-**Established direction versus open gameplay rules:** `Combat Techniques` is only a working name. The owner has **not** approved a universal maneuver formula, default lists of available techniques, the relationship of weapon proficiency and mastery access, the initiation/participation costs for combos, special reaction scheduling in Block Initiative, mastery/combo stacking, or final Ryoko source mechanics. They belong in [the native gameplay specification](native-rules-design-specification.md#unified-combat-technique-framework--owner-approved-direction-rules-draft), not in code-driven architecture defaults. Final third-party details must be verified against a permitted copy and tracked with applicable attribution/rights.
+The [native rules specification](native-rules-design-specification.md#possible-combat-technique-integration--exploratory-model-not-approved) retains the former **Combat Techniques** draft only as an **unapproved hypothesis** for scrutiny, not as an engine implementation plan.
 
 ## Generalized Level Bands and advancement-track semantics
 
