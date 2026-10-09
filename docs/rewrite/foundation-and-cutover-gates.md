@@ -20,6 +20,15 @@ Known investigation areas:
 
 These are subjects to verify against fixtures and current code before selecting replacement structures.
 
+## Greenfield implementation policy
+
+The rewrite is a **new implementation**, not a staged refactor of existing Rules Core classes, schema, and modules. Build the authoritative Dorks & Dice system engine from a new native domain model with independently designed persistence, evaluation, and integration boundaries. Reuse of a library or isolated helper requires an explicit reason; a component's presence in the legacy service is not a reason to retain it. The existing repository and branch may preserve development history without imposing a legacy code dependency. Isolate the new implementation from the currently deployed service until cutover.
+
+The Dorks & Dice game-design decisions already established through years of compatibility/reconciliation are **not** being discarded. Recover their intended semantics as a reviewed specification and tests, then reimplement those rules in the new engine. Treat legacy code and endpoint responses as evidence and migration compatibility references, not automatically correct normative behavior. Distinguish deliberate mechanics decisions from accidentally reproduced bugs or old architecture compromises.
+
+The independently authored core can use properly attributed material from **SRD 5.1** and **SRD 5.2.1**, released under **CC BY 4.0**, without assuming every D&D publication is CC-licensed or that the SRDs are public domain. Game procedures themselves are not protected by U.S. copyright, while copyrightable expression still is. Track source, license, attribution, and modifications for incorporated material. Keep **3e/3.5e OGL** materials and independently licensed third-party source content separately identified; do not convert their licenses to CC BY or publish restricted text merely because its mechanic can be modeled.
+
+
 ## Operational boundary
 
 Hex Crawl is in human testing and, together with Block Initiative, does not require Rules Core for normal use. All other Rules Core-dependent Tools are currently restricted to development access. This reduces the number of exposed consumers during construction; it does **not** authorize production data destruction or interruption of unrelated Tools.
@@ -32,7 +41,7 @@ Hex Crawl is in human testing and, together with Block Initiative, does not requ
 
 ## Compatibility to inventory, not assumptions to inherit
 
-Before refactoring or implementing a replacement endpoint:
+Before implementing the greenfield engine or replacing an external endpoint:
 
 1. Inventory existing external routes, request/response schemas, authentication, authorization, client expectations, and error semantics. Identify actual consumers in Character Sheet, Rules Wiki, and other Tools.
 2. Separately inventory private Rules Wiki Tool-to-Tool routes and the Site delegation/introspection behavior.
@@ -65,7 +74,7 @@ First inventory and independently verify the Dorks & Dice game-design decisions 
 
 ### Gate 1 — Dorks & Dice ruleset kernel and persistence
 
-Build the first-class versioned Dorks & Dice mechanics/ontology and its source/identity/rules domain model with explicit invariants and persistence ownership. Use fresh disposable storage and migration tests. Do not migrate live records into a partially defined schema.
+Build the first-class versioned Dorks & Dice mechanics/ontology and its source/identity/rules domain model with explicit invariants and persistence ownership, **implemented independently of existing Rules Core domain types and database structures**. Use fresh disposable storage and migration tests. Do not migrate live records into a partially defined schema.
 
 ### Gate 2 — ingestion, translation, reconciliation
 
