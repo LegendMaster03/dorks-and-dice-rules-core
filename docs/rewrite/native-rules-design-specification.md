@@ -190,6 +190,7 @@ The owner has now made or reaffirmed the following Dorks & Dice combat design de
 | --- | --- | --- |
 | Initiative | **Block Initiative** is already the native initiative system and is implemented separately. Do not choose an initiative system by preferring one of the editions in the comparison. | Established external Dorks & Dice design; integration still needs precise interface contract |
 | Action economy | **Merge the 3.x/PF1e and 5.x action economies into one native Dorks & Dice system**, recognizing their common functions while making conversion differences explicit. Do not require players to select an edition-wide action economy. **Use 5.x-style flexible movement as the native baseline**, while retaining rule-specific full-turn/full-round restrictions when expressly required. | Owner-confirmed unified system and movement baseline; other budget/timing semantics remain provisional |
+| Combat Techniques (working name) | **Develop one native combat-technique framework using ideas from 3.x/PF combat maneuvers, 2024 Weapon Mastery, Loot Tavern's Ryoko combo attacks, and Dorks & Dice's established coordination principles.** Shared actions, triggers, participants and combat outcomes; varied access, costs and individual/joint procedures, not separate imported combat engines. | **Owner-approved direction to synthesize**, not approval of the working name, exact procedure, numeric rules or imported third-party mechanics |
 | Combat defenses | Preserve the existing 3.5-derived **ordinary, Touch and Flat-Footed AC** distinctions already reconciled in Rules Core. Do not silently substitute 5.x advantage/disadvantage or saving throws for these defenses. | Reaffirmed existing design |
 | Opportunity attacks | Source versions use substantially the same underlying concept, with differences in names, triggers, applicability and action restrictions. Reconcile the common intent but **do not treat triggers as identical** or prematurely decide the native trigger policy. | Existing-concept recognition; native details open |
 | Critical success/failure | **Adapted from Fool's Gold, not invented for Dorks & Dice:** critical successes and failures stack through consecutive extreme natural d20 results. An initial natural 20 is a critical success that calls for another roll; consecutive 20s raise the critical tier. An initial natural 1 is a critical failure that similarly stacks on consecutive natural 1s. The owner also attributes the **triple-critical effects** to Fool's Gold. | Adopted gameplay direction from Fool's Gold; integration details below |
@@ -294,9 +295,72 @@ Block Initiative remains authoritative for **whose turn or block is active**. Th
 
 These questions refine the unified action economy; **they do not reopen the owner's decisions to unify action economy, use 5.x-style splittable movement by default, or retain explicit full-turn restrictions where a rule requires them**.
 
+## Unified combat-technique framework — owner-approved direction, rules draft
+
+**Owner gameplay direction (2026-10-09):** **Take ideas from all the discussed combat systems and create one cohesive Dorks & Dice system**, rather than bolting standalone 3.x maneuvers, 2024 Weapon Mastery, and Loot Tavern *Ryoko's Guide* combo attacks onto the same combat engine. The established **Block Initiative** system provides shared coordination/timing, and **Loot Tavern harvesting/crafting** offers a transferable pattern for meaningful different roles; they are not to be replaced, merged into identical helper mechanics, or treated as three incompatible modes.
+
+**Approval boundary:** The decision to **design and reconcile one system** is established. **Combat Techniques** is a working name, and everything in the proposed schema, default-access policy, roll/defense formula, participant costs and numerical mechanics below remains **provisional** until the owner decides. Do not implement or publish a source-derived proprietary combat subsystem on the strength of the direction alone.
+
+### One shared procedure, with multiple expressions of complexity
+
+Every declared action/attack/technique has enough rule information to describe:
+
+1. **Intent and eligible initiator:** ordinary attack, move, reposition, disarm, grapple, distract, knock Prone, combo, or other named intention; who is allowed to initiate and what weapon/feature/skill/qualification is required.
+2. **Participation and permissions:** solo or multiple characters; who can opt in; what each participant contributes and must possess. No participant is made to act by another player's declaration.
+3. **Timing and costs:** Action, replaced attack, movement, Quick Action, Reaction, spell slot, other resource or explicitly restricted full-turn commitment; number of uses, duration and refresh. **Block Initiative** owns ordering and cooperative timing; each character still owns their own action budget.
+4. **Trigger and targeting:** declaration, hit, miss, critical, reaction condition, ally's action; reach, range, permitted targets, size or positioning.
+5. **Resolution profile:** attack versus normal/Touch/Flat-Footed AC where appropriate, saving throw, opposed check, source-defined maneuver check, conditional automatic effect, or staged/multi-participant resolution. **Shared pipeline does not mandate one uniform d20 formula.**
+6. **Results and state effects:** damage, extra/repositioned attacks, forced movement, Grappled/Prone/disarmed and other conditions, modifiers, resource changes, ally setup, consequences on failure; preserve duration, limits, defenses and special rules.
+7. **Interaction policy:** permission and cost for stacking effects, exclusive choices, repeated triggers, chaining attacks, conditions, critical stacking and resistance/immunity. Ambiguous source-to-source interactions require explicit adjudication; do not award unearned extra actions.
+
+This is **one common technique-and-effect contract**, not three distinct combat controllers and not a requirement that every technique be a combat maneuver or a weapon attack. A player can use a normal attack without opening a technique selection procedure.
+
+### Working expressions of the shared framework
+
+| Expression | Inspiration | Proposed experience |
+| --- | --- | --- |
+| **Ordinary / basic action** | 5.x streamlined turn + ordinary 3.x attacks and common maneuvers | Familiar actions available without specialist training; clear declared intent, cost and outcome. Exact default maneuver list still open. |
+| **Specialized personal technique** | 3.x/PF combat maneuvers, feats and 2024/Ryoko weapon mastery | Optional depth through maneuver choices, weapons, properties, prerequisites, hit/miss triggers and richer consequences. Complex actions can remain complex and genuinely stronger. |
+| **Cooperative technique** | Ryoko party combos; Dorks & Dice Block Initiative teamwork | Two or more willing characters contribute individual authorized actions, attacks, resources or setup to one coordinated result. Individual contributions can be simple or intricate; a combo does not grant its own free universal reaction or action budget. |
+| **Shared resulting effect** | Both editions' conditions, movement and combat outcomes | One Prone condition, one displaced position, one resolved damage event, one attack-scheduling account, regardless of the originating procedure. |
+
+**Example to design, not rules text:** Ordinary Shove may force movement through its native maneuver check; a weapon's Push mastery may cause movement when a qualifying hit occurs; a cooperative technique may combine one character's attack with an ally's setup to cause movement or Prone. **The results use shared position/condition rules**, but the initiating roll, permitted participants, saves and costs remain whatever the approved technique specifies. A 2024 Topple still calls for its specified saving throw in an unmodified source-specific conversion; do not turn it into the ordinary trip check. A 2024 Nick still reschedules a Light-property attack rather than creating a free additional one.
+
+### Must work for every table composition
+
+- **All basic:** The ordinary Attack/Move/Help/basic maneuver route remains practical; an all-basic group can coordinate under Block Initiative and engage with a cooperative option only if its actual requirements and instructions are manageable. Optional advanced technique mastery is not mandatory.
+- **All advanced:** Several characters can each use intricate eligible personal techniques and combine them where permitted. Never impose a rule that exactly one person gets to be the expert while others must perform basic help, unless a specific technique truly has such a role restriction.
+- **Mixed:** One player can manage complex setup/combo decisions while teammates make personally understandable, voluntary contributions. The more experienced player does not assume control of others' turns, and simpler participants need only understand their own cost and resulting consequence.
+- **One character across situations:** The same character/player may use sophisticated options on one turn and an ordinary attack on another, or opt into depth for combat but not crafting.
+- **Power is not required to be equal:** Optional complexity may legitimately be stronger, more versatile or more effective. Do not replace valuable advanced procedures with equally powerful simplistic copies merely to manufacture parity.
+
+### Relationship to critical stacking, Block Initiative and source conversion
+
+- **Critical stacking** remains the Dorks & Dice rule for eligible critical-triggering rolls: single critical maximum-plus-one-roll, double maximum-plus-two-rolls, triple requires **three natural 20s**, and other established critical-failure details. Technique-induced critical range expansion can contribute up to a double if it meets the previously approved expanded-range rule; do not imply a non-20 can create triple. **Whether a combo uses one roll, multiple attack rolls, or transfers critical results between participants remains open.**
+- **Block Initiative** governs which block is active and when characters may coordinate. Reaction borrowing, out-of-block participation, reaction refresh and simultaneous attack timing remain open. **No pooled party-wide Action is assumed.**
+- **Source preservation:** Retain 3.5-specific maneuvers/attack-replacement/full-round limitations, PF1e CMB/CMD profiles, 2014/2024 5e variants, and authored Ryoko combo/mastery distinctions where allowed. A common native effect vocabulary should preserve different **procedures** instead of claiming the source formulas are interchangeable.
+- **Third-party source scope:** *Ryoko's Guide* is a **design reference**; detailed final combo rules require verification in an authorized final copy and suitable licensing/provenance for any imported text/content. The goal is an independently authored native combat system, not a silent copy of its mechanics or nomenclature.
+
+### First decisions still required from the owner
+
+1. **Baseline options:** Which simple combat intentions can any character attempt, and which advanced maneuvers or special techniques require feats, training, class features or weapon mastery? Does native mastery augment eligibility beyond reviewed 2024 grants?
+2. **Native maneuver check:** Should most self-initiated physical maneuvers share one roll/defense such as a generalized maneuver attack versus a defense, or should they follow ability contests / saves / action-specific profiles? Source profiles may still be distinct either way.
+3. **Cooperation:** Is any character permitted to initiate a coordinated technique with willing allies, or must certain combinations be learned? What can an assisting character contribute, and what resources must each independently spend?
+4. **Timing and attack integration:** What is the precise Quick Action / Reaction budget, how do combos interrupt Block Initiative, and how do full attack/Extra Attack/maneuvers/mastery-triggered bonus attacks coexist?
+5. **Interaction and limits:** Can a hit deliver multiple eligible mastery/maneuver/combo effects, how are setup and follow-up effects capped, and how do immunities and criticals apply?
+
+**Recommended order for review:** define the ordinary basic maneuver/attack contract first; then optional personal techniques and weapon-granted triggers; finally collaborative contribution/combo timing and interaction rules. This is a design-sequencing recommendation, **not** separate runtime subsystems.
+
+### Source evidence
+
+- [Pathfinder 1e combat maneuvers](https://pathfinder.d20srd.org/coreRulebook/combat.html): common maneuver mechanic plus maneuver-specific action costs, with some substitutions for melee attacks rather than full actions.
+- [Loot Tavern's published Ryoko product description](https://retail.loottavern.com/product/ryokos-guide-to-the-yokai-realms/): confirms the existence of a party combo attack system; published numerical procedures not verified here.
+- Existing 2024 Weapon Mastery access/selection representation: `src/RulesCore.Infrastructure/Rules/CharacterProjection/CharacterWeaponMasteryProjector.cs`. This is **selection/capability projection, not runtime implementation**.
+- Existing [combat systems comparison](combat-system-comparison-3x-5x-pf1.md) and [prior Weapon Mastery research](#weapon-mastery-and-combat-maneuver-integration--proposal-for-review).
+
 ## Weapon Mastery and combat-maneuver integration — proposal for review
 
-**Status: comparative design analysis; no Weapon Mastery unification procedure has been approved.** The owner suggested integrating Weapon Mastery during the unification of 3.x / Pathfinder 1e and 5.x combat procedures, but has not determined whether or how its effects belong to the same native maneuver system. **Evaluate all proposed integration against the established individual-complexity principle above:** a simple player must not be required to adopt weapon mastery or advanced maneuver bookkeeping to participate normally, while an interested player can engage with the full tactical options allowed by their character, **including legitimate advantages that require greater complexity**. Do not replace mastery properties or advanced maneuver resolution with equally powerful simplified versions solely to enforce parity.
+**Status: specialized detail inside the owner-approved single-combat-system direction; no Weapon Mastery numerical or procedural ruling has been approved.** Weapon Mastery, maneuvers and cooperative combos are to be reconciled within **one native Combat Techniques framework (working name)**, not independently adopted subsystems. Exactly how their triggers, grants, rolls and costs interact remains open. **Evaluate all proposed integration against the established individual-complexity principle above:** a simple player must not be required to adopt weapon mastery or advanced maneuver bookkeeping to participate normally, while an interested player can engage with the full tactical options allowed by their character, **including legitimate advantages that require greater complexity**. Do not replace mastery properties or advanced maneuver resolution with equally powerful simplified versions solely to enforce parity.
 
 ### Existing Rules Core implementation is a starting point, not a finished combat evaluator
 
