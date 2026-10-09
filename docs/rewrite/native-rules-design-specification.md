@@ -75,6 +75,49 @@ For each chapter, recover the existing decision text, describe how the game is i
 
 **Not every existing game mechanic is complete merely because a normalized source profile exists.** The native rules must explain what happens at the table, including cases that currently surface as unresolved.
 
+## Native combat decisions — recovered and newly established
+
+The owner has now made or reaffirmed the following Dorks & Dice combat design decisions. This section is **gameplay design**, not an assertion that the current Rules Core engine implements all of these procedures.
+
+| Subject | Current owner direction | Status |
+| --- | --- | --- |
+| Initiative | **Block Initiative** is already the native initiative system and is implemented separately. Do not choose an initiative system by preferring one of the editions in the comparison. | Established external Dorks & Dice design; integration still needs precise interface contract |
+| Combat defenses | Preserve the existing 3.5-derived **ordinary, Touch and Flat-Footed AC** distinctions already reconciled in Rules Core. Do not silently substitute 5.x advantage/disadvantage or saving throws for these defenses. | Reaffirmed existing design |
+| Opportunity attacks | Source versions use substantially the same underlying concept, with differences in names, triggers, applicability and action restrictions. Reconcile the common intent but **do not treat triggers as identical** or prematurely decide the native trigger policy. | Existing-concept recognition; native details open |
+| Critical success/failure | Critical successes and failures **stack through consecutive extreme natural d20 results**, as the owner described from Fool's Gold. An initial natural 20 is a critical success that calls for another roll; consecutive 20s raise the critical tier. An initial natural 1 is a critical failure that similarly can stack on consecutive natural 1s. | Newly stated owner gameplay rule; remaining cases below |
+| Critical-hit damage | In place of simple doubled damage dice, a critical hit uses **maximum damage plus an additional damage roll**. The exact interaction with static damage modifiers and doubled/stacked critical tiers still needs explicit examples. | Owner rule, detailed arithmetic awaiting confirmation |
+| Triple critical success | A triple critical success in combat **reduces the attacked opponent to 0 HP**. | Owner rule |
+| Triple critical failure | A triple critical failure **reduces the failing character to 0 HP**. | Owner rule; precise scope beyond combat open |
+| Reaching 0 HP | **5e-style death saving throws remain available** even when reaching 0 HP through a triple critical. This rule must not automatically become a 3.x negative-HP instant-death effect. | Owner rule; edge cases open |
+
+### Critical stacking — owner-described baseline
+
+On a natural **20**, mark a critical success and roll again. Another 20 makes it a **double critical** and prompts another roll. A third consecutive 20 makes it a **triple critical**. In combat, that successful attack puts its target at **0 HP**.
+
+Conversely, natural **1s** can accumulate as critical failures. Three consecutive 1s produce a **triple critical failure**, putting the failing character at **0 HP**. Death saving throws are retained from the 5e family.
+
+A normal critical damage result uses **maximum damage plus a damage roll**, not the ordinary 5e rule of simply rolling doubled damage dice. Until reviewed, do not assume the exact placement of ability bonuses, damage types, additional feature-granted dice, or attack-specific modifiers. Do not infer an unspecified double-critical damage formula.
+
+**This combines ideas rather than copying any source formula:** the *additional critical roll* resembles 3.x critical confirmation, the hit-point/death-save framework draws from 5.x, and the stacking/extreme outcomes and maximum-plus-roll rule reflect the owner's stated Dorks & Dice design. The repeated rolls are **not** ordinary 3.x confirmation rolls: natural 20s/1s trigger a repeating escalation rather than an attack-roll-vs-AC confirmation.
+
+### Critical rule details remaining open
+
+1. **Tier-two consequence:** What additional damage or effect, if any, does a double critical success or double critical failure cause? How do further matching natural results beyond a triple behave?
+2. **Roll mechanics:** Are escalation rolls always unmodified plain d20, or do advantage/disadvantage, Emphasis, rerolls, and class/feat bonuses affect them? Does only a *natural* 20/1 count, even when an expanded threat range or feature grants a critical?
+3. **Termination:** On a nonmatching follow-up roll, is the already achieved tier retained, with no chance that an opposite extreme reverses it?
+4. **Scope:** Are stacked criticals for attack rolls only, or are checks, saves, and other d20 rolls eligible? Does the triple-failure 0-HP consequence apply outside combat?
+5. **Damage:** Define precisely what is maximized and rerolled (weapon dice, extra dice, static modifiers), and how immunities, resistances, damage prevention, and multi-target effects interact.
+6. **0-HP consequences:** Confirm whether the 0-HP effect bypasses damage rolls but still requires a valid affected target, how it interacts with creatures with special death/defeat rules, and whether death saves or other active consequences are modified.
+
+### Native combat regression scenarios
+
+- A Block Initiative encounter uses **block resolution** even when some participants or sources originate in 3.x, PF1e, 2014 5e, or 2024 5e.
+- An attack targets **Touch AC** and is not rewritten into advantage; a Flat-Footed AC effect is not rewritten into a Dexterity saving throw.
+- A natural **20, then non-20** yields one critical success; **20 → 20 → non-20** yields two; **20 → 20 → 20** yields the combat target at 0 HP.
+- A natural **1 → 1 → 1** yields the failing character at 0 HP. A surviving combatant's resulting death-save process remains available under the adopted 5e-style dying rules.
+- A **normal critical hit** uses maximum-plus-roll damage rather than 2× dice. All still-open arithmetic and critical-tier interaction rules must have approved examples before code implementation.
+- An imported opportunity-attack rule with broader 3.x triggers does not silently rewrite the Dorks & Dice native trigger policy when that policy is established.
+
 ## Combat systems comparative evidence (non-authoritative)
 
 The five-system [combat comparison](combat-system-comparison-3x-5x-pf1.md) documents shared combat intentions and specific differences across D&D 3.0, 3.5, 2014 5e, 2024 5e, and Pathfinder 1e. It covers action economy, surprise, threatened areas, defensive statistics, criticals, conditions, damage, and multiple maneuver procedures. **It does not select the Dorks & Dice combat defaults.** Use it when refining the owner's proposed native combat system, preserving an independent description of owner intent before proposing borrowed mechanics.
