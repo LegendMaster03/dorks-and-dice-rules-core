@@ -101,15 +101,17 @@ The owner has chosen to **adopt the critical stacking and triple-critical effect
 
 The remaining comparisons of 3.x subdual/nonlethal tracking, 5e nonlethal melee knockouts, and variant dying/death mechanics should now be checked against this owner-established native direction, not treated as a choice between importing entire external critical/death systems.
 
-## 5. Design conclusions for Dorks & Dice — questions, not rulings
+## 5. Design conclusions for Dorks & Dice — established directions and open questions
 
 1. **Shared vocabulary is feasible:** initiative, turn, action cost, movement, attack, defense, save, contest, effect, condition, damage, and maneuver intent are broad concepts recognized across all five systems.
-2. **A maneuver should have separable meaning and procedure**: target/outcome, requirements, resolution, timing, and resulting conditions can be examined independently. Whether Dorks & Dice has **one** maneuver formula or many is an owner decision.
+2. **The owner has approved designing one native combat-technique framework**, synthesizing 3.x/PF maneuver ideas, 2024 Weapon Mastery and Loot Tavern Ryoko team-combo concepts; the concrete `Combat Techniques` name, scope and procedures are proposals. A maneuver must still have separable meaning and procedure: target/outcome, requirements, resolution, timing and resulting conditions. Whether the native system uses one baseline maneuver formula or several profiles remains an owner decision.
 3. **Use the adopted Fool's Gold critical stacking as the Dorks & Dice critical rule** rather than importing an edition's critical confirmation by default. The owner has specified maximum-plus-one-roll damage on a single critical and maximum-plus-two-rolls on a double critical success, while retaining 5e-style death saves; the tier-three 0-HP consequences come from Fool's Gold. Single/double critical failures are GM-adjudicated. Expanded-range critical successes can stack through double, while triple requires three natural 20s. Damage arithmetic details remain open.
 4. **Do not equate mechanical statistics that happen to use the same ability**: BAB, proficiency, ranks, a skill contest, a maneuver attack, and a saving-throw DC are not automatically transformable by name.
 5. **Use one Dorks & Dice action economy, as directed by the owner.** **5.x-style independent and splittable movement is the approved native baseline**, while explicit full-turn constraints remain authoritative when required by an ability. Action-budget numbers, nonmovement move-equivalent conversion, precise full-round permitted movement, swift/immediate coupling and reaction refresh still require owner definition. Do not mistake analogous source categories for identical costs.
 6. **Preserve older options where compatible** with established additive philosophy, but no unconditional union of contradictory procedures, conditions, or action costs.
-7. **Owner first:** review this matrix as evidence, invite the owner's combat-system and maneuver ideas, and record intended native rules before proposing algorithms. Pathfinder influences may apply to any area, not exclusively maneuvers.
+7. **Owner first:** The core choice to synthesize **one** combat system is made, but specific maneuver resolution, mastery acquisition/stacking, team-combo participation and reaction timing still require owner decisions before algorithms or implementation. Pathfinder influences may apply to any area, not exclusively maneuvers.
+
+**Scope clarification:** The approved unification is *not* one universal opposed roll for attacks, maneuvers and combos. It means one native system whose actions, costs, participating characters, triggered effects, conditions, attack-sequencing and critical interactions compose coherently. Block Initiative remains authoritative for coordinating allied activity; harvesting's optional specialist/helper model is an inspiration, not a combat helper formula. All-basic, all-advanced, and mixed tables must function under the same rules.
 
 ## 6. Questions for the next owner review
 
