@@ -95,16 +95,19 @@ An attack against **touch AC**, a PF **CMB check against CMD**, an opposed 5e **
 
 ### Injury and criticals
 
-Confirmation/weapon multipliers versus automatic critical damage-dice doubling, 3.x subdual/nonlethal tracking versus 5e's use of nonlethal melee knockouts, and different dying/death mechanics are separate native-rules questions. Some are already supported in Dorks & Dice as mechanical profiles; support must not be mistaken for approval of one system's default.
+The owner has now established the **Dorks & Dice native critical-stacking direction**: consecutive natural 20s accumulate critical success tiers, consecutive natural 1s accumulate critical failure tiers, a triple combat critical success reduces the attacked opponent to **0 HP**, and a triple critical failure reduces the failing character to **0 HP**. A normal critical hit causes **maximum damage plus a further damage roll** instead of simply rolling doubled dice; 5e-style death saving throws remain. This combines some features of 3.x's additional confirmation roll with 5.x's 0-HP/death-save model but is **not equivalent** to either source rule. The double-critical effects, modifier arithmetic, and noncombat scope still need owner definition. See [the native rules specification](native-rules-design-specification.md) for explicit accepted and open details.
+
+The remaining comparisons of 3.x subdual/nonlethal tracking, 5e nonlethal melee knockouts, and variant dying/death mechanics should now be checked against this owner-established native direction, not treated as a choice between importing entire external critical/death systems.
 
 ## 5. Design conclusions for Dorks & Dice — questions, not rulings
 
 1. **Shared vocabulary is feasible:** initiative, turn, action cost, movement, attack, defense, save, contest, effect, condition, damage, and maneuver intent are broad concepts recognized across all five systems.
 2. **A maneuver should have separable meaning and procedure**: target/outcome, requirements, resolution, timing, and resulting conditions can be examined independently. Whether Dorks & Dice has **one** maneuver formula or many is an owner decision.
-3. **Do not equate mechanical statistics that happen to use the same ability**: BAB, proficiency, ranks, a skill contest, a maneuver attack, and a saving-throw DC are not automatically transformable by name.
-4. **Do not inherit a source-specific core combat action economy by accident.** Determine Dorks & Dice-native action/reaction model before trying to preserve or convert individual 3.x and 5.x special attacks into it.
-5. **Preserve older options where compatible** with established additive philosophy, but no unconditional union of contradictory procedures, conditions, or action costs.
-6. **Owner first:** review this matrix as evidence, invite the owner's combat-system and maneuver ideas, and record intended native rules before proposing algorithms. Pathfinder influences may apply to any area, not exclusively maneuvers.
+3. **Apply the native critical system rather than source defaults**: critical confirmation/stacking, maximum-plus-roll damage, triple-critical 0 HP, and 5e-style death saves have owner-stated direction. Unspecified tier-two consequences and arithmetic remain open.
+4. **Do not equate mechanical statistics that happen to use the same ability**: BAB, proficiency, ranks, a skill contest, a maneuver attack, and a saving-throw DC are not automatically transformable by name.
+5. **Do not inherit a source-specific core combat action economy by accident.** Determine Dorks & Dice-native action/reaction model before trying to preserve or convert individual 3.x and 5.x special attacks into it.
+6. **Preserve older options where compatible** with established additive philosophy, but no unconditional union of contradictory procedures, conditions, or action costs.
+7. **Owner first:** review this matrix as evidence, invite the owner's combat-system and maneuver ideas, and record intended native rules before proposing algorithms. Pathfinder influences may apply to any area, not exclusively maneuvers.
 
 ## 6. Questions for the next owner review
 
