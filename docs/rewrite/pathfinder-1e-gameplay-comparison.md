@@ -1,6 +1,6 @@
 # Phase 0 — Pathfinder First Edition gameplay comparison
 
-Status: **research and comparison only**, 2026-10-09. Pathfinder 1e is an additional design reference for the Dorks & Dice rewrite, not an automatically accepted rule source, mandatory import target, or substitute for already established Dorks & Dice gameplay decisions.
+Status: **Phase 0 decision-recovery cross-check**, 2026-10-09. Owner review indicates that existing Dorks & Dice decisions already address most of the conversion cases in this comparison. **Combat maneuvers are the one identified candidate gameplay-design gap.** Pathfinder 1e remains a comparative reference, not an automatically accepted rules source, mandatory import target, or substitute for settled Dorks & Dice decisions.
 
 ## Purpose and scope
 
@@ -27,45 +27,57 @@ The Dorks & Dice game is being developed from the cross-edition decisions alread
 | Optional mechanical systems | An imported rule may be additive, replace a procedure, or conflict with a Dorks & Dice core procedure; conflicts require policy. | Unchained offers revised action economy, consolidated and grouped skills, variant multiclassing, automatic bonus progression, and alternate attack resolution. | Treat each as a controlled variant/compatibility fixture. Explore structural composition and conflict reporting rather than adopting it. |
 | Skill-level advancement transitions | Mechanics may be introduced, continue, stop advancing, change behavior, or expire at track-specific thresholds. | PF1e Unchained skill unlocks confer new effects at rank thresholds 5, 10, 15, 20. | Supports generalized threshold-triggered mechanics independent of total character-level bands. |
 
-## Priority investigations
+## Reassessment: existing design versus new work
 
-### 1. Skill/competency mapping and loss of meaning — highest priority
+The owner confirmed that the existing Dorks & Dice ruleset already addresses most conversion cases presented in the initial Pathfinder comparison. Do **not** turn those cases into a new backlog or reopen previously settled decisions merely because Pathfinder provides a different solution. Existing competencies, subclasses, prestige classes, multiclassing, epic/level-band progression, 3.x defenses, variant/alternative contributions, and skill thresholds remain **recovery and regression subjects**. A particular rule's specification can be established even when old code did not implement it fully.
 
-Compare PF1e's core skill simplification and Unchained consolidation with Dorks & Dice's existing *derived-parent* relationships. Test composite skills with unequal components and component-targeted modifiers; ensure PF skill mappings do not accidentally make the old components disappear or treat skill identities as equal numeric profiles. Preserve explicit group/facet/family distinctions.
+### Confirmed existing capabilities relevant to the gap
 
-Unchained's consolidated skills may merge formerly different functions (for example Bluff + Diplomacy + Intimidate into Influence). This is **not** equivalent to Dorks & Dice's exact arithmetic-mean Stealth/Perception/Athletics/Acrobatics rule. Unchained also offers Background Skills, which specifically protects vocational skills from being outcompeted by combat/adventuring choices; that is relevant to our independently trainable Craft/Perform/Profession model.
+Repository review found:
 
-### 2. Class-customization semantics — highest priority
+- `src/RulesCore.Infrastructure/Rules/CharacterProjection/CharacterThreeXCombatResolver.cs` computes `combat.grapple` from 3.x BAB, Strength modifier, size-specific grapple modifier, and other modifiers, and also projects 3.x Armor Class variants and saving throws.
+- `src/RulesCore.Domain/Rules/CharacterMechanics.cs` declares `combat.grapple` as a numeric mechanic.
+- `docs/character-mechanics-consumer.md` retains target defenses, roll modes, and applicable target states as separate concepts; advantage is not equivalent to Flat-Footed AC or a touch attack.
+- The current repository search did **not** identify first-class CMB/CMD mechanic identities or a general maneuver resolver for trip, bull rush, disarm, sunder, overrun, and related actions. This is a **scoped evidence finding**, not proof that no relevant imported raw/source rules exist.
 
-Represent three distinct structures and verify each against example PF1e and D&D material:
+The distinction is important: **a grapple modifier is not a complete grapple action procedure**, and a collection of independently imported special attacks is not a unified Dorks & Dice combat-maneuver model.
 
-1. **Subclass:** a class-bound specialization with its own features that uses its parent class's level track.
-2. **Prestige class:** a separately leveled class with prerequisites and possible contributions to another class's mechanics (such as spellcasting progression).
-3. **Feature replacement / archetype:** an optional modification to the base class that removes or replaces named features, preserving unaffected levels and features.
+## Identified design gap — combat maneuvers
 
-The same feature may be a parent-track modification, a prerequisite gate, or a separately progressed grant. Do not collapse these into a generic "specialized class" type or infer that a PF archetype equals a 5e subclass.
+### What must be recovered before designing anything
 
-### 3. Level basis and bands — highest priority
+Audit how the current Rules Core represents each of these source-native actions and whether it already has any of their target selection, contest, conditions, restrictions, and effect behavior:
 
-For each source-derived feature, capture at least these *semantic questions*, without settling the eventual data representation:
+- D&D 3.x: grapple, trip, bull rush, disarm, sunder, overrun, feint, and other special attacks that use different tests and action costs. Not all such actions should be forced into a single formula.
+- Pathfinder 1e Core Rulebook: bull rush, disarm, grapple, overrun, sunder, and trip using **Combat Maneuver Bonus (CMB)** against **Combat Maneuver Defense (CMD)**. Later PF1e rules include additional maneuver types such as dirty trick, drag, reposition, and steal.
+- 5.x: 2014 grapple/shove via opposed ability checks, compared with SRD 5.2.1 (2024) grapple/shove as Unarmed Strike options resisted by saving throws. These are distinct resolution procedures; a shared outcome label does not make the procedures mechanically identical.
 
-- **Acquisition basis:** total character level, a particular class occurrence, prestige-class occurrence, effective class level, competency rank, independent tier, or other track?
-- **Progression basis:** what track causes the feature to improve and at what thresholds/bands?
-- **Prerequisite basis:** which levels/qualifications are checked, and does a separate effective-level formula apply?
-- **Effect basis:** what level controls an effect's damage, duration, uses, DC, etc.?
-- **Transition behavior:** acquired, continued, stopped improving but retained, evolved, replaced, or no longer applicable?
+### Design questions requiring approval
 
-PF1e's ordinary multiclassing, Unchained variant multiclassing, prestige caster progression, skill unlocks, and mythic tiers are complementary verification examples. They illustrate why acquisition and effect basis can differ from a feature's owning class.
+1. **Native Dorks & Dice resolution:** Should combat maneuvers use a unified attacker/defender check (PF-style CMB/CMD), a general attack/contest/save procedure chosen per maneuver, or another rule? No answer is assumed here.
+2. **Maneuver identity and outcome:** Which actions are separate first-class mechanics, which are alternate implementations of one outcome (for example pushing or knocking prone), and which are mechanically distinct?
+3. **Inputs and defenses:** How do BAB, Strength/Dexterity, proficiency, size, other modifiers, special maneuver bonuses, defenses, target states, and applicable conditions contribute? Is CMD a native Dorks & Dice defensive statistic or merely one imported profile?
+4. **Action and consequence semantics:** How do action cost, attacks of opportunity/reactions, reach, size restrictions, movement, prone, grappled, pinned, disarmed objects, damaged equipment, failure consequences, and repeated attempts work?
+5. **Compatibility:** Can source-specific 3.x, PF1e, 2014 5e, and 2024 5e maneuver procedures coexist without silently changing a character or encounter's governing mechanics? How is a conflicting rule reviewed and published?
+6. **Effects and advancement:** Can feats, class features, monster capabilities, and level/competency thresholds grant maneuvers or modify their checks/defenses without special code for each source family?
 
-### 4. Combat and alternative procedures — medium priority
+The new Dorks & Dice system should expose a **typed maneuver/procedure identity** and rule-declared eligibility, resolution method, and consequences. This is a design direction, not approval of PF1e's CMB/CMD formula.
 
-Use CMB/CMD and Unchained revised action economy as case studies in converting repeated rule text into typed reusable procedures. Keep the existing Dorks & Dice rule that touch attacks, flat-footed states, denied Dexterity, and advantage/disadvantage are distinct effects. Pathfinder's combat formulas are source implementations, not automatically authoritative Dorks & Dice defaults.
+### Proposed acceptance fixtures
 
-### 5. Scope of PF1e content and import licensing — separate decisions
+- A 3.5e grapple modifier calculated from BAB, Strength, and source-appropriate size modifier remains unchanged when PF maneuver support is absent.
+- PF1e CMB/CMD use their own correct source-specific modifiers; do not reuse the different 3.5e grapple size modifier as though it were Pathfinder CMB.
+- A successful trip and a successful shove-to-prone may have a comparable outcome but different check/defense, size, and action-economy requirements.
+- Disarm, sunder, and steal are distinct in their targets and effects; none becomes an alias of grapple.
+- Importing a PF maneuver option does not activate it or override an effective Dorks & Dice combat procedure without the designated acceptance/adjudication rule.
+- A feat or feature that modifies one maneuver does not silently modify all maneuvers.
+- Insufficient context or contradictory active procedures return explicit unresolved/conflict states, never a guessed winner.
 
-A comparative game-design audit **does not authorize** a new Pathfinder importer or the import of PF1e's full published content. If desired, a later decision can scope PF1e as an additional supported source. Check the specific publication's OGL declaration and other conditions; Pathfinder 1e's OGL-licensed material and Paizo Product Identity are distinct. Do not infer that its material became CC BY because D&D 5.1/5.2.1 SRDs did.
+### Earlier Pathfinder comparisons: retain as regression evidence only
 
-## Acceptance scenarios to add to the design specification
+Competency ranks and facets, reviewed composite-skill arithmetic, Craft/Perform/Profession families, class versus subclass versus prestige-class track ownership, archetype-like feature replacements, effective class level, multiclass progression, skill rank thresholds, mythic-like independent tracks, and general epic/level-band transitions are already within the user's established design work. Continue to use Pathfinder examples for verification when useful, but **do not classify them as new unresolved game design merely because the comparison showed an alternative.**
+
+## Existing-design regression scenarios (not newly proposed gameplay rules)
 
 1. A Dorks & Dice skill has multiple granular 3.x contributors and one modern umbrella concept; verify independent ranks and parent derivation. Compare PF core and Unchained skill entries without losing granularity.
 2. A character multiclasses without either class entering its second 20-level band; total character level can enter that band separately. Verify a level-dependent global benefit and a class-specific effect do not use the same threshold automatically.
@@ -73,7 +85,7 @@ A comparative game-design audit **does not authorize** a new Pathfinder importer
 4. A class specialization replaces two features but preserves all other class features. Multiple replacements targeting the same base feature must conflict, unlike independent subclasses and prestige levels.
 5. A skill rank threshold unlocks a feature even if the character does not reach a new total character-level band.
 6. An independent mythic-like track changes a feature's effect without incrementing character or class level.
-7. A PF-style CMB/CMD combat procedure coexists as an alternative rule implementation without silently replacing grapple, touch AC, advantage, or another core operation.
+7. **Open combat-maneuver design:** compare a PF-style CMB/CMD procedure with 3.x/5.x maneuver resolution and confirm that no imported procedure silently replaces grapple, touch AC, advantage, or another core operation.
 8. A proposed consolidation that loses semantic or numeric distinctions is flagged for Rules Lawyer review and not automatically accepted.
 
 ## Repo evidence used
@@ -103,4 +115,4 @@ A comparative game-design audit **does not authorize** a new Pathfinder importer
 
 ## Decision status
 
-**No new Dorks & Dice gameplay rules were approved or implemented by this comparison.** It is a research input to Phase 0 and a list of targeted regression/design scenarios. In particular, do not automatically adopt PF skill arithmetic, archetypes as subclasses, CMB/CMD as the universal combat model, mythic tiers as epic level bands, or Unchained variants as base rules.
+**Owner assessment:** the other Pathfinder conversion examples are already substantially covered by established Dorks & Dice gameplay decisions. The only newly identified candidate design gap is **combat maneuvers**. Neither PF1e CMB/CMD nor any specific maneuver policy has been adopted. No gameplay code or new rules were approved or implemented by this document. Retain the other examples only to confirm and recover existing decisions and detect regressions.
