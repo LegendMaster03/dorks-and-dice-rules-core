@@ -85,7 +85,8 @@ The owner has now made or reaffirmed the following Dorks & Dice combat design de
 | Combat defenses | Preserve the existing 3.5-derived **ordinary, Touch and Flat-Footed AC** distinctions already reconciled in Rules Core. Do not silently substitute 5.x advantage/disadvantage or saving throws for these defenses. | Reaffirmed existing design |
 | Opportunity attacks | Source versions use substantially the same underlying concept, with differences in names, triggers, applicability and action restrictions. Reconcile the common intent but **do not treat triggers as identical** or prematurely decide the native trigger policy. | Existing-concept recognition; native details open |
 | Critical success/failure | **Adapted from Fool's Gold, not invented for Dorks & Dice:** critical successes and failures stack through consecutive extreme natural d20 results. An initial natural 20 is a critical success that calls for another roll; consecutive 20s raise the critical tier. An initial natural 1 is a critical failure that similarly stacks on consecutive natural 1s. The owner also attributes the **triple-critical effects** to Fool's Gold. | Adopted gameplay direction from Fool's Gold; integration details below |
-| Critical-hit damage | In place of simple doubled damage dice, a critical hit uses **maximum damage plus an additional damage roll**. The exact interaction with static damage modifiers and doubled/stacked critical tiers still needs explicit examples. | Owner rule, detailed arithmetic awaiting confirmation |
+| Single critical-hit damage | A single critical hit uses **maximum damage plus one additional damage-dice roll**, rather than simply doubling the dice. Static modifiers and bonus dice interactions require a later precision rule. | Owner-stated damage rule |
+| Double critical-hit damage | A double critical hit uses **maximum damage plus two additional damage-dice rolls**, not the same damage as a single critical. For a base `1d8` attack (before modifiers), that is `8 + 2d8`. | Owner-stated damage rule | 
 | Triple critical success | A triple critical success in combat **reduces the attacked opponent to 0 HP**. | Fool's Gold-derived consequence adopted by owner |
 | Triple critical failure | A triple critical failure **reduces the failing character to 0 HP**. | Fool's Gold-derived consequence adopted by owner; precise scope beyond combat open |
 | Reaching 0 HP | **5e-style death saving throws remain available** even when reaching 0 HP through a triple critical. This rule must not automatically become a 3.x negative-HP instant-death effect. | Owner rule; edge cases open |
@@ -96,15 +97,21 @@ On a natural **20**, mark a critical success and roll again. Another 20 makes it
 
 Conversely, natural **1s** can accumulate as critical failures. Three consecutive 1s produce a **triple critical failure**, putting the failing character at **0 HP**. Death saving throws are retained from the 5e family.
 
-A normal critical damage result uses **maximum damage plus a damage roll**, not the ordinary 5e rule of simply rolling doubled damage dice. Until reviewed, do not assume the exact placement of ability bonuses, damage types, additional feature-granted dice, or attack-specific modifiers. Do not infer an unspecified double-critical damage formula.
+**Critical damage progression:**
 
-**Attribution and adaptation:** Fool's Gold is the source of the consecutive critical-success/failure tiers **and the triple-critical consequences**. Dorks & Dice is **adopting**, not inventing, those rules. The owner's separately proposed **maximum-damage-plus-another-damage-roll** rule modifies normal critical-hit damage; retaining **5e-style death saving throws** integrates the adopted stacking mechanic into Dorks & Dice combat. The additional rolls may superficially resemble 3.x critical confirmation, but should **not** be presented as the origin or mechanism of Fool's Gold stacking: repeated natural 20s/1s escalate severity rather than merely confirming a threatened hit against AC.
+- **Single critical success (natural 20):** maximum damage plus **one** additional damage-dice roll. Example for base `1d8` damage (before modifiers): `8 + 1d8`.
+- **Double critical success (20 → 20):** maximum damage plus **two** additional damage-dice rolls. Example for base `1d8` damage (before modifiers): `8 + 2d8`.
+- **Triple critical success (20 → 20 → 20):** in combat, reduce the target to **0 HP**; the normal damage formula no longer determines that stated outcome.
 
-**Source-verification boundary:** This specification records the owner's account of the Fool's Gold rules, not a checked transcription of the published source. Before implementing, validate any finer points directly against the relevant licensed source or the owner's intended adaptation. Do not invent a Fool's Gold double-critical effect in the absence of evidence.
+These examples exclude static damage bonuses and other dice deliberately. The owner has not yet specified how ability bonuses, additional feature-granted dice, or damage riders contribute to the maximized and rolled portions.
+
+**Attribution and adaptation:** Fool's Gold is the source of the consecutive critical-success/failure tiers **and the triple-critical consequences**. Dorks & Dice is **adopting**, not inventing, those rules. The owner's separately stated critical-damage progression uses **maximum damage plus one additional damage-dice roll for a single critical or two for a double critical**; retaining **5e-style death saving throws** integrates the adopted stacking mechanic into Dorks & Dice combat. The additional rolls may superficially resemble 3.x critical confirmation, but should **not** be presented as the origin or mechanism of Fool's Gold stacking: repeated natural 20s/1s escalate severity rather than merely confirming a threatened hit against AC.
+
+**Source-verification boundary:** This specification records the owner's account of the Fool's Gold rules, not a checked transcription of the published source. The **double critical success damage** is now explicitly defined by the owner for Dorks & Dice. Do not infer that this arithmetic is a verbatim Fool's Gold rule without independently checking the relevant source. The double critical *failure* consequence remains undefined.
 
 ### Critical rule details remaining open
 
-1. **Tier-two consequence:** What additional damage or effect, if any, does a double critical success or double critical failure cause? How do further matching natural results beyond a triple behave?
+1. **Other tier-two and higher consequences:** The double critical **success** damage is decided (maximum damage plus two damage-dice rolls). The **double critical failure** consequence and treatment of further matching natural results beyond a triple remain open.
 2. **Roll mechanics:** Are escalation rolls always unmodified plain d20, or do advantage/disadvantage, Emphasis, rerolls, and class/feat bonuses affect them? Does only a *natural* 20/1 count, even when an expanded threat range or feature grants a critical?
 3. **Termination:** On a nonmatching follow-up roll, is the already achieved tier retained, with no chance that an opposite extreme reverses it?
 4. **Scope:** Are stacked criticals for attack rolls only, or are checks, saves, and other d20 rolls eligible? Does the triple-failure 0-HP consequence apply outside combat?
@@ -115,7 +122,7 @@ A normal critical damage result uses **maximum damage plus a damage roll**, not 
 
 - A Block Initiative encounter uses **block resolution** even when some participants or sources originate in 3.x, PF1e, 2014 5e, or 2024 5e.
 - An attack targets **Touch AC** and is not rewritten into advantage; a Flat-Footed AC effect is not rewritten into a Dexterity saving throw.
-- A natural **20, then non-20** yields one critical success; **20 → 20 → non-20** yields two; **20 → 20 → 20** yields the combat target at 0 HP.
+- A natural **20, then non-20** yields a single critical and `max + 1 damage-dice roll`; **20 → 20 → non-20** yields a double critical and `max + 2 damage-dice rolls`; **20 → 20 → 20** yields the combat target at **0 HP**. For base `1d8` damage, the first two are `8 + 1d8` and `8 + 2d8` before modifiers.
 - A natural **1 → 1 → 1** yields the failing character at 0 HP. A surviving combatant's resulting death-save process remains available under the adopted 5e-style dying rules.
 - A **normal critical hit** uses maximum-plus-roll damage rather than 2× dice. All still-open arithmetic and critical-tier interaction rules must have approved examples before code implementation.
 - An imported opportunity-attack rule with broader 3.x triggers does not silently rewrite the Dorks & Dice native trigger policy when that policy is established.
