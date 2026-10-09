@@ -6,9 +6,22 @@ Status: **architectural direction**, 2026-10-09. This describes the intended pro
 
 Rules Core is becoming the authoritative host and execution engine for the **Dorks & Dice custom tabletop role-playing game system**. It is no longer primarily a program that resolves between external tabletop rulesets. The Dorks & Dice system itself defines the primary vocabulary, mechanics, applicability, interaction policies, and defaults. Rules from 3e, 3.5e, 5e, 5.5e, and additional compatible sources are imported and reconciled **into** this hosted system and with one another.
 
-This is a more fundamental change than moving the existing house-rule baseline into a separate source package. The custom system must eventually constitute a playable, independently versioned ruleset: its core procedures and mechanics can operate without arbitrarily selecting a previous edition as the hidden default. Its exact rules and their published versions are subject to design and review; this document does not invent them.
+This is a more fundamental change than moving the existing house-rule baseline into a separate source package. **The game system is not being invented from zero**: the existing cross-edition resolver has already made numerous substantive Dorks & Dice design decisions when recognizing equivalent mechanics, preserving distinct calculations, building universal competencies, and deciding how imported rules coexist. These choices are the starting design evidence for the independent system, not architectural code to copy wholesale. The custom system must ultimately constitute a playable, independently versioned ruleset whose procedures operate without silently selecting an older edition as the default. We must recover and verify previously settled decisions while identifying genuine design gaps, not reopen everything as if it had never been considered.
 
 Compatibility remains a fundamental objective. Moving authority to Dorks & Dice must not erase mechanically important differences, discard imported options, or force false equivalence among editions.
+
+## Clean-slate implementation and licensing
+
+**Starting from scratch means a clean native rules engine and implementation architecture, not discarding existing Dorks & Dice mechanics decisions or treating previous work as absent.** Inventory the existing solver's adjudications, stable universal concepts, cross-edition relationships, mechanics contracts, and accepted house rules. Distinguish established design policy from incidental translation behavior, temporary fallbacks, and implementation constraints. Reimplement established policy deliberately under the new Dorks & Dice ontology.
+
+Under United States copyright law, 17 U.S.C. § 102(b), abstract game procedures, systems, processes, and methods of operation are not protected by copyright. Original explanatory text, artwork, and other expressive content can be protected. The D&D SRD 5.1 and SRD 5.2.1 are **not public domain**; Wizards released them under **Creative Commons Attribution 4.0 International**, allowing use, adaptation, distribution, and commercial reuse with required attribution. The distinction matters when we choose between independently authoring descriptions/implementations and incorporating actual SRD material.
+
+Authoritative references:
+- [17 U.S.C. § 102(b), U.S. Copyright Office](https://www.copyright.gov/title17/92chap1.html)
+- [Wizards of the Coast SRD downloads and licensing FAQ](https://www.dndbeyond.com/srd)
+- [CC BY 4.0 terms](https://creativecommons.org/licenses/by/4.0/)
+
+Maintain clear attribution/provenance and a content-use policy for every incorporated source; the ability to implement a mechanic does not automatically permit wholesale reuse of third-party rulebook text, settings, artwork, or marks.
 
 ## Primary architectural distinction
 
@@ -101,7 +114,7 @@ The Dorks & Dice system's public/readable mechanics and imported restricted sour
 
 Before writing replacement mechanics infrastructure, produce:
 
-1. A **Dorks & Dice system specification** defining the known core mechanics, intentionally open mechanics, ruleset versioning, and expected player-facing procedures. The existing six house rules are seed policy, not a complete system definition.
+1. A **recovered Dorks & Dice design specification**: extract and validate game-design decisions already embodied in the resolver, including competency reconciliation, edition-independent concepts, compatibility and additive behavior, rule precedence, and known house rules. Mark each as settled, provisional, or unresolved; fill genuine gaps to define an independent, versioned playable baseline. The six formally seeded house rules are only one subset of that pre-existing design work.
 2. A **mechanical ontology** separating stable system concepts, source implementations, compatible facets, procedures, operators, typed values, triggers, capabilities, and extensions.
 3. A **compatibility and adjudication policy** for import-to-core and import-to-import relations, effective participation, precedence, contradictory mechanics, and approval.
 4. A **cross-edition acceptance matrix** using 3e/3.5e/5e/5.5e and third-party-shaped fixtures, with pure and mixed-system cases.
