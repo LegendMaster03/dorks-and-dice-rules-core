@@ -75,6 +75,10 @@ For each chapter, recover the existing decision text, describe how the game is i
 
 **Not every existing game mechanic is complete merely because a normalized source profile exists.** The native rules must explain what happens at the table, including cases that currently surface as unresolved.
 
+## Combat systems comparative evidence (non-authoritative)
+
+The five-system [combat comparison](combat-system-comparison-3x-5x-pf1.md) documents shared combat intentions and specific differences across D&D 3.0, 3.5, 2014 5e, 2024 5e, and Pathfinder 1e. It covers action economy, surprise, threatened areas, defensive statistics, criticals, conditions, damage, and multiple maneuver procedures. **It does not select the Dorks & Dice combat defaults.** Use it when refining the owner's proposed native combat system, preserving an independent description of owner intent before proposing borrowed mechanics.
+
 ## Combat maneuvers — owner-ideas-first design worksheet
 
 **Status: owner has ideas; no Dorks & Dice maneuver-resolution formula or default list is approved.** Do not first translate these ideas into Pathfinder's CMB/CMD scheme, D&D 3.x attack-of-opportunity procedures, or D&D 5.x contested checks/saving throws.
