@@ -79,7 +79,9 @@ PF1e CMD is also 10 + BAB + Strength + Dexterity + special size + applicable mod
 
 ### Action economy and opportunity triggers
 
-A maneuver's success calculation can not be defined independently of its **cost, timing and opportunities**. A 3.x maneuver replacing an attack within full attack interacts with iterative BAB attacks differently from a 5e grapple/shove replacing one attack of an Extra Attack action. A PF1e maneuver may replace an attack or use a standard action. The same translated outcome requires explicit action-cost and reactivity semantics.
+**Owner gameplay direction (2026-10-09): Dorks & Dice will merge the 3.x/PF1e and 5.x action economies into a single native model**, because their underlying categories are close enough. This is not an approval of any specific action-budget formula. The mapping and remaining questions are detailed in the [native rules specification](native-rules-design-specification.md#unified-action-economy--design-direction-and-provisional-mapping).
+
+A maneuver's success calculation can not be defined independently of its **cost, timing and opportunities**. A 3.x maneuver replacing an attack within full attack interacts with iterative BAB attacks differently from a 5e grapple/shove replacing one attack of an Extra Attack action. A PF1e maneuver may replace an attack or use a standard action. The same translated outcome requires explicit action-cost and reactivity semantics. In particular, 3.x movement normally consumes a **move action**, 5.x movement is a **separate distance allowance**, PF swift/immediate actions can share a timed resource, and 5.x reactions and opportunity attacks work differently. The unified Dorks & Dice vocabulary should preserve these costs instead of giving an imported ability an unintended additional action.
 
 ### Condition consequences
 
@@ -105,7 +107,7 @@ The remaining comparisons of 3.x subdual/nonlethal tracking, 5e nonlethal melee 
 2. **A maneuver should have separable meaning and procedure**: target/outcome, requirements, resolution, timing, and resulting conditions can be examined independently. Whether Dorks & Dice has **one** maneuver formula or many is an owner decision.
 3. **Use the adopted Fool's Gold critical stacking as the Dorks & Dice critical rule** rather than importing an edition's critical confirmation by default. The owner has specified maximum-plus-one-roll damage on a single critical and maximum-plus-two-rolls on a double critical success, while retaining 5e-style death saves; the tier-three 0-HP consequences come from Fool's Gold. Single/double critical failures are GM-adjudicated. Expanded-range critical successes can stack through double, while triple requires three natural 20s. Damage arithmetic details remain open.
 4. **Do not equate mechanical statistics that happen to use the same ability**: BAB, proficiency, ranks, a skill contest, a maneuver attack, and a saving-throw DC are not automatically transformable by name.
-5. **Do not inherit a source-specific core combat action economy by accident.** Determine Dorks & Dice-native action/reaction model before trying to preserve or convert individual 3.x and 5.x special attacks into it.
+5. **Use one Dorks & Dice action economy, as directed by the owner.** The common action, movement, quick-action, reaction, free-activity and full-turn concepts are proposed vocabulary, while movement substitution, full-round restrictions, swift/immediate coupling and reaction refresh still require owner definition. Do not mistake analogous source categories for identical costs.
 6. **Preserve older options where compatible** with established additive philosophy, but no unconditional union of contradictory procedures, conditions, or action costs.
 7. **Owner first:** review this matrix as evidence, invite the owner's combat-system and maneuver ideas, and record intended native rules before proposing algorithms. Pathfinder influences may apply to any area, not exclusively maneuvers.
 
@@ -115,7 +117,7 @@ These are natural discussion prompts, not prerequisites for using the comparison
 
 - Should **maneuver** mean a category of combat actions (grapple, trip, disarm, reposition) defined by intent, regardless of whether a weapon, spell, class feature, or skill performs it?
 - Should there be a **single baseline maneuver resolution**, or a general procedure contract with different defenses and dice for particular actions?
-- What should be the default **turn/action/movement/reaction model**, since this affects every maneuver?
+- **Within the approved unified action-economy direction**, which movement budget, full-turn restrictions, Quick/Reaction coupling, and Block Initiative refresh rules should govern?
 - Should a successful maneuver directly apply a condition such as Prone/Grappled, or first produce a more general effect such as move, restrain, knockdown, take/disable equipment?
 - When a source procedure is different but produces the same broad outcome, does the native Dorks & Dice procedure govern by default, with opt-in source-specific behavior, or do some alternative procedures coexist?
 
