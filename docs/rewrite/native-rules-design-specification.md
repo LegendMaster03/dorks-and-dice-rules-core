@@ -38,6 +38,38 @@ Automated conversion must preserve semantic intent and meaningful mechanical dif
 
 The **goal** is established. The **exact mechanical layering is not yet approved**: what everybody can attempt by default; which maneuvers and weapon mastery effects require special character grants; how optional complexity delivers its additional capability without making it mandatory for everyone; which source restrictions prevent unintended extra benefits during conversion; and how much intermediate detail a GM/Tool must expose. **Do not require simpler and more detailed procedures to be equally effective**, or redesign complex mechanics solely to erase their advantage. Assess understandability, option accessibility, source fidelity and deliberate balance consequences, rather than choosing a source edition wholesale or imposing numerical parity.
 
+## Aspirational stretch goal — drop-in 5e character sheets for one-shots
+
+**Owner preference (2026-10-09):** It would be desirable, as a **massive stretch goal**, for a guest who arrives at a Dorks & Dice one-shot with an already-filled **5e character sheet** to participate in the same game with reasonable DM accommodation, even if the conversion is imperfect. This is **not an approved promise of seamless play, not required for first release, and not a prerequisite for Gate 0 completion or the greenfield rewrite**.
+
+Distinguish three separate compatibility goals:
+
+| Goal | Status and meaning |
+| --- | --- |
+| **Imported rules/content compatibility** | **Required by the rewrite:** translate 2014/2024 5e and 3.x source mechanics into the authoritative Dorks & Dice system, with explicit decisions when meanings differ. |
+| **Mixed-complexity play** | **Governing design requirement:** players choosing simple or complex Dorks & Dice options can participate together under one shared game. |
+| **Drop-in existing character sheet** | **Long-term stretch:** allow a guest to keep a familiar 5e paper/digital sheet and play a one-shot with minimal setup, instead of creating a new Dorks & Dice character or fully migrating its state. |
+
+### Plausible low-friction bridge (working idea, not a decided rule)
+
+- Treat the visitor's filled-in sheet as the **player-facing interface**, rather than requiring a Dorks & Dice Character Sheet import or conversion flow.
+- Read familiar information directly where meaningful: ability scores/modifiers, skill bonuses, attack bonuses, HP, speed, equipment, basic class features, spell slots and known spells. **Do not assume every numeric statistic or formula is mechanically equivalent without context.**
+- Use the **shared Dorks & Dice procedures** for turn order (Block Initiative), movement, criticals, conditions and encounter effects. The visitor need not memorize the old 3.x implementation profiles used by other players.
+- Let the GM apply a **small set of published conversion/adjudication guidelines** for missing or incompatible information. For instance, a 5e sheet typically does not separately expose Touch or Flat-Footed AC: do not silently pretend its ordinary AC supplies those values. The GM may resolve a missing value explicitly for that one-shot.
+- Leave advanced Dorks & Dice-only choices **optional for the visitor**. A 5e sheet should not imply unearned weapon mastery, prestige advancement, special maneuvers, or other capabilities the visitor's actual features do not grant.
+- Preserve the distinction between **2014 5e** and **2024 5e**, which may differ in class features, spells, weapon mastery and other behavior, without making edition identification a large mandatory onboarding process.
+- Accept that **case-by-case exceptions and balance disparities** may remain. A playable one-shot with limited GM rulings is the stretch goal; perfect character fidelity, automatic rebuild, lossless migration, and zero DM intervention are not.
+
+### Future evaluation cases — intentionally not release gates
+
+1. A guest presents an existing character sheet and makes ordinary attacks, checks and saves without rebuilding the character.
+2. Their 5e actions, movement, spell resources and familiar features operate alongside Dorks & Dice Block Initiative and a more complex native character's maneuvers.
+3. When another player's ability targets Touch AC or causes a native condition, the guest/GM receives an understandable resolution even if the sheet lacks a directly corresponding field.
+4. The GM can recognize ambiguous or incompatible abilities, make an explicit ruling, and continue play, rather than silently producing unjustified derived values.
+5. A one-shot is playable with the paper sheet and a concise compatibility reference **without requiring software or a fully converted persistent character record**.
+
+**Scope guardrail:** Do not add mandatory adapters, parser work, consumer migration, back-compat mode switches, or release-blocking acceptance tests now solely to satisfy this aspirational scenario. Structure native mechanics and documented conversion relations so this path is possible later when resources permit.
+
 ## Game-design status vocabulary
 
 - **Recovered / established:** a previously approved gameplay decision confirmed in existing Rules Core documentation/code or by the owner; cite concrete evidence and retain its meaning.
