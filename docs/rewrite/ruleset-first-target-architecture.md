@@ -16,6 +16,24 @@ Compatibility remains a fundamental objective. Moving authority to Dorks & Dice 
 
 Under United States copyright law, 17 U.S.C. § 102(b), abstract game procedures, systems, processes, and methods of operation are not protected by copyright. Original explanatory text, artwork, and other expressive content can be protected. The D&D SRD 5.1 and SRD 5.2.1 are **not public domain**; Wizards released them under **Creative Commons Attribution 4.0 International**, allowing use, adaptation, distribution, and commercial reuse with required attribution. The **3e and 3.5e SRD** publications and independently licensed third-party source bodies have different permissions (not a blanket CC BY 4.0 grant) and require separate source-specific handling; the availability of a game mechanic does not itself authorize reproducing someone else's protected explanatory text. The distinction matters when we choose between independently authoring descriptions/implementations and incorporating actual SRD material.
 
+### Pathfinder First Edition as the 3.x precedent
+
+**Pathfinder First Edition is our concrete precedent for reusing and adapting 3.x mechanics within an independent TTRPG.** Paizo's March 18, 2008 announcement said that Pathfinder's rules were based on D&D 3.5 Open Game License rules, with backward compatibility as a primary goal. This demonstrates an established historical route: preserve the familiar mechanical foundation, introduce a distinct game's rules and changes, and publish designated open content under its applicable license.
+
+Dorks & Dice need not adopt Pathfinder's actual choices or copy its implementation. For 3e/3.5e-derived mechanics, distinguish these routes per material:
+
+- **Independently implemented methods of play.** U.S. copyright law does not protect abstract procedures, systems, or methods of operation under 17 U.S.C. § 102(b). Write the Dorks & Dice engine and explanations independently, without copying protected prose, illustrations, setting expression, or trademark presentation. The precise copyright/expression line may still require examination for an individual rule.
+- **Text or other content explicitly released as Open Game Content.** Material taken under OGL 1.0a must follow that license's terms, including required license/copyright notices and exclusion of designated Product Identity. Pathfinder 1e's use of OGL 1.0a is the model for this route.
+- **Materials published under other licenses.** SRD 5.1/5.2.1 CC BY 4.0 content, ORC-licensed Pathfinder material, and restricted third-party works must be tracked separately. The release of mechanics under one license does not relicense OGL-only material under CC BY or ORC, or license trademarks and worldbuilding.
+
+Paizo's newer ORC-era Pathfinder publications are not interchangeable with Pathfinder First Edition's OGL foundation. Use Pathfinder 1e as the precedent for **3.x mechanics and OGL practice**, not as a blanket license from Paizo or Wizards. If publishing a substantial compilation that actually incorporates licensed game-rule expression, review the content and notices before release, particularly where multiple source licenses meet.
+
+Primary evidence:
+- [Paizo's Pathfinder announcement, March 18, 2008](https://paizo.com/blog/paizo-publishing-reg-announces-the-em-pathfinder-rpg-em-trade)
+- [Paizo licenses and OGL/ORC distinctions](https://paizo.com/licenses)
+- [Paizo Pathfinder compatibility licensing FAQ](https://paizo.com/licenses/compatibility/faq)
+- [Copyright Office, 17 U.S.C. § 102(b)](https://copyright.gov/title17/92chap1.html)
+
 Authoritative references:
 - [17 U.S.C. § 102(b), U.S. Copyright Office](https://www.copyright.gov/title17/92chap1.html)
 - [Wizards of the Coast SRD downloads and licensing FAQ](https://www.dndbeyond.com/srd)
