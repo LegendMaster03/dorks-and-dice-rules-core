@@ -6,7 +6,7 @@ The rewrite starts on `feature/rules-core-rewrite`, independent of deployed `mai
 
 ## Why this is a rewrite
 
-The current service already completed the headless Rules Core / Rules Wiki split. This effort is **not** another frontend migration. It is an opportunity to replace or simplify backend internals that grew through successive imports, canonicalization migrations, and mechanics projections. Existing code is evidence about required behavior, not the architecture specification for the replacement.
+The current service already completed the headless Rules Core / Rules Wiki split. This effort is **not** another frontend migration and not merely a faster resolver. **Rules Core is becoming the authoritative host and execution engine of the Dorks & Dice custom TTRPG system.** Its own versioned ruleset defines primary mechanics, their applicability, and how imported external rules interact with the core and with each other. D&D 3e, 3.5e, 5e, 5.5e, and future third-party sources remain compatible without becoming the engine's hidden base ontology. The architectural definition is in [ruleset-first-target-architecture.md](ruleset-first-target-architecture.md). Existing code is evidence about required behavior, not the architecture specification for the replacement.
 
 Known investigation areas:
 
@@ -49,7 +49,7 @@ External contracts may be deliberately improved during this rewrite, because dep
 
 **Identity.** Package/distribution, physical representation, source-native entity, publication, canonical entity, source occurrence, and user-facing Rules Layer concept answer different questions. Shared canonical recognition never grants access to restricted source bodies. Name similarity alone never proves cross-edition mechanical equivalence.
 
-**Rules.** Global and campaign choices, publication, and source acquisition are distinct operations. Existing adjudication and historical provenance remain inspectable after migration. 3.x mechanics are not reinterpreted as 5e mechanics, or vice versa, merely to fit a common schema.
+**Rules.** The Dorks & Dice core ruleset is first-class, authoritative, versioned, and ultimately independently playable. It defines how imported rules can contribute, override, interact, or remain unresolved. Global and campaign choices, publication, and source acquisition are distinct operations. Existing adjudication and historical provenance remain inspectable after migration. 3.x mechanics are not reinterpreted as 5e mechanics, or vice versa, merely to fit a common schema.
 
 **Authorization.** Site identity and role/campaign authority remain separate from Rules Core source-content grants. Access filtering must apply at catalog, counts/facets, detail, history, comparison, resolution, and export boundaries. The internal Wiki delegation is not a substitute for per-user checks.
 
@@ -59,21 +59,21 @@ External contracts may be deliberately improved during this rewrite, because dep
 
 ## Incremental implementation sequence
 
-### Gate 0 — independently verified baseline
+### Gate 0 — ruleset specification and independently verified baseline
 
-Produce a machine-readable contract inventory and a deterministic test corpus. Capture current behavior, privacy boundaries, performance bottlenecks, dependency graph, and data counts/sizes without writing to production. Record unresolved questions and the proposed rewrite module boundaries. The acceptance suite must make regressions visible before replacement implementations begin.
+First distinguish the custom Dorks & Dice system's normative mechanics from imported rules and inherited house-rule policy. Specify the system's known/default procedures, intentionally unresolved design choices, compatible source interactions, and core-to-import/import-to-import adjudication policy. Produce a machine-readable contract inventory and a deterministic test corpus. Capture current behavior, privacy boundaries, performance bottlenecks, dependency graph, and data counts/sizes without writing to production. Record unresolved questions and the proposed rewrite module boundaries. The acceptance suite must make regressions visible before replacement implementations begin.
 
-### Gate 1 — replacement domain kernel and persistence
+### Gate 1 — Dorks & Dice ruleset kernel and persistence
 
-Build the source/identity/rules domain model with explicit invariants and persistence ownership. Use fresh disposable storage and migration tests. Do not migrate live records into a partially defined schema.
+Build the first-class versioned Dorks & Dice mechanics/ontology and its source/identity/rules domain model with explicit invariants and persistence ownership. Use fresh disposable storage and migration tests. Do not migrate live records into a partially defined schema.
 
 ### Gate 2 — ingestion, translation, reconciliation
 
-Introduce format adapters and lossless raw-source storage, versioned mechanical normalization, publication/entity identity reconciliation, and resumable parallel imports/backfills. Exercise multiple representations of the same material and adversarial ambiguous matches.
+Introduce format adapters and lossless raw-source storage, versioned mechanical interpretation into the core ontology, publication/entity identity reconciliation, core-to-import and import-to-import semantic relationships, and resumable parallel imports/backfills. Exercise multiple representations of the same material and adversarial ambiguous matches.
 
 ### Gate 3 — adjudication and effective resolution
 
-Implement deterministic published Rules Layer and campaign snapshots, update review, precedence, source visibility, and provenance. Prove that the same revision/context yields the same effective result.
+Implement core-system-governed composition and deterministic published Rules Layer and campaign snapshots, update review, precedence, source visibility, cross-source conflict handling, and provenance. Prove that the same revision/context yields the same effective result.
 
 ### Gate 4 — consumer and Wiki contracts
 
