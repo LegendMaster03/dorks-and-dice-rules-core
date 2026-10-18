@@ -92,19 +92,20 @@ Automated conversion must preserve semantic intent and meaningful mechanical dif
 
 **Status:** The **arithmetic-simplification preference** is a design guideline for evaluating other mechanics, not approval to replace all 3.x multipliers/divisions or remove general miss-chance, armor, damage and progression mechanisms. **Blinded Disadvantage and the native critical-stacking design are already decided separately**; other listed transformations need their own checks only where an actual conflict exists.
 
-### Arithmetic workload allocation — keep player math at the 5e level
+### Arithmetic simplicity and table discretion — 5e-style preference, not a requirement
 
-**Owner clarification (2026-10-18):** The target is the **same practical distribution of arithmetic as ordinary 5e play**, rather than a new rule that DMs must exclusively handle all multiplication or division. Using suitable 5e-style resolutions simplifies much of the 3.x math; when useful 3.x mechanics still require additional multiplication, division or percentage calculations, **the DM normally carries that extra work at the table** (or the digital tools calculate it). **Do not increase the arithmetic required of players beyond the level they typically handle in 5e.**
+**Owner clarification (2026-10-18):** Prefer the familiar, relatively simple arithmetic of 5e **where it can reasonably express a mechanic**; this is an **optional design heuristic, not a hard cap on player arithmetic or an enforced assignment of calculations to the DM**. Integrating useful 3.x mechanics may retain multipliers, division, fractions or percentage calculations where appropriate. Do not strip meaningful rules merely to hit a numerical simplicity target.
 
-**Table practice and implementation:**
-- **Players:** Continue making their ordinary attacks, checks, saves, damage rolls and straightforward additions, as well as any familiar simple calculations that the group's normal 5e practice already assigns to them. This policy does **not** forbid a player from halving or doubling damage where that is already routine.
-- **DM:** Handles or coordinates additional source-specific multipliers, division, rounding, percentage and combined-effect arithmetic that remains necessary after reasonable simplification. This keeps the extra 3.x complexity off players' ordinary turns, not off the ruleset.
-- **Rules Core and other digital tools:** Calculate the same native mechanics deterministically, expose the correct final modifiers/results, and leave the underlying rule definitions and rounding/stacking requirements intact.
-- **DM authority versus arithmetic:** Performing the calculation is **not** permission to improvise or change an established numerical rule; adjudication remains a separate responsibility.
+**Who performs the math is a table decision, as in 5e:**
+- The **DM may calculate** damage adjustments and more involved formulas, particularly when relevant monster traits are undisclosed or the DM prefers to handle them.
+- The **DM may instead share relevant monster damage-type properties**, such as resistance or vulnerability, and **allow players to calculate the adjusted damage**. Sharing that information is the DM's choice, not a mandatory disclosure rule.
+- **Players can perform** ordinary or advanced arithmetic whenever that suits the group's preferred style. Do not enforce a prohibition on player multiplication/division or a default requiring the DM to take over calculations beyond some complexity threshold.
+- **Rules Core and other digital tools** should apply the defined mechanical calculations consistently while supporting either DM-side or player-side workflows as authorized by the table's information-sharing choices. Do not reveal nonpublic creature traits simply to facilitate calculations, and do not mandate a role-based math restriction.
 
-**Example:** A player continues to roll weapon damage and apply familiar 5e arithmetic. If an imported advanced feature requires an additional fractional modifier or a complicated combination of effects, the DM or a tool resolves that extra calculation while the player uses the final result. If a table already has players halve damage for Resistance, this policy does not reassign that routine to the DM.
+**Example:** A player deals fire damage to a creature with fire Resistance. The DM can tell the player to halve the damage, or keep the trait private and report the damage taken after applying Resistance. Either way, the underlying rules produce the same result. Similar flexibility applies to the additional arithmetic of retained 3.x features.
 
-**Status:** This is a **5e-level player-math goal** and workload preference, not a mandatory role restriction, not a blanket removal of 3.x arithmetic, and not an increase in DM discretion. Continue simplifying source mechanics case by case, retaining calculations that meaningfully affect play.
+**Boundary:** This flexibility concerns **who knows the relevant properties and who performs the calculations**, **not who has authority to rewrite an otherwise established mechanical formula**. The native rules still specify the calculation and rounding where needed. Favor simplification when helpful, but do not enforce a player math ceiling, an exclusive DM responsibility or a mandatory disclosure practice.
+
 
 ### Cooperative play as a positive design goal
 
