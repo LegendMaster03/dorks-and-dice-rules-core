@@ -1,6 +1,6 @@
 # Dorks & Dice — native rules specification (pre-implementation)
 
-Status: **working game-design specification**, started 2026-10-09. This document records the owner's established gameplay decisions, proposed generalized rules, and unresolved decisions for review. It is **not authorization to implement**, replace the production Rules Core service, or treat draft procedures as approved rules.
+Status: **working game-design specification**, started 2026-10-09. This document records the owner's established gameplay decisions, proposed generalized rules, and unresolved decisions for review. It is **not authorization to implement**, merge, deploy, restore previously disabled public/tester Rules Core access, or treat draft procedures as approved rules.
 
 ## Mission and compatibility premise
 
@@ -244,7 +244,7 @@ Mechanic **eligibility, advancement progression, effect scaling, and prerequisit
 
 **To specify before engine work:** transition behavior when source data is silent; overlapping track effects; the semantics of paused versus terminated progression; effective level calculations for prestige spellcasting; effects of multiclassing on character-level grants; and whether a progression has a finite maximum. Do not presume every track supports indefinite advancement.
 
-Supersedes the *native-gameplay interpretation* of `docs/epic-content-modeling.md`, which documents the **legacy implementation's** epic-specific metadata. Do not delete or change that legacy document or its currently deployed behavior until migration requirements have been validated.
+Supersedes the *native-gameplay interpretation* of `docs/epic-content-modeling.md`, which documents the **legacy implementation's** epic-specific metadata. Keep that historical document available as evidence until its relevant design decisions and any retained data have been reviewed. This **does not** require a dual old/new runtime or deployment cutover.
 
 ## Core rules chapters to finish before implementation
 
@@ -590,7 +590,7 @@ The [3.5e combat-modifier table](https://www.d20srd.org/srd/combat/combatModifie
 | [1,20] with an applicable special cancellation rule | Dice add up to 21 | **Apply the explicit cancellation outcome** |
 | [1,20] → [7,14] → [4,13] | First two pairs cancel; third selects 4 | **Reroll twice, then select 4** |
 
-**Compatibility note:** The deployed/legacy Rules Core selector currently uses `abs(d20-10)`, keeps the first die when equally scored and reports `selectionTied`. Those were **implementation behavior**, not the adopted symmetric Dorks & Dice Emphasis rule; the new midpoint and cancellation handling supersede them for a future rewrite. Do **not** modify the currently deployed selector simply by editing this specification. The [existing consumer contract](../character-mechanics-consumer.md#d20-roll-selection-modes) describes that **legacy behavior**, not this newly approved native rule.
+**Compatibility note:** The old Rules Core selector code uses `abs(d20-10)`, keeps the first die when equally scored and reports `selectionTied`. Those were **legacy implementation behavior**, not the adopted symmetric Dorks & Dice Emphasis rule; the corrected midpoint and cancellation handling govern implementation of the rewrite. This specification change does **not itself authorize gameplay code edits**. The [old consumer contract](../character-mechanics-consumer.md#d20-roll-selection-modes) records the earlier behavior, not the newly approved native rule.
 
 **Effects and interactions:** Attributing an ability to the attacker or defender helps determine whether to modify that actor's roll or the target's status/AC, but does **not** mechanically prescribe Advantage, Disadvantage, or Emphasis for every buff/debuff. A native feature may apply Emphasis to an eligible attack, check or save for more extreme results without guaranteeing a higher or lower roll. Defending characters can likewise use Emphasis on applicable saving throws/checks when legitimately granted. An effect should not double-count a 5e defender condition's Advantage and its translated native AC penalty.
 
@@ -666,6 +666,8 @@ Obtain the owner's description of (1) what counts as a maneuver, (2) what makes 
 
 ## Pre-implementation acceptance gate
 
+**Operational scope (owner correction, 2026-10-18):** Rules Core has had public/tester access disabled for about a month; **Block Initiative is the only public/tester-accessible Tool** and uses Rules Core only for optional stat-block autofill and current condition lookup. **Character Sheet is dev-only** and requires much more comprehensive Rules Core mechanics, but there is no live dual-service continuity requirement. This section governs design approval for the **native gameplay kernel**; inventorying and testing the narrow Block Initiative catalog/stat-block read contract does **not** require completing or enabling all combat rules. No parallel runtime or cutover is planned; details are in [foundation and in-place integration checkpoints](foundation-and-cutover-gates.md).
+
 Do not begin the engine, persistence, or importer rewrite until the owner has reviewed an independently intelligible **native gameplay specification** that:
 
 - distinguishes settled, proposed, and open mechanics without falsely upgrading implementation accidents into rules;
@@ -677,4 +679,4 @@ Do not begin the engine, persistence, or importer rewrite until the owner has re
 - uses Pathfinder and other systems for **subsequent critical comparison**, without requiring external game rules to supply unknown core procedures;
 - includes owner approval of the gameplay baseline **before** an implementation design or code phase starts.
 
-Architecture, database, performance tests, and legacy-to-new migration remain later tasks. They may be inventoried for safety during Phase 0 but should not dictate game design.
+Architecture, database design, performance validation and **consumer-scoped integration** are later implementation tasks. The old Rules Core is already hidden, so **there is no mandatory parallel implementation, old-to-new live cutover, or global deployment switch**. Review existing data and permissions before any changes; these safety obligations should not dictate gameplay design.
