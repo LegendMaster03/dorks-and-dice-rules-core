@@ -484,7 +484,27 @@ The five-system [combat comparison](combat-system-comparison-3x-5x-pf1.md) docum
 
 **Tradeoff to test rather than dismiss:** Two resolution stages give armor, agility and physical resistance distinct roles, but they add a roll and can make an ordinary grapple significantly less likely to succeed than either source edition's modern one-roll procedure. Test novice play speed, basic-character viability, overall success probabilities, and how source-granted Improved Grapple / other features interact before final approval.
 
-**Status:** **Owner preference to preserve Touch AC in ordinary grapple initiation is recorded; the exact grapple resolution and whether the two-stage candidate is adopted are not yet approved.** Do not invent a universal maneuver formula from this example; apply legacy defensive-role preservation **case by case**, including distinct uses of Flat-Footed AC.
+**Status update (2026-10-18):** The owner subsequently chose the **3.x Grapple procedure as the native baseline**, including **Touch AC contact followed by an opposed grapple check**, with **Escape Artist** (Dexterity) as the skill-based escape option rather than substituting Athletics or Acrobatics. See the adopted core and remaining integration questions below. The prior hybrid check/save candidates are no longer the preferred default. This does not invent a universal maneuver formula; apply legacy defensive-role preservation **case by case**, including distinct uses of Flat-Footed AC.
+
+### Native Grapple baseline — 3.x procedure with Escape Artist
+
+**Owner decision (2026-10-18):** Use **D&D 3.x Grapple as the native Dorks & Dice starting procedure**, rather than converting it wholesale to the 2014/2024 5e Athletics/Acrobatics or saving-throw methods. Preserve **Escape Artist** as an individually meaningful Dexterity-based skill and as the designated **skill-based escape from Grapple**. Do **not** replace Escape Artist with Acrobatics merely because both are Dexterity-based, and do **not** substitute Strength (Athletics) for the 3.x opposed grapple check. Athletics remains a separate skill/competency with its own functions.
+
+**Established native procedure — source-grounded common core:**
+1. **Initiate:** Attempt a qualifying melee touch attack **against Touch AC** to grab the target, with the native action/attack cost and provocation policy applied.
+2. **Establish a hold:** On successful contact, resolve an **opposed grapple check**, reflecting combat ability, Strength, and special size modifiers (3.5e source: **BAB + Strength modifier + special grapple-size modifier**). Success initiates Grapple; contact alone is insufficient.
+3. **Escape by force:** Use an opposed **grapple check** against the grappler. 3.5e permits this **in place of an attack**; preserve that as the source-based timing to map into the eventual unified attack economy.
+4. **Escape by technique:** Use a **Dexterity-based Escape Artist check** opposed by the holder's grapple check; in 3.5e this **requires a standard action**. Escape Artist is subject to an **armor check penalty** in its 3.5e source profile, which illustrates that retaining Touch AC does not make armor entirely irrelevant to grappling.
+5. **Other grapple actions:** Use the 3.x repertoire (e.g., maintain/move, damage, pin, break a pin, attack under restrictions, join an existing grapple) as the **reference for native capability**, while explicitly reconciling their costs, condition consequences, spacing, and source-authorized feature exceptions with the one Dorks & Dice combat system.
+
+**Integration decisions that are *not* automatically settled by choosing 3.x:**
+- **Opportunity attacks and feats:** 3.5e initiating grapple provokes an opportunity attack unless a specific exception applies (e.g., Improved Grapple); the native ordinary trigger and Reaction consumption rules remain open. Do not automatically add new Reactions.
+- **Shared positioning:** 3.5e requires the initiating grappler to enter the target's occupied space to maintain the hold. Verify how this interacts with native occupied-space movement, larger creatures, and the already adopted flexible movement model.
+- **Condition semantics and other costs:** Specify the exact shared Grappled/Pinned consequences, nonlethal damage, initial unarmed damage, constraints on casting and attacking, tie/size handling, multiple grapplers, and duration/escape costs before calling the full procedure complete. Avoid silent 5e-style condition substitution.
+- **Cross-edition characters:** A character importing 5e Acrobatics proficiency or a 5e grappling-related feature may need a semantic conversion for its **grapple-escape capability**, **without globally equating Acrobatics and Escape Artist or creating an unrestricted duplicate bonus**. The mapping and effective grant remain to be decided.
+- **3.0 versus 3.5 details:** The shared 3.x concept is approved as the baseline; use 3.5e as a concrete comparison reference, but identify genuine 3.0/3.5 differences before fixing native timing and side effects.
+
+**Scope of approval:** The owner has selected **3.x Grapple with Touch AC, opposed grapple checks and Escape Artist escapes**. This decision supersedes the earlier suggestion to select a 5e-style saving throw/contest as the native hold procedure. It is **not** blanket approval of every 3.5e incidental movement/provocation rule, a wholesale return to the 3.5e action economy, or an authorization to change gameplay code before Gate 0 owner review. Sources: [3.5 Grapple](https://www.d20srd.org/srd/combat/specialAttacks.htm#grapple) and [Escape Artist (Dex; armor check penalty)](https://www.d20srd.org/srd/skills/escapeArtist.htm).
 
 ## Combat maneuvers — owner-ideas-first design worksheet
 
