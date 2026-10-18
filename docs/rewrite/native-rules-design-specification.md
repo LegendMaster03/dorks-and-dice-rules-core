@@ -4,6 +4,8 @@ Status: **working game-design specification**, started 2026-10-09. This document
 
 ## Mission and compatibility premise
 
+**Owner implementation sequence (2026-10-18):** Finish and approve the **general Dorks & Dice foundation and basic mechanical behavior**, build that foundation, then take **one native rules system at a time through design, implementation, cross-edition conversion and testing**. This **supersedes the earlier requirement to finish the entire independently playable ruleset before *any* engine code**. The independent full rulebook is completed progressively. When stat-block-related systems are sufficiently implemented, **internal database records and external sourced stat blocks** feed a **common, permission-filtered native projection**, and every *imported* mechanic must use approved Dorks & Dice conversion. Established automatic mappings reduce recurring Rules Lawyer review; unsupported or genuinely ambiguous mappings remain explicit.
+
 Dorks & Dice is a distinct, authoritative tabletop RPG system. Rules Core will host and evaluate that system. D&D 3e, D&D 3.5e, 5e (2014), and 5.5e (2024) are *compatibility inputs*, not alternate hidden base systems. **The intended experience is analogous to Pathfinder First Edition's compatibility with D&D 3.5e, with Dorks & Dice providing automated translation rather than relying on manual conversion alone.** Pathfinder 1e is a potential additional compatibility input, not yet a promised importer or incorporated default ruleset.
 
 Automated conversion must preserve semantic intent and meaningful mechanical differences. A converted source rule has a Dorks & Dice concept and an implementation profile; known equivalents and compatible additive content may be mapped automatically, while ambiguous or contradictory rules need visible adjudication. Full source provenance, exact editions, allowed uses, and licenses remain intact. Importing an option does not automatically activate it as a native/default Dorks & Dice mechanic.
@@ -242,13 +244,13 @@ Mechanic **eligibility, advancement progression, effect scaling, and prerequisit
 
 “Epic” is **source-native terminology, not the name of Dorks & Dice's second band or a separate progression algorithm**. Historical Epic Feats/Epic Boons remain feats; an Epic Spell remains a spell; class continuations remain continuations of the relevant progression; independently selectable higher-level prestige classes remain prestige classes. Original terms and eligibility requirements remain in source provenance. For example, a 2024 Epic Boon available from a level-19 requirement is not silently moved to level 21 due to its label.
 
-**To specify before engine work:** transition behavior when source data is silent; overlapping track effects; the semantics of paused versus terminated progression; effective level calculations for prestige spellcasting; effects of multiclassing on character-level grants; and whether a progression has a finite maximum. Do not presume every track supports indefinite advancement.
+**To specify before implementing native Level Band advancement and its conversion slice** (not before writing the shared foundation): transition behavior when source data is silent; overlapping track effects; the semantics of paused versus terminated progression; effective level calculations for prestige spellcasting; effects of multiclassing on character-level grants; and whether a progression has a finite maximum. The foundation must represent generic track identities and explicit unknowns, but it must not presume every track supports indefinite advancement.
 
 Supersedes the *native-gameplay interpretation* of `docs/epic-content-modeling.md`, which documents the **legacy implementation's** epic-specific metadata. Keep that historical document available as evidence until its relevant design decisions and any retained data have been reviewed. This **does not** require a dual old/new runtime or deployment cutover.
 
-## Core rules chapters to finish before implementation
+## Core rules chapters to complete progressively by native subsystem
 
-For each chapter, recover the existing decision text, describe how the game is intended to work in plain rules language, supply at least one play example and one cross-edition conversion example, and mark every unresolved rule. Chapters should include:
+**These chapters are the eventual complete standalone Dorks & Dice game rules, not a checklist that must all finish before the initial native kernel can be written.** Recover already established decisions before defining behavior anew. For **each subsystem before implementing it**, document the native rules in ordinary language, at least one play example, representative source-to-native conversion examples, and unresolved/unsupported interactions. Then implement both the native mechanics and versioned converter tests in that subsystem slice. Chapters include:
 
 1. **Character creation and identity:** ability creation/changes; species/subspecies; backgrounds; starting class; qualifications; equipment; starting resources.
 2. **Advancement:** total and component level tracks; Level Bands and transitions; multiclassing; subclass, prestige and sidekick-like structures; class features; feats; prerequisites; XP and other eligible advancement methods.
@@ -664,19 +666,37 @@ Capture the owner's intended rules for each candidate maneuver through common qu
 
 Obtain the owner's description of (1) what counts as a maneuver, (2) what makes different maneuvers use shared or distinct resolution, (3) how training or features improve them, and (4) the intended consequences. Record these **before** presenting Pathfinder or D&D formulas. It is acceptable to leave numeric tuning and exotic cases open while agreeing on the underlying procedure structure.
 
-## Pre-implementation acceptance gate
+## Native foundation and per-subsystem acceptance checkpoints
 
-**Operational scope (owner correction, 2026-10-18):** Rules Core has had public/tester access disabled for about a month; **Block Initiative is the only public/tester-accessible Tool** and uses Rules Core only for optional stat-block autofill and current condition lookup. **Character Sheet is dev-only** and requires much more comprehensive Rules Core mechanics, but there is no live dual-service continuity requirement. This section governs design approval for the **native gameplay kernel**; inventorying and testing the narrow Block Initiative catalog/stat-block read contract does **not** require completing or enabling all combat rules. No parallel runtime or cutover is planned; details are in [foundation and in-place integration checkpoints](foundation-and-cutover-gates.md).
+**Owner correction (2026-10-18):** Gate 0 no longer means **completing the entire gameplay ruleset before beginning the first Rules Core implementation**. Begin with an approved **general rules foundation plus basic operational mechanics**. All remaining gameplay systems are subsequently designed and implemented in vertical slices, **with import conversion built into each slice**, rather than leaving conversion and integration until the end. See [foundation and in-place integration checkpoints](foundation-and-cutover-gates.md).
 
-Do not begin the engine, persistence, or importer rewrite until the owner has reviewed an independently intelligible **native gameplay specification** that:
+### Foundation acceptance — before first native kernel code
 
-- distinguishes settled, proposed, and open mechanics without falsely upgrading implementation accidents into rules;
-- replaces native epic-only level progression with Level Bands and explicit track/transition semantics;
-- states an initial coherent combat-maneuver design in the owner's own terminology, including at least grapple and one movement/control maneuver;
-- covers a **playable end-to-end loop**: character creation → advancement → basic checks → turn/combat → conditions/damage → recovery → exploration;
-- states automatic conversion scope/fidelity rules for 3e, 3.5e, 2014 5e and 2024 5e, with PF1e as a possible later input;
-- identifies remaining decisions by priority and explicitly records any intentional omissions/optional rules;
-- uses Pathfinder and other systems for **subsequent critical comparison**, without requiring external game rules to supply unknown core procedures;
-- includes owner approval of the gameplay baseline **before** an implementation design or code phase starts.
+- Recover the relevant established Dorks & Dice design decisions and write stable native mechanic/procedure/actor/feature/condition/effect/defense/roll identities. Source structures are translation inputs, not the foundation's type system.
+- Define usable basic native procedures and fixtures: an ordinary check, the approved Normal/Advantage/Disadvantage/Emphasis selection rules, a simple action/effect result, source/permission boundaries and an explicit unsupported conversion case. Keep deeper timing, casting and advancement edge cases unresolved until their responsible system.
+- Specify baseline evaluation, state ownership, versioning and permissions sufficient for a **real executable base**; the game must grow into the documented complete play loop rather than try to implement every chapter in advance.
+- Obtain explicit owner acceptance of this **foundation scope** before writing the native gameplay kernel. This does not itself authorize merge, deploy, data reset or access restoration.
 
-Architecture, database design, performance validation and **consumer-scoped integration** are later implementation tasks. The old Rules Core is already hidden, so **there is no mandatory parallel implementation, old-to-new live cutover, or global deployment switch**. Review existing data and permissions before any changes; these safety obligations should not dictate gameplay design.
+### Subsystem acceptance — before implementing that subsystem
+
+For each chapter/system, apply the same repeatable cycle:
+
+1. Recover the owner's previously established mechanics and settle only the disagreements necessary for that system, documenting the native ordinary/default procedure, authorized depth and source-specific extensions.
+2. Write representative **native, source-edition, cross-edition and mixed-context acceptance examples**. Identify which conversions are equivalent, intentionally adapted, additive, mutually exclusive, unsupported or require adjudication.
+3. Implement the native mechanics and the corresponding supported source adapters/converters in a **single verified development slice**. Preserve exact source/edition/physical-source provenance, license, original content and grants; imported content cannot quietly replace native defaults.
+4. Apply accepted **reusable conversion mappings automatically** across applicable entities, not only the instance that originally taught the mapping. Queue actual semantic ambiguity, incompatible procedures or policy choices for Rules Lawyer review. A name match, unverified approximation or model confidence score **does not** authorize silent equivalence.
+5. Keep unconverted/partially converted material visible to permitted source-review contexts, but do not execute guessed behavior or describe a partly mapped stat block as complete. Only verified translated mechanics become eligible for approved, effective native rule composition.
+
+### Stat-block/catalog integration — when relevant native systems are complete
+
+- Internally **native-authored stat blocks** already speak Dorks & Dice; internally **stored imported stat blocks** and **externally retrieved stat blocks** must pass through the same source-preserving, versioned conversion process.
+- Expose one **effective Dorks & Dice stat-block projection** to callers, covering supported creature statistics, attacks, traits, damage, conditions, capabilities and spells; explicitly represent unsupported members when a source record exceeds currently implemented subsystems.
+- Reapply improved conversion rules to eligible source records without duplicating physical-source identities, inventing upstream revisions or discarding deliberate human adjudications.
+- **Only after the relevant stat-block conversion pipeline works**, reconnect Block Initiative's optional monster/condition lookup and auto-fill; initiative/manual encounter operation remains independent and its current public/tester access must not automatically re-enable the hidden Rules Core.
+- Character Sheet stays developer-only and may consume completed native mechanics slices progressively; Rules Wiki remains an authoring/reference consumer via its private permissions boundary.
+
+### Full-system acceptance — eventually
+
+A complete native Dorks & Dice system ultimately must support character creation → advancement → checks → combat → conditions/damage → recovery → exploration, with magic, equipment, creature rules and source interoperability, **without silently falling back to an external edition**. This is a **completion goal**, not a prerequisite for the first valid foundation implementation. Optional unsupported imports remain honestly identified rather than treated as completed conversions.
+
+No parallel old/new Rules Core service or cutover is required. Review permissions, real stored data and deployment changes as ordinary safety requirements, not as architecture for an obsolete legacy runtime.
