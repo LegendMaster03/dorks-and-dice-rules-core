@@ -92,17 +92,19 @@ Automated conversion must preserve semantic intent and meaningful mechanical dif
 
 **Status:** The **arithmetic-simplification preference** is a design guideline for evaluating other mechanics, not approval to replace all 3.x multipliers/divisions or remove general miss-chance, armor, damage and progression mechanisms. **Blinded Disadvantage and the native critical-stacking design are already decided separately**; other listed transformations need their own checks only where an actual conflict exists.
 
-### Simplified defaults and DM adjudication boundary
+### Arithmetic workload allocation — simpler player math, remaining calculations for DM or tools
 
-**Owner clarification (2026-10-18):** The purpose of using simpler 5e-style resolutions where suitable is **not to eliminate every difference in source mechanics**. It **reduces the ordinary table workload** and leaves the remaining uncommon, context-sensitive complications to **DM adjudication**, consistent with the DM's already established authority over unusual situations and campaign rules. Prefer a playable, immediately usable native baseline over forcing every player to study formulas for rare edge cases.
+**Owner correction (2026-10-18):** The benefit of adopting simpler 5e-style resolutions where suitable is that **players perform less multiplication and division**. Some numerical calculations remain necessary because the mechanics cannot all be simplified without losing their meaning; **the DM handles those remaining calculations in tabletop play**, and Rules Core/other digital tools can perform the same calculations automatically. This is **not** a proposal to transfer the authority to define ordinary mechanical outcomes to the DM.
 
-**Boundary between DM discretion and missing rules:**
-- **Ordinary repeatable interactions are ruleset responsibilities.** An authorized feat or maneuver's known action cost, targeting, conditions, damage, defense, and standard resolution must be consistent at different tables unless the DM explicitly overrides the native rule. The DM should not have to invent the basic effect of a published native ability each time.
-- **Exceptional or improvised situations may be adjudicated by the DM.** Unusual environmental interactions, unexpected combinations lacking a defined procedure, edge cases beyond native scope, and deliberate campaign variations are legitimate judgment calls. Preserve any known source restrictions and established Dorks & Dice rules when selecting a fair outcome.
-- **Mechanical import ambiguity is not automatically a free-form DM ruling.** When automated source conversion can not establish a safe equivalent, record the ambiguity, affected source grant and relevant alternatives so the DM/Rules Lawyer can make an informed decision. Do not silently guess, delete a legitimate ability, or impose an unreviewed numerical mapping.
-- **Tools support, rather than replace, the DM.** The shared engine should handle settled cases deterministically and allow explicit, attributable DM/campaign decisions for the rest, without treating every unusual outcome as a new global default.
+**Responsibility and implementation:**
+- **Player-facing play:** Prefer clear, quick operations such as standard roll modes, ordinary arithmetic and settled simplified rules where they fit. Players should not need to calculate a percentage, divide a damage modifier, or resolve a multi-step formula merely to take a routine turn if that work can be avoided or moved to the DM/tool.
+- **DM at a physical table:** Apply the **defined native rule** for remaining multipliers, fractions, damage adjustments, rounding and other calculations. The DM performs or oversees the arithmetic; the numerical result is **not a discretionary improvisation** unless a separate rule actually grants that discretion.
+- **Rules Core and other digital consumers:** Use a common deterministic calculation and source-defined rounding/stacking procedure, so the digital result agrees with the DM's manual calculation. Player interfaces can display the resolved total and relevant effects without forcing every player to reproduce the computation.
+- **Actual DM discretion remains separate:** Normal judgment over unusual circumstances, overrides and campaign-specific rulings is not expanded merely because the DM is doing the math.
 
-**Status:** This is a division-of-responsibility design direction, **not** a universal instruction to convert remaining difficult arithmetic to ad hoc rulings or a relaxation of the pre-implementation requirement to define a complete playable native core.
+**Example:** A native Resistance rule may still require the DM to **halve damage**; the player only needs the final damage result to update their character. This keeps the arithmetic required by the mechanic without requiring everyone at the table to perform it.
+
+**Status:** This is a **division of arithmetic workload**, not a change in which person may choose rule outcomes or a blanket authorization to delete fractional source mechanics. Continue evaluating simplifications individually under the existing reuse-first principle.
 
 ### Cooperative play as a positive design goal
 
