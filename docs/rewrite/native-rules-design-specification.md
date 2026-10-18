@@ -506,6 +506,29 @@ The [3.5e combat-modifier table](https://www.d20srd.org/srd/combat/combatModifie
 
 **Status:** The **attacker-versus-defender attribution principle** is accepted as a design direction. No blanket conversion table, specific condition penalty, universal Advantage substitution, or finalized numeric stacking rule is approved by this principle alone. Decide effects case by case and test attack-side buffs, defender debuffs, and their genuinely independent combination with ordinary/Touch/Flat-Footed AC.
 
+### Emphasis within attacker/defender effect attribution
+
+**Owner reminder (2026-10-18):** **Emphasis** must remain part of the ordinary d20 roll-mode repertoire when classifying attacker-facing buffs/debuffs and defender-facing conditions. It is **neither Advantage nor Disadvantage** and is **not an AC bonus/penalty or condition by itself**.
+
+**Existing, verified Rules Core d20 selection semantics** (see [consumer contract](../character-mechanics-consumer.md#d20-roll-selection-modes) and `src/RulesCore.Domain/Rules/CharacterMechanics.cs`):
+
+| Mode | Roll procedure |
+| --- | --- |
+| Normal | One d20, use the result |
+| Advantage | Two d20s, use the higher |
+| Disadvantage | Two d20s, use the lower |
+| **Emphasis** | Two d20s, use the result **furthest from 10** |
+
+**How it fits the design:** Attributing an effect to the **attacker** versus the **defender** informs whether it is represented as a roll-side modifier/mode or as a defender-side condition/AC change; it does **not** mean that every attacker buff grants Advantage or that every attacker debuff grants Disadvantage. A specific native ability or rule may legitimately prescribe **Emphasis** on an attack, saving throw, or check when the desired effect is to make the roll's outcome more extreme, rather than reliably favorable or unfavorable. The same mode can be applied to a defender's **own saving throw or check** if an applicable rule grants it. Preserve ability-specific scope and the ordinary per-roll permissions; **do not automatically apply Emphasis to every high-stakes action, conditions or critical escalation**.
+
+**Potential follow-up design questions, not approved changes:**
+- **Competing roll modes:** How do separate grants of Advantage, Disadvantage and Emphasis interact if they apply to the same d20? They are distinct *selection modes* in the current implementation, not automatically cumulative extra dice. Resolve precedence/cancellation without inventing an unapproved combo.
+- **Mode symmetry:** Existing Emphasis selects the result furthest from **10**, not 10.5; consequently a pair of **1 and 20 selects 20**. This is current verified behavior, not proof of intended symmetry or an authorization to change it. The existing selector treats symmetric-distance pairs such as 7 and 13 as ties, deterministically selecting the first generated die and reporting `selectionTied=true` rather than silently creating a game-rule tiebreaker.
+- **Critical isolation:** Subsequent critical escalation d20s are already established to be **straight and unmodified**, without Emphasis or other roll modes, even if the triggering attack used Emphasis.
+- **Interaction with statuses:** If a 5e condition's attack Advantage is translated to a defender-side AC/condition penalty, do not retain the same Advantage again or silently change it to Emphasis. Independently granted attack-side Emphasis and defender penalties may coexist only if the native roll/stacking policy actually permits them.
+
+**Status:** The **presence and existing semantics** of Emphasis are established. Its effect-specific grants and interaction/precedence with other roll modes in the new native system remain **case-by-case design questions**, not an automatic global mapping from a condition.
+
 ### Preserve the mechanical role of legacy AC categories — grapple contact example
 
 **Owner direction (2026-10-18):** Use the existing **ordinary, Touch and Flat-Footed AC** categories purposefully within native Dorks & Dice mechanics, not only as dormant compatibility data. Where 3.x used a particular defense for a physically meaningful step, **prefer keeping that defense even when the rest of the mechanic is redesigned toward a simpler common rules procedure**. This is a case-by-case design principle, not a blanket rule that every maneuver uses Touch AC or that every import gains a new roll.
