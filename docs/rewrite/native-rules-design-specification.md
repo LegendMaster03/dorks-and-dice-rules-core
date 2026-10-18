@@ -92,6 +92,18 @@ Automated conversion must preserve semantic intent and meaningful mechanical dif
 
 **Status:** The **arithmetic-simplification preference** is a design guideline for evaluating other mechanics, not approval to replace all 3.x multipliers/divisions or remove general miss-chance, armor, damage and progression mechanisms. **Blinded Disadvantage and the native critical-stacking design are already decided separately**; other listed transformations need their own checks only where an actual conflict exists.
 
+### Simplified defaults and DM adjudication boundary
+
+**Owner clarification (2026-10-18):** The purpose of using simpler 5e-style resolutions where suitable is **not to eliminate every difference in source mechanics**. It **reduces the ordinary table workload** and leaves the remaining uncommon, context-sensitive complications to **DM adjudication**, consistent with the DM's already established authority over unusual situations and campaign rules. Prefer a playable, immediately usable native baseline over forcing every player to study formulas for rare edge cases.
+
+**Boundary between DM discretion and missing rules:**
+- **Ordinary repeatable interactions are ruleset responsibilities.** An authorized feat or maneuver's known action cost, targeting, conditions, damage, defense, and standard resolution must be consistent at different tables unless the DM explicitly overrides the native rule. The DM should not have to invent the basic effect of a published native ability each time.
+- **Exceptional or improvised situations may be adjudicated by the DM.** Unusual environmental interactions, unexpected combinations lacking a defined procedure, edge cases beyond native scope, and deliberate campaign variations are legitimate judgment calls. Preserve any known source restrictions and established Dorks & Dice rules when selecting a fair outcome.
+- **Mechanical import ambiguity is not automatically a free-form DM ruling.** When automated source conversion can not establish a safe equivalent, record the ambiguity, affected source grant and relevant alternatives so the DM/Rules Lawyer can make an informed decision. Do not silently guess, delete a legitimate ability, or impose an unreviewed numerical mapping.
+- **Tools support, rather than replace, the DM.** The shared engine should handle settled cases deterministically and allow explicit, attributable DM/campaign decisions for the rest, without treating every unusual outcome as a new global default.
+
+**Status:** This is a division-of-responsibility design direction, **not** a universal instruction to convert remaining difficult arithmetic to ad hoc rulings or a relaxation of the pre-implementation requirement to define a complete playable native core.
+
 ### Cooperative play as a positive design goal
 
 **Owner clarification:** The design must support **a whole table of basic players, a whole table of advanced players, and any mixture of the two**. The earlier specialist-plus-helpers framing was too narrow: standard initiative, optional Block Initiative and Loot Tavern Harvesting & Crafting Lite all leave room for parties to coordinate without requiring a designated split between an expert and casual participants. Block Initiative changes the opportunities for within-block planning, but **must not be presumed active**; harvesting offers separate skilled roles and helper contributions with its own actual participation rules. These are different cooperation mechanisms, not a generic helper bonus or pooled action allowance.
