@@ -487,6 +487,25 @@ The [3.5e combat-modifier table](https://www.d20srd.org/srd/combat/combatModifie
 
 **Current status:** **Conceptual direction for case-by-case review**. No new status-specific native penalties, advantage conversion, blanket Flat-Footed assignment, or touch-targeting rule is approved by this note alone.
 
+### Attacker versus defender effect ownership — representation principle
+
+**Owner direction (2026-10-18):** When reconciling otherwise similar 3.x and 5.x attack/defense effects, **first distinguish which character the ability or condition actually affects**. Prefer to represent an **attacker-facing improvement** as an appropriate attack-side roll benefit (such as Advantage), while a **defender-facing impairment** may instead be represented through a native status, lost defensive component, Flat-Footed applicability, or AC adjustment. This explains how to preserve the useful distinction between improving someone's attack and undermining another creature's defense **within the same native combat rules**. Apply it to each effect's actual scope, rather than treating Advantage and reduced AC as interchangeable formulas.
+
+| Effect's primary mechanical subject | Preferred design direction | Scope guardrail |
+| --- | --- | --- |
+| **Attacker gains accuracy or an offensive edge** | Attack-side Advantage, another applicable roll mode or attack modifier | A one-character or one-target attack buff is **not** a global reduction in the opponent's AC |
+| **Defender loses defensive capability** | Native condition/status, loss of applicable Dexterity/dodge defense, targeted AC reduction or other specifically justified status consequence | A creature's debuff may be attacker-relative, duration-limited or limited to particular attack types; **do not universally apply Flat-Footed AC** without checking the condition |
+| **Defender gains protection** | AC/defensive bonus or another applicable defensive rule | Avoid changing every attacker's roll mode when the benefit genuinely belongs to the defender |
+| **Attacker suffers an offensive impairment** | Disadvantage, another roll mode or an attack penalty where warranted | Do not automatically increase the target's AC against *all* other attackers |
+
+**Cause and scope are more important than syntax:** Some 5e effects are **worded** as “attacks against this creature gain Advantage” but are **caused by a condition or exposure on that creature**. Conversely, a feature can give one attacker Advantage **against one particular target** without reducing that target's global AC. Record the source, recipient, affected attack(er)s, duration, trigger and actual mechanical outcome before choosing a native representation. Effects that are already functionally identical may map directly, without rewriting them.
+
+**Do not double count equivalent consequences:** Translating a single 5e defender-impairing condition into native defensive penalties should not automatically preserve its old attack-side Advantage **as an extra independent bonus**. Distinct independently acquired attack buffs and target debuffs **may** coexist under ordinary native stacking and roll-selection rules; they are not prohibited merely because both improve hit probability. Preserve source-authorized exceptions and actual typed modifiers where they matter, rather than replacing every bonus with Advantage.
+
+**Touch AC is a different axis:** Whether a particular incoming attack requires **Touch AC** is normally a property of that attack or effect (e.g., a qualifying touch spell or grapple contact). The defender's condition can further alter the effective defense, but a defender debuff does **not** automatically convert an ordinary hit into a Touch attack. Combined touch and lost-Dexterity defense must still calculate correctly.
+
+**Status:** The **attacker-versus-defender attribution principle** is accepted as a design direction. No blanket conversion table, specific condition penalty, universal Advantage substitution, or finalized numeric stacking rule is approved by this principle alone. Decide effects case by case and test attack-side buffs, defender debuffs, and their genuinely independent combination with ordinary/Touch/Flat-Footed AC.
+
 ### Preserve the mechanical role of legacy AC categories — grapple contact example
 
 **Owner direction (2026-10-18):** Use the existing **ordinary, Touch and Flat-Footed AC** categories purposefully within native Dorks & Dice mechanics, not only as dormant compatibility data. Where 3.x used a particular defense for a physically meaningful step, **prefer keeping that defense even when the rest of the mechanic is redesigned toward a simpler common rules procedure**. This is a case-by-case design principle, not a blanket rule that every maneuver uses Touch AC or that every import gains a new roll.
