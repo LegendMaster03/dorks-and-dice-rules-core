@@ -1,0 +1,15 @@
+{
+  "id": "competency.perform",
+  "kind": "competency-family",
+  "name": "Perform",
+  "independentlyRankedChildren": true,
+  "defaultProfile": {
+    "defaultAbility": "charisma",
+    "supportsRanks": true,
+    "supportsClassSkillState": true,
+    "supportsTrainingState": true,
+    "trainedOnly": false,
+    "armorCheckPenaltyApplies": false
+  },
+  "baselineStatus": "reviewed-family-default; child catalog remains incomplete"
+}

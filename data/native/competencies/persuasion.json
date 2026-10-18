@@ -1,0 +1,9 @@
+{
+  "id": "competency.persuasion",
+  "kind": "competency",
+  "name": "Persuasion",
+  "nativeSkill": "skill.persuasion",
+  "reviewedHistoricalAliases": [
+    "Diplomacy"
+  ]
+}

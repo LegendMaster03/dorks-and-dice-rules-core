@@ -1,0 +1,9 @@
+{
+  "id": "competency.religion",
+  "kind": "competency",
+  "name": "Religion",
+  "nativeSkill": "skill.religion",
+  "reviewedHistoricalAliases": [
+    "Knowledge (Religion)"
+  ]
+}

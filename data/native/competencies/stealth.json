@@ -1,0 +1,15 @@
+{
+  "id": "competency.stealth",
+  "kind": "competency",
+  "name": "Stealth",
+  "nativeSkill": "skill.stealth",
+  "composite": {
+    "operation": "arithmetic-mean",
+    "components": [
+      "competency.hide",
+      "competency.move-silently"
+    ],
+    "rounding": "truncate-toward-zero",
+    "modifierPolicy": "apply component-targeted modifiers to components before the mean; apply parent-targeted modifiers only afterward"
+  }
+}

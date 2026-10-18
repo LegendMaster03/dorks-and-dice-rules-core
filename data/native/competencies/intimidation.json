@@ -1,0 +1,6 @@
+{
+  "id": "competency.intimidation",
+  "kind": "competency",
+  "name": "Intimidation",
+  "nativeSkill": "skill.intimidation"
+}

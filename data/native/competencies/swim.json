@@ -1,0 +1,8 @@
+{
+  "id": "competency.swim",
+  "kind": "competency",
+  "name": "Swim",
+  "independentRankedState": true,
+  "nativeSkill": null,
+  "baselineStatus": "reviewed-granular-competency; further mechanics deferred"
+}

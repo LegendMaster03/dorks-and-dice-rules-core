@@ -1,0 +1,8 @@
+{
+  "id": "competency.listen",
+  "kind": "competency",
+  "name": "Listen",
+  "independentRankedState": true,
+  "nativeSkill": null,
+  "baselineStatus": "reviewed-granular-competency; further mechanics deferred"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "competency.insight",
+  "kind": "competency",
+  "name": "Insight",
+  "nativeSkill": "skill.insight",
+  "reviewedHistoricalAliases": [
+    "Sense Motive"
+  ]
+}

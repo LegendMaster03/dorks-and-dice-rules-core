@@ -1,0 +1,9 @@
+{
+  "id": "competency.sleight-of-hand",
+  "kind": "competency",
+  "name": "Sleight of Hand",
+  "nativeSkill": "skill.sleight-of-hand",
+  "reviewedHistoricalAliases": [
+    "Pick Pocket"
+  ]
+}

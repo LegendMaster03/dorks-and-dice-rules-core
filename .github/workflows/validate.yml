@@ -22,11 +22,9 @@ jobs:
           python3 - <<'PY'
           import json
           from pathlib import Path
-
           expected = [
-              "data/native", "data/native/classes/base",
-              "data/native/classes/subclasses", "data/native/classes/prestige",
-              "data/native/classes/npc", "data/native/classes/sidekick",
+              "data/native", "data/native/classes/base", "data/native/classes/subclasses",
+              "data/native/classes/prestige", "data/native/classes/npc", "data/native/classes/sidekick",
               "data/native/species/base", "data/native/species/subspecies",
               "data/native/bestiary", "data/native/spells", "data/native/feats",
               "data/conversions", "data/schemas", "data/reference",
@@ -35,7 +33,6 @@ jobs:
           missing = [path for path in expected if not Path(path).is_dir()]
           if missing:
               raise SystemExit(f"Missing required directories: {missing}")
-
           retired = [
               "Directory.Build.props", "dorks-and-dice-rules-core.slnx",
               "src/RulesCore.Application", "src/RulesCore.Domain",
@@ -45,10 +42,12 @@ jobs:
           still_present = [path for path in retired if Path(path).exists()]
           if still_present:
               raise SystemExit(f"Legacy implementation retained: {still_present}")
-
           paths = sorted(Path("data").rglob("*.json"))
           for path in paths:
               with path.open(encoding="utf-8") as stream:
                   json.load(stream)
           print(f"Repository skeleton OK; validated {len(paths)} JSON files.")
           PY
+
+      - name: Verify native data baseline
+        run: python3 -m unittest discover -s tests -p 'test_native_seed.py' -v

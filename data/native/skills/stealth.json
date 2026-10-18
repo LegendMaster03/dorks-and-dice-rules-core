@@ -1,0 +1,13 @@
+{
+  "id": "skill.stealth",
+  "kind": "skill",
+  "name": "Stealth",
+  "defaultAbility": "dexterity",
+  "summary": [
+    "Escape notice by moving quietly and hiding behind things."
+  ],
+  "details": [
+    "Make a Dexterity (Stealth) check when you attempt to conceal yourself from enemies, slink past guards, slip away without being noticed, or sneak up on someone without being seen or heard."
+  ],
+  "baselineStatus": "provisional-native-seed; mechanical reconciliation pending"
+}

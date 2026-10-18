@@ -1,0 +1,9 @@
+{
+  "id": "competency.history",
+  "kind": "competency",
+  "name": "History",
+  "nativeSkill": "skill.history",
+  "reviewedHistoricalAliases": [
+    "Knowledge (History)"
+  ]
+}

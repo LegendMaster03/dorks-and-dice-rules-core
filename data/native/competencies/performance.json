@@ -1,0 +1,6 @@
+{
+  "id": "competency.performance",
+  "kind": "competency",
+  "name": "Performance",
+  "nativeSkill": "skill.performance"
+}

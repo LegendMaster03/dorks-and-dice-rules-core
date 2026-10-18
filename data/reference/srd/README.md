@@ -1,9 +1,7 @@
-# CC SRD baselines — staged import
+# CC SRD attribution and native baseline context
 
-The authoritative source documents are **SRD 5.1 (2014-era fifth edition)** and **SRD 5.2.1 (2024-era revision)**, under **Creative Commons Attribution 4.0**. See [`manifest.json`](manifest.json) for the original document links and required attribution statements.
+Native Dorks & Dice rules live in `data/native/`, not in a runtime SRD source layer. `manifest.json` records the identities, license and attribution for the official SRD 5.1 and SRD 5.2.1 materials consulted in the baseline. **The native JSON is intended to be authoritative, not the upstream SRD or 5etools at runtime.**
 
-**Import status: NOT COMPLETE.** The checked-in `skills.index.json` files are discovery-only skill-name/default-Ability indexes derived from the upstream 5etools skills catalog's `srd` and `srd52` flags. They **are not** copies of, or a substitute for, the official SRDs, are **not authoritative native rules**, and should be checked against the official documents before use. The whole 5etools corpus is **not** automatically CC-licensed.
+The initial skill content has been curated directly from the structured `srd` and `srd52` skill records in 5etools at pinned commit `90d343cde64cf8dce1083ea0525a6b0b9e545f2e`. This is not a claim of importing the complete SRDs or independently verifying every text passage against the official PDFs. The project must fulfill CC BY 4.0 obligations and verify its redistributed excerpt coverage.
 
-When implementing the importer, ingest the two exact official artifacts as separately fingerprinted, immutable source representations; extract and validate native-source entities with location/edition lineage; track modifications and precise attribution. Then convert applicable, verified content to the native ontology independently for each approved subsystem. Do not copy legacy source representations into `data/native/` as though they were native mechanics.
-
-The third input to the native baseline is already-reviewed Dorks & Dice decisions from the previous Rules Core implementation and the rewrite documentation, not additional SRD publications.
+No baseline importer is required. Future user imports and third-party source support will have separate versioned conversion and provenance requirements. See `docs/rewrite/native-seed-skills-and-competencies.md`.

@@ -1,0 +1,8 @@
+{
+  "id": "competency.hide",
+  "kind": "competency",
+  "name": "Hide",
+  "independentRankedState": true,
+  "nativeSkill": null,
+  "baselineStatus": "reviewed-granular-competency; further mechanics deferred"
+}

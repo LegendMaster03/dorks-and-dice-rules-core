@@ -1,0 +1,9 @@
+{
+  "id": "competency.medicine",
+  "kind": "competency",
+  "name": "Medicine",
+  "nativeSkill": "skill.medicine",
+  "reviewedHistoricalAliases": [
+    "Heal"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "competency.athletics",
+  "kind": "competency",
+  "name": "Athletics",
+  "nativeSkill": "skill.athletics",
+  "composite": {
+    "operation": "arithmetic-mean",
+    "components": [
+      "competency.climb",
+      "competency.jump",
+      "competency.swim"
+    ],
+    "rounding": "truncate-toward-zero",
+    "modifierPolicy": "apply component-targeted modifiers to components before the mean; apply parent-targeted modifiers only afterward"
+  }
+}
