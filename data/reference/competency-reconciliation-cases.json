@@ -1,0 +1,202 @@
+{
+  "status": "reviewed-decisions-test-vectors; not executable engine tests",
+  "evidence": [
+    "main:docs/universal-character-concepts.md",
+    "main:docs/mechanical-relationships.md",
+    "main:src/RulesCore.Domain/Rules/UniversalCompetencies.cs",
+    "feature/rules-core-rewrite:docs/rewrite/ruleset-first-target-architecture.md"
+  ],
+  "cases": [
+    {
+      "id": "direct-bluff",
+      "kind": "semantic-alias",
+      "input": {
+        "sourceSkill": "Bluff"
+      },
+      "expect": {
+        "competency": "competency.deception",
+        "identityKind": "reviewed-alias"
+      }
+    },
+    {
+      "id": "craft-alchemy-tool",
+      "kind": "shared-identity",
+      "input": {
+        "sourceMechanics": [
+          "Craft (alchemy)",
+          "Alchemist's Supplies"
+        ]
+      },
+      "expect": {
+        "competency": "competency.alchemy",
+        "sameLearnedTrainingIdentity": true,
+        "separateNumericProfiles": true
+      }
+    },
+    {
+      "id": "stealth-components",
+      "kind": "composite",
+      "input": {
+        "componentModifiers": {
+          "Hide": 9,
+          "Move Silently": 3
+        },
+        "parentModifier": 0
+      },
+      "expect": {
+        "parentCompetency": "competency.stealth",
+        "value": 6,
+        "childrenRemainDistinct": true
+      }
+    },
+    {
+      "id": "stealth-modified-child",
+      "kind": "composite",
+      "input": {
+        "componentModifiers": {
+          "Hide": 11,
+          "Move Silently": 3
+        },
+        "parentModifier": 0
+      },
+      "expect": {
+        "parentCompetency": "competency.stealth",
+        "value": 7
+      }
+    },
+    {
+      "id": "stealth-parent-only",
+      "kind": "composite",
+      "input": {
+        "componentModifiers": {
+          "Hide": 9,
+          "Move Silently": 3
+        },
+        "parentModifier": 2
+      },
+      "expect": {
+        "parentCompetency": "competency.stealth",
+        "value": 8,
+        "childModifiersUnchanged": true
+      }
+    },
+    {
+      "id": "perception-components",
+      "kind": "composite-definition",
+      "input": {
+        "components": [
+          "Listen",
+          "Spot"
+        ]
+      },
+      "expect": {
+        "parentCompetency": "competency.perception",
+        "composition": "arithmetic-mean-truncated-toward-zero"
+      }
+    },
+    {
+      "id": "acrobatics-components",
+      "kind": "composite-definition",
+      "input": {
+        "components": [
+          "Balance",
+          "Tumble"
+        ]
+      },
+      "expect": {
+        "parentCompetency": "competency.acrobatics",
+        "composition": "arithmetic-mean-truncated-toward-zero"
+      }
+    },
+    {
+      "id": "athletics-components",
+      "kind": "composite-definition",
+      "input": {
+        "components": [
+          "Climb",
+          "Jump",
+          "Swim"
+        ]
+      },
+      "expect": {
+        "parentCompetency": "competency.athletics",
+        "composition": "arithmetic-mean-truncated-toward-zero"
+      }
+    },
+    {
+      "id": "knowledge-specialty",
+      "kind": "pattern-alias",
+      "input": {
+        "sourceSkill": "Knowledge (Arcana)"
+      },
+      "expect": {
+        "competency": "competency.arcana"
+      }
+    },
+    {
+      "id": "tool-distinction",
+      "kind": "related-not-identical",
+      "input": {
+        "sourceMechanics": [
+          "Open Lock",
+          "Disable Device",
+          "Thieves' Tools"
+        ]
+      },
+      "expect": {
+        "independentCompetencies": true,
+        "relationshipScope": "selected-uses-only"
+      }
+    },
+    {
+      "id": "craft-family",
+      "kind": "family-default",
+      "input": {
+        "family": "Craft"
+      },
+      "expect": {
+        "ability": "intelligence",
+        "ranks": true,
+        "trainedOnly": false,
+        "sharedRanksAcrossChildren": false
+      }
+    },
+    {
+      "id": "profession-family",
+      "kind": "family-default",
+      "input": {
+        "family": "Profession"
+      },
+      "expect": {
+        "ability": "wisdom",
+        "ranks": true,
+        "trainedOnly": true,
+        "sharedRanksAcrossChildren": false
+      }
+    },
+    {
+      "id": "perform-family",
+      "kind": "family-default",
+      "input": {
+        "family": "Perform"
+      },
+      "expect": {
+        "ability": "charisma",
+        "ranks": true,
+        "trainedOnly": false,
+        "sharedRanksAcrossChildren": false
+      }
+    },
+    {
+      "id": "speak-language",
+      "kind": "separate-subsystem",
+      "input": {
+        "sourceSkill": "Speak Language"
+      },
+      "expect": {
+        "competency": "none",
+        "subsystem": "language-proficiency"
+      }
+    }
+  ]
+}
