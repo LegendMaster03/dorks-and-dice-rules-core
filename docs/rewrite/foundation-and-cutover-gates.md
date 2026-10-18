@@ -1,8 +1,8 @@
-# Rules Core rewrite — foundation and cutover gates
+# Rules Core rewrite — foundation and in-place integration checkpoints
 
-Status: **rewrite baseline / implementation planning**, 2026-10-09. This document is not a claim that the new service or migration exists.
+Status: **rewrite planning / corrected operational baseline**, 2026-10-18. The filename is retained for existing documentation links; **no old/new service cutover is planned**.
 
-The rewrite starts on `feature/rules-core-rewrite`, independent of deployed `main`. The existing Rules Core remains available until a separately reviewed and authorized cutover. Do not deploy this branch, alter live registrations, or migrate/reset the production database as an incidental consequence of starting the rewrite.
+The owner confirms the **old Rules Core has been hidden and its public/tester access disabled for approximately one month**. This is **not** a live public service that must be preserved alongside a replacement. Work on `feature/rules-core-rewrite` is one **in-place service rewrite** in the existing repository, not dual production engines, a temporary parallel deployment, or a service-switch/cutover project. Branch-based code review and tests do not constitute parallel live operations. Do not merge, deploy, change access settings, re-enable integrations, or reset stored data without separate explicit authorization.
 
 ## Why this is a rewrite
 
@@ -22,35 +22,41 @@ These are subjects to verify against fixtures and current code before selecting 
 
 ## Greenfield implementation policy
 
-The rewrite is a **new implementation**, not a staged refactor of existing Rules Core classes, schema, and modules. Build the authoritative Dorks & Dice system engine from a new native domain model with independently designed persistence, evaluation, and integration boundaries. Reuse of a library or isolated helper requires an explicit reason; a component's presence in the legacy service is not a reason to retain it. The existing repository and branch may preserve development history without imposing a legacy code dependency. Isolate the new implementation from the currently deployed service until cutover.
+The rewrite is a **new native implementation in the existing Rules Core service/repository**, not an obligation to preserve old code paths, a legacy-compatible second engine, or a prolonged staged refactor. Author the Dorks & Dice rules kernel from its own reviewed gameplay model; source imports, interfaces and persistence serve that model rather than dictate it. Reuse an isolated helper only for a concrete reason. Since the old service is not in public/tester use, **there is no requirement to operate legacy and replacement systems concurrently or perform a routing cutover**. Keep development changes controlled on the rewrite branch and run tests on disposable or appropriately protected data.
 
-The Dorks & Dice game-design decisions already established through years of compatibility/reconciliation are **not** being discarded. Recover their intended semantics as a reviewed specification and tests, then reimplement those rules in the new engine. Treat legacy code and endpoint responses as evidence and migration compatibility references, not automatically correct normative behavior. Distinguish deliberate mechanics decisions from accidentally reproduced bugs or old architecture compromises.
+The Dorks & Dice game-design decisions already established through years of compatibility/reconciliation are **not** being discarded. Recover their intended semantics as a reviewed specification and tests, then reimplement those rules in the new engine. Treat the old code and API responses as **evidence for behavior, existing data and consumer contracts**, not as automatically correct gameplay rules or a requirement for backward-compatibility shims. Distinguish deliberate mechanics decisions from old implementation compromises.
 
 The independently authored core can use properly attributed material from **SRD 5.1** and **SRD 5.2.1**, released under **CC BY 4.0**, without assuming every D&D publication is CC-licensed or that the SRDs are public domain. Game procedures themselves are not protected by U.S. copyright, while copyrightable expression still is. Track source, license, attribution, and modifications for incorporated material. Keep **3e/3.5e OGL** materials and independently licensed third-party source content separately identified; do not convert their licenses to CC BY or publish restricted text merely because its mechanic can be modeled.
 
 
 ## Operational boundary
 
-Hex Crawl is in human testing and, together with Block Initiative, does not require Rules Core for normal use. All other Rules Core-dependent Tools are currently restricted to development access. This reduces the number of exposed consumers during construction; it does **not** authorize production data destruction or interruption of unrelated Tools.
+**Owner-verified accessibility (2026-10-18):**
+- **Rules Core:** Hidden; public/tester access disabled for roughly a month. The old implementation is not an exposed service requiring seamless replacement.
+- **Block Initiative:** The **only public/tester-accessible Tool** relevant to this rewrite. Its **core turn/block and encounter functionality is independent** of Rules Core; its optional integration fetches monster/stat-block data for auto-fill, and the current code also supports **condition search/autocomplete**. This is a **small read-only consumer dependency**, not a dependency on a complete native combat adjudicator.
+- **Character Sheet:** Development access only, deliberately restricted when the old Rules Core was shut down. It requests the largest share of Rules Core mechanics but **does not set public/tester availability requirements** during development.
+- **Rules Wiki and other Tools:** No additional public/tester integration dependency is assumed. Review their actual contracts when their development milestones begin.
 
-- Do not merge, deploy, change Tool registration, or modify production persistence without explicit authorization.
-- Keep Rules Wiki's private, server-to-server delegation and Rules Core's public consumer interface as separately reviewed security and compatibility boundaries.
-- Do not place restricted source contents, credentials, production dumps, or user identifiers into repository fixtures, logs, traces, or review artifacts.
-- A replacement should be constructed and tested against disposable storage or appropriately sanitized copies before any production migration.
-- Only effective resolved rules belong on routine game-Tool runtime paths. Rich source alternatives, historical comparisons, and authoring remain restricted internal/admin workflows.
+The first integration must preserve Block Initiative's **manual encounter entry and normal initiative operation** even if Rules Core lookup is unavailable. Do not enable the hidden Rules Core for everyone merely to make optional auto-fill work; when authorized, expose only the reviewed lookup/detail scopes and verify grants, permission filtering and source visibility. Remember that monster and condition lookups may include restricted content and must not leak it across grants.
+
+- Do not merge, deploy, alter Tool registrations/access controls, re-enable exposed endpoints, or modify live persistence without explicit owner authorization.
+- Keep Rules Wiki's private server-to-server delegation separate from externally available consumer APIs; no public route must silently authorize private bodies.
+- Do not put restricted source contents, credentials, unsanitized data dumps or user identifiers in fixtures, logs, traces or review artifacts.
+- Use disposable/sanitized datasets for destructive tests; **keep backups and deliberate data-change reviews** if existing dev records need preservation. This is ordinary data safety, **not** a mandatory old-service migration or cutover rehearsal.
+- Routine game Tools should receive effective authorized lookup data/mechanics, not arbitrary source alternatives or restricted authoring content.
 
 ## Compatibility to inventory, not assumptions to inherit
 
-Before implementing the greenfield engine or replacing an external endpoint:
+Inventory each actual consumer contract before implementing that consumer's first replacement capability. **Start with the small Block Initiative read-only contract; the complete Character Sheet and Wiki contract inventories can follow before their respective integrations.**
 
-1. Inventory existing external routes, request/response schemas, authentication, authorization, client expectations, and error semantics. Identify actual consumers in Character Sheet, Rules Wiki, and other Tools.
-2. Separately inventory private Rules Wiki Tool-to-Tool routes and the Site delegation/introspection behavior.
+1. For **Block Initiative**, verify the existing `/tool-host/registrations/rules-core/api/upstream` gateway paths and effective `/api/rules?entityType=monster|condition&q=...&limit=...` search and `/api/rules/{conceptKey}` monster detail shape. Current client code projects HP, initiative modifier, ordinary/Touch/Flat-Footed AC, challenge rating and optional combat statistics. Record expected permission behavior, unavailable-service manual fallback and required provenance; do not mistake this for core combat rules execution.
+2. When work begins on **Character Sheet / Rules Wiki**, inventory their actual external/internal routes, authorization and consumer data contracts independently; these are dev-only consumers and need not be public-ready for Block Initiative.
 3. Record read/write paths for source import, content blobs, per-user registrations/grants, canonical entities, Rules Lawyer decisions, campaign overrides, and publications.
 4. Capture deterministic fixtures and assertions from the existing implementation and real-world source *shapes*, including negative access cases.
-5. Establish representative timing/load baselines with the existing `Server-Timing` spans. Distinguish database execution from projection, connection, network, and cache/materialization overhead.
+5. Establish representative timing/load targets for the endpoint being rebuilt; old `Server-Timing` samples, if available, are evidence rather than mandatory live-service performance baselines.
 6. Review open, unmerged work as reference material; do not assume it exists on `main` or silently transplant it.
 
-External contracts may be deliberately improved during this rewrite, because dependent apps are development-only, but each incompatible change must be identified and coordinated before cutover. Do not accidentally change a public contract simply because an equivalent private Wiki operation changes.
+Because **Block Initiative is exposed**, coordinate its lookup/detail contract changes and test its manual fallback before changing accessible behavior. Character Sheet and Rules Wiki are development-only and may adopt intentionally improved contracts without compatibility adapters. Do not accidentally conflate public Block Initiative lookup permissions with private Wiki authoring/delegation.
 
 ## Behavioral invariants to carry into a replacement
 
@@ -66,58 +72,53 @@ External contracts may be deliberately improved during this rewrite, because dep
 
 **Performance.** Expensive requests need explicit budgeted stages, batched reads, suitable indexes, bounded work queues, safe concurrent worker ownership, and observability. Avoid hiding costly synchronous source reconciliation inside hot read paths.
 
-## Incremental implementation sequence
+## Incremental implementation sequence — single in-place rewrite, consumer-specific integration
 
-### Gate 0 — pre-rewrite full game design and verified baseline (no engine code)
+The checkpoints below are **logical work/validation phases**, **not separate live Rules Core instances**, deployment lanes, or a fixed service switch. Work may be organized by the smallest actual consumer capability, and completed parts are verified independently before the next consumer is introduced. Existing documentation has a stronger **full native game-design approval condition before implementing the core engine**; the owner has not revoked that design-approval decision by removing the need for a cutover. **Documentation, contract inventory and acceptance tests for the Block Initiative lookup can be prepared without the entire combat engine being implemented.** Authorize engine code separately.
 
-**This is a gameplay design phase that must finish before the Rules Core engine rewrite starts.** It is not merely an architecture audit. The owner wants a coherent, independently playable Dorks & Dice system *beyond* the rules already recovered from the existing resolver.
+### Gate 0 — native game design and minimum consumer contract approval (no engine code)
 
-**0A — Recover established decisions.** Inventory and verify all game-design choices already present in existing normalization, competencies, composite skills, advancement, combat, spellcasting, source adjudication and house rules. Distinguish established design from bugs, temporary fallbacks, unknown intent and missing implementations. Do not redesign from scratch where decisions already exist. Collect the machine-readable existing contracts/fixtures needed later, but do not let old DTOs or database shape dictate gameplay.
+**0A — Recover established decisions.** Inventory and verify gameplay choices from competencies, composite skills, advancement, combat, spellcasting, source adjudication and house rules. Identify decisions separately from bugs, old fallbacks and implementation-only details.
 
-**0B — Write the native full-system rules.** Maintain [native-rules-design-specification.md](native-rules-design-specification.md) as the owner-reviewed game-design source of truth. Define the complete core play loop: character creation, abilities/checks, advancement, combat/action economy and maneuvers, spellcasting/powers, equipment, states/conditions, damage/recovery, exploration and GM procedures. Record the owner's original concepts **before** introducing alternatives from Pathfinder or other games. Existing designs remain open to informed refinement, but existing coverage is not treated as a new blank slate.
+**0B — Complete the native independent rules specification.** Maintain [native-rules-design-specification.md](native-rules-design-specification.md) as the owner-reviewed source of truth for character creation, advancement, action economy, combat, maneuvers, spellcasting, equipment, conditions, recovery, exploration and GM procedures. Preserve generalized **Level Bands**, with independently evaluated total-character and class/prestige tracks.
 
-The old **epic-specific progression framework is replaced for native Dorks & Dice mechanics by generalized Level Bands** (1–20, 21–40, 41–60, etc., on the relevant level track). Total-character and individual class/prestige progression have separate band positions. Mechanic eligibility, scaling, effects and transitions can depend on different tracks; continue, end, retain without further advancement, and evolve are different behaviors. Historical “Epic” names remain source terminology, not a separate advancement engine.
+**0C — Define source/content compatibility.** Cover native preservation, automated 3e/3.5e/2014 5e/2024 5e conversion, competing contributions, provenance, safe unresolved decisions and explicitly optional Pathfinder 1e scope. Rule/content conversion is different from automatic character or saved-encounter migration.
 
-**0C — Define automated compatibility.** The system premise is analogous to Pathfinder First Edition's manual 3.5e compatibility conversion, extended to **automated** rule/content conversion for D&D 3e, 3.5e, 5e and 5.5e. Pathfinder 1e is a potential later compatibility input. Define exact conversions, optional source-faithful profiles, source-native preservation, mixed-content applicability, safe incomplete conversion and explicit human adjudication where information is missing or mappings are ambiguous. Do not promise lossless conversion of arbitrary characters/campaign state under the same rule-import commitment.
+**0D — Critically compare alternatives.** Use Pathfinder and other sources only after recording the owner's native decisions, especially maneuver design.
 
-**0D — Critically compare other systems after the native foundation is stated.** Use [pathfinder-1e-gameplay-comparison.md](pathfinder-1e-gameplay-comparison.md) and D&D source rules to test and potentially improve *any* native system area, including established competencies, classes and advancement, without automatically substituting external designs. For combat maneuvers in particular, record the owner's ideas before discussing PF1e CMB/CMD or D&D grapple/shove implementations.
+**0E — Approval and acceptance examples.** Separate what is settled from what is optional/open, with ordinary gameplay and cross-edition acceptance cases. The existing **Gate 0 owner sign-off before the full native rules kernel** remains the agreed governance boundary unless explicitly revised. This does **not** make every full-game mechanic a prerequisite for documenting or testing Block Initiative's small monster/condition lookup contract.
 
-**0E — Approve the native game specification and acceptance examples.** Produce plain-language complete rules, marked settled/proposed/unresolved decisions, representative characters and combat/exploration examples, cross-edition conversion cases, and explicit scope/fidelity boundaries. Record approved native defaults, remaining optional/rule-layer decisions, and intentional deferred extensions. Capture old service API/privacy/performance baselines and migration invariants separately for later implementation verification. The acceptance suite must make gameplay regressions visible.
+**Gate 0 exit:** Explicit owner review and approval before starting the **native gameplay engine**, as already established. This is **not** a cutover/migration/dual-deployment gate and does not by itself authorize merging, deployment or re-enabling public access.
 
-**Exit criterion:** owner reviews and approves the sufficiently complete Dorks & Dice core game rules *before* implementing the replacement domain/kernel, persistence or import conversion engine. Approval of this Gate does **not** authorize a live migration, merge, deploy or production data changes.
+### Gate 1 — authoritative Dorks & Dice kernel and data model
 
-### Gate 1 — Dorks & Dice ruleset kernel and persistence
+Implement a single, first-class, versioned Dorks & Dice mechanics/ruleset model and persistence in Rules Core, without retaining a second legacy runtime. Design schema and services from accepted native rules rather than reproducing obsolete DTOs. Verify behavior using disposable or sanitized storage; preserve existing records only where the owner needs them and approves the specific data treatment.
 
-Build the first-class versioned Dorks & Dice mechanics/ontology and its source/identity/rules domain model with explicit invariants and persistence ownership, **implemented independently of existing Rules Core domain types and database structures**. Use fresh disposable storage and migration tests. Do not migrate live records into a partially defined schema.
+### Gate 2 — source ingestion, resolved lookup and Block Initiative integration
 
-### Gate 2 — ingestion, translation, reconciliation
+Implement the **minimum real source identity, permission-filtered catalog/search, and monster/condition read projections needed by Block Initiative**. Prioritize its actual query and detail contract; test imported stat-block variants, distinct ordinary/Touch/Flat-Footed AC fields, authorized source display, manual-entry fallback, missing data and permission failures. The standard encounter/initiative engine is *not* a Rules Core feature to rebuild. Source import/reconciliation can then expand by actual format/consumer need rather than all sources becoming a precondition for the first useful lookup.
 
-Introduce format adapters and lossless raw-source storage, versioned mechanical interpretation into the core ontology, publication/entity identity reconciliation, core-to-import and import-to-import semantic relationships, and resumable parallel imports/backfills. Exercise multiple representations of the same material and adversarial ambiguous matches.
+### Gate 3 — effective rule composition and deterministic mechanics
 
-### Gate 3 — adjudication and effective resolution
+Add native rules evaluation, source-to-native semantic adaptation, publication/Rules Layer decisions, conflicts, campaign overrides and repeatable context-specific results incrementally. Preserve immutable source truth, grants and provenance. Complete the tested engine behavior that actual consumers request without creating an edition-specific second combat runtime.
 
-Implement core-system-governed composition and deterministic published Rules Layer and campaign snapshots, update review, precedence, source visibility, cross-source conflict handling, and provenance. Prove that the same revision/context yields the same effective result.
+### Gate 4 — development-only Character Sheet, Rules Wiki and further consumers
 
-### Gate 4 — consumer and Wiki contracts
+Integrate progressively based on the distinct mechanics required by **Character Sheet** (largest consumer) and the internal/reference requirements of **Rules Wiki**. Verify permission isolation, typed effective mechanics projections, and consumer-owned character/encounter state. Each integration can remain development-only until separately authorized for broader access.
 
-Build typed, efficient mechanics projections and the separate internal Wiki read model on the new domain kernel. Validate Character Sheet, Rules Wiki, and downstream consumer integration using representative requests and denial cases.
+### Gate 5 — validation and controlled access restoration (no cutover)
 
-### Gate 5 — migration rehearsal and cutover
+Once the relevant capabilities pass tests, consider **whether to re-enable only the appropriate Rules Core routes and permissions** for the applicable Tool(s). This is **not** an old-to-new engine cutover, parallel runtime migration or mandatory wholesale public release. Record the reviewed API surface and access grants, test backup/recovery for any data changes, verify service health and relevant performance, and obtain explicit owner authorization for deployments/access changes. Existing development-only consumers may stay development-only.
 
-Rehearse a repeatable, auditable old-to-new data migration against a disposable copy. Compare entity counts, canonical links, source grants, ruleset histories, and representative resolved outputs. Run concurrency/load regression checks. Plan a reversible switch at the Site registration/routing boundary; obtain separate approval for any live migration or deployment.
+## Evidence before an exposed integration or data change
 
-## Minimum evidence before a cutover proposal
-
-- Verified external/API and internal/Wiki contract compatibility matrix with intentional deltas named.
-- Multi-format 3e/3.5e/5e/5.5e corpus tests and structured stat/mechanics assertions.
-- Exact grant/authorization isolation tests (including counts, facets, exports, and error behavior).
-- Idempotent ingestion, retries, failed partial import recovery, worker concurrency, and restart tests.
-- Immutable provenance plus global/campaign publication replay/migration checks.
-- P50/P95/P99 request timing and throughput comparisons at documented dataset sizes and concurrency.
-- New deployment health/readiness and private delegation boundary checks.
-- Rollback/recovery procedure for code **and** data, with tested backups and no implicit schema reset.
-- Explicit owner approval before merge, deployment, or production database change.
+- **Block Initiative:** automated/manual stat-block lookup behavior, monster and condition search, ACL-filtered source data, correct read projection, stored template handling, independent initiative/encounter operation and manual fallback on Rules Core errors.
+- **New native mechanics:** tests of accepted rule procedures and pure/mixed source interactions **as each capability is built**, including predictable conflicts and source provenance.
+- **Security:** permissions and restricted source visibility at lookup, detail, list/count, Wiki/private delegation and export boundaries wherever implemented.
+- **Data safety:** backups, idempotent imports/reprocessing, explicit treatment of existing records, tested recovery and **no implicit database reset**; use migration tests for schema changes where genuinely needed, **not** a mandatory old-service cutover rehearsal.
+- **Quality:** endpoint-specific response budgets, diagnostics, failure handling, and bounded import work; full-scale performance tests as the affected consumers/volumes warrant them.
+- **Approval:** no merging, deployment, access restoration or destructive persistence changes without explicit owner approval.
 
 ## Decisions deliberately not made in Gate 0
 
-The replacement language/runtime, relational schema, DTOs, normalization vocabulary, canonical match thresholds, search/index strategy, task/worker topology, and migration technique must follow the baseline evidence and proposed architecture review. Reusing a current type name or table does not by itself make it a requirement. New feature development in other Tools is out of scope for this initial branch.
+The replacement language/runtime, relational schema, DTOs, normalization vocabulary, canonical match thresholds, search/index strategy and worker topology follow the reviewed source evidence and native design. Reusing an old table/type is not a requirement. **Do not invent an old/new service migration or routing cutover.** Actual schema/data changes still require appropriate tests and owner authorization. New features in other Tools are out of scope except integration changes explicitly authorized for a consumer.
