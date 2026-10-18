@@ -508,35 +508,41 @@ The [3.5e combat-modifier table](https://www.d20srd.org/srd/combat/combatModifie
 
 ### Emphasis within attacker/defender effect attribution
 
-**Owner reminder (2026-10-18):** **Emphasis** must remain part of the ordinary d20 roll-mode repertoire when classifying attacker-facing buffs/debuffs and defender-facing conditions. It is **neither Advantage nor Disadvantage** and is **not an AC bonus/penalty or condition by itself**.
+**Owner decision (2026-10-18):** **Emphasis** is a distinct d20 roll-selection mode alongside Normal, Advantage and Disadvantage. It favors an extreme result on either side of the d20's center; it is neither inherently a buff nor a debuff, and is not an AC adjustment or condition.
 
-**Existing, verified Rules Core d20 selection semantics** (see [consumer contract](../character-mechanics-consumer.md#d20-roll-selection-modes) and `src/RulesCore.Domain/Rules/CharacterMechanics.cs`):
-
-| Mode | Roll procedure |
+| Mode | Native roll procedure |
 | --- | --- |
-| Normal | One d20, use the result |
-| Advantage | Two d20s, use the higher |
-| Disadvantage | Two d20s, use the lower |
-| **Emphasis** | Roll two d20s; evaluate cancellation outcomes **before** selecting a die. **Natural 1 + natural 20, in either order, cancel**; apply an explicitly defined cancellation result if provided, otherwise **reroll both dice** and repeat. For noncanceled dice, retain the greater-extremity selection, with the full symmetric-pair scoring policy still needing review. |
+| Normal | Roll one d20 and use its result |
+| Advantage | Roll two d20s and use the higher |
+| Disadvantage | Roll two d20s and use the lower |
+| **Emphasis** | Roll **two d20s** and normally use the result with the **greater absolute distance from 10.5**; **equally extreme results on opposite sides cancel** and are resolved as described below |
 
-**How it fits the design:** Attributing an effect to the **attacker** versus the **defender** informs whether it is represented as a roll-side modifier/mode or as a defender-side condition/AC change; it does **not** mean that every attacker buff grants Advantage or that every attacker debuff grants Disadvantage. A specific native ability or rule may legitimately prescribe **Emphasis** on an attack, saving throw, or check when the desired effect is to make the roll's outcome more extreme, rather than reliably favorable or unfavorable. The same mode can be applied to a defender's **own saving throw or check** if an applicable rule grants it. Preserve ability-specific scope and the ordinary per-roll permissions; **do not automatically apply Emphasis to every high-stakes action, conditions or critical escalation**.
+**Symmetrical selection:** For each die \(d\), use \(E(d)=|d-10.5|\). If one die has a greater absolute distance, select it. A cancellation occurs when the two dice have **equal absolute distances from 10.5 on opposite sides of the midpoint** (on a d20 this is equivalent to \(d_1+d_2=21\)). **A matched pair of identical dice is not cancellation**: [7,7] produces 7, whereas [7,14] cancels. This clarifies the owner's statement that cancellation occurs when the two rolls have equal absolute magnitude: they must have **opposing** magnitudes, not merely equal positive distances or equal face values.
 
-**Owner-approved Emphasis cancellation (2026-10-18):** A paired **natural 1 and natural 20**, regardless of which die is first, **cancel** rather than selecting the 20, selecting the 1, or automatically triggering a critical success/failure. **If an applicable explicit rule supplies a cancellation-specific outcome, apply that outcome; otherwise reroll both d20s.** Reevaluate each new pair under the same rule, repeating cancellations until either a selectable pair or an authorized cancellation outcome resolves the roll. A canceled pair supplies **no selected d20 result**; do not apply ordinary success/failure/critical consequences to either canceled die. The special outcome is deliberately unspecified at the native default level, not implicitly a success, failure, critical, or zero. Dice or manual-entry consumers must retain the ability to request/report a new pair; do not silently resolve a canceled pair by keeping the first die.
+**Cancellation resolution precedence (owner-approved):**
+1. Identify a cancellation **before selecting either d20** or adjudicating ordinary success, failure or critical effects from that pair.
+2. If an **applicable, explicitly defined cancellation-specific outcome** exists in the effective rules, **apply that outcome instead of rerolling**. Do not assume a predefined universal cancellation result.
+3. **Otherwise reroll both d20s together** and reapply the entire Emphasis selection/cancellation procedure to the new pair. Repeat for as many consecutive cancellations as occur. Do not treat either canceled die as a retained result.
+4. The player's manual dice and any consuming tool must be able to represent the canceled pair, its applicable special result or the need to roll two new dice. The headless rules engine should request the next pair as needed rather than silently selecting one canceled result.
 
-**Examples for acceptance and implementation design:**
-- Emphasis **[1, 20]** or **[20, 1]**, with **no cancellation-specific rule**: **reroll both dice**; do not retain 1 or 20 as the result.
-- Emphasis **[1, 20]**, with an applicable special **cancellation outcome**: execute that explicitly prescribed outcome **instead of the default reroll**.
-- Emphasis **[1, 20] → [20, 1] → [4, 13]** (without special outcomes): reroll after each cancellation, then select 4 under the current greater-distance scoring.
-- Normal/Advantage/Disadvantage roll modes **do not inherit** Emphasis cancellation automatically. Critical escalation rolls remain their **straight, unmodified** d20s.
+**Acceptance examples:**
 
-**Additional scoring question requiring owner review:** The legacy selector scores `abs(d20 - 10)`, so 1 and 20 are not equal-distance and it arbitrarily selects 20, while 7 and 13 are reported tied. A mathematically symmetric Emphasis measure would instead use the **d20 midpoint 10.5**. With that convention, *opposite* pairs satisfying `first + second == 21` (e.g., **[7, 14]**, **[10, 11]**, as well as [1, 20]) would also cancel; identical doubles such as [7, 7] would simply select 7. **Only [1, 20] cancellation and the default-versus-explicit-outcome rule are owner-approved so far.** Expanding cancellation to all complementary pairs and adopting midpoint 10.5 need a further explicit ruling; do not silently change all Emphasis results as part of this correction.
+| Dice rolled | Effective comparison | Native result without a special cancellation outcome |
+| --- | --- | --- |
+| [1,20] or [20,1] | Equally extreme, opposite directions | **Cancel; reroll both** |
+| [7,14] | 3.5 versus 3.5, opposite directions | **Cancel; reroll both** |
+| [10,11] | 0.5 versus 0.5, opposite directions | **Cancel; reroll both** |
+| [7,13] | 3.5 versus 2.5 | **Select 7** |
+| [4,16] | 6.5 versus 5.5 | **Select 4** |
+| [7,7] | Same roll value, not opposite | **Select 7** |
+| [1,20] with an applicable special cancellation rule | Opposed equivalent extremes | **Apply the explicit cancellation outcome** |
+| [1,20] → [7,14] → [4,13] | First two pairs cancel; third selects 4 | **Reroll twice, then select 4** |
 
-**Remaining design questions:**
-- **Competing roll modes:** How do separate grants of Advantage, Disadvantage and Emphasis interact when they apply to the same d20? Preserve source ownership and native stacking without inventing an unapproved combined dice procedure.
-- **Cancellation results:** Define how future specialized rules state a cancellation-specific result and its scope, and ensure cancellation can be represented as *unresolved / another pair required* by a headless Rules Core and by paper-first character play.
-- **Status conversion:** A condition's original 5e attack Advantage must not be duplicated alongside a replacement native defender AC penalty, or silently changed to Emphasis.
+**Compatibility note:** The deployed/legacy Rules Core selector currently uses `abs(d20-10)`, keeps the first die when equally scored and reports `selectionTied`. Those were **implementation behavior**, not the adopted symmetric Dorks & Dice Emphasis rule; the new midpoint and cancellation handling supersede them for a future rewrite. Do **not** modify the currently deployed selector simply by editing this specification. The [existing consumer contract](../character-mechanics-consumer.md#d20-roll-selection-modes) describes that **legacy behavior**, not this newly approved native rule.
 
-**Status:** Existing legacy `abs(d20 - 10)` behavior and first-die tie selection are **implementation evidence, not the finalized native rule**. The owner **changed native Emphasis**: natural 1 versus natural 20 cancels, a separately defined cancellation outcome takes priority, and **rerolling both dice is the default otherwise**. Extending cancellation to other complementary pairs, selecting a symmetrical midpoint, and resolving multiple concurrent roll modes remain open.
+**Effects and interactions:** Attributing an ability to the attacker or defender helps determine whether to modify that actor's roll or the target's status/AC, but does **not** mechanically prescribe Advantage, Disadvantage, or Emphasis for every buff/debuff. A native feature may apply Emphasis to an eligible attack, check or save for more extreme results without guaranteeing a higher or lower roll. Defending characters can likewise use Emphasis on applicable saving throws/checks when legitimately granted. An effect should not double-count a 5e defender condition's Advantage and its translated native AC penalty.
+
+**Remaining decisions:** The interaction/precedence of **separate simultaneous roll-mode grants** (Advantage, Disadvantage, Emphasis), possible specialized cancellation outcomes, and source/campaign applicability remain to be designed case by case. **Critical escalation rolls are already straight, unmodified d20s** and must not receive Emphasis cancellation or any other roll-mode rule. The ordinary cancellation/reroll rule and symmetric selection formula **are settled**.
 
 ### Preserve the mechanical role of legacy AC categories — grapple contact example
 
