@@ -1,265 +1,54 @@
-name: Validate Rules Core
+name: Validate Rules Core Rewrite Structure
 
 on:
-  pull_request:
-    branches: [ "main" ]
   push:
-    branches: [ "**" ]
+    branches: ["**"]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
-concurrency:
-  group: validate-${{ github.event_name }}-${{ github.event.pull_request.head.ref || github.ref_name }}
-  cancel-in-progress: true
+permissions:
+  contents: read
 
 jobs:
-  fast:
-    name: Fast checks
+  structure:
+    name: Check clean-slate structure and JSON
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "10.0.x"
-
-      - name: Enforce headless service boundary
+      - name: Validate repository skeleton
         run: |
-          test ! -d src/RulesCore.Web/wwwroot
-          if grep -R "UseStaticFiles" -n src/RulesCore.Web; then
-            echo "Rules Core must not serve the Rules Wiki presentation layer."
-            exit 1
-          fi
-          if grep -R 'module = "/app.js"' -n src/RulesCore.Web; then
-            echo "Rules Core service metadata must not advertise a frontend module."
-            exit 1
-          fi
-
-      - name: Restore
-        run: dotnet restore dorks-and-dice-rules-core.slnx
-
-      - name: Validate CI timing helpers
-        run: |
-          python3 tools/create-integration-test-shard-filter.py --self-test
-          python3 tools/summarize-integration-test-timings.py --self-test
-
-      - name: Validate private tunnel Compose boundary
-        env:
-          ConnectionStrings__RulesCore: Host=postgres;Port=5432;Database=rules_core_test;Username=rules_core_test;Password=rules_core_test
-          RulesCorePrivate__Network: rules-wiki-rules-core-test
-        run: |
-          docker compose -f docker-compose.yml config >/dev/null
-          docker compose \
-            -f docker-compose.yml \
-            -f docker-compose.private-tunnel.yml \
-            config --format json > /tmp/rules-core-compose.json
-
           python3 - <<'PY'
           import json
           from pathlib import Path
 
-          config = json.loads(Path('/tmp/rules-core-compose.json').read_text())
-          services = config['services']
-
-          public = services['rules-core']
-          private = services['rules-core-private']
-
-          if public['environment'].get('RulesCore__ApiSurface') != 'PublicOnly':
-              raise SystemExit('Public Rules Core ingress must render RulesCore__ApiSurface=PublicOnly.')
-          if private['environment'].get('RulesCore__ApiSurface') != 'PrivateOnly':
-              raise SystemExit('Private Rules Core ingress must render RulesCore__ApiSurface=PrivateOnly.')
-
-          private_networks = set(private.get('networks', {}))
-          required = {
-              'rules-core-private-tunnel',
-              'dorks-and-dice-tool-control-plane',
-              'rules-core-database',
-          }
-          missing = required - private_networks
+          expected = [
+              "data/native", "data/native/classes/base",
+              "data/native/classes/subclasses", "data/native/classes/prestige",
+              "data/native/classes/npc", "data/native/classes/sidekick",
+              "data/native/species/base", "data/native/species/subspecies",
+              "data/native/bestiary", "data/native/spells", "data/native/feats",
+              "data/conversions", "data/schemas", "data/reference",
+              "src", "docs/rewrite", "tests", "tools",
+          ]
+          missing = [path for path in expected if not Path(path).is_dir()]
           if missing:
-              raise SystemExit(f'Private Rules Core ingress is missing networks: {sorted(missing)}')
-          if 'dorks-and-dice-backend' in private_networks:
-              raise SystemExit('Private Rules Core ingress must not join dorks-and-dice-backend.')
+              raise SystemExit(f"Missing required directories: {missing}")
 
-          public_networks = set(public.get('networks', {}))
-          if 'dorks-and-dice-backend' not in public_networks:
-              raise SystemExit('Public Rules Core ingress must remain on dorks-and-dice-backend.')
-          if 'rules-core-private-tunnel' in public_networks:
-              raise SystemExit('Public Rules Core ingress must not join the private pair network.')
+          retired = [
+              "Directory.Build.props", "dorks-and-dice-rules-core.slnx",
+              "src/RulesCore.Application", "src/RulesCore.Domain",
+              "src/RulesCore.Infrastructure", "src/RulesCore.Web",
+              "tests/RulesCore.Tests", "tests/RulesCore.IntegrationTests",
+          ]
+          still_present = [path for path in retired if Path(path).exists()]
+          if still_present:
+              raise SystemExit(f"Legacy implementation retained: {still_present}")
 
-          networks = config['networks']
-          if networks['rules-core-database'].get('name') != 'dorks-and-dice-rules-core-db':
-              raise SystemExit('Private database network default rendered unexpectedly.')
+          paths = sorted(Path("data").rglob("*.json"))
+          for path in paths:
+              with path.open(encoding="utf-8") as stream:
+                  json.load(stream)
+          print(f"Repository skeleton OK; validated {len(paths)} JSON files.")
           PY
-
-      - name: Unit tests
-        run: >-
-          dotnet test tests/RulesCore.Tests/RulesCore.Tests.csproj
-          --configuration Release
-          --no-restore
-          --logger "trx;LogFileName=unit.trx"
-          --results-directory TestResults/unit
-
-      - name: Upload unit-test timing
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: unit-test-results
-          path: TestResults/unit/*.trx
-          if-no-files-found: warn
-          retention-days: 14
-
-  integration:
-    name: Integration shard ${{ matrix.shard }}
-    if: >-
-      github.event_name == 'pull_request' ||
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'push' && github.ref_name == 'main')
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8]
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "10.0.x"
-
-      - name: Restore previous integration timing profile
-        uses: actions/cache/restore@v4
-        with:
-          path: .ci/integration-timing-profile.json
-          key: rules-core-integration-timing-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref_name }}-${{ github.run_id }}
-          restore-keys: |
-            rules-core-integration-timing-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref_name }}-
-            rules-core-integration-timing-${{ github.event_name }}-
-            rules-core-integration-timing-
-
-      - name: Start isolated PostgreSQL
-        run: |
-          docker rm -f rules-core-integration-${{ matrix.shard }} 2>/dev/null || true
-          docker run -d --name rules-core-integration-${{ matrix.shard }} \
-            -p 127.0.0.1:55432:5432 \
-            -e POSTGRES_DB=rules_core_test \
-            -e POSTGRES_USER=rules_core_test \
-            -e POSTGRES_PASSWORD=rules_core_test \
-            postgres:18
-
-          ready=false
-          for i in {1..30}; do
-            if docker exec rules-core-integration-${{ matrix.shard }} \
-              pg_isready -U rules_core_test -d rules_core_test; then
-              ready=true
-              break
-            fi
-            sleep 1
-          done
-
-          if [ "$ready" != "true" ]; then
-            docker logs rules-core-integration-${{ matrix.shard }}
-            exit 1
-          fi
-
-      - name: Restore
-        run: dotnet restore dorks-and-dice-rules-core.slnx
-
-      - name: Build integration tests
-        run: >-
-          dotnet build tests/RulesCore.IntegrationTests/RulesCore.IntegrationTests.csproj
-          --configuration Release
-          --no-restore
-
-      - name: Discover integration shard
-        id: shard
-        run: |
-          dotnet test tests/RulesCore.IntegrationTests/RulesCore.IntegrationTests.csproj \
-            --configuration Release \
-            --no-build \
-            --no-restore \
-            --list-tests > /tmp/rules-core-integration-tests.txt
-
-          TIMING_ARGS=()
-          if [ -f .ci/integration-timing-profile.json ]; then
-            TIMING_ARGS=(--timings .ci/integration-timing-profile.json)
-          fi
-
-          FILTER="$(python3 tools/create-integration-test-shard-filter.py \
-            --shard "${{ matrix.shard }}" \
-            --shard-count 9 \
-            "${TIMING_ARGS[@]}" \
-            < /tmp/rules-core-integration-tests.txt)"
-
-          if [ -z "$FILTER" ]; then
-            echo "Integration shard filter is empty."
-            exit 1
-          fi
-
-          echo "filter=$FILTER" >> "$GITHUB_OUTPUT"
-
-      - name: Run integration shard
-        env:
-          ConnectionStrings__RulesCore: Host=127.0.0.1;Port=55432;Database=rules_core_test;Username=rules_core_test;Password=rules_core_test
-          RulesCore__BootstrapBaseline: "false"
-        run: >-
-          dotnet test tests/RulesCore.IntegrationTests/RulesCore.IntegrationTests.csproj
-          --configuration Release
-          --no-build
-          --no-restore
-          --filter "${{ steps.shard.outputs.filter }}"
-          --logger "console;verbosity=normal"
-          --logger "trx;LogFileName=integration-shard-${{ matrix.shard }}.trx"
-          --results-directory "TestResults/integration-${{ matrix.shard }}"
-
-      - name: Cleanup isolated PostgreSQL
-        if: always()
-        run: docker rm -f rules-core-integration-${{ matrix.shard }} 2>/dev/null || true
-
-      - name: Upload integration timing
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: integration-test-results-${{ matrix.shard }}
-          path: TestResults/integration-${{ matrix.shard }}/*.trx
-          if-no-files-found: warn
-          retention-days: 14
-
-  integration-timing-profile:
-    name: Integration timing profile
-    if: ${{ always() && needs.integration.result == 'success' }}
-    needs: [integration]
-    continue-on-error: true
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download integration TRX artifacts
-        uses: actions/download-artifact@v4
-        with:
-          pattern: integration-test-results-*
-          path: TestResults
-          merge-multiple: true
-
-      - name: Build measured timing profile
-        run: |
-          mapfile -d '' files < <(find TestResults -type f -name '*.trx' -print0)
-          if [ "${#files[@]}" -eq 0 ]; then
-            echo "No integration TRX files were downloaded."
-            exit 1
-          fi
-
-          python3 tools/summarize-integration-test-timings.py \
-            --output .ci/integration-timing-profile.json \
-            "${files[@]}" | tee /tmp/integration-timing-summary.txt
-
-          {
-            echo "## Integration timing profile"
-            echo
-            cat /tmp/integration-timing-summary.txt
-          } >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Save timing profile for the next validation run
-        uses: actions/cache/save@v4
-        with:
-          path: .ci/integration-timing-profile.json
-          key: rules-core-integration-timing-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref_name }}-${{ github.run_id }}

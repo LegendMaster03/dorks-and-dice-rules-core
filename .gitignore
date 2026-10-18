@@ -1,44 +1,50 @@
-# Build outputs
-[Bb]in/
-[Oo]bj/
-artifacts/
-
-# Visual Studio / IDE
-.vs/
-.idea/
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
-
-# Test results / coverage
-TestResults/
-coverage/
-*.coverage
-*.coveragexml
-
-# Local configuration and secrets
+# Secrets and machine-local configuration
 .env
 .env.*
 !.env.example
 secrets.json
 appsettings.Local.json
+*.pem
+*.key
 
-# Rules Core runtime content. Source payloads and user-provided material are never source-controlled.
-data/cache/
-data/uploads/
-data/sources/
-data/blobs/
-imports/
-source-cache/
+# Local build outputs (runtime-independent)
+build/
+dist/
+out/
+target/
+[Bb]in/
+[Oo]bj/
+artifacts/
+coverage/
+TestResults/
+*.coverage
+*.coveragexml
+node_modules/
+.venv/
+__pycache__/
+*.pyc
 
-# Local databases
-*.db
-*.db-shm
-*.db-wal
-
-# OS/editor noise
+# IDE/editor
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
 .DS_Store
 Thumbs.db
 *.swp
 *.tmp
+
+# Runtime-owned data and previous runtime locations
+runtime/
+imports/
+source-cache/
+data/cache/
+data/uploads/
+data/sources/
+data/blobs/
+*.db
+*.db-shm
+*.db-wal
