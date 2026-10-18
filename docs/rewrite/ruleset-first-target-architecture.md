@@ -220,6 +220,14 @@ On publication of the updated native version, **do not apply the same global adj
 
 **Distinguish responsibilities:** **DM campaign overrides** modify only the authorized campaign's effective rules, **user-uploaded homebrew** remains optional and selectable within eligible permissions, and **global Rules Lawyer edits** affect the shared global layer and may be promoted into native mechanics. A user homebrew choice or DM edit does not automatically become an exportable global Rules Lawyer change or require global approval.
 
+### Owner-facing review inventory and optional Rules Moderator role
+
+**Owner requirement (2026-10-18):** Provide the **Owner** an aggregated view of all **active/published global Rules Lawyer rulings and edits**, with effective scope, changed native mechanic, author/revision, difference from the native rule, affected versions and promotion status. Support search/filters, meaningful before/after comparisons, and selected/all **versioned exports** feeding native mechanic updates. Do not require the owner to browse every source entity separately or query the database manually.
+
+**Authorization:** The existing Site role hierarchy **already lets Owner inherit the Dorks & Dice-scoped Rules Lawyer role**. Maintain Owner access via existing authority; no new role is required solely for viewing global changes. A future **Rules Moderator** could be a new Dorks & Dice-scoped role **inheriting Rules Lawyer authority with explicitly granted extra oversight actions**, if delegated moderation becomes valuable. **That role and its incremental capabilities remain proposed**, not permission to create it now or to require moderator preapproval for every Rules Lawyer edit. Source-body grants remain separately enforced; summaries and exports must not leak restricted text.
+
+**Review semantics:** Inventory **only currently active effective global decisions** in the default view; mark inherited/current context and baseline version rather than conflating global edit history with current effective changes. Preserve inactive/draft, superseded, per-campaign DM decisions and private homebrew in their own contexts. An owner/moderator review disposition can identify changes to export, retain or incorporate but must not silently alter the effective rules. After incorporation, version/reconcile the native baseline and global decision to avoid applying the same adjustment twice. See the [Owner review contract](foundation-and-cutover-gates.md#owner-review-of-all-active-global-rules-lawyer-edits).
+
 ### 5. Examples that must remain distinguishable
 
 - **Alchemy**: a universal learned competency can reconcile 3.x ranked skills and later tool proficiency while preserving their different calculations. The core ruleset determines their interaction in a mixed character.
