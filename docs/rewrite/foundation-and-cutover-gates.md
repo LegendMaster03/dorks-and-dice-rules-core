@@ -155,6 +155,19 @@ Once the **needed stat-block rule families** have converters, implement the shar
 
 Run component-level and cross-system gameplay acceptance, mixed-edition conversion/round-trip fixtures, **tester-feedback regressions**, campaign override/homebrew isolation and opt-in tests, authorization/visibility tests, bounded import/replay, performance and persistence tests. Re-enable only approved APIs/Tools when their specific required behavior is ready. This is **not** a parallel deployment, old-to-new routing switch, mandatory live data migration or wholesale restoration of public Rules Core.
 
+## Global Rules Lawyer changes — export and promote improvements into native mechanics
+
+**Owner clarification (2026-10-18):** Global Rules Lawyers **retain authority to edit and publish shared/global rules** through Rules Core. These rulings are **persisted in the database** so they can be used and tested immediately within their authorized scope. The intended ongoing development workflow is to **export the global changes from the database**, review the meaningful changes, and **update the corresponding native Dorks & Dice mechanic directly** (whether defined as native rule data, an executable procedure or implementation code, as appropriate). This supports iterative early-tester feedback and prevents permanent growth of avoidable global override layers.
+
+**Promotion cycle:**
+1. **Edit and use:** An authorized Rules Lawyer records/publishes a global change; Rules Core applies it through the effective rules context. Keep its original scope, provenance, authoring revision and tester observations.
+2. **Export:** Produce a deterministic, reviewable export or diff of the global decisions against the native baseline. Identify affected mechanic identities, rule versions, applicable source conditions, linked tests and any still-unresolved dependencies; exclude restricted/unlicensed source text and user secrets.
+3. **Review and incorporate:** The developer/owner reviews proposed promotions and updates the **native mechanic definition or implementation** and its automated tests. A global decision **is not automatically rewritten into code or made a permanent baseline rule** merely because it was exported.
+4. **Publish and reconcile:** Release a new native baseline version only with normal approvals; once a rule is natively incorporated, mark the **corresponding global override as incorporated/superseded** for that baseline to prevent **applying it twice**. Preserve the historical decision record and handle campaigns pinned to earlier ruleset versions deterministically.
+5. **Keep intentional exceptions:** Some global rulings are source-specific, provisional, or context-limited and should remain explicit adjudications or conversion mappings rather than becoming universal native rules.
+
+**Boundaries:** **Campaign-scoped DM overrides remain confined to their campaigns.** **User-uploaded homebrew remains selectable and opt-in**, not silently incorporated into global mechanics or the export. If a separately authorized global decision intentionally adopts a particular homebrew contribution, record its licensing, source grants and scope explicitly. Rules Lawyers **do not need to approve every ordinary homebrew selection or DM house rule**. Only their **global** changes feed the proposed native-promotion export, not private drafts, local overrides or unapproved content.
+
 ## Rules Lawyer workload and conversion acceptance
 
 - **No review needed for tested, unambiguous mappings:** The converter can handle routine 3.x/5.x equivalents, source variants and already-approved substitutions automatically, with traceable mapping rule/version and diagnostic output.
@@ -164,6 +177,7 @@ Run component-level and cross-system gameplay acceptance, mixed-edition conversi
 
 ## Evidence before an exposed integration or data change
 
+- For global Rules Lawyer promotion: deterministic export/diff, permission-scoped evidence, baseline-to-adjudication comparison, versioned regression fixtures and a reconciliation check to prevent double application after incorporation into native mechanics.
 - For incremental tester access: scoped entitlement, a documented working feature and its limitations, repeatable feedback captures and ruleset/source versions; **no automatic exposure of all Rules Core or Character Sheet features**.
 - For homebrew/campaign customization: opt-in grants distinct from content access, authorized DM edit/publish scope, effective precedence/reproducibility, protection of restricted sources, and no cross-campaign effects.
 - Foundation kernel native behavior, stable mechanic identities, normalized/effective source distinction and owner-approved examples.
