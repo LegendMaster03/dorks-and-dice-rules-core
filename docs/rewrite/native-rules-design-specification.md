@@ -461,6 +461,32 @@ This is analogous to the existing universal-competency approach: a shared concep
 
 The five-system [combat comparison](combat-system-comparison-3x-5x-pf1.md) documents shared combat intentions and specific differences across D&D 3.0, 3.5, 2014 5e, 2024 5e, and Pathfinder 1e. It covers action economy, surprise, threatened areas, defensive statistics, criticals, conditions, damage, and multiple maneuver procedures. **It does not select the Dorks & Dice combat defaults.** Use it when refining the owner's proposed native combat system, preserving an independent description of owner intent before proposing borrowed mechanics.
 
+### Status effects and defensive AC profiles — restoration candidate
+
+**Owner suggestion (2026-10-18):** Restore much of the gameplay significance of **Flat-Footed AC and Touch AC** through interactions with existing **status effects and the actions that cause them**, rather than confining alternative AC values to inert imported statistics. This continues the established policy of retaining meaningful 3.x defensive categories in one Dorks & Dice combat ruleset. **The owner has not yet approved a complete condition-by-condition mapping or automatic conversion of all 5e conditions.**
+
+**Separate the two axes:**
+- **Target's defensive state:** Some statuses deny a target an effective Dexterity/dodge response, make it helpless, or impose other position-dependent AC penalties. This can engage the **Flat-Footed AC calculation** or a more precise **denied Dexterity/dodge defense modifier**. **Denying Dexterity does not necessarily mean imposing the entire Flat-Footed status**, including its unrelated consequences. Defense calculation must respect exceptional abilities (e.g., Uncanny Dodge where applicable), conditional opponents, and specific remaining penalties.
+- **Attack/effect's defense target:** A touch attack targets **Touch AC** because mere contact is sufficient; it ignores armor/shield/natural armor, not Dexterity/dodge by default. Examples to preserve or evaluate include **3.x Grapple contact**, 3.x Trip contact, and qualifying touch-delivered spells or powers. **Being Blinded, Grappled, Restrained or Stunned does not inherently make every incoming weapon attack a Touch attack.**
+- **Combined cases:** If an attack requires touch and the target is also denied a Dexterity/dodge defense, evaluate both properties together. Do not choose exactly one stored AC label and discard the other; compute the effective defense from the active components and source-defined exceptions.
+
+**Source-grounded 3.5e examples for evaluation (not approved native status conversions):**
+
+| Target state | 3.5e defensive effect | Native integration question |
+| --- | --- | --- |
+| **Flat-Footed** | Lose applicable Dexterity and dodge AC bonuses; other flat-footed consequences also exist | Keep the full condition distinct from merely denying Dexterity |
+| **Blinded** | Lose Dexterity bonus to AC and take an additional **−2 AC** | Which consequences should native Blinded impose without double-counting 5e attack Advantage? |
+| **Stunned** | Lose Dexterity bonus to AC and take an additional **−2 AC** | Does the native condition adopt these AC effects and which exceptions apply? |
+| **Grappling** | Lose Dexterity AC bonus **against non-grappling attackers** | Retain attacker-relative conditional defense, not a global Grappled = Flat-Footed shortcut |
+| **Helpless (e.g., Paralyzed)** | Treat defender Dexterity as **0** (modifier −5), with additional helpless and melee/ranged distinctions | Preserve distinction from ordinary denied-Dexterity and avoid reducing helpless to Flat-Footed |
+| **Prone** | **−4 AC versus melee, +4 versus ranged** | Evaluate source-specific attack-position effects instead of marking every Prone target Flat-Footed |
+
+The [3.5e combat-modifier table](https://www.d20srd.org/srd/combat/combatModifiers.htm), [condition summary](https://www.d20srd.org/srd/conditionSummary.htm), and [AC/touch definitions](https://www.d20srd.org/srd/combat/combatStatistics.htm#armorClass) distinguish these states. A 5e condition may encode some similar danger through **Advantage on attacks** rather than 3.x's AC changes; **do not indiscriminately stack both effects** when migrating that condition without an explicit native rule and impact test.
+
+**Design test:** For any condition, distinguish (1) the status's own effects, (2) any active change to the defender's AC components, (3) whether a **specific incoming attack** targets normal/Touch/other defense, and (4) feature-granted exceptions. Keep the native rules playable without the player choosing an edition's combat physics. Preserve attack-side versus defender-side responsibility so Touch AC remains a meaningful **targeting rule** as well as interacting with status-modified defenses.
+
+**Current status:** **Conceptual direction for case-by-case review**. No new status-specific native penalties, advantage conversion, blanket Flat-Footed assignment, or touch-targeting rule is approved by this note alone.
+
 ### Preserve the mechanical role of legacy AC categories — grapple contact example
 
 **Owner direction (2026-10-18):** Use the existing **ordinary, Touch and Flat-Footed AC** categories purposefully within native Dorks & Dice mechanics, not only as dormant compatibility data. Where 3.x used a particular defense for a physically meaningful step, **prefer keeping that defense even when the rest of the mechanic is redesigned toward a simpler common rules procedure**. This is a case-by-case design principle, not a blanket rule that every maneuver uses Touch AC or that every import gains a new roll.
