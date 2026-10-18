@@ -515,9 +515,11 @@ The [3.5e combat-modifier table](https://www.d20srd.org/srd/combat/combatModifie
 | Normal | Roll one d20 and use its result |
 | Advantage | Roll two d20s and use the higher |
 | Disadvantage | Roll two d20s and use the lower |
-| **Emphasis** | Roll **two d20s** and normally use the result with the **greater absolute distance from 10.5**; **equally extreme results on opposite sides cancel** and are resolved as described below |
+| **Emphasis** | Roll **two d20s**. **If they add up to 21, they cancel**: apply a specified cancellation outcome, or **reroll both dice** if none is specified. Otherwise, use the die with the more extreme result (**closer to 1 or 20**). If both dice match, use that number. |
 
-**Symmetrical selection:** For each die \(d\), use \(E(d)=|d-10.5|\). If one die has a greater absolute distance, select it. A cancellation occurs when the two dice have **equal absolute distances from 10.5 on opposite sides of the midpoint** (on a d20 this is equivalent to \(d_1+d_2=21\)). **A matched pair of identical dice is not cancellation**: [7,7] produces 7, whereas [7,14] cancels. This clarifies the owner's statement that cancellation occurs when the two rolls have equal absolute magnitude: they must have **opposing** magnitudes, not merely equal positive distances or equal face values.
+**Player-facing selection rule (owner wording preference, 2026-10-18):** **If the two dice add up to 21, they cancel.** Otherwise, keep the more extreme die (the result closer to **1 or 20**). If the dice show the same number, use that number. For example, [7,14] cancels; [7,13] selects 7; [7,7] selects 7. **No midpoint calculation is required of players.**
+
+**Implementation explanation (not player-facing text):** On a d20, opposing rolls equally far from the midpoint of **10.5** necessarily sum to **21**. Consequently the sum-to-21 cancellation check is exactly equivalent to cancellation for equal-and-opposite absolute values, without an extra calculation. Between noncanceling rolls, compare their distances to the endpoints 1 and 20 to choose the more extreme roll. Do not alter the specified tie rule for identical dice.
 
 **Cancellation resolution precedence (owner-approved):**
 1. Identify a cancellation **before selecting either d20** or adjudicating ordinary success, failure or critical effects from that pair.
@@ -529,13 +531,13 @@ The [3.5e combat-modifier table](https://www.d20srd.org/srd/combat/combatModifie
 
 | Dice rolled | Effective comparison | Native result without a special cancellation outcome |
 | --- | --- | --- |
-| [1,20] or [20,1] | Equally extreme, opposite directions | **Cancel; reroll both** |
-| [7,14] | 3.5 versus 3.5, opposite directions | **Cancel; reroll both** |
-| [10,11] | 0.5 versus 0.5, opposite directions | **Cancel; reroll both** |
-| [7,13] | 3.5 versus 2.5 | **Select 7** |
-| [4,16] | 6.5 versus 5.5 | **Select 4** |
-| [7,7] | Same roll value, not opposite | **Select 7** |
-| [1,20] with an applicable special cancellation rule | Opposed equivalent extremes | **Apply the explicit cancellation outcome** |
+| [1,20] or [20,1] | Dice add up to 21 | **Cancel; reroll both** |
+| [7,14] | Dice add up to 21 | **Cancel; reroll both** |
+| [10,11] | Dice add up to 21 | **Cancel; reroll both** |
+| [7,13] | 7 is closer to 1 than 13 is to 20 | **Select 7** |
+| [4,16] | 4 is closer to 1 than 16 is to 20 | **Select 4** |
+| [7,7] | Identical results, not a total of 21 | **Select 7** |
+| [1,20] with an applicable special cancellation rule | Dice add up to 21 | **Apply the explicit cancellation outcome** |
 | [1,20] → [7,14] → [4,13] | First two pairs cancel; third selects 4 | **Reroll twice, then select 4** |
 
 **Compatibility note:** The deployed/legacy Rules Core selector currently uses `abs(d20-10)`, keeps the first die when equally scored and reports `selectionTied`. Those were **implementation behavior**, not the adopted symmetric Dorks & Dice Emphasis rule; the new midpoint and cancellation handling supersede them for a future rewrite. Do **not** modify the currently deployed selector simply by editing this specification. The [existing consumer contract](../character-mechanics-consumer.md#d20-roll-selection-modes) describes that **legacy behavior**, not this newly approved native rule.
