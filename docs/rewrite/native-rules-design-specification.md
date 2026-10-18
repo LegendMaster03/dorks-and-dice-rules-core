@@ -200,6 +200,16 @@ Distinguish three separate compatibility goals:
 
 **Scope guardrail:** Do not add mandatory adapters, parser work, consumer migration, back-compat mode switches, or release-blocking acceptance tests now solely to satisfy this aspirational scenario. Structure native mechanics and documented conversion relations so this path is possible later when resources permit.
 
+## Global Rules Lawyer changes feeding native rule improvements
+
+**Owner direction (2026-10-18):** Authorized Rules Lawyers can still edit and publish **global** Rules Layer changes. Those changes are stored in the database and can be used during incremental tester feedback. Periodically **export the global edits**, inspect their rationale and effects, and **incorporate the appropriate changes directly into the native Dorks & Dice mechanic** (its rule definition and/or executable evaluation). This avoids treating a growing collection of database overrides as a permanent substitute for correcting the foundation.
+
+**Not every global decision becomes a native default.** A global ruling may apply only to a particular edition's imported feature, a source-revision discrepancy, or a narrowly scoped exception. Its export should retain those constraints; promote universally only where the mechanic genuinely belongs in the native system. Review and test a proposed update before changing the native baseline. Track incorporated/superseded global revisions so the effective evaluator does not apply the same change twice. Historic decisions and pinned ruleset versions must remain reconstructible.
+
+**Other customization stays independent:** An authorized **DM's campaign-scoped rules changes** do not affect the global baseline or other campaigns. **User-uploaded homebrew** can be private/shared, explicitly selected, and resolved within authorized user/campaign contexts without an automatic Rules Lawyer approval requirement. Neither campaign changes nor ordinary homebrew uploads are implicitly fed into the global export. If a Rules Lawyer intentionally adopts one as a global rule, record the explicit adoption, provenance, licensing and source-access limitations.
+
+**Development acceptance example:** A tester identifies a repeatable native condition interaction problem. An authorized Rules Lawyer publishes a global correction for testing. That decision is exported and reviewed, the native condition procedure is amended with a new regression test, and the global correction is marked as incorporated into the updated native version. Campaign-local overrides and opted-in homebrew still apply only in their allowed contexts, and the correction is not applied twice.
+
 ## Game-design status vocabulary
 
 - **Recovered / established:** a previously approved gameplay decision confirmed in existing Rules Core documentation/code or by the owner; cite concrete evidence and retain its meaning.
