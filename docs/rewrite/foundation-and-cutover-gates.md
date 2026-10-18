@@ -47,7 +47,7 @@ The first integration must preserve Block Initiative's **manual encounter entry 
 
 ## Compatibility to inventory, not assumptions to inherit
 
-Inventory each actual consumer contract before implementing that consumer's first replacement capability. **Start with the small Block Initiative read-only contract; the complete Character Sheet and Wiki contract inventories can follow before their respective integrations.**
+Inventory each actual consumer contract before implementing that consumer's integration. **First build the native foundation and per-subsystem conversion**, then verify Block Initiative's narrow converted stat-block read contract when the stat-block pipeline is ready. Character Sheet and Wiki contract inventories can follow before their respective dev-only integrations.
 
 1. For **Block Initiative**, verify the existing `/tool-host/registrations/rules-core/api/upstream` gateway paths and effective `/api/rules?entityType=monster|condition&q=...&limit=...` search and `/api/rules/{conceptKey}` monster detail shape. Current client code projects HP, initiative modifier, ordinary/Touch/Flat-Footed AC, challenge rating and optional combat statistics. Record expected permission behavior, unavailable-service manual fallback and required provenance; do not mistake this for core combat rules execution.
 2. When work begins on **Character Sheet / Rules Wiki**, inventory their actual external/internal routes, authorization and consumer data contracts independently; these are dev-only consumers and need not be public-ready for Block Initiative.
@@ -72,52 +72,75 @@ Because **Block Initiative is exposed**, coordinate its lookup/detail contract c
 
 **Performance.** Expensive requests need explicit budgeted stages, batched reads, suitable indexes, bounded work queues, safe concurrent worker ownership, and observability. Avoid hiding costly synchronous source reconciliation inside hot read paths.
 
-## Incremental implementation sequence — single in-place rewrite, consumer-specific integration
+## Incremental implementation sequence — native foundation, one complete system at a time
 
-The checkpoints below are **logical work/validation phases**, **not separate live Rules Core instances**, deployment lanes, or a fixed service switch. Work may be organized by the smallest actual consumer capability, and completed parts are verified independently before the next consumer is introduced. Existing documentation has a stronger **full native game-design approval condition before implementing the core engine**; the owner has not revoked that design-approval decision by removing the need for a cutover. **Documentation, contract inventory and acceptance tests for the Block Initiative lookup can be prepared without the entire combat engine being implemented.** Authorize engine code separately.
+**Owner sequencing decision (2026-10-18):** Build the **general Dorks & Dice rules foundation and basic operational functionality first**, then implement **one native rules subsystem at a time together with its imported-content conversion**. Do **not** begin by implementing Block Initiative's lookup or a monster converter ahead of the mechanics that give converted stat blocks their meaning. Do **not** require the entire game's final rules to be written or implemented before the first kernel code. This explicitly **replaces the earlier full-game-before-any-engine-code Gate 0 constraint**. The replacement is still one in-place service, with no dual old/new engine or service cutover.
 
-### Gate 0 — native game design and minimum consumer contract approval (no engine code)
+The principle is **native rule + conversion + tests per subsystem**, all based on a shared, already functional foundation. A subsystem is only considered integrated when an imported implementation can be interpreted and executed (or explicitly marked unsupported) using the same native rules as internally authored content.
 
-**0A — Recover established decisions.** Inventory and verify gameplay choices from competencies, composite skills, advancement, combat, spellcasting, source adjudication and house rules. Identify decisions separately from bugs, old fallbacks and implementation-only details.
+### Phase 0 — design and approve the *foundation*, not the complete rulebook
 
-**0B — Complete the native independent rules specification.** Maintain [native-rules-design-specification.md](native-rules-design-specification.md) as the owner-reviewed source of truth for character creation, advancement, action economy, combat, maneuvers, spellcasting, equipment, conditions, recovery, exploration and GM procedures. Preserve generalized **Level Bands**, with independently evaluated total-character and class/prestige tracks.
+Recover existing approved Dorks & Dice decisions and agree on the smallest **coherent shared vocabulary and basic playable behavior** needed for engine implementation:
 
-**0C — Define source/content compatibility.** Cover native preservation, automated 3e/3.5e/2014 5e/2024 5e conversion, competing contributions, provenance, safe unresolved decisions and explicitly optional Pathfinder 1e scope. Rule/content conversion is different from automatic character or saved-encounter migration.
+- Stable native mechanic/concept identifiers and semantic types: character/creature, ability, roll/check/save, defense, condition/effect, damage, action/resource, feature/grant, progression track and source provenance.
+- A usable ordinary roll/effect-resolution foundation (including approved Normal, Advantage, Disadvantage and **verbatim canonical Emphasis** rule), basic ability/check semantics, simple action/effect results and state boundaries; preserve established Touch/Flat-Footed/ordinary AC distinctions where applicable.
+- Ruleset ownership/versioning, basic eligibility and precedence concepts, source-native versus effective-native representation, user/source grants, restricted content and explicit unresolved/unsupported states.
+- First foundation acceptance cases and deliberately deferred systems; do not pretend that provisional advanced combat, spellcasting or Level Band edge cases are already fully specified.
 
-**0D — Critically compare alternatives.** Use Pathfinder and other sources only after recording the owner's native decisions, especially maneuver design.
+**Approval checkpoint:** Owner reviews the **foundation design and its initial acceptance examples before native engine code**. That is the limited design prerequisite. Subsequent subsystems receive their own focused rule/conversion review **before those subsystem mechanics are implemented**; a finished standalone rulebook is an eventual outcome, **not the prerequisite for creating the foundation**. Separate authorization still applies to merges, deployments, access changes and destructive data changes.
 
-**0E — Approval and acceptance examples.** Separate what is settled from what is optional/open, with ordinary gameplay and cross-edition acceptance cases. The existing **Gate 0 owner sign-off before the full native rules kernel** remains the agreed governance boundary unless explicitly revised. This does **not** make every full-game mechanic a prerequisite for documenting or testing Block Initiative's small monster/condition lookup contract.
+### Phase 1 — create the executable native foundation
 
-**Gate 0 exit:** Explicit owner review and approval before starting the **native gameplay engine**, as already established. This is **not** a cutover/migration/dual-deployment gate and does not by itself authorize merging, deployment or re-enabling public access.
+Build a single **Dorks & Dice-first** kernel, basic ruleset identity, versioning, typed mechanism/effect evaluation, canonical source evidence/provenance model, and persistence that can evolve. Begin with basic characters/creatures, ordinary checks and core rule outcomes sufficient to prove executable native mechanics. Keep the player/DM table rules independent from any imported source edition or adapter schema. Use disposable/sanitized data and regression fixtures. **Do not create a second legacy runtime or require a full import corpus yet.**
 
-### Gate 1 — authoritative Dorks & Dice kernel and data model
+### Phase 2 — implement rules systems as vertical slices, with conversion in each slice
 
-Implement a single, first-class, versioned Dorks & Dice mechanics/ruleset model and persistence in Rules Core, without retaining a second legacy runtime. Design schema and services from accepted native rules rather than reproducing obsolete DTOs. Verify behavior using disposable or sanitized storage; preserve existing records only where the owner needs them and approves the specific data treatment.
+For **each** subsystem:
 
-### Gate 2 — source ingestion, resolved lookup and Block Initiative integration
+1. Recover approved Dorks & Dice rules, settle only material open behavior, and record plain-language rules and examples.
+2. Implement the **native** procedure, effects, constraints, and deterministic tests for that system.
+3. Implement/version relevant **3e, 3.5e, 2014 5e, 2024 5e** and eligible third-party **source-to-native mappings**, including source-specific differences, conditions and permissions. PF1e is optional until adopted; do not require a converter for sources that are not in scope.
+4. Test native authoring, a representative import from each supported format, mixed imported/native behavior, idempotent replay, unauthorized access, uncertain/unmappable input, and how a source rule becomes **available versus adopted/active**.
+5. Publish approved **reusable mapping decisions** as conversion rules; send genuinely ambiguous or contradictory cases to a bounded **Rules Lawyer review queue** with context and suggested alternatives. Approved rules are reused on later imports, with provenance and versioning, rather than requiring per-monster/per-book decisions.
+6. Mark what the slice **does not yet support**. Later imported content can remain source-native/preserved and pending translation, but must **not** silently acquire guessed native outcomes.
 
-Implement the **minimum real source identity, permission-filtered catalog/search, and monster/condition read projections needed by Block Initiative**. Prioritize its actual query and detail contract; test imported stat-block variants, distinct ordinary/Touch/Flat-Footed AC fields, authorized source display, manual-entry fallback, missing data and permission failures. The standard encounter/initiative engine is *not* a Rules Core feature to rebuild. Source import/reconciliation can then expand by actual format/consumer need rather than all sources becoming a precondition for the first useful lookup.
+Candidate order follows dependencies rather than publication/edition: abilities and competencies/roll modes; defenses/conditions/damage; action economy, attacks, maneuvers and criticals; equipment/creature traits; spellcasting/powers; classes, features and Level Bands; travel/environment and other modules. Use dependencies and tests to adjust order. **Imported stat blocks are composite content:** their attacks, traits, spells and conditions become convertible as those subsystems mature.
 
-### Gate 3 — effective rule composition and deterministic mechanics
+### Phase 3 — unified converted stat-block catalog and source access
 
-Add native rules evaluation, source-to-native semantic adaptation, publication/Rules Layer decisions, conflicts, campaign overrides and repeatable context-specific results incrementally. Preserve immutable source truth, grants and provenance. Complete the tested engine behavior that actual consumers request without creating an edition-specific second combat runtime.
+Once the **needed stat-block rule families** have converters, implement the shared stat-block resolution/query path. **Both** (a) Dorks & Dice's **internal database of authored or previously imported stat blocks** and (b) **external source lookups/imports, as currently supported**, must reach the **same authoritative native stat-block projection**. Native-authored facts do not need an unnecessary external-edition translation; imported entries (whether cached internally or retrieved externally) pass through source interpretation and the appropriate **versioned Dorks & Dice conversions** before use.
 
-### Gate 4 — development-only Character Sheet, Rules Wiki and further consumers
+- Preserve original external content and source identity/provenance; do not make external lookup a shortcut that bypasses conversion.
+- Preserve source grants, licenses and appropriate stat-block-level authorization. A source's presence in a database does not automatically make it public or active.
+- A converted stat block contains supported numeric/structural data plus **native-qualified actions, defenses, conditions, damage, features and effects**. Unknown mechanics remain explicitly unresolved or omitted from executable behavior; never pretend the raw text was fully converted.
+- Support deterministic repeatable projection and **reconversion when a conversion rule improves**, without manufacturing new upstream source revisions, erasing deliberate Rules Lawyer decisions, or duplicating one physical source across users.
+- Query details needed for Block Initiative include authorized monster/condition search, HP, initiative modifier, standard/Touch/Flat-Footed AC, CR (when sourced) and other supported combat statistics. Keep manual entry and graceful fallback when lookup is unavailable.
 
-Integrate progressively based on the distinct mechanics required by **Character Sheet** (largest consumer) and the internal/reference requirements of **Rules Wiki**. Verify permission isolation, typed effective mechanics projections, and consumer-owned character/encounter state. Each integration can remain development-only until separately authorized for broader access.
+**Block Initiative integration occurs after this conversion-backed lookup is ready**, not as the first implementation phase merely because it is the sole tester/public Tool. Its turn/block engine already works independently, and native stat-block conversion can be built/tested behind dev access until appropriately complete.
 
-### Gate 5 — validation and controlled access restoration (no cutover)
+### Phase 4 — progressively integrate deeper consumers
 
-Once the relevant capabilities pass tests, consider **whether to re-enable only the appropriate Rules Core routes and permissions** for the applicable Tool(s). This is **not** an old-to-new engine cutover, parallel runtime migration or mandatory wholesale public release. Record the reviewed API surface and access grants, test backup/recovery for any data changes, verify service health and relevant performance, and obtain explicit owner authorization for deployments/access changes. Existing development-only consumers may stay development-only.
+**Character Sheet** stays developer-only and can integrate with completed native slices without waiting for every optional module. **Rules Wiki** authors/displays reviewed native rules and provenance through its own private delegation boundary; it does not become a second mechanics executor. Other Tool integration is driven by real contracts and need, not by an artificial global cutover.
+
+### Phase 5 — verification and selectively restore access (no cutover)
+
+Run component-level and cross-system gameplay acceptance, mixed-edition conversion/round-trip fixtures, authorization/visibility tests, bounded import/replay, performance and persistence tests. Re-enable only approved APIs/Tools when their specific required behavior is ready. This is **not** a parallel deployment, old-to-new routing switch, mandatory live data migration or wholesale restoration of public Rules Core.
+
+## Rules Lawyer workload and conversion acceptance
+
+- **No review needed for tested, unambiguous mappings:** The converter can handle routine 3.x/5.x equivalents, source variants and already-approved substitutions automatically, with traceable mapping rule/version and diagnostic output.
+- **Review only meaningful exceptions:** Conflicting definitions or effective rule choices, unsupported new mechanics, materially different costs/procedures, low-confidence matches and novel source relationships require Rules Lawyer/DM attention as appropriate. A name match or a model confidence score alone does **not** justify auto-adoption.
+- **Reusable outcomes:** An authorized Rules Lawyer decision can become a reusable scoped policy where its evidence and applicability justify that; record exception scope, source/revision and overrides. Subsequent imports must not recreate the same question for every source instance.
+- **Safe defaults:** Preserve and index source-native truth, retain available-but-not-adopted content and show an unresolved conversion status. Do not execute guessed semantics or silently grant restricted source abilities.
 
 ## Evidence before an exposed integration or data change
 
-- **Block Initiative:** automated/manual stat-block lookup behavior, monster and condition search, ACL-filtered source data, correct read projection, stored template handling, independent initiative/encounter operation and manual fallback on Rules Core errors.
-- **New native mechanics:** tests of accepted rule procedures and pure/mixed source interactions **as each capability is built**, including predictable conflicts and source provenance.
-- **Security:** permissions and restricted source visibility at lookup, detail, list/count, Wiki/private delegation and export boundaries wherever implemented.
-- **Data safety:** backups, idempotent imports/reprocessing, explicit treatment of existing records, tested recovery and **no implicit database reset**; use migration tests for schema changes where genuinely needed, **not** a mandatory old-service cutover rehearsal.
-- **Quality:** endpoint-specific response budgets, diagnostics, failure handling, and bounded import work; full-scale performance tests as the affected consumers/volumes warrant them.
-- **Approval:** no merging, deployment, access restoration or destructive persistence changes without explicit owner approval.
+- Foundation kernel native behavior, stable mechanic identities, normalized/effective source distinction and owner-approved examples.
+- Per-system native rule tests **and conversion fixtures together**, including source-specific differences, mixed characters and denial cases.
+- For Block Initiative: converted internal/external monster lookups; condition search; ACL-filtered projections; correct stats; persisted template identities; manual-entry fallback; independent initiative operation.
+- Immutable provenance, proper duplicate-source treatment, replay/idempotence, explicit unresolved handling and reusable Rules Lawyer outcomes; no unauthorized source content exposure.
+- Appropriate backups/recovery and schema tests for actual data changes; **no implicit database reset** or invented old/new cutover rehearsal.
+- Relevant diagnostics/response budgets and explicit owner approval for merges, deployments, restored access or destructive persistence changes.
 
 ## Decisions deliberately not made in Gate 0
 
