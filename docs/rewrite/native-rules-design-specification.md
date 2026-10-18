@@ -517,7 +517,13 @@ The [3.5e combat-modifier table](https://www.d20srd.org/srd/combat/combatModifie
 | Disadvantage | Roll two d20s and use the lower |
 | **Emphasis** | Roll **two d20s**. **If they add up to 21, they cancel**: apply a specified cancellation outcome, or **reroll both dice** if none is specified. Otherwise, use the die with the more extreme result (**closer to 1 or 20**). If both dice match, use that number. |
 
-**Player-facing selection rule (owner wording preference, 2026-10-18):** **If the two dice add up to 21, they cancel.** Otherwise, keep the more extreme die (the result closer to **1 or 20**). If the dice show the same number, use that number. For example, [7,14] cancels; [7,13] selects 7; [7,7] selects 7. **No midpoint calculation is required of players.**
+**Canonical player-facing Emphasis rule (owner-approved wording, 2026-10-18; reproduce verbatim in rules text and player-facing tools):**
+
+> Emphasis: Roll two d20s. If the results add up to 21, they cancel each other out. Apply any special cancellation effect defined by the applicable rule. If no such effect exists, reroll both dice.
+>
+> Otherwise, use whichever result is more extreme (closer to 1 or 20). If both dice show the same number, use that number.
+
+**Examples:** [7,14] cancels; [7,13] selects 7; [7,7] selects 7. The exact player-facing rule above deliberately avoids midpoint notation.
 
 **Implementation explanation (not player-facing text):** On a d20, opposing rolls equally far from the midpoint of **10.5** necessarily sum to **21**. Consequently the sum-to-21 cancellation check is exactly equivalent to cancellation for equal-and-opposite absolute values, without an extra calculation. Between noncanceling rolls, compare their distances to the endpoints 1 and 20 to choose the more extreme roll. Do not alter the specified tie rule for identical dice.
 
