@@ -299,6 +299,28 @@ A 5e-style Extra Attack and a 3.5-style full attack must be allowed to have diff
 
 These questions refine the unified action economy; **they do not reopen the owner's decisions to unify action economy, use 5.x-style splittable movement by default, or retain explicit full-turn restrictions where a rule requires them**.
 
+## Feat-granted advanced expressions of basic combat mechanics — proposed design pattern
+
+**Owner preference (2026-10-18):** When a more involved version of an ordinary combat mechanic grants a substantial new capability or tactical advantage, **consider granting that extension through an eligible feat or class feature**. This preserves the accessible ordinary mechanic while allowing interested players to invest in a deeper version. It is a **design pattern to evaluate**, not a rule that every complex action must be feat-locked or that the examples below are already approved.
+
+**Specific owner clarification:** The intended Reaction/AoO approach is **more permitted uses of an existing Reaction**, **not more Reactions per turn or round**. Do not translate this preference into extra reaction slots, unrestricted opportunity-attack counts, or a second reaction budget. Any actual ability that increases available reactions would need its own separate, explicit approval.
+
+**Examples for scrutiny (not new feats):**
+- A character ordinarily makes an opportunity attack when the established shared trigger occurs. A qualifying feat might allow the character to use **the same Reaction** for a Trip/Disarm maneuver **instead** of an ordinary weapon attack.
+- A feat might authorize **additional qualifying triggers** for a particular reactive action, still paid for with the character's normal Reaction. More triggers provide more choices, **not** more uses.
+- A defensive specialist might gain a new eligible Reaction to intervene for an ally, instead of gaining another Reaction.
+- A feat or class feature may improve an ordinary Shove/Attack with a specialized, stronger procedure while ordinary Shove/Attack remains available and fully playable.
+
+**Limitations / design objections to check before adopting each conversion:**
+1. **A complexity label alone is not a feat prerequisite.** Grant features because the character gains a meaningful capability, not to put common combat actions behind a feat tax.
+2. **Default rules stay shared.** A general provocation trigger, condition, or movement rule should not silently differ based solely on which player wants more intricate gameplay. A granted feature can expand a character's options or triggers without making two incompatible universal combat rules.
+3. **Costs remain meaningful.** Reactive maneuvers may replace a basic reaction attack, or may add a permitted effect only when a particular feature explicitly grants it; do not assume both damage **and** maneuver effect are free. Multiple qualifying triggers do not restore an already-spent Reaction.
+4. **Access is not feat-exclusive.** Existing class features, source feats or other legitimate grants can supply an advanced ability. Preserve source-character conversion and provenance rather than stripping an intrinsic 3.x class capability to sell it back as a new feat.
+5. **Combat feats are distinct from free flavor feats.** The owner's rule granting flavor feats freely must not be used to grant substantive reactive combat power for free.
+6. **Table depth remains opt-in.** A character who owns an advanced feat may still choose the straightforward action; all-basic, all-advanced and mixed groups use the same reaction/action budget. Equal power is not a design requirement.
+
+**Open decisions:** The basic opportunity-attack triggers have not been chosen; neither have the exact reaction-refresh budget and Swift/Immediate conversion. Those determine which advanced reactive feat benefits would be genuinely additional. Assess each candidate against the actual default and its opportunity cost before specifying feat requirements, numbers or outcomes.
+
 ## Combat maneuvers, Weapon Mastery and combo attacks — distinct roles
 
 **Owner clarification (2026-10-09):** The suggestion to combine all of these mechanics into a single *Combat Techniques* system was deliberately presented as a test of critical design review. **It is not a design requirement, an approved system, or even a demonstrated improvement.** Do not build a new mandatory unified combat mechanic from conceptual similarities alone.
