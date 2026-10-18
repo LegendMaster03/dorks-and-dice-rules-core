@@ -475,7 +475,7 @@ The five-system [combat comparison](combat-system-comparison-3x-5x-pf1.md) docum
 | Target state | 3.5e defensive effect | Native integration question |
 | --- | --- | --- |
 | **Flat-Footed** | Lose applicable Dexterity and dodge AC bonuses; other flat-footed consequences also exist | Keep the full condition distinct from merely denying Dexterity |
-| **Blinded** | Lose Dexterity bonus to AC and take an additional **−2 AC** | Which consequences should native Blinded impose without double-counting 5e attack Advantage? |
+| **Blinded** | Lose Dexterity bonus to AC and take an additional **−2 AC** | **Resolved attack side:** Attacks made while Blinded use Disadvantage, **not a separate 50% miss check**. **Defense side:** Resolve AC/defense consequences under the established target-impairment rule; avoid duplicated Advantage for the same penalty, with exact native penalty mapping still subject to condition-level review. |
 | **Stunned** | Lose Dexterity bonus to AC and take an additional **−2 AC** | Does the native condition adopt these AC effects and which exceptions apply? |
 | **Grappling** | Lose Dexterity AC bonus **against non-grappling attackers** | Retain attacker-relative conditional defense, not a global Grappled = Flat-Footed shortcut |
 | **Helpless (e.g., Paralyzed)** | Treat defender Dexterity as **0** (modifier −5), with additional helpless and melee/ranged distinctions | Preserve distinction from ordinary denied-Dexterity and avoid reducing helpless to Flat-Footed |
@@ -486,6 +486,16 @@ The [3.5e combat-modifier table](https://www.d20srd.org/srd/combat/combatModifie
 **Design test:** For any condition, distinguish (1) the status's own effects, (2) any active change to the defender's AC components, (3) whether a **specific incoming attack** targets normal/Touch/other defense, and (4) feature-granted exceptions. Keep the native rules playable without the player choosing an edition's combat physics. Preserve attack-side versus defender-side responsibility so Touch AC remains a meaningful **targeting rule** as well as interacting with status-modified defenses.
 
 **Current status:** **Conceptual direction for case-by-case review**. No new status-specific native penalties, advantage conversion, blanket Flat-Footed assignment, or touch-targeting rule is approved by this note alone.
+
+### Blinded: keep attack Disadvantage instead of a separate concealment roll
+
+**Owner decision (2026-10-18):** The **attacker/defender effect attribution** rule is already established; there is no need to reopen the choice of underlying representation as a new condition framework. When a creature **attacks while Blinded**, use the normal **Disadvantage** d20 mode rather than the older 3.x **50% miss chance** associated with the blinded creature's inability to see its opponent. This is a deliberate Dorks & Dice simplification, **not a claim that Disadvantage exactly equals a 50% miss chance**.
+
+**Probability distinction (not an obstacle to the approved choice):** Given a normal hit probability `p`, Disadvantage results in `p²` before other complexities such as criticals, while a separate 50% miss chance after an otherwise successful attack gives `0.5p`. At `p = 0.60`, these are **36%** and **30%**, respectively; the two treatments may differ significantly at other hit rates. The owner explicitly prefers simpler play here.
+
+**Blinded defender:** Evaluate the defender's condition-based AC/defensive restrictions using the existing subject-of-effect and retained 3.x defense principles. Do **not** automatically grant each attacker 5e-style Advantage **in addition to** a semantically equivalent target-side AC penalty. Preserve the distinction between actually becoming Flat-Footed and merely losing relevant Dexterity/dodge contributions; finalize individual numeric condition consequences through ordinary native status review rather than creating a new resolution architecture.
+
+**Scope:** This decision replaces the 3.x blindness-related 50% miss roll **for an attack made while Blinded**. It does **not** delete or globally replace **other distinct concealment, miss-chance or source-specific avoidance effects**. Apply explicit rule grants and exception handling as normal; different independently granted effects should be evaluated for actual scope and legitimate stacking. See [3.5 condition rules](https://www.d20srd.org/srd/conditionSummary.htm#blinded) and [3.5 concealment mechanics](https://www.d20srd.org/srd/combat/combatModifiers.htm#concealment).
 
 ### Attacker versus defender effect ownership — representation principle
 
