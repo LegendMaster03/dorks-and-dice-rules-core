@@ -508,7 +508,7 @@ The five-system [combat comparison](combat-system-comparison-3x-5x-pf1.md) docum
 
 ## Combat maneuvers — owner-ideas-first design worksheet
 
-**Status: owner has ideas; no Dorks & Dice maneuver-resolution formula or default list is approved.** Do not first translate these ideas into Pathfinder's CMB/CMD scheme, D&D 3.x attack-of-opportunity procedures, or D&D 5.x contested checks/saving throws.
+**Status:** The owner has selected the **3.x touch attack + opposed grapple check, with grapple-check or Escape Artist escape**, as the specific native **Grapple** baseline above. **Other maneuvers remain unapproved**, including whether they share a resolution formula or a default action list. Do not automatically translate those others into Pathfinder's CMB/CMD scheme, D&D 3.x attack-of-opportunity procedures, or D&D 5.x contested checks/saving throws.
 
 An initial *working model* to evaluate is that a **maneuver is a declared combat action or effect that changes the situation of one or more targets**, often positioning, restraint, control, equipment possession, or status rather than simply reducing hit points. This is intentionally wider than a combat-statistic or opposed-check category, and it is only a starting definition.
 
@@ -523,7 +523,7 @@ Capture the owner's intended rules for each candidate maneuver through common qu
 - **Interactions:** Bonuses/penalties from size, competencies, feats, class features, creature traits, weapons and conditions; stacking; repeated attempts; ties.
 - **Source adaptation:** How should a 3.x, 5.x, or later PF1e maneuver map to a native intent/outcome while preserving different original resolution procedures when needed?
 
-Candidate examples for *comparison after the owner's explanation*, not an approved list: grapple, shove/forced movement, trip/knock prone, disarm, overrun, sunder, and restraint. The old Rules Core computes a `combat.grapple` **modifier**, but this is not the same as having a full native grapple **procedure**.
+**Unresolved maneuver examples** for comparison: shove/forced movement, trip/knock prone, disarm, overrun, sunder, and restraint. **Grapple is now the first native maneuver with a selected procedure family**, though complete action, state and source-conversion interactions are pending. The old Rules Core computes a `combat.grapple` **modifier**, but that does not by itself implement the newly selected Grapple procedure.
 
 ### First native design checkpoint
 
