@@ -78,6 +78,10 @@ Because **Block Initiative is exposed**, coordinate its lookup/detail contract c
 
 The principle is **native rule + conversion + tests per subsystem**, all based on a shared, already functional foundation. A subsystem is only considered integrated when an imported implementation can be interpreted and executed (or explicitly marked unsupported) using the same native rules as internally authored content.
 
+**Early tester feedback (owner direction, 2026-10-18):** A reviewed, working **subset of native mechanics should become available to specifically authorized testers before the full game is finished**, rather than treating tester access as a final release milestone. Progressively enabled features use the same native Rules Core as development and eventually normal play; there is no separate tester-only rules engine. Protect the intentionally hidden global Rules Core and other dev-only tools: **enabling access to one tested feature is not blanket re-enablement**. Preserve a way to submit, classify and reproduce tester feedback and refine native rules/conversion fixtures before locking subsequent dependent systems. This is a development feedback loop, not authorization to deploy or change access settings now.
+
+**Customizability preserved from the existing model:** Authorized DMs can specify **campaign-scoped changes to effective rules**; users can **upload homebrew content** for private use/sharing and users or authorized campaign managers can **explicitly select eligible homebrew packages or rules**. The same native rules engine resolves these, with provenance and scope; selecting/accessing a source and *activating* it are separate operations. No upload silently changes the global ruleset or any other campaign. User-uploaded homebrew and DM campaign overrides must not require Rules Lawyer approval by default. Rules Lawyers handle globally published reconciliation or genuinely new shared conversion disputes, not ordinary campaign choices.
+
 ### Phase 0 — design and approve the *foundation*, not the complete rulebook
 
 Recover existing approved Dorks & Dice decisions and agree on the smallest **coherent shared vocabulary and basic playable behavior** needed for engine implementation:
@@ -85,6 +89,7 @@ Recover existing approved Dorks & Dice decisions and agree on the smallest **coh
 - Stable native mechanic/concept identifiers and semantic types: character/creature, ability, roll/check/save, defense, condition/effect, damage, action/resource, feature/grant, progression track and source provenance.
 - A usable ordinary roll/effect-resolution foundation (including approved Normal, Advantage, Disadvantage and **verbatim canonical Emphasis** rule), basic ability/check semantics, simple action/effect results and state boundaries; preserve established Touch/Flat-Footed/ordinary AC distinctions where applicable.
 - Ruleset ownership/versioning, basic eligibility and precedence concepts, source-native versus effective-native representation, user/source grants, restricted content and explicit unresolved/unsupported states.
+- **Customization extension points from the start:** user-uploaded homebrew ownership/versioning, share/access grants and explicit opt-in adoption; DM-authorized campaign rule changes, with isolation from the global system and other campaigns. Decide effective precedence and applicability before enabling each kind of override, but do not hard-code a future fixed list of every homebrew mechanic.
 - First foundation acceptance cases and deliberately deferred systems; do not pretend that provisional advanced combat, spellcasting or Level Band edge cases are already fully specified.
 
 **Approval checkpoint:** Owner reviews the **foundation design and its initial acceptance examples before native engine code**. That is the limited design prerequisite. Subsequent subsystems receive their own focused rule/conversion review **before those subsystem mechanics are implemented**; a finished standalone rulebook is an eventual outcome, **not the prerequisite for creating the foundation**. Separate authorization still applies to merges, deployments, access changes and destructive data changes.
@@ -92,6 +97,8 @@ Recover existing approved Dorks & Dice decisions and agree on the smallest **coh
 ### Phase 1 — create the executable native foundation
 
 Build a single **Dorks & Dice-first** kernel, basic ruleset identity, versioning, typed mechanism/effect evaluation, canonical source evidence/provenance model, and persistence that can evolve. Begin with basic characters/creatures, ordinary checks and core rule outcomes sufficient to prove executable native mechanics. Keep the player/DM table rules independent from any imported source edition or adapter schema. Use disposable/sanitized data and regression fixtures. **Do not create a second legacy runtime or require a full import corpus yet.**
+
+**The foundation must support layering without building every authoring screen now:** A published native baseline, eligible selected homebrew/other source contributions, and authorized campaign modifications compose into the same reproducible effective ruleset. Preserve the distinction between access to a package, selecting it for use, and publishing/activating the resulting rule. Early regression cases should prove that one campaign's DM override and one user's private homebrew do not affect another campaign or user.
 
 ### Phase 2 — implement rules systems as vertical slices, with conversion in each slice
 
@@ -105,6 +112,28 @@ For **each** subsystem:
 6. Mark what the slice **does not yet support**. Later imported content can remain source-native/preserved and pending translation, but must **not** silently acquire guessed native outcomes.
 
 Candidate order follows dependencies rather than publication/edition: abilities and competencies/roll modes; defenses/conditions/damage; action economy, attacks, maneuvers and criticals; equipment/creature traits; spellcasting/powers; classes, features and Level Bands; travel/environment and other modules. Use dependencies and tests to adjust order. **Imported stat blocks are composite content:** their attacks, traits, spells and conditions become convertible as those subsystems mature.
+
+### Continuous tester feedback — after each usable subsystem, not only at full-system completion
+
+For every completed and reviewed native subsystem, make a **separately authorized, limited tester-facing workflow** available when practical, without waiting for all later systems or a converted monster catalog:
+
+1. Confirm the slice's supported behavior, deterministic tests, relevant conversion cases, known omissions and source permissions.
+2. Expose **only the approved slice** to the intended tester accounts through an appropriate Tool/test harness; the full Rules Core remains hidden by default and Character Sheet need not become public.
+3. Record test cases and feedback tied to a **ruleset version, converted source revision, homebrew/campaign configuration and reproduction steps**. Distinguish native rule defects, mapping/conversion defects, authorization issues, and usability feedback.
+4. Resolve issues in the owning subsystem and update its documentation/tests/mapping rules before depending on it in later slices; if source semantics genuinely conflict, use Rules Lawyer review. A tester cannot modify the global published baseline merely by reporting a preference.
+5. Allow optional tabletop/manual play tests as well as digital integration tests; early testing must not force use of Character Sheet or Block Initiative.
+
+**This feedback loop operates throughout Phase 1–4.** It is not a request for a second service, public access to undeveloped systems, or general release of the previous Rules Core.
+
+### Homebrew and campaign-specific rules — progressive capability
+
+- **Author/upload:** Accept user-created rules/content as separately attributed, versioned homebrew packages or entries (subject to safe import formats, source ownership/licenses and normal access checks). Preserve original artifacts and mechanical interpretation separately. Homebrew can extend existing concepts or introduce new ones through declared, reviewed extension points; **do not permit unchecked arbitrary executable code** as a rule definition.
+- **Share/access:** The uploader controls permitted sharing within the authorized product model. A homebrew package can be private, offered to other users, or eligible for selection by a campaign. Access to a package is **not** an effective-rules activation or a grant to re-share restricted material.
+- **Select/adopt:** A user may explicitly enable eligible homebrew in their own applicable rules context; a DM/campaign owner chooses **shared campaign-effective rules** for the table. A personal selection must not override shared campaign mechanics or another user's state without appropriate authority.
+- **Modify:** An authorized DM can change, disable, replace or supplement applicable rules **within their campaign**, while the global Dorks & Dice baseline, other campaigns, imported source truth and original homebrew remain unchanged. Treat changes as scoped rules and record their version, precedence and provenance.
+- **Resolve:** The normal native evaluator composes versioned baseline rules, accessible activated contributions and authorized campaign choices, then returns deterministic effective behavior and why it applies. Conflicts are explicit; a rule must not become active only because someone uploaded it, and missing permission must not leak its contents.
+- **Review:** Routine homebrew creation, selection and DM campaign overrides **do not require a Rules Lawyer**. Rules Lawyer input applies to global/common adjudication, complex source normalization or genuinely ambiguous shared conversions—not as a general gate for tables playing their own homebrew.
+- **Test early:** Include private homebrew, optional shared homebrew, campaign override, unchanged other-campaign result, revoked access and conflicting selected rules among foundational/component acceptance cases; richer authoring/editor UI can follow as a later integration.
 
 ### Phase 3 — unified converted stat-block catalog and source access
 
@@ -120,11 +149,11 @@ Once the **needed stat-block rule families** have converters, implement the shar
 
 ### Phase 4 — progressively integrate deeper consumers
 
-**Character Sheet** stays developer-only and can integrate with completed native slices without waiting for every optional module. **Rules Wiki** authors/displays reviewed native rules and provenance through its own private delegation boundary; it does not become a second mechanics executor. Other Tool integration is driven by real contracts and need, not by an artificial global cutover.
+**Character Sheet** stays developer-only by default and can integrate with completed native slices without waiting for every optional module. **Rules Wiki** authors/displays reviewed native rules and provenance through its own private delegation boundary; it does not become a second mechanics executor. Consumer access may be granted **selectively to authorized testers for completed slices**, without exposing the entire tool or lifting other dev-only restrictions. Homebrew upload/selection and campaign-authorized rule editing should progress through the same effective-rules API without requiring global Rules Lawyer publication. Other Tool integration is driven by real contracts and need, not by an artificial global cutover.
 
 ### Phase 5 — verification and selectively restore access (no cutover)
 
-Run component-level and cross-system gameplay acceptance, mixed-edition conversion/round-trip fixtures, authorization/visibility tests, bounded import/replay, performance and persistence tests. Re-enable only approved APIs/Tools when their specific required behavior is ready. This is **not** a parallel deployment, old-to-new routing switch, mandatory live data migration or wholesale restoration of public Rules Core.
+Run component-level and cross-system gameplay acceptance, mixed-edition conversion/round-trip fixtures, **tester-feedback regressions**, campaign override/homebrew isolation and opt-in tests, authorization/visibility tests, bounded import/replay, performance and persistence tests. Re-enable only approved APIs/Tools when their specific required behavior is ready. This is **not** a parallel deployment, old-to-new routing switch, mandatory live data migration or wholesale restoration of public Rules Core.
 
 ## Rules Lawyer workload and conversion acceptance
 
@@ -135,6 +164,8 @@ Run component-level and cross-system gameplay acceptance, mixed-edition conversi
 
 ## Evidence before an exposed integration or data change
 
+- For incremental tester access: scoped entitlement, a documented working feature and its limitations, repeatable feedback captures and ruleset/source versions; **no automatic exposure of all Rules Core or Character Sheet features**.
+- For homebrew/campaign customization: opt-in grants distinct from content access, authorized DM edit/publish scope, effective precedence/reproducibility, protection of restricted sources, and no cross-campaign effects.
 - Foundation kernel native behavior, stable mechanic identities, normalized/effective source distinction and owner-approved examples.
 - Per-system native rule tests **and conversion fixtures together**, including source-specific differences, mixed characters and denial cases.
 - For Block Initiative: converted internal/external monster lookups; condition search; ACL-filtered projections; correct stats; persisted template identities; manual-entry fallback; independent initiative operation.
