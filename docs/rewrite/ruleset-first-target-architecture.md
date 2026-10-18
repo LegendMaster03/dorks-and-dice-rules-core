@@ -210,6 +210,16 @@ Composition must distinguish additive options from mutually exclusive implementa
 
 The evaluator should consume a deterministic compiled/effective rules context, with stable references to its system version, rule contributions, selected decisions, and provenance. Game Tools provide state and present the resulting effects; they do not independently reimplement game logic or choose an edition to make a calculation.
 
+### Global Rules Lawyer edits as a development-to-native feedback path
+
+**Owner clarification (2026-10-18):** The global Rules Layer remains editable by authorized **Rules Lawyers**. Published global edits can apply while the relevant subsystem is in development/test; they are also **exportable from the database** as proposed improvements to the **native Dorks & Dice mechanic**. Rather than accumulate equivalent permanent global patches, the intended development loop is **global edit → export/review → modify the native rule definition or evaluator → test and version the native baseline → reconcile the redundant global edit**.
+
+This is **not** automatic DB-to-source-code mutation. An export records the rule/concept identity, changed applicability/procedure/effect, source or exception scope, relevant authoring/baseline versions and provenance in a reproducible diff or structured artifact. A developer/owner reviews it and incorporates suitable changes into authored native rule data or implementation code with regression tests. Some decisions are source-specific conversion exceptions or provisional rulings and should **not** become universal baseline mechanics.
+
+On publication of the updated native version, **do not apply the same global adjustment twice**. Track which global revision was incorporated or superseded for which native baseline; retain history and respect version-pinned campaigns where applicable. Re-exporting an already incorporated global decision should not generate another supposed change. Avoid including restricted source bodies in an unlicensed export.
+
+**Distinguish responsibilities:** **DM campaign overrides** modify only the authorized campaign's effective rules, **user-uploaded homebrew** remains optional and selectable within eligible permissions, and **global Rules Lawyer edits** affect the shared global layer and may be promoted into native mechanics. A user homebrew choice or DM edit does not automatically become an exportable global Rules Lawyer change or require global approval.
+
 ### 5. Examples that must remain distinguishable
 
 - **Alchemy**: a universal learned competency can reconcile 3.x ranked skills and later tool proficiency while preserving their different calculations. The core ruleset determines their interaction in a mixed character.
@@ -239,6 +249,8 @@ The evaluator should consume a deterministic compiled/effective rules context, w
 **Before each subsystem code**, document and approve that subsystem's native rules, source-to-native conversion/exception policy and representative **pure native, single-source and mixed-source test cases**. Finish the independent full-system rulebook **incrementally as a result of these slices**, not as a global prerequisite for writing the foundational kernel. Mechanically meaningful 3.x rules are not flattened merely to reduce imported source variants; approved 5e-style simplifications may apply where appropriate.
 
 **Rules Lawyer workload policy:** Routine, tested, approved translations are automatic and reusable; substantive conflict or semantic uncertainty receives informed adjudication, with the accepted resolution captured as reusable scoped rules. Manual review is not a required step for every stat block, source entity or rule. An uncertain mapping must not be silently made effective.
+
+**Global iteration, not permanent database-only patching:** Rules Lawyers can publish global refinements during early testing; export those edits, review them and amend the underlying native mechanic where the change genuinely belongs. Record native baseline version, incorporated global decision IDs and conversion exceptions so updates are reproducible and do not double-apply. See [the global promotion cycle](foundation-and-cutover-gates.md#global-rules-lawyer-changes--export-and-promote-improvements-into-native-mechanics).
 
 ## Gate requirements
 
