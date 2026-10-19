@@ -1,0 +1,35 @@
+name: Correct Monster Tactical Identities
+
+on:
+  push:
+    branches: [feature/rules-core-baseline-consistency]
+    paths:
+      - tools/correct_monster_tactics_identity.py
+      - tests/test_monster_family_reconciliation.py
+      - .github/workflows/correct-monster-tactics.yml
+
+permissions:
+  contents: write
+
+jobs:
+  correct:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove tactics-only duplicate identities
+        run: python3 tools/correct_monster_tactics_identity.py
+      - name: Regression tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Verify structural integrity
+        run: python3 tools/audit_native_baseline.py
+      - name: Commit changes on review branch
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/native data/reference/srd/native-coverage-manifest.json data/reference/srd/monster-legacy-variant-review.json docs/rewrite/native-reconciliation-statistics.json
+          git commit -m "data(rewrite): consolidate goblinoid tactics under one creature identity"
+          git push origin HEAD:feature/rules-core-baseline-consistency
