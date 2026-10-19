@@ -308,11 +308,13 @@ Supersedes the *native-gameplay interpretation* of `docs/epic-content-modeling.m
 
 ### Monster families and variant identities — 5.5e-style design direction
 
-**Owner direction (2026-10-18):** Prefer the expanded variety of the 5.5e monster design, using **distinct tactical/role-based monster variants** instead of combining all inherited abilities into one overloaded stat block. A family such as Goblin may offer Minion, Warrior and Boss variants; those are distinct creatures within one native ruleset, not selectable source editions. SRD 5.2.1's variant roster is the starting point for reconciliation.
+**Owner clarification (2026-10-18):** Different combat tactics **do not justify separate creatures**. The DM already chooses how a creature uses its attacks, movement, positioning, targets and available abilities. Use **one coherent stat block** for a given monster identity, with the DM free to use whichever legal tactics fit the encounter.
 
-When an old monster has no exact-name 5.2.1 match, **compare its role and mechanics with newer named variants** before concluding that it is unique content. An older Goblin and a newer Goblin Warrior, for instance, are likely candidates for semantic identity mapping rather than automatic duplication. Preserve genuinely distinct older tactical roles when useful, without copying every older ability onto every newer variant. Keep incompatible numerical or procedural changes open until the applicable coherent stat block is established; do not fabricate new variants solely to avoid making a conflict decision.
+5.5e's larger collection of role-specific creatures remains the preferred roster model **when the differences genuinely change the creature**: for example, a Goblin Minion, Warrior and Boss have distinct statistics, capabilities and encounter roles. Do not create an extra monster simply because an older stat block favors ambushes while the newer one favors grappling. Older Hobgoblin and Bugbear names are semantic aliases of Hobgoblin Warrior and Bugbear Warrior, respectively.
 
-See `docs/rewrite/monster-variant-family-model.md` for the group/role model, sample crosswalk and audit caveats. This design direction does not authorize arbitrary numerical mixing or a parallel edition-switch runtime.
+If older mechanics add compatible, nonredundant abilities to a creature, reconcile those abilities *within that creature's coherent definition*, following the five approved rules. If they change attack damage, resource costs, action economy or other mechanical effects, review the consequences instead of stacking them automatically. The DM's tactical discretion does not itself grant an additional mechanical option not present in the native definition. Meaningfully different statistical identities can still be distinct role variants, but **tactics alone are not a variant boundary**.
+
+See `docs/rewrite/monster-variant-family-model.md` for the family model, reviewed aliases, and older abilities pending integration. Do not introduce independent edition defaults or parallel runtime stat blocks.
 
 ## Core rules chapters to complete progressively by native subsystem
 
