@@ -72,13 +72,15 @@ class LegacyMonsterAbilityTests(unittest.TestCase):
         self.assertIn("halves the damage",
                       json.dumps(cloaker["action"]))
 
-    def test_limited_old_mephit_spell_access_preserved(self):
-        for name in ("magma-mephit", "steam-mephit"):
-            record = read("data/native/bestiary/" + name + ".json")
-            spellcasting = record["definition"].get("spellcasting", [])
-            self.assertEqual(1, len(spellcasting))
-            self.assertEqual("Innate Spellcasting (1/Day)",
-                             spellcasting[0]["name"])
+    def test_mephit_spell_access_reconciled_without_duplicates(self):
+        magma = read("data/native/bestiary/magma-mephit.json")["definition"]
+        self.assertEqual(
+            ["Innate Spellcasting (1/Day)"],
+            [s["name"] for s in magma.get("spellcasting", [])])
+        steam = read("data/native/bestiary/steam-mephit.json")["definition"]
+        self.assertFalse(steam.get("spellcasting"))
+        self.assertIn(
+            "Blurred Form", [t["name"] for t in steam.get("trait", [])])
 
     def test_5_5_only_monsters_are_not_reconciled_against_missing_sources(self):
         pirate = read("data/native/bestiary/pirate.json")
