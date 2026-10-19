@@ -97,7 +97,8 @@ class BarbarianBand1Tests(unittest.TestCase):
                                  record["baselineStatus"])
                 self.assertIn("candidateDefinitions", record)
         manifest = read(MANIFEST)
-        by_path = {row["path"]: row for row in manifest["coverage"]}
+        by_path = {row["path"]: row for row in manifest["coverage"]
+                   if "path" in row}
         for path in [BASE, *FEATURES.glob("*.json")]:
             rel = path.relative_to(ROOT).as_posix()
             row = by_path[rel]
