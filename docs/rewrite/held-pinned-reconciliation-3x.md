@@ -16,7 +16,7 @@ In the 3.0 and 3.5 grapple procedures, a pinned creature is held immobile for on
 
 The pinning creature may elect to prevent speech. Without that choice, Pinned does not silence the target. No full Incapacitated inheritance is applied, so available escape options remain possible.
 
-Breaking a pin with an opposed grapple check or the separately retained Dexterity-based Escape Artist check **removes Pinned, not Grappled**. Voluntary release by the pinner ends that pinner's grapple; independent grapples by other combatants remain.
+**Precondition:** A Pinned effect requires a separately active Grappled instance from the same pinner. This prevents applying Pinned alone from creating a temporary Grappled state that disappears when the pin is broken.\n\nBreaking a pin with an opposed grapple check or the separately retained Dexterity-based Escape Artist check **removes Pinned, not Grappled**. Voluntary release by the pinner ends that pinner's grapple; independent grapples by other combatants remain.
 
 The historical 3.5 pinned casting restrictions and DC 20 + spell level Concentration skill check are preserved as data but marked **pending native spellcasting reconciliation**. Likewise, the 3.x initiation in place of an attack and the Standard Action escape cost are recorded, not silently converted into new Action or Reaction budgets. The source-defined pin duration is one round unless overridden.
 

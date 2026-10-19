@@ -56,6 +56,11 @@ class HeldPinnedTests(unittest.TestCase):
     def test_pinned_is_grappled_not_helpless_or_incapacitated(self):
         pinned = self.native["condition.pinned"]
         self.assertEqual(["condition.grappled"], pinned["appliesConditions"])
+        self.assertEqual([{"condition": "condition.grappled",
+                           "sourceRelation": "same-pinner",
+                           "mustBeIndependentlyActive": True}],
+                         pinned["requiresConditions"])
+        self.assertTrue(pinned["relationships"]["requiresLinkedIndependentGrapple"])
         self.assertNotIn("condition.helpless", pinned["appliesConditions"])
         self.assertNotIn("condition.incapacitated", pinned["appliesConditions"])
         self.assertIn({"type": "speed", "operation": "set", "value": 0,

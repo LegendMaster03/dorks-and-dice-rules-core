@@ -9,6 +9,7 @@
     "Against the pinning creature, a pin does not grant the additional -4 AC penalty. Against outside attackers, apply the condition's -4 AC adjustment on top of the existing Grappled loss of applicable Dexterity and dodge defenses.",
     "The creature maintaining the pin may choose to prevent the pinned target from speaking. A pin without that choice does not itself silence the target.",
     "A successful pin escape removes Pinned while the original Grappled remains in effect. Release by the pinner instead ends the pinner's grapple. Other independent grapplers are unaffected.",
+    "Applying Pinned requires an independently active Grappled instance maintained by that pinner. Pinned cannot create its own only Grappled instance; this ensures removing a pin leaves the existing Grappled in place when the creature has not escaped the original hold.",
     "A pin expires after one round unless an effect specifies a different duration or renews it. Independent applications retain their own source and expiration.",
     "Pinning is a result of a qualifying grapple maneuver, not an automatic consequence of becoming Grappled. Its initiation cost and timing await the unified combat maneuver rules.",
     "The 3.5 pinned spellcasting restrictions are preserved as source-specific candidate mechanics pending native spellcasting and action-cost reconciliation."
@@ -17,7 +18,8 @@
     "requires": "pinning-creature-or-effect-identifier",
     "mayHaveMultipleGrapplers": true,
     "grappledSource": "linked-pinner-grapple",
-    "escapeDoesNotEraseIndependentGrapples": true
+    "escapeDoesNotEraseIndependentGrapples": true,
+    "requiresIndependentGrappleFromPinner": true
   },
   "sourceProcedure": {
     "pin": "opposed-grapple-check-in-place-of-attack",

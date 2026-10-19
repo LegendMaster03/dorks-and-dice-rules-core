@@ -980,8 +980,16 @@
       "relationships": {
         "pinner": "the-creature-maintaining-this-pin",
         "preservesIndependentGrapples": true,
-        "helpless": false
-      }
+        "helpless": false,
+        "requiresLinkedIndependentGrapple": true
+      },
+      "requiresConditions": [
+        {
+          "condition": "condition.grappled",
+          "sourceRelation": "same-pinner",
+          "mustBeIndependentlyActive": true
+        }
+      ]
     },
     {
       "id": "condition.poisoned",
