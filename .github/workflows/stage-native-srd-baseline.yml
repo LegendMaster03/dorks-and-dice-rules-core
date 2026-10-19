@@ -1,0 +1,60 @@
+name: One-time native SRD baseline staging
+
+on:
+  push:
+    branches: [feature/rules-core-rewrite]
+    paths:
+      - .github/workflows/stage-native-srd-baseline.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rules-core-native-srd-one-time
+  cancel-in-progress: false
+
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Build and verify pending native rules baseline
+        run: |
+          set -euo pipefail
+          python3 tools/_stage_native_srd_once.py
+          python3 - <<'PY'
+          import collections
+          import json
+          from pathlib import Path
+          root=Path("data/native")
+          coverage=json.loads(Path("data/reference/srd/native-coverage-manifest.json").read_text())
+          assert coverage["sourceFilesVerified"]==90
+          assert coverage["nativeDefinitionCount"]>=1200, coverage["nativeDefinitionCount"]
+          assert not coverage["warnings"], coverage["warnings"]
+          assert (root/"classes/base/wizard.json").is_file()
+          assert (root/"spells/acid-splash.json").is_file()
+          assert (root/"species/base/dragonborn.json").is_file()
+          assert (root/"bestiary/aboleth.json").is_file()
+          assert (root/"rules/legal-information.json").is_file()
+          conditions=json.loads((root/"conditions.json").read_text())["conditions"]
+          assert len(conditions)==15, len(conditions)
+          assert len([c for c in conditions if c["id"]=="condition.exhaustion"])==1
+          assert len([c for c in conditions if c["id"]=="condition.grappled"])==1
+          assert sum(c.get("baselineStatus")=="pending-native-reconciliation" for c in conditions)==9
+          assert "data/native/skills.json" not in {f["path"] for f in coverage["coverage"]}
+          pending=sum(e["status"] in ("multiple-candidates","single-candidate") for e in coverage["coverage"])
+          print("Staged",coverage["nativeDefinitionCount"],"entries with",pending,"unresolved candidates")
+          PY
+      - name: Commit native baseline staging
+        run: |
+          set -euo pipefail
+          test "$(git branch --show-current)" = "feature/rules-core-rewrite"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data/native data/reference/srd/native-coverage-manifest.json
+          if ! git diff --cached --quiet; then
+            git -c commit.gpgsign=false commit -m "data(rewrite): populate complete pending native SRD baseline without rule adjudication"
+            git push origin HEAD:feature/rules-core-rewrite
+          fi
