@@ -2,23 +2,17 @@
   "id": "deity.hestia",
   "name": "Hestia",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Hestia",
-        "pantheon": "Greek",
-        "alignment": [
-          "N",
-          "G"
-        ],
-        "title": "Goddess of home and family",
-        "domains": [
-          "Life"
-        ],
-        "symbol": "Hearth"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "title": "Goddess of home and family",
+    "domains": [
+      "Life"
+    ],
+    "symbol": "Hearth"
+  }
 }

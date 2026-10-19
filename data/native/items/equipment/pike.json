@@ -2,48 +2,23 @@
   "id": "baseitem.pike",
   "name": "Pike",
   "kind": "baseitem",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Pike",
-        "type": "M",
-        "rarity": "none",
-        "weight": 18,
-        "value": 500,
-        "weaponCategory": "martial",
-        "property": [
-          "H",
-          "R",
-          "2H"
-        ],
-        "dmg1": "1d10",
-        "dmgType": "P",
-        "weapon": true
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Pike",
-        "type": "M|SRD52",
-        "rarity": "none",
-        "weight": 18,
-        "value": 500,
-        "weaponCategory": "martial",
-        "property": [
-          "H|SRD52",
-          "R|SRD52",
-          "2H|SRD52"
-        ],
-        "mastery": [
-          "Push|SRD52"
-        ],
-        "dmg1": "1d10",
-        "dmgType": "P",
-        "weapon": true
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "M|SRD52",
+    "rarity": "none",
+    "weight": 18,
+    "value": 500,
+    "weaponCategory": "martial",
+    "property": [
+      "H|SRD52",
+      "R|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d10",
+    "dmgType": "P",
+    "weapon": true
+  }
 }

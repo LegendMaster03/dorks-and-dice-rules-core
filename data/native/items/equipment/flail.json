@@ -2,38 +2,18 @@
   "id": "baseitem.flail",
   "name": "Flail",
   "kind": "baseitem",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Flail",
-        "type": "M",
-        "rarity": "none",
-        "weight": 2,
-        "value": 1000,
-        "weaponCategory": "martial",
-        "dmg1": "1d8",
-        "dmgType": "B",
-        "weapon": true
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Flail",
-        "type": "M|SRD52",
-        "rarity": "none",
-        "weight": 2,
-        "value": 1000,
-        "weaponCategory": "martial",
-        "mastery": [
-          "Sap|SRD52"
-        ],
-        "dmg1": "1d8",
-        "dmgType": "B",
-        "weapon": true
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "M|SRD52",
+    "rarity": "none",
+    "weight": 2,
+    "value": 1000,
+    "weaponCategory": "martial",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "weapon": true
+  }
 }

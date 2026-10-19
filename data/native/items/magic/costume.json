@@ -2,20 +2,14 @@
   "id": "item.costume",
   "name": "Costume",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Costume",
-        "type": "G|SRD52",
-        "rarity": "none",
-        "weight": 4,
-        "value": 500,
-        "entries": [
-          "While wearing a Costume, you have {@variantrule Advantage|SRD52} on any ability check you make to impersonate the person or type of person it represents."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 4,
+    "value": 500,
+    "entries": [
+      "While wearing a Costume, you have {@variantrule Advantage|SRD52} on any ability check you make to impersonate the person or type of person it represents."
+    ]
+  }
 }

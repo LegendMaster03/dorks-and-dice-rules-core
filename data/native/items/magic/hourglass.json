@@ -2,17 +2,11 @@
   "id": "item.hourglass",
   "name": "Hourglass",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Hourglass",
-        "type": "G",
-        "rarity": "none",
-        "weight": 1,
-        "value": 2500
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 1,
+    "value": 2500
+  }
 }

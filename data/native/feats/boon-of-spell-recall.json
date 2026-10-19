@@ -2,42 +2,36 @@
   "id": "feat.boon-of-spell-recall",
   "name": "Boon of Spell Recall",
   "kind": "feat",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Boon of Spell Recall",
-        "category": "EB",
-        "prerequisite": [
-          {
-            "level": 19,
-            "spellcasting2020": true
-          }
-        ],
-        "ability": [
-          {
-            "choose": {
-              "from": [
-                "int",
-                "wis",
-                "cha"
-              ]
-            },
-            "max": 30
-          }
-        ],
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "category": "EB",
+    "prerequisite": [
+      {
+        "level": 19,
+        "spellcasting2020": true
+      }
+    ],
+    "ability": [
+      {
+        "choose": {
+          "from": [
+            "int",
+            "wis",
+            "cha"
+          ]
+        },
+        "max": 30
+      }
+    ],
+    "entries": [
+      "You gain the following benefits.",
+      {
+        "type": "entries",
+        "name": "Free Casting",
         "entries": [
-          "You gain the following benefits.",
-          {
-            "type": "entries",
-            "name": "Free Casting",
-            "entries": [
-              "Whenever you cast a spell with a level 1-4 spell slot, roll {@dice 1d4}. If the number you roll is the same as the slot's level, the slot isn't expended."
-            ]
-          }
+          "Whenever you cast a spell with a level 1-4 spell slot, roll {@dice 1d4}. If the number you roll is the same as the slot's level, the slot isn't expended."
         ]
       }
-    }
-  ]
+    ]
+  }
 }

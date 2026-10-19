@@ -2,154 +2,148 @@
   "id": "monster.flying-sword",
   "name": "Flying Sword",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Animated Objects"
+    ],
+    "size": [
+      "S"
+    ],
+    "type": "construct",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      {
+        "ac": 17,
+        "from": [
+          "natural armor"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 17,
+      "formula": "5d6"
+    },
+    "speed": {
+      "walk": 0,
+      "fly": {
+        "number": 50,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "str": 12,
+    "dex": 15,
+    "con": 11,
+    "int": 1,
+    "wis": 5,
+    "cha": 1,
+    "save": {
+      "dex": "+4"
+    },
+    "senses": [
+      "blindsight 60 ft. (blind beyond this radius)"
+    ],
+    "passive": 7,
+    "immune": [
+      "poison",
+      "psychic"
+    ],
+    "conditionImmune": [
+      "blinded",
+      "charmed",
+      "deafened",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned"
+    ],
+    "cr": "1/4",
+    "trait": [
+      {
+        "name": "Antimagic Susceptibility",
+        "entries": [
+          "The sword is {@condition incapacitated} while in the area of an {@spell antimagic field}. If targeted by {@spell dispel magic}, the sword must succeed on a Constitution saving throw against the caster's spell save DC or fall {@condition unconscious} for 1 minute."
+        ]
+      },
+      {
+        "name": "False Appearance",
+        "entries": [
+          "While the sword remains motionless and isn't flying, it is indistinguishable from a normal sword."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Longsword",
+        "entries": [
+          "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d8 + 1}) slashing damage."
+        ]
+      }
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/flying-sword.opus"
+    },
+    "attachedItems": [
+      "longsword|srd51"
+    ],
+    "traitTags": [
+      "Antimagic Susceptibility",
+      "False Appearance"
+    ],
+    "senseTags": [
+      "B"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "miscTags": [
+      "MLW",
+      "MW"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Flying Sword",
-        "group": [
-          "Animated Objects"
-        ],
-        "size": [
-          "S"
-        ],
-        "type": "construct",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          {
-            "ac": 17,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 17,
-          "formula": "5d6"
-        },
-        "speed": {
-          "walk": 0,
-          "fly": {
-            "number": 50,
-            "condition": "(hover)"
-          },
-          "canHover": true
-        },
-        "str": 12,
-        "dex": 15,
-        "con": 11,
-        "int": 1,
-        "wis": 5,
-        "cha": 1,
-        "save": {
-          "dex": "+4"
-        },
-        "senses": [
-          "blindsight 60 ft. (blind beyond this radius)"
-        ],
-        "passive": 7,
-        "immune": [
-          "poison",
-          "psychic"
-        ],
-        "conditionImmune": [
-          "blinded",
-          "charmed",
-          "deafened",
-          "frightened",
-          "paralyzed",
-          "petrified",
-          "poisoned"
-        ],
-        "cr": "1/4",
-        "trait": [
-          {
-            "name": "Antimagic Susceptibility",
-            "entries": [
-              "The sword is {@condition incapacitated} while in the area of an {@spell antimagic field}. If targeted by {@spell dispel magic}, the sword must succeed on a Constitution saving throw against the caster's spell save DC or fall {@condition unconscious} for 1 minute."
-            ]
-          },
-          {
-            "name": "False Appearance",
-            "entries": [
-              "While the sword remains motionless and isn't flying, it is indistinguishable from a normal sword."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Longsword",
-            "entries": [
-              "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d8 + 1}) slashing damage."
-            ]
-          }
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/flying-sword.opus"
-        },
-        "attachedItems": [
-          "longsword|srd51"
-        ],
-        "traitTags": [
-          "Antimagic Susceptibility",
-          "False Appearance"
-        ],
-        "senseTags": [
-          "B"
-        ],
-        "damageTags": [
-          "S"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Flying Sword",
-            "_copy": {
-              "name": "Animated Objects",
-              "source": "SRD51",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    "A flying sword dances through the air, fighting with the confidence of a warrior that can't be injured. Swords are the most common weapons animated with magic. Axes, clubs, daggers, maces, spears, and even self-loading crossbows are also known to exist in animated object form.",
+        "_copy": {
+          "name": "Animated Objects",
+          "source": "SRD51",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                "A flying sword dances through the air, fighting with the confidence of a warrior that can't be injured. Swords are the most common weapons animated with magic. Axes, clubs, daggers, maces, spears, and even self-loading crossbows are also known to exist in animated object form.",
+                {
+                  "type": "insetReadaloud",
+                  "entries": [
                     {
-                      "type": "insetReadaloud",
+                      "type": "quote",
                       "entries": [
-                        {
-                          "type": "quote",
-                          "entries": [
-                            "Lyin' next to the chest were the bones of {@style Cap'n Scornblade|small-caps} himself, still clutchin' his rusty sword. Imagine my surprise when the blade flew from his bony grasp! Still go the scar."
-                          ],
-                          "by": "Levity Quickstitch, halfling rogue"
-                        }
-                      ]
+                        "Lyin' next to the chest were the bones of {@style Cap'n Scornblade|small-caps} himself, still clutchin' his rusty sword. Imagine my surprise when the blade flew from his bony grasp! Still go the scar."
+                      ],
+                      "by": "Levity Quickstitch, halfling rogue"
                     }
                   ]
                 }
-              }
+              ]
+            }
+          }
+        },
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/MM/Flying Sword.webp"
             },
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Flying Sword.webp"
-                },
-                "width": 594,
-                "height": 1000
-              }
-            ]
+            "width": 594,
+            "height": 1000
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

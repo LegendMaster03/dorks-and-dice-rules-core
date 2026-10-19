@@ -2,22 +2,16 @@
   "id": "deity.zeus",
   "name": "Zeus",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Zeus",
-        "pantheon": "Greek",
-        "alignment": [
-          "N"
-        ],
-        "title": "God of the sky, ruler of the gods",
-        "domains": [
-          "Tempest"
-        ],
-        "symbol": "Fist full of lightning bolts"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "N"
+    ],
+    "title": "God of the sky, ruler of the gods",
+    "domains": [
+      "Tempest"
+    ],
+    "symbol": "Fist full of lightning bolts"
+  }
 }

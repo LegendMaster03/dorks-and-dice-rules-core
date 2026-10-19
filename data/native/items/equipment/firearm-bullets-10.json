@@ -2,30 +2,24 @@
   "id": "baseitem.firearm-bullets-10",
   "name": "Firearm Bullets (10)",
   "kind": "baseitem",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Firearm Bullets (10)",
-        "type": "A|SRD52",
-        "rarity": "none",
-        "weight": 2,
-        "value": 300,
-        "bulletFirearm": true,
-        "entries": [
-          "Firearm Bullets are destroyed upon use in a modern firearm."
-        ],
-        "packContents": [
-          {
-            "item": "firearm bullet|srd52",
-            "quantity": 10
-          }
-        ],
-        "miscTags": [
-          "CNS"
-        ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "A|SRD52",
+    "rarity": "none",
+    "weight": 2,
+    "value": 300,
+    "bulletFirearm": true,
+    "entries": [
+      "Firearm Bullets are destroyed upon use in a modern firearm."
+    ],
+    "packContents": [
+      {
+        "item": "firearm bullet|srd52",
+        "quantity": 10
       }
-    }
-  ]
+    ],
+    "miscTags": [
+      "CNS"
+    ]
+  }
 }

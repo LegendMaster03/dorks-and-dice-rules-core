@@ -2,20 +2,14 @@
   "id": "item.totem",
   "name": "Totem",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Totem",
-        "group": [
-          "Druidic Focus"
-        ],
-        "type": "SCF",
-        "scfType": "druid",
-        "rarity": "none",
-        "value": 100
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Druidic Focus"
+    ],
+    "type": "SCF",
+    "scfType": "druid",
+    "rarity": "none",
+    "value": 100
+  }
 }

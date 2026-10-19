@@ -2,23 +2,17 @@
   "id": "deity.hermes",
   "name": "Hermes",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Hermes",
-        "pantheon": "Greek",
-        "alignment": [
-          "C",
-          "G"
-        ],
-        "title": "God of travel and commerce",
-        "domains": [
-          "Trickery"
-        ],
-        "symbol": "Caduceus (winged staff and serpents)"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "title": "God of travel and commerce",
+    "domains": [
+      "Trickery"
+    ],
+    "symbol": "Caduceus (winged staff and serpents)"
+  }
 }

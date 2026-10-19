@@ -2,29 +2,12 @@
   "id": "item.mastiff",
   "name": "Mastiff",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Mastiff",
-        "type": "MNT",
-        "rarity": "none",
-        "value": 2500,
-        "carryingCapacity": 195,
-        "speed": 40
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Mastiff",
-        "type": "MNT|SRD52",
-        "rarity": "none",
-        "value": 2500,
-        "carryingCapacity": 195,
-        "speed": 40
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "MNT",
+    "rarity": "none",
+    "value": 2500,
+    "carryingCapacity": 195,
+    "speed": 40
+  }
 }

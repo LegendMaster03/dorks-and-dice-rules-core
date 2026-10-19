@@ -2,17 +2,11 @@
   "id": "itementry.scroll-of-protection",
   "name": "Scroll of Protection",
   "kind": "itemEntry",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Scroll of Protection",
-        "entriesTemplate": [
-          "Using a {@action Magic|SRD52} action to read the scroll creates a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. For 5 minutes, {{item.detail2}} can't enter or affect anything in the area. However, if you move in such a way that an {{item.detail1}} would be inside the area, the effect ends.",
-          "As a {@action Magic|SRD52} action, a creature within 5 feet of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} can attempt to overcome it, which forces the creature to make a {@dc 15} Charisma saving throw. On a successful save, the creature ceases to be affected by the {@variantrule Emanation [Area of Effect]|SRD52|Emanation}."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "entriesTemplate": [
+      "Using a {@action Magic|SRD52} action to read the scroll creates a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. For 5 minutes, {{item.detail2}} can't enter or affect anything in the area. However, if you move in such a way that an {{item.detail1}} would be inside the area, the effect ends.",
+      "As a {@action Magic|SRD52} action, a creature within 5 feet of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} can attempt to overcome it, which forces the creature to make a {@dc 15} Charisma saving throw. On a successful save, the creature ceases to be affected by the {@variantrule Emanation [Area of Effect]|SRD52|Emanation}."
+    ]
+  }
 }

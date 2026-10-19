@@ -2,16 +2,10 @@
   "id": "item.sealing-wax",
   "name": "Sealing Wax",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Sealing Wax",
-        "type": "G",
-        "rarity": "none",
-        "value": 50
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "value": 50
+  }
 }

@@ -2,163 +2,157 @@
   "id": "monster.minotaur-of-baphomet",
   "name": "Minotaur of Baphomet",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 85,
+      "formula": "10d10 + 30"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "str": 18,
+    "dex": 11,
+    "con": 16,
+    "int": 6,
+    "wis": 16,
+    "cha": 9,
+    "skill": {
+      "perception": "+7",
+      "survival": "+7"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 17,
+    "languages": [
+      "Abyssal"
+    ],
+    "cr": "3",
+    "action": [
+      {
+        "name": "Abyssal Glaive",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 10 ft. {@h}10 ({@damage 1d12 + 4}) Slashing damage plus 10 ({@damage 3d6}) Necrotic damage."
+        ]
+      },
+      {
+        "name": "Gore {@recharge 5}",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}18 ({@damage 4d6 + 4}) Piercing damage. If the target is a Large or smaller creature and the minotaur moved 10+ feet straight toward it immediately before the hit, the target takes an extra 10 ({@damage 3d6}) Piercing damage and has the {@condition Prone|SRD52} condition."
+        ]
+      }
+    ],
+    "environment": [
+      "underdark"
+    ],
+    "treasure": [
+      "armaments"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "languageTags": [
+      "AB"
+    ],
+    "damageTags": [
+      "N",
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Minotaur of Baphomet",
-        "size": [
-          "L"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "ac": [
-          14
-        ],
-        "hp": {
-          "average": 85,
-          "formula": "10d10 + 30"
-        },
-        "speed": {
-          "walk": 40
-        },
-        "str": 18,
-        "dex": 11,
-        "con": 16,
-        "int": 6,
-        "wis": 16,
-        "cha": 9,
-        "skill": {
-          "perception": "+7",
-          "survival": "+7"
-        },
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 17,
-        "languages": [
-          "Abyssal"
-        ],
-        "cr": "3",
-        "action": [
+        "entries": [
           {
-            "name": "Abyssal Glaive",
+            "type": "section",
+            "name": "Minotaur of Baphomet",
             "entries": [
-              "{@atkr m} {@hit 6}, reach 10 ft. {@h}10 ({@damage 1d12 + 4}) Slashing damage plus 10 ({@damage 3d6}) Necrotic damage."
-            ]
-          },
-          {
-            "name": "Gore {@recharge 5}",
-            "entries": [
-              "{@atkr m} {@hit 6}, reach 5 ft. {@h}18 ({@damage 4d6 + 4}) Piercing damage. If the target is a Large or smaller creature and the minotaur moved 10+ feet straight toward it immediately before the hit, the target takes an extra 10 ({@damage 3d6}) Piercing damage and has the {@condition Prone|SRD52} condition."
+              "{@i Berserker of the Demon Lord of Beasts}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Underdark|bestiary|environment=underdark}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Armaments"
+                  }
+                ]
+              },
+              "Baphomet, Demon Lord of Beasts, claims to have created minotaurs and demands their worship. While most minotaurs live free of the demon lord's bonds, those that serve him become minotaurs of Baphomet. These brutes resemble the hulking, horned demon lord more than others of their kind, and they wreak havoc in that foul immortal's name. Rarely, non-minotaurs cursed by magic-users or spiteful deities might transform into these monsters.",
+              "Minotaurs of Baphomet often dwell in mazes, leading their allies to hidden destinations and stalking trespassers. Roll on or choose a result from the Minotaur Mazes table to inspire the shape of a minotaur's dwelling.",
+              {
+                "type": "table",
+                "caption": "Minotaur Mazes",
+                "colLabels": [
+                  "1d4",
+                  "The Minotaur of Baphomet Lurks In..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "A multilevel mine or sewer."
+                  ],
+                  [
+                    "2",
+                    "Multiple mazes connected by magic portals."
+                  ],
+                  [
+                    "3",
+                    "A poisonous swamp with labyrinthine paths."
+                  ],
+                  [
+                    "4",
+                    "The ruins of a buried palace or temple."
+                  ]
+                ]
+              }
             ]
           }
         ],
-        "environment": [
-          "underdark"
-        ],
-        "treasure": [
-          "armaments"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "languageTags": [
-          "AB"
-        ],
-        "damageTags": [
-          "N",
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "MA",
-          "MLW",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "hasToken": true,
-        "lore": [
+        "images": [
           {
-            "name": "Minotaur of Baphomet",
-            "entries": [
-              {
-                "type": "section",
-                "name": "Minotaur of Baphomet",
-                "entries": [
-                  "{@i Berserker of the Demon Lord of Beasts}",
-                  {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Underdark|bestiary|environment=underdark}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Armaments"
-                      }
-                    ]
-                  },
-                  "Baphomet, Demon Lord of Beasts, claims to have created minotaurs and demands their worship. While most minotaurs live free of the demon lord's bonds, those that serve him become minotaurs of Baphomet. These brutes resemble the hulking, horned demon lord more than others of their kind, and they wreak havoc in that foul immortal's name. Rarely, non-minotaurs cursed by magic-users or spiteful deities might transform into these monsters.",
-                  "Minotaurs of Baphomet often dwell in mazes, leading their allies to hidden destinations and stalking trespassers. Roll on or choose a result from the Minotaur Mazes table to inspire the shape of a minotaur's dwelling.",
-                  {
-                    "type": "table",
-                    "caption": "Minotaur Mazes",
-                    "colLabels": [
-                      "1d4",
-                      "The Minotaur of Baphomet Lurks In..."
-                    ],
-                    "colStyles": [
-                      "col-2 text-center",
-                      "col-10"
-                    ],
-                    "rows": [
-                      [
-                        "1",
-                        "A multilevel mine or sewer."
-                      ],
-                      [
-                        "2",
-                        "Multiple mazes connected by magic portals."
-                      ],
-                      [
-                        "3",
-                        "A poisonous swamp with labyrinthine paths."
-                      ],
-                      [
-                        "4",
-                        "The ruins of a buried palace or temple."
-                      ]
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Minotaur of Baphomet.webp"
-                },
-                "credit": "Brian Valenzuela",
-                "width": 2550,
-                "height": 1650
-              }
-            ]
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Minotaur of Baphomet.webp"
+            },
+            "credit": "Brian Valenzuela",
+            "width": 2550,
+            "height": 1650
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

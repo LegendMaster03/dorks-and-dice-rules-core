@@ -338,25 +338,19 @@
       "id": "itemtype.trade-bar",
       "name": "Trade Bar",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-b",
-          "content": {
+      "baselineStatus": "retained-native-definition",
+      "definition": {
+        "abbreviation": "TB",
+        "entries": [
+          {
+            "type": "entries",
             "name": "Trade Bar",
-            "abbreviation": "TB",
             "entries": [
-              {
-                "type": "entries",
-                "name": "Trade Bar",
-                "entries": [
-                  "Because large numbers of coins can be difficult to transport and account for, many merchants prefer to use trade bars—ingots of precious metals and alloys (usually silver). These bars are valued by weight."
-                ]
-              }
+              "Because large numbers of coins can be difficult to transport and account for, many merchants prefer to use trade bars—ingots of precious metals and alloys (usually silver). These bars are valued by weight."
             ]
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "id": "itemtype.trade-good",
@@ -403,16 +397,10 @@
       "id": "itemtype.treasure",
       "name": "Treasure",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Treasure",
-            "abbreviation": "$"
-          }
-        }
-      ]
+      "baselineStatus": "retained-native-definition",
+      "definition": {
+        "abbreviation": "$"
+      }
     },
     {
       "id": "itemtype.treasure-art-object",
@@ -512,31 +500,14 @@
       "id": "itemtype.vehicle-air",
       "name": "Vehicle (Air)",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Vehicle (Air)",
-            "abbreviation": "AIR",
-            "_copy": {
-              "abbreviation": "SHP",
-              "source": "SRD51"
-            }
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Vehicle (Air)",
-            "abbreviation": "AIR",
-            "_copy": {
-              "abbreviation": "SHP",
-              "source": "SRD52"
-            }
-          }
+      "baselineStatus": "retained-native-definition",
+      "definition": {
+        "abbreviation": "AIR",
+        "_copy": {
+          "abbreviation": "SHP",
+          "source": "SRD51"
         }
-      ]
+      }
     },
     {
       "id": "itemtype.vehicle-land",

@@ -2,38 +2,32 @@
   "id": "item.three-dragon-ante-set",
   "name": "Three-Dragon Ante Set",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Three-Dragon Ante Set",
-        "type": "GS|SRD52",
-        "rarity": "none",
-        "value": 100,
-        "entries": [
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "GS|SRD52",
+    "rarity": "none",
+    "value": 100,
+    "entries": [
+      {
+        "type": "list",
+        "style": "list-hang-notitle",
+        "items": [
           {
-            "type": "list",
-            "style": "list-hang-notitle",
-            "items": [
-              {
-                "name": "Ability:",
-                "type": "item",
-                "entries": [
-                  "Wisdom"
-                ]
-              },
-              {
-                "name": "Utilize:",
-                "type": "item",
-                "entries": [
-                  "Discern whether someone is cheating ({@dc 10}), or win the game ({@dc 20})"
-                ]
-              }
+            "name": "Ability:",
+            "type": "item",
+            "entries": [
+              "Wisdom"
+            ]
+          },
+          {
+            "name": "Utilize:",
+            "type": "item",
+            "entries": [
+              "Discern whether someone is cheating ({@dc 10}), or win the game ({@dc 20})"
             ]
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

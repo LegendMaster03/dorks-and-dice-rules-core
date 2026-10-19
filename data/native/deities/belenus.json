@@ -2,23 +2,17 @@
   "id": "deity.belenus",
   "name": "Belenus",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Belenus",
-        "pantheon": "Celtic",
-        "alignment": [
-          "N",
-          "G"
-        ],
-        "title": "God of sun, light, and warmth",
-        "domains": [
-          "Light"
-        ],
-        "symbol": "Solar disk and standing stones"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Celtic",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "title": "God of sun, light, and warmth",
+    "domains": [
+      "Light"
+    ],
+    "symbol": "Solar disk and standing stones"
+  }
 }

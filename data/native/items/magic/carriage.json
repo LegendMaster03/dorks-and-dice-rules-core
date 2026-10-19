@@ -2,27 +2,11 @@
   "id": "item.carriage",
   "name": "Carriage",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Carriage",
-        "type": "VEH",
-        "rarity": "none",
-        "weight": 600,
-        "value": 10000
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Carriage",
-        "type": "VEH|SRD52",
-        "rarity": "none",
-        "weight": 600,
-        "value": 10000
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "VEH",
+    "rarity": "none",
+    "weight": 600,
+    "value": 10000
+  }
 }

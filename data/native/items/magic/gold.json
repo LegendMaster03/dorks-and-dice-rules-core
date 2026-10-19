@@ -2,27 +2,11 @@
   "id": "item.gold",
   "name": "Gold",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Gold",
-        "type": "TG",
-        "rarity": "none",
-        "weight": 1,
-        "value": 5000
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Gold",
-        "type": "TG|SRD52",
-        "rarity": "none",
-        "weight": 1,
-        "value": 5000
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "weight": 1,
+    "value": 5000
+  }
 }

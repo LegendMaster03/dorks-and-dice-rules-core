@@ -2,16 +2,10 @@
   "id": "item.chalk-1-piece",
   "name": "Chalk (1 piece)",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Chalk (1 piece)",
-        "type": "G",
-        "rarity": "none",
-        "value": 1
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "value": 1
+  }
 }

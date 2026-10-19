@@ -2,31 +2,25 @@
   "id": "feat.alert",
   "name": "Alert",
   "kind": "feat",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Alert",
-        "category": "O",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "category": "O",
+    "entries": [
+      "You gain the following benefits.",
+      {
+        "type": "entries",
+        "name": "Initiative Proficiency",
         "entries": [
-          "You gain the following benefits.",
-          {
-            "type": "entries",
-            "name": "Initiative Proficiency",
-            "entries": [
-              "When you roll {@variantrule Initiative|SRD52}, you can add your {@variantrule Proficiency|SRD52|Proficiency Bonus} to the roll."
-            ]
-          },
-          {
-            "type": "entries",
-            "name": "Initiative Swap",
-            "entries": [
-              "Immediately after you roll {@variantrule Initiative|SRD52}, you can swap your {@variantrule Initiative|SRD52} with the {@variantrule Initiative|SRD52} of one willing ally in the same combat. You can't make this swap if you or the ally has the {@condition Incapacitated|SRD52} condition."
-            ]
-          }
+          "When you roll {@variantrule Initiative|SRD52}, you can add your {@variantrule Proficiency|SRD52|Proficiency Bonus} to the roll."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Initiative Swap",
+        "entries": [
+          "Immediately after you roll {@variantrule Initiative|SRD52}, you can swap your {@variantrule Initiative|SRD52} with the {@variantrule Initiative|SRD52} of one willing ally in the same combat. You can't make this swap if you or the ally has the {@condition Incapacitated|SRD52} condition."
         ]
       }
-    }
-  ]
+    ]
+  }
 }

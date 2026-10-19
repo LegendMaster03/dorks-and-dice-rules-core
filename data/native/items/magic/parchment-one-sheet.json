@@ -2,16 +2,10 @@
   "id": "item.parchment-one-sheet",
   "name": "Parchment (one sheet)",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Parchment (one sheet)",
-        "type": "G",
-        "rarity": "none",
-        "value": 10
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "value": 10
+  }
 }

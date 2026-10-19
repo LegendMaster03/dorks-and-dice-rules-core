@@ -2,24 +2,18 @@
   "id": "deity.lugh",
   "name": "Lugh",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Lugh",
-        "pantheon": "Celtic",
-        "alignment": [
-          "C",
-          "N"
-        ],
-        "title": "God of arts, travel, and commerce",
-        "domains": [
-          "Knowledge",
-          "Life"
-        ],
-        "symbol": "Pair of long hands"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Celtic",
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "title": "God of arts, travel, and commerce",
+    "domains": [
+      "Knowledge",
+      "Life"
+    ],
+    "symbol": "Pair of long hands"
+  }
 }

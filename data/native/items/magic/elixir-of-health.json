@@ -2,23 +2,17 @@
   "id": "item.elixir-of-health",
   "name": "Elixir of Health",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Elixir of Health",
-        "type": "P|SRD52",
-        "rarity": "rare",
-        "weight": 0.5,
-        "entries": [
-          "When you drink this potion, you are cured of all magical contagions. In addition, the following conditions end on you: {@condition Blinded|SRD52}, {@condition Deafened|SRD52}, {@condition Paralyzed|SRD52}, and {@condition Poisoned|SRD52}.",
-          "The clear, red liquid has tiny bubbles of light in it."
-        ],
-        "miscTags": [
-          "CNS"
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "P|SRD52",
+    "rarity": "rare",
+    "weight": 0.5,
+    "entries": [
+      "When you drink this potion, you are cured of all magical contagions. In addition, the following conditions end on you: {@condition Blinded|SRD52}, {@condition Deafened|SRD52}, {@condition Paralyzed|SRD52}, and {@condition Poisoned|SRD52}.",
+      "The clear, red liquid has tiny bubbles of light in it."
+    ],
+    "miscTags": [
+      "CNS"
+    ]
+  }
 }

@@ -2,29 +2,12 @@
   "id": "item.mule",
   "name": "Mule",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Mule",
-        "type": "MNT",
-        "rarity": "none",
-        "value": 800,
-        "carryingCapacity": 420,
-        "speed": 40
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Mule",
-        "type": "MNT|SRD52",
-        "rarity": "none",
-        "value": 800,
-        "carryingCapacity": 420,
-        "speed": 40
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "MNT",
+    "rarity": "none",
+    "value": 800,
+    "carryingCapacity": 420,
+    "speed": 40
+  }
 }

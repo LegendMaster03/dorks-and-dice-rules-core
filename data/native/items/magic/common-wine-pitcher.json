@@ -2,19 +2,13 @@
   "id": "item.common-wine-pitcher",
   "name": "Common Wine (pitcher)",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Common Wine (pitcher)",
-        "type": "FD",
-        "rarity": "none",
-        "value": 20,
-        "miscTags": [
-          "CNS"
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "FD",
+    "rarity": "none",
+    "value": 20,
+    "miscTags": [
+      "CNS"
+    ]
+  }
 }

@@ -2,44 +2,38 @@
   "id": "feat.boon-of-dimensional-travel",
   "name": "Boon of Dimensional Travel",
   "kind": "feat",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Boon of Dimensional Travel",
-        "category": "EB",
-        "prerequisite": [
-          {
-            "level": 19
-          }
-        ],
-        "ability": [
-          {
-            "choose": {
-              "from": [
-                "str",
-                "dex",
-                "con",
-                "int",
-                "wis",
-                "cha"
-              ]
-            },
-            "max": 30
-          }
-        ],
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "category": "EB",
+    "prerequisite": [
+      {
+        "level": 19
+      }
+    ],
+    "ability": [
+      {
+        "choose": {
+          "from": [
+            "str",
+            "dex",
+            "con",
+            "int",
+            "wis",
+            "cha"
+          ]
+        },
+        "max": 30
+      }
+    ],
+    "entries": [
+      "You gain the following benefits.",
+      {
+        "type": "entries",
+        "name": "Blink Steps",
         "entries": [
-          "You gain the following benefits.",
-          {
-            "type": "entries",
-            "name": "Blink Steps",
-            "entries": [
-              "Immediately after you take the {@action Attack|SRD52} action or the {@action Magic|SRD52} action, you can teleport up to 30 feet to an unoccupied space you can see."
-            ]
-          }
+          "Immediately after you take the {@action Attack|SRD52} action or the {@action Magic|SRD52} action, you can teleport up to 30 feet to an unoccupied space you can see."
         ]
       }
-    }
-  ]
+    ]
+  }
 }

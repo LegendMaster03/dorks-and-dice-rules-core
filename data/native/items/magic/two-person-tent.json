@@ -2,20 +2,14 @@
   "id": "item.two-person-tent",
   "name": "Two-Person Tent",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Two-Person Tent",
-        "type": "G",
-        "rarity": "none",
-        "weight": 20,
-        "value": 200,
-        "entries": [
-          "A simple and portable canvas shelter, a tent sleeps two."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 20,
+    "value": 200,
+    "entries": [
+      "A simple and portable canvas shelter, a tent sleeps two."
+    ]
+  }
 }

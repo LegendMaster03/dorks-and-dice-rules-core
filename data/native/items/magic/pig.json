@@ -2,16 +2,10 @@
   "id": "item.pig",
   "name": "Pig",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Pig",
-        "type": "TG",
-        "rarity": "none",
-        "value": 300
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "value": 300
+  }
 }

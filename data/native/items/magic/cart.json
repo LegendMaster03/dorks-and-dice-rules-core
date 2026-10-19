@@ -2,27 +2,11 @@
   "id": "item.cart",
   "name": "Cart",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Cart",
-        "type": "VEH",
-        "rarity": "none",
-        "weight": 200,
-        "value": 1500
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Cart",
-        "type": "VEH|SRD52",
-        "rarity": "none",
-        "weight": 200,
-        "value": 1500
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "VEH",
+    "rarity": "none",
+    "weight": 200,
+    "value": 1500
+  }
 }

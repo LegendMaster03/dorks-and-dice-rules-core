@@ -2,25 +2,19 @@
   "id": "deity.hecate",
   "name": "Hecate",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Hecate",
-        "pantheon": "Greek",
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "title": "Goddess of magic and the moon",
-        "domains": [
-          "Knowledge",
-          "Trickery",
-          "Arcana"
-        ],
-        "symbol": "Setting moon"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "title": "Goddess of magic and the moon",
+    "domains": [
+      "Knowledge",
+      "Trickery",
+      "Arcana"
+    ],
+    "symbol": "Setting moon"
+  }
 }

@@ -2,34 +2,28 @@
   "id": "magicvariant.dwarven-plate",
   "name": "Dwarven Plate",
   "kind": "magicvariant",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Dwarven Plate",
-        "type": "GV|SRD52",
-        "requires": [
-          {
-            "name": "Half Plate Armor",
-            "source": "SRD52"
-          },
-          {
-            "name": "Plate Armor",
-            "source": "SRD52"
-          }
-        ],
-        "inherits": {
-          "namePrefix": "Dwarven ",
-          "source": "SRD52",
-          "page": 219,
-          "rarity": "very rare",
-          "bonusAc": "+2",
-          "entries": [
-            "While wearing this armor, you gain a {=bonusAc} bonus to {@variantrule Armor Class|SRD52}. In addition, if an effect moves you against your will along the ground, you can take a {@variantrule Reaction|SRD52} to reduce the distance you are moved by up to 10 feet."
-          ]
-        }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "GV|SRD52",
+    "requires": [
+      {
+        "name": "Half Plate Armor",
+        "source": "SRD52"
+      },
+      {
+        "name": "Plate Armor",
+        "source": "SRD52"
       }
+    ],
+    "inherits": {
+      "namePrefix": "Dwarven ",
+      "source": "SRD52",
+      "page": 219,
+      "rarity": "very rare",
+      "bonusAc": "+2",
+      "entries": [
+        "While wearing this armor, you gain a {=bonusAc} bonus to {@variantrule Armor Class|SRD52}. In addition, if an effect moves you against your will along the ground, you can take a {@variantrule Reaction|SRD52} to reduce the distance you are moved by up to 10 feet."
+      ]
     }
-  ]
+  }
 }

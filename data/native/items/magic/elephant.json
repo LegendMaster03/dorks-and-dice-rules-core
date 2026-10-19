@@ -2,29 +2,12 @@
   "id": "item.elephant",
   "name": "Elephant",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Elephant",
-        "type": "MNT",
-        "rarity": "none",
-        "value": 20000,
-        "carryingCapacity": 1320,
-        "speed": 40
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Elephant",
-        "type": "MNT|SRD52",
-        "rarity": "none",
-        "value": 20000,
-        "carryingCapacity": 1320,
-        "speed": 40
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "MNT",
+    "rarity": "none",
+    "value": 20000,
+    "carryingCapacity": 1320,
+    "speed": 40
+  }
 }

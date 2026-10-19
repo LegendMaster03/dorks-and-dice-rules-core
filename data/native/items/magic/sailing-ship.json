@@ -2,45 +2,20 @@
   "id": "item.sailing-ship",
   "name": "Sailing Ship",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Sailing Ship",
-        "type": "SHP",
-        "rarity": "none",
-        "value": 1000000,
-        "crew": 20,
-        "vehAc": 15,
-        "vehHp": 300,
-        "vehDmgThresh": 15,
-        "vehSpeed": 2,
-        "capPassenger": 20,
-        "capCargo": 100,
-        "seeAlsoVehicle": [
-          "Sailing Ship"
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Sailing Ship",
-        "type": "SHP|SRD52",
-        "rarity": "none",
-        "value": 1000000,
-        "crew": 20,
-        "vehAc": 15,
-        "vehHp": 300,
-        "vehDmgThresh": 15,
-        "vehSpeed": 2,
-        "capPassenger": 20,
-        "capCargo": 100,
-        "seeAlsoVehicle": [
-          "Sailing Ship"
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "SHP",
+    "rarity": "none",
+    "value": 1000000,
+    "crew": 20,
+    "vehAc": 15,
+    "vehHp": 300,
+    "vehDmgThresh": 15,
+    "vehSpeed": 2,
+    "capPassenger": 20,
+    "capCargo": 100,
+    "seeAlsoVehicle": [
+      "Sailing Ship"
+    ]
+  }
 }

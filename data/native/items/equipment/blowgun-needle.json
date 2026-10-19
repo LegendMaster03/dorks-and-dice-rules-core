@@ -2,18 +2,12 @@
   "id": "baseitem.blowgun-needle",
   "name": "Blowgun Needle",
   "kind": "baseitem",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Blowgun Needle",
-        "type": "A",
-        "rarity": "none",
-        "weight": 0.02,
-        "value": 2,
-        "needleBlowgun": true
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "A",
+    "rarity": "none",
+    "weight": 0.02,
+    "value": 2,
+    "needleBlowgun": true
+  }
 }

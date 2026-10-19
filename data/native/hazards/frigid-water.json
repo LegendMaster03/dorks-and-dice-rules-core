@@ -2,17 +2,11 @@
   "id": "hazard.frigid-water",
   "name": "Frigid Water",
   "kind": "hazard",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Frigid Water",
-        "trapHazType": "ENV",
-        "entries": [
-          "A creature can be immersed in frigid water for a number of minutes equal to its Constitution score before suffering any ill effects. Each additional minute spent in frigid water requires the creature to succeed on a {@dc 10} Constitution saving throw or gain 1 {@condition Exhaustion|SRD52} level. Creatures with {@variantrule Resistance|SRD52} or {@variantrule Immunity|SRD52} to Cold damage automatically succeed on the save, as do creatures that are naturally adapted to living in ice-cold water."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "trapHazType": "ENV",
+    "entries": [
+      "A creature can be immersed in frigid water for a number of minutes equal to its Constitution score before suffering any ill effects. Each additional minute spent in frigid water requires the creature to succeed on a {@dc 10} Constitution saving throw or gain 1 {@condition Exhaustion|SRD52} level. Creatures with {@variantrule Resistance|SRD52} or {@variantrule Immunity|SRD52} to Cold damage automatically succeed on the save, as do creatures that are naturally adapted to living in ice-cold water."
+    ]
+  }
 }

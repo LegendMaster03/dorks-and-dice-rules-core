@@ -2,174 +2,168 @@
   "id": "monster.centaur",
   "name": "Centaur",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 45,
+      "formula": "6d10 + 12"
+    },
+    "speed": {
+      "walk": 50
+    },
+    "str": 18,
+    "dex": 14,
+    "con": 14,
+    "int": 9,
+    "wis": 13,
+    "cha": 11,
+    "skill": {
+      "athletics": "+6",
+      "perception": "+3",
+      "survival": "+3"
+    },
+    "passive": 13,
+    "languages": [
+      "Elvish",
+      "Sylvan"
+    ],
+    "cr": "2",
+    "trait": [
+      {
+        "name": "Charge",
+        "entries": [
+          "If the centaur moves at least 30 feet straight toward a target and then hits it with a pike attack on the same turn, the target takes an extra 10 ({@damage 3d6}) piercing damage."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The centaur makes two attacks: one with its pike and one with its hooves or two with its longbow."
+        ]
+      },
+      {
+        "name": "Pike",
+        "entries": [
+          "{@atk mw} {@hit 6} to hit, reach 10 ft., one target. {@h}9 ({@damage 1d10 + 4}) piercing damage."
+        ]
+      },
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Longbow",
+        "entries": [
+          "{@atk rw} {@hit 4} to hit, range 150/600 ft., one target. {@h}6 ({@damage 1d8 + 2}) piercing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "grassland",
+      "forest"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/centaur.opus"
+    },
+    "attachedItems": [
+      "longbow|srd51",
+      "pike|srd51"
+    ],
+    "traitTags": [
+      "Charge"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "E",
+      "S"
+    ],
+    "damageTags": [
+      "B",
+      "P"
+    ],
+    "miscTags": [
+      "MLW",
+      "MW",
+      "RCH",
+      "RNG",
+      "RW"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Centaur",
-        "size": [
-          "L"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "N",
-          "G"
-        ],
-        "ac": [
-          12
-        ],
-        "hp": {
-          "average": 45,
-          "formula": "6d10 + 12"
-        },
-        "speed": {
-          "walk": 50
-        },
-        "str": 18,
-        "dex": 14,
-        "con": 14,
-        "int": 9,
-        "wis": 13,
-        "cha": 11,
-        "skill": {
-          "athletics": "+6",
-          "perception": "+3",
-          "survival": "+3"
-        },
-        "passive": 13,
-        "languages": [
-          "Elvish",
-          "Sylvan"
-        ],
-        "cr": "2",
-        "trait": [
+        "entries": [
           {
-            "name": "Charge",
-            "entries": [
-              "If the centaur moves at least 30 feet straight toward a target and then hits it with a pike attack on the same turn, the target takes an extra 10 ({@damage 3d6}) piercing damage."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The centaur makes two attacks: one with its pike and one with its hooves or two with its longbow."
-            ]
-          },
-          {
-            "name": "Pike",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 10 ft., one target. {@h}9 ({@damage 1d10 + 4}) piercing damage."
-            ]
-          },
-          {
-            "name": "Hooves",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) bludgeoning damage."
-            ]
-          },
-          {
-            "name": "Longbow",
-            "entries": [
-              "{@atk rw} {@hit 4} to hit, range 150/600 ft., one target. {@h}6 ({@damage 1d8 + 2}) piercing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "grassland",
-          "forest"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/centaur.opus"
-        },
-        "attachedItems": [
-          "longbow|srd51",
-          "pike|srd51"
-        ],
-        "traitTags": [
-          "Charge"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "E",
-          "S"
-        ],
-        "damageTags": [
-          "B",
-          "P"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW",
-          "RCH",
-          "RNG",
-          "RW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Centaur",
+            "type": "entries",
             "entries": [
               {
                 "type": "entries",
                 "entries": [
+                  "Reclusive wanderers and omen-readers of the wild, centaurs avoid conflict but fight fiercely when pressed. They roam the vast wilderness, keeping far from borders, laws, and the company of other creatures.",
                   {
+                    "name": "Wilderness Nomads",
                     "type": "entries",
                     "entries": [
-                      "Reclusive wanderers and omen-readers of the wild, centaurs avoid conflict but fight fiercely when pressed. They roam the vast wilderness, keeping far from borders, laws, and the company of other creatures.",
-                      {
-                        "name": "Wilderness Nomads",
-                        "type": "entries",
-                        "entries": [
-                          "Centaur tribes range across lands with mild to hot climates, where a centaur requires only light furs or oiled skins to deal with inclement weather. They are hunter-gatherers and rarely build shelters or even use tents.",
-                          "Centaur migrations span continents and take decades to repeat, so that a centaur tribe might not retread the same path for generations. These long-ranging patterns can lead to conflict when centaurs encounter settlements of other creatures built along their traditional routes."
-                        ]
-                      },
-                      {
-                        "name": "Reluctant Settlers",
-                        "type": "entries",
-                        "entries": [
-                          "A centaur that can't keep pace with the rest of its tribe is left behind. Some such centaurs vanish into the wilderness and are never seen again. Those that can bear the loss of their tribe might take up residence among other races. Frontier settlements value the nature knowledge of their centaur residents. Many such communities owe their survival to the insight and acumen of a centaur.",
-                          "Despite their reclusive nature, centaurs trade with elves and with the caravans of other benevolent humanoids they meet during their wanderings. A trader might save the life of a wounded or an elderly centaur unfit for long travel, escorting it to a settlement where it can peacefully live out the rest of its days."
-                        ]
-                      }
+                      "Centaur tribes range across lands with mild to hot climates, where a centaur requires only light furs or oiled skins to deal with inclement weather. They are hunter-gatherers and rarely build shelters or even use tents.",
+                      "Centaur migrations span continents and take decades to repeat, so that a centaur tribe might not retread the same path for generations. These long-ranging patterns can lead to conflict when centaurs encounter settlements of other creatures built along their traditional routes."
                     ]
                   },
                   {
-                    "type": "insetReadaloud",
+                    "name": "Reluctant Settlers",
+                    "type": "entries",
                     "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "I hear centaurs make excellent mounts!"
-                        ],
-                        "by": "Batley Summerfoot, a halfling adventurer who never read {@style Hooves of Fury|small-caps} by Irvil Grayborn of Sundown"
-                      }
+                      "A centaur that can't keep pace with the rest of its tribe is left behind. Some such centaurs vanish into the wilderness and are never seen again. Those that can bear the loss of their tribe might take up residence among other races. Frontier settlements value the nature knowledge of their centaur residents. Many such communities owe their survival to the insight and acumen of a centaur.",
+                      "Despite their reclusive nature, centaurs trade with elves and with the caravans of other benevolent humanoids they meet during their wanderings. A trader might save the life of a wounded or an elderly centaur unfit for long travel, escorting it to a settlement where it can peacefully live out the rest of its days."
                     ]
                   }
                 ]
-              }
-            ],
-            "images": [
+              },
               {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Centaur.webp"
-                },
-                "credit": "Wesley Burt",
-                "width": 1700,
-                "height": 1313
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "I hear centaurs make excellent mounts!"
+                    ],
+                    "by": "Batley Summerfoot, a halfling adventurer who never read {@style Hooves of Fury|small-caps} by Irvil Grayborn of Sundown"
+                  }
+                ]
               }
             ]
           }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/MM/Centaur.webp"
+            },
+            "credit": "Wesley Burt",
+            "width": 1700,
+            "height": 1313
+          }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

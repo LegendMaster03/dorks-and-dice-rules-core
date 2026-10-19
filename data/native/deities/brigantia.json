@@ -2,23 +2,17 @@
   "id": "deity.brigantia",
   "name": "Brigantia",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Brigantia",
-        "pantheon": "Celtic",
-        "alignment": [
-          "N",
-          "G"
-        ],
-        "title": "Goddess of rivers and livestock",
-        "domains": [
-          "Life"
-        ],
-        "symbol": "Footbridge"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Celtic",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "title": "Goddess of rivers and livestock",
+    "domains": [
+      "Life"
+    ],
+    "symbol": "Footbridge"
+  }
 }

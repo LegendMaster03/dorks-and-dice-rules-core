@@ -2,23 +2,17 @@
   "id": "deity.loki",
   "name": "Loki",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Loki",
-        "pantheon": "Norse",
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "title": "God of thieves and trickery",
-        "domains": [
-          "Trickery"
-        ],
-        "symbol": "Flame"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Norse",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "title": "God of thieves and trickery",
+    "domains": [
+      "Trickery"
+    ],
+    "symbol": "Flame"
+  }
 }

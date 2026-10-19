@@ -2,17 +2,11 @@
   "id": "item.hammer",
   "name": "Hammer",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Hammer",
-        "type": "G",
-        "rarity": "none",
-        "weight": 3,
-        "value": 100
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 3,
+    "value": 100
+  }
 }

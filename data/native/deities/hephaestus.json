@@ -2,24 +2,18 @@
   "id": "deity.hephaestus",
   "name": "Hephaestus",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Hephaestus",
-        "pantheon": "Greek",
-        "alignment": [
-          "N",
-          "G"
-        ],
-        "title": "God of smithing and craft",
-        "domains": [
-          "Forge",
-          "Knowledge"
-        ],
-        "symbol": "Hammer and anvil"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "N",
+      "G"
+    ],
+    "title": "God of smithing and craft",
+    "domains": [
+      "Forge",
+      "Knowledge"
+    ],
+    "symbol": "Hammer and anvil"
+  }
 }

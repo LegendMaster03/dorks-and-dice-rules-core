@@ -2,24 +2,18 @@
   "id": "item.gloves-of-thievery",
   "name": "Gloves of Thievery",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Gloves of Thievery",
-        "rarity": "uncommon",
-        "wondrous": true,
-        "entries": [
-          "These gloves are imperceptible while worn. While wearing them, you gain a +5 bonus to Dexterity ({@skill Sleight of Hand|SRD52}) checks."
-        ],
-        "classFeatures": [
-          "replicate magic item|artificer|efa|2|efa"
-        ],
-        "optionalfeatures": [
-          "replicate magic item|tce"
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "rarity": "uncommon",
+    "wondrous": true,
+    "entries": [
+      "These gloves are imperceptible while worn. While wearing them, you gain a +5 bonus to Dexterity ({@skill Sleight of Hand|SRD52}) checks."
+    ],
+    "classFeatures": [
+      "replicate magic item|artificer|efa|2|efa"
+    ],
+    "optionalfeatures": [
+      "replicate magic item|tce"
+    ]
+  }
 }

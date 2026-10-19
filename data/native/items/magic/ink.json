@@ -2,22 +2,16 @@
   "id": "item.ink",
   "name": "Ink",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Ink",
-        "type": "G|SRD52",
-        "rarity": "none",
-        "value": 1000,
-        "entries": [
-          "Ink comes in a 1-ounce bottle, which provides enough ink to write about 500 pages."
-        ],
-        "miscTags": [
-          "CNS"
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 1000,
+    "entries": [
+      "Ink comes in a 1-ounce bottle, which provides enough ink to write about 500 pages."
+    ],
+    "miscTags": [
+      "CNS"
+    ]
+  }
 }

@@ -2,17 +2,11 @@
   "id": "item.pack-saddle",
   "name": "Pack Saddle",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Pack Saddle",
-        "type": "TAH",
-        "rarity": "none",
-        "weight": 15,
-        "value": 500
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TAH",
+    "rarity": "none",
+    "weight": 15,
+    "value": 500
+  }
 }

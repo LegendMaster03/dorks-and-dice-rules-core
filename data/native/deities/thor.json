@@ -2,24 +2,18 @@
   "id": "deity.thor",
   "name": "Thor",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Thor",
-        "pantheon": "Norse",
-        "alignment": [
-          "C",
-          "G"
-        ],
-        "title": "God of storms and thunder",
-        "domains": [
-          "Tempest",
-          "War"
-        ],
-        "symbol": "Hammer"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Norse",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "title": "God of storms and thunder",
+    "domains": [
+      "Tempest",
+      "War"
+    ],
+    "symbol": "Hammer"
+  }
 }

@@ -2,18 +2,12 @@
   "id": "itementry.dragon-scale-mail",
   "name": "Dragon Scale Mail",
   "kind": "itemEntry",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Dragon Scale Mail",
-        "entriesTemplate": [
-          "Dragon Scale Mail is made of the scales of one kind of dragon. Sometimes dragons collect their cast-off scales and gift them. Other times, hunters carefully preserve the hide of a dead dragon. In either case, Dragon Scale Mail is highly valued.",
-          "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}, you have {@variantrule Advantage|SRD52} on saving throws against the breath weapons of Dragons, and you have {@variantrule Resistance|SRD52} to {{getFullImmRes item.resist}} damage.",
-          "Additionally, you can focus your senses as a {@action Magic|SRD52} action to discern the distance and direction to the closest {{item.detail1}} dragon within 30 miles of yourself. This action can't be used again until the next dawn."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "entriesTemplate": [
+      "Dragon Scale Mail is made of the scales of one kind of dragon. Sometimes dragons collect their cast-off scales and gift them. Other times, hunters carefully preserve the hide of a dead dragon. In either case, Dragon Scale Mail is highly valued.",
+      "While wearing this armor, you gain a +1 bonus to {@variantrule Armor Class|SRD52}, you have {@variantrule Advantage|SRD52} on saving throws against the breath weapons of Dragons, and you have {@variantrule Resistance|SRD52} to {{getFullImmRes item.resist}} damage.",
+      "Additionally, you can focus your senses as a {@action Magic|SRD52} action to discern the distance and direction to the closest {{item.detail1}} dragon within 30 miles of yourself. This action can't be used again until the next dawn."
+    ]
+  }
 }

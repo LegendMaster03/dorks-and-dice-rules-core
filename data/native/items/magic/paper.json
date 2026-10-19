@@ -2,19 +2,13 @@
   "id": "item.paper",
   "name": "Paper",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Paper",
-        "type": "G|SRD52",
-        "rarity": "none",
-        "value": 20,
-        "entries": [
-          "One sheet of Paper can hold about 250 handwritten words."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 20,
+    "entries": [
+      "One sheet of Paper can hold about 250 handwritten words."
+    ]
+  }
 }

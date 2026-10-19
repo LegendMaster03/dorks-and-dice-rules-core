@@ -2,147 +2,141 @@
   "id": "monster.thug",
   "name": "Thug",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "humanoid",
+      "tags": [
+        "any race"
+      ]
+    },
+    "alignment": [
+      "L",
+      "NX",
+      "C",
+      "NY",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 11,
+        "from": [
+          "{@item leather armor|srd51}"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 32,
+      "formula": "5d8 + 10"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 15,
+    "dex": 11,
+    "con": 14,
+    "int": 10,
+    "wis": 10,
+    "cha": 11,
+    "skill": {
+      "intimidation": "+2"
+    },
+    "passive": 10,
+    "languages": [
+      "any one language (usually Common)"
+    ],
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The thug has advantage on an attack roll against a creature if at least one of the thug's allies is within 5 feet of the creature and the ally isn't {@condition incapacitated}."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The thug makes two melee attacks."
+        ]
+      },
+      {
+        "name": "Mace",
+        "entries": [
+          "{@atk mw} {@hit 4} to hit, reach 5 ft., one creature. {@h}5 ({@damage 1d6 + 2}) bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Heavy Crossbow",
+        "entries": [
+          "{@atk rw} {@hit 2} to hit, range 100/400 ft., one target. {@h}5 ({@damage 1d10}) piercing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/thug.opus"
+    },
+    "attachedItems": [
+      "heavy crossbow|srd51",
+      "mace|srd51"
+    ],
+    "traitTags": [
+      "Pack Tactics"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "X"
+    ],
+    "damageTags": [
+      "B",
+      "P"
+    ],
+    "miscTags": [
+      "MLW",
+      "MW",
+      "RNG",
+      "RW"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Thug",
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "humanoid",
-          "tags": [
-            "any race"
-          ]
-        },
-        "alignment": [
-          "L",
-          "NX",
-          "C",
-          "NY",
-          "E"
-        ],
-        "ac": [
+        "entries": [
           {
-            "ac": 11,
-            "from": [
-              "{@item leather armor|srd51}"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 32,
-          "formula": "5d8 + 10"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 15,
-        "dex": 11,
-        "con": 14,
-        "int": 10,
-        "wis": 10,
-        "cha": 11,
-        "skill": {
-          "intimidation": "+2"
-        },
-        "passive": 10,
-        "languages": [
-          "any one language (usually Common)"
-        ],
-        "cr": "1/2",
-        "trait": [
-          {
-            "name": "Pack Tactics",
-            "entries": [
-              "The thug has advantage on an attack roll against a creature if at least one of the thug's allies is within 5 feet of the creature and the ally isn't {@condition incapacitated}."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The thug makes two melee attacks."
-            ]
-          },
-          {
-            "name": "Mace",
-            "entries": [
-              "{@atk mw} {@hit 4} to hit, reach 5 ft., one creature. {@h}5 ({@damage 1d6 + 2}) bludgeoning damage."
-            ]
-          },
-          {
-            "name": "Heavy Crossbow",
-            "entries": [
-              "{@atk rw} {@hit 2} to hit, range 100/400 ft., one target. {@h}5 ({@damage 1d10}) piercing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/thug.opus"
-        },
-        "attachedItems": [
-          "heavy crossbow|srd51",
-          "mace|srd51"
-        ],
-        "traitTags": [
-          "Pack Tactics"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "X"
-        ],
-        "damageTags": [
-          "B",
-          "P"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW",
-          "RNG",
-          "RW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Thug",
+            "type": "entries",
             "entries": [
               {
                 "type": "entries",
                 "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "Thugs are ruthless enforcers skilled at intimidation and violence. They work for money and have few scruples."
-                    ]
-                  }
+                  "Thugs are ruthless enforcers skilled at intimidation and violence. They work for money and have few scruples."
                 ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Thug.webp"
-                },
-                "width": 608,
-                "height": 1000
               }
             ]
           }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/MM/Thug.webp"
+            },
+            "width": 608,
+            "height": 1000
+          }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

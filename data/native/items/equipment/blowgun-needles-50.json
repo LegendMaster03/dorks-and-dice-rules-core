@@ -2,24 +2,18 @@
   "id": "baseitem.blowgun-needles-50",
   "name": "Blowgun Needles (50)",
   "kind": "baseitem",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Blowgun Needles (50)",
-        "type": "A",
-        "rarity": "none",
-        "weight": 1,
-        "value": 100,
-        "needleBlowgun": true,
-        "packContents": [
-          {
-            "item": "blowgun needle|srd51",
-            "quantity": 50
-          }
-        ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "A",
+    "rarity": "none",
+    "weight": 1,
+    "value": 100,
+    "needleBlowgun": true,
+    "packContents": [
+      {
+        "item": "blowgun needle|srd51",
+        "quantity": 50
       }
-    }
-  ]
+    ]
+  }
 }

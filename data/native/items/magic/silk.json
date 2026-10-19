@@ -2,17 +2,11 @@
   "id": "item.silk",
   "name": "Silk",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Silk",
-        "type": "TG|SRD52",
-        "rarity": "none",
-        "weight": 1,
-        "value": 1000
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG|SRD52",
+    "rarity": "none",
+    "weight": 1,
+    "value": 1000
+  }
 }

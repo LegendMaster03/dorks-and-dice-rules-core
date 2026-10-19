@@ -2,20 +2,14 @@
   "id": "item.ladder-10-foot",
   "name": "Ladder (10-foot)",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Ladder (10-foot)",
-        "type": "G",
-        "rarity": "none",
-        "weight": 25,
-        "value": 10,
-        "entries": [
-          "Ladder (10-foot)"
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 25,
+    "value": 10,
+    "entries": [
+      "Ladder (10-foot)"
+    ]
+  }
 }

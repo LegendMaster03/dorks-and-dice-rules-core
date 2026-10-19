@@ -2,48 +2,23 @@
   "id": "baseitem.longsword",
   "name": "Longsword",
   "kind": "baseitem",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Longsword",
-        "type": "M",
-        "rarity": "none",
-        "weight": 3,
-        "value": 1500,
-        "weaponCategory": "martial",
-        "property": [
-          "V"
-        ],
-        "dmg1": "1d8",
-        "dmgType": "S",
-        "dmg2": "1d10",
-        "sword": true,
-        "weapon": true
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Longsword",
-        "type": "M|SRD52",
-        "rarity": "none",
-        "weight": 3,
-        "value": 1500,
-        "weaponCategory": "martial",
-        "property": [
-          "V|SRD52"
-        ],
-        "mastery": [
-          "Sap|SRD52"
-        ],
-        "dmg1": "1d8",
-        "dmgType": "S",
-        "dmg2": "1d10",
-        "sword": true,
-        "weapon": true
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "M|SRD52",
+    "rarity": "none",
+    "weight": 3,
+    "value": 1500,
+    "weaponCategory": "martial",
+    "property": [
+      "V|SRD52"
+    ],
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "S",
+    "dmg2": "1d10",
+    "sword": true,
+    "weapon": true
+  }
 }

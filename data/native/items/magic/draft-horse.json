@@ -2,29 +2,12 @@
   "id": "item.draft-horse",
   "name": "Draft Horse",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Draft Horse",
-        "type": "MNT",
-        "rarity": "none",
-        "value": 5000,
-        "carryingCapacity": 540,
-        "speed": 40
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Draft Horse",
-        "type": "MNT|SRD52",
-        "rarity": "none",
-        "value": 5000,
-        "carryingCapacity": 540,
-        "speed": 40
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "MNT",
+    "rarity": "none",
+    "value": 5000,
+    "carryingCapacity": 540,
+    "speed": 40
+  }
 }

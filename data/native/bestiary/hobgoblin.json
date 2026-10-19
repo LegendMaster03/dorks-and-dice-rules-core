@@ -2,213 +2,207 @@
   "id": "monster.hobgoblin",
   "name": "Hobgoblin",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "humanoid",
+      "tags": [
+        "goblinoid"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      {
+        "ac": 18,
+        "from": [
+          "{@item chain mail|srd51}",
+          "{@item shield|srd51}"
+        ]
+      }
+    ],
+    "hp": {
+      "average": 11,
+      "formula": "2d8 + 2"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 13,
+    "dex": 12,
+    "con": 12,
+    "int": 10,
+    "wis": 10,
+    "cha": 9,
+    "senses": [
+      "darkvision 60 ft."
+    ],
+    "passive": 10,
+    "languages": [
+      "Common",
+      "Goblin"
+    ],
+    "cr": "1/2",
+    "trait": [
+      {
+        "name": "Martial Advantage",
+        "entries": [
+          "Once per turn, the hobgoblin can deal an extra 7 ({@damage 2d6}) damage to a creature it hits with a weapon attack if that creature is within 5 feet of an ally of the hobgoblin that isn't {@condition incapacitated}."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Longsword",
+        "entries": [
+          "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d8 + 1}) slashing damage, or 6 ({@damage 1d10 + 1}) slashing damage if used with two hands."
+        ]
+      },
+      {
+        "name": "Longbow",
+        "entries": [
+          "{@atk rw} {@hit 3} to hit, range 150/600 ft., one target. {@h}5 ({@damage 1d8 + 1}) piercing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "underdark",
+      "grassland",
+      "forest",
+      "hill",
+      "desert"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/hobgoblin.opus"
+    },
+    "attachedItems": [
+      "longbow|srd51",
+      "longsword|srd51"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "languageTags": [
+      "C",
+      "GO"
+    ],
+    "damageTags": [
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "MLW",
+      "MW",
+      "RNG",
+      "RW"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Hobgoblin",
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "humanoid",
-          "tags": [
-            "goblinoid"
-          ]
-        },
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
+        "entries": [
           {
-            "ac": 18,
-            "from": [
-              "{@item chain mail|srd51}",
-              "{@item shield|srd51}"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 11,
-          "formula": "2d8 + 2"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 13,
-        "dex": 12,
-        "con": 12,
-        "int": 10,
-        "wis": 10,
-        "cha": 9,
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 10,
-        "languages": [
-          "Common",
-          "Goblin"
-        ],
-        "cr": "1/2",
-        "trait": [
-          {
-            "name": "Martial Advantage",
-            "entries": [
-              "Once per turn, the hobgoblin can deal an extra 7 ({@damage 2d6}) damage to a creature it hits with a weapon attack if that creature is within 5 feet of an ally of the hobgoblin that isn't {@condition incapacitated}."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Longsword",
-            "entries": [
-              "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d8 + 1}) slashing damage, or 6 ({@damage 1d10 + 1}) slashing damage if used with two hands."
-            ]
-          },
-          {
-            "name": "Longbow",
-            "entries": [
-              "{@atk rw} {@hit 3} to hit, range 150/600 ft., one target. {@h}5 ({@damage 1d8 + 1}) piercing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "underdark",
-          "grassland",
-          "forest",
-          "hill",
-          "desert"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/hobgoblin.opus"
-        },
-        "attachedItems": [
-          "longbow|srd51",
-          "longsword|srd51"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "languageTags": [
-          "C",
-          "GO"
-        ],
-        "damageTags": [
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW",
-          "RNG",
-          "RW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Hobgoblin",
+            "type": "entries",
             "entries": [
               {
                 "type": "entries",
                 "entries": [
+                  "War horns sound, stones fly from catapults, and the thunder of a thousand booted feet echoes across the land as hobgoblins march to battle. Across the borderlands of civilization, settlements and settlers must contend with these aggressive humanoids, whose thirst for conquest is never satisfied.",
+                  "Hobgoblins have dark orange or red-orange skin, and hair ranging from dark red-brown to dark gray. Yellow or dark brown eyes peer out beneath their beetling brows, and their wide mouths sport sharp and yellowed teeth. A male hobgoblin might have a large blue or red nose, which symbolizes virility and power among goblinkin. Hobgoblins can live as long as humans, though their love of warfare and battle means that few do.",
                   {
+                    "name": "Goblinoids",
                     "type": "entries",
                     "entries": [
-                      "War horns sound, stones fly from catapults, and the thunder of a thousand booted feet echoes across the land as hobgoblins march to battle. Across the borderlands of civilization, settlements and settlers must contend with these aggressive humanoids, whose thirst for conquest is never satisfied.",
-                      "Hobgoblins have dark orange or red-orange skin, and hair ranging from dark red-brown to dark gray. Yellow or dark brown eyes peer out beneath their beetling brows, and their wide mouths sport sharp and yellowed teeth. A male hobgoblin might have a large blue or red nose, which symbolizes virility and power among goblinkin. Hobgoblins can live as long as humans, though their love of warfare and battle means that few do.",
-                      {
-                        "name": "Goblinoids",
-                        "type": "entries",
-                        "entries": [
-                          "Hobgoblins belong to a family of creatures called goblinoids. They are often found lording over their cousins, the smaller goblins and the ferocious bugbears."
-                        ]
-                      },
-                      {
-                        "name": "Martial Might",
-                        "type": "entries",
-                        "entries": [
-                          "A hobgoblin measures virtue by physical strength and martial prowess, caring about nothing except the opportunity to demonstrate skill and cunning in battle. Hobgoblins of high military rank attain their positions by force, then hold those positions by imposing their authority through draconian measures.",
-                          "Hobgoblins train to fight with a variety of weapons, and have great skill at crafting arms, armor, siege engines, and other military devices. Organized and disciplined, they take exceptional care of their weapons, armor, and personal possessions. They favor the bold colors associated with their tribes, and trim their often-elaborate uniforms with blood-red piping and leather dyed black."
-                        ]
-                      },
-                      {
-                        "name": "Military Legions",
-                        "type": "entries",
-                        "entries": [
-                          "Hobgoblins organize themselves into tribal bands known as legions. In their martial society, every hobgoblin has a rank, from the powerful leaders and champions, to the rank-and-file foot soldiers, to the goblins that find themselves driven into the front lines at spear point. A legion is headed by a warlord with several captains serving under its command. A hobgoblin warlord is a ruthless tyrant more interested in strategy, victory, glory, reputation, and dominion than leading troops into battle.",
-                          "As loyal and disciplined as hobgoblins are in their own legion, rival legions compete constantly for reputation and status. Meetings between legions erupt in violence if troops aren't restrained, and only exceptionally powerful leaders can force legions to cooperate on the battlefield."
-                        ]
-                      },
-                      {
-                        "name": "Strategic Thinkers",
-                        "type": "entries",
-                        "entries": [
-                          "Hobgoblins have a strong grasp of tactics and discipline, and can carry out sophisticated battle plans under the direction of a strategically minded leader. However, they hate elves and attack them first in battle over any other opponents, even if doing so would be a tactical error.",
-                          "Legions often supplement their ranks with less reliable and more expendable troops, including goblins, bugbears, orcs, evil humans, ogres, and giants."
-                        ]
-                      },
-                      {
-                        "name": "Beast Trainers",
-                        "type": "entries",
-                        "entries": [
-                          "Hobgoblins have a long history of training animals to service. Like the more civilized races, they use oxen and horses to transport goods and weaponry over long distances. They communicate with each other using trained ravens, and keep vicious wolves to guard prisoners and protect hobgoblin camps. Hobgoblin cavalry use trained worgs as steeds, in the same way that goblins ride wolves. Some tribes even keep carnivorous apes as fighting beasts."
-                        ]
-                      },
-                      {
-                        "name": "Conquer and Control",
-                        "type": "entries",
-                        "entries": [
-                          "Hobgoblins claim lands with abundant resources, and they can be found in forests and mountains, near mines and humanoid settlements, and anywhere else that wood, metal, and potential slaves can be found. They build and conquer strongholds in strategically advantageous locations, which they then use as staging areas to expand their territory.",
-                          "Hobgoblin warlords never tire of combat, but they don't take up arms lightly. Before they attack, hobgoblins conduct thorough reconnaissance to gauge the strengths and weaknesses of their foes. When assaulting a stronghold, they surround it first to cut off escape routes and supply lines, then slowly starve their enemies out.",
-                          "Hobgoblins fortify their own holdings, bolstering existing defenses with innovations of their own. Whether they lair in cavern complexes, dungeons, ruins, or forests, they protect their strongholds with ditches, fences, gates, guard towers, pit traps, and crude catapults or ballistas."
-                        ]
-                      },
-                      {
-                        "name": "Legion of Maglubiyet",
-                        "type": "entries",
-                        "entries": [
-                          "Hobgoblins worship Maglubiyet the Mighty One, the greater god of goblinoids. As terrifying as this figure is, hobgoblins don't fear death, believing that when they die in battle, their spirits join the honored ranks of Maglubiyet's army on the plane of Acheron."
-                        ]
-                      }
+                      "Hobgoblins belong to a family of creatures called goblinoids. They are often found lording over their cousins, the smaller goblins and the ferocious bugbears."
                     ]
                   },
                   {
-                    "type": "insetReadaloud",
+                    "name": "Martial Might",
+                    "type": "entries",
                     "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "They break before our shields,",
-                          "They fall beneath our blades;",
-                          "Their home is ours to conquer,",
-                          "Their children our slaves.",
-                          "Acheron! Acheron!",
-                          "Victory is ours!"
-                        ],
-                        "by": "Translation of a Hobgoblin War Chant"
-                      }
+                      "A hobgoblin measures virtue by physical strength and martial prowess, caring about nothing except the opportunity to demonstrate skill and cunning in battle. Hobgoblins of high military rank attain their positions by force, then hold those positions by imposing their authority through draconian measures.",
+                      "Hobgoblins train to fight with a variety of weapons, and have great skill at crafting arms, armor, siege engines, and other military devices. Organized and disciplined, they take exceptional care of their weapons, armor, and personal possessions. They favor the bold colors associated with their tribes, and trim their often-elaborate uniforms with blood-red piping and leather dyed black."
+                    ]
+                  },
+                  {
+                    "name": "Military Legions",
+                    "type": "entries",
+                    "entries": [
+                      "Hobgoblins organize themselves into tribal bands known as legions. In their martial society, every hobgoblin has a rank, from the powerful leaders and champions, to the rank-and-file foot soldiers, to the goblins that find themselves driven into the front lines at spear point. A legion is headed by a warlord with several captains serving under its command. A hobgoblin warlord is a ruthless tyrant more interested in strategy, victory, glory, reputation, and dominion than leading troops into battle.",
+                      "As loyal and disciplined as hobgoblins are in their own legion, rival legions compete constantly for reputation and status. Meetings between legions erupt in violence if troops aren't restrained, and only exceptionally powerful leaders can force legions to cooperate on the battlefield."
+                    ]
+                  },
+                  {
+                    "name": "Strategic Thinkers",
+                    "type": "entries",
+                    "entries": [
+                      "Hobgoblins have a strong grasp of tactics and discipline, and can carry out sophisticated battle plans under the direction of a strategically minded leader. However, they hate elves and attack them first in battle over any other opponents, even if doing so would be a tactical error.",
+                      "Legions often supplement their ranks with less reliable and more expendable troops, including goblins, bugbears, orcs, evil humans, ogres, and giants."
+                    ]
+                  },
+                  {
+                    "name": "Beast Trainers",
+                    "type": "entries",
+                    "entries": [
+                      "Hobgoblins have a long history of training animals to service. Like the more civilized races, they use oxen and horses to transport goods and weaponry over long distances. They communicate with each other using trained ravens, and keep vicious wolves to guard prisoners and protect hobgoblin camps. Hobgoblin cavalry use trained worgs as steeds, in the same way that goblins ride wolves. Some tribes even keep carnivorous apes as fighting beasts."
+                    ]
+                  },
+                  {
+                    "name": "Conquer and Control",
+                    "type": "entries",
+                    "entries": [
+                      "Hobgoblins claim lands with abundant resources, and they can be found in forests and mountains, near mines and humanoid settlements, and anywhere else that wood, metal, and potential slaves can be found. They build and conquer strongholds in strategically advantageous locations, which they then use as staging areas to expand their territory.",
+                      "Hobgoblin warlords never tire of combat, but they don't take up arms lightly. Before they attack, hobgoblins conduct thorough reconnaissance to gauge the strengths and weaknesses of their foes. When assaulting a stronghold, they surround it first to cut off escape routes and supply lines, then slowly starve their enemies out.",
+                      "Hobgoblins fortify their own holdings, bolstering existing defenses with innovations of their own. Whether they lair in cavern complexes, dungeons, ruins, or forests, they protect their strongholds with ditches, fences, gates, guard towers, pit traps, and crude catapults or ballistas."
+                    ]
+                  },
+                  {
+                    "name": "Legion of Maglubiyet",
+                    "type": "entries",
+                    "entries": [
+                      "Hobgoblins worship Maglubiyet the Mighty One, the greater god of goblinoids. As terrifying as this figure is, hobgoblins don't fear death, believing that when they die in battle, their spirits join the honored ranks of Maglubiyet's army on the plane of Acheron."
                     ]
                   }
                 ]
-              }
-            ],
-            "images": [
+              },
               {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Hobgoblin.webp"
-                },
-                "width": 894,
-                "height": 1000
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "They break before our shields,",
+                      "They fall beneath our blades;",
+                      "Their home is ours to conquer,",
+                      "Their children our slaves.",
+                      "Acheron! Acheron!",
+                      "Victory is ours!"
+                    ],
+                    "by": "Translation of a Hobgoblin War Chant"
+                  }
+                ]
               }
             ]
           }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/MM/Hobgoblin.webp"
+            },
+            "width": 894,
+            "height": 1000
+          }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

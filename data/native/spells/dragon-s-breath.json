@@ -2,68 +2,62 @@
   "id": "spell.dragon-s-breath",
   "name": "Dragon's Breath",
   "kind": "spell",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Dragon's Breath",
-        "level": 2,
-        "school": "T",
-        "time": [
-          {
-            "number": 1,
-            "unit": "bonus"
-          }
-        ],
-        "range": {
-          "type": "point",
-          "distance": {
-            "type": "touch"
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "level": 2,
+    "school": "T",
+    "time": [
+      {
+        "number": 1,
+        "unit": "bonus"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "touch"
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "a hot pepper"
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "minute",
+          "amount": 1
         },
-        "components": {
-          "v": true,
-          "s": true,
-          "m": "a hot pepper"
-        },
-        "duration": [
-          {
-            "type": "timed",
-            "duration": {
-              "type": "minute",
-              "amount": 1
-            },
-            "concentration": true
-          }
-        ],
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You touch one willing creature, and choose Acid, Cold, Fire, Lightning, or Poison. Until the spell ends, the target can take a {@action Magic|SRD52} action to exhale a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. Each creature in that area makes a Dexterity saving throw, taking {@damage 3d6} damage of the chosen type on a failed save or half as much damage on a successful one."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
         "entries": [
-          "You touch one willing creature, and choose Acid, Cold, Fire, Lightning, or Poison. Until the spell ends, the target can take a {@action Magic|SRD52} action to exhale a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. Each creature in that area makes a Dexterity saving throw, taking {@damage 3d6} damage of the chosen type on a failed save or half as much damage on a successful one."
-        ],
-        "entriesHigherLevel": [
-          {
-            "type": "entries",
-            "name": "Using a Higher-Level Spell Slot",
-            "entries": [
-              "The damage increases by {@scaledamage 3d6|2-9|1d6} for each spell slot level above 2."
-            ]
-          }
-        ],
-        "damageInflict": [
-          "acid",
-          "cold",
-          "fire",
-          "lightning",
-          "poison"
-        ],
-        "savingThrow": [
-          "dexterity"
-        ],
-        "areaTags": [
-          "N",
-          "ST"
+          "The damage increases by {@scaledamage 3d6|2-9|1d6} for each spell slot level above 2."
         ]
       }
-    }
-  ]
+    ],
+    "damageInflict": [
+      "acid",
+      "cold",
+      "fire",
+      "lightning",
+      "poison"
+    ],
+    "savingThrow": [
+      "dexterity"
+    ],
+    "areaTags": [
+      "N",
+      "ST"
+    ]
+  }
 }

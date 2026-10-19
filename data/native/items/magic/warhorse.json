@@ -2,29 +2,12 @@
   "id": "item.warhorse",
   "name": "Warhorse",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Warhorse",
-        "type": "MNT",
-        "rarity": "none",
-        "value": 40000,
-        "carryingCapacity": 540,
-        "speed": 60
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Warhorse",
-        "type": "MNT|SRD52",
-        "rarity": "none",
-        "value": 40000,
-        "carryingCapacity": 540,
-        "speed": 60
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "MNT",
+    "rarity": "none",
+    "value": 40000,
+    "carryingCapacity": 540,
+    "speed": 60
+  }
 }

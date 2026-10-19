@@ -2,20 +2,14 @@
   "id": "item.spellbook",
   "name": "Spellbook",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Spellbook",
-        "type": "G",
-        "rarity": "none",
-        "weight": 3,
-        "value": 5000,
-        "entries": [
-          "Essential for wizards, a spellbook is a leather-bound tome with 100 blank vellum pages suitable for recording spells."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 3,
+    "value": 5000,
+    "entries": [
+      "Essential for wizards, a spellbook is a leather-bound tome with 100 blank vellum pages suitable for recording spells."
+    ]
+  }
 }

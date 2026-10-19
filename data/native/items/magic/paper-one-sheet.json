@@ -2,16 +2,10 @@
   "id": "item.paper-one-sheet",
   "name": "Paper (one sheet)",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Paper (one sheet)",
-        "type": "G",
-        "rarity": "none",
-        "value": 20
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "value": 20
+  }
 }

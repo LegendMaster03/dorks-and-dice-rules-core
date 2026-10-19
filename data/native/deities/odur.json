@@ -2,23 +2,17 @@
   "id": "deity.odur",
   "name": "Odur",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Odur",
-        "pantheon": "Norse",
-        "alignment": [
-          "C",
-          "G"
-        ],
-        "title": "God of light and the sun",
-        "domains": [
-          "Light"
-        ],
-        "symbol": "Solar disk"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Norse",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "title": "God of light and the sun",
+    "domains": [
+      "Light"
+    ],
+    "symbol": "Solar disk"
+  }
 }

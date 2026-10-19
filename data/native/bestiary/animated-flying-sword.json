@@ -2,108 +2,102 @@
   "id": "monster.animated-flying-sword",
   "name": "Animated Flying Sword",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Animated Flying Sword",
-        "size": [
-          "S"
-        ],
-        "type": "construct",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          17
-        ],
-        "hp": {
-          "average": 14,
-          "formula": "4d6"
-        },
-        "speed": {
-          "walk": 5,
-          "fly": {
-            "number": 50,
-            "condition": "(hover)"
-          },
-          "canHover": true
-        },
-        "initiative": {
-          "proficiency": 1
-        },
-        "str": 12,
-        "dex": 15,
-        "con": 11,
-        "int": 1,
-        "wis": 5,
-        "cha": 1,
-        "save": {
-          "dex": "+4"
-        },
-        "senses": [
-          "Blindsight 60 ft."
-        ],
-        "passive": 7,
-        "immune": [
-          "poison",
-          "psychic"
-        ],
-        "conditionImmune": [
-          "charmed",
-          "deafened",
-          "exhaustion",
-          "frightened",
-          "paralyzed",
-          "petrified",
-          "poisoned"
-        ],
-        "cr": "1/4",
-        "action": [
-          {
-            "name": "Slash",
-            "entries": [
-              "{@atkr m} {@hit 4}, reach 5 ft. {@h}6 ({@damage 1d8 + 2}) Slashing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "senseTags": [
-          "B"
-        ],
-        "damageTags": [
-          "S"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Animated Flying Sword",
-            "_copy": {
-              "name": "Animated Objects",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Animated flying swords move as if wielded by unseen warriors. Whether an animated blade is newly forged or a constellation of broken fragments, the object behaves the same. Other weapons from the {@book Player's Handbook|SRD52} can also be animated and use game statistics similar to those here."
-                      ]
-                    }
-                  ]
-                }
-              }
-            }
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S"
+    ],
+    "type": "construct",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 14,
+      "formula": "4d6"
+    },
+    "speed": {
+      "walk": 5,
+      "fly": {
+        "number": 50,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 12,
+    "dex": 15,
+    "con": 11,
+    "int": 1,
+    "wis": 5,
+    "cha": 1,
+    "save": {
+      "dex": "+4"
+    },
+    "senses": [
+      "Blindsight 60 ft."
+    ],
+    "passive": 7,
+    "immune": [
+      "poison",
+      "psychic"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "deafened",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned"
+    ],
+    "cr": "1/4",
+    "action": [
+      {
+        "name": "Slash",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}6 ({@damage 1d8 + 2}) Slashing damage."
         ]
       }
-    }
-  ]
+    ],
+    "environment": [
+      "urban"
+    ],
+    "senseTags": [
+      "B"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Animated Flying Sword",
+        "_copy": {
+          "name": "Animated Objects",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Animated flying swords move as if wielded by unseen warriors. Whether an animated blade is newly forged or a constellation of broken fragments, the object behaves the same. Other weapons from the {@book Player's Handbook|SRD52} can also be animated and use game statistics similar to those here."
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
 }

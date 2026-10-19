@@ -2,17 +2,11 @@
   "id": "hazard.thin-ice",
   "name": "Thin Ice",
   "kind": "hazard",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Thin Ice",
-        "trapHazType": "ENV",
-        "entries": [
-          "Thin ice has a weight tolerance of {@dice 3d10 × 10} pounds per 10-foot-square area. Whenever the total weight on an area of thin ice exceeds its tolerance, the ice in that area breaks. All creatures on broken ice fall through. Below the ice is {@hazard frigid water|SRD52}."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "trapHazType": "ENV",
+    "entries": [
+      "Thin ice has a weight tolerance of {@dice 3d10 × 10} pounds per 10-foot-square area. Whenever the total weight on an area of thin ice exceeds its tolerance, the ice in that area breaks. All creatures on broken ice fall through. Below the ice is {@hazard frigid water|SRD52}."
+    ]
+  }
 }
