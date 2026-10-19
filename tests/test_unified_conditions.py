@@ -26,9 +26,9 @@ class UnifiedConditionsTests(unittest.TestCase):
         return self.conditions["condition." + name.lower()]
 
     def test_one_native_definition_for_each_condition(self):
-        self.assertEqual(18, len(self.conditions))
-        self.assertEqual(18, len(self.data["conditions"]))
-        self.assertEqual(set(self.conditions) - {"condition.flat-footed", "condition.helpless"}, set(self.decisions))
+        self.assertEqual(24, len(self.conditions))
+        self.assertEqual(24, len(self.data["conditions"]))
+        self.assertEqual(set(self.conditions) - { "condition.flat-footed", "condition.helpless", "condition.dazed", "condition.dazzled", "condition.entangled", "condition.fascinated", "condition.nauseated", "condition.sickened" }, set(self.decisions))
         self.assertIn("condition.wet", self.conditions)
         self.assertIn("condition.flat-footed", self.conditions)
         self.assertIn("condition.helpless", self.conditions)
