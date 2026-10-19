@@ -238,6 +238,107 @@ for path in ("docs/rewrite/native-baseline-consistency-gate.md",
     Path(path).write_text(content, encoding="utf-8")
     subprocess.run(["git", "add", path], check=True)
 
+# Source-fidelity tests authored against staged candidateDefinitions must now
+# verify the selected native definitions without weakening provenance checks.
+path = "tests/test_native_source_fidelity.py"
+content = Path(path).read_text(encoding="utf-8")
+content = content.replace(
+    'modern = next(x["content"] for x in item["candidateDefinitions"] if x["key"].startswith("candidate-b"))',
+    'modern = (item.get("definition") or next(x["content"] for x in item["candidateDefinitions"] if x["key"].startswith("candidate-b")))',
+)
+content = content.replace(
+    'records = read(f"data/native/bestiary/{name}.json")["candidateDefinitions"]\n'
+    '                modern = next(x["content"] for x in records if x["key"] == "candidate-b")',
+    'record = read(f"data/native/bestiary/{name}.json")\n'
+    '                modern = record.get("definition") or next(x["content"] for x in record["candidateDefinitions"] if x["key"] == "candidate-b")',
+)
+content = content.replace(
+    'candidates = read("data/native/items/magic/dragon-orb.json")["candidateDefinitions"]\n'
+    '        self.assertEqual(["candidate-b"], [c["key"] for c in candidates])\n'
+    '        modern = candidates[0]["content"]',
+    'record = read("data/native/items/magic/dragon-orb.json")\n'
+    '        self.assertEqual("retained-native-definition", record["baselineStatus"])\n'
+    '        modern = record["definition"]',
+)
+content = content.replace(
+    'modern = read("data/native/items/magic/mysterious-deck.json")["candidateDefinitions"][0]["content"]',
+    'modern = read("data/native/items/magic/mysterious-deck.json")["definition"]',
+)
+old = '''        candidates = read("data/native/bestiary/avatar-of-death.json")["candidateDefinitions"]
+        self.assertEqual(["candidate-a", "candidate-b"], [c["key"] for c in candidates])
+        old, modern = [c["content"] for c in candidates]
+'''
+new = '''        record = read("data/native/bestiary/avatar-of-death.json")
+        self.assertEqual("retained-native-definition", record["baselineStatus"])
+        self.assertNotIn("candidateDefinitions", record)
+        modern = record["definition"]
+        old = next(x for x in read(
+            "data/reference/srd/structured/bestiary/bestiary-srd51.json"
+        )["monster"] if x["name"] == "Avatar of Death")
+'''
+require(old in content, "Avatar test not found for migration")
+content=content.replace(old,new)
+content=content.replace(
+    'self.assertEqual(["Incorporeal Movement"], [t["name"] for t in modern["trait"]])',
+    'self.assertEqual(["Incorporeal Movement", "Turning Immunity"],\n'
+    '                         [t["name"] for t in modern["trait"]])',
+)
+content=content.replace(
+    'self.assertEqual([x["key"] for x in candidates], [x["key"] for x in row["candidates"]])',
+    'self.assertEqual(["candidate-a", "candidate-b"],\n'
+    '                         [x["key"] for x in row["candidates"]])',
+)
+for symbol in [
+    'modern = (item.get("definition") or next',
+    'modern = record.get("definition") or next',
+    'self.assertEqual(["Incorporeal Movement", "Turning Immunity"],',
+    'self.assertEqual("retained-native-definition", record["baselineStatus"])'
+]:
+    require(symbol in content, f"Fidelity test patch missing: {symbol}")
+Path(path).write_text(content,encoding="utf-8")
+subprocess.run(["git","add",path],check=True)
+
+# Restore uniqueness test must omit manifest-only entries that have no paths.
+path = "tests/test_final_monster_removed_features.py"
+content = Path(path).read_text(encoding="utf-8")
+old='locations = {r["nativeId"]: r["path"] for r in manifest["coverage"]}'
+new='locations = {r["nativeId"]: r["path"] for r in manifest["coverage"] if "path" in r}'
+require(old in content, "Ledger test list comprehension changed")
+Path(path).write_text(content.replace(old,new),encoding="utf-8")
+subprocess.run(["git","add",path],check=True)
+
+# Name is stored at the native-record level, not inside selected definitions.
+path = "tests/test_npc_monster_spellcasting_resources.py"
+content = Path(path).read_text(encoding="utf-8")
+old='source = self.newer[definition["name"]]'
+new='source = self.newer[self.monster(name)["name"]]'
+require(old in content, "NPC test identity lookup unexpectedly changed")
+Path(path).write_text(content.replace(old,new),encoding="utf-8")
+subprocess.run(["git","add",path],check=True)
+
+# Preserve the official SRD correction to the modern Black Dragon attack
+# label; pinned unofficial JSON still contains the older uncorrected spelling.
+path = "tests/test_monster_catalog_invariants.py"
+content = Path(path).read_text(encoding="utf-8")
+needle='''                for field in ("trait", "action", "bonus", "reaction", "legendary"):
+                    for feature in source.get(field, []):
+                        self.assertIn(
+                            feature, current.get(field, []),
+'''
+repl='''                for field in ("trait", "action", "bonus", "reaction", "legendary"):
+                    for feature in source.get(field, []):
+                        if name in ("Adult Black Dragon", "Ancient Black Dragon") and field == "action" and feature.get("name") == "Multiattack":
+                            feature = json.loads(json.dumps(feature).replace(
+                                "Melf's Acid Arrow|SRD52", "Acid Arrow|SRD52"
+                            ))
+                        self.assertIn(
+                            feature, current.get(field, []),
+'''
+require(needle in content, "Monster baseline source assertion unexpectedly changed")
+Path(path).write_text(content.replace(needle,repl),encoding="utf-8")
+subprocess.run(["git","add",path],check=True)
+
+
 require(not subprocess.check_output(
     ["git", "diff", "--name-only", "--diff-filter=U"], text=True).strip(),
     "Conflict resolution left unresolved files")
