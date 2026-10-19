@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "status": "approved-native-5x-and-reviewed-3x-defense-consequences; execution-schema-not-yet-final",
-    "note": "Eighteen canonical conditions, including Flat-Footed and Helpless. Native conditions use composable AC contributions rather than mutually exclusive stored AC numbers. Approved Exhaustion, Wet, Stunned half Speed and Petrified awareness are preserved. Original SRD 5.x source data remains in data/reference/srd/; 3.x provenance/decisions are in data/reference/3x/."
+    "status": "approved-native-5x-with-selected-3x-conditions; executable-schema-still-pending",
+    "note": "Twenty-four unified native conditions: sixteen reconciled 5.x and house conditions, two 3.x defensive conditions (Flat-Footed and Helpless), and six additional 3.x conditions (Dazed, Dazzled, Entangled, Fascinated, Nauseated, Sickened). Full 3.x sources, action economy conversions and runtime integration remain separate review work."
   },
   "conditions": [
     {
@@ -77,6 +77,47 @@
       ]
     },
     {
+      "id": "condition.dazed",
+      "name": "Dazed",
+      "kind": "condition",
+      "description": "A Dazed creature cannot take Actions, Bonus Actions, or Reactions, but otherwise defends itself normally. Dazed does not inherently prevent movement, suppress AC contributions, or end Concentration.",
+      "effects": [
+        {
+          "type": "action-restriction",
+          "cannotTake": [
+            "action",
+            "bonus-action",
+            "reaction"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "condition.dazzled",
+      "name": "Dazzled",
+      "kind": "condition",
+      "description": "A Dazzled creature experiences overstimulated vision, suffering a -1 penalty on attacks and Search or Spot checks. Dazzled does not remove sight or impose the Blinded condition.",
+      "effects": [
+        {
+          "type": "roll-modifier",
+          "appliesTo": "attack-roll",
+          "operation": "add",
+          "value": -1
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "skill-check",
+          "skills": [
+            "skill.search",
+            "skill.spot"
+          ],
+          "operation": "add",
+          "value": -1,
+          "appliesOnceToComposedCheck": true
+        }
+      ]
+    },
+    {
       "id": "condition.deafened",
       "name": "Deafened",
       "kind": "condition",
@@ -91,6 +132,62 @@
           "appliesTo": "ability-check",
           "requiresSense": "hearing",
           "result": "automatic-failure"
+        }
+      ]
+    },
+    {
+      "id": "condition.entangled",
+      "name": "Entangled",
+      "kind": "condition",
+      "description": "An Entangled creature is restrained by bonds or another ensnaring effect. Unless securely anchored, it moves at half Speed and cannot Run or Charge. It has a -2 attack penalty and a -4 penalty to effective Dexterity; anchored bonds prevent movement entirely. Spellcasting interference is preserved for later integration with the native spellcasting procedure.",
+      "effects": [
+        {
+          "type": "speed",
+          "operation": "multiply",
+          "factor": 0.5,
+          "when": {
+            "anchored": false
+          }
+        },
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false,
+          "when": {
+            "anchored": true
+          }
+        },
+        {
+          "type": "movement-restriction",
+          "prohibited": [
+            "run",
+            "charge"
+          ]
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "attack-roll",
+          "operation": "add",
+          "value": -2
+        },
+        {
+          "type": "effective-ability-score",
+          "ability": "dexterity",
+          "operation": "add",
+          "value": -4,
+          "minimum": 0,
+          "affectsDerivedStatistics": true
+        },
+        {
+          "type": "spellcasting-disruption",
+          "requiresCheck": "concentration",
+          "dc": {
+            "base": 15,
+            "perSpellLevel": 1
+          },
+          "onFailure": "spell-is-lost",
+          "integrationStatus": "awaiting-native-spellcasting-reconciliation"
         }
       ]
     },
@@ -184,6 +281,71 @@
           "levelsRemoved": 1
         }
       }
+    },
+    {
+      "id": "condition.fascinated",
+      "name": "Fascinated",
+      "kind": "condition",
+      "description": "A Fascinated creature devotes its attention to a compelling effect, remaining quiet and stationary. It cannot take actions other than attending to the effect, suffers -4 on reactive perception skill checks, and may resist a potential threat again. An obvious threat breaks the fascination; an ally may free it using an Action.",
+      "effects": [
+        {
+          "type": "action-restriction",
+          "cannotTake": [
+            "action",
+            "bonus-action",
+            "reaction"
+          ],
+          "exceptions": [
+            "pay-attention-to-fascinating-effect"
+          ]
+        },
+        {
+          "type": "movement-restriction",
+          "restriction": "no-voluntary-movement",
+          "exceptions": [
+            "effect-expressly-allows"
+          ]
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "skill-check",
+          "skills": [
+            "skill.listen",
+            "skill.spot"
+          ],
+          "operation": "add",
+          "value": -4,
+          "when": {
+            "purpose": "reaction-to-surroundings"
+          },
+          "appliesOnceToComposedCheck": true
+        },
+        {
+          "type": "saving-throw-opportunity",
+          "when": {
+            "potentialThreatAppears": true
+          },
+          "against": "fascinating-effect",
+          "resultOnSuccess": "condition-ends"
+        }
+      ],
+      "endsWhen": [
+        {
+          "event": "obvious-threat-appears",
+          "examples": [
+            "weapon-drawn",
+            "spell-cast",
+            "ranged-weapon-aimed"
+          ]
+        },
+        {
+          "event": "ally-shakes-creature-free",
+          "actionCost": "action"
+        },
+        {
+          "event": "fascinating-effect-ends"
+        }
+      ]
     },
     {
       "id": "condition.flat-footed",
@@ -391,6 +553,32 @@
           "when": {
             "targetCanSeeAffectedCreature": false
           }
+        }
+      ]
+    },
+    {
+      "id": "condition.nauseated",
+      "name": "Nauseated",
+      "kind": "condition",
+      "description": "A Nauseated creature cannot attack, cast spells, concentrate, or undertake other activities requiring focused attention. It may move or undertake one simple move-equivalent activity, but cannot act normally. Move-equivalent action costs require normalization in the shared native action economy.",
+      "effects": [
+        {
+          "type": "turn-activity-limit",
+          "allowed": [
+            "movement",
+            "one-simple-move-equivalent-activity"
+          ],
+          "prohibited": [
+            "attack",
+            "cast-spell",
+            "attention-requiring-activity"
+          ],
+          "maxMoveEquivalentActivitiesPerTurn": 1,
+          "nativeActionMapping": "pending-review"
+        },
+        {
+          "type": "concentration",
+          "operation": "end"
         }
       ]
     },
@@ -608,6 +796,46 @@
           "appliesTo": "saving-throw",
           "ability": "dexterity",
           "mode": "disadvantage"
+        }
+      ]
+    },
+    {
+      "id": "condition.sickened",
+      "name": "Sickened",
+      "kind": "condition",
+      "description": "A Sickened creature takes a -2 penalty to attack rolls, weapon damage rolls, saving throws, skill checks, and ability checks. Sickened remains distinct from Poisoned and Nauseated; apply its numeric modifier once to a composed check.",
+      "effects": [
+        {
+          "type": "roll-modifier",
+          "appliesTo": "attack-roll",
+          "operation": "add",
+          "value": -2
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "weapon-damage-roll",
+          "operation": "add",
+          "value": -2
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "saving-throw",
+          "operation": "add",
+          "value": -2
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "skill-check",
+          "operation": "add",
+          "value": -2,
+          "appliesOnceToComposedCheck": true
+        },
+        {
+          "type": "roll-modifier",
+          "appliesTo": "ability-check",
+          "operation": "add",
+          "value": -2,
+          "appliesOnceToComposedCheck": true
         }
       ]
     },
