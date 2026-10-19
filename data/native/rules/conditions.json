@@ -11,7 +11,8 @@
     "Refer to the canonical condition records for the actual effects, restrictions, and ending triggers. Source-edition definitions are retained separately as historical evidence.",
     "For attacks using Armor Class, calculate the applicable normal or Touch defense from the target's contributions, then apply only the applicable defensive effects from its conditions. Denial of Dexterity defense is not itself the full Flat-Footed condition. See data/native/defenses.json.",
     "Historical 3.x conditions are normalized into independent native records. Dazed does not imply loss of Concentration, while Nauseated explicitly ends Concentration. Compound skill checks and repeated impairment of the same underlying statistic must not apply the same modifier more than once.",
-    "Fear-based conditions can impose different severities and sources. Do not treat Shaken, Frightened, Panicked, and Cowering as synonyms. The 3.x automatic escalation of multiple fear effects remains a separate, unresolved native policy; direct Panicked-to-Cowering behavior when escape is impossible is defined on Panicked."
+    "Fear-based conditions can impose different severities and sources. Do not treat Shaken, Frightened, Panicked, and Cowering as synonyms. The 3.x automatic escalation of multiple fear effects remains a separate, unresolved native policy; direct Panicked-to-Cowering behavior when escape is impossible is defined on Panicked.",
+    "Fatigued and six-level Exhaustion remain distinct. Applying an additional fatigue effect does not silently map the historical 3.x Exhausted condition onto an unapproved native Exhaustion level; the source-to-native compatibility mapping must be reconciled explicitly."
   ],
   "conditionIds": [
     "condition.blinded",
@@ -23,6 +24,7 @@
     "condition.entangled",
     "condition.exhaustion",
     "condition.fascinated",
+    "condition.fatigued",
     "condition.flat-footed",
     "condition.frightened",
     "condition.grappled",
