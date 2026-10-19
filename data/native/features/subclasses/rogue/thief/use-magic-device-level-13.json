@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.use-magic-device.rogue.thief.use-magic-device.13",
+  "id": "subclass-feature.rogue.thief.use-magic-device-level-13",
   "name": "Use Magic Device",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -57,6 +57,6 @@
     }
   ],
   "parentClass": "class.rogue",
-  "parentSubclass": "thief",
+  "parentSubclass": "subclass.rogue.thief",
   "classLevel": 13
 }

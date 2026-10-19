@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.school-of-evocation.wizard.evocation.school-of-evocation.2",
+  "id": "subclass-feature.wizard.evocation.school-of-evocation-level-2",
   "name": "School of Evocation",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -28,6 +28,6 @@
     }
   ],
   "parentClass": "class.wizard",
-  "parentSubclass": "evocation",
+  "parentSubclass": "subclass.wizard.evocation",
   "classLevel": 2
 }

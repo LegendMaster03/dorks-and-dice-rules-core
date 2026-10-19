@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.land-s-aid.druid.land.land-s-aid.3",
+  "id": "subclass-feature.druid.land.land-s-aid-level-3",
   "name": "Land's Aid",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.druid",
-  "parentSubclass": "land",
+  "parentSubclass": "subclass.druid.land",
   "classLevel": 3
 }

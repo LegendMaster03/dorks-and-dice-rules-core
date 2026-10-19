@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.bonus-proficiency.cleric.life.bonus-proficiency.1",
+  "id": "subclass-feature.cleric.life.bonus-proficiency-level-1",
   "name": "Bonus Proficiency",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.cleric",
-  "parentSubclass": "life",
+  "parentSubclass": "subclass.cleric.life",
   "classLevel": 1
 }

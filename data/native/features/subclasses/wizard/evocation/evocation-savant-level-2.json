@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.evocation-savant.wizard.evocation.evocation-savant.2",
+  "id": "subclass-feature.wizard.evocation.evocation-savant-level-2",
   "name": "Evocation Savant",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.wizard",
-  "parentSubclass": "evocation",
+  "parentSubclass": "subclass.wizard.evocation",
   "classLevel": 2
 }

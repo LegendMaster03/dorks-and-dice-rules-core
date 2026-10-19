@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.draconic-spells.sorcerer.draconic.draconic-spells.3",
+  "id": "subclass-feature.sorcerer.draconic.draconic-spells-level-3",
   "name": "Draconic Spells",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -51,6 +51,6 @@
     }
   ],
   "parentClass": "class.sorcerer",
-  "parentSubclass": "draconic",
+  "parentSubclass": "subclass.sorcerer.draconic",
   "classLevel": 3
 }

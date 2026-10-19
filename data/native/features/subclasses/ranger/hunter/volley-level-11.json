@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.volley.ranger.hunter.volley.11",
+  "id": "subclass-feature.ranger.hunter.volley-level-11",
   "name": "Volley",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.ranger",
-  "parentSubclass": "hunter",
+  "parentSubclass": "subclass.ranger.hunter",
   "classLevel": 11
 }

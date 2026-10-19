@@ -1,5 +1,5 @@
 {
-  "id": "classFeature.turn-undead.cleric.turn-undead.2",
+  "id": "class-feature.cleric.turn-undead-level-2",
   "name": "Turn Undead",
   "kind": "classFeature",
   "baselineStatus": "pending-native-reconciliation",

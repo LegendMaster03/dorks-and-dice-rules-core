@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.aura-of-devotion.paladin.devotion.aura-of-devotion.7",
+  "id": "subclass-feature.paladin.devotion.aura-of-devotion-level-7",
   "name": "Aura of Devotion",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -37,6 +37,6 @@
     }
   ],
   "parentClass": "class.paladin",
-  "parentSubclass": "devotion",
+  "parentSubclass": "subclass.paladin.devotion",
   "classLevel": 7
 }

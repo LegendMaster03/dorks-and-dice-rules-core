@@ -1,5 +1,5 @@
 {
-  "id": "subclass.the-fiend.warlock.fiend.Fiend",
+  "id": "subclass.warlock.fiend",
   "name": "The Fiend",
   "kind": "subclass",
   "baselineStatus": "pending-native-reconciliation",

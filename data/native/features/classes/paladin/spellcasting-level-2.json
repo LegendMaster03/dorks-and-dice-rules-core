@@ -1,5 +1,5 @@
 {
-  "id": "classFeature.spellcasting.paladin.spellcasting.2",
+  "id": "class-feature.paladin.spellcasting-level-2",
   "name": "Spellcasting",
   "kind": "classFeature",
   "baselineStatus": "pending-native-reconciliation",

@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.fiendish-resilience.warlock.fiend.fiendish-resilience.10",
+  "id": "subclass-feature.warlock.fiend.fiendish-resilience-level-10",
   "name": "Fiendish Resilience",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -36,6 +36,6 @@
     }
   ],
   "parentClass": "class.warlock",
-  "parentSubclass": "fiend",
+  "parentSubclass": "subclass.warlock.fiend",
   "classLevel": 10
 }

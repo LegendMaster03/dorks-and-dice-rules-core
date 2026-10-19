@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.turn-the-unholy.paladin.devotion.turn-the-unholy.3",
+  "id": "subclass-feature.paladin.devotion.turn-the-unholy-level-3",
   "name": "Turn the Unholy",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -25,6 +25,6 @@
     }
   ],
   "parentClass": "class.paladin",
-  "parentSubclass": "devotion",
+  "parentSubclass": "subclass.paladin.devotion",
   "classLevel": 3
 }

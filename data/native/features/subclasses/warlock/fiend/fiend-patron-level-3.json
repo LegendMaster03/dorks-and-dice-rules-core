@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.fiend-patron.warlock.fiend.fiend-patron.3",
+  "id": "subclass-feature.warlock.fiend.fiend-patron-level-3",
   "name": "Fiend Patron",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -29,6 +29,6 @@
     }
   ],
   "parentClass": "class.warlock",
-  "parentSubclass": "fiend",
+  "parentSubclass": "subclass.warlock.fiend",
   "classLevel": 3
 }

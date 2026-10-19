@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.disciple-of-life.cleric.life.disciple-of-life.1",
+  "id": "subclass-feature.cleric.life.disciple-of-life-level-1",
   "name": "Disciple of Life",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.cleric",
-  "parentSubclass": "life",
+  "parentSubclass": "subclass.cleric.life",
   "classLevel": 1
 }

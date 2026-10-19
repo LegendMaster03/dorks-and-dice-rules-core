@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.dragon-wings.sorcerer.draconic.dragon-wings.14",
+  "id": "subclass-feature.sorcerer.draconic.dragon-wings-level-14",
   "name": "Dragon Wings",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -42,6 +42,6 @@
     }
   ],
   "parentClass": "class.sorcerer",
-  "parentSubclass": "draconic",
+  "parentSubclass": "subclass.sorcerer.draconic",
   "classLevel": 14
 }

@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.nature-s-ward.druid.land.nature-s-ward.10",
+  "id": "subclass-feature.druid.land.nature-s-ward-level-10",
   "name": "Nature's Ward",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -71,6 +71,6 @@
     }
   ],
   "parentClass": "class.druid",
-  "parentSubclass": "land",
+  "parentSubclass": "subclass.druid.land",
   "classLevel": 10
 }

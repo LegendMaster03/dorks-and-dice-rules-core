@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.hunter-s-prey.ranger.hunter.hunter-s-prey.3",
+  "id": "subclass-feature.ranger.hunter.hunter-s-prey-level-3",
   "name": "Hunter's Prey",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -72,6 +72,6 @@
     }
   ],
   "parentClass": "class.ranger",
-  "parentSubclass": "hunter",
+  "parentSubclass": "subclass.ranger.hunter",
   "classLevel": 3
 }

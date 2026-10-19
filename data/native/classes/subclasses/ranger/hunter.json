@@ -1,5 +1,5 @@
 {
-  "id": "subclass.hunter.ranger.hunter.Hunter",
+  "id": "subclass.ranger.hunter",
   "name": "Hunter",
   "kind": "subclass",
   "baselineStatus": "pending-native-reconciliation",

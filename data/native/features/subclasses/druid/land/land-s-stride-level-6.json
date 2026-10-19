@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.land-s-stride.druid.land.land-s-stride.6",
+  "id": "subclass-feature.druid.land.land-s-stride-level-6",
   "name": "Land's Stride",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -22,6 +22,6 @@
     }
   ],
   "parentClass": "class.druid",
-  "parentSubclass": "land",
+  "parentSubclass": "subclass.druid.land",
   "classLevel": 6
 }

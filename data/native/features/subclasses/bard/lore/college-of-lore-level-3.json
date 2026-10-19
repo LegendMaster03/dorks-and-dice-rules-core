@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.college-of-lore.bard.lore.college-of-lore.3",
+  "id": "subclass-feature.bard.lore.college-of-lore-level-3",
   "name": "College of Lore",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -53,6 +53,6 @@
     }
   ],
   "parentClass": "class.bard",
-  "parentSubclass": "lore",
+  "parentSubclass": "subclass.bard.lore",
   "classLevel": 3
 }

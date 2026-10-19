@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.warrior-of-the-open-hand.monk.open-hand.warrior-of-the-open-hand.3",
+  "id": "subclass-feature.monk.open-hand.warrior-of-the-open-hand-level-3",
   "name": "Warrior of the Open Hand",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -25,6 +25,6 @@
     }
   ],
   "parentClass": "class.monk",
-  "parentSubclass": "open-hand",
+  "parentSubclass": "subclass.monk.open-hand",
   "classLevel": 3
 }

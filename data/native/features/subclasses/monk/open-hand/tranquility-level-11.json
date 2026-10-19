@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.tranquility.monk.open-hand.tranquility.11",
+  "id": "subclass-feature.monk.open-hand.tranquility-level-11",
   "name": "Tranquility",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.monk",
-  "parentSubclass": "open-hand",
+  "parentSubclass": "subclass.monk.open-hand",
   "classLevel": 11
 }

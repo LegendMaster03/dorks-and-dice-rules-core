@@ -1,5 +1,5 @@
 {
-  "id": "subclass.circle-of-the-land.druid.land.Land",
+  "id": "subclass.druid.land",
   "name": "Circle of the Land",
   "kind": "subclass",
   "baselineStatus": "pending-native-reconciliation",

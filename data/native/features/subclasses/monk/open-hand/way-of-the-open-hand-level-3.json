@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.way-of-the-open-hand.monk.open-hand.way-of-the-open-hand.3",
+  "id": "subclass-feature.monk.open-hand.way-of-the-open-hand-level-3",
   "name": "Way of the Open Hand",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -24,6 +24,6 @@
     }
   ],
   "parentClass": "class.monk",
-  "parentSubclass": "open-hand",
+  "parentSubclass": "subclass.monk.open-hand",
   "classLevel": 3
 }

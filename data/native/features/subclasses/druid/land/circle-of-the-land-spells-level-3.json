@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.circle-of-the-land-spells.druid.land.circle-of-the-land-spells.3",
+  "id": "subclass-feature.druid.land.circle-of-the-land-spells-level-3",
   "name": "Circle of the Land Spells",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -140,6 +140,6 @@
     }
   ],
   "parentClass": "class.druid",
-  "parentSubclass": "land",
+  "parentSubclass": "subclass.druid.land",
   "classLevel": 3
 }

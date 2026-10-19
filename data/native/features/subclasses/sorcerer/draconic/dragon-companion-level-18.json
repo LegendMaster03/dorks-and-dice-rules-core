@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.dragon-companion.sorcerer.draconic.dragon-companion.18",
+  "id": "subclass-feature.sorcerer.draconic.dragon-companion-level-18",
   "name": "Dragon Companion",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -22,6 +22,6 @@
     }
   ],
   "parentClass": "class.sorcerer",
-  "parentSubclass": "draconic",
+  "parentSubclass": "subclass.sorcerer.draconic",
   "classLevel": 18
 }

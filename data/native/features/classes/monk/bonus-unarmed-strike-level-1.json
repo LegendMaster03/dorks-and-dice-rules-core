@@ -1,5 +1,5 @@
 {
-  "id": "classFeature.bonus-unarmed-strike.monk.bonus-unarmed-strike.1",
+  "id": "class-feature.monk.bonus-unarmed-strike-level-1",
   "name": "Bonus Unarmed Strike",
   "kind": "classFeature",
   "baselineStatus": "pending-native-reconciliation",

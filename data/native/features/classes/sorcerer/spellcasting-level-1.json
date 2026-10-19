@@ -1,5 +1,5 @@
 {
-  "id": "classFeature.spellcasting.sorcerer.spellcasting.1",
+  "id": "class-feature.sorcerer.spellcasting-level-1",
   "name": "Spellcasting",
   "kind": "classFeature",
   "baselineStatus": "pending-native-reconciliation",

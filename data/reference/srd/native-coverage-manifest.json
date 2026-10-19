@@ -1,9 +1,9 @@
 {
-  "status": "native-coverage-staged; NOT fully reconciled or executable",
+  "status": "native-coverage-staged; all source-marked entities present; decisions pending",
   "pinnedPackRevision": "d06d1dadee357857767b1e4da985df6609509bcf",
   "sourceFilesVerified": 90,
-  "nativeDefinitionCount": 2523,
-  "individualEntityFiles": 2226,
+  "nativeDefinitionCount": 2522,
+  "individualEntityFiles": 2225,
   "compactRecords": {
     "actions.json": 24,
     "diseases.json": 3,
@@ -2381,7 +2381,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.barbarian.ability-score-improvement.12",
+      "nativeId": "class-feature.barbarian.ability-score-improvement-level-12",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2398,7 +2398,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.barbarian.ability-score-improvement.16",
+      "nativeId": "class-feature.barbarian.ability-score-improvement-level-16",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2415,7 +2415,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.barbarian.ability-score-improvement.19",
+      "nativeId": "class-feature.barbarian.ability-score-improvement-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2428,7 +2428,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.barbarian.ability-score-improvement.4",
+      "nativeId": "class-feature.barbarian.ability-score-improvement-level-4",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2445,7 +2445,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.barbarian.ability-score-improvement.8",
+      "nativeId": "class-feature.barbarian.ability-score-improvement-level-8",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2462,7 +2462,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.barbarian-subclass.barbarian.barbarian-subclass.3",
+      "nativeId": "class-feature.barbarian.barbarian-subclass-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2475,7 +2475,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.brutal-critical-1-die.barbarian.brutal-critical-1-die.9",
+      "nativeId": "class-feature.barbarian.brutal-critical-1-die-level-9",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2488,7 +2488,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.brutal-critical-2-dice.barbarian.brutal-critical-2-dice.13",
+      "nativeId": "class-feature.barbarian.brutal-critical-2-dice-level-13",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2501,7 +2501,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.brutal-critical-3-dice.barbarian.brutal-critical-3-dice.17",
+      "nativeId": "class-feature.barbarian.brutal-critical-3-dice-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2514,7 +2514,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.brutal-strike.barbarian.brutal-strike.9",
+      "nativeId": "class-feature.barbarian.brutal-strike-level-9",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2527,7 +2527,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.danger-sense.barbarian.danger-sense.2",
+      "nativeId": "class-feature.barbarian.danger-sense-level-2",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2544,7 +2544,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.epic-boon.barbarian.epic-boon.19",
+      "nativeId": "class-feature.barbarian.epic-boon-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2557,7 +2557,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.extra-attack.barbarian.extra-attack.5",
+      "nativeId": "class-feature.barbarian.extra-attack-level-5",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2574,7 +2574,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.fast-movement.barbarian.fast-movement.5",
+      "nativeId": "class-feature.barbarian.fast-movement-level-5",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2591,7 +2591,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.feral-instinct.barbarian.feral-instinct.7",
+      "nativeId": "class-feature.barbarian.feral-instinct-level-7",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2608,7 +2608,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.improved-brutal-strike.barbarian.improved-brutal-strike.13",
+      "nativeId": "class-feature.barbarian.improved-brutal-strike-level-13",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2621,7 +2621,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.improved-brutal-strike.barbarian.improved-brutal-strike.17",
+      "nativeId": "class-feature.barbarian.improved-brutal-strike-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2634,7 +2634,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.indomitable-might.barbarian.indomitable-might.18",
+      "nativeId": "class-feature.barbarian.indomitable-might-level-18",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2651,7 +2651,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.instinctive-pounce.barbarian.instinctive-pounce.7",
+      "nativeId": "class-feature.barbarian.instinctive-pounce-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2664,7 +2664,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.path-feature.barbarian.path-feature.10",
+      "nativeId": "class-feature.barbarian.path-feature-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2677,7 +2677,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.path-feature.barbarian.path-feature.14",
+      "nativeId": "class-feature.barbarian.path-feature-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2690,7 +2690,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.path-feature.barbarian.path-feature.6",
+      "nativeId": "class-feature.barbarian.path-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2703,7 +2703,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.persistent-rage.barbarian.persistent-rage.15",
+      "nativeId": "class-feature.barbarian.persistent-rage-level-15",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2720,7 +2720,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.primal-champion.barbarian.primal-champion.20",
+      "nativeId": "class-feature.barbarian.primal-champion-level-20",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2737,7 +2737,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.primal-knowledge.barbarian.primal-knowledge.3",
+      "nativeId": "class-feature.barbarian.primal-knowledge-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2750,7 +2750,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.primal-path.barbarian.primal-path.3",
+      "nativeId": "class-feature.barbarian.primal-path-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2763,7 +2763,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.rage.barbarian.rage.1",
+      "nativeId": "class-feature.barbarian.rage-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2780,7 +2780,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.reckless-attack.barbarian.reckless-attack.2",
+      "nativeId": "class-feature.barbarian.reckless-attack-level-2",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2797,7 +2797,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.relentless-rage.barbarian.relentless-rage.11",
+      "nativeId": "class-feature.barbarian.relentless-rage-level-11",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2814,7 +2814,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.barbarian.subclass-feature.10",
+      "nativeId": "class-feature.barbarian.subclass-feature-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2827,7 +2827,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.barbarian.subclass-feature.14",
+      "nativeId": "class-feature.barbarian.subclass-feature-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2840,7 +2840,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.barbarian.subclass-feature.6",
+      "nativeId": "class-feature.barbarian.subclass-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2853,7 +2853,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.unarmored-defense.barbarian.unarmored-defense.1",
+      "nativeId": "class-feature.barbarian.unarmored-defense-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2870,7 +2870,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.weapon-mastery.barbarian.weapon-mastery.1",
+      "nativeId": "class-feature.barbarian.weapon-mastery-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2883,7 +2883,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.bard.ability-score-improvement.12",
+      "nativeId": "class-feature.bard.ability-score-improvement-level-12",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2900,7 +2900,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.bard.ability-score-improvement.16",
+      "nativeId": "class-feature.bard.ability-score-improvement-level-16",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2917,7 +2917,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.bard.ability-score-improvement.19",
+      "nativeId": "class-feature.bard.ability-score-improvement-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2930,7 +2930,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.bard.ability-score-improvement.4",
+      "nativeId": "class-feature.bard.ability-score-improvement-level-4",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2947,7 +2947,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.bard.ability-score-improvement.8",
+      "nativeId": "class-feature.bard.ability-score-improvement-level-8",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -2964,7 +2964,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.bard-college.bard.bard-college.3",
+      "nativeId": "class-feature.bard.bard-college-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2977,7 +2977,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.bard-college-feature.bard.bard-college-feature.14",
+      "nativeId": "class-feature.bard.bard-college-feature-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -2990,7 +2990,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.bard-college-feature.bard.bard-college-feature.6",
+      "nativeId": "class-feature.bard.bard-college-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3003,7 +3003,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.bard-subclass.bard.bard-subclass.3",
+      "nativeId": "class-feature.bard.bard-subclass-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3016,7 +3016,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.bardic-inspiration.bard.bardic-inspiration.1",
+      "nativeId": "class-feature.bard.bardic-inspiration-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3033,7 +3033,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.bardic-inspiration-d10.bard.bardic-inspiration-d10.10",
+      "nativeId": "class-feature.bard.bardic-inspiration-d10-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3046,7 +3046,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.bardic-inspiration-d12.bard.bardic-inspiration-d12.15",
+      "nativeId": "class-feature.bard.bardic-inspiration-d12-level-15",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3059,7 +3059,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.bardic-inspiration-d8.bard.bardic-inspiration-d8.5",
+      "nativeId": "class-feature.bard.bardic-inspiration-d8-level-5",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3072,7 +3072,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.countercharm.bard.countercharm.6",
+      "nativeId": "class-feature.bard.countercharm-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3085,7 +3085,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.countercharm.bard.countercharm.7",
+      "nativeId": "class-feature.bard.countercharm-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3098,7 +3098,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.epic-boon.bard.epic-boon.19",
+      "nativeId": "class-feature.bard.epic-boon-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3111,7 +3111,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.expertise.bard.expertise.10",
+      "nativeId": "class-feature.bard.expertise-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3124,7 +3124,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.expertise.bard.expertise.2",
+      "nativeId": "class-feature.bard.expertise-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3137,7 +3137,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.expertise.bard.expertise.3",
+      "nativeId": "class-feature.bard.expertise-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3150,7 +3150,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.expertise.bard.expertise.9",
+      "nativeId": "class-feature.bard.expertise-level-9",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3163,7 +3163,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.font-of-inspiration.bard.font-of-inspiration.5",
+      "nativeId": "class-feature.bard.font-of-inspiration-level-5",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3180,7 +3180,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.jack-of-all-trades.bard.jack-of-all-trades.2",
+      "nativeId": "class-feature.bard.jack-of-all-trades-level-2",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3197,7 +3197,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.magical-secrets.bard.magical-secrets.10",
+      "nativeId": "class-feature.bard.magical-secrets-level-10",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3214,7 +3214,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.magical-secrets.bard.magical-secrets.14",
+      "nativeId": "class-feature.bard.magical-secrets-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3227,7 +3227,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.magical-secrets.bard.magical-secrets.18",
+      "nativeId": "class-feature.bard.magical-secrets-level-18",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3240,7 +3240,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.song-of-rest-d10.bard.song-of-rest-d10.13",
+      "nativeId": "class-feature.bard.song-of-rest-d10-level-13",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3253,7 +3253,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.song-of-rest-d12.bard.song-of-rest-d12.17",
+      "nativeId": "class-feature.bard.song-of-rest-d12-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3266,7 +3266,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.song-of-rest-d6.bard.song-of-rest-d6.2",
+      "nativeId": "class-feature.bard.song-of-rest-d6-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3279,7 +3279,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.song-of-rest-d8.bard.song-of-rest-d8.9",
+      "nativeId": "class-feature.bard.song-of-rest-d8-level-9",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3292,7 +3292,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.spellcasting.bard.spellcasting.1",
+      "nativeId": "class-feature.bard.spellcasting-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3309,7 +3309,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.bard.subclass-feature.14",
+      "nativeId": "class-feature.bard.subclass-feature-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3322,7 +3322,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.bard.subclass-feature.6",
+      "nativeId": "class-feature.bard.subclass-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3335,7 +3335,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.superior-inspiration.bard.superior-inspiration.18",
+      "nativeId": "class-feature.bard.superior-inspiration-level-18",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3348,7 +3348,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.superior-inspiration.bard.superior-inspiration.20",
+      "nativeId": "class-feature.bard.superior-inspiration-level-20",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3361,7 +3361,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.words-of-creation.bard.words-of-creation.20",
+      "nativeId": "class-feature.bard.words-of-creation-level-20",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3374,7 +3374,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.cleric.ability-score-improvement.12",
+      "nativeId": "class-feature.cleric.ability-score-improvement-level-12",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3391,7 +3391,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.cleric.ability-score-improvement.16",
+      "nativeId": "class-feature.cleric.ability-score-improvement-level-16",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3408,7 +3408,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.cleric.ability-score-improvement.19",
+      "nativeId": "class-feature.cleric.ability-score-improvement-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3421,7 +3421,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.cleric.ability-score-improvement.4",
+      "nativeId": "class-feature.cleric.ability-score-improvement-level-4",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3438,7 +3438,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.cleric.ability-score-improvement.8",
+      "nativeId": "class-feature.cleric.ability-score-improvement-level-8",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3455,7 +3455,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.blessed-strikes.cleric.blessed-strikes.7",
+      "nativeId": "class-feature.cleric.blessed-strikes-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3468,7 +3468,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.channel-divinity.cleric.channel-divinity.18",
+      "nativeId": "class-feature.cleric.channel-divinity-level-18",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3481,7 +3481,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.channel-divinity.cleric.channel-divinity.2",
+      "nativeId": "class-feature.cleric.channel-divinity-level-2",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3498,7 +3498,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.channel-divinity.cleric.channel-divinity.6",
+      "nativeId": "class-feature.cleric.channel-divinity-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3511,7 +3511,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.channel-divinity-turn-undead.cleric.channel-divinity-turn-undead.2",
+      "nativeId": "class-feature.cleric.channel-divinity-turn-undead-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3524,7 +3524,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.cleric-subclass.cleric.cleric-subclass.3",
+      "nativeId": "class-feature.cleric.cleric-subclass-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3537,7 +3537,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.destroy-undead-cr-1.cleric.destroy-undead-cr-1.8",
+      "nativeId": "class-feature.cleric.destroy-undead-cr-1-level-8",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3550,7 +3550,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.destroy-undead-cr-1-2.cleric.destroy-undead-cr-1-2.5",
+      "nativeId": "class-feature.cleric.destroy-undead-cr-1-2-level-5",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3563,7 +3563,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.destroy-undead-cr-2.cleric.destroy-undead-cr-2.11",
+      "nativeId": "class-feature.cleric.destroy-undead-cr-2-level-11",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3576,7 +3576,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.destroy-undead-cr-3.cleric.destroy-undead-cr-3.14",
+      "nativeId": "class-feature.cleric.destroy-undead-cr-3-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3589,7 +3589,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.destroy-undead-cr-4.cleric.destroy-undead-cr-4.17",
+      "nativeId": "class-feature.cleric.destroy-undead-cr-4-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3602,7 +3602,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.divine-domain.cleric.divine-domain.1",
+      "nativeId": "class-feature.cleric.divine-domain-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3615,7 +3615,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.divine-domain-feature.cleric.divine-domain-feature.17",
+      "nativeId": "class-feature.cleric.divine-domain-feature-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3628,7 +3628,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.divine-domain-feature.cleric.divine-domain-feature.2",
+      "nativeId": "class-feature.cleric.divine-domain-feature-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3641,7 +3641,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.divine-domain-feature.cleric.divine-domain-feature.6",
+      "nativeId": "class-feature.cleric.divine-domain-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3654,7 +3654,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.divine-domain-feature.cleric.divine-domain-feature.8",
+      "nativeId": "class-feature.cleric.divine-domain-feature-level-8",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3667,7 +3667,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.divine-intervention.cleric.divine-intervention.10",
+      "nativeId": "class-feature.cleric.divine-intervention-level-10",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3684,7 +3684,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.divine-intervention-improvement.cleric.divine-intervention-improvement.20",
+      "nativeId": "class-feature.cleric.divine-intervention-improvement-level-20",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3697,7 +3697,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.divine-order.cleric.divine-order.1",
+      "nativeId": "class-feature.cleric.divine-order-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3710,7 +3710,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.divine-spark.cleric.divine-spark.2",
+      "nativeId": "class-feature.cleric.divine-spark-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3723,7 +3723,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.divine-strike.cleric.divine-strike.7",
+      "nativeId": "class-feature.cleric.divine-strike-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3736,7 +3736,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.epic-boon.cleric.epic-boon.19",
+      "nativeId": "class-feature.cleric.epic-boon-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3749,7 +3749,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.greater-divine-intervention.cleric.greater-divine-intervention.20",
+      "nativeId": "class-feature.cleric.greater-divine-intervention-level-20",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3762,7 +3762,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.improved-blessed-strikes.cleric.improved-blessed-strikes.14",
+      "nativeId": "class-feature.cleric.improved-blessed-strikes-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3775,7 +3775,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.potent-spellcasting.cleric.potent-spellcasting.7",
+      "nativeId": "class-feature.cleric.potent-spellcasting-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3788,7 +3788,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.protector.cleric.protector.1",
+      "nativeId": "class-feature.cleric.protector-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3801,7 +3801,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.sear-undead.cleric.sear-undead.5",
+      "nativeId": "class-feature.cleric.sear-undead-level-5",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3814,7 +3814,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.spellcasting.cleric.spellcasting.1",
+      "nativeId": "class-feature.cleric.spellcasting-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3831,7 +3831,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.cleric.subclass-feature.17",
+      "nativeId": "class-feature.cleric.subclass-feature-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3844,7 +3844,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.cleric.subclass-feature.6",
+      "nativeId": "class-feature.cleric.subclass-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3857,7 +3857,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.thaumaturge.cleric.thaumaturge.1",
+      "nativeId": "class-feature.cleric.thaumaturge-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3870,7 +3870,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.turn-undead.cleric.turn-undead.2",
+      "nativeId": "class-feature.cleric.turn-undead-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3883,7 +3883,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.druid.ability-score-improvement.12",
+      "nativeId": "class-feature.druid.ability-score-improvement-level-12",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3900,7 +3900,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.druid.ability-score-improvement.16",
+      "nativeId": "class-feature.druid.ability-score-improvement-level-16",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3917,7 +3917,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.druid.ability-score-improvement.19",
+      "nativeId": "class-feature.druid.ability-score-improvement-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -3930,7 +3930,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.druid.ability-score-improvement.4",
+      "nativeId": "class-feature.druid.ability-score-improvement-level-4",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3947,7 +3947,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.druid.ability-score-improvement.8",
+      "nativeId": "class-feature.druid.ability-score-improvement-level-8",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3964,7 +3964,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.archdruid.druid.archdruid.20",
+      "nativeId": "class-feature.druid.archdruid-level-20",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3981,7 +3981,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.beast-spells.druid.beast-spells.18",
+      "nativeId": "class-feature.druid.beast-spells-level-18",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -3998,7 +3998,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.druid-circle.druid.druid-circle.2",
+      "nativeId": "class-feature.druid.druid-circle-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4011,7 +4011,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.druid-circle-feature.druid.druid-circle-feature.10",
+      "nativeId": "class-feature.druid.druid-circle-feature-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4024,7 +4024,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.druid-circle-feature.druid.druid-circle-feature.14",
+      "nativeId": "class-feature.druid.druid-circle-feature-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4037,7 +4037,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.druid-circle-feature.druid.druid-circle-feature.6",
+      "nativeId": "class-feature.druid.druid-circle-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4050,7 +4050,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.druid-subclass.druid.druid-subclass.3",
+      "nativeId": "class-feature.druid.druid-subclass-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4063,7 +4063,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.druidic.druid.druidic.1",
+      "nativeId": "class-feature.druid.druidic-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4080,7 +4080,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.elemental-fury.druid.elemental-fury.7",
+      "nativeId": "class-feature.druid.elemental-fury-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4093,7 +4093,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.epic-boon.druid.epic-boon.19",
+      "nativeId": "class-feature.druid.epic-boon-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4106,7 +4106,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.improved-elemental-fury.druid.improved-elemental-fury.15",
+      "nativeId": "class-feature.druid.improved-elemental-fury-level-15",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4119,7 +4119,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.magician.druid.magician.1",
+      "nativeId": "class-feature.druid.magician-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4132,7 +4132,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.potent-spellcasting.druid.potent-spellcasting.7",
+      "nativeId": "class-feature.druid.potent-spellcasting-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4145,7 +4145,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.primal-order.druid.primal-order.1",
+      "nativeId": "class-feature.druid.primal-order-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4158,7 +4158,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.primal-strike.druid.primal-strike.7",
+      "nativeId": "class-feature.druid.primal-strike-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4171,7 +4171,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.spellcasting.druid.spellcasting.1",
+      "nativeId": "class-feature.druid.spellcasting-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4188,7 +4188,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.druid.subclass-feature.10",
+      "nativeId": "class-feature.druid.subclass-feature-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4201,7 +4201,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.druid.subclass-feature.14",
+      "nativeId": "class-feature.druid.subclass-feature-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4214,7 +4214,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.druid.subclass-feature.6",
+      "nativeId": "class-feature.druid.subclass-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4227,7 +4227,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.timeless-body.druid.timeless-body.18",
+      "nativeId": "class-feature.druid.timeless-body-level-18",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4240,7 +4240,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.warden.druid.warden.1",
+      "nativeId": "class-feature.druid.warden-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4253,7 +4253,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.wild-companion.druid.wild-companion.2",
+      "nativeId": "class-feature.druid.wild-companion-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4266,7 +4266,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.wild-resurgence.druid.wild-resurgence.5",
+      "nativeId": "class-feature.druid.wild-resurgence-level-5",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4279,7 +4279,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.wild-shape.druid.wild-shape.2",
+      "nativeId": "class-feature.druid.wild-shape-level-2",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4296,7 +4296,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.wild-shape-improvement.druid.wild-shape-improvement.4",
+      "nativeId": "class-feature.druid.wild-shape-improvement-level-4",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4309,7 +4309,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.wild-shape-improvement.druid.wild-shape-improvement.8",
+      "nativeId": "class-feature.druid.wild-shape-improvement-level-8",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4322,7 +4322,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.fighter.ability-score-improvement.12",
+      "nativeId": "class-feature.fighter.ability-score-improvement-level-12",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4339,7 +4339,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.fighter.ability-score-improvement.14",
+      "nativeId": "class-feature.fighter.ability-score-improvement-level-14",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4356,7 +4356,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.fighter.ability-score-improvement.16",
+      "nativeId": "class-feature.fighter.ability-score-improvement-level-16",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4373,7 +4373,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.fighter.ability-score-improvement.19",
+      "nativeId": "class-feature.fighter.ability-score-improvement-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4386,7 +4386,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.fighter.ability-score-improvement.4",
+      "nativeId": "class-feature.fighter.ability-score-improvement-level-4",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4403,7 +4403,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.fighter.ability-score-improvement.6",
+      "nativeId": "class-feature.fighter.ability-score-improvement-level-6",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4420,7 +4420,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.fighter.ability-score-improvement.8",
+      "nativeId": "class-feature.fighter.ability-score-improvement-level-8",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4437,7 +4437,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.action-surge.fighter.action-surge.17",
+      "nativeId": "class-feature.fighter.action-surge-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4450,7 +4450,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.action-surge.fighter.action-surge.2",
+      "nativeId": "class-feature.fighter.action-surge-level-2",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4467,7 +4467,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.action-surge-two-uses.fighter.action-surge-two-uses.17",
+      "nativeId": "class-feature.fighter.action-surge-two-uses-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4480,7 +4480,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.epic-boon.fighter.epic-boon.19",
+      "nativeId": "class-feature.fighter.epic-boon-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4493,7 +4493,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.extra-attack.fighter.extra-attack.5",
+      "nativeId": "class-feature.fighter.extra-attack-level-5",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4510,7 +4510,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.extra-attack-2.fighter.extra-attack-2.11",
+      "nativeId": "class-feature.fighter.extra-attack-2-level-11",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4523,7 +4523,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.extra-attack-3.fighter.extra-attack-3.20",
+      "nativeId": "class-feature.fighter.extra-attack-3-level-20",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4536,7 +4536,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.fighter-subclass.fighter.fighter-subclass.3",
+      "nativeId": "class-feature.fighter.fighter-subclass-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4549,7 +4549,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.fighting-style.fighter.fighting-style.1",
+      "nativeId": "class-feature.fighter.fighting-style-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4566,7 +4566,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.indomitable.fighter.indomitable.13",
+      "nativeId": "class-feature.fighter.indomitable-level-13",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4579,7 +4579,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.indomitable.fighter.indomitable.17",
+      "nativeId": "class-feature.fighter.indomitable-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4592,7 +4592,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.indomitable.fighter.indomitable.9",
+      "nativeId": "class-feature.fighter.indomitable-level-9",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4609,7 +4609,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.indomitable-three-uses.fighter.indomitable-three-uses.17",
+      "nativeId": "class-feature.fighter.indomitable-three-uses-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4622,7 +4622,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.indomitable-two-uses.fighter.indomitable-two-uses.13",
+      "nativeId": "class-feature.fighter.indomitable-two-uses-level-13",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4635,7 +4635,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.martial-archetype.fighter.martial-archetype.3",
+      "nativeId": "class-feature.fighter.martial-archetype-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4648,7 +4648,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.martial-archetype-feature.fighter.martial-archetype-feature.10",
+      "nativeId": "class-feature.fighter.martial-archetype-feature-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4661,7 +4661,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.martial-archetype-feature.fighter.martial-archetype-feature.15",
+      "nativeId": "class-feature.fighter.martial-archetype-feature-level-15",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4674,7 +4674,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.martial-archetype-feature.fighter.martial-archetype-feature.18",
+      "nativeId": "class-feature.fighter.martial-archetype-feature-level-18",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4687,7 +4687,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.martial-archetype-feature.fighter.martial-archetype-feature.7",
+      "nativeId": "class-feature.fighter.martial-archetype-feature-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4700,7 +4700,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.second-wind.fighter.second-wind.1",
+      "nativeId": "class-feature.fighter.second-wind-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4717,7 +4717,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.studied-attacks.fighter.studied-attacks.13",
+      "nativeId": "class-feature.fighter.studied-attacks-level-13",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4730,7 +4730,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.fighter.subclass-feature.10",
+      "nativeId": "class-feature.fighter.subclass-feature-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4743,7 +4743,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.fighter.subclass-feature.15",
+      "nativeId": "class-feature.fighter.subclass-feature-level-15",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4756,7 +4756,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.fighter.subclass-feature.18",
+      "nativeId": "class-feature.fighter.subclass-feature-level-18",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4769,7 +4769,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.fighter.subclass-feature.7",
+      "nativeId": "class-feature.fighter.subclass-feature-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4782,7 +4782,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.tactical-master.fighter.tactical-master.9",
+      "nativeId": "class-feature.fighter.tactical-master-level-9",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4795,7 +4795,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.tactical-mind.fighter.tactical-mind.2",
+      "nativeId": "class-feature.fighter.tactical-mind-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4808,7 +4808,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.tactical-shift.fighter.tactical-shift.5",
+      "nativeId": "class-feature.fighter.tactical-shift-level-5",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4821,7 +4821,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.three-extra-attacks.fighter.three-extra-attacks.20",
+      "nativeId": "class-feature.fighter.three-extra-attacks-level-20",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4834,7 +4834,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.two-extra-attacks.fighter.two-extra-attacks.11",
+      "nativeId": "class-feature.fighter.two-extra-attacks-level-11",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4847,7 +4847,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.weapon-mastery.fighter.weapon-mastery.1",
+      "nativeId": "class-feature.fighter.weapon-mastery-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4860,7 +4860,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.monk.ability-score-improvement.12",
+      "nativeId": "class-feature.monk.ability-score-improvement-level-12",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4877,7 +4877,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.monk.ability-score-improvement.16",
+      "nativeId": "class-feature.monk.ability-score-improvement-level-16",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4894,7 +4894,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.monk.ability-score-improvement.19",
+      "nativeId": "class-feature.monk.ability-score-improvement-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4907,7 +4907,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.monk.ability-score-improvement.4",
+      "nativeId": "class-feature.monk.ability-score-improvement-level-4",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4924,7 +4924,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.monk.ability-score-improvement.8",
+      "nativeId": "class-feature.monk.ability-score-improvement-level-8",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -4941,7 +4941,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.acrobatic-movement.monk.acrobatic-movement.9",
+      "nativeId": "class-feature.monk.acrobatic-movement-level-9",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4954,7 +4954,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.body-and-mind.monk.body-and-mind.20",
+      "nativeId": "class-feature.monk.body-and-mind-level-20",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4967,7 +4967,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.bonus-unarmed-strike.monk.bonus-unarmed-strike.1",
+      "nativeId": "class-feature.monk.bonus-unarmed-strike-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4980,7 +4980,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.deflect-attacks.monk.deflect-attacks.3",
+      "nativeId": "class-feature.monk.deflect-attacks-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -4993,7 +4993,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.deflect-energy.monk.deflect-energy.13",
+      "nativeId": "class-feature.monk.deflect-energy-level-13",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5006,7 +5006,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.deflect-missiles.monk.deflect-missiles.3",
+      "nativeId": "class-feature.monk.deflect-missiles-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5019,7 +5019,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.dexterous-attacks.monk.dexterous-attacks.1",
+      "nativeId": "class-feature.monk.dexterous-attacks-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5032,7 +5032,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.diamond-soul.monk.diamond-soul.14",
+      "nativeId": "class-feature.monk.diamond-soul-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5045,7 +5045,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.disciplined-survivor.monk.disciplined-survivor.14",
+      "nativeId": "class-feature.monk.disciplined-survivor-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5058,7 +5058,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.empowered-strikes.monk.empowered-strikes.6",
+      "nativeId": "class-feature.monk.empowered-strikes-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5071,7 +5071,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.empty-body.monk.empty-body.18",
+      "nativeId": "class-feature.monk.empty-body-level-18",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5084,7 +5084,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.epic-boon.monk.epic-boon.19",
+      "nativeId": "class-feature.monk.epic-boon-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5097,7 +5097,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.evasion.monk.evasion.7",
+      "nativeId": "class-feature.monk.evasion-level-7",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5114,7 +5114,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.extra-attack.monk.extra-attack.5",
+      "nativeId": "class-feature.monk.extra-attack-level-5",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5131,7 +5131,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.flurry-of-blows.monk.flurry-of-blows.2",
+      "nativeId": "class-feature.monk.flurry-of-blows-level-2",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5148,7 +5148,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.heightened-focus.monk.heightened-focus.10",
+      "nativeId": "class-feature.monk.heightened-focus-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5161,7 +5161,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ki.monk.ki.2",
+      "nativeId": "class-feature.monk.ki-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5174,7 +5174,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ki-empowered-strikes.monk.ki-empowered-strikes.6",
+      "nativeId": "class-feature.monk.ki-empowered-strikes-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5187,7 +5187,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.martial-arts.monk.martial-arts.1",
+      "nativeId": "class-feature.monk.martial-arts-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5204,7 +5204,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.martial-arts-die.monk.martial-arts-die.1",
+      "nativeId": "class-feature.monk.martial-arts-die-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5217,7 +5217,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.monastic-tradition.monk.monastic-tradition.3",
+      "nativeId": "class-feature.monk.monastic-tradition-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5230,7 +5230,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.monastic-tradition-feature.monk.monastic-tradition-feature.11",
+      "nativeId": "class-feature.monk.monastic-tradition-feature-level-11",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5243,7 +5243,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.monastic-tradition-feature.monk.monastic-tradition-feature.17",
+      "nativeId": "class-feature.monk.monastic-tradition-feature-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5256,7 +5256,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.monastic-tradition-feature.monk.monastic-tradition-feature.6",
+      "nativeId": "class-feature.monk.monastic-tradition-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5269,7 +5269,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.monk-s-focus.monk.monk-s-focus.2",
+      "nativeId": "class-feature.monk.monk-s-focus-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5282,7 +5282,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.monk-subclass.monk.monk-subclass.3",
+      "nativeId": "class-feature.monk.monk-subclass-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5295,7 +5295,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.patient-defense.monk.patient-defense.2",
+      "nativeId": "class-feature.monk.patient-defense-level-2",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5312,7 +5312,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.perfect-focus.monk.perfect-focus.15",
+      "nativeId": "class-feature.monk.perfect-focus-level-15",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5325,7 +5325,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.perfect-self.monk.perfect-self.20",
+      "nativeId": "class-feature.monk.perfect-self-level-20",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5338,7 +5338,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.purity-of-body.monk.purity-of-body.10",
+      "nativeId": "class-feature.monk.purity-of-body-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5351,7 +5351,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.self-restoration.monk.self-restoration.10",
+      "nativeId": "class-feature.monk.self-restoration-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5364,7 +5364,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.slow-fall.monk.slow-fall.4",
+      "nativeId": "class-feature.monk.slow-fall-level-4",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5381,7 +5381,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.step-of-the-wind.monk.step-of-the-wind.2",
+      "nativeId": "class-feature.monk.step-of-the-wind-level-2",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5398,7 +5398,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.stillness-of-mind.monk.stillness-of-mind.7",
+      "nativeId": "class-feature.monk.stillness-of-mind-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5411,7 +5411,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.stunning-strike.monk.stunning-strike.5",
+      "nativeId": "class-feature.monk.stunning-strike-level-5",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5428,7 +5428,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.monk.subclass-feature.11",
+      "nativeId": "class-feature.monk.subclass-feature-level-11",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5441,7 +5441,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.monk.subclass-feature.17",
+      "nativeId": "class-feature.monk.subclass-feature-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5454,7 +5454,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.monk.subclass-feature.6",
+      "nativeId": "class-feature.monk.subclass-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5467,7 +5467,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.superior-defense.monk.superior-defense.18",
+      "nativeId": "class-feature.monk.superior-defense-level-18",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5480,7 +5480,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.timeless-body.monk.timeless-body.15",
+      "nativeId": "class-feature.monk.timeless-body-level-15",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5493,7 +5493,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.tongue-of-the-sun-and-moon.monk.tongue-of-the-sun-and-moon.13",
+      "nativeId": "class-feature.monk.tongue-of-the-sun-and-moon-level-13",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5506,7 +5506,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.unarmored-defense.monk.unarmored-defense.1",
+      "nativeId": "class-feature.monk.unarmored-defense-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5523,7 +5523,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.unarmored-movement.monk.unarmored-movement.2",
+      "nativeId": "class-feature.monk.unarmored-movement-level-2",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5540,7 +5540,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.unarmored-movement-improvement.monk.unarmored-movement-improvement.9",
+      "nativeId": "class-feature.monk.unarmored-movement-improvement-level-9",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5553,7 +5553,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.uncanny-metabolism.monk.uncanny-metabolism.2",
+      "nativeId": "class-feature.monk.uncanny-metabolism-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5566,7 +5566,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.paladin.ability-score-improvement.12",
+      "nativeId": "class-feature.paladin.ability-score-improvement-level-12",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5583,7 +5583,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.paladin.ability-score-improvement.16",
+      "nativeId": "class-feature.paladin.ability-score-improvement-level-16",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5600,7 +5600,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.paladin.ability-score-improvement.19",
+      "nativeId": "class-feature.paladin.ability-score-improvement-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5613,7 +5613,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.paladin.ability-score-improvement.4",
+      "nativeId": "class-feature.paladin.ability-score-improvement-level-4",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5630,7 +5630,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.paladin.ability-score-improvement.8",
+      "nativeId": "class-feature.paladin.ability-score-improvement-level-8",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5647,7 +5647,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.abjure-foes.paladin.abjure-foes.9",
+      "nativeId": "class-feature.paladin.abjure-foes-level-9",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5660,7 +5660,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.aura-expansion.paladin.aura-expansion.18",
+      "nativeId": "class-feature.paladin.aura-expansion-level-18",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5673,7 +5673,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.aura-improvements.paladin.aura-improvements.18",
+      "nativeId": "class-feature.paladin.aura-improvements-level-18",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5686,7 +5686,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.aura-of-courage.paladin.aura-of-courage.10",
+      "nativeId": "class-feature.paladin.aura-of-courage-level-10",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5703,7 +5703,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.aura-of-protection.paladin.aura-of-protection.6",
+      "nativeId": "class-feature.paladin.aura-of-protection-level-6",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5720,7 +5720,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.channel-divinity.paladin.channel-divinity.3",
+      "nativeId": "class-feature.paladin.channel-divinity-level-3",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5737,7 +5737,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.cleansing-touch.paladin.cleansing-touch.14",
+      "nativeId": "class-feature.paladin.cleansing-touch-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5750,7 +5750,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.divine-health.paladin.divine-health.3",
+      "nativeId": "class-feature.paladin.divine-health-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5763,7 +5763,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.divine-sense.paladin.divine-sense.1",
+      "nativeId": "class-feature.paladin.divine-sense-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5776,7 +5776,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.divine-sense.paladin.divine-sense.3",
+      "nativeId": "class-feature.paladin.divine-sense-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5789,7 +5789,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.divine-smite.paladin.divine-smite.2",
+      "nativeId": "class-feature.paladin.divine-smite-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5802,7 +5802,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.epic-boon.paladin.epic-boon.19",
+      "nativeId": "class-feature.paladin.epic-boon-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5815,7 +5815,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.extra-attack.paladin.extra-attack.5",
+      "nativeId": "class-feature.paladin.extra-attack-level-5",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5832,7 +5832,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.faithful-steed.paladin.faithful-steed.5",
+      "nativeId": "class-feature.paladin.faithful-steed-level-5",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5845,7 +5845,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.fighting-style.paladin.fighting-style.2",
+      "nativeId": "class-feature.paladin.fighting-style-level-2",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5862,7 +5862,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.improved-divine-smite.paladin.improved-divine-smite.11",
+      "nativeId": "class-feature.paladin.improved-divine-smite-level-11",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5875,7 +5875,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.lay-on-hands.paladin.lay-on-hands.1",
+      "nativeId": "class-feature.paladin.lay-on-hands-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -5892,7 +5892,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.paladin-s-smite.paladin.paladin-s-smite.2",
+      "nativeId": "class-feature.paladin.paladin-s-smite-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5905,7 +5905,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.paladin-subclass.paladin.paladin-subclass.3",
+      "nativeId": "class-feature.paladin.paladin-subclass-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5918,7 +5918,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.radiant-strikes.paladin.radiant-strikes.11",
+      "nativeId": "class-feature.paladin.radiant-strikes-level-11",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5931,7 +5931,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.restoring-touch.paladin.restoring-touch.14",
+      "nativeId": "class-feature.paladin.restoring-touch-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5944,7 +5944,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.sacred-oath.paladin.sacred-oath.3",
+      "nativeId": "class-feature.paladin.sacred-oath-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5957,7 +5957,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.sacred-oath-feature.paladin.sacred-oath-feature.15",
+      "nativeId": "class-feature.paladin.sacred-oath-feature-level-15",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5970,7 +5970,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.sacred-oath-feature.paladin.sacred-oath-feature.20",
+      "nativeId": "class-feature.paladin.sacred-oath-feature-level-20",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5983,7 +5983,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.sacred-oath-feature.paladin.sacred-oath-feature.7",
+      "nativeId": "class-feature.paladin.sacred-oath-feature-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -5996,7 +5996,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.spellcasting.paladin.spellcasting.1",
+      "nativeId": "class-feature.paladin.spellcasting-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6009,7 +6009,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.spellcasting.paladin.spellcasting.2",
+      "nativeId": "class-feature.paladin.spellcasting-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6022,7 +6022,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.paladin.subclass-feature.15",
+      "nativeId": "class-feature.paladin.subclass-feature-level-15",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6035,7 +6035,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.paladin.subclass-feature.20",
+      "nativeId": "class-feature.paladin.subclass-feature-level-20",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6048,7 +6048,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.paladin.subclass-feature.7",
+      "nativeId": "class-feature.paladin.subclass-feature-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6061,7 +6061,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.weapon-mastery.paladin.weapon-mastery.1",
+      "nativeId": "class-feature.paladin.weapon-mastery-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6074,7 +6074,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.ranger.ability-score-improvement.12",
+      "nativeId": "class-feature.ranger.ability-score-improvement-level-12",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6091,7 +6091,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.ranger.ability-score-improvement.16",
+      "nativeId": "class-feature.ranger.ability-score-improvement-level-16",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6108,7 +6108,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.ranger.ability-score-improvement.19",
+      "nativeId": "class-feature.ranger.ability-score-improvement-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6121,7 +6121,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.ranger.ability-score-improvement.4",
+      "nativeId": "class-feature.ranger.ability-score-improvement-level-4",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6138,7 +6138,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.ranger.ability-score-improvement.8",
+      "nativeId": "class-feature.ranger.ability-score-improvement-level-8",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6155,7 +6155,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.deft-explorer.ranger.deft-explorer.2",
+      "nativeId": "class-feature.ranger.deft-explorer-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6168,7 +6168,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.epic-boon.ranger.epic-boon.19",
+      "nativeId": "class-feature.ranger.epic-boon-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6181,7 +6181,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.expertise.ranger.expertise.9",
+      "nativeId": "class-feature.ranger.expertise-level-9",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6194,7 +6194,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.extra-attack.ranger.extra-attack.5",
+      "nativeId": "class-feature.ranger.extra-attack-level-5",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6211,7 +6211,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.favored-enemy.ranger.favored-enemy.1",
+      "nativeId": "class-feature.ranger.favored-enemy-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6228,7 +6228,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.favored-enemy-and-natural-explorer-improvements.ranger.favored-enemy-and-natural-explorer-improvements.6",
+      "nativeId": "class-feature.ranger.favored-enemy-and-natural-explorer-improvements-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6241,7 +6241,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.favored-enemy-improvement.ranger.favored-enemy-improvement.14",
+      "nativeId": "class-feature.ranger.favored-enemy-improvement-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6254,7 +6254,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.feral-senses.ranger.feral-senses.18",
+      "nativeId": "class-feature.ranger.feral-senses-level-18",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6271,7 +6271,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.fighting-style.ranger.fighting-style.2",
+      "nativeId": "class-feature.ranger.fighting-style-level-2",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6288,7 +6288,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.foe-slayer.ranger.foe-slayer.20",
+      "nativeId": "class-feature.ranger.foe-slayer-level-20",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6305,7 +6305,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.hide-in-plain-sight.ranger.hide-in-plain-sight.10",
+      "nativeId": "class-feature.ranger.hide-in-plain-sight-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6318,7 +6318,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.land-s-stride.ranger.land-s-stride.8",
+      "nativeId": "class-feature.ranger.land-s-stride-level-8",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6331,7 +6331,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.natural-explorer.ranger.natural-explorer.1",
+      "nativeId": "class-feature.ranger.natural-explorer-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6344,7 +6344,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.natural-explorer-improvement.ranger.natural-explorer-improvement.10",
+      "nativeId": "class-feature.ranger.natural-explorer-improvement-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6357,7 +6357,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.nature-s-veil.ranger.nature-s-veil.14",
+      "nativeId": "class-feature.ranger.nature-s-veil-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6370,7 +6370,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.precise-hunter.ranger.precise-hunter.17",
+      "nativeId": "class-feature.ranger.precise-hunter-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6383,7 +6383,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.primeval-awareness.ranger.primeval-awareness.3",
+      "nativeId": "class-feature.ranger.primeval-awareness-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6396,7 +6396,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ranger-archetype.ranger.ranger-archetype.3",
+      "nativeId": "class-feature.ranger.ranger-archetype-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6409,7 +6409,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ranger-archetype-feature.ranger.ranger-archetype-feature.11",
+      "nativeId": "class-feature.ranger.ranger-archetype-feature-level-11",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6422,7 +6422,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ranger-archetype-feature.ranger.ranger-archetype-feature.15",
+      "nativeId": "class-feature.ranger.ranger-archetype-feature-level-15",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6435,7 +6435,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ranger-archetype-feature.ranger.ranger-archetype-feature.7",
+      "nativeId": "class-feature.ranger.ranger-archetype-feature-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6448,7 +6448,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ranger-subclass.ranger.ranger-subclass.3",
+      "nativeId": "class-feature.ranger.ranger-subclass-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6461,7 +6461,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.relentless-hunter.ranger.relentless-hunter.13",
+      "nativeId": "class-feature.ranger.relentless-hunter-level-13",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6474,7 +6474,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.roving.ranger.roving.6",
+      "nativeId": "class-feature.ranger.roving-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6487,7 +6487,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.spellcasting.ranger.spellcasting.1",
+      "nativeId": "class-feature.ranger.spellcasting-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6500,7 +6500,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.spellcasting.ranger.spellcasting.2",
+      "nativeId": "class-feature.ranger.spellcasting-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6513,7 +6513,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.ranger.subclass-feature.11",
+      "nativeId": "class-feature.ranger.subclass-feature-level-11",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6526,7 +6526,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.ranger.subclass-feature.15",
+      "nativeId": "class-feature.ranger.subclass-feature-level-15",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6539,7 +6539,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.ranger.subclass-feature.7",
+      "nativeId": "class-feature.ranger.subclass-feature-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6552,7 +6552,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.tireless.ranger.tireless.10",
+      "nativeId": "class-feature.ranger.tireless-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6565,7 +6565,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.vanish.ranger.vanish.14",
+      "nativeId": "class-feature.ranger.vanish-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6578,7 +6578,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.weapon-mastery.ranger.weapon-mastery.1",
+      "nativeId": "class-feature.ranger.weapon-mastery-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6591,7 +6591,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.rogue.ability-score-improvement.10",
+      "nativeId": "class-feature.rogue.ability-score-improvement-level-10",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6608,7 +6608,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.rogue.ability-score-improvement.12",
+      "nativeId": "class-feature.rogue.ability-score-improvement-level-12",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6625,7 +6625,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.rogue.ability-score-improvement.16",
+      "nativeId": "class-feature.rogue.ability-score-improvement-level-16",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6642,7 +6642,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.rogue.ability-score-improvement.19",
+      "nativeId": "class-feature.rogue.ability-score-improvement-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6655,7 +6655,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.rogue.ability-score-improvement.4",
+      "nativeId": "class-feature.rogue.ability-score-improvement-level-4",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6672,7 +6672,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.rogue.ability-score-improvement.8",
+      "nativeId": "class-feature.rogue.ability-score-improvement-level-8",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6689,7 +6689,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.blindsense.rogue.blindsense.14",
+      "nativeId": "class-feature.rogue.blindsense-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6702,7 +6702,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.cunning-action.rogue.cunning-action.2",
+      "nativeId": "class-feature.rogue.cunning-action-level-2",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6719,7 +6719,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.cunning-strike.rogue.cunning-strike.5",
+      "nativeId": "class-feature.rogue.cunning-strike-level-5",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6732,7 +6732,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.daze-cost-2d6.rogue.daze-cost-2d6.14",
+      "nativeId": "class-feature.rogue.daze-cost-2d6-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6745,7 +6745,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.devious-strikes.rogue.devious-strikes.14",
+      "nativeId": "class-feature.rogue.devious-strikes-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6758,7 +6758,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.elusive.rogue.elusive.18",
+      "nativeId": "class-feature.rogue.elusive-level-18",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6775,7 +6775,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.epic-boon.rogue.epic-boon.19",
+      "nativeId": "class-feature.rogue.epic-boon-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6788,7 +6788,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.evasion.rogue.evasion.7",
+      "nativeId": "class-feature.rogue.evasion-level-7",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6805,7 +6805,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.expertise.rogue.expertise.1",
+      "nativeId": "class-feature.rogue.expertise-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6822,7 +6822,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.expertise.rogue.expertise.6",
+      "nativeId": "class-feature.rogue.expertise-level-6",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6839,7 +6839,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.improved-cunning-strike.rogue.improved-cunning-strike.11",
+      "nativeId": "class-feature.rogue.improved-cunning-strike-level-11",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6852,7 +6852,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.knock-out-cost-6d6.rogue.knock-out-cost-6d6.14",
+      "nativeId": "class-feature.rogue.knock-out-cost-6d6-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6865,7 +6865,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.obscure-cost-3d6.rogue.obscure-cost-3d6.14",
+      "nativeId": "class-feature.rogue.obscure-cost-3d6-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6878,7 +6878,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.poison-cost-1d6.rogue.poison-cost-1d6.5",
+      "nativeId": "class-feature.rogue.poison-cost-1d6-level-5",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6891,7 +6891,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.reliable-talent.rogue.reliable-talent.11",
+      "nativeId": "class-feature.rogue.reliable-talent-level-11",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6904,7 +6904,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.reliable-talent.rogue.reliable-talent.7",
+      "nativeId": "class-feature.rogue.reliable-talent-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6917,7 +6917,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.rogue-subclass.rogue.rogue-subclass.3",
+      "nativeId": "class-feature.rogue.rogue-subclass-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6930,7 +6930,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.roguish-archetype.rogue.roguish-archetype.3",
+      "nativeId": "class-feature.rogue.roguish-archetype-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6943,7 +6943,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.roguish-archetype-feature.rogue.roguish-archetype-feature.13",
+      "nativeId": "class-feature.rogue.roguish-archetype-feature-level-13",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6956,7 +6956,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.roguish-archetype-feature.rogue.roguish-archetype-feature.17",
+      "nativeId": "class-feature.rogue.roguish-archetype-feature-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6969,7 +6969,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.roguish-archetype-feature.rogue.roguish-archetype-feature.9",
+      "nativeId": "class-feature.rogue.roguish-archetype-feature-level-9",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -6982,7 +6982,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.slippery-mind.rogue.slippery-mind.15",
+      "nativeId": "class-feature.rogue.slippery-mind-level-15",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -6999,7 +6999,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.sneak-attack.rogue.sneak-attack.1",
+      "nativeId": "class-feature.rogue.sneak-attack-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7016,7 +7016,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.steady-aim.rogue.steady-aim.3",
+      "nativeId": "class-feature.rogue.steady-aim-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7029,7 +7029,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.stroke-of-luck.rogue.stroke-of-luck.20",
+      "nativeId": "class-feature.rogue.stroke-of-luck-level-20",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7046,7 +7046,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.rogue.subclass-feature.13",
+      "nativeId": "class-feature.rogue.subclass-feature-level-13",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7059,7 +7059,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.rogue.subclass-feature.17",
+      "nativeId": "class-feature.rogue.subclass-feature-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7072,7 +7072,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.rogue.subclass-feature.9",
+      "nativeId": "class-feature.rogue.subclass-feature-level-9",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7085,7 +7085,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.thieves-cant.rogue.thieves-cant.1",
+      "nativeId": "class-feature.rogue.thieves-cant-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7102,7 +7102,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.trip-cost-1d6.rogue.trip-cost-1d6.5",
+      "nativeId": "class-feature.rogue.trip-cost-1d6-level-5",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7115,7 +7115,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.uncanny-dodge.rogue.uncanny-dodge.5",
+      "nativeId": "class-feature.rogue.uncanny-dodge-level-5",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7132,7 +7132,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.weapon-mastery.rogue.weapon-mastery.1",
+      "nativeId": "class-feature.rogue.weapon-mastery-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7145,7 +7145,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.withdraw-cost-1d6.rogue.withdraw-cost-1d6.5",
+      "nativeId": "class-feature.rogue.withdraw-cost-1d6-level-5",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7158,7 +7158,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.sorcerer.ability-score-improvement.12",
+      "nativeId": "class-feature.sorcerer.ability-score-improvement-level-12",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7175,7 +7175,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.sorcerer.ability-score-improvement.16",
+      "nativeId": "class-feature.sorcerer.ability-score-improvement-level-16",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7192,7 +7192,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.sorcerer.ability-score-improvement.19",
+      "nativeId": "class-feature.sorcerer.ability-score-improvement-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7205,7 +7205,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.sorcerer.ability-score-improvement.4",
+      "nativeId": "class-feature.sorcerer.ability-score-improvement-level-4",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7222,7 +7222,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.sorcerer.ability-score-improvement.8",
+      "nativeId": "class-feature.sorcerer.ability-score-improvement-level-8",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7239,7 +7239,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.arcane-apotheosis.sorcerer.arcane-apotheosis.20",
+      "nativeId": "class-feature.sorcerer.arcane-apotheosis-level-20",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7252,7 +7252,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.epic-boon.sorcerer.epic-boon.19",
+      "nativeId": "class-feature.sorcerer.epic-boon-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7265,7 +7265,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.flexible-casting.sorcerer.flexible-casting.2",
+      "nativeId": "class-feature.sorcerer.flexible-casting-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7278,7 +7278,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.font-of-magic.sorcerer.font-of-magic.2",
+      "nativeId": "class-feature.sorcerer.font-of-magic-level-2",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7295,7 +7295,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.innate-sorcery.sorcerer.innate-sorcery.1",
+      "nativeId": "class-feature.sorcerer.innate-sorcery-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7308,7 +7308,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.metamagic.sorcerer.metamagic.10",
+      "nativeId": "class-feature.sorcerer.metamagic-level-10",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7325,7 +7325,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.metamagic.sorcerer.metamagic.17",
+      "nativeId": "class-feature.sorcerer.metamagic-level-17",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7342,7 +7342,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.metamagic.sorcerer.metamagic.2",
+      "nativeId": "class-feature.sorcerer.metamagic-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7355,7 +7355,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.metamagic.sorcerer.metamagic.3",
+      "nativeId": "class-feature.sorcerer.metamagic-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7368,7 +7368,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.metamagic-options.sorcerer.metamagic-options.2",
+      "nativeId": "class-feature.sorcerer.metamagic-options-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7381,7 +7381,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.sorcerer-subclass.sorcerer.sorcerer-subclass.3",
+      "nativeId": "class-feature.sorcerer.sorcerer-subclass-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7394,7 +7394,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.sorcerous-origin.sorcerer.sorcerous-origin.1",
+      "nativeId": "class-feature.sorcerer.sorcerous-origin-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7407,7 +7407,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.sorcerous-origin-feature.sorcerer.sorcerous-origin-feature.14",
+      "nativeId": "class-feature.sorcerer.sorcerous-origin-feature-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7420,7 +7420,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.sorcerous-origin-feature.sorcerer.sorcerous-origin-feature.18",
+      "nativeId": "class-feature.sorcerer.sorcerous-origin-feature-level-18",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7433,7 +7433,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.sorcerous-origin-feature.sorcerer.sorcerous-origin-feature.6",
+      "nativeId": "class-feature.sorcerer.sorcerous-origin-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7446,7 +7446,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.sorcerous-restoration.sorcerer.sorcerous-restoration.20",
+      "nativeId": "class-feature.sorcerer.sorcerous-restoration-level-20",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7459,7 +7459,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.sorcerous-restoration.sorcerer.sorcerous-restoration.5",
+      "nativeId": "class-feature.sorcerer.sorcerous-restoration-level-5",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7472,7 +7472,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.sorcery-incarnate.sorcerer.sorcery-incarnate.7",
+      "nativeId": "class-feature.sorcerer.sorcery-incarnate-level-7",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7485,7 +7485,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.sorcery-points.sorcerer.sorcery-points.2",
+      "nativeId": "class-feature.sorcerer.sorcery-points-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7498,7 +7498,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.spellcasting.sorcerer.spellcasting.1",
+      "nativeId": "class-feature.sorcerer.spellcasting-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7515,7 +7515,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.sorcerer.subclass-feature.14",
+      "nativeId": "class-feature.sorcerer.subclass-feature-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7528,7 +7528,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.sorcerer.subclass-feature.18",
+      "nativeId": "class-feature.sorcerer.subclass-feature-level-18",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7541,7 +7541,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.sorcerer.subclass-feature.6",
+      "nativeId": "class-feature.sorcerer.subclass-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7554,7 +7554,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.warlock.ability-score-improvement.12",
+      "nativeId": "class-feature.warlock.ability-score-improvement-level-12",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7571,7 +7571,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.warlock.ability-score-improvement.16",
+      "nativeId": "class-feature.warlock.ability-score-improvement-level-16",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7588,7 +7588,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.warlock.ability-score-improvement.19",
+      "nativeId": "class-feature.warlock.ability-score-improvement-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7601,7 +7601,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.warlock.ability-score-improvement.4",
+      "nativeId": "class-feature.warlock.ability-score-improvement-level-4",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7618,7 +7618,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.warlock.ability-score-improvement.8",
+      "nativeId": "class-feature.warlock.ability-score-improvement-level-8",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7635,7 +7635,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.contact-patron.warlock.contact-patron.9",
+      "nativeId": "class-feature.warlock.contact-patron-level-9",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7648,7 +7648,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.eldritch-invocation-options.warlock.eldritch-invocation-options.1",
+      "nativeId": "class-feature.warlock.eldritch-invocation-options-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7661,7 +7661,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.eldritch-invocations.warlock.eldritch-invocations.1",
+      "nativeId": "class-feature.warlock.eldritch-invocations-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7674,7 +7674,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.eldritch-invocations.warlock.eldritch-invocations.2",
+      "nativeId": "class-feature.warlock.eldritch-invocations-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7687,7 +7687,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.eldritch-master.warlock.eldritch-master.20",
+      "nativeId": "class-feature.warlock.eldritch-master-level-20",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7704,7 +7704,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.epic-boon.warlock.epic-boon.19",
+      "nativeId": "class-feature.warlock.epic-boon-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7717,7 +7717,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.magical-cunning.warlock.magical-cunning.2",
+      "nativeId": "class-feature.warlock.magical-cunning-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7730,7 +7730,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.mystic-arcanum.warlock.mystic-arcanum.11",
+      "nativeId": "class-feature.warlock.mystic-arcanum-level-11",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7743,7 +7743,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.mystic-arcanum.warlock.mystic-arcanum.13",
+      "nativeId": "class-feature.warlock.mystic-arcanum-level-13",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7756,7 +7756,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.mystic-arcanum.warlock.mystic-arcanum.15",
+      "nativeId": "class-feature.warlock.mystic-arcanum-level-15",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7769,7 +7769,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.mystic-arcanum.warlock.mystic-arcanum.17",
+      "nativeId": "class-feature.warlock.mystic-arcanum-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7782,7 +7782,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.mystic-arcanum-6th-level.warlock.mystic-arcanum-6th-level.11",
+      "nativeId": "class-feature.warlock.mystic-arcanum-6th-level-level-11",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7795,7 +7795,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.mystic-arcanum-7th-level.warlock.mystic-arcanum-7th-level.13",
+      "nativeId": "class-feature.warlock.mystic-arcanum-7th-level-level-13",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7808,7 +7808,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.mystic-arcanum-8th-level.warlock.mystic-arcanum-8th-level.15",
+      "nativeId": "class-feature.warlock.mystic-arcanum-8th-level-level-15",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7821,7 +7821,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.mystic-arcanum-9th-level.warlock.mystic-arcanum-9th-level.17",
+      "nativeId": "class-feature.warlock.mystic-arcanum-9th-level-level-17",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7834,7 +7834,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.otherworldly-patron.warlock.otherworldly-patron.1",
+      "nativeId": "class-feature.warlock.otherworldly-patron-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7847,7 +7847,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.otherworldly-patron-feature.warlock.otherworldly-patron-feature.10",
+      "nativeId": "class-feature.warlock.otherworldly-patron-feature-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7860,7 +7860,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.otherworldly-patron-feature.warlock.otherworldly-patron-feature.14",
+      "nativeId": "class-feature.warlock.otherworldly-patron-feature-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7873,7 +7873,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.otherworldly-patron-feature.warlock.otherworldly-patron-feature.6",
+      "nativeId": "class-feature.warlock.otherworldly-patron-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7886,7 +7886,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.pact-boon.warlock.pact-boon.3",
+      "nativeId": "class-feature.warlock.pact-boon-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7899,7 +7899,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.pact-magic.warlock.pact-magic.1",
+      "nativeId": "class-feature.warlock.pact-magic-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7916,7 +7916,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.warlock.subclass-feature.10",
+      "nativeId": "class-feature.warlock.subclass-feature-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7929,7 +7929,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.warlock.subclass-feature.14",
+      "nativeId": "class-feature.warlock.subclass-feature-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7942,7 +7942,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.warlock.subclass-feature.6",
+      "nativeId": "class-feature.warlock.subclass-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7955,7 +7955,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.warlock-subclass.warlock.warlock-subclass.3",
+      "nativeId": "class-feature.warlock.warlock-subclass-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -7968,7 +7968,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.wizard.ability-score-improvement.12",
+      "nativeId": "class-feature.wizard.ability-score-improvement-level-12",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -7985,7 +7985,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.wizard.ability-score-improvement.16",
+      "nativeId": "class-feature.wizard.ability-score-improvement-level-16",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -8002,7 +8002,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.wizard.ability-score-improvement.19",
+      "nativeId": "class-feature.wizard.ability-score-improvement-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -8015,7 +8015,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.wizard.ability-score-improvement.4",
+      "nativeId": "class-feature.wizard.ability-score-improvement-level-4",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -8032,7 +8032,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ability-score-improvement.wizard.ability-score-improvement.8",
+      "nativeId": "class-feature.wizard.ability-score-improvement-level-8",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -8049,7 +8049,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.arcane-recovery.wizard.arcane-recovery.1",
+      "nativeId": "class-feature.wizard.arcane-recovery-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -8066,7 +8066,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.arcane-tradition.wizard.arcane-tradition.2",
+      "nativeId": "class-feature.wizard.arcane-tradition-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -8079,7 +8079,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.arcane-tradition-feature.wizard.arcane-tradition-feature.10",
+      "nativeId": "class-feature.wizard.arcane-tradition-feature-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -8092,7 +8092,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.arcane-tradition-feature.wizard.arcane-tradition-feature.14",
+      "nativeId": "class-feature.wizard.arcane-tradition-feature-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -8105,7 +8105,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.arcane-tradition-feature.wizard.arcane-tradition-feature.6",
+      "nativeId": "class-feature.wizard.arcane-tradition-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -8118,7 +8118,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.epic-boon.wizard.epic-boon.19",
+      "nativeId": "class-feature.wizard.epic-boon-level-19",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -8131,7 +8131,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.memorize-spell.wizard.memorize-spell.5",
+      "nativeId": "class-feature.wizard.memorize-spell-level-5",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -8144,7 +8144,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.ritual-adept.wizard.ritual-adept.1",
+      "nativeId": "class-feature.wizard.ritual-adept-level-1",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -8157,7 +8157,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.scholar.wizard.scholar.2",
+      "nativeId": "class-feature.wizard.scholar-level-2",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -8170,7 +8170,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.signature-spells.wizard.signature-spells.20",
+      "nativeId": "class-feature.wizard.signature-spells-level-20",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -8187,7 +8187,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.spell-mastery.wizard.spell-mastery.18",
+      "nativeId": "class-feature.wizard.spell-mastery-level-18",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -8204,7 +8204,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.spellcasting.wizard.spellcasting.1",
+      "nativeId": "class-feature.wizard.spellcasting-level-1",
       "kind": "classFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -8221,7 +8221,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.wizard.subclass-feature.10",
+      "nativeId": "class-feature.wizard.subclass-feature-level-10",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -8234,7 +8234,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.wizard.subclass-feature.14",
+      "nativeId": "class-feature.wizard.subclass-feature-level-14",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -8247,7 +8247,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.subclass-feature.wizard.subclass-feature.6",
+      "nativeId": "class-feature.wizard.subclass-feature-level-6",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -8260,7 +8260,7 @@
       ]
     },
     {
-      "nativeId": "classFeature.wizard-subclass.wizard.wizard-subclass.3",
+      "nativeId": "class-feature.wizard.wizard-subclass-level-3",
       "kind": "classFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -18700,7 +18700,7 @@
       ]
     },
     {
-      "nativeId": "itemEntry.armor-of-resistance",
+      "nativeId": "itementry.armor-of-resistance",
       "kind": "itemEntry",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -18717,7 +18717,7 @@
       ]
     },
     {
-      "nativeId": "itemEntry.dragon-scale-mail",
+      "nativeId": "itementry.dragon-scale-mail",
       "kind": "itemEntry",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -18730,7 +18730,7 @@
       ]
     },
     {
-      "nativeId": "itemEntry.grenade",
+      "nativeId": "itementry.grenade",
       "kind": "itemEntry",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -18747,7 +18747,7 @@
       ]
     },
     {
-      "nativeId": "itemEntry.ioun-stone",
+      "nativeId": "itementry.ioun-stone",
       "kind": "itemEntry",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -18760,7 +18760,7 @@
       ]
     },
     {
-      "nativeId": "itemEntry.potion-of-resistance",
+      "nativeId": "itementry.potion-of-resistance",
       "kind": "itemEntry",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -18777,7 +18777,7 @@
       ]
     },
     {
-      "nativeId": "itemEntry.ring-of-resistance",
+      "nativeId": "itementry.ring-of-resistance",
       "kind": "itemEntry",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -18794,7 +18794,7 @@
       ]
     },
     {
-      "nativeId": "itemEntry.scroll-of-protection",
+      "nativeId": "itementry.scroll-of-protection",
       "kind": "itemEntry",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -28347,23 +28347,6 @@
       ]
     },
     {
-      "nativeId": "rule.legal-information",
-      "kind": "ruleChapter",
-      "status": "multiple-candidates",
-      "sourceRecords": 2,
-      "path": "data/native/rules/legal-information.json",
-      "candidates": [
-        {
-          "key": "candidate-a",
-          "source": "5.1"
-        },
-        {
-          "key": "candidate-b",
-          "source": "5.2.1"
-        }
-      ]
-    },
-    {
       "nativeId": "rule.magic-items",
       "kind": "ruleChapter",
       "status": "multiple-candidates",
@@ -34794,7 +34777,7 @@
       ]
     },
     {
-      "nativeId": "subclass.path-of-the-berserker.barbarian.berserker.Berserker",
+      "nativeId": "subclass.barbarian.berserker",
       "kind": "subclass",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -34811,7 +34794,7 @@
       ]
     },
     {
-      "nativeId": "subclass.college-of-lore.bard.lore.Lore",
+      "nativeId": "subclass.bard.lore",
       "kind": "subclass",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -34828,7 +34811,7 @@
       ]
     },
     {
-      "nativeId": "subclass.life-domain.cleric.life.Life",
+      "nativeId": "subclass.cleric.life",
       "kind": "subclass",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -34845,7 +34828,7 @@
       ]
     },
     {
-      "nativeId": "subclass.circle-of-the-land.druid.land.Land",
+      "nativeId": "subclass.druid.land",
       "kind": "subclass",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -34862,7 +34845,7 @@
       ]
     },
     {
-      "nativeId": "subclass.champion.fighter.champion.Champion",
+      "nativeId": "subclass.fighter.champion",
       "kind": "subclass",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -34879,7 +34862,7 @@
       ]
     },
     {
-      "nativeId": "subclass.way-of-the-open-hand.monk.open-hand.Open Hand",
+      "nativeId": "subclass.monk.open-hand",
       "kind": "subclass",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -34896,7 +34879,7 @@
       ]
     },
     {
-      "nativeId": "subclass.oath-of-devotion.paladin.devotion.Devotion",
+      "nativeId": "subclass.paladin.devotion",
       "kind": "subclass",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -34913,7 +34896,7 @@
       ]
     },
     {
-      "nativeId": "subclass.hunter.ranger.hunter.Hunter",
+      "nativeId": "subclass.ranger.hunter",
       "kind": "subclass",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -34930,7 +34913,7 @@
       ]
     },
     {
-      "nativeId": "subclass.thief.rogue.thief.Thief",
+      "nativeId": "subclass.rogue.thief",
       "kind": "subclass",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -34947,7 +34930,7 @@
       ]
     },
     {
-      "nativeId": "subclass.draconic-bloodline.sorcerer.draconic.Draconic",
+      "nativeId": "subclass.sorcerer.draconic",
       "kind": "subclass",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -34964,7 +34947,7 @@
       ]
     },
     {
-      "nativeId": "subclass.the-fiend.warlock.fiend.Fiend",
+      "nativeId": "subclass.warlock.fiend",
       "kind": "subclass",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -34981,7 +34964,7 @@
       ]
     },
     {
-      "nativeId": "subclass.school-of-evocation.wizard.evocation.Evocation",
+      "nativeId": "subclass.wizard.evocation",
       "kind": "subclass",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -34994,7 +34977,7 @@
       ]
     },
     {
-      "nativeId": "subclass.evoker.wizard.evoker.Evoker",
+      "nativeId": "subclass.wizard.evoker",
       "kind": "subclass",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35007,7 +34990,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.frenzy.barbarian.berserker.frenzy.3",
+      "nativeId": "subclass-feature.barbarian.berserker.frenzy-level-3",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35024,7 +35007,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.intimidating-presence.barbarian.berserker.intimidating-presence.10",
+      "nativeId": "subclass-feature.barbarian.berserker.intimidating-presence-level-10",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35037,7 +35020,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.intimidating-presence.barbarian.berserker.intimidating-presence.14",
+      "nativeId": "subclass-feature.barbarian.berserker.intimidating-presence-level-14",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35050,7 +35033,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.mindless-rage.barbarian.berserker.mindless-rage.6",
+      "nativeId": "subclass-feature.barbarian.berserker.mindless-rage-level-6",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35067,7 +35050,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.path-of-the-berserker.barbarian.berserker.path-of-the-berserker.3",
+      "nativeId": "subclass-feature.barbarian.berserker.path-of-the-berserker-level-3",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35084,7 +35067,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.retaliation.barbarian.berserker.retaliation.10",
+      "nativeId": "subclass-feature.barbarian.berserker.retaliation-level-10",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35097,7 +35080,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.retaliation.barbarian.berserker.retaliation.14",
+      "nativeId": "subclass-feature.barbarian.berserker.retaliation-level-14",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35110,7 +35093,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.additional-magical-secrets.bard.lore.additional-magical-secrets.6",
+      "nativeId": "subclass-feature.bard.lore.additional-magical-secrets-level-6",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35123,7 +35106,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.bonus-proficiencies.bard.lore.bonus-proficiencies.3",
+      "nativeId": "subclass-feature.bard.lore.bonus-proficiencies-level-3",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35140,7 +35123,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.college-of-lore.bard.lore.college-of-lore.3",
+      "nativeId": "subclass-feature.bard.lore.college-of-lore-level-3",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35157,7 +35140,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.cutting-words.bard.lore.cutting-words.3",
+      "nativeId": "subclass-feature.bard.lore.cutting-words-level-3",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35174,7 +35157,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.magical-discoveries.bard.lore.magical-discoveries.6",
+      "nativeId": "subclass-feature.bard.lore.magical-discoveries-level-6",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35187,7 +35170,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.peerless-skill.bard.lore.peerless-skill.14",
+      "nativeId": "subclass-feature.bard.lore.peerless-skill-level-14",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35204,7 +35187,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.blessed-healer.cleric.life.blessed-healer.6",
+      "nativeId": "subclass-feature.cleric.life.blessed-healer-level-6",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35221,7 +35204,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.bonus-proficiency.cleric.life.bonus-proficiency.1",
+      "nativeId": "subclass-feature.cleric.life.bonus-proficiency-level-1",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35234,7 +35217,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.channel-divinity-preserve-life.cleric.life.channel-divinity-preserve-life.2",
+      "nativeId": "subclass-feature.cleric.life.channel-divinity-preserve-life-level-2",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35247,7 +35230,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.disciple-of-life.cleric.life.disciple-of-life.1",
+      "nativeId": "subclass-feature.cleric.life.disciple-of-life-level-1",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35260,7 +35243,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.disciple-of-life.cleric.life.disciple-of-life.3",
+      "nativeId": "subclass-feature.cleric.life.disciple-of-life-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35273,7 +35256,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.divine-strike.cleric.life.divine-strike.8",
+      "nativeId": "subclass-feature.cleric.life.divine-strike-level-8",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35286,7 +35269,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.life-domain.cleric.life.life-domain.1",
+      "nativeId": "subclass-feature.cleric.life.life-domain-level-1",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35299,7 +35282,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.life-domain.cleric.life.life-domain.3",
+      "nativeId": "subclass-feature.cleric.life.life-domain-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35312,7 +35295,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.life-domain-spells.cleric.life.life-domain-spells.3",
+      "nativeId": "subclass-feature.cleric.life.life-domain-spells-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35325,7 +35308,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.preserve-life.cleric.life.preserve-life.3",
+      "nativeId": "subclass-feature.cleric.life.preserve-life-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35338,7 +35321,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.supreme-healing.cleric.life.supreme-healing.17",
+      "nativeId": "subclass-feature.cleric.life.supreme-healing-level-17",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35355,7 +35338,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.bonus-cantrip.druid.land.bonus-cantrip.2",
+      "nativeId": "subclass-feature.druid.land.bonus-cantrip-level-2",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35368,7 +35351,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.circle-of-the-land.druid.land.circle-of-the-land.2",
+      "nativeId": "subclass-feature.druid.land.circle-of-the-land-level-2",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35381,7 +35364,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.circle-of-the-land.druid.land.circle-of-the-land.3",
+      "nativeId": "subclass-feature.druid.land.circle-of-the-land-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35394,7 +35377,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.circle-of-the-land-spells.druid.land.circle-of-the-land-spells.3",
+      "nativeId": "subclass-feature.druid.land.circle-of-the-land-spells-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35407,7 +35390,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.circle-spells.druid.land.circle-spells.2",
+      "nativeId": "subclass-feature.druid.land.circle-spells-level-2",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35420,7 +35403,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.land-s-aid.druid.land.land-s-aid.3",
+      "nativeId": "subclass-feature.druid.land.land-s-aid-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35433,7 +35416,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.land-s-stride.druid.land.land-s-stride.6",
+      "nativeId": "subclass-feature.druid.land.land-s-stride-level-6",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35446,7 +35429,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.natural-recovery.druid.land.natural-recovery.2",
+      "nativeId": "subclass-feature.druid.land.natural-recovery-level-2",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35459,7 +35442,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.natural-recovery.druid.land.natural-recovery.6",
+      "nativeId": "subclass-feature.druid.land.natural-recovery-level-6",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35472,7 +35455,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.nature-s-sanctuary.druid.land.nature-s-sanctuary.14",
+      "nativeId": "subclass-feature.druid.land.nature-s-sanctuary-level-14",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35489,7 +35472,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.nature-s-ward.druid.land.nature-s-ward.10",
+      "nativeId": "subclass-feature.druid.land.nature-s-ward-level-10",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35506,7 +35489,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.additional-fighting-style.fighter.champion.additional-fighting-style.10",
+      "nativeId": "subclass-feature.fighter.champion.additional-fighting-style-level-10",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35519,7 +35502,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.additional-fighting-style.fighter.champion.additional-fighting-style.7",
+      "nativeId": "subclass-feature.fighter.champion.additional-fighting-style-level-7",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35532,7 +35515,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.champion.fighter.champion.champion.3",
+      "nativeId": "subclass-feature.fighter.champion.champion-level-3",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35549,7 +35532,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.heroic-warrior.fighter.champion.heroic-warrior.10",
+      "nativeId": "subclass-feature.fighter.champion.heroic-warrior-level-10",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35562,7 +35545,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.improved-critical.fighter.champion.improved-critical.3",
+      "nativeId": "subclass-feature.fighter.champion.improved-critical-level-3",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35579,7 +35562,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.remarkable-athlete.fighter.champion.remarkable-athlete.3",
+      "nativeId": "subclass-feature.fighter.champion.remarkable-athlete-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35592,7 +35575,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.remarkable-athlete.fighter.champion.remarkable-athlete.7",
+      "nativeId": "subclass-feature.fighter.champion.remarkable-athlete-level-7",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35605,7 +35588,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.superior-critical.fighter.champion.superior-critical.15",
+      "nativeId": "subclass-feature.fighter.champion.superior-critical-level-15",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35622,7 +35605,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.survivor.fighter.champion.survivor.18",
+      "nativeId": "subclass-feature.fighter.champion.survivor-level-18",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35639,7 +35622,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.fleet-step.monk.open-hand.fleet-step.11",
+      "nativeId": "subclass-feature.monk.open-hand.fleet-step-level-11",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35652,7 +35635,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.open-hand-technique.monk.open-hand.open-hand-technique.3",
+      "nativeId": "subclass-feature.monk.open-hand.open-hand-technique-level-3",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35669,7 +35652,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.quivering-palm.monk.open-hand.quivering-palm.17",
+      "nativeId": "subclass-feature.monk.open-hand.quivering-palm-level-17",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35686,7 +35669,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.tranquility.monk.open-hand.tranquility.11",
+      "nativeId": "subclass-feature.monk.open-hand.tranquility-level-11",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35699,7 +35682,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.warrior-of-the-open-hand.monk.open-hand.warrior-of-the-open-hand.3",
+      "nativeId": "subclass-feature.monk.open-hand.warrior-of-the-open-hand-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35712,7 +35695,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.way-of-the-open-hand.monk.open-hand.way-of-the-open-hand.3",
+      "nativeId": "subclass-feature.monk.open-hand.way-of-the-open-hand-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35725,7 +35708,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.wholeness-of-body.monk.open-hand.wholeness-of-body.6",
+      "nativeId": "subclass-feature.monk.open-hand.wholeness-of-body-level-6",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35742,7 +35725,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.aura-of-devotion.paladin.devotion.aura-of-devotion.7",
+      "nativeId": "subclass-feature.paladin.devotion.aura-of-devotion-level-7",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35759,7 +35742,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.channel-divinity.paladin.devotion.channel-divinity.3",
+      "nativeId": "subclass-feature.paladin.devotion.channel-divinity-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35772,7 +35755,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.holy-nimbus.paladin.devotion.holy-nimbus.20",
+      "nativeId": "subclass-feature.paladin.devotion.holy-nimbus-level-20",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35789,7 +35772,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.oath-of-devotion.paladin.devotion.oath-of-devotion.3",
+      "nativeId": "subclass-feature.paladin.devotion.oath-of-devotion-level-3",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35806,7 +35789,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.oath-of-devotion-spells.paladin.devotion.oath-of-devotion-spells.3",
+      "nativeId": "subclass-feature.paladin.devotion.oath-of-devotion-spells-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35819,7 +35802,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.oath-spells.paladin.devotion.oath-spells.3",
+      "nativeId": "subclass-feature.paladin.devotion.oath-spells-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35832,7 +35815,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.purity-of-spirit.paladin.devotion.purity-of-spirit.15",
+      "nativeId": "subclass-feature.paladin.devotion.purity-of-spirit-level-15",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35845,7 +35828,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.sacred-weapon.paladin.devotion.sacred-weapon.3",
+      "nativeId": "subclass-feature.paladin.devotion.sacred-weapon-level-3",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35862,7 +35845,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.smite-of-protection.paladin.devotion.smite-of-protection.15",
+      "nativeId": "subclass-feature.paladin.devotion.smite-of-protection-level-15",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35875,7 +35858,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.tenets-of-devotion.paladin.devotion.tenets-of-devotion.3",
+      "nativeId": "subclass-feature.paladin.devotion.tenets-of-devotion-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35888,7 +35871,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.turn-the-unholy.paladin.devotion.turn-the-unholy.3",
+      "nativeId": "subclass-feature.paladin.devotion.turn-the-unholy-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35901,7 +35884,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.colossus-slayer.ranger.hunter.colossus-slayer.3",
+      "nativeId": "subclass-feature.ranger.hunter.colossus-slayer-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35914,7 +35897,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.defensive-tactics.ranger.hunter.defensive-tactics.7",
+      "nativeId": "subclass-feature.ranger.hunter.defensive-tactics-level-7",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -35931,7 +35914,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.escape-the-horde.ranger.hunter.escape-the-horde.7",
+      "nativeId": "subclass-feature.ranger.hunter.escape-the-horde-level-7",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35944,7 +35927,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.evasion.ranger.hunter.evasion.15",
+      "nativeId": "subclass-feature.ranger.hunter.evasion-level-15",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35957,7 +35940,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.giant-killer.ranger.hunter.giant-killer.3",
+      "nativeId": "subclass-feature.ranger.hunter.giant-killer-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35970,7 +35953,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.horde-breaker.ranger.hunter.horde-breaker.3",
+      "nativeId": "subclass-feature.ranger.hunter.horde-breaker-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -35983,7 +35966,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.hunter.ranger.hunter.hunter.3",
+      "nativeId": "subclass-feature.ranger.hunter.hunter-level-3",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -36000,7 +35983,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.hunter-s-lore.ranger.hunter.hunter-s-lore.3",
+      "nativeId": "subclass-feature.ranger.hunter.hunter-s-lore-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36013,7 +35996,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.hunter-s-prey.ranger.hunter.hunter-s-prey.3",
+      "nativeId": "subclass-feature.ranger.hunter.hunter-s-prey-level-3",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -36030,7 +36013,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.multiattack.ranger.hunter.multiattack.11",
+      "nativeId": "subclass-feature.ranger.hunter.multiattack-level-11",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36043,7 +36026,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.multiattack-defense.ranger.hunter.multiattack-defense.7",
+      "nativeId": "subclass-feature.ranger.hunter.multiattack-defense-level-7",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36056,7 +36039,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.stand-against-the-tide.ranger.hunter.stand-against-the-tide.15",
+      "nativeId": "subclass-feature.ranger.hunter.stand-against-the-tide-level-15",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36069,7 +36052,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.steel-will.ranger.hunter.steel-will.7",
+      "nativeId": "subclass-feature.ranger.hunter.steel-will-level-7",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36082,7 +36065,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.superior-hunter-s-defense.ranger.hunter.superior-hunter-s-defense.15",
+      "nativeId": "subclass-feature.ranger.hunter.superior-hunter-s-defense-level-15",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -36099,7 +36082,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.superior-hunter-s-prey.ranger.hunter.superior-hunter-s-prey.11",
+      "nativeId": "subclass-feature.ranger.hunter.superior-hunter-s-prey-level-11",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36112,7 +36095,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.uncanny-dodge.ranger.hunter.uncanny-dodge.15",
+      "nativeId": "subclass-feature.ranger.hunter.uncanny-dodge-level-15",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36125,7 +36108,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.volley.ranger.hunter.volley.11",
+      "nativeId": "subclass-feature.ranger.hunter.volley-level-11",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36138,7 +36121,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.whirlwind-attack.ranger.hunter.whirlwind-attack.11",
+      "nativeId": "subclass-feature.ranger.hunter.whirlwind-attack-level-11",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36151,7 +36134,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.fast-hands.rogue.thief.fast-hands.3",
+      "nativeId": "subclass-feature.rogue.thief.fast-hands-level-3",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -36168,7 +36151,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.second-story-work.rogue.thief.second-story-work.3",
+      "nativeId": "subclass-feature.rogue.thief.second-story-work-level-3",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -36185,7 +36168,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.supreme-sneak.rogue.thief.supreme-sneak.9",
+      "nativeId": "subclass-feature.rogue.thief.supreme-sneak-level-9",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -36202,7 +36185,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.thief.rogue.thief.thief.3",
+      "nativeId": "subclass-feature.rogue.thief.thief-level-3",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -36219,7 +36202,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.thief-s-reflexes.rogue.thief.thief-s-reflexes.17",
+      "nativeId": "subclass-feature.rogue.thief.thief-s-reflexes-level-17",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -36236,7 +36219,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.use-magic-device.rogue.thief.use-magic-device.13",
+      "nativeId": "subclass-feature.rogue.thief.use-magic-device-level-13",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -36253,7 +36236,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.draconic-bloodline.sorcerer.draconic.draconic-bloodline.1",
+      "nativeId": "subclass-feature.sorcerer.draconic.draconic-bloodline-level-1",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36266,7 +36249,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.draconic-presence.sorcerer.draconic.draconic-presence.18",
+      "nativeId": "subclass-feature.sorcerer.draconic.draconic-presence-level-18",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36279,7 +36262,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.draconic-resilience.sorcerer.draconic.draconic-resilience.1",
+      "nativeId": "subclass-feature.sorcerer.draconic.draconic-resilience-level-1",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36292,7 +36275,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.draconic-resilience.sorcerer.draconic.draconic-resilience.3",
+      "nativeId": "subclass-feature.sorcerer.draconic.draconic-resilience-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36305,7 +36288,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.draconic-sorcery.sorcerer.draconic.draconic-sorcery.3",
+      "nativeId": "subclass-feature.sorcerer.draconic.draconic-sorcery-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36318,7 +36301,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.draconic-spells.sorcerer.draconic.draconic-spells.3",
+      "nativeId": "subclass-feature.sorcerer.draconic.draconic-spells-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36331,7 +36314,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.dragon-ancestor.sorcerer.draconic.dragon-ancestor.1",
+      "nativeId": "subclass-feature.sorcerer.draconic.dragon-ancestor-level-1",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36344,7 +36327,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.dragon-companion.sorcerer.draconic.dragon-companion.18",
+      "nativeId": "subclass-feature.sorcerer.draconic.dragon-companion-level-18",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36357,7 +36340,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.dragon-wings.sorcerer.draconic.dragon-wings.14",
+      "nativeId": "subclass-feature.sorcerer.draconic.dragon-wings-level-14",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -36374,7 +36357,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.elemental-affinity.sorcerer.draconic.elemental-affinity.6",
+      "nativeId": "subclass-feature.sorcerer.draconic.elemental-affinity-level-6",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -36391,7 +36374,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.dark-one-s-blessing.warlock.fiend.dark-one-s-blessing.1",
+      "nativeId": "subclass-feature.warlock.fiend.dark-one-s-blessing-level-1",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36404,7 +36387,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.dark-one-s-blessing.warlock.fiend.dark-one-s-blessing.3",
+      "nativeId": "subclass-feature.warlock.fiend.dark-one-s-blessing-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36417,7 +36400,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.dark-one-s-own-luck.warlock.fiend.dark-one-s-own-luck.6",
+      "nativeId": "subclass-feature.warlock.fiend.dark-one-s-own-luck-level-6",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -36434,7 +36417,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.fiend-patron.warlock.fiend.fiend-patron.3",
+      "nativeId": "subclass-feature.warlock.fiend.fiend-patron-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36447,7 +36430,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.fiend-spells.warlock.fiend.fiend-spells.3",
+      "nativeId": "subclass-feature.warlock.fiend.fiend-spells-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36460,7 +36443,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.fiendish-resilience.warlock.fiend.fiendish-resilience.10",
+      "nativeId": "subclass-feature.warlock.fiend.fiendish-resilience-level-10",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -36477,7 +36460,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.hurl-through-hell.warlock.fiend.hurl-through-hell.14",
+      "nativeId": "subclass-feature.warlock.fiend.hurl-through-hell-level-14",
       "kind": "subclassFeature",
       "status": "multiple-candidates",
       "sourceRecords": 2,
@@ -36494,7 +36477,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.the-fiend.warlock.fiend.the-fiend.1",
+      "nativeId": "subclass-feature.warlock.fiend.the-fiend-level-1",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36507,7 +36490,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.empowered-evocation.wizard.evocation.empowered-evocation.10",
+      "nativeId": "subclass-feature.wizard.evocation.empowered-evocation-level-10",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36520,7 +36503,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.evocation-savant.wizard.evocation.evocation-savant.2",
+      "nativeId": "subclass-feature.wizard.evocation.evocation-savant-level-2",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36533,7 +36516,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.overchannel.wizard.evocation.overchannel.14",
+      "nativeId": "subclass-feature.wizard.evocation.overchannel-level-14",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36546,7 +36529,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.potent-cantrip.wizard.evocation.potent-cantrip.6",
+      "nativeId": "subclass-feature.wizard.evocation.potent-cantrip-level-6",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36559,7 +36542,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.school-of-evocation.wizard.evocation.school-of-evocation.2",
+      "nativeId": "subclass-feature.wizard.evocation.school-of-evocation-level-2",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36572,7 +36555,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.sculpt-spells.wizard.evocation.sculpt-spells.2",
+      "nativeId": "subclass-feature.wizard.evocation.sculpt-spells-level-2",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36585,7 +36568,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.empowered-evocation.wizard.evoker.empowered-evocation.10",
+      "nativeId": "subclass-feature.wizard.evoker.empowered-evocation-level-10",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36598,7 +36581,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.evocation-savant.wizard.evoker.evocation-savant.3",
+      "nativeId": "subclass-feature.wizard.evoker.evocation-savant-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36611,7 +36594,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.evoker.wizard.evoker.evoker.3",
+      "nativeId": "subclass-feature.wizard.evoker.evoker-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36624,7 +36607,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.overchannel.wizard.evoker.overchannel.14",
+      "nativeId": "subclass-feature.wizard.evoker.overchannel-level-14",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36637,7 +36620,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.potent-cantrip.wizard.evoker.potent-cantrip.3",
+      "nativeId": "subclass-feature.wizard.evoker.potent-cantrip-level-3",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36650,7 +36633,7 @@
       ]
     },
     {
-      "nativeId": "subclassFeature.sculpt-spells.wizard.evoker.sculpt-spells.6",
+      "nativeId": "subclass-feature.wizard.evoker.sculpt-spells-level-6",
       "kind": "subclassFeature",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36663,7 +36646,7 @@
       ]
     },
     {
-      "nativeId": "subspecies.section-1.dragonborn.unnamed-1a909417769c0dff",
+      "nativeId": "subspecies.dragonborn.unnamed-1a909417769c0dff",
       "kind": "subrace",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36676,7 +36659,7 @@
       ]
     },
     {
-      "nativeId": "subspecies.hill.dwarf.hill",
+      "nativeId": "subspecies.dwarf.hill",
       "kind": "subrace",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36689,7 +36672,7 @@
       ]
     },
     {
-      "nativeId": "subspecies.high.elf.high",
+      "nativeId": "subspecies.elf.high",
       "kind": "subrace",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36702,7 +36685,7 @@
       ]
     },
     {
-      "nativeId": "subspecies.rock.gnome.rock",
+      "nativeId": "subspecies.gnome.rock",
       "kind": "subrace",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36715,7 +36698,7 @@
       ]
     },
     {
-      "nativeId": "subspecies.section-5.half-elf.unnamed-46a4597a60e25d66",
+      "nativeId": "subspecies.half-elf.unnamed-46a4597a60e25d66",
       "kind": "subrace",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36728,7 +36711,7 @@
       ]
     },
     {
-      "nativeId": "subspecies.section-6.half-orc.unnamed-bf18b1445395662d",
+      "nativeId": "subspecies.half-orc.unnamed-bf18b1445395662d",
       "kind": "subrace",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36741,7 +36724,7 @@
       ]
     },
     {
-      "nativeId": "subspecies.lightfoot.halfling.lightfoot",
+      "nativeId": "subspecies.halfling.lightfoot",
       "kind": "subrace",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36754,7 +36737,7 @@
       ]
     },
     {
-      "nativeId": "subspecies.section-8.human.unnamed-a946fbc1fd2bf612",
+      "nativeId": "subspecies.human.unnamed-a946fbc1fd2bf612",
       "kind": "subrace",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -36767,7 +36750,7 @@
       ]
     },
     {
-      "nativeId": "subspecies.section-9.tiefling.unnamed-77c4d3f18398af4b",
+      "nativeId": "subspecies.tiefling.unnamed-77c4d3f18398af4b",
       "kind": "subrace",
       "status": "single-candidate",
       "sourceRecords": 1,
@@ -38538,5 +38521,13 @@
       ]
     }
   ],
-  "reconciliationPolicy": "Existing approved native rules left untouched; unreviewed variants carried as inert candidateDefinitions; edition version names mapped outside native JSON; no source variant chosen as runtime rule."
+  "reconciliationPolicy": "Existing approved native rules left untouched; unreviewed variants carried as inert candidateDefinitions; edition version names mapped outside native JSON; no source variant chosen as runtime rule.",
+  "referenceOnlyBookSections": [
+    {
+      "name": "Legal Information",
+      "location": "data/reference/srd/structured/book/book-srd51.json and book-srd52.json",
+      "reason": "Legal and licensing metadata is not a native game mechanic"
+    }
+  ],
+  "canonicalIdentifiersNormalized": 561
 }

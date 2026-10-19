@@ -1,5 +1,5 @@
 {
-  "id": "classFeature.unarmored-defense.monk.unarmored-defense.1",
+  "id": "class-feature.monk.unarmored-defense-level-1",
   "name": "Unarmored Defense",
   "kind": "classFeature",
   "baselineStatus": "pending-native-reconciliation",

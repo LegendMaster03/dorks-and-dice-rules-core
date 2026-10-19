@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.remarkable-athlete.fighter.champion.remarkable-athlete.7",
+  "id": "subclass-feature.fighter.champion.remarkable-athlete-level-7",
   "name": "Remarkable Athlete",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -22,6 +22,6 @@
     }
   ],
   "parentClass": "class.fighter",
-  "parentSubclass": "champion",
+  "parentSubclass": "subclass.fighter.champion",
   "classLevel": 7
 }

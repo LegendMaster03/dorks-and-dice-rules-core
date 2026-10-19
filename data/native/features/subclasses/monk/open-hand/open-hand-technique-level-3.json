@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.open-hand-technique.monk.open-hand.open-hand-technique.3",
+  "id": "subclass-feature.monk.open-hand.open-hand-technique-level-3",
   "name": "Open Hand Technique",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -64,6 +64,6 @@
     }
   ],
   "parentClass": "class.monk",
-  "parentSubclass": "open-hand",
+  "parentSubclass": "subclass.monk.open-hand",
   "classLevel": 3
 }

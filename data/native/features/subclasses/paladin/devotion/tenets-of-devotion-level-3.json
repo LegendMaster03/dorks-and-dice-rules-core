@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.tenets-of-devotion.paladin.devotion.tenets-of-devotion.3",
+  "id": "subclass-feature.paladin.devotion.tenets-of-devotion-level-3",
   "name": "Tenets of Devotion",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -81,6 +81,6 @@
     }
   ],
   "parentClass": "class.paladin",
-  "parentSubclass": "devotion",
+  "parentSubclass": "subclass.paladin.devotion",
   "classLevel": 3
 }

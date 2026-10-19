@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.purity-of-spirit.paladin.devotion.purity-of-spirit.15",
+  "id": "subclass-feature.paladin.devotion.purity-of-spirit-level-15",
   "name": "Purity of Spirit",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.paladin",
-  "parentSubclass": "devotion",
+  "parentSubclass": "subclass.paladin.devotion",
   "classLevel": 15
 }

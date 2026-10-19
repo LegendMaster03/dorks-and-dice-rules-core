@@ -1,5 +1,5 @@
 {
-  "id": "subclass.path-of-the-berserker.barbarian.berserker.Berserker",
+  "id": "subclass.barbarian.berserker",
   "name": "Path of the Berserker",
   "kind": "subclass",
   "baselineStatus": "pending-native-reconciliation",

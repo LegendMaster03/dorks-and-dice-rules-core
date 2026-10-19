@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.draconic-resilience.sorcerer.draconic.draconic-resilience.3",
+  "id": "subclass-feature.sorcerer.draconic.draconic-resilience-level-3",
   "name": "Draconic Resilience",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -22,6 +22,6 @@
     }
   ],
   "parentClass": "class.sorcerer",
-  "parentSubclass": "draconic",
+  "parentSubclass": "subclass.sorcerer.draconic",
   "classLevel": 3
 }

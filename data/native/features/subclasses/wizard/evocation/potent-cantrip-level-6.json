@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.potent-cantrip.wizard.evocation.potent-cantrip.6",
+  "id": "subclass-feature.wizard.evocation.potent-cantrip-level-6",
   "name": "Potent Cantrip",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.wizard",
-  "parentSubclass": "evocation",
+  "parentSubclass": "subclass.wizard.evocation",
   "classLevel": 6
 }

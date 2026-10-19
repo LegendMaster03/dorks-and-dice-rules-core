@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.survivor.fighter.champion.survivor.18",
+  "id": "subclass-feature.fighter.champion.survivor-level-18",
   "name": "Survivor",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -50,6 +50,6 @@
     }
   ],
   "parentClass": "class.fighter",
-  "parentSubclass": "champion",
+  "parentSubclass": "subclass.fighter.champion",
   "classLevel": 18
 }

@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.mindless-rage.barbarian.berserker.mindless-rage.6",
+  "id": "subclass-feature.barbarian.berserker.mindless-rage-level-6",
   "name": "Mindless Rage",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -36,6 +36,6 @@
     }
   ],
   "parentClass": "class.barbarian",
-  "parentSubclass": "berserker",
+  "parentSubclass": "subclass.barbarian.berserker",
   "classLevel": 6
 }

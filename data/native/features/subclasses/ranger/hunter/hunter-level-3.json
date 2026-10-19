@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.hunter.ranger.hunter.hunter.3",
+  "id": "subclass-feature.ranger.hunter.hunter-level-3",
   "name": "Hunter",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -47,6 +47,6 @@
     }
   ],
   "parentClass": "class.ranger",
-  "parentSubclass": "hunter",
+  "parentSubclass": "subclass.ranger.hunter",
   "classLevel": 3
 }

@@ -1,5 +1,5 @@
 {
-  "id": "itemEntry.ioun-stone",
+  "id": "itementry.ioun-stone",
   "name": "Ioun Stone",
   "kind": "itemEntry",
   "baselineStatus": "pending-native-reconciliation",

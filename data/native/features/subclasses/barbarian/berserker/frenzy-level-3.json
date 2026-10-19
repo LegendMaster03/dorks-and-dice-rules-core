@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.frenzy.barbarian.berserker.frenzy.3",
+  "id": "subclass-feature.barbarian.berserker.frenzy-level-3",
   "name": "Frenzy",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -36,6 +36,6 @@
     }
   ],
   "parentClass": "class.barbarian",
-  "parentSubclass": "berserker",
+  "parentSubclass": "subclass.barbarian.berserker",
   "classLevel": 3
 }

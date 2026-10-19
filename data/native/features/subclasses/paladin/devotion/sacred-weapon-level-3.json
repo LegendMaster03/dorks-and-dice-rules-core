@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.sacred-weapon.paladin.devotion.sacred-weapon.3",
+  "id": "subclass-feature.paladin.devotion.sacred-weapon-level-3",
   "name": "Sacred Weapon",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -44,6 +44,6 @@
     }
   ],
   "parentClass": "class.paladin",
-  "parentSubclass": "devotion",
+  "parentSubclass": "subclass.paladin.devotion",
   "classLevel": 3
 }

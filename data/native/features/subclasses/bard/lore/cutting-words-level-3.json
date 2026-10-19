@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.cutting-words.bard.lore.cutting-words.3",
+  "id": "subclass-feature.bard.lore.cutting-words-level-3",
   "name": "Cutting Words",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -36,6 +36,6 @@
     }
   ],
   "parentClass": "class.bard",
-  "parentSubclass": "lore",
+  "parentSubclass": "subclass.bard.lore",
   "classLevel": 3
 }

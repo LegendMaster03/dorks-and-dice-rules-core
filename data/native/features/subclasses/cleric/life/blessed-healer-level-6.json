@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.blessed-healer.cleric.life.blessed-healer.6",
+  "id": "subclass-feature.cleric.life.blessed-healer-level-6",
   "name": "Blessed Healer",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -36,6 +36,6 @@
     }
   ],
   "parentClass": "class.cleric",
-  "parentSubclass": "life",
+  "parentSubclass": "subclass.cleric.life",
   "classLevel": 6
 }

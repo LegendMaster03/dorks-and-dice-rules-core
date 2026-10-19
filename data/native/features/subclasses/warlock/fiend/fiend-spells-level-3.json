@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.fiend-spells.warlock.fiend.fiend-spells.3",
+  "id": "subclass-feature.warlock.fiend.fiend-spells-level-3",
   "name": "Fiend Spells",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -51,6 +51,6 @@
     }
   ],
   "parentClass": "class.warlock",
-  "parentSubclass": "fiend",
+  "parentSubclass": "subclass.warlock.fiend",
   "classLevel": 3
 }

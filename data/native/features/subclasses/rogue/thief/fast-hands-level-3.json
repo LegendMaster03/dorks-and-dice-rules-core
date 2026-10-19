@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.fast-hands.rogue.thief.fast-hands.3",
+  "id": "subclass-feature.rogue.thief.fast-hands-level-3",
   "name": "Fast Hands",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -54,6 +54,6 @@
     }
   ],
   "parentClass": "class.rogue",
-  "parentSubclass": "thief",
+  "parentSubclass": "subclass.rogue.thief",
   "classLevel": 3
 }

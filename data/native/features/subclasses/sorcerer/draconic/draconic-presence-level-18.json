@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.draconic-presence.sorcerer.draconic.draconic-presence.18",
+  "id": "subclass-feature.sorcerer.draconic.draconic-presence-level-18",
   "name": "Draconic Presence",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -25,6 +25,6 @@
     }
   ],
   "parentClass": "class.sorcerer",
-  "parentSubclass": "draconic",
+  "parentSubclass": "subclass.sorcerer.draconic",
   "classLevel": 18
 }

@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.oath-spells.paladin.devotion.oath-spells.3",
+  "id": "subclass-feature.paladin.devotion.oath-spells-level-3",
   "name": "Oath Spells",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -55,6 +55,6 @@
     }
   ],
   "parentClass": "class.paladin",
-  "parentSubclass": "devotion",
+  "parentSubclass": "subclass.paladin.devotion",
   "classLevel": 3
 }

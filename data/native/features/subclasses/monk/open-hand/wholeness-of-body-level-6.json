@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.wholeness-of-body.monk.open-hand.wholeness-of-body.6",
+  "id": "subclass-feature.monk.open-hand.wholeness-of-body-level-6",
   "name": "Wholeness of Body",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -37,6 +37,6 @@
     }
   ],
   "parentClass": "class.monk",
-  "parentSubclass": "open-hand",
+  "parentSubclass": "subclass.monk.open-hand",
   "classLevel": 6
 }

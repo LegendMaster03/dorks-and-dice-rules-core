@@ -1,5 +1,5 @@
 {
-  "id": "itemEntry.grenade",
+  "id": "itementry.grenade",
   "name": "Grenade",
   "kind": "itemEntry",
   "baselineStatus": "pending-native-reconciliation",

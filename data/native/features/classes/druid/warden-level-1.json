@@ -1,5 +1,5 @@
 {
-  "id": "classFeature.warden.druid.warden.1",
+  "id": "class-feature.druid.warden-level-1",
   "name": "Warden",
   "kind": "classFeature",
   "baselineStatus": "pending-native-reconciliation",

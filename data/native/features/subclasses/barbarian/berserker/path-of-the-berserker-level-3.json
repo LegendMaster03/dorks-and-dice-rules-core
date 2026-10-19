@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.path-of-the-berserker.barbarian.berserker.path-of-the-berserker.3",
+  "id": "subclass-feature.barbarian.berserker.path-of-the-berserker-level-3",
   "name": "Path of the Berserker",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -43,6 +43,6 @@
     }
   ],
   "parentClass": "class.barbarian",
-  "parentSubclass": "berserker",
+  "parentSubclass": "subclass.barbarian.berserker",
   "classLevel": 3
 }

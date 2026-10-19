@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.holy-nimbus.paladin.devotion.holy-nimbus.20",
+  "id": "subclass-feature.paladin.devotion.holy-nimbus-level-20",
   "name": "Holy Nimbus",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -60,6 +60,6 @@
     }
   ],
   "parentClass": "class.paladin",
-  "parentSubclass": "devotion",
+  "parentSubclass": "subclass.paladin.devotion",
   "classLevel": 20
 }

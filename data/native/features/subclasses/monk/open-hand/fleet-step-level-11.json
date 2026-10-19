@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.fleet-step.monk.open-hand.fleet-step.11",
+  "id": "subclass-feature.monk.open-hand.fleet-step-level-11",
   "name": "Fleet Step",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.monk",
-  "parentSubclass": "open-hand",
+  "parentSubclass": "subclass.monk.open-hand",
   "classLevel": 11
 }

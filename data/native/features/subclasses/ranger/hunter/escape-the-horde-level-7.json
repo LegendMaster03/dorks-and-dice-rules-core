@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.escape-the-horde.ranger.hunter.escape-the-horde.7",
+  "id": "subclass-feature.ranger.hunter.escape-the-horde-level-7",
   "name": "Escape the Horde",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.ranger",
-  "parentSubclass": "hunter",
+  "parentSubclass": "subclass.ranger.hunter",
   "classLevel": 7
 }

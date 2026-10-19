@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.whirlwind-attack.ranger.hunter.whirlwind-attack.11",
+  "id": "subclass-feature.ranger.hunter.whirlwind-attack-level-11",
   "name": "Whirlwind Attack",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.ranger",
-  "parentSubclass": "hunter",
+  "parentSubclass": "subclass.ranger.hunter",
   "classLevel": 11
 }

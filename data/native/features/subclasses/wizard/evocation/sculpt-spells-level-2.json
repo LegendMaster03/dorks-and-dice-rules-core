@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.sculpt-spells.wizard.evocation.sculpt-spells.2",
+  "id": "subclass-feature.wizard.evocation.sculpt-spells-level-2",
   "name": "Sculpt Spells",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.wizard",
-  "parentSubclass": "evocation",
+  "parentSubclass": "subclass.wizard.evocation",
   "classLevel": 2
 }

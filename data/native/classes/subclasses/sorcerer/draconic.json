@@ -1,5 +1,5 @@
 {
-  "id": "subclass.draconic-bloodline.sorcerer.draconic.Draconic",
+  "id": "subclass.sorcerer.draconic",
   "name": "Draconic Bloodline",
   "kind": "subclass",
   "baselineStatus": "pending-native-reconciliation",

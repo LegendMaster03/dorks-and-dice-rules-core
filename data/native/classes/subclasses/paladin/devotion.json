@@ -1,5 +1,5 @@
 {
-  "id": "subclass.oath-of-devotion.paladin.devotion.Devotion",
+  "id": "subclass.paladin.devotion",
   "name": "Oath of Devotion",
   "kind": "subclass",
   "baselineStatus": "pending-native-reconciliation",

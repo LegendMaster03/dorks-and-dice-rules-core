@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.nature-s-sanctuary.druid.land.nature-s-sanctuary.14",
+  "id": "subclass-feature.druid.land.nature-s-sanctuary-level-14",
   "name": "Nature's Sanctuary",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -38,6 +38,6 @@
     }
   ],
   "parentClass": "class.druid",
-  "parentSubclass": "land",
+  "parentSubclass": "subclass.druid.land",
   "classLevel": 14
 }

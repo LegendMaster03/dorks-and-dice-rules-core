@@ -1,5 +1,5 @@
 {
-  "id": "classFeature.rage.barbarian.rage.1",
+  "id": "class-feature.barbarian.rage-level-1",
   "name": "Rage",
   "kind": "classFeature",
   "baselineStatus": "pending-native-reconciliation",

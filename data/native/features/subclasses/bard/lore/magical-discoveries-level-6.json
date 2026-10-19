@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.magical-discoveries.bard.lore.magical-discoveries.6",
+  "id": "subclass-feature.bard.lore.magical-discoveries-level-6",
   "name": "Magical Discoveries",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -22,6 +22,6 @@
     }
   ],
   "parentClass": "class.bard",
-  "parentSubclass": "lore",
+  "parentSubclass": "subclass.bard.lore",
   "classLevel": 6
 }

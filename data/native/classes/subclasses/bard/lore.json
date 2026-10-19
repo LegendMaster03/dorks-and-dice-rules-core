@@ -1,5 +1,5 @@
 {
-  "id": "subclass.college-of-lore.bard.lore.Lore",
+  "id": "subclass.bard.lore",
   "name": "College of Lore",
   "kind": "subclass",
   "baselineStatus": "pending-native-reconciliation",

@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.natural-recovery.druid.land.natural-recovery.6",
+  "id": "subclass-feature.druid.land.natural-recovery-level-6",
   "name": "Natural Recovery",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -22,6 +22,6 @@
     }
   ],
   "parentClass": "class.druid",
-  "parentSubclass": "land",
+  "parentSubclass": "subclass.druid.land",
   "classLevel": 6
 }

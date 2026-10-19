@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.the-fiend.warlock.fiend.the-fiend.1",
+  "id": "subclass-feature.warlock.fiend.the-fiend-level-1",
   "name": "The Fiend",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -65,6 +65,6 @@
     }
   ],
   "parentClass": "class.warlock",
-  "parentSubclass": "fiend",
+  "parentSubclass": "subclass.warlock.fiend",
   "classLevel": 1
 }

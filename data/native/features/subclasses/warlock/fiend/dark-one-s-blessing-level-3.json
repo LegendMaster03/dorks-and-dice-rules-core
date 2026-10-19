@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.dark-one-s-blessing.warlock.fiend.dark-one-s-blessing.3",
+  "id": "subclass-feature.warlock.fiend.dark-one-s-blessing-level-3",
   "name": "Dark One's Blessing",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.warlock",
-  "parentSubclass": "fiend",
+  "parentSubclass": "subclass.warlock.fiend",
   "classLevel": 3
 }

@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.channel-divinity-preserve-life.cleric.life.channel-divinity-preserve-life.2",
+  "id": "subclass-feature.cleric.life.channel-divinity-preserve-life-level-2",
   "name": "Channel Divinity: Preserve Life",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -25,6 +25,6 @@
     }
   ],
   "parentClass": "class.cleric",
-  "parentSubclass": "life",
+  "parentSubclass": "subclass.cleric.life",
   "classLevel": 2
 }

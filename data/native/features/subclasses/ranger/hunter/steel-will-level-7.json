@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.steel-will.ranger.hunter.steel-will.7",
+  "id": "subclass-feature.ranger.hunter.steel-will-level-7",
   "name": "Steel Will",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.ranger",
-  "parentSubclass": "hunter",
+  "parentSubclass": "subclass.ranger.hunter",
   "classLevel": 7
 }

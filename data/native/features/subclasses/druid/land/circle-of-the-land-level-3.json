@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.circle-of-the-land.druid.land.circle-of-the-land.3",
+  "id": "subclass-feature.druid.land.circle-of-the-land-level-3",
   "name": "Circle of the Land",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -29,6 +29,6 @@
     }
   ],
   "parentClass": "class.druid",
-  "parentSubclass": "land",
+  "parentSubclass": "subclass.druid.land",
   "classLevel": 3
 }

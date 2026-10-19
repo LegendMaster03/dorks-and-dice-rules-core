@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.oath-of-devotion.paladin.devotion.oath-of-devotion.3",
+  "id": "subclass-feature.paladin.devotion.oath-of-devotion-level-3",
   "name": "Oath of Devotion",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -65,6 +65,6 @@
     }
   ],
   "parentClass": "class.paladin",
-  "parentSubclass": "devotion",
+  "parentSubclass": "subclass.paladin.devotion",
   "classLevel": 3
 }

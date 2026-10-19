@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.potent-cantrip.wizard.evoker.potent-cantrip.3",
+  "id": "subclass-feature.wizard.evoker.potent-cantrip-level-3",
   "name": "Potent Cantrip",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.wizard",
-  "parentSubclass": "evoker",
+  "parentSubclass": "subclass.wizard.evoker",
   "classLevel": 3
 }

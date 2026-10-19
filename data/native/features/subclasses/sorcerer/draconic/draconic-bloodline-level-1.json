@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.draconic-bloodline.sorcerer.draconic.draconic-bloodline.1",
+  "id": "subclass-feature.sorcerer.draconic.draconic-bloodline-level-1",
   "name": "Draconic Bloodline",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -28,6 +28,6 @@
     }
   ],
   "parentClass": "class.sorcerer",
-  "parentSubclass": "draconic",
+  "parentSubclass": "subclass.sorcerer.draconic",
   "classLevel": 1
 }

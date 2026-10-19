@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.stand-against-the-tide.ranger.hunter.stand-against-the-tide.15",
+  "id": "subclass-feature.ranger.hunter.stand-against-the-tide-level-15",
   "name": "Stand Against the Tide",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.ranger",
-  "parentSubclass": "hunter",
+  "parentSubclass": "subclass.ranger.hunter",
   "classLevel": 15
 }

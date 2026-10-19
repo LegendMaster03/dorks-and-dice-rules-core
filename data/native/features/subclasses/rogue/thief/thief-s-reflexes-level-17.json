@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.thief-s-reflexes.rogue.thief.thief-s-reflexes.17",
+  "id": "subclass-feature.rogue.thief.thief-s-reflexes-level-17",
   "name": "Thief's Reflexes",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -36,6 +36,6 @@
     }
   ],
   "parentClass": "class.rogue",
-  "parentSubclass": "thief",
+  "parentSubclass": "subclass.rogue.thief",
   "classLevel": 17
 }

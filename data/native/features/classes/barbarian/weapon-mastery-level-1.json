@@ -1,5 +1,5 @@
 {
-  "id": "classFeature.weapon-mastery.barbarian.weapon-mastery.1",
+  "id": "class-feature.barbarian.weapon-mastery-level-1",
   "name": "Weapon Mastery",
   "kind": "classFeature",
   "baselineStatus": "pending-native-reconciliation",

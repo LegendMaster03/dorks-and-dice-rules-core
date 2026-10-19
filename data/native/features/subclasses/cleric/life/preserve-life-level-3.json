@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.preserve-life.cleric.life.preserve-life.3",
+  "id": "subclass-feature.cleric.life.preserve-life-level-3",
   "name": "Preserve Life",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -24,6 +24,6 @@
     }
   ],
   "parentClass": "class.cleric",
-  "parentSubclass": "life",
+  "parentSubclass": "subclass.cleric.life",
   "classLevel": 3
 }

@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.retaliation.barbarian.berserker.retaliation.14",
+  "id": "subclass-feature.barbarian.berserker.retaliation-level-14",
   "name": "Retaliation",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.barbarian",
-  "parentSubclass": "berserker",
+  "parentSubclass": "subclass.barbarian.berserker",
   "classLevel": 14
 }

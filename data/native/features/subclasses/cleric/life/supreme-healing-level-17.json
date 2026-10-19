@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.supreme-healing.cleric.life.supreme-healing.17",
+  "id": "subclass-feature.cleric.life.supreme-healing-level-17",
   "name": "Supreme Healing",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -36,6 +36,6 @@
     }
   ],
   "parentClass": "class.cleric",
-  "parentSubclass": "life",
+  "parentSubclass": "subclass.cleric.life",
   "classLevel": 17
 }

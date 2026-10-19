@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.superior-critical.fighter.champion.superior-critical.15",
+  "id": "subclass-feature.fighter.champion.superior-critical-level-15",
   "name": "Superior Critical",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -36,6 +36,6 @@
     }
   ],
   "parentClass": "class.fighter",
-  "parentSubclass": "champion",
+  "parentSubclass": "subclass.fighter.champion",
   "classLevel": 15
 }

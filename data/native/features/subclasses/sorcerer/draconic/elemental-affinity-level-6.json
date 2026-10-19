@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.elemental-affinity.sorcerer.draconic.elemental-affinity.6",
+  "id": "subclass-feature.sorcerer.draconic.elemental-affinity-level-6",
   "name": "Elemental Affinity",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -40,6 +40,6 @@
     }
   ],
   "parentClass": "class.sorcerer",
-  "parentSubclass": "draconic",
+  "parentSubclass": "subclass.sorcerer.draconic",
   "classLevel": 6
 }

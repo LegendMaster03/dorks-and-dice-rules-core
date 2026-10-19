@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.hunter-s-lore.ranger.hunter.hunter-s-lore.3",
+  "id": "subclass-feature.ranger.hunter.hunter-s-lore-level-3",
   "name": "Hunter's Lore",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -20,6 +20,6 @@
     }
   ],
   "parentClass": "class.ranger",
-  "parentSubclass": "hunter",
+  "parentSubclass": "subclass.ranger.hunter",
   "classLevel": 3
 }

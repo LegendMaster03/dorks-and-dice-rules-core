@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.bonus-proficiencies.bard.lore.bonus-proficiencies.3",
+  "id": "subclass-feature.bard.lore.bonus-proficiencies-level-3",
   "name": "Bonus Proficiencies",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -36,6 +36,6 @@
     }
   ],
   "parentClass": "class.bard",
-  "parentSubclass": "lore",
+  "parentSubclass": "subclass.bard.lore",
   "classLevel": 3
 }

@@ -1,5 +1,5 @@
 {
-  "id": "subclass.champion.fighter.champion.Champion",
+  "id": "subclass.fighter.champion",
   "name": "Champion",
   "kind": "subclass",
   "baselineStatus": "pending-native-reconciliation",

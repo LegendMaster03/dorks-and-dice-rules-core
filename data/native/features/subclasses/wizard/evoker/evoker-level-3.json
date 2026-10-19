@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.evoker.wizard.evoker.evoker.3",
+  "id": "subclass-feature.wizard.evoker.evoker-level-3",
   "name": "Evoker",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -29,6 +29,6 @@
     }
   ],
   "parentClass": "class.wizard",
-  "parentSubclass": "evoker",
+  "parentSubclass": "subclass.wizard.evoker",
   "classLevel": 3
 }

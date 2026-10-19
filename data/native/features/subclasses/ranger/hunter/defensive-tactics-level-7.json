@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.defensive-tactics.ranger.hunter.defensive-tactics.7",
+  "id": "subclass-feature.ranger.hunter.defensive-tactics-level-7",
   "name": "Defensive Tactics",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -73,6 +73,6 @@
     }
   ],
   "parentClass": "class.ranger",
-  "parentSubclass": "hunter",
+  "parentSubclass": "subclass.ranger.hunter",
   "classLevel": 7
 }

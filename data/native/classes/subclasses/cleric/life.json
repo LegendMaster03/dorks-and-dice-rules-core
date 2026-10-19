@@ -1,5 +1,5 @@
 {
-  "id": "subclass.life-domain.cleric.life.Life",
+  "id": "subclass.cleric.life",
   "name": "Life Domain",
   "kind": "subclass",
   "baselineStatus": "pending-native-reconciliation",

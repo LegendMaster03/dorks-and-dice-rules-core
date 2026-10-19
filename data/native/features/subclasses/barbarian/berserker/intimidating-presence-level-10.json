@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.intimidating-presence.barbarian.berserker.intimidating-presence.10",
+  "id": "subclass-feature.barbarian.berserker.intimidating-presence-level-10",
   "name": "Intimidating Presence",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -22,6 +22,6 @@
     }
   ],
   "parentClass": "class.barbarian",
-  "parentSubclass": "berserker",
+  "parentSubclass": "subclass.barbarian.berserker",
   "classLevel": 10
 }

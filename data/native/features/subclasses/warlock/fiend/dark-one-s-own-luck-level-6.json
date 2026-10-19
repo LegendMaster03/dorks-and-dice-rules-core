@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.dark-one-s-own-luck.warlock.fiend.dark-one-s-own-luck.6",
+  "id": "subclass-feature.warlock.fiend.dark-one-s-own-luck-level-6",
   "name": "Dark One's Own Luck",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -38,6 +38,6 @@
     }
   ],
   "parentClass": "class.warlock",
-  "parentSubclass": "fiend",
+  "parentSubclass": "subclass.warlock.fiend",
   "classLevel": 6
 }

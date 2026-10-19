@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.empowered-evocation.wizard.evocation.empowered-evocation.10",
+  "id": "subclass-feature.wizard.evocation.empowered-evocation-level-10",
   "name": "Empowered Evocation",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.wizard",
-  "parentSubclass": "evocation",
+  "parentSubclass": "subclass.wizard.evocation",
   "classLevel": 10
 }

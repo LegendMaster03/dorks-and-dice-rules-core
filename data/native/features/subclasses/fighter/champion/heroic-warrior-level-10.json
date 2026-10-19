@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.heroic-warrior.fighter.champion.heroic-warrior.10",
+  "id": "subclass-feature.fighter.champion.heroic-warrior-level-10",
   "name": "Heroic Warrior",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.fighter",
-  "parentSubclass": "champion",
+  "parentSubclass": "subclass.fighter.champion",
   "classLevel": 10
 }

@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.life-domain.cleric.life.life-domain.1",
+  "id": "subclass-feature.cleric.life.life-domain-level-1",
   "name": "Life Domain",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -63,6 +63,6 @@
     }
   ],
   "parentClass": "class.cleric",
-  "parentSubclass": "life",
+  "parentSubclass": "subclass.cleric.life",
   "classLevel": 1
 }

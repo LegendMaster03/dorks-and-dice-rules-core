@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.bonus-cantrip.druid.land.bonus-cantrip.2",
+  "id": "subclass-feature.druid.land.bonus-cantrip-level-2",
   "name": "Bonus Cantrip",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.druid",
-  "parentSubclass": "land",
+  "parentSubclass": "subclass.druid.land",
   "classLevel": 2
 }

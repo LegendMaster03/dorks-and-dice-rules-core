@@ -1,5 +1,5 @@
 {
-  "id": "subclass.evoker.wizard.evoker.Evoker",
+  "id": "subclass.wizard.evoker",
   "name": "Evoker",
   "kind": "subclass",
   "baselineStatus": "pending-native-reconciliation",

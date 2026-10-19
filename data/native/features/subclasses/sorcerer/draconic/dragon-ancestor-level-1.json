@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.dragon-ancestor.sorcerer.draconic.dragon-ancestor.1",
+  "id": "subclass-feature.sorcerer.draconic.dragon-ancestor-level-1",
   "name": "Dragon Ancestor",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -76,6 +76,6 @@
     }
   ],
   "parentClass": "class.sorcerer",
-  "parentSubclass": "draconic",
+  "parentSubclass": "subclass.sorcerer.draconic",
   "classLevel": 1
 }

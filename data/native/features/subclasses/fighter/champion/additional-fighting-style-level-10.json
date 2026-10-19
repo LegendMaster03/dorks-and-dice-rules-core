@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.additional-fighting-style.fighter.champion.additional-fighting-style.10",
+  "id": "subclass-feature.fighter.champion.additional-fighting-style-level-10",
   "name": "Additional Fighting Style",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.fighter",
-  "parentSubclass": "champion",
+  "parentSubclass": "subclass.fighter.champion",
   "classLevel": 10
 }

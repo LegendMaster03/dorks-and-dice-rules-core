@@ -1,5 +1,5 @@
 {
-  "id": "itemEntry.scroll-of-protection",
+  "id": "itementry.scroll-of-protection",
   "name": "Scroll of Protection",
   "kind": "itemEntry",
   "baselineStatus": "pending-native-reconciliation",

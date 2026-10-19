@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.smite-of-protection.paladin.devotion.smite-of-protection.15",
+  "id": "subclass-feature.paladin.devotion.smite-of-protection-level-15",
   "name": "Smite of Protection",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.paladin",
-  "parentSubclass": "devotion",
+  "parentSubclass": "subclass.paladin.devotion",
   "classLevel": 15
 }

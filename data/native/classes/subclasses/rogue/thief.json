@@ -1,5 +1,5 @@
 {
-  "id": "subclass.thief.rogue.thief.Thief",
+  "id": "subclass.rogue.thief",
   "name": "Thief",
   "kind": "subclass",
   "baselineStatus": "pending-native-reconciliation",

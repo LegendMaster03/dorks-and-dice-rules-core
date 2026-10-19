@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.colossus-slayer.ranger.hunter.colossus-slayer.3",
+  "id": "subclass-feature.ranger.hunter.colossus-slayer-level-3",
   "name": "Colossus Slayer",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.ranger",
-  "parentSubclass": "hunter",
+  "parentSubclass": "subclass.ranger.hunter",
   "classLevel": 3
 }

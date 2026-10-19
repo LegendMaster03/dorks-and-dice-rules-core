@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.overchannel.wizard.evocation.overchannel.14",
+  "id": "subclass-feature.wizard.evocation.overchannel-level-14",
   "name": "Overchannel",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -22,6 +22,6 @@
     }
   ],
   "parentClass": "class.wizard",
-  "parentSubclass": "evocation",
+  "parentSubclass": "subclass.wizard.evocation",
   "classLevel": 14
 }

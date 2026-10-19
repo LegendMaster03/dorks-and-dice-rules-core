@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.superior-hunter-s-defense.ranger.hunter.superior-hunter-s-defense.15",
+  "id": "subclass-feature.ranger.hunter.superior-hunter-s-defense-level-15",
   "name": "Superior Hunter's Defense",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -54,6 +54,6 @@
     }
   ],
   "parentClass": "class.ranger",
-  "parentSubclass": "hunter",
+  "parentSubclass": "subclass.ranger.hunter",
   "classLevel": 15
 }

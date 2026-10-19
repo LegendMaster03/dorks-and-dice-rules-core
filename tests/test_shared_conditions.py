@@ -22,14 +22,21 @@ class SharedConditionReconciliationTests(unittest.TestCase):
     def test_native_coverage_and_external_edition_separation(self):
         selected = {"condition.exhaustion", "condition.deafened", "condition.frightened",
                     "condition.grappled", "condition.poisoned", "condition.restrained"}
-        self.assertEqual(selected, set(self.native))
+        self.assertTrue(selected.issubset(self.native))
         self.assertEqual(selected, set(self.decisions))
+        pending = {key for key, value in self.native.items()
+                   if value.get("baselineStatus") == "pending-native-reconciliation"}
+        self.assertEqual(9, len(pending))
+        self.assertTrue(pending.isdisjoint(selected))
         for cond in self.native.values():
             for forbidden in ("source", "edition", "srd", "srd52", "sourceAliases"):
                 self.assertNotIn(forbidden, cond)
         for name in ("Blinded", "Charmed", "Incapacitated",
                      "Invisible", "Paralyzed", "Petrified", "Prone", "Stunned", "Unconscious"):
-            self.assertNotIn("condition." + name.lower(), self.native)
+            pending_condition = self.native["condition." + name.lower()]
+            self.assertEqual("pending-native-reconciliation",
+                             pending_condition["baselineStatus"])
+            self.assertEqual(2, len(pending_condition["candidateDefinitions"]))
 
     def test_deafened(self):
         self.assertEqual([

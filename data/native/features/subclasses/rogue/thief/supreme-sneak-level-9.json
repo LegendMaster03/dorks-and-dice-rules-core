@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.supreme-sneak.rogue.thief.supreme-sneak.9",
+  "id": "subclass-feature.rogue.thief.supreme-sneak-level-9",
   "name": "Supreme Sneak",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -48,6 +48,6 @@
     }
   ],
   "parentClass": "class.rogue",
-  "parentSubclass": "thief",
+  "parentSubclass": "subclass.rogue.thief",
   "classLevel": 9
 }

@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.champion.fighter.champion.champion.3",
+  "id": "subclass-feature.fighter.champion.champion-level-3",
   "name": "Champion",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -47,6 +47,6 @@
     }
   ],
   "parentClass": "class.fighter",
-  "parentSubclass": "champion",
+  "parentSubclass": "subclass.fighter.champion",
   "classLevel": 3
 }

@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.hurl-through-hell.warlock.fiend.hurl-through-hell.14",
+  "id": "subclass-feature.warlock.fiend.hurl-through-hell-level-14",
   "name": "Hurl Through Hell",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -39,6 +39,6 @@
     }
   ],
   "parentClass": "class.warlock",
-  "parentSubclass": "fiend",
+  "parentSubclass": "subclass.warlock.fiend",
   "classLevel": 14
 }

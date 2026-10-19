@@ -1,5 +1,5 @@
 {
-  "id": "itemEntry.dragon-scale-mail",
+  "id": "itementry.dragon-scale-mail",
   "name": "Dragon Scale Mail",
   "kind": "itemEntry",
   "baselineStatus": "pending-native-reconciliation",

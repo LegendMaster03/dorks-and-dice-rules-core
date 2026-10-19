@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.multiattack-defense.ranger.hunter.multiattack-defense.7",
+  "id": "subclass-feature.ranger.hunter.multiattack-defense-level-7",
   "name": "Multiattack Defense",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.ranger",
-  "parentSubclass": "hunter",
+  "parentSubclass": "subclass.ranger.hunter",
   "classLevel": 7
 }

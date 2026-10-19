@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.quivering-palm.monk.open-hand.quivering-palm.17",
+  "id": "subclass-feature.monk.open-hand.quivering-palm-level-17",
   "name": "Quivering Palm",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -46,6 +46,6 @@
     }
   ],
   "parentClass": "class.monk",
-  "parentSubclass": "open-hand",
+  "parentSubclass": "subclass.monk.open-hand",
   "classLevel": 17
 }

@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.peerless-skill.bard.lore.peerless-skill.14",
+  "id": "subclass-feature.bard.lore.peerless-skill-level-14",
   "name": "Peerless Skill",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -36,6 +36,6 @@
     }
   ],
   "parentClass": "class.bard",
-  "parentSubclass": "lore",
+  "parentSubclass": "subclass.bard.lore",
   "classLevel": 14
 }

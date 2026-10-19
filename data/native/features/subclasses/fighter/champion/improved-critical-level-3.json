@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.improved-critical.fighter.champion.improved-critical.3",
+  "id": "subclass-feature.fighter.champion.improved-critical-level-3",
   "name": "Improved Critical",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -36,6 +36,6 @@
     }
   ],
   "parentClass": "class.fighter",
-  "parentSubclass": "champion",
+  "parentSubclass": "subclass.fighter.champion",
   "classLevel": 3
 }

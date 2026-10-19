@@ -1,5 +1,5 @@
 {
-  "id": "classFeature.poison-cost-1d6.rogue.poison-cost-1d6.5",
+  "id": "class-feature.rogue.poison-cost-1d6-level-5",
   "name": "Poison (Cost: 1d6)",
   "kind": "classFeature",
   "baselineStatus": "pending-native-reconciliation",

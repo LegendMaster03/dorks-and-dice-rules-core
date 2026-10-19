@@ -1,5 +1,5 @@
 {
-  "id": "subclass.school-of-evocation.wizard.evocation.Evocation",
+  "id": "subclass.wizard.evocation",
   "name": "School of Evocation",
   "kind": "subclass",
   "baselineStatus": "pending-native-reconciliation",

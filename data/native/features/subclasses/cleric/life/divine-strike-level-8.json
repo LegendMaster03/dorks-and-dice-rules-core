@@ -1,5 +1,5 @@
 {
-  "id": "subclassFeature.divine-strike.cleric.life.divine-strike.8",
+  "id": "subclass-feature.cleric.life.divine-strike-level-8",
   "name": "Divine Strike",
   "kind": "subclassFeature",
   "baselineStatus": "pending-native-reconciliation",
@@ -21,6 +21,6 @@
     }
   ],
   "parentClass": "class.cleric",
-  "parentSubclass": "life",
+  "parentSubclass": "subclass.cleric.life",
   "classLevel": 8
 }
