@@ -1,0 +1,26 @@
+{
+  "status": "approved-source-to-native-reconciliation-decisions",
+  "decisions": [
+    {
+      "nativeRuleId": "condition.exhaustion",
+      "adoptedVariant": "SRD 5.1 exhaustion",
+      "decision": "Use the six cumulative tier-based effects, including the SRD 5.1 rest/food/drink and raised-from-dead rules.",
+      "alternativeNotAdopted": "SRD 5.2.1 exhaustion's per-level D20 Test penalty and flat Speed reduction",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Exhaustion"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Exhaustion"
+        }
+      ],
+      "nativeLocation": "data/native/conditions.json",
+      "decisionBasis": "Explicit Dorks & Dice Owner ruling",
+      "state": "approved-native-rule"
+    }
+  ]
+}

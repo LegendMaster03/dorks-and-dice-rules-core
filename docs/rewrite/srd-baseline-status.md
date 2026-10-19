@@ -20,8 +20,9 @@ conditions and other structured material.
   tentatively by entity category, name and parent, and ignores source/page
   metadata. False-positive matches remain possible; identical-looking data
   alone is not a universal equivalence proof.
-- The inventory does **not** adjudicate differences. Differing versions
-  remain accessible as evidence until native mechanics have been selected.
+- The inventory does **not** adjudicate differences by itself. Differing versions
+  remain accessible as evidence. Specific decisions are recorded separately
+  in `data/reference/srd/reconciliation-decisions.json` when approved.
 
 ## First comparisons
 
@@ -68,3 +69,22 @@ text or gameplay equivalence.
 The complete imported source pack is available for deterministic review.
 **Native reconciliation of the entire pack is NOT complete** and must not
 be described as completed merely because the files have been copied.
+
+## Approved reconciliation: Exhaustion
+
+The Owner explicitly selected **SRD 5.1 Exhaustion** as the single native
+Dorks & Dice Exhaustion condition. This rule is in `data/native/conditions.json`:
+six cumulative levels with tier effects, disadvantage on ability checks
+(level 1), half Speed (level 2), disadvantage on attacks and saves (level 3),
+half maximum HP (level 4), Speed 0 (level 5), and death (level 6).
+It retains SRD 5.1's one-level recovery from a long rest **provided food
+and drink were consumed**, and one level removed when raised from the dead.
+Effects that remove exhaustion reduce levels by their stated amount.
+
+The SRD 5.2.1 per-level numerical penalties are **not** native defaults.
+The decision/provenance is stored under `data/reference/srd/`, separately
+from the native condition; source-edition labels are not required at runtime.
+
+This is an accepted **mechanical ruling**, with data-only validation. The new
+runtime has not yet been implemented, so these tests establish the serialized
+contract, not execution of effects.

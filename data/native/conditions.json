@@ -1,0 +1,99 @@
+{
+  "_meta": {
+    "status": "approved-native-mechanics; execution-schema-not-yet-final",
+    "note": "Native, edition-independent Dorks & Dice conditions. Exhaustion is the first explicitly reconciled entry."
+  },
+  "conditions": [
+    {
+      "id": "condition.exhaustion",
+      "name": "Exhaustion",
+      "kind": "leveled-condition",
+      "description": "Exhaustion measures cumulative weariness from environmental hazards, deprivation, special abilities, or other effects.",
+      "levelRules": {
+        "minimum": 0,
+        "maximum": 6,
+        "gain": "Increase the creature's exhaustion level by the number specified by the effect causing exhaustion.",
+        "stacking": "A creature suffers the effects of its current exhaustion level and every lower level.",
+        "endsAtLevel": 0
+      },
+      "levels": [
+        {
+          "level": 1,
+          "effects": [
+            {
+              "type": "roll-mode",
+              "appliesTo": "ability-check",
+              "mode": "disadvantage"
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "effects": [
+            {
+              "type": "speed",
+              "operation": "multiply",
+              "factor": 0.5
+            }
+          ]
+        },
+        {
+          "level": 3,
+          "effects": [
+            {
+              "type": "roll-mode",
+              "appliesTo": "attack-roll",
+              "mode": "disadvantage"
+            },
+            {
+              "type": "roll-mode",
+              "appliesTo": "saving-throw",
+              "mode": "disadvantage"
+            }
+          ]
+        },
+        {
+          "level": 4,
+          "effects": [
+            {
+              "type": "maximum-hit-points",
+              "operation": "multiply",
+              "factor": 0.5
+            }
+          ]
+        },
+        {
+          "level": 5,
+          "effects": [
+            {
+              "type": "speed",
+              "operation": "set",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "level": 6,
+          "effects": [
+            {
+              "type": "death"
+            }
+          ]
+        }
+      ],
+      "recovery": {
+        "general": "An effect that removes exhaustion reduces the level by the amount specified by that effect.",
+        "longRest": {
+          "levelsRemoved": 1,
+          "requirements": [
+            "food-consumed",
+            "drink-consumed"
+          ]
+        },
+        "raisedFromDead": {
+          "levelsRemoved": 1
+        }
+      }
+    }
+  ]
+}

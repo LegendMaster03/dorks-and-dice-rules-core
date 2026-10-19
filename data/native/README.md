@@ -18,3 +18,7 @@ New categories can be added when approved subsystems require them. Placeholder d
 `competencies.json` combines crafting skills and tool proficiencies into learned capabilities. A competency may have a crafting facet, a tool-proficiency facet, or both, and only reviewed shared training identities combine them. Skill ranks and tool proficiency calculations are distinct mechanical facets, not interchangeable bonuses. Craft specialization belongs here, rather than being spread between generic Skill entries and duplicate Competency rows.
 
 Edition-specific names, provenance and external content mappings belong in `data/conversions/` or external reference documents, never in the core Skills catalog.
+
+## Native conditions
+
+`conditions.json` stores the compact native condition catalog. Exhaustion has a six-level cumulative rule approved from the tiered SRD 5.1 mechanic. References to the alternative source variant and the Owner's reconciliation decision live outside native rules in `data/reference/srd/reconciliation-decisions.json`.
