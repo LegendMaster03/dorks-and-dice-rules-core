@@ -145,7 +145,7 @@ The deterministic public package `dorks-and-dice-baseline` contains the settled 
 
 - **Healing Potion Use** — bonus action uses rolled healing; using the action grants maximum possible healing.
 - **Spell Preparation** — the normal prepared-spell restriction is removed.
-- **Spellcasting Resource Choice** — casters may choose spell slots or spell points.
+- **Spellcasting Resource Choice** — eligible casters, including NPCs and monsters, may choose spell slots or spell points. The choice does not by itself grant a resource pool or override innate and limited-use spell grants; the authoritative native-creature policy is in `docs/rewrite/native-rules-design-specification.md`.
 - **Controlled Creature Initiative** — a controlled creature acts on its controller's initiative.
 - **Free Flavor Feats** — purely flavor feats do not consume a mechanical feat choice.
 - **Cross-Edition Additive Compatibility** — 3e, 3.5e, 5e, and 5.5e are merged additively; omission from a newer edition does not remove a compatible older option; explicit conflicts require adjudication; source provenance is preserved.
