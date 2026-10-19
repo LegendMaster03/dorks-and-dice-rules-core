@@ -27,17 +27,19 @@
 | Hobgoblin | Hobgoblin (CR 1/2) | Hobgoblin Warrior (CR 1/2), Hobgoblin Captain (CR 3) | Review old Hobgoblin against Warrior; Martial Advantage versus Pack Tactics/changed weapon damage is a real tactical distinction, not just formatting. Captain remains its own role. |
 | Bugbear | Bugbear (CR 1) | Bugbear Warrior (CR 1), Bugbear Stalker (CR 3) | Review the older ambush/brute identity against the newer grapple-oriented Warrior and Stalker. A truly distinct ambush specialist could warrant a variant, but should not automatically stack Brute, Surprise Attack, Abduct and the new attacks onto every Bugbear. |
 
-### Immediate data-quality consequence
+### Implementation outcome
 
-The first automated cross-category pass retained source-unique catalog entries when they had no *exact-name* counterpart. It therefore retained `monster.goblin` alongside `monster.goblin-warrior`, `monster.hobgoblin` alongside `monster.hobgoblin-warrior`, and `monster.bugbear` alongside `monster.bugbear-warrior`. This is **source retention**, not final approval that all six are separate gameplay variants.
+The first monster-family pass has now run, with passing repository tests.
 
-Before sign-off, all source-unique monsters must pass semantic role/alias reconciliation. Until that check, the earlier **467 source-only retained content** and **531 automatically admitted entries** cannot be interpreted as fully reconciled distinct native entities. Do not delete source data or invent legacy-named gameplay variants to make coverage statistics look better.
+- **285** shared-name monsters use a single SRD 5.2.1-style base stat block. Other edition variants are not exposed as runtime switches.
+- **21** older creature names resolve as native identity aliases of their newer named roles; for example, old Goblin resolves to Goblin Warrior.
+- **84** independently compatible older perception, disguise and terrain traits were retained without adding unrelated attack actions.
+- **3** native families explicitly list Goblin, Hobgoblin and Bugbear role members in `data/native/monster-families.json`.
+- **66** one-source monster records are retained as potential independent entries. The old Hobgoblin and Bugbear remain among these because their older tactical identity requires a separate variant review.
+- **249** non-runtime legacy-review entries record capabilities still needing semantic classification. Many are older attack or legendary suites replaced or renamed by the selected default; their presence does not mean each requires a new monster.
 
-## Not decided by this document
+The semantic crosswalk and remaining legacy abilities are in `data/reference/srd/monster-legacy-variant-review.json`. A mapping removes an old name's duplicate standalone stat block but keeps its original definition in the pinned source reference for compatible-addition and variant review. The named aliases were already single-source-retained in the prior statistics and therefore do not reduce the remaining candidate-definition total a second time.
 
-- A universal rule that all original 5.1 numerical values are discarded regardless of monster role.
-- A numeric challenge-adjustment algorithm for new combinations of older and newer abilities.
-- Automatically converting source-edition differences into new variants.
-- Assigning old abilities to arbitrary existing 5.2.1 variants without checking tactical identity, action budget and effect duplication.
+## Remaining work
 
-**Status:** The Owner's preference for 5.5e-style tactical variety is recorded. The semantic family mapping and coherent variant definitions still require implementation and validation before any related entry can pass the final native baseline gate.
+Review outstanding older capabilities for actual equivalence, compatible inclusion or a separate meaningful tactical role. Finish native-schema typing and encounter validation before considering a family or creature definition fully ready for runtime use. Do not turn mechanically conflicting old and new attack suites into an uncontrolled combined Multiattack, and do not create a new variant solely because a numerical value changed.
