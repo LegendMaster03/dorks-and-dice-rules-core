@@ -1,45 +1,39 @@
-# Native monster families and tactical variants
+# Native monster families and DM-selected tactics
 
-**Owner design direction (2026-10-18):** Follow the more varied **5.5e/SRD 5.2.1 monster design** as the default direction. Keep distinct roles and tactics as distinct *native monster variants*, rather than combining every inherited attack, trait, action and numerical revision into one bloated creature. This is a cleaner, more labor-intensive content-reconciliation approach. It does **not** create parallel edition-dependent gameplay engines.
+**Owner correction (2026-10-18): Tactics alone do not create different monsters.** A DM can use one creature's existing actions and movement in different ways. Preserve the role-specific variety of 5.5e where a creature really has a different stat block, capability set, or encounter role, not where it merely favors a different strategy.
 
-## Entity model
+## Design distinctions
 
-- **Creature family:** a grouping of related species, creatures or archetypes for browsing, encounter building, relationships and common traits. It does not imply an automatic feat or ability grant to every family member.
-- **Monster variant:** an independent stat block with a meaningful, playable role (minion, warrior, boss, captain, stalker, caster, etc.). Each variant has its *own* coherent native statistics, actions, traits, encounter role and eligibility. Different variants are not the same entity's 2014/2024 switch.
-- **Shared mechanics:** actions, conditions, attack resolution, damage, skills, spellcasting, roles and resource rules use the single Dorks & Dice native ruleset. Share implementations; do not duplicate rule physics per variant.
-- **Legacy identity map:** old names are resolved against equivalent native variant identities before marking them as independent content. A difference in edition label or naming alone is not enough to manufacture a distinct creature.
-- **Additional variants:** keep a genuinely unique older creature or distinct tactical configuration where it adds actual variety, after ensuring its costs, challenge and actions make sense. Use a descriptive role identity rather than an edition-prefixed clone. A specialized variant may have unique capabilities without granting those capabilities to every member of its family.
+- **Creature family:** A semantic grouping for browsing and encounter construction, such as Goblin, Hobgoblin and Bugbear.
+- **Creature identity:** One coherent native monster stat block with all approved traits, actions, and constraints. A renamed older monster can be an alias of the current identity.
+- **DM tactics:** Decisions about targets, positioning, attack selection, teamwork, retreat, surprise, timing, and other actions already available in that creature's stat block. These are not fixed in the creature identity and do not require separate records, switches or profiles.
+- **Meaningful creature variant:** A mechanically distinct role, such as Goblin Minion (CR 1/8), Goblin Warrior (CR 1/4), or Goblin Boss (CR 1), with different statistics or actual capabilities. Such entries can be separate creatures.
+- **Older mechanical abilities:** Reconcile compatible additions into the one appropriate creature definition, without duplicating effects. Older attack/action suites with different numerical or procedural outcomes require review, not indiscriminate stacking. Tactics alone never justify restoring an entire old stat block as a separate monster.
 
-## Reconciliation workflow
+## SRD 5.1 to 5.2.1 mapping examples
 
-1. Group SRD 5.1 and 5.2.1 monsters by **semantic family and combat role**, not only exact monster name.
-2. Use SRD 5.2.1's **role-specific creature roster and corresponding stat block** as the primary default when a suitable variant exists.
-3. Identify unchanged, renamed, moved or recast older mechanics and map them to the appropriate variant and shared native resolution. Do not double-grant an effect because it moved from a Trait to a Bonus Action or from one named attack to another.
-4. Preserve compatible, nonredundant older mechanics according to the five approved reconciliation rules, while considering the intended *variant*, not assuming all added abilities belong on all members of the family.
-5. When mechanics conflict, use the chosen coherent variant behavior. A materially distinct old option might justify a different **tactical variant** rather than a second procedure on the baseline variant. Do not invent an unnecessary variant for a purely numerical/stat-block edition revision.
-6. Validate encounter roles, attacks, resources, action economy, CR coherence and compatibility with the native Grapple, status and AC rules. Content with genuine mechanical incompatibilities remains under review.
+| Older identity | Current native identity | Reason |
+| --- | --- | --- |
+| Goblin | Goblin Warrior | Same base combat role; newer family also includes Minion and Boss |
+| Hobgoblin | Hobgoblin Warrior | Same core role; old Martial Advantage and new Pack Tactics are **different mechanical capabilities** to reconcile within a single coherent monster, not separate tactical identities |
+| Bugbear | Bugbear Warrior | Same base role; old Brute/Surprise Attack and new grappling actions need integration review, not automatic creation of an 'ambush variant' |
+| Goblin Boss | Goblin Boss | Distinct, stronger encounter role; remains its own stat block |
+| Hobgoblin Captain | Hobgoblin Captain | Distinct leadership capabilities and CR; remains its own stat block |
+| Bugbear Stalker | Bugbear Stalker | Distinct statistics, CR and capabilities; remains its own stat block |
 
-## Example: goblinoid roles in the imported SRDs
+**DM freedom and mechanical grants are separate.** A DM can choose any legal behavior at the table, but a monster does not automatically gain an older mechanical trait that has not been reconciled into its native stat block. Conversely, having several actions is not itself a reason to produce several monster variants.
 
-| Family | SRD 5.1 | SRD 5.2.1 variants | Reconciliation direction |
-| --- | --- | --- | --- |
-| Goblin | Goblin (CR 1/4) | Goblin Minion (CR 1/8), Goblin Warrior (CR 1/4), Goblin Boss (CR 1) | The old Goblin closely corresponds to Goblin Warrior: scimitar, shortbow and Nimble Escape. Review as a **semantic same-role predecessor** before deciding whether any truly independent old mechanics warrant a new role. Preserve distinct Minion and Boss identities. |
-| Hobgoblin | Hobgoblin (CR 1/2) | Hobgoblin Warrior (CR 1/2), Hobgoblin Captain (CR 3) | Review old Hobgoblin against Warrior; Martial Advantage versus Pack Tactics/changed weapon damage is a real tactical distinction, not just formatting. Captain remains its own role. |
-| Bugbear | Bugbear (CR 1) | Bugbear Warrior (CR 1), Bugbear Stalker (CR 3) | Review the older ambush/brute identity against the newer grapple-oriented Warrior and Stalker. A truly distinct ambush specialist could warrant a variant, but should not automatically stack Brute, Surprise Attack, Abduct and the new attacks onto every Bugbear. |
+## Applied repository changes
 
-### Implementation outcome
+- **285** same-name 5.1/5.2.1 creature pairs use one selected 5.5e-style native stat-block default.
+- **23** older monster names map to the corresponding new creature identity, including Goblin, Hobgoblin and Bugbear to their Warrior records.
+- **84** independent older traits were previously carried into the newer definitions.
+- **3** monster families are represented in `data/native/monster-families.json`; different roles remain separate members.
+- **64** single-source monster records remain retained. The old Hobgoblin and Bugbear are *not* among them; they are aliases, so neither creates a duplicate combat stat block.
+- **249** entries in `data/reference/srd/monster-legacy-variant-review.json` preserve older mechanical questions, including old Hobgoblin and Bugbear features. These entries are **not** additional operative monsters. The original pinned SRDs remain intact.
 
-The first monster-family pass has now run, with passing repository tests.
+The candidate backlog remains **1,663**, because both newly mapped aliases were already counted as retained single-source records. This correction changes identity accounting and avoids tactical duplicates; it is not an additional reduction of the original unresolved-pair inventory.
 
-- **285** shared-name monsters use a single SRD 5.2.1-style base stat block. Other edition variants are not exposed as runtime switches.
-- **21** older creature names resolve as native identity aliases of their newer named roles; for example, old Goblin resolves to Goblin Warrior.
-- **84** independently compatible older perception, disguise and terrain traits were retained without adding unrelated attack actions.
-- **3** native families explicitly list Goblin, Hobgoblin and Bugbear role members in `data/native/monster-families.json`.
-- **66** one-source monster records are retained as potential independent entries. The old Hobgoblin and Bugbear remain among these because their older tactical identity requires a separate variant review.
-- **249** non-runtime legacy-review entries record capabilities still needing semantic classification. Many are older attack or legendary suites replaced or renamed by the selected default; their presence does not mean each requires a new monster.
+## Remaining acceptance work
 
-The semantic crosswalk and remaining legacy abilities are in `data/reference/srd/monster-legacy-variant-review.json`. A mapping removes an old name's duplicate standalone stat block but keeps its original definition in the pinned source reference for compatible-addition and variant review. The named aliases were already single-source-retained in the prior statistics and therefore do not reduce the remaining candidate-definition total a second time.
-
-## Remaining work
-
-Review outstanding older capabilities for actual equivalence, compatible inclusion or a separate meaningful tactical role. Finish native-schema typing and encounter validation before considering a family or creature definition fully ready for runtime use. Do not turn mechanically conflicting old and new attack suites into an uncontrolled combined Multiattack, and do not create a new variant solely because a numerical value changed.
+Review the older mechanical differences for semantic equivalence, compatible inclusion, or true conflicts under the already-approved five general policies. Do not manufacture a monster variant to avoid deciding a changed attack suite. Finalize creature-family relationships, native schema/markup conversion, and integration with the unified Dorks & Dice attack, Grapple, defense and action rules before calling these stat blocks executable.
