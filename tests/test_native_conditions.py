@@ -20,7 +20,10 @@ class ExhaustionTests(unittest.TestCase):
         cls.reference_data = load("data/reference/srd/structured/conditionsdiseases.json")
 
     def test_one_native_exhaustion_condition_no_parallel_edition_variants(self):
-        self.assertEqual(1, len(self.native_data["conditions"]))
+        all_ids = [x["id"] for x in self.native_data["conditions"]]
+        self.assertEqual(len(all_ids), len(set(all_ids)), "Native condition IDs must be unique")
+        self.assertEqual(1, all_ids.count("condition.exhaustion"))
+        self.assertFalse(any("exhaustion-" in x or ".exhaustion." in x for x in all_ids))
         self.assertEqual("leveled-condition", self.native["kind"])
         self.assertEqual("Exhaustion", self.native["name"])
         for key in ("source", "edition", "srd", "srd52", "historical", "sourceAliases"):
