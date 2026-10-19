@@ -50,6 +50,12 @@
         "entries": [
           "While in contact with a web, the spider knows the exact location of any other creature in contact with the same web."
         ]
+      },
+      {
+        "name": "Web Walker",
+        "entries": [
+          "The spider ignores movement restrictions caused by webbing."
+        ]
       }
     ],
     "action": [

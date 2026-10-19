@@ -172,6 +172,12 @@
         "entries": [
           "{@actSave con} {@dc 17}, one creature within 5 feet that is willing or that has the {@condition Grappled|SRD52}, {@condition Incapacitated|SRD52}, or {@condition Restrained|SRD52} condition. {@actSaveFail} 6 ({@damage 1d4 + 4}) Piercing damage plus 13 ({@damage 3d8}) Necrotic damage. The target's {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by an amount equal to the Necrotic damage taken, and the vampire regains {@variantrule Hit Points|SRD52} equal to that amount. A Humanoid reduced to 0 {@variantrule Hit Points|SRD52} by this damage and then buried rises the following sunset as a {@creature Vampire Spawn|SRD52} under the vampire's control."
         ]
+      },
+      {
+        "name": "Children of the Night (1/Day)",
+        "entries": [
+          "The vampire magically calls {@dice 2d4} swarms of {@creature swarm of bats||bats} or {@creature swarm of rats||rats}, provided that the sun isn't up. While outdoors, the vampire can call {@dice 3d6} {@creature wolf||wolves} instead. The called creatures arrive in {@dice 1d4} rounds, acting as allies of the vampire and obeying its spoken commands. The beasts remain for 1 hour, until the vampire dies, or until the vampire dismisses them as a bonus action."
+        ]
       }
     ],
     "bonus": [
@@ -190,6 +196,12 @@
         "name": "Deathless Strike",
         "entries": [
           "The vampire moves up to half its {@variantrule Speed|SRD52}, and it makes one Grave Strike attack."
+        ]
+      },
+      {
+        "name": "Move",
+        "entries": [
+          "The vampire moves up to its speed without provoking opportunity attacks."
         ]
       }
     ],

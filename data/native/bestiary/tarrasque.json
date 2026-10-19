@@ -149,6 +149,12 @@
         "entries": [
           "The tarrasque moves up to its {@variantrule Speed|SRD52}. At the end of this movement, the tarrasque creates an instantaneous shock wave in a 60-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from itself. Creatures in that area lose {@status Concentration|SRD52} and, if Medium or smaller, have the {@condition Prone|SRD52} condition. The tarrasque can't take this action again until the start of its next turn."
         ]
+      },
+      {
+        "name": "Move",
+        "entries": [
+          "The tarrasque moves up to half its speed."
+        ]
       }
     ],
     "environment": [

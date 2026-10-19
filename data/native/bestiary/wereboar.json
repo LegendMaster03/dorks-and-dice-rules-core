@@ -175,6 +175,14 @@
           }
         ]
       }
+    ],
+    "trait": [
+      {
+        "name": "Relentless (Recharges after a Short or Long Rest)",
+        "entries": [
+          "If the wereboar takes 14 damage or less that would reduce it to 0 hit points, it is reduced to 1 hit point instead."
+        ]
+      }
     ]
   }
 }

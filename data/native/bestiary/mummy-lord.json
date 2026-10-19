@@ -177,6 +177,18 @@
         "entries": [
           "The mummy makes one Rotting Fist or Channel Negative Energy attack."
         ]
+      },
+      {
+        "name": "Blinding Dust",
+        "entries": [
+          "Blinding dust and sand swirls magically around the mummy lord. Each creature within 5 feet of the mummy lord must succeed on a {@dc 16} Constitution saving throw or be {@condition blinded} until the end of the creature's next turn."
+        ]
+      },
+      {
+        "name": "Blasphemous Word (Costs 2 Actions)",
+        "entries": [
+          "The mummy lord utters a blasphemous word. Each non-undead creature within 10 feet of the mummy lord that can hear the magical utterance must succeed on a {@dc 16} Constitution saving throw or be {@condition stunned} until the end of the mummy lord's next turn."
+        ]
       }
     ],
     "environment": [

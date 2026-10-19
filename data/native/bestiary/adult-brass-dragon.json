@@ -144,6 +144,18 @@
         "entries": [
           "{@actSave dex} {@dc 16}, one creature the dragon can see within 120 feet. {@actSaveFail} 27 ({@damage 6d8}) Fire damage, and the target's {@variantrule Speed|SRD52} is halved until the end of its next turn. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
         ]
+      },
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 10 feet of the dragon must succeed on a {@dc 19} Dexterity saving throw or take 13 ({@damage 2d6 + 6}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
       }
     ],
     "environment": [

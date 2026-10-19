@@ -56,6 +56,12 @@
         "entries": [
           "{@actSave con} {@dc 10}, any creature that starts its turn in a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the ghast. {@actSaveFail} The target has the {@condition Poisoned|SRD52} condition until the start of its next turn. {@actSaveSuccess} The target is immune to this ghast's Stench for 24 hours."
         ]
+      },
+      {
+        "name": "Turning Defiance",
+        "entries": [
+          "The ghast and any ghouls within 30 feet of it have advantage on saving throws against effects that turn undead."
+        ]
       }
     ],
     "action": [

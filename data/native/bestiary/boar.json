@@ -35,6 +35,12 @@
         "entries": [
           "While {@status Bloodied|SRD52}, the boar has {@variantrule Advantage|SRD52} on attack rolls."
         ]
+      },
+      {
+        "name": "Relentless (Recharges after a Short or Long Rest)",
+        "entries": [
+          "If the boar takes 7 damage or less that would reduce it to 0 hit points, it is reduced to 1 hit point instead."
+        ]
       }
     ],
     "action": [

@@ -43,6 +43,12 @@
         "entries": [
           "While {@status Bloodied|SRD52}, the berserker has {@variantrule Advantage|SRD52} on attack rolls and saving throws."
         ]
+      },
+      {
+        "name": "Reckless",
+        "entries": [
+          "At the start of its turn, the berserker can gain advantage on all melee weapon attack rolls during that turn, but attack rolls against it have advantage until the start of its next turn."
+        ]
       }
     ],
     "action": [

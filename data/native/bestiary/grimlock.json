@@ -164,6 +164,12 @@
         "entries": [
           "The grimlock has advantage on Dexterity ({@skill Stealth}) checks made to hide in rocky terrain."
         ]
+      },
+      {
+        "name": "Blind Senses",
+        "entries": [
+          "The grimlock can't use its blindsight while {@condition deafened} and unable to smell."
+        ]
       }
     ]
   }

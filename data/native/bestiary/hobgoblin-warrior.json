@@ -60,6 +60,12 @@
         "entries": [
           "The hobgoblin has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the hobgoblin's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
         ]
+      },
+      {
+        "name": "Martial Advantage",
+        "entries": [
+          "Once per turn, the hobgoblin can deal an extra 7 ({@damage 2d6}) damage to a creature it hits with a weapon attack if that creature is within 5 feet of an ally of the hobgoblin that isn't {@condition incapacitated}."
+        ]
       }
     ],
     "action": [

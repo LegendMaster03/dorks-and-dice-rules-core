@@ -1,0 +1,19 @@
+{
+  "summary": {
+    "feature:already-present": 84,
+    "feature:newer-successor": 40,
+    "feature:possible-redesign": 47,
+    "feature:restored": 94,
+    "feature:review-needed": 106,
+    "feature:revised-attack-suite": 303,
+    "monstersWithOpenFeatureQuestions": 93,
+    "restored:action": 2,
+    "restored:legendary": 49,
+    "restored:spellcasting": 1,
+    "restored:trait": 42
+  },
+  "featuresRestoredThisPass": 94,
+  "unresolvedFeatureQuestions": 153,
+  "reviewEntriesWithOpenQuestions": 93,
+  "note": "Changed attack suites and moved abilities do not create new monster identities."
+}

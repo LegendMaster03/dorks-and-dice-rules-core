@@ -63,6 +63,12 @@
         "entries": [
           "{@atkr r} {@hit 2}, range 100/400 ft. {@h}11 ({@damage 2d10}) Piercing damage plus 4 ({@damage 1d8}) Radiant damage."
         ]
+      },
+      {
+        "name": "Leadership (Recharges after a Short or Long Rest)",
+        "entries": [
+          "For 1 minute, the knight can utter a special command or warning whenever a nonhostile creature that it can see within 30 feet of it makes an attack roll or a saving throw. The creature can add a {@dice d4} to its roll provided it can hear and understand the knight. A creature can benefit from only one Leadership die at a time. This effect ends if the knight is {@condition incapacitated}."
+        ]
       }
     ],
     "reaction": [
@@ -124,6 +130,14 @@
             }
           }
         }
+      }
+    ],
+    "trait": [
+      {
+        "name": "Brave",
+        "entries": [
+          "The knight has advantage on saving throws against being {@condition frightened}."
+        ]
       }
     ]
   }

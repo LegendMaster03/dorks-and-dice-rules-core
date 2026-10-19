@@ -58,6 +58,12 @@
         "entries": [
           "When the succubus finishes a {@variantrule Long Rest|SRD52}, it can shape-shift into an {@creature Incubus|SRD52}, using that stat block instead of this one."
         ]
+      },
+      {
+        "name": "Telepathic Bond",
+        "entries": [
+          "The fiend ignores the range restriction on its telepathy when communicating with a creature it has {@condition charmed}. The two don't even need to be on the same plane of existence."
+        ]
       }
     ],
     "action": [

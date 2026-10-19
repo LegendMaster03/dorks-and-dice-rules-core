@@ -66,6 +66,18 @@
         "entries": [
           "The devil has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
         ]
+      },
+      {
+        "name": "Devil's Sight",
+        "entries": [
+          "Magical darkness doesn't impede the devil's darkvision."
+        ]
+      },
+      {
+        "name": "Steadfast",
+        "entries": [
+          "The devil can't be {@condition frightened} while it can see an allied creature within 30 feet of it."
+        ]
       }
     ],
     "action": [

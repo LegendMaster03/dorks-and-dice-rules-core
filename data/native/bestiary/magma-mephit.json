@@ -132,6 +132,22 @@
           }
         }
       }
+    ],
+    "spellcasting": [
+      {
+        "name": "Innate Spellcasting (1/Day)",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The mephit can innately cast {@spell heat metal} (spell save {@dc 10}), requiring no material components. Its innate spellcasting ability is Charisma."
+        ],
+        "will": [
+          "{@spell heat metal}"
+        ],
+        "ability": "cha",
+        "hidden": [
+          "will"
+        ]
+      }
     ]
   }
 }

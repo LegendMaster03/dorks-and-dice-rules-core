@@ -96,6 +96,14 @@
           }
         }
       }
+    ],
+    "trait": [
+      {
+        "name": "Dark Devotion",
+        "entries": [
+          "The cultist has advantage on saving throws against being {@condition charmed} or {@condition frightened}."
+        ]
+      }
     ]
   }
 }

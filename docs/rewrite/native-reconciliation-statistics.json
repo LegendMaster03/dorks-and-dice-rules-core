@@ -38,5 +38,17 @@
   "monsterOlderOnlySourceEntriesStillRetained": 64,
   "originalUnresolvedCandidateCount": 2479,
   "reducedUnresolvedCandidateCount": 816,
-  "monsterReviewCaveat": "Tactics alone do not create independent monsters. The older Hobgoblin and Bugbear are aliases of newer Warrior identities; their mechanical differences remain in the review ledger for a coherent single-stat-block decision. Remaining native schema/markup conversion is pending."
+  "monsterReviewCaveat": "Selected 5.5e stat blocks are retained. Independent missing older abilities restored with exact original restrictions; revised attack suites are not duplicated. Remaining differences are tracked per feature in the reference ledger. Imported markup still needs native typing.",
+  "monsterAdditionalOlderFeaturesRestored": 94,
+  "monsterOlderFeaturesPreviouslyTransferred": 84,
+  "monsterRemainingFeatureQuestions": 153,
+  "monsterReviewEntriesWithOpenQuestions": 93,
+  "monsterFeatureDispositions": {
+    "newer-successor": 40,
+    "revised-attack-suite": 303,
+    "review-needed": 106,
+    "restored": 94,
+    "already-present": 84,
+    "possible-redesign": 47
+  }
 }

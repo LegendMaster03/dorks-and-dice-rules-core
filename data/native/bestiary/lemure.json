@@ -62,6 +62,12 @@
         "entries": [
           "If the lemure dies in the Nine Hells, it revives with all its {@variantrule Hit Points|SRD52} in {@dice 1d10} days unless it is killed by a creature under the effects of a {@spell Bless|SRD52} spell or its remains are sprinkled with {@item Holy Water|SRD52}."
         ]
+      },
+      {
+        "name": "Devil's Sight",
+        "entries": [
+          "Magical darkness doesn't impede the lemure's darkvision."
+        ]
       }
     ],
     "action": [

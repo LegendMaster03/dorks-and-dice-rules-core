@@ -126,6 +126,12 @@
         "entries": [
           "If the aboleth has at least one creature {@condition Charmed|SRD52} or {@condition Grappled|SRD52}, it uses Consume Memories and regains 5 ({@dice 1d10}) {@variantrule Hit Points|SRD52}."
         ]
+      },
+      {
+        "name": "Detect",
+        "entries": [
+          "The aboleth makes a Wisdom ({@skill Perception}) check."
+        ]
       }
     ],
     "environment": [

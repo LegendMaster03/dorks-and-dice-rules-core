@@ -145,6 +145,14 @@
           }
         }
       }
+    ],
+    "trait": [
+      {
+        "name": "Dark Devotion",
+        "entries": [
+          "The fanatic has advantage on saving throws against being {@condition charmed} or {@condition frightened}."
+        ]
+      }
     ]
   }
 }

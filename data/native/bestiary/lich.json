@@ -156,6 +156,12 @@
         "entries": [
           "If destroyed, the lich reforms in {@dice 1d10} days if it has a spirit jar, reviving with all its {@variantrule Hit Points|SRD52}. The new body appears in an unoccupied space within the lich's lair."
         ]
+      },
+      {
+        "name": "Turn Resistance",
+        "entries": [
+          "The lich has advantage on saving throws against any effect that turns undead."
+        ]
       }
     ],
     "action": [

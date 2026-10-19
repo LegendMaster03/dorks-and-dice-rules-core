@@ -48,6 +48,18 @@
         "entries": [
           "The pseudodragon has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
         ]
+      },
+      {
+        "name": "Keen Senses",
+        "entries": [
+          "The pseudodragon has advantage on Wisdom ({@skill Perception}) checks that rely on sight, hearing, or smell."
+        ]
+      },
+      {
+        "name": "Limited Telepathy",
+        "entries": [
+          "The pseudodragon can magically communicate simple ideas, emotions, and images telepathically with any creature within 100 feet of it that can understand a language."
+        ]
       }
     ],
     "action": [

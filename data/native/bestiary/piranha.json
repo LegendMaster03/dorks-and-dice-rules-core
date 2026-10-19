@@ -39,6 +39,12 @@
         "entries": [
           "The piranha can breathe only underwater."
         ]
+      },
+      {
+        "name": "Blood Frenzy",
+        "entries": [
+          "The quipper has advantage on melee attack rolls against any creature that doesn't have all its hit points."
+        ]
       }
     ],
     "action": [

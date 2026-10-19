@@ -81,6 +81,12 @@
         "entries": [
           "The drider ignores movement restrictions caused by webs, and the drider knows the location of any other creature in contact with the same web."
         ]
+      },
+      {
+        "name": "Fey Ancestry",
+        "entries": [
+          "The drider has advantage on saving throws against being {@condition charmed}, and magic can't put the drider to sleep."
+        ]
       }
     ],
     "action": [

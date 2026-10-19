@@ -198,6 +198,14 @@
           }
         ]
       }
+    ],
+    "trait": [
+      {
+        "name": "Brave",
+        "entries": [
+          "The gladiator has advantage on saving throws against being {@condition frightened}."
+        ]
+      }
     ]
   }
 }

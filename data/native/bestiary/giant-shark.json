@@ -45,6 +45,12 @@
         "entries": [
           "The shark can breathe only underwater."
         ]
+      },
+      {
+        "name": "Blood Frenzy",
+        "entries": [
+          "The shark has advantage on melee attack rolls against any creature that doesn't have all its hit points."
+        ]
       }
     ],
     "action": [

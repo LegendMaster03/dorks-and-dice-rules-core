@@ -219,6 +219,14 @@
           }
         ]
       }
+    ],
+    "trait": [
+      {
+        "name": "Surprise Attack",
+        "entries": [
+          "If the doppelganger surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 10 ({@damage 3d6}) damage from the attack."
+        ]
+      }
     ]
   }
 }
