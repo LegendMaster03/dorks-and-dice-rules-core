@@ -19,13 +19,13 @@ The table below applies the existing additive-policy conclusions and lists the s
 | 1 | Battle Rage or Primal Rage (each activation); shared Rage uses; Unarmored Defense; Fast Movement (+10 ft, source restrictions); Weapon Mastery; class hit die d12 and source-compatible proficiencies |
 | 2 | Reckless Attack; Danger Sense; Uncanny Dodge |
 | 3 | Primal Knowledge; Trap Sense +1 |
-| 4 | Ability Score Improvement or qualifying ordinary feat |
+| 4 | Ability Score Improvement or qualifying ordinary feat; Weapon Mastery choices increase to 3 |
 | 5 | Extra Attack; Improved Uncanny Dodge |
 | 6 | Trap Sense +2 |
 | 7 | Damage Reduction 1/−; Feral Instinct; Instinctive Pounce |
 | 8 | Ability Score Improvement or qualifying ordinary feat |
 | 9 | **Greater Battle Rage** (+3 Rage damage); Brutal Critical (1 extra weapon die); Brutal Strike (1d10 and eligible tactical effect); Trap Sense +3 |
-| 10 | Damage Reduction 2/− |
+| 10 | Damage Reduction 2/−; Weapon Mastery choices increase to 4 |
 | 11 | **Greater Primal Rage** (+6 Strength and Constitution; +3 Will); Relentless Rage |
 | 12 | Ability Score Improvement or qualifying ordinary feat; Trap Sense +4 |
 | 13 | Damage Reduction 3/−; Brutal Critical (2 extra weapon dice); Improved Brutal Strike (additional effect choices) |
@@ -63,6 +63,8 @@ Temporary Constitution changes modify effective Constitution and derived HP for 
 - **Damage Reduction** is an always-available flat defense, distinct from the damage-type Resistance active during Rage. Calculate interactions through shared native damage-resolution order, without a Barbarian-only formula.
 - **Reckless Attack, Brutal Strike, Brutal Critical, Weapon Mastery, Primal Knowledge, Instinctive Pounce, Feral Instinct, Indomitable Will, Indomitable Might** remain independently granted where conditions are met. Brutal Critical must use Dorks & Dice's critical-escalation dice procedure rather than reverting to the original 5e critical calculation.
 - **Relentless Rage** uses a Constitution save beginning at DC 10, increasing by 5 after each use and resetting after a Short or Long Rest. The amount of HP on success conflicts (5e = 1; 5.5e = twice Barbarian level), requiring a specific numerical ruling.
+- **Weapon Mastery** starts with 2 eligible weapon choices at level 1, increases to 3 choices at level 4, and 4 choices at level 10. The choice limit and eligible weapons remain part of the native Weapon Mastery grant, not bonus weapon proficiencies.
+- **Primal Rage's historical concentration/skill/item restrictions:** Preserve the 3.x inability to perform actions requiring patience or concentration, including the specified spell-trigger, spell-completion, and command-word item activations and otherwise barred features. The historical restrictions on Charisma-, Dexterity-, and Intelligence-based skills need to be interpreted through the native system, where checks can use an alternative Ability; Primal Knowledge's explicit Strength-based checks are allowed when the feature grants them. Do not prohibit every skill named in the old text regardless of actual use, or remove genuinely retained restrictions through a purely textual rewrite. These restrictions apply to **Primal Rage**, not automatically to Battle Rage.
 - **Primal Champion** permanently increases Strength and Constitution by 4 each at level 20, regardless of the active Rage type, without establishing a permanent maximum. Mighty Primal Rage remains a temporary *additional* ability-score modification.
 - Do not impose the 3.x class alignment or automatic illiteracy restrictions. Skills, competencies, saves, BAB-derived iterative attacks, armor/weapon proficiency, multiclass entitlement and Rage action costs map to their already established native subsystems. Do not invent extra feat/skill entitlements from mere differences in edition table format.
 - Subclass entries in the 5.x class tables are **excluded**, not treated as missing base-class features.
