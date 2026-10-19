@@ -2,6 +2,24 @@
   "status": "approved-source-to-native-reconciliation-decisions",
   "decisions": [
     {
+      "nativeRuleId": "condition.deafened",
+      "state": "reconciled-identical-mechanics",
+      "decisionBasis": "Direct comparison of matching SRD 5.1 and SRD 5.2.1 condition mechanical effects; wording and markup differences omitted.",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Deafened"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Deafened"
+        }
+      ]
+    },
+    {
       "nativeRuleId": "condition.exhaustion",
       "adoptedVariant": "SRD 5.1 exhaustion",
       "decision": "Use the six cumulative tier-based effects, including the SRD 5.1 rest/food/drink and raised-from-dead rules.",
@@ -21,6 +39,60 @@
       "nativeLocation": "data/native/conditions.json",
       "decisionBasis": "Explicit Dorks & Dice Owner ruling",
       "state": "approved-native-rule"
+    },
+    {
+      "nativeRuleId": "condition.frightened",
+      "state": "reconciled-identical-mechanics",
+      "decisionBasis": "Direct comparison of matching SRD 5.1 and SRD 5.2.1 condition mechanical effects; wording and markup differences omitted.",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Frightened"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Frightened"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.poisoned",
+      "state": "reconciled-identical-mechanics",
+      "decisionBasis": "Direct comparison of matching SRD 5.1 and SRD 5.2.1 condition mechanical effects; wording and markup differences omitted.",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Poisoned"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Poisoned"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "condition.restrained",
+      "state": "reconciled-identical-mechanics",
+      "decisionBasis": "Direct comparison of matching SRD 5.1 and SRD 5.2.1 condition mechanical effects; wording and markup differences omitted.",
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Restrained"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Restrained"
+        }
+      ]
     }
   ]
 }

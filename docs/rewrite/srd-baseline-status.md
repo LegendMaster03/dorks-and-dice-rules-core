@@ -88,3 +88,29 @@ from the native condition; source-edition labels are not required at runtime.
 This is an accepted **mechanical ruling**, with data-only validation. The new
 runtime has not yet been implemented, so these tests establish the serialized
 contract, not execution of effects.
+
+## Reconciled shared conditions
+
+The following conditions have matching operational consequences in both SRDs,
+allowing one native definition without preferring an edition:
+
+| Condition | Native effects |
+| --- | --- |
+| Deafened | Can not hear; automatically fails checks requiring hearing |
+| Frightened | Disadvantage on attack rolls and ability checks while the fear source is in line of sight; can not willingly move closer to that source |
+| Poisoned | Disadvantage on attack rolls and ability checks |
+| Restrained | Speed 0; attacks against the creature have Advantage; its attacks and Dexterity saving throws have Disadvantage |
+
+The definitive normalized records are in `data/native/conditions.json`. This
+reconciles mechanical **consequences**, not spell durations, applications, or
+related creature effects. Approval-by-equivalence is documented in
+`data/reference/srd/reconciliation-decisions.json`. The condition records
+have no source-edition dependency.
+
+**Unresolved conditions from the imported pair:** Blinded (its native
+attacker-side Disadvantage is previously decided, but the complete defensive
+interaction still requires care), Charmed, Grappled, Incapacitated,
+Invisible, Paralyzed, Petrified, Prone, Stunned and Unconscious. Some of
+these contain identical core effects and additional differences, or inherit
+the disputed rules of another condition; they remain staged, rather than
+partially claiming a completed native condition.

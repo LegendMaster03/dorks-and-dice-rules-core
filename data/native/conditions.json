@@ -1,9 +1,27 @@
 {
   "_meta": {
     "status": "approved-native-mechanics; execution-schema-not-yet-final",
-    "note": "Native, edition-independent Dorks & Dice conditions. Exhaustion is the first explicitly reconciled entry."
+    "note": "Single native definitions for already reconciled conditions. Exhaustion uses the Owner-approved six-tier rule; Deafened, Frightened, Poisoned and Restrained preserve mechanics common to both imported SRDs. Other differences remain unresolved."
   },
   "conditions": [
+    {
+      "id": "condition.deafened",
+      "name": "Deafened",
+      "kind": "condition",
+      "effects": [
+        {
+          "type": "sense",
+          "sense": "hearing",
+          "availability": "none"
+        },
+        {
+          "type": "check",
+          "appliesTo": "ability-check",
+          "requiresSense": "hearing",
+          "result": "automatic-failure"
+        }
+      ]
+    },
     {
       "id": "condition.exhaustion",
       "name": "Exhaustion",
@@ -94,6 +112,82 @@
           "levelsRemoved": 1
         }
       }
+    },
+    {
+      "id": "condition.frightened",
+      "name": "Frightened",
+      "kind": "condition",
+      "effects": [
+        {
+          "type": "roll-mode",
+          "appliesTo": "ability-check",
+          "mode": "disadvantage",
+          "when": {
+            "fearSourceWithinLineOfSight": true
+          }
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "disadvantage",
+          "when": {
+            "fearSourceWithinLineOfSight": true
+          }
+        },
+        {
+          "type": "movement-restriction",
+          "restriction": "cannot-willingly-move-closer",
+          "relativeTo": "fear-source"
+        }
+      ]
+    },
+    {
+      "id": "condition.poisoned",
+      "name": "Poisoned",
+      "kind": "condition",
+      "effects": [
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "disadvantage"
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "ability-check",
+          "mode": "disadvantage"
+        }
+      ]
+    },
+    {
+      "id": "condition.restrained",
+      "name": "Restrained",
+      "kind": "condition",
+      "effects": [
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "advantage",
+          "subject": "attacks-against-affected-creature"
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "disadvantage",
+          "subject": "attacks-by-affected-creature"
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "saving-throw",
+          "ability": "dexterity",
+          "mode": "disadvantage"
+        }
+      ]
     }
   ]
 }
