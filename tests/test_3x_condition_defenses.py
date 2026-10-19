@@ -90,7 +90,7 @@ class ThreeXConditionDefenseTests(unittest.TestCase):
         self.assertEqual(16, evaluate(("flat-footed",)))
         self.assertEqual(10, evaluate(("flat-footed",), target="touch"))
         self.assertEqual(4, len(self.data["derivedProfiles"]))
-        self.assertEqual("incoming-attack", "incoming-attack")  # Category supplied by attack
+        self.assertEqual("normal", self.data["attackTargeting"]["default"])
 
     def test_touch_not_triggered_by_conditions(self):
         for state in ("blinded", "stunned", "grappled", "paralyzed", "restrained"):
@@ -102,7 +102,7 @@ class ThreeXConditionDefenseTests(unittest.TestCase):
         self.assertEqual(21, evaluate(dodge=2))
         self.assertEqual(16, evaluate(("flat-footed",), dodge=2))
         self.assertEqual(16, evaluate(("flat-footed", "grappled"), dodge=2))
-        self.assertEqual(8, evaluate(("blinded", "stunned"), target="touch", dodge=2))
+        self.assertEqual(6, evaluate(("blinded", "stunned"), target="touch", dodge=2))
         # Negative Dexterity remains a penalty; it is not erased.
         self.assertEqual(14, evaluate(("flat-footed",), dexterity=-2))
 
