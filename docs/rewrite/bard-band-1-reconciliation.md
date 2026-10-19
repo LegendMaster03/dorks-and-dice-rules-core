@@ -1,6 +1,6 @@
-# Bard — Band 1 base-class reconciliation (four-way proposal)
+# Bard — Band 1 base-class reconciliation (approved and implemented)
 
-**Scope:** Unified Dorks & Dice Bard class levels 1–20, before subclasses, prestige classes, and Band 2. **Status:** complete four-way *base-class proposal*, pending rulings on the limited genuine conflicts identified below. This does **not** authorize activating `data/native/classes/base/bard.json` or any individual Bard feature records.
+**Scope:** Unified Dorks & Dice Bard class levels 1–20, before subclasses, prestige classes, and Band 2. **Status:** the user authorized implementation of the four proposed rulings (2026-10-19). Bard Band 1 is implemented in native source-neutral class and feature records. Runtime execution and complete consumer integration remain separate tasks.
 
 ## Approved foundational identity (2026-10-19)
 
@@ -74,7 +74,7 @@ Use **one native Bard** and the established approved native rules:
 | 19 | ASI/qualifying ordinary feat; not an automatic Band 1 Epic Boon |
 | 20 | Inspire Courage improves; Words of Creation |
 
-For every level also apply: 3/4 historical BAB (floor(3 × class level / 4)), Fortitude poor (floor(level/3)), Reflex and Will good (2 + floor(level/2)), full modern Bard slot schedule, approved spells-known and cantrips-known count schedules (see decisions), Bardic Inspiration progression, and once/day/Bard-level historical performance uses. The proposed table is **not yet an executable class contract**.
+For every level also apply: 3/4 historical BAB (floor(3 × class level / 4)), Fortitude poor (floor(level/3)), Reflex and Will good (2 + floor(level/2)), full modern Bard slot schedule, approved spells-known and cantrips-known count schedules (see decisions), Bardic Inspiration progression, and once/day/Bard-level historical performance uses. The table is now reflected in native progression data. Consumer/runtime mechanics integration remains a separate activity.
 
 ## Detailed historical performance effects to preserve
 
@@ -110,22 +110,31 @@ The two modern SRDs have identical spell **slot** tables but distinct spells-kno
 | 19 | 22 | 21 |
 | 20 | 22 | 22 |
 
-**Correction of a likely mistaken shortcut:** Neither table universally dominates: SRD 5.1 has higher counts at L14–15 and L18–19; SRD 5.2.1 supplies more at numerous earlier levels. A single authoritative 1–20 native spells-known count must be chosen, without granting the sum. **Recommendation for review:** per-level greatest documented count to retain each era's acquired capacity, producing `[4,5,6,7,9,10,11,12,14,15,16,16,17,18,19,19,20,22,22,22]` at levels 1–20 (verify each number against both 5.x tables). This is a *quantitative proposal*, not an existing approved numeric-merging policy. Magical Secrets stays within this count.
+**Correction of a likely mistaken shortcut:** Neither table universally dominates: SRD 5.1 has higher counts at L14–15 and L18–19; SRD 5.2.1 supplies more at numerous earlier levels. A single authoritative 1–20 native spells-known count must be chosen, without granting the sum. **Approved:** per-level greatest documented count to retain each era's acquired capacity, producing `[4,5,6,7,9,10,11,12,14,15,16,16,17,18,19,19,20,22,22,22]` at levels 1–20 (verify each number against both 5.x tables). This is an **approved Bard-specific numeric reconciliation**, not a universal numeric-merging policy. Magical Secrets stays within this count.
 
-## Actual owner decisions still needed
+## Approved Bard-specific rulings (2026-10-19)
 
-Only genuinely competing or underspecified procedures are presented for approval; most other reconciliation applies already accepted principles.
+The user directed implementation of all four numeric/procedural resolutions below. They are no longer open decisions.
 
 1. **Bardic Inspiration timing:** 5.1 lets the recipient choose the die after a roll but before success/failure is declared (10-minute lifespan), whereas 5.2.1 grants it after a failed d20 test (one-hour lifespan). Recommend the newer after-failure/hour-long procedure; it is simpler to apply and more permissive, not a separate resource or second inspiration.
 2. **Inspire Courage charm/fear save bonus:** 3.0 grants +2 from level 1, while 3.5 begins at +1 and later scales all three numeric effects together. Recommend retain 3.0's stronger early protection against charm/fear while preserving 3.5 attack/damage scaling: charm/fear save +2 at L1–13, +3 at L14–19, +4 at L20; attack/damage +1 at L1–7, +2 at L8–13, +3 at L14–19, +4 at L20. This is one Inspire Courage feature and one existing performance use.
 3. **Accessible Bard spell capacity:** Recommend the higher source documented known/available count **at each level**, rather than arbitrarily choosing an edition-wide winner or summing both tables (table above).
-4. **Cantrips known:** 3.0/3.5's Bard starts with **4** cantrips known, increases to **5** at class level 2 and **6** at 3, whereas 5.1/5.2.1 starts with 2, reaches 3 at 4, and 4 at 10. **Recommendation:** retain the greater 3.x known-cantrip capacity (4/5/6 at 1/2/3 and six through L20) while applying the modern *at-will cantrip casting procedure* instead of simultaneously tracking legacy cantrip slots per day. This is a specific quantitative/procedural resolution, not an additive six-plus-four cantrip grant.
+4. **Cantrips known:** 3.0/3.5's Bard starts with **4** cantrips known, increases to **5** at class level 2 and **6** at 3, whereas 5.1/5.2.1 starts with 2, reaches 3 at 4, and 4 at 10. **Approved:** retain the greater 3.x known-cantrip capacity (4/5/6 at 1/2/3 and six through L20) while applying the modern *at-will cantrip casting procedure* instead of simultaneously tracking legacy cantrip slots per day. This is a specific quantitative/procedural resolution, not an additive six-plus-four cantrip grant.
 
 ## Established conversion work, not additional class-identity decisions
 
 - **Artistic training:** As already required by the approved expression principle, replace source musical-instrument-only training choices with **three eligible artistic training choices** and preserve any relevant historical Perform-rank gates through the native rank/competency mapping. Specific training equivalence and spellcasting-focus eligibility should be checked when the shared competency and focus rules are executable; do not assume every artistic item is a universal focus.
 - **Perception:** Preserve actual target perception, range and ongoing-expression requirements by feature, allowing visual, auditory, or other appropriate artistic media without automatically changing action, duration, or target limits. A stored painting or cooked meal does not inherently grant a remote combat performance.
 - **Source conventions:** Original 3.x all-verbal Bard spells, Charisma spell-level thresholds, and armor arcane-failure percentages require the already planned native spellcasting and component conversion; do not silently reinstate an older subsystem in this class file alone.
+
+## Native implementation
+
+- `data/native/classes/base/bard.json` is the source-neutral native Bard base class, with one 20-level grant progression, shared Bard spellcasting, nonmusical artistic identity, 3/4 BAB and historical strong Reflex/Will save progression.
+- **25** staged base-class feature files are reconciled as one authoritative `definition` each; **12** historically restored 3.x feature definitions are embedded in `definition.inlineFeatures`, including the Bardic Performances resource and individual performance effects.
+- **10** unused records, including old duplicate schedules, automatic Band 1 Epic Boon and subclass placeholders, remain pending source evidence and are never granted by the base-class level progression.
+- Bardic Inspiration has a **one-hour lifespan** and is used after failure of a qualifying d20 test. Inspire Courage preserves the earlier **+2** charm/fear bonus. Higher of the two modern documented accessible spell counts is selected at each level. Cantrips known progress **4, 5, 6** at levels 1, 2 and 3 and remain six thereafter, with modern at-will casting.
+- Bardic Performances and Bardic Inspiration are distinct resources, not edition variants. Expression can be cooking, painting, storytelling or another eligible art without subclass enrollment. Appropriate range, perception, training and action costs are still enforced per effect.
+- Declarative class data and a passing repository CI run do not, by themselves, prove complete runtime execution for every feature. Implement/review native consumer integration under existing test gates, and reconcile subclasses later.
 
 ## Not blockers or permission to infer
 
@@ -135,5 +144,5 @@ Only genuinely competing or underspecified procedures are presented for approval
 - **No copied third-party subclass** from Heliana or other protected supplements.
 - **No implicit extra attacks**, free actions/Reactions, spell slots, performance uses, skills or proficiencies merely because another edition describes the same entitlement.
 - **No automatic source precedence.** The decisions above are scoped Bard judgments; they do not create a policy that newer source rules always win.
-- **No native Bard activation until approved**, class record and referenced feature records are reconciled together, and regression validation passes. See Barbarian implementation pattern `data/native/classes/base/barbarian.json` and `tests/test_barbarian_band1.py`.
+- **Native Band 1 data is now implemented and testable.** Consumer/runtime integration remains separate. Historical subclass, duplicate feature, and Epic Boon candidate records remain staged rather than automatically granted.
 
