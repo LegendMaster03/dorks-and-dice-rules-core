@@ -1,0 +1,110 @@
+{
+  "scope": {
+    "kind": "base-class",
+    "classLevelStart": 1,
+    "classLevelEnd": 20,
+    "excluded": [
+      "subclass",
+      "prestige-class",
+      "band-2"
+    ]
+  },
+  "purpose": "Historical reference source index; not an active Dorks & Dice rule definition.",
+  "sources": {
+    "SRD30": {
+      "edition": "D&D 3.0",
+      "status": "external-mirror-verified-partially; not locally imported",
+      "license": "OGL-1.0a",
+      "entry": "https://www.dragon.ee/30srd/",
+      "verifiedExample": "https://www.dragon.ee/30srd/barbarian.htm",
+      "notice": "Only the Barbarian page was reviewed. Do not represent other class pages as vetted."
+    },
+    "SRD35": {
+      "edition": "D&D 3.5",
+      "status": "full-core-base-class-reference-copied",
+      "license": "OGL-1.0a",
+      "originalRtf": "https://archive.org/details/dnd35srd",
+      "conversion": "https://github.com/katekorsaro/dnd3.5e-srd",
+      "files": [
+        "srd35/classes-i.md",
+        "srd35/classes-ii.md",
+        "srd35/legal.md"
+      ]
+    },
+    "SRD51": {
+      "edition": "D&D 5e (2014)",
+      "status": "existing-repository-source",
+      "license": "CC-BY-4.0",
+      "location": "data/reference/srd/structured/class/"
+    },
+    "SRD52": {
+      "edition": "D&D 5.5e (2024)",
+      "status": "existing-repository-source",
+      "license": "CC-BY-4.0",
+      "location": "data/reference/srd/structured/class/"
+    }
+  },
+  "classes": [
+    {
+      "name": "barbarian",
+      "source35": "srd35/classes-i.md",
+      "source5x": "data/reference/srd/structured/class/class-barbarian.json"
+    },
+    {
+      "name": "bard",
+      "source35": "srd35/classes-i.md",
+      "source5x": "data/reference/srd/structured/class/class-bard.json"
+    },
+    {
+      "name": "cleric",
+      "source35": "srd35/classes-i.md",
+      "source5x": "data/reference/srd/structured/class/class-cleric.json"
+    },
+    {
+      "name": "druid",
+      "source35": "srd35/classes-i.md",
+      "source5x": "data/reference/srd/structured/class/class-druid.json"
+    },
+    {
+      "name": "fighter",
+      "source35": "srd35/classes-i.md",
+      "source5x": "data/reference/srd/structured/class/class-fighter.json"
+    },
+    {
+      "name": "monk",
+      "source35": "srd35/classes-i.md",
+      "source5x": "data/reference/srd/structured/class/class-monk.json"
+    },
+    {
+      "name": "paladin",
+      "source35": "srd35/classes-ii.md",
+      "source5x": "data/reference/srd/structured/class/class-paladin.json"
+    },
+    {
+      "name": "ranger",
+      "source35": "srd35/classes-ii.md",
+      "source5x": "data/reference/srd/structured/class/class-ranger.json"
+    },
+    {
+      "name": "rogue",
+      "source35": "srd35/classes-ii.md",
+      "source5x": "data/reference/srd/structured/class/class-rogue.json"
+    },
+    {
+      "name": "sorcerer",
+      "source35": "srd35/classes-ii.md",
+      "source5x": "data/reference/srd/structured/class/class-sorcerer.json"
+    },
+    {
+      "name": "wizard",
+      "source35": "srd35/classes-ii.md",
+      "source5x": "data/reference/srd/structured/class/class-wizard.json"
+    },
+    {
+      "name": "warlock",
+      "source35": null,
+      "source5x": "data/reference/srd/structured/class/class-warlock.json",
+      "note": "Not in the core 3.5 SRD; source from later 3.5 supplement requires separate licensing review."
+    }
+  ]
+}
