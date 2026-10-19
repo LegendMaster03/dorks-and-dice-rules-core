@@ -161,6 +161,8 @@ class NativeSourceFidelityTests(unittest.TestCase):
         self.assertNotIn("A Question of Enmity", names)
         body = json.dumps(modern)
         self.assertNotIn("Deck of Many Things", body)
+        self.assertNotIn("Bastion", body)
+        self.assertNotIn("seeAlsoDeck", modern)
         self.assertIn("Avatar of Death|SRD52", body)
 
 if __name__ == "__main__":
