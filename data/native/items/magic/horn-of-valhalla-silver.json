@@ -1,0 +1,39 @@
+{
+  "id": "item.horn-of-valhalla-silver",
+  "name": "Horn of Valhalla, Silver",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Horn of Valhalla, Silver",
+        "baseItem": "horn|srd51",
+        "type": "INS",
+        "tier": "major",
+        "rarity": "rare",
+        "wondrous": true,
+        "weight": 2,
+        "entries": [
+          "You can use an action to blow this horn. In response, warrior spirits from the plane of Ysgard appear within 60 feet of you. These spirits use the {@creature berserker} statistics. They return to Ysgard after 1 hour or when they drop to 0 hit points. Once you use the horn, it can't be used again until 7 days have passed.",
+          "The silver horn summons {@dice 2d4 + 2} {@creature berserker||berserkers}.",
+          "The {@creature berserker||berserkers} are friendly to you and your companions and follow your commands."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Horn of Valhalla, Silver",
+        "baseItem": "horn|srd52",
+        "type": "INS|SRD52",
+        "rarity": "rare",
+        "wondrous": true,
+        "entries": [
+          "You can take a {@action Magic|SRD52} action to blow this horn. In response, warrior spirits from the plane of Ysgard appear in unoccupied spaces within 60 feet of you. Each spirit uses the {@creature Berserker|SRD52} stat block and returns to Ysgard after 1 hour or when it drops to 0 {@variantrule Hit Points|SRD52}. The spirits look like living, breathing warriors, and they have {@variantrule Immunity|SRD52} to the {@condition Charmed|SRD52} and {@condition Frightened|SRD52} conditions. Once you use the horn, it can't be used again until 7 days have passed.",
+          "A silver horn summons 2 {@creature Berserker|SRD52|Berserkers}. They are {@variantrule Friendly [Attitude]|SRD52|Friendly} to you and your allies and follow your commands."
+        ]
+      }
+    }
+  ]
+}

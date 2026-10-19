@@ -1,0 +1,56 @@
+{
+  "id": "classFeature.channel-divinity.cleric.channel-divinity.2",
+  "name": "Channel Divinity",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Channel Divinity",
+        "className": "Cleric",
+        "classSource": "SRD51",
+        "level": 2,
+        "entries": [
+          "At 2nd level, you gain the ability to channel divine energy directly from your deity, using that energy to fuel magical effects. You start with two such effects: Turn Undead and an effect determined by your domain. Some domains grant you additional effects as you advance in levels, as noted in the domain description.",
+          "When you use your Channel Divinity, you choose which effect to create. You must then finish a short or long rest to use your Channel Divinity again.",
+          "Some Channel Divinity effects require saving throws. When you use such an effect from this class, the DC equals your cleric spell save DC.",
+          "Beginning at 6th level, you can use your Channel Divinity twice between rests, and beginning at 18th level, you can use it three times between rests. When you finish a short or long rest, you regain your expended uses.",
+          {
+            "type": "refClassFeature",
+            "classFeature": "Channel Divinity: Turn Undead|Cleric||2"
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Channel Divinity",
+        "className": "Cleric",
+        "classSource": "SRD52",
+        "level": 2,
+        "entries": [
+          "You can channel divine energy directly from the Outer Planes to fuel magical effects. You start with two such effects: Divine Spark and Turn Undead, each of which is described below. Each time you use this class's Channel Divinity, choose which Channel Divinity effect from this class to create. You gain additional effect options at higher Cleric levels.",
+          "You can use this class's Channel Divinity twice. You regain one of its expended uses when you finish a {@variantrule Short Rest|SRD52}, and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}. You gain additional uses when you reach certain Cleric levels, as shown in the Channel Divinity column of the Cleric Features table.",
+          "If a Channel Divinity effect requires a saving throw, the DC equals the spell save DC from this class's Spellcasting feature.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "refClassFeature",
+                "classFeature": "Divine Spark|Cleric|SRD52|2|SRD52"
+              },
+              {
+                "type": "refClassFeature",
+                "classFeature": "Turn Undead|Cleric|SRD52|2|SRD52"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "classLevel": 2
+}

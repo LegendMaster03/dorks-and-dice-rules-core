@@ -1,0 +1,25 @@
+{
+  "id": "deity.arawn",
+  "name": "Arawn",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Arawn",
+        "pantheon": "Celtic",
+        "alignment": [
+          "N",
+          "E"
+        ],
+        "title": "God of life and death",
+        "domains": [
+          "Life",
+          "Death"
+        ],
+        "symbol": "Black star on gray background"
+      }
+    }
+  ]
+}

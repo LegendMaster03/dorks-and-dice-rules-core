@@ -1,0 +1,34 @@
+{
+  "id": "subclassFeature.circle-of-the-land.druid.land.circle-of-the-land.3",
+  "name": "Circle of the Land",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Circle of the Land",
+        "className": "Druid",
+        "classSource": "SRD52",
+        "subclassShortName": "Land",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "{@i Celebrate Connection to the Natural World}",
+          "The Circle of the Land comprises mystics and sages who safeguard ancient knowledge and rites. These Druids meet within sacred circles of trees or standing stones to whisper primal secrets in Druidic. The circle's wisest members preside as the chief priests of their communities.",
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Circle of the Land Spells|Druid|SRD52|Land|SRD52|3"
+          },
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Land's Aid|Druid|SRD52|Land|SRD52|3"
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "parentSubclass": "land",
+  "classLevel": 3
+}

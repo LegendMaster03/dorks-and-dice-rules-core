@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.divine-domain-feature.cleric.divine-domain-feature.2",
+  "name": "Divine Domain feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Divine Domain feature",
+        "className": "Cleric",
+        "classSource": "SRD51",
+        "level": 2,
+        "entries": [
+          "At 2nd level, you gain a feature from your Divine Domain."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "classLevel": 2
+}

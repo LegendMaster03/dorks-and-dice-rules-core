@@ -1,0 +1,320 @@
+{
+  "id": "monster.grimlock",
+  "name": "Grimlock",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Grimlock",
+        "size": [
+          "M"
+        ],
+        "type": {
+          "type": "humanoid",
+          "tags": [
+            "grimlock"
+          ]
+        },
+        "alignment": [
+          "N",
+          "E"
+        ],
+        "ac": [
+          11
+        ],
+        "hp": {
+          "average": 11,
+          "formula": "2d8 + 2"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "str": 16,
+        "dex": 12,
+        "con": 12,
+        "int": 9,
+        "wis": 8,
+        "cha": 6,
+        "skill": {
+          "athletics": "+5",
+          "perception": "+3",
+          "stealth": "+3"
+        },
+        "senses": [
+          "blindsight 30 ft. or 10 ft. while deafened (blind beyond this radius)"
+        ],
+        "passive": 13,
+        "conditionImmune": [
+          "blinded"
+        ],
+        "languages": [
+          "Undercommon"
+        ],
+        "cr": "1/4",
+        "trait": [
+          {
+            "name": "Blind Senses",
+            "entries": [
+              "The grimlock can't use its blindsight while {@condition deafened} and unable to smell."
+            ]
+          },
+          {
+            "name": "Keen Hearing and Smell",
+            "entries": [
+              "The grimlock has advantage on Wisdom ({@skill Perception}) checks that rely on hearing or smell."
+            ]
+          },
+          {
+            "name": "Stone Camouflage",
+            "entries": [
+              "The grimlock has advantage on Dexterity ({@skill Stealth}) checks made to hide in rocky terrain."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Spiked Bone Club",
+            "entries": [
+              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d4 + 3}) bludgeoning damage plus 2 ({@damage 1d4}) piercing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/grimlock.opus"
+        },
+        "traitTags": [
+          "Camouflage",
+          "Keen Senses"
+        ],
+        "senseTags": [
+          "B"
+        ],
+        "languageTags": [
+          "U"
+        ],
+        "damageTags": [
+          "B",
+          "P"
+        ],
+        "miscTags": [
+          "MLW",
+          "MW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Grimlock",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "The degenerate subterranean grimlocks were once human, but their worship of the mind flayers over generations of prowling the Underdark transformed them into blind, monstrous cannibals long ago.",
+                      {
+                        "type": "entries",
+                        "name": "Debased Cultists",
+                        "entries": [
+                          "The empire of the mind flayers once spread across many worlds, enslaving countless races. Among those were human cultures whose high priests the mind flayers subverted using their insidious powers of thought control. Those leaders gradually turned the faiths of their followers toward the illithids, which they worshiped as blasphemous deities.",
+                          "Over time, the rituals of these enslaved humans created fervent cannibal cults that regarded the brain eating of the mind flayers as a holy sacrament. The illithids commanded their worshipers to abduct other sentient creatures to be sacrificed. After the victims' brains had been consumed, the mind flayers gave the lifeless bodies to the cultists."
+                        ]
+                      },
+                      {
+                        "name": "Blind Hunters",
+                        "type": "entries",
+                        "entries": [
+                          "When the rule of the mind flayers crumbled, their cults faced constant warfare from their enemies, the same creatures that had once been their victims. The cults fled into the Underdark domains of their illithid gods. Over generations in that lightless realm, the cultists learned to rely on their other senses for survival. In time, their eyes withered away and eyelids sealed, leaving only covered eye sockets behind.",
+                          "A grimlock's ears prick up at the faintest footfall or whisper echoing down stone passageways. It can speak in tones too low for most other humanoids to hear. The odors of sweat, flesh, and blood awaken its hunger, and it can track by such scents like a bloodhound. To enhance their senses, grimlocks leave trails of blood, piles of dung, or the viscera of slain prey in places far from their lairs. When intruders pass through those areas, they carry the foul scents with them, warning the grimlocks of their approach.",
+                          "For most creatures, blindness is an enormous hindrance. For a grimlock with its other heightened senses, sightlessness is a boon. A grimlock isn't fooled by visual illusions or misperceptions. It is fearless as it stalks prey."
+                        ]
+                      },
+                      {
+                        "name": "Endless War",
+                        "type": "entries",
+                        "entries": [
+                          "Grimlocks still venerate the mind flayers, serving them whenever possible. Grimlocks also recall the war in which they were driven underground. To them, it has never ended. They continue to return to the surface world to abduct captives for their illithid masters."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Grimlock.webp"
+                },
+                "width": 1000,
+                "height": 914
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Grimlock",
+        "size": [
+          "M"
+        ],
+        "type": "aberration",
+        "alignment": [
+          "N",
+          "E"
+        ],
+        "ac": [
+          11
+        ],
+        "hp": {
+          "average": 11,
+          "formula": "2d8 + 2"
+        },
+        "speed": {
+          "walk": 30,
+          "climb": 30
+        },
+        "str": 16,
+        "dex": 12,
+        "con": 12,
+        "int": 9,
+        "wis": 8,
+        "cha": 6,
+        "skill": {
+          "athletics": "+5",
+          "perception": "+3",
+          "stealth": "+5"
+        },
+        "senses": [
+          "Blindsight 30 ft."
+        ],
+        "passive": 13,
+        "cr": "1/4",
+        "action": [
+          {
+            "name": "Bone Cudgel",
+            "entries": [
+              "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Bludgeoning damage plus 2 ({@damage 1d4}) Psychic damage."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/grimlock.opus"
+        },
+        "senseTags": [
+          "B"
+        ],
+        "damageTags": [
+          "B",
+          "Y"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Grimlock",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Grimlock",
+                "entries": [
+                  "{@i Puppet of the Mind Flayer Menace}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Underdark|bestiary|environment=underdark}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "None"
+                      }
+                    ]
+                  },
+                  "Grimlocks are victims of biological manipulation by mind flayers. To create grimlocks, illithids capture Humanoids, expose them to strange forms of Underdark radiation, and implant new directives into their brains. The process of creating a grimlock rends the creature's mind such that no semblance of the individual's former personality remains.",
+                  "Grimlocks have shallow depressions rather than eyes. A sixth sense allows grimlocks to perceive their surroundings. Psychic energies from their transformations linger in grimlocks' bodies, and they channel these eerie forces into their attacks.",
+                  "Roll on or choose a result from the Grimlock Tasks table to inspire how grimlocks serve illithids.",
+                  {
+                    "type": "table",
+                    "caption": "Grimlock Tasks",
+                    "colLabels": [
+                      "1d4",
+                      "The Grimlock Serves Mind Flayers By..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "Carving caves to serve as illithid outposts."
+                      ],
+                      [
+                        "2",
+                        "Hiding the threat of mind flayers beneath fake, purposefully crude dwellings."
+                      ],
+                      [
+                        "3",
+                        "Pretending to be helpful and luring travelers into false senses of security."
+                      ],
+                      [
+                        "4",
+                        "Raiding surface communities and tempting other creatures to pursue it into illithid traps."
+                      ]
+                    ]
+                  },
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "We thought we'd discovered a new people living deeper than we believed possible. The truth was something far worse."
+                        ],
+                        "by": "Aljayera, Underdark Seer"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Grimlock.webp"
+                },
+                "credit": "John Tedrick",
+                "width": 2550,
+                "height": 1704
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

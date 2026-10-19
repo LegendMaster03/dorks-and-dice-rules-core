@@ -1,0 +1,25 @@
+{
+  "id": "baseitem.crossbow-bolts-20",
+  "name": "Crossbow Bolts (20)",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Crossbow Bolts (20)",
+        "type": "A",
+        "rarity": "none",
+        "weight": 1.5,
+        "value": 100,
+        "bolt": true,
+        "packContents": [
+          {
+            "item": "crossbow bolt|srd51",
+            "quantity": 20
+          }
+        ]
+      }
+    }
+  ]
+}

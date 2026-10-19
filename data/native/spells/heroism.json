@@ -1,0 +1,120 @@
+{
+  "id": "spell.heroism",
+  "name": "Heroism",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Heroism",
+        "level": 1,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "A willing creature you touch is imbued with bravery. Until the spell ends, the creature is immune to being {@condition frightened} and gains temporary hit points equal to your spellcasting ability modifier at the start of each of its turns. When the spell ends, the target loses any remaining temporary hit points from this spell."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 2nd level or higher, you can target one additional creature for each slot level above 1st."
+            ]
+          }
+        ],
+        "conditionImmune": [
+          "frightened"
+        ],
+        "miscTags": [
+          "SCT",
+          "THP"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Heroism",
+        "level": 1,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "A willing creature you touch is imbued with bravery. Until the spell ends, the creature is immune to the {@condition Frightened|SRD52} condition and gains {@variantrule Temporary Hit Points|SRD52} equal to your spellcasting ability modifier at the start of each of its turns."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "You can target one additional creature for each spell slot level above 1."
+            ]
+          }
+        ],
+        "conditionImmune": [
+          "frightened"
+        ],
+        "miscTags": [
+          "SCT",
+          "THP"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "id": "baseitem.potter-s-tools",
+  "name": "Potter's Tools",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potter's Tools",
+        "type": "AT",
+        "rarity": "none",
+        "weight": 3,
+        "value": 1000,
+        "additionalEntries": [
+          "Potter's tools are used to create a variety of ceramic objects, most typically pots and similar vessels.",
+          {
+            "type": "entries",
+            "name": "Components",
+            "entries": [
+              "Potter's tools include potter's needles, ribs, scrapers, a knife, and calipers."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "History",
+            "entries": [
+              "Your expertise aids you in identifying ceramic objects, including when they were created and their likely place or culture of origin."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Investigation, Perception",
+            "entries": [
+              "You gain additional insight when inspecting ceramics, uncovering clues others would overlook by spotting minor irregularities."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Reconstruction",
+            "entries": [
+              "By examining pottery shards, you can determine an object's original, intact form and its likely purpose."
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Potter's Tools",
+            "colLabels": [
+              "Activity",
+              "DC"
+            ],
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "rows": [
+              [
+                "Determine what a vessel once held",
+                "10"
+              ],
+              [
+                "Create a serviceable pot",
+                "15"
+              ],
+              [
+                "Find a weak point in a ceramic object",
+                "20"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potter's Tools",
+        "type": "AT|SRD52",
+        "rarity": "none",
+        "weight": 3,
+        "value": 1000,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Intelligence"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Discern what a ceramic object held in the past 24 hours ({@dc 15})"
+                ]
+              },
+              {
+                "name": "Craft:",
+                "type": "item",
+                "entries": [
+                  "{@item Jug|SRD52}, {@item Lamp|SRD52}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

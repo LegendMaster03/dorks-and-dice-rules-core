@@ -1,0 +1,24 @@
+{
+  "id": "deity.diancecht",
+  "name": "Diancecht",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Diancecht",
+        "pantheon": "Celtic",
+        "alignment": [
+          "L",
+          "G"
+        ],
+        "title": "God of medicine and healing",
+        "domains": [
+          "Life"
+        ],
+        "symbol": "Crossed oak and mistletoe branches"
+      }
+    }
+  ]
+}

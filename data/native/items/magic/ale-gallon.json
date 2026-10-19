@@ -1,0 +1,20 @@
+{
+  "id": "item.ale-gallon",
+  "name": "Ale (gallon)",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ale (gallon)",
+        "type": "FD",
+        "rarity": "none",
+        "value": 20,
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

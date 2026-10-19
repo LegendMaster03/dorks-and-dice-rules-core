@@ -1,0 +1,31 @@
+{
+  "id": "item.shovel",
+  "name": "Shovel",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Shovel",
+        "type": "G",
+        "rarity": "none",
+        "weight": 5,
+        "value": 200
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Shovel",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 5,
+        "value": 200,
+        "entries": [
+          "Working for 1 hour, you can use a Shovel to dig a hole that is 5 feet on each side in soil or similar material."
+        ]
+      }
+    }
+  ]
+}

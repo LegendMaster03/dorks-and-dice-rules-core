@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.aura-expansion.paladin.aura-expansion.18",
+  "name": "Aura Expansion",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Aura Expansion",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "level": 18,
+        "entries": [
+          "Your Aura of Protection is now a 30-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "classLevel": 18
+}

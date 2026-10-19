@@ -1,0 +1,46 @@
+{
+  "id": "item.potion-of-acid-resistance",
+  "name": "Potion of Acid Resistance",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Acid Resistance",
+        "type": "P",
+        "resist": [
+          "acid"
+        ],
+        "tier": "minor",
+        "rarity": "uncommon",
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Potion of Resistance}"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Acid Resistance",
+        "type": "P|SRD52",
+        "resist": [
+          "acid"
+        ],
+        "rarity": "uncommon",
+        "weight": 0.5,
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Potion of Resistance|SRD52}"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "item.ring-of-water-walking",
+  "name": "Ring of Water Walking",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Water Walking",
+        "type": "RG|SRD51",
+        "tier": "major",
+        "rarity": "uncommon",
+        "entries": [
+          "While wearing this ring, you can stand on and move across any liquid surface as if it were solid ground."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Water Walking",
+        "type": "RG|SRD52",
+        "rarity": "uncommon",
+        "entries": [
+          "While wearing this ring, you cast {@spell Water Walk|SRD52} from it, targeting only yourself."
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ],
+        "attachedSpells": {
+          "will": [
+            "water walk|srd52"
+          ]
+        }
+      }
+    }
+  ]
+}

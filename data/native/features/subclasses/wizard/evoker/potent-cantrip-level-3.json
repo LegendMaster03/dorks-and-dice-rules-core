@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.potent-cantrip.wizard.evoker.potent-cantrip.3",
+  "name": "Potent Cantrip",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potent Cantrip",
+        "className": "Wizard",
+        "classSource": "SRD52",
+        "subclassShortName": "Evoker",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "header": 1,
+        "entries": [
+          "Your damaging cantrips affect even creatures that avoid the brunt of the effect. When you cast a cantrip at a creature and you miss with the attack roll or the target succeeds on a saving throw against the cantrip, the target takes half the cantrip's damage (if any) but suffers no additional effect from the cantrip."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.wizard",
+  "parentSubclass": "evoker",
+  "classLevel": 3
+}

@@ -1,0 +1,51 @@
+{
+  "id": "item.amulet-of-health",
+  "name": "Amulet of Health",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Amulet of Health",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 1,
+        "ability": {
+          "static": {
+            "con": 19
+          }
+        },
+        "entries": [
+          "Your Constitution score is 19 while you wear this amulet. It has no effect on you if your Constitution score is already 19 or higher without it."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Amulet of Health",
+        "rarity": "rare",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 1,
+        "ability": {
+          "static": {
+            "con": 19
+          }
+        },
+        "entries": [
+          "Your Constitution score is 19 while you wear this amulet. It has no effect on you if your Constitution is already 19 or higher without it."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

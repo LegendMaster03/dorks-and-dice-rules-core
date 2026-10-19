@@ -1,0 +1,23 @@
+{
+  "id": "deity.tyche",
+  "name": "Tyche",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Tyche",
+        "pantheon": "Greek",
+        "alignment": [
+          "N"
+        ],
+        "title": "Goddess of good fortune",
+        "domains": [
+          "Trickery"
+        ],
+        "symbol": "Red pentagram"
+      }
+    }
+  ]
+}

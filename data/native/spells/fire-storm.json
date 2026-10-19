@@ -1,0 +1,100 @@
+{
+  "id": "spell.fire-storm",
+  "name": "Fire Storm",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Fire Storm",
+        "level": 7,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 150
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "A storm made up of sheets of roaring flame appears in a location you choose within range. The area of the storm consists of up to ten 10-foot cubes, which you can arrange as you wish. Each cube must have at least one face adjacent to the face of another cube. Each creature in the area must make a Dexterity saving throw. It takes {@damage 7d10} fire damage on a failed save, or half as much damage on a successful one.",
+          "The fire damages objects in the area and ignites flammable objects that aren't being worn or carried. If you choose, plant life in the area is unaffected by this spell."
+        ],
+        "damageInflict": [
+          "fire"
+        ],
+        "savingThrow": [
+          "dexterity"
+        ],
+        "miscTags": [
+          "OBJ"
+        ],
+        "areaTags": [
+          "C"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Fire Storm",
+        "level": 7,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 150
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "A storm of fire appears within range. The area of the storm consists of up to ten 10-foot Cubes, which you arrange as you like. Each {@variantrule Cube [Area of Effect]|SRD52|Cube} must be contiguous with at least one other {@variantrule Cube [Area of Effect]|SRD52|Cube}. Each creature in the area makes a Dexterity saving throw, taking {@damage 7d10} Fire damage on a failed save or half as much damage on a successful one.",
+          "Flammable objects in the area that aren't being worn or carried start {@hazard burning|SRD52}."
+        ],
+        "damageInflict": [
+          "fire"
+        ],
+        "savingThrow": [
+          "dexterity"
+        ],
+        "miscTags": [
+          "OBJ"
+        ],
+        "areaTags": [
+          "C"
+        ]
+      }
+    }
+  ]
+}

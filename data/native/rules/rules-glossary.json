@@ -1,0 +1,1012 @@
+{
+  "id": "rule.rules-glossary",
+  "name": "Rules Glossary",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "type": "section",
+        "name": "Rules Glossary",
+        "page": 176,
+        "entries": [
+          {
+            "type": "section",
+            "name": "Glossary Conventions",
+            "page": 176,
+            "entries": [
+              "The glossary uses the following conventions:",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Tags in Brackets",
+                    "entry": "Some entries have a tag in brackets after the entry's name, as in \"Attack [Action].\" A tag—Action, Area of Effect, Attitude, Condition, or Hazard—indicates that a rule is part of a family of rules. The tags also have glossary entries."
+                  },
+                  {
+                    "type": "item",
+                    "name": "\"You\"",
+                    "entry": "The game's rules—in this glossary and elsewhere—often talk about something happening to you in the game world. That \"you\" refers to the creature or object that the rule applies to in a particular moment of play. For example, the \"you\" in the {@condition Prone|srd52} condition is a creature that currently has that condition."
+                  },
+                  {
+                    "type": "item",
+                    "name": "\"See Also\"",
+                    "entry": "Some glossary entries include a See also section that points to other entries in the glossary, to other parts of this document, or both."
+                  },
+                  {
+                    "type": "item",
+                    "name": "No Obsolete Terms",
+                    "entry": "The glossary contains definitions of current rules terms only. If you're looking for a term from an earlier version of the fifth edition rules, consult the index."
+                  },
+                  {
+                    "type": "item",
+                    "name": "Abbreviations",
+                    "entry": "The abbreviations listed below appear in this glossary and elsewhere in the rules."
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "colStyles": [
+                  "col-2 text-right",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "AC",
+                    "Armor Class"
+                  ],
+                  [
+                    "C",
+                    "{@status Concentration|srd52}"
+                  ],
+                  [
+                    "CE",
+                    "Chaotic Evil"
+                  ],
+                  [
+                    "CG",
+                    "Chaotic Good"
+                  ],
+                  [
+                    "Cha.",
+                    "Charisma"
+                  ],
+                  [
+                    "CN",
+                    "Chaotic Neutral"
+                  ],
+                  [
+                    "Con.",
+                    "Constitution"
+                  ],
+                  [
+                    "CP",
+                    "Copper Piece(s)"
+                  ],
+                  [
+                    "CR",
+                    "{@variantrule Challenge Rating|srd52}"
+                  ],
+                  [
+                    "DC",
+                    "{@variantrule Difficulty Class|srd52}"
+                  ],
+                  [
+                    "Dex.",
+                    "Dexterity"
+                  ],
+                  [
+                    "DM",
+                    "GM"
+                  ],
+                  [
+                    "EP",
+                    "Electrum Piece(s)"
+                  ],
+                  [
+                    "GP",
+                    "Gold Piece(s)"
+                  ],
+                  [
+                    "HP",
+                    "{@variantrule Hit Points|srd52|Hit Point}(s)"
+                  ],
+                  [
+                    "Int.",
+                    "Intelligence"
+                  ],
+                  [
+                    "LE",
+                    "Lawful Evil"
+                  ],
+                  [
+                    "LG",
+                    "Lawful Good"
+                  ],
+                  [
+                    "LN",
+                    "Lawful Neutral"
+                  ],
+                  [
+                    "M",
+                    "Material component"
+                  ],
+                  [
+                    "N",
+                    "Neutral"
+                  ],
+                  [
+                    "NE",
+                    "Neutral Evil"
+                  ],
+                  [
+                    "NG",
+                    "Neutral Good"
+                  ],
+                  [
+                    "NPC",
+                    "Nonplayer character"
+                  ],
+                  [
+                    "PB",
+                    "{@variantrule Proficiency|srd52|Proficiency Bonus}"
+                  ],
+                  [
+                    "PP",
+                    "Platinum Piece(s)"
+                  ],
+                  [
+                    "R",
+                    "{@variantrule Ritual|srd52}"
+                  ],
+                  [
+                    "S",
+                    "Somatic component"
+                  ],
+                  [
+                    "SP",
+                    "Silver Piece(s)"
+                  ],
+                  [
+                    "Str.",
+                    "Strength"
+                  ],
+                  [
+                    "V",
+                    "Verbal component"
+                  ],
+                  [
+                    "Wis.",
+                    "Wisdom"
+                  ],
+                  [
+                    "XP",
+                    "{@variantrule Experience Points|srd52|Experience Point}(s)"
+                  ]
+                ]
+              }
+            ],
+            "id": "1d3"
+          },
+          {
+            "type": "section",
+            "name": "Rules Definitions",
+            "page": 176,
+            "entries": [
+              "Here are definitions of various rules.",
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Ability Check"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Ability Score and Modifier"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Action"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Advantage"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Adventure"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Alignment"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Ally"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Area of Effect"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Armor Class"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Armor Training"
+              },
+              {
+                "type": "statblock",
+                "tag": "action",
+                "name": "Attack",
+                "displayName": "Attack [Action]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Attack Roll"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Attitude"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Attunement"
+              },
+              {
+                "type": "statblock",
+                "tag": "condition",
+                "name": "Blinded",
+                "displayName": "Blinded [Condition]"
+              },
+              {
+                "type": "statblock",
+                "tag": "sense",
+                "name": "Blindsight"
+              },
+              {
+                "type": "statblock",
+                "tag": "status",
+                "name": "Bloodied"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Bonus Action"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Breaking Objects"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Bright Light"
+              },
+              {
+                "type": "statblock",
+                "tag": "hazard",
+                "name": "Burning",
+                "displayName": "Burning [Hazard]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Burrow Speed"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Campaign"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Cantrip"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Carrying Capacity"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Challenge Rating"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Character Sheet"
+              },
+              {
+                "type": "statblock",
+                "tag": "condition",
+                "name": "Charmed",
+                "displayName": "Charmed [Condition]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Climbing"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Climb Speed"
+              },
+              {
+                "type": "statblock",
+                "tag": "status",
+                "name": "Concentration"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Condition"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Cone [Area of Effect]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Cover"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Crawling"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Creature"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Creature Type"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Critical Hit"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Cube [Area of Effect]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Curses"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Cylinder [Area of Effect]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "D20 Test"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Damage"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Damage Roll"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Damage Threshold"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Damage Types"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Darkness"
+              },
+              {
+                "type": "statblock",
+                "tag": "sense",
+                "name": "Darkvision"
+              },
+              {
+                "type": "statblock",
+                "tag": "action",
+                "name": "Dash",
+                "displayName": "Dash [Action]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Dead"
+              },
+              {
+                "type": "statblock",
+                "tag": "condition",
+                "name": "Deafened",
+                "displayName": "Deafened [Condition]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Death Saving Throw"
+              },
+              {
+                "type": "statblock",
+                "tag": "hazard",
+                "name": "Dehydration",
+                "displayName": "Dehydration [Hazard]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Difficult Terrain"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Difficulty Class"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Dim Light"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Disadvantage"
+              },
+              {
+                "type": "statblock",
+                "tag": "action",
+                "name": "Disengage",
+                "displayName": "Disengage [Action]"
+              },
+              {
+                "type": "statblock",
+                "tag": "action",
+                "name": "Dodge",
+                "displayName": "Dodge [Action]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Emanation [Area of Effect]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Encounter"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Enemy"
+              },
+              {
+                "type": "statblock",
+                "tag": "condition",
+                "name": "Exhaustion",
+                "displayName": "Exhaustion [Condition]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Experience Points"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Expertise"
+              },
+              {
+                "type": "statblock",
+                "tag": "hazard",
+                "name": "Falling",
+                "displayName": "Falling [Hazard]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Flying"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Fly Speed"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Friendly [Attitude]"
+              },
+              {
+                "type": "statblock",
+                "tag": "condition",
+                "name": "Frightened",
+                "displayName": "Frightened [Condition]"
+              },
+              {
+                "type": "statblock",
+                "tag": "condition",
+                "name": "Grappled",
+                "displayName": "Grappled [Condition]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Grappling"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Hazard"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Healing"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Heavily Obscured"
+              },
+              {
+                "type": "statblock",
+                "tag": "action",
+                "name": "Help",
+                "displayName": "Help [Action]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Heroic Inspiration"
+              },
+              {
+                "type": "statblock",
+                "tag": "action",
+                "name": "Hide",
+                "displayName": "Hide [Action]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "High Jump"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Hit Point Dice"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Hit Points"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Hostile [Attitude]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Hover"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Illusions"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Immunity"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Improvised Weapons"
+              },
+              {
+                "type": "statblock",
+                "tag": "condition",
+                "name": "Incapacitated",
+                "displayName": "Incapacitated [Condition]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Indifferent [Attitude]"
+              },
+              {
+                "type": "statblock",
+                "tag": "action",
+                "name": "Influence",
+                "displayName": "Influence [Action]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Initiative"
+              },
+              {
+                "type": "statblock",
+                "tag": "condition",
+                "name": "Invisible",
+                "displayName": "Invisible [Condition]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Jumping"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Knocking Out a Creature"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Lightly Obscured"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Line [Area of Effect]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Long Jump"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Long Rest"
+              },
+              {
+                "type": "statblock",
+                "tag": "action",
+                "name": "Magic",
+                "displayName": "Magic [Action]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Magical Effect"
+              },
+              {
+                "type": "statblock",
+                "tag": "hazard",
+                "name": "Malnutrition",
+                "displayName": "Malnutrition [Hazard]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Monster"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Nonplayer Character"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Object"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Occupied Space"
+              },
+              {
+                "type": "statblock",
+                "tag": "action",
+                "name": "Opportunity Attack",
+                "displayName": "Opportunity Attack [Action]"
+              },
+              {
+                "type": "statblock",
+                "tag": "condition",
+                "name": "Paralyzed",
+                "displayName": "Paralyzed [Condition]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Passive Perception"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Per Day"
+              },
+              {
+                "type": "statblock",
+                "tag": "condition",
+                "name": "Petrified",
+                "displayName": "Petrified [Condition]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Player Character"
+              },
+              {
+                "type": "statblock",
+                "tag": "condition",
+                "name": "Poisoned",
+                "displayName": "Poisoned [Condition]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Possession"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Proficiency"
+              },
+              {
+                "type": "statblock",
+                "tag": "condition",
+                "name": "Prone",
+                "displayName": "Prone [Condition]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Reaction"
+              },
+              {
+                "type": "statblock",
+                "tag": "action",
+                "name": "Ready",
+                "displayName": "Ready [Action]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Resistance"
+              },
+              {
+                "type": "statblock",
+                "tag": "condition",
+                "name": "Restrained",
+                "displayName": "Restrained [Condition]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Ritual"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Round Down"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Save"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Saving Throw"
+              },
+              {
+                "type": "statblock",
+                "tag": "action",
+                "name": "Search",
+                "displayName": "Search [Action]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Shape-Shifting"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Short Rest"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Simultaneous Effects"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Size"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Skill"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Speed"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Spell"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Spell Attack"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Spellcasting Focus"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Sphere [Area of Effect]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Stable"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Stat Block"
+              },
+              {
+                "type": "statblock",
+                "tag": "action",
+                "name": "Study",
+                "displayName": "Study [Action]"
+              },
+              {
+                "type": "statblock",
+                "tag": "condition",
+                "name": "Stunned",
+                "displayName": "Stunned [Condition]"
+              },
+              {
+                "type": "statblock",
+                "tag": "hazard",
+                "name": "Suffocation",
+                "displayName": "Suffocation [Hazard]"
+              },
+              {
+                "type": "statblock",
+                "tag": "status",
+                "name": "Surprised"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Swimming"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Swim Speed"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Target"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Telepathy"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Teleportation"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Temporary Hit Points"
+              },
+              {
+                "type": "statblock",
+                "tag": "sense",
+                "name": "Tremorsense"
+              },
+              {
+                "type": "statblock",
+                "tag": "sense",
+                "name": "Truesight"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Unarmed Strike"
+              },
+              {
+                "type": "statblock",
+                "tag": "condition",
+                "name": "Unconscious",
+                "displayName": "Unconscious [Condition]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Unoccupied Space"
+              },
+              {
+                "type": "statblock",
+                "tag": "action",
+                "name": "Utilize",
+                "displayName": "Utilize [Action]"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Vulnerability"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Weapon"
+              },
+              {
+                "type": "statblock",
+                "tag": "variantrule",
+                "name": "Weapon Attack"
+              }
+            ],
+            "id": "1d4"
+          }
+        ],
+        "id": "1d2"
+      }
+    }
+  ]
+}

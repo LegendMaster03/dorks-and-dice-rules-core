@@ -1,0 +1,46 @@
+{
+  "id": "baseitem.arrows-20",
+  "name": "Arrows (20)",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Arrows (20)",
+        "type": "A",
+        "rarity": "none",
+        "weight": 1,
+        "value": 100,
+        "arrow": true,
+        "packContents": [
+          {
+            "item": "arrow|srd51",
+            "quantity": 20
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Arrows (20)",
+        "type": "A|SRD52",
+        "rarity": "none",
+        "weight": 1,
+        "value": 100,
+        "arrow": true,
+        "entries": [
+          "Arrows are used with a weapon that has the ammunition property to make a ranged attack. Each time you attack with the weapon, you expend one piece of ammunition. Drawing the ammunition from a quiver, case, or other container is part of the attack (you need a free hand to load a one-handed weapon). At the end of the battle, you can recover half your expended ammunition by taking a minute to search the battlefield.",
+          "Arrows are typically stored in a {@item Quiver|SRD52} (bought separately)."
+        ],
+        "packContents": [
+          {
+            "item": "arrow|srd52",
+            "quantity": 20
+          }
+        ]
+      }
+    }
+  ]
+}

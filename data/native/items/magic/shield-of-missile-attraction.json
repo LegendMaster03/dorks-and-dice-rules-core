@@ -1,0 +1,54 @@
+{
+  "id": "item.shield-of-missile-attraction",
+  "name": "Shield of Missile Attraction",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Shield of Missile Attraction",
+        "type": "S",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": true,
+        "curse": true,
+        "weight": 6,
+        "ac": 2,
+        "entries": [
+          "While holding this shield, you have resistance to damage from ranged weapon attacks.",
+          {
+            "type": "entries",
+            "name": "Curse",
+            "entries": [
+              "This shield is cursed. Attuning to it curses you until you are targeted by the {@spell remove curse} spell or similar magic. Removing the shield fails to end the curse on you. Whenever a ranged weapon attack is made against a target within 10 feet of you, the curse causes you to become the target instead."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Shield of Missile Attraction",
+        "baseItem": "shield|srd52",
+        "type": "S|SRD52",
+        "rarity": "rare",
+        "reqAttune": true,
+        "curse": true,
+        "weight": 6,
+        "ac": 2,
+        "entries": [
+          "While holding this Shield, you have {@variantrule Resistance|SRD52} to damage from attacks made with Ranged weapons.",
+          {
+            "type": "entries",
+            "name": "Curse",
+            "entries": [
+              "This Shield is cursed. Attuning to it curses you until you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic. Removing the Shield fails to end the curse on you. Whenever an attack with a Ranged weapon targets a creature within 10 feet of you, the curse causes you to become the target instead."
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

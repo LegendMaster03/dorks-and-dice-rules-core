@@ -1,0 +1,427 @@
+{
+  "id": "monster.rakshasa",
+  "name": "Rakshasa",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Rakshasa",
+        "size": [
+          "M"
+        ],
+        "type": "fiend",
+        "alignment": [
+          "L",
+          "E"
+        ],
+        "ac": [
+          {
+            "ac": 16,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 110,
+          "formula": "13d8 + 52"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 14,
+        "dex": 17,
+        "con": 18,
+        "int": 13,
+        "wis": 16,
+        "cha": 20,
+        "skill": {
+          "deception": "+10",
+          "insight": "+8"
+        },
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 13,
+        "immune": [
+          {
+            "immune": [
+              "bludgeoning",
+              "piercing",
+              "slashing"
+            ],
+            "note": "from nonmagical attacks",
+            "cond": true
+          }
+        ],
+        "vulnerable": [
+          {
+            "vulnerable": [
+              "piercing"
+            ],
+            "note": "from magic weapons wielded by good creatures",
+            "cond": true
+          }
+        ],
+        "languages": [
+          "Common",
+          "Infernal"
+        ],
+        "cr": "13",
+        "spellcasting": [
+          {
+            "name": "Innate Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The rakshasa's innate spellcasting ability is Charisma (spell save {@dc 18}, {@hit 10} to hit with spell attacks). The rakshasa can innately cast the following spells, requiring no material components:"
+            ],
+            "will": [
+              "{@spell detect thoughts}",
+              "{@spell disguise self}",
+              "{@spell mage hand}",
+              "{@spell minor illusion}"
+            ],
+            "daily": {
+              "3e": [
+                "{@spell charm person}",
+                "{@spell detect magic}",
+                "{@spell invisibility}",
+                "{@spell major image}",
+                "{@spell suggestion}"
+              ],
+              "1e": [
+                "{@spell dominate person}",
+                "{@spell fly}",
+                "{@spell plane shift}",
+                "{@spell true seeing}"
+              ]
+            },
+            "ability": "cha"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Limited Magic Immunity",
+            "entries": [
+              "The rakshasa can't be affected or detected by spells of 6th level or lower unless it wishes to be. It has advantage on saving throws against all other spells and magical effects."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The rakshasa makes two claw attacks."
+            ]
+          },
+          {
+            "name": "Claw",
+            "entries": [
+              "{@atk mw} {@hit 7} to hit, reach 5 ft., one target. {@h}9 ({@damage 2d6 + 2}) slashing damage, and the target is cursed if it is a creature. The magical curse takes effect whenever the target takes a short or long rest, filling the target's thoughts with horrible images and dreams. The cursed target gains no benefit from finishing a short or long rest. The curse lasts until it is lifted by a {@spell remove curse} spell or similar magic."
+            ]
+          }
+        ],
+        "environment": [
+          "urban"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/rakshasa.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "I"
+        ],
+        "damageTags": [
+          "S"
+        ],
+        "spellcastingTags": [
+          "I"
+        ],
+        "miscTags": [
+          "CUR",
+          "MW"
+        ],
+        "savingThrowForcedSpell": [
+          "charisma",
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Rakshasa",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "The rakshasa employs delicacy and misdirection in its pursuit of dominion over others. Few creatures ever see the fiend in its true form, for it can take on any guise it wants, although it prefers to masquerade as someone powerful or influential: a noble, cardinal, or rich merchant, for example. A rakshasa's true form combines the features of a human and a tiger, with one noteworthy deformity: its palms are where the backs of the hands would be on a human.",
+                      {
+                        "name": "Evil Spirits in Mortal Flesh",
+                        "entries": [
+                          "Rakshasas originated long ago in the Nine Hells, when powerful devils created a dark ritual to free their essence from their fiendish bodies in order to escape the Lower Planes. A rakshasa enters the Material Plane to feed its appetite for humanoid flesh and evil schemes. It selects its prey with care, taking pains to keep its presence in the world a secret."
+                        ],
+                        "type": "entries"
+                      },
+                      {
+                        "name": "Evil Reborn",
+                        "type": "entries",
+                        "entries": [
+                          "For a rakshasa, death on the Material Plane means an agonizing and torturous return to the Nine Hells, where its essence remains trapped until its body reforms-a process that can take months or years.",
+                          "When the rakshasa is reborn, it has all the memories and knowledge of its former life, and it seeks retribution against the one who slew it. If the target has somehow slipped through its grasp, the rakshasa might punish its killer's family, friends, or descendants.",
+                          "Like devils, rakshasas killed in the Nine Hells are forever destroyed."
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "Slay me once, shame on you.",
+                          "Slay me twice, shame on me."
+                        ],
+                        "by": "Rakshasa maxim"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Rakshasa.webp"
+                },
+                "width": 824,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Rakshasa",
+        "size": [
+          "M"
+        ],
+        "type": "fiend",
+        "alignment": [
+          "L",
+          "E"
+        ],
+        "ac": [
+          17
+        ],
+        "hp": {
+          "average": 221,
+          "formula": "26d8 + 104"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "initiative": {
+          "proficiency": 1
+        },
+        "str": 14,
+        "dex": 17,
+        "con": 18,
+        "int": 13,
+        "wis": 16,
+        "cha": 20,
+        "skill": {
+          "deception": "+10",
+          "insight": "+8",
+          "perception": "+8"
+        },
+        "senses": [
+          "Truesight 60 ft."
+        ],
+        "passive": 18,
+        "vulnerable": [
+          {
+            "vulnerable": [
+              "piercing"
+            ],
+            "note": "damage from weapons wielded by creatures under the effect of a {@spell Bless|SRD52} spell",
+            "cond": true
+          }
+        ],
+        "conditionImmune": [
+          "charmed",
+          "frightened"
+        ],
+        "languages": [
+          "Common",
+          "Infernal"
+        ],
+        "cr": "13",
+        "spellcasting": [
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The rakshasa casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 18}):"
+            ],
+            "will": [
+              "{@spell Detect Magic|SRD52}",
+              "{@spell Detect Thoughts|SRD52}",
+              "{@spell Disguise Self|SRD52}",
+              "{@spell Mage Hand|SRD52}",
+              "{@spell Minor Illusion|SRD52}"
+            ],
+            "daily": {
+              "1e": [
+                "{@spell Fly|SRD52}",
+                "{@spell Invisibility|SRD52}",
+                "{@spell Major Image|SRD52}",
+                "{@spell Plane Shift|SRD52}"
+              ]
+            },
+            "ability": "cha",
+            "displayAs": "action"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Greater Magic Resistance",
+            "entries": [
+              "The rakshasa automatically succeeds on saving throws against spells and other magical effects, and the attack rolls of spells automatically miss it. Without the rakshasa's permission, no spell can observe the rakshasa remotely or detect its thoughts, creature type, or alignment."
+            ]
+          },
+          {
+            "name": "Fiendish Restoration",
+            "entries": [
+              "If the rakshasa dies outside the Nine Hells, its body turns to ichor, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Nine Hells."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The rakshasa makes three Cursed Touch attacks."
+            ]
+          },
+          {
+            "name": "Cursed Touch",
+            "entries": [
+              "{@atkr m} {@hit 10}, reach 5 ft. {@h}12 ({@damage 2d6 + 5}) Slashing damage plus 19 ({@damage 3d12}) Necrotic damage. If the target is a creature, it is cursed. While cursed, the target gains no benefit from finishing a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}."
+            ]
+          },
+          {
+            "name": "Baleful Command {@recharge 5}",
+            "entries": [
+              "{@actSave wis} {@dc 18}, each enemy in a 30-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the rakshasa. {@actSaveFail} 28 ({@damage 8d6}) Psychic damage, and the target has the {@condition Frightened|SRD52} and {@condition Incapacitated|SRD52} conditions until the start of the rakshasa's next turn."
+            ]
+          }
+        ],
+        "environment": [
+          "planar, nine hells",
+          "urban"
+        ],
+        "treasure": [
+          "relics"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/rakshasa.opus"
+        },
+        "senseTags": [
+          "U"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "I"
+        ],
+        "damageTags": [
+          "N",
+          "S",
+          "Y"
+        ],
+        "spellcastingTags": [
+          "O"
+        ],
+        "miscTags": [
+          "CUR",
+          "MA"
+        ],
+        "conditionInflictSpell": [
+          "invisible"
+        ],
+        "savingThrowForced": [
+          "wisdom"
+        ],
+        "savingThrowForcedSpell": [
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Rakshasa",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Rakshasa",
+                "entries": [
+                  "{@i Deceiver Hungry for Power and Flesh}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Planar (Nine Hells)|bestiary|environment=planar, nine hells}, {@filter Urban|bestiary|environment=urban}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Relics"
+                      }
+                    ]
+                  },
+                  "Masters of manipulation, rakshasas infiltrate communities to claim positions of power. While disguising their true natures, they kidnap victims and indulge their insatiable hunger for flesh.",
+                  "Rakshasas can withstand some degree of magic, but legends tell of blessed warriors felling them with crossbow bolts, arrows, or similar weapons.",
+                  "Rakshasas' appearances combine humanlike bodies with the features of animals and monsters. All rakshasas have a physical oddity that remains when they adopt magical disguises, such as palms where the backs of the hands would be on humans."
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Rakshasa.webp"
+                },
+                "credit": "Andrea Piparo",
+                "width": 2142,
+                "height": 1366
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

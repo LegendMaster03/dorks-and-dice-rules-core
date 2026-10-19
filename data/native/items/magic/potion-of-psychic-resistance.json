@@ -1,0 +1,46 @@
+{
+  "id": "item.potion-of-psychic-resistance",
+  "name": "Potion of Psychic Resistance",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Psychic Resistance",
+        "type": "P",
+        "resist": [
+          "psychic"
+        ],
+        "tier": "minor",
+        "rarity": "uncommon",
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Potion of Resistance}"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Psychic Resistance",
+        "type": "P|SRD52",
+        "resist": [
+          "psychic"
+        ],
+        "rarity": "uncommon",
+        "weight": 0.5,
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Potion of Resistance|SRD52}"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

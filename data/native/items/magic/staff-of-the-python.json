@@ -1,0 +1,68 @@
+{
+  "id": "item.staff-of-the-python",
+  "name": "Staff of the Python",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Staff of the Python",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": "by a cleric, druid, or warlock",
+        "reqAttuneTags": [
+          {
+            "class": "cleric"
+          },
+          {
+            "class": "druid"
+          },
+          {
+            "class": "warlock"
+          }
+        ],
+        "weight": 4,
+        "weaponCategory": "simple",
+        "property": [
+          "V"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "B",
+        "dmg2": "1d8",
+        "staff": true,
+        "entries": [
+          "You can use an action to speak this staff's command word and throw the staff on the ground within 10 feet of you. The staff becomes a {@creature giant constrictor snake} under your control and acts on its own initiative count. By using a bonus action to speak the command word again, you return the staff to its normal form in a space formerly occupied by the snake.",
+          "On your turn, you can mentally command the snake if it is within 60 feet of you and you aren't {@condition incapacitated}. You decide what action the snake takes and where it moves during its next turn, or you can issue it a general command, such as to attack your enemies or guard a location.",
+          "If the snake is reduced to 0 hit points, it dies and reverts to its staff form. The staff then shatters and is destroyed. If the snake reverts to staff form before losing all its hit points, it regains all of them."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Staff of the Python",
+        "type": "M|SRD52",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "weight": 4,
+        "weaponCategory": "simple",
+        "property": [
+          "V|SRD52"
+        ],
+        "mastery": [
+          "Topple|SRD52"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "B",
+        "dmg2": "1d8",
+        "staff": true,
+        "entries": [
+          "As a {@action Magic|SRD52} action, you can throw this staff so that it lands in an unoccupied space within 10 feet of you, causing the staff to become a {@creature Giant Constrictor Snake|SRD52} in that space. The snake is under your control and shares your {@variantrule Initiative|SRD52} count, taking its turn immediately after yours.",
+          "On your turn, you can mentally command the snake (no action required) if it is within 60 feet of you and you don't have the {@condition Incapacitated|SRD52} condition. You decide what action the snake takes and where it moves during its turn, or you can issue it a general command, such as to attack your enemies or guard a location. Absent commands from you, the snake defends itself.",
+          "As a {@variantrule Bonus Action|SRD52}, you can command the snake to revert to staff form in its current space, and you can't use the staff's property again for 1 hour. If the snake is reduced to 0 {@variantrule Hit Points|SRD52}, it dies and reverts to its staff form; the staff then shatters and is destroyed. If the snake reverts to staff form before losing all its {@variantrule Hit Points|SRD52}, it regains all of them."
+        ]
+      }
+    }
+  ]
+}

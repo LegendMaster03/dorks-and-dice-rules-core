@@ -1,0 +1,120 @@
+{
+  "id": "spell.heal",
+  "name": "Heal",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Heal",
+        "level": 6,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "Choose a creature that you can see within range. A surge of positive energy washes through the creature, causing it to regain 70 hit points. This spell also ends {@condition blinded||blindness}, {@condition deafened||deafness}, and any diseases affecting the target. This spell has no effect on constructs or undead."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 7th level or higher, the amount of healing increases by 10 for each slot level above 6th."
+            ]
+          }
+        ],
+        "affectsCreatureType": [
+          "aberration",
+          "beast",
+          "celestial",
+          "dragon",
+          "elemental",
+          "fey",
+          "fiend",
+          "giant",
+          "humanoid",
+          "monstrosity",
+          "ooze",
+          "plant"
+        ],
+        "miscTags": [
+          "HL",
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Heal",
+        "level": 6,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "Choose a creature that you can see within range. Positive energy washes through the target, restoring 70 {@variantrule Hit Points|SRD52}. This spell also ends the {@condition Blinded|SRD52}, {@condition Deafened|SRD52}, and {@condition Poisoned|SRD52} conditions on the target."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "The healing increases by {@scaledice 70|6-9|10} for each spell slot level above 6."
+            ]
+          }
+        ],
+        "miscTags": [
+          "HL",
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

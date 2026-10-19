@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.withdraw-cost-1d6.rogue.withdraw-cost-1d6.5",
+  "name": "Withdraw (Cost: 1d6)",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Withdraw (Cost: 1d6)",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 5,
+        "entries": [
+          "Immediately after the attack, you move up to half your {@variantrule Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 5
+}

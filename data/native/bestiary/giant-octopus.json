@@ -1,0 +1,244 @@
+{
+  "id": "monster.giant-octopus",
+  "name": "Giant Octopus",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Giant Octopus",
+        "size": [
+          "L"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          11
+        ],
+        "hp": {
+          "average": 52,
+          "formula": "8d10 + 8"
+        },
+        "speed": {
+          "walk": 10,
+          "swim": 60
+        },
+        "str": 17,
+        "dex": 13,
+        "con": 13,
+        "int": 4,
+        "wis": 10,
+        "cha": 4,
+        "skill": {
+          "perception": "+4",
+          "stealth": "+5"
+        },
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 14,
+        "cr": "1",
+        "trait": [
+          {
+            "name": "Hold Breath",
+            "entries": [
+              "While out of water, the octopus can hold its breath for 1 hour."
+            ]
+          },
+          {
+            "name": "Underwater Camouflage",
+            "entries": [
+              "The octopus has advantage on Dexterity ({@skill Stealth}) checks made while underwater."
+            ]
+          },
+          {
+            "name": "Water Breathing",
+            "entries": [
+              "The octopus can breathe only underwater."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Tentacles",
+            "entries": [
+              "{@atk mw} {@hit 5} to hit, reach 15 ft., one target. {@h}10 ({@damage 2d6 + 3}) bludgeoning damage. If the target is a creature, it is {@condition grappled} (escape {@dc 16}). Until this grapple ends, the target is {@condition restrained}, and the octopus can't use its tentacles on another target."
+            ]
+          },
+          {
+            "name": "Ink Cloud (Recharges after a Short or Long Rest)",
+            "entries": [
+              "A 20-foot-radius cloud of ink extends all around the octopus if it is underwater. The area is {@quickref Vision and Light||2||heavily obscured} for 1 minute, although a significant current can disperse the ink. After releasing the ink, the octopus can use the {@action Dash} action as a bonus action."
+            ]
+          }
+        ],
+        "environment": [
+          "underwater"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/giant-octopus.opus"
+        },
+        "traitTags": [
+          "Camouflage",
+          "Hold Breath",
+          "Water Breathing"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Tentacles"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "AOE",
+          "MW",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "grappled",
+          "restrained"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Giant Octopus",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Giant Octopus.webp"
+                },
+                "width": 608,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Giant Octopus",
+        "size": [
+          "L"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          11
+        ],
+        "hp": {
+          "average": 45,
+          "formula": "7d10 + 7"
+        },
+        "speed": {
+          "walk": 10,
+          "swim": 60
+        },
+        "str": 17,
+        "dex": 13,
+        "con": 13,
+        "int": 5,
+        "wis": 10,
+        "cha": 4,
+        "skill": {
+          "perception": "+4",
+          "stealth": "+5"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 14,
+        "cr": "1",
+        "trait": [
+          {
+            "name": "Water Breathing",
+            "entries": [
+              "The octopus can breathe only underwater. It can hold its breath for 1 hour outside water."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Tentacles",
+            "entries": [
+              "{@atkr m} {@hit 5}, reach 10 ft. {@h}10 ({@damage 2d6 + 3}) Bludgeoning damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 13}) from all eight tentacles. While {@condition Grappled|SRD52}, the target has the {@condition Restrained|SRD52} condition."
+            ]
+          }
+        ],
+        "reaction": [
+          {
+            "name": "Ink Cloud (1/Day)",
+            "entries": [
+              "{@actTrigger} The octopus takes damage while underwater. {@actResponse} The octopus releases ink that fills a 10-foot {@variantrule Cube [Area of Effect]|SRD52|Cube} centered on itself, and the octopus moves up to its {@variantrule Swim Speed|SRD52}. The {@variantrule Cube [Area of Effect]|SRD52|Cube} is {@variantrule Heavily Obscured|SRD52} for 1 minute or until a strong current or similar effect disperses the ink."
+            ]
+          }
+        ],
+        "environment": [
+          "underwater"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/giant-octopus.opus"
+        },
+        "traitTags": [
+          "Water Breathing"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Tentacles"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MA",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "grappled",
+          "restrained"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Giant Octopus",
+            "_copy": {
+              "name": "Animals",
+              "source": "SRD52",
+              "_mod": {
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Octopus.webp"
+                      },
+                      "width": 1000,
+                      "height": 875
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "deity.isis",
+  "name": "Isis",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Isis",
+        "pantheon": "Egyptian",
+        "alignment": [
+          "N",
+          "G"
+        ],
+        "title": "Goddess of fertility and magic",
+        "domains": [
+          "Knowledge",
+          "Life",
+          "Arcana"
+        ],
+        "symbol": "Ankh and star"
+      }
+    }
+  ]
+}

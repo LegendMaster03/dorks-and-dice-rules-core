@@ -1,0 +1,418 @@
+{
+  "id": "monster.mummy",
+  "name": "Mummy",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Mummy",
+        "size": [
+          "M"
+        ],
+        "type": "undead",
+        "alignment": [
+          "L",
+          "E"
+        ],
+        "ac": [
+          {
+            "ac": 11,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 58,
+          "formula": "9d8 + 18"
+        },
+        "speed": {
+          "walk": 20
+        },
+        "str": 16,
+        "dex": 8,
+        "con": 15,
+        "int": 6,
+        "wis": 10,
+        "cha": 12,
+        "save": {
+          "wis": "+2"
+        },
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 10,
+        "resist": [
+          {
+            "resist": [
+              "bludgeoning",
+              "piercing",
+              "slashing"
+            ],
+            "note": "from nonmagical attacks",
+            "cond": true
+          }
+        ],
+        "immune": [
+          "necrotic",
+          "poison"
+        ],
+        "vulnerable": [
+          "fire"
+        ],
+        "conditionImmune": [
+          "charmed",
+          "exhaustion",
+          "frightened",
+          "paralyzed",
+          "poisoned"
+        ],
+        "languages": [
+          "the languages it knew in life"
+        ],
+        "cr": "3",
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The mummy can use its Dreadful Glare and makes one attack with its rotting fist."
+            ]
+          },
+          {
+            "name": "Rotting Fist",
+            "entries": [
+              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}10 ({@damage 2d6 + 3}) bludgeoning damage plus 10 ({@damage 3d6}) necrotic damage. If the target is a creature, it must succeed on a {@dc 12} Constitution saving throw or be cursed with mummy rot. The cursed target can't regain hit points, and its hit point maximum decreases by 10 ({@dice 3d6}) for every 24 hours that elapse. If the curse reduces the target's hit point maximum to 0, the target dies, and its body turns to dust. The curse lasts until removed by the {@spell remove curse} spell or other magic."
+            ]
+          },
+          {
+            "name": "Dreadful Glare",
+            "entries": [
+              "The mummy targets one creature it can see within 60 feet of it. If the target can see the mummy, it must succeed on a {@dc 11} Wisdom saving throw against this magic or become {@condition frightened} until the end of the mummy's next turn. If the target fails the saving throw by 5 or more, it is also {@condition paralyzed} for the same duration. A target that succeeds on the saving throw is immune to the Dreadful Glare of all mummies (but not mummy lords) for the next 24 hours."
+            ]
+          }
+        ],
+        "environment": [
+          "desert"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/mummy.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "LF"
+        ],
+        "damageTags": [
+          "B",
+          "N"
+        ],
+        "miscTags": [
+          "CUR",
+          "HPR",
+          "MW"
+        ],
+        "conditionInflict": [
+          "frightened",
+          "paralyzed"
+        ],
+        "savingThrowForced": [
+          "constitution",
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Mummy",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Raised by dark funerary rituals, a mummy shambles from the shrouded stillness of a time-lost temple or tomb. Having been awoken from its rest, it punishes transgressors with the power of its unholy curse.",
+                      {
+                        "name": "Preserved Wrath",
+                        "type": "entries",
+                        "entries": [
+                          "The long burial rituals that accompany a mummy's entombment help protect its body from rot. In the embalming process, the newly dead creature's organs are removed and placed in special jars, and its corpse is treated with preserving oils, herbs, and wrappings. After the body has been prepared, the corpse is typically wrapped in linen bandages."
+                        ]
+                      },
+                      {
+                        "name": "The Will of Dark Gods",
+                        "type": "entries",
+                        "entries": [
+                          "An undead mummy is created when the priest of a death god or other dark deity ritually imbues a prepared corpse with necromantic magic. The mummy's linen wrappings are inscribed with necromantic markings before the burial ritual concludes with an invocation to darkness. As a mummy endures in undeath, it animates in response to conditions specified by the ritual. Most commonly, a transgression against its tomb, treasures, lands, or former loved ones will cause a mummy to rise."
+                        ]
+                      },
+                      {
+                        "name": "The Punished",
+                        "type": "entries",
+                        "entries": [
+                          "Once deceased, an individual has no say in whether or not its body is made into a mummy. Some mummies were powerful individuals who displeased a high priest or pharaoh, or who committed crimes of treason, adultery, or murder. As punishment, they were cursed with eternal undeath, embalmed, mummified, and sealed away. Other times, mummies acting as tomb guardians are created from slaves put to death specifically to serve a greater purpose."
+                        ]
+                      },
+                      {
+                        "name": "Creature of Ritual",
+                        "type": "entries",
+                        "entries": [
+                          "A mummy obeys the conditions and parameters laid down by the rituals that created it, driven only to punish transgressors. The overwhelming terror that foreshadows a mummy's attack can leave the intended victim paralyzed with fright. In the days following a mummy's touch, a victim's body rots from the outside in, until nothing but dust remains."
+                        ]
+                      },
+                      {
+                        "name": "Ending a Mummy's Curse",
+                        "type": "entries",
+                        "entries": [
+                          "Rare magic can undo or dispel the ritual that gave rise to a mummy, allowing it to truly die. More commonly, a mummy can be sent back to its endless rest by undoing the transgression that caused it to rise. A sacred idol might be replaced in its niche, a stolen treasure could be returned to its tomb, or a temple might be purified of despoiling bloodshed.",
+                          "More ephemeral or permanent offenses, such as revealing a secret the mummy wished kept or killing an individual the mummy loved, can't be so easily remedied. In such cases, a mummy might slaughter all the creatures responsible and still not sate its wrath."
+                        ]
+                      },
+                      {
+                        "name": "Undead Archives",
+                        "type": "entries",
+                        "entries": [
+                          "Though they seldom bother to do so, mummies can speak. As a result, some serve as undead repositories of lost lore, and can be consulted by the descendants of those who created them. Powerful individuals sometimes intentionally sequester mummies away for occasional consultation."
+                        ]
+                      },
+                      {
+                        "name": "Undead Nature",
+                        "type": "entries",
+                        "entries": [
+                          "A mummy doesn't require air, food, drink, or sleep."
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "Before opening a sarcophagus, light a torch."
+                        ],
+                        "by": "X the Mystic's 7th rule of dungeon survival"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Mummy.webp"
+                },
+                "width": 431,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Mummy",
+        "size": [
+          "S",
+          "M"
+        ],
+        "type": "undead",
+        "alignment": [
+          "L",
+          "E"
+        ],
+        "ac": [
+          11
+        ],
+        "hp": {
+          "average": 58,
+          "formula": "9d8 + 18"
+        },
+        "speed": {
+          "walk": 20
+        },
+        "str": 16,
+        "dex": 8,
+        "con": 15,
+        "int": 6,
+        "wis": 12,
+        "cha": 12,
+        "save": {
+          "wis": "+3"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 11,
+        "immune": [
+          "necrotic",
+          "poison"
+        ],
+        "vulnerable": [
+          "fire"
+        ],
+        "conditionImmune": [
+          "charmed",
+          "exhaustion",
+          "frightened",
+          "paralyzed",
+          "poisoned"
+        ],
+        "languages": [
+          "Common plus two other languages"
+        ],
+        "cr": "3",
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The mummy makes two Rotting Fist attacks and uses Dreadful Glare."
+            ]
+          },
+          {
+            "name": "Rotting Fist",
+            "entries": [
+              "{@atkr m} {@hit 5}, reach 5 ft. {@h}8 ({@damage 1d10 + 3}) Bludgeoning damage plus 10 ({@damage 3d6}) Necrotic damage. If the target is a creature, it is cursed. While cursed, the target can't regain {@variantrule Hit Points|SRD52}, its {@variantrule Hit Points|SRD52|Hit Point} maximum doesn't return to normal when finishing a {@variantrule Long Rest|SRD52}, and its {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by 10 ({@dice 3d6}) every 24 hours that elapse. A creature dies and turns to dust if reduced to 0 {@variantrule Hit Points|SRD52} by this attack."
+            ]
+          },
+          {
+            "name": "Dreadful Glare",
+            "entries": [
+              "{@actSave wis} {@dc 11}, one creature the mummy can see within 60 feet. {@actSaveFail} The target has the {@condition Frightened|SRD52} condition until the end of the mummy's next turn. {@actSaveSuccess} The target is immune to this mummy's Dreadful Glare for 24 hours."
+            ]
+          }
+        ],
+        "environment": [
+          "desert",
+          "swamp"
+        ],
+        "treasure": [
+          "relics"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/mummy.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "X"
+        ],
+        "damageTags": [
+          "B",
+          "N"
+        ],
+        "miscTags": [
+          "CUR",
+          "HPR",
+          "MA"
+        ],
+        "conditionInflict": [
+          "frightened"
+        ],
+        "savingThrowForced": [
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Mummy",
+            "_copy": {
+              "name": "Mummies",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "Common mummies are the remains of priests, nobles, or champions of faith that underwent magical burial rites. Some are preserved through processes using linen wrappings or clay, but others are preserved by peat bogs, ice, magic, or other means.",
+                        "Roll on or choose a result from the Mummy Resurrections table to determine why a mummy has returned from the dead.",
+                        {
+                          "type": "table",
+                          "caption": "Mummy Resurrections",
+                          "colLabels": [
+                            "1d8",
+                            "The Mummy Reanimates To..."
+                          ],
+                          "colStyles": [
+                            "col-2 text-center",
+                            "col-10"
+                          ],
+                          "rows": [
+                            [
+                              "1",
+                              "Defend a holy site it was created to protect."
+                            ],
+                            [
+                              "2",
+                              "Obey the summons of a mummy lord."
+                            ],
+                            [
+                              "3",
+                              "Oppose an enemy who has returned to life."
+                            ],
+                            [
+                              "4",
+                              "Protect its descendants from an ancient threat."
+                            ],
+                            [
+                              "5",
+                              "Punish the progeny of those who cursed it."
+                            ],
+                            [
+                              "6",
+                              "Reclaim treasures robbed from its crypt."
+                            ],
+                            [
+                              "7",
+                              "Serve whoever speaks the prayer on its tomb."
+                            ],
+                            [
+                              "8",
+                              "Slay anyone who sets eyes on it."
+                            ]
+                          ]
+                        },
+                        {
+                          "type": "insetReadaloud",
+                          "entries": [
+                            {
+                              "type": "quote",
+                              "entries": [
+                                "Rule 7: Before opening a sarcophagus, light a torch."
+                              ],
+                              "from": "X the Mystic's Rules of Dungeon Survival"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

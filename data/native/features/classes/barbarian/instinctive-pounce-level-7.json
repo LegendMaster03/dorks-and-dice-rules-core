@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.instinctive-pounce.barbarian.instinctive-pounce.7",
+  "name": "Instinctive Pounce",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Instinctive Pounce",
+        "className": "Barbarian",
+        "classSource": "SRD52",
+        "level": 7,
+        "entries": [
+          "As part of the {@variantrule Bonus Action|SRD52} you take to enter your Rage, you can move up to half your {@variantrule Speed|SRD52}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian",
+  "classLevel": 7
+}

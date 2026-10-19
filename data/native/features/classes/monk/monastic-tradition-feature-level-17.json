@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.monastic-tradition-feature.monk.monastic-tradition-feature.17",
+  "name": "Monastic Tradition feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Monastic Tradition feature",
+        "className": "Monk",
+        "classSource": "SRD51",
+        "level": 17,
+        "entries": [
+          "At 17th level, you gain one feature granted by your Monastic Tradition."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 17
+}

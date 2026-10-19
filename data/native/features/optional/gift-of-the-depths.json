@@ -1,0 +1,33 @@
+{
+  "id": "optionalfeature.gift-of-the-depths",
+  "name": "Gift of the Depths",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Gift of the Depths",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 5,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            }
+          }
+        ],
+        "entries": [
+          "You can breathe underwater, and you gain a Swim Speed equal to your Speed.",
+          "You can also cast {@spell Water Breathing|SRD52} once without expending a spell slot. You regain the ability to cast it in this way again when you finish a {@variantrule Long Rest|SRD52}."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "id": "monster.pteranodon",
+  "name": "Pteranodon",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Pteranodon",
+        "group": [
+          "Dinosaurs"
+        ],
+        "size": [
+          "M"
+        ],
+        "type": {
+          "type": "beast",
+          "tags": [
+            "dinosaur"
+          ]
+        },
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 13,
+          "formula": "3d8"
+        },
+        "speed": {
+          "walk": 10,
+          "fly": 60
+        },
+        "str": 12,
+        "dex": 15,
+        "con": 10,
+        "int": 2,
+        "wis": 9,
+        "cha": 5,
+        "skill": {
+          "perception": "+1"
+        },
+        "passive": 11,
+        "cr": "1/4",
+        "trait": [
+          {
+            "name": "Flyby",
+            "entries": [
+              "The pteranodon doesn't provoke an {@action Opportunity Attack|SRD52} when it flies out of an enemy's reach."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atkr m} {@hit 4}, reach 5 ft. {@h}6 ({@damage 1d8 + 2}) Piercing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "coastal",
+          "grassland",
+          "mountain"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/pteranodon.opus"
+        },
+        "traitTags": [
+          "Flyby"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Pteranodon",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "These flying reptiles have wingspans of 15 to 20 feet and typically dive for small marine prey, though they are opportunists and will attack any creature that appears edible. A pteranodon has no teeth, instead using its sharp beak to stab prey too large to swallow with one gulp.",
+                      {
+                        "type": "entries",
+                        "name": "Dinosaurs",
+                        "entries": [
+                          "Dinosaurs, or behemoths, are among the oldest reptiles in the world. Predatory dinosaurs are savage, territorial hunters. Herbivorous dinosaurs are less aggressive, but they might attack to defend their young, or if startled or harassed.",
+                          "Dinosaurs come in many sizes and shapes. Larger varieties often have drab coloration, while smaller dinosaurs have colorful markings akin to birds. Dinosaurs roam rugged and isolated areas that humanoids seldom visit, including remote mountain valleys, inaccessible plateaus, tropical islands, and deep fens."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Dinosaurs.webp"
+                },
+                "width": 1000,
+                "height": 827
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

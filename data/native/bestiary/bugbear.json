@@ -1,0 +1,174 @@
+{
+  "id": "monster.bugbear",
+  "name": "Bugbear",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Bugbear",
+        "size": [
+          "M"
+        ],
+        "type": {
+          "type": "humanoid",
+          "tags": [
+            "goblinoid"
+          ]
+        },
+        "alignment": [
+          "C",
+          "E"
+        ],
+        "ac": [
+          {
+            "ac": 16,
+            "from": [
+              "{@item hide armor|srd51}",
+              "{@item shield|srd51}"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 27,
+          "formula": "5d8 + 5"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "str": 15,
+        "dex": 14,
+        "con": 13,
+        "int": 8,
+        "wis": 11,
+        "cha": 9,
+        "skill": {
+          "stealth": "+6",
+          "survival": "+2"
+        },
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 10,
+        "languages": [
+          "Common",
+          "Goblin"
+        ],
+        "cr": "1",
+        "trait": [
+          {
+            "name": "Brute",
+            "entries": [
+              "A melee weapon deals one extra die of its damage when the bugbear hits with it (included in the attack)."
+            ]
+          },
+          {
+            "name": "Surprise Attack",
+            "entries": [
+              "If the bugbear surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 7 ({@damage 2d6}) damage from the attack."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Morningstar",
+            "entries": [
+              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d8 + 2}) piercing damage."
+            ]
+          },
+          {
+            "name": "Javelin",
+            "entries": [
+              "{@atk mw,rw} {@hit 4} to hit, reach 5 ft. or range 30/120 ft., one target. {@h}9 ({@damage 2d6 + 2}) piercing damage in melee or 5 ({@damage 1d6 + 2}) piercing damage at range."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark",
+          "grassland",
+          "forest"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/bugbear.opus"
+        },
+        "attachedItems": [
+          "javelin|srd51",
+          "morningstar|srd51"
+        ],
+        "traitTags": [
+          "Brute"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "languageTags": [
+          "C",
+          "GO"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MLW",
+          "MW",
+          "RW",
+          "THW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Bugbear",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Bugbears are born for battle and mayhem. Surviving by raiding and hunting, they bully the weak and despise being bossed around, but their love of carnage means they will fight for powerful masters if bloodshed and treasure are assured.",
+                      {
+                        "name": "Goblinoids",
+                        "type": "entries",
+                        "entries": [
+                          "Bugbears are often found in the company of their cousins, hobgoblins and goblins. Bugbears usually enslave goblins they encounter, and they bully hobgoblins into giving them gold and food in return for serving as scouts and shock troops. Even when paid, bugbears are at best unreliable allies, yet goblins and hobgoblins understand that no matter how much bugbears might drain a tribe of resources, these creatures are a potent force."
+                        ]
+                      },
+                      {
+                        "name": "Followers of Hruggek",
+                        "type": "entries",
+                        "entries": [
+                          "Bugbears worship Hruggek, a lesser god who dwells on the plane of Acheron. In the absence of their goblinoid kin, bugbears form loose war bands, each one led by its fiercest member. Bugbears believe that when they die, their spirits have a chance to fight at Hruggek's side. They try to prove themselves worthy by defeating as many foes as possible."
+                        ]
+                      },
+                      {
+                        "name": "Venal Ambushers",
+                        "type": "entries",
+                        "entries": [
+                          "Despite their intimidating builds, bugbears move with surprising stealth. They are fond of setting ambushes and flee when outmatched. They are dependable mercenaries as long as they are supplied food, drink, and treasure, but a bugbear forgets any bond when its life is on the line. A wounded member of a bugbear band might be left behind to help the rest of the band escape. Afterward, that bugbear might help pursuers track down its former companions if doing so saves its life."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Bugbear.webp"
+                },
+                "credit": "Steve Prescott",
+                "width": 682,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "id": "classFeature.faithful-steed.paladin.faithful-steed.5",
+  "name": "Faithful Steed",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Faithful Steed",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "level": 5,
+        "entries": [
+          "You can call on the aid of an otherworldly steed. You always have the {@spell Find Steed|SRD52} spell prepared.",
+          "You can also cast the spell once without expending a spell slot, and you regain the ability to do so when you finish a {@variantrule Long Rest|SRD52}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "classLevel": 5
+}

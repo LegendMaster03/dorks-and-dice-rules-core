@@ -1,0 +1,124 @@
+{
+  "id": "spell.hideous-laughter",
+  "name": "Hideous Laughter",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Hideous Laughter",
+        "level": 1,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "tiny tarts and a feather that is waved in the air"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "A creature of your choice that you can see within range perceives everything as hilariously funny and falls into fits of laughter if this spell affects it. The target must succeed on a Wisdom saving throw or fall {@condition prone}, becoming {@condition incapacitated} and unable to stand up for the duration. A creature with an Intelligence score of 4 or less isn't affected.",
+          "At the end of each of its turns, and each time it takes damage, the target can make another Wisdom saving throw. The target has advantage on the saving throw if it's triggered by damage. On a success, the spell ends."
+        ],
+        "conditionInflict": [
+          "incapacitated",
+          "prone"
+        ],
+        "savingThrow": [
+          "wisdom"
+        ],
+        "miscTags": [
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Hideous Laughter",
+        "level": 1,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a tart and a feather"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "One creature of your choice that you can see within range makes a Wisdom saving throw. On a failed save, it has the {@condition Prone|SRD52} and {@condition Incapacitated|SRD52} conditions for the duration. During that time, it laughs uncontrollably if it's capable of laughter, and it can't end the {@condition Prone|SRD52} condition on itself.",
+          "At the end of each of its turns and each time it takes damage, it makes another Wisdom saving throw. The target has {@variantrule Advantage|SRD52} on the save if the save is triggered by damage. On a successful save, the spell ends."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "You can target one additional creature for each spell slot level above 1."
+            ]
+          }
+        ],
+        "conditionInflict": [
+          "incapacitated",
+          "prone"
+        ],
+        "savingThrow": [
+          "wisdom"
+        ],
+        "miscTags": [
+          "SCT",
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

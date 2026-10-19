@@ -1,0 +1,34 @@
+{
+  "id": "item.military-saddle",
+  "name": "Military Saddle",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Military Saddle",
+        "type": "TAH",
+        "rarity": "none",
+        "weight": 30,
+        "value": 2000,
+        "entries": [
+          "A military saddle braces the rider, helping you keep your seat on an active mount in battle. It gives you advantage on any check you make to remain mounted."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Military Saddle",
+        "type": "TAH|SRD52",
+        "rarity": "none",
+        "weight": 30,
+        "value": 2000,
+        "entries": [
+          "A saddle comes with a bit, a bridle, reins, and any other equipment needed to use the saddle. A Military Saddle gives {@variantrule Advantage|SRD52} on any ability check you make to remain mounted."
+        ]
+      }
+    }
+  ]
+}

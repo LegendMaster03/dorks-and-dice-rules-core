@@ -1,0 +1,48 @@
+{
+  "id": "item.chariot",
+  "name": "Chariot",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Chariot",
+        "type": "VEH",
+        "rarity": "none",
+        "weight": 100,
+        "value": 25000,
+        "additionalEntries": [
+          {
+            "type": "inset",
+            "name": "Chariots",
+            "source": "MOT",
+            "page": 196,
+            "entries": [
+              "Chariots and the creatures pulling them work like controlled mounts, as described in the mounted combat rules in the {@book Player's Handbook|SRD51|9|Mounted Combat}, but with the following differences:",
+              {
+                "type": "list",
+                "items": [
+                  "Mounting or dismounting a chariot costs you 5 feet of movement, rather than a number of feet equal to half your speed.",
+                  "Being mounted on a chariot grants you {@quickref Cover||3||half cover}.",
+                  "A chariot's speed is equal to the speed of the slowest creature pulling it.",
+                  "If multiple creatures are pulling the chariot, they all act on the same initiative, and they must take the same action on their turn."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Chariot",
+        "type": "VEH|SRD52",
+        "rarity": "none",
+        "weight": 100,
+        "value": 25000
+      }
+    }
+  ]
+}

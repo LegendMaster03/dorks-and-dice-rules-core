@@ -1,0 +1,31 @@
+{
+  "id": "subspecies.lightfoot.halfling.lightfoot",
+  "name": "Lightfoot",
+  "kind": "subspecies",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Lightfoot",
+        "raceName": "Halfling",
+        "raceSource": "SRD51",
+        "ability": [
+          {
+            "cha": 1
+          }
+        ],
+        "entries": [
+          {
+            "name": "Naturally Stealthy",
+            "entries": [
+              "You can attempt to hide even when you are obscured only by a creature that is at least one size larger than you."
+            ],
+            "type": "entries"
+          }
+        ]
+      }
+    }
+  ],
+  "parentSpecies": "species.halfling"
+}

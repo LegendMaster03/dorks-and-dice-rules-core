@@ -1,0 +1,251 @@
+{
+  "id": "monster.giant-lizard",
+  "name": "Giant Lizard",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Giant Lizard",
+        "size": [
+          "L"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          {
+            "ac": 12,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 19,
+          "formula": "3d10 + 3"
+        },
+        "speed": {
+          "walk": 30,
+          "climb": 30
+        },
+        "str": 15,
+        "dex": 12,
+        "con": 13,
+        "int": 2,
+        "wis": 10,
+        "cha": 5,
+        "senses": [
+          "darkvision 30 ft."
+        ],
+        "passive": 10,
+        "cr": "1/4",
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d8 + 2}) piercing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark",
+          "forest",
+          "swamp",
+          "desert",
+          "coastal"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/giant-lizard.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "hasToken": true,
+        "_versions": [
+          {
+            "name": "Giant Lizard (Hold Breath and Spider Climb)",
+            "source": "SRD51",
+            "_mod": {
+              "trait": {
+                "mode": "appendArr",
+                "items": [
+                  {
+                    "name": "Hold Breath",
+                    "entries": [
+                      "The lizard can hold its breath for 15 minutes."
+                    ]
+                  },
+                  {
+                    "name": "Spider Climb",
+                    "entries": [
+                      "The lizard can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+                    ]
+                  }
+                ]
+              }
+            },
+            "speed": {
+              "walk": 30,
+              "climb": 30,
+              "swim": 30
+            },
+            "variant": null
+          }
+        ],
+        "lore": [
+          {
+            "name": "Giant Lizard",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "A giant lizard can be ridden or used as a draft animal. Lizardfolk also keep them as pets, and subterranean giant lizards are used as mounts and pack animals by drow, duergar, and other Underdark dwellers.",
+                      {
+                        "type": "inset",
+                        "name": "Variant: Giant Lizard Traits",
+                        "entries": [
+                          "Some giant lizards have one or both of the following traits.",
+                          {
+                            "type": "entries",
+                            "name": "Hold Breath",
+                            "entries": [
+                              "The lizard can hold its breath for 15 minutes. (A lizard that has this trait also has a swimming speed of 30 feet.)"
+                            ]
+                          },
+                          {
+                            "name": "Spider Climb",
+                            "type": "entries",
+                            "entries": [
+                              "The lizard can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Giant Lizard",
+        "size": [
+          "L"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 19,
+          "formula": "3d10 + 3"
+        },
+        "speed": {
+          "walk": 40,
+          "climb": 40
+        },
+        "str": 15,
+        "dex": 12,
+        "con": 13,
+        "int": 2,
+        "wis": 10,
+        "cha": 5,
+        "save": {
+          "dex": "+3"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 10,
+        "cr": "1/4",
+        "trait": [
+          {
+            "name": "Spider Climb",
+            "entries": [
+              "The lizard can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atkr m} {@hit 4}, reach 5 ft. {@h}6 ({@damage 1d8 + 2}) Piercing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "coastal",
+          "desert",
+          "forest",
+          "swamp",
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/giant-lizard.opus"
+        },
+        "traitTags": [
+          "Spider Climb"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Giant Lizard",
+            "_copy": {
+              "name": "Animals",
+              "source": "SRD52",
+              "_mod": {
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Lizard.webp"
+                      },
+                      "credit": "Jonathan Kuo",
+                      "width": 802,
+                      "height": 1000
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

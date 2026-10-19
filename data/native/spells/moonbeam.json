@@ -1,0 +1,132 @@
+{
+  "id": "spell.moonbeam",
+  "name": "Moonbeam",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Moonbeam",
+        "level": 2,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 120
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "several seeds of any moonseed plant and a piece of opalescent feldspar"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "A silvery beam of pale light shines down in a 5-foot-radius, 40-foot-high cylinder centered on a point within range. Until the spell ends, dim light fills the cylinder.",
+          "When a creature enters the spell's area for the first time on a turn or starts its turn there, it is engulfed in ghostly flames that cause searing pain, and it must make a Constitution saving throw. It takes {@damage 2d10} radiant damage on a failed save, or half as much damage on a successful one.",
+          "A shapechanger makes its saving throw with disadvantage. If it fails, it also instantly reverts to its original form and can't assume a different form until it leaves the spell's light.",
+          "On each of your turns after you cast this spell, you can use an action to move the beam up to 60 feet in any direction."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by {@scaledamage 2d10|2-9|1d10} for each slot level above 2nd."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "radiant"
+        ],
+        "savingThrow": [
+          "constitution"
+        ],
+        "miscTags": [
+          "LGT"
+        ],
+        "areaTags": [
+          "Y"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Moonbeam",
+        "level": 2,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 120
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a moonseed leaf"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "A silvery beam of pale light shines down in a 5-foot-radius, 40-foot-high {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} centered on a point within range. Until the spell ends, {@variantrule Dim Light|SRD52} fills the {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder}, and you can take a {@action Magic|SRD52} action on later turns to move the {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} up to 60 feet.",
+          "When the {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} appears, each creature in it makes a Constitution saving throw. On a failed save, a creature takes {@damage 2d10} Radiant damage, and if the creature is shape-shifted (as a result of the {@spell Polymorph|SRD52} spell, for example), it reverts to its true form and can't shape-shift until it leaves the {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder}. On a successful save, a creature takes half as much damage only. A creature also makes this save when the spell's area moves into its space and when it enters the spell's area or ends its turn there. A creature makes this save only once per turn."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "The damage increases by {@scaledamage 2d10|2-9|1d10} for each spell slot level above 2."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "radiant"
+        ],
+        "savingThrow": [
+          "constitution"
+        ],
+        "miscTags": [
+          "LGT"
+        ],
+        "areaTags": [
+          "Y"
+        ]
+      }
+    }
+  ]
+}

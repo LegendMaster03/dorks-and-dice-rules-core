@@ -1,0 +1,78 @@
+{
+  "id": "item.trident-of-fish-command",
+  "name": "Trident of Fish Command",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Trident of Fish Command",
+        "baseItem": "trident|srd51",
+        "type": "M",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "weight": 4,
+        "weaponCategory": "martial",
+        "property": [
+          "T",
+          "V"
+        ],
+        "range": "20/60",
+        "dmg1": "1d6",
+        "dmgType": "P",
+        "dmg2": "1d8",
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d3}",
+        "charges": 3,
+        "entries": [
+          "This trident is a magic weapon. It has 3 charges. While you carry it, you can use an action and expend 1 charge to cast {@spell dominate beast} (save {@dc 15}) from it on a beast that has an innate swimming speed. The trident regains {@dice 1d3} expended charges daily at dawn."
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "dominate beast"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Trident of Fish Command",
+        "baseItem": "trident|srd52",
+        "type": "M|SRD52",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "weight": 4,
+        "weaponCategory": "martial",
+        "property": [
+          "T|SRD52",
+          "V|SRD52"
+        ],
+        "mastery": [
+          "Topple|SRD52"
+        ],
+        "range": "20/60",
+        "dmg1": "1d8",
+        "dmgType": "P",
+        "dmg2": "1d10",
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d3}",
+        "charges": 3,
+        "entries": [
+          "This magic weapon has 3 charges, and it regains {@dice 1d3} expended charges daily at dawn. While you carry it, you can expend 1 charge to cast {@spell Dominate Beast|SRD52} (save {@dc 15}) from it on a Beast that has a {@variantrule Swim Speed|SRD52}."
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "dominate beast|srd52"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

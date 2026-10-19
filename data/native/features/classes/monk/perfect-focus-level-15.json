@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.perfect-focus.monk.perfect-focus.15",
+  "name": "Perfect Focus",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Perfect Focus",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 15,
+        "entries": [
+          "When you roll {@variantrule Initiative|SRD52} and don't use Uncanny Metabolism, you regain expended Focus Points until you have 4 if you have 3 or fewer."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 15
+}

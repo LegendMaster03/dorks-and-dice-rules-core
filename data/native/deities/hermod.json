@@ -1,0 +1,24 @@
+{
+  "id": "deity.hermod",
+  "name": "Hermod",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Hermod",
+        "pantheon": "Norse",
+        "alignment": [
+          "C",
+          "N"
+        ],
+        "title": "God of luck",
+        "domains": [
+          "Trickery"
+        ],
+        "symbol": "Winged scroll"
+      }
+    }
+  ]
+}

@@ -1,0 +1,340 @@
+{
+  "id": "monster.roc",
+  "name": "Roc",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Roc",
+        "size": [
+          "G"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          {
+            "ac": 15,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 248,
+          "formula": "16d20 + 80"
+        },
+        "speed": {
+          "walk": 20,
+          "fly": 120
+        },
+        "str": 28,
+        "dex": 10,
+        "con": 20,
+        "int": 3,
+        "wis": 10,
+        "cha": 9,
+        "save": {
+          "dex": "+4",
+          "con": "+9",
+          "wis": "+4",
+          "cha": "+3"
+        },
+        "skill": {
+          "perception": "+4"
+        },
+        "passive": 14,
+        "cr": "11",
+        "trait": [
+          {
+            "name": "Keen Sight",
+            "entries": [
+              "The roc has advantage on Wisdom ({@skill Perception}) checks that rely on sight."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The roc makes two attacks: one with its beak and one with its talons."
+            ]
+          },
+          {
+            "name": "Beak",
+            "entries": [
+              "{@atk mw} {@hit 13} to hit, reach 10 ft., one target. {@h}27 ({@damage 4d8 + 9}) piercing damage."
+            ]
+          },
+          {
+            "name": "Talons",
+            "entries": [
+              "{@atk mw} {@hit 13} to hit, reach 5 ft., one target. {@h}23 ({@damage 4d6 + 9}) slashing damage, and the target is {@condition grappled} (escape {@dc 19}). Until this grapple ends, the target is {@condition restrained}, and the roc can't use its talons on another target."
+            ]
+          }
+        ],
+        "environment": [
+          "mountain",
+          "hill",
+          "desert",
+          "coastal",
+          "arctic"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/roc.opus"
+        },
+        "traitTags": [
+          "Keen Senses"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "damageTags": [
+          "P",
+          "S"
+        ],
+        "miscTags": [
+          "MW",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "grappled",
+          "restrained"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Roc",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "At first sight, a roc's silhouette looks much like any other bird of prey. As it descends, however, its unearthly size becomes terrifyingly clear. In flight, a roc's wingspan spreads two hundred feet or more. At rest, perched upon the mountain peaks that are its home, this monstrous bird rivals the oldest dragons in size.",
+                      {
+                        "name": "Sky Titans",
+                        "type": "entries",
+                        "entries": [
+                          "In the ancient days when giants battled dragons for control of the world, Annam, the father of the giant gods, created the rocs so that his worshipers might challenge the dragons' dominance of the air.",
+                          "When the war ended, the rocs were freed from giant domination and spread throughout the world.",
+                          "Though cloud giants and storm giants sometimes tame these great birds, rocs treat even giants as potential prey. They fly great distances in search of food, soaring high above the clouds to reach their favored hunting grounds. A roc seldom hunts swift or small creatures, and it ignores towns and forests where prey can easily take cover. When it locates a large and slow-moving target such as a giant, a whale, or an elephant, a roc dives down to snatch its prey in its massive talons."
+                        ]
+                      },
+                      {
+                        "name": "Remote and Alone",
+                        "type": "entries",
+                        "entries": [
+                          "Rocs are solitary creatures that can live for centuries. They lair in nests made from trees, tents, broken ships, and the remains of caravans they carry off, placing these massive tangles in mountain clefts out of the reach of lesser creatures.",
+                          "Sometimes a roc's nest contains treasures from the caravans or ships they raid, but these creatures are heedless of such baubles. More rarely, a nest holds eggs that are taller than a human, produced by the rocs' infrequent mating."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Roc.webp"
+                },
+                "width": 1000,
+                "height": 642
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Roc",
+        "size": [
+          "G"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          15
+        ],
+        "hp": {
+          "average": 248,
+          "formula": "16d20 + 80"
+        },
+        "speed": {
+          "walk": 20,
+          "fly": 120
+        },
+        "initiative": {
+          "proficiency": 2
+        },
+        "str": 28,
+        "dex": 10,
+        "con": 20,
+        "int": 3,
+        "wis": 10,
+        "cha": 9,
+        "save": {
+          "dex": "+4",
+          "wis": "+4"
+        },
+        "skill": {
+          "perception": "+8"
+        },
+        "passive": 18,
+        "cr": "11",
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The roc makes two Beak attacks. It can replace one attack with a Talons attack."
+            ]
+          },
+          {
+            "name": "Beak",
+            "entries": [
+              "{@atkr m} {@hit 13}, reach 10 ft. {@h}28 ({@damage 3d12 + 9}) Piercing damage."
+            ]
+          },
+          {
+            "name": "Talons",
+            "entries": [
+              "{@atkr m} {@hit 13}, reach 5 ft. {@h}23 ({@damage 4d6 + 9}) Slashing damage. If the target is a Huge or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 19}) from both talons, and it has the {@condition Restrained|SRD52} condition until the grapple ends."
+            ]
+          }
+        ],
+        "bonus": [
+          {
+            "name": "Swoop {@recharge 5}",
+            "entries": [
+              "If the roc has a creature {@condition Grappled|SRD52}, the roc flies up to half its {@variantrule Fly Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks} and drops that creature."
+            ]
+          }
+        ],
+        "environment": [
+          "arctic",
+          "coastal",
+          "desert",
+          "hill",
+          "mountain"
+        ],
+        "treasure": [
+          "any"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/roc.opus"
+        },
+        "actionTags": [
+          "Multiattack"
+        ],
+        "damageTags": [
+          "P",
+          "S"
+        ],
+        "miscTags": [
+          "MA",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "grappled",
+          "restrained"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Roc",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Roc",
+                "entries": [
+                  "{@i Avian of Unbelievable Size}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Arctic|bestiary|environment=arctic}, {@filter Coastal|bestiary|environment=coastal}, {@filter Desert|bestiary|environment=desert}, {@filter Hill|bestiary|environment=hill}, {@filter Mountain|bestiary|environment=mountain}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Any"
+                      }
+                    ]
+                  },
+                  "Birds of prey of fantastic scale, rocs hunt over vast territories and can snatch whole elephants, whales, or wagons in their talons. They then carry their prey back to their remote nests, journeys that can take days and cover hundreds of miles.",
+                  "Rocs nest amid remote heights. Their nests are typically littered with treasure and uneaten prey. Roll on or choose an option from the Roc Nest Remnants table to inspire what's in a roc's nest.",
+                  {
+                    "type": "table",
+                    "caption": "Roc Nest Remnants",
+                    "colLabels": [
+                      "1d6",
+                      "The Roc's Nest Holds..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "The burial litter of a lost hero."
+                      ],
+                      [
+                        "2",
+                        "A caravan wagon full of trade goods."
+                      ],
+                      [
+                        "3",
+                        "A live elephant."
+                      ],
+                      [
+                        "4",
+                        "{@dice 1d4} eggs larger than adult humans."
+                      ],
+                      [
+                        "5",
+                        "Someone marooned in the nest."
+                      ],
+                      [
+                        "6",
+                        "A statue of a knight riding a rearing steed."
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Roc.webp"
+                },
+                "credit": "Alejandro Pacheco",
+                "width": 2560,
+                "height": 1627
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

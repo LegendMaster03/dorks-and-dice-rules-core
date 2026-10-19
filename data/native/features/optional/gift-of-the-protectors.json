@@ -1,0 +1,37 @@
+{
+  "id": "optionalfeature.gift-of-the-protectors",
+  "name": "Gift of the Protectors",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Gift of the Protectors",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 9,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            },
+            "optionalfeature": [
+              "pact of the tome|srd52"
+            ]
+          }
+        ],
+        "entries": [
+          "A new page appears in your Book of Shadows when you conjure it. With your permission, a creature can take an action to write its name on that page, which can contain a number of names equal to your Charisma modifier (minimum of one name).",
+          "When any creature whose name is on the page is reduced to 0 {@variantrule Hit Points|SRD52} but not killed outright, the creature magically drops to 1 {@variantrule Hit Points|SRD52|Hit Point} instead. Once this magic is triggered, no creature can benefit from it until you finish a {@variantrule Long Rest|SRD52}.",
+          "As a {@action Magic|SRD52} action, you can erase a name on the page by touching it."
+        ]
+      }
+    }
+  ]
+}

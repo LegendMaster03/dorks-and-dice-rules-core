@@ -1,0 +1,51 @@
+{
+  "id": "baseitem.trident",
+  "name": "Trident",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Trident",
+        "type": "M",
+        "rarity": "none",
+        "weight": 4,
+        "value": 500,
+        "weaponCategory": "martial",
+        "property": [
+          "T",
+          "V"
+        ],
+        "range": "20/60",
+        "dmg1": "1d6",
+        "dmgType": "P",
+        "dmg2": "1d8",
+        "weapon": true
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Trident",
+        "type": "M|SRD52",
+        "rarity": "none",
+        "weight": 4,
+        "value": 500,
+        "weaponCategory": "martial",
+        "property": [
+          "T|SRD52",
+          "V|SRD52"
+        ],
+        "mastery": [
+          "Topple|SRD52"
+        ],
+        "range": "20/60",
+        "dmg1": "1d8",
+        "dmgType": "P",
+        "dmg2": "1d10",
+        "weapon": true
+      }
+    }
+  ]
+}

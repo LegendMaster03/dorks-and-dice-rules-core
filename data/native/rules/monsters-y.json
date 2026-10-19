@@ -1,0 +1,36 @@
+{
+  "id": "rule.monsters-y",
+  "name": "Monsters (Y)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (Y)",
+        "page": 261,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Young Black Dragon|srd51}",
+              "{@creature Young Blue Dragon|srd51}",
+              "{@creature Young Brass Dragon|srd51}",
+              "{@creature Young Bronze Dragon|srd51}",
+              "{@creature Young Copper Dragon|srd51}",
+              "{@creature Young Gold Dragon|srd51}",
+              "{@creature Young Green Dragon|srd51}",
+              "{@creature Young Red Dragon|srd51}",
+              "{@creature Young Silver Dragon|srd51}",
+              "{@creature Young White Dragon|srd51}"
+            ]
+          }
+        ],
+        "id": "1bb"
+      }
+    }
+  ]
+}

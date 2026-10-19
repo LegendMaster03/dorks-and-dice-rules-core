@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.sorcerous-restoration.sorcerer.sorcerous-restoration.5",
+  "name": "Sorcerous Restoration",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Sorcerous Restoration",
+        "className": "Sorcerer",
+        "classSource": "SRD52",
+        "level": 5,
+        "entries": [
+          "When you finish a {@variantrule Short Rest|SRD52}, you can regain expended Sorcery Points, but no more than a number equal to half your Sorcerer level (round down). Once you use this feature, you can't do so again until you finish a {@variantrule Long Rest|SRD52}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.sorcerer",
+  "classLevel": 5
+}

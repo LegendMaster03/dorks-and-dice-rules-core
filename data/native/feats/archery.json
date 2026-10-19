@@ -1,0 +1,25 @@
+{
+  "id": "feat.archery",
+  "name": "Archery",
+  "kind": "feat",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Archery",
+        "category": "FS",
+        "prerequisite": [
+          {
+            "feature": [
+              "Fighting Style"
+            ]
+          }
+        ],
+        "entries": [
+          "You gain a +2 bonus to attack rolls you make with Ranged weapons."
+        ]
+      }
+    }
+  ]
+}

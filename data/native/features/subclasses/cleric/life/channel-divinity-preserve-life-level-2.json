@@ -1,0 +1,30 @@
+{
+  "id": "subclassFeature.channel-divinity-preserve-life.cleric.life.channel-divinity-preserve-life.2",
+  "name": "Channel Divinity: Preserve Life",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Channel Divinity: Preserve Life",
+        "className": "Cleric",
+        "classSource": "SRD51",
+        "subclassShortName": "Life",
+        "subclassSource": "SRD51",
+        "level": 2,
+        "header": 2,
+        "consumes": {
+          "name": "Channel Divinity"
+        },
+        "entries": [
+          "Starting at 2nd level, you can use your Channel Divinity to heal the badly injured.",
+          "As an action, you present your holy symbol and evoke healing energy that can restore a number of hit points equal to five times your cleric level. Choose any creatures within 30 feet of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can't use this feature on an undead or a construct."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "parentSubclass": "life",
+  "classLevel": 2
+}

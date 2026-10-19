@@ -1,0 +1,30 @@
+{
+  "id": "subclassFeature.turn-the-unholy.paladin.devotion.turn-the-unholy.3",
+  "name": "Turn the Unholy",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Turn the Unholy",
+        "className": "Paladin",
+        "classSource": "SRD51",
+        "subclassShortName": "Devotion",
+        "subclassSource": "SRD51",
+        "level": 3,
+        "header": 1,
+        "consumes": {
+          "name": "Channel Divinity"
+        },
+        "entries": [
+          "As an action, you present your holy symbol and speak a prayer censuring fiends and undead, using your Channel Divinity. Each fiend or undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes damage.",
+          "A turned creature must spend its turns trying to move as far away from you as it can, and it can't willingly move to a space within 30 feet of you. It also can't take reactions. For its action, it can use only the {@action Dash} action or try to escape from an effect that prevents it from moving. If there's nowhere to move, the creature can use the {@action Dodge} action."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "parentSubclass": "devotion",
+  "classLevel": 3
+}

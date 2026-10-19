@@ -1,0 +1,137 @@
+{
+  "id": "spell.divine-word",
+  "name": "Divine Word",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Divine Word",
+        "level": 7,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "bonus"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You utter a divine word, imbued with the power that shaped the world at the dawn of creation. Choose any number of creatures you can see within range. Each creature that can hear you must make a Charisma saving throw. On a failed save, a creature suffers an effect based on its current hit points:",
+          {
+            "type": "list",
+            "items": [
+              "50 hit points or fewer: {@condition deafened} for 1 minute",
+              "40 hit points or fewer: {@condition deafened} and {@condition blinded} for 10 minutes",
+              "30 hit points or fewer: {@condition blinded}, {@condition deafened}, and {@condition stunned} for 1 hour",
+              "20 hit points or fewer: killed instantly"
+            ]
+          },
+          "Regardless of its current hit points, a celestial, an elemental, a fey, or a fiend that fails its save is forced back to its plane of origin (if it isn't there already) and can't return to your current plane for 24 hours by any means short of a {@spell wish} spell."
+        ],
+        "conditionInflict": [
+          "blinded",
+          "deafened",
+          "stunned"
+        ],
+        "savingThrow": [
+          "charisma"
+        ],
+        "miscTags": [
+          "SGT"
+        ],
+        "areaTags": [
+          "MT"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Divine Word",
+        "level": 7,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "bonus"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You utter a word imbued with power from the Upper Planes. Each creature of your choice in range makes a Charisma saving throw. On a failed save, a target that has 50 {@variantrule Hit Points|SRD52} or fewer suffers an effect based on its current {@variantrule Hit Points|SRD52}, as shown in the Divine Word Effects table. Regardless of its {@variantrule Hit Points|SRD52}, a Celestial, an Elemental, a Fey, or a Fiend target that fails its save is forced back to its plane of origin (if it isn't there already) and can't return to the current plane for 24 hours by any means short of a {@spell Wish|SRD52} spell.",
+          {
+            "type": "table",
+            "caption": "Divine Word Effects",
+            "colStyles": [
+              "col-2 text-center",
+              "col-10"
+            ],
+            "colLabels": [
+              "Hit Points",
+              "Effect"
+            ],
+            "rows": [
+              [
+                "0-20",
+                "The target dies."
+              ],
+              [
+                "21-30",
+                "The target has the {@condition Blinded|SRD52}, {@condition Deafened|SRD52}, and {@condition Stunned|SRD52} conditions for 1 hour."
+              ],
+              [
+                "31-40",
+                "The target has the {@condition Blinded|SRD52} and {@condition Deafened|SRD52} conditions for 10 minutes."
+              ],
+              [
+                "41-50",
+                "The target has the {@condition Deafened|SRD52} condition for 1 minute."
+              ]
+            ]
+          }
+        ],
+        "conditionInflict": [
+          "blinded",
+          "deafened",
+          "stunned"
+        ],
+        "savingThrow": [
+          "charisma"
+        ],
+        "areaTags": [
+          "MT"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "id": "monster.guard-captain",
+  "name": "Guard Captain",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Guard Captain",
+        "size": [
+          "S",
+          "M"
+        ],
+        "type": "humanoid",
+        "alignment": [
+          "N"
+        ],
+        "ac": [
+          18
+        ],
+        "hp": {
+          "average": 75,
+          "formula": "10d8 + 30"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "initiative": {
+          "proficiency": 1
+        },
+        "str": 18,
+        "dex": 14,
+        "con": 16,
+        "int": 12,
+        "wis": 14,
+        "cha": 13,
+        "skill": {
+          "athletics": "+6",
+          "perception": "+4"
+        },
+        "passive": 14,
+        "languages": [
+          "Common"
+        ],
+        "cr": "4",
+        "gear": [
+          "breastplate|srd52",
+          {
+            "item": "javelin|srd52",
+            "quantity": 6
+          },
+          "longsword|srd52",
+          "shield|srd52"
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The guard makes two attacks, using Javelin or Longsword in any combination."
+            ]
+          },
+          {
+            "name": "Javelin",
+            "entries": [
+              "{@atkr m,r} {@hit 6}, reach 5 ft. or range 30/120 ft. {@h}14 ({@damage 3d6 + 4}) Piercing damage."
+            ]
+          },
+          {
+            "name": "Longsword",
+            "entries": [
+              "{@atkr m} {@hit 6}, reach 5 ft. {@h}15 ({@damage 2d10 + 4}) Slashing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "any"
+        ],
+        "treasure": [
+          "armaments",
+          "individual"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C"
+        ],
+        "damageTags": [
+          "P",
+          "S"
+        ],
+        "miscTags": [
+          "MA",
+          "MLW",
+          "RA",
+          "THW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Guard Captain",
+            "_copy": {
+              "name": "Guards",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "Guard captains often have ample professional experience. They might be accomplished bodyguards, protectors of magic treasures, veteran watch members, or similar wardens."
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

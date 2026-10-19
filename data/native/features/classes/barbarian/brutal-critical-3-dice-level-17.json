@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.brutal-critical-3-dice.barbarian.brutal-critical-3-dice.17",
+  "name": "Brutal Critical (3 dice)",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Brutal Critical (3 dice)",
+        "className": "Barbarian",
+        "classSource": "SRD51",
+        "level": 17,
+        "entries": [
+          "At 17th level, you can roll three additional weapon damage dice when determining the extra damage for a critical hit with a melee attack."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian",
+  "classLevel": 17
+}

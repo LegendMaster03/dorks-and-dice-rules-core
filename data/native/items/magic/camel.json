@@ -1,0 +1,30 @@
+{
+  "id": "item.camel",
+  "name": "Camel",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Camel",
+        "type": "MNT",
+        "rarity": "none",
+        "value": 5000,
+        "carryingCapacity": 480,
+        "speed": 50
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Camel",
+        "type": "MNT|SRD52",
+        "rarity": "none",
+        "value": 5000,
+        "carryingCapacity": 450,
+        "speed": 50
+      }
+    }
+  ]
+}

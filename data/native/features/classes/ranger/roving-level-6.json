@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.roving.ranger.roving.6",
+  "name": "Roving",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Roving",
+        "className": "Ranger",
+        "classSource": "SRD52",
+        "level": 6,
+        "entries": [
+          "Your {@variantrule Speed|SRD52} increases by 10 feet while you aren't wearing Heavy armor. You also have a {@variantrule Climb Speed|SRD52} and a {@variantrule Swim Speed|SRD52} equal to your {@variantrule Speed|SRD52}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "classLevel": 6
+}

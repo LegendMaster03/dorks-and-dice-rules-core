@@ -1,0 +1,46 @@
+{
+  "id": "item.pale-tincture",
+  "name": "Pale Tincture",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Pale Tincture",
+        "type": "G",
+        "rarity": "none",
+        "value": 25000,
+        "poison": true,
+        "entries": [
+          "A creature subjected to this poison must succeed on a {@dc 16} Constitution saving throw or take 3 ({@damage 1d6}) poison damage and become {@condition poisoned}. The {@condition poisoned} creature must repeat the saving throw every 24 hours, taking 3 ({@damage 1d6}) poison damage on a failed save. Until this poison ends, the damage the poison deals can't be healed by any means. After seven successful saving throws, the effect ends and the creature can heal normally."
+        ],
+        "poisonTypes": [
+          "ingested"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Pale Tincture",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "value": 25000,
+        "poison": true,
+        "entries": [
+          "A creature subjected to Pale Tincture must succeed on a {@dc 16} Constitution saving throw or take 3 ({@damage 1d6}) Poison damage and have the {@condition Poisoned|SRD52} condition. The {@condition Poisoned|SRD52} creature repeats the save every 24 hours, taking 3 ({@damage 1d6}) Poison damage on a failed save. The damage the poison deals can't be healed by any means while the creature remains {@condition Poisoned|SRD52}. After seven successful saves against the poison, the creature is no longer {@condition Poisoned|SRD52}."
+        ],
+        "poisonTypes": [
+          "ingested"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

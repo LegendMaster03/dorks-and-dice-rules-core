@@ -1,0 +1,114 @@
+{
+  "id": "spell.silence",
+  "name": "Silence",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Silence",
+        "level": 2,
+        "school": "I",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 120
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 10
+            },
+            "concentration": true
+          }
+        ],
+        "meta": {
+          "ritual": true
+        },
+        "entries": [
+          "For the duration, no sound can be created within or pass through a 20-foot-radius sphere centered on a point you choose within range. Any creature or object entirely inside the sphere is immune to thunder damage, and creatures are {@condition deafened} while entirely inside it. Casting a spell that includes a verbal component is impossible there."
+        ],
+        "damageImmune": [
+          "thunder"
+        ],
+        "conditionInflict": [
+          "deafened"
+        ],
+        "miscTags": [
+          "OBJ"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Silence",
+        "level": 2,
+        "school": "I",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 120
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 10
+            },
+            "concentration": true
+          }
+        ],
+        "meta": {
+          "ritual": true
+        },
+        "entries": [
+          "For the duration, no sound can be created within or pass through a 20-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on a point you choose within range. Any creature or object entirely inside the {@variantrule Sphere [Area of Effect]|SRD52|Sphere} has {@variantrule Immunity|SRD52} to Thunder damage, and creatures have the {@condition Deafened|SRD52} condition while entirely inside it. Casting a spell that includes a Verbal component is impossible there."
+        ],
+        "damageImmune": [
+          "thunder"
+        ],
+        "conditionInflict": [
+          "deafened"
+        ],
+        "miscTags": [
+          "OBJ"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    }
+  ]
+}

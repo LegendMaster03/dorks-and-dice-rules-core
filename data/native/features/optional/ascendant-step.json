@@ -1,0 +1,72 @@
+{
+  "id": "optionalfeature.ascendant-step",
+  "name": "Ascendant Step",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ascendant Step",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 9,
+              "class": {
+                "name": "Warlock"
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "levitate"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell levitate} on yourself at will, without expending a spell slot or material components."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ascendant Step",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 5,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "levitate|srd52"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell Levitate|SRD52} on yourself without expending a spell slot."
+        ]
+      }
+    }
+  ]
+}

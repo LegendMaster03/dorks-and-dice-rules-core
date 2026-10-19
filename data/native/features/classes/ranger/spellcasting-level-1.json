@@ -1,0 +1,64 @@
+{
+  "id": "classFeature.spellcasting.ranger.spellcasting.1",
+  "name": "Spellcasting",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Spellcasting",
+        "className": "Ranger",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "You have learned to channel the magical essence of nature to cast spells. See {@book chapter 7|SRD52|7} for the rules on spellcasting. The information below details how you use those rules with Ranger spells, which appear in the {@filter Ranger spell list|spells|class=Ranger} later in the class's description.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Spell Slots",
+                "entries": [
+                  "The Ranger Features table shows how many spell slots you have to cast your level 1+ spells. You regain all expended slots when you finish a {@variantrule Long Rest|SRD52}."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Prepared Spells of Level 1+",
+                "entries": [
+                  "You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose two {@filter level 1 Ranger spells|spells|class=Ranger|level=1}. {@spell Cure Wounds|SRD52} and {@spell Ensnaring Strike|SRD52} are recommended.",
+                  "The number of spells on your list increases as you gain Ranger levels, as shown in the Prepared Spells column of the Ranger Features table. Whenever that number increases, choose additional Ranger spells until the number of spells on your list matches the number in the Ranger Features table. The chosen spells must be of a level for which you have spell slots. For example, if you're a level 5 Ranger, your list of prepared spells can include six Ranger spells of level 1 or 2 in any combination.",
+                  "If another Ranger feature gives you spells that you always have prepared, those spells don't count against the number of spells you can prepare with this feature, but those spells otherwise count as Ranger spells for you."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Changing Your Prepared Spells",
+                "entries": [
+                  "Whenever you finish a {@variantrule Long Rest|SRD52}, you can replace one spell on your list with another Ranger spell for which you have spell slots."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Spellcasting Ability",
+                "entries": [
+                  "Wisdom is your spellcasting ability for your Ranger spells."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Spellcasting Focus",
+                "entries": [
+                  "You can use a {@item Druidic Focus|SRD52} as a {@variantrule Spellcasting Focus|SRD52} for your Ranger spells."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "classLevel": 1
+}

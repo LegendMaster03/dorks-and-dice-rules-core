@@ -1,0 +1,60 @@
+{
+  "id": "rule.monsters-a",
+  "name": "Monsters (A)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (A)",
+        "page": 261,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Aboleth|srd51}",
+              "{@creature Acolyte|srd51}",
+              "{@creature Adult Black Dragon|srd51}",
+              "{@creature Adult Blue Dragon|srd51}",
+              "{@creature Adult Brass Dragon|srd51}",
+              "{@creature Adult Bronze Dragon|srd51}",
+              "{@creature Adult Copper Dragon|srd51}",
+              "{@creature Adult Gold Dragon|srd51}",
+              "{@creature Adult Green Dragon|srd51}",
+              "{@creature Adult Red Dragon|srd51}",
+              "{@creature Adult Silver Dragon|srd51}",
+              "{@creature Adult White Dragon|srd51}",
+              "{@creature Air Elemental|srd51}",
+              "{@creature Ancient Black Dragon|srd51}",
+              "{@creature Ancient Blue Dragon|srd51}",
+              "{@creature Ancient Brass Dragon|srd51}",
+              "{@creature Ancient Bronze Dragon|srd51}",
+              "{@creature Ancient Copper Dragon|srd51}",
+              "{@creature Ancient Gold Dragon|srd51}",
+              "{@creature Ancient Green Dragon|srd51}",
+              "{@creature Ancient Red Dragon|srd51}",
+              "{@creature Ancient Silver Dragon|srd51}",
+              "{@creature Ancient White Dragon|srd51}",
+              "{@creature Androsphinx|srd51}",
+              "{@creature Animated Armor|srd51}",
+              "{@creature Ankheg|srd51}",
+              "{@creature Ape|srd51}",
+              "{@creature Archmage|srd51}",
+              "{@creature Assassin|srd51}",
+              "{@creature Avatar of Death|srd51}",
+              "{@creature Awakened Shrub|srd51}",
+              "{@creature Awakened Tree|srd51}",
+              "{@creature Axe Beak|srd51}",
+              "{@creature Azer|srd51}"
+            ]
+          }
+        ],
+        "id": "1a3"
+      }
+    }
+  ]
+}

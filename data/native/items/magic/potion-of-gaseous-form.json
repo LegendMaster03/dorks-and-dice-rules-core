@@ -1,0 +1,45 @@
+{
+  "id": "item.potion-of-gaseous-form",
+  "name": "Potion of Gaseous Form",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Gaseous Form",
+        "type": "P",
+        "tier": "minor",
+        "rarity": "rare",
+        "entries": [
+          "When you drink this potion, you gain the effect of the {@spell gaseous form} spell for 1 hour (no {@status concentration} required) or until you end the effect as a bonus action. This potion's container seems to hold fog that moves and pours like water."
+        ],
+        "attachedSpells": [
+          "gaseous form"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Gaseous Form",
+        "type": "P|SRD52",
+        "rarity": "rare",
+        "weight": 0.5,
+        "entries": [
+          "When you drink this potion, you gain the effect of the {@spell Gaseous Form|SRD52} spell for 1 hour (no {@status Concentration|SRD52} required) or until you end the effect as a {@variantrule Bonus Action|SRD52}.",
+          "This potion's container seems to hold fog that moves and pours like water."
+        ],
+        "attachedSpells": [
+          "gaseous form|srd52"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

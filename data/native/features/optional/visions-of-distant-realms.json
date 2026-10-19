@@ -1,0 +1,72 @@
+{
+  "id": "optionalfeature.visions-of-distant-realms",
+  "name": "Visions of Distant Realms",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Visions of Distant Realms",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 15,
+              "class": {
+                "name": "Warlock"
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "arcane eye"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell arcane eye} at will, without expending a spell slot."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Visions of Distant Realms",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 9,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "arcane eye|srd52"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell Arcane Eye|SRD52} without expending a spell slot."
+        ]
+      }
+    }
+  ]
+}

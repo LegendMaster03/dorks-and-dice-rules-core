@@ -1,0 +1,39 @@
+{
+  "id": "baseitem.splint-armor",
+  "name": "Splint Armor",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Splint Armor",
+        "type": "HA",
+        "rarity": "none",
+        "weight": 60,
+        "value": 20000,
+        "ac": 17,
+        "strength": "15",
+        "armor": true,
+        "stealth": true,
+        "entries": [
+          "This armor is made of narrow vertical strips of metal riveted to a backing of leather that is worn over cloth padding. Flexible chain mail protects the joints."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Splint Armor",
+        "type": "HA|SRD52",
+        "rarity": "none",
+        "weight": 60,
+        "value": 20000,
+        "ac": 17,
+        "strength": "15",
+        "armor": true,
+        "stealth": true
+      }
+    }
+  ]
+}

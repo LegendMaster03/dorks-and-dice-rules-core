@@ -1,0 +1,228 @@
+{
+  "id": "monster.giant-rat",
+  "name": "Giant Rat",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Giant Rat",
+        "size": [
+          "S"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 7,
+          "formula": "2d6"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "str": 7,
+        "dex": 15,
+        "con": 11,
+        "int": 2,
+        "wis": 10,
+        "cha": 4,
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 10,
+        "cr": "1/8",
+        "trait": [
+          {
+            "name": "Keen Smell",
+            "entries": [
+              "The rat has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
+            ]
+          },
+          {
+            "name": "Pack Tactics",
+            "entries": [
+              "The rat has advantage on an attack roll against a creature if at least one of the rat's allies is within 5 feet of the creature and the ally isn't {@condition incapacitated}."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}4 ({@damage 1d4 + 2}) piercing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark",
+          "forest",
+          "swamp",
+          "urban"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/giant-rat.opus"
+        },
+        "traitTags": [
+          "Keen Senses",
+          "Pack Tactics"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "DIS",
+          "MW"
+        ],
+        "savingThrowForced": [
+          "constitution"
+        ],
+        "hasToken": true,
+        "_versions": [
+          {
+            "name": "Giant Rat (Diseased)",
+            "source": "SRD51",
+            "action": [
+              {
+                "name": "Bite",
+                "entries": [
+                  "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}4 ({@damage 1d4 + 2}) piercing damage. If the target is a creature, it must succeed on a {@dc 10} Constitution saving throw or contract a disease. Until the disease is cured, the target can't regain hit points except by magical means, and the target's hit point maximum decreases by 3 ({@dice 1d6}) every 24 hours. If the target's hit point maximum drops to 0 as a result of this disease, the target dies."
+                ]
+              }
+            ],
+            "variant": null
+          }
+        ],
+        "lore": [
+          {
+            "name": "Giant Rat",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Giant Rat.webp"
+                },
+                "width": 1597,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Giant Rat",
+        "size": [
+          "S"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 7,
+          "formula": "2d6"
+        },
+        "speed": {
+          "walk": 30,
+          "climb": 30
+        },
+        "str": 7,
+        "dex": 16,
+        "con": 11,
+        "int": 2,
+        "wis": 10,
+        "cha": 4,
+        "save": {
+          "dex": "+5"
+        },
+        "skill": {
+          "perception": "+2"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 12,
+        "cr": "1/8",
+        "trait": [
+          {
+            "name": "Pack Tactics",
+            "entries": [
+              "The rat has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the rat's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atkr m} {@hit 5}, reach 5 feet. {@h}5 ({@damage 1d4 + 3}) Piercing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "forest",
+          "swamp",
+          "underdark",
+          "urban"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/giant-rat.opus"
+        },
+        "traitTags": [
+          "Pack Tactics"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Giant Rat",
+            "_copy": {
+              "name": "Animals",
+              "source": "SRD52",
+              "_mod": {
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Rats.webp"
+                      },
+                      "width": 2539,
+                      "height": 1643
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

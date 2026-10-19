@@ -1,0 +1,23 @@
+{
+  "id": "classFeature.expertise.bard.expertise.2",
+  "name": "Expertise",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Expertise",
+        "className": "Bard",
+        "classSource": "SRD52",
+        "level": 2,
+        "entries": [
+          "You gain {@variantrule Expertise|SRD52} in two of your skill proficiencies of your choice. {@skill Performance|SRD52} and {@skill Persuasion|SRD52} are recommended if you have proficiency in them.",
+          "At Bard level 9, you gain {@variantrule Expertise|SRD52} in two more of your skill proficiencies of your choice."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.bard",
+  "classLevel": 2
+}

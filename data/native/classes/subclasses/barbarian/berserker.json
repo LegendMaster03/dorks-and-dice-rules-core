@@ -1,0 +1,59 @@
+{
+  "id": "subclass.path-of-the-berserker.barbarian.berserker.Berserker",
+  "name": "Path of the Berserker",
+  "kind": "subclass",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Path of the Berserker",
+        "shortName": "Berserker",
+        "className": "Barbarian",
+        "classSource": "SRD51",
+        "subclassFeatures": [
+          "Path of the Berserker|Barbarian||Berserker||3",
+          "Mindless Rage|Barbarian||Berserker||6",
+          "Intimidating Presence|Barbarian||Berserker||10",
+          "Retaliation|Barbarian||Berserker||14"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Path of the Berserker",
+        "shortName": "Berserker",
+        "className": "Barbarian",
+        "classSource": "SRD52",
+        "subclassFeatures": [
+          "Path of the Berserker|Barbarian|SRD52|Berserker|SRD52|3",
+          "Mindless Rage|Barbarian|SRD52|Berserker|SRD52|6",
+          "Retaliation|Barbarian|SRD52|Berserker|SRD52|10",
+          "Intimidating Presence|Barbarian|SRD52|Berserker|SRD52|14"
+        ],
+        "lore": [
+          {
+            "name": "Path of the Berserker",
+            "shortName": "Berserker",
+            "className": "Barbarian",
+            "classSource": "SRD52",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "classes/XPHB/Berserker Barbarian.webp"
+                },
+                "credit": "Nathaniel Himawan",
+                "width": 850,
+                "height": 2316
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian"
+}

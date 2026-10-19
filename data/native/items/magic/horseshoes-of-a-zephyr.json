@@ -1,0 +1,32 @@
+{
+  "id": "item.horseshoes-of-a-zephyr",
+  "name": "Horseshoes of a Zephyr",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Horseshoes of a Zephyr",
+        "tier": "minor",
+        "rarity": "very rare",
+        "wondrous": true,
+        "entries": [
+          "These iron horseshoes come in a set of four. While all four shoes are affixed to the hooves of a horse or similar creature, they allow the creature to move normally while floating 4 inches above the ground. This effect means the creature can cross or stand above nonsolid or unstable surfaces, such as water or lava. The creature leaves no tracks and ignores {@quickref difficult terrain||3}. In addition, the creature can move at normal speed for up to 12 hours a day without suffering {@condition exhaustion} from a forced march."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Horseshoes of a Zephyr",
+        "rarity": "very rare",
+        "wondrous": true,
+        "entries": [
+          "These horseshoes come in a set of four. As a {@action Magic|SRD52} action, you can touch one of the horseshoes to the hoof of a horse or similar creature, whereupon the horseshoe affixes itself to the hoof. Removing a horseshoe also takes a {@action Magic|SRD52} action.",
+          "While all four shoes are affixed to the hooves of a horse or similar creature, they allow the creature to move normally while floating 4 inches above a surface. This effect means the creature can cross or stand above nonsolid or unstable surfaces, such as water or lava. The creature leaves no tracks and ignores {@variantrule Difficult Terrain|SRD52}. In addition, the creature can travel for up to 12 hours a day without gaining {@condition Exhaustion|SRD52} levels from extended travel."
+        ]
+      }
+    }
+  ]
+}

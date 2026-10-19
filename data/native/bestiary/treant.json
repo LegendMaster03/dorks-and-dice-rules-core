@@ -1,0 +1,371 @@
+{
+  "id": "monster.treant",
+  "name": "Treant",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Treant",
+        "size": [
+          "H"
+        ],
+        "type": "plant",
+        "alignment": [
+          "C",
+          "G"
+        ],
+        "ac": [
+          {
+            "ac": 16,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 138,
+          "formula": "12d12 + 60"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "str": 23,
+        "dex": 8,
+        "con": 21,
+        "int": 12,
+        "wis": 16,
+        "cha": 12,
+        "passive": 13,
+        "resist": [
+          "bludgeoning",
+          "piercing"
+        ],
+        "vulnerable": [
+          "fire"
+        ],
+        "languages": [
+          "Common",
+          "Druidic",
+          "Elvish",
+          "Sylvan"
+        ],
+        "cr": "9",
+        "trait": [
+          {
+            "name": "False Appearance",
+            "entries": [
+              "While the treant remains motionless, it is indistinguishable from a normal tree."
+            ]
+          },
+          {
+            "name": "Siege Monster",
+            "entries": [
+              "The treant deals double damage to objects and structures."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The treant makes two slam attacks."
+            ]
+          },
+          {
+            "name": "Slam",
+            "entries": [
+              "{@atk mw} {@hit 10} to hit, reach 5 ft., one target. {@h}16 ({@damage 3d6 + 6}) bludgeoning damage."
+            ]
+          },
+          {
+            "name": "Rock",
+            "entries": [
+              "{@atk rw} {@hit 10} to hit, range 60/180 ft., one target. {@h}28 ({@damage 4d10 + 6}) bludgeoning damage."
+            ]
+          },
+          {
+            "name": "Animate Trees (1/Day)",
+            "entries": [
+              "The treant magically animates one or two trees it can see within 60 feet of it. These trees have the same statistics as a {@creature treant}, except they have Intelligence and Charisma scores of 1, they can't speak, and they have only the Slam action option. An animated tree acts as an ally of the treant. The tree remains animate for 1 day or until it dies; until the treant dies or is more than 120 feet from the tree; or until the treant takes a bonus action to turn it back into an inanimate tree. The tree then takes root if possible."
+            ]
+          }
+        ],
+        "environment": [
+          "forest"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/treant.opus"
+        },
+        "traitTags": [
+          "False Appearance",
+          "Siege Monster"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "DU",
+          "E",
+          "S"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MW",
+          "RW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Treant",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Treants are awakened trees that dwell in ancient forests. Although treants prefer to while away the days, months, and years in quiet contemplation, they fiercely protect their woodland demesnes from outside threats.",
+                      {
+                        "name": "The Sleeping Tree Awakens",
+                        "type": "entries",
+                        "entries": [
+                          "A tree destined to become a treant meditates through a long cycle of seasons, living normally for decades or centuries before realizing its potential. Trees that awaken do so only under special circumstances and in places steeped with nature's magic. Treants and powerful druids can sense when a tree has the spark of potential, and they protect such trees in secret groves as they draw near the moment of their awakening. During the long process of awakening, a tree acquires face-like features in its bark, a division of the lower trunk into legs, and long branches bending downward to serve as its arms. When it is ready, the tree pulls its legs free from the clutching earth and joins its fellows in protecting its woodland home."
+                        ]
+                      },
+                      {
+                        "name": "Legendary Guardians",
+                        "type": "entries",
+                        "entries": [
+                          "After a treant awakens, it continues to grow exactly as it did when it was a tree. Treants created from the mightiest trees can reach great sizes while developing an innate magical power over plants and animals. Such treants can animate plants, using them to ensnare and trap intruders. They can call wild creatures to aid them or carry messages across great distances."
+                        ]
+                      },
+                      {
+                        "name": "Protectors of the Wild",
+                        "type": "entries",
+                        "entries": [
+                          "Even after awakening, a treant spends much of its time living as a tree. While rooted in place, a treant remains aware of its surroundings, and can perceive the effects of events taking place miles away based on subtle changes nearby.",
+                          "Woodcutters who avoid culling healthy living trees and hunters who take only what they need of the forest's bounty are unlikely to arouse a treant's ire. Creatures careless with fire, those who poison the forest, and those who destroy great trees, especially a tree close to awakening, face the treant's wrath."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Treant.webp"
+                },
+                "credit": "Dave Dorman",
+                "width": 733,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Treant",
+        "size": [
+          "H"
+        ],
+        "type": "plant",
+        "alignment": [
+          "C",
+          "G"
+        ],
+        "ac": [
+          16
+        ],
+        "hp": {
+          "average": 138,
+          "formula": "12d12 + 60"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "initiative": {
+          "proficiency": 1
+        },
+        "str": 23,
+        "dex": 8,
+        "con": 21,
+        "int": 12,
+        "wis": 16,
+        "cha": 12,
+        "passive": 13,
+        "resist": [
+          "bludgeoning",
+          "piercing"
+        ],
+        "vulnerable": [
+          "fire"
+        ],
+        "languages": [
+          "Common",
+          "Druidic",
+          "Elvish",
+          "Sylvan"
+        ],
+        "cr": "9",
+        "trait": [
+          {
+            "name": "Siege Monster",
+            "entries": [
+              "The treant deals double damage to objects and structures."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The treant makes two Slam attacks."
+            ]
+          },
+          {
+            "name": "Slam",
+            "entries": [
+              "{@atkr m} {@hit 10}, reach 5 ft. {@h}16 ({@damage 3d6 + 6}) Bludgeoning damage."
+            ]
+          },
+          {
+            "name": "Hail of Bark",
+            "entries": [
+              "{@atkr r} {@hit 10}, range 180 ft. {@h}28 ({@damage 4d10 + 6}) Piercing damage."
+            ]
+          },
+          {
+            "name": "Animate Trees (1/Day)",
+            "entries": [
+              "The treant magically animates up to two trees it can see within 60 feet of itself. Each tree uses the Treant stat block, except it has Intelligence and Charisma scores of 1, it can't speak, and it lacks this action. The tree takes its turn immediately after the treant on the same {@variantrule Initiative|SRD52} count, and it obeys the treant. A tree remains animate for 1 day or until it dies, the treant dies, or it is more than 120 feet from the treant. The tree then takes root if possible."
+            ]
+          }
+        ],
+        "environment": [
+          "forest"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/treant.opus"
+        },
+        "traitTags": [
+          "Siege Monster"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "DU",
+          "E",
+          "S"
+        ],
+        "damageTags": [
+          "B",
+          "P"
+        ],
+        "miscTags": [
+          "MA",
+          "RA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Treant",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Treant",
+                "entries": [
+                  "{@i Wise and Mighty Animate Tree}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Forest|bestiary|environment=forest}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "None"
+                      }
+                    ]
+                  },
+                  "Ancient inhabitants of the forest, treants are gigantic, animate trees with wizened faces. Most have lived for centuries and know secrets of the natural world. They avoid becoming embroiled in the conflicts of shorter-lived creatures, but they're protective of their forest homes. If roused to anger, treants can animate trees to aid them.",
+                  "Treants defend and are shaped by secrets of the forest. Roll on or choose a result from the Treant Secrets table to inspire what mysteries a treant protects.",
+                  {
+                    "type": "table",
+                    "caption": "Treant Secrets",
+                    "colLabels": [
+                      "1d6",
+                      "The Treant Is..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "Blessed by a god and grows magic fruit."
+                      ],
+                      [
+                        "2",
+                        "Growing atop the entrance to a dungeon or portal to the Feywild."
+                      ],
+                      [
+                        "3",
+                        "Home to a community of pixies or sprites."
+                      ],
+                      [
+                        "4",
+                        "The last lore keeper of lost druidic knowledge."
+                      ],
+                      [
+                        "5",
+                        "Rooted on a hero's burial mound and animates trees that look like questing knights."
+                      ],
+                      [
+                        "6",
+                        "Scarred by a fire and holds the bones of the arsonist who started it in a hollow."
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Treant.webp"
+                },
+                "title": "A treant evicts adventurers from a city it has reclaimed for nature",
+                "credit": "Robson Michel",
+                "width": 2550,
+                "height": 1704
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "subclassFeature.bonus-proficiencies.bard.lore.bonus-proficiencies.3",
+  "name": "Bonus Proficiencies",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Bonus Proficiencies",
+        "className": "Bard",
+        "classSource": "SRD51",
+        "subclassShortName": "Lore",
+        "subclassSource": "SRD51",
+        "level": 3,
+        "header": 1,
+        "entries": [
+          "When you join the College of Lore at 3rd level, you gain proficiency with three skills of your choice."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Bonus Proficiencies",
+        "className": "Bard",
+        "classSource": "SRD52",
+        "subclassShortName": "Lore",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "header": 2,
+        "entries": [
+          "You gain proficiency with three skills of your choice."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.bard",
+  "parentSubclass": "lore",
+  "classLevel": 3
+}

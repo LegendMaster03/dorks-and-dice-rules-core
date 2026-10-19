@@ -1,0 +1,41 @@
+{
+  "id": "item.crystal-ball",
+  "name": "Crystal Ball",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Crystal Ball",
+        "tier": "major",
+        "rarity": "very rare",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 3,
+        "entries": [
+          "This crystal ball is about 6 inches in diameter. While touching it, you can cast the {@spell scrying} spell (save {@dc 17}) with it."
+        ],
+        "attachedSpells": [
+          "scrying"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Crystal Ball",
+        "rarity": "very rare",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 3,
+        "entries": [
+          "The typical crystal ball, a very rare item, is about 6 inches in diameter. While touching it, you can cast the {@spell Scrying|SRD52} spell (save {@dc 17}) with it."
+        ],
+        "attachedSpells": [
+          "scrying|srd52"
+        ]
+      }
+    }
+  ]
+}

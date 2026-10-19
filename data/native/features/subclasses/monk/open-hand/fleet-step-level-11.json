@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.fleet-step.monk.open-hand.fleet-step.11",
+  "name": "Fleet Step",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Fleet Step",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "subclassShortName": "Open Hand",
+        "subclassSource": "SRD52",
+        "level": 11,
+        "header": 2,
+        "entries": [
+          "When you take a {@variantrule Bonus Action|SRD52} other than Step of the Wind, you can also use Step of the Wind immediately after that {@variantrule Bonus Action|SRD52}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "parentSubclass": "open-hand",
+  "classLevel": 11
+}

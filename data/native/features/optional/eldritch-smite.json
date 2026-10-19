@@ -1,0 +1,35 @@
+{
+  "id": "optionalfeature.eldritch-smite",
+  "name": "Eldritch Smite",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Eldritch Smite",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 5,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            },
+            "optionalfeature": [
+              "pact of the blade|srd52"
+            ]
+          }
+        ],
+        "entries": [
+          "Once per turn when you hit a creature with your pact weapon, you can expend a Pact Magic spell slot to deal an extra {@damage 1d8} Force damage to the target, plus another {@damage 1d8} per level of the spell slot, and you can give the target the {@condition Prone|SRD52} condition if it is Huge or smaller."
+        ]
+      }
+    }
+  ]
+}

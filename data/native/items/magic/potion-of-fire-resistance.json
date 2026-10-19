@@ -1,0 +1,46 @@
+{
+  "id": "item.potion-of-fire-resistance",
+  "name": "Potion of Fire Resistance",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Fire Resistance",
+        "type": "P",
+        "resist": [
+          "fire"
+        ],
+        "tier": "minor",
+        "rarity": "uncommon",
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Potion of Resistance}"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Fire Resistance",
+        "type": "P|SRD52",
+        "resist": [
+          "fire"
+        ],
+        "rarity": "uncommon",
+        "weight": 0.5,
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Potion of Resistance|SRD52}"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

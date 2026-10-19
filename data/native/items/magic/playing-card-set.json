@@ -1,0 +1,17 @@
+{
+  "id": "item.playing-card-set",
+  "name": "Playing Card Set",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Playing Card Set",
+        "type": "GS",
+        "rarity": "none",
+        "value": 50
+      }
+    }
+  ]
+}

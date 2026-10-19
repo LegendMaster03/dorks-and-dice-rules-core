@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.magician.druid.magician.1",
+  "name": "Magician",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Magician",
+        "className": "Druid",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "You know one extra cantrip from the {@filter Druid spell list|spells|class=Druid}. In addition, your mystical connection to nature gives you a bonus to your Intelligence ({@skill Arcana|SRD52} or {@skill Nature|SRD52}) checks. The bonus equals your Wisdom modifier (minimum bonus of +1)."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "classLevel": 1
+}

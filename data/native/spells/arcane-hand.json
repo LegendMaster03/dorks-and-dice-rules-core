@@ -1,0 +1,208 @@
+{
+  "id": "spell.arcane-hand",
+  "name": "Arcane Hand",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Arcane Hand",
+        "level": 5,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 120
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "an eggshell and a snakeskin glove"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You create a Large hand of shimmering, translucent force in an unoccupied space that you can see within range. The hand lasts for the spell's duration, and it moves at your command, mimicking the movements of your own hand.",
+          "The hand is an object that has AC 20 and hit points equal to your hit point maximum. If it drops to 0 hit points, the spell ends. It has a Strength of 26 ({@d20 8}) and a Dexterity of 10 ({@d20 0}). The hand doesn't fill its space.",
+          "When you cast the spell and as a bonus action on your subsequent turns, you can move the hand up to 60 feet and then cause one of the following effects with it.",
+          {
+            "type": "entries",
+            "name": "Clenched Fist",
+            "entries": [
+              "The hand strikes one creature or object within 5 feet of it. Make a melee spell attack for the hand using your game statistics. On a hit, the target takes {@damage 4d8} force damage."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Forceful Hand",
+            "entries": [
+              "The hand attempts to push a creature within 5 feet of it in a direction you choose. Make a check with the hand's Strength contested by the Strength ({@skill Athletics}) check of the target. If the target is Medium or smaller, you have advantage on the check. If you succeed, the hand pushes the target up to 5 feet plus a number of feet equal to five times your spellcasting ability modifier. The hand moves with the target to remain within 5 feet of it."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Grasping Hand",
+            "entries": [
+              "The hand attempts to grapple a Huge or smaller creature within 5 feet of it. You use the hand's Strength score to resolve the grapple. If the target is Medium or smaller, you have advantage on the check. While the hand is grappling the target, you can use a bonus action to have the hand crush it. When you do so, the target takes bludgeoning damage equal to {@damage 2d6} + your spellcasting ability modifier."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Interposing Hand",
+            "entries": [
+              "The hand interposes itself between you and a creature you choose until you give the hand a different command. The hand moves to stay between you and the target, providing you with {@quickref Cover||3||half cover} against the target. The target can't move through the hand's space if its Strength score is less than or equal to the hand's Strength score. If its Strength score is higher than the hand's Strength score, the target can move toward you through the hand's space, but that space is {@quickref difficult terrain||3} for the target."
+            ]
+          }
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 6th level or higher, the damage from the clenched fist option increases by {@scaledamage 4d8|5-9|2d8} and the damage from the grasping hand increases by {@scaledamage 2d6|5-9|2d6} for each slot level above 5th."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "bludgeoning",
+          "force"
+        ],
+        "spellAttack": [
+          "M"
+        ],
+        "abilityCheck": [
+          "strength"
+        ],
+        "miscTags": [
+          "DFT",
+          "FMV",
+          "OBJ",
+          "SGT",
+          "UBA"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Arcane Hand",
+        "level": 5,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 120
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "an eggshell and a glove"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You create a Large hand of shimmering magical energy in an unoccupied space that you can see within range. The hand lasts for the duration, and it moves at your command, mimicking the movements of your own hand.",
+          "The hand is an object that has AC 20 and {@variantrule Hit Points|SRD52} equal to your {@variantrule Hit Points|SRD52|Hit Point} maximum. If it drops to 0 {@variantrule Hit Points|SRD52}, the spell ends. The hand doesn't occupy its space.",
+          "When you cast the spell and as a {@variantrule Bonus Action|SRD52} on your later turns, you can move the hand up to 60 feet and then cause one of the following effects:",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "type": "item",
+                "name": "Clenched Fist",
+                "entries": [
+                  "The hand strikes a target within 5 feet of it. Make a melee spell attack. On a hit, the target takes {@damage 5d8} Force damage."
+                ]
+              },
+              {
+                "type": "item",
+                "name": "Forceful Hand",
+                "entries": [
+                  "The hand attempts to push a Huge or smaller creature within 5 feet of it. The target must succeed on a Strength saving throw, or the hand pushes the target up to 5 feet plus a number of feet equal to five times your spellcasting ability modifier. The hand moves with the target, remaining within 5 feet of it."
+                ]
+              },
+              {
+                "type": "item",
+                "name": "Grasping Hand",
+                "entries": [
+                  "The hand attempts to grapple a Huge or smaller creature within 5 feet of it. The target must succeed on a Dexterity saving throw, or the target has the {@condition Grappled|SRD52} condition, with an escape DC equal to your spell save DC. While the hand grapples the target, you can take a {@variantrule Bonus Action|SRD52} to cause the hand to crush it, dealing Bludgeoning damage to the target equal to {@damage 4d6} plus your spellcasting ability modifier."
+                ]
+              },
+              {
+                "type": "item",
+                "name": "Interposing Hand",
+                "entries": [
+                  "The hand grants you Half {@variantrule Cover|SRD52} against attacks and other effects that originate from its space or that pass through it. In addition, its space counts as {@variantrule Difficult Terrain|SRD52} for your enemies."
+                ]
+              }
+            ]
+          }
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "The damage of the Clenched Fist increases by {@scaledamage 5d8|5-9|2d8} and the damage of the Grasping Hand increases by {@scaledamage 4d6|5-9|2d6} for each spell slot level above 5."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "bludgeoning",
+          "force"
+        ],
+        "conditionInflict": [
+          "grappled"
+        ],
+        "spellAttack": [
+          "M"
+        ],
+        "savingThrow": [
+          "dexterity",
+          "strength"
+        ],
+        "miscTags": [
+          "DFT",
+          "FMV",
+          "OBJ",
+          "SGT",
+          "UBA"
+        ]
+      }
+    }
+  ]
+}

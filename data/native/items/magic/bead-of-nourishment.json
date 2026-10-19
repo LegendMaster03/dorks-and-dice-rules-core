@@ -1,0 +1,23 @@
+{
+  "id": "item.bead-of-nourishment",
+  "name": "Bead of Nourishment",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Bead of Nourishment",
+        "rarity": "common",
+        "wondrous": true,
+        "entries": [
+          "This flavorless, gelatinous bead dissolves on your tongue and provides as much nourishment as 1 day of Rations."
+        ],
+        "miscTags": [
+          "CF/W",
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "baseitem.blowgun",
+  "name": "Blowgun",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Blowgun",
+        "type": "R",
+        "rarity": "none",
+        "weight": 1,
+        "value": 1000,
+        "weaponCategory": "martial",
+        "property": [
+          "A",
+          "LD"
+        ],
+        "range": "25/100",
+        "dmg1": "1",
+        "dmgType": "P",
+        "weapon": true,
+        "ammoType": "blowgun needle|srd51"
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Blowgun",
+        "type": "R|SRD52",
+        "rarity": "none",
+        "weight": 1,
+        "value": 1000,
+        "weaponCategory": "martial",
+        "property": [
+          "A|SRD52",
+          "LD|SRD52"
+        ],
+        "mastery": [
+          "Vex|SRD52"
+        ],
+        "range": "25/100",
+        "dmg1": "1",
+        "dmgType": "P",
+        "weapon": true,
+        "ammoType": "needle|srd52"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "item.abacus",
+  "name": "Abacus",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Abacus",
+        "type": "G",
+        "rarity": "none",
+        "weight": 2,
+        "value": 200
+      }
+    }
+  ]
+}

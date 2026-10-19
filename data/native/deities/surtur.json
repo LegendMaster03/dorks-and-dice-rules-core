@@ -1,0 +1,41 @@
+{
+  "id": "deity.surtur",
+  "name": "Surtur",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a-1",
+      "content": {
+        "name": "Surtur",
+        "pantheon": "Nonhuman",
+        "alignment": [
+          "L",
+          "E"
+        ],
+        "title": "God of fire giants and craft",
+        "domains": [
+          "Knowledge",
+          "War"
+        ],
+        "symbol": "Flaming sword"
+      }
+    },
+    {
+      "key": "candidate-a-2",
+      "content": {
+        "name": "Surtur",
+        "pantheon": "Norse",
+        "alignment": [
+          "L",
+          "E"
+        ],
+        "title": "God of fire giants and war",
+        "domains": [
+          "War"
+        ],
+        "symbol": "Flaming sword"
+      }
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "id": "magicvariant.frost-brand",
+  "name": "Frost Brand",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Frost Brand",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "sword": true
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Frost Brand ",
+          "source": "SRD51",
+          "page": 223,
+          "resist": [
+            "fire"
+          ],
+          "rarity": "very rare",
+          "reqAttune": true,
+          "entries": [
+            "When you hit with an attack using this magic sword, the target takes an extra {@damage 1d6} cold damage. In addition, while you hold the sword, you have resistance to fire damage.",
+            "In freezing temperatures, the blade sheds bright light in a 10-foot radius and dim light for an additional 10 feet.",
+            "When you draw this weapon, you can extinguish all nonmagical flames within 30 feet of you. This property can be used no more than once per hour."
+          ],
+          "light": [
+            {
+              "bright": 10,
+              "dim": 20
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Frost Brand",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "name": "Glaive",
+            "source": "SRD52"
+          },
+          {
+            "name": "Greatsword",
+            "source": "SRD52"
+          },
+          {
+            "name": "Longsword",
+            "source": "SRD52"
+          },
+          {
+            "name": "Rapier",
+            "source": "SRD52"
+          },
+          {
+            "name": "Scimitar",
+            "source": "SRD52"
+          },
+          {
+            "name": "Shortsword",
+            "source": "SRD52"
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Frost Brand ",
+          "source": "SRD52",
+          "page": 223,
+          "rarity": "very rare",
+          "reqAttune": true,
+          "entries": [
+            "When you hit with an attack roll using this magic weapon, the target takes an extra {@damage 1d6} Cold damage. In addition, while you hold the weapon, you have {@variantrule Resistance|SRD52} to Fire damage.",
+            "In freezing temperatures, the weapon sheds {@variantrule Bright Light|SRD52} in a 10-foot radius and {@variantrule Dim Light|SRD52} for an additional 10 feet.",
+            "When you draw this weapon, you can extinguish all nonmagical flames within 30 feet of yourself. Once used, this property can't be used again for 1 hour."
+          ],
+          "light": [
+            {
+              "bright": 10,
+              "dim": 20
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

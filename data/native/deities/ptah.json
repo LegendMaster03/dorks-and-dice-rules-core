@@ -1,0 +1,24 @@
+{
+  "id": "deity.ptah",
+  "name": "Ptah",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ptah",
+        "pantheon": "Egyptian",
+        "alignment": [
+          "L",
+          "N"
+        ],
+        "title": "God of crafts, knowledge, and secrets",
+        "domains": [
+          "Knowledge"
+        ],
+        "symbol": "Bull"
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "classFeature.indomitable-might.barbarian.indomitable-might.18",
+  "name": "Indomitable Might",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Indomitable Might",
+        "className": "Barbarian",
+        "classSource": "SRD51",
+        "level": 18,
+        "entries": [
+          "Beginning at 18th level, if your total for a Strength check is less than your Strength score, you can use that score in place of the total."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Indomitable Might",
+        "className": "Barbarian",
+        "classSource": "SRD52",
+        "level": 18,
+        "entries": [
+          "If your total for a Strength check or Strength saving throw is less than your Strength score, you can use that score in place of the total."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian",
+  "classLevel": 18
+}

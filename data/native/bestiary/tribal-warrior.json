@@ -1,0 +1,120 @@
+{
+  "id": "monster.tribal-warrior",
+  "name": "Tribal Warrior",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Tribal Warrior",
+        "size": [
+          "M"
+        ],
+        "type": {
+          "type": "humanoid",
+          "tags": [
+            "any race"
+          ]
+        },
+        "alignment": [
+          "A"
+        ],
+        "ac": [
+          {
+            "ac": 12,
+            "from": [
+              "{@item hide armor|srd51}"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 11,
+          "formula": "2d8 + 2"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "str": 13,
+        "dex": 11,
+        "con": 12,
+        "int": 8,
+        "wis": 11,
+        "cha": 8,
+        "passive": 10,
+        "languages": [
+          "any one language"
+        ],
+        "cr": "1/8",
+        "trait": [
+          {
+            "name": "Pack Tactics",
+            "entries": [
+              "The warrior has advantage on an attack roll against a creature if at least one of the warrior's allies is within 5 feet of the creature and the ally isn't {@condition incapacitated}."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Spear",
+            "entries": [
+              "{@atk mw,rw} {@hit 3} to hit, reach 5 ft. or range 20/60 ft., one target. {@h}4 ({@damage 1d6 + 1}) piercing damage, or 5 ({@damage 1d8 + 1}) piercing damage if used with two hands to make a melee attack."
+            ]
+          }
+        ],
+        "environment": [
+          "coastal",
+          "mountain",
+          "grassland",
+          "hill",
+          "arctic",
+          "forest",
+          "swamp",
+          "underdark",
+          "desert"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/tribal-warrior.opus"
+        },
+        "attachedItems": [
+          "spear|srd51"
+        ],
+        "traitTags": [
+          "Pack Tactics"
+        ],
+        "languageTags": [
+          "X"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MLW",
+          "MW",
+          "RW",
+          "THW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Tribal Warrior",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Tribal warriors live beyond civilization, most often subsisting on fishing and hunting. Each tribe acts in accordance with the wishes of its chief, who is the greatest or oldest warrior of the tribe or a tribe member blessed by the gods."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "baseitem.rapier",
+  "name": "Rapier",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Rapier",
+        "type": "M",
+        "rarity": "none",
+        "weight": 2,
+        "value": 2500,
+        "weaponCategory": "martial",
+        "property": [
+          "F"
+        ],
+        "dmg1": "1d8",
+        "dmgType": "P",
+        "rapier": true,
+        "sword": true,
+        "weapon": true
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Rapier",
+        "type": "M|SRD52",
+        "rarity": "none",
+        "weight": 2,
+        "value": 2500,
+        "weaponCategory": "martial",
+        "property": [
+          "F|SRD52"
+        ],
+        "mastery": [
+          "Vex|SRD52"
+        ],
+        "dmg1": "1d8",
+        "dmgType": "P",
+        "rapier": true,
+        "sword": true,
+        "weapon": true
+      }
+    }
+  ]
+}

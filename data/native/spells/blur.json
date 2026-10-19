@@ -1,0 +1,80 @@
+{
+  "id": "spell.blur",
+  "name": "Blur",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Blur",
+        "level": 2,
+        "school": "I",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Your body becomes blurred, shifting and wavering to all who can see you. For the duration, any creature has disadvantage on attack rolls against you. An attacker is immune to this effect if it doesn't rely on sight, as with blindsight, or can see through illusions, as with {@sense truesight}."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Blur",
+        "level": 2,
+        "school": "I",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Your body becomes blurred. For the duration, any creature has {@variantrule Disadvantage|SRD52} on attack rolls against you. An attacker is immune to this effect if it perceives you with {@sense Blindsight|SRD52} or {@sense Truesight|SRD52}."
+        ]
+      }
+    }
+  ]
+}

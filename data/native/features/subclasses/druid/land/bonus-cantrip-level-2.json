@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.bonus-cantrip.druid.land.bonus-cantrip.2",
+  "name": "Bonus Cantrip",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Bonus Cantrip",
+        "className": "Druid",
+        "classSource": "SRD51",
+        "subclassShortName": "Land",
+        "subclassSource": "SRD51",
+        "level": 2,
+        "header": 1,
+        "entries": [
+          "You learn one additional druid cantrip of your choice. This cantrip doesn't count against the number of druid cantrips you know."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "parentSubclass": "land",
+  "classLevel": 2
+}

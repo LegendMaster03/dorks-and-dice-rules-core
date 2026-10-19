@@ -1,0 +1,120 @@
+{
+  "id": "item.rod-of-alertness",
+  "name": "Rod of Alertness",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Rod of Alertness",
+        "type": "RD|SRD51",
+        "tier": "major",
+        "rarity": "very rare",
+        "reqAttune": true,
+        "weight": 2,
+        "bonusAc": "+1",
+        "bonusSavingThrow": "+1",
+        "entries": [
+          "This rod has a flanged head and the following properties.",
+          {
+            "name": "Alertness",
+            "type": "entries",
+            "entries": [
+              "While holding the rod, you have advantage on Wisdom ({@skill Perception}) checks and on rolls for initiative."
+            ]
+          },
+          {
+            "name": "Spells",
+            "type": "entries",
+            "entries": [
+              "While holding the rod, you can use an action to cast one of the following spells from it: {@spell detect evil and good}, {@spell detect magic}, {@spell detect poison and disease}, or {@spell see invisibility}."
+            ]
+          },
+          {
+            "name": "Protective Aura",
+            "type": "entries",
+            "entries": [
+              "As an action, you can plant the haft end of the rod in the ground, whereupon the rod's head sheds bright light in a 60-foot radius and dim light for an additional 60 feet. While in that bright light, you and any creature that is friendly to you gain a +1 bonus to AC and saving throws and can sense the location of any {@condition invisible} hostile creature that is also in the bright light.",
+              "The rod's head stops glowing and the effect ends after 10 minutes, or when a creature uses an action to pull the rod from the ground. This property can't be used again until the next dawn."
+            ]
+          }
+        ],
+        "light": [
+          {
+            "bright": 60,
+            "dim": 120
+          }
+        ],
+        "attachedSpells": {
+          "will": [
+            "detect evil and good",
+            "detect magic",
+            "detect poison and disease",
+            "see invisibility"
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Rod of Alertness",
+        "type": "RD|SRD52",
+        "rarity": "very rare",
+        "reqAttune": true,
+        "weight": 2,
+        "bonusAc": "+1",
+        "bonusSavingThrow": "+1",
+        "entries": [
+          "This rod has the following properties.",
+          {
+            "type": "entries",
+            "name": "Alertness",
+            "entries": [
+              "While holding the rod, you have {@variantrule Advantage|SRD52} on Wisdom ({@skill Perception|SRD52}) checks and on {@variantrule Initiative|SRD52} rolls."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spells",
+            "entries": [
+              "While holding the rod, you can cast the following spells from it:",
+              {
+                "type": "list",
+                "items": [
+                  "{@spell Detect Evil and Good|SRD52}",
+                  "{@spell Detect Magic|SRD52}",
+                  "{@spell Detect Poison and Disease|SRD52}",
+                  "{@spell See Invisibility|SRD52}"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Protective Aura",
+            "entries": [
+              "As a {@action Magic|SRD52} action, you can plant the haft end of the rod in the ground, whereupon the rod's head sheds {@variantrule Bright Light|SRD52} in a 60-foot radius and {@variantrule Dim Light|SRD52} for an additional 60 feet. While in that {@variantrule Bright Light|SRD52}, you and your allies gain a +1 bonus to {@variantrule Armor Class|SRD52} and saving throws and can sense the location of any {@condition Invisible|SRD52} creature that is also in the {@variantrule Bright Light|SRD52}.",
+              "The rod's head stops glowing and the effect ends after 10 minutes or when a creature takes a {@action Magic|SRD52} action to pull the rod from the ground. Once used, this property can't be used again until the next dawn."
+            ]
+          }
+        ],
+        "light": [
+          {
+            "bright": 60,
+            "dim": 120
+          }
+        ],
+        "attachedSpells": {
+          "will": [
+            "detect evil and good|srd52",
+            "detect magic|srd52",
+            "detect poison and disease|srd52",
+            "see invisibility|srd52"
+          ]
+        }
+      }
+    }
+  ]
+}

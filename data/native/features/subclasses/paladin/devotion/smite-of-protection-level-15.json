@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.smite-of-protection.paladin.devotion.smite-of-protection.15",
+  "name": "Smite of Protection",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Smite of Protection",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "subclassShortName": "Devotion",
+        "subclassSource": "SRD52",
+        "level": 15,
+        "header": 2,
+        "entries": [
+          "Your magical smite now radiates protective energy. Whenever you cast {@spell Divine Smite|SRD52}, you and your allies have {@variantrule Cover|SRD52|Half Cover} while in your Aura of Protection. The aura has this benefit until the start of your next turn."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "parentSubclass": "devotion",
+  "classLevel": 15
+}

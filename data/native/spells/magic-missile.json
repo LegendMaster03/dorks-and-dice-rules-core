@@ -1,0 +1,145 @@
+{
+  "id": "spell.magic-missile",
+  "name": "Magic Missile",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Magic Missile",
+        "level": 1,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 120
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You create three glowing darts of magical force. Each dart hits a creature of your choice that you can see within range. A dart deals {@damage 1d4 + 1} force damage to its target. The darts all strike simultaneously, and you can direct them to hit one creature or several."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 2nd level or higher, the spell creates one more dart for each slot level above 1st."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "force"
+        ],
+        "miscTags": [
+          "SGT"
+        ],
+        "areaTags": [
+          "MT",
+          "ST"
+        ],
+        "lore": [
+          {
+            "name": "Magic Missile",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "spells/PHB/Magic Missile.webp"
+                },
+                "width": 1359,
+                "height": 1700
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Magic Missile",
+        "level": 1,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 120
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You create three glowing darts of magical force. Each dart strikes a creature of your choice that you can see within range. A dart deals {@damage 1d4 + 1} Force damage to its target. The darts all strike simultaneously, and you can direct them to hit one creature or several."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "The spell creates one more dart for each spell slot level above 1."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "force"
+        ],
+        "miscTags": [
+          "SGT"
+        ],
+        "areaTags": [
+          "MT",
+          "ST"
+        ],
+        "lore": [
+          {
+            "name": "Magic Missile",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "spells/XPHB/Magic Missile.webp"
+                },
+                "credit": "Aaron J. Riley",
+                "width": 2040,
+                "height": 1440
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

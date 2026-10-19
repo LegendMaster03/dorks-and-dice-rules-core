@@ -1,0 +1,125 @@
+{
+  "id": "spell.disintegrate",
+  "name": "Disintegrate",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Disintegrate",
+        "level": 6,
+        "school": "T",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a lodestone and a pinch of dust"
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "A thin green ray springs from your pointing finger to a target that you can see within range. The target can be a creature, an object, or a creation of magical force, such as the wall created by {@spell wall of force}.",
+          "A creature targeted by this spell must make a Dexterity saving throw. On a failed save, the target takes {@damage 10d6 + 40} force damage. The target is disintegrated if this damage leaves it with 0 hit points.",
+          "A disintegrated creature and everything it is wearing and carrying, except magic items, are reduced to a pile of fine gray dust. The creature can be restored to life only by means of a {@spell true resurrection} or a {@spell wish} spell.",
+          "This spell automatically disintegrates a Large or smaller nonmagical object or a creation of magical force. If the target is a Huge or larger object or creation of force, this spell disintegrates a 10-foot-cube portion of it. A magic item is unaffected by this spell."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 7th level or higher, the damage increases by {@scaledamage 10d6 + 40|6-9|3d6} for each slot level above 6th."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "force"
+        ],
+        "savingThrow": [
+          "dexterity"
+        ],
+        "miscTags": [
+          "OBJ",
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Disintegrate",
+        "level": 6,
+        "school": "T",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a lodestone and dust"
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You launch a green ray at a target you can see within range. The target can be a creature, a nonmagical object, or a creation of magical force, such as the wall created by {@spell Wall of Force|SRD52}.",
+          "A creature targeted by this spell makes a Dexterity saving throw. On a failed save, the target takes {@damage 10d6 + 40} Force damage. If this damage reduces it to 0 {@variantrule Hit Points|SRD52}, it and everything nonmagical it is wearing and carrying are disintegrated into gray dust. The target can be revived only by a {@spell True Resurrection|SRD52} or a {@spell Wish|SRD52} spell.",
+          "This spell automatically disintegrates a Large or smaller nonmagical object or a creation of magical force. If such a target is Huge or larger, this spell disintegrates a 10-foot-{@variantrule Cube [Area of Effect]|SRD52|Cube} portion of it."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "The damage increases by {@scaledamage 10d6 + 40|6-9|3d6} for each spell slot level above 6."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "force"
+        ],
+        "savingThrow": [
+          "dexterity"
+        ],
+        "miscTags": [
+          "OBJ",
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

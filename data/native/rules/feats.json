@@ -1,0 +1,172 @@
+{
+  "id": "rule.feats",
+  "name": "Feats",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Feats",
+        "page": 75,
+        "entries": [
+          "A feat represents a talent or an area of expertise that gives a character special capabilities. It embodies training, experience, and abilities beyond what a class provides.",
+          "At certain levels, your class gives you the Ability Score Improvement feature. Using the optional feats rule, you can forgo taking that feature to take a feat of your choice instead. You can take each feat only once, unless the feat's description says otherwise.",
+          "You must meet any prerequisite specified in a feat to take that feat. If you ever lose a feat's prerequisite, you can't use that feat until you regain the prerequisite. For example, the Grappler feat requires you to have a Strength of 13 or higher. If your Strength is reduced below 13 somehow—perhaps by a withering curse—you can't benefit from the Grappler feat until your Strength is restored.",
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 1,
+            "items": [
+              "{@feat Grappler|srd51}"
+            ]
+          }
+        ],
+        "id": "0ba"
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "type": "section",
+        "name": "Feats",
+        "page": 87,
+        "entries": [
+          {
+            "type": "section",
+            "name": "Feat Descriptions",
+            "page": 87,
+            "entries": [
+              "The feats that follow are organized by category— Origin, General, Fighting Style, or Epic Boon—and alphabetized in each category.",
+              {
+                "type": "entries",
+                "name": "Parts of a Feat",
+                "page": 87,
+                "entries": [
+                  "The description of a feat contains the following parts, which are presented after the feat's name.",
+                  {
+                    "type": "entries",
+                    "name": "Category",
+                    "page": 87,
+                    "entries": [
+                      "A feat is a member of a category, which is noted in the feat. If you're instructed to choose a feat from a specific category, such as the Origin category, that category must appear under the feat's name. If you're instructed to choose a feat and no category is specified, you can choose from any category."
+                    ],
+                    "id": "0ef"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Prerequisite",
+                    "page": 87,
+                    "entries": [
+                      "To take a feat, you must meet any prerequisite in its description unless a feature allows you to take the feat without the prerequisite. If a prerequisite includes a class, you must have at least 1 level in that class to take the feat."
+                    ],
+                    "id": "0f0"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Benefit",
+                    "page": 87,
+                    "entries": [
+                      "The benefits of a feat are detailed after any prerequisites are listed. If you have a feat, you gain its benefits."
+                    ],
+                    "id": "0f1"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Repeatable",
+                    "page": 87,
+                    "entries": [
+                      "A feat can be taken only once unless its description states otherwise in a \"Repeatable\" subsection."
+                    ],
+                    "id": "0f2"
+                  }
+                ],
+                "id": "0ee"
+              }
+            ],
+            "id": "0ed"
+          },
+          {
+            "type": "section",
+            "name": "Origin Feats",
+            "page": 87,
+            "entries": [
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "columns": 2,
+                "items": [
+                  "{@feat Alert|srd52}",
+                  "{@feat Magic Initiate|srd52}",
+                  "{@feat Savage Attacker|srd52}",
+                  "{@feat Skilled|srd52}"
+                ]
+              }
+            ],
+            "id": "0f3"
+          },
+          {
+            "type": "section",
+            "name": "General Feats",
+            "page": 87,
+            "entries": [
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "columns": 2,
+                "items": [
+                  "{@feat Ability Score Improvement|srd52}",
+                  "{@feat Grappler|srd52}"
+                ]
+              }
+            ],
+            "id": "0f4"
+          },
+          {
+            "type": "section",
+            "name": "Fighting Style Feats",
+            "page": 87,
+            "entries": [
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "columns": 2,
+                "items": [
+                  "{@feat Archery|srd52}",
+                  "{@feat Defense|srd52}",
+                  "{@feat Great Weapon Fighting|srd52}",
+                  "{@feat Two-Weapon Fighting|srd52}"
+                ]
+              }
+            ],
+            "id": "0f5"
+          },
+          {
+            "type": "section",
+            "name": "Epic Boon Feats",
+            "page": 88,
+            "entries": [
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "columns": 2,
+                "items": [
+                  "{@feat Boon of Combat Prowess|srd52}",
+                  "{@feat Boon of Dimensional Travel|srd52}",
+                  "{@feat Boon of Fate|srd52}",
+                  "{@feat Boon of Irresistible Offense|srd52}",
+                  "{@feat Boon of Spell Recall|srd52}",
+                  "{@feat Boon of the Night Spirit|srd52}",
+                  "{@feat Boon of Truesight|srd52}"
+                ]
+              }
+            ],
+            "id": "0f6"
+          }
+        ],
+        "id": "0ec"
+      }
+    }
+  ]
+}

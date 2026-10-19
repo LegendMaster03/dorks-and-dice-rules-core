@@ -1,0 +1,75 @@
+{
+  "id": "trap.falling-net",
+  "name": "Falling Net",
+  "kind": "trap",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Falling Net",
+        "trapHazType": "MECH",
+        "entries": [
+          "This trap uses a trip wire to release a net suspended from the ceiling.",
+          "The trip wire is 3 inches off the ground and stretches between two columns or trees. The net is hidden by cobwebs or foliage. The DC to spot the trip wire and net is 10. A successful {@dc 15} Dexterity check using thieves' tools breaks the trip wire harmlessly. A character without thieves' tools can attempt this check with disadvantage using any edged weapon or edged tool. On a failed check, the trap triggers.",
+          "When the trap is triggered, the net is released, covering a 10-foot-square area. Those in the area are trapped under the net and {@condition restrained}, and those that fail a {@dc 10} Strength saving throw are also knocked {@condition prone}.",
+          "A creature can use its action to make a {@dc 10} Strength check, freeing itself or another creature within its reach on a success. The net has AC 10 and 20 hit points.",
+          "Dealing 5 slashing damage to the net (AC 10) destroys a 5-foot-square section of it, freeing any creature trapped in that section."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Falling Net",
+        "trapHazType": "TRP",
+        "rating": [
+          {
+            "tier": 1,
+            "threat": "nuisance"
+          }
+        ],
+        "trigger": [
+          "A creature crosses a trip wire"
+        ],
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "A falling net trap uses a trip wire to release a weighted, 10-foot-square {@item Net|SRD52} suspended from the ceiling. The trip wire is 3 inches off the ground and stretches between two columns or trees.",
+          "The first creature that crosses the trip wire causes the Net to fall on it. The target must succeed on a {@dc 10} Dexterity saving throw or have the {@condition Restrained|SRD52} condition until it escapes. The target succeeds automatically if it's Huge or larger. A creature can take an action to make a {@dc 10} Strength ({@skill Athletics|SRD52}) check, freeing itself or another creature within its reach from the Net on a successful check.",
+          {
+            "type": "entries",
+            "name": "Detect and Disarm",
+            "entries": [
+              "As a {@action Search|SRD52} action, a creature can examine the trapped area and make a {@dc 11} Wisdom ({@skill Perception|SRD52}) check, detecting the trip wire and the suspended Net on a successful check. Once detected, the trip wire can be easily cut or avoided (no ability check required)."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Destroy the Net",
+            "entries": [
+              "Reducing the Net to 0 Hit Points frees any creature trapped in it (see the {@book Player's Handbook|SRD52} for the {@item Net|SRD52|Net's} statistics)."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Set the Trap",
+            "entries": [
+              "A creature that has {@item Thieves' Tools|SRD52} and all the trap's components (including a Net) can try to set a falling net trap, doing so with a successful {@dc 13} Dexterity ({@skill Sleight of Hand|SRD52}) check. Each attempt to set this trap takes 10 minutes."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "You can scale the trap for higher levels by increasing the weight of the Net, which increases the save DC and the DC of the Strength ({@skill Athletics|SRD52}) check as follows: {@dc 12} at levels 5–10, {@dc 14} at levels 11–16, or {@dc 16} at levels 17–20."
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

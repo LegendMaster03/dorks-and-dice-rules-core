@@ -1,0 +1,58 @@
+{
+  "id": "magicvariant.3-armor",
+  "name": "+3 Armor",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "+3 Armor",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "armor": true
+          }
+        ],
+        "inherits": {
+          "namePrefix": "+3 ",
+          "source": "SRD51",
+          "page": 208,
+          "rarity": "legendary",
+          "bonusAc": "+3",
+          "entries": [
+            "You have a {=bonusAc} bonus to AC while wearing this armor."
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "+3 Armor",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "type": "LA|SRD52"
+          },
+          {
+            "type": "MA|SRD52"
+          },
+          {
+            "type": "HA|SRD52"
+          }
+        ],
+        "inherits": {
+          "namePrefix": "+3 ",
+          "source": "SRD52",
+          "page": 210,
+          "rarity": "legendary",
+          "bonusAc": "+3",
+          "entries": [
+            "You have a {=bonusAc} bonus to AC while wearing this armor."
+          ]
+        }
+      }
+    }
+  ]
+}

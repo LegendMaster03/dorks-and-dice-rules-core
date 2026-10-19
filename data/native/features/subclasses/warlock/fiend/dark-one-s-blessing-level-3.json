@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.dark-one-s-blessing.warlock.fiend.dark-one-s-blessing.3",
+  "name": "Dark One's Blessing",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Dark One's Blessing",
+        "className": "Warlock",
+        "classSource": "SRD52",
+        "subclassShortName": "Fiend",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "header": 2,
+        "entries": [
+          "When you reduce an enemy to 0 {@variantrule Hit Points|SRD52}, you gain {@variantrule Temporary Hit Points|SRD52} equal to your Charisma modifier plus your Warlock level (minimum of 1 {@variantrule Temporary Hit Points|SRD52|Temporary Hit Point}). You also gain this benefit if someone else reduces an enemy within 10 feet of you to 0 {@variantrule Hit Points|SRD52}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.warlock",
+  "parentSubclass": "fiend",
+  "classLevel": 3
+}

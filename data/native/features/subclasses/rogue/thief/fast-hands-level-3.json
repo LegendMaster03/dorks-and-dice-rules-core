@@ -1,0 +1,59 @@
+{
+  "id": "subclassFeature.fast-hands.rogue.thief.fast-hands.3",
+  "name": "Fast Hands",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Fast Hands",
+        "className": "Rogue",
+        "classSource": "SRD51",
+        "subclassShortName": "Thief",
+        "subclassSource": "SRD51",
+        "level": 3,
+        "header": 1,
+        "entries": [
+          "Starting at 3rd level, you can use the bonus action granted by your Cunning Action to make a Dexterity ({@skill Sleight of Hand}) check, use your {@item thieves' tools|srd51} to disarm a trap or open a lock, or take the {@action Use an Object} action."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Fast Hands",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "subclassShortName": "Thief",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "As a {@variantrule Bonus Action|SRD52}, you can do one of the following.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Sleight of Hand",
+                "entries": [
+                  "Make a Dexterity ({@skill Sleight of Hand|SRD52}) check to pick a lock or disarm a trap with {@item Thieves' Tools|SRD52} or to pick a pocket."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Use an Object",
+                "entries": [
+                  "Take the {@action Utilize|SRD52} action, or take the {@action Magic|SRD52} action to use a magic item that requires that action."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "parentSubclass": "thief",
+  "classLevel": 3
+}

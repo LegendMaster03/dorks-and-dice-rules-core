@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.words-of-creation.bard.words-of-creation.20",
+  "name": "Words of Creation",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Words of Creation",
+        "className": "Bard",
+        "classSource": "SRD52",
+        "level": 20,
+        "entries": [
+          "You have mastered two of the Words of Creation: the words of life and death. You therefore always have the {@spell Power Word Heal|SRD52} and {@spell Power Word Kill|SRD52} spells prepared. When you cast either spell, you can target a second creature with it if that creature is within 10 feet of the first target."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.bard",
+  "classLevel": 20
+}

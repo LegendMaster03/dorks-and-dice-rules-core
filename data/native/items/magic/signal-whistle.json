@@ -1,0 +1,29 @@
+{
+  "id": "item.signal-whistle",
+  "name": "Signal Whistle",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Signal Whistle",
+        "type": "G",
+        "rarity": "none",
+        "value": 5
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Signal Whistle",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "value": 5,
+        "entries": [
+          "When blown as a {@action Utilize|SRD52} action, a Signal Whistle produces a sound that can be heard up to 600 feet away."
+        ]
+      }
+    }
+  ]
+}

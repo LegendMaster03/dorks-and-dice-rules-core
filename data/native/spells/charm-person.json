@@ -1,0 +1,132 @@
+{
+  "id": "spell.charm-person",
+  "name": "Charm Person",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Charm Person",
+        "level": 1,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            }
+          }
+        ],
+        "entries": [
+          "You attempt to charm a humanoid you can see within range. It must make a Wisdom saving throw, and does so with advantage if you or your companions are fighting it. If it fails the saving throw, it is {@condition charmed} by you until the spell ends or until you or your companions do anything harmful to it. The {@condition charmed} creature regards you as a friendly acquaintance. When the spell ends, the creature knows it was {@condition charmed} by you."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 2nd level or higher, you can target one additional creature for each slot level above 1st. The creatures must be within 30 feet of each other when you target them."
+            ]
+          }
+        ],
+        "conditionInflict": [
+          "charmed"
+        ],
+        "savingThrow": [
+          "wisdom"
+        ],
+        "affectsCreatureType": [
+          "humanoid"
+        ],
+        "miscTags": [
+          "SCT",
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Charm Person",
+        "level": 1,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            }
+          }
+        ],
+        "entries": [
+          "One Humanoid you can see within range makes a Wisdom saving throw. It does so with {@variantrule Advantage|SRD52} if you or your allies are fighting it. On a failed save, the target has the {@condition Charmed|SRD52} condition until the spell ends or until you or your allies damage it. The {@condition Charmed|SRD52} creature is {@variantrule Friendly [Attitude]|SRD52|Friendly} to you. When the spell ends, the target knows it was {@condition Charmed|SRD52} by you."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "You can target one additional creature for each spell slot level above 1."
+            ]
+          }
+        ],
+        "conditionInflict": [
+          "charmed"
+        ],
+        "savingThrow": [
+          "wisdom"
+        ],
+        "affectsCreatureType": [
+          "humanoid"
+        ],
+        "miscTags": [
+          "SCT",
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

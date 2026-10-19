@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.rogue-subclass.rogue.rogue-subclass.3",
+  "name": "Rogue Subclass",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Rogue Subclass",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "You gain a Rogue subclass of your choice. A subclass is a specialization that grants you features at certain Rogue levels. For the rest of your career, you gain each of your subclass's features that are of your Rogue level or lower."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 3
+}

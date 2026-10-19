@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.evocation-savant.wizard.evocation.evocation-savant.2",
+  "name": "Evocation Savant",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Evocation Savant",
+        "className": "Wizard",
+        "classSource": "SRD51",
+        "subclassShortName": "Evocation",
+        "subclassSource": "SRD51",
+        "level": 2,
+        "header": 1,
+        "entries": [
+          "Beginning when you select this school at 2nd level, the gold and time you must spend to copy an evocation spell into your spellbook is halved."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.wizard",
+  "parentSubclass": "evocation",
+  "classLevel": 2
+}

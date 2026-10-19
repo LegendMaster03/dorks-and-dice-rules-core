@@ -1,0 +1,67 @@
+{
+  "id": "item.boots-of-the-winterlands",
+  "name": "Boots of the Winterlands",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Boots of the Winterlands",
+        "resist": [
+          "cold"
+        ],
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "entries": [
+          "These furred boots are snug and feel quite warm. While you wear them, you gain the following benefits:",
+          {
+            "type": "list",
+            "items": [
+              "You have resistance to cold damage.",
+              "You ignore {@quickref difficult terrain||3} created by ice or snow.",
+              "You can tolerate temperatures as low as -50 degrees Fahrenheit without any additional protection. If you wear heavy clothes, you can tolerate temperatures as low as -100 degrees Fahrenheit."
+            ]
+          }
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Boots of the Winterlands",
+        "resist": [
+          "cold"
+        ],
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "entries": [
+          "These furred boots are snug and feel warm. While wearing them, you gain the following benefits.",
+          {
+            "type": "entries",
+            "name": "Cold Resistance",
+            "entries": [
+              "You have {@variantrule Resistance|SRD52} to Cold damage and can tolerate temperatures of 0 degrees Fahrenheit or lower without any additional protection."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Winter Strider",
+            "entries": [
+              "You ignore {@variantrule Difficult Terrain|SRD52} created by ice or snow."
+            ]
+          }
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

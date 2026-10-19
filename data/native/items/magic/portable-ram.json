@@ -1,0 +1,34 @@
+{
+  "id": "item.portable-ram",
+  "name": "Portable Ram",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Portable Ram",
+        "type": "G",
+        "rarity": "none",
+        "weight": 35,
+        "value": 400,
+        "entries": [
+          "You can use a portable ram to break down doors. When doing so, you gain a +4 bonus on the Strength check. One other character can help you use the ram, giving you advantage on this check."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Portable Ram",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 35,
+        "value": 400,
+        "entries": [
+          "You can use a Portable Ram to break down doors. When doing so, you gain a +4 bonus to the Strength check. One other character can help you use the ram, giving you {@variantrule Advantage|SRD52} on this check."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,1228 @@
+{
+  "_meta": {
+    "status": "SRD-derived-native-baseline-pending-reconciliation",
+    "note": "Candidate definitions are imported content, not adopted executable rules."
+  },
+  "records": [
+    {
+      "id": "itemGroup.arcane-focus",
+      "name": "Arcane Focus",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Arcane Focus",
+            "type": "SCF|SRD52",
+            "scfType": "arcane",
+            "rarity": "none",
+            "focus": [
+              "Sorcerer",
+              "Warlock",
+              "Wizard"
+            ],
+            "items": [
+              "Crystal|SRD52",
+              "Orb|SRD52",
+              "Rod|SRD52",
+              "Staff|SRD52",
+              "Wand|SRD52"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.armor-of-resistance",
+      "name": "Armor of Resistance",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Armor of Resistance",
+            "type": "GV|SRD52",
+            "rarity": "rare",
+            "reqAttune": true,
+            "entries": [
+              "You have {@variantrule Resistance|SRD52} to one type of damage while you wear this armor. The DM chooses the type or determines it randomly by rolling on the following table.",
+              {
+                "type": "table",
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "colLabels": [
+                  "d10",
+                  "Damage Type"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Acid"
+                  ],
+                  [
+                    "2",
+                    "Cold"
+                  ],
+                  [
+                    "3",
+                    "Fire"
+                  ],
+                  [
+                    "4",
+                    "Force"
+                  ],
+                  [
+                    "5",
+                    "Lightning"
+                  ],
+                  [
+                    "6",
+                    "Necrotic"
+                  ],
+                  [
+                    "7",
+                    "Poison"
+                  ],
+                  [
+                    "8",
+                    "Psychic"
+                  ],
+                  [
+                    "9",
+                    "Radiant"
+                  ],
+                  [
+                    "10",
+                    "Thunder"
+                  ]
+                ]
+              }
+            ],
+            "items": [],
+            "itemsHidden": true,
+            "classFeatures": [
+              "replicate magic item|artificer|efa|2|efa"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.armor-of-vulnerability",
+      "name": "Armor of Vulnerability",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Armor of Vulnerability",
+            "type": "GV|SRD52",
+            "rarity": "rare",
+            "reqAttune": true,
+            "curse": true,
+            "items": [
+              "Armor of Vulnerability (Bludgeoning)|SRD52",
+              "Armor of Vulnerability (Piercing)|SRD52",
+              "Armor of Vulnerability (Slashing)|SRD52"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.artisan-s-tools",
+      "name": "Artisan's Tools",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Artisan's Tools",
+            "type": "AT",
+            "rarity": "none",
+            "items": [
+              "Alchemist's Supplies|SRD51",
+              "Brewer's Supplies|SRD51",
+              "Calligrapher's Supplies|SRD51",
+              "Carpenter's Tools|SRD51",
+              "Cartographer's Tools|SRD51",
+              "Cobbler's Tools|SRD51",
+              "Cook's Utensils|SRD51",
+              "Glassblower's Tools|SRD51",
+              "Jeweler's Tools|SRD51",
+              "Leatherworker's Tools|SRD51",
+              "Mason's Tools|SRD51",
+              "Painter's Supplies|SRD51",
+              "Potter's Tools|SRD51",
+              "Smith's Tools|SRD51",
+              "Tinker's Tools|SRD51",
+              "Weaver's Tools|SRD51",
+              "Woodcarver's Tools|SRD51"
+            ]
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Artisan's Tools",
+            "type": "AT|SRD52",
+            "rarity": "none",
+            "items": [
+              "Alchemist's Supplies|SRD52",
+              "Brewer's Supplies|SRD52",
+              "Calligrapher's Supplies|SRD52",
+              "Carpenter's Tools|SRD52",
+              "Cartographer's Tools|SRD52",
+              "Cobbler's Tools|SRD52",
+              "Cook's Utensils|SRD52",
+              "Glassblower's Tools|SRD52",
+              "Jeweler's Tools|SRD52",
+              "Leatherworker's Tools|SRD52",
+              "Mason's Tools|SRD52",
+              "Painter's Supplies|SRD52",
+              "Potter's Tools|SRD52",
+              "Smith's Tools|SRD52",
+              "Tinker's Tools|SRD52",
+              "Weaver's Tools|SRD52",
+              "Woodcarver's Tools|SRD52"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.bag-of-tricks",
+      "name": "Bag of Tricks",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Bag of Tricks",
+            "rarity": "uncommon",
+            "wondrous": true,
+            "recharge": "dawn",
+            "items": [
+              "Bag of Tricks, Gray|SRD52",
+              "Bag of Tricks, Rust|SRD52",
+              "Bag of Tricks, Tan|SRD52"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.belt-of-giant-strength",
+      "name": "Belt of Giant Strength",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Belt of Giant Strength",
+            "rarity": "varies",
+            "reqAttune": true,
+            "wondrous": true,
+            "entries": [
+              {
+                "type": "table",
+                "colLabels": [
+                  "Belt",
+                  "Str.",
+                  "Rarity"
+                ],
+                "colStyles": [
+                  "col-8",
+                  "col-2 text-center",
+                  "col-2"
+                ],
+                "rows": [
+                  [
+                    "{@item Belt of Hill Giant Strength|SRD52}",
+                    "21",
+                    "Rare"
+                  ],
+                  [
+                    "{@item Belt of Frost Giant Strength|SRD52} or {@item Belt of Stone Giant Strength|SRD52}",
+                    "23",
+                    "Very Rare"
+                  ],
+                  [
+                    "{@item Belt of Fire Giant Strength|SRD52}",
+                    "25",
+                    "Very Rare"
+                  ],
+                  [
+                    "{@item Belt of Cloud Giant Strength|SRD52}",
+                    "27",
+                    "Legendary"
+                  ],
+                  [
+                    "{@item Belt of Storm Giant Strength|SRD52}",
+                    "29",
+                    "Legendary"
+                  ]
+                ]
+              }
+            ],
+            "items": [
+              "Belt of Cloud Giant Strength|SRD52",
+              "Belt of Fire Giant Strength|SRD52",
+              "Belt of Frost Giant Strength|SRD52",
+              "Belt of Hill Giant Strength|SRD52",
+              "Belt of Stone Giant Strength|SRD52",
+              "Belt of Storm Giant Strength|SRD52"
+            ],
+            "itemsHidden": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.carpet-of-flying",
+      "name": "Carpet of Flying",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Carpet of Flying",
+            "rarity": "very rare",
+            "wondrous": true,
+            "entries": [
+              "You can make this carpet hover and fly by taking a {@action Magic|SRD52} action and using the carpet's command word. It moves according to your directions if you are within 30 feet of it.",
+              "Four sizes of Carpet of Flying exist. The DM chooses the size of a given carpet or determines it randomly by rolling on the following table. A carpet can carry up to twice the weight shown on the table, but its {@variantrule Fly Speed|SRD52} is halved if it carries more than its normal capacity.",
+              {
+                "type": "table",
+                "caption": "Applicable Carpet Sizes",
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-4",
+                  "col-3 text-center",
+                  "col-3 text-center"
+                ],
+                "colLabels": [
+                  "1d100",
+                  "Size",
+                  "Capacity",
+                  "Fly Speed"
+                ],
+                "rows": [
+                  [
+                    "01-20",
+                    "{@item Carpet of Flying, 3 ft. × 5 ft.|SRD52}",
+                    "200 lb.",
+                    "80 feet"
+                  ],
+                  [
+                    "21-55",
+                    "{@item Carpet of Flying, 4 ft. × 6 ft.|SRD52}",
+                    "400 lb.",
+                    "60 feet"
+                  ],
+                  [
+                    "56-80",
+                    "{@item Carpet of Flying, 5 ft. × 7 ft.|SRD52}",
+                    "600 lb.",
+                    "40 feet"
+                  ],
+                  [
+                    "81-00",
+                    "{@item Carpet of Flying, 6 ft. × 9 ft.|SRD52}",
+                    "800 lb.",
+                    "30 feet"
+                  ]
+                ]
+              }
+            ],
+            "items": [
+              "Carpet of Flying, 3 ft. × 5 ft.|SRD52",
+              "Carpet of Flying, 4 ft. × 6 ft.|SRD52",
+              "Carpet of Flying, 5 ft. × 7 ft.|SRD52",
+              "Carpet of Flying, 6 ft. × 9 ft.|SRD52"
+            ],
+            "itemsHidden": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.dragon-scale-mail",
+      "name": "Dragon Scale Mail",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Dragon Scale Mail",
+            "type": "MA",
+            "tier": "major",
+            "rarity": "very rare",
+            "reqAttune": true,
+            "weight": 45,
+            "ac": 14,
+            "bonusAc": "+1",
+            "stealth": true,
+            "items": [
+              "Black Dragon Scale Mail",
+              "Blue Dragon Scale Mail",
+              "Brass Dragon Scale Mail",
+              "Bronze Dragon Scale Mail",
+              "Copper Dragon Scale Mail",
+              "Gold Dragon Scale Mail",
+              "Green Dragon Scale Mail",
+              "Red Dragon Scale Mail",
+              "Silver Dragon Scale Mail",
+              "White Dragon Scale Mail"
+            ]
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Dragon Scale Mail",
+            "baseItem": "scale mail|srd52",
+            "type": "MA|SRD52",
+            "rarity": "very rare",
+            "reqAttune": true,
+            "weight": 45,
+            "ac": 14,
+            "bonusAc": "+1",
+            "stealth": true,
+            "items": [
+              "Black Dragon Scale Mail|SRD52",
+              "Blue Dragon Scale Mail|SRD52",
+              "Brass Dragon Scale Mail|SRD52",
+              "Bronze Dragon Scale Mail|SRD52",
+              "Copper Dragon Scale Mail|SRD52",
+              "Gold Dragon Scale Mail|SRD52",
+              "Green Dragon Scale Mail|SRD52",
+              "Red Dragon Scale Mail|SRD52",
+              "Silver Dragon Scale Mail|SRD52",
+              "White Dragon Scale Mail|SRD52"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.druidic-focus",
+      "name": "Druidic Focus",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Druidic Focus",
+            "type": "SCF|SRD52",
+            "scfType": "druid",
+            "rarity": "none",
+            "focus": [
+              "Druid"
+            ],
+            "items": [
+              "Sprig of mistletoe|SRD52",
+              "Wooden staff|SRD52",
+              "Yew wand|SRD52"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.elemental-gem",
+      "name": "Elemental Gem",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Elemental Gem",
+            "rarity": "uncommon",
+            "wondrous": true,
+            "items": [
+              "Elemental Gem, Blue Sapphire|SRD52",
+              "Elemental Gem, Emerald|SRD52",
+              "Elemental Gem, Red Corundum|SRD52",
+              "Elemental Gem, Yellow Diamond|SRD52"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.feather-token",
+      "name": "Feather Token",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Feather Token",
+            "rarity": "varies",
+            "wondrous": true,
+            "entries": [
+              "This object looks like a feather. Different types of feather tokens exist, each with a different single-use effect. The DM chooses the kind of token or determines it randomly by rolling on the Feather Tokens table. The type of token determines its rarity.",
+              {
+                "type": "table",
+                "caption": "Feather Tokens",
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-5 text-center",
+                  "col-5 text-center"
+                ],
+                "colLabels": [
+                  "1d100",
+                  "Token",
+                  "Rarity"
+                ],
+                "rows": [
+                  [
+                    "01-20",
+                    "{@item Feather Token, Anchor|SRD52|Anchor}",
+                    "Uncommon"
+                  ],
+                  [
+                    "21-35",
+                    "{@item Feather Token, Bird|SRD52|Bird}",
+                    "Rare"
+                  ],
+                  [
+                    "36-50",
+                    "{@item Feather Token, Fan|SRD52|Fan}",
+                    "Uncommon"
+                  ],
+                  [
+                    "51-65",
+                    "{@item Feather Token, Swan boat|SRD52|Swan Boat}",
+                    "Rare"
+                  ],
+                  [
+                    "66-90",
+                    "{@item Feather Token, Tree|SRD52|Tree}",
+                    "Uncommon"
+                  ],
+                  [
+                    "91-00",
+                    "{@item Feather Token, Whip|SRD52|Whip}",
+                    "Rare"
+                  ]
+                ]
+              }
+            ],
+            "items": [
+              "Feather Token, Anchor|SRD52",
+              "Feather Token, Bird|SRD52",
+              "Feather Token, Fan|SRD52",
+              "Feather Token, Swan Boat|SRD52",
+              "Feather Token, Tree|SRD52",
+              "Feather Token, Whip|SRD52"
+            ],
+            "itemsHidden": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.figurine-of-wondrous-power",
+      "name": "Figurine of Wondrous Power",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Figurine of Wondrous Power",
+            "rarity": "varies",
+            "wondrous": true,
+            "items": [
+              "Figurine of Wondrous Power, Bronze Griffon|SRD52",
+              "Figurine of Wondrous Power, Ebony Fly|SRD52",
+              "Figurine of Wondrous Power, Golden Lions|SRD52",
+              "Figurine of Wondrous Power, Ivory Goats|SRD52",
+              "Figurine of Wondrous Power, Marble Elephant|SRD52",
+              "Figurine of Wondrous Power, Obsidian Steed|SRD52",
+              "Figurine of Wondrous Power, Onyx Dog|SRD52",
+              "Figurine of Wondrous Power, Serpentine Owl|SRD52",
+              "Figurine of Wondrous Power, Silver Raven|SRD52"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.gaming-set",
+      "name": "Gaming Set",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Gaming Set",
+            "type": "GS",
+            "rarity": "none",
+            "items": [
+              "Dice Set|SRD51",
+              "Dragonchess Set|SRD51",
+              "Playing Card Set|SRD51",
+              "Three-Dragon Ante Set|SRD51"
+            ]
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Gaming Set",
+            "type": "GS|SRD52",
+            "rarity": "none",
+            "items": [
+              "Dice Set|SRD52",
+              "Dragonchess Set|SRD52",
+              "Playing Cards|SRD52",
+              "Three-Dragon Ante Set|SRD52"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.holy-symbol",
+      "name": "Holy Symbol",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Holy Symbol",
+            "type": "SCF|SRD52",
+            "scfType": "holy",
+            "rarity": "none",
+            "focus": [
+              "Cleric",
+              "Paladin"
+            ],
+            "items": [
+              "Amulet|SRD52",
+              "Emblem|SRD52",
+              "Reliquary|SRD52"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.horn-of-valhalla",
+      "name": "Horn of Valhalla",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Horn of Valhalla",
+            "rarity": "varies",
+            "wondrous": true,
+            "entries": [
+              "You can take a {@action Magic|SRD52} action to blow this horn. In response, warrior spirits from the plane of Ysgard appear in unoccupied spaces within 60 feet of you. Each spirit uses the {@creature Berserker|SRD52} stat block and returns to Ysgard after 1 hour or when it drops to 0 {@variantrule Hit Points|SRD52}. The spirits look like living, breathing warriors, and they have {@variantrule Immunity|SRD52} to the {@condition Charmed|SRD52} and {@condition Frightened|SRD52} conditions. Once you use the horn, it can't be used again until 7 days have passed.",
+              "Four types of Horn of Valhalla are known to exist, each made of a different metal. The horn's type determines how many spirits it summons, as well as the requirement for its use. The DM chooses the horn's type or determines it randomly by rolling on the following table. If you blow the horn without meeting its requirement, the summoned spirits attack you.",
+              "If you meet the requirement, they are {@variantrule Friendly [Attitude]|SRD52|Friendly} to you and your allies and follow your commands.",
+              {
+                "type": "table",
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-2 text-center",
+                  "col-2 text-center",
+                  "col-6"
+                ],
+                "colLabels": [
+                  "1d100",
+                  "Horn Type",
+                  "Spirits",
+                  "Requirement"
+                ],
+                "rows": [
+                  [
+                    "01-40",
+                    "{@item Horn of Valhalla, Silver|SRD52|Silver}",
+                    "2",
+                    "None"
+                  ],
+                  [
+                    "41-75",
+                    "{@item Horn of Valhalla, Brass|SRD52|Brass}",
+                    "3",
+                    "{@variantrule Proficiency|SRD52} with all Simple weapons"
+                  ],
+                  [
+                    "76-90",
+                    "{@item Horn of Valhalla, Bronze|SRD52|Bronze}",
+                    "4",
+                    "Training with all Medium armor"
+                  ],
+                  [
+                    "91-00",
+                    "{@item Horn of Valhalla, Iron|SRD52|Iron}",
+                    "5",
+                    "{@variantrule Proficiency|SRD52} with all Martial weapons"
+                  ]
+                ]
+              }
+            ],
+            "items": [
+              "Horn of Valhalla, Brass|SRD52",
+              "Horn of Valhalla, Bronze|SRD52",
+              "Horn of Valhalla, Iron|SRD52",
+              "Horn of Valhalla, Silver|SRD52"
+            ],
+            "itemsHidden": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.ioun-stone",
+      "name": "Ioun Stone",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Ioun Stone",
+            "rarity": "varies",
+            "reqAttune": true,
+            "wondrous": true,
+            "hasRefs": true,
+            "entries": [
+              "{#itemEntry Ioun Stone|SRD52}",
+              "The type of stone determines its rarity and effects."
+            ],
+            "items": [
+              "Ioun Stone, Absorption|SRD52",
+              "Ioun Stone, Agility|SRD52",
+              "Ioun Stone, Awareness|SRD52",
+              "Ioun Stone, Fortitude|SRD52",
+              "Ioun Stone, Greater Absorption|SRD52",
+              "Ioun Stone, Insight|SRD52",
+              "Ioun Stone, Intellect|SRD52",
+              "Ioun Stone, Leadership|SRD52",
+              "Ioun Stone, Mastery|SRD52",
+              "Ioun Stone, Protection|SRD52",
+              "Ioun Stone, Regeneration|SRD52",
+              "Ioun Stone, Reserve|SRD52",
+              "Ioun Stone, Strength|SRD52",
+              "Ioun Stone, Sustenance|SRD52"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.manual-of-golems",
+      "name": "Manual of Golems",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Manual of Golems",
+            "rarity": "very rare",
+            "wondrous": true,
+            "weight": 5,
+            "entries": [
+              "This tome contains information and incantations necessary to make a particular type of golem. To decipher and use the manual, you must be a spellcaster with at least two 5th-level spell slots. A creature that can't use a manual of golems and attempts to read it takes {@damage 6d6} psychic damage.",
+              {
+                "type": "table",
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-4",
+                  "col-3 text-center",
+                  "col-3 text-right"
+                ],
+                "colLabels": [
+                  "d20",
+                  "Golem",
+                  "Time",
+                  "Cost"
+                ],
+                "rows": [
+                  [
+                    "1-5",
+                    "{@item Manual of Clay Golems|SRD52}",
+                    "30 days",
+                    "65,000 GP"
+                  ],
+                  [
+                    "6-17",
+                    "{@item Manual of Flesh Golems|SRD52}",
+                    "60 days",
+                    "50,000 GP"
+                  ],
+                  [
+                    "18",
+                    "{@item Manual of Iron Golems|SRD52}",
+                    "120 days",
+                    "100,000 GP"
+                  ],
+                  [
+                    "19-20",
+                    "{@item Manual of Stone Golems|SRD52}",
+                    "90 days",
+                    "80,000 GP"
+                  ]
+                ]
+              },
+              "To create a golem, you must spend the time shown on the table, working without interruption with the manual at hand and resting no more than 8 hours per day. You must also pay the specified cost to purchase supplies.",
+              "Once you finish creating the golem, the book is consumed in eldritch flames. The golem becomes animate when the ashes of the manual are sprinkled on it. It is under your control, and it understands and obeys your spoken commands."
+            ],
+            "items": [
+              "Manual of Clay Golems|SRD52",
+              "Manual of Flesh Golems|SRD52",
+              "Manual of Iron Golems|SRD52",
+              "Manual of Stone Golems|SRD52"
+            ],
+            "itemsHidden": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.musical-instrument",
+      "name": "Musical Instrument",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Musical Instrument",
+            "type": "INS",
+            "rarity": "none",
+            "items": [
+              "Bagpipes|SRD51",
+              "Drum|SRD51",
+              "Dulcimer|SRD51",
+              "Flute|SRD51",
+              "Horn|SRD51",
+              "Lute|SRD51",
+              "Lyre|SRD51",
+              "Pan Flute|SRD51",
+              "Shawm|SRD51",
+              "Viol|SRD51"
+            ]
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Musical Instrument",
+            "type": "INS|SRD52",
+            "rarity": "none",
+            "items": [
+              "Bagpipes|SRD52",
+              "Drum|SRD52",
+              "Dulcimer|SRD52",
+              "Flute|SRD52",
+              "Horn|SRD52",
+              "Lute|SRD52",
+              "Lyre|SRD52",
+              "Pan Flute|SRD52",
+              "Shawm|SRD52",
+              "Viol|SRD52"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.potion-of-giant-strength",
+      "name": "Potion of Giant Strength",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Potion of Giant Strength",
+            "type": "P|SRD52",
+            "rarity": "varies",
+            "weight": 0.5,
+            "items": [
+              "Potion of Hill Giant Strength|SRD52",
+              "Potion of Frost Giant Strength|SRD52",
+              "Potion of Stone Giant Strength|SRD52",
+              "Potion of Fire Giant Strength|SRD52",
+              "Potion of Cloud Giant Strength|SRD52",
+              "Potion of Storm Giant Strength|SRD52"
+            ],
+            "miscTags": [
+              "CNS"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.potion-of-healing",
+      "name": "Potion of Healing (*)",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Potion of Healing (*)",
+            "type": "P",
+            "rarity": "varies",
+            "entries": [
+              "{@note * This item group has the same name and source as the item {@item potion of healing}}."
+            ],
+            "items": [
+              "Potion of Healing",
+              "Potion of Greater Healing",
+              "Potion of Superior Healing",
+              "Potion of Supreme Healing"
+            ],
+            "miscTags": [
+              "CNS"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.potion-of-resistance",
+      "name": "Potion of Resistance",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Potion of Resistance",
+            "type": "P|SRD52",
+            "rarity": "uncommon",
+            "weight": 0.5,
+            "entries": [
+              "When you drink this potion, you have {@variantrule Resistance|SRD52} to one type of damage for 1 hour. The DM chooses the type or determines it randomly by rolling on the following table.",
+              {
+                "type": "table",
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "colLabels": [
+                  "d10",
+                  "Damage Type"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "{@item Potion of Acid Resistance|SRD52|Acid}"
+                  ],
+                  [
+                    "2",
+                    "{@item Potion of Cold Resistance|SRD52|Cold}"
+                  ],
+                  [
+                    "3",
+                    "{@item Potion of Fire Resistance|SRD52|Fire}"
+                  ],
+                  [
+                    "4",
+                    "{@item Potion of Force Resistance|SRD52|Force}"
+                  ],
+                  [
+                    "5",
+                    "{@item Potion of Lightning Resistance|SRD52|Lightning}"
+                  ],
+                  [
+                    "6",
+                    "{@item Potion of Necrotic Resistance|SRD52|Necrotic}"
+                  ],
+                  [
+                    "7",
+                    "{@item Potion of Poison Resistance|SRD52|Poison}"
+                  ],
+                  [
+                    "8",
+                    "{@item Potion of Psychic Resistance|SRD52|Psychic}"
+                  ],
+                  [
+                    "9",
+                    "{@item Potion of Radiant Resistance|SRD52|Radiant}"
+                  ],
+                  [
+                    "10",
+                    "{@item Potion of Thunder Resistance|SRD52|Thunder}"
+                  ]
+                ]
+              }
+            ],
+            "items": [
+              "Potion of Acid Resistance|SRD52",
+              "Potion of Cold Resistance|SRD52",
+              "Potion of Fire Resistance|SRD52",
+              "Potion of Force Resistance|SRD52",
+              "Potion of Lightning Resistance|SRD52",
+              "Potion of Necrotic Resistance|SRD52",
+              "Potion of Poison Resistance|SRD52",
+              "Potion of Psychic Resistance|SRD52",
+              "Potion of Radiant Resistance|SRD52",
+              "Potion of Thunder Resistance|SRD52"
+            ],
+            "itemsHidden": true,
+            "miscTags": [
+              "CNS"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.potions-of-healing",
+      "name": "Potions of Healing",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Potions of Healing",
+            "type": "P|SRD52",
+            "rarity": "varies",
+            "weight": 0.5,
+            "items": [
+              "Potion of Healing|SRD52",
+              "Potion of Greater Healing|SRD52",
+              "Potion of Superior Healing|SRD52",
+              "Potion of Supreme Healing|SRD52"
+            ],
+            "miscTags": [
+              "CNS"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.ring-of-elemental-command",
+      "name": "Ring of Elemental Command",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Ring of Elemental Command",
+            "type": "RG|SRD52",
+            "rarity": "legendary",
+            "reqAttune": true,
+            "recharge": "dawn",
+            "rechargeAmount": "{@dice 1d4 + 1}",
+            "charges": 5,
+            "items": [
+              "Ring of Elemental Command (Air)|SRD52",
+              "Ring of Elemental Command (Earth)|SRD52",
+              "Ring of Elemental Command (Fire)|SRD52",
+              "Ring of Elemental Command (Water)|SRD52"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.ring-of-resistance",
+      "name": "Ring of Resistance",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Ring of Resistance",
+            "type": "RG|SRD52",
+            "rarity": "rare",
+            "entries": [
+              "You have {@variantrule Resistance|SRD52} to one damage type while wearing this ring. The gemstone in the ring indicates the type, which the DM chooses or determines randomly by rolling on the following table.",
+              {
+                "type": "table",
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-5",
+                  "col-5"
+                ],
+                "colLabels": [
+                  "d10",
+                  "Damage Type",
+                  "Gem"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "{@item Ring of Acid Resistance|SRD52|Acid}",
+                    "Pearl"
+                  ],
+                  [
+                    "2",
+                    "{@item Ring of Cold Resistance|SRD52|Cold}",
+                    "Tourmaline"
+                  ],
+                  [
+                    "3",
+                    "{@item Ring of Fire Resistance|SRD52|Fire}",
+                    "Garnet"
+                  ],
+                  [
+                    "4",
+                    "{@item Ring of Force Resistance|SRD52|Force}",
+                    "Sapphire"
+                  ],
+                  [
+                    "5",
+                    "{@item Ring of Lightning Resistance|SRD52|Lightning}",
+                    "Citrine"
+                  ],
+                  [
+                    "6",
+                    "{@item Ring of Necrotic Resistance|SRD52|Necrotic}",
+                    "Jet"
+                  ],
+                  [
+                    "7",
+                    "{@item Ring of Poison Resistance|SRD52|Poison}",
+                    "Amethyst"
+                  ],
+                  [
+                    "8",
+                    "{@item Ring of Psychic Resistance|SRD52|Psychic}",
+                    "Jade"
+                  ],
+                  [
+                    "9",
+                    "{@item Ring of Radiant Resistance|SRD52|Radiant}",
+                    "Topaz"
+                  ],
+                  [
+                    "10",
+                    "{@item Ring of Thunder Resistance|SRD52|Thunder}",
+                    "Spinel"
+                  ]
+                ]
+              }
+            ],
+            "items": [
+              "Ring of Acid Resistance|SRD52",
+              "Ring of Cold Resistance|SRD52",
+              "Ring of Fire Resistance|SRD52",
+              "Ring of Force Resistance|SRD52",
+              "Ring of Lightning Resistance|SRD52",
+              "Ring of Necrotic Resistance|SRD52",
+              "Ring of Poison Resistance|SRD52",
+              "Ring of Psychic Resistance|SRD52",
+              "Ring of Radiant Resistance|SRD52",
+              "Ring of Thunder Resistance|SRD52"
+            ],
+            "itemsHidden": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.spell-scroll",
+      "name": "Spell Scroll",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Spell Scroll",
+            "type": "SC|SRD52",
+            "rarity": "varies",
+            "items": [
+              "Spell Scroll (Cantrip)|SRD52",
+              "Spell Scroll (Level 1)|SRD52",
+              "Spell Scroll (Level 2)|SRD52",
+              "Spell Scroll (Level 3)|SRD52",
+              "Spell Scroll (Level 4)|SRD52",
+              "Spell Scroll (Level 5)|SRD52",
+              "Spell Scroll (Level 6)|SRD52",
+              "Spell Scroll (Level 7)|SRD52",
+              "Spell Scroll (Level 8)|SRD52",
+              "Spell Scroll (Level 9)|SRD52"
+            ],
+            "miscTags": [
+              "CNS"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemGroup.wand-of-the-war-mage",
+      "name": "Wand of the War Mage",
+      "kind": "itemGroup",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Wand of the War Mage",
+            "type": "WD|SRD51",
+            "tier": "major",
+            "rarity": "varies",
+            "reqAttune": "by a spellcaster",
+            "reqAttuneTags": [
+              {
+                "spellcasting": true
+              }
+            ],
+            "weight": 1,
+            "items": [
+              "+1 Wand of the War Mage",
+              "+2 Wand of the War Mage",
+              "+3 Wand of the War Mage"
+            ]
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Wand of the War Mage",
+            "type": "WD|SRD52",
+            "rarity": "varies",
+            "reqAttune": "by a spellcaster",
+            "reqAttuneTags": [
+              {
+                "spellcasting": true
+              }
+            ],
+            "weight": 1,
+            "items": [
+              "+1 Wand of the War Mage|SRD52",
+              "+2 Wand of the War Mage|SRD52",
+              "+3 Wand of the War Mage|SRD52"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

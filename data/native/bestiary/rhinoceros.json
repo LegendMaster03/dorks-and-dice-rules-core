@@ -1,0 +1,165 @@
+{
+  "id": "monster.rhinoceros",
+  "name": "Rhinoceros",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Rhinoceros",
+        "size": [
+          "L"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          {
+            "ac": 11,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 45,
+          "formula": "6d10 + 12"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 21,
+        "dex": 8,
+        "con": 15,
+        "int": 2,
+        "wis": 12,
+        "cha": 6,
+        "passive": 11,
+        "cr": "2",
+        "trait": [
+          {
+            "name": "Charge",
+            "entries": [
+              "If the rhinoceros moves at least 20 feet straight toward a target and then hits it with a gore attack on the same turn, the target takes an extra 9 ({@damage 2d8}) bludgeoning damage. If the target is a creature, it must succeed on a {@dc 15} Strength saving throw or be knocked {@condition prone}."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Gore",
+            "entries": [
+              "{@atk mw} {@hit 7} to hit, reach 5 ft., one target. {@h}14 ({@damage 2d8 + 5}) bludgeoning damage."
+            ]
+          }
+        ],
+        "environment": [
+          "grassland"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/rhinoceros.opus"
+        },
+        "traitTags": [
+          "Charge"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "conditionInflict": [
+          "prone"
+        ],
+        "savingThrowForced": [
+          "strength"
+        ],
+        "hasToken": true
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Rhinoceros",
+        "size": [
+          "L"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 45,
+          "formula": "6d10 + 12"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 21,
+        "dex": 8,
+        "con": 15,
+        "int": 2,
+        "wis": 12,
+        "cha": 6,
+        "passive": 11,
+        "cr": "2",
+        "action": [
+          {
+            "name": "Gore",
+            "entries": [
+              "{@atkr m} {@hit 7}, reach 5 ft. {@h}14 ({@damage 2d8 + 5}) Piercing damage. If target is a Large or smaller creature and the rhinoceros moved 20+ feet straight toward it immediately before the hit, the target takes an extra 9 ({@damage 2d8}) Piercing damage and has the {@condition Prone|SRD52} condition."
+            ]
+          }
+        ],
+        "environment": [
+          "grassland"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/rhinoceros.opus"
+        },
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "conditionInflict": [
+          "prone"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Rhinoceros",
+            "_copy": {
+              "name": "Animals",
+              "source": "SRD52",
+              "_mod": {
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Rhinoceros.webp"
+                      },
+                      "credit": "Polar Engine",
+                      "width": 1002,
+                      "height": 936
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

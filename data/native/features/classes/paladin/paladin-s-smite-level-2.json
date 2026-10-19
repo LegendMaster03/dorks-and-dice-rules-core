@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.paladin-s-smite.paladin.paladin-s-smite.2",
+  "name": "Paladin's Smite",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Paladin's Smite",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "level": 2,
+        "entries": [
+          "You always have the {@spell Divine Smite|SRD52} spell prepared. In addition, you can cast it without expending a spell slot, but you must finish a {@variantrule Long Rest|SRD52} before you can cast it in this way again."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "classLevel": 2
+}

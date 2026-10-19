@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.unarmored-movement-improvement.monk.unarmored-movement-improvement.9",
+  "name": "Unarmored Movement improvement",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Unarmored Movement improvement",
+        "className": "Monk",
+        "classSource": "SRD51",
+        "level": 9,
+        "entries": [
+          "At 9th level, you gain the ability to move along vertical surfaces and across liquids on your turn without falling during the move."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 9
+}

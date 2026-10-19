@@ -1,0 +1,334 @@
+{
+  "id": "monster.ankheg",
+  "name": "Ankheg",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ankheg",
+        "size": [
+          "L"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          {
+            "ac": 14,
+            "from": [
+              "natural armor"
+            ]
+          },
+          {
+            "ac": 11,
+            "condition": "while prone"
+          }
+        ],
+        "hp": {
+          "average": 39,
+          "formula": "6d10 + 6"
+        },
+        "speed": {
+          "walk": 30,
+          "burrow": 10
+        },
+        "str": 17,
+        "dex": 11,
+        "con": 13,
+        "int": 1,
+        "wis": 13,
+        "cha": 6,
+        "senses": [
+          "darkvision 60 ft.",
+          "tremorsense 60 ft."
+        ],
+        "passive": 11,
+        "cr": "2",
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}10 ({@damage 2d6 + 3}) slashing damage plus 3 ({@damage 1d6}) acid damage. If the target is a Large or smaller creature, it is {@condition grappled} (escape {@dc 13}). Until this grapple ends, the ankheg can bite only the {@condition grappled} creature and has advantage on attack rolls to do so."
+            ]
+          },
+          {
+            "name": "Acid Spray {@recharge}",
+            "entries": [
+              "The ankheg spits acid in a line that is 30 feet long and 5 feet wide, provided that it has no creature {@condition grappled}. Each creature in that line must make a {@dc 13} Dexterity saving throw, taking 10 ({@damage 3d6}) acid damage on a failed save, or half as much damage on a successful one."
+            ]
+          }
+        ],
+        "environment": [
+          "grassland",
+          "forest"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/ankheg.opus"
+        },
+        "senseTags": [
+          "D",
+          "T"
+        ],
+        "damageTags": [
+          "A",
+          "S"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "conditionInflict": [
+          "grappled"
+        ],
+        "savingThrowForced": [
+          "dexterity"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Ankheg",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "An ankheg resembles an enormous many-legged insect, its long antennae twitching in response to any movement around it. Its legs end in sharp hooks adapted for burrowing and grasping its prey, and its powerful mandibles can snap a small tree in half.",
+                      {
+                        "type": "entries",
+                        "name": "Lurkers in the Earth",
+                        "entries": [
+                          "The ankheg uses its powerful mandibles to dig winding tunnels deep beneath the ground. When it hunts, an ankheg burrows upward, waiting below the surface until its antennae detect movement from above. Then it bursts from the earth and seizes prey in its mandibles, crushing and grinding while it secretes acidic digestive enzymes. These enzymes help dissolve a victim for easy swallowing, but the ankheg can also squirt acid to take down foes."
+                        ]
+                      },
+                      {
+                        "name": "Bane of Field and Forest",
+                        "type": "entries",
+                        "entries": [
+                          "Although ankhegs receive a certain portion of their nutrients from the soil through which they burrow, they must supplement their diet with fresh meat. Pastures teeming with grazing livestock and forests rife with game are an ankheg's prime hunting grounds. Ankhegs are thus the bane of farmers and rangers everywhere."
+                        ]
+                      },
+                      {
+                        "name": "Earthen Tunnels",
+                        "type": "entries",
+                        "entries": [
+                          "As it burrows through earth, the ankheg leaves a narrow, partially collapsed tunnel in its wake. In these tunnels, one might find the remnants of molted ankheg chitin, hatched ankheg eggs, or the grisly remains of ankheg victims, including coins or other treasures scattered during the creature's attack."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Ankheg.webp"
+                },
+                "credit": "Christopher Burdett",
+                "width": 773,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ankheg",
+        "size": [
+          "L"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          14
+        ],
+        "hp": {
+          "average": 45,
+          "formula": "6d10 + 12"
+        },
+        "speed": {
+          "walk": 30,
+          "burrow": 10
+        },
+        "str": 17,
+        "dex": 11,
+        "con": 14,
+        "int": 1,
+        "wis": 13,
+        "cha": 6,
+        "senses": [
+          "Darkvision 60 ft.",
+          "Tremorsense 60 ft."
+        ],
+        "passive": 11,
+        "cr": "2",
+        "trait": [
+          {
+            "name": "Tunneler",
+            "entries": [
+              "The ankheg can burrow through solid rock at half its {@variantrule Burrow Speed|SRD52} and leaves a 10-foot-diameter tunnel in its wake."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atkr m} {@hit 5} (with {@variantrule Advantage|SRD52} if the target is {@condition Grappled|SRD52} by the ankheg), reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Slashing damage plus 3 ({@damage 1d6}) Acid damage. If the target is a Large or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 13})."
+            ]
+          },
+          {
+            "name": "Acid Spray {@recharge}",
+            "entries": [
+              "{@actSave dex} {@dc 12}, each creature in a 30-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 14 ({@damage 4d6}) Acid damage. {@actSaveSuccess} Half damage."
+            ]
+          }
+        ],
+        "environment": [
+          "forest",
+          "grassland"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/ankheg.opus"
+        },
+        "traitTags": [
+          "Tunneler"
+        ],
+        "senseTags": [
+          "D",
+          "T"
+        ],
+        "damageTags": [
+          "A",
+          "S"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "conditionInflict": [
+          "grappled"
+        ],
+        "savingThrowForced": [
+          "dexterity"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Ankheg",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Ankheg",
+                "entries": [
+                  "{@i Burrowing Insectile Predator}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Forest|bestiary|environment=forest}, {@filter Grassland|bestiary|environment=grassland}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "None"
+                      }
+                    ]
+                  },
+                  "Oversize insects, ankhegs burrow close to the surface, creating sprawling underground labyrinths. From these tunnels, they burst forth to dissolve and devour smaller creatures using their acid-dripping mandibles and sprays of digestive enzymes.",
+                  "Ankhegs are the bane of farmers whose grazing livestock are easy prey for these monsters. Many ankhegs hunt alone, but those in places with ample food might collect in nests of several dozen and threaten whole towns. Ankheg nests can be challenging to wipe out unless the monsters' tunnels are cleared out and their eggs destroyed.",
+                  "Ankheg tunnels are roughly cylindrical and are often littered with the remains of ankhegs' meals and subterranean treasures. Roll on or choose a result from the Ankheg Tunnel Discoveries table to inspire what might be found in an ankheg's tunnel.",
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "Though they feed on things under the soil, ankhegs prefer live meat—your cattle, your dogs, or you."
+                        ],
+                        "by": "Feil Jenkins, Sage of Kirwak"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "table",
+                    "caption": "Ankheg Tunnel Discoveries",
+                    "colLabels": [
+                      "1d8",
+                      "Inside the Ankheg Tunnel Is..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "Another tunnel (either natural or of worked stone) that extends into the Underdark."
+                      ],
+                      [
+                        "2",
+                        "A buried ruin or grave exposed by the tunnel."
+                      ],
+                      [
+                        "3",
+                        "A cluster of {@dice 1d4} fresh ankheg eggs that can be broken and used as vials of Acid."
+                      ],
+                      [
+                        "4",
+                        "A dead ankheg and evidence of a deadlier subterranean predator."
+                      ],
+                      [
+                        "5",
+                        "A piece of ankheg carapace usable as a Shield."
+                      ],
+                      [
+                        "6",
+                        "A pouch with {@dice 2d6} GP near a puddle of acid."
+                      ],
+                      [
+                        "7",
+                        "A stray farm or woodland animal."
+                      ],
+                      [
+                        "8",
+                        "A viciously mauled scarecrow."
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Ankheg.webp"
+                },
+                "credit": "Domenico Cava",
+                "width": 1815,
+                "height": 1930
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

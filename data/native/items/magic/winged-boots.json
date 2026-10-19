@@ -1,0 +1,53 @@
+{
+  "id": "item.winged-boots",
+  "name": "Winged Boots",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Winged Boots",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "modifySpeed": {
+          "equal": {
+            "fly": "walk"
+          }
+        },
+        "entries": [
+          "While you wear these boots, you have a flying speed equal to your walking speed. You can use the boots to fly for up to 4 hours, all at once or in several shorter flights, each one using a minimum of 1 minute from the duration. If you are flying when the duration expires, you descend at a rate of 30 feet per round until you land.",
+          "The boots regain 2 hours of flying capability for every 12 hours they aren't in use."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Winged Boots",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "modifySpeed": {
+          "static": {
+            "fly": 30
+          }
+        },
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d4}",
+        "charges": 4,
+        "entries": [
+          "These boots have 4 charges and regain {@dice 1d4} expended charges daily at dawn. While wearing the boots, you can take a {@action Magic|SRD52} action to expend 1 charge, gaining a {@variantrule Fly Speed|SRD52} of 30 feet for 1 hour. If you are flying when the duration expires, you descend at a rate of 30 feet per round until you land."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

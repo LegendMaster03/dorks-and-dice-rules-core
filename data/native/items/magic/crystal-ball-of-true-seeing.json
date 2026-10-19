@@ -1,0 +1,24 @@
+{
+  "id": "item.crystal-ball-of-true-seeing",
+  "name": "Crystal Ball of True Seeing",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Crystal Ball of True Seeing",
+        "rarity": "legendary",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 3,
+        "entries": [
+          "While touching this crystal orb, you can cast {@spell Scrying|SRD52} (save {@dc 17}) with it. In addition, you have {@sense Truesight|SRD52} with a range of 120 feet centered on the spell's sensor."
+        ],
+        "attachedSpells": [
+          "scrying|srd52"
+        ]
+      }
+    }
+  ]
+}

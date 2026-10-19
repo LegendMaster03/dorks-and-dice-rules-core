@@ -1,0 +1,93 @@
+{
+  "id": "spell.divine-favor",
+  "name": "Divine Favor",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Divine Favor",
+        "level": 1,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "bonus"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Your prayer empowers you with divine radiance. Until the spell ends, your weapon attacks deal an extra {@damage 1d4} radiant damage on a hit."
+        ],
+        "damageInflict": [
+          "radiant"
+        ],
+        "miscTags": [
+          "AAD"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Divine Favor",
+        "level": 1,
+        "school": "T",
+        "time": [
+          {
+            "number": 1,
+            "unit": "bonus"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            }
+          }
+        ],
+        "entries": [
+          "Until the spell ends, your attacks with weapons deal an extra {@damage 1d4} Radiant damage on a hit."
+        ],
+        "damageInflict": [
+          "radiant"
+        ],
+        "miscTags": [
+          "AAD"
+        ]
+      }
+    }
+  ]
+}

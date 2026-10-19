@@ -1,0 +1,153 @@
+{
+  "id": "spell.fireball",
+  "name": "Fireball",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Fireball",
+        "level": 3,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 150
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a tiny ball of bat guano and sulfur"
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "A bright streak flashes from your pointing finger to a point you choose within range and then blossoms with a low roar into an explosion of flame. Each creature in a 20-foot-radius sphere centered on that point must make a Dexterity saving throw. A target takes {@damage 8d6} fire damage on a failed save, or half as much damage on a successful one.",
+          "The fire spreads around corners. It ignites flammable objects in the area that aren't being worn or carried."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 4th level or higher, the damage increases by {@scaledamage 8d6|3-9|1d6} for each slot level above 3rd."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "fire"
+        ],
+        "savingThrow": [
+          "dexterity"
+        ],
+        "miscTags": [
+          "OBJ"
+        ],
+        "areaTags": [
+          "S"
+        ],
+        "lore": [
+          {
+            "name": "Fireball",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "spells/PHB/Fireball.webp"
+                },
+                "width": 449,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Fireball",
+        "level": 3,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 150
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a ball of bat guano and sulfur"
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "A bright streak flashes from you to a point you choose within range and then blossoms with a low roar into a fiery explosion. Each creature in a 20-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on that point makes a Dexterity saving throw, taking {@damage 8d6} Fire damage on a failed save or half as much damage on a successful one.",
+          "Flammable objects in the area that aren't being worn or carried start {@hazard burning|SRD52}."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "The damage increases by {@scaledamage 8d6|3-9|1d6} for each spell slot level above 3."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "fire"
+        ],
+        "savingThrow": [
+          "dexterity"
+        ],
+        "miscTags": [
+          "OBJ"
+        ],
+        "areaTags": [
+          "S"
+        ],
+        "lore": [
+          {
+            "name": "Fireball",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "spells/XPHB/Fireball.webp"
+                },
+                "credit": "Yuhong Ding",
+                "width": 2226,
+                "height": 1440
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

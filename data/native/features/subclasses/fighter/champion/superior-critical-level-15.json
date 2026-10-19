@@ -1,0 +1,41 @@
+{
+  "id": "subclassFeature.superior-critical.fighter.champion.superior-critical.15",
+  "name": "Superior Critical",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Superior Critical",
+        "className": "Fighter",
+        "classSource": "SRD51",
+        "subclassShortName": "Champion",
+        "subclassSource": "SRD51",
+        "level": 15,
+        "header": 2,
+        "entries": [
+          "Starting at 15th level, your weapon attacks score a critical hit on a roll of 18-20."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Superior Critical",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "subclassShortName": "Champion",
+        "subclassSource": "SRD52",
+        "level": 15,
+        "header": 2,
+        "entries": [
+          "Your attack rolls with weapons and Unarmed Strikes can now score a {@variantrule Critical Hit|SRD52} on a roll of 18–20 on the {@dice d20}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "parentSubclass": "champion",
+  "classLevel": 15
+}

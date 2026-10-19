@@ -1,0 +1,139 @@
+{
+  "id": "baseitem.carpenter-s-tools",
+  "name": "Carpenter's Tools",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Carpenter's Tools",
+        "type": "AT",
+        "rarity": "none",
+        "weight": 6,
+        "value": 800,
+        "additionalEntries": [
+          "Skill at carpentry enables a character to construct wooden structures. A carpenter can build a house, a shack, a wooden cabinet, or similar items.",
+          {
+            "type": "entries",
+            "name": "Components",
+            "entries": [
+              "Carpenter's tools include a saw, a hammer, nails, a hatchet, a square, a ruler, an adze, a plane, and a chisel."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "History",
+            "entries": [
+              "This tool proficiency aids you in identifying the use and the origin of wooden buildings and other large wooden objects."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Investigation",
+            "entries": [
+              "You gain additional insight when inspecting areas within wooden structures, because you know tricks of construction that can conceal areas from discovery."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Perception",
+            "entries": [
+              "You can spot irregularities in wooden walls or floors, making it easier to find trap doors and secret passages."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Stealth",
+            "entries": [
+              "You can quickly assess the weak spots in a wooden floor, making it easier to avoid the places that creak and groan when they're stepped on."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Fortify",
+            "entries": [
+              "With 1 minute of work and raw materials, you can make a door or window harder to force open. Increase the DC needed to open it by 5."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Temporary Shelter",
+            "entries": [
+              "As part of a long rest, you can construct a lean-to or a similar shelter to keep your group dry and in the shade for the duration of the rest. Because it was fashioned quickly from whatever wood was available, the shelter collapses {@dice 1d3} days after being assembled."
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Carpenter's Tools",
+            "colLabels": [
+              "Activity",
+              "DC"
+            ],
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "rows": [
+              [
+                "Build a simple wooden structure",
+                "10"
+              ],
+              [
+                "Design a complex wooden structure",
+                "15"
+              ],
+              [
+                "Find a weak point in a wooden wall",
+                "15"
+              ],
+              [
+                "Pry apart a door",
+                "20"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Carpenter's Tools",
+        "type": "AT|SRD52",
+        "rarity": "none",
+        "weight": 6,
+        "value": 800,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Strength"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Seal or pry open a door or container ({@dc 20})"
+                ]
+              },
+              {
+                "name": "Craft:",
+                "type": "item",
+                "entries": [
+                  "{@item Club|SRD52}, {@item Greatclub|SRD52}, {@item Quarterstaff|SRD52}, {@item Barrel|SRD52}, {@item Chest|SRD52}, {@item Ladder|SRD52}, {@item Pole|SRD52}, {@item Portable Ram|SRD52}, {@item Torch|SRD52}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

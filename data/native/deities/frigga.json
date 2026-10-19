@@ -1,0 +1,24 @@
+{
+  "id": "deity.frigga",
+  "name": "Frigga",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Frigga",
+        "pantheon": "Norse",
+        "alignment": [
+          "N"
+        ],
+        "title": "Goddess of birth and fertility",
+        "domains": [
+          "Life",
+          "Light"
+        ],
+        "symbol": "Cat"
+      }
+    }
+  ]
+}

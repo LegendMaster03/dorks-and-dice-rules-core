@@ -1,0 +1,162 @@
+{
+  "id": "spell.dispel-evil-and-good",
+  "name": "Dispel Evil and Good",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Dispel Evil and Good",
+        "level": 5,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "holy water or powdered silver and iron"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Shimmering energy surrounds and protects you from fey, undead, and creatures originating from beyond the Material Plane. For the duration, celestials, elementals, fey, fiends, and undead have disadvantage on attack rolls against you.",
+          "You can end the spell early by using either of the following special functions.",
+          {
+            "type": "entries",
+            "name": "Break Enchantment",
+            "entries": [
+              "As your action, you touch a creature you can reach that is {@condition charmed}, {@condition frightened}, or possessed by a celestial, an elemental, a fey, a fiend, or an undead. The creature you touch is no longer {@condition charmed}, {@condition frightened}, or possessed by such creatures."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Dismissal",
+            "entries": [
+              "As your action, make a melee spell attack against a celestial, an elemental, a fey, a fiend, or an undead you can reach. On a hit, you attempt to drive the creature back to its home plane. The creature must succeed on a Charisma saving throw or be sent back to its home plane (if it isn't there already). If they aren't on their home plane, undead are sent to the Shadowfell, and fey are sent to the Feywild."
+            ]
+          }
+        ],
+        "spellAttack": [
+          "M"
+        ],
+        "savingThrow": [
+          "charisma"
+        ],
+        "affectsCreatureType": [
+          "celestial",
+          "elemental",
+          "fey",
+          "fiend",
+          "undead"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Dispel Evil and Good",
+        "level": 5,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "powdered silver and iron"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "For the duration, Celestials, Elementals, Fey, Fiends, and Undead have {@variantrule Disadvantage|SRD52} on attack rolls against you. You can end the spell early by using either of the following special functions.",
+          {
+            "type": "entries",
+            "name": "Break Enchantment",
+            "entries": [
+              "As a {@action Magic|SRD52} action, you touch a creature that is possessed by or has the {@condition Charmed|SRD52} or {@condition Frightened|SRD52} condition from one or more creatures of the types above. The target is no longer possessed, {@condition Charmed|SRD52}, or {@condition Frightened|SRD52} by such creatures."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Dismissal",
+            "entries": [
+              "As a {@action Magic|SRD52} action, you target one creature you can see within 5 feet of you that has one of the creature types above. The target must succeed on a Charisma saving throw or be sent back to its home plane if it isn't there already. If they aren't on their home plane, Undead are sent to the Shadowfell, and Fey are sent to the Feywild."
+            ]
+          }
+        ],
+        "savingThrow": [
+          "charisma"
+        ],
+        "affectsCreatureType": [
+          "celestial",
+          "elemental",
+          "fey",
+          "fiend",
+          "undead"
+        ],
+        "miscTags": [
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ],
+        "lore": [
+          {
+            "name": "Dispel Evil and Good",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "spells/XPHB/Dispel Evil and Good.webp"
+                },
+                "credit": "Javier Charro",
+                "width": 2225,
+                "height": 1440
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "item.chest",
+  "name": "Chest",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Chest",
+        "type": "G",
+        "rarity": "none",
+        "weight": 25,
+        "value": 500,
+        "entries": [
+          "A chest holds 12 cubic feet or 300 pounds of gear."
+        ],
+        "containerCapacity": {
+          "weight": [
+            300
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Chest",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 25,
+        "value": 500,
+        "entries": [
+          "A Chest holds up to 12 cubic feet of contents."
+        ],
+        "containerCapacity": {
+          "volume": [
+            12
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "id": "spell.hold-person",
+  "name": "Hold Person",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Hold Person",
+        "level": 2,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a small, straight piece of iron"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Choose a humanoid that you can see within range. The target must succeed on a Wisdom saving throw or be {@condition paralyzed} for the duration. At the end of each of its turns, the target can make another Wisdom saving throw. On a success, the spell ends on the target."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 3rd level or higher, you can target one additional humanoid for each slot level above 2nd. The humanoids must be within 30 feet of each other when you target them."
+            ]
+          }
+        ],
+        "conditionInflict": [
+          "paralyzed"
+        ],
+        "savingThrow": [
+          "wisdom"
+        ],
+        "affectsCreatureType": [
+          "humanoid"
+        ],
+        "miscTags": [
+          "SCT",
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Hold Person",
+        "level": 2,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a straight piece of iron"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Choose a Humanoid that you can see within range. The target must succeed on a Wisdom saving throw or have the {@condition Paralyzed|SRD52} condition for the duration. At the end of each of its turns, the target repeats the save, ending the spell on itself on a success."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "You can target one additional Humanoid for each spell slot level above 2."
+            ]
+          }
+        ],
+        "conditionInflict": [
+          "paralyzed"
+        ],
+        "savingThrow": [
+          "wisdom"
+        ],
+        "affectsCreatureType": [
+          "humanoid"
+        ],
+        "miscTags": [
+          "SCT",
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

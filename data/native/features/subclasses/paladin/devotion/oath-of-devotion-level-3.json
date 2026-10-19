@@ -1,0 +1,70 @@
+{
+  "id": "subclassFeature.oath-of-devotion.paladin.devotion.oath-of-devotion.3",
+  "name": "Oath of Devotion",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Oath of Devotion",
+        "className": "Paladin",
+        "classSource": "SRD51",
+        "subclassShortName": "Devotion",
+        "subclassSource": "SRD51",
+        "level": 3,
+        "entries": [
+          "The Oath of Devotion binds a paladin to the loftiest ideals of justice, virtue, and order. Sometimes called cavaliers, white knights, or holy warriors, these paladins meet the ideal of the knight in shining armor, acting with honor in pursuit of justice and the greater good. They hold themselves to the highest standards of conduct, and some, for better or worse, hold the rest of the world to the same standards. Many who swear this oath are devoted to gods of law and good and use their gods' tenets as the measure of their devotion. They hold angels—the perfect servants of good—as their ideals, and incorporate images of angelic wings into their helmets or coats of arms.",
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Tenets of Devotion|Paladin||Devotion||3"
+          },
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Oath Spells|Paladin||Devotion||3"
+          },
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Channel Divinity|Paladin||Devotion||3"
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Oath of Devotion",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "subclassShortName": "Devotion",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "{@i Uphold the Ideals of Justice and Order}",
+          "The Oath of Devotion binds Paladins to the ideals of justice and order. These Paladins meet the archetype of the knight in shining armor. They hold themselves to the highest standards of conduct, and some—for better or worse—hold the rest of the world to the same standards.",
+          "Many who swear this oath are devoted to gods of law and good and use their gods' tenets as the measure of personal devotion. Others hold angels as their ideals and incorporate images of angelic wings into their helmets or coats of arms.",
+          "These paladins share the following tenets:",
+          {
+            "type": "list",
+            "items": [
+              "Let your word be your promise.",
+              "Protect the weak and never fear to act.",
+              "Let your honorable deeds be an example."
+            ]
+          },
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Oath of Devotion Spells|Paladin|SRD52|Devotion|SRD52|3"
+          },
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Sacred Weapon|Paladin|SRD52|Devotion|SRD52|3"
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "parentSubclass": "devotion",
+  "classLevel": 3
+}

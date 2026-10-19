@@ -1,0 +1,110 @@
+{
+  "id": "baseitem.jeweler-s-tools",
+  "name": "Jeweler's Tools",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Jeweler's Tools",
+        "type": "AT",
+        "rarity": "none",
+        "weight": 2,
+        "value": 2500,
+        "additionalEntries": [
+          "Training with jeweler's tools includes the basic techniques needed to beautify gems. It also gives you expertise in identifying precious stones.",
+          {
+            "type": "entries",
+            "name": "Components",
+            "entries": [
+              "Jeweler's tools consist of a small saw and hammer, files, pliers, and tweezers."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Arcana",
+            "entries": [
+              "Proficiency with jeweler's tools grants you knowledge about the reputed mystical uses of gems. This insight proves handy when you make {@skill Arcana} checks related to gems or gem-encrusted items."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Investigation",
+            "entries": [
+              "When you inspect jeweled objects, your proficiency with jeweler's tools aids you in picking out clues they might hold."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Identify Gems",
+            "entries": [
+              "You can identify gems and determine their value at a glance."
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Jeweler's Tools",
+            "colLabels": [
+              "Activity",
+              "DC"
+            ],
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "rows": [
+              [
+                "Modify a gem's appearance",
+                "15"
+              ],
+              [
+                "Determine a gem's history",
+                "20"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Jeweler's Tools",
+        "type": "AT|SRD52",
+        "rarity": "none",
+        "weight": 2,
+        "value": 2500,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Intelligence"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Discern a gem's value ({@dc 15})"
+                ]
+              },
+              {
+                "name": "Craft:",
+                "type": "item",
+                "entries": [
+                  "{@item Arcane Focus|SRD52}, {@item Holy Symbol|SRD52}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "item.chain",
+  "name": "Chain",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Chain",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 10,
+        "value": 500,
+        "entries": [
+          "As a {@action Utilize|SRD52} action, you can wrap a Chain around an unwilling creature within 5 feet of yourself that has the {@condition Grappled|SRD52}, {@condition Incapacitated|SRD52}, or {@condition Restrained|SRD52} condition if you succeed on a {@dc 13} Strength ({@skill Athletics|SRD52}) check. If the creature's legs are bound, the creature has the {@condition Restrained|SRD52} condition until it escapes. Escaping the Chain requires the creature to make a successful {@dc 18} Dexterity ({@skill Acrobatics|SRD52}) check as an action. Bursting the Chain requires a successful {@dc 20} Strength ({@skill Athletics|SRD52}) check as an action."
+        ]
+      }
+    }
+  ]
+}

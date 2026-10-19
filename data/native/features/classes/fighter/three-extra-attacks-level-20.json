@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.three-extra-attacks.fighter.three-extra-attacks.20",
+  "name": "Three Extra Attacks",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Three Extra Attacks",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "level": 20,
+        "entries": [
+          "You can attack four times instead of once whenever you take the {@action Attack|SRD52} action on your turn."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 20
+}

@@ -1,0 +1,390 @@
+{
+  "id": "monster.water-elemental",
+  "name": "Water Elemental",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Water Elemental",
+        "size": [
+          "L"
+        ],
+        "type": "elemental",
+        "alignment": [
+          "N"
+        ],
+        "ac": [
+          {
+            "ac": 14,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 114,
+          "formula": "12d10 + 48"
+        },
+        "speed": {
+          "walk": 30,
+          "swim": 90
+        },
+        "str": 18,
+        "dex": 14,
+        "con": 18,
+        "int": 5,
+        "wis": 10,
+        "cha": 8,
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 10,
+        "resist": [
+          "acid",
+          {
+            "resist": [
+              "bludgeoning",
+              "piercing",
+              "slashing"
+            ],
+            "note": "from nonmagical attacks",
+            "cond": true
+          }
+        ],
+        "immune": [
+          "poison"
+        ],
+        "conditionImmune": [
+          "exhaustion",
+          "grappled",
+          "paralyzed",
+          "petrified",
+          "poisoned",
+          "prone",
+          "restrained",
+          "unconscious"
+        ],
+        "languages": [
+          "Aquan"
+        ],
+        "cr": "5",
+        "trait": [
+          {
+            "name": "Water Form",
+            "entries": [
+              "The elemental can enter a hostile creature's space and stop there. It can move through a space as narrow as 1 inch wide without squeezing."
+            ]
+          },
+          {
+            "name": "Freeze",
+            "entries": [
+              "If the elemental takes cold damage, it partially freezes; its speed is reduced by 20 feet until the end of its next turn."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The elemental makes two slam attacks."
+            ]
+          },
+          {
+            "name": "Slam",
+            "entries": [
+              "{@atk mw} {@hit 7} to hit, reach 5 ft., one target. {@h}13 ({@damage 2d8 + 4}) bludgeoning damage."
+            ]
+          },
+          {
+            "name": "Whelm {@recharge 4}",
+            "entries": [
+              "Each creature in the elemental's space must make a {@dc 15} Strength saving throw. On a failure, a target takes 13 ({@damage 2d8 + 4}) bludgeoning damage. If it is Large or smaller, it is also {@condition grappled} (escape {@dc 14}). Until this grapple ends, the target is {@condition restrained} and unable to breathe unless it can breathe water. If the saving throw is successful, the target is pushed out of the elemental's space.",
+              "The elemental can grapple one Large creature or up to two Medium or smaller creatures at one time. At the start of each of the elemental's turns, each target {@condition grappled} by it takes 13 ({@damage 2d8 + 4}) bludgeoning damage. A creature within 5 feet of the elemental can pull a creature or object out of it by taking an action to make a {@dc 14} Strength check and succeeding."
+            ]
+          }
+        ],
+        "environment": [
+          "underwater",
+          "swamp",
+          "coastal"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/water-elemental.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "AQ"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "conditionInflict": [
+          "grappled",
+          "restrained"
+        ],
+        "savingThrowForced": [
+          "strength"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Water Elemental",
+            "_copy": {
+              "name": "Elementals",
+              "source": "SRD51",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": {
+                    "type": "entries",
+                    "entries": [
+                      {
+                        "type": "entries",
+                        "entries": [
+                          "A water elemental is a cresting wave that rolls across the ground, becoming nearly invisible at it courses through a larger body of water. It engulfs creatures that stand against it, filling their mouths and lungs as easily as it smothers flame."
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "images": {
+                  "mode": "prependArr",
+                  "items": {
+                    "type": "image",
+                    "href": {
+                      "type": "internal",
+                      "path": "bestiary/MM/Water Elemental.webp"
+                    },
+                    "width": 905,
+                    "height": 1000
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Water Elemental",
+        "size": [
+          "L"
+        ],
+        "type": "elemental",
+        "alignment": [
+          "N"
+        ],
+        "ac": [
+          14
+        ],
+        "hp": {
+          "average": 114,
+          "formula": "12d10 + 48"
+        },
+        "speed": {
+          "walk": 30,
+          "swim": 90
+        },
+        "str": 18,
+        "dex": 14,
+        "con": 18,
+        "int": 5,
+        "wis": 10,
+        "cha": 8,
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 10,
+        "resist": [
+          "acid",
+          "fire"
+        ],
+        "immune": [
+          "poison"
+        ],
+        "conditionImmune": [
+          "exhaustion",
+          "grappled",
+          "paralyzed",
+          "petrified",
+          "poisoned",
+          "prone",
+          "restrained",
+          "unconscious"
+        ],
+        "languages": [
+          "Primordial (Aquan)"
+        ],
+        "cr": "5",
+        "trait": [
+          {
+            "name": "Freeze",
+            "entries": [
+              "If the elemental takes Cold damage, its {@variantrule Speed|SRD52} decreases by 20 feet until the end of its next turn."
+            ]
+          },
+          {
+            "name": "Water Form",
+            "entries": [
+              "The elemental can enter an enemy's space and stop there. It can move through a space as narrow as 1 inch without expending extra movement to do so."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The elemental makes two Slam attacks."
+            ]
+          },
+          {
+            "name": "Slam",
+            "entries": [
+              "{@atkr m} {@hit 7}, reach 5 ft. {@h}13 ({@damage 2d8 + 4}) Bludgeoning damage. If the target is a Medium or smaller creature, it has the {@condition Prone|SRD52} condition."
+            ]
+          },
+          {
+            "name": "Whelm {@recharge 4}",
+            "entries": [
+              "{@actSave str} {@dc 15}, each creature in the elemental's space. {@actSaveFail} 22 ({@damage 4d8 + 4}) Bludgeoning damage. If the target is a Large or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 14}). Until the grapple ends, the target has the {@condition Restrained|SRD52} condition, is suffocating unless it can breathe water, and takes 9 ({@damage 2d8}) Bludgeoning damage at the start of each of the elemental's turns. The elemental can grapple one Large creature or up to two Medium or smaller creatures at a time with Whelm. As an action, a creature within 5 feet of the elemental can pull a creature out of it by succeeding on a {@dc 14} Strength ({@skill Athletics|SRD52}) check. {@actSaveSuccess} Half damage only."
+            ]
+          }
+        ],
+        "environment": [
+          "coastal",
+          "planar, water",
+          "swamp",
+          "underwater"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/water-elemental.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "AQ",
+          "P"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "conditionInflict": [
+          "grappled",
+          "prone",
+          "restrained"
+        ],
+        "savingThrowForced": [
+          "strength"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Water Elemental",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Water Elemental",
+                "entries": [
+                  "{@i Primal Spirit of Waves and Tides}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Coastal|bestiary|environment=coastal}, {@filter Planar (Elemental Plane of Water)|bestiary|environment=planar, water}, {@filter Swamp|bestiary|environment=swamp}, {@filter Underwater|bestiary|environment=underwater}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "None"
+                      }
+                    ]
+                  },
+                  "Spirits of the Elemental Plane of Water form shapeless liquids into water elementals, aqueous beings with the might of surging waves. Water elementals are as mutable as liquid, allowing them to crash into foes and seep through narrow cracks. They can crush foes with limb-like geysers, or they might flood over creatures, submerging and drowning foes within their whirling forms. Water elementals often appear near nexuses of elemental power, such as aquatic abysses, magical springs, and whirlpools.",
+                  "Water elementals' shapes are influenced by the liquid bodies in which they form. Roll on or choose a result from the Water Elemental Compositions table to inspire a water elemental's features.",
+                  {
+                    "type": "table",
+                    "caption": "Water Elemental Compositions",
+                    "colLabels": [
+                      "1d4",
+                      "The Water Elemental's Body Features..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "Chilling or near-boiling temperatures."
+                      ],
+                      [
+                        "2",
+                        "Energetic effervescence."
+                      ],
+                      [
+                        "3",
+                        "Muddy, polluted, or crystal-clear water."
+                      ],
+                      [
+                        "4",
+                        "Seaweed, tiny fish, or other sea life."
+                      ]
+                    ]
+                  },
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "Water: greatest of the elements in might and form. A tsunami's torrent. A blizzard's claws. A parent's tears. What is not moved by water?"
+                        ],
+                        "by": "Kalbari, Mother of Foam, Ruler of Marids"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Water Elemental.webp"
+                },
+                "credit": "Chris Cold",
+                "width": 1800,
+                "height": 2250
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "classFeature.slippery-mind.rogue.slippery-mind.15",
+  "name": "Slippery Mind",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Slippery Mind",
+        "className": "Rogue",
+        "classSource": "SRD51",
+        "level": 15,
+        "entries": [
+          "By 15th level, you have acquired greater mental strength. You gain proficiency in Wisdom saving throws."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Slippery Mind",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 15,
+        "entries": [
+          "Your cunning mind is exceptionally difficult to control. You gain proficiency in Wisdom and Charisma saving throws."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 15
+}

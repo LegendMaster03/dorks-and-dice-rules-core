@@ -1,0 +1,43 @@
+{
+  "id": "optionalfeature.minions-of-chaos",
+  "name": "Minions of Chaos",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Minions of Chaos",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 9,
+              "class": {
+                "name": "Warlock"
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": {
+                "daily": {
+                  "1e": [
+                    "conjure elemental"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell conjure elemental} once using a warlock spell slot. You can't do so again until you finish a long rest."
+        ]
+      }
+    }
+  ]
+}

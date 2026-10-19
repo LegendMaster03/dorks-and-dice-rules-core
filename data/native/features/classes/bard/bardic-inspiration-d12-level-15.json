@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.bardic-inspiration-d12.bard.bardic-inspiration-d12.15",
+  "name": "Bardic Inspiration (d12)",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Bardic Inspiration (d12)",
+        "className": "Bard",
+        "classSource": "SRD51",
+        "level": 15,
+        "entries": [
+          "At 15th level, your Bardic Inspiration die changes to a {@dice d12}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.bard",
+  "classLevel": 15
+}

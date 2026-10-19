@@ -1,0 +1,336 @@
+{
+  "id": "monster.priest",
+  "name": "Priest",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Priest",
+        "size": [
+          "M"
+        ],
+        "type": {
+          "type": "humanoid",
+          "tags": [
+            "any race"
+          ]
+        },
+        "alignment": [
+          "A"
+        ],
+        "ac": [
+          {
+            "ac": 13,
+            "from": [
+              "{@item chain shirt|srd51}"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 27,
+          "formula": "5d8 + 5"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "str": 10,
+        "dex": 10,
+        "con": 12,
+        "int": 13,
+        "wis": 16,
+        "cha": 13,
+        "skill": {
+          "medicine": "+7",
+          "persuasion": "+3",
+          "religion": "+5"
+        },
+        "passive": 13,
+        "languages": [
+          "any two languages"
+        ],
+        "cr": "2",
+        "spellcasting": [
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The priest is a 5th-level spellcaster. Its spellcasting ability is Wisdom (spell save {@dc 13}, {@hit 5} to hit with spell attacks). The priest has the following cleric spells prepared:"
+            ],
+            "spells": {
+              "0": {
+                "spells": [
+                  "{@spell light}",
+                  "{@spell sacred flame}",
+                  "{@spell thaumaturgy}"
+                ]
+              },
+              "1": {
+                "slots": 4,
+                "spells": [
+                  "{@spell cure wounds}",
+                  "{@spell guiding bolt}",
+                  "{@spell sanctuary}"
+                ]
+              },
+              "2": {
+                "slots": 3,
+                "spells": [
+                  "{@spell lesser restoration}",
+                  "{@spell spiritual weapon}"
+                ]
+              },
+              "3": {
+                "slots": 2,
+                "spells": [
+                  "{@spell dispel magic}",
+                  "{@spell spirit guardians}"
+                ]
+              }
+            },
+            "ability": "wis"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Divine Eminence",
+            "entries": [
+              "As a bonus action, the priest can expend a spell slot to cause its melee weapon attacks to magically deal an extra 10 ({@damage 3d6}) radiant damage to a target on a hit. This benefit lasts until the end of the turn. If the priest expends a spell slot of 2nd level or higher, the extra damage increases by {@damage 1d6} for each level above 1st."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Mace",
+            "entries": [
+              "{@atk mw} {@hit 2} to hit, reach 5 ft., one target. {@h}3 ({@damage 1d6}) bludgeoning damage."
+            ]
+          }
+        ],
+        "environment": [
+          "urban"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/priest.opus"
+        },
+        "attachedItems": [
+          "mace|srd51"
+        ],
+        "languageTags": [
+          "X"
+        ],
+        "damageTags": [
+          "B",
+          "R"
+        ],
+        "damageTagsSpell": [
+          "N",
+          "O",
+          "R"
+        ],
+        "spellcastingTags": [
+          "CC"
+        ],
+        "miscTags": [
+          "MLW",
+          "MW"
+        ],
+        "savingThrowForcedSpell": [
+          "dexterity",
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Priest",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Priests bring the teachings of their gods to the common folk. They are the spiritual leaders of temples and shrines and often hold positions of influence in their communities. Evil priests might work openly under a tyrant, or they might be the leaders of religious sects hidden in the shadows of good society, overseeing depraved rites. A priest typically has one or more acolytes to help with religious ceremonies and other sacred duties."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Priest",
+        "size": [
+          "S",
+          "M"
+        ],
+        "type": {
+          "type": "humanoid",
+          "tags": [
+            "cleric"
+          ]
+        },
+        "alignment": [
+          "N"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 38,
+          "formula": "7d8 + 7"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "str": 16,
+        "dex": 10,
+        "con": 12,
+        "int": 13,
+        "wis": 16,
+        "cha": 13,
+        "skill": {
+          "medicine": "+7",
+          "perception": "+5",
+          "religion": "+5"
+        },
+        "passive": 15,
+        "languages": [
+          "Common plus one other language"
+        ],
+        "cr": "2",
+        "gear": [
+          "chain shirt|srd52",
+          "holy symbol|srd52",
+          "mace|srd52"
+        ],
+        "spellcasting": [
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The priest casts one of the following spells, using Wisdom as the spellcasting ability:"
+            ],
+            "will": [
+              "{@spell Light|SRD52}",
+              "{@spell Thaumaturgy|SRD52}"
+            ],
+            "daily": {
+              "1": [
+                "{@spell Spirit Guardians|SRD52}"
+              ]
+            },
+            "ability": "wis",
+            "displayAs": "action"
+          },
+          {
+            "name": "Divine Aid (3/Day)",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The priest casts {@spell Bless|SRD52}, {@spell Dispel Magic|SRD52}, {@spell Healing Word|SRD52}, or {@spell Lesser Restoration|SRD52}, using the same spellcasting ability as Spellcasting."
+            ],
+            "daily": {
+              "3": [
+                "{@spell Bless|SRD52}",
+                "{@spell Dispel Magic|SRD52}",
+                "{@spell Healing Word|SRD52}",
+                "{@spell Lesser Restoration|SRD52}"
+              ]
+            },
+            "ability": "wis",
+            "displayAs": "bonus",
+            "hidden": [
+              "daily"
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The priest makes two attacks, using Mace or Radiant Flame in any combination."
+            ]
+          },
+          {
+            "name": "Mace",
+            "entries": [
+              "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Bludgeoning damage plus 5 ({@damage 2d4}) Radiant damage."
+            ]
+          },
+          {
+            "name": "Radiant Flame",
+            "entries": [
+              "{@atkr r} {@hit 5}, range 60 ft. {@h}11 ({@damage 2d10}) Radiant damage."
+            ]
+          }
+        ],
+        "environment": [
+          "any"
+        ],
+        "treasure": [
+          "individual",
+          "relics"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/priest.opus"
+        },
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "X"
+        ],
+        "damageTags": [
+          "B",
+          "R"
+        ],
+        "damageTagsSpell": [
+          "N",
+          "R"
+        ],
+        "spellcastingTags": [
+          "O"
+        ],
+        "miscTags": [
+          "MA",
+          "MLW",
+          "RA"
+        ],
+        "savingThrowForcedSpell": [
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Priest",
+            "_copy": {
+              "name": "Priests",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "Priests draw on their beliefs to heal the needful and smite their foes. They can channel their faith as spells and empower their weapons with divine might."
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "classFeature.signature-spells.wizard.signature-spells.20",
+  "name": "Signature Spells",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Signature Spells",
+        "className": "Wizard",
+        "classSource": "SRD51",
+        "level": 20,
+        "entries": [
+          "When you reach 20th level, you gain mastery over two powerful spells and can cast them with little effort. Choose two 3rd-level wizard spells in your spellbook as your signature spells. You always have these spells prepared, they don't count against the number of spells you have prepared, and you can cast each of them once at 3rd level without expending a spell slot. When you do so, you can't do so again until you finish a short or long rest.",
+          "If you want to cast either spell at a higher level, you must expend a spell slot as normal."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Signature Spells",
+        "className": "Wizard",
+        "classSource": "SRD52",
+        "level": 20,
+        "entries": [
+          "Choose two level 3 spells in your spellbook as your signature spells. You always have these spells prepared, and you can cast each of them once at level 3 without expending a spell slot. When you do so, you can't cast them in this way again until you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}. To cast either spell at a higher level, you must expend a spell slot."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.wizard",
+  "classLevel": 20
+}

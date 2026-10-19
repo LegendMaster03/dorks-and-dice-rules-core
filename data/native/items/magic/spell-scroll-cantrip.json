@@ -1,0 +1,45 @@
+{
+  "id": "item.spell-scroll-cantrip",
+  "name": "Spell Scroll (Cantrip)",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Spell Scroll (Cantrip)",
+        "type": "SC|SRD51",
+        "tier": "minor",
+        "rarity": "common",
+        "entries": [
+          "A spell scroll bears the words of a single spell, written as a mystical cipher. If the spell is on your class's spell list, you can read the scroll and cast its spell without providing any material components. Otherwise, the scroll is unintelligible. Casting the spell by reading the scroll requires the spell's normal casting time. Once the spell is cast, the words on the scroll fade, and it crumbles to dust. If the casting is interrupted, the scroll is not lost.",
+          "If the spell is on your class's spell list but of a higher level than you can normally cast, you must make an ability check using your spellcasting ability to determine whether you cast it successfully. The DC is 10. On a failed check, the spell disappears from the scroll with no other effect.",
+          "Once the spell is cast, the words on the scroll fade, and the scroll itself crumbles to dust.",
+          "A spell cast from this scroll has a save DC of 13 and an attack bonus of {@hit 5}."
+        ],
+        "spellScrollLevel": 0,
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Spell Scroll (Cantrip)",
+        "type": "SC|SRD52",
+        "rarity": "common",
+        "value": 3000,
+        "entries": [
+          "A Spell Scroll bears the words of a single spell, written in a mystical cipher. If the spell is on your spell list, you can read the scroll and cast its spell without Material components. Otherwise, the scroll is unintelligible. Casting the spell by reading the scroll requires the spell's normal casting time. Once the spell is cast, the scroll crumbles to dust. If the casting is interrupted, the scroll isn't lost.",
+          "If the spell is on your spell list but of a higher level than you can normally cast, you make a {@dc 10} ability check using your spellcasting ability to determine whether you cast the spell. On a failed check, the spell disappears from the scroll with no other effect.",
+          "If the spell requires a saving throw or an attack roll, the spell save DC is 13, and the attack bonus is {@hit 5}."
+        ],
+        "spellScrollLevel": 0,
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "subclassFeature.improved-critical.fighter.champion.improved-critical.3",
+  "name": "Improved Critical",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Improved Critical",
+        "className": "Fighter",
+        "classSource": "SRD51",
+        "subclassShortName": "Champion",
+        "subclassSource": "SRD51",
+        "level": 3,
+        "header": 1,
+        "entries": [
+          "Beginning when you choose this archetype at 3rd level, your weapon attacks score a critical hit on a roll of 19 or 20."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Improved Critical",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "subclassShortName": "Champion",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "header": 2,
+        "entries": [
+          "Your attack rolls with weapons and Unarmed Strikes can score a {@variantrule Critical Hit|SRD52} on a roll of 19 or 20 on the {@dice d20}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "parentSubclass": "champion",
+  "classLevel": 3
+}

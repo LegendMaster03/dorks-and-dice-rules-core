@@ -1,0 +1,38 @@
+{
+  "id": "classFeature.sneak-attack.rogue.sneak-attack.1",
+  "name": "Sneak Attack",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Sneak Attack",
+        "className": "Rogue",
+        "classSource": "SRD51",
+        "level": 1,
+        "entries": [
+          "Beginning at 1st level, you know how to strike subtly and exploit a foe's distraction. Once per turn, you can deal an extra {@damage 1d6} damage to one creature you hit with an attack if you have advantage on the attack roll. The attack must use a finesse or a ranged weapon.",
+          "You don't need advantage on the attack roll if another enemy of the target is within 5 feet of it, that enemy isn't {@condition incapacitated}, and you don't have disadvantage on the attack roll.",
+          "The amount of the extra damage increases as you gain levels in this class, as shown in the Sneak Attack column of the Rogue table."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Sneak Attack",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "You know how to strike subtly and exploit a foe's distraction. Once per turn, you can deal an extra {@damage 1d6} damage to one creature you hit with an attack roll if you have {@variantrule Advantage|SRD52} on the roll and the attack uses a Finesse or a Ranged weapon. The extra damage's type is the same as the weapon's type.",
+          "You don't need {@variantrule Advantage|SRD52} on the attack roll if at least one of your allies is within 5 feet of the target, the ally doesn't have the {@condition Incapacitated|SRD52} condition, and you don't have {@variantrule Disadvantage|SRD52} on the attack roll.",
+          "The extra damage increases as you gain Rogue levels, as shown in the Sneak Attack column of the Rogue Features table."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 1
+}

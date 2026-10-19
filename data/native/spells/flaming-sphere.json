@@ -1,0 +1,136 @@
+{
+  "id": "spell.flaming-sphere",
+  "name": "Flaming Sphere",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Flaming Sphere",
+        "level": 2,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a bit of tallow, a pinch of brimstone, and a dusting of powdered iron"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "A 5-foot-diameter sphere of fire appears in an unoccupied space of your choice within range and lasts for the duration. Any creature that ends its turn within 5 feet of the sphere must make a Dexterity saving throw. The creature takes {@damage 2d6} fire damage on a failed save, or half as much damage on a successful one.",
+          "As a bonus action, you can move the sphere up to 30 feet. If you ram the sphere into a creature, that creature must make the saving throw against the sphere's damage, and the sphere stops moving this turn.",
+          "When you move the sphere, you can direct it over barriers up to 5 feet tall and jump it across pits up to 10 feet wide. The sphere ignites flammable objects not being worn or carried, and it sheds bright light in a 20-foot radius and dim light for an additional 20 feet."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by {@scaledamage 2d6|2-9|1d6} for each slot level above 2nd."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "fire"
+        ],
+        "savingThrow": [
+          "dexterity"
+        ],
+        "miscTags": [
+          "LGT",
+          "OBJ",
+          "UBA"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Flaming Sphere",
+        "level": 2,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a ball of wax"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You create a 5-foot-diameter sphere of fire in an unoccupied space on the ground within range. It lasts for the duration. Any creature that ends its turn within 5 feet of the sphere makes a Dexterity saving throw, taking {@damage 2d6} Fire damage on a failed save or half as much damage on a successful one.",
+          "As a {@variantrule Bonus Action|SRD52}, you can move the sphere up to 30 feet, rolling it along the ground. If you move the sphere into a creature's space, that creature makes the save against the sphere, and the sphere stops moving for the turn.",
+          "When you move the sphere, you can direct it over barriers up to 5 feet tall and jump it across pits up to 10 feet wide. Flammable objects that aren't being worn or carried start {@hazard burning|SRD52} if touched by the sphere, and it sheds {@variantrule Bright Light|SRD52} in a 20-foot radius and {@variantrule Dim Light|SRD52} for an additional 20 feet."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "The damage increases by {@scaledamage 2d6|2-9|1d6} for each spell slot level above 2."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "fire"
+        ],
+        "savingThrow": [
+          "dexterity"
+        ],
+        "miscTags": [
+          "LGT",
+          "OBJ",
+          "UBA"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    }
+  ]
+}

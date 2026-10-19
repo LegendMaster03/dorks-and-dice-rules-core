@@ -1,0 +1,50 @@
+{
+  "id": "feat.boon-of-truesight",
+  "name": "Boon of Truesight",
+  "kind": "feat",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Boon of Truesight",
+        "category": "EB",
+        "prerequisite": [
+          {
+            "level": 19
+          }
+        ],
+        "ability": [
+          {
+            "choose": {
+              "from": [
+                "str",
+                "dex",
+                "con",
+                "int",
+                "wis",
+                "cha"
+              ]
+            },
+            "max": 30
+          }
+        ],
+        "senses": [
+          {
+            "truesight": 60
+          }
+        ],
+        "entries": [
+          "You gain the following benefits.",
+          {
+            "type": "entries",
+            "name": "Truesight",
+            "entries": [
+              "You have {@sense Truesight|SRD52} with a range of 60 feet."
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

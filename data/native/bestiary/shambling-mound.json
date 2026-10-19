@@ -1,0 +1,389 @@
+{
+  "id": "monster.shambling-mound",
+  "name": "Shambling Mound",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Shambling Mound",
+        "size": [
+          "L"
+        ],
+        "type": "plant",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          {
+            "ac": 15,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 136,
+          "formula": "16d10 + 48"
+        },
+        "speed": {
+          "walk": 20,
+          "swim": 20
+        },
+        "str": 18,
+        "dex": 8,
+        "con": 16,
+        "int": 5,
+        "wis": 10,
+        "cha": 5,
+        "skill": {
+          "stealth": "+2"
+        },
+        "senses": [
+          "blindsight 60 ft. (blind beyond this radius)"
+        ],
+        "passive": 10,
+        "resist": [
+          "cold",
+          "fire"
+        ],
+        "immune": [
+          "lightning"
+        ],
+        "conditionImmune": [
+          "blinded",
+          "deafened",
+          "exhaustion"
+        ],
+        "cr": "5",
+        "trait": [
+          {
+            "name": "Lightning Absorption",
+            "entries": [
+              "Whenever the shambling mound is subjected to lightning damage, it takes no damage and regains a number of hit points equal to the lightning damage dealt."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The shambling mound makes two slam attacks. If both attacks hit a Medium or smaller target, the target is {@condition grappled} (escape {@dc 14}), and the shambling mound uses its Engulf on it."
+            ]
+          },
+          {
+            "name": "Slam",
+            "entries": [
+              "{@atk mw} {@hit 7} to hit, reach 5 ft., one target. {@h}13 ({@damage 2d8 + 4}) bludgeoning damage."
+            ]
+          },
+          {
+            "name": "Engulf",
+            "entries": [
+              "The shambling mound engulfs a Medium or smaller creature {@condition grappled} by it. The engulfed target is {@condition blinded}, {@condition restrained}, and unable to breathe, and it must succeed on a {@dc 14} Constitution saving throw at the start of each of the mound's turns or take 13 ({@damage 2d8 + 4}) bludgeoning damage. If the mound moves, the engulfed target moves with it. The mound can have only one creature engulfed at a time."
+            ]
+          }
+        ],
+        "environment": [
+          "forest",
+          "swamp"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/shambling-mound.opus"
+        },
+        "traitTags": [
+          "Damage Absorption"
+        ],
+        "senseTags": [
+          "B"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "conditionInflict": [
+          "blinded",
+          "grappled",
+          "restrained"
+        ],
+        "savingThrowForced": [
+          "constitution"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Shambling Mound",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "A shambling mound, sometimes called a shambler, trudges ponderously through bleak swamps, dismal marshes, and rain forests, consuming any organic matter in its path. This rotting heap of animated vegetation looms up half again as tall as a human, tapering into a faceless \"head\" at its top.",
+                      {
+                        "name": "All-Consuming Devourers",
+                        "entries": [
+                          "A shambling mound feeds on any organic material, tirelessly consuming plants as it moves and devouring animals that can't escape it. Only the shambling mounds' rarity and plodding speed prevent them from overwhelming entire ecosystems. Even so, their presence leeches natural environments of plant and animal life, and an unsettling quiet pervades the swamps and woods haunted by these ever-hungry horrors."
+                        ],
+                        "type": "entries"
+                      },
+                      {
+                        "name": "Unseen Hunters",
+                        "type": "entries",
+                        "entries": [
+                          "Composed of decaying leaves, vines, roots, and other natural swamp and forest compost, shamblers can blend into their environs. Because they move slowly, they rarely attempt to pursue and catch creatures. Rather, they remain in place, sustaining themselves by absorbing nutrients from their surroundings as they wait for prey to come to them. When a creature passes near or alights upon a shambling mound, the monster comes to life, seizing and absorbing the unwary prey.",
+                          {
+                            "name": "Spawned by Lightning",
+                            "entries": [
+                              "A shambling mound results from a phenomenon in which lightning or fey magic invigorates an otherwise ordinary swamp plant. As the plant is reborn into its second life, it chokes the life from plants and animals around it, mulching their corpses in a heap around its roots. Those roots eventually give up their reliance on the soil, directing the shambling mound to seek out new sources of food."
+                            ],
+                            "type": "entries"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "The Weed that Walks",
+                        "type": "entries",
+                        "entries": [
+                          "The instinct that drives a shambling mound is its central root-stem, buried somewhere inside its ponderous form. The rest of a shambler consists of the rotting heap that it simultaneously accumulates and feeds on, which protects the root-stem and animates to smash and smother the life from any creature.",
+                          "The dense mass of a shambling mound's body shrugs off the effects of cold and fire. Lightning reinvigorates the root-stem, strengthening the shambling mound and bolstering its consumptive drive.",
+                          "Despite its monstrous form, the shambling mound is a living plant that requires air and nourishment. Although it doesn't sleep the way an animal does, it can lie dormant for days on end before rising to hunt for food.",
+                          {
+                            "name": "A Resurgent Menace",
+                            "entries": [
+                              "If a shambling mound faces defeat before an overwhelming foe, the root-stem can feign death, collapsing the remains of its mound. If not subsequently killed, the root-stem beds down in the shambler's remains to slowly regrow its full body, then once again sets out to consume all it can. In this way, shambling mound infestations long thought destroyed can recur time and again."
+                            ],
+                            "type": "entries"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Shambling Mound.webp"
+                },
+                "width": 1000,
+                "height": 692
+              },
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Shambling Mound 2.webp"
+                },
+                "width": 1000,
+                "height": 949
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Shambling Mound",
+        "size": [
+          "L"
+        ],
+        "type": "plant",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          15
+        ],
+        "hp": {
+          "average": 110,
+          "formula": "13d10 + 39"
+        },
+        "speed": {
+          "walk": 30,
+          "swim": 20
+        },
+        "str": 18,
+        "dex": 8,
+        "con": 16,
+        "int": 5,
+        "wis": 10,
+        "cha": 5,
+        "skill": {
+          "stealth": "+3"
+        },
+        "senses": [
+          "Blindsight 60 ft."
+        ],
+        "passive": 10,
+        "resist": [
+          "cold",
+          "fire"
+        ],
+        "immune": [
+          "lightning"
+        ],
+        "conditionImmune": [
+          "deafened",
+          "exhaustion"
+        ],
+        "cr": "5",
+        "trait": [
+          {
+            "name": "Lightning Absorption",
+            "entries": [
+              "Whenever the shambling mound is subjected to Lightning damage, it regains a number of {@variantrule Hit Points|SRD52} equal to the Lightning damage dealt."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The shambling mound makes three Charged Tendril attacks. It can replace one attack with a use of Engulf."
+            ]
+          },
+          {
+            "name": "Charged Tendril",
+            "entries": [
+              "{@atkr m} {@hit 7}, reach 10 ft. {@h}7 ({@damage 1d6 + 4}) Bludgeoning damage plus 5 ({@damage 2d4}) Lightning damage. If the target is a Medium or smaller creature, the shambling mound pulls the target 5 feet straight toward itself."
+            ]
+          },
+          {
+            "name": "Engulf",
+            "entries": [
+              "{@actSave str} {@dc 15}, one Medium or smaller creature within 5 feet. {@actSaveFail} The target is pulled into the shambling mound's space and has the {@condition Grappled|SRD52} condition (escape {@dc 14}). Until the grapple ends, the target has the {@condition Blinded|SRD52} and {@condition Restrained|SRD52} conditions, and it takes 10 ({@damage 3d6}) Lightning damage at the start of each of its turns. When the shambling mound moves, the {@condition Grappled|SRD52} target moves with it, costing it no extra movement. The shambling mound can have only one creature {@condition Grappled|SRD52} by this action at a time."
+            ]
+          }
+        ],
+        "environment": [
+          "forest",
+          "swamp"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/shambling-mound.opus"
+        },
+        "traitTags": [
+          "Damage Absorption"
+        ],
+        "senseTags": [
+          "B"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "damageTags": [
+          "B",
+          "L"
+        ],
+        "miscTags": [
+          "MA",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "grappled"
+        ],
+        "savingThrowForced": [
+          "strength"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Shambling Mound",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Shambling Mound",
+                "entries": [
+                  "{@i Manifestation of Primeval Power}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Forest|bestiary|environment=forest}, {@filter Swamp|bestiary|environment=swamp}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "None"
+                      }
+                    ]
+                  },
+                  "Shambling mounds—also known as \"shamblers\"—embody the tenacity of the wilderness, seeking only to consume and grow. These masses of vegetation rise up to half again as tall as a human and possess thick limbs and a vague head. As they move through bogs and undergrowth, they ensnare creatures that come within reach. Shambling mounds bury those they catch within their own forms as compost.",
+                  "Strange circumstances might give rise to shambling mounds, transforming vegetation into hulks with rudimentary cunning. Such conditions include strikes from magical lightning, nature defending itself, or druidic curses. Roll on or choose a result from the Shambling Mound Cultivation table to inspire a shambling mound's origins and features.",
+                  {
+                    "type": "table",
+                    "caption": "Shambling Mound Cultivation",
+                    "colLabels": [
+                      "1d6",
+                      "The Shambling Mound Is..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "Covered in vibrant alien or Feywild blooms."
+                      ],
+                      [
+                        "2",
+                        "Hauling a rune-etched menhir in its torso."
+                      ],
+                      [
+                        "3",
+                        "Infested with vermin or fungi."
+                      ],
+                      [
+                        "4",
+                        "Made up of knotty vines entangling skeletons."
+                      ],
+                      [
+                        "5",
+                        "Mutated and leaking glowing pollution."
+                      ],
+                      [
+                        "6",
+                        "The remains of an ancient tree or a treant."
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Shambling Mound.webp"
+                },
+                "credit": "Robson Michel",
+                "width": 2560,
+                "height": 1656
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

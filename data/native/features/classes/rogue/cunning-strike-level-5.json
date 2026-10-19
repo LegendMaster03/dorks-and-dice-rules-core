@@ -1,0 +1,40 @@
+{
+  "id": "classFeature.cunning-strike.rogue.cunning-strike.5",
+  "name": "Cunning Strike",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Cunning Strike",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 5,
+        "entries": [
+          "You've developed cunning ways to use your Sneak Attack. When you deal Sneak Attack damage, you can add one of the following Cunning Strike effects. Each effect has a die cost, which is the number of Sneak Attack damage dice you must forgo to add the effect. You remove the die before rolling, and the effect occurs immediately after the attack's damage is dealt. For example, if you add the Poison effect, remove {@dice 1d6} from the Sneak Attack's damage before rolling.",
+          "If a Cunning Strike effect requires a saving throw, the DC equals 8 plus your Dexterity modifier and {@variantrule Proficiency|SRD52|Proficiency Bonus}.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "refClassFeature",
+                "classFeature": "Poison (Cost: 1d6)|Rogue|SRD52|5|SRD52"
+              },
+              {
+                "type": "refClassFeature",
+                "classFeature": "Trip (Cost: 1d6)|Rogue|SRD52|5|SRD52"
+              },
+              {
+                "type": "refClassFeature",
+                "classFeature": "Withdraw (Cost: 1d6)|Rogue|SRD52|5|SRD52"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 5
+}

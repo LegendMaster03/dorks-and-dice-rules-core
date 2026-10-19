@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.druid-subclass.druid.druid-subclass.3",
+  "name": "Druid Subclass",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Druid Subclass",
+        "className": "Druid",
+        "classSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "You gain a Druid subclass of your choice. A subclass is a specialization that grants you features at certain Druid levels. For the rest of your career, you gain each of your subclass's features that are of your Druid level or lower."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "classLevel": 3
+}

@@ -1,0 +1,36 @@
+{
+  "id": "classFeature.expertise.rogue.expertise.1",
+  "name": "Expertise",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Expertise",
+        "className": "Rogue",
+        "classSource": "SRD51",
+        "level": 1,
+        "entries": [
+          "At 1st level, choose two of your skill proficiencies, or one of your skill proficiencies and your proficiency with {@item thieves' tools|srd51}. Your proficiency bonus is doubled for any ability check you make that uses either of the chosen proficiencies.",
+          "At 6th level, you can choose two more of your proficiencies (in skills or with {@item thieves' tools|srd51}) to gain this benefit."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Expertise",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "You gain {@variantrule Expertise|SRD52} in two of your skill proficiencies of your choice. {@skill Sleight of Hand|SRD52} and {@skill Stealth|SRD52} are recommended if you have proficiency in them.",
+          "At Rogue level 6, you gain {@variantrule Expertise|SRD52} in two more of your skill proficiencies of your choice."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 1
+}

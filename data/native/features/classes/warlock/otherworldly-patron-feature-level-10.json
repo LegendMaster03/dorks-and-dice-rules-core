@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.otherworldly-patron-feature.warlock.otherworldly-patron-feature.10",
+  "name": "Otherworldly Patron feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Otherworldly Patron feature",
+        "className": "Warlock",
+        "classSource": "SRD51",
+        "level": 10,
+        "entries": [
+          "At 10th level, you gain a feature granted by your Otherworldly Patron."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.warlock",
+  "classLevel": 10
+}

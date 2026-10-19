@@ -1,0 +1,43 @@
+{
+  "id": "rule.monsters-d",
+  "name": "Monsters (D)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (D)",
+        "page": 269,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Darkmantle|srd51}",
+              "{@creature Death Dog|srd51}",
+              "{@creature Deep Gnome (Svirfneblin)|srd51}",
+              "{@creature Deer|srd51}",
+              "{@creature Deva|srd51}",
+              "{@creature Dire Wolf|srd51}",
+              "{@creature Djinni|srd51}",
+              "{@creature Doppelganger|srd51}",
+              "{@creature Draft Horse|srd51}",
+              "{@creature Dragon Turtle|srd51}",
+              "{@creature Dretch|srd51}",
+              "{@creature Drider|srd51}",
+              "{@creature Drow|srd51}",
+              "{@creature Druid|srd51}",
+              "{@creature Dryad|srd51}",
+              "{@creature Duergar|srd51}",
+              "{@creature Dust Mephit|srd51}"
+            ]
+          }
+        ],
+        "id": "1a6"
+      }
+    }
+  ]
+}

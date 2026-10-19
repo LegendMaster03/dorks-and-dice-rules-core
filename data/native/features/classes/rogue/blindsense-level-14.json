@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.blindsense.rogue.blindsense.14",
+  "name": "Blindsense",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Blindsense",
+        "className": "Rogue",
+        "classSource": "SRD51",
+        "level": 14,
+        "entries": [
+          "Starting at 14th level, if you are able to hear, you are aware of the location of any hidden or {@condition invisible} creature within 10 feet of you."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 14
+}

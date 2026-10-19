@@ -1,0 +1,148 @@
+{
+  "id": "spell.insect-plague",
+  "name": "Insect Plague",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Insect Plague",
+        "level": 5,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 300
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a few grains of sugar, some kernels of grain, and a smear of fat"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 10
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Swarming, biting locusts fill a 20-foot-radius sphere centered on a point you choose within range. The sphere spreads around corners. The sphere remains for the duration, and its area is {@quickref Vision and Light|SRD51|2||lightly obscured}. The sphere's area is {@quickref difficult terrain||3}.",
+          "When the area appears, each creature in it must make a Constitution saving throw. A creature takes {@damage 4d10} piercing damage on a failed save, or half as much damage on a successful one. A creature must also make this saving throw when it enters the spell's area for the first time on a turn or ends its turn there."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 6th level or higher, the damage increases by {@scaledamage 4d10|5-9|1d10} for each slot level above 5th."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "piercing"
+        ],
+        "savingThrow": [
+          "constitution"
+        ],
+        "miscTags": [
+          "DFT",
+          "OBS"
+        ],
+        "areaTags": [
+          "S"
+        ],
+        "lore": [
+          {
+            "name": "Insect Plague",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "spells/PHB/Insect Plague.webp"
+                },
+                "width": 449,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Insect Plague",
+        "level": 5,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 300
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a locust"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 10
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Swarming locusts fill a 20-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on a point you choose within range. The {@variantrule Sphere [Area of Effect]|SRD52|Sphere} remains for the duration, and its area is {@variantrule Lightly Obscured|SRD52} and {@variantrule Difficult Terrain|SRD52}.",
+          "When the swarm appears, each creature in it makes a Constitution saving throw, taking {@damage 4d10} Piercing damage on a failed save or half as much damage on a successful one. A creature also makes this save when it enters the spell's area for the first time on a turn or ends its turn there. A creature makes this save only once per turn."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "The damage increases by {@scaledamage 4d10|5-9|1d10} for each spell slot level above 5."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "piercing"
+        ],
+        "savingThrow": [
+          "constitution"
+        ],
+        "miscTags": [
+          "DFT",
+          "OBS"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    }
+  ]
+}

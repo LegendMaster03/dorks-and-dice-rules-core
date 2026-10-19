@@ -1,0 +1,160 @@
+{
+  "id": "item.staff-of-fire",
+  "name": "Staff of Fire",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Staff of Fire",
+        "resist": [
+          "fire"
+        ],
+        "tier": "major",
+        "rarity": "very rare",
+        "reqAttune": "by a druid, sorcerer, warlock, or wizard",
+        "reqAttuneTags": [
+          {
+            "class": "druid"
+          },
+          {
+            "class": "sorcerer"
+          },
+          {
+            "class": "warlock"
+          },
+          {
+            "class": "wizard"
+          }
+        ],
+        "weight": 4,
+        "weaponCategory": "simple",
+        "property": [
+          "V"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "B",
+        "dmg2": "1d8",
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d6 + 4}",
+        "charges": 10,
+        "staff": true,
+        "entries": [
+          "You have resistance to fire damage while you hold this staff.",
+          "The staff has 10 charges. While holding it, you can use an action to expend 1 or more of its charges to cast one of the following spells from it, using your spell save DC: {@spell burning hands} (1 charge), {@spell fireball} (3 charges), or {@spell wall of fire} (4 charges).",
+          "The staff regains {@dice 1d6 + 4} expended charges daily at dawn. If you expend the last charge, roll a {@dice d20}. On a 1, the staff blackens, crumbles into cinders, and is destroyed."
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "burning hands"
+            ],
+            "3": [
+              "fireball"
+            ],
+            "4": [
+              "wall of fire"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Staff of Fire",
+        "type": "M|SRD52",
+        "resist": [
+          "fire"
+        ],
+        "rarity": "very rare",
+        "reqAttune": "by a druid, sorcerer, warlock, or wizard",
+        "reqAttuneTags": [
+          {
+            "class": "druid"
+          },
+          {
+            "class": "sorcerer"
+          },
+          {
+            "class": "warlock"
+          },
+          {
+            "class": "wizard"
+          }
+        ],
+        "weight": 4,
+        "weaponCategory": "simple",
+        "property": [
+          "V|SRD52"
+        ],
+        "mastery": [
+          "Topple|SRD52"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "B",
+        "dmg2": "1d8",
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d6 + 4}",
+        "charges": 10,
+        "staff": true,
+        "entries": [
+          "You have {@variantrule Resistance|SRD52} to Fire damage while you hold this staff.",
+          {
+            "type": "entries",
+            "name": "Spells",
+            "entries": [
+              "The staff has 10 charges. While holding the staff, you can cast one of the spells on the following table from it, using your spell save DC. The table indicates how many charges you must expend to cast the spell.",
+              {
+                "type": "table",
+                "colStyles": [
+                  "col-10",
+                  "col-2 text-center"
+                ],
+                "colLabels": [
+                  "Spell",
+                  "Charge Cost"
+                ],
+                "rows": [
+                  [
+                    "{@spell Burning Hands|SRD52}",
+                    "1"
+                  ],
+                  [
+                    "{@spell Fireball|SRD52}",
+                    "3"
+                  ],
+                  [
+                    "{@spell Wall of Fire|SRD52}",
+                    "4"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Regaining Charges",
+            "entries": [
+              "The staff regains {@dice 1d6 + 4} expended charges daily at dawn. If you expend the last charge, roll {@dice 1d20}. On a 1, the staff crumbles into cinders and is destroyed."
+            ]
+          }
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "burning hands|srd52"
+            ],
+            "3": [
+              "fireball|srd52"
+            ],
+            "4": [
+              "wall of fire|srd52"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

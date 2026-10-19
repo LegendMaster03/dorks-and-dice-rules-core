@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.druid-circle-feature.druid.druid-circle-feature.14",
+  "name": "Druid Circle feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Druid Circle feature",
+        "className": "Druid",
+        "classSource": "SRD51",
+        "level": 14,
+        "entries": [
+          "At 14th level, you gain a feature granted by your Druid Circle feature."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "classLevel": 14
+}

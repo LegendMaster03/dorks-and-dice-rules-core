@@ -1,0 +1,92 @@
+{
+  "id": "spell.commune",
+  "name": "Commune",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Commune",
+        "level": 5,
+        "school": "D",
+        "time": [
+          {
+            "number": 1,
+            "unit": "minute"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "incense and a vial of holy or unholy water"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            }
+          }
+        ],
+        "meta": {
+          "ritual": true
+        },
+        "entries": [
+          "You contact your deity or a divine proxy and ask up to three questions that can be answered with a yes or no. You must ask your questions before the spell ends. You receive a correct answer for each question.",
+          "Divine beings aren't necessarily omniscient, so you might receive \"unclear\" as an answer if a question pertains to information that lies beyond the deity's knowledge. In a case where a one-word answer could be misleading or contrary to the deity's interests, the DM might offer a short phrase as an answer instead.",
+          "If you cast the spell two or more times before finishing your next long rest, there is a cumulative {@chance 25|||No answer!|Answer} chance for each casting after the first that you get no answer. The DM makes this roll in secret."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Commune",
+        "level": 5,
+        "school": "D",
+        "time": [
+          {
+            "number": 1,
+            "unit": "minute"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "incense"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            }
+          }
+        ],
+        "meta": {
+          "ritual": true
+        },
+        "entries": [
+          "You contact a deity or a divine proxy and ask up to three questions that can be answered with yes or no. You must ask your questions before the spell ends. You receive a correct answer for each question.",
+          "Divine beings aren't necessarily omniscient, so you might receive \"unclear\" as an answer if a question pertains to information that lies beyond the deity's knowledge. In a case where a one-word answer could be misleading or contrary to the deity's interests, the DM might offer a short phrase as an answer instead.",
+          "If you cast the spell more than once before finishing a {@variantrule Long Rest|SRD52}, there is a cumulative {@chance 25|||No answer!|Answer} chance for each casting after the first that you get no answer."
+        ]
+      }
+    }
+  ]
+}

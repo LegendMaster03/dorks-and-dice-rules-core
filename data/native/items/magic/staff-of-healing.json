@@ -1,0 +1,140 @@
+{
+  "id": "item.staff-of-healing",
+  "name": "Staff of Healing",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Staff of Healing",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": "by a bard, cleric, or druid",
+        "reqAttuneTags": [
+          {
+            "class": "bard"
+          },
+          {
+            "class": "cleric"
+          },
+          {
+            "class": "druid"
+          }
+        ],
+        "weight": 4,
+        "weaponCategory": "simple",
+        "property": [
+          "V"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "B",
+        "dmg2": "1d8",
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d6 + 4}",
+        "charges": 10,
+        "staff": true,
+        "entries": [
+          "This staff has 10 charges. While holding it, you can use an action to expend 1 or more of its charges to cast one of the following spells from it, using your spell save DC and spellcasting ability modifier: {@spell cure wounds} (1 charge per spell level, up to 4th), {@spell lesser restoration} (2 charges). or {@spell mass cure wounds} (5 charges).",
+          "The staff regains {@dice 1d6 + 4} expended charges daily at dawn. If you expend the last charge, roll a {@dice d20}. On a 1. the staff vanishes in a flash of light, lost forever."
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "cure wounds"
+            ],
+            "2": [
+              "lesser restoration"
+            ],
+            "5": [
+              "mass cure wounds"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Staff of Healing",
+        "type": "M|SRD52",
+        "rarity": "rare",
+        "reqAttune": "by a bard, cleric, or druid",
+        "reqAttuneTags": [
+          {
+            "class": "bard"
+          },
+          {
+            "class": "cleric"
+          },
+          {
+            "class": "druid"
+          }
+        ],
+        "weight": 4,
+        "weaponCategory": "simple",
+        "property": [
+          "V|SRD52"
+        ],
+        "mastery": [
+          "Topple|SRD52"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "B",
+        "dmg2": "1d8",
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d6 + 4}",
+        "charges": 10,
+        "staff": true,
+        "entries": [
+          "This staff has 10 charges. While holding the staff, you can cast one of the spells on the following table from it, using your spellcasting ability modifier. The table indicates how many charges you must expend to cast the spell.",
+          {
+            "type": "table",
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "colLabels": [
+              "Spell",
+              "Charge Cost"
+            ],
+            "rows": [
+              [
+                "{@spell Cure Wounds|SRD52}",
+                "1 charge per spell level (maximum 4 for a level 4 spell)"
+              ],
+              [
+                "{@spell Lesser Restoration|SRD52}",
+                "2"
+              ],
+              [
+                "{@spell Mass Cure Wounds|SRD52}",
+                "5"
+              ]
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Regaining Charges",
+            "entries": [
+              "The staff regains {@dice 1d6 + 4} expended charges daily at dawn. If you expend the last charge, roll {@dice 1d20}. On a 1, the staff vanishes in a flash of light, lost forever."
+            ]
+          }
+        ],
+        "attachedSpells": {
+          "will": [
+            "cure wounds|srd52"
+          ],
+          "charges": {
+            "2": [
+              "lesser restoration|srd52"
+            ],
+            "5": [
+              "mass cure wounds|srd52"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

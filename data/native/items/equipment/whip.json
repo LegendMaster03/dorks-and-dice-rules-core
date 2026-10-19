@@ -1,0 +1,47 @@
+{
+  "id": "baseitem.whip",
+  "name": "Whip",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Whip",
+        "type": "M",
+        "rarity": "none",
+        "weight": 3,
+        "value": 200,
+        "weaponCategory": "martial",
+        "property": [
+          "F",
+          "R"
+        ],
+        "dmg1": "1d4",
+        "dmgType": "S",
+        "weapon": true
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Whip",
+        "type": "M|SRD52",
+        "rarity": "none",
+        "weight": 3,
+        "value": 200,
+        "weaponCategory": "martial",
+        "property": [
+          "F|SRD52",
+          "R|SRD52"
+        ],
+        "mastery": [
+          "Slow|SRD52"
+        ],
+        "dmg1": "1d4",
+        "dmgType": "S",
+        "weapon": true
+      }
+    }
+  ]
+}

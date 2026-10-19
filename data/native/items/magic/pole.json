@@ -1,0 +1,21 @@
+{
+  "id": "item.pole",
+  "name": "Pole",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Pole",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 7,
+        "value": 5,
+        "entries": [
+          "A Pole is 10 feet long. You can use it to touch something up to 10 feet away. If you must make a Strength ({@skill Athletics|SRD52}) check as part of a High or {@variantrule Long Jump|SRD52}, you can use the Pole to vault, giving yourself {@variantrule Advantage|SRD52} on the check."
+        ]
+      }
+    }
+  ]
+}

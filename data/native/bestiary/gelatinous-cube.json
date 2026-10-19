@@ -1,0 +1,321 @@
+{
+  "id": "monster.gelatinous-cube",
+  "name": "Gelatinous Cube",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Gelatinous Cube",
+        "size": [
+          "L"
+        ],
+        "type": "ooze",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          6
+        ],
+        "hp": {
+          "average": 84,
+          "formula": "8d10 + 40"
+        },
+        "speed": {
+          "walk": 15
+        },
+        "str": 14,
+        "dex": 3,
+        "con": 20,
+        "int": 1,
+        "wis": 6,
+        "cha": 1,
+        "senses": [
+          "blindsight 60 ft. (blind beyond this radius)"
+        ],
+        "passive": 8,
+        "conditionImmune": [
+          "blinded",
+          "charmed",
+          "deafened",
+          "exhaustion",
+          "frightened",
+          "prone"
+        ],
+        "cr": "2",
+        "trait": [
+          {
+            "name": "Ooze Cube",
+            "entries": [
+              "The cube takes up its entire space. Other creatures can enter the space, but a creature that does so is subjected to the cube's Engulf and has disadvantage on the saving throw.",
+              "Creatures inside the cube can be seen but have {@quickref Cover||3||total cover}.",
+              "A creature within 5 feet of the cube can take an action to pull a creature or object out of the cube. Doing so requires a successful {@dc 12} Strength check, and the creature making the attempt takes 10 ({@damage 3d6}) acid damage.",
+              "The cube can hold only one Large creature or up to four Medium or smaller creatures inside it at a time."
+            ]
+          },
+          {
+            "name": "Transparent",
+            "entries": [
+              "Even when the cube is in plain sight, it takes a successful {@dc 15} Wisdom ({@skill Perception}) check to spot a cube that has neither moved nor attacked. A creature that tries to enter the cube's space while unaware of the cube is {@status surprised} by the cube."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Pseudopod",
+            "entries": [
+              "{@atk mw} {@hit 4} to hit, reach 5 ft., one creature. {@h}10 ({@damage 3d6}) acid damage."
+            ]
+          },
+          {
+            "name": "Engulf",
+            "entries": [
+              "The cube moves up to its speed. While doing so, it can enter Large or smaller creatures' spaces. Whenever the cube enters a creature's space, the creature must make a {@dc 12} Dexterity saving throw.",
+              "On a successful save, the creature can choose to be pushed 5 feet back or to the side of the cube. A creature that chooses not to be pushed suffers the consequences of a failed saving throw.",
+              "On a failed save, the cube enters the creature's space, and the creature takes 10 ({@damage 3d6}) acid damage and is engulfed. The engulfed creature can't breathe, is {@condition restrained}, and takes 21 ({@damage 6d6}) acid damage at the start of each of the cube's turns. When the cube moves, the engulfed creature moves with it.",
+              "An engulfed creature can try to escape by taking an action to make a {@dc 12} Strength check. On a success, the creature escapes and enters a space of its choice within 5 feet of the cube."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/gelatinous-cube.opus"
+        },
+        "senseTags": [
+          "B"
+        ],
+        "damageTags": [
+          "A"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "conditionInflict": [
+          "restrained"
+        ],
+        "savingThrowForced": [
+          "dexterity"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Gelatinous Cube",
+            "entries": [
+              "Gelatinous cubes scour dungeon passages in silent, predictable patterns, leaving perfectly clean paths in their wake. They consume living tissue while leaving bones and other materials undissolved.",
+              "A gelatinous cube is all but transparent, making it hard to spot until it attacks. A cube that is well fed can be easier to spot, since its victims' bones, coins, and other objects can be seen suspended inside the creature.",
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "The dungeon's floors were spotless. That should have been our first clue."
+                    ],
+                    "by": "From the journal of Jaster Hollowquill, on his first exploration of Undermountain"
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Gelatinous Cube.webp"
+                },
+                "width": 1000,
+                "height": 866
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Gelatinous Cube",
+        "size": [
+          "L"
+        ],
+        "type": "ooze",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          6
+        ],
+        "hp": {
+          "average": 63,
+          "formula": "6d10 + 30"
+        },
+        "speed": {
+          "walk": 15
+        },
+        "str": 14,
+        "dex": 3,
+        "con": 20,
+        "int": 1,
+        "wis": 6,
+        "cha": 1,
+        "senses": [
+          "Blindsight 60 ft."
+        ],
+        "passive": 8,
+        "immune": [
+          "acid"
+        ],
+        "conditionImmune": [
+          "blinded",
+          "charmed",
+          "deafened",
+          "exhaustion",
+          "frightened",
+          "prone"
+        ],
+        "cr": "2",
+        "trait": [
+          {
+            "name": "Ooze Cube",
+            "entries": [
+              "The cube fills its entire space and is transparent. Other creatures can enter that space, but a creature that does so is subjected to the cube's Engulf and has {@variantrule Disadvantage|SRD52} on the saving throw.",
+              "Creatures inside the cube have {@variantrule Cover|SRD52|Total Cover}, and the cube can hold one Large creature or up to four Medium or Small creatures inside itself at a time.",
+              "As an action, a creature within 5 feet of the cube can pull a creature or an object out of the cube by succeeding on a {@dc 12} Strength ({@skill Athletics|SRD52}) check, and the puller takes 10 ({@damage 3d6}) Acid damage."
+            ]
+          },
+          {
+            "name": "Transparent",
+            "entries": [
+              "Even when the cube is in plain sight, a creature must succeed on a {@dc 15} Wisdom ({@skill Perception|SRD52}) check to notice the cube if the creature hasn't witnessed the cube move or otherwise act."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Pseudopod",
+            "entries": [
+              "{@atkr m} {@hit 4}, reach 5 ft. {@h}12 ({@damage 3d6 + 2}) Acid damage."
+            ]
+          },
+          {
+            "name": "Engulf",
+            "entries": [
+              "The cube moves up to its {@variantrule Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}. The cube can move through the spaces of Large or smaller creatures if it has room inside itself to contain them (see the Ooze {@variantrule Cube [Area of Effect]|SRD52|Cube} trait). {@actSave dex} {@dc 12}, each creature whose space the cube enters for the first time during this move. {@actSaveFail} 10 ({@damage 3d6}) Acid damage, and the target is engulfed. An engulfed target is suffocating, can't cast spells with a Verbal component, has the {@condition Restrained|SRD52} condition, and takes 10 ({@damage 3d6}) Acid damage at the start of each of the cube's turns. When the cube moves, the engulfed target moves with it. An engulfed target can try to escape by taking an action to make a {@dc 12} Strength ({@skill Athletics|SRD52}) check. On a successful check, the target escapes and enters the nearest unoccupied space. {@actSaveSuccess} Half damage, and the target moves to an unoccupied space within 5 feet of the cube. If there is no unoccupied space, the target fails the save instead."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "treasure": [
+          "any"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/gelatinous-cube.opus"
+        },
+        "senseTags": [
+          "B"
+        ],
+        "damageTags": [
+          "A"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "conditionInflict": [
+          "restrained"
+        ],
+        "savingThrowForced": [
+          "dexterity"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Gelatinous Cube",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Gelatinous Cube",
+                "entries": [
+                  "{@i Dungeon-Scouring Block of Ooze}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Underdark|bestiary|environment=underdark}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Any"
+                      }
+                    ]
+                  },
+                  "Quivering masses of acidic goo, gelatinous cubes wobble through narrow caverns and dungeons, engulfing anything in their paths. These Oozes are naturally transparent, making them difficult to see while they're stationary. Creatures and objects that become stuck within these slimes are gradually dissolved. Undigested detritus sometimes floats within a gelatinous cube, hinting at its past meals. Roll on or choose a result from the Gelatinous Cube Debris table to inspire a gelatinous cube's contents.",
+                  {
+                    "type": "table",
+                    "caption": "Gelatinous Cube Debris",
+                    "colLabels": [
+                      "1d6",
+                      "Floating in the Gelatinous Cube Is A..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "Chest or recently trapped mimic."
+                      ],
+                      [
+                        "2",
+                        "Collection of bubbles or rocks resembling eyes."
+                      ],
+                      [
+                        "3",
+                        "Key to a nearby door or coffer."
+                      ],
+                      [
+                        "4",
+                        "Remarkable weapon in need of repair."
+                      ],
+                      [
+                        "5",
+                        "Skeleton belonging to a famous adventurer."
+                      ],
+                      [
+                        "6",
+                        "Tablet bearing a mysterious message."
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Gelatinous Cube.webp"
+                },
+                "credit": "Olivier Bernard",
+                "width": 1200,
+                "height": 1500
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

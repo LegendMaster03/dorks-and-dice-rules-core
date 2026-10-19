@@ -1,0 +1,114 @@
+{
+  "id": "spell.fog-cloud",
+  "name": "Fog Cloud",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Fog Cloud",
+        "level": 1,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 120
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You create a 20-foot-radius sphere of fog centered on a point within range. The sphere spreads around corners, and its area is {@quickref Vision and Light|SRD51|2||heavily obscured}. It lasts for the duration or until a wind of moderate or greater speed (at least 10 miles per hour) disperses it."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 2nd level or higher, the radius of the fog increases by 20 feet for each slot level above 1st."
+            ]
+          }
+        ],
+        "miscTags": [
+          "OBS"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Fog Cloud",
+        "level": 1,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 120
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You create a 20-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} of fog centered on a point within range. The {@variantrule Sphere [Area of Effect]|SRD52|Sphere} is {@variantrule Heavily Obscured|SRD52}. It lasts for the duration or until a strong wind (such as one created by {@spell Gust of Wind|SRD52}) disperses it."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "The fog's radius increases by 20 feet for each spell slot level above 1."
+            ]
+          }
+        ],
+        "miscTags": [
+          "OBS"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    }
+  ]
+}

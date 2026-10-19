@@ -1,0 +1,48 @@
+{
+  "id": "item.pipes-of-haunting",
+  "name": "Pipes of Haunting",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Pipes of Haunting",
+        "type": "INS",
+        "tier": "major",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "weight": 2,
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d3}",
+        "charges": 3,
+        "entries": [
+          "You must be proficient with wind instruments to use these pipes. They have 3 charges. You can use an action to play them and expend 1 charge to create an eerie, spellbinding tune. Each creature within 30 feet of you that hears you play must succeed on a {@dc 15} Wisdom saving throw or become {@condition frightened} of you for 1 minute. If you wish, all creatures in the area that aren't hostile toward you automatically succeed on the saving throw. A creature that fails the saving throw can repeat it at the end of each of its turns, ending the effect on itself on a success. A creature that succeeds on its saving throw is immune to the effect of these pipes for 24 hours. The pipes regain {@dice 1d3} expended charges daily at dawn."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Pipes of Haunting",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d3}",
+        "charges": 3,
+        "entries": [
+          "These pipes have 3 charges and regain {@dice 1d3} expended charges daily at dawn. You can take a {@action Magic|SRD52} action to play them and expend 1 charge to create an eerie, spellbinding tune. Each creature of your choice within 30 feet of you must succeed on a {@dc 15} Wisdom saving throw or have the {@condition Frightened|SRD52} condition for 1 minute. A creature that fails the save repeats it at the end of each of its turns, ending the effect on itself on a success. A creature that succeeds on its save is immune to the effect of these pipes for 24 hours."
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": "item.candle",
+  "name": "Candle",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Candle",
+        "type": "G",
+        "rarity": "none",
+        "value": 1,
+        "entries": [
+          "For 1 hour, a candle sheds bright light in a 5-foot radius and dim light for an additional 5 feet."
+        ],
+        "light": [
+          {
+            "bright": 5,
+            "dim": 10
+          }
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Candle",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "value": 1,
+        "entries": [
+          "For 1 hour, a lit Candle sheds {@variantrule Bright Light|SRD52} in a 5-foot radius and {@variantrule Dim Light|SRD52} for an additional 5 feet."
+        ],
+        "light": [
+          {
+            "bright": 5,
+            "dim": 10
+          }
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

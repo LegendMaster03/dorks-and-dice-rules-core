@@ -1,0 +1,399 @@
+{
+  "id": "monster.xorn",
+  "name": "Xorn",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Xorn",
+        "size": [
+          "M"
+        ],
+        "type": "elemental",
+        "alignment": [
+          "N"
+        ],
+        "ac": [
+          {
+            "ac": 19,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 73,
+          "formula": "7d8 + 42"
+        },
+        "speed": {
+          "walk": 20,
+          "burrow": 20
+        },
+        "str": 17,
+        "dex": 10,
+        "con": 22,
+        "int": 11,
+        "wis": 10,
+        "cha": 11,
+        "skill": {
+          "perception": "+6",
+          "stealth": "+3"
+        },
+        "senses": [
+          "darkvision 60 ft.",
+          "tremorsense 60 ft."
+        ],
+        "passive": 16,
+        "resist": [
+          {
+            "resist": [
+              "piercing",
+              "slashing"
+            ],
+            "note": "from nonmagical attacks that aren't adamantine",
+            "cond": true
+          }
+        ],
+        "languages": [
+          "Terran"
+        ],
+        "cr": "5",
+        "trait": [
+          {
+            "name": "Earth Glide",
+            "entries": [
+              "The xorn can burrow through nonmagical, unworked earth and stone. While doing so, the xorn doesn't disturb the material it moves through."
+            ]
+          },
+          {
+            "name": "Stone Camouflage",
+            "entries": [
+              "The xorn has advantage on Dexterity ({@skill Stealth}) checks made to hide in rocky terrain."
+            ]
+          },
+          {
+            "name": "Treasure Sense",
+            "entries": [
+              "The xorn can pinpoint, by scent, the location of precious metals and stones, such as coins and gems, within 60 feet of it."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The xorn makes three claw attacks and one bite attack."
+            ]
+          },
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}13 ({@damage 3d6 + 3}) piercing damage."
+            ]
+          },
+          {
+            "name": "Claw",
+            "entries": [
+              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d6 + 3}) slashing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/xorn.opus"
+        },
+        "traitTags": [
+          "Camouflage"
+        ],
+        "senseTags": [
+          "D",
+          "T"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "T"
+        ],
+        "damageTags": [
+          "P",
+          "S"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Xorn",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Bizarre creatures native to the Elemental Plane of Earth, xorn sniff out gemstones and precious metals, then tunnel through earth and rock to consume those treasures. On the Material Plane, xorn must range far and wide through the Underdark to sustain themselves, becoming aggressive toward miners and treasure hunters when the valuable minerals of their diet are scarce.",
+                      "A xorn's unnatural origins are suggested by its unusually heavy body and the large, powerful mouth sitting atop its head. Its three long arms are each tipped with sharp talons, and its three large, stone-lidded eyes see in all directions.",
+                      {
+                        "name": "Elemental Travelers",
+                        "type": "entries",
+                        "entries": [
+                          "Possessed of the power of elemental earth, a xorn glides through stone and dirt as easily as a fish swims through water. It doesn't displace earth or stone when it moves, but merges with and flows through it, leaving no tunnel, hole, or hint of its passage."
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "Keep a few gems in your pocket. A hungry xorn is a helpful xorn."
+                        ],
+                        "by": "X the Mystic's 6th rule of dungeon survival"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Xorn.webp"
+                },
+                "credit": "Mike Burns",
+                "width": 852,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Xorn",
+        "size": [
+          "M"
+        ],
+        "type": "elemental",
+        "alignment": [
+          "N"
+        ],
+        "ac": [
+          19
+        ],
+        "hp": {
+          "average": 84,
+          "formula": "8d8 + 48"
+        },
+        "speed": {
+          "walk": 20,
+          "burrow": 20
+        },
+        "str": 17,
+        "dex": 10,
+        "con": 22,
+        "int": 11,
+        "wis": 10,
+        "cha": 11,
+        "skill": {
+          "perception": "+6",
+          "stealth": "+6"
+        },
+        "senses": [
+          "Darkvision 60 ft.",
+          "Tremorsense 60 ft."
+        ],
+        "passive": 16,
+        "immune": [
+          "poison"
+        ],
+        "conditionImmune": [
+          "paralyzed",
+          "petrified",
+          "poisoned"
+        ],
+        "languages": [
+          "Primordial (Terran)"
+        ],
+        "cr": "5",
+        "trait": [
+          {
+            "name": "Earth Glide",
+            "entries": [
+              "The xorn can burrow through nonmagical, unworked earth and stone. While doing so, the xorn doesn't disturb the material it moves through."
+            ]
+          },
+          {
+            "name": "Treasure Sense",
+            "entries": [
+              "The xorn can pinpoint the location of precious metals and stones within 60 feet of itself."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The xorn makes one Bite attack and three Claw attacks."
+            ]
+          },
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atkr m} {@hit 6}, reach 5 ft. {@h}17 ({@damage 4d6 + 3}) Piercing damage."
+            ]
+          },
+          {
+            "name": "Claw",
+            "entries": [
+              "{@atkr m} {@hit 6}, reach 5 ft. {@h}8 ({@damage 1d10 + 3}) Slashing damage."
+            ]
+          }
+        ],
+        "bonus": [
+          {
+            "name": "Charge",
+            "entries": [
+              "The xorn moves up to its {@variantrule Speed|SRD52} or {@variantrule Burrow Speed|SRD52} straight toward an enemy it can sense."
+            ]
+          }
+        ],
+        "environment": [
+          "planar, earth",
+          "underdark"
+        ],
+        "treasure": [
+          "any"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/xorn.opus"
+        },
+        "senseTags": [
+          "D",
+          "T"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "P",
+          "T"
+        ],
+        "damageTags": [
+          "P",
+          "S"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Xorn",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Xorn",
+                "entries": [
+                  "{@i Treasure-Devouring Glutton}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Underdark|bestiary|environment=underdark}, {@filter Planar (Elemental Plane of Earth)|bestiary|environment=planar, earth}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Any"
+                      }
+                    ]
+                  },
+                  "On the Elemental Plane of Earth, xorn roam in search of meals they consider delicacies: gems, crystals, and veins of precious metals. For xorn, the Elemental Plane of Earth presents an endless buffet. Those that find their way to the Material Plane discover that most worlds are culinary wastelands. These xorn scour subterranean depths, consuming whatever sparse gems and ores they find. This might bring them into conflict with miners or others who hide their treasures underground.",
+                  "Xorn have three eyes, three arms, and three legs arranged around their trilaterally symmetrical frames. At the top of their bodies is a toothy maw that's equally capable of crushing minerals and dangerous creatures. Xorn move through the earth magically, leaving no tunnel or sign of their passage.",
+                  "Rapt gourmands, xorn focus on their next meals. They care little for living creatures and avoid harming them when possible. They know others also covet the earth's treasures, and they're not above bargaining for their meals. Xorn might share their knowledge of the Underdark in exchange for snacks of gems, coins, or magical metals. If starving or angered, xorn might try to forcibly take their meals.",
+                  "Roll on or choose a result from the Xorn Delicacies table to inspire a xorn's favorite fare.",
+                  {
+                    "type": "table",
+                    "caption": "Xorn Delicacies",
+                    "colLabels": [
+                      "1d8",
+                      "The Xorn Craves..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "Adamantine or mithral."
+                      ],
+                      [
+                        "2",
+                        "Coins minted by a long-dead empire."
+                      ],
+                      [
+                        "3",
+                        "Fossils or petrified wood."
+                      ],
+                      [
+                        "4",
+                        "A gem that's part of a magic item."
+                      ],
+                      [
+                        "5",
+                        "The keystone of a great arch or bridge."
+                      ],
+                      [
+                        "6",
+                        "Parts of a galeb duhr or stone golem."
+                      ],
+                      [
+                        "7",
+                        "A piece of a meteor or moon."
+                      ],
+                      [
+                        "8",
+                        "The stone crowning a mountain peak."
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Xorn.webp"
+                },
+                "credit": "Alexandre Honoré",
+                "width": 1398,
+                "height": 1725
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

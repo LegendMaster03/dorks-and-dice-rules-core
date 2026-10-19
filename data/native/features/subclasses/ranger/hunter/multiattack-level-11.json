@@ -1,0 +1,40 @@
+{
+  "id": "subclassFeature.multiattack.ranger.hunter.multiattack.11",
+  "name": "Multiattack",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Multiattack",
+        "className": "Ranger",
+        "classSource": "SRD51",
+        "subclassShortName": "Hunter",
+        "subclassSource": "SRD51",
+        "level": 11,
+        "header": 2,
+        "entries": [
+          "At 11th level, you gain one of the following features of your choice.",
+          {
+            "type": "options",
+            "count": 1,
+            "entries": [
+              {
+                "type": "refSubclassFeature",
+                "subclassFeature": "Volley|Ranger||Hunter||11"
+              },
+              {
+                "type": "refSubclassFeature",
+                "subclassFeature": "Whirlwind Attack|Ranger||Hunter||11"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "parentSubclass": "hunter",
+  "classLevel": 11
+}

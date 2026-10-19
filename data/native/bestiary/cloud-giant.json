@@ -1,0 +1,435 @@
+{
+  "id": "monster.cloud-giant",
+  "name": "Cloud Giant",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Cloud Giant",
+        "size": [
+          "H"
+        ],
+        "type": "giant",
+        "alignment": [
+          {
+            "alignment": [
+              "N",
+              "G"
+            ],
+            "chance": 50
+          },
+          {
+            "alignment": [
+              "N",
+              "E"
+            ],
+            "chance": 50
+          }
+        ],
+        "ac": [
+          {
+            "ac": 14,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 200,
+          "formula": "16d12 + 96"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 27,
+        "dex": 10,
+        "con": 22,
+        "int": 12,
+        "wis": 16,
+        "cha": 16,
+        "save": {
+          "con": "+10",
+          "wis": "+7",
+          "cha": "+7"
+        },
+        "skill": {
+          "insight": "+7",
+          "perception": "+7"
+        },
+        "passive": 17,
+        "languages": [
+          "Common",
+          "Giant"
+        ],
+        "cr": "9",
+        "spellcasting": [
+          {
+            "name": "Innate Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The giant's innate spellcasting ability is Charisma. It can innately cast the following spells, requiring no material components:"
+            ],
+            "will": [
+              "{@spell detect magic}",
+              "{@spell fog cloud}",
+              "{@spell light}"
+            ],
+            "daily": {
+              "3e": [
+                "{@spell feather fall}",
+                "{@spell fly}",
+                "{@spell misty step}",
+                "{@spell telekinesis}"
+              ],
+              "1e": [
+                "{@spell control weather}",
+                "{@spell gaseous form}"
+              ]
+            },
+            "ability": "cha"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Keen Smell",
+            "entries": [
+              "The giant has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The giant makes two morningstar attacks."
+            ]
+          },
+          {
+            "name": "Morningstar",
+            "entries": [
+              "{@atk mw} {@hit 12} to hit, reach 10 ft., one target. {@h}21 ({@damage 3d8 + 8}) piercing damage."
+            ]
+          },
+          {
+            "name": "Rock",
+            "entries": [
+              "{@atk rw} {@hit 12} to hit, range 60/240 ft., one target. {@h}30 ({@damage 4d10 + 8}) bludgeoning damage."
+            ]
+          }
+        ],
+        "environment": [
+          "mountain"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/cloud-giant.opus"
+        },
+        "attachedItems": [
+          "morningstar|srd51"
+        ],
+        "traitTags": [
+          "Keen Senses"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "GI"
+        ],
+        "damageTags": [
+          "B",
+          "P"
+        ],
+        "spellcastingTags": [
+          "I"
+        ],
+        "miscTags": [
+          "MLW",
+          "MW",
+          "RCH",
+          "RW"
+        ],
+        "conditionInflict": [
+          "prone"
+        ],
+        "conditionInflictSpell": [
+          "restrained"
+        ],
+        "savingThrowForced": [
+          "dexterity"
+        ],
+        "savingThrowForcedSpell": [
+          "dexterity"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Cloud Giant",
+            "_copy": {
+              "name": "Giants",
+              "source": "SRD51",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": {
+                    "type": "entries",
+                    "entries": [
+                      {
+                        "type": "entries",
+                        "entries": [
+                          "Cloud giants live extravagant lives high above the world, showing little concern for the plights of other races except as amusement. They are muscular with light skin and have hair of silver or blue.",
+                          {
+                            "type": "entries",
+                            "name": "High and Mighty",
+                            "entries": [
+                              "Cloud giants are spread to the winds, encompassing vast areas of the world. In times of need, scattered cloud giant families band together as a unified clan. However, they can seldom do so quickly.",
+                              "Attuned to the magic of their airy domains, cloud giants are able to turn into mist and create clouds of billowing fog. They dwell in castles on high mountain peaks, or on the solid clouds that once held their fiefs.",
+                              "Still gracing the skies on occasion, these magic clouds are a lasting remnant of the giants' lost empires. Better spellcasters than most other giants, some cloud giants can control weather, bring storms, and steer the wind almost as well as their cousins, the storm giants."
+                            ]
+                          },
+                          {
+                            "type": "entries",
+                            "name": "Affluent Princes",
+                            "entries": [
+                              "Although cloud giants are lower in the ordning than storm giants, the reclusive storm giants rarely engage with the rest of giantkind. As a result, many cloud giants see themselves as having the highest status and power among the giant races.",
+                              "They order lesser giants to seek out wealth and art on their behalf, employing fire giants as smiths and crafters, and using frost giants as reavers, raiders, and plunderers. Dimwitted hill giants serve them as brutes and combat fodder-sometimes fighting for the cloud giants' amusement. A cloud giant might order hill or frost giants to steal from nearby humanoid lands, which it considers to be a fair tax for its continued beneficence. On their mountain summits and solid clouds, cloud giants keep extraordinary gardens. Grapes as big as apples grow there, along with apples the size of pumpkins, and pumpkins the size of wagons. From the errant seeds of these gardens, tales of cottage sized produce and magic beans are spread in the mortal realm.",
+                              "As humanoid nobles keep an aerie for hunting hawks, so do cloud giants keep griffons, perytons, and wyverns as their own flying beasts of prey. Such creatures also patrol the cloud giants' gardens by night, along with trained predators such as owlbears and lions."
+                            ]
+                          },
+                          {
+                            "type": "entries",
+                            "name": "Children of the Trickster",
+                            "entries": [
+                              "The patron god and father of the cloud giants is Memnor the Trickster, the cleverest and slyest of the giant deities. Cloud giants align themselves according to the aspects and exploits of Memnor that they most admire, with evil cloud giants emulating his deceitfulness and self-interest and good cloud giants emulating his intellect and silver-tongued speech. Family members usually align in the same direction."
+                            ]
+                          },
+                          {
+                            "type": "entries",
+                            "name": "Wealth and Power",
+                            "entries": [
+                              "A cloud giant earns its place in the ordning by the treasure it accumulates, the wealth it wears, and the gifts it bestows on other cloud giants.",
+                              "However, value is only one part of the assessment. The extravagances a cloud giant wears or places about its home must also be beautiful or wondrous. Sacks of gold or gems are worth less to a cloud giant than the jewelry that might be crafted from those materials, creating treasures that bring esteem to a cloud giant's household.",
+                              "Rather than steal from one another or fight over treasures, cloud giants are inveterate gamblers with a hunger for high risks and high rewards. They frequently bet on the outcome of events nominally outside their control, such as the lives of lesser creatures. Ordning ranks and kings' ransoms can be won and lost in bets over the military triumphs of humanoid nations. Fixing wagers by interfering in the conflict causes the loss of the bet, but such deceit is considered to be cheating only if it is discovered. Otherwise, it is cleverness honoring Memnor."
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "images": {
+                  "mode": "prependArr",
+                  "items": {
+                    "type": "image",
+                    "href": {
+                      "type": "internal",
+                      "path": "bestiary/MM/Cloud Giant.webp"
+                    },
+                    "width": 712,
+                    "height": 1000
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Cloud Giant",
+        "size": [
+          "H"
+        ],
+        "type": "giant",
+        "alignment": [
+          "N"
+        ],
+        "ac": [
+          14
+        ],
+        "hp": {
+          "average": 200,
+          "formula": "16d12 + 96"
+        },
+        "speed": {
+          "walk": 40,
+          "fly": {
+            "number": 20,
+            "condition": "(hover)"
+          },
+          "canHover": true
+        },
+        "initiative": {
+          "proficiency": 1
+        },
+        "str": 27,
+        "dex": 10,
+        "con": 22,
+        "int": 12,
+        "wis": 16,
+        "cha": 16,
+        "save": {
+          "con": "+10",
+          "wis": "+7"
+        },
+        "skill": {
+          "insight": "+7",
+          "perception": "+11"
+        },
+        "passive": 21,
+        "languages": [
+          "Common",
+          "Giant"
+        ],
+        "cr": "9",
+        "spellcasting": [
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The giant casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 15}):"
+            ],
+            "will": [
+              "{@spell Detect Magic|SRD52}",
+              "{@spell Fog Cloud|SRD52}",
+              "{@spell Light|SRD52}"
+            ],
+            "daily": {
+              "1e": [
+                "{@spell Control Weather|SRD52}",
+                "{@spell Gaseous Form|SRD52}",
+                "{@spell Telekinesis|SRD52}"
+              ]
+            },
+            "ability": "cha",
+            "displayAs": "action"
+          },
+          {
+            "name": "Misty Step",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The giant casts the {@spell Misty Step|SRD52} spell, using the same spellcasting ability as Spellcasting."
+            ],
+            "will": [
+              "{@spell Misty Step|SRD52}"
+            ],
+            "ability": "cha",
+            "displayAs": "bonus",
+            "hidden": [
+              "will"
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The giant makes two attacks, using Thunderous Mace or Thundercloud in any combination. It can replace one attack with a use of Spellcasting to cast {@spell Fog Cloud|SRD52}."
+            ]
+          },
+          {
+            "name": "Thunderous Mace",
+            "entries": [
+              "{@atkr m} {@hit 12}, reach 10 ft. {@h}21 ({@damage 3d8 + 8}) Bludgeoning damage plus 7 ({@damage 2d6}) Thunder damage."
+            ]
+          },
+          {
+            "name": "Thundercloud",
+            "entries": [
+              "{@atkr r} {@hit 12}, range 240 ft. {@h}18 ({@damage 3d6 + 8}) Thunder damage, and the target has the {@condition Incapacitated|SRD52} condition until the end of its next turn."
+            ]
+          }
+        ],
+        "environment": [
+          "mountain"
+        ],
+        "treasure": [
+          "arcana"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/cloud-giant.opus"
+        },
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "GI"
+        ],
+        "damageTags": [
+          "B",
+          "T"
+        ],
+        "spellcastingTags": [
+          "O"
+        ],
+        "miscTags": [
+          "MA",
+          "MLW",
+          "RA",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "incapacitated"
+        ],
+        "conditionInflictSpell": [
+          "restrained"
+        ],
+        "savingThrowForcedSpell": [
+          "strength"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Cloud Giant",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Cloud Giant",
+                "entries": [
+                  "{@i Giant of the Loftiest Heights}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Mountain|bestiary|environment=mountain}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Arcana"
+                      }
+                    ]
+                  },
+                  "Cloud giants use the power of the skies to observe and subtly influence the world. These giants resemble humans with hair ranging from silver to blue and with skin in cloudlike shades from stark white to twilight hues. Curved canines grow in their upper jaws, extending past their lower lips. In battle, they attack with weapons wreathed in storm clouds and throw roaring thunderheads.",
+                  "Most cloud giants inhabit citadels crowning tremendous mountains or magical palaces that drift amid the clouds. Many of these giants believe they possess similarly lofty status or purpose. Some view themselves as godlike beings who can manipulate and steal from terrestrial beings with impunity. Others claim their long lives and place among the clouds grant them unique perspectives, so they chronicle what they witness in the world below without interfering. In either case, cloud giants often possess fabulous magical treasures, either claimed from across the world or created by (and gigantically sized for) themselves."
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Cloud Giant.webp"
+                },
+                "credit": "Taras Susak",
+                "width": 2550,
+                "height": 1704
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

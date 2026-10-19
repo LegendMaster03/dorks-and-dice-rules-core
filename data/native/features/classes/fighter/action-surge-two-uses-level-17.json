@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.action-surge-two-uses.fighter.action-surge-two-uses.17",
+  "name": "Action Surge (two uses)",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Action Surge (two uses)",
+        "className": "Fighter",
+        "classSource": "SRD51",
+        "level": 17,
+        "entries": [
+          "At 17th level, you can use Action Surge twice before a rest, but only once on the same turn."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 17
+}

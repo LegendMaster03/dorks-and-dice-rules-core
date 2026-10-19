@@ -1,0 +1,38 @@
+{
+  "id": "item.potion-of-greater-healing",
+  "name": "Potion of Greater Healing",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Greater Healing",
+        "type": "P",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "entries": [
+          "You regain {@dice 4d4 + 4} hit points when you drink this potion. The potion's red liquid glimmers when agitated."
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Greater Healing",
+        "type": "P|SRD52",
+        "rarity": "uncommon",
+        "weight": 0.5,
+        "entries": [
+          "You regain {@dice 4d4 + 4} {@variantrule Hit Points|SRD52} when you drink this potion. The potion's red liquid glimmers when agitated."
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "item.talisman-of-the-sphere",
+  "name": "Talisman of the Sphere",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Talisman of the Sphere",
+        "tier": "major",
+        "rarity": "legendary",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 1,
+        "entries": [
+          "When you make an Intelligence ({@skill Arcana}) check to control a {@item sphere of annihilation} while you are holding this talisman, you double your proficiency bonus on the check. In addition, when you start your turn with control over a {@item sphere of annihilation}, you can use an action to levitate it 10 feet plus a number of additional feet equal to 10 × your Intelligence modifier."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Talisman of the Sphere",
+        "rarity": "legendary",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 1,
+        "entries": [
+          "While holding or wearing this talisman, you have {@variantrule Advantage|SRD52} on any Intelligence ({@skill Arcana|SRD52}) check you make to control a {@item Sphere of Annihilation|SRD52}. In addition, when you start your turn in control of a {@item Sphere of Annihilation|SRD52}, you can take a {@action Magic|SRD52} action to move it 10 feet plus a number of additional feet equal to 10 times your Intelligence modifier. This movement doesn't have to be in a straight line."
+        ]
+      }
+    }
+  ]
+}

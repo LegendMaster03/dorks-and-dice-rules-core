@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.divine-health.paladin.divine-health.3",
+  "name": "Divine Health",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Divine Health",
+        "className": "Paladin",
+        "classSource": "SRD51",
+        "level": 3,
+        "entries": [
+          "By 3rd level, the divine magic flowing through you makes you immune to disease."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "classLevel": 3
+}

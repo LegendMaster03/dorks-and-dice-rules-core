@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.greater-divine-intervention.cleric.greater-divine-intervention.20",
+  "name": "Greater Divine Intervention",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Greater Divine Intervention",
+        "className": "Cleric",
+        "classSource": "SRD52",
+        "level": 20,
+        "entries": [
+          "You can call on even more powerful divine intervention. When you use your Divine Intervention feature, you can choose {@spell Wish|SRD52} when you select a spell. If you do so, you can't use Divine Intervention again until you finish {@dice 2d4} Long Rests."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "classLevel": 20
+}

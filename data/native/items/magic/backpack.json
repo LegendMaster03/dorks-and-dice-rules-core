@@ -1,0 +1,44 @@
+{
+  "id": "item.backpack",
+  "name": "Backpack",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Backpack",
+        "type": "G",
+        "rarity": "none",
+        "weight": 5,
+        "value": 200,
+        "entries": [
+          "A backpack can hold one cubic foot or 30 pounds of gear. You can also strap items, such as a bedroll or a coil of rope, to the outside of a backpack."
+        ],
+        "containerCapacity": {
+          "weight": [
+            30
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Backpack",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 5,
+        "value": 200,
+        "entries": [
+          "A Backpack holds up to 30 pounds within 1 cubic foot. It can also serve as a saddlebag."
+        ],
+        "containerCapacity": {
+          "weight": [
+            30
+          ]
+        }
+      }
+    }
+  ]
+}

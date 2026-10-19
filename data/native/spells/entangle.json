@@ -1,0 +1,131 @@
+{
+  "id": "spell.entangle",
+  "name": "Entangle",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Entangle",
+        "level": 1,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 90
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Grasping weeds and vines sprout from the ground in a 20-foot square starting from a point within range. For the duration, these plants turn the ground in the area into {@quickref difficult terrain||3}.",
+          "A creature in the area when you cast the spell must succeed on a Strength saving throw or be {@condition restrained} by the entangling plants until the spell ends. A creature {@condition restrained} by the plants can use its action to make a Strength check against your spell save DC. On a success, it frees itself.",
+          "When the spell ends, the conjured plants wilt away."
+        ],
+        "conditionInflict": [
+          "restrained"
+        ],
+        "savingThrow": [
+          "strength"
+        ],
+        "abilityCheck": [
+          "strength"
+        ],
+        "areaTags": [
+          "Q"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Entangle",
+        "level": 1,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 90
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Grasping plants sprout from the ground in a 20-foot square within range. For the duration, these plants turn the ground in the area into {@variantrule Difficult Terrain|SRD52}. They disappear when the spell ends.",
+          "Each creature (other than you) in the area when you cast the spell must succeed on a Strength saving throw or have the {@condition Restrained|SRD52} condition until the spell ends. A {@condition Restrained|SRD52} creature can take an action to make a Strength ({@skill Athletics|SRD52}) check against your spell save DC. On a success, it frees itself from the grasping plants and is no longer {@condition Restrained|SRD52} by them."
+        ],
+        "conditionInflict": [
+          "restrained"
+        ],
+        "savingThrow": [
+          "strength"
+        ],
+        "abilityCheck": [
+          "strength"
+        ],
+        "miscTags": [
+          "DFT"
+        ],
+        "areaTags": [
+          "Q"
+        ],
+        "lore": [
+          {
+            "name": "Entangle",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "spells/XPHB/Entangle.webp"
+                },
+                "credit": "Brian Valeza",
+                "width": 2225,
+                "height": 1440
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

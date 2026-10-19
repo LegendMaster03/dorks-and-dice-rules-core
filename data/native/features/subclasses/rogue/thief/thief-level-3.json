@@ -1,0 +1,56 @@
+{
+  "id": "subclassFeature.thief.rogue.thief.thief.3",
+  "name": "Thief",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Thief",
+        "className": "Rogue",
+        "classSource": "SRD51",
+        "subclassShortName": "Thief",
+        "subclassSource": "SRD51",
+        "level": 3,
+        "entries": [
+          "You hone your skills in the larcenous arts. Burglars, bandits, cutpurses, and other criminals typically follow this archetype, but so do rogues who prefer to think of themselves as professional treasure seekers, explorers, delvers, and investigators. In addition to improving your agility and stealth, you learn skills useful for delving into ancient ruins, reading unfamiliar languages, and using magic items you normally couldn't employ.",
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Fast Hands|Rogue||Thief||3"
+          },
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Second-Story Work|Rogue||Thief||3"
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Thief",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "subclassShortName": "Thief",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "{@i Hunt for Treasure as a Classic Adventurer}",
+          "A mix of burglar, treasure hunter, and explorer, you are the epitome of an adventurer. In addition to improving your agility and stealth, you gain abilities useful for delving into ruins and getting maximum benefit from the magic items you find there.",
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Fast Hands|Rogue|SRD52|Thief|SRD52|3"
+          },
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Second-Story Work|Rogue|SRD52|Thief|SRD52|3"
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "parentSubclass": "thief",
+  "classLevel": 3
+}

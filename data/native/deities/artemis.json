@@ -1,0 +1,25 @@
+{
+  "id": "deity.artemis",
+  "name": "Artemis",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Artemis",
+        "pantheon": "Greek",
+        "alignment": [
+          "N",
+          "G"
+        ],
+        "title": "Goddess of hunting and childbirth",
+        "domains": [
+          "Life",
+          "Nature"
+        ],
+        "symbol": "Bow and arrow on lunar disk"
+      }
+    }
+  ]
+}

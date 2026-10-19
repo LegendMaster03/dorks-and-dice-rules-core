@@ -1,0 +1,27 @@
+{
+  "id": "rule.monsters-x",
+  "name": "Monsters (X)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (X)",
+        "page": 356,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Xorn|srd51}"
+            ]
+          }
+        ],
+        "id": "1ba"
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "optionalfeature.defense",
+  "name": "Defense",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Defense",
+        "featureType": [
+          "FS:F",
+          "FS:P",
+          "FS:R"
+        ],
+        "entries": [
+          "While you are wearing armor, you gain a +1 bonus to AC."
+        ]
+      }
+    }
+  ]
+}

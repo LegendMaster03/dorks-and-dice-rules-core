@@ -1,0 +1,110 @@
+{
+  "id": "spell.freedom-of-movement",
+  "name": "Freedom of Movement",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Freedom of Movement",
+        "level": 4,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a leather strap, bound around the arm or a similar appendage"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            }
+          }
+        ],
+        "entries": [
+          "You touch a willing creature. For the duration, the target's movement is unaffected by {@quickref difficult terrain||3}, and spells and other magical effects can neither reduce the target's speed nor cause the target to be {@condition paralyzed} or {@condition restrained}.",
+          "The target can also spend 5 feet of movement to automatically escape from nonmagical restraints, such as manacles or a creature that has it {@condition grappled}. Finally, being underwater imposes no penalties on the target's movement or attacks."
+        ],
+        "conditionImmune": [
+          "paralyzed",
+          "restrained"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Freedom of Movement",
+        "level": 4,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a leather strap"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            }
+          }
+        ],
+        "entries": [
+          "You touch a willing creature. For the duration, the target's movement is unaffected by {@variantrule Difficult Terrain|SRD52}, and spells and other magical effects can neither reduce the target's {@variantrule Speed|SRD52} nor cause the target to have the {@condition Paralyzed|SRD52} or {@condition Restrained|SRD52} conditions. The target also has a {@variantrule Swim Speed|SRD52} equal to its {@variantrule Speed|SRD52}.",
+          "In addition, the target can spend 5 feet of movement to automatically escape from nonmagical restraints, such as manacles or a creature imposing the {@condition Grappled|SRD52} condition on it."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "You can target one additional creature for each spell slot level above 4."
+            ]
+          }
+        ],
+        "conditionImmune": [
+          "paralyzed",
+          "restrained"
+        ],
+        "miscTags": [
+          "SCT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

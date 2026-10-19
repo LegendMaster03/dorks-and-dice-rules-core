@@ -1,0 +1,25 @@
+{
+  "id": "deity.heimdall",
+  "name": "Heimdall",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Heimdall",
+        "pantheon": "Norse",
+        "alignment": [
+          "L",
+          "G"
+        ],
+        "title": "God of watchfulness and loyalty",
+        "domains": [
+          "Light",
+          "War"
+        ],
+        "symbol": "Curling musical horn"
+      }
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "id": "monster.ogre-zombie",
+  "name": "Ogre Zombie",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ogre Zombie",
+        "size": [
+          "L"
+        ],
+        "type": "undead",
+        "alignment": [
+          "N",
+          "E"
+        ],
+        "ac": [
+          8
+        ],
+        "hp": {
+          "average": 85,
+          "formula": "9d10 + 36"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "str": 19,
+        "dex": 6,
+        "con": 18,
+        "int": 3,
+        "wis": 6,
+        "cha": 5,
+        "save": {
+          "wis": "+0"
+        },
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 8,
+        "immune": [
+          "poison"
+        ],
+        "conditionImmune": [
+          "poisoned"
+        ],
+        "languages": [
+          "understands Common and Giant but can't speak"
+        ],
+        "cr": "2",
+        "trait": [
+          {
+            "name": "Undead Fortitude",
+            "entries": [
+              "If damage reduces the zombie to 0 hit points, it must make a Constitution saving throw with a DC of 5 + the damage taken, unless the damage is radiant or from a critical hit. On a success, the zombie drops to 1 hit point instead."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Morningstar",
+            "entries": [
+              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}13 ({@damage 2d8 + 4}) bludgeoning damage."
+            ]
+          }
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/ogre-zombie.opus"
+        },
+        "attachedItems": [
+          "morningstar|srd51"
+        ],
+        "traitTags": [
+          "Undead Fortitude"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "languageTags": [
+          "C",
+          "CS",
+          "GI"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MLW",
+          "MW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Ogre Zombie",
+            "_copy": {
+              "name": "Zombie",
+              "source": "SRD51"
+            },
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Ogre Zombie.webp"
+                },
+                "width": 605,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ogre Zombie",
+        "size": [
+          "L"
+        ],
+        "type": "undead",
+        "alignment": [
+          "N",
+          "E"
+        ],
+        "ac": [
+          8
+        ],
+        "hp": {
+          "average": 85,
+          "formula": "9d10 + 36"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "str": 19,
+        "dex": 6,
+        "con": 18,
+        "int": 3,
+        "wis": 6,
+        "cha": 5,
+        "save": {
+          "wis": "+0"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 8,
+        "immune": [
+          "poison"
+        ],
+        "conditionImmune": [
+          "exhaustion",
+          "poisoned"
+        ],
+        "languages": [
+          "understands Common and Giant but can't speak"
+        ],
+        "cr": "2",
+        "trait": [
+          {
+            "name": "Undead Fortitude",
+            "entries": [
+              "If damage reduces the zombie to 0 {@variantrule Hit Points|SRD52}, it makes a Constitution saving throw ({@dc 5} plus the damage taken) unless the damage is Radiant or from a {@variantrule Critical Hit|SRD52}. On a successful save, the zombie drops to 1 {@variantrule Hit Points|SRD52|Hit Point} instead."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Slam",
+            "entries": [
+              "{@atkr m} {@hit 6}, reach 5 ft. {@h}13 ({@damage 2d8 + 4}) Bludgeoning damage."
+            ]
+          }
+        ],
+        "environment": [
+          "planar, shadowfell",
+          "underdark",
+          "urban"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/ogre-zombie.opus"
+        },
+        "traitTags": [
+          "Undead Fortitude"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "languageTags": [
+          "C",
+          "CS",
+          "GI"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Ogre Zombie",
+            "_copy": {
+              "name": "Zombies",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "Ogre zombies serve as tireless labor and undying weapons of war. These massive zombies possess the size and strength to break through barriers that repel smaller zombies."
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.protector.cleric.protector.1",
+  "name": "Protector",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Protector",
+        "className": "Cleric",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "Trained for battle, you gain proficiency with {@filter Martial weapons|items|type=martial weapon} and training with {@filter Heavy armor|items|type=Heavy Armor}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "classLevel": 1
+}

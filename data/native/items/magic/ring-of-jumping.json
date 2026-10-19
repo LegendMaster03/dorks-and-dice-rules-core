@@ -1,0 +1,52 @@
+{
+  "id": "item.ring-of-jumping",
+  "name": "Ring of Jumping",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Jumping",
+        "type": "RG|SRD51",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "entries": [
+          "While wearing this ring, you can cast the {@spell jump} spell from it as a bonus action at will, but can target only yourself when you do so."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ],
+        "attachedSpells": {
+          "will": [
+            "jump"
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Jumping",
+        "type": "RG|SRD52",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "entries": [
+          "While wearing this ring, you can cast {@spell Jump|SRD52} from it, but can target only yourself when you do so."
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ],
+        "attachedSpells": {
+          "will": [
+            "jump|srd52"
+          ]
+        }
+      }
+    }
+  ]
+}

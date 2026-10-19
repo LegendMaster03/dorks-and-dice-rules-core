@@ -1,0 +1,36 @@
+{
+  "id": "baseitem.wand",
+  "name": "Wand",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Wand",
+        "group": [
+          "Arcane Focus"
+        ],
+        "type": "SCF",
+        "scfType": "arcane",
+        "rarity": "none",
+        "weight": 1,
+        "value": 1000
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Wand",
+        "group": [
+          "Arcane Focus"
+        ],
+        "type": "SCF|SRD52",
+        "scfType": "arcane",
+        "rarity": "none",
+        "weight": 1,
+        "value": 1000
+      }
+    }
+  ]
+}

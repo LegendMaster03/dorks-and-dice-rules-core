@@ -1,0 +1,24 @@
+{
+  "id": "deity.demeter",
+  "name": "Demeter",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Demeter",
+        "pantheon": "Greek",
+        "alignment": [
+          "N",
+          "G"
+        ],
+        "title": "Goddess of agriculture",
+        "domains": [
+          "Life"
+        ],
+        "symbol": "Mare's head"
+      }
+    }
+  ]
+}

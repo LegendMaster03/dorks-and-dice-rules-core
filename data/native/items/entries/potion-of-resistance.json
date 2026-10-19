@@ -1,0 +1,26 @@
+{
+  "id": "itemEntry.potion-of-resistance",
+  "name": "Potion of Resistance",
+  "kind": "itemEntry",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Resistance",
+        "entriesTemplate": [
+          "When you drink this potion, you gain resistance to {{item.resist}} damage for 1 hour."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Resistance",
+        "entriesTemplate": [
+          "When you drink this potion, you have {@variantrule Resistance|SRD52} to {{getFullImmRes item.resist}} damage for 1 hour."
+        ]
+      }
+    }
+  ]
+}

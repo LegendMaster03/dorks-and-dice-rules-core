@@ -1,0 +1,56 @@
+{
+  "id": "subclassFeature.draconic-spells.sorcerer.draconic.draconic-spells.3",
+  "name": "Draconic Spells",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Draconic Spells",
+        "className": "Sorcerer",
+        "classSource": "SRD52",
+        "subclassShortName": "Draconic",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "header": 1,
+        "entries": [
+          "When you reach a Sorcerer level specified in the Draconic Spells table, you thereafter always have the listed spells prepared.",
+          {
+            "type": "table",
+            "caption": "Draconic Spells",
+            "colLabels": [
+              "Sorcerer Level",
+              "Spells"
+            ],
+            "colStyles": [
+              "col-2 text-center",
+              "col-10"
+            ],
+            "rows": [
+              [
+                "3rd",
+                "{@spell Alter Self|SRD52}, {@spell Chromatic Orb|SRD52}, {@spell Command|SRD52}, {@spell Dragon's Breath|SRD52}"
+              ],
+              [
+                "5th",
+                "{@spell Fear|SRD52}, {@spell Fly|SRD52}"
+              ],
+              [
+                "7th",
+                "{@spell Arcane Eye|SRD52}, {@spell Charm Monster|SRD52}"
+              ],
+              [
+                "9th",
+                "{@spell Legend Lore|SRD52}, {@spell Summon Dragon|SRD52}"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.sorcerer",
+  "parentSubclass": "draconic",
+  "classLevel": 3
+}

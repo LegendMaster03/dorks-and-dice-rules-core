@@ -1,0 +1,39 @@
+{
+  "id": "item.bucket",
+  "name": "Bucket",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Bucket",
+        "type": "G",
+        "rarity": "none",
+        "weight": 2,
+        "value": 5,
+        "entries": [
+          "A bucket holds 3 gallons of liquid or ½ cubic foot of solids."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Bucket",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 2,
+        "value": 5,
+        "entries": [
+          "A Bucket holds up to half a cubic foot of contents."
+        ],
+        "containerCapacity": {
+          "volume": [
+            0.5
+          ]
+        }
+      }
+    }
+  ]
+}

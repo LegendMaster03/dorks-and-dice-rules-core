@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.stillness-of-mind.monk.stillness-of-mind.7",
+  "name": "Stillness of Mind",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Stillness of Mind",
+        "className": "Monk",
+        "classSource": "SRD51",
+        "level": 7,
+        "entries": [
+          "Starting at 7th level, you can use your action to end one effect on yourself that is causing you to be {@condition charmed} or {@condition frightened}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 7
+}

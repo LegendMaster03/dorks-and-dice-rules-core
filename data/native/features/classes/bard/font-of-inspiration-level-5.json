@@ -1,0 +1,35 @@
+{
+  "id": "classFeature.font-of-inspiration.bard.font-of-inspiration.5",
+  "name": "Font of Inspiration",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Font of Inspiration",
+        "className": "Bard",
+        "classSource": "SRD51",
+        "level": 5,
+        "entries": [
+          "Beginning when you reach 5th level, you regain all of your expended uses of Bardic Inspiration when you finish a short or long rest."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Font of Inspiration",
+        "className": "Bard",
+        "classSource": "SRD52",
+        "level": 5,
+        "entries": [
+          "You now regain all your expended uses of Bardic Inspiration when you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}.",
+          "In addition, you can expend a spell slot (no action required) to regain one expended use of Bardic Inspiration."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.bard",
+  "classLevel": 5
+}

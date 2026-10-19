@@ -1,0 +1,111 @@
+{
+  "id": "spell.calm-emotions",
+  "name": "Calm Emotions",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Calm Emotions",
+        "level": 2,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You attempt to suppress strong emotions in a group of people. Each humanoid in a 20-foot-radius sphere centered on a point you choose within range must make a Charisma saving throw; a creature can choose to fail this saving throw if it wishes. If a creature fails its saving throw, choose one of the following two effects.",
+          "You can suppress any effect causing a target to be {@condition charmed} or {@condition frightened}. When this spell ends, any suppressed effect resumes, provided that its duration has not expired in the meantime.",
+          "Alternatively, you can make a target indifferent about creatures of your choice that it is hostile toward. This indifference ends if the target is attacked or harmed by a spell or if it witnesses any of its friends being harmed. When the spell ends, the creature becomes hostile again, unless the DM rules otherwise."
+        ],
+        "savingThrow": [
+          "charisma"
+        ],
+        "affectsCreatureType": [
+          "humanoid"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Calm Emotions",
+        "level": 2,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Each Humanoid in a 20-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on a point you choose within range must succeed on a Charisma saving throw or be affected by one of the following effects (choose for each creature):",
+          {
+            "type": "list",
+            "items": [
+              "The creature has {@variantrule Immunity|SRD52} to the {@condition Charmed|SRD52} and {@condition Frightened|SRD52} conditions until the spell ends. If the creature was already {@condition Charmed|SRD52} or {@condition Frightened|SRD52}, those conditions are suppressed for the duration.",
+              "The creature becomes {@variantrule Indifferent [Attitude]|SRD52|Indifferent} about creatures of your choice that it's {@variantrule Hostile [Attitude]|SRD52|Hostile} toward. This indifference ends if the target takes damage or witnesses its allies taking damage. When the spell ends, the creature's attitude returns to normal."
+            ]
+          }
+        ],
+        "savingThrow": [
+          "charisma"
+        ],
+        "affectsCreatureType": [
+          "humanoid"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    }
+  ]
+}

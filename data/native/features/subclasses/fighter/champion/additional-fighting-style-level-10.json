@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.additional-fighting-style.fighter.champion.additional-fighting-style.10",
+  "name": "Additional Fighting Style",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Additional Fighting Style",
+        "className": "Fighter",
+        "classSource": "SRD51",
+        "subclassShortName": "Champion",
+        "subclassSource": "SRD51",
+        "level": 10,
+        "header": 2,
+        "entries": [
+          "At 10th level, you can choose a second option from the Fighting Style class feature."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "parentSubclass": "champion",
+  "classLevel": 10
+}

@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.retaliation.barbarian.berserker.retaliation.10",
+  "name": "Retaliation",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Retaliation",
+        "className": "Barbarian",
+        "classSource": "SRD52",
+        "subclassShortName": "Berserker",
+        "subclassSource": "SRD52",
+        "level": 10,
+        "header": 2,
+        "entries": [
+          "When you take damage from a creature that is within 5 feet of you, you can take a {@variantrule Reaction|SRD52} to make one melee attack against that creature, using a weapon or an {@variantrule Unarmed Strike|SRD52}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian",
+  "parentSubclass": "berserker",
+  "classLevel": 10
+}

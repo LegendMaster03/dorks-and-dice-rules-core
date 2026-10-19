@@ -1,0 +1,278 @@
+{
+  "id": "monster.grick",
+  "name": "Grick",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Grick",
+        "size": [
+          "M"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "N"
+        ],
+        "ac": [
+          {
+            "ac": 14,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 27,
+          "formula": "6d8"
+        },
+        "speed": {
+          "walk": 30,
+          "climb": 30
+        },
+        "str": 14,
+        "dex": 14,
+        "con": 11,
+        "int": 3,
+        "wis": 14,
+        "cha": 5,
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 12,
+        "resist": [
+          {
+            "resist": [
+              "bludgeoning",
+              "piercing",
+              "slashing"
+            ],
+            "note": "from nonmagical attacks",
+            "cond": true
+          }
+        ],
+        "cr": "2",
+        "trait": [
+          {
+            "name": "Stone Camouflage",
+            "entries": [
+              "The grick has advantage on Dexterity ({@skill Stealth}) checks made to hide in rocky terrain."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The grick makes one attack with its tentacles. If that attack hits, the grick can make one beak attack against the same target."
+            ]
+          },
+          {
+            "name": "Tentacles",
+            "entries": [
+              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}9 ({@damage 2d6 + 2}) slashing damage."
+            ]
+          },
+          {
+            "name": "Beak",
+            "entries": [
+              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d6 + 2}) piercing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark",
+          "forest"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/grick.opus"
+        },
+        "altArt": [
+          {
+            "name": "Crystal Grick",
+            "source": "PaBTSO"
+          }
+        ],
+        "traitTags": [
+          "Camouflage"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack",
+          "Tentacles"
+        ],
+        "damageTags": [
+          "P",
+          "S"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Grick",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "The wormlike grick waits unseen, blending in with the rock of the caves and caverns it haunts. Only when prey comes near does it rear up, its four barbed tentacles unfurling to reveal its hungry, snapping beak.",
+                      {
+                        "name": "Passive Predators",
+                        "type": "entries",
+                        "entries": [
+                          "Gricks rarely hunt. Instead, they drag their rubbery bodies to places where creatures regularly pass, lurking out of sight amid rocky rubble and debris, squeezing into burrows, holes, or crevices, climbing up to ledges, or coiling around stalactites to drop on unwary prey. A grick consumes virtually anything that moves except for other gricks. It targets the nearest prey, grabbing a fallen creature with its tentacles and dragging it off to eat alone."
+                        ]
+                      },
+                      {
+                        "name": "Roving Ambushers",
+                        "type": "entries",
+                        "entries": [
+                          "Gricks remain in an area until the food supply dwindles, often because sentient creatures become aware of their presence and plot alternate routes around their lairs. When prey is scarce in the Underdark, gricks venture aboveground to hunt in the wilderness, lurking in trees or on cliff-side ledges. A grick pack is often led by a single well-fed, oversized alpha around which the others congregate."
+                        ]
+                      },
+                      {
+                        "name": "Spoils of Slaughter",
+                        "type": "entries",
+                        "entries": [
+                          "Over time, grick lairs accumulate the cast-off possessions of intelligent prey, and expert guides know to look out for these tell-tale signs. Underdark explorers sometimes seal off the routes leading to and from a grick lair to starve them, then claim the wealth of the foul creatures' victims."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Grick.webp"
+                },
+                "width": 680,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Grick",
+        "size": [
+          "M"
+        ],
+        "type": "aberration",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          14
+        ],
+        "hp": {
+          "average": 54,
+          "formula": "12d8"
+        },
+        "speed": {
+          "walk": 30,
+          "climb": 30
+        },
+        "str": 14,
+        "dex": 14,
+        "con": 11,
+        "int": 3,
+        "wis": 14,
+        "cha": 5,
+        "skill": {
+          "stealth": "+4"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 12,
+        "cr": "2",
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The grick makes one Beak attack and one Tentacles attack."
+            ]
+          },
+          {
+            "name": "Beak",
+            "entries": [
+              "{@atkr m} {@hit 4}, reach 5 ft. {@h}9 ({@damage 2d6 + 2}) Piercing damage."
+            ]
+          },
+          {
+            "name": "Tentacles",
+            "entries": [
+              "{@atkr m} {@hit 4}, reach 5 ft. {@h}7 ({@damage 1d10 + 2}) Slashing damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 12}) from all four tentacles."
+            ]
+          }
+        ],
+        "environment": [
+          "forest",
+          "underdark"
+        ],
+        "treasure": [
+          "any"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/grick.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack",
+          "Tentacles"
+        ],
+        "damageTags": [
+          "P",
+          "S"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "conditionInflict": [
+          "grappled"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Grick",
+            "_copy": {
+              "name": "Gricks",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "Gricks tend to be solitary hunters, but young gricks might lurk near dozens of their brood mates for years before gradually drifting apart."
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

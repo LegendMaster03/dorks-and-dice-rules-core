@@ -1,0 +1,56 @@
+{
+  "id": "subclassFeature.fiend-spells.warlock.fiend.fiend-spells.3",
+  "name": "Fiend Spells",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Fiend Spells",
+        "className": "Warlock",
+        "classSource": "SRD52",
+        "subclassShortName": "Fiend",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "header": 2,
+        "entries": [
+          "The magic of your patron ensures you always have certain spells ready; when you reach a Warlock level specified in the Fiend Spells table, you thereafter always have the listed spells prepared.",
+          {
+            "type": "table",
+            "caption": "Fiend Spells",
+            "colLabels": [
+              "Warlock Level",
+              "Spells"
+            ],
+            "colStyles": [
+              "col-2 text-center",
+              "col-10"
+            ],
+            "rows": [
+              [
+                "3",
+                "{@spell Burning Hands|SRD52}, {@spell Command|SRD52}, {@spell Scorching Ray|SRD52}, {@spell Suggestion|SRD52}"
+              ],
+              [
+                "5",
+                "{@spell Fireball|SRD52}, {@spell Stinking Cloud|SRD52}"
+              ],
+              [
+                "7",
+                "{@spell Fire Shield|SRD52}, {@spell Wall of Fire|SRD52}"
+              ],
+              [
+                "9",
+                "{@spell Geas|SRD52}, {@spell Insect Plague|SRD52}"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.warlock",
+  "parentSubclass": "fiend",
+  "classLevel": 3
+}

@@ -1,0 +1,108 @@
+{
+  "id": "rule.races",
+  "name": "Races",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Races",
+        "page": 3,
+        "entries": [
+          {
+            "type": "entries",
+            "name": "Racial Traits",
+            "page": 3,
+            "entries": [
+              "The description of each race includes racial traits that are common to members of that race. The following entries appear among the traits of most races.",
+              {
+                "type": "entries",
+                "name": "Ability Score Increase",
+                "page": 3,
+                "entries": [
+                  "Every race increases one or more of a character's ability scores."
+                ],
+                "id": "004"
+              },
+              {
+                "type": "entries",
+                "name": "Age",
+                "page": 3,
+                "entries": [
+                  "The age entry notes the age when a member of the race is considered an adult, as well as the race's expected lifespan. This information can help you decide how old your character is at the start of the game. You can choose any age for your character, which could provide an explanation for some of your ability scores. For example, if you play a young or very old character, your age could explain a particularly low Strength or Constitution score, while advanced age could account for a high Intelligence or Wisdom."
+                ],
+                "id": "005"
+              },
+              {
+                "type": "entries",
+                "name": "Alignment",
+                "page": 3,
+                "entries": [
+                  "Most races have tendencies toward certain alignments, described in this entry. These are not binding for player characters, but considering why your dwarf is chaotic, for example, in defiance of lawful dwarf society can help you better define your character."
+                ],
+                "id": "006"
+              },
+              {
+                "type": "entries",
+                "name": "Size",
+                "page": 3,
+                "entries": [
+                  "Characters of most races are Medium, a size category including creatures that are roughly 4 to 8 feet tall.",
+                  "Members of a few races are Small (between 2 and 4 feet tall), which means that certain rules of the game affect them differently. The most important of these rules is that Small characters have trouble wielding heavy weapons, as explained in \"Equipment.\""
+                ],
+                "id": "007"
+              },
+              {
+                "type": "entries",
+                "name": "Speed",
+                "page": 3,
+                "entries": [
+                  "Your speed determines how far you can move when traveling (\"Adventuring\") and fighting (\"Combat\")."
+                ],
+                "id": "008"
+              },
+              {
+                "type": "entries",
+                "name": "Languages",
+                "page": 3,
+                "entries": [
+                  "By virtue of your race, your character can speak, read, and write certain languages."
+                ],
+                "id": "009"
+              },
+              {
+                "type": "entries",
+                "name": "Subraces",
+                "page": 3,
+                "entries": [
+                  "Some races have subraces. Members of a subrace have the traits of the parent race in addition to the traits specified for their subrace. Relationships among subraces vary significantly from race to race and world to world."
+                ],
+                "id": "00a"
+              }
+            ],
+            "id": "003"
+          },
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@race Dragonborn|srd51}",
+              "{@race Dwarf|srd51}",
+              "{@race Elf|srd51}",
+              "{@race Gnome|srd51}",
+              "{@race Half-Elf|srd51}",
+              "{@race Half-Orc|srd51}",
+              "{@race Halfling|srd51}",
+              "{@race Human|srd51}",
+              "{@race Tiefling|srd51}"
+            ]
+          }
+        ],
+        "id": "002"
+      }
+    }
+  ]
+}

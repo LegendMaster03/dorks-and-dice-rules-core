@@ -1,0 +1,349 @@
+{
+  "id": "monster.salamander",
+  "name": "Salamander",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Salamander",
+        "size": [
+          "L"
+        ],
+        "type": "elemental",
+        "alignment": [
+          "N",
+          "E"
+        ],
+        "ac": [
+          {
+            "ac": 15,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 90,
+          "formula": "12d10 + 24"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "str": 18,
+        "dex": 14,
+        "con": 15,
+        "int": 11,
+        "wis": 10,
+        "cha": 12,
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 10,
+        "resist": [
+          {
+            "resist": [
+              "bludgeoning",
+              "piercing",
+              "slashing"
+            ],
+            "note": "from nonmagical attacks",
+            "cond": true
+          }
+        ],
+        "immune": [
+          "fire"
+        ],
+        "vulnerable": [
+          "cold"
+        ],
+        "languages": [
+          "Ignan"
+        ],
+        "cr": "5",
+        "trait": [
+          {
+            "name": "Heated Body",
+            "entries": [
+              "A creature that touches the salamander or hits it with a melee attack while within 5 feet of it takes 7 ({@damage 2d6}) fire damage."
+            ]
+          },
+          {
+            "name": "Heated Weapons",
+            "entries": [
+              "Any metal melee weapon the salamander wields deals an extra 3 ({@damage 1d6}) fire damage on a hit (included in the attack)."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The salamander makes two attacks: one with its spear and one with its tail."
+            ]
+          },
+          {
+            "name": "Spear",
+            "entries": [
+              "{@atk mw,rw} {@hit 7} to hit, reach 5 ft. or range 20/60 ft., one target. {@h}11 ({@damage 2d6 + 4}) piercing damage, or 13 ({@damage 2d8 + 4}) piercing damage if used with two hands to make a melee attack, plus 3 ({@damage 1d6}) fire damage."
+            ]
+          },
+          {
+            "name": "Tail",
+            "entries": [
+              "{@atk mw} {@hit 7} to hit, reach 10 ft., one target. {@h}11 ({@damage 2d6 + 4}) bludgeoning damage plus 7 ({@damage 2d6}) fire damage, and the target is {@condition grappled} (escape {@dc 14}). Until this grapple ends, the target is {@condition restrained}, the salamander can automatically hit the target with its tail, and the salamander can't make tail attacks against other targets."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/salamander.opus"
+        },
+        "attachedItems": [
+          "spear|srd51"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "IG"
+        ],
+        "damageTags": [
+          "B",
+          "F",
+          "P"
+        ],
+        "miscTags": [
+          "MLW",
+          "MW",
+          "RCH",
+          "RW",
+          "THW"
+        ],
+        "conditionInflict": [
+          "grappled",
+          "restrained"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Salamander",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Salamanders slither across the Sea of Ash on the Elemental Plane of Fire, their sinuous coils and jagged spines smoldering. Intense heat washes off their bodies, while their yellow eyes glow like candles in the deep-set hollows of their hawkish faces.",
+                      "Salamanders adore power, and they delight in setting fire to things. Outside their home plane, they play among the burning skeletons of charred trees as forest fires rage around them, or slither down the slopes of erupting volcanoes to linger in fire pits and magma floes.",
+                      {
+                        "name": "Fire Snakes",
+                        "type": "entries",
+                        "entries": [
+                          "Salamanders hatch from eggs that are two-foot-diameter spheres of smoldering obsidian. When a salamander is ready to hatch, it melts its way through the egg's thick shell and emerges as a fire snake. A fire snake matures into a salamander adult within a year."
+                        ]
+                      },
+                      {
+                        "name": "Slaves of the Efreet",
+                        "type": "entries",
+                        "entries": [
+                          "Long ago, the efreet hired azers to build the fabled City of Brass, but then failed in their attempt to enslave that mystical race when the azers' work was done. Turning instead to strike against the salamanders, the efreet had better luck in establishing a slave race, which they use to unleash war and destruction across the planes.",
+                          "Salamanders despise the azers, believing that if the efreet had succeeded in dominating that race of elemental crafters, the salamanders would still be free. The efreet use this enmity to their own advantage, stoking the salamanders' hatred and pitting them against the efreeti's former servants.",
+                          "The efreet suffer salamanders to serve no other master; when efreet encounter salamanders dedicated to the cults of Elemental Evil, they slay them rather than taking them as slaves."
+                        ]
+                      },
+                      {
+                        "name": "Domineering Nobles",
+                        "type": "entries",
+                        "entries": [
+                          "Although salamanders follow the destructive impulses of their fiery nature, slavery under the efreet has impacted the culture of free salamanders. They rule their own societies according to the efreet model, in which larger and stronger salamanders claim dominion over their lesser kin.",
+                          "As salamanders age, they increase in size and status, rising to positions of power as cruel nobles among their kind. Nobles rule wandering bands of salamanders, which move across the Elemental Plane of Fire like desert nomads, raiding other communities for treasure."
+                        ]
+                      },
+                      {
+                        "name": "Living Forges",
+                        "type": "entries",
+                        "entries": [
+                          "Salamanders generate intense heat, and when they fight, their weapons glow red and sear the bodies of their enemies on contact. Even approaching a salamander is dangerous, since flesh blisters and burns in its proximity.",
+                          "This inherent heat is an asset to salamanders' skill as smiths, allowing them to soften and shape iron and steel with their bare hands. Although not as meticulous as azers, salamanders number among the greatest metalsmiths in all the planes. Powerful creatures summon them as warriors, but others enlist the salamanders for their crafting skills, or bind them to forges and ovens to generate limitless heat."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Salamander.webp"
+                },
+                "width": 716,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Salamander",
+        "size": [
+          "L"
+        ],
+        "type": "elemental",
+        "alignment": [
+          "N",
+          "E"
+        ],
+        "ac": [
+          15
+        ],
+        "hp": {
+          "average": 90,
+          "formula": "12d10 + 24"
+        },
+        "speed": {
+          "walk": 30,
+          "climb": 30
+        },
+        "str": 18,
+        "dex": 14,
+        "con": 15,
+        "int": 11,
+        "wis": 10,
+        "cha": 12,
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 10,
+        "immune": [
+          "fire"
+        ],
+        "vulnerable": [
+          "cold"
+        ],
+        "languages": [
+          "Primordial (Ignan)"
+        ],
+        "cr": "5",
+        "trait": [
+          {
+            "name": "Fire Aura",
+            "entries": [
+              "At the end of each of the salamander's turns, each creature of the salamander's choice in a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the salamander takes 7 ({@damage 2d6}) Fire damage."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The salamander makes two Flame Spear attacks. It can replace one attack with a use of Constrict."
+            ]
+          },
+          {
+            "name": "Flame Spear",
+            "entries": [
+              "{@atkr m,r} {@hit 7}, reach 5 ft. or range 20/60 ft. {@h}13 ({@damage 2d8 + 4}) Piercing damage plus 7 ({@damage 2d6}) Fire damage. {@hom}The spear magically returns to the salamander's hand immediately after a ranged attack."
+            ]
+          },
+          {
+            "name": "Constrict",
+            "entries": [
+              "{@actSave str} {@dc 15}, one Large or smaller creature the salamander can see within 10 feet. {@actSaveFail} 11 ({@damage 2d6 + 4}) Bludgeoning damage plus 7 ({@damage 2d6}) Fire damage. The target has the {@condition Grappled|SRD52} condition (escape {@dc 14}), and it has the {@condition Restrained|SRD52} condition until the grapple ends."
+            ]
+          }
+        ],
+        "environment": [
+          "planar, fire",
+          "underdark"
+        ],
+        "treasure": [
+          "armaments"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/salamander.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "IG",
+          "P"
+        ],
+        "damageTags": [
+          "B",
+          "F",
+          "P"
+        ],
+        "miscTags": [
+          "MA",
+          "MLW",
+          "RA",
+          "THW"
+        ],
+        "conditionInflict": [
+          "grappled",
+          "restrained"
+        ],
+        "savingThrowForced": [
+          "strength"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Salamander",
+            "_copy": {
+              "name": "Salamanders",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "Most salamanders are arrogant yet curious, seeking to create artful blazes or burn that which has never been burned. They eagerly explain their work to strangers before trying to determine how the strangers burn. Salamanders radiate intense heat, which is conducted by their blazing weapons."
+                      ]
+                    }
+                  ]
+                },
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Salamander.webp"
+                      },
+                      "width": 1000,
+                      "height": 886
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

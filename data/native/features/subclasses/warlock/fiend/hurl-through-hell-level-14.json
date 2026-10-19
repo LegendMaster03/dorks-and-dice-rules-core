@@ -1,0 +1,44 @@
+{
+  "id": "subclassFeature.hurl-through-hell.warlock.fiend.hurl-through-hell.14",
+  "name": "Hurl Through Hell",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Hurl Through Hell",
+        "className": "Warlock",
+        "classSource": "SRD51",
+        "subclassShortName": "Fiend",
+        "subclassSource": "SRD51",
+        "level": 14,
+        "header": 2,
+        "entries": [
+          "Starting at 14th level, when you hit a creature with an attack, you can use this feature to instantly transport the target through the lower planes. The creature disappears and hurtles through a nightmare landscape.",
+          "At the end of your next turn, the target returns to the space it previously occupied, or the nearest unoccupied space. If the target is not a fiend, it takes {@damage 10d10} psychic damage as it reels from its horrific experience.",
+          "Once you use this feature, you can't use it again until you finish a long rest."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Hurl Through Hell",
+        "className": "Warlock",
+        "classSource": "SRD52",
+        "subclassShortName": "Fiend",
+        "subclassSource": "SRD52",
+        "level": 14,
+        "header": 2,
+        "entries": [
+          "Once per turn when you hit a creature with an attack roll, you can try to instantly transport the target through the Lower Planes. The target must succeed on a Charisma saving throw against your spell save DC, or the target disappears and hurtles through a nightmare landscape. The target takes {@damage 8d10} Psychic damage if it isn't a Fiend, and it has the {@condition Incapacitated|SRD52} condition until the end of your next turn, when it returns to the space it previously occupied or the nearest unoccupied space.",
+          "Once you use this feature, you can't use it again until you finish a {@variantrule Long Rest|SRD52} unless you expend a Pact Magic spell slot (no action required) to restore your use of it."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.warlock",
+  "parentSubclass": "fiend",
+  "classLevel": 14
+}

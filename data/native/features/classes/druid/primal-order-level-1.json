@@ -1,0 +1,41 @@
+{
+  "id": "classFeature.primal-order.druid.primal-order.1",
+  "name": "Primal Order",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Primal Order",
+        "className": "Druid",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "You have dedicated yourself to one of the following sacred roles of your choice.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "options",
+                "count": 1,
+                "entries": [
+                  {
+                    "type": "refClassFeature",
+                    "classFeature": "Magician|Druid|SRD52|1"
+                  },
+                  {
+                    "type": "refClassFeature",
+                    "classFeature": "Warden|Druid|SRD52|1"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "classLevel": 1
+}

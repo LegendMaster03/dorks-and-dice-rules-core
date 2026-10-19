@@ -1,0 +1,28 @@
+{
+  "id": "item.salt",
+  "name": "Salt",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Salt",
+        "type": "TG",
+        "rarity": "none",
+        "weight": 1,
+        "value": 5
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Salt",
+        "type": "TG|SRD52",
+        "rarity": "none",
+        "weight": 1,
+        "value": 5
+      }
+    }
+  ]
+}

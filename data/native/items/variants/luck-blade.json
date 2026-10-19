@@ -1,0 +1,142 @@
+{
+  "id": "magicvariant.luck-blade",
+  "name": "Luck Blade",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Luck Blade",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "sword": true
+          }
+        ],
+        "entries": [
+          "You gain a +1 bonus to attack and damage rolls made with this magic weapon. While the sword is on your person, you also gain a +1 bonus to saving throws.",
+          {
+            "type": "entries",
+            "name": "Luck",
+            "entries": [
+              "If the sword is on your person, you can call on its luck (no action required) to reroll one attack roll, ability check, or saving throw you dislike. You must use the second roll. This property can't be used again until the next dawn."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Wish",
+            "entries": [
+              "The sword has {@dice 1d4 - 1} charges. While holding it, you can use an action to expend 1 charge and cast the {@spell wish} spell from it. This property can't be used again until the next dawn. The sword loses this property if it has no charges."
+            ]
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Luck Blade ",
+          "source": "SRD51",
+          "page": 229,
+          "rarity": "legendary",
+          "reqAttune": true,
+          "bonusWeapon": "+1",
+          "bonusSavingThrow": "+1",
+          "charges": "{@dice 1d4 - 1}",
+          "entries": [
+            "You gain a +1 bonus to attack and damage rolls made with this magic weapon. While the sword is on your person, you also gain a +1 bonus to saving throws.",
+            {
+              "type": "entries",
+              "name": "Luck",
+              "entries": [
+                "If the sword is on your person, you can call on its luck (no action required) to reroll one attack roll, ability check, or saving throw you dislike. You must use the second roll. This property can't be used again until the next dawn."
+              ]
+            },
+            {
+              "type": "entries",
+              "name": "Wish",
+              "entries": [
+                "The sword has {@dice 1d4 - 1} charges. While holding it, you can use an action to expend 1 charge and cast the {@spell wish} spell from it. This property can't be used again until the next dawn. The sword loses this property if it has no charges."
+              ]
+            }
+          ],
+          "attachedSpells": {
+            "charges": {
+              "1": [
+                "wish"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Luck Blade",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "name": "Glaive",
+            "source": "SRD52"
+          },
+          {
+            "name": "Greatsword",
+            "source": "SRD52"
+          },
+          {
+            "name": "Longsword",
+            "source": "SRD52"
+          },
+          {
+            "name": "Rapier",
+            "source": "SRD52"
+          },
+          {
+            "name": "Scimitar",
+            "source": "SRD52"
+          },
+          {
+            "name": "Sickle",
+            "source": "SRD52"
+          },
+          {
+            "name": "Shortsword",
+            "source": "SRD52"
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Luck ",
+          "source": "SRD52",
+          "page": 229,
+          "rarity": "legendary",
+          "reqAttune": true,
+          "bonusWeapon": "+1",
+          "bonusSavingThrow": "+1",
+          "charges": "{@dice 1d3}",
+          "entries": [
+            "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon. While the weapon is on your person, you also gain a {=bonusSavingThrow} bonus to saving throws.",
+            {
+              "type": "entries",
+              "name": "Luck",
+              "entries": [
+                "If the weapon is on your person, you can call on its luck (no action required) to reroll one failed {@variantrule D20 Test|SRD52} if you don't have the {@condition Incapacitated|SRD52} condition. You must use the second roll. Once used, this property can't be used again until the next dawn."
+              ]
+            },
+            {
+              "type": "entries",
+              "name": "Wish",
+              "entries": [
+                "The weapon has {@dice 1d3} charges. While holding it, you can expend 1 charge and cast {@spell Wish|SRD52} from it. Once used, this property can't be used again until the next dawn. The weapon loses this property if it has no charges."
+              ]
+            }
+          ],
+          "attachedSpells": {
+            "charges": {
+              "1": [
+                "wish|srd52"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "id": "monster.goat",
+  "name": "Goat",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Goat",
+        "size": [
+          "M"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          10
+        ],
+        "hp": {
+          "average": 4,
+          "formula": "1d8"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 12,
+        "dex": 10,
+        "con": 11,
+        "int": 2,
+        "wis": 10,
+        "cha": 5,
+        "passive": 10,
+        "cr": "0",
+        "trait": [
+          {
+            "name": "Charge",
+            "entries": [
+              "If the goat moves at least 20 feet straight toward a target and then hits it with a ram attack on the same turn, the target takes an extra 2 ({@damage 1d4}) bludgeoning damage. If the target is a creature, it must succeed on a {@dc 10} Strength saving throw or be knocked {@condition prone}."
+            ]
+          },
+          {
+            "name": "Sure-Footed",
+            "entries": [
+              "The goat has advantage on Strength and Dexterity saving throws made against effects that would knock it {@condition prone}."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Ram",
+            "entries": [
+              "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}3 ({@damage 1d4 + 1}) bludgeoning damage."
+            ]
+          }
+        ],
+        "environment": [
+          "mountain",
+          "grassland",
+          "hill",
+          "urban"
+        ],
+        "familiar": true,
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/goat.opus"
+        },
+        "traitTags": [
+          "Charge",
+          "Sure-Footed"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "conditionInflict": [
+          "prone"
+        ],
+        "savingThrowForced": [
+          "strength"
+        ],
+        "hasToken": true
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Goat",
+        "size": [
+          "M"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          10
+        ],
+        "hp": {
+          "average": 4,
+          "formula": "1d8"
+        },
+        "speed": {
+          "walk": 40,
+          "climb": 30
+        },
+        "str": 11,
+        "dex": 10,
+        "con": 11,
+        "int": 2,
+        "wis": 10,
+        "cha": 5,
+        "save": {
+          "str": "+2"
+        },
+        "skill": {
+          "perception": "+2"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 12,
+        "cr": "0",
+        "action": [
+          {
+            "name": "Ram",
+            "entries": [
+              "{@atkr m} {@hit 2}, reach 5 ft. {@h}1 Bludgeoning damage, or 2 ({@damage 1d4}) Bludgeoning damage if the goat moved 20+ feet straight toward the target immediately before the hit."
+            ]
+          }
+        ],
+        "environment": [
+          "grassland",
+          "hill",
+          "mountain",
+          "urban"
+        ],
+        "familiar": true,
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/goat.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Goat",
+            "_copy": {
+              "name": "Animals",
+              "source": "SRD52",
+              "_mod": {
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Goat.webp"
+                      },
+                      "width": 1408,
+                      "height": 1440
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "id": "item.dagger-of-venom",
+  "name": "Dagger of Venom",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Dagger of Venom",
+        "baseItem": "dagger|srd51",
+        "type": "M",
+        "tier": "major",
+        "rarity": "rare",
+        "weight": 1,
+        "weaponCategory": "simple",
+        "property": [
+          "F",
+          "L",
+          "T"
+        ],
+        "range": "20/60",
+        "dmg1": "1d4",
+        "dmgType": "P",
+        "bonusWeapon": "+1",
+        "entries": [
+          "You gain a +1 bonus to attack and damage rolls made with this magic weapon.",
+          "You can use an action to cause thick, black poison to coat the blade. The poison remains for 1 minute or until an attack using this weapon hits a creature. That creature must succeed on a {@dc 15} Constitution saving throw or take {@damage 2d10} poison damage and become {@condition poisoned} for 1 minute. The dagger can't be used this way again until the next dawn."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Dagger of Venom",
+        "baseItem": "dagger|srd52",
+        "type": "M|SRD52",
+        "rarity": "rare",
+        "weight": 1,
+        "weaponCategory": "simple",
+        "property": [
+          "F|SRD52",
+          "L|SRD52",
+          "T|SRD52"
+        ],
+        "mastery": [
+          "Nick|SRD52"
+        ],
+        "range": "20/60",
+        "dmg1": "1d4",
+        "dmgType": "P",
+        "bonusWeapon": "+1",
+        "entries": [
+          "You gain a +1 bonus to attack rolls and damage rolls made with this magic weapon.",
+          "You can take a {@variantrule Bonus Action|SRD52} to magically coat the blade with poison. The poison remains for 1 minute or until an attack using this weapon hits a creature. That creature must succeed on a {@dc 15} Constitution saving throw or take {@damage 2d10} Poison damage and have the {@condition Poisoned|SRD52} condition for 1 minute. The weapon can't be used this way again until the next dawn."
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ]
+      }
+    }
+  ]
+}

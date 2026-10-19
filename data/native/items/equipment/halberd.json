@@ -1,0 +1,51 @@
+{
+  "id": "baseitem.halberd",
+  "name": "Halberd",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Halberd",
+        "type": "M",
+        "rarity": "none",
+        "weight": 6,
+        "value": 2000,
+        "weaponCategory": "martial",
+        "property": [
+          "H",
+          "R",
+          "2H"
+        ],
+        "dmg1": "1d10",
+        "dmgType": "S",
+        "polearm": true,
+        "weapon": true
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Halberd",
+        "type": "M|SRD52",
+        "rarity": "none",
+        "weight": 6,
+        "value": 2000,
+        "weaponCategory": "martial",
+        "property": [
+          "H|SRD52",
+          "R|SRD52",
+          "2H|SRD52"
+        ],
+        "mastery": [
+          "Cleave|SRD52"
+        ],
+        "dmg1": "1d10",
+        "dmgType": "S",
+        "polearm": true,
+        "weapon": true
+      }
+    }
+  ]
+}

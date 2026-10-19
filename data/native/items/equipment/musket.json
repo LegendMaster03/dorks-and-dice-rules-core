@@ -1,0 +1,56 @@
+{
+  "id": "baseitem.musket",
+  "name": "Musket",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b-1",
+      "content": {
+        "name": "Musket",
+        "type": "R",
+        "rarity": "none",
+        "weight": 10,
+        "value": 50000,
+        "weaponCategory": "martial",
+        "age": "renaissance",
+        "property": [
+          "AF|SRD51",
+          "LD",
+          "2H"
+        ],
+        "range": "40/120",
+        "dmg1": "1d12",
+        "dmgType": "P",
+        "firearm": true,
+        "weapon": true,
+        "ammoType": "renaissance bullet"
+      }
+    },
+    {
+      "key": "candidate-b-2",
+      "content": {
+        "name": "Musket",
+        "type": "R|SRD52",
+        "rarity": "none",
+        "weight": 10,
+        "value": 50000,
+        "weaponCategory": "martial",
+        "property": [
+          "A|SRD52",
+          "LD|SRD52",
+          "2H|SRD52"
+        ],
+        "mastery": [
+          "Slow|SRD52"
+        ],
+        "range": "40/120",
+        "dmg1": "1d12",
+        "dmgType": "P",
+        "firearm": true,
+        "weapon": true,
+        "ammoType": "firearm bullet|srd52"
+      }
+    }
+  ]
+}

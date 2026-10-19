@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.retaliation.barbarian.berserker.retaliation.14",
+  "name": "Retaliation",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Retaliation",
+        "className": "Barbarian",
+        "classSource": "SRD51",
+        "subclassShortName": "Berserker",
+        "subclassSource": "SRD51",
+        "level": 14,
+        "header": 2,
+        "entries": [
+          "Starting at 14th level, when you take damage from a creature that is within 5 feet of you, you can use your reaction to make a melee weapon attack against that creature."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian",
+  "parentSubclass": "berserker",
+  "classLevel": 14
+}

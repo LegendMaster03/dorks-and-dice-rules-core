@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.radiant-strikes.paladin.radiant-strikes.11",
+  "name": "Radiant Strikes",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Radiant Strikes",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "level": 11,
+        "entries": [
+          "Your strikes now carry supernatural power. When you hit a target with an attack roll using a Melee weapon or an {@variantrule Unarmed Strike|SRD52}, the target takes an extra {@damage 1d8} Radiant damage."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "classLevel": 11
+}

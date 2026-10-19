@@ -1,0 +1,104 @@
+{
+  "id": "spell.faerie-fire",
+  "name": "Faerie Fire",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Faerie Fire",
+        "level": 1,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Each object in a 20-foot cube within range is outlined in blue, green, or violet light (your choice). Any creature in the area when the spell is cast is also outlined in light if it fails a Dexterity saving throw. For the duration, objects and affected creatures shed dim light in a 10-foot radius.",
+          "Any attack roll against an affected creature or object has advantage if the attacker can see it, and the affected creature or object can't benefit from being {@condition invisible}."
+        ],
+        "savingThrow": [
+          "dexterity"
+        ],
+        "miscTags": [
+          "ADV",
+          "LGT"
+        ],
+        "areaTags": [
+          "C"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Faerie Fire",
+        "level": 1,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Objects in a 20-foot {@variantrule Cube [Area of Effect]|SRD52|Cube} within range are outlined in blue, green, or violet light (your choice). Each creature in the {@variantrule Cube [Area of Effect]|SRD52|Cube} is also outlined if it fails a Dexterity saving throw. For the duration, objects and affected creatures shed {@variantrule Dim Light|SRD52} in a 10-foot radius and can't benefit from the {@condition Invisible|SRD52} condition.",
+          "{@action Attack|SRD52} rolls against an affected creature or object have {@variantrule Advantage|SRD52} if the attacker can see it."
+        ],
+        "savingThrow": [
+          "dexterity"
+        ],
+        "miscTags": [
+          "ADV",
+          "LGT"
+        ],
+        "areaTags": [
+          "C"
+        ]
+      }
+    }
+  ]
+}

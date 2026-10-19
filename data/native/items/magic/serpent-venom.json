@@ -1,0 +1,46 @@
+{
+  "id": "item.serpent-venom",
+  "name": "Serpent Venom",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Serpent Venom",
+        "type": "G",
+        "rarity": "none",
+        "value": 20000,
+        "poison": true,
+        "entries": [
+          "This poison must be harvested from a dead or {@condition incapacitated} {@creature giant poisonous snake}. A creature subjected to this poison must succeed on a {@dc 11} Constitution saving throw, taking 10 ({@damage 3d6}) poison damage on a failed save, or half as much damage on a successful one."
+        ],
+        "poisonTypes": [
+          "injury"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Serpent Venom",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "value": 20000,
+        "poison": true,
+        "entries": [
+          "A creature subjected to Serpent Venom must succeed on a {@dc 11} Constitution saving throw, taking 10 ({@damage 3d6}) Poison damage on a failed save or half as much damage on a successful one."
+        ],
+        "poisonTypes": [
+          "injury"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

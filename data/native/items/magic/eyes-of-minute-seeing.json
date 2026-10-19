@@ -1,0 +1,34 @@
+{
+  "id": "item.eyes-of-minute-seeing",
+  "name": "Eyes of Minute Seeing",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Eyes of Minute Seeing",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "These crystal lenses fit over the eyes. While wearing them, you can see much better than normal out to a range of 1 foot. You have advantage on Intelligence ({@skill Investigation}) checks that rely on sight while searching an area or studying an object within that range."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Eyes of Minute Seeing",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "These crystal lenses fit over the eyes. While wearing them, your vision improves significantly out to a range of 1 foot, granting you {@sense Darkvision|SRD52} within that range and {@variantrule Advantage|SRD52} on Intelligence ({@skill Investigation|SRD52}) checks made to examine something within that range."
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ]
+      }
+    }
+  ]
+}

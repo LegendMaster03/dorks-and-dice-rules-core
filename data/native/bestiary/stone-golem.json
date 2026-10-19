@@ -1,0 +1,405 @@
+{
+  "id": "monster.stone-golem",
+  "name": "Stone Golem",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Stone Golem",
+        "size": [
+          "L"
+        ],
+        "type": "construct",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          {
+            "ac": 17,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 178,
+          "formula": "17d10 + 85"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "str": 22,
+        "dex": 9,
+        "con": 20,
+        "int": 3,
+        "wis": 11,
+        "cha": 1,
+        "senses": [
+          "darkvision 120 ft."
+        ],
+        "passive": 10,
+        "immune": [
+          "poison",
+          "psychic",
+          {
+            "immune": [
+              "bludgeoning",
+              "piercing",
+              "slashing"
+            ],
+            "note": "from nonmagical attacks that aren't adamantine",
+            "cond": true
+          }
+        ],
+        "conditionImmune": [
+          "charmed",
+          "exhaustion",
+          "frightened",
+          "paralyzed",
+          "petrified",
+          "poisoned"
+        ],
+        "languages": [
+          "understands the languages of its creator but can't speak"
+        ],
+        "cr": "10",
+        "trait": [
+          {
+            "name": "Immutable Form",
+            "entries": [
+              "The golem is immune to any spell or effect that would alter its form."
+            ]
+          },
+          {
+            "name": "Magic Resistance",
+            "entries": [
+              "The golem has advantage on saving throws against spells and other magical effects."
+            ]
+          },
+          {
+            "name": "Magic Weapons",
+            "entries": [
+              "The golem's weapon attacks are magical."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The golem makes two slam attacks."
+            ]
+          },
+          {
+            "name": "Slam",
+            "entries": [
+              "{@atk mw} {@hit 10} to hit, reach 5 ft., one target. {@h}19 ({@damage 3d8 + 6}) bludgeoning damage."
+            ]
+          },
+          {
+            "name": "Slow {@recharge 5}",
+            "entries": [
+              "The golem targets one or more creatures it can see within 10 feet of it. Each target must make a {@dc 17} Wisdom saving throw against this magic. On a failed save, a target can't use reactions, its speed is halved, and it can't make more than one attack on its turn. In addition, the target can take either an action or a bonus action on its turn, not both. These effects last for 1 minute. A target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+            ]
+          }
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/stone-golem.opus"
+        },
+        "traitTags": [
+          "Immutable Form",
+          "Magic Resistance",
+          "Magic Weapons"
+        ],
+        "senseTags": [
+          "SD"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "CS"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "savingThrowForced": [
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Stone Golem",
+            "_copy": {
+              "name": "Golems",
+              "source": "SRD51",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    "Stone golems display great variety in shape and form, cut and chiseled from stone to appear as tall, impressive statues. Though most bear humanoid features, stone golems can be carved in any form the sculptor can imagine. Ancient stone golems found in sealed tombs or flanking the gates of lost cities sometimes take the forms of giant beasts.",
+                    "Like other golems, stone golems are nearly impervious to spells and ordinary weapons. Creatures that fight a stone golem can feel the ebb and flow of time slow down around them, almost as though they were made of stone themselves."
+                  ]
+                }
+              }
+            },
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Stone Golem.webp"
+                },
+                "credit": "Conceptopolis",
+                "width": 532,
+                "height": 878
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Stone Golem",
+        "size": [
+          "L"
+        ],
+        "type": "construct",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          18
+        ],
+        "hp": {
+          "average": 220,
+          "formula": "21d10 + 105"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "initiative": {
+          "proficiency": 1
+        },
+        "str": 22,
+        "dex": 9,
+        "con": 20,
+        "int": 3,
+        "wis": 11,
+        "cha": 1,
+        "senses": [
+          "Darkvision 120 ft."
+        ],
+        "passive": 10,
+        "immune": [
+          "poison",
+          "psychic"
+        ],
+        "conditionImmune": [
+          "charmed",
+          "exhaustion",
+          "frightened",
+          "paralyzed",
+          "petrified",
+          "poisoned"
+        ],
+        "languages": [
+          "understands Common plus two other languages but can't speak"
+        ],
+        "cr": "10",
+        "spellcasting": [
+          {
+            "name": "Slow {@recharge 5}",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The golem casts the {@spell Slow|SRD52} spell, requiring no spell components and using Constitution as the spellcasting ability (spell save {@dc 17})."
+            ],
+            "recharge": {
+              "5": [
+                "{@spell Slow|SRD52}"
+              ]
+            },
+            "ability": "con",
+            "displayAs": "bonus",
+            "hidden": [
+              "recharge"
+            ]
+          }
+        ],
+        "trait": [
+          {
+            "name": "Immutable Form",
+            "entries": [
+              "The golem can't shape-shift."
+            ]
+          },
+          {
+            "name": "Magic Resistance",
+            "entries": [
+              "The golem has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The golem makes two attacks, using Slam or Force Bolt in any combination."
+            ]
+          },
+          {
+            "name": "Slam",
+            "entries": [
+              "{@atkr m} {@hit 10}, reach 5 ft. {@h}15 ({@damage 2d8 + 6}) Bludgeoning damage plus 9 ({@damage 2d8}) Force damage."
+            ]
+          },
+          {
+            "name": "Force Bolt",
+            "entries": [
+              "{@atkr r} {@hit 9}, range 120 ft. {@h}22 ({@damage 4d10}) Force damage."
+            ]
+          }
+        ],
+        "environment": [
+          "any"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/stone-golem.opus"
+        },
+        "traitTags": [
+          "Immutable Form",
+          "Magic Resistance"
+        ],
+        "senseTags": [
+          "SD"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "CS",
+          "X"
+        ],
+        "damageTags": [
+          "B",
+          "O"
+        ],
+        "spellcastingTags": [
+          "O"
+        ],
+        "miscTags": [
+          "MA",
+          "RA"
+        ],
+        "savingThrowForcedSpell": [
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Stone Golem",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Stone Golem",
+                "entries": [
+                  "{@i Guardian of the Storied and Sacred}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Any|bestiary|environment=any}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "None"
+                      }
+                    ]
+                  },
+                  "Stone golems take varied forms, such as weathered carvings of ancient deities, lifelike sculptures of heroes, or any other shape their makers imagine. No matter their design or the rock from which they're crafted, these golems are strengthened by the magic that animates them, allowing them to follow their creators' orders for centuries.",
+                  "Stone golems are typically created to protect places of significance to a group, such as a monument to an important event, a leader's tomb, or a faith's sanctuary. Roll on or choose a result from the Stone Golem Orders table to inspire the commands a stone golem follows.",
+                  {
+                    "type": "table",
+                    "caption": "Stone Golem Orders",
+                    "colLabels": [
+                      "1d6",
+                      "The Stone Golem Follows Orders To..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "Allow only those wearing ritual garb to pass."
+                      ],
+                      [
+                        "2",
+                        "Cast {@spell Slow|SRD52} on and aid in apprehending anyone who touches a city's prized relic."
+                      ],
+                      [
+                        "3",
+                        "Destroy a dam or bridge at the command of one bearing a ruler's medallion of office."
+                      ],
+                      [
+                        "4",
+                        "Obey whoever places a missing crest in its chest, then deactivate for a year."
+                      ],
+                      [
+                        "5",
+                        "Reveal a hidden passage to those who recite a leader's final words."
+                      ],
+                      [
+                        "6",
+                        "Watch for and do battle with the type of monster that slew the hero it resembles."
+                      ]
+                    ]
+                  },
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "Exercise discernment when deciding the golem's appearance, as your creation is likely to long outlive its model."
+                        ],
+                        "from": "Manual of Stone Golems"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Stone Golem.webp"
+                },
+                "credit": "Hinchel Or",
+                "width": 1400,
+                "height": 1750
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

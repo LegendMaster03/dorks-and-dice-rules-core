@@ -1,0 +1,62 @@
+{
+  "id": "item.eyes-of-charming",
+  "name": "Eyes of Charming",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Eyes of Charming",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "recharge": "dawn",
+        "rechargeAmount": 3,
+        "charges": 3,
+        "entries": [
+          "These crystal lenses fit over the eyes. They have 3 charges. While wearing them, you can expend 1 charge as an action to cast the {@spell charm person} spell (save {@dc 13}) on a humanoid within 30 feet of you, provided that you and the target can see each other. The lenses regain all expended charges daily at dawn."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "charm person"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Eyes of Charming",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "recharge": "dawn",
+        "rechargeAmount": 3,
+        "charges": 3,
+        "entries": [
+          "These crystal lenses fit over the eyes. They have 3 charges. While wearing them, you can expend 1 or more charges to cast {@spell Charm Person|SRD52} (save {@dc 13}). For 1 charge, you cast the level 1 version of the spell. You increase the spell's level by one for each additional charge you expend. The lenses regain all expended charges daily at dawn."
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "charm person|srd52"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

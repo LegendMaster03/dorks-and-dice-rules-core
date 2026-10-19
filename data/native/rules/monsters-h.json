@@ -1,0 +1,39 @@
+{
+  "id": "rule.monsters-h",
+  "name": "Monsters (H)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (H)",
+        "page": 319,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Half-Red Dragon Veteran|srd51}",
+              "{@creature Harpy|srd51}",
+              "{@creature Hawk|srd51}",
+              "{@creature Hell Hound|srd51}",
+              "{@creature Hezrou|srd51}",
+              "{@creature Hill Giant|srd51}",
+              "{@creature Hippogriff|srd51}",
+              "{@creature Hobgoblin|srd51}",
+              "{@creature Homunculus|srd51}",
+              "{@creature Horned Devil|srd51}",
+              "{@creature Hunter Shark|srd51}",
+              "{@creature Hydra|srd51}",
+              "{@creature Hyena|srd51}"
+            ]
+          }
+        ],
+        "id": "1aa"
+      }
+    }
+  ]
+}

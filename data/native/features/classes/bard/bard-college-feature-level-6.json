@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.bard-college-feature.bard.bard-college-feature.6",
+  "name": "Bard College feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Bard College feature",
+        "className": "Bard",
+        "classSource": "SRD51",
+        "level": 6,
+        "entries": [
+          "At 6th level, you gain a feature from your Bard College."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.bard",
+  "classLevel": 6
+}

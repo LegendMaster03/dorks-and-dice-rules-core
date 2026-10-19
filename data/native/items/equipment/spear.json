@@ -1,0 +1,53 @@
+{
+  "id": "baseitem.spear",
+  "name": "Spear",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Spear",
+        "type": "M",
+        "rarity": "none",
+        "weight": 3,
+        "value": 100,
+        "weaponCategory": "simple",
+        "property": [
+          "T",
+          "V"
+        ],
+        "range": "20/60",
+        "dmg1": "1d6",
+        "dmgType": "P",
+        "dmg2": "1d8",
+        "spear": true,
+        "weapon": true
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Spear",
+        "type": "M|SRD52",
+        "rarity": "none",
+        "weight": 3,
+        "value": 100,
+        "weaponCategory": "simple",
+        "property": [
+          "T|SRD52",
+          "V|SRD52"
+        ],
+        "mastery": [
+          "Sap|SRD52"
+        ],
+        "range": "20/60",
+        "dmg1": "1d6",
+        "dmgType": "P",
+        "dmg2": "1d8",
+        "spear": true,
+        "weapon": true
+      }
+    }
+  ]
+}

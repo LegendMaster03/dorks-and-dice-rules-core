@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.divine-intervention-improvement.cleric.divine-intervention-improvement.20",
+  "name": "Divine Intervention Improvement",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Divine Intervention Improvement",
+        "className": "Cleric",
+        "classSource": "SRD51",
+        "level": 20,
+        "entries": [
+          "At 20th level, your call for intervention succeeds automatically, no roll required."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "classLevel": 20
+}

@@ -1,0 +1,56 @@
+{
+  "id": "subclassFeature.life-domain-spells.cleric.life.life-domain-spells.3",
+  "name": "Life Domain Spells",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Life Domain Spells",
+        "className": "Cleric",
+        "classSource": "SRD52",
+        "subclassShortName": "Life",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "header": 1,
+        "entries": [
+          "Your connection to this divine domain ensures you always have certain spells ready. When you reach a Cleric level specified in the Life Domain Spells table, you thereafter always have the listed spells prepared.",
+          {
+            "type": "table",
+            "caption": "Life Domain Spells",
+            "colLabels": [
+              "Cleric Level",
+              "Prepared Spells"
+            ],
+            "colStyles": [
+              "col-1 text-center",
+              "col-11"
+            ],
+            "rows": [
+              [
+                "3rd",
+                "{@spell Aid|SRD52}, {@spell Bless|SRD52}, {@spell Cure Wounds|SRD52}, {@spell Lesser Restoration|SRD52}"
+              ],
+              [
+                "5th",
+                "{@spell Mass Healing Word|SRD52}, {@spell Revivify|SRD52}"
+              ],
+              [
+                "7th",
+                "{@spell Aura of Life|SRD52}, {@spell Death Ward|SRD52}"
+              ],
+              [
+                "9th",
+                "{@spell Greater Restoration|SRD52}, {@spell Mass Cure Wounds|SRD52}"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "parentSubclass": "life",
+  "classLevel": 3
+}

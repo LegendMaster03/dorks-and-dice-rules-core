@@ -1,0 +1,137 @@
+{
+  "id": "classFeature.spellcasting.cleric.spellcasting.1",
+  "name": "Spellcasting",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Spellcasting",
+        "className": "Cleric",
+        "classSource": "SRD51",
+        "level": 1,
+        "entries": [
+          "As a conduit for divine power, you can cast cleric spells. See {@book chapter 10|SRD51|10} for the general rules of spellcasting and {@book chapter 11|SRD51|11} for a selection of {@filter cleric spells|spells|class=cleric}.",
+          {
+            "type": "entries",
+            "name": "Cantrips",
+            "entries": [
+              "At 1st level, you know three cantrips of your choice from the cleric spell list. You learn additional cleric cantrips of your choice at higher levels, as shown in the Cantrips Known column of the Cleric table."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Preparing and Casting Spells",
+            "entries": [
+              "The Cleric table shows how many spell slots you have to cast your {@filter cleric spells|spells|class=cleric} of 1st level and higher. To cast one of these spells, you must expend a slot of the spell's level or higher. You regain all expended spell slots when you finish a long rest.",
+              "You prepare the list of cleric spells that are available for you to cast, choosing from the cleric spell list. When you do so, choose a number of cleric spells equal to your Wisdom modifier + your cleric level (minimum of one spell). The spells must be of a level for which you have spell slots.",
+              "For example, if you are a 3rd-level cleric, you have four 1st-level and two 2nd-level spell slots. With a Wisdom of 16, your list of prepared spells can include six spells of 1st or 2nd level, in any combination. If you prepare the 1st-level spell {@spell cure wounds}, you can cast it using a 1st-level or 2nd-level slot. Casting the spell doesn't remove it from your list of prepared spells.",
+              "You can change your list of prepared spells when you finish a long rest. Preparing a new list of cleric spells requires time spent in prayer and meditation: at least 1 minute per spell level for each spell on your list."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spellcasting Ability",
+            "entries": [
+              "Wisdom is your spellcasting ability for your cleric spells. The power of your spells comes from your devotion to your deity. You use your Wisdom whenever a cleric spell refers to your spellcasting ability. In addition, you use your Wisdom modifier when setting the saving throw DC for a cleric spell you cast and when making an attack roll with one.",
+              {
+                "type": "abilityDc",
+                "name": "Spell",
+                "attributes": [
+                  "wis"
+                ]
+              },
+              {
+                "type": "abilityAttackMod",
+                "name": "Spell",
+                "attributes": [
+                  "wis"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Ritual Casting",
+            "entries": [
+              "You can cast a cleric spell as a ritual if that spell has the ritual tag and you have the spell prepared."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spellcasting Focus",
+            "entries": [
+              "You can use a {@item holy symbol|srd51} as a spellcasting focus for your cleric spells."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Spellcasting",
+        "className": "Cleric",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "You have learned to cast spells through prayer and meditation. See {@book chapter 7|SRD52|7} for the rules on spellcasting. The information below details how you use those rules with Cleric spells, which appear on the {@filter Cleric spell list|spells|class=Cleric} later in the class's description.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Cantrips",
+                "entries": [
+                  "You know three cantrips of your choice from the {@filter Cleric spell list|spells|class=Cleric}. {@spell Guidance|SRD52}, {@spell Sacred Flame|SRD52}, and {@spell Thaumaturgy|SRD52} are recommended.",
+                  "Whenever you gain a Cleric level, you can replace one of your cantrips with another cantrip of your choice from the {@filter Cleric spell list|spells|class=Cleric}.",
+                  "When you reach Cleric levels 4 and 10, you learn another cantrip of your choice from the {@filter Cleric spell list|spells|class=Cleric}, as shown in the Cantrips column of the Cleric Features table."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Spell Slots",
+                "entries": [
+                  "The Cleric Features table shows how many spell slots you have to cast your level 1+ spells. You regain all expended slots when you finish a {@variantrule Long Rest|SRD52}."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Prepared Spells of Level 1+",
+                "entries": [
+                  "You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose four level 1 spells from the {@filter Cleric spell list|spells|class=Cleric}. {@spell Bless|SRD52}, {@spell Cure Wounds|SRD52}, {@spell Guiding Bolt|SRD52}, and {@spell Shield of Faith|SRD52} are recommended.",
+                  "The number of spells on your list increases as you gain Cleric levels, as shown in the Prepared Spells column of the Cleric Features table. Whenever that number increases, choose additional spells from the {@filter Cleric spell list|spells|class=Cleric} until the number of spells on your list matches the number on the table. The chosen spells must be of a level for which you have spell slots. For example, if you're a level 3 Cleric, your list of prepared spells can include six spells of levels 1 and 2 in any combination.",
+                  "If another Cleric feature gives you spells that you always have prepared, those spells don't count against the number of spells you can prepare with this feature, but those spells otherwise count as Cleric spells for you."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Changing Your Prepared Spells",
+                "entries": [
+                  "Whenever you finish a {@variantrule Long Rest|SRD52}, you can change your list of prepared spells, replacing any of the spells there with other Cleric spells for which you have spell slots."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Spellcasting Ability",
+                "entries": [
+                  "Wisdom is your spellcasting ability for your Cleric spells."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Spellcasting Focus",
+                "entries": [
+                  "You can use a {@item Holy Symbol|SRD52} as a {@variantrule Spellcasting Focus|SRD52} for your Cleric spells."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "classLevel": 1
+}

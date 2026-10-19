@@ -1,0 +1,34 @@
+{
+  "id": "subclassFeature.draconic-sorcery.sorcerer.draconic.draconic-sorcery.3",
+  "name": "Draconic Sorcery",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Draconic Sorcery",
+        "className": "Sorcerer",
+        "classSource": "SRD52",
+        "subclassShortName": "Draconic",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "{@i Breathe the Magic of Dragons}",
+          "Your innate magic comes from the gift of a dragon. Perhaps an ancient dragon facing death bequeathed some of its magical power to you or your ancestor. You might have absorbed magic from a site infused with dragons' power. Or perhaps you handled a treasure taken from a dragon's hoard that was steeped in draconic power. Or you might have a dragon for an ancestor.",
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Draconic Resilience|Sorcerer|SRD52|Draconic|SRD52|3"
+          },
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Draconic Spells|Sorcerer|SRD52|Draconic|SRD52|3"
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.sorcerer",
+  "parentSubclass": "draconic",
+  "classLevel": 3
+}

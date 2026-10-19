@@ -1,0 +1,75 @@
+{
+  "id": "item.efficient-quiver",
+  "name": "Efficient Quiver",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Efficient Quiver",
+        "tier": "major",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "weight": 2,
+        "entries": [
+          "Each of the quiver's three compartments connects to an extradimensional space that allows the quiver to hold numerous items while never weighing more than 2 pounds. The shortest compartment can hold up to sixty {@item arrow|srd51|arrows}, {@item crossbow bolt|srd51|bolts}, or similar objects. The midsize compartment holds up to eighteen {@item javelin|srd51|javelins} or similar objects. The longest compartment holds up to six long objects, such as bows, {@item quarterstaff|srd51|quarterstaffs}, or {@item spear|srd51|spears}.",
+          "You can draw any item the quiver contains as if doing so from a regular quiver or scabbard."
+        ],
+        "containerCapacity": {
+          "item": [
+            {
+              "crossbow bolt|srd51": 60,
+              "arrow|srd51": 60
+            },
+            {
+              "javelin|srd51": 18
+            },
+            {
+              "quarterstaff|srd51": 6,
+              "spear|srd51": 6
+            }
+          ],
+          "weightless": true
+        },
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Efficient Quiver",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "weight": 2,
+        "entries": [
+          "Each of the quiver's three compartments connects to an extradimensional space that allows the quiver to hold numerous items while never weighing more than 2 pounds. The shortest compartment can hold up to 60 {@item Arrow|SRD52|Arrows}, {@item Bolt|SRD52|Bolts}, or similar objects. The midsize compartment holds up to 18 {@item Javelin|SRD52|Javelins} or similar objects. The longest compartment holds up to 6 long objects, such as bows, {@item Quarterstaff|SRD52|Quarterstaff's}, or {@item Spear|SRD52|Spears}.",
+          "You can draw any item the quiver contains as if doing so from a regular quiver or scabbard."
+        ],
+        "containerCapacity": {
+          "item": [
+            {
+              "bolt|srd52": 60,
+              "arrow|srd52": 60
+            },
+            {
+              "javelin|srd52": 18
+            },
+            {
+              "longbow|srd52": 6,
+              "shortbow|srd52": 6,
+              "quarterstaff|srd52": 6,
+              "spear|srd52": 6
+            }
+          ],
+          "weightless": true
+        },
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

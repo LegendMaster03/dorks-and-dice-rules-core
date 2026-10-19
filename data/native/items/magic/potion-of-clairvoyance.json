@@ -1,0 +1,45 @@
+{
+  "id": "item.potion-of-clairvoyance",
+  "name": "Potion of Clairvoyance",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Clairvoyance",
+        "type": "P",
+        "tier": "minor",
+        "rarity": "rare",
+        "entries": [
+          "When you drink this potion, you gain the effect of the {@spell clairvoyance} spell. An eyeball bobs in this yellowish liquid but vanishes when the potion is opened."
+        ],
+        "attachedSpells": [
+          "clairvoyance"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Clairvoyance",
+        "type": "P|SRD52",
+        "rarity": "rare",
+        "weight": 0.5,
+        "entries": [
+          "When you drink this potion, you gain the effect of the {@spell Clairvoyance|SRD52} spell (no {@status Concentration|SRD52} required).",
+          "An eyeball bobs in this potion's yellowish liquid but vanishes when the potion is opened."
+        ],
+        "attachedSpells": [
+          "clairvoyance|srd52"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

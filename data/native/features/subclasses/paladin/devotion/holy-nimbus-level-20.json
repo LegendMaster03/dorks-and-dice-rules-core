@@ -1,0 +1,65 @@
+{
+  "id": "subclassFeature.holy-nimbus.paladin.devotion.holy-nimbus.20",
+  "name": "Holy Nimbus",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Holy Nimbus",
+        "className": "Paladin",
+        "classSource": "SRD51",
+        "subclassShortName": "Devotion",
+        "subclassSource": "SRD51",
+        "level": 20,
+        "header": 2,
+        "entries": [
+          "At 20th level, as an action, you can emanate an aura of sunlight. For 1 minute, bright light shines from you in a 30-foot radius, and dim light shines 30 feet beyond that.",
+          "Whenever an enemy creature starts its turn in the bright light, the creature takes 10 radiant damage.",
+          "In addition, for the duration, you have advantage on saving throws against spells cast by fiends or undead.",
+          "Once you use this feature, you can't use it again until you finish a long rest."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Holy Nimbus",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "subclassShortName": "Devotion",
+        "subclassSource": "SRD52",
+        "level": 20,
+        "header": 2,
+        "entries": [
+          "As a {@variantrule Bonus Action|SRD52}, you can imbue your Aura of Protection with holy power, granting the benefits below for 10 minutes or until you end them (no action required). Once you use this feature, you can't use it again until you finish a {@variantrule Long Rest|SRD52}. You can also restore your use of it by expending a level 5 spell slot (no action required).",
+          {
+            "type": "entries",
+            "name": "Holy Ward",
+            "entries": [
+              "You have {@variantrule Advantage|SRD52} on any saving throw you are forced to make by a Fiend or an Undead."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Radiant Damage",
+            "entries": [
+              "Whenever an enemy starts its turn in the aura, that creature takes Radiant damage equal to your Charisma modifier plus your {@variantrule Proficiency|SRD52|Proficiency Bonus}."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Sunlight",
+            "entries": [
+              "The aura is filled with {@variantrule Bright Light|SRD52} that is sunlight."
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "parentSubclass": "devotion",
+  "classLevel": 20
+}

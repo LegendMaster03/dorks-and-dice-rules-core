@@ -1,0 +1,45 @@
+{
+  "id": "item.ring-of-three-wishes",
+  "name": "Ring of Three Wishes",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Three Wishes",
+        "type": "RG|SRD51",
+        "tier": "major",
+        "rarity": "legendary",
+        "entries": [
+          "While wearing this ring, you can use an action to expend 1 of its 3 charges to cast the {@spell wish} spell from it. The ring becomes nonmagical when you use the last charge."
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "wish"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Three Wishes",
+        "type": "RG|SRD52",
+        "rarity": "legendary",
+        "entries": [
+          "While wearing this ring, you can expend 1 of its 3 charges to cast {@spell Wish|SRD52} from it. The ring becomes nonmagical when you use the last charge."
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "wish|srd52"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.subclass-feature.wizard.subclass-feature.10",
+  "name": "Subclass Feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Subclass Feature",
+        "className": "Wizard",
+        "classSource": "SRD52",
+        "level": 10,
+        "entries": [
+          "You gain a feature from your Wizard Subclass."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.wizard",
+  "classLevel": 10
+}

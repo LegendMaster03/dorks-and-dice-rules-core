@@ -1,0 +1,34 @@
+{
+  "id": "subclassFeature.fiend-patron.warlock.fiend.fiend-patron.3",
+  "name": "Fiend Patron",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Fiend Patron",
+        "className": "Warlock",
+        "classSource": "SRD52",
+        "subclassShortName": "Fiend",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "{@i Make a Deal with the Lower Planes}",
+          "Your pact draws on the Lower Planes, the realms of perdition. You might forge a bargain with a demon lord such as Demogorgon or Orcus; an archdevil such as Asmodeus; or a pit fiend, balor, yugoloth, or night hag that is especially mighty. That patron's aims are evil—the corruption or destruction of all things, ultimately including you—and your path is defined by the extent to which you strive against those aims.",
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Fiend Spells|Warlock|SRD52|Fiend|SRD52|3"
+          },
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Dark One's Blessing|Warlock|SRD52|Fiend|SRD52|3"
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.warlock",
+  "parentSubclass": "fiend",
+  "classLevel": 3
+}

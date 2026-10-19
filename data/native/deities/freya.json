@@ -1,0 +1,24 @@
+{
+  "id": "deity.freya",
+  "name": "Freya",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Freya",
+        "pantheon": "Norse",
+        "alignment": [
+          "N",
+          "G"
+        ],
+        "title": "Goddess of fertility and love",
+        "domains": [
+          "Life"
+        ],
+        "symbol": "Falcon"
+      }
+    }
+  ]
+}

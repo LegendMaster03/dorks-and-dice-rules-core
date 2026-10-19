@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.improved-cunning-strike.rogue.improved-cunning-strike.11",
+  "name": "Improved Cunning Strike",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Improved Cunning Strike",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 11,
+        "entries": [
+          "You can use up to two Cunning Strike effects when you deal Sneak Attack damage, paying the die cost for each effect."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 11
+}

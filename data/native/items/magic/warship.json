@@ -1,0 +1,46 @@
+{
+  "id": "item.warship",
+  "name": "Warship",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Warship",
+        "type": "SHP",
+        "rarity": "none",
+        "value": 2500000,
+        "crew": 60,
+        "vehAc": 15,
+        "vehHp": 500,
+        "vehDmgThresh": 20,
+        "vehSpeed": 2.5,
+        "capPassenger": 60,
+        "capCargo": 200,
+        "seeAlsoVehicle": [
+          "Warship"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Warship",
+        "type": "SHP|SRD52",
+        "rarity": "none",
+        "value": 2500000,
+        "crew": 60,
+        "vehAc": 15,
+        "vehHp": 500,
+        "vehDmgThresh": 20,
+        "vehSpeed": 2.5,
+        "capPassenger": 60,
+        "capCargo": 200,
+        "seeAlsoVehicle": [
+          "Warship"
+        ]
+      }
+    }
+  ]
+}

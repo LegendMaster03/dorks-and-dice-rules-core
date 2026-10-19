@@ -1,0 +1,39 @@
+{
+  "id": "classFeature.devious-strikes.rogue.devious-strikes.14",
+  "name": "Devious Strikes",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Devious Strikes",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 14,
+        "entries": [
+          "You've practiced new ways to use your Sneak Attack deviously. The following effects are now among your Cunning Strike options.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "refClassFeature",
+                "classFeature": "Daze (Cost: 2d6)|Rogue|SRD52|14|SRD52"
+              },
+              {
+                "type": "refClassFeature",
+                "classFeature": "Knock Out (Cost: 6d6)|Rogue|SRD52|14|SRD52"
+              },
+              {
+                "type": "refClassFeature",
+                "classFeature": "Obscure (Cost: 3d6)|Rogue|SRD52|14|SRD52"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 14
+}

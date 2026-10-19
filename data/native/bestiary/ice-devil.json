@@ -1,0 +1,449 @@
+{
+  "id": "monster.ice-devil",
+  "name": "Ice Devil",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ice Devil",
+        "size": [
+          "L"
+        ],
+        "type": {
+          "type": "fiend",
+          "tags": [
+            "devil"
+          ]
+        },
+        "alignment": [
+          "L",
+          "E"
+        ],
+        "ac": [
+          {
+            "ac": 18,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 180,
+          "formula": "19d10 + 76"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 21,
+        "dex": 14,
+        "con": 18,
+        "int": 18,
+        "wis": 15,
+        "cha": 18,
+        "save": {
+          "dex": "+7",
+          "con": "+9",
+          "wis": "+7",
+          "cha": "+9"
+        },
+        "senses": [
+          "blindsight 60 ft.",
+          "darkvision 120 ft."
+        ],
+        "passive": 12,
+        "resist": [
+          {
+            "resist": [
+              "bludgeoning",
+              "piercing",
+              "slashing"
+            ],
+            "note": "from nonmagical attacks that aren't silvered",
+            "cond": true
+          }
+        ],
+        "immune": [
+          "fire",
+          "poison",
+          "cold"
+        ],
+        "conditionImmune": [
+          "poisoned"
+        ],
+        "languages": [
+          "Infernal",
+          "telepathy 120 ft."
+        ],
+        "cr": "14",
+        "trait": [
+          {
+            "name": "Devil's Sight",
+            "entries": [
+              "Magical darkness doesn't impede the devil's darkvision."
+            ]
+          },
+          {
+            "name": "Magic Resistance",
+            "entries": [
+              "The devil has advantage on saving throws against spells and other magical effects."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The devil makes three attacks: one with its bite, one with its claws, and one with its tail."
+            ]
+          },
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 10} to hit, reach 5 ft., one target. {@h}12 ({@damage 2d6 + 5}) piercing damage plus 10 ({@damage 3d6}) cold damage."
+            ]
+          },
+          {
+            "name": "Claws",
+            "entries": [
+              "{@atk mw} {@hit 10} to hit, reach 5 ft., one target. {@h}10 ({@damage 2d4 + 5}) slashing damage plus 10 ({@damage 3d6}) cold damage."
+            ]
+          },
+          {
+            "name": "Tail",
+            "entries": [
+              "{@atk mw} {@hit 10} to hit, reach 10 ft., one target. {@h}12 ({@damage 2d6 + 5}) bludgeoning damage plus 10 ({@damage 3d6}) cold damage."
+            ]
+          },
+          {
+            "name": "Wall of Ice {@recharge}",
+            "entries": [
+              "The devil magically forms an opaque wall of ice on a solid surface it can see within 60 feet of it. The wall is 1 foot thick and up to 30 feet long and 10 feet high, or it's a hemispherical dome up to 20 feet in diameter.",
+              "When the wall appears, each creature in its space is pushed out of it by the shortest route. The creature chooses which side of the wall to end up on, unless the creature is {@condition incapacitated}. The creature then makes a {@dc 17} Dexterity saving throw, taking 35 ({@damage 10d6}) cold damage on a failed save, or half as much damage on a successful one.",
+              "The wall lasts for 1 minute or until the devil is {@condition incapacitated} or dies. The wall can be damaged and breached; each 10-foot section has AC 5, 30 hit points, vulnerability to fire damage, and immunity to acid, cold, necrotic, poison, and psychic damage. If a section is destroyed, it leaves behind a sheet of frigid air in the space the wall occupied. Whenever a creature finishes moving through the frigid air on a turn, willingly or otherwise, the creature must make a {@dc 17} Constitution saving throw, taking 17 ({@damage 5d6}) cold damage on a failed save, or half as much damage on a successful one. The frigid air dissipates when the rest of the wall vanishes."
+            ]
+          }
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/ice-devil.opus"
+        },
+        "traitTags": [
+          "Devil's Sight",
+          "Magic Resistance"
+        ],
+        "senseTags": [
+          "B",
+          "SD"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "I",
+          "TP"
+        ],
+        "damageTags": [
+          "B",
+          "C",
+          "P",
+          "S"
+        ],
+        "miscTags": [
+          "MW",
+          "RCH"
+        ],
+        "savingThrowForced": [
+          "constitution",
+          "dexterity"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Ice Devil",
+            "_copy": {
+              "name": "Devils",
+              "source": "SRD51",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": {
+                    "type": "entries",
+                    "entries": [
+                      {
+                        "type": "entries",
+                        "entries": [
+                          "Found most commonly on the cold layers of Stygia and Cania, ice devils serve as commanders of the infernal armies of the Nine Hells, tormenting lesser devils as an outlet for their anger and resentment. Coveting the power of their pit fiend superiors, ice devils work ceaselessly toward promotion, slaughtering the enemies of the Nine Hells and claiming as many souls as they can for their archdevil masters.",
+                          "Resembling a giant bipedal insect, an ice devil has clawed hands and feet, powerful mandibles, and a long tail covered in razor-sharp spikes. Some carry barbed spears whose icy touch can render a foe all but helpless in combat.",
+                          {
+                            "type": "inset",
+                            "name": "Variant: Ice Devil Spear",
+                            "entries": [
+                              "Some ice devils have the following action options.",
+                              {
+                                "name": "Multiattack",
+                                "type": "entries",
+                                "entries": [
+                                  "The devil makes two attacks: one with its spear and one with its tail."
+                                ]
+                              },
+                              {
+                                "name": "Ice Spear",
+                                "type": "entries",
+                                "entries": [
+                                  "{@atk mw} {@hit +10} to hit, reach 10 ft., one target. {@h}14 ({@damage 2d8 + 5}) piercing damage + 10 ({@damage 3d6}) cold damage. If the target is a creature, it must succeed on a {@dc 15} Constitution saving throw, or for 1 minute, its speed is reduced by 10 feet; it can take either an action or a bonus action on each of its turns, not both; and it can't take reactions. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "images": {
+                  "mode": "prependArr",
+                  "items": {
+                    "type": "image",
+                    "href": {
+                      "type": "internal",
+                      "path": "bestiary/MM/Ice Devil.webp"
+                    },
+                    "width": 1000,
+                    "height": 604
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ice Devil",
+        "group": [
+          "Devils"
+        ],
+        "size": [
+          "L"
+        ],
+        "type": {
+          "type": "fiend",
+          "tags": [
+            "devil"
+          ]
+        },
+        "alignment": [
+          "L",
+          "E"
+        ],
+        "ac": [
+          18
+        ],
+        "hp": {
+          "average": 228,
+          "formula": "24d10 + 96"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "initiative": {
+          "proficiency": 1
+        },
+        "str": 21,
+        "dex": 14,
+        "con": 18,
+        "int": 18,
+        "wis": 15,
+        "cha": 18,
+        "save": {
+          "dex": "+7",
+          "con": "+9",
+          "wis": "+7",
+          "cha": "+9"
+        },
+        "skill": {
+          "insight": "+7",
+          "perception": "+7",
+          "persuasion": "+9"
+        },
+        "senses": [
+          "Blindsight 120 ft."
+        ],
+        "passive": 17,
+        "immune": [
+          "cold",
+          "fire",
+          "poison"
+        ],
+        "conditionImmune": [
+          "poisoned"
+        ],
+        "languages": [
+          "Infernal; telepathy 120 ft."
+        ],
+        "cr": "14",
+        "spellcasting": [
+          {
+            "name": "Ice Wall {@recharge}",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The devil casts {@spell Wall of Ice|SRD52} (level 8 version), requiring no spell components and using Intelligence as the spellcasting ability (spell save {@dc 17})."
+            ],
+            "recharge": {
+              "6": [
+                "{@spell Wall of Ice|SRD52} (level 8 version)"
+              ]
+            },
+            "ability": "int",
+            "displayAs": "action",
+            "hidden": [
+              "recharge"
+            ]
+          }
+        ],
+        "trait": [
+          {
+            "name": "Diabolical Restoration",
+            "entries": [
+              "If the devil dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Nine Hells."
+            ]
+          },
+          {
+            "name": "Magic Resistance",
+            "entries": [
+              "The devil has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The devil makes three Ice Spear attacks. It can replace one attack with a Tail attack."
+            ]
+          },
+          {
+            "name": "Ice Spear",
+            "entries": [
+              "{@atkr m,r} {@hit 10}, reach 5 ft. or range 30/120 ft. {@h}14 ({@damage 2d8 + 5}) Piercing damage plus 10 ({@damage 3d6}) Cold damage. Until the end of its next turn, the target can't take a {@variantrule Bonus Action|SRD52} or {@variantrule Reaction|SRD52}, its {@variantrule Speed|SRD52} decreases by 10 feet, and it can move or take one action on its turn, not both. {@hom}The spear magically returns to the devil's hand immediately after a ranged attack."
+            ]
+          },
+          {
+            "name": "Tail",
+            "entries": [
+              "{@atkr m} {@hit 10}, reach 10 ft. {@h}15 ({@damage 3d6 + 5}) Bludgeoning damage plus 18 ({@damage 4d8}) Cold damage."
+            ]
+          }
+        ],
+        "environment": [
+          "planar, nine hells"
+        ],
+        "treasure": [
+          "arcana"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/ice-devil.opus"
+        },
+        "traitTags": [
+          "Magic Resistance"
+        ],
+        "senseTags": [
+          "B"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "I",
+          "TP"
+        ],
+        "damageTags": [
+          "B",
+          "C",
+          "P"
+        ],
+        "damageTagsSpell": [
+          "C"
+        ],
+        "spellcastingTags": [
+          "O"
+        ],
+        "miscTags": [
+          "MA",
+          "MLW",
+          "RA",
+          "RCH",
+          "THW"
+        ],
+        "savingThrowForcedSpell": [
+          "constitution",
+          "dexterity"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Ice Devil",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Ice Devil",
+                "entries": [
+                  "{@i Devil of Antipathy and Intellectual Arrogance}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Planar (Nine Hells)|bestiary|environment=planar, nine hells}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Arcana"
+                      }
+                    ]
+                  },
+                  "Heartless strategists of the Nine Hells, ice devils—also known as gelugons—forsake emotion to indulge in their own malicious interpretations of logic. For them, the multiverse is a puzzle that must be solved to benefit them, their masters, and the Nine Hells.",
+                  "Ice devils act maliciously, disguising their whims as reason and strategy. In the service of evil masters, these insectile devils patiently plot the movements of infernal armies and scheme ways to fulfill wicked goals. They might also serve as guardians, owing to their martial prowess and ability to reshape battlefields with walls of ice.",
+                  "When indulging their own schemes, ice devils tempt mortals to forsake empathy and social connections to embrace selfish, destructive visions of intellectualism. After isolating victims, these devils drain them of their secrets or send them forth to spread fractious dogmas cloaked as reason.",
+                  "Ice devils usually lurk in frozen realms, particularly the frigid layer of Cania in the Nine Hells.",
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "Part of the charm of ice devils is that they always think they're smarter than you. Mmm—there are few pleasures sweeter than proving a devil wrong."
+                        ],
+                        "by": "Tasha"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Ice Devil.webp"
+                },
+                "credit": "Nils Hamm",
+                "width": 1506,
+                "height": 1795
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

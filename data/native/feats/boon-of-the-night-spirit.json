@@ -1,0 +1,52 @@
+{
+  "id": "feat.boon-of-the-night-spirit",
+  "name": "Boon of the Night Spirit",
+  "kind": "feat",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Boon of the Night Spirit",
+        "category": "EB",
+        "prerequisite": [
+          {
+            "level": 19
+          }
+        ],
+        "ability": [
+          {
+            "choose": {
+              "from": [
+                "str",
+                "dex",
+                "con",
+                "int",
+                "wis",
+                "cha"
+              ]
+            },
+            "max": 30
+          }
+        ],
+        "entries": [
+          "You gain the following benefits.",
+          {
+            "type": "entries",
+            "name": "Merge with Shadows",
+            "entries": [
+              "While within {@variantrule Dim Light|SRD52} or {@variantrule Darkness|SRD52}, you can give yourself the {@condition Invisible|SRD52} condition as a {@variantrule Bonus Action|SRD52}. The condition ends on you immediately after you take an action, a {@variantrule Bonus Action|SRD52}, or a {@variantrule Reaction|SRD52}."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Shadowy Form",
+            "entries": [
+              "While within {@variantrule Dim Light|SRD52} or {@variantrule Darkness|SRD52}, you have {@variantrule Resistance|SRD52} to all damage except Psychic and Radiant."
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

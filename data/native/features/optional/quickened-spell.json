@@ -1,0 +1,40 @@
+{
+  "id": "optionalfeature.quickened-spell",
+  "name": "Quickened Spell",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Quickened Spell",
+        "featureType": [
+          "MM"
+        ],
+        "consumes": {
+          "name": "Sorcery Point",
+          "amount": 2
+        },
+        "entries": [
+          "When you cast a spell that has a casting time of 1 action, you can spend 2 sorcery points to change the casting time to 1 bonus action for this casting."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Quickened Spell",
+        "featureType": [
+          "MM"
+        ],
+        "consumes": {
+          "name": "Sorcery Point",
+          "amount": 2
+        },
+        "entries": [
+          "When you cast a spell that has a casting time of an action, you can spend 2 Sorcery Points to change the casting time to a {@variantrule Bonus Action|SRD52} for this casting. You can't modify a spell in this way if you've already cast a level 1+ spell on the current turn, nor can you cast a level 1+ spell on this turn after modifying a spell in this way."
+        ]
+      }
+    }
+  ]
+}

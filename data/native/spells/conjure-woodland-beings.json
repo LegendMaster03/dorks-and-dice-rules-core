@@ -1,0 +1,130 @@
+{
+  "id": "spell.conjure-woodland-beings",
+  "name": "Conjure Woodland Beings",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Conjure Woodland Beings",
+        "level": 4,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "one holly berry per creature summoned"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You summon fey creatures that appear in unoccupied spaces that you can see within range. Choose one of the following options for what appears:",
+          {
+            "type": "list",
+            "items": [
+              "One {@filter fey creature of challenge rating 2 or lower|bestiary|challenge rating=[&0;&2]|type=fey|miscellaneous=!swarm}",
+              "Two {@filter fey creatures of challenge rating 1 or lower|bestiary|challenge rating=[&0;&1]|type=fey|miscellaneous=!swarm}",
+              "Four {@filter fey creatures of challenge rating 1/2 or lower|bestiary|challenge rating=[&0;&1/2]|type=fey|miscellaneous=!swarm}",
+              "Eight {@filter fey creatures of challenge rating 1/4 or lower|bestiary|challenge rating=[&0;&1/4]|type=fey|miscellaneous=!swarm}"
+            ]
+          },
+          "A summoned creature disappears when it drops to 0 hit points or when the spell ends.",
+          "The summoned creatures are friendly to you and your companions. Roll initiative for the summoned creatures as a group, which have their own turns. They obey any verbal commands that you issue to them (no action required by you). If you don't issue any commands to them, they defend themselves from hostile creatures, but otherwise take no actions.",
+          "The DM has the creatures' statistics."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using certain higher-level spell slots, you choose one of the summoning options above, and more creatures appear: twice as many with a 6th-level slot and three times as many with an 8th-level slot."
+            ]
+          }
+        ],
+        "miscTags": [
+          "SGT",
+          "SMN"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Conjure Woodland Beings",
+        "level": 4,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "emanation",
+          "distance": {
+            "type": "feet",
+            "amount": 10
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 10
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You conjure nature spirits that flit around you in a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} for the duration. Whenever the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} enters the space of a creature you can see and whenever a creature you can see enters the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} or ends its turn there, you can force that creature to make a Wisdom saving throw. The creature takes {@damage 5d8} Force damage on a failed save or half as much damage on a successful one. A creature makes this save only once per turn.",
+          "In addition, you can take the {@action Disengage|SRD52} action as a {@variantrule Bonus Action|SRD52} for the spell's duration."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "The damage increases by {@scaledamage 5d8|4-9|1d8} for each spell slot level above 4."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "force"
+        ],
+        "savingThrow": [
+          "wisdom"
+        ],
+        "miscTags": [
+          "SGT",
+          "UBA"
+        ]
+      }
+    }
+  ]
+}

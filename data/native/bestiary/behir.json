@@ -1,0 +1,369 @@
+{
+  "id": "monster.behir",
+  "name": "Behir",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Behir",
+        "size": [
+          "H"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "N",
+          "E"
+        ],
+        "ac": [
+          {
+            "ac": 17,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 168,
+          "formula": "16d12 + 64"
+        },
+        "speed": {
+          "walk": 50,
+          "climb": 40
+        },
+        "str": 23,
+        "dex": 16,
+        "con": 18,
+        "int": 7,
+        "wis": 14,
+        "cha": 12,
+        "skill": {
+          "perception": "+6",
+          "stealth": "+7"
+        },
+        "senses": [
+          "darkvision 90 ft."
+        ],
+        "passive": 16,
+        "immune": [
+          "lightning"
+        ],
+        "languages": [
+          "Draconic"
+        ],
+        "cr": "11",
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The behir makes two attacks: one with its bite and one to constrict."
+            ]
+          },
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 10} to hit, reach 10 ft., one target. {@h}22 ({@damage 3d10 + 6}) piercing damage."
+            ]
+          },
+          {
+            "name": "Constrict",
+            "entries": [
+              "{@atk mw} {@hit 10} to hit, reach 5 ft., one Large or smaller creature. {@h}17 ({@damage 2d10 + 6}) bludgeoning damage plus 17 ({@damage 2d10 + 6}) slashing damage. The target is {@condition grappled} (escape {@dc 16}) if the behir isn't already constricting a creature, and the target is {@condition restrained} until this grapple ends."
+            ]
+          },
+          {
+            "name": "Lightning Breath {@recharge 5}",
+            "entries": [
+              "The behir exhales a line of lightning that is 20 feet long and 5 feet wide. Each creature in that line must make a {@dc 16} Dexterity saving throw, taking 66 ({@damage 12d10}) lightning damage on a failed save, or half as much damage on a successful one."
+            ]
+          },
+          {
+            "name": "Swallow",
+            "entries": [
+              "The behir makes one bite attack against a Medium or smaller target it is grappling. If the attack hits, the target is also swallowed, and the grapple ends. While swallowed, the target is {@condition blinded} and {@condition restrained}, it has {@quickref Cover||3||total cover} against attacks and other effects outside the behir, and it takes 21 ({@damage 6d6}) acid damage at the start of each of the behir's turns. A behir can have only one creature swallowed at a time.",
+              "If the behir takes 30 damage or more on a single turn from the swallowed creature, the behir must succeed on a {@dc 14} Constitution saving throw at the end of that turn or regurgitate the creature, which falls {@condition prone} in a space within 10 feet of the behir. If the behir dies, a swallowed creature is no longer {@condition restrained} by it and can escape from the corpse by using 15 feet of movement, exiting {@condition prone}."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/behir.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Breath Weapon",
+          "Multiattack",
+          "Swallow"
+        ],
+        "languageTags": [
+          "DR"
+        ],
+        "damageTags": [
+          "A",
+          "B",
+          "L",
+          "P",
+          "S"
+        ],
+        "miscTags": [
+          "MW",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "blinded",
+          "grappled",
+          "restrained"
+        ],
+        "savingThrowForced": [
+          "constitution",
+          "dexterity"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Behir",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "The serpentine behir crawls along floors and clambers up walls to reach its prey. Its lightning breath can incinerate most creatures, even as more powerful foes are constricted in its coils and eaten alive.",
+                      "A behir's monstrous form resembles a combination of centipede and crocodile. Its scaled hide ranges from ultramarine to deep blue in color, fading to pale blue on its underside.",
+                      {
+                        "name": "Cavern Predators",
+                        "type": "entries",
+                        "entries": [
+                          "Behirs lair in places inaccessible to other creatures, favoring locations where would-be intruders must make a harrowing climb to reach them. Deep pits, high caves in cliff walls, and caverns reached only by narrow, twisting tunnels are prime sites for a behir ambush. A behir's dozen legs allow it to scramble through its lair site with ease. When not climbing, it moves even faster by folding its legs beside its body and slithering like a snake.",
+                          "Behirs swallow their prey whole, after which they enter a period of dormancy while they digest. While dormant, a behir chooses a hiding place where intruders in its lair might overlook it."
+                        ]
+                      },
+                      {
+                        "name": "Foes of the Dragons",
+                        "type": "entries",
+                        "entries": [
+                          "In times long forgotten, giants and dragons engaged in seemingly endless war. Storm giants created the first behirs as weapons against the dragons, and behirs retain a natural hatred for dragonkind.",
+                          "A behir never makes its lair in an area it knows to be inhabited by a dragon. If a dragon attempts to establish a lair within a few dozen miles of a behir's lair, the behir is compelled to kill the dragon or drive it off. Only if the dragon proves too powerful to fight does a behir back down, seeking out a new lair site a great distance away."
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "I've already eaten three giant bats, six troglodytes, and a mind flayer today, but that's okay. Plenty of room in my belly for you and your friends."
+                        ],
+                        "by": "Lludd the behir, confronting adventurers in the Lost Caverns of Tsojcanth"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Behir.webp"
+                },
+                "width": 1000,
+                "height": 513
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Behir",
+        "size": [
+          "H"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "N",
+          "E"
+        ],
+        "ac": [
+          17
+        ],
+        "hp": {
+          "average": 168,
+          "formula": "16d12 + 64"
+        },
+        "speed": {
+          "walk": 50,
+          "climb": 50
+        },
+        "str": 23,
+        "dex": 16,
+        "con": 18,
+        "int": 7,
+        "wis": 14,
+        "cha": 12,
+        "skill": {
+          "perception": "+6",
+          "stealth": "+7"
+        },
+        "senses": [
+          "Darkvision 90 ft."
+        ],
+        "passive": 16,
+        "immune": [
+          "lightning"
+        ],
+        "languages": [
+          "Draconic"
+        ],
+        "cr": "11",
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The behir makes one Bite attack and uses Constrict."
+            ]
+          },
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atkr m} {@hit 10}, reach 10 ft. {@h}19 ({@damage 2d12 + 6}) Piercing damage plus 11 ({@damage 2d10}) Lightning damage."
+            ]
+          },
+          {
+            "name": "Constrict",
+            "entries": [
+              "{@actSave str} {@dc 18}, one Large or smaller creature the behir can see within 5 feet. {@actSaveFail} 28 ({@damage 5d8 + 6}) Bludgeoning damage. The target has the {@condition Grappled|SRD52} condition (escape {@dc 16}), and it has the {@condition Restrained|SRD52} condition until the grapple ends."
+            ]
+          },
+          {
+            "name": "Lightning Breath {@recharge 5}",
+            "entries": [
+              "{@actSave dex} {@dc 16}, each creature in a 90-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 66 ({@damage 12d10}) Lightning damage. {@actSaveSuccess} Half damage."
+            ]
+          }
+        ],
+        "bonus": [
+          {
+            "name": "Swallow",
+            "entries": [
+              "{@actSave dex} {@dc 18}, one Large or smaller creature {@condition Grappled|SRD52} by the behir (the behir can have only one creature swallowed at a time). {@actSaveFail} The behir swallows the target, which is no longer {@condition Grappled|SRD52}. While swallowed, a creature has the {@condition Blinded|SRD52} and {@condition Restrained|SRD52} conditions, has {@variantrule Cover|SRD52|Total Cover} against attacks and other effects outside the behir, and takes 21 ({@damage 6d6}) Acid damage at the start of each of the behir's turns.",
+              "If the behir takes 30 damage or more on a single turn from the swallowed creature, the behir must succeed on a {@dc 14} Constitution saving throw at the end of that turn or regurgitate the creature, which falls in a space within 10 feet of the behir and has the {@condition Prone|SRD52} condition. If the behir dies, a swallowed creature is no longer {@condition Restrained|SRD52} and can escape from the corpse by using 15 feet of movement, exiting {@condition Prone|SRD52}."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "treasure": [
+          "any"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/behir.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Breath Weapon",
+          "Multiattack",
+          "Swallow"
+        ],
+        "languageTags": [
+          "DR"
+        ],
+        "damageTags": [
+          "A",
+          "B",
+          "L",
+          "P"
+        ],
+        "miscTags": [
+          "MA",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "grappled",
+          "prone",
+          "restrained"
+        ],
+        "savingThrowForced": [
+          "constitution",
+          "dexterity",
+          "strength"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Behir",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Behir",
+                "entries": [
+                  "{@i Lightning-Spewing Glutton}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Underdark|bestiary|environment=underdark}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Any"
+                      }
+                    ]
+                  },
+                  "Twelve-legged, reptilian predators, behirs endlessly hunt for their next meal. Their short legs propel them quickly across floors and walls. Any prey that behirs can't chase down, they blast with breaths of powerful lightning.",
+                  "Legends claim the first behirs were magically created by storm giants during an ancient, multiversal conflict between giants and dragons. The giants used their mastery of weather to alter the essence of blue dragons. The results were the first behirs, which served as hunters with a particular taste for dragon eggs.",
+                  "Behirs live in sprawling cave systems and elaborate ruins where they can make the most of their exceptional mobility. They are mindful of areas where dragons dwell, as most dragons view behirs as dangerous abominations and attack them on sight. Nevertheless, behirs occasionally hunt for dragon lairs in the hope of finding and devouring unhatched dragon eggs.",
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "You wouldn't believe all the great stuff I've swallowed! Now just climb on in here, and you can keep whatever you find."
+                        ],
+                        "by": "Lludd, Behir"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Behir.webp"
+                },
+                "credit": "Andrea Piparo",
+                "width": 1463,
+                "height": 2560
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

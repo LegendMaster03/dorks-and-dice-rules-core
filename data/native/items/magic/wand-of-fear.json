@@ -1,0 +1,107 @@
+{
+  "id": "item.wand-of-fear",
+  "name": "Wand of Fear",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Wand of Fear",
+        "type": "WD|SRD51",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": true,
+        "weight": 1,
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d6 + 1}",
+        "charges": 7,
+        "entries": [
+          "This wand has 7 charges for the following properties. It regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll a {@dice d20}. On a 1, the wand crumbles into ashes and is destroyed.",
+          {
+            "name": "Command",
+            "type": "entries",
+            "entries": [
+              "While holding the wand, you can use an action to expend 1 charge and command another creature to flee or grovel, as with the {@spell command} spell (save {@dc 15})."
+            ]
+          },
+          {
+            "name": "Cone of Fear",
+            "type": "entries",
+            "entries": [
+              "While holding the wand, you can use an action to expend 2 charges, causing the wand's tip to emit a 60-foot cone of amber light. Each creature in the cone must succeed on a {@dc 15} Wisdom saving throw or become {@condition frightened} of you for 1 minute. While it is {@condition frightened} in this way, a creature must spend its turns trying to move as far away from you as it can, and it can't willingly move to a space within 30 feet of you. It also can't take reactions. For its action, it can use only the {@action Dash} action or try to escape from an effect that prevent it from moving. If it has nowhere it can move, the creature can use the {@action Dodge} action. At the end of each of its turns, a creature can repeat the saving throw, ending the effect on itself on a success."
+            ]
+          }
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "command"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Wand of Fear",
+        "type": "WD|SRD52",
+        "rarity": "rare",
+        "reqAttune": true,
+        "weight": 1,
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d6 + 1}",
+        "charges": 7,
+        "entries": [
+          "This wand has 7 charges.",
+          {
+            "type": "entries",
+            "name": "Spells",
+            "entries": [
+              "While holding the wand, you can cast one of the spells (save {@dc 15}) on the following table from it. The table indicates how many charges you must expend to cast the spell.",
+              {
+                "type": "table",
+                "colStyles": [
+                  "col-10",
+                  "col-2 text-center"
+                ],
+                "colLabels": [
+                  "Spell",
+                  "Charge Cost"
+                ],
+                "rows": [
+                  [
+                    "{@spell Command|SRD52} (\"flee\" or \"grovel\" only)",
+                    "1"
+                  ],
+                  [
+                    "{@spell Fear|SRD52} (60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone})",
+                    "3"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Regaining Charges",
+            "entries": [
+              "The wand regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll {@dice 1d20}. On a 1, the wand crumbles into ashes and is destroyed."
+            ]
+          }
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "command|srd52"
+            ],
+            "3": [
+              "fear|srd52"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

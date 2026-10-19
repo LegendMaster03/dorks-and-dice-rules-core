@@ -1,0 +1,283 @@
+{
+  "id": "monster.white-dragon-wyrmling",
+  "name": "White Dragon Wyrmling",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "White Dragon Wyrmling",
+        "group": [
+          "Chromatic Dragon"
+        ],
+        "size": [
+          "M"
+        ],
+        "type": "dragon",
+        "alignment": [
+          "C",
+          "E"
+        ],
+        "ac": [
+          {
+            "ac": 16,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 32,
+          "formula": "5d8 + 10"
+        },
+        "speed": {
+          "walk": 30,
+          "burrow": 15,
+          "fly": 60,
+          "swim": 30
+        },
+        "str": 14,
+        "dex": 10,
+        "con": 14,
+        "int": 5,
+        "wis": 10,
+        "cha": 11,
+        "save": {
+          "dex": "+2",
+          "con": "+4",
+          "wis": "+2",
+          "cha": "+2"
+        },
+        "skill": {
+          "perception": "+4",
+          "stealth": "+2"
+        },
+        "senses": [
+          "blindsight 10 ft.",
+          "darkvision 60 ft."
+        ],
+        "passive": 14,
+        "immune": [
+          "cold"
+        ],
+        "languages": [
+          "Draconic"
+        ],
+        "cr": "2",
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}7 ({@damage 1d10 + 2}) piercing damage plus 2 ({@damage 1d4}) cold damage."
+            ]
+          },
+          {
+            "name": "Cold Breath {@recharge 5}",
+            "entries": [
+              "The dragon exhales an icy blast of hail in a 15-foot cone. Each creature in that area must make a {@dc 12} Constitution saving throw, taking 22 ({@damage 5d8}) cold damage on a failed save, or half as much damage on a successful one."
+            ]
+          }
+        ],
+        "dragonAge": "wyrmling",
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/white-dragon-wyrmling.opus"
+        },
+        "senseTags": [
+          "B",
+          "D"
+        ],
+        "actionTags": [
+          "Breath Weapon"
+        ],
+        "languageTags": [
+          "DR"
+        ],
+        "damageTags": [
+          "C",
+          "P"
+        ],
+        "miscTags": [
+          "AOE",
+          "MW"
+        ],
+        "savingThrowForced": [
+          "constitution"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "White Dragon Wyrmling",
+            "_copy": {
+              "name": "White Dragon",
+              "source": "SRD51"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "White Dragon Wyrmling",
+        "group": [
+          "Chromatic Dragons"
+        ],
+        "size": [
+          "M"
+        ],
+        "type": {
+          "type": "dragon",
+          "tags": [
+            "chromatic"
+          ]
+        },
+        "alignment": [
+          "C",
+          "E"
+        ],
+        "ac": [
+          16
+        ],
+        "hp": {
+          "average": 32,
+          "formula": "5d8 + 10"
+        },
+        "speed": {
+          "walk": 30,
+          "burrow": 15,
+          "fly": 60,
+          "swim": 30
+        },
+        "initiative": {
+          "proficiency": 1
+        },
+        "str": 14,
+        "dex": 10,
+        "con": 14,
+        "int": 5,
+        "wis": 10,
+        "cha": 11,
+        "save": {
+          "dex": "+2",
+          "wis": "+2"
+        },
+        "skill": {
+          "perception": "+4",
+          "stealth": "+2"
+        },
+        "senses": [
+          "Blindsight 10 ft.",
+          "Darkvision 60 ft."
+        ],
+        "passive": 14,
+        "immune": [
+          "cold"
+        ],
+        "languages": [
+          "Draconic"
+        ],
+        "cr": "2",
+        "trait": [
+          {
+            "name": "Ice Walk",
+            "entries": [
+              "The dragon can move across and climb icy surfaces without needing to make an ability check. Additionally, {@variantrule Difficult Terrain|SRD52} composed of ice or snow doesn't cost it extra movement."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The dragon makes two Rend attacks."
+            ]
+          },
+          {
+            "name": "Rend",
+            "entries": [
+              "{@atkr m} {@hit 4}, reach 5 ft. {@h}6 ({@damage 1d8 + 2}) Slashing damage plus 2 ({@damage 1d4}) Cold damage."
+            ]
+          },
+          {
+            "name": "Cold Breath {@recharge 5}",
+            "entries": [
+              "{@actSave con} {@dc 12}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 22 ({@damage 5d8}) Cold damage. {@actSaveSuccess} Half damage."
+            ]
+          }
+        ],
+        "environment": [
+          "arctic"
+        ],
+        "treasure": [
+          "arcana"
+        ],
+        "dragonAge": "wyrmling",
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/white-dragon-wyrmling.opus"
+        },
+        "senseTags": [
+          "B",
+          "D"
+        ],
+        "actionTags": [
+          "Breath Weapon",
+          "Multiattack"
+        ],
+        "languageTags": [
+          "DR"
+        ],
+        "damageTags": [
+          "C",
+          "S"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "savingThrowForced": [
+          "constitution"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "White Dragon Wyrmling",
+            "_copy": {
+              "name": "White Dragons",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "White dragon wyrmlings usually head off on their own soon after hatching. While the cold means little to these creatures, food is scarce in arctic realms, and predators there are merciless. Most white dragon wyrmlings survive by scavenging, hunting opportunistically, and quickly fleeing foes—including other white dragons."
+                      ]
+                    }
+                  ]
+                },
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/White Dragon Wyrmling.webp"
+                      },
+                      "credit": "Vance Kovacs",
+                      "width": 1386,
+                      "height": 1109
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

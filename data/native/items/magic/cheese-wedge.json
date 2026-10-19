@@ -1,0 +1,20 @@
+{
+  "id": "item.cheese-wedge",
+  "name": "Cheese (wedge)",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Cheese (wedge)",
+        "type": "FD|SRD52",
+        "rarity": "none",
+        "value": 10,
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

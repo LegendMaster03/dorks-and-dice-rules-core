@@ -1,0 +1,86 @@
+{
+  "id": "subclass.college-of-lore.bard.lore.Lore",
+  "name": "College of Lore",
+  "kind": "subclass",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "College of Lore",
+        "shortName": "Lore",
+        "className": "Bard",
+        "classSource": "SRD51",
+        "additionalSpells": [
+          {
+            "name": "Additional Magical Secrets",
+            "known": {
+              "6": [
+                {
+                  "choose": "level=0;1;2;3"
+                },
+                {
+                  "choose": "level=0;1;2;3"
+                }
+              ]
+            }
+          }
+        ],
+        "subclassFeatures": [
+          "College of Lore|Bard||Lore||3",
+          "Additional Magical Secrets|Bard||Lore||6",
+          "Peerless Skill|Bard||Lore||14"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "College of Lore",
+        "shortName": "Lore",
+        "className": "Bard",
+        "classSource": "SRD52",
+        "additionalSpells": [
+          {
+            "prepared": {
+              "6": [
+                {
+                  "choose": "level=0;1;2;3|class=Cleric;Druid;Wizard"
+                },
+                {
+                  "choose": "level=0;1;2;3|class=Cleric;Druid;Wizard"
+                }
+              ]
+            }
+          }
+        ],
+        "subclassFeatures": [
+          "College of Lore|Bard|SRD52|Lore|SRD52|3",
+          "Magical Discoveries|Bard|SRD52|Lore|SRD52|6",
+          "Peerless Skill|Bard|SRD52|Lore|SRD52|14"
+        ],
+        "lore": [
+          {
+            "name": "College of Lore",
+            "shortName": "Lore",
+            "className": "Bard",
+            "classSource": "SRD52",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "classes/XPHB/Lore Bard.webp"
+                },
+                "credit": "Mike Pape",
+                "width": 850,
+                "height": 2453
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.bard"
+}

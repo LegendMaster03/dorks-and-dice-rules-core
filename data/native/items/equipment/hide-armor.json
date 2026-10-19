@@ -1,0 +1,35 @@
+{
+  "id": "baseitem.hide-armor",
+  "name": "Hide Armor",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Hide Armor",
+        "type": "MA",
+        "rarity": "none",
+        "weight": 12,
+        "value": 1000,
+        "ac": 12,
+        "armor": true,
+        "entries": [
+          "This crude armor consists of thick furs and pelts. It is commonly worn by barbarian tribes, evil humanoids, and other folk who lack access to the tools and materials needed to create better armor."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Hide Armor",
+        "type": "MA|SRD52",
+        "rarity": "none",
+        "weight": 12,
+        "value": 1000,
+        "ac": 12,
+        "armor": true
+      }
+    }
+  ]
+}

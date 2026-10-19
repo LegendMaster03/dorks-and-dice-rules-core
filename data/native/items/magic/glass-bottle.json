@@ -1,0 +1,39 @@
+{
+  "id": "item.glass-bottle",
+  "name": "Glass Bottle",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Glass Bottle",
+        "type": "G",
+        "rarity": "none",
+        "weight": 2,
+        "value": 200,
+        "entries": [
+          "A bottle holds 1½ pints of liquid."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Glass Bottle",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 2,
+        "value": 200,
+        "entries": [
+          "A Glass Bottle holds up to 1½ pints."
+        ],
+        "containerCapacity": {
+          "volume": [
+            0.03
+          ]
+        }
+      }
+    }
+  ]
+}

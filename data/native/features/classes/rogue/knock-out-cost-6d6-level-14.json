@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.knock-out-cost-6d6.rogue.knock-out-cost-6d6.14",
+  "name": "Knock Out (Cost: 6d6)",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Knock Out (Cost: 6d6)",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 14,
+        "entries": [
+          "The target must succeed on a Constitution saving throw, or it has the {@condition Unconscious|SRD52} condition for 1 minute or until it takes any damage. The {@condition Unconscious|SRD52} target repeats the save at the end of each of its turns, ending the effect on itself on a success."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 14
+}

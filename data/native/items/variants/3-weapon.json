@@ -1,0 +1,55 @@
+{
+  "id": "magicvariant.3-weapon",
+  "name": "+3 Weapon",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "+3 Weapon",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "weapon": true
+          }
+        ],
+        "excludes": {
+          "net": true
+        },
+        "inherits": {
+          "namePrefix": "+3 ",
+          "source": "SRD51",
+          "page": 250,
+          "rarity": "very rare",
+          "bonusWeapon": "+3",
+          "entries": [
+            "You have a {=bonusWeapon} bonus to attack and damage rolls made with this magic weapon."
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "+3 Weapon",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "weapon": true
+          }
+        ],
+        "inherits": {
+          "namePrefix": "+3 ",
+          "source": "SRD52",
+          "page": 253,
+          "rarity": "very rare",
+          "bonusWeapon": "+3",
+          "entries": [
+            "You have a {=bonusWeapon} bonus to attack and damage rolls made with this magic weapon."
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "id": "monster.giant-eagle",
+  "name": "Giant Eagle",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Giant Eagle",
+        "size": [
+          "L"
+        ],
+        "type": "beast",
+        "alignment": [
+          "N",
+          "G"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 26,
+          "formula": "4d10 + 4"
+        },
+        "speed": {
+          "walk": 10,
+          "fly": 80
+        },
+        "str": 16,
+        "dex": 17,
+        "con": 13,
+        "int": 8,
+        "wis": 14,
+        "cha": 10,
+        "skill": {
+          "perception": "+4"
+        },
+        "passive": 14,
+        "languages": [
+          "Giant Eagle",
+          "understands Common and Auran but can't speak them"
+        ],
+        "cr": "1",
+        "trait": [
+          {
+            "name": "Keen Sight",
+            "entries": [
+              "The eagle has advantage on Wisdom ({@skill Perception}) checks that rely on sight."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The eagle makes two attacks: one with its beak and one with its talons."
+            ]
+          },
+          {
+            "name": "Beak",
+            "entries": [
+              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d6 + 3}) piercing damage."
+            ]
+          },
+          {
+            "name": "Talons",
+            "entries": [
+              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}10 ({@damage 2d6 + 3}) slashing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "mountain",
+          "grassland",
+          "hill",
+          "coastal"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/giant-eagle.opus"
+        },
+        "traitTags": [
+          "Keen Senses"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "AU",
+          "C",
+          "CS",
+          "OTH"
+        ],
+        "damageTags": [
+          "P",
+          "S"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Giant Eagle",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "A giant eagle is a noble creature that speaks its own language and understands speech in the Common tongue. A mated pair of giant eagles typically has up to four eggs or young in their nest (treat the young as normal eagles)."
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Giant Eagle.webp"
+                },
+                "width": 1000,
+                "height": 501
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Giant Eagle",
+        "size": [
+          "L"
+        ],
+        "type": "celestial",
+        "alignment": [
+          "N",
+          "G"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 26,
+          "formula": "4d10 + 4"
+        },
+        "speed": {
+          "walk": 10,
+          "fly": 80
+        },
+        "str": 16,
+        "dex": 17,
+        "con": 13,
+        "int": 8,
+        "wis": 14,
+        "cha": 10,
+        "skill": {
+          "perception": "+6"
+        },
+        "passive": 16,
+        "resist": [
+          "necrotic",
+          "radiant"
+        ],
+        "languages": [
+          "Celestial; understands Common and Primordial (Auran) but can't speak them"
+        ],
+        "cr": "1",
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The eagle makes two Rend attacks."
+            ]
+          },
+          {
+            "name": "Rend",
+            "entries": [
+              "{@atkr m} {@hit 5}, reach 5 ft. {@h}5 ({@damage 1d4 + 3}) Slashing damage plus 3 ({@damage 1d6}) Radiant damage."
+            ]
+          }
+        ],
+        "environment": [
+          "coastal",
+          "grassland",
+          "hill",
+          "mountain"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/giant-eagle.opus"
+        },
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "AU",
+          "C",
+          "CE",
+          "CS",
+          "P"
+        ],
+        "damageTags": [
+          "R",
+          "S"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Giant Eagle",
+            "_copy": {
+              "name": "Animals",
+              "source": "SRD52",
+              "_mod": {
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Eagle.webp"
+                      },
+                      "width": 1000,
+                      "height": 501
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

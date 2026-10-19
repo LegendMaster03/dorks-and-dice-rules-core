@@ -1,0 +1,40 @@
+{
+  "id": "deity.thrym",
+  "name": "Thrym",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a-1",
+      "content": {
+        "name": "Thrym",
+        "pantheon": "Nonhuman",
+        "alignment": [
+          "C",
+          "E"
+        ],
+        "title": "God of frost giants and strength",
+        "domains": [
+          "War"
+        ],
+        "symbol": "White double-bladed axe"
+      }
+    },
+    {
+      "key": "candidate-a-2",
+      "content": {
+        "name": "Thrym",
+        "pantheon": "Norse",
+        "alignment": [
+          "C",
+          "E"
+        ],
+        "title": "God of frost giants and cold",
+        "domains": [
+          "War"
+        ],
+        "symbol": "White double-bladed axe"
+      }
+    }
+  ]
+}

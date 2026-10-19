@@ -1,0 +1,37 @@
+{
+  "id": "item.dust-of-disappearance",
+  "name": "Dust of Disappearance",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Dust of Disappearance",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "Found in a small packet, this powder resembles very fine sand. There is enough of it for one use. When you use an action to throw the dust into the air, you and each creature and object within 10 feet of you become {@condition invisible} for {@dice 2d4} minutes. The duration is the same for all subjects, and the dust is consumed when its magic takes effect. If a creature affected by the dust attacks or casts a spell, the invisibility ends for that creature."
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Dust of Disappearance",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "This powder resembles fine sand. There is enough of it for one use. When you take a {@action Utilize|SRD52} action to throw the dust into the air, you and each creature and object within a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you have the {@condition Invisible|SRD52} condition for {@dice 2d4} minutes. The duration is the same for all subjects, and the dust is consumed when its magic takes effect. Immediately after an affected creature makes an attack roll, deals damage, or casts a spell, the {@condition Invisible|SRD52} condition ends for that creature."
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

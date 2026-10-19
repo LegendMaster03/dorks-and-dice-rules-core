@@ -1,0 +1,27 @@
+{
+  "id": "feat.savage-attacker",
+  "name": "Savage Attacker",
+  "kind": "feat",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b-1",
+      "content": {
+        "name": "Savage Attacker",
+        "entries": [
+          "Once per turn when you roll damage for a melee weapon attack, you can reroll the weapon's damage dice and use either total."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b-2",
+      "content": {
+        "name": "Savage Attacker",
+        "category": "O",
+        "entries": [
+          "You've trained to deal particularly damaging strikes. Once per turn when you hit a target with a weapon, you can roll the weapon's damage dice twice and use either roll against the target."
+        ]
+      }
+    }
+  ]
+}

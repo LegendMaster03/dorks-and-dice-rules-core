@@ -1,0 +1,1835 @@
+{
+  "id": "rule.character-creation",
+  "name": "Character Creation",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "type": "section",
+        "name": "Character Creation",
+        "page": 19,
+        "entries": [
+          {
+            "type": "section",
+            "name": "Choose a Character Sheet",
+            "page": 19,
+            "entries": [
+              "You'll record the main details of your character on a character sheet. Throughout this chapter, we use the term \"character sheet\" to mean whatever you use to track your character's details, whether it's a printed character sheet, a digital character sheet, or plain paper. Choose whichever style of sheet works for you, and then embark on creating a character!"
+            ],
+            "id": "091"
+          },
+          {
+            "type": "section",
+            "name": "Create Your Character",
+            "page": 19,
+            "entries": [
+              "Here are the steps to make a character; each step is explored in detail:",
+              {
+                "type": "list",
+                "style": "list-decimal",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Choose a Class",
+                    "entry": "Every adventurer is a member of a class. A class broadly describes a character's vocation, special talents, and favored tactics."
+                  },
+                  {
+                    "type": "item",
+                    "name": "Determine Origin",
+                    "entry": "A character's origin includes two elements: background and species. How did the character spend the years leading up to a life of adventure? Who are the character's ancestors? You can also choose your character's languages."
+                  },
+                  {
+                    "type": "item",
+                    "name": "Determine Ability Scores",
+                    "entry": "Much of what your character does in the game depends on the character's six abilities."
+                  },
+                  {
+                    "type": "item",
+                    "name": "Choose an Alignment",
+                    "entry": "Alignment is a shorthand for your character's moral compass."
+                  },
+                  {
+                    "type": "item",
+                    "name": "Fill in Details",
+                    "entry": "Using the choices you've made, fill in the remaining details on your character sheet."
+                  }
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Step 1: Choose Class",
+                "page": 19,
+                "entries": [
+                  "Choose a class, and write it on your character sheet. The Class Overview table summarizes the classes. See {@book Classes|srd52|3} for the classes' details.",
+                  {
+                    "type": "table",
+                    "caption": "Class Overview",
+                    "srd52": true,
+                    "basicRules2024": true,
+                    "colLabels": [
+                      "Class",
+                      "Likes...",
+                      "Primary Ability",
+                      "Complexity"
+                    ],
+                    "colStyles": [
+                      "col-3",
+                      "col-3",
+                      "col-3",
+                      "col-3"
+                    ],
+                    "rows": [
+                      [
+                        "{@class Barbarian|srd52}",
+                        "Battle",
+                        "Strength",
+                        "Average"
+                      ],
+                      [
+                        "{@class Bard|srd52}",
+                        "Performing",
+                        "Charisma",
+                        "High"
+                      ],
+                      [
+                        "{@class Cleric|srd52}",
+                        "Gods",
+                        "Wisdom",
+                        "Average"
+                      ],
+                      [
+                        "{@class Druid|srd52}",
+                        "Nature",
+                        "Wisdom",
+                        "High"
+                      ],
+                      [
+                        "{@class Fighter|srd52}",
+                        "Weapons",
+                        "Strength or Dexterity",
+                        "Low"
+                      ],
+                      [
+                        "{@class Monk|srd52}",
+                        "Unarmed combat",
+                        "Dexterity and Wisdom",
+                        "High"
+                      ],
+                      [
+                        "{@class Paladin|srd52}",
+                        "Defense",
+                        "Strength and Charisma",
+                        "Average"
+                      ],
+                      [
+                        "{@class Ranger|srd52}",
+                        "Survival",
+                        "Dexterity and Wisdom",
+                        "Average"
+                      ],
+                      [
+                        "{@class Rogue|srd52}",
+                        "Stealth",
+                        "Dexterity",
+                        "Low"
+                      ],
+                      [
+                        "{@class Sorcerer|srd52}",
+                        "Power",
+                        "Charisma",
+                        "High"
+                      ],
+                      [
+                        "{@class Warlock|srd52}",
+                        "Occult lore",
+                        "Charisma",
+                        "High"
+                      ],
+                      [
+                        "{@class Wizard|srd52}",
+                        "Spellbooks",
+                        "Intelligence",
+                        "Average"
+                      ]
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Write Your Level",
+                    "page": 19,
+                    "entries": [
+                      "Write your character's level on your character sheet. Typically, a character starts at level 1 and advances in level by adventuring and gaining {@variantrule Experience Points|srd52} (XP).",
+                      {
+                        "type": "entries",
+                        "name": "Write Your XP",
+                        "page": 19,
+                        "entries": [
+                          "Also record your Experience Points. A level 1 character has 0 XP."
+                        ],
+                        "id": "095"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Starting at a Higher Level",
+                        "page": 19,
+                        "entries": [
+                          "Your DM might start you at a higher level. If you start at level 3 or higher, write your chosen subclass on your character sheet. See the \"{@book Starting at Higher Levels|srd52|2|Starting at Higher Levels}\" section later in the chapter for more information."
+                        ],
+                        "id": "096"
+                      }
+                    ],
+                    "id": "094"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Note Armor Training",
+                    "page": 19,
+                    "entries": [
+                      "Your class might give you training with certain categories of armor. Note your armor training on your character sheet. Armor training with a kind of armor means you can wear that armor effectively, gaining defensive bonuses from it. The categories of armor are described in {@book Equipment|srd52|6|Armor}."
+                    ],
+                    "id": "097"
+                  }
+                ],
+                "id": "093"
+              },
+              {
+                "type": "entries",
+                "name": "Step 2: Character Origin",
+                "page": 19,
+                "entries": [
+                  "Determining your character's origin involves choosing a background, a species, and two languages.",
+                  "A character's background represents the place and occupation that were most formative for the character. The combination of background, species, and languages provides fertile soil for your imagination as you ponder your character's earliest days.",
+                  {
+                    "type": "entries",
+                    "name": "Choose a Background",
+                    "page": 19,
+                    "entries": [
+                      "Choose your character's background, and write it on your character sheet. You can choose any of the backgrounds detailed in {@book Character Origins|srd52|4|Background Descriptions}, and your GM might offer additional backgrounds as options.",
+                      "The background you choose influences step 3, when you determine your character's ability scores. If you're having trouble choosing, the Ability Scores and Backgrounds table shows which backgrounds benefit which ability scores. Look for your class's primary ability there.",
+                      {
+                        "type": "table",
+                        "caption": "Ability Scores and Backgrounds",
+                        "srd52": true,
+                        "colLabels": [
+                          "Ability",
+                          "Background"
+                        ],
+                        "colStyles": [
+                          "col-4",
+                          "col-8"
+                        ],
+                        "rows": [
+                          [
+                            "Strength",
+                            "{@background Soldier|srd52}"
+                          ],
+                          [
+                            "Dexterity",
+                            "{@background Soldier|srd52}"
+                          ],
+                          [
+                            "Constitution",
+                            "{@background Soldier|srd52}"
+                          ],
+                          [
+                            "Intelligence",
+                            "{@background Acolyte|srd52}"
+                          ],
+                          [
+                            "Wisdom",
+                            "{@background Acolyte|srd52}"
+                          ],
+                          [
+                            "Charisma",
+                            "{@background Acolyte|srd52}"
+                          ]
+                        ]
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Record Your Feat",
+                        "page": 20,
+                        "entries": [
+                          "A background gives you a feat, which grants your character particular capabilities. Feats are detailed in {@book Feats|srd52|5}. Write the feat on your character sheet."
+                        ],
+                        "id": "09a"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Note Proficiencies",
+                        "page": 20,
+                        "entries": [
+                          "Your background gives proficiency in two skills and with one tool. Record this information on your character sheet.",
+                          "Your class also gives proficiencies. Check your class description in {@book Classes|srd52|3} and note the proficiencies on your character sheet.",
+                          "On the sample character sheet, you can indicate proficiency in skills and saving throws by marking the circle next to them.",
+                          "The features table in your class description shows your Proficiency Bonus (described in {@book chapter 1|srd52|1|Proficiency}), which is +2 for a level 1 character. Note this number on your character sheet. You'll fill in other numbers connected to these proficiencies in {@book step 5|srd52|2|Step 5: Fill In Details}."
+                        ],
+                        "id": "09b"
+                      }
+                    ],
+                    "id": "099"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Choose Starting Equipment",
+                    "page": 20,
+                    "entries": [
+                      "Your background and class both provide starting equipment. Any coins that you gain at this step can be immediately spent on equipment from {@book Equipment|srd52|6}. In addition, you can have one {@item trinket|srd52} at no cost at the end of this chapter.",
+                      "Record your chosen equipment on your character sheet. Equipment is described in {@book Equipment|srd52|6}, but for now you can just write it all down and look up the specifics in that chapter later. There's also space on the sample character sheet to note any coins you have left after purchasing your equipment, as well as treasure you acquire on your adventures."
+                    ],
+                    "id": "09c"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Choose a Species",
+                    "page": 20,
+                    "entries": [
+                      "Choose a species for your character. The following species options are detailed in \"{@book Character Origins|srd52|4}\": {@race Dragonborn|srd52}, {@race Dwarf|srd52}, {@race Elf|srd52}, {@race Gnome|srd52}, {@race Goliath|srd52}, {@race Halfling|srd52}, {@race Human|srd52}, {@race Orc|srd52}, and {@race Tiefling|srd52}. Once you've chosen a species, write it on your character sheet. Then record your species' traits.",
+                      "Your character's {@variantrule size|srd52} and {@variantrule Speed|srd52} are determined by the character's species; record these in the appropriate places on your character sheet as well (you may write just the first letter of your size)."
+                    ],
+                    "id": "09d"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Imagine Your Past and Present",
+                    "page": 20,
+                    "entries": [
+                      "Let your character's background and species inspire how you imagine their past. That past fed into the character's present. With that in mind, consider answers to the following questions as your character:",
+                      {
+                        "type": "list",
+                        "items": [
+                          "Who raised you?",
+                          "Who was your dearest childhood friend?",
+                          "Did you grow up with a pet?",
+                          "Have you fallen in love? If so, with whom?",
+                          "Did you join an organization, such as a guild or religion? If so, are you still a member of it?",
+                          "What elements of your past inspire you to go on adventures now?"
+                        ]
+                      }
+                    ],
+                    "id": "09e"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Choose Languages",
+                    "page": 20,
+                    "entries": [
+                      "Your character knows at least three languages: Common plus two languages you roll or choose from the Standard Languages table. Knowledge of a language means your character can communicate in it, read it, and write it. Your class and other features might also give you languages.",
+                      "The Standard Languages table lists languages that are widespread in the setting. Every player character knows Common. The other standard languages originated with the first members of the most prominent species in the setting and have since spread widely.",
+                      {
+                        "type": "table",
+                        "caption": "Standard Languages",
+                        "colLabels": [
+                          "{@dice 1d12}",
+                          "Language"
+                        ],
+                        "colStyles": [
+                          "col-2 text-center",
+                          "col-10"
+                        ],
+                        "rows": [
+                          [
+                            "—",
+                            "{@language Common|srd52}"
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 1
+                              }
+                            },
+                            "{@language Common Sign Language|srd52}"
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 2
+                              }
+                            },
+                            "{@language Draconic|srd52}"
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "min": 3,
+                                "max": 4
+                              }
+                            },
+                            "{@language Dwarvish|srd52}"
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "min": 5,
+                                "max": 6
+                              }
+                            },
+                            "{@language Elvish|srd52}"
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 7
+                              }
+                            },
+                            "{@language Giant|srd52}"
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 8
+                              }
+                            },
+                            "{@language Gnomish|srd52}"
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 9
+                              }
+                            },
+                            "{@language Goblin|srd52}"
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "min": 10,
+                                "max": 11
+                              }
+                            },
+                            "{@language Halfling|srd52}"
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 12
+                              }
+                            },
+                            "{@language Orc|srd52}"
+                          ]
+                        ]
+                      },
+                      "The Rare Languages table lists languages that are either secret or derived from other planes of existence and thus less widespread in the worlds of the Material Plane. Some features let a character learn a rare language.",
+                      {
+                        "type": "table",
+                        "caption": "Rare Languages",
+                        "colLabels": [
+                          "Language",
+                          "Language"
+                        ],
+                        "colStyles": [
+                          "col-6",
+                          "col-6"
+                        ],
+                        "rows": [
+                          [
+                            "{@language Abyssal|srd52}",
+                            "{@language Primordial|srd52|Primordial*}"
+                          ],
+                          [
+                            "{@language Celestial|srd52}",
+                            "{@language Sylvan|srd52}"
+                          ],
+                          [
+                            "{@language Deep Speech|srd52}",
+                            "{@language Thieves' Cant|srd52}"
+                          ],
+                          [
+                            "{@language Druidic|srd52}",
+                            "{@language Undercommon|srd52}"
+                          ],
+                          [
+                            "{@language Infernal|srd52}",
+                            ""
+                          ]
+                        ],
+                        "footnotes": [
+                          "*Primordial includes the Aquan, Auran, Ignan, and Terran dialects. Creatures that know one of these dialects can communicate with those that know a different one."
+                        ]
+                      }
+                    ],
+                    "id": "09f"
+                  }
+                ],
+                "id": "098"
+              },
+              {
+                "type": "entries",
+                "name": "Step 3: Ability Scores",
+                "page": 20,
+                "entries": [
+                  "To determine your character's ability scores, you first generate a set of six numbers using the instructions below and then assign them to your six abilities. {@book Chapter 1|srd52|1|The Six Abilities} explains what each ability means.",
+                  {
+                    "type": "entries",
+                    "name": "Generate Your Scores",
+                    "page": 21,
+                    "entries": [
+                      "Determine your ability scores by using one of the following three methods. Your DM might prefer you to use a particular one.",
+                      {
+                        "type": "entries",
+                        "name": "Standard Array",
+                        "page": 21,
+                        "entries": [
+                          "Use the following six scores for your abilities: 15, 14, 13, 12, 10, 8."
+                        ],
+                        "id": "0a2"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Random Generation",
+                        "page": 21,
+                        "entries": [
+                          "Roll four d6s and record the total of the highest three dice. Do this five more times, so you have six numbers."
+                        ],
+                        "id": "0a3"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Point Cost",
+                        "page": 21,
+                        "entries": [
+                          "You have 27 points to spend on your ability scores. The cost of each score is shown on the Ability Score Point Costs table. For example, a score of 14 costs 7 of your 27 points.",
+                          {
+                            "type": "table",
+                            "caption": "Ability Score Point Costs",
+                            "srd52": true,
+                            "basicRules2024": true,
+                            "colLabels": [
+                              "Score",
+                              "Cost"
+                            ],
+                            "colStyles": [
+                              "col-6 text-center",
+                              "col-6 text-center"
+                            ],
+                            "rows": [
+                              [
+                                "8",
+                                "0"
+                              ],
+                              [
+                                "9",
+                                "1"
+                              ],
+                              [
+                                "10",
+                                "2"
+                              ],
+                              [
+                                "11",
+                                "3"
+                              ],
+                              [
+                                "12",
+                                "4"
+                              ],
+                              [
+                                "13",
+                                "5"
+                              ],
+                              [
+                                "14",
+                                "7"
+                              ],
+                              [
+                                "15",
+                                "9"
+                              ]
+                            ]
+                          }
+                        ],
+                        "id": "0a4"
+                      }
+                    ],
+                    "id": "0a1"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Assign Ability Scores",
+                    "page": 21,
+                    "entries": [
+                      "Once you've generated six scores, assign them to Strength, Dexterity, Constitution, Intelligence, Wisdom, and Charisma, keeping in mind your class's primary ability. Fill in the ability modifiers as well.",
+                      "If you're using the Standard Array option, consult the Standard Array by Class table for suggestions on where to assign scores for your character's class. The table puts the highest scores in a class's main abilities. If you used a different method to generate the scores, you may still use this table to guide where you place your highest and lowest scores.",
+                      {
+                        "type": "table",
+                        "caption": "Standard Array by Class",
+                        "srd52": true,
+                        "basicRules2024": true,
+                        "colLabels": [
+                          "Class",
+                          "Str.",
+                          "Dex.",
+                          "Con.",
+                          "Int.",
+                          "Wis.",
+                          "Cha."
+                        ],
+                        "colStyles": [
+                          "col-6",
+                          "col-1 text-center",
+                          "col-1 text-center",
+                          "col-1 text-center",
+                          "col-1 text-center",
+                          "col-1 text-center",
+                          "col-1 text-center"
+                        ],
+                        "rows": [
+                          [
+                            "{@class Barbarian|srd52}",
+                            "15",
+                            "13",
+                            "14",
+                            "10",
+                            "12",
+                            "8"
+                          ],
+                          [
+                            "{@class Bard|srd52}",
+                            "8",
+                            "14",
+                            "12",
+                            "13",
+                            "10",
+                            "15"
+                          ],
+                          [
+                            "{@class Cleric|srd52}",
+                            "14",
+                            "8",
+                            "13",
+                            "10",
+                            "15",
+                            "12"
+                          ],
+                          [
+                            "{@class Druid|srd52}",
+                            "8",
+                            "12",
+                            "14",
+                            "13",
+                            "15",
+                            "10"
+                          ],
+                          [
+                            "{@class Fighter|srd52}",
+                            "15",
+                            "14",
+                            "13",
+                            "8",
+                            "10",
+                            "12"
+                          ],
+                          [
+                            "{@class Monk|srd52}",
+                            "12",
+                            "15",
+                            "13",
+                            "10",
+                            "14",
+                            "8"
+                          ],
+                          [
+                            "{@class Paladin|srd52}",
+                            "15",
+                            "10",
+                            "13",
+                            "8",
+                            "12",
+                            "14"
+                          ],
+                          [
+                            "{@class Ranger|srd52}",
+                            "12",
+                            "15",
+                            "13",
+                            "8",
+                            "14",
+                            "10"
+                          ],
+                          [
+                            "{@class Rogue|srd52}",
+                            "12",
+                            "15",
+                            "13",
+                            "14",
+                            "10",
+                            "8"
+                          ],
+                          [
+                            "{@class Sorcerer|srd52}",
+                            "10",
+                            "13",
+                            "14",
+                            "8",
+                            "12",
+                            "15"
+                          ],
+                          [
+                            "{@class Warlock|srd52}",
+                            "8",
+                            "14",
+                            "13",
+                            "12",
+                            "10",
+                            "15"
+                          ],
+                          [
+                            "{@class Wizard|srd52}",
+                            "8",
+                            "12",
+                            "13",
+                            "15",
+                            "14",
+                            "10"
+                          ]
+                        ]
+                      }
+                    ],
+                    "id": "0a5"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Adjust Ability Scores",
+                    "page": 21,
+                    "entries": [
+                      "After assigning your ability scores, adjust them according to your background. Your background lists three abilities; increase one of those scores by 2 and a different one by 1, or increase all three by 1. None of these increases can raise a score above 20.",
+                      "Some players like to increase their class's primary ability, while others prefer to increase a low score."
+                    ],
+                    "id": "0a6"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Determine Ability Modifiers",
+                    "page": 21,
+                    "entries": [
+                      "Finally, determine your ability modifiers using the Ability Scores and Modifiers table. Write the modifier next to each of your scores.",
+                      {
+                        "type": "table",
+                        "caption": "Ability Scores and Modifiers",
+                        "srd52": true,
+                        "basicRules2024": true,
+                        "colLabels": [
+                          "Score",
+                          "Modifier"
+                        ],
+                        "colStyles": [
+                          "col-6 text-center",
+                          "col-6 text-center"
+                        ],
+                        "rows": [
+                          [
+                            "3",
+                            "−4"
+                          ],
+                          [
+                            "4–5",
+                            "−3"
+                          ],
+                          [
+                            "6–7",
+                            "−2"
+                          ],
+                          [
+                            "8–9",
+                            "−1"
+                          ],
+                          [
+                            "10–11",
+                            "+0"
+                          ],
+                          [
+                            "12–13",
+                            "+1"
+                          ],
+                          [
+                            "14–15",
+                            "+2"
+                          ],
+                          [
+                            "16–17",
+                            "+3"
+                          ],
+                          [
+                            "18–19",
+                            "+4"
+                          ],
+                          [
+                            "20",
+                            "+5"
+                          ]
+                        ]
+                      }
+                    ],
+                    "id": "0a7"
+                  }
+                ],
+                "id": "0a0"
+              },
+              {
+                "type": "entries",
+                "name": "Step 4: Alignment",
+                "page": 21,
+                "entries": [
+                  "Choose your character's alignment from the options below, and note it on your character sheet.",
+                  "D&D assumes that player characters aren't of an evil alignment. Check with your GM before making an evil character.",
+                  {
+                    "type": "entries",
+                    "name": "The Nine Alignments",
+                    "page": 21,
+                    "entries": [
+                      "A creature's alignment broadly describes its ethical attitudes and ideals. Alignment is a combination of two factors: one identifies morality (good, evil, or neutral), and the other describes attitudes toward order (lawful, chaotic, or neutral).",
+                      "The summaries of the alignments below describe the typical behavior of a creature with that alignment; individuals can vary from that behavior.",
+                      {
+                        "type": "entries",
+                        "name": "Lawful Good (LG)",
+                        "page": 21,
+                        "entries": [
+                          "Lawful Good creatures endeavor to do the right thing as expected by society. Someone who fights injustice and protects the innocent without hesitation is probably Lawful Good."
+                        ],
+                        "id": "0aa"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Neutral Good (NG)",
+                        "page": 21,
+                        "entries": [
+                          "Neutral Good creatures do the best they can, working within rules but not feeling bound by them. A kindly person who helps others according to their needs is probably Neutral Good."
+                        ],
+                        "id": "0ab"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Chaotic Good (CG)",
+                        "page": 21,
+                        "entries": [
+                          "Chaotic Good creatures act as their conscience directs with little regard for what others expect. A rebel who waylays a cruel baron's tax collectors and uses the stolen money to help the poor is probably Chaotic Good."
+                        ],
+                        "id": "0ac"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Lawful Neutral (LN)",
+                        "page": 21,
+                        "entries": [
+                          "Lawful Neutral individuals act in accordance with law, tradition, or personal codes. Someone who follows a disciplined rule of life—and isn't swayed either by the demands of those in need or by the temptations of evil—is probably Lawful Neutral."
+                        ],
+                        "id": "0ad"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Neutral (N)",
+                        "page": 21,
+                        "entries": [
+                          "Neutral is the alignment of those who prefer to avoid moral questions and don't take sides, doing what seems best at the time. Someone who's bored by moral debate is probably Neutral."
+                        ],
+                        "id": "0ae"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Chaotic Neutral (CN)",
+                        "page": 22,
+                        "entries": [
+                          "Chaotic Neutral creatures follow their whims, valuing their personal freedom above all else. A scoundrel who wanders the land living by their wits is probably Chaotic Neutral."
+                        ],
+                        "id": "0af"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Lawful Evil (LE)",
+                        "page": 22,
+                        "entries": [
+                          "Lawful Evil creatures methodically take what they want within the limits of a code of tradition, loyalty, or order. An aristocrat exploiting citizens while scheming for power is probably Lawful Evil."
+                        ],
+                        "id": "0b0"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Neutral Evil (NE)",
+                        "page": 22,
+                        "entries": [
+                          "Neutral Evil is the alignment of those who are untroubled by the harm they cause as they pursue their desires. A criminal who robs and murders as they please is probably Neutral Evil."
+                        ],
+                        "id": "0b1"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Chaotic Evil (CE)",
+                        "page": 22,
+                        "entries": [
+                          "Chaotic Evil creatures act with arbitrary violence, spurred by their hatred or bloodlust. A villain pursuing schemes of vengeance and havoc is probably Chaotic Evil.",
+                          {
+                            "type": "inset",
+                            "name": "Unaligned Creatures",
+                            "page": 22,
+                            "entries": [
+                              "Most creatures that lack the capacity for rational thought don't have alignments; they are unaligned. {@creature Reef Shark|srd52|Sharks} are savage predators, for example, but they aren't evil; they are unaligned."
+                            ],
+                            "id": "0b3"
+                          }
+                        ],
+                        "id": "0b2"
+                      }
+                    ],
+                    "id": "0a9"
+                  }
+                ],
+                "id": "0a8"
+              },
+              {
+                "type": "entries",
+                "name": "Step 5: Character Creation Details",
+                "page": 22,
+                "entries": [
+                  "Now fill in the rest of your character sheet.",
+                  {
+                    "type": "entries",
+                    "name": "Record Class Features",
+                    "page": 22,
+                    "entries": [
+                      "Look at your class's feature table in {@book Classes|srd52|3}, and write down the level 1 features. The class features are detailed in that same chapter.",
+                      "Some class features offer choices. Make sure to read all your features and make any offered choices."
+                    ],
+                    "id": "0b5"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Fill In Numbers",
+                    "page": 22,
+                    "entries": [
+                      "Note these numbers on your character sheet.",
+                      {
+                        "type": "entries",
+                        "name": "Saving Throws",
+                        "page": 22,
+                        "entries": [
+                          "For the saving throws you have proficiency in, add your Proficiency Bonus to the appropriate ability modifier and note the total. Some players also like to note the modifier for saving throws they're not proficient in, which is just the relevant ability modifier."
+                        ],
+                        "id": "0b7"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Skills",
+                        "page": 22,
+                        "entries": [
+                          "For skills you have proficiency in, add your Proficiency Bonus to the ability modifier associated with that skill, and note the total. You might also wish to note the modifier for skills you're not proficient in, which is just the relevant ability modifier."
+                        ],
+                        "id": "0b8"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Passive Perception",
+                        "page": 22,
+                        "entries": [
+                          "Sometimes your GM will determine whether your character notices something without asking you to make a Wisdom ({@skill Perception|srd52}) check; the GM uses your Passive Perception instead. Passive Perception is a score that reflects a general awareness of your surroundings when you're not actively looking for something. Use this formula to determine your Passive Perception score:",
+                          {
+                            "type": "abilityGeneric",
+                            "name": "Passive Perception",
+                            "text": "10 + Wisdom ({@skill Perception|srd52}) check modifier"
+                          },
+                          "Include all modifiers that apply to your Wisdom ({@skill Perception|srd52}) checks. For example, if your character has a Wisdom of 15 and proficiency in the {@skill Perception|srd52} skill, you have a Passive Perception of 14 (10 + 2 for your Wisdom modifier + 2 for proficiency)."
+                        ],
+                        "id": "0b9"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Hit Points",
+                        "page": 23,
+                        "entries": [
+                          "Your class and Constitution modifier determine your Hit Point maximum at level 1, as shown on the Level 1 Hit Points by Class table.",
+                          {
+                            "type": "table",
+                            "caption": "Level 1 Hit Points by Class",
+                            "srd52": true,
+                            "basicRules2024": true,
+                            "colLabels": [
+                              "Class",
+                              "Hit Point Maximum"
+                            ],
+                            "colStyles": [
+                              "col-6",
+                              "col-6"
+                            ],
+                            "rows": [
+                              [
+                                "{@class Barbarian|srd52}",
+                                "12 + Con. modifier"
+                              ],
+                              [
+                                "{@class Fighter|srd52}, {@class Paladin|srd52}, or {@class Ranger|srd52}",
+                                "10 + Con. modifier"
+                              ],
+                              [
+                                "{@class Bard|srd52}, {@class Cleric|srd52}, {@class Druid|srd52}, {@class Monk|srd52}, {@class Rogue|srd52}, or {@class Warlock|srd52}",
+                                "8 + Con. modifier"
+                              ],
+                              [
+                                "{@class Sorcerer|srd52} or {@class Wizard|srd52}",
+                                "6 + Con. modifier"
+                              ]
+                            ]
+                          },
+                          "The character sheet includes room to note your current Hit Points when you take damage, as well as any {@variantrule Temporary Hit Points|srd52} you might gain. There's also space to track {@variantrule Death Saving Throw|srd52|Death Saving Throws}."
+                        ],
+                        "id": "0ba"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Hit Point Dice",
+                        "page": 22,
+                        "entries": [
+                          "Your class's description tells you the die type of your character's Hit Point Dice (or Hit Dice for short); write this on your character sheet. At level 1, your character has 1 Hit Die. You can spend Hit Dice during a Short Rest to recover Hit Points. Your character sheet also includes space to note how many Hit Dice you've spent."
+                        ],
+                        "id": "0bb"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Initiative",
+                        "page": 22,
+                        "entries": [
+                          "Write your Dexterity modifier in the space for Initiative on your character sheet."
+                        ],
+                        "id": "0bc"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Armor Class",
+                        "page": 22,
+                        "entries": [
+                          "Without armor or a shield, your base {@variantrule Armor Class|srd52} is 10 plus your Dexterity modifier. If your starting equipment includes armor or a Shield (or both), calculate your AC using the rules in {@book Equipment|srd52|6|Armor}. A class feature might give you a different way to calculate your AC."
+                        ],
+                        "id": "0bd"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Attacks",
+                        "page": 22,
+                        "entries": [
+                          "In the Weapons & Damage Cantrips section of the character sheet, write your starting weapons. The attack roll bonus for a weapon with which you have proficiency is one of the following unless a weapon's property says otherwise:",
+                          {
+                            "type": "abilityAttackMod",
+                            "name": "Melee",
+                            "attributes": [
+                              "str"
+                            ]
+                          },
+                          {
+                            "type": "abilityAttackMod",
+                            "name": "Ranged",
+                            "attributes": [
+                              "dex"
+                            ]
+                          },
+                          "Look up the damage and properties of your weapons in {@book Equipment|srd52|6|Weapons}. You add the same ability modifier you use for attacks with a weapon to your damage rolls with that weapon."
+                        ],
+                        "id": "0be"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Spellcasting",
+                        "page": 22,
+                        "entries": [
+                          "Note both the saving throw DC for your spells and the attack bonus for attacks you make with them, using these formulas:",
+                          {
+                            "type": "abilityDc",
+                            "name": "Spell",
+                            "attributes": [
+                              "spellcasting"
+                            ]
+                          },
+                          {
+                            "type": "abilityAttackMod",
+                            "name": "Spell",
+                            "attributes": [
+                              "spellcasting"
+                            ]
+                          },
+                          "Your spellcasting ability modifier for a spell is determined by whatever feature gives you the ability to cast the spell."
+                        ],
+                        "id": "0bf"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Spell Slots, Cantrips, and Prepared Spells",
+                        "page": 23,
+                        "entries": [
+                          "If your class gives you the Spellcasting or Pact Magic feature, your class features table shows the number of spell slots you have available, how many cantrips you know, and how many spells you can prepare. Choose your cantrips and prepared spells, and note them—along with your number of spell slots—on your character sheet."
+                        ],
+                        "id": "0c0"
+                      }
+                    ],
+                    "id": "0b6"
+                  }
+                ],
+                "id": "0b4"
+              }
+            ],
+            "id": "092"
+          },
+          {
+            "type": "section",
+            "name": "Level Advancement",
+            "page": 23,
+            "entries": [
+              "While going on adventures, your character gains experience, represented by {@variantrule Experience Points|srd52} (XP). A character who reaches a specified Experience Point total advances in capability. This advancement is called gaining a level.",
+              "The Character Advancement table lists the XP you need to advance to a level and the Proficiency Bonus for a character of that level. When your XP total equals or exceeds a number in the Experience Points column, you reach the corresponding level.",
+              {
+                "type": "table",
+                "caption": "Character Advancement",
+                "srd52": true,
+                "basicRules2024": true,
+                "colLabels": [
+                  "Level",
+                  "Experience Points",
+                  "Proficiency Bonus"
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-5",
+                  "col-5 text-center"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "0",
+                    "+2"
+                  ],
+                  [
+                    "2",
+                    "300",
+                    "+2"
+                  ],
+                  [
+                    "3",
+                    "900",
+                    "+2"
+                  ],
+                  [
+                    "4",
+                    "2,700",
+                    "+2"
+                  ],
+                  [
+                    "5",
+                    "6,500",
+                    "+3"
+                  ],
+                  [
+                    "6",
+                    "14,000",
+                    "+3"
+                  ],
+                  [
+                    "7",
+                    "23,000",
+                    "+3"
+                  ],
+                  [
+                    "8",
+                    "34,000",
+                    "+3"
+                  ],
+                  [
+                    "9",
+                    "48,000",
+                    "+4"
+                  ],
+                  [
+                    "10",
+                    "64,000",
+                    "+4"
+                  ],
+                  [
+                    "11",
+                    "85,000",
+                    "+4"
+                  ],
+                  [
+                    "12",
+                    "100,000",
+                    "+4"
+                  ],
+                  [
+                    "13",
+                    "120,000",
+                    "+5"
+                  ],
+                  [
+                    "14",
+                    "140,000",
+                    "+5"
+                  ],
+                  [
+                    "15",
+                    "165,000",
+                    "+5"
+                  ],
+                  [
+                    "16",
+                    "195,000",
+                    "+5"
+                  ],
+                  [
+                    "17",
+                    "225,000",
+                    "+6"
+                  ],
+                  [
+                    "18",
+                    "265,000",
+                    "+6"
+                  ],
+                  [
+                    "19",
+                    "305,000",
+                    "+6"
+                  ],
+                  [
+                    "20",
+                    "355,000",
+                    "+6"
+                  ]
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Gaining a Level",
+                "page": 23,
+                "entries": [
+                  "When you gain a level, follow these steps:",
+                  {
+                    "type": "list",
+                    "style": "list-decimal",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Choose a Class",
+                        "entry": "Most characters advance in the same class. However, you might decide to gain a level in another class using the rules in the \"{@book Multiclassing|srd52|2|Multiclassing}\" section later in this chapter."
+                      },
+                      {
+                        "type": "item",
+                        "name": "Adjust Hit Points and Hit Point Dice",
+                        "entries": [
+                          "Each time you gain a level, you gain an additional Hit Die. Roll that die, add your Constitution modifier to the roll, and add the total (minimum of 1) to your Hit Point maximum. Instead of rolling, you can use the fixed value shown in the Fixed Hit Points by Class table.",
+                          {
+                            "type": "table",
+                            "caption": "Fixed Hit Points by Class",
+                            "srd52": true,
+                            "basicRules2024": true,
+                            "colLabels": [
+                              "Class",
+                              "Hit Points per Level"
+                            ],
+                            "colStyles": [
+                              "col-6",
+                              "col-6"
+                            ],
+                            "rows": [
+                              [
+                                "{@class Barbarian|srd52}",
+                                "7 + Con. modifier"
+                              ],
+                              [
+                                "{@class Fighter|srd52}, {@class Paladin|srd52}, or {@class Ranger|srd52}",
+                                "6 + Con. modifier"
+                              ],
+                              [
+                                "{@class Bard|srd52}, {@class Cleric|srd52}, {@class Druid|srd52}, {@class Monk|srd52}, {@class Rogue|srd52}, or {@class Warlock|srd52}",
+                                "5 + Con. modifier"
+                              ],
+                              [
+                                "{@class Sorcerer|srd52} or {@class Wizard|srd52}",
+                                "4 + Con. modifier"
+                              ]
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "item",
+                        "name": "Record New Class Features",
+                        "entry": "Look at your class features table in {@book Classes|srd52|3} and note the features you gain at your new level in that class. Make any choices offered by a new feature."
+                      },
+                      {
+                        "type": "item",
+                        "name": "Adjust Proficiency Bonus",
+                        "entry": "A character's Proficiency Bonus increases at certain levels, as shown in the {@book Character Advancement table|srd52|2|Character Advancement} and your class features table in {@book Classes|srd52|3}. When your Proficiency Bonus increases, increase all the numbers on your character sheet that include your Proficiency Bonus."
+                      },
+                      {
+                        "type": "item",
+                        "name": "Adjust Ability Modifiers",
+                        "entry": "If you choose a feat that increases one or more of your ability scores, your ability modifier also changes if the new score is an even number. When that happens, adjust all the numbers on your character sheet that use that ability modifier. When your Constitution modifier increases by 1, your Hit Point maximum increases by 1 for each level you have attained. For example, if a character reaches level 8 and increases their Constitution score from 17 to 18, the Constitution modifier increases to +4. The character's Hit Point maximum then increases by 8, in addition to the Hit Points gained for reaching level 8."
+                      }
+                    ]
+                  }
+                ],
+                "id": "0c2"
+              },
+              {
+                "type": "entries",
+                "name": "Tiers of Play",
+                "page": 23,
+                "entries": [
+                  "With each new level, characters acquire new capabilities that equip them to handle greater challenges. As characters advance in level, the tone of the game also changes, and the stakes of the campaign get higher. It's helpful to think of a character's (and a campaign's) arc in terms of four tiers of play, describing the journey from a level 1 character just beginning an adventuring career to the epic heights of level 20. These tiers don't have any rules associated with them; they point to the fact that the play experience evolves as characters gain levels.",
+                  {
+                    "type": "entries",
+                    "name": "Tier 1 (Levels 1–4)",
+                    "page": 24,
+                    "entries": [
+                      "In tier 1, characters are apprentice adventurers, though they are already set apart from the broader populace by virtue of their extraordinary abilities. They learn their starting class features and choose a subclass. The threats they face usually pose a danger to local farmsteads or villages."
+                    ],
+                    "id": "0c4"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Tier 2 (Levels 5–10)",
+                    "page": 24,
+                    "entries": [
+                      "In tier 2, characters are full-fledged adventurers. Spellcasters gain iconic spells such as {@spell Fireball|srd52}, {@spell Lightning Bolt|srd52}, and {@spell Raise Dead|srd52}. Most weapon-focused classes gain the ability to make multiple attacks in a round. The characters now face dangers that threaten cities and kingdoms."
+                    ],
+                    "id": "0c5"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Tier 3 (Levels 11–16)",
+                    "page": 24,
+                    "entries": [
+                      "In tier 3, characters have reached a level of power that makes them special among adventurers. At level 11, many spellcasters learn reality-altering spells. Other characters gain features that allow them to make more attacks or to do more impressive things with those attacks. These adventurers often confront threats to whole regions."
+                    ],
+                    "id": "0c6"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Tier 4 (Levels 17–20)",
+                    "page": 24,
+                    "entries": [
+                      "At tier 4, characters achieve the pinnacle of their class features, becoming heroic archetypes. The fate of the world or even the order of the multiverse might hang in the balance during their adventures.",
+                      {
+                        "type": "inset",
+                        "name": "Bonus Feats at Level 20",
+                        "page": 24,
+                        "entries": [
+                          "A DM can use feats as a form of advancement after characters reach level 20 to provide greater power to characters who have no more levels to gain. With this approach, each character gains one feat of their choice for every 30,000 XP the character earns above 355,000 XP. {@book Epic Boon|srd52|5|Epic Boon Feats} feats are especially appropriate for these bonus feats, but a player can choose any feat for which their level 20 character qualifies."
+                        ],
+                        "id": "0c8"
+                      }
+                    ],
+                    "id": "0c7"
+                  }
+                ],
+                "id": "0c3"
+              }
+            ],
+            "id": "0c1"
+          },
+          {
+            "type": "section",
+            "name": "Starting at Higher Levels",
+            "page": 24,
+            "entries": [
+              "Your DM might start your group's characters at a level higher than 1. It is particularly recommended to start at level 3 if your group is composed of seasoned players.",
+              {
+                "type": "entries",
+                "name": "Creating Your Character",
+                "page": 24,
+                "entries": [
+                  "Creating a higher-level character uses the same character-creation steps outlined in this chapter and the rules for advancing beyond level 1 provided in the \"{@book Level Advancement|srd52|2|Level Advancement}\" section. You begin with the minimum amount of XP required to reach your starting level. For example, if the GM starts you at level 10, you have 64,000 XP."
+                ],
+                "id": "0ca"
+              },
+              {
+                "type": "entries",
+                "name": "Starting Equipment",
+                "page": 24,
+                "entries": [
+                  "The GM decides whether your character starts with more than the standard equipment for a level 1 character, possibly even one or more magic items. The Starting Equipment at Higher Levels table is a guide for the GM.",
+                  "Also, check with your GM about what equipment is available for you to buy with your starting money. For example, the firearms described in {@book Equipment|srd52|6|Weapons} are too expensive for level 1 characters, but they might be available for purchase if your GM allows them.",
+                  {
+                    "type": "table",
+                    "caption": "Starting Equipment at Higher Levels",
+                    "srd52": true,
+                    "basicRules2024": true,
+                    "colLabels": [
+                      "Starting Level",
+                      "Equipment and Money",
+                      "Magic Items"
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-6",
+                      "col-4"
+                    ],
+                    "rows": [
+                      [
+                        "2–4",
+                        "Normal starting equipment",
+                        "1 {@filter Common|items|rarity=Common}"
+                      ],
+                      [
+                        "5–10",
+                        "500 GP plus {@dice 1d10 × 25} GP plus normal starting equipment",
+                        "1 {@filter Common|items|rarity=Common}, 1 {@filter Uncommon|items|rarity=Uncommon}"
+                      ],
+                      [
+                        "11–16",
+                        "5,000 gp plus {@dice 1d10 × 250} GP plus normal starting equipment",
+                        "2 {@filter Common|items|rarity=Common}, 3 {@filter Uncommon|items|rarity=Uncommon}, 1 {@filter Rare|items|rarity=Rare}"
+                      ],
+                      [
+                        "17–20",
+                        "20,000 GP plus {@dice 1d10 × 250} GP plus normal starting equipment",
+                        "2 {@filter Common|items|rarity=Common}, 4 {@filter Uncommon|items|rarity=Uncommon}, 3 {@filter Rare|items|rarity=Rare}, 1 {@filter Very Rare|items|rarity=Very Rare}"
+                      ]
+                    ]
+                  }
+                ],
+                "id": "0cb"
+              }
+            ],
+            "id": "0c9"
+          },
+          {
+            "type": "section",
+            "name": "Multiclassing",
+            "page": 24,
+            "entries": [
+              "Multiclassing allows you to gain levels in multiple classes. With this rule, you have the option of gaining a level in a new class whenever you advance in level instead of gaining a level in your current class. Doing so lets you mix the abilities of those classes to realize a character concept that might not be reflected in a single class.",
+              {
+                "type": "entries",
+                "name": "Prerequisites",
+                "page": 24,
+                "entries": [
+                  "To qualify for a new class, you must have a score of at least 13 in the primary ability of the new class and your current classes. For example, a Barbarian who decides to multiclass into the Druid class must have Strength and Wisdom scores of 13 or higher, since Strength is the primary ability for Barbarians and Wisdom is the primary ability for Druids."
+                ],
+                "id": "0cd"
+              },
+              {
+                "type": "entries",
+                "name": "Experience Points",
+                "page": 25,
+                "entries": [
+                  "The Experience Point cost to gain a level is based on your total character level, not your level in a particular class, as shown in the {@book Character Advancement table|srd52|2|Character Advancement} in this chapter. For example, if you are a level 6 Cleric / level 1 Fighter, you must gain enough XP to reach level 8 before you can take your second level as a Fighter or your seventh level as a Cleric."
+                ],
+                "id": "0ce"
+              },
+              {
+                "type": "entries",
+                "name": "Hit Points and Hit Point Dice",
+                "page": 25,
+                "entries": [
+                  "You gain the Hit Points from your new class as described for levels after 1. You gain the level 1 Hit Points for a class only when your total character level is 1.",
+                  "Add together the Hit Dice granted by all your classes to form your pool of Hit Dice. If these dice are the same die type, you can pool them together. For example, both the Fighter and the Paladin have a {@dice d10} Hit Die, so if you are a level 5 Fighter / level 5 Paladin, you have ten {@dice d10} Hit Dice. If your classes give you Hit Dice of different types, track them separately. If you are a level 5 Cleric / level 5 Paladin, for example, you have five {@dice d8} Hit Dice and five {@dice d10} Hit Dice."
+                ],
+                "id": "0cf"
+              },
+              {
+                "type": "entries",
+                "name": "Proficiency Bonus",
+                "page": 22,
+                "entries": [
+                  "Your Proficiency Bonus is based on your total character level, not your level in a particular class, as shown in the {@book Character Advancement table|srd52|2|Character Advancement}. For example, if you are a level 3 Fighter / level 2 Rogue, you have the Proficiency Bonus of a level 5 character, which is +3."
+                ],
+                "id": "0d0"
+              },
+              {
+                "type": "entries",
+                "name": "Proficiencies",
+                "page": 25,
+                "entries": [
+                  "When you gain your first level in a class other than your initial class, you gain only some of the new class's starting proficiencies, as detailed in each class's description in {@book Classes|srd52|3}."
+                ],
+                "id": "0d1"
+              },
+              {
+                "type": "entries",
+                "name": "Class Features",
+                "page": 24,
+                "entries": [
+                  "When you gain a new level in a class, you get its features for that level. A few features have additional rules when you're multiclassing. Check the information about multiclassing included in each of your classes' descriptions.",
+                  "Special rules apply to Extra Attack, Spellcasting, and features (such as Unarmored Defense) that give you alternative ways to calculate your Armor Class.",
+                  {
+                    "type": "entries",
+                    "name": "Armor Class",
+                    "page": 25,
+                    "entries": [
+                      "If you have multiple ways to calculate your {@variantrule Armor Class|srd52}, you can benefit from only one at a time. For example, a Monk/Sorcerer with a Monk's Unarmored Defense feature and a Sorcerer's Draconic Resilience feature must choose only one of those features as a way to calculate Armor Class."
+                    ],
+                    "id": "0d3"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Extra Attack",
+                    "page": 25,
+                    "entries": [
+                      "If you gain the Extra Attack feature from more than one class, the features don't stack. You can't make more than two attacks with this feature unless you have a feature that says you can (such as the Fighter's Two Extra Attacks feature).",
+                      "Similarly, the Warlock's Thirsting Blade invocation, which grants you the Extra Attack feature with your pact weapon, doesn't give you additional attacks if you also have Extra Attack."
+                    ],
+                    "id": "0d4"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Spellcasting",
+                    "page": 25,
+                    "entries": [
+                      "Your capacity for spellcasting depends partly on your combined levels in all your spellcasting classes and partly on your individual levels in those classes. Once you have the Spellcasting feature from more than one class, use the rules below. If you multiclass but have the Spellcasting feature from only one class, follow the rules for that class.",
+                      {
+                        "type": "table",
+                        "caption": "Multiclass Spellcaster: Spell Slots per Spell Level",
+                        "srd52": true,
+                        "basicRules2024": true,
+                        "colLabels": [
+                          "Level",
+                          "1",
+                          "2",
+                          "3",
+                          "4",
+                          "5",
+                          "6",
+                          "7",
+                          "8",
+                          "9"
+                        ],
+                        "colStyles": [
+                          "col-3 text-center",
+                          "col-1 text-center",
+                          "col-1 text-center",
+                          "col-1 text-center",
+                          "col-1 text-center",
+                          "col-1 text-center",
+                          "col-1 text-center",
+                          "col-1 text-center",
+                          "col-1 text-center",
+                          "col-1 text-center"
+                        ],
+                        "rows": [
+                          [
+                            "1",
+                            "2",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—"
+                          ],
+                          [
+                            "2",
+                            "3",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—"
+                          ],
+                          [
+                            "3",
+                            "4",
+                            "2",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—"
+                          ],
+                          [
+                            "4",
+                            "4",
+                            "3",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—"
+                          ],
+                          [
+                            "5",
+                            "4",
+                            "3",
+                            "2",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—"
+                          ],
+                          [
+                            "6",
+                            "4",
+                            "3",
+                            "3",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—"
+                          ],
+                          [
+                            "7",
+                            "4",
+                            "3",
+                            "3",
+                            "1",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—"
+                          ],
+                          [
+                            "8",
+                            "4",
+                            "3",
+                            "3",
+                            "2",
+                            "—",
+                            "—",
+                            "—",
+                            "—",
+                            "—"
+                          ],
+                          [
+                            "9",
+                            "4",
+                            "3",
+                            "3",
+                            "3",
+                            "1",
+                            "—",
+                            "—",
+                            "—",
+                            "—"
+                          ],
+                          [
+                            "10",
+                            "4",
+                            "3",
+                            "3",
+                            "3",
+                            "2",
+                            "—",
+                            "—",
+                            "—",
+                            "—"
+                          ],
+                          [
+                            "11",
+                            "4",
+                            "3",
+                            "3",
+                            "3",
+                            "2",
+                            "1",
+                            "—",
+                            "—",
+                            "—"
+                          ],
+                          [
+                            "12",
+                            "4",
+                            "3",
+                            "3",
+                            "3",
+                            "2",
+                            "1",
+                            "—",
+                            "—",
+                            "—"
+                          ],
+                          [
+                            "13",
+                            "4",
+                            "3",
+                            "3",
+                            "3",
+                            "2",
+                            "1",
+                            "1",
+                            "—",
+                            "—"
+                          ],
+                          [
+                            "14",
+                            "4",
+                            "3",
+                            "3",
+                            "3",
+                            "2",
+                            "1",
+                            "1",
+                            "—",
+                            "—"
+                          ],
+                          [
+                            "15",
+                            "4",
+                            "3",
+                            "3",
+                            "3",
+                            "2",
+                            "1",
+                            "1",
+                            "1",
+                            "—"
+                          ],
+                          [
+                            "16",
+                            "4",
+                            "3",
+                            "3",
+                            "3",
+                            "2",
+                            "1",
+                            "1",
+                            "1",
+                            "—"
+                          ],
+                          [
+                            "17",
+                            "4",
+                            "3",
+                            "3",
+                            "3",
+                            "2",
+                            "1",
+                            "1",
+                            "1",
+                            "1"
+                          ],
+                          [
+                            "18",
+                            "4",
+                            "3",
+                            "3",
+                            "3",
+                            "3",
+                            "1",
+                            "1",
+                            "1",
+                            "1"
+                          ],
+                          [
+                            "19",
+                            "4",
+                            "3",
+                            "3",
+                            "3",
+                            "3",
+                            "2",
+                            "1",
+                            "1",
+                            "1"
+                          ],
+                          [
+                            "20",
+                            "4",
+                            "3",
+                            "3",
+                            "3",
+                            "3",
+                            "2",
+                            "2",
+                            "1",
+                            "1"
+                          ]
+                        ]
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Spells Prepared",
+                        "page": 25,
+                        "entries": [
+                          "You determine what spells you can prepare for each class individually, as if you were a single-classed member of that class. If you are a level 4 Ranger / level 3 Sorcerer, for example, you can prepare five level 1 Ranger spells, and you can prepare six Sorcerer spells of level 1 or 2 (as well as four Sorcerer cantrips).",
+                          "Each spell you prepare is associated with one of your classes, and you use the spellcasting ability of that class when you cast the spell."
+                        ],
+                        "id": "0d6"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Cantrips",
+                        "page": 25,
+                        "entries": [
+                          "If a cantrip of yours increases in power at higher levels, the increase is based on your total character level, not your level in a particular class, unless the spell says otherwise."
+                        ],
+                        "id": "0d7"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Spell Slots",
+                        "page": 25,
+                        "entries": [
+                          "You determine your available spell slots by adding together the following:",
+                          {
+                            "type": "list",
+                            "items": [
+                              "All your levels in the Bard, Cleric, Druid, Sorcerer, and Wizard classes",
+                              "Half your levels (round up) in the Paladin and Ranger classes",
+                              "One third of your Fighter or Rogue levels (round down) if you have the Eldritch Knight or Arcane Trickster subclass."
+                            ]
+                          },
+                          "Then look up this total level in the Level column of the Multiclass Spellcaster table. You use the slots for that level to cast spells of an appropriate level from any class whose Spellcasting feature you have.",
+                          "This table might give you spell slots of a higher level than the spells you prepare. You can use those slots but only to cast your lower-level spells. If a lower-level spell that you cast, like {@spell Burning Hands|srd52}, has an enhanced effect when cast at a higher level, you can use the enhanced effect as normal.",
+                          "For example, if you are a level 4 Ranger / level 3 Sorcerer, you count as a level 5 character when determining your spell slots, counting all your levels as a Sorcerer and half your Ranger levels. As shown in the Multiclass Spellcaster table, you have four level 1 spell slots, three level 2 slots, and two level 3 slots. However, you can't prepare any level 3 spells, nor can you prepare any level 2 Ranger spells. You can use the spell slots of those levels to cast the spells you do prepare—and potentially enhance their effects."
+                        ],
+                        "id": "0d8"
+                      },
+                      {
+                        "type": "entries",
+                        "name": "Pact Magic",
+                        "page": 26,
+                        "entries": [
+                          "If you have the Pact Magic feature from the Warlock class and the Spellcasting feature, you can use the spell slots you gain from Pact Magic to cast spells you have prepared from classes with the Spellcasting feature, and you can use the spell slots you gain from the Spellcasting feature to cast Warlock spells you have prepared."
+                        ],
+                        "id": "0d9"
+                      }
+                    ],
+                    "id": "0d5"
+                  }
+                ],
+                "id": "0d2"
+              }
+            ],
+            "data": {
+              "variantRuleInclude": {
+                "ruleType": "C",
+                "srd52": true,
+                "basicRules2024": true
+              }
+            },
+            "id": "0cc"
+          },
+          {
+            "type": "section",
+            "name": "Trinkets",
+            "page": 26,
+            "entries": [
+              "When you make your character, you can roll once on the {@item Trinket|srd52|Trinkets} table to gain a Tiny trinket, a simple item lightly touched by mystery. The GM might also use this table. It can help stock a room in a dungeon or fill a creature's pockets."
+            ],
+            "id": "0da"
+          }
+        ],
+        "id": "090"
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "optionalfeature.eldritch-sight",
+  "name": "Eldritch Sight",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Eldritch Sight",
+        "featureType": [
+          "EI"
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "detect magic"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell detect magic} at will, without expending a spell slot."
+        ]
+      }
+    }
+  ]
+}

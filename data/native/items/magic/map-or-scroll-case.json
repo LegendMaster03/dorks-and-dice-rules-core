@@ -1,0 +1,50 @@
+{
+  "id": "item.map-or-scroll-case",
+  "name": "Map or Scroll Case",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Map or Scroll Case",
+        "type": "G",
+        "rarity": "none",
+        "weight": 1,
+        "value": 100,
+        "entries": [
+          "This cylindrical leather case can hold up to ten rolled-up {@item paper (one sheet)|srd51|sheets of paper} or five rolled-up {@item parchment (one sheet)|srd51|sheets of parchment}."
+        ],
+        "containerCapacity": {
+          "item": [
+            {
+              "parchment (one sheet)|srd51": 5,
+              "paper (one sheet)|srd51": 10
+            }
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Map or Scroll Case",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 1,
+        "value": 100,
+        "entries": [
+          "A {@item Map or Scroll Case|SRD52} holds up to 10 sheets of paper or 5 sheets of parchment."
+        ],
+        "containerCapacity": {
+          "item": [
+            {
+              "parchment|srd52": 5,
+              "paper|srd52": 10
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "id": "monster.giant-constrictor-snake",
+  "name": "Giant Constrictor Snake",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Giant Constrictor Snake",
+        "size": [
+          "H"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 60,
+          "formula": "8d12 + 8"
+        },
+        "speed": {
+          "walk": 30,
+          "swim": 30
+        },
+        "str": 19,
+        "dex": 14,
+        "con": 12,
+        "int": 1,
+        "wis": 10,
+        "cha": 3,
+        "skill": {
+          "perception": "+2"
+        },
+        "senses": [
+          "blindsight 10 ft."
+        ],
+        "passive": 12,
+        "cr": "2",
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 6} to hit, reach 10 ft., one creature. {@h}11 ({@damage 2d6 + 4}) piercing damage."
+            ]
+          },
+          {
+            "name": "Constrict",
+            "entries": [
+              "{@atk mw} {@hit 6} to hit, reach 5 ft., one creature. {@h}13 ({@damage 2d8 + 4}) bludgeoning damage, and the target is {@condition grappled} (escape {@dc 16}). Until this grapple ends, the creature is {@condition restrained}, and the snake can't constrict another target."
+            ]
+          }
+        ],
+        "environment": [
+          "underwater",
+          "underdark",
+          "forest",
+          "swamp",
+          "desert"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/giant-constrictor-snake.opus"
+        },
+        "senseTags": [
+          "B"
+        ],
+        "damageTags": [
+          "B",
+          "P"
+        ],
+        "miscTags": [
+          "MW",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "grappled",
+          "restrained"
+        ],
+        "hasToken": true
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Giant Constrictor Snake",
+        "size": [
+          "H"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 60,
+          "formula": "8d12 + 8"
+        },
+        "speed": {
+          "walk": 30,
+          "swim": 30
+        },
+        "str": 19,
+        "dex": 14,
+        "con": 12,
+        "int": 1,
+        "wis": 10,
+        "cha": 3,
+        "skill": {
+          "perception": "+2"
+        },
+        "senses": [
+          "Blindsight 10 ft."
+        ],
+        "passive": 12,
+        "cr": "2",
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The snake makes one Bite attack and uses Constrict."
+            ]
+          },
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atkr m} {@hit 6}, reach 10 ft. {@h}11 ({@damage 2d6 + 4}) Piercing damage."
+            ]
+          },
+          {
+            "name": "Constrict",
+            "entries": [
+              "{@actSave str} {@dc 14}, one Large or smaller creature the snake can see within 10 feet. {@actSaveFail} 13 ({@damage 2d8 + 4}) Bludgeoning damage, and the target has the {@condition Grappled|SRD52} condition (escape {@dc 14})."
+            ]
+          }
+        ],
+        "environment": [
+          "desert",
+          "forest",
+          "swamp",
+          "underwater"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/giant-constrictor-snake.opus"
+        },
+        "senseTags": [
+          "B"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "damageTags": [
+          "B",
+          "P"
+        ],
+        "miscTags": [
+          "MA",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "grappled"
+        ],
+        "savingThrowForced": [
+          "strength"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Giant Constrictor Snake",
+            "_copy": {
+              "name": "Animals",
+              "source": "SRD52",
+              "_mod": {
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Constrictor Snake.webp"
+                      },
+                      "width": 1000,
+                      "height": 844
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

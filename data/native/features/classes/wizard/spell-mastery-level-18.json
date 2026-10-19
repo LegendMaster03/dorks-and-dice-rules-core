@@ -1,0 +1,36 @@
+{
+  "id": "classFeature.spell-mastery.wizard.spell-mastery.18",
+  "name": "Spell Mastery",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Spell Mastery",
+        "className": "Wizard",
+        "classSource": "SRD51",
+        "level": 18,
+        "entries": [
+          "At 18th level, you have achieved such mastery over certain spells that you can cast them at will. Choose a 1st-level wizard spell and a 2nd-level wizard spell that are in your spellbook. You can cast those spells at their lowest level without expending a spell slot when you have them prepared. If you want to cast either spell at a higher level, you must expend a spell slot as normal.",
+          "By spending 8 hours in study, you can exchange one or both of the spells you chose for different spells of the same levels."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Spell Mastery",
+        "className": "Wizard",
+        "classSource": "SRD52",
+        "level": 18,
+        "entries": [
+          "You have achieved such mastery over certain spells that you can cast them at will. Choose a level 1 and a level 2 spell in your spellbook that have a casting time of an action. You always have those spells prepared, and you can cast them at their lowest level without expending a spell slot. To cast either spell at a higher level, you must expend a spell slot.",
+          "Whenever you finish a {@variantrule Long Rest|SRD52}, you can study your spellbook and replace one of those spells with an eligible spell of the same level from the book."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.wizard",
+  "classLevel": 18
+}

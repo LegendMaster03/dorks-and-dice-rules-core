@@ -1,0 +1,40 @@
+{
+  "id": "item.brazier-of-commanding-fire-elementals",
+  "name": "Brazier of Commanding Fire Elementals",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Brazier of Commanding Fire Elementals",
+        "tier": "major",
+        "rarity": "rare",
+        "wondrous": true,
+        "weight": 5,
+        "entries": [
+          "While a fire burns in this brass brazier, you can use an action to speak the brazier's command word and summon a {@creature fire elemental}, as if you had cast the {@spell conjure elemental} spell. The brazier can't be used this way again until the next dawn.",
+          "The brazier weighs 5 pounds."
+        ],
+        "attachedSpells": {
+          "daily": {
+            "1": [
+              "conjure elemental"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Brazier of Commanding Fire Elementals",
+        "rarity": "rare",
+        "wondrous": true,
+        "entries": [
+          "While you are within 5 feet of this brazier, you can take a {@action Magic|SRD52} action to summon a {@creature Fire Elemental|SRD52}. The elemental appears in an unoccupied space as close to the brazier as possible, understands your languages, obeys your commands, and takes its turn immediately after you on your {@variantrule Initiative|SRD52} count. The elemental disappears after 1 hour, when it dies, or when you dismiss it as a {@variantrule Bonus Action|SRD52}. The brazier can't be used this way again until the next dawn."
+        ]
+      }
+    }
+  ]
+}

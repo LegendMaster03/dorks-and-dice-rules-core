@@ -1,0 +1,34 @@
+{
+  "id": "classFeature.primal-champion.barbarian.primal-champion.20",
+  "name": "Primal Champion",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Primal Champion",
+        "className": "Barbarian",
+        "classSource": "SRD51",
+        "level": 20,
+        "entries": [
+          "At 20th level, you embody the power of the wilds. Your Strength and Constitution scores increase by 4. Your maximum for those scores is now 24."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Primal Champion",
+        "className": "Barbarian",
+        "classSource": "SRD52",
+        "level": 20,
+        "entries": [
+          "You embody primal power. Your Strength and Constitution scores increase by 4, to a maximum of 25."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian",
+  "classLevel": 20
+}

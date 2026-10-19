@@ -1,0 +1,21 @@
+{
+  "id": "item.restorative-ointment",
+  "name": "Restorative Ointment",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Restorative Ointment",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "This glass jar, 3 inches in diameter, contains {@dice 1d4 + 1} doses of a thick mixture that smells faintly of aloe. The jar and its contents weigh ½ pound.",
+          "As an action, one dose of the ointment can be swallowed or applied to the skin. The creature that receives it regains {@dice 2d8 + 2} hit points, ceases to be {@condition poisoned}, and is cured of any disease."
+        ]
+      }
+    }
+  ]
+}

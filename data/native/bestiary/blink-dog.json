@@ -1,0 +1,253 @@
+{
+  "id": "monster.blink-dog",
+  "name": "Blink Dog",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Blink Dog",
+        "size": [
+          "M"
+        ],
+        "type": "fey",
+        "alignment": [
+          "L",
+          "G"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 22,
+          "formula": "4d8 + 4"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 12,
+        "dex": 17,
+        "con": 12,
+        "int": 10,
+        "wis": 13,
+        "cha": 11,
+        "skill": {
+          "perception": "+3",
+          "stealth": "+5"
+        },
+        "passive": 13,
+        "languages": [
+          "Blink Dog",
+          "understands Sylvan but can't speak it"
+        ],
+        "cr": "1/4",
+        "trait": [
+          {
+            "name": "Keen Hearing and Smell",
+            "entries": [
+              "The dog has advantage on Wisdom ({@skill Perception}) checks that rely on hearing or smell."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}4 ({@damage 1d6 + 1}) piercing damage."
+            ]
+          },
+          {
+            "name": "Teleport {@recharge 4}",
+            "entries": [
+              "The dog magically teleports, along with any equipment it is wearing or carrying, up to 40 feet to an unoccupied space it can see. Before or after teleporting, the dog can make one bite attack."
+            ]
+          }
+        ],
+        "environment": [
+          "forest"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/blink-dog.opus"
+        },
+        "traitTags": [
+          "Keen Senses"
+        ],
+        "actionTags": [
+          "Teleport"
+        ],
+        "languageTags": [
+          "CS",
+          "OTH",
+          "S"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Blink Dog",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "A blink dog takes its name from its ability to blink in and out of existence, a talent it uses to aid its attacks and to avoid harm. Blink dogs harbor a long-standing hatred for displacer beasts and attack them on sight."
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Blink Dog.webp"
+                },
+                "width": 1000,
+                "height": 853
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Blink Dog",
+        "size": [
+          "M"
+        ],
+        "type": "fey",
+        "alignment": [
+          "L",
+          "G"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 22,
+          "formula": "4d8 + 4"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 12,
+        "dex": 17,
+        "con": 12,
+        "int": 10,
+        "wis": 13,
+        "cha": 11,
+        "skill": {
+          "perception": "+5",
+          "stealth": "+5"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 15,
+        "languages": [
+          "Blink Dog",
+          "understands Elvish and Sylvan but can't speak them"
+        ],
+        "cr": "1/4",
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atkr m} {@hit 5}, reach 5 ft. {@h}5 ({@damage 1d4 + 3}) Piercing damage."
+            ]
+          }
+        ],
+        "bonus": [
+          {
+            "name": "Teleport {@recharge 4}",
+            "entries": [
+              "The dog teleports up to 40 feet to an unoccupied space it can see."
+            ]
+          }
+        ],
+        "environment": [
+          "forest",
+          "planar, feywild"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/blink-dog.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Teleport"
+        ],
+        "languageTags": [
+          "CS",
+          "E",
+          "OTH",
+          "S"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Blink Dog",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Blink Dog",
+                "entries": [
+                  "{@i Elusive Feywild Canine}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Forest|bestiary|environment=forest}, {@filter Planar (Feywild)|bestiary|environment=planar, feywild}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "None"
+                      }
+                    ]
+                  },
+                  "Blink dogs glimmer with a magic that allows them to teleport, \"blinking\" from one spot to another. These dogs use this power to chase prey, baffle foes, and express joy. They're frequently found among Feywild folk, such as centaurs and pixies—often as members of rollicking hunts between worlds."
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Blink Dog.webp"
+                },
+                "credit": "John Patrick Gañas",
+                "width": 1200,
+                "height": 1800
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

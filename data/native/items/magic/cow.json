@@ -1,0 +1,17 @@
+{
+  "id": "item.cow",
+  "name": "Cow",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Cow",
+        "type": "TG",
+        "rarity": "none",
+        "value": 1000
+      }
+    }
+  ]
+}

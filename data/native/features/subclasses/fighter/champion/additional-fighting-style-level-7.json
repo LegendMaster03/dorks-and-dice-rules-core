@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.additional-fighting-style.fighter.champion.additional-fighting-style.7",
+  "name": "Additional Fighting Style",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Additional Fighting Style",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "subclassShortName": "Champion",
+        "subclassSource": "SRD52",
+        "level": 7,
+        "header": 2,
+        "entries": [
+          "You gain another {@filter Fighting Style feat|feats|category=FS} of your choice."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "parentSubclass": "champion",
+  "classLevel": 7
+}

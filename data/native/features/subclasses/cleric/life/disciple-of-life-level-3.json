@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.disciple-of-life.cleric.life.disciple-of-life.3",
+  "name": "Disciple of Life",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Disciple of Life",
+        "className": "Cleric",
+        "classSource": "SRD52",
+        "subclassShortName": "Life",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "header": 1,
+        "entries": [
+          "When a spell you cast with a spell slot restores {@variantrule Hit Points|SRD52} to a creature, that creature regains additional {@variantrule Hit Points|SRD52} on the turn you cast the spell. The additional {@variantrule Hit Points|SRD52} equal 2 plus the spell slot's level."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "parentSubclass": "life",
+  "classLevel": 3
+}

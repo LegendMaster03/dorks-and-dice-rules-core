@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.song-of-rest-d12.bard.song-of-rest-d12.17",
+  "name": "Song of Rest (d12)",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Song of Rest (d12)",
+        "className": "Bard",
+        "classSource": "SRD51",
+        "level": 17,
+        "entries": [
+          "At 17th level, the extra hit points gained from Song of Rest increases to {@dice 1d12}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.bard",
+  "classLevel": 17
+}

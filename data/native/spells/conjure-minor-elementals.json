@@ -1,0 +1,132 @@
+{
+  "id": "spell.conjure-minor-elementals",
+  "name": "Conjure Minor Elementals",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Conjure Minor Elementals",
+        "level": 4,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "minute"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 90
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You summon elementals that appear in unoccupied spaces that you can see within range. You choose one of the following options for what appears:",
+          {
+            "type": "list",
+            "items": [
+              "One {@filter elemental of challenge rating 2 or lower|bestiary|challenge rating=[&0;&2]|type=elemental|miscellaneous=!swarm}",
+              "Two {@filter elementals of challenge rating 1 or lower|bestiary|challenge rating=[&0;&1]|type=elemental|miscellaneous=!swarm}",
+              "Four {@filter elementals of challenge rating 1/2 or lower|bestiary|challenge rating=[&0;&1/2]|type=elemental|miscellaneous=!swarm}",
+              "Eight {@filter elementals of challenge rating 1/4 or lower|bestiary|challenge rating=[&0;&1/4]|type=elemental|miscellaneous=!swarm}."
+            ]
+          },
+          "An elemental summoned by this spell disappears when it drops to 0 hit points or when the spell ends.",
+          "The summoned creatures are friendly to you and your companions. Roll initiative for the summoned creatures as a group, which has its own turns. They obey any verbal commands that you issue to them (no action required by you). If you don't issue any commands to them, they defend themselves from hostile creatures, but otherwise take no actions.",
+          "The DM has the creatures' statistics."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using certain higher-level spell slots, you choose one of the summoning options above, and more creatures appear: twice as many with a 6th-level slot and three times as many with an 8th-level slot."
+            ]
+          }
+        ],
+        "miscTags": [
+          "SGT",
+          "SMN"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Conjure Minor Elementals",
+        "level": 4,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "emanation",
+          "distance": {
+            "type": "feet",
+            "amount": 15
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 10
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You conjure spirits from the Elemental Planes that flit around you in a 15-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} for the duration. Until the spell ends, any attack you make deals an extra {@damage 2d8} damage when you hit a creature in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation}. This damage is Acid, Cold, Fire, or Lightning (your choice when you make the attack).",
+          "In addition, the ground in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} is {@variantrule Difficult Terrain|SRD52} for your enemies."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "The damage increases by {@scaledamage 2d8|4-9|1d8} for each spell slot level above 4."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "acid",
+          "cold",
+          "fire",
+          "lightning"
+        ],
+        "miscTags": [
+          "AAD",
+          "DFT"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "id": "monster.wolf",
+  "name": "Wolf",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Wolf",
+        "size": [
+          "M"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          {
+            "ac": 13,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 11,
+          "formula": "2d8 + 2"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 12,
+        "dex": 15,
+        "con": 12,
+        "int": 3,
+        "wis": 12,
+        "cha": 6,
+        "skill": {
+          "perception": "+3",
+          "stealth": "+4"
+        },
+        "passive": 13,
+        "cr": "1/4",
+        "trait": [
+          {
+            "name": "Keen Hearing and Smell",
+            "entries": [
+              "The wolf has advantage on Wisdom ({@skill Perception}) checks that rely on hearing or smell."
+            ]
+          },
+          {
+            "name": "Pack Tactics",
+            "entries": [
+              "The wolf has advantage on an attack roll against a creature if at least one of the wolf's allies is within 5 feet of the creature and the ally isn't {@condition incapacitated}."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}7 ({@damage 2d4 + 2}) piercing damage. If the target is a creature, it must succeed on a {@dc 11} Strength saving throw or be knocked {@condition prone}."
+            ]
+          }
+        ],
+        "environment": [
+          "grassland",
+          "forest",
+          "hill"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/wolf.opus"
+        },
+        "traitTags": [
+          "Keen Senses",
+          "Pack Tactics"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "conditionInflict": [
+          "prone"
+        ],
+        "savingThrowForced": [
+          "strength"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Wolf",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Wolf.webp"
+                },
+                "width": 798,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Wolf",
+        "size": [
+          "M"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 11,
+          "formula": "2d8 + 2"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 14,
+        "dex": 15,
+        "con": 12,
+        "int": 3,
+        "wis": 12,
+        "cha": 6,
+        "skill": {
+          "perception": "+5",
+          "stealth": "+4"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 15,
+        "cr": "1/4",
+        "trait": [
+          {
+            "name": "Pack Tactics",
+            "entries": [
+              "The wolf has {@variantrule Advantage|SRD52} on attack rolls against a creature if at least one of the wolf's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Piercing damage. If the target is a Medium or smaller creature, it has the {@condition Prone|SRD52} condition."
+            ]
+          }
+        ],
+        "environment": [
+          "forest",
+          "grassland",
+          "hill"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/wolf.opus"
+        },
+        "traitTags": [
+          "Pack Tactics"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "conditionInflict": [
+          "prone"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Wolf",
+            "_copy": {
+              "name": "Animals",
+              "source": "SRD52",
+              "_mod": {
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Wolf.webp"
+                      },
+                      "width": 1217,
+                      "height": 539
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "classFeature.deft-explorer.ranger.deft-explorer.2",
+  "name": "Deft Explorer",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Deft Explorer",
+        "className": "Ranger",
+        "classSource": "SRD52",
+        "level": 2,
+        "entries": [
+          "Thanks to your travels, you gain the following benefits.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Expertise",
+                "entries": [
+                  "Choose one of your skill proficiencies with which you lack {@variantrule Expertise|SRD52}. You gain {@variantrule Expertise|SRD52} in that skill."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Languages",
+                "entries": [
+                  "You know two languages of your choice from the language tables in {@book chapter 2|SRD52|2|Choose Languages}."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "classLevel": 2
+}

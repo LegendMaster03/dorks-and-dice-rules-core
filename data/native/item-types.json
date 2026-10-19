@@ -1,0 +1,957 @@
+{
+  "_meta": {
+    "status": "SRD-derived-native-baseline-pending-reconciliation",
+    "note": "Candidate definitions are imported content, not adopted executable rules."
+  },
+  "records": [
+    {
+      "id": "itemType.adventuring-gear",
+      "name": "Adventuring Gear",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Adventuring Gear",
+            "abbreviation": "G"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Adventuring Gear",
+            "abbreviation": "G"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.ammunition",
+      "name": "Ammunition",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a-1",
+          "content": {
+            "name": "Ammunition",
+            "abbreviation": "A"
+          }
+        },
+        {
+          "key": "candidate-a-2",
+          "content": {
+            "name": "Ammunition",
+            "abbreviation": "AF"
+          }
+        },
+        {
+          "key": "candidate-b-1",
+          "content": {
+            "name": "Ammunition",
+            "abbreviation": "A"
+          }
+        },
+        {
+          "key": "candidate-b-2",
+          "content": {
+            "name": "Ammunition",
+            "abbreviation": "AF"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.artisan-s-tools",
+      "name": "Artisan's Tools",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Artisan's Tools",
+            "abbreviation": "AT",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Artisan's Tools",
+                "entries": [
+                  "These special tools include the items needed to pursue a craft or trade. Proficiency with a set of artisan's tools lets you add your proficiency bonus to any ability checks you make using the tools in your craft. Each type of artisan's tools requires a separate proficiency."
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Artisan's Tools",
+            "abbreviation": "AT",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Artisan's Tool",
+                "entries": [
+                  "Artisan's Tools are each focused on crafting items and pursuing a trade. Each type of Artisan's Tools tools requires a separate proficiency.",
+                  "If you have proficiency with a tool, add your {@variantrule Proficiency|SRD52|Proficiency Bonus} to any ability check you make that uses the tool. If you have proficiency in a skill that's used with that check, you have {@variantrule Advantage|SRD52} on the check too."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.explosive",
+      "name": "Explosive",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Explosive",
+            "abbreviation": "EXP"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Explosive",
+            "abbreviation": "EXP"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.food-and-drink",
+      "name": "Food and Drink",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Food and Drink",
+            "abbreviation": "FD"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Food and Drink",
+            "abbreviation": "FD"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.gaming-set",
+      "name": "Gaming Set",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Gaming Set",
+            "abbreviation": "GS",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Gaming Set",
+                "entries": [
+                  "If you are proficient with a gaming set, you can add your proficiency bonus to ability checks you make to play a game with that set. Each type of gaming set requires a separate proficiency."
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Gaming Set",
+            "abbreviation": "GS",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Tool (Gaming Set)",
+                "entries": [
+                  "If you have proficiency with a tool, add your {@variantrule Proficiency|SRD52|Proficiency Bonus} to any ability check you make that uses the tool. If you have proficiency in a skill that's used with that check, you have {@variantrule Advantage|SRD52} on the check too."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.generic-variant",
+      "name": "Generic Variant",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Generic Variant",
+            "abbreviation": "GV"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Generic Variant",
+            "abbreviation": "GV"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.heavy-armor",
+      "name": "Heavy Armor",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Heavy Armor",
+            "abbreviation": "HA"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Heavy Armor",
+            "abbreviation": "HA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.instrument",
+      "name": "Instrument",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Instrument",
+            "abbreviation": "INS",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Instrument",
+                "entries": [
+                  "If you have proficiency with a given musical instrument, you can add your proficiency bonus to any ability checks you make to play music with the instrument. A bard can use a musical instrument as a spellcasting focus. Each type of musical instrument requires a separate proficiency."
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Instrument",
+            "abbreviation": "INS",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Tool (Musical Instrument)",
+                "entries": [
+                  "If you have proficiency with a tool, add your {@variantrule Proficiency|SRD52|Proficiency Bonus} to any ability check you make that uses the tool. If you have proficiency in a skill that's used with that check, you have {@variantrule Advantage|SRD52} on the check too."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.light-armor",
+      "name": "Light Armor",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Light Armor",
+            "abbreviation": "LA"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Light Armor",
+            "abbreviation": "LA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.medium-armor",
+      "name": "Medium Armor",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Medium Armor",
+            "abbreviation": "MA"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Medium Armor",
+            "abbreviation": "MA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.melee-weapon",
+      "name": "Melee Weapon",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Melee Weapon",
+            "abbreviation": "M"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Melee Weapon",
+            "abbreviation": "M"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.mount",
+      "name": "Mount",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Mount",
+            "abbreviation": "MNT"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Mount",
+            "abbreviation": "MNT"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.other",
+      "name": "Other",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Other",
+            "abbreviation": "OTH"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Other",
+            "abbreviation": "OTH"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.potion",
+      "name": "Potion",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Potion",
+            "abbreviation": "P"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Potion",
+            "abbreviation": "P"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.ranged-weapon",
+      "name": "Ranged Weapon",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Ranged Weapon",
+            "abbreviation": "R",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Range",
+                "entries": [
+                  "A weapon that can be used to make a ranged attack has a range shown in parentheses after the ammunition or thrown property. The range lists two numbers. The first is the weapon's normal range in feet, and the second indicates the weapon's maximum range. When attacking a target beyond normal range, you have disadvantage on the attack roll. You can't attack a target beyond the weapon's long range."
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Ranged Weapon",
+            "abbreviation": "R",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Range",
+                "entries": [
+                  "A Range weapon has a range in parentheses after the Ammunition or Thrown property. The range lists two numbers. The first is the weapon's normal range in feet, and the second is the weapon's long range. When attacking a target beyond normal range, you have {@variantrule Disadvantage|SRD52} on the attack roll. You can't attack a target beyond the long range."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.ring",
+      "name": "Ring",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Ring",
+            "abbreviation": "RG"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Ring",
+            "abbreviation": "RG"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.rod",
+      "name": "Rod",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Rod",
+            "abbreviation": "RD"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Rod",
+            "abbreviation": "RD"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.scroll",
+      "name": "Scroll",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Scroll",
+            "abbreviation": "SC"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Scroll",
+            "abbreviation": "SC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.shield",
+      "name": "Shield",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Shield",
+            "abbreviation": "S"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Shield",
+            "abbreviation": "S"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.spellcasting-focus",
+      "name": "Spellcasting Focus",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Spellcasting Focus",
+            "abbreviation": "SCF"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Spellcasting Focus",
+            "abbreviation": "SCF"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.tack-and-harness",
+      "name": "Tack and Harness",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Tack and Harness",
+            "abbreviation": "TAH"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Tack and Harness",
+            "abbreviation": "TAH"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.tool",
+      "name": "Tool",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Tool",
+            "abbreviation": "T"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Tool",
+            "abbreviation": "T",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Tool",
+                "entries": [
+                  "If you have proficiency with a tool, add your {@variantrule Proficiency|SRD52|Proficiency Bonus} to any ability check you make that uses the tool. If you have proficiency in a skill that's used with that check, you have {@variantrule Advantage|SRD52} on the check too."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.trade-bar",
+      "name": "Trade Bar",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Trade Bar",
+            "abbreviation": "TB",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Trade Bar",
+                "entries": [
+                  "Because large numbers of coins can be difficult to transport and account for, many merchants prefer to use trade bars—ingots of precious metals and alloys (usually silver). These bars are valued by weight."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.trade-good",
+      "name": "Trade Good",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Trade Good",
+            "abbreviation": "TG",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Trade Good",
+                "entries": [
+                  "Most wealth is not in coins. It is measured in livestock, grain, land, rights to collect taxes, or rights to resources (such as a mine or a forest).",
+                  "Guilds, nobles, and royalty regulate trade. Chartered companies are granted rights to conduct trade along certain routes, to send merchant ships to various ports, or to buy or sell specific goods. Guilds set prices for the goods or services that they control, and determine who may or may not offer those goods and services. Merchants commonly exchange trade goods without using currency."
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Trade Good",
+            "abbreviation": "TG",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Trade Good",
+                "entries": [
+                  "Merchants commonly exchange trade goods without using currency."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.treasure",
+      "name": "Treasure",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Treasure",
+            "abbreviation": "$"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.treasure-art-object",
+      "name": "Treasure (Art Object)",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Treasure (Art Object)",
+            "abbreviation": "$A"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Treasure (Art Object)",
+            "abbreviation": "$A",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Treasure (Art Object)",
+                "entries": [
+                  "Idols cast of solid gold, necklaces studded with precious stones, paintings of ancient kings, bejeweled dishes—art objects include all these and more."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.treasure-coinage",
+      "name": "Treasure (Coinage)",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Treasure (Coinage)",
+            "abbreviation": "$C"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Treasure (Coinage)",
+            "abbreviation": "$C",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Treasure (Coinage)",
+                "entries": [
+                  "Characters often find coins on their adventures and can spend those coins in shops, inns, and other businesses. Coins come in different denominations based on the relative worth of their material. The Coin Values table lists coins and how much they're worth relative to the Gold Piece, which is the game's main coin. For example, 100 Copper Pieces are worth 1 Gold Piece.",
+                  "A coin weighs about a third of an ounce, so fifty coins weigh a pound."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.treasure-gemstone",
+      "name": "Treasure (Gemstone)",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Treasure (Gemstone)",
+            "abbreviation": "$G"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Treasure (Gemstone)",
+            "abbreviation": "$G",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Treasure (Gemstone)",
+                "entries": [
+                  "Gemstones are small, lightweight, and easily secured compared to their same value in coins."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.vehicle-air",
+      "name": "Vehicle (Air)",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Vehicle (Air)",
+            "abbreviation": "AIR",
+            "_copy": {
+              "abbreviation": "SHP",
+              "source": "SRD51"
+            }
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Vehicle (Air)",
+            "abbreviation": "AIR",
+            "_copy": {
+              "abbreviation": "SHP",
+              "source": "SRD52"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.vehicle-land",
+      "name": "Vehicle (Land)",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Vehicle (Land)",
+            "abbreviation": "VEH"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Vehicle (Land)",
+            "abbreviation": "VEH"
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.vehicle-water",
+      "name": "Vehicle (Water)",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Vehicle (Water)",
+            "abbreviation": "SHP",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Crew",
+                "entries": [
+                  "A ship needs a crew of skilled hirelings to function. As per the Player's Handbook, one skilled hireling costs at least 2 gp per day. The minimum number of skilled hirelings needed to crew a ship depends on the type of vessel.",
+                  "You can track the loyalty of individual crew members or the crew as a whole using the optional loyalty rules in chapter 4 of the Dungeon Master's Guide. If at least half the crew becomes disloyal during a voyage, the crew turns hostile and stages a mutiny. If the ship is berthed, disloyal crew members leave the ship and never return."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Passengers",
+                "entries": [
+                  "This indicates the number of Small and Medium passengers the ship can accommodate.",
+                  "Accommodations consist of shared hammocks in tight quarters. A ship outfitted with private accommodations can carry one-fifth as many passengers.",
+                  "A passenger is usually expected to pay 5 sp per day for a hammock, but prices can vary from ship to ship. A small private cabin usually costs 2 gp per day."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Cargo",
+                "entries": [
+                  "The maximum tonnage the ship can carry."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Damage Threshold",
+                "entries": [
+                  "If a ship has a Damage Threshold, it has immunity to all damage unless it takes an amount of damage equal to or greater than its damage threshold, in which case it takes damage as normal. Any damage that fails to meet or exceed the damage threshold is considered superficial and doesn't reduce the ship's hit points."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Ship Repair",
+                "entries": [
+                  "Repairs to a damaged ship can be made while the vessel is berthed. Repairing 1 hit point of damage requires 1 day and costs 20 gp for materials and labor."
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Vehicle (Water)",
+            "abbreviation": "SHP",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Speed",
+                "entries": [
+                  "A ship sailing against a strong wind moves at half speed. In a dead calm (no wind), waterborne ships can't move under sail and must be rowed. Keelboats and Rowboats are used on lakes and rivers. If going downstream, add the speed of the current (typically 3 miles per hour) to the speed of the vehicle. These vehicles can't be rowed against any significant current, but they can be pulled upstream by draft animals on the shores. A Rowboat can be carried and weighs 100 pounds."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Crew",
+                "entries": [
+                  "A ship larger than a Keelboat or Rowboat needs a crew of skilled hirelings (see \"{@book Services|SRD52|6|Services}\") to function. The minimum number of skilled hirelings needed to crew a ship depends on the type of ship."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Passengers",
+                "entries": [
+                  "The number of Small and Medium passengers the ship can accommodate using hammocks. A ship outfitted with private accommodations can carry one-fifth as many passengers. A passenger usually pays 5 SP per day for a hammock, but prices can vary from ship to ship. A small private cabin usually costs 2 GP per day."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Damage Threshold",
+                "entries": [
+                  "See the {@variantrule Damage Threshold|SRD52|rules glossary}."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Ship Repair",
+                "entries": [
+                  "Repairs to a damaged ship can be made while the vessel is berthed. Repairing 1 {@variantrule Hit Points|SRD52|Hit Point} of damage requires 1 day and costs 20 GP for materials and labor. If the repairs are made in a location where supplies and skilled labor are abundant, such as a city shipyard, the repair time and cost are halved."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "itemType.wand",
+      "name": "Wand",
+      "kind": "itemType",
+      "baselineStatus": "pending-native-reconciliation",
+      "candidateDefinitions": [
+        {
+          "key": "candidate-a",
+          "content": {
+            "name": "Wand",
+            "abbreviation": "WD"
+          }
+        },
+        {
+          "key": "candidate-b",
+          "content": {
+            "name": "Wand",
+            "abbreviation": "WD"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "item.ring-of-fire-resistance",
+  "name": "Ring of Fire Resistance",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Fire Resistance",
+        "type": "RG|SRD51",
+        "resist": [
+          "fire"
+        ],
+        "detail1": "garnet",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": true,
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Ring of Resistance}"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Fire Resistance",
+        "type": "RG|SRD52",
+        "resist": [
+          "fire"
+        ],
+        "detail1": "garnet",
+        "rarity": "rare",
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Ring of Resistance|SRD52}"
+        ]
+      }
+    }
+  ]
+}

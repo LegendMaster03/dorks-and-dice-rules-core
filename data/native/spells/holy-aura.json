@@ -1,0 +1,116 @@
+{
+  "id": "spell.holy-aura",
+  "name": "Holy Aura",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Holy Aura",
+        "level": 8,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "a tiny reliquary worth at least 1,000 gp containing a sacred relic, such as a scrap of cloth from a saint's robe or a piece of parchment from a religious text",
+            "cost": 100000
+          }
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "Divine light washes out from you and coalesces in a soft radiance in a 30-foot radius around you. Creatures of your choice in that radius when you cast this spell shed dim light in a 5-foot radius and have advantage on all saving throws, and other creatures have disadvantage on attack rolls against them until the spell ends. In addition, when a fiend or an undead hits an affected creature with a melee attack, the aura flashes with brilliant light. The attacker must succeed on a Constitution saving throw or be {@condition blinded} until the spell ends."
+        ],
+        "conditionInflict": [
+          "blinded"
+        ],
+        "savingThrow": [
+          "constitution"
+        ],
+        "miscTags": [
+          "ADV",
+          "LGT"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Holy Aura",
+        "level": 8,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "emanation",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "a reliquary worth 1,000+ GP",
+            "cost": 100000
+          }
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "For the duration, you emit an aura in a 30-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation}. While in the aura, creatures of your choice have {@variantrule Advantage|SRD52} on all saving throws, and other creatures have {@variantrule Disadvantage|SRD52} on attack rolls against them. In addition, when a Fiend or an Undead hits an affected creature with a melee attack roll, the attacker must succeed on a Constitution saving throw or have the {@condition Blinded|SRD52} condition until the end of its next turn."
+        ],
+        "conditionInflict": [
+          "blinded"
+        ],
+        "savingThrow": [
+          "constitution"
+        ],
+        "miscTags": [
+          "ADV"
+        ],
+        "areaTags": [
+          "S"
+        ]
+      }
+    }
+  ]
+}

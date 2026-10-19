@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.arcane-apotheosis.sorcerer.arcane-apotheosis.20",
+  "name": "Arcane Apotheosis",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Arcane Apotheosis",
+        "className": "Sorcerer",
+        "classSource": "SRD52",
+        "level": 20,
+        "entries": [
+          "While your Innate Sorcery feature is active, you can use one Metamagic option on each of your turns without spending Sorcery Points on it."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.sorcerer",
+  "classLevel": 20
+}

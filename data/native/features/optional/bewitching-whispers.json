@@ -1,0 +1,43 @@
+{
+  "id": "optionalfeature.bewitching-whispers",
+  "name": "Bewitching Whispers",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Bewitching Whispers",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 7,
+              "class": {
+                "name": "Warlock"
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": {
+                "daily": {
+                  "1e": [
+                    "compulsion"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell compulsion} once using a warlock spell slot. You can't do so again until you finish a long rest."
+        ]
+      }
+    }
+  ]
+}

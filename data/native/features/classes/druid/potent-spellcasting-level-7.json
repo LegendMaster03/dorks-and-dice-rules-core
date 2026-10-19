@@ -1,0 +1,23 @@
+{
+  "id": "classFeature.potent-spellcasting.druid.potent-spellcasting.7",
+  "name": "Potent Spellcasting",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potent Spellcasting",
+        "className": "Druid",
+        "classSource": "SRD52",
+        "level": 7,
+        "header": 2,
+        "entries": [
+          "Add your Wisdom modifier to the damage you deal with any Druid cantrip."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "classLevel": 7
+}

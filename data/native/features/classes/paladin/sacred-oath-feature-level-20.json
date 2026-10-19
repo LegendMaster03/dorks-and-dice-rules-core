@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.sacred-oath-feature.paladin.sacred-oath-feature.20",
+  "name": "Sacred Oath feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Sacred Oath feature",
+        "className": "Paladin",
+        "classSource": "SRD51",
+        "level": 20,
+        "entries": [
+          "At 20th level, you gain a feature granted to you by your Sacred Oath."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "classLevel": 20
+}

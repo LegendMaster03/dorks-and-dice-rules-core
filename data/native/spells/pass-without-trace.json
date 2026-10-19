@@ -1,0 +1,91 @@
+{
+  "id": "spell.pass-without-trace",
+  "name": "Pass without Trace",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Pass without Trace",
+        "level": 2,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "ashes from a burned leaf of mistletoe and a sprig of spruce"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "A veil of shadows and silence radiates from you, masking you and your companions from detection. For the duration, each creature you choose within 30 feet of you (including you) has a +10 bonus to Dexterity ({@skill Stealth}) checks and can't be tracked except by magical means. A creature that receives this bonus leaves behind no tracks or other traces of its passage."
+        ],
+        "areaTags": [
+          "MT"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Pass without Trace",
+        "level": 2,
+        "school": "A",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "emanation",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "ashes from burned mistletoe"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 1
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You radiate a concealing aura in a 30-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} for the duration. While in the aura, you and each creature you choose have a +10 bonus to Dexterity ({@skill Stealth|SRD52}) checks and leave no tracks."
+        ],
+        "areaTags": [
+          "MT"
+        ]
+      }
+    }
+  ]
+}

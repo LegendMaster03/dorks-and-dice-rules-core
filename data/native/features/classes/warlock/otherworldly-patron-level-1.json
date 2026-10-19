@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.otherworldly-patron.warlock.otherworldly-patron.1",
+  "name": "Otherworldly Patron",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Otherworldly Patron",
+        "className": "Warlock",
+        "classSource": "SRD51",
+        "level": 1,
+        "entries": [
+          "At 1st level, you have struck a bargain with an otherworldly being chosen from the list of available patrons. Your choice grants you features at 1st level and again at 6th, 10th, and 14th level."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.warlock",
+  "classLevel": 1
+}

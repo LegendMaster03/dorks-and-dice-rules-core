@@ -1,0 +1,102 @@
+{
+  "id": "spell.meld-into-stone",
+  "name": "Meld into Stone",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Meld into Stone",
+        "level": 3,
+        "school": "T",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 8
+            }
+          }
+        ],
+        "meta": {
+          "ritual": true
+        },
+        "entries": [
+          "You step into a stone object or surface large enough to fully contain your body, melding yourself and all the equipment you carry with the stone for the duration. Using your movement, you step into the stone at a point you can touch. Nothing of your presence remains visible or otherwise detectable by nonmagical senses.",
+          "While merged with the stone, you can't see what occurs outside it, and any Wisdom ({@skill Perception}) checks you make to hear sounds outside it are made with disadvantage. You remain aware of the passage of time and can cast spells on yourself while merged in the stone. You can use your movement to leave the stone where you entered it, which ends the spell. You otherwise can't move.",
+          "Minor physical damage to the stone doesn't harm you, but its partial destruction or a change in its shape (to the extent that you no longer fit within it) expels you and deals {@damage 6d6} bludgeoning damage to you. The stone's complete destruction (or transmutation into a different substance) expels you and deals 50 bludgeoning damage to you. If expelled, you fall {@condition prone} in an unoccupied space closest to where you first entered."
+        ],
+        "damageInflict": [
+          "bludgeoning"
+        ],
+        "conditionInflict": [
+          "prone"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Meld into Stone",
+        "level": 3,
+        "school": "T",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 8
+            }
+          }
+        ],
+        "meta": {
+          "ritual": true
+        },
+        "entries": [
+          "You step into a stone object or surface large enough to fully contain your body, merging yourself and your equipment with the stone for the duration. You must touch the stone to do so. Nothing of your presence remains visible or otherwise detectable by nonmagical senses.",
+          "While merged with the stone, you can't see what occurs outside it, and any Wisdom ({@skill Perception|SRD52}) checks you make to hear sounds outside it are made with {@variantrule Disadvantage|SRD52}. You remain aware of the passage of time and can cast spells on yourself while merged in the stone. You can use 5 feet of movement to leave the stone where you entered it, which ends the spell. You otherwise can't move.",
+          "Minor physical damage to the stone doesn't harm you, but its partial destruction or a change in its shape (to the extent that you no longer fit within it) expels you and deals {@damage 6d6} Force damage to you. The stone's complete destruction (or transmutation into a different substance) expels you and deals 50 Force damage to you. If expelled, you move into an unoccupied space closest to where you first entered and have the {@condition Prone|SRD52} condition."
+        ],
+        "damageInflict": [
+          "force"
+        ],
+        "conditionInflict": [
+          "prone"
+        ]
+      }
+    }
+  ]
+}

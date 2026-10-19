@@ -1,0 +1,671 @@
+{
+  "id": "monster.mummy-lord",
+  "name": "Mummy Lord",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Mummy Lord",
+        "size": [
+          "M"
+        ],
+        "type": "undead",
+        "alignment": [
+          "L",
+          "E"
+        ],
+        "ac": [
+          {
+            "ac": 17,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 97,
+          "formula": "13d8 + 39"
+        },
+        "speed": {
+          "walk": 20
+        },
+        "str": 18,
+        "dex": 10,
+        "con": 17,
+        "int": 11,
+        "wis": 18,
+        "cha": 16,
+        "save": {
+          "con": "+8",
+          "int": "+5",
+          "wis": "+9",
+          "cha": "+8"
+        },
+        "skill": {
+          "history": "+5",
+          "religion": "+5"
+        },
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 14,
+        "immune": [
+          "necrotic",
+          "poison",
+          {
+            "immune": [
+              "bludgeoning",
+              "piercing",
+              "slashing"
+            ],
+            "note": "from nonmagical attacks",
+            "cond": true
+          }
+        ],
+        "vulnerable": [
+          "fire"
+        ],
+        "conditionImmune": [
+          "charmed",
+          "exhaustion",
+          "frightened",
+          "paralyzed",
+          "poisoned"
+        ],
+        "languages": [
+          "the languages it knew in life"
+        ],
+        "cr": {
+          "cr": "15",
+          "lair": "16"
+        },
+        "spellcasting": [
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The mummy lord is a 10th-level spellcaster. Its spellcasting ability is Wisdom (spell save {@dc 17}, {@hit 9} to hit with spell attacks). The mummy lord has the following cleric spells prepared:"
+            ],
+            "spells": {
+              "0": {
+                "spells": [
+                  "{@spell sacred flame}",
+                  "{@spell thaumaturgy}"
+                ]
+              },
+              "1": {
+                "slots": 4,
+                "spells": [
+                  "{@spell command}",
+                  "{@spell guiding bolt}",
+                  "{@spell shield of faith}"
+                ]
+              },
+              "2": {
+                "slots": 3,
+                "spells": [
+                  "{@spell hold person}",
+                  "{@spell silence}",
+                  "{@spell spiritual weapon}"
+                ]
+              },
+              "3": {
+                "slots": 3,
+                "spells": [
+                  "{@spell animate dead}",
+                  "{@spell dispel magic}"
+                ]
+              },
+              "4": {
+                "slots": 3,
+                "spells": [
+                  "{@spell divination}",
+                  "{@spell guardian of faith}"
+                ]
+              },
+              "5": {
+                "slots": 2,
+                "spells": [
+                  "{@spell contagion}",
+                  "{@spell insect plague}"
+                ]
+              },
+              "6": {
+                "slots": 1,
+                "spells": [
+                  "{@spell harm}"
+                ]
+              }
+            },
+            "ability": "wis"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Magic Resistance",
+            "entries": [
+              "The mummy lord has advantage on saving throws against spells and other magical effects."
+            ]
+          },
+          {
+            "name": "Rejuvenation",
+            "entries": [
+              "A destroyed mummy lord gains a new body in 24 hours if its heart is intact, regaining all its hit points and becoming active again. The new body appears within 5 feet of the mummy lord's heart."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The mummy can use its Dreadful Glare and makes one attack with its rotting fist."
+            ]
+          },
+          {
+            "name": "Rotting Fist",
+            "entries": [
+              "{@atk mw} {@hit 9} to hit, reach 5 ft., one target. {@h}14 ({@damage 3d6 + 4}) bludgeoning damage plus 21 ({@damage 6d6}) necrotic damage. If the target is a creature, it must succeed on a {@dc 16} Constitution saving throw or be cursed with mummy rot. The cursed target can't regain hit points, and its hit point maximum decreases by 10 ({@dice 3d6}) for every 24 hours that elapse. If the curse reduces the target's hit point maximum to 0, the target dies, and its body turns to dust. The curse lasts until removed by the {@spell remove curse} spell or other magic."
+            ]
+          },
+          {
+            "name": "Dreadful Glare",
+            "entries": [
+              "The mummy lord targets one creature it can see within 60 feet of it. If the target can see the mummy lord, it must succeed on a {@dc 16} Wisdom saving throw against this magic or become {@condition frightened} until the end of the mummy's next turn. If the target fails the saving throw by 5 or more, it is also {@condition paralyzed} for the same duration. A target that succeeds on the saving throw is immune to the Dreadful Glare of all mummies and mummy lords for the next 24 hours."
+            ]
+          }
+        ],
+        "legendary": [
+          {
+            "name": "Attack",
+            "entries": [
+              "The mummy lord makes one attack with its rotting fist or uses its Dreadful Glare."
+            ]
+          },
+          {
+            "name": "Blinding Dust",
+            "entries": [
+              "Blinding dust and sand swirls magically around the mummy lord. Each creature within 5 feet of the mummy lord must succeed on a {@dc 16} Constitution saving throw or be {@condition blinded} until the end of the creature's next turn."
+            ]
+          },
+          {
+            "name": "Blasphemous Word (Costs 2 Actions)",
+            "entries": [
+              "The mummy lord utters a blasphemous word. Each non-undead creature within 10 feet of the mummy lord that can hear the magical utterance must succeed on a {@dc 16} Constitution saving throw or be {@condition stunned} until the end of the mummy lord's next turn."
+            ]
+          },
+          {
+            "name": "Channel Negative Energy (Costs 2 Actions)",
+            "entries": [
+              "The mummy lord magically unleashes negative energy. Creatures within 60 feet of the mummy lord, including ones behind barriers and around corners, can't regain hit points until the end of the mummy lord's next turn."
+            ]
+          },
+          {
+            "name": "Whirlwind of Sand (Costs 2 Actions)",
+            "entries": [
+              "The mummy lord magically transforms into a whirlwind of sand, moves up to 60 feet, and reverts to its normal form. While in whirlwind form, the mummy lord is immune to all damage, and it can't be {@condition grappled}, {@condition petrified}, knocked {@condition prone}, {@condition restrained}, or {@condition stunned}. Equipment worn or carried by the mummy lord remain in its possession."
+            ]
+          }
+        ],
+        "environment": [
+          "desert"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/mummy-lord.opus"
+        },
+        "traitTags": [
+          "Magic Resistance",
+          "Rejuvenation"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "LF"
+        ],
+        "damageTags": [
+          "B",
+          "N"
+        ],
+        "damageTagsSpell": [
+          "N",
+          "O",
+          "P",
+          "R"
+        ],
+        "spellcastingTags": [
+          "CC"
+        ],
+        "miscTags": [
+          "AOE",
+          "CUR",
+          "HPR",
+          "MW"
+        ],
+        "conditionInflict": [
+          "blinded",
+          "frightened",
+          "paralyzed",
+          "stunned"
+        ],
+        "conditionInflictSpell": [
+          "blinded",
+          "deafened",
+          "paralyzed",
+          "poisoned",
+          "prone",
+          "stunned"
+        ],
+        "savingThrowForced": [
+          "constitution",
+          "wisdom"
+        ],
+        "savingThrowForcedLegendary": [
+          "constitution"
+        ],
+        "savingThrowForcedSpell": [
+          "constitution",
+          "dexterity",
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Mummy Lord",
+            "_copy": {
+              "name": "Mummy",
+              "source": "SRD51",
+              "_mod": {
+                "entries": {
+                  "mode": "appendArr",
+                  "items": [
+                    {
+                      "type": "entries",
+                      "name": "Mummy Lord",
+                      "entries": [
+                        "In the tombs of the ancients, tyrannical monarchs and the high priests of dark gods lie in dreamless rest, waiting for the time when they might reclaim their thrones and reforge their ancient empires. The regalia of their terrible rule still adorns their linen-wrapped bodies, their moldering robes stitched with evil symbols and bronze armor etched with devices of dynasties that fell a thousand years before.",
+                        "Under the direction of the most powerful priests, the ritual that creates a mummy can be increased in potency. The mummy lord that rises from such a ritual retains the memories and personality of its former life, and is gifted with supernatural resilience. Dead emperors wield the same infamous rune-marked blades that they did in legend. Sorcerer lords work the forbidden magic that once controlled a terrified populace, and the dark gods reward dead priest-kings' prayers by imparting divine spells.",
+                        {
+                          "type": "entries",
+                          "entries": [
+                            {
+                              "name": "Heart of the Mummy Lord",
+                              "type": "entries",
+                              "entries": [
+                                "As part of the ritual that creates a mummy lord, the creature's heart and viscera are removed from the corpse and placed in canopic jars. These jars are usually carved from limestone or made of pottery, etched or painted with religious hieroglyphs.",
+                                "As long as its shriveled heart remains intact, a mummy lord can't be permanently destroyed. When it drops to 0 hit points, the mummy lord turns to dust and re-forms at full strength 24 hours later, rising out of dust in close proximity to the canopic jar containing its heart. A mummy lord can be destroyed or prevented from re-forming by burning its heart to ashes. For this reason, a mummy lord usually keeps its heart and viscera in a hidden tomb or vault.",
+                                "The mummy lord's heart has AC 5, 25 hit points, and immunity to all damage except fire."
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "entries",
+                      "name": "A Mummy Lord's Lair",
+                      "entries": [
+                        "A mummy lord watches over an ancient temple or tomb that is protected by lesser undead and rigged with traps. Hidden in this temple is the sarcophagus where a mummy lord keeps its greatest treasures. A mummy lord encountered in its lair has a challenge rating of 16 (15,000 XP)."
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Mummy Lord",
+        "size": [
+          "S",
+          "M"
+        ],
+        "type": {
+          "type": "undead",
+          "tags": [
+            "cleric"
+          ]
+        },
+        "alignment": [
+          "L",
+          "E"
+        ],
+        "ac": [
+          17
+        ],
+        "hp": {
+          "average": 187,
+          "formula": "25d8 + 75"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "initiative": {
+          "proficiency": 2
+        },
+        "str": 18,
+        "dex": 10,
+        "con": 17,
+        "int": 11,
+        "wis": 19,
+        "cha": 16,
+        "save": {
+          "int": "+5",
+          "wis": "+9"
+        },
+        "skill": {
+          "history": "+5",
+          "perception": "+9",
+          "religion": "+5"
+        },
+        "senses": [
+          "Truesight 60 ft."
+        ],
+        "passive": 19,
+        "immune": [
+          "necrotic",
+          "poison"
+        ],
+        "vulnerable": [
+          "fire"
+        ],
+        "conditionImmune": [
+          "charmed",
+          "exhaustion",
+          "frightened",
+          "paralyzed",
+          "poisoned"
+        ],
+        "languages": [
+          "Common plus three other languages"
+        ],
+        "cr": {
+          "cr": "15",
+          "xpLair": 15000
+        },
+        "spellcasting": [
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The mummy casts one of the following spells, requiring no Material components and using Wisdom as the spellcasting ability (spell save {@dc 17}, {@hit 9} to hit with spell attacks):"
+            ],
+            "will": [
+              "{@spell Dispel Magic|SRD52}",
+              "{@spell Thaumaturgy|SRD52}"
+            ],
+            "daily": {
+              "1e": [
+                "{@spell Animate Dead|SRD52}",
+                "{@spell Harm|SRD52}",
+                "{@spell Insect Plague|SRD52} (level 7 version)"
+              ]
+            },
+            "ability": "wis",
+            "displayAs": "action"
+          },
+          {
+            "name": "Dread Command",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The mummy casts {@spell Command|SRD52} (level 2 version), using the same spellcasting ability as Spellcasting. The mummy can't take this action again until the start of its next turn."
+            ],
+            "legendary": {
+              "1": [
+                "{@spell Command|SRD52} (level 2 version)"
+              ]
+            },
+            "ability": "wis",
+            "displayAs": "legendary",
+            "hidden": [
+              "legendary"
+            ]
+          }
+        ],
+        "trait": [
+          {
+            "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+            "entries": [
+              "If the mummy fails a saving throw, it can choose to succeed instead."
+            ]
+          },
+          {
+            "name": "Magic Resistance",
+            "entries": [
+              "The mummy has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+            ]
+          },
+          {
+            "name": "Undead Restoration",
+            "entries": [
+              "If destroyed, the mummy gains a new body in 24 hours if its heart is intact, reviving with all its {@variantrule Hit Points|SRD52}. The new body appears in an unoccupied space within the mummy's lair. The heart is a Tiny object that has AC 17, HP 10, and {@variantrule Immunity|SRD52} to all damage except Fire."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The mummy makes one Rotting Fist or Channel Negative Energy attack, and it uses Dreadful Glare."
+            ]
+          },
+          {
+            "name": "Rotting Fist",
+            "entries": [
+              "{@atkr m} {@hit 9}, reach 5 ft. {@h}15 ({@damage 2d10 + 4}) Bludgeoning damage plus 10 ({@damage 3d6}) Necrotic damage. If the target is a creature, it is cursed. While cursed, the target can't regain {@variantrule Hit Points|SRD52}, it gains no benefit from finishing a {@variantrule Long Rest|SRD52}, and its {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by 10 ({@dice 3d6}) every 24 hours that elapse. A creature dies and turns to dust if reduced to 0 {@variantrule Hit Points|SRD52} by this attack."
+            ]
+          },
+          {
+            "name": "Channel Negative Energy",
+            "entries": [
+              "{@atkr r} {@hit 9}, range 60 ft. {@h}25 ({@damage 6d6 + 4}) Necrotic damage."
+            ]
+          },
+          {
+            "name": "Dreadful Glare",
+            "entries": [
+              "{@actSave wis} {@dc 17}, one creature the mummy can see within 60 feet. {@actSaveFail} 25 ({@damage 6d6 + 4}) Psychic damage, and the target has the {@condition Paralyzed|SRD52} condition until the end of the mummy's next turn."
+            ]
+          }
+        ],
+        "reaction": [
+          {
+            "name": "Whirlwind of Sand",
+            "entries": [
+              "{@actTrigger} The mummy is hit by an attack roll. {@actResponse} The mummy adds 2 to its AC against the attack, possibly causing the attack to miss, and the mummy teleports up to 60 feet to an unoccupied space it can see. Each creature of its choice that it can see within 5 feet of its destination space has the {@condition Blinded|SRD52} condition until the end of the mummy's next turn."
+            ]
+          }
+        ],
+        "legendaryActionsLair": 4,
+        "legendary": [
+          {
+            "name": "Glare",
+            "entries": [
+              "The mummy uses Dreadful Glare. The mummy can't take this action again until the start of its next turn."
+            ]
+          },
+          {
+            "name": "Necrotic Strike",
+            "entries": [
+              "The mummy makes one Rotting Fist or Channel Negative Energy attack."
+            ]
+          }
+        ],
+        "environment": [
+          "desert",
+          "swamp"
+        ],
+        "treasure": [
+          "relics"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/mummy-lord.opus"
+        },
+        "traitTags": [
+          "Legendary Resistances",
+          "Magic Resistance"
+        ],
+        "senseTags": [
+          "U"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C"
+        ],
+        "damageTags": [
+          "B",
+          "N",
+          "Y"
+        ],
+        "damageTagsSpell": [
+          "N",
+          "P"
+        ],
+        "spellcastingTags": [
+          "O"
+        ],
+        "miscTags": [
+          "CUR",
+          "HPR",
+          "MA",
+          "RA"
+        ],
+        "conditionInflict": [
+          "blinded",
+          "paralyzed"
+        ],
+        "conditionInflictSpell": [
+          "prone"
+        ],
+        "savingThrowForced": [
+          "wisdom"
+        ],
+        "savingThrowForcedLegendary": [
+          "constitution"
+        ],
+        "savingThrowForcedSpell": [
+          "constitution",
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Mummy Lord",
+            "_copy": {
+              "name": "Mummies",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "Those desperate to escape death sometimes make terrible bargains with wicked deities. Devoting their hearts to evil forces, these villains gain power over death and a cursed immortality that binds their minds and spirits within a desiccated corpse. Freed from mortal concerns, these mummy lords pursue their obsessions across ages.",
+                        "Most mummy lords linger amid the ruins of ancient palaces or temples where they once held sway. Their age-old faith and ties to deathly forces grant them fearful magic, which they use to sow ruin and animate undead servants.",
+                        "A mummy lord's heart embodies the pact that grants it immortality. Rather than bearing its heart within its corpse, a mummy lord removes and hides this accursed organ. As long as its heart isn't destroyed by fire, a mummy lord can return to unlife no matter what doom it meets.",
+                        "Mummy lords are usually consumed by ageless plots. Roll on or choose a result from the Mummy Lord Plots table to determine a mummy lord's ancient agenda.",
+                        {
+                          "type": "table",
+                          "caption": "Mummy Lord Plots",
+                          "colLabels": [
+                            "1d8",
+                            "The Mummy Lord Seeks To..."
+                          ],
+                          "colStyles": [
+                            "col-2 text-center",
+                            "col-10"
+                          ],
+                          "rows": [
+                            [
+                              "1",
+                              "Open a portal to the past, when its power was at its height."
+                            ],
+                            [
+                              "2",
+                              "Perform a ritual that can be attempted only once every eight hundred years."
+                            ],
+                            [
+                              "3",
+                              "Reclaim and resurrect a loved one's corpse."
+                            ],
+                            [
+                              "4",
+                              "Reconquer the lands that once composed its empire."
+                            ],
+                            [
+                              "5",
+                              "Recover the pieces of its lost heart."
+                            ],
+                            [
+                              "6",
+                              "Replace its descendant as the ruler of a realm."
+                            ],
+                            [
+                              "7",
+                              "Sacrifice a thousand souls to its god in return for true life."
+                            ],
+                            [
+                              "8",
+                              "Transform the people of an entire nation into Undead servants."
+                            ]
+                          ]
+                        },
+                        {
+                          "type": "entries",
+                          "name": "Mummy Lord Lairs",
+                          "entries": [
+                            "Mummy lords typically lurk in the ruins of places they dwelled in life. Such sites have forbidding reputations, or they might be lost and forgotten."
+                          ]
+                        },
+                        {
+                          "type": "insetReadaloud",
+                          "entries": [
+                            {
+                              "type": "quote",
+                              "entries": [
+                                "The scroll contained a foul ritual to raise one of the children of Anhktepot. I tried to burn it, but the flames refused to touch the parchment. Forgive me, but I cannot destroy it... and I cannot help myself."
+                              ],
+                              "by": "Isu, High Priest of Muhar"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Mummy Lord.webp"
+                      },
+                      "credit": "Helge C. Balzer",
+                      "width": 2550,
+                      "height": 1650
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "subclassFeature.aura-of-devotion.paladin.devotion.aura-of-devotion.7",
+  "name": "Aura of Devotion",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Aura of Devotion",
+        "className": "Paladin",
+        "classSource": "SRD51",
+        "subclassShortName": "Devotion",
+        "subclassSource": "SRD51",
+        "level": 7,
+        "header": 2,
+        "entries": [
+          "Starting at 7th level, you and friendly creatures within 10 feet of you can't be {@condition charmed} while you are conscious.",
+          "At 18th level, the range of this aura increases to 30 feet."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Aura of Devotion",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "subclassShortName": "Devotion",
+        "subclassSource": "SRD52",
+        "level": 7,
+        "header": 2,
+        "entries": [
+          "You and your allies have {@variantrule Immunity|SRD52} to the {@condition Charmed|SRD52} condition while in your Aura of Protection. If a {@condition Charmed|SRD52} ally enters the aura, that condition has no effect on that ally while there."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "parentSubclass": "devotion",
+  "classLevel": 7
+}

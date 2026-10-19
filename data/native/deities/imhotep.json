@@ -1,0 +1,24 @@
+{
+  "id": "deity.imhotep",
+  "name": "Imhotep",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Imhotep",
+        "pantheon": "Egyptian",
+        "alignment": [
+          "N",
+          "G"
+        ],
+        "title": "God of crafts and medicine",
+        "domains": [
+          "Knowledge"
+        ],
+        "symbol": "Step pyramid"
+      }
+    }
+  ]
+}

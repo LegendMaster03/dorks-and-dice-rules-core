@@ -1,0 +1,309 @@
+{
+  "id": "spell.reincarnate",
+  "name": "Reincarnate",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Reincarnate",
+        "level": 5,
+        "school": "T",
+        "time": [
+          {
+            "number": 1,
+            "unit": "hour"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "rare oils and unguents worth at least 1,000 gp, which the spell consumes",
+            "cost": 100000,
+            "consume": true
+          }
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You touch a dead humanoid or a piece of a dead humanoid. Provided that the creature has been dead no longer than 10 days, the spell forms a new adult body for it and then calls the soul to enter that body. If the target's soul isn't free or willing to do so, the spell fails.",
+          "The magic fashions a new body for the creature to inhabit, which likely causes the creature's race to change. The DM rolls a {@dice d100} and consults the following table to determine what form the creature takes when restored to life, or the DM chooses a form.",
+          {
+            "type": "table",
+            "caption": "Reincarnate Races",
+            "colLabels": [
+              "{@dice d100}",
+              "Race"
+            ],
+            "colStyles": [
+              "col-1 text-center no-wrap",
+              "col-11"
+            ],
+            "rows": [
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "min": 1,
+                    "max": 4,
+                    "pad": true
+                  }
+                },
+                "{@race Dragonborn|SRD51}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "min": 5,
+                    "max": 13,
+                    "pad": true
+                  }
+                },
+                "{@race Dwarf|SRD51|Dwarf, hill}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "min": 14,
+                    "max": 21
+                  }
+                },
+                "Dwarf, mountain"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "min": 22,
+                    "max": 25
+                  }
+                },
+                "Elf, dark"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "min": 26,
+                    "max": 34
+                  }
+                },
+                "{@race Elf|SRD51|Elf, high}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "min": 35,
+                    "max": 42
+                  }
+                },
+                "Elf, wood"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "min": 43,
+                    "max": 46
+                  }
+                },
+                "Gnome, forest"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "min": 47,
+                    "max": 52
+                  }
+                },
+                "{@race Gnome|SRD51|Gnome, rock}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "min": 53,
+                    "max": 56
+                  }
+                },
+                "{@race Half-Elf|SRD51}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "min": 57,
+                    "max": 60
+                  }
+                },
+                "{@race Half-Orc|SRD51}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "min": 61,
+                    "max": 68
+                  }
+                },
+                "{@race Halfling|SRD51|Halfling, lightfoot}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "min": 69,
+                    "max": 76
+                  }
+                },
+                "Halfling, stout"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "min": 77,
+                    "max": 96
+                  }
+                },
+                "{@race Human|SRD51}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "min": 97,
+                    "max": 0,
+                    "pad": true
+                  }
+                },
+                "{@race Tiefling|SRD51}"
+              ]
+            ]
+          },
+          "The reincarnated creature recalls its former life and experiences. It retains the capabilities it had in its original form, except it exchanges its original race for the new one and changes its racial traits accordingly."
+        ],
+        "affectsCreatureType": [
+          "humanoid"
+        ],
+        "miscTags": [
+          "HL",
+          "RO"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Reincarnate",
+        "level": 5,
+        "school": "N",
+        "time": [
+          {
+            "number": 1,
+            "unit": "hour"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "rare oils worth 1,000+ GP, which the spell consumes",
+            "cost": 100000,
+            "consume": true
+          }
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You touch a dead Humanoid or a piece of one. If the creature has been dead no longer than 10 days, the spell forms a new body for it and calls the soul to enter that body. Roll {@dice 1d10} and consult the table below to determine the body's species, or the DM chooses another playable species.",
+          {
+            "type": "table",
+            "colStyles": [
+              "col-2 text-center",
+              "col-10"
+            ],
+            "colLabels": [
+              "1d10",
+              "Species"
+            ],
+            "rows": [
+              [
+                "1",
+                "Roll again."
+              ],
+              [
+                "2",
+                "{@race Dragonborn|SRD52}"
+              ],
+              [
+                "3",
+                "{@race Dwarf|SRD52}"
+              ],
+              [
+                "4",
+                "{@race Elf|SRD52}"
+              ],
+              [
+                "5",
+                "{@race Gnome|SRD52}"
+              ],
+              [
+                "6",
+                "{@race Goliath|SRD52}"
+              ],
+              [
+                "7",
+                "{@race Halfling|SRD52}"
+              ],
+              [
+                "8",
+                "{@race Human|SRD52}"
+              ],
+              [
+                "9",
+                "{@race Orc|SRD52}"
+              ],
+              [
+                "10",
+                "{@race Tiefling|SRD52}"
+              ]
+            ]
+          },
+          "The reincarnated creature makes any choices that a species' description offers, and the creature recalls its former life. It retains the capabilities it had in its original form, except it loses the traits of its previous species and gains the traits of its new one."
+        ],
+        "affectsCreatureType": [
+          "humanoid"
+        ],
+        "miscTags": [
+          "HL",
+          "RO"
+        ]
+      }
+    }
+  ]
+}

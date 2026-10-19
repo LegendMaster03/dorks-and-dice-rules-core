@@ -1,0 +1,379 @@
+{
+  "id": "subclass.circle-of-the-land.druid.land.Land",
+  "name": "Circle of the Land",
+  "kind": "subclass",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Circle of the Land",
+        "shortName": "Land",
+        "className": "Druid",
+        "classSource": "SRD51",
+        "additionalSpells": [
+          {
+            "name": "Arctic",
+            "known": {
+              "1": {
+                "_": [
+                  {
+                    "choose": "level=0|class=Druid"
+                  }
+                ]
+              }
+            },
+            "prepared": {
+              "3": [
+                "hold person",
+                "spike growth"
+              ],
+              "5": [
+                "sleet storm",
+                "slow"
+              ],
+              "7": [
+                "freedom of movement",
+                "ice storm"
+              ],
+              "9": [
+                "commune with nature",
+                "cone of cold"
+              ]
+            }
+          },
+          {
+            "name": "Coast",
+            "known": {
+              "1": {
+                "_": [
+                  {
+                    "choose": "level=0|class=Druid"
+                  }
+                ]
+              }
+            },
+            "prepared": {
+              "3": [
+                "mirror image",
+                "misty step"
+              ],
+              "5": [
+                "water breathing",
+                "water walk"
+              ],
+              "7": [
+                "control water",
+                "freedom of movement"
+              ],
+              "9": [
+                "conjure elemental",
+                "scrying"
+              ]
+            }
+          },
+          {
+            "name": "Desert",
+            "known": {
+              "1": {
+                "_": [
+                  {
+                    "choose": "level=0|class=Druid"
+                  }
+                ]
+              }
+            },
+            "prepared": {
+              "3": [
+                "blur",
+                "silence"
+              ],
+              "5": [
+                "create food and water",
+                "protection from energy"
+              ],
+              "7": [
+                "blight",
+                "hallucinatory terrain"
+              ],
+              "9": [
+                "insect plague",
+                "wall of stone"
+              ]
+            }
+          },
+          {
+            "name": "Forest",
+            "known": {
+              "1": {
+                "_": [
+                  {
+                    "choose": "level=0|class=Druid"
+                  }
+                ]
+              }
+            },
+            "prepared": {
+              "3": [
+                "barkskin",
+                "spider climb"
+              ],
+              "5": [
+                "call lightning",
+                "plant growth"
+              ],
+              "7": [
+                "divination",
+                "freedom of movement"
+              ],
+              "9": [
+                "commune with nature",
+                "tree stride"
+              ]
+            }
+          },
+          {
+            "name": "Grassland",
+            "known": {
+              "1": {
+                "_": [
+                  {
+                    "choose": "level=0|class=Druid"
+                  }
+                ]
+              }
+            },
+            "prepared": {
+              "3": [
+                "invisibility",
+                "pass without trace"
+              ],
+              "5": [
+                "daylight",
+                "haste"
+              ],
+              "7": [
+                "divination",
+                "freedom of movement"
+              ],
+              "9": [
+                "dream",
+                "insect plague"
+              ]
+            }
+          },
+          {
+            "name": "Mountain",
+            "known": {
+              "1": {
+                "_": [
+                  {
+                    "choose": "level=0|class=Druid"
+                  }
+                ]
+              }
+            },
+            "prepared": {
+              "3": [
+                "spider climb",
+                "spike growth"
+              ],
+              "5": [
+                "lightning bolt",
+                "meld into stone"
+              ],
+              "7": [
+                "stone shape",
+                "stoneskin"
+              ],
+              "9": [
+                "passwall",
+                "wall of stone"
+              ]
+            }
+          },
+          {
+            "name": "Swamp",
+            "known": {
+              "1": {
+                "_": [
+                  {
+                    "choose": "level=0|class=Druid"
+                  }
+                ]
+              }
+            },
+            "prepared": {
+              "3": [
+                "darkness",
+                "Melf's acid arrow"
+              ],
+              "5": [
+                "water walk",
+                "stinking cloud"
+              ],
+              "7": [
+                "freedom of movement",
+                "locate creature"
+              ],
+              "9": [
+                "insect plague",
+                "scrying"
+              ]
+            }
+          },
+          {
+            "name": "Underdark",
+            "known": {
+              "1": {
+                "_": [
+                  {
+                    "choose": "level=0|class=Druid"
+                  }
+                ]
+              }
+            },
+            "prepared": {
+              "3": [
+                "spider climb",
+                "web"
+              ],
+              "5": [
+                "gaseous form",
+                "stinking cloud"
+              ],
+              "7": [
+                "greater invisibility",
+                "stone shape"
+              ],
+              "9": [
+                "cloudkill",
+                "insect plague"
+              ]
+            }
+          }
+        ],
+        "subclassFeatures": [
+          "Circle of the Land|Druid||Land||2",
+          "Land's Stride|Druid||Land||6",
+          "Nature's Ward|Druid||Land||10",
+          "Nature's Sanctuary|Druid||Land||14"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Circle of the Land",
+        "shortName": "Land",
+        "className": "Druid",
+        "classSource": "SRD52",
+        "additionalSpells": [
+          {
+            "name": "Arid Land",
+            "prepared": {
+              "3": [
+                "blur|srd52",
+                "burning hands|srd52",
+                "fire bolt|srd52"
+              ],
+              "5": [
+                "fireball|srd52"
+              ],
+              "7": [
+                "blight|srd52"
+              ],
+              "9": [
+                "wall of stone|srd52"
+              ]
+            }
+          },
+          {
+            "name": "Polar Land",
+            "prepared": {
+              "3": [
+                "fog cloud|srd52",
+                "hold person|srd52",
+                "ray of frost|srd52"
+              ],
+              "5": [
+                "sleet storm|srd52"
+              ],
+              "7": [
+                "ice storm|srd52"
+              ],
+              "9": [
+                "cone of cold|srd52"
+              ]
+            }
+          },
+          {
+            "name": "Temperate Land",
+            "prepared": {
+              "3": [
+                "misty step|srd52",
+                "shocking grasp|srd52",
+                "sleep|srd52"
+              ],
+              "5": [
+                "lightning bolt|srd52"
+              ],
+              "7": [
+                "freedom of movement|srd52"
+              ],
+              "9": [
+                "tree stride|srd52"
+              ]
+            }
+          },
+          {
+            "name": "Tropical Land",
+            "prepared": {
+              "3": [
+                "acid splash|srd52",
+                "ray of sickness|srd52",
+                "web|srd52"
+              ],
+              "5": [
+                "stinking cloud|srd52"
+              ],
+              "7": [
+                "polymorph|srd52"
+              ],
+              "9": [
+                "insect plague|srd52"
+              ]
+            }
+          }
+        ],
+        "subclassFeatures": [
+          "Circle of the Land|Druid|SRD52|Land|SRD52|3",
+          "Natural Recovery|Druid|SRD52|Land|SRD52|6",
+          "Nature's Ward|Druid|SRD52|Land|SRD52|10",
+          "Nature's Sanctuary|Druid|SRD52|Land|SRD52|14"
+        ],
+        "lore": [
+          {
+            "name": "Circle of the Land",
+            "shortName": "Land",
+            "className": "Druid",
+            "classSource": "SRD52",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "classes/XPHB/Land Druid.webp"
+                },
+                "credit": "Polar Engine",
+                "width": 850,
+                "height": 2513
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid"
+}

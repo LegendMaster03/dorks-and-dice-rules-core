@@ -1,0 +1,451 @@
+{
+  "id": "monster.spirit-naga",
+  "name": "Spirit Naga",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Spirit Naga",
+        "size": [
+          "L"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "C",
+          "E"
+        ],
+        "ac": [
+          {
+            "ac": 15,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 75,
+          "formula": "10d10 + 20"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 18,
+        "dex": 17,
+        "con": 14,
+        "int": 16,
+        "wis": 15,
+        "cha": 16,
+        "save": {
+          "dex": "+6",
+          "con": "+5",
+          "wis": "+5",
+          "cha": "+6"
+        },
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 12,
+        "immune": [
+          "poison"
+        ],
+        "conditionImmune": [
+          "charmed",
+          "poisoned"
+        ],
+        "languages": [
+          "Abyssal",
+          "Common"
+        ],
+        "cr": "8",
+        "spellcasting": [
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The naga is a 10th-level spellcaster. Its spellcasting ability is Intelligence (spell save {@dc 14}, {@hit 6} to hit with spell attacks), and it needs only verbal components to cast its spells. It has the following wizard spells prepared:"
+            ],
+            "spells": {
+              "0": {
+                "spells": [
+                  "{@spell mage hand}",
+                  "{@spell minor illusion}",
+                  "{@spell ray of frost}"
+                ]
+              },
+              "1": {
+                "slots": 4,
+                "spells": [
+                  "{@spell charm person}",
+                  "{@spell detect magic}",
+                  "{@spell sleep}"
+                ]
+              },
+              "2": {
+                "slots": 3,
+                "spells": [
+                  "{@spell detect thoughts}",
+                  "{@spell hold person}"
+                ]
+              },
+              "3": {
+                "slots": 3,
+                "spells": [
+                  "{@spell lightning bolt}",
+                  "{@spell water breathing}"
+                ]
+              },
+              "4": {
+                "slots": 3,
+                "spells": [
+                  "{@spell blight}",
+                  "{@spell dimension door}"
+                ]
+              },
+              "5": {
+                "slots": 2,
+                "spells": [
+                  "{@spell dominate person}"
+                ]
+              }
+            },
+            "ability": "int"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Rejuvenation",
+            "entries": [
+              "If it dies, the naga returns to life in {@dice 1d6} days and regains all its hit points. Only a {@spell wish} spell can prevent this trait from functioning."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 7} to hit, reach 10 ft., one creature. {@h}7 ({@damage 1d6 + 4}) piercing damage, and the target must make a {@dc 13} Constitution saving throw, taking 31 ({@damage 7d8}) poison damage on a failed save, or half as much damage on a successful one."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/spirit-naga.opus"
+        },
+        "traitTags": [
+          "Rejuvenation"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "languageTags": [
+          "AB",
+          "C"
+        ],
+        "damageTags": [
+          "I",
+          "P"
+        ],
+        "damageTagsSpell": [
+          "C",
+          "L",
+          "N",
+          "O"
+        ],
+        "spellcastingTags": [
+          "CW"
+        ],
+        "miscTags": [
+          "MW",
+          "RCH"
+        ],
+        "savingThrowForced": [
+          "constitution"
+        ],
+        "savingThrowForcedSpell": [
+          "constitution",
+          "dexterity",
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Spirit Naga",
+            "_copy": {
+              "name": "Nagas",
+              "source": "SRD51",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    "Spirit nagas live in gloom and spitefulness, constantly plotting vengeance against creatures that have wronged them-or that they believe have wronged them. Lairing in dismal caverns and ruins, they devote their time to developing new spells and enslaving the mortals with which they surround themselves. A spirit naga likes to charm its foes, drawing them close so that it can sink its poisonous fangs into their flesh.",
+                    {
+                      "type": "insetReadaloud",
+                      "entries": [
+                        {
+                          "type": "quote",
+                          "entries": [
+                            "If you destroy me, I will return, and everyone you care about will suffer for it."
+                          ],
+                          "by": "Explictica Defilus, spirit naga"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Spirit Naga.webp"
+                },
+                "width": 807,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Spirit Naga",
+        "size": [
+          "L"
+        ],
+        "type": "fiend",
+        "alignment": [
+          "C",
+          "E"
+        ],
+        "ac": [
+          17
+        ],
+        "hp": {
+          "average": 135,
+          "formula": "18d10 + 36"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 18,
+        "dex": 17,
+        "con": 14,
+        "int": 16,
+        "wis": 15,
+        "cha": 16,
+        "save": {
+          "dex": "+6",
+          "con": "+5",
+          "wis": "+5",
+          "cha": "+6"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 12,
+        "immune": [
+          "poison"
+        ],
+        "conditionImmune": [
+          "charmed",
+          "poisoned"
+        ],
+        "languages": [
+          "Abyssal",
+          "Common"
+        ],
+        "cr": "8",
+        "spellcasting": [
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The naga casts one of the following spells, requiring no Somatic or Material components and using Intelligence as the spellcasting ability (spell save {@dc 14}):"
+            ],
+            "will": [
+              "{@spell Detect Magic|SRD52}",
+              "{@spell Mage Hand|SRD52}",
+              "{@spell Minor Illusion|SRD52}",
+              "{@spell Water Breathing|SRD52}"
+            ],
+            "daily": {
+              "2e": [
+                "{@spell Detect Thoughts|SRD52}",
+                "{@spell Dimension Door|SRD52}",
+                "{@spell Hold Person|SRD52} (level 3 version)",
+                "{@spell Lightning Bolt|SRD52} (level 4 version)"
+              ]
+            },
+            "ability": "int",
+            "displayAs": "action"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Fiendish Restoration",
+            "entries": [
+              "If it dies, the naga returns to life in {@dice 1d6} days and regains all its {@variantrule Hit Points|SRD52}. Only a {@spell Wish|SRD52} spell can prevent this trait from functioning."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The naga makes three attacks, using Bite or Necrotic Ray in any combination."
+            ]
+          },
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atkr m} {@hit 7}, reach 10 ft. {@h}7 ({@damage 1d6 + 4}) Piercing damage plus 14 ({@damage 4d6}) Poison damage."
+            ]
+          },
+          {
+            "name": "Necrotic Ray",
+            "entries": [
+              "{@atkr r} {@hit 6}, range 60 ft. {@h}21 ({@damage 6d6}) Necrotic damage."
+            ]
+          }
+        ],
+        "environment": [
+          "planar, lower",
+          "underdark"
+        ],
+        "treasure": [
+          "arcana"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/spirit-naga.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "AB",
+          "C"
+        ],
+        "damageTags": [
+          "I",
+          "N",
+          "P"
+        ],
+        "damageTagsSpell": [
+          "L",
+          "O"
+        ],
+        "spellcastingTags": [
+          "O"
+        ],
+        "miscTags": [
+          "MA",
+          "RA",
+          "RCH"
+        ],
+        "conditionInflictSpell": [
+          "paralyzed"
+        ],
+        "savingThrowForcedSpell": [
+          "dexterity",
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Spirit Naga",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Spirit Naga",
+                "entries": [
+                  "{@i Spiteful Serpentine Grudge Keeper}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Planar (Lower Planes)|bestiary|environment=planar, lower}, {@filter Underdark|bestiary|environment=underdark}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Arcana"
+                      }
+                    ]
+                  },
+                  "Spirit nagas loathe the world and all creatures. Possessing perfect memories, these venomous, cobra-like creatures recall every slight committed against them during their immortal existences. In their dank, joyless lairs, they create vicious plots to avenge themselves against even petty offenses.",
+                  "Spirit nagas seek to claim what they believe they deserve. Their schemes often involve poisons, vile spells, cursed objects, or magical compulsions, eventually making them wellsprings of diabolical knowledge and evil inspiration. Other villains often seek out spirit nagas as advisers and allies. Roll on or choose a result from the Spirit Naga Grievances table to inspire what motivates a spirit naga's schemes.",
+                  {
+                    "type": "table",
+                    "caption": "Spirit Naga Grievances",
+                    "colLabels": [
+                      "1d6",
+                      "The Spirit Naga Believes..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "A character is to blame for its recent failures."
+                      ],
+                      [
+                        "2",
+                        "It has been evicted from its rightful home."
+                      ],
+                      [
+                        "3",
+                        "Locals have reneged on an age-old bargain."
+                      ],
+                      [
+                        "4",
+                        "Other creatures are mocking it."
+                      ],
+                      [
+                        "5",
+                        "A rival is spying on it."
+                      ],
+                      [
+                        "6",
+                        "Someone's treasure rightfully belongs to it."
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Spirit Naga.webp"
+                },
+                "credit": "Alex Stone",
+                "width": 2550,
+                "height": 1650
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

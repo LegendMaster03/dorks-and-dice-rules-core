@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.indomitable-three-uses.fighter.indomitable-three-uses.17",
+  "name": "Indomitable (three uses)",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Indomitable (three uses)",
+        "className": "Fighter",
+        "classSource": "SRD51",
+        "level": 17,
+        "entries": [
+          "At 17th level, you can use Indomitable three times between long rests."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 17
+}

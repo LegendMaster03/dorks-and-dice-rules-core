@@ -1,0 +1,83 @@
+{
+  "id": "item.staff-of-withering",
+  "name": "Staff of Withering",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Staff of Withering",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": "by a cleric, druid, or warlock",
+        "reqAttuneTags": [
+          {
+            "class": "cleric"
+          },
+          {
+            "class": "druid"
+          },
+          {
+            "class": "warlock"
+          }
+        ],
+        "weight": 4,
+        "weaponCategory": "simple",
+        "property": [
+          "V"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "B",
+        "dmg2": "1d8",
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d3}",
+        "charges": 3,
+        "staff": true,
+        "entries": [
+          "This staff has 3 charges and regains {@dice 1d3} expended charges daily at dawn.",
+          "The staff can be wielded as a magic quarterstaff. On a hit, it deals damage as a normal quarterstaff, and you can expend 1 charge to deal an extra {@damage 2d10} necrotic damage to the target. In addition, the target must succeed on a {@dc 15} Constitution saving throw or have disadvantage for 1 hour on any ability check or saving throw that uses Strength or Constitution."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Staff of Withering",
+        "type": "M|SRD52",
+        "rarity": "rare",
+        "reqAttune": "by a cleric, druid, or warlock",
+        "reqAttuneTags": [
+          {
+            "class": "cleric"
+          },
+          {
+            "class": "druid"
+          },
+          {
+            "class": "warlock"
+          }
+        ],
+        "weight": 4,
+        "weaponCategory": "simple",
+        "property": [
+          "V|SRD52"
+        ],
+        "mastery": [
+          "Topple|SRD52"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "B",
+        "dmg2": "1d8",
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d3}",
+        "charges": 3,
+        "staff": true,
+        "entries": [
+          "This staff has 3 charges and regains {@dice 1d3} expended charges daily at dawn.",
+          "The staff can be wielded as a magic Quarterstaff. On a hit, it deals damage as a normal Quarterstaff , and you can expend 1 charge to deal an extra {@damage 2d10} Necrotic damage to the target and force it to make a {@dc 15} Constitution saving throw. On a failed save, the target has {@variantrule Disadvantage|SRD52} for 1 hour on any ability check or saving throw that uses Strength or Constitution."
+        ]
+      }
+    }
+  ]
+}

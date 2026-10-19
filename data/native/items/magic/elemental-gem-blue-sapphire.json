@@ -1,0 +1,38 @@
+{
+  "id": "item.elemental-gem-blue-sapphire",
+  "name": "Elemental Gem, Blue Sapphire",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Elemental Gem, Blue Sapphire",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "This gem contains a mote of elemental energy. When you use an action to break the gem, an {@creature air elemental} is summoned as if you had cast the {@spell conjure elemental} spell, and the gem's magic is lost."
+        ],
+        "attachedSpells": {
+          "limited": {
+            "1": [
+              "conjure elemental"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Elemental Gem, Blue Sapphire",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "This gem contains a mote of elemental energy. When you take a {@action Utilize|SRD52} action to break the gem, an {@creature Air Elemental|SRD52} is summoned, and the gem ceases to be magical. The elemental appears in an unoccupied space as close to the broken gem as possible, understands your languages, obeys your commands, and takes its turn immediately after you on your {@variantrule Initiative|SRD52} count. The elemental disappears after 1 hour, when it dies, or when you dismiss it as a {@variantrule Bonus Action|SRD52}."
+        ]
+      }
+    }
+  ]
+}

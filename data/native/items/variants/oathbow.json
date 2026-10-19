@@ -1,0 +1,37 @@
+{
+  "id": "magicvariant.oathbow",
+  "name": "Oathbow",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Oathbow",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "name": "Longbow",
+            "source": "SRD52"
+          },
+          {
+            "name": "Shortbow",
+            "source": "SRD52"
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Oath ",
+          "source": "SRD52",
+          "page": 233,
+          "rarity": "very rare",
+          "reqAttune": true,
+          "entries": [
+            "When you nock an arrow on this bow, it whispers in Elvish, \"Swift defeat to my enemies.\" When you use this weapon to make a ranged attack, you can utter or sign the following command words: \"Swift death to you who have wronged me.\" The target of your attack becomes your sworn enemy until it dies or until dawn 7 days later. You can have only one such sworn enemy at a time. When your sworn enemy dies, you can choose a new one after the next dawn.",
+            "When you make a ranged attack roll with this weapon against your sworn enemy, you have {@variantrule Advantage|SRD52} on the roll. In addition, your target gains no benefit from {@variantrule Cover|SRD52|Half Cover} or {@variantrule Cover|SRD52|Three-Quarters Cover}, and you suffer no {@variantrule Disadvantage|SRD52} due to long range. If the attack hits, your sworn enemy takes an extra {@damage 3d6} Piercing damage.",
+            "While your sworn enemy lives, you have {@variantrule Disadvantage|SRD52} on attack rolls with all other weapons."
+          ]
+        }
+      }
+    }
+  ]
+}

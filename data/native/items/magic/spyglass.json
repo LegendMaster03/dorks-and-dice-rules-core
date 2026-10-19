@@ -1,0 +1,34 @@
+{
+  "id": "item.spyglass",
+  "name": "Spyglass",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Spyglass",
+        "type": "G",
+        "rarity": "none",
+        "weight": 1,
+        "value": 100000,
+        "entries": [
+          "Objects viewed through a spyglass are magnified to twice their size."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Spyglass",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 1,
+        "value": 100000,
+        "entries": [
+          "Objects viewed through a Spyglass are magnified to twice their size."
+        ]
+      }
+    }
+  ]
+}

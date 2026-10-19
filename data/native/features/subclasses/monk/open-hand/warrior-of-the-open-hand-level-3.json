@@ -1,0 +1,30 @@
+{
+  "id": "subclassFeature.warrior-of-the-open-hand.monk.open-hand.warrior-of-the-open-hand.3",
+  "name": "Warrior of the Open Hand",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Warrior of the Open Hand",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "subclassShortName": "Open Hand",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "{@i Master Unarmed Combat Techniques}",
+          "Warriors of the Open Hand are masters of unarmed combat. They learn techniques to push and trip their opponents and manipulate their own energy to protect themselves from harm.",
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Open Hand Technique|Monk|SRD52|Open Hand|SRD52|3"
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "parentSubclass": "open-hand",
+  "classLevel": 3
+}

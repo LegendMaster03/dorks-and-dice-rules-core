@@ -1,0 +1,23 @@
+{
+  "id": "item.airship",
+  "name": "Airship",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Airship",
+        "type": "AIR|SRD52",
+        "rarity": "none",
+        "value": 4000000,
+        "crew": 10,
+        "vehAc": 13,
+        "vehHp": 300,
+        "vehSpeed": 8,
+        "capPassenger": 20,
+        "capCargo": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "subclassFeature.dragon-wings.sorcerer.draconic.dragon-wings.14",
+  "name": "Dragon Wings",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Dragon Wings",
+        "className": "Sorcerer",
+        "classSource": "SRD51",
+        "subclassShortName": "Draconic",
+        "subclassSource": "SRD51",
+        "level": 14,
+        "header": 2,
+        "entries": [
+          "At 14th level, you gain the ability to sprout a pair of dragon wings from your back, gaining a flying speed equal to your current speed. You can create these wings as a bonus action on your turn. They last until you dismiss them as a bonus action on your turn.",
+          "You can't manifest your wings while wearing armor unless the armor is made to accommodate them, and clothing not made to accommodate your wings might be destroyed when you manifest them."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Dragon Wings",
+        "className": "Sorcerer",
+        "classSource": "SRD52",
+        "subclassShortName": "Draconic",
+        "subclassSource": "SRD52",
+        "level": 14,
+        "header": 2,
+        "consumes": {
+          "name": "Sorcery Point",
+          "amount": 3
+        },
+        "entries": [
+          "As a {@variantrule Bonus Action|SRD52}, you can cause draconic wings to appear on your back. The wings last for 1 hour or until you dismiss them (no action required). For the duration, you have a {@variantrule Fly Speed|SRD52} of 60 feet.",
+          "Once you use this feature, you can't use it again until you finish a {@variantrule Long Rest|SRD52} unless you spend 3 Sorcery Points (no action required) to restore your use of it."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.sorcerer",
+  "parentSubclass": "draconic",
+  "classLevel": 14
+}

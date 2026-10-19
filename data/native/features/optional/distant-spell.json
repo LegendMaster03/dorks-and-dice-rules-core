@@ -1,0 +1,39 @@
+{
+  "id": "optionalfeature.distant-spell",
+  "name": "Distant Spell",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Distant Spell",
+        "featureType": [
+          "MM"
+        ],
+        "consumes": {
+          "name": "Sorcery Point"
+        },
+        "entries": [
+          "When you cast a spell that has a range of 5 feet or greater, you can spend 1 sorcery point to double the range of the spell.",
+          "When you cast a spell that has a range of touch, you can spend 1 sorcery point to make the range of the spell 30 feet."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Distant Spell",
+        "featureType": [
+          "MM"
+        ],
+        "consumes": {
+          "name": "Sorcery Point"
+        },
+        "entries": [
+          "When you cast a spell that has a range of at least 5 feet, you can spend 1 Sorcery Point to double the spell's range. Or when you cast a spell that has a range of Touch, you can spend 1 Sorcery Point to make the spell's range 30 feet."
+        ]
+      }
+    }
+  ]
+}

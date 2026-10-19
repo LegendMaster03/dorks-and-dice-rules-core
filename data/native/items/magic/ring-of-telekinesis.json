@@ -1,0 +1,43 @@
+{
+  "id": "item.ring-of-telekinesis",
+  "name": "Ring of Telekinesis",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Telekinesis",
+        "type": "RG|SRD51",
+        "tier": "major",
+        "rarity": "very rare",
+        "reqAttune": true,
+        "entries": [
+          "While wearing this ring, you can cast the {@spell telekinesis} spell at will, but you can target only objects that aren't being worn or carried."
+        ],
+        "attachedSpells": {
+          "will": [
+            "telekinesis"
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Telekinesis",
+        "type": "RG|SRD52",
+        "rarity": "very rare",
+        "reqAttune": true,
+        "entries": [
+          "While wearing this ring, you can cast {@spell Telekinesis|SRD52} from it."
+        ],
+        "attachedSpells": {
+          "will": [
+            "telekinesis|srd52"
+          ]
+        }
+      }
+    }
+  ]
+}

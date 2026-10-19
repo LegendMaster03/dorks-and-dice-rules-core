@@ -1,0 +1,39 @@
+{
+  "id": "item.amulet",
+  "name": "Amulet",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Amulet",
+        "group": [
+          "Holy Symbol"
+        ],
+        "type": "SCF",
+        "scfType": "holy",
+        "rarity": "none",
+        "weight": 1,
+        "value": 500
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Amulet",
+        "group": [
+          "Holy Symbol"
+        ],
+        "type": "SCF|SRD52",
+        "scfType": "holy",
+        "rarity": "none",
+        "weight": 1,
+        "value": 500,
+        "entries": [
+          "For an Amulet to be an effective Holy Symbol, it must be worn or held."
+        ]
+      }
+    }
+  ]
+}

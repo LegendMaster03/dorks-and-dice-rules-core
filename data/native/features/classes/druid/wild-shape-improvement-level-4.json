@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.wild-shape-improvement.druid.wild-shape-improvement.4",
+  "name": "Wild Shape Improvement",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Wild Shape Improvement",
+        "className": "Druid",
+        "classSource": "SRD51",
+        "level": 4,
+        "entries": [
+          "At 4th level, your Wild Shape improves as shown on the Beast Shapes table."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "classLevel": 4
+}

@@ -1,0 +1,130 @@
+{
+  "id": "spell.heroes-feast",
+  "name": "Heroes' Feast",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Heroes' Feast",
+        "level": 6,
+        "school": "C",
+        "time": [
+          {
+            "number": 10,
+            "unit": "minute"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "a gem-encrusted bowl worth at least 1,000 gp, which the spell consumes",
+            "cost": 100000,
+            "consume": true
+          }
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You bring forth a great feast, including magnificent food and drink. The feast takes 1 hour to consume and disappears at the end of that time, and the beneficial effects don't set in until this hour is over. Up to twelve creatures can partake of the feast.",
+          "A creature that partakes of the feast gains several benefits. The creature is cured of all diseases and poison, becomes immune to poison and being {@condition frightened}, and makes all Wisdom saving throws with advantage. Its hit point maximum also increases by {@dice 2d10}, and it gains the same number of hit points. These benefits last for 24 hours."
+        ],
+        "damageImmune": [
+          "poison"
+        ],
+        "conditionImmune": [
+          "frightened"
+        ],
+        "miscTags": [
+          "ADV",
+          "HL"
+        ],
+        "areaTags": [
+          "MT"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Heroes' Feast",
+        "level": 6,
+        "school": "C",
+        "time": [
+          {
+            "number": 10,
+            "unit": "minute"
+          }
+        ],
+        "range": {
+          "type": "cube",
+          "distance": {
+            "type": "feet",
+            "amount": 10
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "a gem-encrusted bowl worth 1,000+ GP, which the spell consumes",
+            "cost": 100000,
+            "consume": true
+          }
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You conjure a feast that appears on a surface in an unoccupied 10-foot {@variantrule Cube [Area of Effect]|SRD52|Cube} next to you. The feast takes 1 hour to consume and disappears at the end of that time, and the beneficial effects don't set in until this hour is over. Up to twelve creatures can partake of the feast.",
+          "A creature that partakes gains several benefits, which last for 24 hours. The creature has {@variantrule Resistance|SRD52} to Poison damage, and it has {@variantrule Immunity|SRD52} to the {@condition Frightened|SRD52} and {@condition Poisoned|SRD52} conditions. Its {@variantrule Hit Points|SRD52|Hit Point} maximum also increases by {@dice 2d10}, and it gains the same number of {@variantrule Hit Points|SRD52}."
+        ],
+        "damageImmune": [
+          "poison"
+        ],
+        "conditionImmune": [
+          "frightened",
+          "poisoned"
+        ],
+        "miscTags": [
+          "HL"
+        ],
+        "areaTags": [
+          "C",
+          "MT"
+        ],
+        "lore": [
+          {
+            "name": "Heroes' Feast",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "spells/XPHB/Heroes' Feast.webp"
+                },
+                "credit": "Raluca Marinescu",
+                "width": 1700,
+                "height": 1073
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

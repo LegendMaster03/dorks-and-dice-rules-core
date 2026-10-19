@@ -1,0 +1,121 @@
+{
+  "id": "baseitem.brewer-s-supplies",
+  "name": "Brewer's Supplies",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Brewer's Supplies",
+        "type": "AT",
+        "rarity": "none",
+        "weight": 9,
+        "value": 2000,
+        "additionalEntries": [
+          "Brewing is the art of producing beer. Not only does beer serve as an alcoholic beverage, but the process of brewing purifies water. Crafting beer takes weeks of fermentation, but only a few hours of work.",
+          {
+            "type": "entries",
+            "name": "Components",
+            "entries": [
+              "Brewer's supplies include a large glass jug, a quantity of hops, a siphon, and several feet of tubing."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "History",
+            "entries": [
+              "Proficiency with brewer's supplies gives you additional insight on Intelligence ({@skill History}) checks concerning events that involve alcohol as a significant element."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Medicine",
+            "entries": [
+              "This tool proficiency grants additional insight when you treat anyone suffering from alcohol poisoning or when you can use alcohol to dull pain."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Persuasion",
+            "entries": [
+              "A stiff drink can help soften the hardest heart. Your proficiency with brewer's supplies can help you ply someone with drink, giving them just enough alcohol to mellow their mood."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Potable Water",
+            "entries": [
+              "Your knowledge of brewing enables you to purify water that would otherwise be undrinkable. As part of a long rest, you can purify up to 6 gallons of water, or 1 gallon as part of a short rest."
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Brewer's Supplies",
+            "colLabels": [
+              "Activity",
+              "DC"
+            ],
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "rows": [
+              [
+                "Detect poison or impurities in a drink",
+                "10"
+              ],
+              [
+                "Identify alcohol",
+                "15"
+              ],
+              [
+                "Ignore effects of alcohol",
+                "20"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Brewer's Supplies",
+        "type": "AT|SRD52",
+        "rarity": "none",
+        "weight": 9,
+        "value": 2000,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Intelligence"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Detect poisoned drink ({@dc 15}), or identify alcohol ({@dc 10})"
+                ]
+              },
+              {
+                "name": "Craft:",
+                "type": "item",
+                "entries": [
+                  "{@item Antitoxin|SRD52}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

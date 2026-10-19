@@ -1,0 +1,533 @@
+{
+  "id": "monster.aboleth",
+  "name": "Aboleth",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Aboleth",
+        "size": [
+          "L"
+        ],
+        "type": "aberration",
+        "alignment": [
+          "L",
+          "E"
+        ],
+        "ac": [
+          {
+            "ac": 17,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 135,
+          "formula": "18d10 + 36"
+        },
+        "speed": {
+          "walk": 10,
+          "swim": 40
+        },
+        "str": 21,
+        "dex": 9,
+        "con": 15,
+        "int": 18,
+        "wis": 15,
+        "cha": 18,
+        "save": {
+          "con": "+6",
+          "int": "+8",
+          "wis": "+6"
+        },
+        "skill": {
+          "history": "+12",
+          "perception": "+10"
+        },
+        "senses": [
+          "darkvision 120 ft."
+        ],
+        "passive": 20,
+        "languages": [
+          "Deep Speech",
+          "telepathy 120 ft."
+        ],
+        "cr": "10",
+        "trait": [
+          {
+            "name": "Amphibious",
+            "entries": [
+              "The aboleth can breathe air and water."
+            ]
+          },
+          {
+            "name": "Mucous Cloud",
+            "entries": [
+              "While underwater, the aboleth is surrounded by transformative mucus. A creature that touches the aboleth or that hits it with a melee attack while within 5 feet of it must make a {@dc 14} Constitution saving throw. On a failure, the creature is diseased for {@dice 1d4} hours. The diseased creature can breathe only underwater."
+            ]
+          },
+          {
+            "name": "Probing Telepathy",
+            "entries": [
+              "If a creature communicates telepathically with the aboleth, the aboleth learns the creature's greatest desires if the aboleth can see the creature."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The aboleth makes three tentacle attacks."
+            ]
+          },
+          {
+            "name": "Tentacle",
+            "entries": [
+              "{@atk mw} {@hit 9} to hit, reach 10 ft., one target. {@h}12 ({@damage 2d6 + 5}) bludgeoning damage. If the target is a creature, it must succeed on a {@dc 14} Constitution saving throw or become diseased. The disease has no effect for 1 minute and can be removed by any magic that cures disease. After 1 minute, the diseased creature's skin becomes translucent and slimy, the creature can't regain hit points unless it is underwater, and the disease can be removed only by {@spell heal} or another disease-curing spell of 6th level or higher. When the creature is outside a body of water, it takes 6 ({@damage 1d12}) acid damage every 10 minutes unless moisture is applied to the skin before 10 minutes have passed."
+            ]
+          },
+          {
+            "name": "Tail",
+            "entries": [
+              "{@atk mw} {@hit 9} to hit, reach 10 ft., one target. {@h}15 ({@damage 3d6 + 5}) bludgeoning damage."
+            ]
+          },
+          {
+            "name": "Enslave (3/Day)",
+            "entries": [
+              "The aboleth targets one creature it can see within 30 feet of it. The target must succeed on a {@dc 14} Wisdom saving throw or be magically {@condition charmed} by the aboleth until the aboleth dies or until it is on a different plane of existence from the target. The {@condition charmed} target is under the aboleth's control and can't take reactions, and the aboleth and the target can communicate telepathically with each other over any distance.",
+              "Whenever the {@condition charmed} target takes damage, the target can repeat the saving throw. On a success, the effect ends. No more than once every 24 hours, the target can also repeat the saving throw when it is at least 1 mile away from the aboleth."
+            ]
+          }
+        ],
+        "legendary": [
+          {
+            "name": "Detect",
+            "entries": [
+              "The aboleth makes a Wisdom ({@skill Perception}) check."
+            ]
+          },
+          {
+            "name": "Tail Swipe",
+            "entries": [
+              "The aboleth makes one tail attack."
+            ]
+          },
+          {
+            "name": "Psychic Drain (Costs 2 Actions)",
+            "entries": [
+              "One creature {@condition charmed} by the aboleth takes 10 ({@damage 3d6}) psychic damage, and the aboleth regains hit points equal to the damage the creature takes."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/aboleth.opus"
+        },
+        "traitTags": [
+          "Amphibious"
+        ],
+        "senseTags": [
+          "SD"
+        ],
+        "actionTags": [
+          "Multiattack",
+          "Tentacles"
+        ],
+        "languageTags": [
+          "DS",
+          "TP"
+        ],
+        "damageTags": [
+          "A",
+          "B",
+          "Y"
+        ],
+        "damageTagsLegendary": [
+          "Y"
+        ],
+        "miscTags": [
+          "DIS",
+          "MW",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "charmed"
+        ],
+        "conditionInflictLegendary": [
+          "prone"
+        ],
+        "savingThrowForced": [
+          "constitution",
+          "wisdom"
+        ],
+        "savingThrowForcedLegendary": [
+          "intelligence",
+          "strength",
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Aboleth",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Before the coming of the gods, aboleths lurked in primordial oceans and underground lakes. They reached out with their minds and seized control of the burgeoning life-forms of the mortal realm, making those creatures their slaves. Their dominance made them like gods. Then the true gods appeared, smashing the aboleths' empire and freeing their slaves. Aboleths have never forgotten.",
+                      {
+                        "name": "Eternal Memories",
+                        "type": "entries",
+                        "entries": [
+                          "Aboleths have flawless memories. They pass on their knowledge and experience from generation to generation. Thus, the injury of their defeat by the gods remains perfectly preserved in their minds.",
+                          "Aboleths' minds are treasure troves of ancient lore, recalling moments from prehistory with perfect clarity. They plot patiently and intricately across eons. Few creatures can conceive of the extent of an aboleth's plan.",
+                          {
+                            "name": "Gods in the Lake",
+                            "entries": [
+                              "Aboleths dwell in watery environments, including ocean abysses, deep lakes, and the Elemental Plane of Water. In these domains and the lands that adjoin them, aboleths are like gods, demanding worship and obedience from their subjects. When they consume other creatures, aboleths add the knowledge and experiences of their prey to their eternal memories. Aboleths use their telepathic powers to read the minds of creatures and know their desires. An aboleth uses this knowledge to gain a creature's loyalty, promising to fulfill such wants in exchange for obedience. Within its lair, the aboleth can further use its powers to override senses, granting creatures, such as its followers, the illusion of promised rewards."
+                            ],
+                            "type": "entries"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "Enemies of the Gods",
+                        "type": "entries",
+                        "entries": [
+                          "The aboleths' fall from power is written in stark clarity on their flawless memories, for aboleths never truly die. If an aboleth's body is destroyed, its spirit returns to the Elemental Plane of Water, where a new body coalesces for it over days or months.",
+                          "Ultimately, aboleths dream of overthrowing the gods and regaining control of the world. Aboleths have had untold eons to plot and to prepare their plans for perfect execution."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "Could it be that the aboleths are older than the gods... that before the divine ones came to be, such horrors shaped the multiverse? Now there's a chilling thought."
+                    ],
+                    "by": "Vaqir Zekh'r, githzerai philosopher and author of {@style The Far Realm: Real Yet Unreal|small-caps}"
+                  }
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "An Aboleth's Lair",
+                "entries": [
+                  "Aboleths lair in subterranean lakes or the rocky depths of the ocean, often surrounded by the ruins of an ancient, fallen aboleth city. An aboleth spends most of its existence underwater, surfacing occasionally to treat with visitors or deranged worshipers."
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Aboleth.webp"
+                },
+                "width": 1000,
+                "height": 868
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Aboleth",
+        "size": [
+          "L"
+        ],
+        "type": "aberration",
+        "alignment": [
+          "L",
+          "E"
+        ],
+        "ac": [
+          17
+        ],
+        "hp": {
+          "average": 150,
+          "formula": "20d10 + 40"
+        },
+        "speed": {
+          "walk": 10,
+          "swim": 40
+        },
+        "initiative": {
+          "proficiency": 2
+        },
+        "str": 21,
+        "dex": 9,
+        "con": 15,
+        "int": 18,
+        "wis": 15,
+        "cha": 18,
+        "save": {
+          "dex": "+3",
+          "con": "+6",
+          "int": "+8",
+          "wis": "+6"
+        },
+        "skill": {
+          "history": "+12",
+          "perception": "+10"
+        },
+        "senses": [
+          "Darkvision 120 ft."
+        ],
+        "passive": 20,
+        "languages": [
+          "Deep Speech; telepathy 120 ft."
+        ],
+        "cr": {
+          "cr": "10",
+          "xpLair": 7200
+        },
+        "trait": [
+          {
+            "name": "Amphibious",
+            "entries": [
+              "The aboleth can breathe air and water."
+            ]
+          },
+          {
+            "name": "Eldritch Restoration",
+            "entries": [
+              "If destroyed, the aboleth gains a new body in {@dice 5d10} days, reviving with all its {@variantrule Hit Points|SRD52} in the Far Realm or another location chosen by the DM."
+            ]
+          },
+          {
+            "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+            "entries": [
+              "If the aboleth fails a saving throw, it can choose to succeed instead."
+            ]
+          },
+          {
+            "name": "Mucus Cloud",
+            "entries": [
+              "While underwater, the aboleth is surrounded by mucus. {@actSave con} {@dc 14}, each creature in a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the aboleth at the end of the aboleth's turn. {@actSaveFail} The target is cursed. Until the curse ends, the target's skin becomes slimy, the target can breathe air and water, and it can't regain {@variantrule Hit Points|SRD52} unless it is underwater.",
+              "While the cursed creature is outside a body of water, the creature takes 6 ({@damage 1d12}) Acid damage at the end of every 10 minutes unless moisture is applied to its skin before those minutes have passed."
+            ]
+          },
+          {
+            "name": "Probing Telepathy",
+            "entries": [
+              "If a creature the aboleth can see communicates telepathically with the aboleth, the aboleth learns the creature's greatest desires."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The aboleth makes two Tentacle attacks and uses either Consume Memories or Dominate Mind if available."
+            ]
+          },
+          {
+            "name": "Tentacle",
+            "entries": [
+              "{@atkr m} {@hit 9}, reach 15 ft. {@h}12 ({@damage 2d6 + 5}) Bludgeoning damage. If the target is a Large or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 14}) from one of four tentacles."
+            ]
+          },
+          {
+            "name": "Consume Memories",
+            "entries": [
+              "{@actSave int} {@dc 16}, one creature within 30 feet that is {@condition Charmed|SRD52} or {@condition Grappled|SRD52} by the aboleth. {@actSaveFail} 10 ({@damage 3d6}) Psychic damage. {@actSaveSuccess} Half damage. {@actSaveSuccessOrFail} The aboleth gains the target's memories if the target is a Humanoid and is reduced to 0 {@variantrule Hit Points|SRD52} by this action."
+            ]
+          },
+          {
+            "name": "Dominate Mind (2/Day)",
+            "entries": [
+              "{@actSave wis} {@dc 16}, one creature the aboleth can see within 30 feet. {@actSaveFail} The target has the {@condition Charmed|SRD52} condition until the aboleth dies or is on a different plane of existence from the target. While {@condition Charmed|SRD52}, the target acts as an ally to the aboleth and is under its control while within 60 feet of it. In addition, the aboleth and the target can communicate telepathically with each other over any distance.",
+              "The target repeats the save whenever it takes damage as well as after every 24 hours it spends at least 1 mile away from the aboleth, ending the effect on itself on a success."
+            ]
+          }
+        ],
+        "legendaryActionsLair": 4,
+        "legendary": [
+          {
+            "name": "Lash",
+            "entries": [
+              "The aboleth makes one Tentacle attack."
+            ]
+          },
+          {
+            "name": "Psychic Drain",
+            "entries": [
+              "If the aboleth has at least one creature {@condition Charmed|SRD52} or {@condition Grappled|SRD52}, it uses Consume Memories and regains 5 ({@dice 1d10}) {@variantrule Hit Points|SRD52}."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark",
+          "underwater"
+        ],
+        "treasure": [
+          "relics"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/aboleth.opus"
+        },
+        "traitTags": [
+          "Amphibious",
+          "Legendary Resistances"
+        ],
+        "senseTags": [
+          "SD"
+        ],
+        "actionTags": [
+          "Multiattack",
+          "Tentacles"
+        ],
+        "languageTags": [
+          "DS",
+          "TP"
+        ],
+        "damageTags": [
+          "A",
+          "B",
+          "Y"
+        ],
+        "miscTags": [
+          "CUR",
+          "MA",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "charmed",
+          "grappled"
+        ],
+        "savingThrowForced": [
+          "constitution",
+          "intelligence",
+          "wisdom"
+        ],
+        "savingThrowForcedLegendary": [
+          "constitution"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Aboleth",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Aboleth",
+                "entries": [
+                  "{@i Ageless Alien Mastermind}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Underdark|bestiary|environment=underdark}, {@filter Underwater|bestiary|environment=underwater}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Relics"
+                      }
+                    ]
+                  },
+                  "In aquatic abysses, aboleths dream of dead empires and orchestrate plots that unfold across ages. These elusive, amphibious immortals physically and mentally overwhelm their victims and transform creatures with a slimy, aberrant infection, reshaping other beings to serve them beneath the waves.",
+                  "Aboleths possess terrifying intellects and have alien mindsets. These creatures possess perfect memories of proto-worlds and incomprehensible dominions from the multiverse's earliest eons. Their secrets are innumerable and unfathomable. Aboleths lurk in places awash in primordial mysteries: the ruins of aquatic empires, hidden magical nexuses, or weak places between planes of existence. In these lairs, aboleths dream of epochs past, collect throngs of psychically dominated servants, consume the minds of unwitting victims, and prepare for their return to power.",
+                  "Aboleths' alien goals and methods are often mysterious to other creatures. Roll on or choose a result from the Aboleth Schemes table to inspire an aboleth's schemes.",
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "The lies we call reason are fragile things, vulnerable and raw on the shores of eons. But in the dream-vaults of dread ancients roil seas of terrifying truth. Our age is an island, and the ebb of primordial tides avows the Stygian wave."
+                        ],
+                        "by": "Evard",
+                        "from": "Sighs of the All-Seeing Worm"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "table",
+                    "caption": "Aboleth Schemes",
+                    "colLabels": [
+                      "1d6",
+                      "The Aboleth Seeks To..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "Accomplish incomprehensible plans that lead it to act in seemingly random ways."
+                      ],
+                      [
+                        "2",
+                        "Learn more of the world by kidnapping people and consuming their minds."
+                      ],
+                      [
+                        "3",
+                        "Manipulate innocents into worshiping it as a god by using its telepathy from hiding."
+                      ],
+                      [
+                        "4",
+                        "Open a gate to the distant past or future, releasing an invasion from another time."
+                      ],
+                      [
+                        "5",
+                        "Rouse a dragon turtle, a kraken, or another sea monster to flood a coastal city."
+                      ],
+                      [
+                        "6",
+                        "Trick treasure hunters into recovering relics from its long-fallen empire."
+                      ]
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Aboleth Lairs",
+                    "entries": [
+                      "Aboleths usually dwell in submerged ruins and caverns. They keep air-filled spaces for their terrestrial servants and to hold treasures that would be damaged by water."
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Aboleth.webp"
+                },
+                "title": "A gnome cultist consults an all-knowing aboleth",
+                "credit": "Kev Walker",
+                "width": 2550,
+                "height": 1650
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

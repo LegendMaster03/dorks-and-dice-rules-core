@@ -1,0 +1,1280 @@
+{
+  "id": "class.ranger",
+  "name": "Ranger",
+  "kind": "class",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ranger",
+        "hd": {
+          "number": 1,
+          "faces": 10
+        },
+        "proficiency": [
+          "str",
+          "dex"
+        ],
+        "spellcastingAbility": "wis",
+        "casterProgression": "1/2",
+        "spellsKnownProgression": [
+          0,
+          2,
+          3,
+          3,
+          4,
+          4,
+          5,
+          5,
+          6,
+          6,
+          7,
+          7,
+          8,
+          8,
+          9,
+          9,
+          10,
+          10,
+          11,
+          11
+        ],
+        "optionalfeatureProgression": [
+          {
+            "name": "Fighting Style",
+            "featureType": [
+              "FS:R"
+            ],
+            "progression": {
+              "2": 1
+            }
+          }
+        ],
+        "startingProficiencies": {
+          "armor": [
+            "light",
+            "medium",
+            "shield"
+          ],
+          "weapons": [
+            "simple",
+            "martial"
+          ],
+          "skills": [
+            {
+              "choose": {
+                "from": [
+                  "animal handling",
+                  "athletics",
+                  "insight",
+                  "investigation",
+                  "nature",
+                  "perception",
+                  "stealth",
+                  "survival"
+                ],
+                "count": 3
+              }
+            }
+          ]
+        },
+        "startingEquipment": {
+          "additionalFromBackground": true,
+          "default": [
+            "(a) {@item scale mail|srd51} or (b) {@item leather armor|srd51}",
+            "(a) two {@item shortsword|srd51|shortswords} or (b) two {@filter simple melee weapons|items|source=srd51|category=basic|type=simple weapon;melee weapon=sand}",
+            "(a) a {@item dungeoneer's pack|srd51} or (b) an {@item explorer's pack|srd51}",
+            "A {@item longbow|srd51} and a {@item quiver|srd51} of {@item arrows (20)|srd51|20 arrows}"
+          ],
+          "goldAlternative": "{@dice 5d4 × 10|5d4 × 10|Starting Gold}",
+          "defaultData": [
+            {
+              "a": [
+                "scale mail|srd51"
+              ],
+              "b": [
+                "leather armor|srd51"
+              ]
+            },
+            {
+              "a": [
+                {
+                  "item": "shortsword|srd51",
+                  "quantity": 2
+                }
+              ],
+              "b": [
+                {
+                  "equipmentType": "weaponSimpleMelee",
+                  "quantity": 2
+                }
+              ]
+            },
+            {
+              "a": [
+                "dungeoneer's pack|srd51"
+              ],
+              "b": [
+                "explorer's pack|srd51"
+              ]
+            },
+            {
+              "_": [
+                "longbow|srd51",
+                "arrows (20)|srd51"
+              ]
+            }
+          ]
+        },
+        "multiclassing": {
+          "requirements": {
+            "dex": 13,
+            "wis": 13
+          },
+          "proficienciesGained": {
+            "armor": [
+              "light",
+              "medium",
+              "shield"
+            ],
+            "skills": [
+              {
+                "choose": {
+                  "from": [
+                    "animal handling",
+                    "athletics",
+                    "insight",
+                    "investigation",
+                    "nature",
+                    "perception",
+                    "stealth",
+                    "survival"
+                  ],
+                  "count": 1
+                }
+              }
+            ],
+            "weapons": [
+              "simple",
+              "martial"
+            ]
+          }
+        },
+        "classTableGroups": [
+          {
+            "colLabels": [
+              "{@filter Spells Known|spells|class=ranger}"
+            ],
+            "rows": [
+              [
+                0
+              ],
+              [
+                2
+              ],
+              [
+                3
+              ],
+              [
+                3
+              ],
+              [
+                4
+              ],
+              [
+                4
+              ],
+              [
+                5
+              ],
+              [
+                5
+              ],
+              [
+                6
+              ],
+              [
+                6
+              ],
+              [
+                7
+              ],
+              [
+                7
+              ],
+              [
+                8
+              ],
+              [
+                8
+              ],
+              [
+                9
+              ],
+              [
+                9
+              ],
+              [
+                10
+              ],
+              [
+                10
+              ],
+              [
+                11
+              ],
+              [
+                11
+              ]
+            ]
+          },
+          {
+            "title": "Spell Slots per Spell Level",
+            "colLabels": [
+              "{@filter 1st|spells|level=1|class=Ranger}",
+              "{@filter 2nd|spells|level=2|class=Ranger}",
+              "{@filter 3rd|spells|level=3|class=Ranger}",
+              "{@filter 4th|spells|level=4|class=Ranger}",
+              "{@filter 5th|spells|level=5|class=Ranger}"
+            ],
+            "rowsSpellProgression": [
+              [
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                3,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                3,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                4,
+                2,
+                0,
+                0,
+                0
+              ],
+              [
+                4,
+                2,
+                0,
+                0,
+                0
+              ],
+              [
+                4,
+                3,
+                0,
+                0,
+                0
+              ],
+              [
+                4,
+                3,
+                0,
+                0,
+                0
+              ],
+              [
+                4,
+                3,
+                2,
+                0,
+                0
+              ],
+              [
+                4,
+                3,
+                2,
+                0,
+                0
+              ],
+              [
+                4,
+                3,
+                3,
+                0,
+                0
+              ],
+              [
+                4,
+                3,
+                3,
+                0,
+                0
+              ],
+              [
+                4,
+                3,
+                3,
+                1,
+                0
+              ],
+              [
+                4,
+                3,
+                3,
+                1,
+                0
+              ],
+              [
+                4,
+                3,
+                3,
+                2,
+                0
+              ],
+              [
+                4,
+                3,
+                3,
+                2,
+                0
+              ],
+              [
+                4,
+                3,
+                3,
+                3,
+                1
+              ],
+              [
+                4,
+                3,
+                3,
+                3,
+                1
+              ],
+              [
+                4,
+                3,
+                3,
+                3,
+                2
+              ],
+              [
+                4,
+                3,
+                3,
+                3,
+                2
+              ]
+            ]
+          }
+        ],
+        "classFeatures": [
+          "Favored Enemy|Ranger||1",
+          "Natural Explorer|Ranger||1",
+          "Fighting Style|Ranger||2",
+          "Spellcasting|Ranger||2",
+          {
+            "classFeature": "Ranger Archetype|Ranger||3",
+            "gainSubclassFeature": true
+          },
+          "Primeval Awareness|Ranger||3",
+          "Ability Score Improvement|Ranger||4",
+          "Extra Attack|Ranger||5",
+          "Favored Enemy and Natural Explorer improvements|Ranger||6",
+          {
+            "classFeature": "Ranger Archetype feature|Ranger||7",
+            "gainSubclassFeature": true
+          },
+          "Ability Score Improvement|Ranger||8",
+          "Land's Stride|Ranger||8",
+          "Hide in Plain Sight|Ranger||10",
+          "Natural Explorer improvement|Ranger||10",
+          {
+            "classFeature": "Ranger Archetype feature|Ranger||11",
+            "gainSubclassFeature": true
+          },
+          "Ability Score Improvement|Ranger||12",
+          "Vanish|Ranger||14",
+          "Favored Enemy improvement|Ranger||14",
+          {
+            "classFeature": "Ranger Archetype feature|Ranger||15",
+            "gainSubclassFeature": true
+          },
+          "Ability Score Improvement|Ranger||16",
+          "Feral Senses|Ranger||18",
+          "Ability Score Improvement|Ranger||19",
+          "Foe Slayer|Ranger||20"
+        ],
+        "subclassTitle": "Ranger Archetype",
+        "lore": [
+          {
+            "name": "Ranger",
+            "entries": [
+              {
+                "name": "Ranger",
+                "type": "section",
+                "entries": [
+                  "Rough and wild looking, a human stalks alone through the shadows of trees, hunting the orcs he knows are planning a raid on a nearby farm. Clutching a shortsword in each hand, he becomes a whirlwind of steel, cutting down one enemy after another.",
+                  "After tumbling away from a cone of freezing air, an elf finds her feet and draws back her bow to loose an arrow at the white dragon. Shrugging off the wave of fear that emanates from the dragon like the cold of its breath, she sends one arrow after another to find the gaps between the dragon's thick scales.",
+                  "Holding his hand high, a half-elf whistles to the hawk that circles high above him, calling the bird back to his side. Whispering instructions in Elvish, he points to the owlbear he's been tracking and sends the hawk to distract the creature while he readies his bow.",
+                  "Far from the bustle of cities and towns, past the hedges that shelter the most distant farms from the terrors of the wild, amid the dense-packed trees of trackless forests and across wide and empty plains, rangers keep their unending watch.",
+                  {
+                    "type": "entries",
+                    "name": "Deadly Hunters",
+                    "entries": [
+                      "Warriors of the wilderness, rangers specialize in hunting the monsters that threaten the edges of civilization—humanoid raiders, rampaging beasts and monstrosities, terrible giants, and deadly dragons. They learn to track their quarry as a predator does, moving stealthily through the wilds and hiding themselves in brush and rubble. Rangers focus their combat training on techniques that are particularly useful against their specific favored foes.",
+                      "Thanks to their familiarity with the wilds, rangers acquire the ability to cast spells that harness nature's power, much as a druid does. Their spells, like their combat abilities, emphasize speed, stealth, and the hunt. A ranger's talents and abilities are honed with deadly focus on the grim task of protecting the borderlands."
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Independent Adventurers",
+                    "entries": [
+                      "Though a ranger might make a living as a hunter, a guide, or a tracker, a ranger's true calling is to defend the outskirts of civilization from the ravages of monsters and humanoid hordes that press in from the wild. In some places, rangers gather in secretive orders or join forces with druidic circles. Many rangers, though, are independent almost to a fault, knowing that, when a dragon or a band of orcs attacks, a ranger might be the first—and possibly the last—line of defense.",
+                      "This fierce independence makes rangers well suited to adventuring, since they are accustomed to life far from the comforts of a dry bed and a hot bath. Faced with city-bred adventurers who grouse and whine about the hardships of the wild, rangers respond with some mixture of amusement, frustration, and compassion. But they quickly learn that other adventurers who can carry their own weight in a fight against civilization's foes are worth any extra burden. Coddled city folk might not know how to feed themselves or find fresh water in the wild, but they make up for it in other ways."
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Creating a Ranger",
+                    "entries": [
+                      "As you create your ranger character, consider the nature of the training that gave you your particular capabilities. Did you train with a single mentor, wandering the wilds together until you mastered the ranger's ways? Did you leave your apprenticeship, or was your mentor slain—perhaps by the same kind of monster that became your favored enemy? Or perhaps you learned your skills as part of a band of rangers affiliated with a druidic circle, trained in mystic paths as well as wilderness lore. You might be self-taught, a recluse who learned combat skills, tracking, and even a magical connection to nature through the necessity of surviving in the wilds.",
+                      "What's the source of your particular hatred of a certain kind of enemy? Did a monster kill someone you loved or destroy your home village? Or did you see too much of the destruction these monsters cause and commit yourself to reining in their depredations? Is your adventuring career a continuation of your work in protecting the borderlands, or a significant change? What made you join up with a band of adventurers? Do you find it challenging to teach new allies the ways of the wild, or do you welcome the relief from solitude that they offer?",
+                      {
+                        "type": "entries",
+                        "name": "Quick Build",
+                        "entries": [
+                          "You can make a ranger quickly by following these suggestions. First, make Dexterity your highest ability score, followed by Wisdom. (Some rangers who focus on two-weapon fighting make Strength higher than Dexterity.) Second, choose the {@background outlander} background."
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "source": "SRD51",
+                "page": 89
+              },
+              {
+                "type": "section",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "I spend a lot of my life away from civilization, keeping to its fringes to protect it. Don't assume that because I don't bend the knee to your king that I haven't done more to protect him than all his knights put together."
+                    ],
+                    "by": "Soveliss"
+                  },
+                  "Rangers are free-minded wanderers and seekers who patrol the edges of civilized territory, turning back the denizens of the wild lands beyond. It is a thankless job, since their efforts are rarely understood and almost never rewarded. Yet rangers persist in their duties, never doubting that their work makes the world a safer place.",
+                  "A relationship with civilization informs every ranger's personality and history. Some rangers see themselves as enforcers of the law and bringers of justice on civilization's frontier, answering to no sovereign power. Others are survivalists who eschew civilization altogether. They vanquish monsters to keep themselves safe while they live in and travel through the perilous wild areas of the world. If their efforts also benefit the kingdoms and other civilized realms that they avoid, so be it.",
+                  "If you're creating or playing a ranger character, the following sections offer ideas for embellishing the character and enhancing your roleplaying experience.",
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "I'm a monster. Are you going to try to kill me? Didn't think so. Go kill some goblins or something. On second thought, goblins aren't monsters - they're people. So maybe you should call yourself a people killer."
+                    ],
+                    "by": "Xanathar"
+                  },
+                  {
+                    "type": "entries",
+                    "name": "View of the World",
+                    "entries": [
+                      "A ranger's view of the world begins (and sometimes ends) with that character's outlook toward civilized folk and the places they occupy. Some rangers have an attitude toward civilization that's deeply rooted in disdain, while others pity the people they have sworn to protect—though on the battlefield, it's impossible to tell the difference between one ranger and another. Indeed, to those who have seen them operate and been the beneficiaries of their prowess, it scarcely matters why rangers do what they do. That said, no two rangers are likely to express their opinions on any matter in the same way.",
+                      "If you haven't yet thought about the details of your character's worldview, consider putting a finer point on things by summarizing that viewpoint in a short statement (such as the entries on the following table). How might that feeling affect the way you conduct yourself?",
+                      {
+                        "type": "table",
+                        "caption": "View of the World",
+                        "colLabels": [
+                          "{@dice d6}",
+                          "View"
+                        ],
+                        "colStyles": [
+                          "col-1 text-center",
+                          "col-11"
+                        ],
+                        "rows": [
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 1
+                              }
+                            },
+                            "Towns and cities are the best places for those who can't survive on their own."
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 2
+                              }
+                            },
+                            "The advancement of civilization is the best way to thwart chaos, but its reach must be monitored."
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 3
+                              }
+                            },
+                            "Towns and cities are a necessary evil, but once the wilderness is purged of supernatural threats, we will need them no more."
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 4
+                              }
+                            },
+                            "Walls are for cowards, who huddle behind them while others do the work of making the world safe."
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 5
+                              }
+                            },
+                            "Visiting a town is not unpleasant, but after a few days I feel the irresistible call to return to the wild."
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 6
+                              }
+                            },
+                            "Cities breed weakness by isolating folk from the harsh lessons of the wild."
+                          ]
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Homelands",
+                    "entries": [
+                      "All rangers, regardless of how they came to take up the profession, have a strong connection to the natural world and its various terrains. For some rangers, the wilderness is where they grew up, either as a result of being born there or moving there at a young age. For other rangers, civilization was originally home, but the wilderness became a second homeland.",
+                      "Think of your character's backstory and decide what terrain feels most like home, whether or not you were born there. What does that terrain say about your personality? Does it influence which spells you choose to learn? Have your experiences there shaped who your favored enemies are?",
+                      {
+                        "type": "table",
+                        "caption": "Homelands",
+                        "colLabels": [
+                          "{@dice d6}",
+                          "Homeland"
+                        ],
+                        "colStyles": [
+                          "col-1 text-center",
+                          "col-11"
+                        ],
+                        "rows": [
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 1
+                              }
+                            },
+                            "You patrolled an ancient forest, darkened and corrupted by several crossings to the Shadowfell."
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 2
+                              }
+                            },
+                            "As part of a group of nomads, you acquired the skills for surviving in the desert."
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 3
+                              }
+                            },
+                            "Your early life in the Underdark prepared you for the challenges of combating its denizens."
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 4
+                              }
+                            },
+                            "You dwelled on the edge of a swamp, in an area imperiled by land creatures as well as aquatic ones."
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 5
+                              }
+                            },
+                            "Because you grew up among the peaks, finding the best path through the mountains is second nature to you."
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 6
+                              }
+                            },
+                            "You wandered the far north, learning how to protect yourself and prosper in a realm overrun by ice."
+                          ]
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "entries",
+                    "name": "Sworn Enemy",
+                    "entries": [
+                      "Every ranger begins with a favored enemy (or two). The determination of a favored enemy might be tied to a specific event in the character's early life, or it might be entirely a matter of choice.",
+                      "What spurred your character to select a particular enemy? Was the choice made because of tradition or curiosity, or do you have a grudge to settle?",
+                      {
+                        "type": "table",
+                        "caption": "Sworn Enemies",
+                        "colLabels": [
+                          "{@dice d6}",
+                          "Enemy"
+                        ],
+                        "colStyles": [
+                          "col-1 text-center",
+                          "col-11"
+                        ],
+                        "rows": [
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 1
+                              }
+                            },
+                            "You seek revenge on nature's behalf for the great transgressions your foe has committed."
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 2
+                              }
+                            },
+                            "Your forebears or predecessors fought these creatures, and so shall you."
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 3
+                              }
+                            },
+                            "You bear no enmity toward your foe. You stalk such creatures as a hunter tracks down a wild animal."
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 4
+                              }
+                            },
+                            "You find your foe fascinating, and you collect books of tales and history concerning it."
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 5
+                              }
+                            },
+                            "You collect tokens of your fallen enemies to remind you of each kill."
+                          ],
+                          [
+                            {
+                              "type": "cell",
+                              "roll": {
+                                "exact": 6
+                              }
+                            },
+                            "You respect your chosen enemy, and you see your battles as a test of respective skills."
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "page": 40,
+                "source": "XGE"
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "classes/PHB/Ranger.webp"
+                },
+                "width": 900,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ranger",
+        "primaryAbility": [
+          {
+            "dex": true,
+            "wis": true
+          }
+        ],
+        "hd": {
+          "number": 1,
+          "faces": 10
+        },
+        "proficiency": [
+          "str",
+          "dex"
+        ],
+        "spellcastingAbility": "wis",
+        "casterProgression": "artificer",
+        "preparedSpellsProgression": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          6,
+          7,
+          7,
+          9,
+          9,
+          10,
+          10,
+          11,
+          11,
+          12,
+          12,
+          14,
+          14,
+          15,
+          15
+        ],
+        "preparedSpellsChange": "restLong",
+        "additionalSpells": [
+          {
+            "prepared": {
+              "1": [
+                "hunter's mark|srd52"
+              ]
+            }
+          }
+        ],
+        "featProgression": [
+          {
+            "name": "Fighting Style",
+            "category": [
+              "FS",
+              "FS:R"
+            ],
+            "progression": {
+              "2": 1
+            }
+          },
+          {
+            "name": "Epic Boon",
+            "category": [
+              "EB"
+            ],
+            "progression": {
+              "19": 1
+            }
+          }
+        ],
+        "startingProficiencies": {
+          "armor": [
+            "light",
+            "medium",
+            "shield"
+          ],
+          "weapons": [
+            "simple",
+            "martial"
+          ],
+          "skills": [
+            {
+              "choose": {
+                "from": [
+                  "animal handling",
+                  "athletics",
+                  "insight",
+                  "investigation",
+                  "nature",
+                  "perception",
+                  "stealth",
+                  "survival"
+                ],
+                "count": 3
+              }
+            }
+          ]
+        },
+        "startingEquipment": {
+          "additionalFromBackground": true,
+          "defaultData": [
+            {
+              "A": [
+                {
+                  "item": "studded leather armor|srd52"
+                },
+                {
+                  "item": "scimitar|srd52"
+                },
+                {
+                  "item": "shortsword|srd52"
+                },
+                {
+                  "item": "longbow|srd52"
+                },
+                {
+                  "item": "arrows (20)|srd52"
+                },
+                {
+                  "item": "quiver|srd52"
+                },
+                {
+                  "item": "sprig of mistletoe|srd52"
+                },
+                {
+                  "item": "explorer's pack|srd52"
+                },
+                {
+                  "value": 700
+                }
+              ],
+              "B": [
+                {
+                  "value": 15000
+                }
+              ]
+            }
+          ],
+          "entries": [
+            "{@i Choose A or B:} (A) {@item Studded Leather Armor|SRD52}, {@item Scimitar|SRD52}, {@item Shortsword|SRD52}, {@item Longbow|SRD52}, {@item Arrows (20)|SRD52|20 Arrows}, {@item Quiver|SRD52}, {@item Druidic Focus|SRD52} ({@item sprig of mistletoe|SRD52}), {@item Explorer's Pack|SRD52}, and 7 GP; or (B) 150 GP"
+          ]
+        },
+        "multiclassing": {
+          "proficienciesGained": {
+            "weapons": [
+              "martial"
+            ],
+            "armor": [
+              "light",
+              "medium",
+              "shield"
+            ],
+            "skills": [
+              {
+                "choose": {
+                  "from": [
+                    "animal handling",
+                    "athletics",
+                    "insight",
+                    "investigation",
+                    "nature",
+                    "perception",
+                    "stealth",
+                    "survival"
+                  ],
+                  "count": 1
+                }
+              }
+            ]
+          }
+        },
+        "classTableGroups": [
+          {
+            "colLabels": [
+              "Favored Enemy"
+            ],
+            "rows": [
+              [
+                2
+              ],
+              [
+                2
+              ],
+              [
+                2
+              ],
+              [
+                2
+              ],
+              [
+                3
+              ],
+              [
+                3
+              ],
+              [
+                3
+              ],
+              [
+                3
+              ],
+              [
+                4
+              ],
+              [
+                4
+              ],
+              [
+                4
+              ],
+              [
+                4
+              ],
+              [
+                5
+              ],
+              [
+                5
+              ],
+              [
+                5
+              ],
+              [
+                5
+              ],
+              [
+                6
+              ],
+              [
+                6
+              ],
+              [
+                6
+              ],
+              [
+                6
+              ]
+            ]
+          },
+          {
+            "colLabels": [
+              "{@filter Prepared Spells|spells|level=!0|class=Ranger}"
+            ],
+            "rows": [
+              [
+                2
+              ],
+              [
+                3
+              ],
+              [
+                4
+              ],
+              [
+                5
+              ],
+              [
+                6
+              ],
+              [
+                6
+              ],
+              [
+                7
+              ],
+              [
+                7
+              ],
+              [
+                9
+              ],
+              [
+                9
+              ],
+              [
+                10
+              ],
+              [
+                10
+              ],
+              [
+                11
+              ],
+              [
+                11
+              ],
+              [
+                12
+              ],
+              [
+                12
+              ],
+              [
+                14
+              ],
+              [
+                14
+              ],
+              [
+                15
+              ],
+              [
+                15
+              ]
+            ]
+          },
+          {
+            "title": "Spell Slots per Spell Level",
+            "colLabels": [
+              "{@filter 1st|spells|level=1|class=ranger}",
+              "{@filter 2nd|spells|level=2|class=ranger}",
+              "{@filter 3rd|spells|level=3|class=ranger}",
+              "{@filter 4th|spells|level=4|class=ranger}",
+              "{@filter 5th|spells|level=5|class=ranger}"
+            ],
+            "rowsSpellProgression": [
+              [
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                3,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                3,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                4,
+                2,
+                0,
+                0,
+                0
+              ],
+              [
+                4,
+                2,
+                0,
+                0,
+                0
+              ],
+              [
+                4,
+                3,
+                0,
+                0,
+                0
+              ],
+              [
+                4,
+                3,
+                0,
+                0,
+                0
+              ],
+              [
+                4,
+                3,
+                2,
+                0,
+                0
+              ],
+              [
+                4,
+                3,
+                2,
+                0,
+                0
+              ],
+              [
+                4,
+                3,
+                3,
+                0,
+                0
+              ],
+              [
+                4,
+                3,
+                3,
+                0,
+                0
+              ],
+              [
+                4,
+                3,
+                3,
+                1,
+                0
+              ],
+              [
+                4,
+                3,
+                3,
+                1,
+                0
+              ],
+              [
+                4,
+                3,
+                3,
+                2,
+                0
+              ],
+              [
+                4,
+                3,
+                3,
+                2,
+                0
+              ],
+              [
+                4,
+                3,
+                3,
+                3,
+                1
+              ],
+              [
+                4,
+                3,
+                3,
+                3,
+                1
+              ],
+              [
+                4,
+                3,
+                3,
+                3,
+                2
+              ],
+              [
+                4,
+                3,
+                3,
+                3,
+                2
+              ]
+            ]
+          }
+        ],
+        "classFeatures": [
+          "Spellcasting|Ranger|SRD52|1",
+          "Favored Enemy|Ranger|SRD52|1",
+          "Weapon Mastery|Ranger|SRD52|1",
+          "Deft Explorer|Ranger|SRD52|2",
+          "Fighting Style|Ranger|SRD52|2",
+          {
+            "classFeature": "Ranger Subclass|Ranger|SRD52|3",
+            "gainSubclassFeature": true
+          },
+          "Ability Score Improvement|Ranger|SRD52|4",
+          "Extra Attack|Ranger|SRD52|5",
+          "Roving|Ranger|SRD52|6",
+          {
+            "classFeature": "Subclass Feature|Ranger|SRD52|7",
+            "gainSubclassFeature": true
+          },
+          "Ability Score Improvement|Ranger|SRD52|8",
+          "Expertise|Ranger|SRD52|9",
+          "Tireless|Ranger|SRD52|10",
+          {
+            "classFeature": "Subclass Feature|Ranger|SRD52|11",
+            "gainSubclassFeature": true
+          },
+          "Ability Score Improvement|Ranger|SRD52|12",
+          "Relentless Hunter|Ranger|SRD52|13",
+          "Nature's Veil|Ranger|SRD52|14",
+          {
+            "classFeature": "Subclass Feature|Ranger|SRD52|15",
+            "gainSubclassFeature": true
+          },
+          "Ability Score Improvement|Ranger|SRD52|16",
+          "Precise Hunter|Ranger|SRD52|17",
+          "Feral Senses|Ranger|SRD52|18",
+          "Epic Boon|Ranger|SRD52|19",
+          "Foe Slayer|Ranger|SRD52|20"
+        ],
+        "subclassTitle": "Ranger Subclass",
+        "lore": [
+          {
+            "name": "Ranger",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Ranger",
+                "source": "SRD52",
+                "page": 118,
+                "entries": [
+                  "Far from bustling cities, amid the trees of trackless forests and across wide plains, Rangers keep their unending watch in the wilderness. Rangers learn to track their quarry as a predator does, moving stealthily through the wilds and hiding themselves in brush and rubble.",
+                  "Thanks to their connection with nature, Rangers can also cast spells that harness primal powers of the wilderness. A Ranger's talents and magic are honed with deadly focus to protect the world from the ravages of monsters and tyrants."
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "classes/XPHB/Ranger.webp"
+                },
+                "credit": "Chris Rallis",
+                "width": 1700,
+                "height": 2259
+              },
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "classes/XPHB/093-04-008.ranger-and-deer.webp"
+                },
+                "credit": "Mike Pape",
+                "width": 540,
+                "height": 1440
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

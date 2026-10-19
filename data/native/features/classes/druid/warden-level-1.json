@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.warden.druid.warden.1",
+  "name": "Warden",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Warden",
+        "className": "Druid",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "Trained for battle, you gain proficiency with {@filter Martial weapons|items|type=martial weapon} and training with {@filter Medium armor|items|type=Medium Armor}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "classLevel": 1
+}

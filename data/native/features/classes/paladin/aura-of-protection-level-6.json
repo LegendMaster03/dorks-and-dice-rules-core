@@ -1,0 +1,37 @@
+{
+  "id": "classFeature.aura-of-protection.paladin.aura-of-protection.6",
+  "name": "Aura of Protection",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Aura of Protection",
+        "className": "Paladin",
+        "classSource": "SRD51",
+        "level": 6,
+        "entries": [
+          "Starting at 6th level, whenever you or a friendly creature within 10 feet of you must make a saving throw, the creature gains a bonus to the saving throw equal to your Charisma modifier (with a minimum bonus of +1). You must be conscious to grant this bonus.",
+          "At 18th level, the range of this aura increases to 30 feet."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Aura of Protection",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "level": 6,
+        "entries": [
+          "You radiate a protective, unseeable aura in a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} that originates from you. The aura is inactive while you have the {@condition Incapacitated|SRD52} condition.",
+          "You and your allies in the aura gain a bonus to saving throws equal to your Charisma modifier (minimum bonus of +1).",
+          "If another Paladin is present, a creature can benefit from only one Aura of Protection at a time; the creature chooses which aura while in them."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "classLevel": 6
+}

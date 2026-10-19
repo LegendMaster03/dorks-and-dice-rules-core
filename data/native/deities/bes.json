@@ -1,0 +1,24 @@
+{
+  "id": "deity.bes",
+  "name": "Bes",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Bes",
+        "pantheon": "Egyptian",
+        "alignment": [
+          "C",
+          "N"
+        ],
+        "title": "God of luck and music",
+        "domains": [
+          "Trickery"
+        ],
+        "symbol": "Image of the misshapen deity"
+      }
+    }
+  ]
+}

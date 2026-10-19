@@ -1,0 +1,47 @@
+{
+  "id": "magicvariant.weapon-of-warning",
+  "name": "Weapon of Warning",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Weapon of Warning",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "weaponCategory": "simple"
+          },
+          {
+            "weaponCategory": "martial"
+          }
+        ],
+        "inherits": {
+          "nameSuffix": " of Warning",
+          "source": "SRD52",
+          "page": 253,
+          "rarity": "uncommon",
+          "reqAttune": true,
+          "entries": [
+            "As long as this weapon is within your reach and you are attuned to it, you and allies within 30 feet of you gain the following benefits.",
+            {
+              "type": "entries",
+              "name": "Alarm",
+              "entries": [
+                "The weapon magically awakens each subject who is sleeping naturally when combat begins. This benefit doesn't wake a subject from magically induced sleep."
+              ]
+            },
+            {
+              "type": "entries",
+              "name": "Supernatural Readiness",
+              "entries": [
+                "Each subject has {@variantrule Advantage|SRD52} on its {@variantrule Initiative|SRD52} rolls."
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

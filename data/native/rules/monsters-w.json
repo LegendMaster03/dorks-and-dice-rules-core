@@ -1,0 +1,43 @@
+{
+  "id": "rule.monsters-w",
+  "name": "Monsters (W)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (W)",
+        "page": 354,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Warhorse|srd51}",
+              "{@creature Warhorse Skeleton|srd51}",
+              "{@creature Water Elemental|srd51}",
+              "{@creature Weasel|srd51}",
+              "{@creature Werebear|srd51}",
+              "{@creature Wereboar|srd51}",
+              "{@creature Wererat|srd51}",
+              "{@creature Weretiger|srd51}",
+              "{@creature Werewolf|srd51}",
+              "{@creature White Dragon Wyrmling|srd51}",
+              "{@creature Wight|srd51}",
+              "{@creature Will-o'-Wisp|srd51}",
+              "{@creature Winter Wolf|srd51}",
+              "{@creature Wolf|srd51}",
+              "{@creature Worg|srd51}",
+              "{@creature Wraith|srd51}",
+              "{@creature Wyvern|srd51}"
+            ]
+          }
+        ],
+        "id": "1b9"
+      }
+    }
+  ]
+}

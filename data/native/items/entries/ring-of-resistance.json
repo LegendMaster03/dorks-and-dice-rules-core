@@ -1,0 +1,26 @@
+{
+  "id": "itemEntry.ring-of-resistance",
+  "name": "Ring of Resistance",
+  "kind": "itemEntry",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Resistance",
+        "entriesTemplate": [
+          "You have resistance to {{item.resist}} damage while wearing this ring. The ring is set with {{item.detail1}}."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Resistance",
+        "entriesTemplate": [
+          "You have {@variantrule Resistance|SRD52} to {{getFullImmRes item.resist}} damage while wearing this ring. The ring is set with {{item.detail1}}."
+        ]
+      }
+    }
+  ]
+}

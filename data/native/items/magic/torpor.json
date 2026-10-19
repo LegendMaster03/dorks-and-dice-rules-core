@@ -1,0 +1,46 @@
+{
+  "id": "item.torpor",
+  "name": "Torpor",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Torpor",
+        "type": "G",
+        "rarity": "none",
+        "value": 60000,
+        "poison": true,
+        "entries": [
+          "A creature subjected to this poison must succeed on a {@dc 15} Constitution saving throw or become {@condition poisoned} for {@dice 4d6} hours. The {@condition poisoned} creature is {@condition incapacitated}."
+        ],
+        "poisonTypes": [
+          "ingested"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Torpor",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "value": 60000,
+        "poison": true,
+        "entries": [
+          "A creature subjected to Torpor poison must succeed on a {@dc 15} Constitution saving throw or have the {@condition Poisoned|SRD52} condition for {@dice 4d6} hours. The creature's {@variantrule Speed|SRD52} is halved while the creature is {@condition Poisoned|SRD52} in this way."
+        ],
+        "poisonTypes": [
+          "ingested"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

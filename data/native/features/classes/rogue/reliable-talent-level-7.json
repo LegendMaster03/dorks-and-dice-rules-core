@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.reliable-talent.rogue.reliable-talent.7",
+  "name": "Reliable Talent",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Reliable Talent",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 7,
+        "entries": [
+          "Whenever you make an ability check that uses one of your skill or tool proficiencies, you can treat a {@dice d20} roll of 9 or lower as a 10."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 7
+}

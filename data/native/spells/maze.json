@@ -1,0 +1,106 @@
+{
+  "id": "spell.maze",
+  "name": "Maze",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Maze",
+        "level": 8,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 10
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You banish a creature that you can see within range into a labyrinthine demiplane. The target remains there for the duration or until it escapes the maze.",
+          "The target can use its action to attempt to escape. When it does so, it makes a {@dc 20} Intelligence check. If it succeeds, it escapes, and the spell ends (a {@creature minotaur} or goristro demon automatically succeeds).",
+          "When the spell ends, the target reappears in the space it left or, if that space is occupied, in the nearest unoccupied space."
+        ],
+        "abilityCheck": [
+          "intelligence"
+        ],
+        "miscTags": [
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Maze",
+        "level": 8,
+        "school": "C",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 60
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "minute",
+              "amount": 10
+            },
+            "concentration": true
+          }
+        ],
+        "entries": [
+          "You banish a creature that you can see within range into a labyrinthine demiplane. The target remains there for the duration or until it escapes the maze.",
+          "The target can take a {@action Study|SRD52} action to try to escape. When it does so, it makes a {@dc 20} Intelligence ({@skill Investigation|SRD52}) check. If it succeeds, it escapes, and the spell ends.",
+          "When the spell ends, the target reappears in the space it left or, if that space is occupied, in the nearest unoccupied space."
+        ],
+        "abilityCheck": [
+          "intelligence"
+        ],
+        "miscTags": [
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

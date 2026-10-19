@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.expertise.bard.expertise.10",
+  "name": "Expertise",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Expertise",
+        "className": "Bard",
+        "classSource": "SRD51",
+        "level": 10,
+        "entries": [
+          "At 10th level, you can choose another two skill proficiencies. Your proficiency bonus is doubled for any ability check you make that uses either of the chosen proficiencies."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.bard",
+  "classLevel": 10
+}

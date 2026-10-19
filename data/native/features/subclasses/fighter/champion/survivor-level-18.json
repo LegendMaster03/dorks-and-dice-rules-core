@@ -1,0 +1,55 @@
+{
+  "id": "subclassFeature.survivor.fighter.champion.survivor.18",
+  "name": "Survivor",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Survivor",
+        "className": "Fighter",
+        "classSource": "SRD51",
+        "subclassShortName": "Champion",
+        "subclassSource": "SRD51",
+        "level": 18,
+        "header": 2,
+        "entries": [
+          "At 18th level, you attain the pinnacle of resilience in battle. At the start of each of your turns, you regain hit points equal to 5 + your Constitution modifier if you have no more than half of your hit points left. You don't gain this benefit if you have 0 hit points."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Survivor",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "subclassShortName": "Champion",
+        "subclassSource": "SRD52",
+        "level": 18,
+        "header": 2,
+        "entries": [
+          "You attain the pinnacle of resilience in battle, giving you these benefits.",
+          {
+            "type": "entries",
+            "name": "Defy Death",
+            "entries": [
+              "You have {@variantrule Advantage|SRD52} on {@variantrule Death Saving Throw|SRD52|Death Saving Throws}. Moreover, when you roll 18–20 on a {@variantrule Death Saving Throw|SRD52}, you gain the benefit of rolling a 20 on it."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Heroic Rally",
+            "entries": [
+              "At the start of each of your turns, you regain {@variantrule Hit Points|SRD52} equal to 5 plus your Constitution modifier if you are {@status Bloodied|SRD52} and have at least 1 {@variantrule Hit Points|SRD52|Hit Point}."
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "parentSubclass": "champion",
+  "classLevel": 18
+}

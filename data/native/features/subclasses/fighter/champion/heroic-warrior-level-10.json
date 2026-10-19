@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.heroic-warrior.fighter.champion.heroic-warrior.10",
+  "name": "Heroic Warrior",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Heroic Warrior",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "subclassShortName": "Champion",
+        "subclassSource": "SRD52",
+        "level": 10,
+        "header": 2,
+        "entries": [
+          "The thrill of battle drives you toward victory. During combat, you can give yourself {@variantrule Heroic Inspiration|SRD52} whenever you start your turn without it."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "parentSubclass": "champion",
+  "classLevel": 10
+}

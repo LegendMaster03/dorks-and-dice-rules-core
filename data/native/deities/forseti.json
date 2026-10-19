@@ -1,0 +1,24 @@
+{
+  "id": "deity.forseti",
+  "name": "Forseti",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Forseti",
+        "pantheon": "Norse",
+        "alignment": [
+          "N"
+        ],
+        "title": "God of justice and law",
+        "domains": [
+          "Light",
+          "Order"
+        ],
+        "symbol": "Head of a bearded man"
+      }
+    }
+  ]
+}

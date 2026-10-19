@@ -1,0 +1,23 @@
+{
+  "id": "classFeature.weapon-mastery.fighter.weapon-mastery.1",
+  "name": "Weapon Mastery",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Weapon Mastery",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "Your training with weapons allows you to use the {@variantrule weapon mastery properties|SRD52|mastery properties} of three kinds of {@filter Simple|items|type=simple weapon} or {@filter Martial|items|type=martial weapon} weapons of your choice. Whenever you finish a {@variantrule Long Rest|SRD52}, you can practice weapon drills and change one of those weapon choices.",
+          "When you reach certain Fighter levels, you gain the ability to use the {@variantrule weapon mastery properties|SRD52|mastery properties} of more kinds of weapons, as shown in the Weapon Mastery column of the Fighter Features table."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 1
+}

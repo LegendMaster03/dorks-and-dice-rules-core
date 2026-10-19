@@ -1,0 +1,217 @@
+{
+  "id": "monster.violet-fungus",
+  "name": "Violet Fungus",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Violet Fungus",
+        "size": [
+          "M"
+        ],
+        "type": "plant",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          5
+        ],
+        "hp": {
+          "average": 18,
+          "formula": "4d8"
+        },
+        "speed": {
+          "walk": 5
+        },
+        "str": 3,
+        "dex": 1,
+        "con": 10,
+        "int": 1,
+        "wis": 3,
+        "cha": 1,
+        "senses": [
+          "blindsight 30 ft. (blind beyond this radius)"
+        ],
+        "passive": 6,
+        "conditionImmune": [
+          "blinded",
+          "deafened",
+          "frightened"
+        ],
+        "cr": "1/4",
+        "trait": [
+          {
+            "name": "False Appearance",
+            "entries": [
+              "While the violet fungus remains motionless, it is indistinguishable from an ordinary fungus."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The fungus makes {@dice 1d4} Rotting Touch attacks."
+            ]
+          },
+          {
+            "name": "Rotting Touch",
+            "entries": [
+              "{@atk mw} {@hit 2} to hit, reach 10 ft., one creature. {@h}4 ({@damage 1d8}) necrotic damage."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/violet-fungus.opus"
+        },
+        "traitTags": [
+          "False Appearance"
+        ],
+        "senseTags": [
+          "B"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "damageTags": [
+          "N"
+        ],
+        "miscTags": [
+          "MW",
+          "RCH"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Violet Fungus",
+            "_copy": {
+              "name": "Fungi",
+              "source": "SRD51",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": "This purplish mushroom uses root-like feelers growing from its base to creep across cavern floors. The four stalks protruding from a violet fungi's central mass are used to lash out at prey, rotting flesh with the slightest touch. Any creature killed by a violet fungus decomposes rapidly. A new violet fungus sprouts from the moldering corpse, growing to full size in {@dice 2d6} days."
+                }
+              }
+            },
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Violet Fungus.webp"
+                },
+                "credit": "Daniel Landerman",
+                "width": 768,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Violet Fungus",
+        "size": [
+          "M"
+        ],
+        "type": "plant",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          5
+        ],
+        "hp": {
+          "average": 18,
+          "formula": "4d8"
+        },
+        "speed": {
+          "walk": 5
+        },
+        "str": 3,
+        "dex": 1,
+        "con": 10,
+        "int": 1,
+        "wis": 3,
+        "cha": 1,
+        "senses": [
+          "Blindsight 30 ft."
+        ],
+        "passive": 6,
+        "conditionImmune": [
+          "blinded",
+          "charmed",
+          "deafened",
+          "frightened"
+        ],
+        "cr": "1/4",
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The fungus makes two Rotting Touch attacks."
+            ]
+          },
+          {
+            "name": "Rotting Touch",
+            "entries": [
+              "{@atkr m} {@hit 2}, reach 10 ft. {@h}4 ({@damage 1d8}) Necrotic damage."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/violet-fungus.opus"
+        },
+        "senseTags": [
+          "B"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "damageTags": [
+          "N"
+        ],
+        "miscTags": [
+          "MA",
+          "RCH"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Violet Fungus",
+            "_copy": {
+              "name": "Fungi",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "Slow but mobile, violet fungi rot any flesh they touch with their lashing tendrils."
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "item.fine-wine-bottle",
+  "name": "Fine Wine (bottle)",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Fine Wine (bottle)",
+        "type": "FD",
+        "rarity": "none",
+        "value": 1000,
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Fine Wine (bottle)",
+        "type": "FD|SRD52",
+        "rarity": "none",
+        "value": 1000,
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

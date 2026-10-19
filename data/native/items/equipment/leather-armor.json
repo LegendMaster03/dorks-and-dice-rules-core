@@ -1,0 +1,35 @@
+{
+  "id": "baseitem.leather-armor",
+  "name": "Leather Armor",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Leather Armor",
+        "type": "LA",
+        "rarity": "none",
+        "weight": 10,
+        "value": 1000,
+        "ac": 11,
+        "armor": true,
+        "entries": [
+          "The breastplate and shoulder protectors of this armor are made of leather that has been stiffened by being boiled in oil. The rest of the armor is made of softer and more flexible materials."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Leather Armor",
+        "type": "LA|SRD52",
+        "rarity": "none",
+        "weight": 10,
+        "value": 1000,
+        "ac": 11,
+        "armor": true
+      }
+    }
+  ]
+}

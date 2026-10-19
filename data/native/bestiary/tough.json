@@ -1,0 +1,115 @@
+{
+  "id": "monster.tough",
+  "name": "Tough",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Tough",
+        "size": [
+          "S",
+          "M"
+        ],
+        "type": "humanoid",
+        "alignment": [
+          "N"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 32,
+          "formula": "5d8 + 10"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "str": 15,
+        "dex": 12,
+        "con": 14,
+        "int": 10,
+        "wis": 10,
+        "cha": 11,
+        "passive": 10,
+        "languages": [
+          "Common"
+        ],
+        "cr": "1/2",
+        "gear": [
+          "heavy crossbow|srd52",
+          "leather armor|srd52",
+          "mace|srd52"
+        ],
+        "trait": [
+          {
+            "name": "Pack Tactics",
+            "entries": [
+              "The tough has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the tough's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Mace",
+            "entries": [
+              "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Bludgeoning damage."
+            ]
+          },
+          {
+            "name": "Heavy Crossbow",
+            "entries": [
+              "{@atkr r} {@hit 3}, range 100/400 ft. {@h}6 ({@damage 1d10 + 1}) Piercing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "any"
+        ],
+        "treasure": [
+          "armaments"
+        ],
+        "traitTags": [
+          "Pack Tactics"
+        ],
+        "languageTags": [
+          "C"
+        ],
+        "damageTags": [
+          "B",
+          "P"
+        ],
+        "miscTags": [
+          "MA",
+          "MLW",
+          "RA",
+          "RNG"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Tough",
+            "_copy": {
+              "name": "Toughs",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "Toughs might work in groups at the direction of a leader, or individual toughs might bully weaker folk into doing what they say."
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

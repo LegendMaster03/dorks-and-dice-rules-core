@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.destroy-undead-cr-1.cleric.destroy-undead-cr-1.8",
+  "name": "Destroy Undead (CR 1)",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Destroy Undead (CR 1)",
+        "className": "Cleric",
+        "classSource": "SRD51",
+        "level": 8,
+        "entries": [
+          "Starting at 8th level, when an {@filter undead of CR 1 or lower|bestiary|challenge rating=[&0;&1]|type=undead|miscellaneous=!swarm} fails its saving throw against your Turn Undead feature, the creature is instantly destroyed."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "classLevel": 8
+}

@@ -1,0 +1,335 @@
+{
+  "id": "monster.black-pudding",
+  "name": "Black Pudding",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Black Pudding",
+        "size": [
+          "L"
+        ],
+        "type": "ooze",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          7
+        ],
+        "hp": {
+          "average": 85,
+          "formula": "10d10 + 30"
+        },
+        "speed": {
+          "walk": 20,
+          "climb": 20
+        },
+        "str": 16,
+        "dex": 5,
+        "con": 16,
+        "int": 1,
+        "wis": 6,
+        "cha": 1,
+        "senses": [
+          "blindsight 60 ft. (blind beyond this radius)"
+        ],
+        "passive": 8,
+        "immune": [
+          "acid",
+          "cold",
+          "lightning",
+          "slashing"
+        ],
+        "conditionImmune": [
+          "blinded",
+          "charmed",
+          "deafened",
+          "exhaustion",
+          "frightened",
+          "prone"
+        ],
+        "cr": "4",
+        "trait": [
+          {
+            "name": "Amorphous",
+            "entries": [
+              "The pudding can move through a space as narrow as 1 inch wide without squeezing."
+            ]
+          },
+          {
+            "name": "Corrosive Form",
+            "entries": [
+              "A creature that touches the pudding or hits it with a melee attack while within 5 feet of it takes 4 ({@damage 1d8}) acid damage. Any nonmagical weapon made of metal or wood that hits the pudding corrodes. After dealing damage, the weapon takes a permanent and cumulative −1 penalty to damage rolls. If its penalty drops to −5, the weapon is destroyed. Nonmagical ammunition made of metal or wood that hits the pudding is destroyed after dealing damage. The pudding can eat through 2-inch-thick, nonmagical wood or metal in 1 round."
+            ]
+          },
+          {
+            "name": "Spider Climb",
+            "entries": [
+              "The pudding can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Pseudopod",
+            "entries": [
+              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d6 + 3}) bludgeoning damage plus 18 ({@damage 4d8}) acid damage. In addition, nonmagical armor worn by the target is partly dissolved and takes a permanent and cumulative −1 penalty to the AC it offers. The armor is destroyed if the penalty reduces its AC to 10."
+            ]
+          }
+        ],
+        "reaction": [
+          {
+            "name": "Split",
+            "entries": [
+              "When a pudding that is Medium or larger is subjected to lightning or slashing damage, it splits into two new puddings if it has at least 10 hit points. Each new pudding has hit points equal to half the original pudding's, rounded down. New puddings are one size smaller than the original pudding."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/black-pudding.opus"
+        },
+        "traitTags": [
+          "Amorphous",
+          "Spider Climb"
+        ],
+        "senseTags": [
+          "B"
+        ],
+        "damageTags": [
+          "A",
+          "B"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Black Pudding",
+            "_copy": {
+              "name": "Oozes",
+              "source": "SRD51",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    "A black pudding resembles a heaving mound of sticky black sludge. In dim passageways, the pudding appears to be little more than a blot of shadow.",
+                    "Flesh, wood, metal, and bone dissolve when the pudding ebbs over them. Stone remains behind, wiped clean."
+                  ]
+                }
+              }
+            },
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Black Pudding.webp"
+                },
+                "width": 700,
+                "height": 881
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Black Pudding",
+        "size": [
+          "L"
+        ],
+        "type": "ooze",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          7
+        ],
+        "hp": {
+          "average": 68,
+          "formula": "8d10 + 24"
+        },
+        "speed": {
+          "walk": 20,
+          "climb": 20
+        },
+        "str": 16,
+        "dex": 5,
+        "con": 16,
+        "int": 1,
+        "wis": 6,
+        "cha": 1,
+        "senses": [
+          "Blindsight 60 ft."
+        ],
+        "passive": 8,
+        "immune": [
+          "acid",
+          "cold",
+          "lightning",
+          "slashing"
+        ],
+        "conditionImmune": [
+          "charmed",
+          "deafened",
+          "exhaustion",
+          "frightened",
+          "grappled",
+          "prone",
+          "restrained"
+        ],
+        "cr": "4",
+        "trait": [
+          {
+            "name": "Amorphous",
+            "entries": [
+              "The pudding can move through a space as narrow as 1 inch without expending extra movement to do so."
+            ]
+          },
+          {
+            "name": "Corrosive Form",
+            "entries": [
+              "A creature that hits the pudding with a melee attack roll takes 4 ({@damage 1d8}) Acid damage. Nonmagical ammunition is destroyed immediately after hitting the pudding and dealing any damage. Any nonmagical weapon takes a cumulative -1 penalty to attack rolls immediately after dealing damage to the pudding and coming into contact with it. The weapon is destroyed if the penalty reaches -5. The penalty can be removed by casting the {@spell Mending|SRD52} spell on the weapon.",
+              "In 1 minute, the pudding can eat through 2 feet of nonmagical wood or metal."
+            ]
+          },
+          {
+            "name": "Spider Climb",
+            "entries": [
+              "The pudding can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Dissolving Pseudopod",
+            "entries": [
+              "{@atkr m} {@hit 5}, reach 10 ft. {@h}17 ({@damage 4d6 + 3}) Acid damage. Nonmagical armor worn by the target takes a -1 penalty to the AC it offers. The armor is destroyed if the penalty reduces its AC to 10. The penalty can be removed by casting the {@spell Mending|SRD52} spell on the armor."
+            ]
+          }
+        ],
+        "reaction": [
+          {
+            "name": "Split",
+            "entries": [
+              "{@actTrigger} While the pudding is Large or Medium and has 10+ {@variantrule Hit Points|SRD52}, it becomes {@status Bloodied|SRD52} or is subjected to Lightning or Slashing damage. {@actResponse} The pudding splits into two new Black Puddings. Each new pudding is one size smaller than the original pudding and acts on its {@variantrule Initiative|SRD52}. The original pudding's {@variantrule Hit Points|SRD52} are divided evenly between the new puddings (round down)."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/black-pudding.opus"
+        },
+        "traitTags": [
+          "Amorphous",
+          "Spider Climb"
+        ],
+        "senseTags": [
+          "B"
+        ],
+        "damageTags": [
+          "A"
+        ],
+        "miscTags": [
+          "MA",
+          "RCH"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Black Pudding",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Black Pudding",
+                "entries": [
+                  "{@i Divisible, Corrosive Blob}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Underdark|bestiary|environment=underdark}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "None"
+                      }
+                    ]
+                  },
+                  "Black puddings are shapeless masses of predatory cells. Once a pudding detects organic matter, it oozes toward its prey, dissolving living matter and various objects. If a black pudding is split by lightning or slashing attacks, it divides into two smaller, independent puddings.",
+                  "Various supernatural conditions might bring black puddings into being. Roll on or choose a result from the Black Pudding Sources table to inspire a pudding's origins.",
+                  {
+                    "type": "table",
+                    "caption": "Black Pudding Sources",
+                    "colLabels": [
+                      "1d6",
+                      "The Black Pudding Formed From..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "An ancient black dragon's acidic saliva."
+                      ],
+                      [
+                        "2",
+                        "The blood or extreme emotions of a foul deity."
+                      ],
+                      [
+                        "3",
+                        "Cosmic entropy or ruinous planar forces."
+                      ],
+                      [
+                        "4",
+                        "A curse that transformed a forgotten tyrant."
+                      ],
+                      [
+                        "5",
+                        "Forbidden or industrialized magic."
+                      ],
+                      [
+                        "6",
+                        "Necrotic material animated by aimless spirits."
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Black Pudding.webp"
+                },
+                "credit": "Steven Belledin",
+                "width": 1428,
+                "height": 1781
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

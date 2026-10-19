@@ -1,0 +1,51 @@
+{
+  "id": "item.gold-dragon-scale-mail",
+  "name": "Gold Dragon Scale Mail",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Gold Dragon Scale Mail",
+        "type": "MA",
+        "resist": [
+          "fire"
+        ],
+        "tier": "major",
+        "rarity": "very rare",
+        "reqAttune": true,
+        "weight": 45,
+        "ac": 14,
+        "bonusAc": "+1",
+        "stealth": true,
+        "entries": [
+          "Dragon scale mail is made of the scales of one kind of dragon. Sometimes dragons collect their cast-off scales and gift them to humanoids. Other times, hunters carefully skin and preserve the hide of a dead dragon. In either case, dragon scale mail is highly valued. While wearing this armor, you gain a +1 bonus to AC, you have advantage on saving throws against the Frightful Presence and breath weapons of dragons, and you have resistance to fire damage.",
+          "Additionally, you can focus your senses as an action to magically discern the distance and direction to the closest gold dragon within 30 miles of you. This special action can't be used again until the next dawn."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Gold Dragon Scale Mail",
+        "baseItem": "scale mail|srd52",
+        "type": "MA|SRD52",
+        "resist": [
+          "fire"
+        ],
+        "detail1": "gold",
+        "rarity": "very rare",
+        "reqAttune": true,
+        "weight": 45,
+        "ac": 14,
+        "bonusAc": "+1",
+        "stealth": true,
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Dragon Scale Mail|SRD52}"
+        ]
+      }
+    }
+  ]
+}

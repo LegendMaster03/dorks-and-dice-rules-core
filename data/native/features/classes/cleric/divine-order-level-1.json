@@ -1,0 +1,41 @@
+{
+  "id": "classFeature.divine-order.cleric.divine-order.1",
+  "name": "Divine Order",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Divine Order",
+        "className": "Cleric",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "You have dedicated yourself to one of the following sacred roles of your choice.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "options",
+                "count": 1,
+                "entries": [
+                  {
+                    "type": "refClassFeature",
+                    "classFeature": "Protector|Cleric|SRD52|1|SRD52"
+                  },
+                  {
+                    "type": "refClassFeature",
+                    "classFeature": "Thaumaturge|Cleric|SRD52|1|SRD52"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "classLevel": 1
+}

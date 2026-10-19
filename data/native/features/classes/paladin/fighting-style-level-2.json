@@ -1,0 +1,65 @@
+{
+  "id": "classFeature.fighting-style.paladin.fighting-style.2",
+  "name": "Fighting Style",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Fighting Style",
+        "className": "Paladin",
+        "classSource": "SRD51",
+        "level": 2,
+        "entries": [
+          "At 2nd level, you adopt a particular style of fighting as your specialty. Choose one of the following options. You can't take the same Fighting Style option more than once, even if you get to choose again.",
+          {
+            "type": "options",
+            "count": 1,
+            "entries": [
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Defense"
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Dueling"
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Great Weapon Fighting"
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Protection"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Fighting Style",
+        "className": "Paladin",
+        "classSource": "SRD52",
+        "level": 2,
+        "entries": [
+          "You gain a {@filter Fighting Style feat|feats|category=FS} of your choice. Instead of choosing one of those feats, you can choose the option below.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "refFeat",
+                "feat": "Blessed Warrior|SRD52"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "classLevel": 2
+}

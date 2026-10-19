@@ -1,0 +1,23 @@
+{
+  "id": "classFeature.indomitable.fighter.indomitable.17",
+  "name": "Indomitable",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Indomitable",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "level": 17,
+        "entries": [
+          "If you fail a saving throw, you can reroll it with a bonus equal to your Fighter level. You must use the new roll, and you can't use this feature again until you finish a {@variantrule Long Rest|SRD52}.",
+          "You can use this feature twice before a {@variantrule Long Rest|SRD52} starting at level 13 and three times before a {@variantrule Long Rest|SRD52} starting at level 17."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 17
+}

@@ -1,0 +1,22 @@
+{
+  "id": "item.rope",
+  "name": "Rope",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Rope",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 5,
+        "value": 100,
+        "entries": [
+          "As a {@action Utilize|SRD52} action, you can tie a knot with Rope if you succeed on a {@dc 10} Dexterity ({@skill Sleight of Hand|SRD52}) check. The Rope can be burst with a successful {@dc 20} Strength ({@skill Athletics|SRD52}) check.",
+          "You can bind an unwilling creature with the Rope only if the creature has the {@condition Grappled|SRD52}, {@condition Incapacitated|SRD52}, or {@condition Restrained|SRD52} condition. If the creature's legs are bound, the creature has the {@condition Restrained|SRD52} condition until it escapes. Escaping the Rope requires the creature to make a successful {@dc 15} Dexterity ({@skill Acrobatics|SRD52}) check as an action."
+        ]
+      }
+    }
+  ]
+}

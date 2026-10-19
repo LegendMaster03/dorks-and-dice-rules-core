@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.expertise.bard.expertise.9",
+  "name": "Expertise",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Expertise",
+        "className": "Bard",
+        "classSource": "SRD52",
+        "level": 9,
+        "entries": [
+          "You gain {@variantrule Expertise|SRD52} in two of your Skill Proficiencies of your choice."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.bard",
+  "classLevel": 9
+}

@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.arcane-tradition-feature.wizard.arcane-tradition-feature.6",
+  "name": "Arcane Tradition feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Arcane Tradition feature",
+        "className": "Wizard",
+        "classSource": "SRD51",
+        "level": 6,
+        "entries": [
+          "At 6th level, you gain a feature granted by your Arcane Tradition."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.wizard",
+  "classLevel": 6
+}

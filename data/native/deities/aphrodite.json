@@ -1,0 +1,24 @@
+{
+  "id": "deity.aphrodite",
+  "name": "Aphrodite",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Aphrodite",
+        "pantheon": "Greek",
+        "alignment": [
+          "C",
+          "G"
+        ],
+        "title": "Goddess of love and beauty",
+        "domains": [
+          "Light"
+        ],
+        "symbol": "Sea shell"
+      }
+    }
+  ]
+}

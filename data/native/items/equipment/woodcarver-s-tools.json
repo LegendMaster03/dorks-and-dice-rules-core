@@ -1,0 +1,117 @@
+{
+  "id": "baseitem.woodcarver-s-tools",
+  "name": "Woodcarver's Tools",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Woodcarver's Tools",
+        "type": "AT",
+        "rarity": "none",
+        "weight": 5,
+        "value": 100,
+        "additionalEntries": [
+          "Woodcarver's tools allow you to craft intricate objects from wood, such as wooden tokens or arrows.",
+          {
+            "type": "entries",
+            "name": "Components",
+            "entries": [
+              "Woodcarver's tools consist of a knife, a gouge, and a small saw."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Arcana, History",
+            "entries": [
+              "Your expertise lends you additional insight when you examine wooden objects, such as figurines or arrows."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Nature",
+            "entries": [
+              "Your knowledge of wooden objects gives you some added insight when you examine trees."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Repair",
+            "entries": [
+              "As part of a short rest, you can repair a single damaged wooden object."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Craft Arrows",
+            "entries": [
+              "As part of a short rest, you can craft up to five arrows. As part of a long rest, you can craft up to twenty. You must have enough wood on hand to produce them."
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Woodcarver's Tools",
+            "colLabels": [
+              "Activity",
+              "DC"
+            ],
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "rows": [
+              [
+                "Craft a small wooden figurine",
+                "10"
+              ],
+              [
+                "Carve an intricate pattern in wood",
+                "15"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Woodcarver's Tools",
+        "type": "AT|SRD52",
+        "rarity": "none",
+        "weight": 5,
+        "value": 100,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Dexterity"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Carve a pattern in wood ({@dc 10})"
+                ]
+              },
+              {
+                "name": "Craft:",
+                "type": "item",
+                "entries": [
+                  "{@item Club|SRD52}, {@item Greatclub|SRD52}, {@item Quarterstaff|SRD52}, Ranged weapons (except {@item Pistol|SRD52}, {@item Musket|SRD52}, and {@item Sling|SRD52}), {@item Arcane Focus|SRD52}, {@item Arrows (20)|SRD52|Arrows}, {@item Bolts (20)|SRD52|Bolts}, {@item Druidic Focus|SRD52}, {@item Ink Pen|SRD52}, {@item Needles (50)|SRD52|Needles}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

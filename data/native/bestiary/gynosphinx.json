@@ -1,0 +1,254 @@
+{
+  "id": "monster.gynosphinx",
+  "name": "Gynosphinx",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Gynosphinx",
+        "group": [
+          "Sphinxes"
+        ],
+        "size": [
+          "L"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "L",
+          "N"
+        ],
+        "ac": [
+          {
+            "ac": 17,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 136,
+          "formula": "16d10 + 48"
+        },
+        "speed": {
+          "walk": 40,
+          "fly": 60
+        },
+        "str": 18,
+        "dex": 15,
+        "con": 16,
+        "int": 18,
+        "wis": 18,
+        "cha": 18,
+        "skill": {
+          "arcana": "+12",
+          "history": "+12",
+          "perception": "+8",
+          "religion": "+8"
+        },
+        "senses": [
+          "truesight 120 ft."
+        ],
+        "passive": 18,
+        "resist": [
+          {
+            "resist": [
+              "bludgeoning",
+              "piercing",
+              "slashing"
+            ],
+            "note": "from nonmagical attacks",
+            "cond": true
+          }
+        ],
+        "immune": [
+          "psychic"
+        ],
+        "conditionImmune": [
+          "charmed",
+          "frightened"
+        ],
+        "languages": [
+          "Common",
+          "Sphinx"
+        ],
+        "cr": "11",
+        "spellcasting": [
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The sphinx is a 9th-level spellcaster. Its spellcasting ability is Intelligence (spell save {@dc 16}, {@hit 8} to hit with spell attacks). It requires no material components to cast its spells. The sphinx has the following wizard spells prepared:"
+            ],
+            "spells": {
+              "0": {
+                "spells": [
+                  "{@spell mage hand}",
+                  "{@spell minor illusion}",
+                  "{@spell prestidigitation}"
+                ]
+              },
+              "1": {
+                "slots": 4,
+                "spells": [
+                  "{@spell detect magic}",
+                  "{@spell identify}",
+                  "{@spell shield}"
+                ]
+              },
+              "2": {
+                "slots": 3,
+                "spells": [
+                  "{@spell darkness}",
+                  "{@spell locate object}",
+                  "{@spell suggestion}"
+                ]
+              },
+              "3": {
+                "slots": 3,
+                "spells": [
+                  "{@spell dispel magic}",
+                  "{@spell remove curse}",
+                  "{@spell tongues}"
+                ]
+              },
+              "4": {
+                "slots": 3,
+                "spells": [
+                  "{@spell banishment}",
+                  "{@spell greater invisibility}"
+                ]
+              },
+              "5": {
+                "slots": 1,
+                "spells": [
+                  "{@spell legend lore}"
+                ]
+              }
+            },
+            "ability": "int"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Inscrutable",
+            "entries": [
+              "The sphinx is immune to any effect that would sense its emotions or read its thoughts, as well as any divination spell that it refuses. Wisdom ({@skill Insight}) checks made to ascertain the sphinx's intentions or sincerity have disadvantage."
+            ]
+          },
+          {
+            "name": "Magic Weapons",
+            "entries": [
+              "The sphinx's weapon attacks are magical."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The sphinx makes two claw attacks."
+            ]
+          },
+          {
+            "name": "Claw",
+            "entries": [
+              "{@atk mw} {@hit 8} to hit, reach 5 ft., one target. {@h}13 ({@damage 2d8 + 4}) slashing damage."
+            ]
+          }
+        ],
+        "legendary": [
+          {
+            "name": "Claw Attack",
+            "entries": [
+              "The sphinx makes one claw attack."
+            ]
+          },
+          {
+            "name": "Teleport (Costs 2 Actions)",
+            "entries": [
+              "The sphinx magically teleports, along with any equipment it is wearing or carrying, up to 120 feet to an unoccupied space it can see."
+            ]
+          },
+          {
+            "name": "Cast a Spell (Costs 3 Actions)",
+            "entries": [
+              "The sphinx casts a spell from its list of prepared spells, using a spell slot as normal."
+            ]
+          }
+        ],
+        "environment": [
+          "desert"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/gynosphinx.opus"
+        },
+        "traitTags": [
+          "Magic Weapons"
+        ],
+        "senseTags": [
+          "U"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "OTH"
+        ],
+        "damageTags": [
+          "S"
+        ],
+        "damageTagsLegendary": [
+          "N"
+        ],
+        "spellcastingTags": [
+          "CW"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "savingThrowForcedLegendary": [
+          "constitution"
+        ],
+        "savingThrowForcedSpell": [
+          "charisma",
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Gynosphinx",
+            "_copy": {
+              "name": "Sphinxes",
+              "source": "SRD51",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    "A gynosphinx bears the head of a humanoid female. Many have the regal countenances of worldly queens, but some are marked with wild, leonine features. A gynosphinx's eyes see beyond the present time and place, and penetrate veils of invisibility and magic.",
+                    "Supplicants who look deep into those eyes might find themselves magically displaced, banished to some far flung plane where a difficult trial awaits them.",
+                    "Gynosphinxes are virtual libraries of knowledge and lore. They ask riddles and present puzzles to test the wit of supplicants that come to learn their secrets. Some are willing to bargain with such supplicants for treasure or service."
+                  ]
+                }
+              }
+            },
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Gynosphinx.webp"
+                },
+                "width": 908,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "id": "subclass.champion.fighter.champion.Champion",
+  "name": "Champion",
+  "kind": "subclass",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Champion",
+        "shortName": "Champion",
+        "className": "Fighter",
+        "classSource": "SRD51",
+        "optionalfeatureProgression": [
+          {
+            "name": "Fighting Style",
+            "featureType": [
+              "FS:F"
+            ],
+            "progression": {
+              "10": 1
+            }
+          }
+        ],
+        "subclassFeatures": [
+          "Champion|Fighter||Champion||3",
+          "Remarkable Athlete|Fighter||Champion||7",
+          "Additional Fighting Style|Fighter||Champion||10",
+          "Superior Critical|Fighter||Champion||15",
+          "Survivor|Fighter||Champion||18"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Champion",
+        "shortName": "Champion",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "featProgression": [
+          {
+            "name": "Fighting Style",
+            "category": [
+              "FS"
+            ],
+            "progression": {
+              "7": 1
+            }
+          }
+        ],
+        "subclassFeatures": [
+          "Champion|Fighter|SRD52|Champion|SRD52|3",
+          "Additional Fighting Style|Fighter|SRD52|Champion|SRD52|7",
+          "Heroic Warrior|Fighter|SRD52|Champion|SRD52|10",
+          "Superior Critical|Fighter|SRD52|Champion|SRD52|15",
+          "Survivor|Fighter|SRD52|Champion|SRD52|18"
+        ],
+        "lore": [
+          {
+            "name": "Champion",
+            "shortName": "Champion",
+            "className": "Fighter",
+            "classSource": "SRD52",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "classes/XPHB/Champion Fighter.webp"
+                },
+                "credit": "Katerina Ladon",
+                "width": 850,
+                "height": 2000
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter"
+}

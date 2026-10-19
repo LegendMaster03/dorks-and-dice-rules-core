@@ -1,0 +1,523 @@
+{
+  "id": "monster.green-hag",
+  "name": "Green Hag",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Green Hag",
+        "size": [
+          "M"
+        ],
+        "type": "fey",
+        "alignment": [
+          "N",
+          "E"
+        ],
+        "ac": [
+          {
+            "ac": 17,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 82,
+          "formula": "11d8 + 33"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "str": 18,
+        "dex": 12,
+        "con": 16,
+        "int": 13,
+        "wis": 14,
+        "cha": 14,
+        "skill": {
+          "arcana": "+3",
+          "deception": "+4",
+          "perception": "+4",
+          "stealth": "+3"
+        },
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 14,
+        "languages": [
+          "Common",
+          "Draconic",
+          "Sylvan"
+        ],
+        "cr": {
+          "cr": "3",
+          "coven": "5"
+        },
+        "spellcasting": [
+          {
+            "name": "Innate Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The hag's innate spellcasting ability is Charisma (spell save {@dc 12}). She can innately cast the following spells, requiring no material components:"
+            ],
+            "will": [
+              "{@spell dancing lights}",
+              "{@spell minor illusion}",
+              "{@spell vicious mockery}"
+            ],
+            "ability": "cha"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Amphibious",
+            "entries": [
+              "The hag can breathe air and water."
+            ]
+          },
+          {
+            "name": "Mimicry",
+            "entries": [
+              "The hag can mimic animal sounds and humanoid voices. A creature that hears the sounds can tell they are imitations with a successful {@dc 14} Wisdom ({@skill Insight}) check."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Claws",
+            "entries": [
+              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}13 ({@damage 2d8 + 4}) slashing damage."
+            ]
+          },
+          {
+            "name": "Illusory Appearance",
+            "entries": [
+              "The hag covers herself and anything she is wearing or carrying with a magical illusion that makes her look like another creature of her general size and humanoid shape. The illusion ends if the hag takes a bonus action to end it or if she dies.",
+              "The changes wrought by this effect fail to hold up to physical inspection. For example, the hag could appear to have smooth skin, but someone touching her would feel her rough flesh. Otherwise, a creature must take an action to visually inspect the illusion and succeed on a {@dc 20} Intelligence ({@skill Investigation}) check to discern that the hag is disguised."
+            ]
+          },
+          {
+            "name": "Invisible Passage",
+            "entries": [
+              "The hag magically turns {@condition invisible} until she attacks or casts a spell, or until her {@status concentration} ends (as if {@status concentration||concentrating} on a spell). While {@condition invisible}, she leaves no physical evidence of her passage, so she can be tracked only by magic. Any equipment she wears or carries is {@condition invisible} with her."
+            ]
+          }
+        ],
+        "environment": [
+          "forest",
+          "swamp",
+          "hill"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/green-hag.opus"
+        },
+        "traitTags": [
+          "Amphibious",
+          "Mimicry"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "languageTags": [
+          "C",
+          "DR",
+          "S"
+        ],
+        "damageTags": [
+          "S"
+        ],
+        "damageTagsSpell": [
+          "Y"
+        ],
+        "spellcastingTags": [
+          "CW",
+          "I",
+          "S"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "conditionInflict": [
+          "invisible"
+        ],
+        "conditionInflictSpell": [
+          "frightened",
+          "paralyzed",
+          "poisoned",
+          "unconscious"
+        ],
+        "savingThrowForcedSpell": [
+          "wisdom"
+        ],
+        "hasToken": true,
+        "_versions": [
+          {
+            "name": "Green Hag (Coven)",
+            "source": "SRD51",
+            "_mod": {
+              "spellcasting": {
+                "mode": "appendArr",
+                "items": {
+                  "name": "Shared Spellcasting (Coven Only)",
+                  "headerEntries": [
+                    "While all three members of a hag coven are within 30 feet of one another, they can each cast the following spells from the wizard's spell list but must share the spell slots among themselves:"
+                  ],
+                  "spells": {
+                    "1": {
+                      "slots": 4,
+                      "spells": [
+                        "{@spell identify}",
+                        "{@spell ray of sickness}"
+                      ]
+                    },
+                    "2": {
+                      "slots": 3,
+                      "spells": [
+                        "{@spell hold person}",
+                        "{@spell locate object}"
+                      ]
+                    },
+                    "3": {
+                      "slots": 3,
+                      "spells": [
+                        "{@spell bestow curse}",
+                        "{@spell counterspell}",
+                        "{@spell lightning bolt}"
+                      ]
+                    },
+                    "4": {
+                      "slots": 3,
+                      "spells": [
+                        "{@spell phantasmal killer}",
+                        "{@spell polymorph}"
+                      ]
+                    },
+                    "5": {
+                      "slots": 2,
+                      "spells": [
+                        "{@spell contact other plane}",
+                        "{@spell scrying}"
+                      ]
+                    },
+                    "6": {
+                      "slots": 1,
+                      "spells": [
+                        "{@spell eyebite}"
+                      ]
+                    }
+                  },
+                  "ability": "int",
+                  "footerEntries": [
+                    "For casting these spells, each hag is a 12th-level spellcaster that uses Intelligence as her spellcasting ability. The spell save {@dc 13}, and the spell attack bonus is {@hit 5}."
+                  ]
+                }
+              }
+            },
+            "cr": "5",
+            "variant": null
+          }
+        ],
+        "lore": [
+          {
+            "name": "Green Hag",
+            "_copy": {
+              "name": "Hags",
+              "source": "SRD51",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": {
+                    "type": "entries",
+                    "entries": [
+                      {
+                        "type": "entries",
+                        "entries": [
+                          "The wretched and hateful green hags dwell in dying forests, lonely swamps, and misty moors, making their homes in caves. Green hags love to manipulate other creatures into doing their bidding, masking their intentions behind layers of deception. They lure victims to them by mimicking voices calling out for help, or drive unwanted visitors away by imitating the cries of fierce beasts.",
+                          {
+                            "type": "entries",
+                            "name": "Obsession with Tragedy",
+                            "entries": [
+                              "Green hags revel in the failings and tragedies of other creatures. They derive joy from bringing people low and seeing hope turn into despair, not just for individuals but also for whole nations."
+                            ]
+                          },
+                          {
+                            "type": "entries",
+                            "name": "Covens",
+                            "entries": [
+                              "A green hag that is part of a coven (see the \"Hag Covens\" sidebar) has a challenge rating of 5 (1,800 XP)."
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "images": {
+                  "mode": "prependArr",
+                  "items": {
+                    "type": "image",
+                    "href": {
+                      "type": "internal",
+                      "path": "bestiary/MM/Green Hag.webp"
+                    },
+                    "credit": "Conceptopolis",
+                    "width": 553,
+                    "height": 977
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Green Hag",
+        "size": [
+          "M"
+        ],
+        "type": "fey",
+        "alignment": [
+          "N",
+          "E"
+        ],
+        "ac": [
+          17
+        ],
+        "hp": {
+          "average": 82,
+          "formula": "11d8 + 33"
+        },
+        "speed": {
+          "walk": 30,
+          "swim": 30
+        },
+        "str": 18,
+        "dex": 12,
+        "con": 16,
+        "int": 13,
+        "wis": 14,
+        "cha": 14,
+        "skill": {
+          "arcana": "+5",
+          "deception": "+4",
+          "perception": "+4",
+          "stealth": "+3"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 14,
+        "languages": [
+          "Common",
+          "Elvish",
+          "Sylvan"
+        ],
+        "cr": "3",
+        "spellcasting": [
+          {
+            "name": "Coven Magic",
+            "type": "spellcasting",
+            "headerEntries": [
+              "While within 30 feet of at least two hag allies, the hag can cast one of the following spells, requiring no Material components, using the spell's normal casting time, and using Intelligence as the spellcasting ability (spell save {@dc 11}): {@spell Augury|SRD52}, {@spell Find Familiar|SRD52}, {@spell Identify|SRD52}, {@spell Locate Object|SRD52}, {@spell Scrying|SRD52}, or {@spell Unseen Servant|SRD52}. The hag must finish a {@variantrule Long Rest|SRD52} before using this trait to cast that spell again."
+            ],
+            "restLong": {
+              "1": [
+                "{@spell Augury|SRD52}",
+                "{@spell Find Familiar|SRD52}",
+                "{@spell Identify|SRD52}",
+                "{@spell Locate Object|SRD52}",
+                "{@spell Scrying|SRD52}",
+                "{@spell Unseen Servant|SRD52}"
+              ]
+            },
+            "ability": "int",
+            "hidden": [
+              "restLong"
+            ]
+          },
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The hag casts one of the following spells, requiring no Material components and using Wisdom as the spellcasting ability (spell save {@dc 12}, {@hit 4} to hit with spell attacks):"
+            ],
+            "will": [
+              "{@spell Dancing Lights|SRD52}",
+              "{@spell Disguise Self|SRD52} (24-hour duration)",
+              "{@spell Invisibility|SRD52} (self only, and the hag leaves no tracks while {@condition Invisible|SRD52})",
+              "{@spell Minor Illusion|SRD52}",
+              "{@spell Ray of Sickness|SRD52} (level 3 version)"
+            ],
+            "ability": "wis",
+            "displayAs": "action"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Amphibious",
+            "entries": [
+              "The hag can breathe air and water."
+            ]
+          },
+          {
+            "name": "Mimicry",
+            "entries": [
+              "The hag can mimic animal sounds and humanoid voices. A creature that hears the sounds can tell they are imitations only with a successful {@dc 14} Wisdom ({@skill Insight|SRD52}) check."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The hag makes two Claw attacks."
+            ]
+          },
+          {
+            "name": "Claw",
+            "entries": [
+              "{@atkr m} {@hit 6}, reach 5 ft. {@h}8 ({@damage 1d8 + 4}) Slashing damage plus 3 ({@damage 1d6}) Poison damage."
+            ]
+          }
+        ],
+        "environment": [
+          "forest",
+          "hill",
+          "swamp"
+        ],
+        "treasure": [
+          "arcana"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/green-hag.opus"
+        },
+        "traitTags": [
+          "Amphibious",
+          "Mimicry"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "E",
+          "S"
+        ],
+        "damageTags": [
+          "I",
+          "S"
+        ],
+        "damageTagsSpell": [
+          "I"
+        ],
+        "spellcastingTags": [
+          "O"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "conditionInflictSpell": [
+          "invisible",
+          "poisoned"
+        ],
+        "savingThrowForcedSpell": [
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Green Hag",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Green Hag",
+                "entries": [
+                  "{@i Foul Witch of the Wicked Wild}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Forest|bestiary|environment=forest}, {@filter Hill|bestiary|environment=hill}, {@filter Swamp|bestiary|environment=swamp}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Arcana"
+                      }
+                    ]
+                  },
+                  "Green hags work bitter magic to foul all that is beautiful and pure. Whether alone or in covens of other hags, these ancient witches call on eerie forces, spreading corruption and plotting doom for those who earn their ire. Green hags are adept deceivers, and they use illusions to cloak themselves in unassuming forms, hoping to tempt innocents into peril. These hags often spirit their victims back to surreal lairs where they hold captives prisoner or cook them into monstrous meals.",
+                  "Green hags frequently know strange magic or forgotten secrets, such as the weaknesses of villains, the locations of lost treasures, or the ways to break curses. They might trade such knowledge for rare magic or symbolic treasures. Roll on or choose a result from the Green Hag Bargains table to inspire what a green hag charges for its secrets.",
+                  {
+                    "type": "table",
+                    "caption": "Green Hag Bargains",
+                    "colLabels": [
+                      "1d6",
+                      "A Green Hag Trades Its Knowledge For..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "A bargainer's memories of a loved one."
+                      ],
+                      [
+                        "2",
+                        "The cauldron of a rival hag."
+                      ],
+                      [
+                        "3",
+                        "A favor to be redeemed when the hag wishes."
+                      ],
+                      [
+                        "4",
+                        "A flower from a hidden Feywild garden."
+                      ],
+                      [
+                        "5",
+                        "A gift given freely by a yugoloth."
+                      ],
+                      [
+                        "6",
+                        "A vial filled with a ruler's tears."
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Green Hag.webp"
+                },
+                "credit": "Helge C. Balzer",
+                "width": 1463,
+                "height": 2560
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,419 @@
+{
+  "id": "monster.wraith",
+  "name": "Wraith",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Wraith",
+        "size": [
+          "M"
+        ],
+        "type": "undead",
+        "alignment": [
+          "N",
+          "E"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 67,
+          "formula": "9d8 + 27"
+        },
+        "speed": {
+          "walk": 0,
+          "fly": {
+            "number": 60,
+            "condition": "(hover)"
+          },
+          "canHover": true
+        },
+        "str": 6,
+        "dex": 16,
+        "con": 16,
+        "int": 12,
+        "wis": 14,
+        "cha": 15,
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 12,
+        "resist": [
+          "acid",
+          "cold",
+          "fire",
+          "lightning",
+          "thunder",
+          {
+            "resist": [
+              "bludgeoning",
+              "piercing",
+              "slashing"
+            ],
+            "note": "from nonmagical attacks that aren't silvered",
+            "cond": true
+          }
+        ],
+        "immune": [
+          "necrotic",
+          "poison"
+        ],
+        "conditionImmune": [
+          "charmed",
+          "exhaustion",
+          "grappled",
+          "paralyzed",
+          "petrified",
+          "poisoned",
+          "prone",
+          "restrained"
+        ],
+        "languages": [
+          "the languages it knew in life"
+        ],
+        "cr": "5",
+        "trait": [
+          {
+            "name": "Incorporeal Movement",
+            "entries": [
+              "The wraith can move through other creatures and objects as if they were {@quickref difficult terrain||3}. It takes 5 ({@damage 1d10}) force damage if it ends its turn inside an object."
+            ]
+          },
+          {
+            "name": "Sunlight Sensitivity",
+            "entries": [
+              "While in sunlight, the wraith has disadvantage on attack rolls, as well as on Wisdom ({@skill Perception}) checks that rely on sight."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Life Drain",
+            "entries": [
+              "{@atk mw} {@hit 6} to hit, reach 5 ft., one creature. {@h}21 ({@damage 4d8 + 3}) necrotic damage. The target must succeed on a {@dc 14} Constitution saving throw or its hit point maximum is reduced by an amount equal to the damage taken. This reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0."
+            ]
+          },
+          {
+            "name": "Create Specter",
+            "entries": [
+              "The wraith targets a humanoid within 10 feet of it that has been dead for no longer than 1 minute and died violently. The target's spirit rises as a {@creature specter} in the space of its corpse or in the nearest unoccupied space. The {@creature specter} is under the wraith's control. The wraith can have no more than seven specters under its control at one time."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/wraith.opus"
+        },
+        "traitTags": [
+          "Incorporeal Movement",
+          "Sunlight Sensitivity"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "languageTags": [
+          "LF"
+        ],
+        "damageTags": [
+          "N",
+          "O"
+        ],
+        "miscTags": [
+          "HPR",
+          "MW"
+        ],
+        "savingThrowForced": [
+          "constitution"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Wraith",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "A wraith is malice incarnate, concentrated into an incorporeal form that seeks to quench all life. The creature is suffused with negative energy, and its mere passage through the world leaves nearby plants blackened and withered. Animals flee from its presence. Even small fires can be extinguished by the sucking oblivion of the wraith's horrifying existence.",
+                      {
+                        "name": "Vile Oblivion",
+                        "type": "entries",
+                        "entries": [
+                          "When a mortal humanoid lives a debased life or enters into a fiendish pact, it consigns its soul to eternal damnation in the Lower Planes. However, sometimes the soul becomes so suffused with negative energy that it collapses in on itself and ceases to exist the instant before it can shuffle off to some horrible afterlife. When this occurs, the spirit becomes a soulless wraith-a malevolent void trapped on the plane where it died. Almost nothing of the wraith's former existence is preserved; in this new form, it exists only to annihilate other life."
+                        ]
+                      },
+                      {
+                        "name": "Bereft of Body",
+                        "type": "entries",
+                        "entries": [
+                          "A wraith can move through solid creatures and objects as easily as a mortal creature moves through fog.",
+                          "A wraith might retain a few memories of its mortal life as shadowy echoes. However, even the strongest events and emotions become little more than faint impressions, fleeting as half-remembered dreams. A wraith might pause to stare at something that fascinated it in life, or it might curb its wrath in acknowledgment of a past friendship. Such moments come rarely, however, because most wraiths despise what they were as a reminder of what they have become."
+                        ]
+                      },
+                      {
+                        "name": "Undead Commanders",
+                        "type": "entries",
+                        "entries": [
+                          "A wraith can make an undead servant from the spirit of a humanoid creature that has recently suffered a violent death. Such a fragment of woe becomes a specter, spiteful of all that lives.",
+                          "Wraiths sometimes rule the legions of the dead, plotting the doom of living creatures. When they emerge from their tombs to do battle, life and hope shrivel before them. Even if a wraith's armies are forced to retreat, the lands its forces occupied are so blasted and withered that those who live there often starve and die."
+                        ]
+                      },
+                      {
+                        "name": "Undead Nature",
+                        "type": "entries",
+                        "entries": [
+                          "A wraith doesn't require air, food, drink, or sleep."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Wraith.webp"
+                },
+                "width": 651,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Wraith",
+        "size": [
+          "S",
+          "M"
+        ],
+        "type": "undead",
+        "alignment": [
+          "N",
+          "E"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 67,
+          "formula": "9d8 + 27"
+        },
+        "speed": {
+          "walk": 5,
+          "fly": {
+            "number": 60,
+            "condition": "(hover)"
+          },
+          "canHover": true
+        },
+        "str": 6,
+        "dex": 16,
+        "con": 16,
+        "int": 12,
+        "wis": 14,
+        "cha": 15,
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 12,
+        "resist": [
+          "acid",
+          "bludgeoning",
+          "cold",
+          "fire",
+          "piercing",
+          "slashing"
+        ],
+        "immune": [
+          "necrotic",
+          "poison"
+        ],
+        "conditionImmune": [
+          "charmed",
+          "exhaustion",
+          "grappled",
+          "paralyzed",
+          "petrified",
+          "poisoned",
+          "prone",
+          "restrained",
+          "unconscious"
+        ],
+        "languages": [
+          "Common plus two other languages"
+        ],
+        "cr": "5",
+        "trait": [
+          {
+            "name": "Incorporeal Movement",
+            "entries": [
+              "The wraith can move through other creatures and objects as if they were {@variantrule Difficult Terrain|SRD52}. It takes 5 ({@damage 1d10}) Force damage if it ends its turn inside an object."
+            ]
+          },
+          {
+            "name": "Sunlight Sensitivity",
+            "entries": [
+              "While in sunlight, the wraith has {@variantrule Disadvantage|SRD52} on ability checks and attack rolls."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Life Drain",
+            "entries": [
+              "{@atkr m} {@hit 6}, reach 5 ft. {@h}21 ({@damage 4d8 + 3}) Necrotic damage. If the target is a creature, its {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by an amount equal to the damage taken."
+            ]
+          },
+          {
+            "name": "Create Specter",
+            "entries": [
+              "The wraith targets a Humanoid corpse within 10 feet of itself that has been dead for no longer than 1 minute. The target's spirit rises as a {@creature Specter|SRD52} in the space of its corpse or in the nearest unoccupied space. The specter is under the wraith's control. The wraith can have no more than seven specters under its control at a time."
+            ]
+          }
+        ],
+        "environment": [
+          "planar, shadowfell",
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/wraith.opus"
+        },
+        "traitTags": [
+          "Incorporeal Movement",
+          "Sunlight Sensitivity"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "languageTags": [
+          "C",
+          "X"
+        ],
+        "damageTags": [
+          "N",
+          "O"
+        ],
+        "miscTags": [
+          "HPR",
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Wraith",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Wraith",
+                "entries": [
+                  "{@i Essence of Evil}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Planar (Shadowfell)|bestiary|environment=planar, shadowfell}, {@filter Underdark|bestiary|environment=underdark}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "None"
+                      }
+                    ]
+                  },
+                  "Wraiths are spectral evils, life-hungry embodiments of malice and terror. Arising from the souls of tyrants, moments of catastrophic pain, or magical blasphemies, wraiths spread suffering and the torment of undeath. Humanoids that die near a wraith might be entrapped by the foul spirit and rise as specters bound to the wraith's sinister will.",
+                  "Wraiths lurk in forgotten dungeons, accursed ruins, or lands influenced by sinister planes of existence. Such haunted domains might bear hints of the tragedies or foul magic that brought the wraiths into being.",
+                  "Wraiths might arise from a single powerfully evil soul or other baleful forces. Roll on or choose a result from the Wraith Manifestations table to inspire the wickedness a wraith embodies.",
+                  {
+                    "type": "table",
+                    "caption": "Wraith Manifestations",
+                    "colLabels": [
+                      "1d10",
+                      "The Wraith Embodies..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "The blasphemous magic of a cursed location."
+                      ],
+                      [
+                        "2",
+                        "The exorcised evil of a redeemed villain."
+                      ],
+                      [
+                        "3",
+                        "A legendary villain who returns once a century."
+                      ],
+                      [
+                        "4",
+                        "Locals' fear of a superstition or legend."
+                      ],
+                      [
+                        "5",
+                        "The memory of a tragedy."
+                      ],
+                      [
+                        "6",
+                        "A profane idea or foul piece of lore."
+                      ],
+                      [
+                        "7",
+                        "The torment of one or more suffering souls."
+                      ],
+                      [
+                        "8",
+                        "The viciousness of a profane Artifact."
+                      ],
+                      [
+                        "9",
+                        "The vile dreams of a slumbering god."
+                      ],
+                      [
+                        "10",
+                        "The voracity of a life-hungry realm, such as the Shadowfell or Negative Plane."
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Wraith.webp"
+                },
+                "credit": "Alex Brock",
+                "width": 1326,
+                "height": 2320
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

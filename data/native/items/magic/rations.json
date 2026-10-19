@@ -1,0 +1,24 @@
+{
+  "id": "item.rations",
+  "name": "Rations",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Rations",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 2,
+        "value": 50,
+        "entries": [
+          "Rations consist of travel-ready food, including jerky, dried fruit, hardtack, and nuts. See \"{@hazard Malnutrition|SRD52}\" for the risks of not eating."
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

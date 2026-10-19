@@ -1,0 +1,30 @@
+{
+  "id": "item.riding-horse",
+  "name": "Riding Horse",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Riding Horse",
+        "type": "MNT",
+        "rarity": "none",
+        "value": 7500,
+        "carryingCapacity": 480,
+        "speed": 60
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Riding Horse",
+        "type": "MNT|SRD52",
+        "rarity": "none",
+        "value": 7500,
+        "carryingCapacity": 480,
+        "speed": 60
+      }
+    }
+  ]
+}

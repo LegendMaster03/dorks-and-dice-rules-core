@@ -1,0 +1,41 @@
+{
+  "id": "classFeature.elemental-fury.druid.elemental-fury.7",
+  "name": "Elemental Fury",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Elemental Fury",
+        "className": "Druid",
+        "classSource": "SRD52",
+        "level": 7,
+        "entries": [
+          "The might of the elements flows through you. You gain one of the following options of your choice.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "options",
+                "count": 1,
+                "entries": [
+                  {
+                    "type": "refClassFeature",
+                    "classFeature": "Potent Spellcasting|Druid|SRD52|7"
+                  },
+                  {
+                    "type": "refClassFeature",
+                    "classFeature": "Primal Strike|Druid|SRD52|7"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "classLevel": 7
+}

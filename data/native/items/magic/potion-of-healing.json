@@ -1,0 +1,41 @@
+{
+  "id": "item.potion-of-healing",
+  "name": "Potion of Healing",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Healing",
+        "type": "P",
+        "tier": "minor",
+        "rarity": "common",
+        "weight": 0.5,
+        "value": 5000,
+        "entries": [
+          "You regain {@dice 2d4 + 2} hit points when you drink this potion. The potion's red liquid glimmers when agitated."
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Healing",
+        "type": "P|SRD52",
+        "rarity": "common",
+        "weight": 0.5,
+        "value": 5000,
+        "entries": [
+          "This potion is a magic item. As a {@variantrule Bonus Action|SRD52}, you can drink it or administer it to another creature within 5 feet of yourself. The creature that drinks the magical red fluid in this vial regains {@dice 2d4 + 2} {@variantrule Hit Points|SRD52}. The potion's red liquid glimmers when agitated."
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

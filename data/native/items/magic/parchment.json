@@ -1,0 +1,20 @@
+{
+  "id": "item.parchment",
+  "name": "Parchment",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Parchment",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "value": 10,
+        "entries": [
+          "One sheet of Parchment can hold about 250 handwritten words."
+        ]
+      }
+    }
+  ]
+}

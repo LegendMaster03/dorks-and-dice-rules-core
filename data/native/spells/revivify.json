@@ -1,0 +1,94 @@
+{
+  "id": "spell.revivify",
+  "name": "Revivify",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Revivify",
+        "level": 3,
+        "school": "N",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "diamonds worth 300 gp, which the spell consumes",
+            "cost": 30000,
+            "consume": true
+          }
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You touch a creature that has died within the last minute. That creature returns to life with 1 hit point. This spell can't return to life a creature that has died of old age, nor can it restore any missing body parts."
+        ],
+        "miscTags": [
+          "HL"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Revivify",
+        "level": 3,
+        "school": "N",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": {
+            "text": "a diamond worth 300+ GP, which the spell consumes",
+            "cost": 30000,
+            "consume": true
+          }
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "You touch a creature that has died within the last minute. That creature revives with 1 {@variantrule Hit Points|SRD52|Hit Point}. This spell can't revive a creature that has died of old age, nor does it restore any missing body parts."
+        ],
+        "miscTags": [
+          "HL"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

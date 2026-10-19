@@ -1,0 +1,18 @@
+{
+  "id": "item.cinnamon",
+  "name": "Cinnamon",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Cinnamon",
+        "type": "TG",
+        "rarity": "none",
+        "weight": 1,
+        "value": 200
+      }
+    }
+  ]
+}

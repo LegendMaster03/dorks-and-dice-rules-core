@@ -1,0 +1,46 @@
+{
+  "id": "item.potion-of-cold-resistance",
+  "name": "Potion of Cold Resistance",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Cold Resistance",
+        "type": "P",
+        "resist": [
+          "cold"
+        ],
+        "tier": "minor",
+        "rarity": "uncommon",
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Potion of Resistance}"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Cold Resistance",
+        "type": "P|SRD52",
+        "resist": [
+          "cold"
+        ],
+        "rarity": "uncommon",
+        "weight": 0.5,
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Potion of Resistance|SRD52}"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

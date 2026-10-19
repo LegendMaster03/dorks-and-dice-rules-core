@@ -1,0 +1,33 @@
+{
+  "id": "rule.monsters-f",
+  "name": "Monsters (F)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (F)",
+        "page": 309,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Fire Elemental|srd51}",
+              "{@creature Fire Giant|srd51}",
+              "{@creature Flesh Golem|srd51}",
+              "{@creature Flying Snake|srd51}",
+              "{@creature Flying Sword|srd51}",
+              "{@creature Frog|srd51}",
+              "{@creature Frost Giant|srd51}"
+            ]
+          }
+        ],
+        "id": "1a8"
+      }
+    }
+  ]
+}

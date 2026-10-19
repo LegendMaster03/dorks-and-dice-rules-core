@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.ranger-archetype.ranger.ranger-archetype.3",
+  "name": "Ranger Archetype",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ranger Archetype",
+        "className": "Ranger",
+        "classSource": "SRD51",
+        "level": 3,
+        "entries": [
+          "At 3rd level, you choose an archetype that you strive to emulate from the list of available archetypes. Your choice grants features at 3rd level, and again at 7th, 11th, and 15th level."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "classLevel": 3
+}

@@ -1,0 +1,18 @@
+{
+  "id": "item.saddlebags",
+  "name": "Saddlebags",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Saddlebags",
+        "type": "TAH",
+        "rarity": "none",
+        "weight": 8,
+        "value": 400
+      }
+    }
+  ]
+}

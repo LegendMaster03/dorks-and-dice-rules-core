@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.mystic-arcanum.warlock.mystic-arcanum.13",
+  "name": "Mystic Arcanum",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Mystic Arcanum",
+        "className": "Warlock",
+        "classSource": "SRD52",
+        "level": 13,
+        "entries": [
+          "You gain a level 7 Warlock Spell of your choice."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.warlock",
+  "classLevel": 13
+}

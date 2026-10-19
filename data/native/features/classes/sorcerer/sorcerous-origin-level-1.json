@@ -1,0 +1,23 @@
+{
+  "id": "classFeature.sorcerous-origin.sorcerer.sorcerous-origin.1",
+  "name": "Sorcerous Origin",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Sorcerous Origin",
+        "className": "Sorcerer",
+        "classSource": "SRD51",
+        "level": 1,
+        "entries": [
+          "Choose a sorcerous origin, which describes the source of your innate magical power, from the list of available origins.",
+          "Your choice grants you features when you choose it at 1st level and again at 6th, 14th, and 18th level."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.sorcerer",
+  "classLevel": 1
+}

@@ -1,0 +1,69 @@
+{
+  "id": "magicvariant.holy-avenger",
+  "name": "Holy Avenger",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Holy Avenger",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "sword": true
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Holy Avenger ",
+          "source": "SRD51",
+          "page": 225,
+          "rarity": "legendary",
+          "reqAttune": "by a paladin",
+          "reqAttuneTags": [
+            {
+              "class": "paladin"
+            }
+          ],
+          "bonusWeapon": "+3",
+          "entries": [
+            "You gain a +3 bonus to attack and damage rolls made with this magic weapon. When you hit a fiend or an undead with it, that creature takes an extra {@damage 2d10} radiant damage.",
+            "While you hold the drawn sword, it creates an aura in a 10-foot radius around you. You and all creatures friendly to you in the aura have advantage on saving throws against spells and other magical effects. If you have 17 or more levels in the paladin class, the radius of the aura increases to 30 feet."
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Holy Avenger",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "weaponCategory": "simple"
+          },
+          {
+            "weaponCategory": "martial"
+          }
+        ],
+        "inherits": {
+          "namePrefix": "Holy Avenger ",
+          "source": "SRD52",
+          "page": 226,
+          "rarity": "legendary",
+          "reqAttune": "by a paladin",
+          "reqAttuneTags": [
+            {
+              "class": "paladin"
+            }
+          ],
+          "bonusWeapon": "+3",
+          "entries": [
+            "You gain a +3 bonus to attack rolls and damage rolls made with this magic weapon. When you hit a Fiend or an Undead with it, that creature takes an extra {@damage 2d10} Radiant damage.",
+            "While you hold the drawn weapon, it creates a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. You and all creatures {@variantrule Friendly [Attitude]|SRD52|Friendly} to you in the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} have {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects. If you have 17 or more levels in the Paladin class, the size of the {@variantrule Emanation [Area of Effect]|SRD52|Emanation} increases to 30 feet."
+          ]
+        }
+      }
+    }
+  ]
+}

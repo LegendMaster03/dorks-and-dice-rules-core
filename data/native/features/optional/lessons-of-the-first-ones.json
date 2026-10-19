@@ -1,0 +1,39 @@
+{
+  "id": "optionalfeature.lessons-of-the-first-ones",
+  "name": "Lessons of the First Ones",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Lessons of the First Ones",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 2,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            }
+          }
+        ],
+        "entries": [
+          "You have received knowledge from an elder entity of the multiverse, allowing you to gain one Origin feat of your choice (see \"Feats\").",
+          {
+            "type": "entries",
+            "name": "Repeatable",
+            "entries": [
+              "You can gain this invocation more than once. Each time you do so, choose a different Origin feat."
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

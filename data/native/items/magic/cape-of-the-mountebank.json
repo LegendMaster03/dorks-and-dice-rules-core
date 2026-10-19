@@ -1,0 +1,47 @@
+{
+  "id": "item.cape-of-the-mountebank",
+  "name": "Cape of the Mountebank",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Cape of the Mountebank",
+        "tier": "major",
+        "rarity": "rare",
+        "wondrous": true,
+        "entries": [
+          "This cape smells faintly of brimstone. While wearing it, you can use it to cast the {@spell dimension door} spell as an action. This property of the cape can't be used again until the next dawn.",
+          "When you disappear, you leave behind a cloud of smoke, and you appear in a similar cloud of smoke at your destination. The smoke lightly obscures the space you left and the space you appear in, and it dissipates at the end of your next turn. A light or stronger wind disperses the smoke."
+        ],
+        "attachedSpells": {
+          "daily": {
+            "1": [
+              "dimension door"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Cape of the Mountebank",
+        "rarity": "rare",
+        "wondrous": true,
+        "entries": [
+          "This cape smells faintly of brimstone. While wearing it, you can use it to cast {@spell Dimension Door|SRD52} as a {@action Magic|SRD52} action. This property can't be used again until the next dawn.",
+          "When you teleport with that spell, you leave behind a cloud of smoke. The space you left is {@variantrule Lightly Obscured|SRD52} by that smoke until the end of your next turn."
+        ],
+        "attachedSpells": {
+          "daily": {
+            "1": [
+              "dimension door|srd52"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

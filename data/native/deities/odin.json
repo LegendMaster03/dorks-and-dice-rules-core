@@ -1,0 +1,25 @@
+{
+  "id": "deity.odin",
+  "name": "Odin",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Odin",
+        "pantheon": "Norse",
+        "alignment": [
+          "N",
+          "G"
+        ],
+        "title": "God of knowledge and war",
+        "domains": [
+          "Knowledge",
+          "War"
+        ],
+        "symbol": "Watching blue eye"
+      }
+    }
+  ]
+}

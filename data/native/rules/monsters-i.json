@@ -1,0 +1,32 @@
+{
+  "id": "rule.monsters-i",
+  "name": "Monsters (I)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (I)",
+        "page": 323,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Ice Devil|srd51}",
+              "{@creature Ice Mephit|srd51}",
+              "{@creature Imp|srd51}",
+              "{@creature Incubus|srd51}",
+              "{@creature Invisible Stalker|srd51}",
+              "{@creature Iron Golem|srd51}"
+            ]
+          }
+        ],
+        "id": "1ab"
+      }
+    }
+  ]
+}

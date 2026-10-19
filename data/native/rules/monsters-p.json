@@ -1,0 +1,38 @@
+{
+  "id": "rule.monsters-p",
+  "name": "Monsters (P)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (P)",
+        "page": 340,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Panther|srd51}",
+              "{@creature Pegasus|srd51}",
+              "{@creature Phase Spider|srd51}",
+              "{@creature Pit Fiend|srd51}",
+              "{@creature Planetar|srd51}",
+              "{@creature Plesiosaurus|srd51}",
+              "{@creature Poisonous Snake|srd51}",
+              "{@creature Polar Bear|srd51}",
+              "{@creature Pony|srd51}",
+              "{@creature Priest|srd51}",
+              "{@creature Pseudodragon|srd51}",
+              "{@creature Purple Worm|srd51}"
+            ]
+          }
+        ],
+        "id": "1b2"
+      }
+    }
+  ]
+}

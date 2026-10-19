@@ -1,0 +1,18 @@
+{
+  "id": "item.costume-clothes",
+  "name": "Costume Clothes",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Costume Clothes",
+        "type": "G",
+        "rarity": "none",
+        "weight": 4,
+        "value": 500
+      }
+    }
+  ]
+}

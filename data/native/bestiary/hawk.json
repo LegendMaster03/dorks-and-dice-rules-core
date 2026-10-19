@@ -1,0 +1,179 @@
+{
+  "id": "monster.hawk",
+  "name": "Hawk",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Hawk",
+        "size": [
+          "T"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 1,
+          "formula": "1d4 - 1"
+        },
+        "speed": {
+          "walk": 10,
+          "fly": 60
+        },
+        "str": 5,
+        "dex": 16,
+        "con": 8,
+        "int": 2,
+        "wis": 14,
+        "cha": 6,
+        "skill": {
+          "perception": "+4"
+        },
+        "passive": 14,
+        "cr": "0",
+        "trait": [
+          {
+            "name": "Keen Sight",
+            "entries": [
+              "The hawk has advantage on Wisdom ({@skill Perception}) checks that rely on sight."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Talons",
+            "entries": [
+              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}1 slashing damage."
+            ]
+          }
+        ],
+        "familiar": true,
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/hawk.opus"
+        },
+        "traitTags": [
+          "Keen Senses"
+        ],
+        "damageTags": [
+          "S"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Hawk",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Hawk.webp"
+                },
+                "width": 700,
+                "height": 417
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Hawk",
+        "size": [
+          "T"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 1,
+          "formula": "1d4 - 1"
+        },
+        "speed": {
+          "walk": 10,
+          "fly": 60
+        },
+        "str": 5,
+        "dex": 16,
+        "con": 8,
+        "int": 2,
+        "wis": 14,
+        "cha": 6,
+        "skill": {
+          "perception": "+6"
+        },
+        "passive": 16,
+        "cr": "0",
+        "action": [
+          {
+            "name": "Talons",
+            "entries": [
+              "{@atkr m} {@hit 5}, reach 5 ft. {@h}1 Slashing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "arctic",
+          "coastal",
+          "forest",
+          "grassland",
+          "hill",
+          "mountain"
+        ],
+        "familiar": true,
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/hawk.opus"
+        },
+        "damageTags": [
+          "S"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Hawk",
+            "_copy": {
+              "name": "Animals",
+              "source": "SRD52",
+              "_mod": {
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Hawk.webp"
+                      },
+                      "credit": "Suzanne Helmigh",
+                      "width": 1152,
+                      "height": 1440
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

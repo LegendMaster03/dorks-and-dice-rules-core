@@ -1,0 +1,72 @@
+{
+  "id": "optionalfeature.master-of-myriad-forms",
+  "name": "Master of Myriad Forms",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Master of Myriad Forms",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 15,
+              "class": {
+                "name": "Warlock"
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "alter self"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell alter self} at will, without expending a spell slot."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Master of Myriad Forms",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 5,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": [
+                "alter self|srd52"
+              ]
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell Alter Self|SRD52} without expending a spell slot."
+        ]
+      }
+    }
+  ]
+}

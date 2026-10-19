@@ -1,0 +1,46 @@
+{
+  "id": "item.essence-of-ether",
+  "name": "Essence of Ether",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Essence of Ether",
+        "type": "G",
+        "rarity": "none",
+        "value": 30000,
+        "poison": true,
+        "entries": [
+          "A creature subjected to this poison must succeed on a {@dc 15} Constitution saving throw or become {@condition poisoned} for 8 hours. The {@condition poisoned} creature is {@condition unconscious}. The creature wakes up if it takes damage or if another creature takes an action to shake it awake."
+        ],
+        "poisonTypes": [
+          "inhaled"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Essence of Ether",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "value": 30000,
+        "poison": true,
+        "entries": [
+          "A creature subjected to Essence of Ether must succeed on a {@dc 15} Constitution saving throw or have the {@condition Poisoned|SRD52} condition for 8 hours. The creature also has the {@condition Unconscious|SRD52} condition while {@condition Poisoned|SRD52} in this way. The creature wakes up if it takes damage or if another creature takes an action to shake it awake."
+        ],
+        "poisonTypes": [
+          "inhaled"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "id": "item.pearl-of-power",
+  "name": "Pearl of Power",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Pearl of Power",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": "by a spellcaster",
+        "reqAttuneTags": [
+          {
+            "spellcasting": true
+          }
+        ],
+        "wondrous": true,
+        "entries": [
+          "While this pearl is on your person, you can use an action to speak its command word and regain one expended spell slot. If the expended slot was of 4th level or higher, the new slot is 3rd level. Once you have used the pearl, it can't be used again until the next dawn."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Pearl of Power",
+        "rarity": "uncommon",
+        "reqAttune": "by a spellcaster",
+        "reqAttuneTags": [
+          {
+            "spellcasting": true
+          }
+        ],
+        "wondrous": true,
+        "entries": [
+          "While this pearl is on your person, you can take a {@action Magic|SRD52} action to regain one expended spell slot of level 3 or lower. Once you use the pearl, it can't be used again until the next dawn."
+        ]
+      }
+    }
+  ]
+}

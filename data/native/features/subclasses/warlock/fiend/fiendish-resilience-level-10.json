@@ -1,0 +1,41 @@
+{
+  "id": "subclassFeature.fiendish-resilience.warlock.fiend.fiendish-resilience.10",
+  "name": "Fiendish Resilience",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Fiendish Resilience",
+        "className": "Warlock",
+        "classSource": "SRD51",
+        "subclassShortName": "Fiend",
+        "subclassSource": "SRD51",
+        "level": 10,
+        "header": 2,
+        "entries": [
+          "Starting at 10th level, you can choose one damage type when you finish a short or long rest. You gain resistance to that damage type until you choose a different one with this feature. Damage from magical weapons or silver weapons ignores this resistance."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Fiendish Resilience",
+        "className": "Warlock",
+        "classSource": "SRD52",
+        "subclassShortName": "Fiend",
+        "subclassSource": "SRD52",
+        "level": 10,
+        "header": 2,
+        "entries": [
+          "Choose one damage type, other than Force, whenever you finish a {@variantrule Short Rest|SRD52|Short} or {@variantrule Long Rest|SRD52}. You have {@variantrule Resistance|SRD52} to that damage type until you choose a different one with this feature."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.warlock",
+  "parentSubclass": "fiend",
+  "classLevel": 10
+}

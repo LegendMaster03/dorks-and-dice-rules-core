@@ -1,0 +1,199 @@
+{
+  "id": "monster.giant-scorpion",
+  "name": "Giant Scorpion",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Giant Scorpion",
+        "size": [
+          "L"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          {
+            "ac": 15,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 52,
+          "formula": "7d10 + 14"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 15,
+        "dex": 13,
+        "con": 15,
+        "int": 1,
+        "wis": 9,
+        "cha": 3,
+        "senses": [
+          "blindsight 60 ft."
+        ],
+        "passive": 9,
+        "cr": "3",
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The scorpion makes three attacks: two with its claws and one with its sting."
+            ]
+          },
+          {
+            "name": "Claw",
+            "entries": [
+              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d8 + 2}) bludgeoning damage, and the target is {@condition grappled} (escape {@dc 12}). The scorpion has two claws, each of which can grapple only one target."
+            ]
+          },
+          {
+            "name": "Sting",
+            "entries": [
+              "{@atk mw} {@hit 4} to hit, reach 5 ft., one creature. {@h}7 ({@damage 1d10 + 2}) piercing damage, and the target must make a {@dc 12} Constitution saving throw, taking 22 ({@damage 4d10}) poison damage on a failed save, or half as much damage on a successful one."
+            ]
+          }
+        ],
+        "environment": [
+          "desert"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/giant-scorpion.opus"
+        },
+        "senseTags": [
+          "B"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "damageTags": [
+          "B",
+          "I",
+          "P"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "conditionInflict": [
+          "grappled"
+        ],
+        "savingThrowForced": [
+          "constitution"
+        ],
+        "hasToken": true
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Giant Scorpion",
+        "size": [
+          "L"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          15
+        ],
+        "hp": {
+          "average": 52,
+          "formula": "7d10 + 14"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 16,
+        "dex": 13,
+        "con": 15,
+        "int": 1,
+        "wis": 9,
+        "cha": 3,
+        "senses": [
+          "Blindsight 60 ft."
+        ],
+        "passive": 9,
+        "cr": "3",
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The scorpion makes two Claw attacks and one Sting attack."
+            ]
+          },
+          {
+            "name": "Claw",
+            "entries": [
+              "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Bludgeoning damage. If the target is a Large or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 13}) from one of two claws."
+            ]
+          },
+          {
+            "name": "Sting",
+            "entries": [
+              "{@atkr m} {@hit 5}, reach 5 ft. {@h}7 ({@damage 1d8 + 3}) Piercing damage plus 11 ({@damage 2d10}) Poison damage."
+            ]
+          }
+        ],
+        "environment": [
+          "desert"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/giant-scorpion.opus"
+        },
+        "senseTags": [
+          "B"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "damageTags": [
+          "B",
+          "I",
+          "P"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "conditionInflict": [
+          "grappled"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Giant Scorpion",
+            "_copy": {
+              "name": "Animals",
+              "source": "SRD52",
+              "_mod": {
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Giant Scorpion.webp"
+                      },
+                      "width": 848,
+                      "height": 1000
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

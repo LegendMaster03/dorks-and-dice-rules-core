@@ -1,0 +1,59 @@
+{
+  "id": "monster.sea-horse",
+  "name": "Sea Horse",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Sea Horse",
+        "size": [
+          "T"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          11
+        ],
+        "hp": {
+          "average": 1,
+          "formula": "1d4 - 1"
+        },
+        "speed": {
+          "swim": 20
+        },
+        "str": 1,
+        "dex": 12,
+        "con": 8,
+        "int": 1,
+        "wis": 10,
+        "cha": 2,
+        "passive": 10,
+        "cr": {
+          "cr": "0",
+          "xp": 0
+        },
+        "trait": [
+          {
+            "name": "Water Breathing",
+            "entries": [
+              "The sea horse can breathe only underwater."
+            ]
+          }
+        ],
+        "familiar": true,
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/sea-horse.opus"
+        },
+        "traitTags": [
+          "Water Breathing"
+        ],
+        "hasToken": true
+      }
+    }
+  ]
+}

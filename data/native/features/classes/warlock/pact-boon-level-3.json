@@ -1,0 +1,40 @@
+{
+  "id": "classFeature.pact-boon.warlock.pact-boon.3",
+  "name": "Pact Boon",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Pact Boon",
+        "className": "Warlock",
+        "classSource": "SRD51",
+        "level": 3,
+        "entries": [
+          "At 3rd level, your otherworldly patron bestows a gift upon you for your loyal service. You gain one of the following features of your choice.",
+          {
+            "type": "options",
+            "count": 1,
+            "entries": [
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Pact of the Chain"
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Pact of the Blade"
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Pact of the Tome"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.warlock",
+  "classLevel": 3
+}

@@ -1,0 +1,39 @@
+{
+  "id": "item.feather-token-tree",
+  "name": "Feather Token, Tree",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Feather Token, Tree",
+        "tier": "minor",
+        "rarity": "rare",
+        "wondrous": true,
+        "entries": [
+          "This tiny object looks like a feather. Different types of feather tokens exist, each with a different single-use effect.",
+          {
+            "name": "Tree",
+            "type": "entries",
+            "entries": [
+              "You must be outdoors to use this token. You can use an action to touch it to an unoccupied space on the ground. The token disappears, and in its place a nonmagical oak tree springs into existence. The tree is 60 feet tall and has a 5-foot-diameter trunk, and its branches at the top spread out in a 20-foot radius."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Feather Token, Tree",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "This object looks like a feather.",
+          "You must be outdoors to use this token. You can take a {@action Magic|SRD52} action to touch it to an unoccupied space on the ground. The token disappears, and in its place a nonmagical oak tree springs into existence. The tree is 60 feet tall and has a 5-foot-diameter trunk, and its branches at the top spread out in a 20-foot radius."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "subclassFeature.remarkable-athlete.fighter.champion.remarkable-athlete.3",
+  "name": "Remarkable Athlete",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Remarkable Athlete",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "subclassShortName": "Champion",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "header": 2,
+        "entries": [
+          "Thanks to your athleticism, you have {@variantrule Advantage|SRD52} on {@variantrule Initiative|SRD52} rolls and Strength ({@skill Athletics|SRD52}) checks.",
+          "In addition, immediately after you score a {@variantrule Critical Hit|SRD52}, you can move up to half your {@variantrule Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "parentSubclass": "champion",
+  "classLevel": 3
+}

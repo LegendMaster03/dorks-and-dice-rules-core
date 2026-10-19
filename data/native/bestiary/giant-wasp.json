@@ -1,0 +1,167 @@
+{
+  "id": "monster.giant-wasp",
+  "name": "Giant Wasp",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Giant Wasp",
+        "size": [
+          "M"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 13,
+          "formula": "3d8"
+        },
+        "speed": {
+          "walk": 10,
+          "fly": 50
+        },
+        "str": 10,
+        "dex": 14,
+        "con": 10,
+        "int": 1,
+        "wis": 10,
+        "cha": 3,
+        "passive": 10,
+        "cr": "1/2",
+        "action": [
+          {
+            "name": "Sting",
+            "entries": [
+              "{@atk mw} {@hit 4} to hit, reach 5 ft., one creature. {@h}5 ({@damage 1d6 + 2}) piercing damage, and the target must make a {@dc 11} Constitution saving throw, taking 10 ({@damage 3d6}) poison damage on a failed save, or half as much damage on a successful one. If the poison damage reduces the target to 0 hit points, the target is stable but {@condition poisoned} for 1 hour, even after regaining hit points, and is {@condition paralyzed} while {@condition poisoned} in this way."
+            ]
+          }
+        ],
+        "environment": [
+          "grassland",
+          "forest",
+          "urban"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/giant-wasp.opus"
+        },
+        "damageTags": [
+          "I",
+          "P"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "conditionInflict": [
+          "paralyzed",
+          "poisoned"
+        ],
+        "savingThrowForced": [
+          "constitution"
+        ],
+        "hasToken": true
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Giant Wasp",
+        "size": [
+          "M"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 22,
+          "formula": "5d8"
+        },
+        "speed": {
+          "walk": 10,
+          "fly": 50
+        },
+        "str": 10,
+        "dex": 14,
+        "con": 10,
+        "int": 1,
+        "wis": 10,
+        "cha": 3,
+        "passive": 10,
+        "cr": "1/2",
+        "trait": [
+          {
+            "name": "Flyby",
+            "entries": [
+              "The wasp doesn't provoke an {@action Opportunity Attack|SRD52} when it flies out of an enemy's reach."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Sting",
+            "entries": [
+              "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Piercing damage plus 5 ({@damage 2d4}) Poison damage."
+            ]
+          }
+        ],
+        "environment": [
+          "forest",
+          "grassland",
+          "urban"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/giant-wasp.opus"
+        },
+        "traitTags": [
+          "Flyby"
+        ],
+        "damageTags": [
+          "I",
+          "P"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Giant Wasp",
+            "_copy": {
+              "name": "Animals",
+              "source": "SRD52",
+              "_mod": {
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Giant Wasp.webp"
+                      },
+                      "title": "A gnome rogue distracts a hive of giant wasps while Sheila the thief sneaks by",
+                      "credit": "Dario Jelusic",
+                      "width": 2040,
+                      "height": 1320
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "id": "optionalfeature.investment-of-the-chain-master",
+  "name": "Investment of the Chain Master",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Investment of the Chain Master",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 5,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            },
+            "optionalfeature": [
+              "pact of the chain|srd52"
+            ]
+          }
+        ],
+        "entries": [
+          "When you cast {@spell Find Familiar|SRD52}, you infuse the summoned familiar with a measure of your eldritch power, granting the creature the following benefits.",
+          {
+            "type": "entries",
+            "name": "Aerial or Aquatic",
+            "entries": [
+              "The familiar gains either a Fly Speed or a Swim Speed (your choice) of 40 feet."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Quick Attack",
+            "entries": [
+              "As a {@variantrule Bonus Action|SRD52}, you can command the familiar to take the {@action Attack|SRD52} action."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Necrotic or Radiant Damage",
+            "entries": [
+              "Whenever the familiar deals Bludgeoning, Piercing, or Slashing damage, you can make it deal Necrotic or Radiant damage instead."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Your Save DC",
+            "entries": [
+              "If the familiar forces a creature to make a saving throw, it uses your spell save DC."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Resistance",
+            "entries": [
+              "When the familiar takes damage, you can take a {@variantrule Reaction|SRD52} to grant it {@variantrule Resistance|SRD52} against that damage."
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

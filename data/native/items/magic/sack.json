@@ -1,0 +1,44 @@
+{
+  "id": "item.sack",
+  "name": "Sack",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Sack",
+        "type": "G",
+        "rarity": "none",
+        "weight": 0.5,
+        "value": 1,
+        "entries": [
+          "A sack can hold up to 1 cubic foot or 30 pounds of gear."
+        ],
+        "containerCapacity": {
+          "weight": [
+            30
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Sack",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 0.5,
+        "value": 1,
+        "entries": [
+          "A Sack holds up to 30 pounds within 1 cubic foot."
+        ],
+        "containerCapacity": {
+          "weight": [
+            30
+          ]
+        }
+      }
+    }
+  ]
+}

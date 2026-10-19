@@ -1,0 +1,36 @@
+{
+  "id": "baseitem.orb",
+  "name": "Orb",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Orb",
+        "group": [
+          "Arcane Focus"
+        ],
+        "type": "SCF",
+        "scfType": "arcane",
+        "rarity": "none",
+        "weight": 3,
+        "value": 2000
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Orb",
+        "group": [
+          "Arcane Focus"
+        ],
+        "type": "SCF|SRD52",
+        "scfType": "arcane",
+        "rarity": "none",
+        "weight": 3,
+        "value": 2000
+      }
+    }
+  ]
+}

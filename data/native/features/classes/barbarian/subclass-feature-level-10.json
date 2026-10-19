@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.subclass-feature.barbarian.subclass-feature.10",
+  "name": "Subclass Feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Subclass Feature",
+        "className": "Barbarian",
+        "classSource": "SRD52",
+        "level": 10,
+        "entries": [
+          "You gain a feature from your Barbarian subclass."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian",
+  "classLevel": 10
+}

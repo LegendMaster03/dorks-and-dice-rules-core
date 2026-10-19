@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.epic-boon.ranger.epic-boon.19",
+  "name": "Epic Boon",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Epic Boon",
+        "className": "Ranger",
+        "classSource": "SRD52",
+        "level": 19,
+        "entries": [
+          "You gain an {@filter Epic Boon feat|feats|category=EB} or another {@5etools feat|feats.html} of your choice for which you qualify. {@feat Boon of Dimensional Travel|SRD52} is recommended."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "classLevel": 19
+}

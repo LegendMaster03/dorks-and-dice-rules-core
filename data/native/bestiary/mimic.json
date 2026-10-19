@@ -1,0 +1,374 @@
+{
+  "id": "monster.mimic",
+  "name": "Mimic",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Mimic",
+        "size": [
+          "M"
+        ],
+        "type": {
+          "type": "monstrosity",
+          "tags": [
+            "shapechanger"
+          ]
+        },
+        "alignment": [
+          "N"
+        ],
+        "ac": [
+          {
+            "ac": 12,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 58,
+          "formula": "9d8 + 18"
+        },
+        "speed": {
+          "walk": 15
+        },
+        "str": 17,
+        "dex": 12,
+        "con": 15,
+        "int": 5,
+        "wis": 13,
+        "cha": 8,
+        "skill": {
+          "stealth": "+5"
+        },
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 11,
+        "immune": [
+          "acid"
+        ],
+        "conditionImmune": [
+          "prone"
+        ],
+        "cr": "2",
+        "trait": [
+          {
+            "name": "Shapechanger",
+            "entries": [
+              "The mimic can use its action to polymorph into an object or back into its true, amorphous form. Its statistics are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies."
+            ]
+          },
+          {
+            "name": "Adhesive (Object Form Only)",
+            "entries": [
+              "The mimic adheres to anything that touches it. A Huge or smaller creature adhered to the mimic is also {@condition grappled} by it (escape {@dc 13}). Ability checks made to escape this grapple have disadvantage."
+            ]
+          },
+          {
+            "name": "False Appearance (Object Form Only)",
+            "entries": [
+              "While the mimic remains motionless, it is indistinguishable from an ordinary object."
+            ]
+          },
+          {
+            "name": "Grappler",
+            "entries": [
+              "The mimic has advantage on attack rolls against any creature {@condition grappled} by it."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Pseudopod",
+            "entries": [
+              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}7 ({@damage 1d8 + 3}) bludgeoning damage. If the mimic is in object form, the target is subjected to its Adhesive trait."
+            ]
+          },
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}7 ({@damage 1d8 + 3}) piercing damage plus 4 ({@damage 1d8}) acid damage."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark",
+          "urban"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/mimic.opus"
+        },
+        "traitTags": [
+          "False Appearance",
+          "Shapechanger"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "damageTags": [
+          "A",
+          "B",
+          "P"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "conditionInflict": [
+          "grappled"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Mimic",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Mimics are shapeshifting predators able to take on the form of inanimate objects to lure creatures to their doom. In dungeons, these cunning creatures most often take the form of doors and chests, having learned that such forms attract a steady stream of prey.",
+                      {
+                        "name": "Imitative Predators",
+                        "type": "entries",
+                        "entries": [
+                          "Mimics can alter their outward texture to resemble wood, stone, and other basic materials, and they have evolved to assume the appearance of objects that other creatures are likely to come into contact with. A mimic in its altered form is nearly unrecognizable until potential prey blunders into its reach, whereupon the monster sprouts pseudopods and attacks.",
+                          "When it changes shape, a mimic excretes an adhesive that helps it seize prey and weapons that touch it. The adhesive is absorbed when the mimic assumes its amorphous form and on parts the mimic uses to move itself."
+                        ]
+                      },
+                      {
+                        "name": "Cunning Hunters",
+                        "type": "entries",
+                        "entries": [
+                          "Mimics live and hunt alone, though they occasionally share their feeding grounds with other creatures. Although most mimics have only predatory intelligence, a rare few evolve greater cunning and the ability to carry on simple conversations in Common or Undercommon. Such mimics might allow safe passage through their domains or provide useful information in exchange for food."
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "Sometimes a chest is just a chest, but don't bet on it."
+                        ],
+                        "by": "X the Mystic's 3rd rule of dungeon survival"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Mimic.webp"
+                },
+                "credit": "Eric Belisle",
+                "width": 551,
+                "height": 417
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Mimic",
+        "size": [
+          "M"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "N"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 58,
+          "formula": "9d8 + 18"
+        },
+        "speed": {
+          "walk": 20
+        },
+        "initiative": {
+          "proficiency": 1
+        },
+        "str": 17,
+        "dex": 12,
+        "con": 15,
+        "int": 5,
+        "wis": 13,
+        "cha": 8,
+        "skill": {
+          "stealth": "+5"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 11,
+        "immune": [
+          "acid"
+        ],
+        "conditionImmune": [
+          "prone"
+        ],
+        "cr": "2",
+        "trait": [
+          {
+            "name": "Adhesive (Object Form Only)",
+            "entries": [
+              "The mimic adheres to anything that touches it. A Huge or smaller creature adhered to the mimic has the {@condition Grappled|SRD52} condition (escape {@dc 13}). Ability checks made to escape this grapple have {@variantrule Disadvantage|SRD52}."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atkr m} {@hit 5} (with {@variantrule Advantage|SRD52} if the target is {@condition Grappled|SRD52} by the mimic), reach 5 ft. {@h}7 ({@damage 1d8 + 3}) Piercing damage—or 12 ({@damage 2d8 + 3}) Piercing damage if the target is {@condition Grappled|SRD52} by the mimic—plus 4 ({@damage 1d8}) Acid damage."
+            ]
+          },
+          {
+            "name": "Pseudopod",
+            "entries": [
+              "{@atkr m} {@hit 5}, reach 5 ft. {@h}7 ({@damage 1d8 + 3}) Bludgeoning damage plus 4 ({@damage 1d8}) Acid damage. If the target is a Large or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 13}). Ability checks made to escape this grapple have {@variantrule Disadvantage|SRD52}."
+            ]
+          }
+        ],
+        "bonus": [
+          {
+            "name": "Shape-Shift",
+            "entries": [
+              "The mimic shape-shifts to resemble a Medium or Small object while retaining its game statistics, or it returns to its true blob form. Any equipment it is wearing or carrying isn't transformed."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark",
+          "urban"
+        ],
+        "treasure": [
+          "any"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/mimic.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "damageTags": [
+          "A",
+          "B",
+          "P"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "conditionInflict": [
+          "grappled"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Mimic",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Mimic",
+                "entries": [
+                  "{@i Shape-Shifter Disguised as an Unassuming Object}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Underdark|bestiary|environment=underdark}, {@filter Urban|bestiary|environment=urban}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Any"
+                      }
+                    ]
+                  },
+                  "In their natural forms, mimics are little more than roaming stomachs, their blobby bodies covered with alien eyes and teeth. They can alter their color, texture, and dimensions to duplicate inanimate objects of their approximate size. Mimics use their disguises as both camouflage and bait. Once victims draw close, mimics strike, lashing out with their sticky pseudopods and toothy mouths. After consuming victims, mimics usually relocate, change form, and await their next meal.",
+                  "Use the following list to inspire mimics' shapes:",
+                  {
+                    "type": "list",
+                    "style": "list-no-bullets",
+                    "columns": 3,
+                    "items": [
+                      "Altar",
+                      "Bell",
+                      "Boulder",
+                      "Cauldron",
+                      "Chair",
+                      "Chandelier",
+                      "Chest",
+                      "Cot",
+                      "Door",
+                      "Floor mat",
+                      "Giant gemstone",
+                      "Gravestone",
+                      "Heap of leaves",
+                      "Keg",
+                      "Ladder",
+                      "Lectern",
+                      "Mannequin",
+                      "Mirror",
+                      "Obelisk",
+                      "Oversize cake",
+                      "Panel of levers",
+                      "Pile of bones",
+                      "Potted plant",
+                      "Row of books",
+                      "Sarcophagus",
+                      "Sculpture",
+                      "Ship's wheel",
+                      "Sign",
+                      "Stalagmite",
+                      "Stump",
+                      "Table",
+                      "Tapestry",
+                      "Taxidermy",
+                      "Throne",
+                      "Topiary",
+                      "Weapon rack"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Mimic.webp"
+                },
+                "credit": "Mark Zug",
+                "width": 2004,
+                "height": 1631
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "subclassFeature.draconic-resilience.sorcerer.draconic.draconic-resilience.3",
+  "name": "Draconic Resilience",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Draconic Resilience",
+        "className": "Sorcerer",
+        "classSource": "SRD52",
+        "subclassShortName": "Draconic",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "header": 2,
+        "entries": [
+          "The magic in your body manifests physical traits of your draconic gift. Your {@variantrule Hit Points|SRD52|Hit Point} maximum increases by 3, and it increases by 1 whenever you gain another Sorcerer level.",
+          "Parts of you are also covered by dragon-like scales. While you aren't wearing armor, your base {@variantrule Armor Class|SRD52} equals 10 plus your Dexterity and Charisma modifiers."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.sorcerer",
+  "parentSubclass": "draconic",
+  "classLevel": 3
+}

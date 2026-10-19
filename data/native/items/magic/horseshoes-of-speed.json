@@ -1,0 +1,32 @@
+{
+  "id": "item.horseshoes-of-speed",
+  "name": "Horseshoes of Speed",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Horseshoes of Speed",
+        "tier": "minor",
+        "rarity": "rare",
+        "wondrous": true,
+        "entries": [
+          "These iron horseshoes come in a set of four. While all four shoes are affixed to the hooves of a horse or similar creature, they increase the creature's walking speed by 30 feet."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Horseshoes of Speed",
+        "rarity": "rare",
+        "wondrous": true,
+        "entries": [
+          "These horseshoes come in a set of four. As a {@action Magic|SRD52} action, you can touch one of the horseshoes to the hoof of a horse or similar creature, whereupon the horseshoe affixes itself to the hoof. Removing a horseshoe also takes a {@action Magic|SRD52} action.",
+          "While all four horseshoes are attached to the same creature, its {@variantrule Speed|SRD52} is increased by 30 feet."
+        ]
+      }
+    }
+  ]
+}

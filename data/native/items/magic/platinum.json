@@ -1,0 +1,28 @@
+{
+  "id": "item.platinum",
+  "name": "Platinum",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Platinum",
+        "type": "TG",
+        "rarity": "none",
+        "weight": 1,
+        "value": 50000
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Platinum",
+        "type": "TG|SRD52",
+        "rarity": "none",
+        "weight": 1,
+        "value": 50000
+      }
+    }
+  ]
+}

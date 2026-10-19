@@ -1,0 +1,24 @@
+{
+  "id": "item.rations-1-day",
+  "name": "Rations (1 day)",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Rations (1 day)",
+        "type": "G",
+        "rarity": "none",
+        "weight": 2,
+        "value": 50,
+        "entries": [
+          "Rations consist of dry foods suitable for extended travel, including jerky, dried fruit, hardtack, and nuts."
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "deity.apollo",
+  "name": "Apollo",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Apollo",
+        "pantheon": "Greek",
+        "alignment": [
+          "C",
+          "G"
+        ],
+        "title": "God of light, music, and healing",
+        "domains": [
+          "Knowledge",
+          "Life",
+          "Light"
+        ],
+        "symbol": "Lyre"
+      }
+    }
+  ]
+}

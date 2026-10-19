@@ -1,0 +1,34 @@
+{
+  "id": "classFeature.cunning-action.rogue.cunning-action.2",
+  "name": "Cunning Action",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Cunning Action",
+        "className": "Rogue",
+        "classSource": "SRD51",
+        "level": 2,
+        "entries": [
+          "Starting at 2nd level, your quick thinking and agility allow you to move and act quickly. You can take a bonus action on each of your turns in combat. This action can be used only to take the {@action Dash}, {@action Disengage}, or {@action Hide} action."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Cunning Action",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 2,
+        "entries": [
+          "Your quick thinking and agility allow you to move and act quickly. On your turn, you can take one of the following actions as a {@variantrule Bonus Action|SRD52}: {@action Dash|SRD52}, {@action Disengage|SRD52}, or {@action Hide|SRD52}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 2
+}

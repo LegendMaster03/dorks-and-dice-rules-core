@@ -1,0 +1,39 @@
+{
+  "id": "item.feather-token-fan",
+  "name": "Feather Token, Fan",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Feather Token, Fan",
+        "tier": "minor",
+        "rarity": "rare",
+        "wondrous": true,
+        "entries": [
+          "This tiny object looks like a feather. Different types of feather tokens exist, each with a different single-use effect.",
+          {
+            "name": "Fan",
+            "type": "entries",
+            "entries": [
+              "If you are on a boat or ship, you can use an action to toss the token up to 10 feet in the air. The token disappears, and a giant flapping fan takes its place. The fan floats and creates a wind strong enough to fill the sails of one ship, increasing its speed by 5 miles per hour for 8 hours. You can dismiss the fan as an action."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Feather Token, Fan",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "This object looks like a feather.",
+          "If you are on a boat or ship, you can take a {@action Magic|SRD52} action to toss the token up to 10 feet in the air. The token disappears, and a giant flapping fan takes its place. The fan floats and creates a strong wind. This wind can fill the sails of one ship, increasing its speed by 5 miles per hour for 8 hours. You can dismiss the fan as a {@action Magic|SRD52} action."
+        ]
+      }
+    }
+  ]
+}

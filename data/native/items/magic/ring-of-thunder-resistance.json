@@ -1,0 +1,42 @@
+{
+  "id": "item.ring-of-thunder-resistance",
+  "name": "Ring of Thunder Resistance",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Thunder Resistance",
+        "type": "RG|SRD51",
+        "resist": [
+          "thunder"
+        ],
+        "detail1": "spinel",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": true,
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Ring of Resistance}"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Thunder Resistance",
+        "type": "RG|SRD52",
+        "resist": [
+          "thunder"
+        ],
+        "detail1": "spinel",
+        "rarity": "rare",
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Ring of Resistance|SRD52}"
+        ]
+      }
+    }
+  ]
+}

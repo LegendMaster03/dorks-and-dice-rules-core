@@ -1,0 +1,211 @@
+{
+  "id": "monster.awakened-tree",
+  "name": "Awakened Tree",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Awakened Tree",
+        "size": [
+          "H"
+        ],
+        "type": "plant",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          {
+            "ac": 13,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 59,
+          "formula": "7d12 + 14"
+        },
+        "speed": {
+          "walk": 20
+        },
+        "str": 19,
+        "dex": 6,
+        "con": 15,
+        "int": 10,
+        "wis": 10,
+        "cha": 7,
+        "passive": 10,
+        "resist": [
+          "bludgeoning",
+          "piercing"
+        ],
+        "vulnerable": [
+          "fire"
+        ],
+        "languages": [
+          "one language known by its creator"
+        ],
+        "cr": "2",
+        "trait": [
+          {
+            "name": "False Appearance",
+            "entries": [
+              "While the tree remains motionless, it is indistinguishable from a normal tree."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Slam",
+            "entries": [
+              "{@atk mw} {@hit 6} to hit, reach 10 ft., one target. {@h}14 ({@damage 3d6 + 4}) bludgeoning damage."
+            ]
+          }
+        ],
+        "environment": [
+          "forest"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/awakened-tree.opus"
+        },
+        "traitTags": [
+          "False Appearance"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MW",
+          "RCH"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Awakened Tree",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "An awakened tree is an ordinary tree given sentience and mobility by the {@spell awaken} spell or similar magic."
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Awakened Tree",
+        "size": [
+          "H"
+        ],
+        "type": "plant",
+        "alignment": [
+          "N"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 59,
+          "formula": "7d12 + 14"
+        },
+        "speed": {
+          "walk": 20
+        },
+        "str": 19,
+        "dex": 6,
+        "con": 15,
+        "int": 10,
+        "wis": 10,
+        "cha": 7,
+        "passive": 10,
+        "resist": [
+          "bludgeoning",
+          "piercing"
+        ],
+        "vulnerable": [
+          "fire"
+        ],
+        "languages": [
+          "Common plus one other language"
+        ],
+        "cr": "2",
+        "action": [
+          {
+            "name": "Slam",
+            "entries": [
+              "{@atkr m} {@hit 6}, reach 10 ft. {@h}13 ({@damage 2d8 + 4}) Bludgeoning damage."
+            ]
+          }
+        ],
+        "environment": [
+          "forest"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/awakened-tree.opus"
+        },
+        "languageTags": [
+          "C",
+          "X"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MA",
+          "RCH"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Awakened Tree",
+            "_copy": {
+              "name": "Awakened Plants",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "Some awakened trees stand in still, meditative states for long periods, making them easy to mistake for normal plants, while others patrol regions of natural power. Awakened trees are sometimes brought to life by influences from the Feywild, which make them colorful and endlessly blooming, or by Shadowfell energy, which covers them with grotesque burls or makes them look lifeless."
+                      ]
+                    }
+                  ]
+                },
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Awakened Tree.webp"
+                      },
+                      "credit": "Vicki Pangestu",
+                      "width": 1498,
+                      "height": 1874
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

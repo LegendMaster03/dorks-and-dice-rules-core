@@ -1,0 +1,18 @@
+{
+  "id": "item.sledgehammer",
+  "name": "Sledgehammer",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Sledgehammer",
+        "type": "G",
+        "rarity": "none",
+        "weight": 10,
+        "value": 200
+      }
+    }
+  ]
+}

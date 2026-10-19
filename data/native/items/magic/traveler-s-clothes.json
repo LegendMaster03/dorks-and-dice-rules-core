@@ -1,0 +1,31 @@
+{
+  "id": "item.traveler-s-clothes",
+  "name": "Traveler's Clothes",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Traveler's Clothes",
+        "type": "G",
+        "rarity": "none",
+        "weight": 4,
+        "value": 200
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Traveler's Clothes",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 4,
+        "value": 200,
+        "entries": [
+          "Traveler's Clothes are resilient garments designed for travel in various environments."
+        ]
+      }
+    }
+  ]
+}

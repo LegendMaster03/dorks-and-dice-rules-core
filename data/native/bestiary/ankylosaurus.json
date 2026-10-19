@@ -1,0 +1,122 @@
+{
+  "id": "monster.ankylosaurus",
+  "name": "Ankylosaurus",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ankylosaurus",
+        "group": [
+          "Dinosaurs"
+        ],
+        "size": [
+          "H"
+        ],
+        "type": {
+          "type": "beast",
+          "tags": [
+            "dinosaur"
+          ]
+        },
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          15
+        ],
+        "hp": {
+          "average": 68,
+          "formula": "8d12 + 16"
+        },
+        "speed": {
+          "walk": 30
+        },
+        "str": 19,
+        "dex": 11,
+        "con": 15,
+        "int": 2,
+        "wis": 12,
+        "cha": 5,
+        "save": {
+          "str": "+6"
+        },
+        "passive": 11,
+        "cr": "3",
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The ankylosaurus makes two Tail attacks."
+            ]
+          },
+          {
+            "name": "Tail",
+            "entries": [
+              "{@atkr m} {@hit 6}, reach 10 ft. {@h}9 ({@damage 1d10 + 4}) Bludgeoning damage. If the target is a Huge or smaller creature, it has the {@condition Prone|SRD52} condition."
+            ]
+          }
+        ],
+        "environment": [
+          "grassland"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/ankylosaurus.opus"
+        },
+        "actionTags": [
+          "Multiattack"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MA",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "prone"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Ankylosaurus",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Thick armor plating covers the body of the plant-eating ankylosaurus, which defends itself against predators with a knobbed tail that delivers a devastating strike. Some varieties of ankylosaurus have spiked tails that deal piercing damage instead of bludgeoning damage.",
+                      {
+                        "type": "entries",
+                        "name": "Dinosaurs",
+                        "entries": [
+                          "Dinosaurs, or behemoths, are among the oldest reptiles in the world. Predatory dinosaurs are savage, territorial hunters. Herbivorous dinosaurs are less aggressive, but they might attack to defend their young, or if startled or harassed.",
+                          "Dinosaurs come in many sizes and shapes. Larger varieties often have drab coloration, while smaller dinosaurs have colorful markings akin to birds. Dinosaurs roam rugged and isolated areas that humanoids seldom visit, including remote mountain valleys, inaccessible plateaus, tropical islands, and deep fens."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Dinosaurs.webp"
+                },
+                "width": 1000,
+                "height": 827
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

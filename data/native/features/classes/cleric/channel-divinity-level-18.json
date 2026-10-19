@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.channel-divinity.cleric.channel-divinity.18",
+  "name": "Channel Divinity",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Channel Divinity",
+        "className": "Cleric",
+        "classSource": "SRD51",
+        "level": 18,
+        "entries": [
+          "Beginning at 18th level, you can use your Channel Divinity three times between rests."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "classLevel": 18
+}

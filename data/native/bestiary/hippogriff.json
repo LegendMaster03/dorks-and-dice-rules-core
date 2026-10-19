@@ -1,0 +1,293 @@
+{
+  "id": "monster.hippogriff",
+  "name": "Hippogriff",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Hippogriff",
+        "size": [
+          "L"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          11
+        ],
+        "hp": {
+          "average": 19,
+          "formula": "3d10 + 3"
+        },
+        "speed": {
+          "walk": 40,
+          "fly": 60
+        },
+        "str": 17,
+        "dex": 13,
+        "con": 13,
+        "int": 2,
+        "wis": 12,
+        "cha": 8,
+        "skill": {
+          "perception": "+5"
+        },
+        "passive": 15,
+        "cr": "1",
+        "trait": [
+          {
+            "name": "Keen Sight",
+            "entries": [
+              "The hippogriff has advantage on Wisdom ({@skill Perception}) checks that rely on sight."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The hippogriff makes two attacks: one with its beak and one with its claws."
+            ]
+          },
+          {
+            "name": "Beak",
+            "entries": [
+              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}8 ({@damage 1d10 + 3}) piercing damage."
+            ]
+          },
+          {
+            "name": "Claws",
+            "entries": [
+              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}10 ({@damage 2d6 + 3}) slashing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "mountain",
+          "grassland",
+          "hill"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/hippogriff.opus"
+        },
+        "traitTags": [
+          "Keen Senses"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "damageTags": [
+          "P",
+          "S"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Hippogriff",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "A beast whose magical origins are lost to history, a hippogriff possesses the wings and forelimbs of an eagle, the hindquarters of a horse, and a head that combines the features of both animals.",
+                      "Reclusive and omnivorous, hippogriffs mate for life and seldom venture more than a few miles from their nest. When defending its mate or its young, a hippogriff fights to the death. Hippogriffs don't lay eggs but give birth to live young.",
+                      "Dragons, griffons, and wyverns have a taste for hippogriff meat and frequently prey on these creatures.",
+                      {
+                        "name": "Flying Mounts",
+                        "type": "entries",
+                        "entries": [
+                          "A hippogriff raised in captivity can be trained to be a faithful companion and mount. Of all the creatures that can serve as flying mounts, hippogriffs are among the easiest to train and the most loyal once trained properly."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Hippogriff.webp"
+                },
+                "width": 890,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Hippogriff",
+        "size": [
+          "L"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          11
+        ],
+        "hp": {
+          "average": 26,
+          "formula": "4d10 + 4"
+        },
+        "speed": {
+          "walk": 40,
+          "fly": 60
+        },
+        "str": 17,
+        "dex": 13,
+        "con": 13,
+        "int": 2,
+        "wis": 12,
+        "cha": 8,
+        "skill": {
+          "perception": "+5"
+        },
+        "passive": 15,
+        "cr": "1",
+        "trait": [
+          {
+            "name": "Flyby",
+            "entries": [
+              "The hippogriff doesn't provoke an {@action Opportunity Attack|SRD52} when it flies out of an enemy's reach."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The hippogriff makes two Rend attacks."
+            ]
+          },
+          {
+            "name": "Rend",
+            "entries": [
+              "{@atkr m} {@hit 5}, reach 5 ft. {@h}7 ({@damage 1d8 + 3}) Slashing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "grassland",
+          "hill",
+          "mountain"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/hippogriff.opus"
+        },
+        "traitTags": [
+          "Flyby"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "damageTags": [
+          "S"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Hippogriff",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Hippogriff",
+                "entries": [
+                  "{@i World-Traveling Hunter and Steed}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Grassland|bestiary|environment=grassland}, {@filter Hill|bestiary|environment=hill}, {@filter Mountain|bestiary|environment=mountain}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "None"
+                      }
+                    ]
+                  },
+                  "Part hunting bird, part horse, hippogriffs are majestic creatures that hunt opportunistically as they migrate, often targeting lone travelers and livestock. Hippogriffs might carry riders with them in their travels in return for food or other aid.",
+                  "Hippogriff migrations might take months or years, and sages frequently predict their routes. Roll on or choose a result from the Hippogriff Destination table to inspire where a hippogriff might be en route to.",
+                  {
+                    "type": "table",
+                    "caption": "Hippogriff Destination",
+                    "colLabels": [
+                      "1d6",
+                      "The Hippogriff Is Traveling to A..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "Lost ruin hidden by clouds or fog."
+                      ],
+                      [
+                        "2",
+                        "Low-hanging moon, star, or other solar body."
+                      ],
+                      [
+                        "3",
+                        "Magical garden on a floating island."
+                      ],
+                      [
+                        "4",
+                        "Mountaintop with a view of a giant geoglyph."
+                      ],
+                      [
+                        "5",
+                        "Nest full of hippogriff eggs atop a spire."
+                      ],
+                      [
+                        "6",
+                        "Portal to the Feywild or an Upper Plane."
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Hippogriff.webp"
+                },
+                "credit": "Axel Defois",
+                "width": 2560,
+                "height": 2259
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

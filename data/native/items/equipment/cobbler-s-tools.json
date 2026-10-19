@@ -1,0 +1,117 @@
+{
+  "id": "baseitem.cobbler-s-tools",
+  "name": "Cobbler's Tools",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Cobbler's Tools",
+        "type": "AT",
+        "rarity": "none",
+        "weight": 5,
+        "value": 500,
+        "additionalEntries": [
+          "Although the cobbler's trade might seem too humble for an adventurer, a good pair of boots will see a character across rugged wilderness and through deadly dungeons.",
+          {
+            "type": "entries",
+            "name": "Components",
+            "entries": [
+              "Cobbler's tools consist of a hammer, an awl, a knife, a shoe stand, a cutter, spare leather, and thread."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Arcana, History",
+            "entries": [
+              "Your knowledge of shoes aids you in identifying the magical properties of enchanted boots or the history of such items."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Investigation",
+            "entries": [
+              "Footwear holds a surprising number of secrets. You can learn where someone has recently visited by examining the wear and the dirt that has accumulated on their shoes. Your experience in repairing shoes makes it easier for you to identify where damage might come from."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Maintain Shoes",
+            "entries": [
+              "As part of a long rest, you can repair your companions' shoes. For the next 24 hours, up to six creatures of your choice who wear shoes you worked on can travel up to 10 hours a day without making saving throws to avoid {@condition exhaustion}."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Craft Hidden Compartment",
+            "entries": [
+              "With 8 hours of work, you can add a hidden compartment to a pair of shoes. The compartment can hold an object up to 3 inches long and 1 inch wide and deep. You make an Intelligence check using your tool proficiency to determine the Intelligence ({@skill Investigation}) check DC needed to find the compartment."
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Cobbler's Tools",
+            "colLabels": [
+              "Activity",
+              "DC"
+            ],
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "rows": [
+              [
+                "Determine a shoe's age and origin",
+                "10"
+              ],
+              [
+                "Find a hidden compartment in a boot heel",
+                "15"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Cobbler's Tools",
+        "type": "AT|SRD52",
+        "rarity": "none",
+        "weight": 5,
+        "value": 500,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Dexterity"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Modify footwear to give {@variantrule Advantage|SRD52} on the wearer's next Dexterity ({@skill Acrobatics|SRD52}) check ({@dc 10})"
+                ]
+              },
+              {
+                "name": "Craft:",
+                "type": "item",
+                "entries": [
+                  "{@item Climber's Kit|SRD52}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

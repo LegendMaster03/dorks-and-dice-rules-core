@@ -1,0 +1,28 @@
+{
+  "id": "item.feed-per-day",
+  "name": "Feed (per day)",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Feed (per day)",
+        "type": "TAH",
+        "rarity": "none",
+        "weight": 10,
+        "value": 5
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Feed (per day)",
+        "type": "TAH|SRD52",
+        "rarity": "none",
+        "weight": 10,
+        "value": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "id": "deity.balder",
+  "name": "Balder",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Balder",
+        "pantheon": "Norse",
+        "alignment": [
+          "N",
+          "G"
+        ],
+        "title": "God of beauty and poetry",
+        "domains": [
+          "Life",
+          "Light"
+        ],
+        "symbol": "Gem-encrusted silver chalice"
+      }
+    }
+  ]
+}

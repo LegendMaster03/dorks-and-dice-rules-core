@@ -1,0 +1,175 @@
+{
+  "id": "item.staff-of-swarming-insects",
+  "name": "Staff of Swarming Insects",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Staff of Swarming Insects",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": "by a bard, cleric, druid, sorcerer, warlock, or wizard",
+        "reqAttuneTags": [
+          {
+            "class": "bard"
+          },
+          {
+            "class": "cleric"
+          },
+          {
+            "class": "druid"
+          },
+          {
+            "class": "sorcerer"
+          },
+          {
+            "class": "warlock"
+          },
+          {
+            "class": "wizard"
+          }
+        ],
+        "weight": 4,
+        "weaponCategory": "simple",
+        "property": [
+          "V"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "B",
+        "dmg2": "1d8",
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d6 + 4}",
+        "charges": 10,
+        "staff": true,
+        "entries": [
+          "This staff has 10 charges and regains {@dice 1d6 + 4} expended charges daily at dawn. If you expend the last charge, roll a {@dice d20}. On a 1, a {@creature swarm of insects} consumes and destroys the staff, then disperses.",
+          {
+            "name": "Spells",
+            "type": "entries",
+            "entries": [
+              "While holding the staff, you can use an action to expend some of its charges to cast one of the following spells from it, using your spell save DC: {@spell giant insect} (4 charges) or {@spell insect plague} (5 charges)."
+            ]
+          },
+          {
+            "name": "Insect Cloud",
+            "type": "entries",
+            "entries": [
+              "While holding the staff, you can use an action and expend 1 charge to cause a swarm of harmless flying insects to spread out in a 30-foot radius from you. The insects remain for 10 minutes, making the area heavily obscured for creatures other than you. The swarm moves with you, remaining centered on you. A wind of at least 10 miles per hour disperses the swarm and ends the effect."
+            ]
+          }
+        ],
+        "attachedSpells": {
+          "charges": {
+            "4": [
+              "giant insect"
+            ],
+            "5": [
+              "insect plague"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Staff of Swarming Insects",
+        "type": "M|SRD52",
+        "rarity": "rare",
+        "reqAttune": "by a bard, cleric, druid, sorcerer, warlock, or wizard",
+        "reqAttuneTags": [
+          {
+            "class": "bard"
+          },
+          {
+            "class": "cleric"
+          },
+          {
+            "class": "druid"
+          },
+          {
+            "class": "sorcerer"
+          },
+          {
+            "class": "warlock"
+          },
+          {
+            "class": "wizard"
+          }
+        ],
+        "weight": 4,
+        "weaponCategory": "simple",
+        "property": [
+          "V|SRD52"
+        ],
+        "mastery": [
+          "Topple|SRD52"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "B",
+        "dmg2": "1d8",
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d6 + 4}",
+        "charges": 10,
+        "staff": true,
+        "entries": [
+          "This staff has 10 charges.",
+          {
+            "type": "entries",
+            "name": "Insect Cloud",
+            "entries": [
+              "While holding the staff , you can take a {@action Magic|SRD52} action and expend 1 charge to cause a swarm of harmless flying insects to fill a 30-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from you. The insects remain for 10 minutes, making the area {@variantrule Heavily Obscured|SRD52} for creatures other than you. A strong wind (like that created by {@spell Gust of Wind|SRD52}) disperses the swarm and ends the effect."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Spells",
+            "entries": [
+              "While holding the staff, you can cast one of the spells on the following table from it, using your spell save DC and spell attack modifier. The table indicates how many charges you must expend to cast the spell.",
+              {
+                "type": "table",
+                "colStyles": [
+                  "col-10",
+                  "col-2 text-center"
+                ],
+                "colLabels": [
+                  "Spell",
+                  "Charge Cost"
+                ],
+                "rows": [
+                  [
+                    "{@spell Giant Insect|SRD52}",
+                    "4"
+                  ],
+                  [
+                    "{@spell Insect Plague|SRD52}",
+                    "5"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Regaining Charges",
+            "entries": [
+              "The staff regains {@dice 1d6 + 4} expended charges daily at dawn. If you expend the last charge, roll {@dice 1d20}. On a 1, a swarm of insects consumes and destroys the staff, then disperses."
+            ]
+          }
+        ],
+        "attachedSpells": {
+          "charges": {
+            "4": [
+              "giant insect|srd52"
+            ],
+            "5": [
+              "insect plague|srd52"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

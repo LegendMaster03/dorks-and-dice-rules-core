@@ -1,0 +1,41 @@
+{
+  "id": "classFeature.brutal-strike.barbarian.brutal-strike.9",
+  "name": "Brutal Strike",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Brutal Strike",
+        "className": "Barbarian",
+        "classSource": "SRD52",
+        "level": 9,
+        "entries": [
+          "If you use Reckless Attack, you can forgo any {@variantrule Advantage|SRD52} on one Strength-based attack roll of your choice on your turn. The chosen attack roll mustn't have {@variantrule Disadvantage|SRD52}. If the chosen attack roll hits, the target takes an extra {@damage 1d10} damage of the same type dealt by the weapon or {@variantrule Unarmed Strike|SRD52}, and you can cause one Brutal Strike effect of your choice. You have the following effect options.",
+          {
+            "type": "entries",
+            "entries": [
+              {
+                "type": "entries",
+                "name": "Forceful Blow",
+                "entries": [
+                  "The target is pushed 15 feet straight away from you. You can then move up to half your {@variantrule Speed|SRD52} straight toward the target without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}."
+                ]
+              },
+              {
+                "type": "entries",
+                "name": "Hamstring Blow",
+                "entries": [
+                  "The target's {@variantrule Speed|SRD52} is reduced by 15 feet until the start of your next turn. A target can be affected by only one Hamstring Blow at a time—the most recent one."
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian",
+  "classLevel": 9
+}

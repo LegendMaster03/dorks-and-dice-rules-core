@@ -1,0 +1,450 @@
+{
+  "id": "monster.ancient-black-dragon",
+  "name": "Ancient Black Dragon",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ancient Black Dragon",
+        "group": [
+          "Chromatic Dragon"
+        ],
+        "size": [
+          "G"
+        ],
+        "type": "dragon",
+        "alignment": [
+          "C",
+          "E"
+        ],
+        "ac": [
+          {
+            "ac": 22,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 367,
+          "formula": "21d20 + 147"
+        },
+        "speed": {
+          "walk": 40,
+          "fly": 80,
+          "swim": 40
+        },
+        "str": 27,
+        "dex": 14,
+        "con": 25,
+        "int": 16,
+        "wis": 15,
+        "cha": 19,
+        "save": {
+          "dex": "+9",
+          "con": "+14",
+          "wis": "+9",
+          "cha": "+11"
+        },
+        "skill": {
+          "perception": "+16",
+          "stealth": "+9"
+        },
+        "senses": [
+          "blindsight 60 ft.",
+          "darkvision 120 ft."
+        ],
+        "passive": 26,
+        "immune": [
+          "acid"
+        ],
+        "languages": [
+          "Common",
+          "Draconic"
+        ],
+        "cr": "21",
+        "trait": [
+          {
+            "name": "Amphibious",
+            "entries": [
+              "The dragon can breathe air and water."
+            ]
+          },
+          {
+            "name": "Legendary Resistance (3/Day)",
+            "entries": [
+              "If the dragon fails a saving throw, it can choose to succeed instead."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+            ]
+          },
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 15} to hit, reach 15 ft., one target. {@h}19 ({@damage 2d10 + 8}) piercing damage plus 9 ({@damage 2d8}) acid damage."
+            ]
+          },
+          {
+            "name": "Claw",
+            "entries": [
+              "{@atk mw} {@hit 15} to hit, reach 10 ft., one target. {@h}15 ({@damage 2d6 + 8}) slashing damage."
+            ]
+          },
+          {
+            "name": "Tail",
+            "entries": [
+              "{@atk mw} {@hit 15} to hit, reach 20 ft., one target. {@h}17 ({@damage 2d8 + 8}) bludgeoning damage."
+            ]
+          },
+          {
+            "name": "Frightful Presence",
+            "entries": [
+              "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 19} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+            ]
+          },
+          {
+            "name": "Acid Breath {@recharge 5}",
+            "entries": [
+              "The dragon exhales acid in a 90-foot line that is 10 feet wide. Each creature in that line must make a {@dc 22} Dexterity saving throw, taking 67 ({@damage 15d8}) acid damage on a failed save, or half as much damage on a successful one."
+            ]
+          }
+        ],
+        "legendary": [
+          {
+            "name": "Detect",
+            "entries": [
+              "The dragon makes a Wisdom ({@skill Perception}) check."
+            ]
+          },
+          {
+            "name": "Tail Attack",
+            "entries": [
+              "The dragon makes a tail attack."
+            ]
+          },
+          {
+            "name": "Wing Attack (Costs 2 Actions)",
+            "entries": [
+              "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 23} Dexterity saving throw or take 15 ({@damage 2d6 + 8}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+            ]
+          }
+        ],
+        "environment": [
+          "swamp"
+        ],
+        "dragonCastingColor": "black",
+        "dragonAge": "ancient",
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/black-dragon.opus"
+        },
+        "traitTags": [
+          "Amphibious",
+          "Legendary Resistances"
+        ],
+        "senseTags": [
+          "B",
+          "SD"
+        ],
+        "actionTags": [
+          "Breath Weapon",
+          "Frightful Presence",
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "DR"
+        ],
+        "damageTags": [
+          "A",
+          "B",
+          "P",
+          "S"
+        ],
+        "damageTagsLegendary": [
+          "I",
+          "P"
+        ],
+        "miscTags": [
+          "AOE",
+          "MW",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "frightened",
+          "prone"
+        ],
+        "conditionInflictLegendary": [
+          "poisoned",
+          "prone",
+          "restrained"
+        ],
+        "savingThrowForced": [
+          "dexterity",
+          "wisdom"
+        ],
+        "savingThrowForcedLegendary": [
+          "constitution",
+          "strength"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Ancient Black Dragon",
+            "_copy": {
+              "name": "Black Dragon",
+              "source": "SRD51"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ancient Black Dragon",
+        "group": [
+          "Chromatic Dragons"
+        ],
+        "size": [
+          "G"
+        ],
+        "type": {
+          "type": "dragon",
+          "tags": [
+            "chromatic"
+          ]
+        },
+        "alignment": [
+          "C",
+          "E"
+        ],
+        "ac": [
+          22
+        ],
+        "hp": {
+          "average": 367,
+          "formula": "21d20 + 147"
+        },
+        "speed": {
+          "walk": 40,
+          "fly": 80,
+          "swim": 40
+        },
+        "initiative": {
+          "proficiency": 2
+        },
+        "str": 27,
+        "dex": 14,
+        "con": 25,
+        "int": 16,
+        "wis": 15,
+        "cha": 22,
+        "save": {
+          "dex": "+9",
+          "wis": "+9"
+        },
+        "skill": {
+          "perception": "+16",
+          "stealth": "+9"
+        },
+        "senses": [
+          "Blindsight 60 ft.",
+          "Darkvision 120 ft."
+        ],
+        "passive": 26,
+        "immune": [
+          "acid"
+        ],
+        "languages": [
+          "Common",
+          "Draconic"
+        ],
+        "cr": {
+          "cr": "21",
+          "xpLair": 41000
+        },
+        "spellcasting": [
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 21}, {@hit 13} to hit with spell attacks):"
+            ],
+            "will": [
+              "{@spell Detect Magic|SRD52}",
+              "{@spell Fear|SRD52}",
+              "{@spell Melf's Acid Arrow|SRD52} (level 4 version)"
+            ],
+            "daily": {
+              "1e": [
+                "{@spell Create Undead|SRD52}",
+                "{@spell Speak with Dead|SRD52}",
+                "{@spell Vitriolic Sphere|SRD52} (level 5 version)"
+              ]
+            },
+            "ability": "cha",
+            "displayAs": "action"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Amphibious",
+            "entries": [
+              "The dragon can breathe air and water."
+            ]
+          },
+          {
+            "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+            "entries": [
+              "If the dragon fails a saving throw, it can choose to succeed instead."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Melf's Acid Arrow|SRD52} (level 4 version)."
+            ]
+          },
+          {
+            "name": "Rend",
+            "entries": [
+              "{@atkr m} {@hit 15}, reach 15 ft. {@h}17 ({@damage 2d8 + 8}) Slashing damage plus 9 ({@damage 2d8}) Acid damage."
+            ]
+          },
+          {
+            "name": "Acid Breath {@recharge 5}",
+            "entries": [
+              "{@actSave dex} {@dc 22}, each creature in a 90-foot-long, 10-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 67 ({@damage 15d8}) Acid damage. {@actSaveSuccess} Half damage."
+            ]
+          }
+        ],
+        "legendaryActionsLair": 4,
+        "legendary": [
+          {
+            "name": "Cloud of Insects",
+            "entries": [
+              "{@actSave dex} {@dc 21}, one creature the dragon can see within 120 feet. {@actSaveFail} 33 ({@damage 6d10}) Poison damage, and the target has {@variantrule Disadvantage|SRD52} on saving throws to maintain {@status Concentration|SRD52} until the end of its next turn. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+            ]
+          },
+          {
+            "name": "Frightful Presence",
+            "entries": [
+              "The dragon uses Spellcasting to cast {@spell Fear|SRD52}. The dragon can't take this action again until the start of its next turn."
+            ]
+          },
+          {
+            "name": "Pounce",
+            "entries": [
+              "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+            ]
+          }
+        ],
+        "environment": [
+          "swamp"
+        ],
+        "treasure": [
+          "relics"
+        ],
+        "dragonAge": "ancient",
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/black-dragon.opus"
+        },
+        "traitTags": [
+          "Amphibious",
+          "Legendary Resistances"
+        ],
+        "senseTags": [
+          "B",
+          "SD"
+        ],
+        "actionTags": [
+          "Breath Weapon",
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "DR"
+        ],
+        "damageTags": [
+          "A",
+          "I",
+          "S"
+        ],
+        "damageTagsSpell": [
+          "A"
+        ],
+        "spellcastingTags": [
+          "O"
+        ],
+        "miscTags": [
+          "MA",
+          "RCH"
+        ],
+        "conditionInflictSpell": [
+          "frightened"
+        ],
+        "savingThrowForced": [
+          "dexterity"
+        ],
+        "savingThrowForcedLegendary": [
+          "constitution"
+        ],
+        "savingThrowForcedSpell": [
+          "dexterity",
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Ancient Black Dragon",
+            "_copy": {
+              "name": "Black Dragons",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "Ancient black dragons plot the ruin of whole realms. They seek magic to corrupt the land, raise undead hordes, bind fiends, and replicate magical disasters. Ancient black dragons strive to create vast, dead domains where they are the greatest things that remain."
+                      ]
+                    }
+                  ]
+                },
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Ancient Black Dragon.webp"
+                      },
+                      "title": "As terrifying as it is titanic, an ancient black dragon eradicates unwanted life in its despoiled territory",
+                      "credit": "Martin Mottet",
+                      "width": 1978,
+                      "height": 2560
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

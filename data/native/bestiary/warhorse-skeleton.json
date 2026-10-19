@@ -1,0 +1,187 @@
+{
+  "id": "monster.warhorse-skeleton",
+  "name": "Warhorse Skeleton",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Warhorse Skeleton",
+        "size": [
+          "L"
+        ],
+        "type": "undead",
+        "alignment": [
+          "L",
+          "E"
+        ],
+        "ac": [
+          {
+            "ac": 13,
+            "from": [
+              "barding scraps"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 22,
+          "formula": "3d10 + 6"
+        },
+        "speed": {
+          "walk": 60
+        },
+        "str": 18,
+        "dex": 12,
+        "con": 15,
+        "int": 2,
+        "wis": 8,
+        "cha": 5,
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 9,
+        "immune": [
+          "poison"
+        ],
+        "vulnerable": [
+          "bludgeoning"
+        ],
+        "conditionImmune": [
+          "exhaustion",
+          "poisoned"
+        ],
+        "cr": "1/2",
+        "action": [
+          {
+            "name": "Hooves",
+            "entries": [
+              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) bludgeoning damage."
+            ]
+          }
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/warhorse-skeleton.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Warhorse Skeleton",
+            "_copy": {
+              "name": "Skeleton",
+              "source": "SRD51"
+            },
+            "images": null
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Warhorse Skeleton",
+        "size": [
+          "L"
+        ],
+        "type": "undead",
+        "alignment": [
+          "L",
+          "E"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 22,
+          "formula": "3d10 + 6"
+        },
+        "speed": {
+          "walk": 60
+        },
+        "str": 18,
+        "dex": 12,
+        "con": 15,
+        "int": 2,
+        "wis": 8,
+        "cha": 5,
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 9,
+        "immune": [
+          "poison"
+        ],
+        "vulnerable": [
+          "bludgeoning"
+        ],
+        "conditionImmune": [
+          "exhaustion",
+          "poisoned"
+        ],
+        "cr": "1/2",
+        "action": [
+          {
+            "name": "Hooves",
+            "entries": [
+              "{@atkr m} {@hit 6}, reach 5 ft. {@h}7 ({@damage 1d6 + 4}) Bludgeoning damage. If the target is a Large or smaller creature and the skeleton moved 20+ feet straight toward it immediately before the hit, the target has the {@condition Prone|SRD52} condition."
+            ]
+          }
+        ],
+        "environment": [
+          "planar, shadowfell",
+          "underdark",
+          "urban"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/warhorse-skeleton.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "conditionInflict": [
+          "prone"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Warhorse Skeleton",
+            "_copy": {
+              "name": "Skeletons",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "Warhorse skeletons are obedient, supernatural steeds bearing the rotted remains of the barding they wore in life. They're often ridden by the corpses of their former riders."
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

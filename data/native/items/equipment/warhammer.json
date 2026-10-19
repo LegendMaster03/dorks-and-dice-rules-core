@@ -1,0 +1,49 @@
+{
+  "id": "baseitem.warhammer",
+  "name": "Warhammer",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Warhammer",
+        "type": "M",
+        "rarity": "none",
+        "weight": 2,
+        "value": 1500,
+        "weaponCategory": "martial",
+        "property": [
+          "V"
+        ],
+        "dmg1": "1d8",
+        "dmgType": "B",
+        "dmg2": "1d10",
+        "hammer": true,
+        "weapon": true
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Warhammer",
+        "type": "M|SRD52",
+        "rarity": "none",
+        "weight": 5,
+        "value": 1500,
+        "weaponCategory": "martial",
+        "property": [
+          "V|SRD52"
+        ],
+        "mastery": [
+          "Push|SRD52"
+        ],
+        "dmg1": "1d8",
+        "dmgType": "B",
+        "dmg2": "1d10",
+        "hammer": true,
+        "weapon": true
+      }
+    }
+  ]
+}

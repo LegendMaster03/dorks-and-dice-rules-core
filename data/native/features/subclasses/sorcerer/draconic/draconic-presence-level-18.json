@@ -1,0 +1,30 @@
+{
+  "id": "subclassFeature.draconic-presence.sorcerer.draconic.draconic-presence.18",
+  "name": "Draconic Presence",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Draconic Presence",
+        "className": "Sorcerer",
+        "classSource": "SRD51",
+        "subclassShortName": "Draconic",
+        "subclassSource": "SRD51",
+        "level": 18,
+        "header": 2,
+        "consumes": {
+          "name": "Sorcery Point",
+          "amount": 5
+        },
+        "entries": [
+          "Beginning at 18th level, you can channel the dread presence of your dragon ancestor, causing those around you to become awestruck or {@condition frightened}. As an action, you can spend 5 sorcery points to draw on this power and exude an aura of awe or fear (your choice) to a distance of 60 feet. For 1 minute or until you lose your {@status concentration} (as if you were casting a {@status concentration} spell), each hostile creature that starts its turn in this aura must succeed on a Wisdom saving throw or be {@condition charmed} (if you chose awe) or {@condition frightened} (if you chose fear) until the aura ends. A creature that succeeds on this saving throw is immune to your aura for 24 hours."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.sorcerer",
+  "parentSubclass": "draconic",
+  "classLevel": 18
+}

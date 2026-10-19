@@ -1,0 +1,398 @@
+{
+  "id": "monster.cloaker",
+  "name": "Cloaker",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Cloaker",
+        "size": [
+          "L"
+        ],
+        "type": "aberration",
+        "alignment": [
+          "C",
+          "N"
+        ],
+        "ac": [
+          {
+            "ac": 14,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 78,
+          "formula": "12d10 + 12"
+        },
+        "speed": {
+          "walk": 10,
+          "fly": 40
+        },
+        "str": 17,
+        "dex": 15,
+        "con": 12,
+        "int": 13,
+        "wis": 12,
+        "cha": 14,
+        "skill": {
+          "stealth": "+5"
+        },
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 11,
+        "languages": [
+          "Deep Speech",
+          "Undercommon"
+        ],
+        "cr": "8",
+        "trait": [
+          {
+            "name": "Damage Transfer",
+            "entries": [
+              "While attached to a creature, the cloaker takes only half the damage dealt to it (rounded down), and that creature takes the other half."
+            ]
+          },
+          {
+            "name": "False Appearance",
+            "entries": [
+              "While the cloaker remains motionless without its underside exposed, it is indistinguishable from a dark leather cloak."
+            ]
+          },
+          {
+            "name": "Light Sensitivity",
+            "entries": [
+              "While in bright light, the cloaker has disadvantage on attack rolls and Wisdom ({@skill Perception}) checks that rely on sight."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The cloaker makes two attacks: one with its bite and one with its tail."
+            ]
+          },
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 6} to hit, reach 5 ft., one creature. {@h}10 ({@damage 2d6 + 3}) piercing damage, and if the target is Large or smaller, the cloaker attaches to it. If the cloaker has advantage against the target, the cloaker attaches to the target's head, and the target is {@condition blinded} and unable to breathe while the cloaker is attached. While attached, the cloaker can make this attack only against the target and has advantage on the attack roll. The cloaker can detach itself by spending 5 feet of its movement. A creature, including the target, can take its action to detach the cloaker by succeeding on a {@dc 16} Strength check."
+            ]
+          },
+          {
+            "name": "Tail",
+            "entries": [
+              "{@atk mw} {@hit 6} to hit, reach 10 ft., one creature. {@h}7 ({@damage 1d8 + 3}) slashing damage."
+            ]
+          },
+          {
+            "name": "Moan",
+            "entries": [
+              "Each creature within 60 feet of the cloaker that can hear its moan and that isn't an aberration must succeed on a {@dc 13} Wisdom saving throw or become {@condition frightened} until the end of the cloaker's next turn. If a creature's saving throw is successful, the creature is immune to the cloaker's moan for the next 24 hours."
+            ]
+          },
+          {
+            "name": "Phantasms (Recharges after a Short or Long Rest)",
+            "entries": [
+              "The cloaker magically creates three illusory duplicates of itself if it isn't in bright light. The duplicates move with it and mimic its actions, shifting position so as to make it impossible to track which cloaker is the real one. If the cloaker is ever in an area of bright light, the duplicates disappear.",
+              "Whenever any creature targets the cloaker with an attack or a harmful spell while a duplicate remains, that creature rolls randomly to determine whether it targets the cloaker or one of the duplicates. A creature is unaffected by this magical effect if it can't see or if it relies on senses other than sight.",
+              "A duplicate has the cloaker's AC and uses its saving throws. If an attack hits a duplicate, or if a duplicate fails a saving throw against an effect that deals damage, the duplicate disappears."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/cloaker.opus"
+        },
+        "traitTags": [
+          "False Appearance",
+          "Light Sensitivity"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "DS",
+          "U"
+        ],
+        "damageTags": [
+          "P",
+          "S"
+        ],
+        "miscTags": [
+          "AOE",
+          "MW",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "blinded",
+          "frightened"
+        ],
+        "savingThrowForced": [
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Cloaker",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Cloakers earned their names for the resemblance they bear to dark leathery cloaks. Lurking in remote dungeons and caves, these stealthy predators wait to slay lone or injured prey stumbling through the darkness.",
+                      {
+                        "name": "Camouflaged Lurkers",
+                        "type": "entries",
+                        "entries": [
+                          "Like a stingray, a cloaker's body is composed of cartilage and muscle. With its tail and fins unfurled, it flies through darkness and lurks among the shadows of caverns the same way a stingray glides through water and hides on the ocean floor. Parallel rows of round, black eyespots run along its back like buttons, and the ivory-colored claws on its cowl resemble bone clasps.",
+                          "When a cloaker unfurls and moves to attack, it reveals its pale underside and makes its true nature evident. Red eyes glow above rows of sharp teeth, and a long pendulous tail whips behind it."
+                        ]
+                      },
+                      {
+                        "name": "Opportunistic Predators",
+                        "type": "entries",
+                        "entries": [
+                          "When hunting, cloakers glide through the shadows at a safe distance behind groups of other creatures traversing the Underdark. They follow parties of humanoids to prey on the wounded after a battle, or pursue herds of Underdark beasts, attacking the sick, the weak, or the straggling.",
+                          "Cloakers strike quickly and consume their meals as swiftly as possible, enveloping and devouring their victims. While it feeds, a cloaker uses its swift, whiplike tail for defense, although it rarely takes a stand against dangerous foes or groups of creatures. As an added defense, cloakers can create illusory duplicates of themselves."
+                        ]
+                      },
+                      {
+                        "name": "Haunting Moan",
+                        "type": "entries",
+                        "entries": [
+                          "Cloakers' thoughts are alien to other life-forms, and they communicate with one another through subsonic moans inaudible to most creatures. At higher intensities, a cloaker's haunting moan becomes audible, evoking sensations of doom and dread in creatures that hear it."
+                        ]
+                      },
+                      {
+                        "name": "Cloaker Conclaves",
+                        "type": "entries",
+                        "entries": [
+                          "Cloakers prefer isolation, but they sometimes convene with other cloakers for defense or to exchange information about new dangers, suitable hunting grounds, or developments that might affect their habitats. When this convergence is complete, the cloakers separate again."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Cloaker.webp"
+                },
+                "credit": "Mark Behm",
+                "width": 916,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Cloaker",
+        "size": [
+          "L"
+        ],
+        "type": "aberration",
+        "alignment": [
+          "C",
+          "N"
+        ],
+        "ac": [
+          14
+        ],
+        "hp": {
+          "average": 91,
+          "formula": "14d10 + 14"
+        },
+        "speed": {
+          "walk": 10,
+          "fly": 40
+        },
+        "initiative": {
+          "proficiency": 1
+        },
+        "str": 17,
+        "dex": 15,
+        "con": 12,
+        "int": 13,
+        "wis": 14,
+        "cha": 7,
+        "skill": {
+          "stealth": "+5"
+        },
+        "senses": [
+          "Darkvision 120 ft."
+        ],
+        "passive": 12,
+        "conditionImmune": [
+          "frightened"
+        ],
+        "languages": [
+          "Deep Speech",
+          "Undercommon"
+        ],
+        "cr": "8",
+        "spellcasting": [
+          {
+            "name": "Phantasms (Recharge after a Short or Long Rest)",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The cloaker casts the {@spell Mirror Image|SRD52} spell, requiring no spell components and using Wisdom as the spellcasting ability. The spell ends early if the cloaker starts or ends its turn in {@variantrule Bright Light|SRD52}."
+            ],
+            "will": [
+              "{@spell Mirror Image|SRD52}"
+            ],
+            "ability": "wis",
+            "displayAs": "bonus",
+            "hidden": [
+              "will"
+            ]
+          }
+        ],
+        "trait": [
+          {
+            "name": "Light Sensitivity",
+            "entries": [
+              "While in {@variantrule Bright Light|SRD52}, the cloaker has {@variantrule Disadvantage|SRD52} on attack rolls."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The cloaker makes one Attach attack and two Tail attacks."
+            ]
+          },
+          {
+            "name": "Attach",
+            "entries": [
+              "{@atkr m} {@hit 6}, reach 5 ft. {@h}13 ({@damage 3d6 + 3}) Piercing damage. If the target is a Large or smaller creature, the cloaker attaches to it. While the cloaker is attached, the target has the {@condition Blinded|SRD52} condition, and the cloaker can't make Attach attacks against other targets. In addition, the cloaker halves the damage it takes (round down), and the target takes the same amount of damage.",
+              "The cloaker can detach itself by spending 5 feet of movement. The target or a creature within 5 feet of it can take an action to try to detach the cloaker, doing so by succeeding on a {@dc 14} Strength ({@skill Athletics|SRD52}) check."
+            ]
+          },
+          {
+            "name": "Tail",
+            "entries": [
+              "{@atkr m} {@hit 6}, reach 10 ft. {@h}8 ({@damage 1d10 + 3}) Slashing damage."
+            ]
+          }
+        ],
+        "bonus": [
+          {
+            "name": "Moan",
+            "entries": [
+              "{@actSave wis} {@dc 13}, each creature in a 60-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the cloaker. {@actSaveFail} The target has the {@condition Frightened|SRD52} condition until the end of the cloaker's next turn. {@actSaveSuccess} The target is immune to this cloaker's Moan for the next 24 hours."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark"
+        ],
+        "treasure": [
+          "implements"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/cloaker.opus"
+        },
+        "traitTags": [
+          "Light Sensitivity"
+        ],
+        "senseTags": [
+          "SD"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "DS",
+          "U"
+        ],
+        "damageTags": [
+          "P",
+          "S"
+        ],
+        "spellcastingTags": [
+          "O"
+        ],
+        "miscTags": [
+          "MA",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "blinded",
+          "frightened"
+        ],
+        "savingThrowForced": [
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Cloaker",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Cloaker",
+                "entries": [
+                  "{@i Haunter in the Dark}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Underdark|bestiary|environment=underdark}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Implements"
+                      }
+                    ]
+                  },
+                  "Cloakers are mysterious Underdark predators, named by adventurers for their resemblance to hanging cloaks when they cling to walls. What cloakers call themselves is unknown, if they refer to themselves at all. Though they're undeniably intelligent, their behavior is often inscrutable.",
+                  "Cloakers sometimes gather in Underdark enclaves, but they rarely build settlements or form social structures. Most operate as solitary predators, lurking in dismal subterranean reaches or abandoned dungeons—sometimes for months at a time—as they wait for prey to pass. They use their mottled hides to blend in with their surroundings. When unsuspecting prey nears, cloakers unfurl and attempt to latch on and then smother their victims in their powerful wings.",
+                  "Cloakers delight in frightening foes. In addition to their methods of ambush, cloakers can create illusory duplicates of themselves and emit surreal moans that non-cloakers find terrifying in unexplainable, primal ways. Cloakers might antagonize explorers lost in the Underdark for days, terrorizing and scattering them before attacking. They rarely converse with other beings, except to whisper eerie riddles to those they're about to consume."
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Cloaker.webp"
+                },
+                "credit": "Alex Stone",
+                "width": 1330,
+                "height": 1551
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

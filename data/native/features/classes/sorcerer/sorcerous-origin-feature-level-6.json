@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.sorcerous-origin-feature.sorcerer.sorcerous-origin-feature.6",
+  "name": "Sorcerous Origin feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Sorcerous Origin feature",
+        "className": "Sorcerer",
+        "classSource": "SRD51",
+        "level": 6,
+        "entries": [
+          "At 6th level, you gain a feature granted by your Sorcerous Origin."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.sorcerer",
+  "classLevel": 6
+}

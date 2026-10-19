@@ -1,0 +1,28 @@
+{
+  "id": "item.sled",
+  "name": "Sled",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Sled",
+        "type": "VEH",
+        "rarity": "none",
+        "weight": 300,
+        "value": 2000
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Sled",
+        "type": "VEH|SRD52",
+        "rarity": "none",
+        "weight": 300,
+        "value": 2000
+      }
+    }
+  ]
+}

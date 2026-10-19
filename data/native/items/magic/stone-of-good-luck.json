@@ -1,0 +1,43 @@
+{
+  "id": "item.stone-of-good-luck",
+  "name": "Stone of Good Luck",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Stone of Good Luck",
+        "alias": [
+          "Luckstone"
+        ],
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "bonusSavingThrow": "+1",
+        "bonusAbilityCheck": "+1",
+        "entries": [
+          "While this polished agate is on your person, you gain a +1 bonus to ability checks and saving throws."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Stone of Good Luck",
+        "alias": [
+          "Luckstone"
+        ],
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "bonusSavingThrow": "+1",
+        "bonusAbilityCheck": "+1",
+        "entries": [
+          "While this polished agate is on your person, you gain a +1 bonus to ability checks and saving throws."
+        ]
+      }
+    }
+  ]
+}

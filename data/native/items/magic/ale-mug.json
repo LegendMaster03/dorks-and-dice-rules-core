@@ -1,0 +1,32 @@
+{
+  "id": "item.ale-mug",
+  "name": "Ale (mug)",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ale (mug)",
+        "type": "FD",
+        "rarity": "none",
+        "value": 4,
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ale (mug)",
+        "type": "FD|SRD52",
+        "rarity": "none",
+        "value": 4,
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

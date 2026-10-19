@@ -1,0 +1,408 @@
+{
+  "id": "monster.clay-golem",
+  "name": "Clay Golem",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Clay Golem",
+        "size": [
+          "L"
+        ],
+        "type": "construct",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          {
+            "ac": 14,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 133,
+          "formula": "14d10 + 56"
+        },
+        "speed": {
+          "walk": 20
+        },
+        "str": 20,
+        "dex": 9,
+        "con": 18,
+        "int": 3,
+        "wis": 8,
+        "cha": 1,
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 9,
+        "immune": [
+          "acid",
+          "poison",
+          "psychic",
+          {
+            "immune": [
+              "bludgeoning",
+              "piercing",
+              "slashing"
+            ],
+            "note": "from nonmagical attacks that aren't adamantine",
+            "cond": true
+          }
+        ],
+        "conditionImmune": [
+          "charmed",
+          "exhaustion",
+          "frightened",
+          "paralyzed",
+          "petrified",
+          "poisoned"
+        ],
+        "languages": [
+          "understands the languages of its creator but can't speak"
+        ],
+        "cr": "9",
+        "trait": [
+          {
+            "name": "Acid Absorption",
+            "entries": [
+              "Whenever the golem is subjected to acid damage, it takes no damage and instead regains a number of hit points equal to the acid damage dealt."
+            ]
+          },
+          {
+            "name": "Berserk",
+            "entries": [
+              "Whenever the golem starts its turn with 60 hit points or fewer, roll a {@dice d6}. On a 6, the golem goes berserk. On each of its turns while berserk, the golem attacks the nearest creature it can see. If no creature is near enough to move to and attack, the golem attacks an object, with preference for an object smaller than itself. Once the golem goes berserk, it continues to do so until it is destroyed or regains all its hit points."
+            ]
+          },
+          {
+            "name": "Immutable Form",
+            "entries": [
+              "The golem is immune to any spell or effect that would alter its form."
+            ]
+          },
+          {
+            "name": "Magic Resistance",
+            "entries": [
+              "The golem has advantage on saving throws against spells and other magical effects."
+            ]
+          },
+          {
+            "name": "Magic Weapons",
+            "entries": [
+              "The golem's weapon attacks are magical."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The golem makes two slam attacks."
+            ]
+          },
+          {
+            "name": "Slam",
+            "entries": [
+              "{@atk mw} {@hit 8} to hit, reach 5 ft., one target. {@h}16 ({@damage 2d10 + 5}) bludgeoning damage. If the target is a creature, it must succeed on a {@dc 15} Constitution saving throw or have its hit point maximum reduced by an amount equal to the damage taken. The target dies if this attack reduces its hit point maximum to 0. The reduction lasts until removed by the {@spell greater restoration} spell or other magic."
+            ]
+          },
+          {
+            "name": "Haste {@recharge 5}",
+            "entries": [
+              "Until the end of its next turn, the golem magically gains a +2 bonus to its AC, has advantage on Dexterity saving throws, and can use its slam attack as a bonus action."
+            ]
+          }
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/clay-golem.opus"
+        },
+        "traitTags": [
+          "Damage Absorption",
+          "Immutable Form",
+          "Magic Resistance",
+          "Magic Weapons"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "CS"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "savingThrowForced": [
+          "constitution"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Clay Golem",
+            "_copy": {
+              "name": "Golems",
+              "source": "SRD51",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    "Sculpted from clay, this bulky golem stands head and shoulders taller than most human-sized creatures. It is human shaped, but its proportions are off.",
+                    "Clay golems are often divinely endowed with purpose by priests of great faith. However, clay is a weak vessel for life force. If the golem is damaged, the elemental spirit bound into it can break free. Such a golem runs amok, smashing everything around it until it is destroyed or completely repaired.",
+                    {
+                      "type": "insetReadaloud",
+                      "entries": [
+                        {
+                          "type": "quote",
+                          "entries": [
+                            "The more rigid its physical form, the less likely the golem is to lose its sense of purpose. The clay ones can be a bit twitchy."
+                          ],
+                          "by": "Words of warning in the {@style Manual of Clay Golems|small-caps}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Clay Golem.webp"
+                },
+                "width": 831,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Clay Golem",
+        "size": [
+          "L"
+        ],
+        "type": "construct",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          14
+        ],
+        "hp": {
+          "average": 123,
+          "formula": "13d10 + 52"
+        },
+        "speed": {
+          "walk": 20
+        },
+        "initiative": {
+          "proficiency": 1
+        },
+        "str": 20,
+        "dex": 9,
+        "con": 18,
+        "int": 3,
+        "wis": 8,
+        "cha": 1,
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 9,
+        "resist": [
+          "bludgeoning",
+          "piercing",
+          "slashing"
+        ],
+        "immune": [
+          "acid",
+          "poison",
+          "psychic"
+        ],
+        "conditionImmune": [
+          "charmed",
+          "exhaustion",
+          "frightened",
+          "paralyzed",
+          "petrified",
+          "poisoned"
+        ],
+        "languages": [
+          "Common plus one other language"
+        ],
+        "cr": "9",
+        "trait": [
+          {
+            "name": "Acid Absorption",
+            "entries": [
+              "Whenever the golem is subjected to Acid damage, it takes no damage and instead regains a number of {@variantrule Hit Points|SRD52} equal to the Acid damage dealt."
+            ]
+          },
+          {
+            "name": "Berserk",
+            "entries": [
+              "Whenever the golem starts its turn {@status Bloodied|SRD52}, roll {@dice 1d6}. On a 6, the golem goes berserk. On each of its turns while berserk, the golem attacks the nearest creature it can see. If no creature is near enough to move to and attack, the golem attacks an object. Once the golem goes berserk, it continues to be berserk until it is destroyed or it is no longer {@status Bloodied|SRD52}."
+            ]
+          },
+          {
+            "name": "Immutable Form",
+            "entries": [
+              "The golem can't shape-shift."
+            ]
+          },
+          {
+            "name": "Magic Resistance",
+            "entries": [
+              "The golem has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The golem makes two Slam attacks, or it makes three Slam attacks if it used Hasten this turn."
+            ]
+          },
+          {
+            "name": "Slam",
+            "entries": [
+              "{@atkr m} {@hit 9}, reach 5 ft. {@h}10 ({@damage 1d10 + 5}) Bludgeoning damage plus 6 ({@damage 1d12}) Acid damage, and the target's {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by an amount equal to the Acid damage taken."
+            ]
+          }
+        ],
+        "bonus": [
+          {
+            "name": "Hasten {@recharge 5}",
+            "entries": [
+              "The golem takes the {@action Dash|SRD52} and {@action Disengage|SRD52} actions."
+            ]
+          }
+        ],
+        "environment": [
+          "urban"
+        ],
+        "treasure": [
+          "relics"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/clay-golem.opus"
+        },
+        "traitTags": [
+          "Damage Absorption",
+          "Immutable Form",
+          "Magic Resistance"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "X"
+        ],
+        "damageTags": [
+          "A",
+          "B"
+        ],
+        "miscTags": [
+          "HPR",
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Clay Golem",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Clay Golem",
+                "entries": [
+                  "{@i Guardian of Home and Heart}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Urban|bestiary|environment=urban}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Relics"
+                      }
+                    ]
+                  },
+                  "Clay golems are magical defenders made from earth and clay to protect places or communities. The materials used in creating clay golems originate from near the location the golems protect and often have special significance to their creators, such as clay from a holy site or bricks from a magical ruin. While some clay golems are masterfully sculpted to resemble living beings, others have only vaguely humanlike forms.",
+                  "These golems obey their creators' orders and protect what their makers value most. Some still follow these orders long after their creators' deaths. Roll on or choose a result from the Clay Golem Orders table to inspire the commands a clay golem follows.",
+                  {
+                    "type": "table",
+                    "caption": "Clay Golem Orders",
+                    "colLabels": [
+                      "1d4",
+                      "The Clay Golem Follows Orders To..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "Block the path of anyone who enters a site with a weapon drawn."
+                      ],
+                      [
+                        "2",
+                        "Defend any member of their creator's family or community who is threatened in its sight."
+                      ],
+                      [
+                        "3",
+                        "Prevent any Fiend from crossing a bridge."
+                      ],
+                      [
+                        "4",
+                        "Remove any who enter its creator's workshop."
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Clay Golem.webp"
+                },
+                "credit": "Hinchel Or",
+                "width": 1400,
+                "height": 1750
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "rule.monsters-u",
+  "name": "Monsters (U)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (U)",
+        "page": 351,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Unicorn|srd51}"
+            ]
+          }
+        ],
+        "id": "1b7"
+      }
+    }
+  ]
+}

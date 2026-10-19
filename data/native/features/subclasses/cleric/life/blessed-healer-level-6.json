@@ -1,0 +1,41 @@
+{
+  "id": "subclassFeature.blessed-healer.cleric.life.blessed-healer.6",
+  "name": "Blessed Healer",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Blessed Healer",
+        "className": "Cleric",
+        "classSource": "SRD51",
+        "subclassShortName": "Life",
+        "subclassSource": "SRD51",
+        "level": 6,
+        "header": 2,
+        "entries": [
+          "Beginning at 6th level, the healing spells you cast on others heal you as well. When you cast a spell of 1st level or higher that restores hit points to a creature other than you, you regain hit points equal to 2 + the spell's level."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Blessed Healer",
+        "className": "Cleric",
+        "classSource": "SRD52",
+        "subclassShortName": "Life",
+        "subclassSource": "SRD52",
+        "level": 6,
+        "header": 2,
+        "entries": [
+          "The healing spells you cast on others heal you as well. Immediately after you cast a spell with a spell slot that restores {@variantrule Hit Points|SRD52} to one creature other than you, you regain {@variantrule Hit Points|SRD52} equal to 2 plus the spell slot's level."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "parentSubclass": "life",
+  "classLevel": 6
+}

@@ -1,0 +1,34 @@
+{
+  "id": "classFeature.danger-sense.barbarian.danger-sense.2",
+  "name": "Danger Sense",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Danger Sense",
+        "className": "Barbarian",
+        "classSource": "SRD51",
+        "level": 2,
+        "entries": [
+          "At 2nd level, you gain an uncanny sense of when things nearby aren't as they should be, giving you an edge when you dodge away from danger. You have advantage on Dexterity saving throws against effects that you can see, such as traps and spells. To gain this benefit, you can't be {@condition blinded}, {@condition deafened}, or {@condition incapacitated}."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Danger Sense",
+        "className": "Barbarian",
+        "classSource": "SRD52",
+        "level": 2,
+        "entries": [
+          "You gain an uncanny sense of when things aren't as they should be, giving you an edge when you dodge perils. You have {@variantrule Advantage|SRD52} on Dexterity saving throws unless you have the {@condition Incapacitated|SRD52} condition."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian",
+  "classLevel": 2
+}

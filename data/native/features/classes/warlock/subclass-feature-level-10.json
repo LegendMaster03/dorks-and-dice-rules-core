@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.subclass-feature.warlock.subclass-feature.10",
+  "name": "Subclass Feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Subclass Feature",
+        "className": "Warlock",
+        "classSource": "SRD52",
+        "level": 10,
+        "entries": [
+          "You gain a feature from your Warlock subclass."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.warlock",
+  "classLevel": 10
+}

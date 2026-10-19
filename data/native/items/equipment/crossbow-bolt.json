@@ -1,0 +1,19 @@
+{
+  "id": "baseitem.crossbow-bolt",
+  "name": "Crossbow Bolt",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Crossbow Bolt",
+        "type": "A",
+        "rarity": "none",
+        "weight": 0.075,
+        "value": 5,
+        "bolt": true
+      }
+    }
+  ]
+}

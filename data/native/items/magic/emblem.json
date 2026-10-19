@@ -1,0 +1,37 @@
+{
+  "id": "item.emblem",
+  "name": "Emblem",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Emblem",
+        "group": [
+          "Holy Symbol"
+        ],
+        "type": "SCF",
+        "scfType": "holy",
+        "rarity": "none",
+        "value": 500
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Emblem",
+        "group": [
+          "Holy Symbol"
+        ],
+        "type": "SCF|SRD52",
+        "scfType": "holy",
+        "rarity": "none",
+        "value": 500,
+        "entries": [
+          "For an Emblem to be an effective Holy Symbol, it must be borne on fabric (such as a tabard or banner) or a {@item Shield|SRD52}."
+        ]
+      }
+    }
+  ]
+}

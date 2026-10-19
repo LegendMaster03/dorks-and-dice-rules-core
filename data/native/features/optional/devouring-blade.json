@@ -1,0 +1,35 @@
+{
+  "id": "optionalfeature.devouring-blade",
+  "name": "Devouring Blade",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Devouring Blade",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 12,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            },
+            "optionalfeature": [
+              "thirsting blade|srd52"
+            ]
+          }
+        ],
+        "entries": [
+          "The Extra Attack of your {@optionalfeature Thirsting Blade|SRD52} invocation confers two extra attacks rather than one."
+        ]
+      }
+    }
+  ]
+}

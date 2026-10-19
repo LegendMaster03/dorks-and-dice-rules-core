@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.steady-aim.rogue.steady-aim.3",
+  "name": "Steady Aim",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Steady Aim",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "As a {@variantrule Bonus Action|SRD52}, you give yourself {@variantrule Advantage|SRD52} on your next attack roll on the current turn. You can use this feature only if you haven't moved during this turn, and after you use it, your {@variantrule Speed|SRD52} is 0 until the end of the current turn."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 3
+}

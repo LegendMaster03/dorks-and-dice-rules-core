@@ -1,0 +1,105 @@
+{
+  "id": "item.burglar-s-pack",
+  "name": "Burglar's Pack",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Burglar's Pack",
+        "type": "G",
+        "rarity": "none",
+        "weight": 44.5,
+        "value": 1600,
+        "entries": [
+          "Includes:",
+          {
+            "type": "list",
+            "items": [
+              "a {@item backpack|srd51}",
+              "a {@item Ball Bearings (Bag of 1,000)|srd51|bag of 1,000 ball bearings}",
+              "10 feet of string",
+              "a {@item bell|srd51}",
+              "5 {@item candle|srd51|candles}",
+              "a {@item crowbar|srd51}",
+              "a {@item hammer|srd51}",
+              "10 {@item piton|srd51|pitons}",
+              "a {@item hooded lantern|srd51}",
+              "2 {@item Oil (flask)|srd51|flasks of oil}",
+              "5 days {@item Rations (1 day)|srd51|rations}",
+              "a {@item tinderbox|srd51}",
+              "a {@item waterskin|srd51}",
+              "{@item Hempen Rope (50 feet)|srd51|50 feet of hempen rope}"
+            ]
+          }
+        ],
+        "packContents": [
+          "backpack|srd51",
+          "ball bearings (bag of 1,000)|srd51",
+          {
+            "special": "10 feet of string"
+          },
+          "bell|srd51",
+          {
+            "item": "candle|srd51",
+            "quantity": 5
+          },
+          "crowbar|srd51",
+          "hammer|srd51",
+          {
+            "item": "piton|srd51",
+            "quantity": 10
+          },
+          "hooded lantern|srd51",
+          {
+            "item": "oil (flask)|srd51",
+            "quantity": 2
+          },
+          {
+            "item": "rations (1 day)|srd51",
+            "quantity": 5
+          },
+          "tinderbox|srd51",
+          "waterskin|srd51",
+          "hempen rope (50 feet)|srd51"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Burglar's Pack",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 47.5,
+        "value": 1600,
+        "entries": [
+          "A Burglar's Pack contains the following items: {@item Backpack|SRD52}, {@item Ball Bearings|SRD52}, {@item Bell|SRD52}, 10 {@item Candle|SRD52|Candles}, {@item Crowbar|SRD52}, {@item Hooded Lantern|SRD52}, 7 flasks of {@item Oil|SRD52}, 5 days of {@item Rations|SRD52}, {@item Rope|SRD52}, {@item Tinderbox|SRD52}, and {@item Waterskin|SRD52}."
+        ],
+        "packContents": [
+          "backpack|srd52",
+          "ball bearings|srd52",
+          "bell|srd52",
+          {
+            "item": "candle|srd52",
+            "quantity": 10
+          },
+          "crowbar|srd52",
+          "hooded lantern|srd52",
+          {
+            "item": "oil|srd52",
+            "quantity": 7
+          },
+          {
+            "item": "rations|srd52",
+            "quantity": 5
+          },
+          "rope|srd52",
+          "tinderbox|srd52",
+          "waterskin|srd52"
+        ]
+      }
+    }
+  ]
+}

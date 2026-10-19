@@ -1,0 +1,33 @@
+{
+  "id": "item.cloak-of-displacement",
+  "name": "Cloak of Displacement",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Cloak of Displacement",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": true,
+        "wondrous": true,
+        "entries": [
+          "While you wear this cloak, it projects an illusion that makes you appear to be standing in a place near your actual location, causing any creature to have disadvantage on attack rolls against you. If you take damage, the property ceases to function until the start of your next turn. This property is suppressed while you are {@condition incapacitated}, {@condition restrained}, or otherwise unable to move."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Cloak of Displacement",
+        "rarity": "rare",
+        "reqAttune": true,
+        "wondrous": true,
+        "entries": [
+          "While you wear this cloak, it magically projects an illusion that makes you appear to be standing in a place near your actual location, causing any creature to have {@variantrule Disadvantage|SRD52} on attack rolls against you. If you take damage, the property ceases to function until the start of your next turn. This property is suppressed while your {@variantrule Speed|SRD52} is 0."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.sorcerous-restoration.sorcerer.sorcerous-restoration.20",
+  "name": "Sorcerous Restoration",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Sorcerous Restoration",
+        "className": "Sorcerer",
+        "classSource": "SRD51",
+        "level": 20,
+        "entries": [
+          "At 20th level, you regain 4 expended sorcery points whenever you finish a short rest."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.sorcerer",
+  "classLevel": 20
+}

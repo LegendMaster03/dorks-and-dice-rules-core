@@ -1,0 +1,328 @@
+{
+  "id": "monster.griffon",
+  "name": "Griffon",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Griffon",
+        "size": [
+          "L"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 59,
+          "formula": "7d10 + 21"
+        },
+        "speed": {
+          "walk": 30,
+          "fly": 80
+        },
+        "str": 18,
+        "dex": 15,
+        "con": 16,
+        "int": 2,
+        "wis": 13,
+        "cha": 8,
+        "skill": {
+          "perception": "+5"
+        },
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 15,
+        "cr": "2",
+        "trait": [
+          {
+            "name": "Keen Sight",
+            "entries": [
+              "The griffon has advantage on Wisdom ({@skill Perception}) checks that rely on sight."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The griffon makes two attacks: one with its beak and one with its claws."
+            ]
+          },
+          {
+            "name": "Beak",
+            "entries": [
+              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}8 ({@damage 1d8 + 4}) piercing damage."
+            ]
+          },
+          {
+            "name": "Claws",
+            "entries": [
+              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) slashing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "mountain",
+          "grassland",
+          "hill",
+          "coastal",
+          "arctic"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/griffon.opus"
+        },
+        "traitTags": [
+          "Keen Senses"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "damageTags": [
+          "P",
+          "S"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Griffon",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Griffons are ferocious avian carnivores with the muscular bodies of lions and the head, forelegs, and wings of eagles. When they attack, griffons are as swift and deadly as eagles, even as they strike with a lion's savage might and grace.",
+                      {
+                        "name": "Horse Eaters",
+                        "type": "entries",
+                        "entries": [
+                          "Griffons hunt in small prides, flying high over plains and forests near their rocky cliff-side aeries. Herd animals and horses are the prey they crave above all others, though they also hunt and kill hippogriffs. When it spots horses, a griffon screeches to alert its pride mates, which descend quickly toward their prey.",
+                          "Those riding or herding horses dread the griffon's piercing cry, preparing themselves for the bloody fight that inevitably follows. A griffon ignores a horse's rider when possible, and a rider that abandons its mount, or a herder that releases one or two horses, can escape unharmed while the griffon targets its chosen prey. Riders who attempt to protect their horses attract the full fury of an attacking griffon."
+                        ]
+                      },
+                      {
+                        "name": "Sky Dwellers",
+                        "type": "entries",
+                        "entries": [
+                          "Griffons lair in high rocky clifftop aeries, building their nests from sticks, leaves, and the bones of their prey. Once griffons establish a territory, they remain in that area until the food supply has been exhausted.",
+                          "Aggressive and territorial, griffons engage in brutal aerial combat to defend their aeries, tearing and shredding the wings of flying intruders to send them spiraling to the ground. Creatures that climb to a griffon's lair are plucked from the cliffs and eaten, or are knocked from the heights to go tumbling to their deaths."
+                        ]
+                      },
+                      {
+                        "name": "Trained Mounts",
+                        "type": "entries",
+                        "entries": [
+                          "A griffon raised from an egg can be trained to serve as a mount. However, such training is time consuming, expensive (mostly for the ample food the creature requires), and dangerous. Expert trainers well versed in the griffon's legendary ferocity are typically the only ones able to raise these creatures safely.",
+                          "Once trained, a griffon is a fierce and loyal steed. It bonds with one master for life, fighting to the death to protect that rider. A griffon mount retains its ravenous appetite for horseflesh, and a wise master ensures that a griffon remains satiated with other prey when passing through civilized lands."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Griffon.webp"
+                },
+                "width": 956,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Griffon",
+        "size": [
+          "L"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 59,
+          "formula": "7d10 + 21"
+        },
+        "speed": {
+          "walk": 30,
+          "fly": 80
+        },
+        "str": 18,
+        "dex": 15,
+        "con": 16,
+        "int": 2,
+        "wis": 13,
+        "cha": 8,
+        "skill": {
+          "perception": "+5"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 15,
+        "cr": "2",
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The griffon makes two Rend attacks."
+            ]
+          },
+          {
+            "name": "Rend",
+            "entries": [
+              "{@atkr m} {@hit 6}, reach 5 ft. {@h}8 ({@damage 1d8 + 4}) Piercing damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 14}) from both of the griffon's front claws."
+            ]
+          }
+        ],
+        "environment": [
+          "arctic",
+          "coastal",
+          "grassland",
+          "hill",
+          "mountain"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/griffon.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "conditionInflict": [
+          "grappled"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Griffon",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Griffon",
+                "entries": [
+                  "{@i Majestic Hunter of Land and Sky}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Arctic|bestiary|environment=arctic}, {@filter Coastal|bestiary|environment=coastal}, {@filter Grassland|bestiary|environment=grassland}, {@filter Hill|bestiary|environment=hill}, {@filter Mountain|bestiary|environment=mountain}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "None"
+                      }
+                    ]
+                  },
+                  "Griffons combine the features of raptors and big cats—most commonly eagles and lions—and possess the precision and ferocity of such predators. Rarer breeds of griffons have the features of condors and panthers, while others resemble hawks and tigers. Regardless of their appearances, griffons are often associated with royalty and are widely called the Masters of Animals.",
+                  "Countless tales surround griffons. Roll on or choose a result from the Griffon Tales table to inspire stories about them.",
+                  {
+                    "type": "table",
+                    "caption": "Griffon Tales",
+                    "colLabels": [
+                      "1d6",
+                      "Legends Claim That Griffons..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "Attack anything in the skies near their lairs."
+                      ],
+                      [
+                        "2",
+                        "Curse their killers. Those who slay a griffon face the enmity of all animals."
+                      ],
+                      [
+                        "3",
+                        "Lay eggs with remarkable healing properties."
+                      ],
+                      [
+                        "4",
+                        "Prefer the taste of horses over all other prey."
+                      ],
+                      [
+                        "5",
+                        "Serve the first creature they see after hatching."
+                      ],
+                      [
+                        "6",
+                        "Won't attack those with royal blood."
+                      ]
+                    ]
+                  },
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "People think we flew high over the city to avoid weather vanes and laundry lines and whatnot. Truth is, if the griffons smelled how much horse meat trotted just below, folks would have worse than joy-flying mages and stirges to worry about!"
+                        ],
+                        "by": "Sildar Hallwinter, retired member of the Waterdeep Griffon Cavalry"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Griffon.webp"
+                },
+                "credit": "Adam Rex",
+                "width": 2520,
+                "height": 1656
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

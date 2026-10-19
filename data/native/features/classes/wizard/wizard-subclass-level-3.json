@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.wizard-subclass.wizard.wizard-subclass.3",
+  "name": "Wizard Subclass",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Wizard Subclass",
+        "className": "Wizard",
+        "classSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "You gain a Wizard subclass of your choice. A subclass is a specialization that grants you features at certain Wizard levels. For the rest of your career, you gain each of your subclass's features that are of your Wizard level or lower."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.wizard",
+  "classLevel": 3
+}

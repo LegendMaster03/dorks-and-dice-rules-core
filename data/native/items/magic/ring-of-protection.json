@@ -1,0 +1,46 @@
+{
+  "id": "item.ring-of-protection",
+  "name": "Ring of Protection",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Protection",
+        "type": "RG|SRD51",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": true,
+        "bonusAc": "+1",
+        "bonusSavingThrow": "+1",
+        "entries": [
+          "You gain a +1 bonus to AC and saving throws while wearing this ring."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Protection",
+        "type": "RG|SRD52",
+        "rarity": "rare",
+        "reqAttune": true,
+        "bonusAc": "+1",
+        "bonusSavingThrow": "+1",
+        "entries": [
+          "You gain a +1 bonus to {@variantrule Armor Class|SRD52} and saving throws while wearing this ring."
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

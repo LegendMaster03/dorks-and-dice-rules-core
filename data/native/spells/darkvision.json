@@ -1,0 +1,88 @@
+{
+  "id": "spell.darkvision",
+  "name": "Darkvision",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Darkvision",
+        "level": 2,
+        "school": "T",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "either a pinch of dried carrot or an agate"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 8
+            }
+          }
+        ],
+        "entries": [
+          "You touch a willing creature to grant it the ability to see in the dark. For the duration, that creature has {@sense darkvision} out to a range of 60 feet."
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Darkvision",
+        "level": 2,
+        "school": "T",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "touch"
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a dried carrot"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 8
+            }
+          }
+        ],
+        "entries": [
+          "For the duration, a willing creature you touch has {@sense Darkvision|SRD52} with a range of 150 feet."
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

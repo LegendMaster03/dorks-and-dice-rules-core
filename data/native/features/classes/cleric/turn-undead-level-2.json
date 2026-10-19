@@ -1,0 +1,26 @@
+{
+  "id": "classFeature.turn-undead.cleric.turn-undead.2",
+  "name": "Turn Undead",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Turn Undead",
+        "className": "Cleric",
+        "classSource": "SRD52",
+        "level": 2,
+        "header": 2,
+        "consumes": {
+          "name": "Channel Divinity"
+        },
+        "entries": [
+          "As a {@action Magic|SRD52} action, you present your {@item Holy Symbol|SRD52} and censure Undead creatures. Each Undead of your choice within 30 feet of you must make a Wisdom saving throw. If the creature fails its save, it has the {@condition Frightened|SRD52} and {@condition Incapacitated|SRD52} conditions for 1 minute. For that duration, it tries to move as far from you as it can on its turns. This effect ends early on the creature if it takes any damage, if you have the {@condition Incapacitated|SRD52} condition, or if you die."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "classLevel": 2
+}

@@ -1,0 +1,37 @@
+{
+  "id": "classFeature.second-wind.fighter.second-wind.1",
+  "name": "Second Wind",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Second Wind",
+        "className": "Fighter",
+        "classSource": "SRD51",
+        "level": 1,
+        "entries": [
+          "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to {@dice 1d10} + your fighter level.",
+          "Once you use this feature, you must finish a short or long rest before you can use it again."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Second Wind",
+        "className": "Fighter",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "You have a limited well of physical and mental stamina that you can draw on. As a {@variantrule Bonus Action|SRD52}, you can use it to regain {@variantrule Hit Points|SRD52} equal to {@dice 1d10} plus your Fighter level.",
+          "You can use this feature twice. You regain one expended use when you finish a {@variantrule Short Rest|SRD52}, and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}.",
+          "When you reach certain Fighter levels, you gain more uses of this feature, as shown in the Second Wind column of the Fighter Features table."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 1
+}

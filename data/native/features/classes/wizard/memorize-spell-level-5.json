@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.memorize-spell.wizard.memorize-spell.5",
+  "name": "Memorize Spell",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Memorize Spell",
+        "className": "Wizard",
+        "classSource": "SRD52",
+        "level": 5,
+        "entries": [
+          "Whenever you finish a {@variantrule Short Rest|SRD52}, you can study your spellbook and replace one of the level 1+ Wizard spells you have prepared for your Spellcasting feature with another level 1+ spell from the book."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.wizard",
+  "classLevel": 5
+}

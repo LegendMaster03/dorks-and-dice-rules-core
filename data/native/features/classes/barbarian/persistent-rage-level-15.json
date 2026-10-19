@@ -1,0 +1,35 @@
+{
+  "id": "classFeature.persistent-rage.barbarian.persistent-rage.15",
+  "name": "Persistent Rage",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Persistent Rage",
+        "className": "Barbarian",
+        "classSource": "SRD51",
+        "level": 15,
+        "entries": [
+          "Beginning at 15th level, your rage is so fierce that it ends early only if you fall {@condition unconscious} or if you choose to end it."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Persistent Rage",
+        "className": "Barbarian",
+        "classSource": "SRD52",
+        "level": 15,
+        "entries": [
+          "When you roll {@variantrule Initiative|SRD52}, you can regain all expended uses of Rage. After you regain uses of Rage in this way, you can't do so again until you finish a {@variantrule Long Rest|SRD52}.",
+          "In addition, your Rage is so fierce that it now lasts for 10 minutes without you needing to do anything to extend it from round to round. Your Rage ends early if you have the {@condition Unconscious|SRD52} condition (not just the {@condition Incapacitated|SRD52} condition) or don Heavy armor."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian",
+  "classLevel": 15
+}

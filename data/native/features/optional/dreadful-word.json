@@ -1,0 +1,43 @@
+{
+  "id": "optionalfeature.dreadful-word",
+  "name": "Dreadful Word",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Dreadful Word",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 7,
+              "class": {
+                "name": "Warlock"
+              }
+            }
+          }
+        ],
+        "additionalSpells": [
+          {
+            "innate": {
+              "_": {
+                "daily": {
+                  "1e": [
+                    "confusion"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "entries": [
+          "You can cast {@spell confusion} once using a warlock spell slot. You can't do so again until you finish a long rest."
+        ]
+      }
+    }
+  ]
+}

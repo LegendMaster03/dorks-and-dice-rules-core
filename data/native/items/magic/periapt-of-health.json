@@ -1,0 +1,35 @@
+{
+  "id": "item.periapt-of-health",
+  "name": "Periapt of Health",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Periapt of Health",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "weight": 1,
+        "entries": [
+          "You are immune to contracting any disease while you wear this pendant. If you are already infected with a disease, the effects of the disease are suppressed while you wear the pendant."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Periapt of Health",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "weight": 1,
+        "entries": [
+          "While wearing this pendant, you can take a {@action Magic|SRD52} action to regain {@dice 2d4 + 2} {@variantrule Hit Points|SRD52}. Once used, this property can't be used again until the next dawn.",
+          "In addition, you have {@variantrule Advantage|SRD52} on saving throws to avoid or end the {@condition Poisoned|SRD52} condition while you wear this pendant."
+        ]
+      }
+    }
+  ]
+}

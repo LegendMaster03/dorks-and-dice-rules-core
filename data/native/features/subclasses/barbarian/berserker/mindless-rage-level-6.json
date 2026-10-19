@@ -1,0 +1,41 @@
+{
+  "id": "subclassFeature.mindless-rage.barbarian.berserker.mindless-rage.6",
+  "name": "Mindless Rage",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Mindless Rage",
+        "className": "Barbarian",
+        "classSource": "SRD51",
+        "subclassShortName": "Berserker",
+        "subclassSource": "SRD51",
+        "level": 6,
+        "header": 2,
+        "entries": [
+          "Beginning at 6th level, you can't be {@condition charmed} or {@condition frightened} while raging. If you are {@condition charmed} or {@condition frightened} when you enter your rage, the effect is suspended for the duration of the rage."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Mindless Rage",
+        "className": "Barbarian",
+        "classSource": "SRD52",
+        "subclassShortName": "Berserker",
+        "subclassSource": "SRD52",
+        "level": 6,
+        "header": 2,
+        "entries": [
+          "You have {@variantrule Immunity|SRD52} to the {@condition Charmed|SRD52} and {@condition Frightened|SRD52} conditions while your Rage is active. If you're {@condition Charmed|SRD52} or {@condition Frightened|SRD52} when you enter your Rage, the condition ends on you."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian",
+  "parentSubclass": "berserker",
+  "classLevel": 6
+}

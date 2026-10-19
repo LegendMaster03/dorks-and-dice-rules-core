@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.ranger-archetype-feature.ranger.ranger-archetype-feature.11",
+  "name": "Ranger Archetype feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ranger Archetype feature",
+        "className": "Ranger",
+        "classSource": "SRD51",
+        "level": 11,
+        "entries": [
+          "At 11th level, you gain a feature granted to you by your Ranger Archetype."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "classLevel": 11
+}

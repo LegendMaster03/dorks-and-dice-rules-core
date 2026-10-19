@@ -1,0 +1,188 @@
+{
+  "id": "monster.crocodile",
+  "name": "Crocodile",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Crocodile",
+        "size": [
+          "L"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          {
+            "ac": 12,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 19,
+          "formula": "3d10 + 3"
+        },
+        "speed": {
+          "walk": 20,
+          "swim": 30
+        },
+        "str": 15,
+        "dex": 10,
+        "con": 13,
+        "int": 2,
+        "wis": 10,
+        "cha": 5,
+        "skill": {
+          "stealth": "+2"
+        },
+        "passive": 10,
+        "cr": "1/2",
+        "trait": [
+          {
+            "name": "Hold Breath",
+            "entries": [
+              "The crocodile can hold its breath for 15 minutes."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 4} to hit, reach 5 ft., one creature. {@h}7 ({@damage 1d10 + 2}) piercing damage, and the target is {@condition grappled} (escape {@dc 12}). Until this grapple ends, the target is {@condition restrained}, and the crocodile can't bite another target"
+            ]
+          }
+        ],
+        "environment": [
+          "swamp",
+          "urban"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/crocodile.opus"
+        },
+        "traitTags": [
+          "Hold Breath"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "conditionInflict": [
+          "grappled",
+          "restrained"
+        ],
+        "hasToken": true
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Crocodile",
+        "size": [
+          "L"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 13,
+          "formula": "2d10 + 2"
+        },
+        "speed": {
+          "walk": 20,
+          "swim": 30
+        },
+        "str": 15,
+        "dex": 10,
+        "con": 13,
+        "int": 2,
+        "wis": 10,
+        "cha": 5,
+        "save": {
+          "con": "+3"
+        },
+        "skill": {
+          "stealth": "+2"
+        },
+        "passive": 10,
+        "cr": "1/2",
+        "trait": [
+          {
+            "name": "Hold Breath",
+            "entries": [
+              "The crocodile can hold its breath for 1 hour."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atkr m} {@hit 4}, reach 5 ft. {@h}6 ({@damage 1d8 + 2}) Piercing damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 12}). While {@condition Grappled|SRD52}, the target has the {@condition Restrained|SRD52} condition."
+            ]
+          }
+        ],
+        "environment": [
+          "coastal",
+          "swamp",
+          "urban"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/crocodile.opus"
+        },
+        "traitTags": [
+          "Hold Breath"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "conditionInflict": [
+          "grappled",
+          "restrained"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Crocodile",
+            "_copy": {
+              "name": "Animals",
+              "source": "SRD52",
+              "_mod": {
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Crocodile.webp"
+                      },
+                      "width": 1179,
+                      "height": 1360
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

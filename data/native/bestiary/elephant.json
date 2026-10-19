@@ -1,0 +1,190 @@
+{
+  "id": "monster.elephant",
+  "name": "Elephant",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Elephant",
+        "size": [
+          "H"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          {
+            "ac": 12,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 76,
+          "formula": "8d12 + 24"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 22,
+        "dex": 9,
+        "con": 17,
+        "int": 3,
+        "wis": 11,
+        "cha": 6,
+        "passive": 10,
+        "cr": "4",
+        "trait": [
+          {
+            "name": "Trampling Charge",
+            "entries": [
+              "If the elephant moves at least 20 feet straight toward a creature and then hits it with a gore attack on the same turn, that target must succeed on a {@dc 12} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the elephant can make one stomp attack against it as a bonus action."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Gore",
+            "entries": [
+              "{@atk mw} {@hit 8} to hit, reach 5 ft., one target. {@h}19 ({@damage 3d8 + 6}) piercing damage."
+            ]
+          },
+          {
+            "name": "Stomp",
+            "entries": [
+              "{@atk mw} {@hit 8} to hit, reach 5 ft., one {@condition prone} creature. {@h}22 ({@damage 3d10 + 6}) bludgeoning damage."
+            ]
+          }
+        ],
+        "environment": [
+          "grassland"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/elephant.opus"
+        },
+        "damageTags": [
+          "B",
+          "P"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "conditionInflict": [
+          "prone"
+        ],
+        "savingThrowForced": [
+          "strength"
+        ],
+        "hasToken": true
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Elephant",
+        "size": [
+          "H"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 76,
+          "formula": "8d12 + 24"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 22,
+        "dex": 9,
+        "con": 17,
+        "int": 3,
+        "wis": 11,
+        "cha": 6,
+        "passive": 10,
+        "cr": "4",
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The elephant makes two Gore attacks."
+            ]
+          },
+          {
+            "name": "Gore",
+            "entries": [
+              "{@atkr m} {@hit 8}, reach 5 ft. {@h}15 ({@damage 2d8 + 6}) Piercing damage. If the target is a Huge or smaller creature and the elephant moved 20+ feet straight toward it immediately before the hit, the target has the {@condition Prone|SRD52} condition."
+            ]
+          }
+        ],
+        "bonus": [
+          {
+            "name": "Trample",
+            "entries": [
+              "{@actSave dex} {@dc 16}, one creature within 5 feet that has the {@condition Prone|SRD52} condition. {@actSaveFail} 17 ({@damage 2d10 + 6}) Bludgeoning damage. {@actSaveSuccess} Half damage."
+            ]
+          }
+        ],
+        "environment": [
+          "grassland"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/elephant.opus"
+        },
+        "actionTags": [
+          "Multiattack"
+        ],
+        "damageTags": [
+          "B",
+          "P"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "conditionInflict": [
+          "prone"
+        ],
+        "savingThrowForced": [
+          "dexterity"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Elephant",
+            "_copy": {
+              "name": "Animals",
+              "source": "SRD52",
+              "_mod": {
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Elephant.webp"
+                      },
+                      "credit": "Jonathan Kuo",
+                      "width": 1026,
+                      "height": 819
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

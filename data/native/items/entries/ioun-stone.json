@@ -1,0 +1,20 @@
+{
+  "id": "itemEntry.ioun-stone",
+  "name": "Ioun Stone",
+  "kind": "itemEntry",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ioun Stone",
+        "entriesTemplate": [
+          "Roughly marble sized, {@i Ioun Stones} are named after Ioun, a god of knowledge and prophecy revered on some worlds. Many types of {@i Ioun Stones} exist, each type a distinct combination of shape and color.",
+          "When you take a {@action Magic|SRD52} action to toss an {@i Ioun Stone} into the air, the stone orbits your head at a distance of {@dice 1d3} feet, conferring its benefit to you while doing so. You can have up to three {@i Ioun Stones} orbiting your head at the same time.",
+          "Each {@i Ioun Stone} orbiting your head is considered to be an object you are wearing. The orbiting stone avoids contact with other creatures and objects, adjusting its orbit to avoid collisions and thwarting all attempts by other creatures to attack or snatch it.",
+          "As a {@action Utilize|SRD52} action, you can seize and stow any number of {@i Ioun Stones} orbiting your head. If your {@variantrule Attunement|SRD52} to an Ioun Stone ends while it's orbiting your head, the stone falls as though you had dropped it."
+        ]
+      }
+    }
+  ]
+}

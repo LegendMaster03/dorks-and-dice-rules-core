@@ -1,0 +1,478 @@
+{
+  "id": "monster.guardian-naga",
+  "name": "Guardian Naga",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Guardian Naga",
+        "size": [
+          "L"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "L",
+          "G"
+        ],
+        "ac": [
+          {
+            "ac": 18,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 127,
+          "formula": "15d10 + 45"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 19,
+        "dex": 18,
+        "con": 16,
+        "int": 16,
+        "wis": 19,
+        "cha": 18,
+        "save": {
+          "dex": "+8",
+          "con": "+7",
+          "int": "+7",
+          "wis": "+8",
+          "cha": "+8"
+        },
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 14,
+        "immune": [
+          "poison"
+        ],
+        "conditionImmune": [
+          "charmed",
+          "poisoned"
+        ],
+        "languages": [
+          "Celestial",
+          "Common"
+        ],
+        "cr": "10",
+        "spellcasting": [
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The naga is an 11th-level spellcaster. Its spellcasting ability is Wisdom (spell save {@dc 16}, {@hit 8} to hit with spell attacks), and it needs only verbal components to cast its spells. It has the following cleric spells prepared:"
+            ],
+            "spells": {
+              "0": {
+                "spells": [
+                  "{@spell mending}",
+                  "{@spell sacred flame}",
+                  "{@spell thaumaturgy}"
+                ]
+              },
+              "1": {
+                "slots": 4,
+                "spells": [
+                  "{@spell command}",
+                  "{@spell cure wounds}",
+                  "{@spell shield of faith}"
+                ]
+              },
+              "2": {
+                "slots": 3,
+                "spells": [
+                  "{@spell calm emotions}",
+                  "{@spell hold person}"
+                ]
+              },
+              "3": {
+                "slots": 3,
+                "spells": [
+                  "{@spell bestow curse}",
+                  "{@spell clairvoyance}"
+                ]
+              },
+              "4": {
+                "slots": 3,
+                "spells": [
+                  "{@spell banishment}",
+                  "{@spell freedom of movement}"
+                ]
+              },
+              "5": {
+                "slots": 2,
+                "spells": [
+                  "{@spell flame strike}",
+                  "{@spell geas}"
+                ]
+              },
+              "6": {
+                "slots": 1,
+                "spells": [
+                  "{@spell true seeing}"
+                ]
+              }
+            },
+            "ability": "wis"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Rejuvenation",
+            "entries": [
+              "If it dies, the naga returns to life in {@dice 1d6} days and regains all its hit points. Only a {@spell wish} spell can prevent this trait from functioning."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 8} to hit, reach 10 ft., one creature. {@h}8 ({@damage 1d8 + 4}) piercing damage, and the target must make a {@dc 15} Constitution saving throw, taking 45 ({@damage 10d8}) poison damage on a failed save, or half as much damage on a successful one."
+            ]
+          },
+          {
+            "name": "Spit Poison",
+            "entries": [
+              "{@atk rw} {@hit 8} to hit, range 15/30 ft., one creature. {@h}The target must make a {@dc 15} Constitution saving throw, taking 45 ({@damage 10d8}) poison damage on a failed save, or half as much damage on a successful one."
+            ]
+          }
+        ],
+        "environment": [
+          "forest",
+          "desert"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/guardian-naga.opus"
+        },
+        "traitTags": [
+          "Rejuvenation"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "languageTags": [
+          "C",
+          "CE"
+        ],
+        "damageTags": [
+          "I",
+          "P"
+        ],
+        "damageTagsSpell": [
+          "F",
+          "N",
+          "R",
+          "Y"
+        ],
+        "spellcastingTags": [
+          "CC"
+        ],
+        "miscTags": [
+          "MW",
+          "RCH",
+          "RW"
+        ],
+        "savingThrowForced": [
+          "constitution"
+        ],
+        "savingThrowForcedSpell": [
+          "charisma",
+          "dexterity",
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Guardian Naga",
+            "_copy": {
+              "name": "Nagas",
+              "source": "SRD51",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    "Wise and good, the beautiful guardian nagas protect sacred places and items of magical power from falling into evil hands. In their hidden redoubts, they research spells and hatch convoluted plots to thwart the evil designs of their enemies.",
+                    "A guardian naga doesn't seek out violence, warning off intruders rather than attacking. Only if its foes persist does the naga attack, accosting enemies with its spells and poisonous spittle."
+                  ]
+                }
+              }
+            },
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Guardian Naga.webp"
+                },
+                "width": 861,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Guardian Naga",
+        "size": [
+          "L"
+        ],
+        "type": "celestial",
+        "alignment": [
+          "L",
+          "G"
+        ],
+        "ac": [
+          18
+        ],
+        "hp": {
+          "average": 136,
+          "formula": "16d10 + 48"
+        },
+        "speed": {
+          "walk": 40,
+          "climb": 40,
+          "swim": 40
+        },
+        "str": 19,
+        "dex": 18,
+        "con": 16,
+        "int": 16,
+        "wis": 19,
+        "cha": 18,
+        "save": {
+          "dex": "+8",
+          "con": "+7",
+          "int": "+7",
+          "wis": "+8",
+          "cha": "+8"
+        },
+        "skill": {
+          "arcana": "+11",
+          "history": "+11",
+          "religion": "+11"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 14,
+        "immune": [
+          "poison"
+        ],
+        "conditionImmune": [
+          "charmed",
+          "paralyzed",
+          "poisoned",
+          "restrained"
+        ],
+        "languages": [
+          "Celestial",
+          "Common"
+        ],
+        "cr": "10",
+        "spellcasting": [
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The naga casts one of the following spells, requiring no Somatic or Material components and using Wisdom as the spellcasting ability (spell save {@dc 16}):"
+            ],
+            "will": [
+              "{@spell Thaumaturgy|SRD52}"
+            ],
+            "daily": {
+              "1e": [
+                "{@spell Clairvoyance|SRD52}",
+                "{@spell Cure Wounds|SRD52} (level 6 version)",
+                "{@spell Flame Strike|SRD52} (level 6 version)",
+                "{@spell Geas|SRD52}",
+                "{@spell True Seeing|SRD52}"
+              ]
+            },
+            "ability": "wis",
+            "displayAs": "action"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Celestial Restoration",
+            "entries": [
+              "If the naga dies, it returns to life in {@dice 1d6} days and regains all its {@variantrule Hit Points|SRD52} unless {@spell Dispel Evil and Good|SRD52} is cast on its remains."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The naga makes two Bite attacks. It can replace any attack with a use of Poisonous Spittle."
+            ]
+          },
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atkr m} {@hit 8}, reach 10 ft. {@h}17 ({@damage 2d12 + 4}) Piercing damage plus 22 ({@damage 4d10}) Poison damage."
+            ]
+          },
+          {
+            "name": "Poisonous Spittle",
+            "entries": [
+              "{@actSave con} {@dc 16}, one creature the naga can see within 60 feet. {@actSaveFail} 31 ({@damage 7d8}) Poison damage, and the target has the {@condition Blinded|SRD52} condition until the start of the naga's next turn. {@actSaveSuccess} Half damage only."
+            ]
+          }
+        ],
+        "environment": [
+          "desert",
+          "forest",
+          "planar, upper"
+        ],
+        "treasure": [
+          "relics"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/guardian-naga.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "CE"
+        ],
+        "damageTags": [
+          "I",
+          "P"
+        ],
+        "damageTagsSpell": [
+          "F",
+          "R",
+          "Y"
+        ],
+        "spellcastingTags": [
+          "O"
+        ],
+        "miscTags": [
+          "MA",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "blinded"
+        ],
+        "conditionInflictSpell": [
+          "charmed"
+        ],
+        "savingThrowForced": [
+          "constitution"
+        ],
+        "savingThrowForcedSpell": [
+          "dexterity",
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Guardian Naga",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Guardian Naga",
+                "entries": [
+                  "{@i Enduring Serpentine Lore Keeper}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Desert|bestiary|environment=desert}, {@filter Forest|bestiary|environment=forest}, {@filter Planar (Upper Planes)|bestiary|environment=planar, upper}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Relics"
+                      }
+                    ]
+                  },
+                  "Guardian nagas are immortal, serpentine scholars that possess perfect memories. They collect the histories and lore of those they live among, guarding cultures' stories and passing them on to new generations with infallible accuracy. Guardian nagas that outlive their host civilizations might linger in whatever ruins remain, preserving the civilizations' stories so their lost people might live on.",
+                  "Roll on or choose a result from the Guardian Naga Lore table to inspire what a naga knows.",
+                  {
+                    "type": "table",
+                    "caption": "Guardian Naga Lore",
+                    "colLabels": [
+                      "1d8",
+                      "The Guardian Naga Recalls..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "The last words of an ancient sage or leader."
+                      ],
+                      [
+                        "2",
+                        "The location of a hidden city or continent."
+                      ],
+                      [
+                        "3",
+                        "A magic word, password, or riddle's answer."
+                      ],
+                      [
+                        "4",
+                        "The names of all who have told it stories."
+                      ],
+                      [
+                        "5",
+                        "An otherwise forgotten ritual or spell."
+                      ],
+                      [
+                        "6",
+                        "Recipes using regional ingredients."
+                      ],
+                      [
+                        "7",
+                        "Stories of forgotten gods and local spirits."
+                      ],
+                      [
+                        "8",
+                        "The vulnerabilities of a legendary monster."
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Guardian Naga.webp"
+                },
+                "credit": "Alejandro Pacheco",
+                "width": 2560,
+                "height": 1656
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "baseitem.scimitar",
+  "name": "Scimitar",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Scimitar",
+        "type": "M",
+        "rarity": "none",
+        "weight": 3,
+        "value": 2500,
+        "weaponCategory": "martial",
+        "property": [
+          "F",
+          "L"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "S",
+        "sword": true,
+        "weapon": true
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Scimitar",
+        "type": "M|SRD52",
+        "rarity": "none",
+        "weight": 3,
+        "value": 2500,
+        "weaponCategory": "martial",
+        "property": [
+          "F|SRD52",
+          "L|SRD52"
+        ],
+        "mastery": [
+          "Nick|SRD52"
+        ],
+        "dmg1": "1d6",
+        "dmgType": "S",
+        "sword": true,
+        "weapon": true
+      }
+    }
+  ]
+}

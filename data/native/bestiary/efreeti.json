@@ -1,0 +1,506 @@
+{
+  "id": "monster.efreeti",
+  "name": "Efreeti",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Efreeti",
+        "group": [
+          "Genies"
+        ],
+        "size": [
+          "L"
+        ],
+        "type": "elemental",
+        "alignment": [
+          "L",
+          "E"
+        ],
+        "ac": [
+          {
+            "ac": 17,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 200,
+          "formula": "16d10 + 112"
+        },
+        "speed": {
+          "walk": 40,
+          "fly": 60
+        },
+        "str": 22,
+        "dex": 12,
+        "con": 24,
+        "int": 16,
+        "wis": 15,
+        "cha": 16,
+        "save": {
+          "int": "+7",
+          "wis": "+6",
+          "cha": "+7"
+        },
+        "senses": [
+          "darkvision 120 ft."
+        ],
+        "passive": 12,
+        "immune": [
+          "fire"
+        ],
+        "languages": [
+          "Ignan"
+        ],
+        "cr": "11",
+        "spellcasting": [
+          {
+            "name": "Innate Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The efreeti's innate spellcasting ability is Charisma (spell save {@dc 15}, {@hit 7} to hit with spell attacks). It can innately cast the following spells, requiring no material components:"
+            ],
+            "will": [
+              "{@spell detect magic}"
+            ],
+            "daily": {
+              "3e": [
+                "{@spell enlarge/reduce}",
+                "{@spell tongues}"
+              ],
+              "1e": [
+                "{@spell conjure elemental} ({@creature fire elemental} only)",
+                "{@spell gaseous form}",
+                "{@spell invisibility}",
+                "{@spell major image}",
+                "{@spell plane shift}",
+                "{@spell wall of fire}"
+              ]
+            },
+            "ability": "cha"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Elemental Demise",
+            "entries": [
+              "If the efreeti dies, its body disintegrates in a flash of fire and puff of smoke, leaving behind only equipment the efreeti was wearing or carrying."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The efreeti makes two scimitar attacks or uses its Hurl Flame twice."
+            ]
+          },
+          {
+            "name": "Scimitar",
+            "entries": [
+              "{@atk mw} {@hit 10} to hit, reach 5 ft., one target. {@h}13 ({@damage 2d6 + 6}) slashing damage plus 7 ({@damage 2d6}) fire damage."
+            ]
+          },
+          {
+            "name": "Hurl Flame",
+            "entries": [
+              "{@atk rs} {@hit 7} to hit, range 120 ft., one target. {@h}17 ({@damage 5d6}) fire damage."
+            ]
+          }
+        ],
+        "environment": [
+          "desert"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/efreeti.opus"
+        },
+        "attachedItems": [
+          "scimitar|srd51"
+        ],
+        "senseTags": [
+          "SD"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "IG"
+        ],
+        "damageTags": [
+          "F",
+          "S"
+        ],
+        "damageTagsSpell": [
+          "F"
+        ],
+        "spellcastingTags": [
+          "I"
+        ],
+        "miscTags": [
+          "MLW",
+          "MW"
+        ],
+        "savingThrowForcedSpell": [
+          "charisma",
+          "constitution",
+          "dexterity"
+        ],
+        "hasToken": true,
+        "_versions": [
+          {
+            "name": "Efreeti (Disguises)",
+            "source": "SRD51",
+            "_mod": {
+              "_": {
+                "mode": "addSpells",
+                "will": [
+                  "{@spell disguise self} (often with a longer duration than is normal for that spell; see Disguises)"
+                ],
+                "daily": {
+                  "3e": [
+                    "{@spell true polymorph} (mightier genies only; see Disguises)"
+                  ]
+                }
+              },
+              "trait": {
+                "mode": "appendArr",
+                "items": {
+                  "name": "Disguises",
+                  "entries": [
+                    "Some genies can veil themselves in illusion to pass as other similarly shaped creatures. Such genies can innately cast the {@spell disguise self} spell at will, often with a longer duration than is normal for that spell. Mightier genies can cast the {@spell true polymorph} spell one to three times per day, possibly with a longer duration than normal. Such genies can change only their own shape, but a rare few can use the spell on other creatures and objects as well."
+                  ]
+                }
+              }
+            },
+            "variant": null
+          },
+          {
+            "name": "Efreeti (Wishes)",
+            "source": "SRD51",
+            "_mod": {
+              "_": {
+                "mode": "addSpells",
+                "yearly": {
+                  "1e": [
+                    "{@spell wish} (see Wishes)"
+                  ]
+                }
+              },
+              "trait": {
+                "mode": "appendArr",
+                "items": {
+                  "name": "Wishes",
+                  "entries": [
+                    "The genie power to grant wishes is legendary among mortals. Only the most potent genies, such as those among the nobility, can do so. A particular genie that has this power can grant one to three wishes to a creature that isn't a genie. Once a genie has granted its limit of wishes, it can't grant wishes again for some amount of time (usually 1 year), and cosmic law dictates that the same genie can expend its limit of wishes on a specific creature only once in that creature's existence.",
+                    "To be granted a wish, a creature within 60 feet of the genie states a desired effect to it. The genie can then cast the {@spell wish} spell on the creature's behalf to bring about the effect. Depending on the genie's nature, the genie might try to pervert the intent of the wish by exploiting the wish's poor wording. The perversion of the wording is usually crafted to be to the genie's benefit."
+                  ]
+                }
+              }
+            },
+            "variant": null
+          }
+        ],
+        "lore": [
+          {
+            "name": "Efreeti",
+            "_copy": {
+              "name": "Genies",
+              "source": "SRD51",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    "Hulking genies of the Elemental Plane of Fire, the efreet are masters of flame, immune to fire and able to create it on a whim. Fine silk caftans and damask robes drape their magma-red or coal-black skin, and they bedeck themselves in brass and gold torcs, chains, and rings, all glittering with jewels. When an efreeti flies, its lower body transforms into a column of smoke and embers.",
+                    {
+                      "type": "entries",
+                      "entries": [
+                        {
+                          "type": "entries",
+                          "entries": [
+                            {
+                              "name": "Haughty and Cruel",
+                              "type": "entries",
+                              "entries": [
+                                "The efreet are deceptive, cunning, and cruel to the point of ruthlessness. They despise being forced into servitude and are relentless in pursuit of vengeance against creatures that have wronged them. Efreet don't see themselves in this light, naturally, and regard their race as fair and orderly, even as they admit to an enlightened sense of self-interest."
+                              ]
+                            },
+                            {
+                              "name": "Spiteful Slavers",
+                              "type": "entries",
+                              "entries": [
+                                "Efreet view all other creatures as enemies or potential serfs. They raid the Material Plane and the elemental planes for slaves, which they capture and bring back to their homes on the Elemental Plane of Fire. The efreet rule as oppressive tyrants, promoting only the cruelest among their slaves. Those overseers are given whips to help keep the rank-and-file slaves in line."
+                              ]
+                            },
+                            {
+                              "name": "Planar Raiders",
+                              "type": "entries",
+                              "entries": [
+                                "Most efreet reside on the Elemental Plane of Fire, either in great domed fortresses of black glass and basalt surrounded by churning lakes of fire, or in the fabled City of Brass. Additionally, efreet military outposts thronging with their minions and slaves can be found scattered throughout the planes.",
+                                "On the Material Plane, efreet dwell in fiery regions such as volcanoes and the burning expanses of the world's deserts. Their love of the desert brings them into conflict with the djinn that ride the desert whirlwinds, and with the earthbound dao. Efreet utterly despise marids, with whom they have maintained a passionate conflict throughout the history of both races."
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "insetReadaloud",
+                      "entries": [
+                        {
+                          "type": "quote",
+                          "entries": [
+                            "The armies of the Grand Sultan are bolstered by legions of devils, his palace warded by spells of a thousand archmagi. No one has plundered the efreeti's fabled vaults and lived to tell the tale. By the grace of a thousand winds, you could be the first."
+                          ],
+                          "by": "A djinni enticing adventurers to free her caliph from a magic lamp in the Charcoal Palace of the City of Brass"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Efreeti.webp"
+                },
+                "width": 870,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Efreeti",
+        "group": [
+          "Genies"
+        ],
+        "size": [
+          "L"
+        ],
+        "type": {
+          "type": "elemental",
+          "tags": [
+            "genie"
+          ]
+        },
+        "alignment": [
+          "N"
+        ],
+        "ac": [
+          17
+        ],
+        "hp": {
+          "average": 212,
+          "formula": "17d10 + 119"
+        },
+        "speed": {
+          "walk": 40,
+          "fly": {
+            "number": 60,
+            "condition": "(hover)"
+          },
+          "canHover": true
+        },
+        "str": 22,
+        "dex": 12,
+        "con": 24,
+        "int": 16,
+        "wis": 15,
+        "cha": 19,
+        "save": {
+          "wis": "+6",
+          "cha": "+8"
+        },
+        "senses": [
+          "Darkvision 120 ft."
+        ],
+        "passive": 12,
+        "immune": [
+          "fire"
+        ],
+        "languages": [
+          "Primordial (Ignan)"
+        ],
+        "cr": "11",
+        "spellcasting": [
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The efreeti casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 16}):"
+            ],
+            "will": [
+              "{@spell Detect Magic|SRD52}",
+              "{@spell Elementalism|SRD52}"
+            ],
+            "daily": {
+              "1e": [
+                "{@spell Gaseous Form|SRD52}",
+                "{@spell Invisibility|SRD52}",
+                "{@spell Major Image|SRD52}",
+                "{@spell Plane Shift|SRD52}",
+                "{@spell Tongues|SRD52}",
+                "{@spell Wall of Fire|SRD52} (level 7 version)"
+              ]
+            },
+            "ability": "cha",
+            "displayAs": "action"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Elemental Restoration",
+            "entries": [
+              "If the efreeti dies outside the Elemental Plane of Fire, its body dissolves into ash, and it gains a new body in {@dice 1d4} days, reviving with all its {@variantrule Hit Points|SRD52} somewhere on the Plane of Fire."
+            ]
+          },
+          {
+            "name": "Magic Resistance",
+            "entries": [
+              "The efreeti has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+            ]
+          },
+          {
+            "name": "Wishes",
+            "entries": [
+              "The efreeti has a 30 percent chance of knowing the {@spell Wish|SRD52} spell. If the efreeti knows it, the efreeti can cast it only on behalf of a non-genie creature who communicates a wish in a way the efreeti can understand. If the efreeti casts the spell for the creature, the efreeti suffers none of the spell's stress. Once the efreeti has cast it three times, the efreeti can't do so again for 365 days."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The efreeti makes three attacks, using Heated Blade or Hurl Flame in any combination."
+            ]
+          },
+          {
+            "name": "Heated Blade",
+            "entries": [
+              "{@atkr m} {@hit 10}, reach 5 ft. {@h}13 ({@damage 2d6 + 6}) Slashing damage plus 13 ({@damage 2d12}) Fire damage."
+            ]
+          },
+          {
+            "name": "Hurl Flame",
+            "entries": [
+              "{@atkr r} {@hit 8}, range 120 ft. {@h}24 ({@damage 7d6}) Fire damage."
+            ]
+          }
+        ],
+        "environment": [
+          "desert",
+          "planar, fire"
+        ],
+        "treasure": [
+          "armaments"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/efreeti.opus"
+        },
+        "traitTags": [
+          "Magic Resistance"
+        ],
+        "senseTags": [
+          "SD"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "IG",
+          "P"
+        ],
+        "damageTags": [
+          "F",
+          "S"
+        ],
+        "damageTagsSpell": [
+          "F"
+        ],
+        "spellcastingTags": [
+          "O"
+        ],
+        "miscTags": [
+          "MA",
+          "RA"
+        ],
+        "conditionInflictSpell": [
+          "invisible"
+        ],
+        "savingThrowForcedSpell": [
+          "dexterity"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Efreeti",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Efreeti",
+                "entries": [
+                  "{@i Genie of Fire}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Desert|bestiary|environment=desert}, {@filter Planar (Elemental Plane of Fire)|bestiary|environment=planar, fire}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Armaments"
+                      }
+                    ]
+                  },
+                  "Efreet burn with the energy and unpredictability of fire. Their innate magic allows them to conjure flames from nothing and shape treasures within magical infernos. Many efreet have wicked reputations, as their fickle natures and love for dramatic conflagrations can be destructive. Other efreet delight in fire's beauty, be it the delicacy of a candle flame or the shared wonder of fireworks. These genies might aid mortals in exchange for treasures or the liberation of captive Elementals.",
+                  "On many worlds, efreet dwell in sweltering deserts and volcanic regions. Those that make their homes on the Elemental Plane of Fire create incredible cities among seas of flame and molten minerals. Eclipsing all of these is the storied City of Brass, a gleaming metropolis that is one of the most wondrous cities in the multiverse. Here, magic tempers the plane's extreme heat, making the City of Brass a hub of trade between planes of existence.",
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "Imagine seas of platinum and liquid flame, the Crimson Pillar with fires hot enough to sear the gods, and the infinite delights of the City of Brass. Now imagine what my master offers..."
+                        ],
+                        "by": "Veyisvexvayn, Magma Mephit Herald"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Efreeti.webp"
+                },
+                "credit": "Michael Broussard",
+                "width": 1500,
+                "height": 1873
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

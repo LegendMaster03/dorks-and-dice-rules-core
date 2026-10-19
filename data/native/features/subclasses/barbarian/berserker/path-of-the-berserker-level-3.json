@@ -1,0 +1,48 @@
+{
+  "id": "subclassFeature.path-of-the-berserker.barbarian.berserker.path-of-the-berserker.3",
+  "name": "Path of the Berserker",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Path of the Berserker",
+        "className": "Barbarian",
+        "classSource": "SRD51",
+        "subclassShortName": "Berserker",
+        "subclassSource": "SRD51",
+        "level": 3,
+        "entries": [
+          "For some barbarians, rage is a means to an end—that end being violence. The Path of the Berserker is a path of untrammeled fury, slick with blood. As you enter the berserker's rage, you thrill in the chaos of battle, heedless of your own health or well-being.",
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Frenzy|Barbarian||Berserker||3"
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Path of the Berserker",
+        "className": "Barbarian",
+        "classSource": "SRD52",
+        "subclassShortName": "Berserker",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "{@i Channel Rage into Violent Fury}",
+          "Barbarians who walk the Path of the Berserker direct their Rage primarily toward violence. Their path is one of untrammeled fury, and they thrill in the chaos of battle as they allow their Rage to seize and empower them.",
+          {
+            "type": "refSubclassFeature",
+            "subclassFeature": "Frenzy|Barbarian|SRD52|Berserker|SRD52|3"
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian",
+  "parentSubclass": "berserker",
+  "classLevel": 3
+}

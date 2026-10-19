@@ -1,0 +1,31 @@
+{
+  "id": "item.blanket",
+  "name": "Blanket",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Blanket",
+        "type": "G",
+        "rarity": "none",
+        "weight": 3,
+        "value": 50
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Blanket",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 3,
+        "value": 50,
+        "entries": [
+          "While wrapped in a blanket, you have {@variantrule Advantage|SRD52} on saving throws against {@hazard extreme cold|SRD52} (see the {@book Dungeon Master's Guide|SRD52})."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "id": "item.entertainer-s-pack",
+  "name": "Entertainer's Pack",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Entertainer's Pack",
+        "type": "G",
+        "rarity": "none",
+        "weight": 38,
+        "value": 4000,
+        "entries": [
+          "Includes:",
+          {
+            "type": "list",
+            "items": [
+              "a {@item backpack|srd51}",
+              "a {@item bedroll|srd51}",
+              "2 {@item Costume Clothes|srd51|costumes}",
+              "5 {@item candle|srd51|candles}",
+              "5 days of {@item Rations (1 day)|srd51|rations}",
+              "a {@item waterskin|srd51}",
+              "a {@item disguise kit|srd51}"
+            ]
+          }
+        ],
+        "packContents": [
+          "backpack|srd51",
+          "bedroll|srd51",
+          {
+            "item": "costume clothes|srd51",
+            "quantity": 2
+          },
+          {
+            "item": "candle|srd51",
+            "quantity": 5
+          },
+          {
+            "item": "rations (1 day)|srd51",
+            "quantity": 5
+          },
+          "waterskin|srd51",
+          "disguise kit|srd51"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Entertainer's Pack",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 58.5,
+        "value": 4000,
+        "entries": [
+          "An Entertainer's Pack contains the following items: {@item Backpack|SRD52}, {@item Bedroll|SRD52}, {@item Bell|SRD52}, {@item Bullseye Lantern|SRD52}, 3 {@item Costume|SRD52|Costumes}, {@item Mirror|SRD52}, 8 flasks of {@item Oil|SRD52}, 9 days of {@item Rations|SRD52}, {@item Tinderbox|SRD52}, and {@item Waterskin|SRD52}."
+        ],
+        "packContents": [
+          "backpack|srd52",
+          "bedroll|srd52",
+          "bell|srd52",
+          "bullseye lantern|srd52",
+          {
+            "item": "costume|srd52",
+            "quantity": 3
+          },
+          "mirror|srd52",
+          {
+            "item": "oil|srd52",
+            "quantity": 8
+          },
+          {
+            "item": "rations|srd52",
+            "quantity": 9
+          },
+          "tinderbox|srd52",
+          "waterskin|srd52"
+        ]
+      }
+    }
+  ]
+}

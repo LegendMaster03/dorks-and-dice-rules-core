@@ -1,0 +1,198 @@
+{
+  "id": "monster.rat",
+  "name": "Rat",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Rat",
+        "size": [
+          "T"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          10
+        ],
+        "hp": {
+          "average": 1,
+          "formula": "1d4 - 1"
+        },
+        "speed": {
+          "walk": 20
+        },
+        "str": 2,
+        "dex": 11,
+        "con": 9,
+        "int": 2,
+        "wis": 10,
+        "cha": 4,
+        "senses": [
+          "darkvision 30 ft."
+        ],
+        "passive": 10,
+        "cr": "0",
+        "trait": [
+          {
+            "name": "Keen Smell",
+            "entries": [
+              "The rat has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 0} to hit, reach 5 ft., one target. {@h}1 piercing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "swamp",
+          "urban"
+        ],
+        "familiar": true,
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/rat.opus"
+        },
+        "traitTags": [
+          "Keen Senses"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Rat",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Rat.webp"
+                },
+                "width": 1597,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Rat",
+        "size": [
+          "T"
+        ],
+        "type": "beast",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          10
+        ],
+        "hp": {
+          "average": 1,
+          "formula": "1d4 - 1"
+        },
+        "speed": {
+          "walk": 20,
+          "climb": 20
+        },
+        "str": 2,
+        "dex": 11,
+        "con": 9,
+        "int": 2,
+        "wis": 10,
+        "cha": 4,
+        "skill": {
+          "perception": "+2"
+        },
+        "senses": [
+          "Darkvision 30 ft."
+        ],
+        "passive": 12,
+        "cr": "0",
+        "trait": [
+          {
+            "name": "Agile",
+            "entries": [
+              "The rat doesn't provoke {@action Opportunity Attack|SRD52|Opportunity Attacks} when it moves out of an enemy's reach."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atkr m} {@hit 2}, reach 5 ft. {@h}1 Piercing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "forest",
+          "swamp",
+          "underdark",
+          "urban"
+        ],
+        "familiar": true,
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/rat.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "damageTags": [
+          "P"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Rat",
+            "_copy": {
+              "name": "Animals",
+              "source": "SRD52",
+              "_mod": {
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Rats.webp"
+                      },
+                      "title": "An adventurer underestimates the extent of a tavern's giant rat infestation",
+                      "credit": "Katerina Ladon",
+                      "width": 2539,
+                      "height": 1643
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

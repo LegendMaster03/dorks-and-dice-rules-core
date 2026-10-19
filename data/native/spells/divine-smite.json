@@ -1,0 +1,72 @@
+{
+  "id": "spell.divine-smite",
+  "name": "Divine Smite",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Divine Smite",
+        "level": 1,
+        "school": "V",
+        "time": [
+          {
+            "number": 1,
+            "unit": "bonus",
+            "condition": "which you take immediately after hitting a target with a Melee weapon or an {@variantrule Unarmed Strike|SRD52}"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "self"
+          }
+        },
+        "components": {
+          "v": true
+        },
+        "duration": [
+          {
+            "type": "instant"
+          }
+        ],
+        "entries": [
+          "The target takes an extra {@damage 2d8} Radiant damage from the attack. The damage increases by {@damage 1d8} if the target is a Fiend or an Undead."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "The damage increases by {@scaledamage 2d8|1-9|1d8} for each spell slot level above 1."
+            ]
+          }
+        ],
+        "damageInflict": [
+          "radiant"
+        ],
+        "miscTags": [
+          "AAD"
+        ],
+        "lore": [
+          {
+            "name": "Divine Smite",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "spells/XPHB/Divine Smite.webp"
+                },
+                "credit": "Bryan Sola",
+                "width": 2226,
+                "height": 1440
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

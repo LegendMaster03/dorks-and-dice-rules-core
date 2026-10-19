@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.relentless-hunter.ranger.relentless-hunter.13",
+  "name": "Relentless Hunter",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Relentless Hunter",
+        "className": "Ranger",
+        "classSource": "SRD52",
+        "level": 13,
+        "entries": [
+          "Taking damage can't break your {@status Concentration|SRD52} on Hunter's Mark."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "classLevel": 13
+}

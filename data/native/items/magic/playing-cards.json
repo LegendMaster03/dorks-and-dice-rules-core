@@ -1,0 +1,39 @@
+{
+  "id": "item.playing-cards",
+  "name": "Playing Cards",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Playing Cards",
+        "type": "GS|SRD52",
+        "rarity": "none",
+        "value": 50,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Wisdom"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Discern whether someone is cheating ({@dc 10}), or win the game ({@dc 20})"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

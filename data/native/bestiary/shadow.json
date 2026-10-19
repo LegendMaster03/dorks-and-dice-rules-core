@@ -1,0 +1,371 @@
+{
+  "id": "monster.shadow",
+  "name": "Shadow",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Shadow",
+        "size": [
+          "M"
+        ],
+        "type": "undead",
+        "alignment": [
+          "C",
+          "E"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 16,
+          "formula": "3d8 + 3"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 6,
+        "dex": 14,
+        "con": 13,
+        "int": 6,
+        "wis": 10,
+        "cha": 8,
+        "skill": {
+          "stealth": "+4"
+        },
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 10,
+        "resist": [
+          "acid",
+          "cold",
+          "fire",
+          "lightning",
+          "thunder",
+          {
+            "resist": [
+              "bludgeoning",
+              "piercing",
+              "slashing"
+            ],
+            "note": "from nonmagical attacks",
+            "cond": true
+          }
+        ],
+        "immune": [
+          "necrotic",
+          "poison"
+        ],
+        "vulnerable": [
+          "radiant"
+        ],
+        "conditionImmune": [
+          "exhaustion",
+          "frightened",
+          "grappled",
+          "paralyzed",
+          "petrified",
+          "poisoned",
+          "prone",
+          "restrained"
+        ],
+        "cr": "1/2",
+        "trait": [
+          {
+            "name": "Amorphous",
+            "entries": [
+              "The shadow can move through a space as narrow as 1 inch wide without squeezing."
+            ]
+          },
+          {
+            "name": "Shadow Stealth",
+            "entries": [
+              "While in dim light or darkness, the shadow can take the {@action Hide} action as a bonus action. Its stealth bonus is also improved to +6."
+            ]
+          },
+          {
+            "name": "Sunlight Weakness",
+            "entries": [
+              "While in sunlight, the shadow has disadvantage on attack rolls, ability checks, and saving throws."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Strength Drain",
+            "entries": [
+              "{@atk mw} {@hit 4} to hit, reach 5 ft., one creature. {@h}9 ({@damage 2d6 + 2}) necrotic damage, and the target's Strength score is reduced by {@dice 1d4}. The target dies if this reduces its Strength to 0. Otherwise, the reduction lasts until the target finishes a short or long rest.",
+              "If a non-evil humanoid dies from this attack, a new {@creature shadow} rises from the corpse {@dice 1d4} hours later."
+            ]
+          }
+        ],
+        "environment": [
+          "underdark",
+          "urban"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/shadow.opus"
+        },
+        "traitTags": [
+          "Amorphous"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "damageTags": [
+          "N"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Shadow",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Shadows are undead that resemble dark exaggerations of humanoid shadows.",
+                      {
+                        "name": "Dark Disposition",
+                        "type": "entries",
+                        "entries": [
+                          "From the darkness, the shadow reaches out to feed on living creatures' vitality. They can consume any living creature, but they are especially drawn to creatures untainted by evil. A creature that lives a life of goodness and piety consigns its basest impulses and strongest temptations to the darkness where the shadows hunger. As a shadow drains its victim's strength and physical form, the victim's shadow darkens and begins to move of its own volition. In death, the creature's shadow breaks free, becoming a new undead shadow hungry for more life to consume.",
+                          "If a creature from which a shadow has been created somehow returns to life, its undead shadow senses the return. The shadow might seek its \"parent\" to vex or slay. Whether the shadow pursues its living counterpart, the creature that birthed the shadow no longer casts one until the monster is destroyed."
+                        ]
+                      },
+                      {
+                        "name": "Undead Nature",
+                        "type": "entries",
+                        "entries": [
+                          "A shadow doesn't require air, food, drink, or sleep"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Shadow.webp"
+                },
+                "width": 678,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Shadow",
+        "size": [
+          "M"
+        ],
+        "type": "undead",
+        "alignment": [
+          "C",
+          "E"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 27,
+          "formula": "5d8 + 5"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 6,
+        "dex": 14,
+        "con": 13,
+        "int": 6,
+        "wis": 10,
+        "cha": 8,
+        "skill": {
+          "stealth": "+6"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 10,
+        "resist": [
+          "acid",
+          "cold",
+          "fire",
+          "lightning",
+          "thunder"
+        ],
+        "immune": [
+          "necrotic",
+          "poison"
+        ],
+        "vulnerable": [
+          "radiant"
+        ],
+        "conditionImmune": [
+          "exhaustion",
+          "frightened",
+          "grappled",
+          "paralyzed",
+          "petrified",
+          "poisoned",
+          "prone",
+          "restrained",
+          "unconscious"
+        ],
+        "cr": "1/2",
+        "trait": [
+          {
+            "name": "Amorphous",
+            "entries": [
+              "The shadow can move through a space as narrow as 1 inch without expending extra movement to do so."
+            ]
+          },
+          {
+            "name": "Sunlight Weakness",
+            "entries": [
+              "While in sunlight, the shadow has {@variantrule Disadvantage|SRD52} on {@variantrule D20 Test|SRD52|D20 Tests}."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Draining Swipe",
+            "entries": [
+              "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Necrotic damage, and the target's Strength score decreases by {@dice 1d4}. The target dies if this reduces that score to 0. If a Humanoid is slain by this attack, a Shadow rises from the corpse {@dice 1d4} hours later."
+            ]
+          }
+        ],
+        "bonus": [
+          {
+            "name": "Shadow Stealth",
+            "entries": [
+              "While in {@variantrule Dim Light|SRD52} or {@variantrule Darkness|SRD52}, the shadow takes the {@action Hide|SRD52} action."
+            ]
+          }
+        ],
+        "environment": [
+          "planar, shadowfell",
+          "underdark",
+          "urban"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/shadow.opus"
+        },
+        "traitTags": [
+          "Amorphous"
+        ],
+        "senseTags": [
+          "D"
+        ],
+        "damageTags": [
+          "N"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Shadow",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Shadow",
+                "entries": [
+                  "{@i Disembodied, Life-Drinking Shade}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Planar (Shadowfell)|bestiary|environment=planar, shadowfell}, {@filter Underdark|bestiary|environment=underdark}, {@filter Urban|bestiary|environment=urban}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "None"
+                      }
+                    ]
+                  },
+                  "Shadows are incorporeal Undead that feed on life. They resent the living for possessing the potential and vitality lost to them.",
+                  "Shadows lurk in dark, lonely places, typically sites that were meaningful to them in life or cursed places with ties to death, sinister magic, or the Shadowfell. Their victims rise as new shadows and prey on the living.",
+                  "Shadows might resemble the silhouettes of who they were in life or take on more menacing forms. Roll on or choose a result from the Shadow Shapes table to inspire a shadow's form and haunting.",
+                  {
+                    "type": "table",
+                    "caption": "Shadow Shapes",
+                    "colLabels": [
+                      "1d6",
+                      "The Shadow Appears As..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "A distorted stalker that lurks in the woods."
+                      ],
+                      [
+                        "2",
+                        "A fiend that dwells near a wicked ritual site."
+                      ],
+                      [
+                        "3",
+                        "Grasping hands that haunt a miser's home."
+                      ],
+                      [
+                        "4",
+                        "A grim storybook character that follows those who speak its name."
+                      ],
+                      [
+                        "5",
+                        "Its target, acting in eerie pantomime."
+                      ],
+                      [
+                        "6",
+                        "An ominous priest that haunts a defiled site."
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Shadow.webp"
+                },
+                "credit": "Michael Broussard",
+                "width": 2550,
+                "height": 1655
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

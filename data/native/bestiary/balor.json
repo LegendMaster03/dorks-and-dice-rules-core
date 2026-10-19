@@ -1,0 +1,424 @@
+{
+  "id": "monster.balor",
+  "name": "Balor",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Balor",
+        "size": [
+          "H"
+        ],
+        "type": {
+          "type": "fiend",
+          "tags": [
+            "demon"
+          ]
+        },
+        "alignment": [
+          "C",
+          "E"
+        ],
+        "ac": [
+          {
+            "ac": 19,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 262,
+          "formula": "21d12 + 126"
+        },
+        "speed": {
+          "walk": 40,
+          "fly": 80
+        },
+        "str": 26,
+        "dex": 15,
+        "con": 22,
+        "int": 20,
+        "wis": 16,
+        "cha": 22,
+        "save": {
+          "str": "+14",
+          "con": "+12",
+          "wis": "+9",
+          "cha": "+12"
+        },
+        "senses": [
+          "truesight 120 ft."
+        ],
+        "passive": 13,
+        "resist": [
+          "cold",
+          "lightning",
+          {
+            "resist": [
+              "bludgeoning",
+              "piercing",
+              "slashing"
+            ],
+            "note": "from nonmagical attacks",
+            "cond": true
+          }
+        ],
+        "immune": [
+          "fire",
+          "poison"
+        ],
+        "conditionImmune": [
+          "poisoned"
+        ],
+        "languages": [
+          "Abyssal",
+          "telepathy 120 ft."
+        ],
+        "cr": "19",
+        "trait": [
+          {
+            "name": "Death Throes",
+            "entries": [
+              "When the balor dies, it explodes, and each creature within 30 feet of it must make a {@dc 20} Dexterity saving throw, taking 70 ({@damage 20d6}) fire damage on a failed save, or half as much damage on a successful one. The explosion ignites flammable objects in that area that aren't being worn or carried, and it destroys the balor's weapons."
+            ]
+          },
+          {
+            "name": "Fire Aura",
+            "entries": [
+              "At the start of each of the balor's turns, each creature within 5 feet of it takes 10 ({@damage 3d6}) fire damage, and flammable objects in the aura that aren't being worn or carried ignite. A creature that touches the balor or hits it with a melee attack while within 5 feet of it takes 10 ({@damage 3d6}) fire damage."
+            ]
+          },
+          {
+            "name": "Magic Resistance",
+            "entries": [
+              "The balor has advantage on saving throws against spells and other magical effects."
+            ]
+          },
+          {
+            "name": "Magic Weapons",
+            "entries": [
+              "The balor's weapon attacks are magical."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The balor makes two attacks: one with its longsword and one with its whip."
+            ]
+          },
+          {
+            "name": "Longsword",
+            "entries": [
+              "{@atk mw} {@hit 14} to hit, reach 10 ft., one target. {@h}21 ({@damage 3d8 + 8}) slashing damage plus 13 ({@damage 3d8}) lightning damage. If the balor scores a critical hit, it rolls damage dice three times, instead of twice."
+            ]
+          },
+          {
+            "name": "Whip",
+            "entries": [
+              "{@atk mw} {@hit 14} to hit, reach 30 ft., one target. {@h}15 ({@damage 2d6 + 8}) slashing damage plus 10 ({@damage 3d6}) fire damage, and the target must succeed on a {@dc 20} Strength saving throw or be pulled up to 25 feet toward the balor."
+            ]
+          },
+          {
+            "name": "Teleport",
+            "entries": [
+              "The balor magically teleports, along with any equipment it is wearing or carrying, up to 120 feet to an unoccupied space it can see."
+            ]
+          }
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/balor.opus"
+        },
+        "attachedItems": [
+          "longsword|srd51",
+          "whip|srd51"
+        ],
+        "traitTags": [
+          "Death Burst",
+          "Magic Resistance",
+          "Magic Weapons"
+        ],
+        "senseTags": [
+          "U"
+        ],
+        "actionTags": [
+          "Multiattack",
+          "Teleport"
+        ],
+        "languageTags": [
+          "AB",
+          "TP"
+        ],
+        "damageTags": [
+          "F",
+          "L",
+          "S"
+        ],
+        "miscTags": [
+          "AOE",
+          "MLW",
+          "MW",
+          "RCH"
+        ],
+        "savingThrowForced": [
+          "dexterity",
+          "strength"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Balor",
+            "_copy": {
+              "name": "Demons",
+              "source": "SRD51",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": {
+                    "type": "entries",
+                    "entries": [
+                      {
+                        "type": "entries",
+                        "entries": [
+                          "Figures of ancient and terrible evil, balors rule as generals over demonic armies, yearning to seize power while destroying any creatures that oppose them.",
+                          "Wielding a flaming whip and a longsword that channels the power of the storm, a balor's battle prowess is fueled by hatred and rage. It channels this demonic fury in its death throes, falling within a blast of fire that can destroy even the hardiest foes."
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "images": {
+                  "mode": "prependArr",
+                  "items": {
+                    "type": "image",
+                    "href": {
+                      "type": "internal",
+                      "path": "bestiary/MM/Balor.webp"
+                    },
+                    "width": 1000,
+                    "height": 636
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Balor",
+        "group": [
+          "Demons"
+        ],
+        "size": [
+          "H"
+        ],
+        "type": {
+          "type": "fiend",
+          "tags": [
+            "demon"
+          ]
+        },
+        "alignment": [
+          "C",
+          "E"
+        ],
+        "ac": [
+          19
+        ],
+        "hp": {
+          "average": 287,
+          "formula": "23d12 + 138"
+        },
+        "speed": {
+          "walk": 40,
+          "fly": 80
+        },
+        "initiative": {
+          "proficiency": 2
+        },
+        "str": 26,
+        "dex": 15,
+        "con": 22,
+        "int": 20,
+        "wis": 16,
+        "cha": 22,
+        "save": {
+          "con": "+12",
+          "wis": "+9"
+        },
+        "skill": {
+          "perception": "+9"
+        },
+        "senses": [
+          "Truesight 120 ft."
+        ],
+        "passive": 19,
+        "resist": [
+          "cold",
+          "lightning"
+        ],
+        "immune": [
+          "fire",
+          "poison"
+        ],
+        "conditionImmune": [
+          "charmed",
+          "frightened",
+          "poisoned"
+        ],
+        "languages": [
+          "Abyssal; telepathy 120 ft."
+        ],
+        "cr": "19",
+        "trait": [
+          {
+            "name": "Death Throes",
+            "entries": [
+              "The balor explodes when it dies. {@actSave dex} {@dc 20}, each creature in a 30-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the balor. {@actSaveFail} 31 ({@damage 9d6}) Fire damage plus 31 ({@damage 9d6}) Force damage. {@actSaveSuccess} Half damage. {@actSaveSuccessOrFail} If the balor dies outside the Abyss, it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Abyss."
+            ]
+          },
+          {
+            "name": "Fire Aura",
+            "entries": [
+              "At the end of each of the balor's turns, each creature in a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the balor takes 13 ({@damage 3d8}) Fire damage."
+            ]
+          },
+          {
+            "name": "Legendary Resistance (3/Day)",
+            "entries": [
+              "If the balor fails a saving throw, it can choose to succeed instead."
+            ]
+          },
+          {
+            "name": "Magic Resistance",
+            "entries": [
+              "The balor has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The balor makes one Flame Whip attack and one Lightning Blade attack."
+            ]
+          },
+          {
+            "name": "Flame Whip",
+            "entries": [
+              "{@atkr m} {@hit 14}, reach 30 ft. {@h}18 ({@damage 3d6 + 8}) Force damage plus 17 ({@damage 5d6}) Fire damage. If the target is a Huge or smaller creature, the balor pulls the target up to 25 feet straight toward itself, and the target has the {@condition Prone|SRD52} condition."
+            ]
+          },
+          {
+            "name": "Lightning Blade",
+            "entries": [
+              "{@atkr m} {@hit 14}, reach 10 ft. {@h}21 ({@damage 3d8 + 8}) Force damage plus 22 ({@damage 4d10}) Lightning damage, and the target can't take Reactions until the start of the balor's next turn."
+            ]
+          }
+        ],
+        "bonus": [
+          {
+            "name": "Teleport",
+            "entries": [
+              "The balor teleports itself or a willing demon within 10 feet of itself up to 60 feet to an unoccupied space the balor can see."
+            ]
+          }
+        ],
+        "environment": [
+          "planar, abyss"
+        ],
+        "treasure": [
+          "armaments"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/balor.opus"
+        },
+        "traitTags": [
+          "Death Burst",
+          "Legendary Resistances",
+          "Magic Resistance"
+        ],
+        "senseTags": [
+          "U"
+        ],
+        "actionTags": [
+          "Multiattack",
+          "Teleport"
+        ],
+        "languageTags": [
+          "AB",
+          "TP"
+        ],
+        "damageTags": [
+          "F",
+          "L",
+          "O"
+        ],
+        "miscTags": [
+          "MA",
+          "MLW",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "prone"
+        ],
+        "savingThrowForced": [
+          "dexterity"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Balor",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Balor",
+                "entries": [
+                  "{@i Demon of Overwhelming Rage}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Planar (Abyss)|bestiary|environment=planar, abyss}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Armaments"
+                      }
+                    ]
+                  },
+                  "Balors embody demons' ruinous fury and hatred. Towering, winged terrors, these demonic warlords seethe with wrath, their rage erupting in waves of fire and as a pair of vicious weapons: a sword of crackling lightning and a whip of lashing flames. A balor's fury persists until the moment of its demise, at which point it explodes—a last act of vengeance against those who slew it. Demon lords and evil gods harness balors' rage by making balors commanders of armies or guardians of grave secrets."
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Balor.webp"
+                },
+                "credit": "Sidharth Chaturvedi",
+                "width": 2550,
+                "height": 1971
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

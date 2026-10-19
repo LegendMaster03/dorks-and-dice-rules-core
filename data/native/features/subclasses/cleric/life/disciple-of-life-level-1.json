@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.disciple-of-life.cleric.life.disciple-of-life.1",
+  "name": "Disciple of Life",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Disciple of Life",
+        "className": "Cleric",
+        "classSource": "SRD51",
+        "subclassShortName": "Life",
+        "subclassSource": "SRD51",
+        "level": 1,
+        "header": 1,
+        "entries": [
+          "Also starting at 1st level, your healing spells are more effective. Whenever you use a spell of 1st level or higher to restore hit points to a creature, the creature regains additional hit points equal to 2 + the spell's level."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "parentSubclass": "life",
+  "classLevel": 1
+}

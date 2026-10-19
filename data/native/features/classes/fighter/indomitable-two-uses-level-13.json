@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.indomitable-two-uses.fighter.indomitable-two-uses.13",
+  "name": "Indomitable (two uses)",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Indomitable (two uses)",
+        "className": "Fighter",
+        "classSource": "SRD51",
+        "level": 13,
+        "entries": [
+          "At 13th level, you can use Indomitable twice between long rests."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 13
+}

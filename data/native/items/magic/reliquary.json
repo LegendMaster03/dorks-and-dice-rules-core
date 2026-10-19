@@ -1,0 +1,39 @@
+{
+  "id": "item.reliquary",
+  "name": "Reliquary",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Reliquary",
+        "group": [
+          "Holy Symbol"
+        ],
+        "type": "SCF",
+        "scfType": "holy",
+        "rarity": "none",
+        "weight": 2,
+        "value": 500
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Reliquary",
+        "group": [
+          "Holy Symbol"
+        ],
+        "type": "SCF|SRD52",
+        "scfType": "holy",
+        "rarity": "none",
+        "weight": 2,
+        "value": 500,
+        "entries": [
+          "For a Reliquary to be an effective Holy Symbol, it must be held."
+        ]
+      }
+    }
+  ]
+}

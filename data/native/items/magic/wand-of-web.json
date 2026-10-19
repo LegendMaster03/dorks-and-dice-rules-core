@@ -1,0 +1,76 @@
+{
+  "id": "item.wand-of-web",
+  "name": "Wand of Web",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Wand of Web",
+        "type": "WD|SRD51",
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": "by a spellcaster",
+        "reqAttuneTags": [
+          {
+            "spellcasting": true
+          }
+        ],
+        "weight": 1,
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d6 + 1}",
+        "charges": 7,
+        "entries": [
+          "This wand has 7 charges. While holding it, you can use an action to expend 1 of its charges to cast the {@spell web} spell (save {@dc 15}) from it.",
+          "The wand regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll a {@dice d20}. On a 1, the wand crumbles into ashes and is destroyed."
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "web"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Wand of Web",
+        "type": "WD|SRD52",
+        "rarity": "uncommon",
+        "reqAttune": "by a spellcaster",
+        "reqAttuneTags": [
+          {
+            "spellcasting": true
+          }
+        ],
+        "weight": 1,
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d6 + 1}",
+        "charges": 7,
+        "entries": [
+          "This wand has 7 charges. While holding it, you can expend 1 charge to cast {@spell Web|SRD52} (save {@dc 13}) from it.",
+          {
+            "type": "entries",
+            "name": "Regaining Charges",
+            "entries": [
+              "The wand regains {@dice 1d6 + 1} expended charges daily at dawn. If you expend the wand's last charge, roll {@dice 1d20}. On a 1, the wand crumbles into ashes and is destroyed."
+            ]
+          }
+        ],
+        "classFeatures": [
+          "replicate magic item|artificer|efa|2|efa"
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "web|srd52"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,468 @@
+{
+  "id": "monster.ancient-brass-dragon",
+  "name": "Ancient Brass Dragon",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ancient Brass Dragon",
+        "group": [
+          "Metallic Dragon"
+        ],
+        "size": [
+          "G"
+        ],
+        "type": "dragon",
+        "alignment": [
+          "C",
+          "G"
+        ],
+        "ac": [
+          {
+            "ac": 20,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 297,
+          "formula": "17d20 + 119"
+        },
+        "speed": {
+          "walk": 40,
+          "burrow": 40,
+          "fly": 80
+        },
+        "str": 27,
+        "dex": 10,
+        "con": 25,
+        "int": 16,
+        "wis": 15,
+        "cha": 19,
+        "save": {
+          "dex": "+6",
+          "con": "+13",
+          "wis": "+8",
+          "cha": "+10"
+        },
+        "skill": {
+          "history": "+9",
+          "perception": "+14",
+          "persuasion": "+10",
+          "stealth": "+6"
+        },
+        "senses": [
+          "blindsight 60 ft.",
+          "darkvision 120 ft."
+        ],
+        "passive": 24,
+        "immune": [
+          "fire"
+        ],
+        "languages": [
+          "Common",
+          "Draconic"
+        ],
+        "cr": "20",
+        "trait": [
+          {
+            "name": "Legendary Resistance (3/Day)",
+            "entries": [
+              "If the dragon fails a saving throw, it can choose to succeed instead."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
+            ]
+          },
+          {
+            "name": "Bite",
+            "entries": [
+              "{@atk mw} {@hit 14} to hit, reach 15 ft., one target. {@h}19 ({@damage 2d10 + 8}) piercing damage."
+            ]
+          },
+          {
+            "name": "Claw",
+            "entries": [
+              "{@atk mw} {@hit 14} to hit, reach 10 ft., one target. {@h}15 ({@damage 2d6 + 8}) slashing damage."
+            ]
+          },
+          {
+            "name": "Tail",
+            "entries": [
+              "{@atk mw} {@hit 14} to hit, reach 20 ft., one target. {@h}17 ({@damage 2d8 + 8}) bludgeoning damage."
+            ]
+          },
+          {
+            "name": "Frightful Presence",
+            "entries": [
+              "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 18} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+            ]
+          },
+          {
+            "name": "Breath Weapons {@recharge 5}",
+            "entries": [
+              "The dragon uses one of the following breath weapons:",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Fire Breath",
+                    "entry": "The dragon exhales fire in a 90-foot line that is 10 feet wide. Each creature in that line must make a {@dc 21} Dexterity saving throw, taking 56 ({@damage 16d6}) fire damage on a failed save, or half as much damage on a successful one."
+                  },
+                  {
+                    "type": "item",
+                    "name": "Sleep Breath",
+                    "entry": "The dragon exhales sleep gas in a 90-foot cone. Each creature in that area must succeed on a {@dc 21} Constitution saving throw or fall {@condition unconscious} for 10 minutes. This effect ends for a creature if the creature takes damage or someone uses an action to wake it."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Change Shape",
+            "entries": [
+              "The dragon magically polymorphs into a humanoid or beast that has a challenge rating no higher than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the dragon's choice).",
+              "In a new form, the dragon retains its alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Its statistics and capabilities are otherwise replaced by those of the new form, except any class features or legendary actions of that form."
+            ]
+          }
+        ],
+        "legendary": [
+          {
+            "name": "Detect",
+            "entries": [
+              "The dragon makes a Wisdom ({@skill Perception}) check."
+            ]
+          },
+          {
+            "name": "Tail Attack",
+            "entries": [
+              "The dragon makes a tail attack."
+            ]
+          },
+          {
+            "name": "Wing Attack (Costs 2 Actions)",
+            "entries": [
+              "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 22} Dexterity saving throw or take 15 ({@damage 2d6 + 8}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+            ]
+          }
+        ],
+        "environment": [
+          "desert"
+        ],
+        "dragonCastingColor": "brass",
+        "dragonAge": "ancient",
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/brass-dragon.opus"
+        },
+        "traitTags": [
+          "Legendary Resistances"
+        ],
+        "senseTags": [
+          "B",
+          "SD"
+        ],
+        "actionTags": [
+          "Breath Weapon",
+          "Frightful Presence",
+          "Multiattack",
+          "Shapechanger"
+        ],
+        "languageTags": [
+          "C",
+          "DR"
+        ],
+        "damageTags": [
+          "B",
+          "F",
+          "P",
+          "S"
+        ],
+        "damageTagsLegendary": [
+          "B"
+        ],
+        "miscTags": [
+          "AOE",
+          "MW",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "frightened",
+          "prone",
+          "unconscious"
+        ],
+        "conditionInflictLegendary": [
+          "blinded",
+          "prone"
+        ],
+        "savingThrowForced": [
+          "constitution",
+          "dexterity",
+          "wisdom"
+        ],
+        "savingThrowForcedLegendary": [
+          "constitution",
+          "strength"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Ancient Brass Dragon",
+            "_copy": {
+              "name": "Brass Dragon",
+              "source": "SRD51"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ancient Brass Dragon",
+        "group": [
+          "Metallic Dragons"
+        ],
+        "size": [
+          "G"
+        ],
+        "type": {
+          "type": "dragon",
+          "tags": [
+            "metallic"
+          ]
+        },
+        "alignment": [
+          "C",
+          "G"
+        ],
+        "ac": [
+          20
+        ],
+        "hp": {
+          "average": 332,
+          "formula": "19d20 + 133"
+        },
+        "speed": {
+          "walk": 40,
+          "burrow": 40,
+          "fly": 80
+        },
+        "initiative": {
+          "proficiency": 2
+        },
+        "str": 27,
+        "dex": 10,
+        "con": 25,
+        "int": 16,
+        "wis": 15,
+        "cha": 22,
+        "save": {
+          "dex": "+6",
+          "wis": "+8"
+        },
+        "skill": {
+          "history": "+9",
+          "perception": "+14",
+          "persuasion": "+12",
+          "stealth": "+6"
+        },
+        "senses": [
+          "Blindsight 60 ft.",
+          "Darkvision 120 ft."
+        ],
+        "passive": 24,
+        "immune": [
+          "fire"
+        ],
+        "languages": [
+          "Common",
+          "Draconic"
+        ],
+        "cr": {
+          "cr": "20",
+          "xpLair": 33000
+        },
+        "spellcasting": [
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 20}):"
+            ],
+            "will": [
+              "{@spell Detect Magic|SRD52}",
+              "{@spell Minor Illusion|SRD52}",
+              "{@spell Scorching Ray|SRD52} (level 3 version)",
+              "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)",
+              "{@spell Speak with Animals|SRD52}"
+            ],
+            "daily": {
+              "1e": [
+                "{@spell Control Weather|SRD52}",
+                "{@spell Detect Thoughts|SRD52}"
+              ]
+            },
+            "ability": "cha",
+            "displayAs": "action"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+            "entries": [
+              "If the dragon fails a saving throw, it can choose to succeed instead."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Sleep Breath or (B) Spellcasting to cast {@spell Scorching Ray|SRD52} (level 3 version)."
+            ]
+          },
+          {
+            "name": "Rend",
+            "entries": [
+              "{@atkr m} {@hit 14}, reach 15 ft. {@h}19 ({@damage 2d10 + 8}) Slashing damage plus 7 ({@damage 2d6}) Fire damage."
+            ]
+          },
+          {
+            "name": "Fire Breath {@recharge 5}",
+            "entries": [
+              "{@actSave dex} {@dc 21}, each creature in a 90-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 58 ({@damage 13d8}) Fire damage. {@actSaveSuccess} Half damage."
+            ]
+          },
+          {
+            "name": "Sleep Breath",
+            "entries": [
+              "{@actSave con} {@dc 21}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target has the {@condition Incapacitated|SRD52} condition until the end of its next turn, at which point it repeats the save. {@actSaveFail 2} The target has the {@condition Unconscious|SRD52} condition for 10 minutes. This effect ends for the target if it takes damage or a creature within 5 feet of it takes an action to wake it."
+            ]
+          }
+        ],
+        "legendaryActionsLair": 4,
+        "legendary": [
+          {
+            "name": "Blazing Light",
+            "entries": [
+              "The dragon uses Spellcasting to cast {@spell Scorching Ray|SRD52} (level 3 version)."
+            ]
+          },
+          {
+            "name": "Pounce",
+            "entries": [
+              "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+            ]
+          },
+          {
+            "name": "Scorching Sands",
+            "entries": [
+              "{@actSave dex} {@dc 20}, one creature the dragon can see within 120 feet. {@actSaveFail} 36 ({@damage 8d8}) Fire damage, and the target's {@variantrule Speed|SRD52} is halved until the end of its next turn. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+            ]
+          }
+        ],
+        "environment": [
+          "desert"
+        ],
+        "treasure": [
+          "arcana"
+        ],
+        "dragonAge": "ancient",
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/brass-dragon.opus"
+        },
+        "traitTags": [
+          "Legendary Resistances"
+        ],
+        "senseTags": [
+          "B",
+          "SD"
+        ],
+        "actionTags": [
+          "Breath Weapon",
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "DR"
+        ],
+        "damageTags": [
+          "F",
+          "S"
+        ],
+        "damageTagsSpell": [
+          "F"
+        ],
+        "spellcastingTags": [
+          "O"
+        ],
+        "miscTags": [
+          "MA",
+          "RCH"
+        ],
+        "conditionInflict": [
+          "incapacitated",
+          "unconscious"
+        ],
+        "savingThrowForced": [
+          "constitution",
+          "dexterity"
+        ],
+        "savingThrowForcedSpell": [
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Ancient Brass Dragon",
+            "_copy": {
+              "name": "Brass Dragons",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "Ancient brass dragons create worlds-spanning networks. They combat forces of repression and misinformation, helping people learn from the mistakes of the past. Either personally or through webs of messengers, ancient brass dragons keep allies informed about challenges they can face together."
+                      ]
+                    }
+                  ]
+                },
+                "images": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "image",
+                      "href": {
+                        "type": "internal",
+                        "path": "bestiary/XMM/Ancient Brass Dragon.webp"
+                      },
+                      "title": "An ancient brass dragon protects travelers from an oncoming sandstorm",
+                      "credit": "Caio Monteiro",
+                      "width": 1979,
+                      "height": 2560
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

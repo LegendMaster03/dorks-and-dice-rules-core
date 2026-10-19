@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.trip-cost-1d6.rogue.trip-cost-1d6.5",
+  "name": "Trip (Cost: 1d6)",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Trip (Cost: 1d6)",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 5,
+        "entries": [
+          "If the target is Large or smaller, it must succeed on a Dexterity saving throw or have the {@condition Prone|SRD52} condition."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 5
+}

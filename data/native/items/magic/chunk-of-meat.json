@@ -1,0 +1,20 @@
+{
+  "id": "item.chunk-of-meat",
+  "name": "Chunk of Meat",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Chunk of Meat",
+        "type": "FD",
+        "rarity": "none",
+        "value": 30,
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.land-s-aid.druid.land.land-s-aid.3",
+  "name": "Land's Aid",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Land's Aid",
+        "className": "Druid",
+        "classSource": "SRD52",
+        "subclassShortName": "Land",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "entries": [
+          "As a {@action Magic|SRD52} action, you can expend a use of your Wild Shape and choose a point within 60 feet of yourself. Vitality-giving flowers and life-draining thorns appear for a moment in a 10-foot-radius {@variantrule Sphere [Area of Effect]|SRD52|Sphere} centered on that point. Each creature of your choice in the {@variantrule Sphere [Area of Effect]|SRD52|Sphere} must make a Constitution saving throw against your spell save DC, taking {@damage 2d6} Necrotic damage on a failed save or half as much damage on a successful one. One creature of your choice in that area regains {@dice 2d6} {@variantrule Hit Points|SRD52}.",
+          "The damage and healing increase by {@dice 1d6} when you reach Druid levels 10 ({@dice 3d6}) and 14 ({@dice 4d6})."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "parentSubclass": "land",
+  "classLevel": 3
+}

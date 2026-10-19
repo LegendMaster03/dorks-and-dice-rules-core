@@ -1,0 +1,127 @@
+{
+  "id": "item.herbalism-kit",
+  "name": "Herbalism Kit",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Herbalism Kit",
+        "type": "T",
+        "rarity": "none",
+        "weight": 3,
+        "value": 500,
+        "entries": [
+          "This kit contains a variety of instruments such as clippers, mortar and pestle, and pouches and vials used by herbalists to create remedies and potions. Proficiency with this kit lets you add your proficiency bonus to any ability checks you make to identify or apply herbs. Also, proficiency with this kit is required to create antitoxin and potions of healing."
+        ],
+        "additionalEntries": [
+          "Proficiency with an herbalism kit allows you to identify plants and safely collect their useful elements.",
+          {
+            "type": "entries",
+            "name": "Components",
+            "entries": [
+              "An herbalism kit includes pouches to store herbs, clippers and leather gloves for collecting plants, a mortar and pestle, and several glass jars."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Arcana",
+            "entries": [
+              "Your knowledge of the nature and uses of herbs can add insight to your magical studies that deal with plants and your attempts to identify potions."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Investigation",
+            "entries": [
+              "When you inspect an area overgrown with plants, your proficiency can help you pick out details and clues that others might miss."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Medicine",
+            "entries": [
+              "Your mastery of herbalism improves your ability to treat illnesses and wounds by augmenting your methods of care with medicinal plants."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Nature and Survival",
+            "entries": [
+              "When you travel in the wild, your skill in herbalism makes it easier to identify plants and spot sources of food that others might overlook."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Identify Plants",
+            "entries": [
+              "You can identify most plants with a quick inspection of their appearance and smell."
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Herbalism Kit",
+            "colLabels": [
+              "Activity",
+              "DC"
+            ],
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "rows": [
+              [
+                "Find plants",
+                "15"
+              ],
+              [
+                "Identify poison",
+                "20"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Herbalism Kit",
+        "type": "T|SRD52",
+        "rarity": "none",
+        "weight": 3,
+        "value": 500,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Intelligence"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Identify a plant ({@dc 10})"
+                ]
+              },
+              {
+                "name": "Craft:",
+                "type": "item",
+                "entries": [
+                  "{@item Antitoxin|SRD52}, {@item Candle|SRD52}, {@item Healer's Kit|SRD52}, {@item Potion of Healing|SRD52}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.empowered-evocation.wizard.evoker.empowered-evocation.10",
+  "name": "Empowered Evocation",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Empowered Evocation",
+        "className": "Wizard",
+        "classSource": "SRD52",
+        "subclassShortName": "Evoker",
+        "subclassSource": "SRD52",
+        "level": 10,
+        "header": 2,
+        "entries": [
+          "Whenever you cast a Wizard spell from the Evocation school, you can add your Intelligence modifier to one damage roll of that spell."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.wizard",
+  "parentSubclass": "evoker",
+  "classLevel": 10
+}

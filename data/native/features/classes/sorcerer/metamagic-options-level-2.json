@@ -1,0 +1,98 @@
+{
+  "id": "classFeature.metamagic-options.sorcerer.metamagic-options.2",
+  "name": "Metamagic Options",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Metamagic Options",
+        "className": "Sorcerer",
+        "classSource": "SRD52",
+        "level": 2,
+        "entries": [
+          "The following options are available to your Metamagic feature. The options are presented in alphabetical order.",
+          {
+            "type": "options",
+            "count": 2,
+            "entries": [
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Careful Spell|SRD52",
+                "preserve": {
+                  "consumes": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Distant Spell|SRD52",
+                "preserve": {
+                  "consumes": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Empowered Spell|SRD52",
+                "preserve": {
+                  "consumes": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Extended Spell|SRD52",
+                "preserve": {
+                  "consumes": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Heightened Spell|SRD52",
+                "preserve": {
+                  "consumes": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Quickened Spell|SRD52",
+                "preserve": {
+                  "consumes": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Seeking Spell|SRD52",
+                "preserve": {
+                  "consumes": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Subtle Spell|SRD52",
+                "preserve": {
+                  "consumes": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Transmuted Spell|SRD52",
+                "preserve": {
+                  "consumes": true
+                }
+              },
+              {
+                "type": "refOptionalfeature",
+                "optionalfeature": "Twinned Spell|SRD52",
+                "preserve": {
+                  "consumes": true
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.sorcerer",
+  "classLevel": 2
+}

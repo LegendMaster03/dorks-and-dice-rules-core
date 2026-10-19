@@ -1,0 +1,22 @@
+{
+  "id": "optionalfeature.two-weapon-fighting",
+  "name": "Two-Weapon Fighting",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Two-Weapon Fighting",
+        "featureType": [
+          "FS:F",
+          "FS:B",
+          "FS:R"
+        ],
+        "entries": [
+          "When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack."
+        ]
+      }
+    }
+  ]
+}

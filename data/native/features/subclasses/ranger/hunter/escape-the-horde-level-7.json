@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.escape-the-horde.ranger.hunter.escape-the-horde.7",
+  "name": "Escape the Horde",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Escape the Horde",
+        "className": "Ranger",
+        "classSource": "SRD51",
+        "subclassShortName": "Hunter",
+        "subclassSource": "SRD51",
+        "level": 7,
+        "header": 2,
+        "entries": [
+          "Opportunity attacks against you are made with disadvantage."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "parentSubclass": "hunter",
+  "classLevel": 7
+}

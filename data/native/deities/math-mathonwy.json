@@ -1,0 +1,25 @@
+{
+  "id": "deity.math-mathonwy",
+  "name": "Math Mathonwy",
+  "kind": "deity",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Math Mathonwy",
+        "pantheon": "Celtic",
+        "alignment": [
+          "N",
+          "E"
+        ],
+        "title": "God of magic",
+        "domains": [
+          "Knowledge",
+          "Arcana"
+        ],
+        "symbol": "Staff"
+      }
+    }
+  ]
+}

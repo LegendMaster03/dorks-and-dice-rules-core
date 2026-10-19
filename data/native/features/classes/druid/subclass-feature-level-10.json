@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.subclass-feature.druid.subclass-feature.10",
+  "name": "Subclass Feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Subclass Feature",
+        "className": "Druid",
+        "classSource": "SRD52",
+        "level": 10,
+        "entries": [
+          "You gain a feature from your Druid Subclass."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.druid",
+  "classLevel": 10
+}

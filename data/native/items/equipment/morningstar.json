@@ -1,0 +1,41 @@
+{
+  "id": "baseitem.morningstar",
+  "name": "Morningstar",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Morningstar",
+        "type": "M",
+        "rarity": "none",
+        "weight": 4,
+        "value": 1500,
+        "weaponCategory": "martial",
+        "dmg1": "1d8",
+        "dmgType": "P",
+        "mace": true,
+        "weapon": true
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Morningstar",
+        "type": "M|SRD52",
+        "rarity": "none",
+        "weight": 4,
+        "value": 1500,
+        "weaponCategory": "martial",
+        "mastery": [
+          "Sap|SRD52"
+        ],
+        "dmg1": "1d8",
+        "dmgType": "P",
+        "mace": true,
+        "weapon": true
+      }
+    }
+  ]
+}

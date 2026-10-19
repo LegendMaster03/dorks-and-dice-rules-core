@@ -1,0 +1,32 @@
+{
+  "id": "rule.monsters-l",
+  "name": "Monsters (L)",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Monsters (L)",
+        "page": 325,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@creature Lamia|srd51}",
+              "{@creature Lemure|srd51}",
+              "{@creature Lich|srd51}",
+              "{@creature Lion|srd51}",
+              "{@creature Lizard|srd51}",
+              "{@creature Lizardfolk|srd51}"
+            ]
+          }
+        ],
+        "id": "1ae"
+      }
+    }
+  ]
+}

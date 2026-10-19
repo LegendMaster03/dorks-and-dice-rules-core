@@ -1,0 +1,300 @@
+{
+  "id": "monster.satyr",
+  "name": "Satyr",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Satyr",
+        "size": [
+          "M"
+        ],
+        "type": "fey",
+        "alignment": [
+          "C",
+          "N"
+        ],
+        "ac": [
+          {
+            "ac": 14,
+            "from": [
+              "{@item leather armor|srd51}"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 31,
+          "formula": "7d8"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 12,
+        "dex": 16,
+        "con": 11,
+        "int": 12,
+        "wis": 10,
+        "cha": 14,
+        "skill": {
+          "perception": "+2",
+          "performance": "+6",
+          "stealth": "+5"
+        },
+        "passive": 12,
+        "languages": [
+          "Common",
+          "Elvish",
+          "Sylvan"
+        ],
+        "cr": "1/2",
+        "trait": [
+          {
+            "name": "Magic Resistance",
+            "entries": [
+              "The satyr has advantage on saving throws against spells and other magical effects."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Ram",
+            "entries": [
+              "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}6 ({@damage 2d4 + 1}) bludgeoning damage."
+            ]
+          },
+          {
+            "name": "Shortsword",
+            "entries": [
+              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d6 + 3}) piercing damage."
+            ]
+          },
+          {
+            "name": "Shortbow",
+            "entries": [
+              "{@atk rw} {@hit 5} to hit, range 80/320 ft., one target. {@h}6 ({@damage 1d6 + 3}) piercing damage."
+            ]
+          }
+        ],
+        "environment": [
+          "forest"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/satyr.opus"
+        },
+        "attachedItems": [
+          "shortbow|srd51",
+          "shortsword|srd51"
+        ],
+        "traitTags": [
+          "Magic Resistance"
+        ],
+        "languageTags": [
+          "C",
+          "E",
+          "S"
+        ],
+        "damageTags": [
+          "B",
+          "P"
+        ],
+        "miscTags": [
+          "MLW",
+          "MW",
+          "RNG",
+          "RW"
+        ],
+        "conditionInflict": [
+          "charmed",
+          "frightened",
+          "unconscious"
+        ],
+        "savingThrowForced": [
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Satyr",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Satyrs are raucous fey that frolic in wild forests, driven by curiosity and hedonism in equal measure.",
+                      "Satyrs resemble stout male humans with the furry lower bodies and cloven hooves of goats. Horns sprout from their heads, ranging in shape from a pair of small nubs to large, curling rams' horns. They typically sport facial hair.",
+                      {
+                        "name": "Hedonistic Revelers",
+                        "type": "entries",
+                        "entries": [
+                          "Satyrs crave the strongest drink, the most fragrant spices, and the most dizzying dances. A satyr feels starved when it can't indulge itself, and it goes to great lengths to sate its desires. It might kidnap a fine minstrel to hear lovely songs, sneak through a well-defended garden to gaze upon a beautiful lad or lass, or infiltrate a palace to taste the finest food in the land. Satyrs allow no festivity to pass them by. They partake in any holiday they've heard of. Civilizations of the world have enough festivals and holy days among them to justify nonstop celebration.",
+                          "Inebriated on drink and pleasure, satyrs give no thought to the consequences of the hedonism they incite in others. They leave such creatures mystified at their own behavior. Such revelers might have to scrounge for excuses to explain their disordered state to parents, employers, family, or friends."
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "Twixt day and night the spirits goad me on",
+                          "They pine for ages past when hearts were pure",
+                          "Against all reason now they seem unsure",
+                          "They laugh and scream between mine ears anon.",
+                          "Now fill my cup not once, not twice, but thrice",
+                          "With flag's brim upon my lips I dance",
+                          "Let unseen pixies toss their gowns askance",
+                          "While I, the Carnal King, indulge my vice.",
+                          "With folded boughs, the treants take their leave",
+                          "As merry damsels' corsets come undone",
+                          "My song doth stir them like a summer breeze",
+                          "They fill mine empty cup without reprieve.",
+                          "The sun becomes the moon becomes the sun",
+                          "I while away the hours as I please."
+                        ],
+                        "by": "Sonnet of a Naughty Satyr"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Satyr.webp"
+                },
+                "width": 714,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Satyr",
+        "size": [
+          "M"
+        ],
+        "type": "fey",
+        "alignment": [
+          "C",
+          "N"
+        ],
+        "ac": [
+          13
+        ],
+        "hp": {
+          "average": 31,
+          "formula": "7d8"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 12,
+        "dex": 16,
+        "con": 11,
+        "int": 12,
+        "wis": 10,
+        "cha": 14,
+        "skill": {
+          "perception": "+2",
+          "performance": "+6",
+          "stealth": "+5"
+        },
+        "passive": 12,
+        "languages": [
+          "Common",
+          "Elvish",
+          "Sylvan"
+        ],
+        "cr": "1/2",
+        "trait": [
+          {
+            "name": "Magic Resistance",
+            "entries": [
+              "The satyr has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Hooves",
+            "entries": [
+              "{@atkr m} {@hit 5}, reach 5 ft. {@h}5 ({@damage 1d4 + 3}) Bludgeoning damage. If the target is a Medium or smaller creature, the satyr pushes the target up to 10 feet straight away from itself."
+            ]
+          },
+          {
+            "name": "Mockery",
+            "entries": [
+              "{@actSave wis} {@dc 12}, one creature the satyr can see within 90 feet. {@actSaveFail} 5 ({@damage 1d6 + 2}) Psychic damage."
+            ]
+          }
+        ],
+        "environment": [
+          "forest",
+          "planar, feywild"
+        ],
+        "treasure": [
+          "implements"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/satyr.opus"
+        },
+        "traitTags": [
+          "Magic Resistance"
+        ],
+        "languageTags": [
+          "C",
+          "E",
+          "S"
+        ],
+        "damageTags": [
+          "B",
+          "Y"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "savingThrowForced": [
+          "wisdom"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Satyr",
+            "_copy": {
+              "name": "Satyrs",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "Satyrs enjoy demonstrating their physicality through contests, evicting party poopers, and defending Fey realms."
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

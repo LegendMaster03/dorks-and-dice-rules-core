@@ -1,0 +1,315 @@
+{
+  "id": "monster.pegasus",
+  "name": "Pegasus",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Pegasus",
+        "size": [
+          "L"
+        ],
+        "type": "celestial",
+        "alignment": [
+          "C",
+          "G"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 59,
+          "formula": "7d10 + 21"
+        },
+        "speed": {
+          "walk": 60,
+          "fly": 90
+        },
+        "str": 18,
+        "dex": 15,
+        "con": 16,
+        "int": 10,
+        "wis": 15,
+        "cha": 13,
+        "save": {
+          "dex": "+4",
+          "wis": "+4",
+          "cha": "+3"
+        },
+        "skill": {
+          "perception": "+6"
+        },
+        "passive": 16,
+        "languages": [
+          "understands Celestial",
+          "Common",
+          "Elvish",
+          "and Sylvan but can't speak"
+        ],
+        "cr": "2",
+        "action": [
+          {
+            "name": "Hooves",
+            "entries": [
+              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) bludgeoning damage."
+            ]
+          }
+        ],
+        "environment": [
+          "grassland",
+          "forest",
+          "hill"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/pegasus.opus"
+        },
+        "languageTags": [
+          "C",
+          "CE",
+          "CS",
+          "E",
+          "S"
+        ],
+        "damageTags": [
+          "B"
+        ],
+        "miscTags": [
+          "MW"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Pegasus",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "The white winged horses known as pegasi soar through the skies, a vision of grace and majesty. When they touch down on solid ground, they linger only for a moment, drinking from mountain springs and pristine lakes. Any sound or sign of another creature startles them, sending them off to fly once more among the clouds.",
+                      {
+                        "name": "Noble Mounts",
+                        "type": "entries",
+                        "entries": [
+                          "Pegasi are highly prized as swift and reliable steeds, being faster and less temperamental than griffons, hippogriffs, and wyverns. However, these wild and shy creatures are as intelligent as humanoids, and so can't be traditionally broken and tamed. A pegasus must be persuaded to serve a good-aligned creature as a mount, but when it does so, it forges a lifelong bond with its new companion."
+                        ]
+                      },
+                      {
+                        "name": "Born of the Planes",
+                        "type": "entries",
+                        "entries": [
+                          "Pegasi trace their origins to the Olympian Glades of Arborea, where they soar through the skies of that plane and serve as faithful mounts to the Seldarine, the pantheon of elven gods. These gods have been known to send pegasi to the Material Plane to aid those in need."
+                        ]
+                      },
+                      {
+                        "name": "Pegasi Nests",
+                        "type": "entries",
+                        "entries": [
+                          "Pegasi mate for life, build their nests in hard-to-reach locations, and give birth to live young."
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "Behold, the pegasus. It can outrace a dragon in the open sky, and only the best among us can ever hope to ride one. A fitting emblem for our great house, don't you think?"
+                        ],
+                        "by": "Tyllenvane d'Orien, dragonmarked scion arguing to change the symbol of House Orien from the unicorn to the pegasus"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Pegasus.webp"
+                },
+                "width": 867,
+                "height": 1000
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Pegasus",
+        "size": [
+          "L"
+        ],
+        "type": "celestial",
+        "alignment": [
+          "C",
+          "G"
+        ],
+        "ac": [
+          12
+        ],
+        "hp": {
+          "average": 59,
+          "formula": "7d10 + 21"
+        },
+        "speed": {
+          "walk": 60,
+          "fly": 90
+        },
+        "str": 18,
+        "dex": 15,
+        "con": 16,
+        "int": 10,
+        "wis": 15,
+        "cha": 13,
+        "save": {
+          "dex": "+4",
+          "con": "+5",
+          "wis": "+4",
+          "cha": "+3"
+        },
+        "skill": {
+          "perception": "+6"
+        },
+        "passive": 16,
+        "languages": [
+          "understands Celestial",
+          "Common",
+          "Elvish",
+          "and Sylvan but can't speak"
+        ],
+        "cr": "2",
+        "action": [
+          {
+            "name": "Hooves",
+            "entries": [
+              "{@atkr m} {@hit 6}, reach 5 ft. {@h}7 ({@damage 1d6 + 4}) Bludgeoning damage plus 5 ({@damage 2d4}) Radiant damage."
+            ]
+          }
+        ],
+        "environment": [
+          "forest",
+          "grassland",
+          "hill",
+          "planar, upper"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/pegasus.opus"
+        },
+        "languageTags": [
+          "C",
+          "CE",
+          "CS",
+          "E",
+          "S"
+        ],
+        "damageTags": [
+          "B",
+          "R"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Pegasus",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Pegasus",
+                "entries": [
+                  "{@i Elusive Winged Steed}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Forest|bestiary|environment=forest}, {@filter Grassland|bestiary|environment=grassland}, {@filter Hill|bestiary|environment=hill}, {@filter Planar (Upper Planes)|bestiary|environment=planar, upper}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "None"
+                      }
+                    ]
+                  },
+                  "Winged, sapient horses of noble bearing, pegasi are as majestic as they are elusive. Most avoid the affairs of other creatures, preferring to dwell amid idyllic pastures or floating islands, or on other planes of existence. Others serve deities of the Feywild and Upper Planes, aiding heroes in need. In rare cases, pegasi might befriend virtuous people and serve as their companions and steeds.",
+                  "Pegasi are hunted by servants of evil, leading many of these winged steeds to flee strangers on sight. Roll on or choose a result from the Pegasus Offerings table to inspire how one might show their good intentions to a wary pegasus.",
+                  {
+                    "type": "table",
+                    "caption": "Pegasus Offerings",
+                    "colLabels": [
+                      "1d4",
+                      "A Pegasus Won't Flee Someone..."
+                    ],
+                    "colStyles": [
+                      "col-2 text-center",
+                      "col-10"
+                    ],
+                    "rows": [
+                      [
+                        "1",
+                        "Bearing the gear of a hero the pegasus aided."
+                      ],
+                      [
+                        "2",
+                        "Offering magical fruit or holy spring water."
+                      ],
+                      [
+                        "3",
+                        "Singing a song in Celestial, Druidic, or Sylvan."
+                      ],
+                      [
+                        "4",
+                        "Wearing the garb of an ancient heroic order."
+                      ]
+                    ]
+                  },
+                  {
+                    "type": "insetReadaloud",
+                    "entries": [
+                      {
+                        "type": "quote",
+                        "entries": [
+                          "Pegasi are the cherished steeds of our creator, Corellon. To see one is a blessing, but to ride one proves nothing less than the love of the gods."
+                        ],
+                        "by": "Yolande, Queen of Celene"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Pegasus.webp"
+                },
+                "credit": "Alejandro Pacheco",
+                "width": 2560,
+                "height": 1710
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

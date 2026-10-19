@@ -1,0 +1,117 @@
+{
+  "id": "baseitem.mason-s-tools",
+  "name": "Mason's Tools",
+  "kind": "baseitem",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Mason's Tools",
+        "type": "AT",
+        "rarity": "none",
+        "weight": 8,
+        "value": 1000,
+        "additionalEntries": [
+          "Mason's tools allow you to craft stone structures, including walls and buildings crafted from brick.",
+          {
+            "type": "entries",
+            "name": "Components",
+            "entries": [
+              "Mason's tools consist of a trowel, a hammer, a chisel, brushes, and a square."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "History",
+            "entries": [
+              "Your expertise aids you in identifying a stone building's date of construction and purpose, along with insight into who might have built it."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Investigation",
+            "entries": [
+              "You gain additional insight when inspecting areas within stone structures."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Perception",
+            "entries": [
+              "You can spot irregularities in stone walls or floors, making it easier to find trap doors and secret passages."
+            ]
+          },
+          {
+            "type": "entries",
+            "name": "Demolition",
+            "entries": [
+              "Your knowledge of masonry allows you to spot weak points in brick walls. You deal double damage to such structures with your weapon attacks."
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Mason's Tools",
+            "colLabels": [
+              "Activity",
+              "DC"
+            ],
+            "colStyles": [
+              "col-10",
+              "col-2 text-center"
+            ],
+            "rows": [
+              [
+                "Chisel a small hole in a stone wall",
+                "10"
+              ],
+              [
+                "Find a weak point in a stone wall",
+                "15"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Mason's Tools",
+        "type": "AT|SRD52",
+        "rarity": "none",
+        "weight": 8,
+        "value": 1000,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "items": [
+              {
+                "name": "Ability:",
+                "type": "item",
+                "entries": [
+                  "Strength"
+                ]
+              },
+              {
+                "name": "Utilize:",
+                "type": "item",
+                "entries": [
+                  "Chisel a symbol or hole in stone ({@dc 10})"
+                ]
+              },
+              {
+                "name": "Craft:",
+                "type": "item",
+                "entries": [
+                  "{@item Block and Tackle|SRD52}"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

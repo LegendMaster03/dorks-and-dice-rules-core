@@ -1,0 +1,36 @@
+{
+  "id": "classFeature.divine-intervention.cleric.divine-intervention.10",
+  "name": "Divine Intervention",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Divine Intervention",
+        "className": "Cleric",
+        "classSource": "SRD51",
+        "level": 10,
+        "entries": [
+          "Beginning at 10th level, you can call on your deity to intervene on your behalf when your need is great.",
+          "Imploring your deity's aid requires you to use your action. Describe the assistance you seek, and roll percentile dice. If you roll a number equal to or lower than your cleric level, your deity intervenes. The DM chooses the nature of the intervention; the effect of any cleric spell or cleric domain spell would be appropriate. If your deity intervenes, you can't use this feature again for 7 days. Otherwise, you can use it again after you finish a long rest.",
+          "At 20th level, your call for intervention succeeds automatically, no roll required."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Divine Intervention",
+        "className": "Cleric",
+        "classSource": "SRD52",
+        "level": 10,
+        "entries": [
+          "You can call on your deity or pantheon to intervene on your behalf. As a {@action Magic|SRD52} action, choose any Cleric spell of level 5 or lower that doesn't require a {@variantrule Reaction|SRD52} to cast. As part of the same action, you cast that spell without expending a spell slot or needing Material components. You can't use this feature again until you finish a {@variantrule Long Rest|SRD52}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.cleric",
+  "classLevel": 10
+}

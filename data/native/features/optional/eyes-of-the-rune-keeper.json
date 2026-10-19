@@ -1,0 +1,20 @@
+{
+  "id": "optionalfeature.eyes-of-the-rune-keeper",
+  "name": "Eyes of the Rune Keeper",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Eyes of the Rune Keeper",
+        "featureType": [
+          "EI"
+        ],
+        "entries": [
+          "You can read all writing."
+        ]
+      }
+    }
+  ]
+}

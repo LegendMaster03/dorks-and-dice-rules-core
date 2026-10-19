@@ -1,0 +1,23 @@
+{
+  "id": "classFeature.weapon-mastery.ranger.weapon-mastery.1",
+  "name": "Weapon Mastery",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Weapon Mastery",
+        "className": "Ranger",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "Your training with weapons allows you to use the {@variantrule weapon mastery properties|SRD52|mastery properties} of two kinds of {@filter weapons|items|type=simple weapon;martial weapon} of your choice with which you have proficiency, such as {@item Longbow|SRD52|Longbows} and {@item Shortsword|SRD52|Shortswords}.",
+          "Whenever you finish a {@variantrule Long Rest|SRD52}, you can change the kinds of weapons you chose. For example, you could switch to using the {@variantrule weapon mastery properties|SRD52|mastery properties} of {@item Scimitar|SRD52|Scimitars} and {@item Longsword|SRD52|Longswords}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "classLevel": 1
+}

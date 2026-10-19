@@ -1,0 +1,45 @@
+{
+  "id": "item.potion-of-mind-reading",
+  "name": "Potion of Mind Reading",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Mind Reading",
+        "type": "P",
+        "tier": "minor",
+        "rarity": "rare",
+        "entries": [
+          "When you drink this potion, you gain the effect of the {@spell detect thoughts} spell (save {@dc 13}). The potion's dense, purple liquid has an ovoid cloud of pink floating in it."
+        ],
+        "attachedSpells": [
+          "detect thoughts"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Mind Reading",
+        "type": "P|SRD52",
+        "rarity": "rare",
+        "weight": 0.5,
+        "entries": [
+          "When you drink this potion, you gain the effect of the {@spell Detect Thoughts|SRD52} spell (save {@dc 13}) for 10 minutes (no {@status Concentration|SRD52} required).",
+          "This potion's dense, purple liquid has an ovoid cloud of pink floating in it."
+        ],
+        "attachedSpells": [
+          "detect thoughts|srd52"
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

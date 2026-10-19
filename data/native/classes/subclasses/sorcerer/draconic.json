@@ -1,0 +1,83 @@
+{
+  "id": "subclass.draconic-bloodline.sorcerer.draconic.Draconic",
+  "name": "Draconic Bloodline",
+  "kind": "subclass",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Draconic Bloodline",
+        "shortName": "Draconic",
+        "className": "Sorcerer",
+        "classSource": "SRD51",
+        "subclassFeatures": [
+          "Draconic Bloodline|Sorcerer||Draconic||1",
+          "Elemental Affinity|Sorcerer||Draconic||6",
+          "Dragon Wings|Sorcerer||Draconic||14",
+          "Draconic Presence|Sorcerer||Draconic||18"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Draconic Sorcery",
+        "shortName": "Draconic",
+        "className": "Sorcerer",
+        "classSource": "SRD52",
+        "additionalSpells": [
+          {
+            "prepared": {
+              "3": [
+                "alter self|srd52",
+                "chromatic orb|srd52",
+                "command|srd52",
+                "dragon's breath|srd52"
+              ],
+              "5": [
+                "fear|srd52",
+                "fly|srd52"
+              ],
+              "7": [
+                "arcane eye|srd52",
+                "charm monster|srd52"
+              ],
+              "9": [
+                "legend lore|srd52",
+                "summon dragon|srd52"
+              ]
+            }
+          }
+        ],
+        "subclassFeatures": [
+          "Draconic Sorcery|Sorcerer|SRD52|Draconic|SRD52|3",
+          "Elemental Affinity|Sorcerer|SRD52|Draconic|SRD52|6",
+          "Dragon Wings|Sorcerer|SRD52|Draconic|SRD52|14",
+          "Dragon Companion|Sorcerer|SRD52|Draconic|SRD52|18"
+        ],
+        "lore": [
+          {
+            "name": "Draconic Sorcery",
+            "shortName": "Draconic",
+            "className": "Sorcerer",
+            "classSource": "SRD52",
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "classes/XPHB/Draconic Sorcerer.webp"
+                },
+                "credit": "Lauren Walsh",
+                "width": 850,
+                "height": 2146
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.sorcerer"
+}

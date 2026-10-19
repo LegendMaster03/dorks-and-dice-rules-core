@@ -1,0 +1,45 @@
+{
+  "id": "item.brooch-of-shielding",
+  "name": "Brooch of Shielding",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Brooch of Shielding",
+        "resist": [
+          "force"
+        ],
+        "tier": "major",
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "entries": [
+          "While wearing this brooch, you have resistance to force damage, and you have immunity to damage from the {@spell magic missile} spell."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Brooch of Shielding",
+        "resist": [
+          "force"
+        ],
+        "rarity": "uncommon",
+        "reqAttune": true,
+        "wondrous": true,
+        "entries": [
+          "While wearing this brooch, you have {@variantrule Resistance|SRD52} to Force damage, and you have {@variantrule Immunity|SRD52} to damage from the {@spell Magic Missile|SRD52} spell."
+        ],
+        "optionalfeatures": [
+          "replicate magic item|tce"
+        ]
+      }
+    }
+  ]
+}

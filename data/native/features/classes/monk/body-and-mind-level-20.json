@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.body-and-mind.monk.body-and-mind.20",
+  "name": "Body and Mind",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Body and Mind",
+        "className": "Monk",
+        "classSource": "SRD52",
+        "level": 20,
+        "entries": [
+          "You have developed your body and mind to new heights. Your Dexterity and Wisdom scores increase by 4, to a maximum of 25."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 20
+}

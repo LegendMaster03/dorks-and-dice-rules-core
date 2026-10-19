@@ -1,0 +1,34 @@
+{
+  "id": "item.crowbar",
+  "name": "Crowbar",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Crowbar",
+        "type": "G",
+        "rarity": "none",
+        "weight": 5,
+        "value": 200,
+        "entries": [
+          "Using a crowbar grants advantage to Strength checks where the crowbar's leverage can be applied."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Crowbar",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 5,
+        "value": 200,
+        "entries": [
+          "Using a Crowbar gives you {@variantrule Advantage|SRD52} on Strength checks where the Crowbar's leverage can be applied."
+        ]
+      }
+    }
+  ]
+}

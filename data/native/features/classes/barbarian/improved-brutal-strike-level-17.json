@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.improved-brutal-strike.barbarian.improved-brutal-strike.17",
+  "name": "Improved Brutal Strike",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Improved Brutal Strike",
+        "className": "Barbarian",
+        "classSource": "SRD52",
+        "level": 17,
+        "entries": [
+          "The extra damage of your Brutal Strike increases to {@damage 2d10}. In addition, you can use two different Brutal Strike effects whenever you use your Brutal Strike feature."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.barbarian",
+  "classLevel": 17
+}

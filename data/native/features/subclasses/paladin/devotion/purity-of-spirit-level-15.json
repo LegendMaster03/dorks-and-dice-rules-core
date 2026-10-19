@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.purity-of-spirit.paladin.devotion.purity-of-spirit.15",
+  "name": "Purity of Spirit",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Purity of Spirit",
+        "className": "Paladin",
+        "classSource": "SRD51",
+        "subclassShortName": "Devotion",
+        "subclassSource": "SRD51",
+        "level": 15,
+        "header": 2,
+        "entries": [
+          "Beginning at 15th level, you are always under the effects of a {@spell protection from evil and good} spell."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.paladin",
+  "parentSubclass": "devotion",
+  "classLevel": 15
+}

@@ -1,0 +1,532 @@
+{
+  "id": "item.deck-of-illusions",
+  "name": "Deck of Illusions",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Deck of Illusions",
+        "tier": "major",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "This box contains a set of parchment cards. A full deck has 34 cards. A deck found as treasure is usually missing {@dice 1d20 - 1} cards.",
+          "The magic of the deck functions only if cards are drawn at random (you can use an altered deck of playing cards to simulate the deck). You can use an action to draw a card at random from the deck and throw it to the ground at a point within 30 feet of you.",
+          "An illusion of one or more creatures forms over the thrown card and remains until dispelled. An illusory creature appears real, of the appropriate size, and behaves as if it were a real creature, except that it can do no harm. While you are within 120 feet of the illusory creature and can see it, you can use an action to move it magically anywhere within 30 feet of its card. Any physical interaction with the illusory creature reveals it to be an illusion, because objects pass through it. Someone who uses an action to visually inspect the creature identifies it as illusory with a successful {@dc 15} Intelligence ({@skill Investigation}) check. The creature then appears translucent.",
+          "The illusion lasts until its card is moved or the illusion is dispelled. When the illusion ends, the image on its card disappears, and that card can't be used again.",
+          {
+            "type": "table",
+            "colLabels": [
+              "{@dice 1d34|Playing Card}",
+              "Illusion"
+            ],
+            "colStyles": [
+              "col-3",
+              "col-9"
+            ],
+            "rows": [
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 1
+                  },
+                  "entry": "Ace of hearts"
+                },
+                "{@creature adult red dragon||Red dragon}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 2
+                  },
+                  "entry": "King of hearts"
+                },
+                "{@creature Knight} and four {@creature guard||guards}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 3
+                  },
+                  "entry": "Queen of hearts"
+                },
+                "{@creature Succubus||Succubus/Incubus}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 4
+                  },
+                  "entry": "Jack of hearts"
+                },
+                "{@creature Druid}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 5
+                  },
+                  "entry": "Ten of hearts"
+                },
+                "{@creature Cloud giant}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 6
+                  },
+                  "entry": "Nine of hearts"
+                },
+                "{@creature Ettin}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 7
+                  },
+                  "entry": "Eight of hearts"
+                },
+                "{@creature Bugbear}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 8
+                  },
+                  "entry": "Two of hearts"
+                },
+                "{@creature Goblin}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 9
+                  },
+                  "entry": "Ace of diamonds"
+                },
+                "Beholder"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 10
+                  },
+                  "entry": "King of diamonds"
+                },
+                "{@creature Archmage} and {@creature mage} apprentice"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 11
+                  },
+                  "entry": "Queen of diamonds"
+                },
+                "{@creature Night hag}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 12
+                  },
+                  "entry": "Jack of diamonds"
+                },
+                "{@creature Assassin}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 13
+                  },
+                  "entry": "Ten of diamonds"
+                },
+                "{@creature Fire giant}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 14
+                  },
+                  "entry": "Nine of diamonds"
+                },
+                "{@creature oni||Ogre mage}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 15
+                  },
+                  "entry": "Eight of diamonds"
+                },
+                "{@creature Gnoll}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 16
+                  },
+                  "entry": "Two of diamonds"
+                },
+                "{@creature Kobold}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 17
+                  },
+                  "entry": "Ace of spades"
+                },
+                "{@creature Lich}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 18
+                  },
+                  "entry": "King of spades"
+                },
+                "{@creature Priest} and two {@creature acolyte||acolytes}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 19
+                  },
+                  "entry": "Queen of spades"
+                },
+                "{@creature Medusa}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 20
+                  },
+                  "entry": "Jack of spades"
+                },
+                "{@creature Veteran}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 21
+                  },
+                  "entry": "Ten of spades"
+                },
+                "{@creature Frost giant}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 22
+                  },
+                  "entry": "Nine of spades"
+                },
+                "{@creature Troll}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 23
+                  },
+                  "entry": "Eight of spades"
+                },
+                "{@creature Hobgoblin}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 24
+                  },
+                  "entry": "Two of spades"
+                },
+                "{@creature Goblin}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 25
+                  },
+                  "entry": "Ace of clubs"
+                },
+                "{@creature Iron golem}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 26
+                  },
+                  "entry": "King of clubs"
+                },
+                "{@creature Bandit captain} and three {@creature bandit||bandits}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 27
+                  },
+                  "entry": "Queen of clubs"
+                },
+                "{@creature Erinyes}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 28
+                  },
+                  "entry": "Jack of clubs"
+                },
+                "{@creature Berserker}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 29
+                  },
+                  "entry": "Ten of clubs"
+                },
+                "{@creature Hill giant}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 30
+                  },
+                  "entry": "Nine of clubs"
+                },
+                "{@creature Ogre}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 31
+                  },
+                  "entry": "Eight of clubs"
+                },
+                "{@creature Orc}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "exact": 32
+                  },
+                  "entry": "Two of clubs"
+                },
+                "{@creature Kobold}"
+              ],
+              [
+                {
+                  "type": "cell",
+                  "roll": {
+                    "min": 33,
+                    "max": 34
+                  },
+                  "entry": "jokers (2)"
+                },
+                "You (the deck's owner)"
+              ]
+            ]
+          }
+        ],
+        "seeAlsoDeck": [
+          "Deck of Illusions"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Deck of Illusions",
+        "rarity": "uncommon",
+        "wondrous": true,
+        "entries": [
+          "This box contains a set of cards. A full deck has 34 cards: 32 depicting specific creatures and two with a mirrored surface. A deck found as treasure is usually missing {@dice 1d20 - 1} cards.",
+          "The magic of the deck functions only if its cards are drawn at random. You can take a {@action Magic|SRD52} action to draw a card at random from the deck and throw it to the ground at a point within 30 feet of yourself. An illusion of a creature, determined by rolling on the Deck of Illusions table, forms over the thrown card and remains until dispelled. The illusory creature created by the card looks and behaves like a real creature of its kind, except that it can do no harm. While you are within 120 feet of the illusory creature and can see it, you can take a {@action Magic|SRD52} action to move it anywhere within 30 feet of its card.",
+          "Any physical interaction with the illusory creature reveals it to be false, because objects pass through it. A creature that takes a {@action Study|SRD52} action to visually inspect the illusory creature identifies it as an illusion with a successful {@dc 15} Intelligence ({@skill Investigation|SRD52}) check. The illusion lasts until its card is moved or the illusion is dispelled (using a {@spell Dispel Magic|SRD52} spell or a similar effect). When the illusion ends, the image on its card disappears, and that card can't be used again.",
+          {
+            "type": "table",
+            "caption": "Deck of Illusions",
+            "colStyles": [
+              "col-2 text-center",
+              "col-10"
+            ],
+            "colLabels": [
+              "1d100",
+              "Illusion"
+            ],
+            "rows": [
+              [
+                "01-03",
+                "{@creature Adult Red Dragon|SRD52}"
+              ],
+              [
+                "04-06",
+                "{@creature Archmage|SRD52}"
+              ],
+              [
+                "07-09",
+                "{@creature Assassin|SRD52}"
+              ],
+              [
+                "10-12",
+                "{@creature Bandit Captain|SRD52}"
+              ],
+              [
+                "13-15",
+                "Beholder"
+              ],
+              [
+                "16-18",
+                "{@creature Berserker|SRD52}"
+              ],
+              [
+                "19-21",
+                "{@creature Bugbear Warrior|SRD52}"
+              ],
+              [
+                "22-24",
+                "{@creature Cloud Giant|SRD52}"
+              ],
+              [
+                "25-27",
+                "{@creature Druid|SRD52}"
+              ],
+              [
+                "28-30",
+                "{@creature Erinyes|SRD52}"
+              ],
+              [
+                "31-33",
+                "{@creature Ettin|SRD52}"
+              ],
+              [
+                "34-36",
+                "{@creature Fire Giant|SRD52}"
+              ],
+              [
+                "37-39",
+                "{@creature Frost Giant|SRD52}"
+              ],
+              [
+                "40-42",
+                "{@creature Gnoll Warrior|SRD52}"
+              ],
+              [
+                "43-45",
+                "{@creature Goblin Warrior|SRD52}"
+              ],
+              [
+                "46-48",
+                "{@creature Guardian Naga|SRD52}"
+              ],
+              [
+                "49-51",
+                "{@creature Hill Giant|SRD52}"
+              ],
+              [
+                "52-54",
+                "{@creature Hobgoblin Warrior|SRD52}"
+              ],
+              [
+                "55-57",
+                "{@creature Incubus|SRD52}"
+              ],
+              [
+                "58-60",
+                "{@creature Iron Golem|SRD52}"
+              ],
+              [
+                "61-63",
+                "{@creature Knight|SRD52}"
+              ],
+              [
+                "64-66",
+                "{@creature Kobold Warrior|SRD52}"
+              ],
+              [
+                "67-69",
+                "{@creature Lich|SRD52}"
+              ],
+              [
+                "70-72",
+                "{@creature Medusa|SRD52}"
+              ],
+              [
+                "73-75",
+                "{@creature Night Hag|SRD52}"
+              ],
+              [
+                "76-78",
+                "{@creature Ogre|SRD52}"
+              ],
+              [
+                "79-81",
+                "{@creature Oni|SRD52}"
+              ],
+              [
+                "82-84",
+                "{@creature Priest|SRD52}"
+              ],
+              [
+                "85-87",
+                "{@creature Succubus|SRD52}"
+              ],
+              [
+                "88-90",
+                "{@creature Troll|SRD52}"
+              ],
+              [
+                "91-93",
+                "{@creature Warrior Veteran|SRD52}"
+              ],
+              [
+                "94-96",
+                "{@creature Wyvern|SRD52}"
+              ],
+              [
+                "97-00",
+                "The card drawer"
+              ]
+            ]
+          }
+        ],
+        "seeAlsoDeck": [
+          "Deck of Illusions|SRD52"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.stand-against-the-tide.ranger.hunter.stand-against-the-tide.15",
+  "name": "Stand Against the Tide",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Stand Against the Tide",
+        "className": "Ranger",
+        "classSource": "SRD51",
+        "subclassShortName": "Hunter",
+        "subclassSource": "SRD51",
+        "level": 15,
+        "header": 2,
+        "entries": [
+          "When a hostile creature misses you with a melee attack, you can use your reaction to force that creature to repeat the same attack against another creature (other than itself) of your choice."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "parentSubclass": "hunter",
+  "classLevel": 15
+}

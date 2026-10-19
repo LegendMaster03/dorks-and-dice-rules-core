@@ -1,0 +1,50 @@
+{
+  "id": "item.potion-of-hill-giant-strength",
+  "name": "Potion of Hill Giant Strength",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Potion of Hill Giant Strength",
+        "type": "P",
+        "tier": "minor",
+        "rarity": "uncommon",
+        "ability": {
+          "static": {
+            "str": 21
+          }
+        },
+        "entries": [
+          "When you drink this potion, your Strength score changes to 21 for 1 hour. The potion has no effect on you if your Strength is equal to or greater than that score.",
+          "This potion's transparent liquid has floating in it a sliver of fingernail from a {@creature hill giant}."
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Potion of Hill Giant Strength",
+        "type": "P|SRD52",
+        "rarity": "uncommon",
+        "weight": 0.5,
+        "ability": {
+          "static": {
+            "str": 21
+          }
+        },
+        "entries": [
+          "When you drink this potion, your Strength score changes to 21 for 1 hour. The potion has no effect on you if your Strength is equal to or greater than that score.",
+          "This potion's transparent liquid has floating in it a sliver of fingernail from a hill giant."
+        ],
+        "miscTags": [
+          "CNS"
+        ]
+      }
+    }
+  ]
+}

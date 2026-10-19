@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.obscure-cost-3d6.rogue.obscure-cost-3d6.14",
+  "name": "Obscure (Cost: 3d6)",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Obscure (Cost: 3d6)",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 14,
+        "entries": [
+          "The target must succeed on a Dexterity saving throw, or it has the {@condition Blinded|SRD52} condition until the end of its next turn."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 14
+}

@@ -1,0 +1,68 @@
+{
+  "id": "rule.classes",
+  "name": "Classes",
+  "kind": "ruleChapter",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "type": "section",
+        "name": "Classes",
+        "page": 8,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@class Barbarian|srd51}",
+              "{@class Bard|srd51}",
+              "{@class Cleric|srd51}",
+              "{@class Druid|srd51}",
+              "{@class Fighter|srd51}",
+              "{@class Monk|srd51}",
+              "{@class Paladin|srd51}",
+              "{@class Ranger|srd51}",
+              "{@class Rogue|srd51}",
+              "{@class Sorcerer|srd51}",
+              "{@class Warlock|srd51}",
+              "{@class Wizard|srd51}"
+            ]
+          }
+        ],
+        "id": "00b"
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "type": "section",
+        "name": "Classes",
+        "page": 28,
+        "entries": [
+          {
+            "type": "list",
+            "style": "list-hang-notitle",
+            "columns": 3,
+            "items": [
+              "{@class Barbarian|srd52}",
+              "{@class Bard|srd52}",
+              "{@class Cleric|srd52}",
+              "{@class Druid|srd52}",
+              "{@class Fighter|srd52}",
+              "{@class Monk|srd52}",
+              "{@class Paladin|srd52}",
+              "{@class Ranger|srd52}",
+              "{@class Rogue|srd52}",
+              "{@class Sorcerer|srd52}",
+              "{@class Warlock|srd52}",
+              "{@class Wizard|srd52}"
+            ]
+          }
+        ],
+        "id": "0db"
+      }
+    }
+  ]
+}

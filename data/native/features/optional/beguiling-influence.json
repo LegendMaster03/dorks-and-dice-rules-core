@@ -1,0 +1,26 @@
+{
+  "id": "optionalfeature.beguiling-influence",
+  "name": "Beguiling Influence",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Beguiling Influence",
+        "featureType": [
+          "EI"
+        ],
+        "skillProficiencies": [
+          {
+            "deception": true,
+            "persuasion": true
+          }
+        ],
+        "entries": [
+          "You gain proficiency in the {@skill Deception} and {@skill Persuasion} skills."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "id": "item.ring-of-animal-influence",
+  "name": "Ring of Animal Influence",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Animal Influence",
+        "type": "RG|SRD51",
+        "tier": "major",
+        "rarity": "rare",
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d3}",
+        "charges": 3,
+        "entries": [
+          "This ring has 3 charges, and it regains {@dice 1d3} expended charges daily at dawn. While wearing the ring, you can use an action to expend 1 of its charges to cast one of the following spells:",
+          {
+            "type": "list",
+            "items": [
+              "{@spell Animal friendship} (save {@dc 13})",
+              "{@spell Fear} (save {@dc 13}), targeting only beasts that have an Intelligence of 3 or lower",
+              "{@spell Speak with animals}"
+            ]
+          }
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "animal friendship",
+              "fear",
+              "speak with animals"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Animal Influence",
+        "type": "RG|SRD52",
+        "rarity": "rare",
+        "recharge": "dawn",
+        "rechargeAmount": "{@dice 1d3}",
+        "charges": 3,
+        "entries": [
+          "This ring has 3 charges, and it regains {@dice 1d3} expended charges daily at dawn. While wearing the ring, you can expend 1 charge to cast one of the following spells (save {@dc 13}) from it:",
+          {
+            "type": "list",
+            "items": [
+              "{@spell Animal Friendship|SRD52}",
+              "{@spell Fear|SRD52} (affects Beasts only)",
+              "{@spell Speak with Animals|SRD52}"
+            ]
+          }
+        ],
+        "attachedSpells": {
+          "charges": {
+            "1": [
+              "animal friendship|srd52",
+              "fear|srd52",
+              "speak with animals|srd52"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

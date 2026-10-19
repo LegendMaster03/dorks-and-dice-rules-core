@@ -1,0 +1,41 @@
+{
+  "id": "subclassFeature.cutting-words.bard.lore.cutting-words.3",
+  "name": "Cutting Words",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Cutting Words",
+        "className": "Bard",
+        "classSource": "SRD51",
+        "subclassShortName": "Lore",
+        "subclassSource": "SRD51",
+        "level": 3,
+        "header": 1,
+        "entries": [
+          "Also at 3rd level, you learn how to use your wit to distract, confuse, and otherwise sap the confidence and competence of others. When a creature that you can see within 60 feet of you makes an attack roll, an ability check, or a damage roll, you can use your reaction to expend one of your uses of Bardic Inspiration, rolling a Bardic Inspiration die and subtracting the number rolled from the creature's roll. You can choose to use this feature after the creature makes its roll, but before the DM determines whether the attack roll or ability check succeeds or fails, or before the creature deals its damage. The creature is immune if it can't hear you or if it's immune to being {@condition charmed}."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Cutting Words",
+        "className": "Bard",
+        "classSource": "SRD52",
+        "subclassShortName": "Lore",
+        "subclassSource": "SRD52",
+        "level": 3,
+        "header": 2,
+        "entries": [
+          "You learn to use your wit to supernaturally distract, confuse, and otherwise sap the confidence and competence of others. When a creature that you can see within 60 feet of yourself makes a damage roll or succeeds on an ability check or attack roll, you can take a {@variantrule Reaction|SRD52} to expend one use of your Bardic Inspiration; roll your Bardic Inspiration die, and subtract the number rolled from the creature's roll, reducing the damage or potentially turning the success into a failure."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.bard",
+  "parentSubclass": "lore",
+  "classLevel": 3
+}

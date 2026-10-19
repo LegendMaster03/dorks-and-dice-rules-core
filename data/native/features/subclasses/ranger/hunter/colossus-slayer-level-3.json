@@ -1,0 +1,26 @@
+{
+  "id": "subclassFeature.colossus-slayer.ranger.hunter.colossus-slayer.3",
+  "name": "Colossus Slayer",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Colossus Slayer",
+        "className": "Ranger",
+        "classSource": "SRD51",
+        "subclassShortName": "Hunter",
+        "subclassSource": "SRD51",
+        "level": 3,
+        "header": 2,
+        "entries": [
+          "Your tenacity can wear down the most potent foes. When you hit a creature with a weapon attack, the creature takes an extra {@damage 1d8} damage if it's below its hit point maximum. You can deal this extra damage only once per turn."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.ranger",
+  "parentSubclass": "hunter",
+  "classLevel": 3
+}

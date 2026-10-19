@@ -1,0 +1,36 @@
+{
+  "id": "item.yew-wand",
+  "name": "Yew Wand",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Yew Wand",
+        "group": [
+          "Druidic Focus"
+        ],
+        "type": "SCF",
+        "scfType": "druid",
+        "rarity": "none",
+        "weight": 1,
+        "value": 1000
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Yew Wand",
+        "group": [
+          "Druidic Focus"
+        ],
+        "type": "SCF|SRD52",
+        "scfType": "druid",
+        "rarity": "none",
+        "weight": 1,
+        "value": 1000
+      }
+    }
+  ]
+}

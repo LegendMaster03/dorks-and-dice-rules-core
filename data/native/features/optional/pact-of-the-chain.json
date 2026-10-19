@@ -1,0 +1,60 @@
+{
+  "id": "optionalfeature.pact-of-the-chain",
+  "name": "Pact of the Chain",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Pact of the Chain",
+        "featureType": [
+          "PB"
+        ],
+        "additionalSpells": [
+          {
+            "ability": "cha",
+            "innate": {
+              "_": {
+                "ritual": [
+                  "find familiar"
+                ]
+              }
+            }
+          }
+        ],
+        "entries": [
+          "You learn the {@spell find familiar} spell and can cast it as a ritual. The spell doesn't count against your number of spells known.",
+          "When you cast the spell, you can choose one of the normal forms for your familiar or one of the following special forms: {@creature imp}, {@creature pseudodragon}, {@creature quasit}, or {@creature sprite}.",
+          "Additionally, when you take the {@action Attack} action, you can forgo one of your own attacks to allow your familiar to use its reaction to make one attack of its own."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Pact of the Chain",
+        "featureType": [
+          "EI"
+        ],
+        "additionalSpells": [
+          {
+            "ability": "cha",
+            "innate": {
+              "_": {
+                "ritual": [
+                  "find familiar|srd52"
+                ]
+              }
+            }
+          }
+        ],
+        "entries": [
+          "You learn the {@spell Find Familiar|SRD52} spell and can cast it as a {@action Magic|SRD52} action without expending a spell slot.",
+          "When you cast the spell, you choose one of the normal forms for your familiar or one of the following special forms: {@creature Imp|SRD52}, {@creature Pseudodragon|SRD52}, {@creature Quasit|SRD52}, {@creature Skeleton|SRD52}, {@creature Slaad Tadpole|SRD52}, {@creature Sphinx of Wonder|SRD52}, {@creature Sprite|SRD52}, or {@creature Venomous Snake|SRD52} (see appendix B for the familiar's stat block).",
+          "Additionally, when you take the {@action Attack|SRD52} action, you can forgo one of your own attacks to allow your familiar to make one attack of its own with its {@variantrule Reaction|SRD52}."
+        ]
+      }
+    }
+  ]
+}

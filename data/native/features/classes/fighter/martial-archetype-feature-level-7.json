@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.martial-archetype-feature.fighter.martial-archetype-feature.7",
+  "name": "Martial Archetype feature",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Martial Archetype feature",
+        "className": "Fighter",
+        "classSource": "SRD51",
+        "level": 7,
+        "entries": [
+          "At 7th level, you gain a feature granted by your Martial Archetype."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.fighter",
+  "classLevel": 7
+}

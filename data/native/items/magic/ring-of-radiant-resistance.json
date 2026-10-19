@@ -1,0 +1,42 @@
+{
+  "id": "item.ring-of-radiant-resistance",
+  "name": "Ring of Radiant Resistance",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Ring of Radiant Resistance",
+        "type": "RG|SRD51",
+        "resist": [
+          "radiant"
+        ],
+        "detail1": "topaz",
+        "tier": "major",
+        "rarity": "rare",
+        "reqAttune": true,
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Ring of Resistance}"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ring of Radiant Resistance",
+        "type": "RG|SRD52",
+        "resist": [
+          "radiant"
+        ],
+        "detail1": "topaz",
+        "rarity": "rare",
+        "hasRefs": true,
+        "entries": [
+          "{#itemEntry Ring of Resistance|SRD52}"
+        ]
+      }
+    }
+  ]
+}

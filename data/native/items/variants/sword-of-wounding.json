@@ -1,0 +1,74 @@
+{
+  "id": "magicvariant.sword-of-wounding",
+  "name": "Sword of Wounding",
+  "kind": "magicvariant",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Sword of Wounding",
+        "type": "GV|SRD51",
+        "requires": [
+          {
+            "sword": true
+          }
+        ],
+        "inherits": {
+          "nameSuffix": " of Wounding",
+          "source": "SRD51",
+          "page": 246,
+          "rarity": "rare",
+          "reqAttune": true,
+          "entries": [
+            "Hit points lost to this weapon's damage can be regained only through a short or long rest, rather than by regeneration, magic, or any other means.",
+            "Once per turn, when you hit a creature with an attack using this magic weapon, you can wound the target. At the start of each of the wounded creature's turns, it takes {@damage 1d4} necrotic damage for each time you've wounded it, and it can then make a {@dc 15} Constitution saving throw, ending the effect of all such wounds on itself on a success. Alternatively, the wounded creature, or a creature within 5 feet of it, can use an action to make a {@dc 15} Wisdom ({@skill Medicine}) check, ending the effect of such wounds on it on a success."
+          ]
+        }
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Sword of Wounding",
+        "type": "GV|SRD52",
+        "requires": [
+          {
+            "name": "Glaive",
+            "source": "SRD52"
+          },
+          {
+            "name": "Greatsword",
+            "source": "SRD52"
+          },
+          {
+            "name": "Longsword",
+            "source": "SRD52"
+          },
+          {
+            "name": "Rapier",
+            "source": "SRD52"
+          },
+          {
+            "name": "Scimitar",
+            "source": "SRD52"
+          },
+          {
+            "name": "Shortsword",
+            "source": "SRD52"
+          }
+        ],
+        "inherits": {
+          "nameSuffix": " of Wounding",
+          "source": "SRD52",
+          "page": 248,
+          "rarity": "rare",
+          "reqAttune": true,
+          "entries": [
+            "When you hit a creature with an attack using this magic weapon, the target takes an extra {@damage 2d6} Necrotic damage and must succeed on a {@dc 15} Constitution saving throw or be unable to regain {@variantrule Hit Points|SRD52} for 1 hour. The target repeats the save at the end of each of its turns, ending the effect on itself on a success."
+          ]
+        }
+      }
+    }
+  ]
+}

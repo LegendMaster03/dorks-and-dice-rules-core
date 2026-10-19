@@ -1,0 +1,443 @@
+{
+  "id": "monster.storm-giant",
+  "name": "Storm Giant",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Storm Giant",
+        "size": [
+          "H"
+        ],
+        "type": "giant",
+        "alignment": [
+          "C",
+          "G"
+        ],
+        "ac": [
+          {
+            "ac": 16,
+            "from": [
+              "{@item scale mail|srd51}"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 230,
+          "formula": "20d12 + 100"
+        },
+        "speed": {
+          "walk": 50,
+          "swim": 50
+        },
+        "str": 29,
+        "dex": 14,
+        "con": 20,
+        "int": 16,
+        "wis": 18,
+        "cha": 18,
+        "save": {
+          "str": "+14",
+          "con": "+10",
+          "wis": "+9",
+          "cha": "+9"
+        },
+        "skill": {
+          "arcana": "+8",
+          "athletics": "+14",
+          "history": "+8",
+          "perception": "+9"
+        },
+        "passive": 19,
+        "resist": [
+          "cold"
+        ],
+        "immune": [
+          "lightning",
+          "thunder"
+        ],
+        "languages": [
+          "Common",
+          "Giant"
+        ],
+        "cr": "13",
+        "spellcasting": [
+          {
+            "name": "Innate Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The giant's innate spellcasting ability is Charisma (spell save {@dc 17}). It can innately cast the following spells, requiring no material components:"
+            ],
+            "will": [
+              "{@spell detect magic}",
+              "{@spell feather fall}",
+              "{@spell levitate}",
+              "{@spell light}"
+            ],
+            "daily": {
+              "3e": [
+                "{@spell control weather}",
+                "{@spell water breathing}"
+              ]
+            },
+            "ability": "cha"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Amphibious",
+            "entries": [
+              "The giant can breathe air and water."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The giant makes two greatsword attacks."
+            ]
+          },
+          {
+            "name": "Greatsword",
+            "entries": [
+              "{@atk mw} {@hit 14} to hit, reach 10 ft., one target. {@h}30 ({@damage 6d6 + 9}) slashing damage."
+            ]
+          },
+          {
+            "name": "Rock",
+            "entries": [
+              "{@atk rw} {@hit 14} to hit, range 60/240 ft., one target. {@h}35 ({@damage 4d12 + 9}) bludgeoning damage."
+            ]
+          },
+          {
+            "name": "Lightning Strike {@recharge 5}",
+            "entries": [
+              "The giant hurls a magical lightning bolt at a point it can see within 500 feet of it. Each creature within 10 feet of that point must make a {@dc 17} Dexterity saving throw, taking 54 ({@damage 12d8}) lightning damage on a failed save, or half as much damage on a successful one."
+            ]
+          }
+        ],
+        "environment": [
+          "coastal",
+          "underwater"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/storm-giant.opus"
+        },
+        "attachedItems": [
+          "greatsword|srd51"
+        ],
+        "traitTags": [
+          "Amphibious"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "GI"
+        ],
+        "damageTags": [
+          "B",
+          "L",
+          "S",
+          "T"
+        ],
+        "spellcastingTags": [
+          "I"
+        ],
+        "miscTags": [
+          "AOE",
+          "MLW",
+          "MW",
+          "RCH",
+          "RW"
+        ],
+        "conditionInflict": [
+          "deafened"
+        ],
+        "savingThrowForced": [
+          "constitution",
+          "dexterity"
+        ],
+        "savingThrowForcedSpell": [
+          "constitution",
+          "dexterity"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Storm Giant",
+            "_copy": {
+              "name": "Giants",
+              "source": "SRD51",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": {
+                    "type": "entries",
+                    "entries": [
+                      {
+                        "type": "entries",
+                        "entries": [
+                          "Storm giants are contemplative seers that live in places far removed from mortal civilization. Most have pale purple-gray skin and hair, and glittering emerald eyes.",
+                          "Some rare storm giants are violet-skinned, with deep violet or blue-black hair and silvery gray or purple eyes. They are benevolent and wise unless angered, in response to which the fury of a storm giant can affect the fate of thousands.",
+                          {
+                            "type": "entries",
+                            "name": "Distant Prophet-Kings",
+                            "entries": [
+                              "Storm giants live in isolated refuges so far above the surface of the world or below the sea that they are beyond the reach of most other creatures. Some make their abodes in cloud-top castles so high that flying dragons appear as specks below. Others live atop mountain peaks that pierce the clouds. Some occupy palaces covered with algae and coral at the bottom of the ocean, or grim fortresses in undersea rifts."
+                            ]
+                          },
+                          {
+                            "type": "entries",
+                            "name": "Detached Oracles",
+                            "entries": [
+                              "Storm giants recall the glory of ancient giant empires forged by the god Annam. They seek to restore what was lost when those empires fell. They don't compete for status in the ordning but live out the centuries of their existence in contemplative seclusion, watching the starry heavens and the ocean's depths for signs, symbols, and omens of Annam's favor.",
+                              "Storm giants see the events of the world in a wide perspective. They can foretell the rise and fall of kings and empires, see the beginnings and ends of fortune and disaster, and find the patterns within seemingly unrelated events. By reading omens and prophesying, storm giants learn of vast secrets previously unknown and troves of lore utterly forgotten.",
+                              "Kings will rise and fall, wars will be won and lost, and good and evil will wrestle in conflict. Storm giants have watched these events in the manner of mortal gods over many lifetimes, and they know it is pointless to intervene. Even so, a storm giant might willingly disclose certain secrets to benevolent beings that visit its remote domain with specific purpose. Such creatures must speak and act respectfully, however, for a storm giant roused to anger is a force of utter destruction."
+                            ]
+                          },
+                          {
+                            "type": "entries",
+                            "name": "Solitary Lives",
+                            "entries": [
+                              "Storm giants communicate infrequently with others of their kind. They do so usually to compare signs and omens or engage in a rare courtship. Storm giant parents stay together to raise a child to maturity, then return to the solitary isolation they cherish.",
+                              "Some humanoid cultures worship storm giants as they would worship lesser gods, creating myths and stories around the giants' exploits and vast knowledge. A storm giant is governed by the dictates of its conscience, however, and not by any culture's laws or codes of honor. As such, a storm giant that bends its mind toward greed or gains a taste for petty power can easily become a terrible threat."
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "images": {
+                  "mode": "prependArr",
+                  "items": {
+                    "type": "image",
+                    "href": {
+                      "type": "internal",
+                      "path": "bestiary/MM/Storm Giant.webp"
+                    },
+                    "width": 790,
+                    "height": 1000
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Storm Giant",
+        "size": [
+          "H"
+        ],
+        "type": "giant",
+        "alignment": [
+          "C",
+          "G"
+        ],
+        "ac": [
+          16
+        ],
+        "hp": {
+          "average": 230,
+          "formula": "20d12 + 100"
+        },
+        "speed": {
+          "walk": 50,
+          "fly": {
+            "number": 25,
+            "condition": "(hover)"
+          },
+          "swim": 50,
+          "canHover": true
+        },
+        "initiative": {
+          "proficiency": 1
+        },
+        "str": 29,
+        "dex": 14,
+        "con": 20,
+        "int": 16,
+        "wis": 20,
+        "cha": 18,
+        "save": {
+          "str": "+14",
+          "con": "+10",
+          "wis": "+10",
+          "cha": "+9"
+        },
+        "skill": {
+          "arcana": "+8",
+          "athletics": "+14",
+          "history": "+8",
+          "perception": "+10"
+        },
+        "senses": [
+          "Darkvision 120 ft.",
+          "Truesight 30 ft."
+        ],
+        "passive": 20,
+        "resist": [
+          "cold"
+        ],
+        "immune": [
+          "lightning",
+          "thunder"
+        ],
+        "languages": [
+          "Common",
+          "Giant"
+        ],
+        "cr": "13",
+        "spellcasting": [
+          {
+            "name": "Spellcasting",
+            "type": "spellcasting",
+            "headerEntries": [
+              "The giant casts one of the following spells, requiring no Material components and using Wisdom as the spellcasting ability (spell save {@dc 18}):"
+            ],
+            "will": [
+              "{@spell Detect Magic|SRD52}",
+              "{@spell Light|SRD52}"
+            ],
+            "daily": {
+              "1": [
+                "{@spell Control Weather|SRD52}"
+              ]
+            },
+            "ability": "wis",
+            "displayAs": "action"
+          }
+        ],
+        "trait": [
+          {
+            "name": "Amphibious",
+            "entries": [
+              "The giant can breathe air and water."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Multiattack",
+            "entries": [
+              "The giant makes two attacks, using Storm Sword or Thunderbolt in any combination."
+            ]
+          },
+          {
+            "name": "Storm Sword",
+            "entries": [
+              "{@atkr m} {@hit 14}, reach 10 ft. {@h}23 ({@damage 4d6 + 9}) Slashing damage plus 13 ({@damage 3d8}) Lightning damage."
+            ]
+          },
+          {
+            "name": "Thunderbolt",
+            "entries": [
+              "{@atkr r} {@hit 14}, range 500 ft. {@h}22 ({@damage 2d12 + 9}) Lightning damage, and the target has the {@condition Blinded|SRD52} and {@condition Deafened|SRD52} conditions until the start of the giant's next turn."
+            ]
+          },
+          {
+            "name": "Lightning Storm {@recharge 5}",
+            "entries": [
+              "{@actSave dex} {@dc 18}, each creature in a 10-foot-radius, 40-foot-high {@variantrule Cylinder [Area of Effect]|SRD52|Cylinder} originating from a point the giant can see within 500 feet. {@actSaveFail} 55 ({@damage 10d10}) Lightning damage. {@actSaveSuccess} Half damage."
+            ]
+          }
+        ],
+        "environment": [
+          "coastal",
+          "underwater"
+        ],
+        "treasure": [
+          "armaments"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/storm-giant.opus"
+        },
+        "traitTags": [
+          "Amphibious"
+        ],
+        "senseTags": [
+          "SD",
+          "U"
+        ],
+        "actionTags": [
+          "Multiattack"
+        ],
+        "languageTags": [
+          "C",
+          "GI"
+        ],
+        "damageTags": [
+          "L",
+          "S"
+        ],
+        "spellcastingTags": [
+          "O"
+        ],
+        "miscTags": [
+          "AOE",
+          "MA",
+          "RA",
+          "RCH"
+        ],
+        "savingThrowForced": [
+          "dexterity"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Storm Giant",
+            "entries": [
+              {
+                "type": "section",
+                "name": "Storm Giant",
+                "entries": [
+                  "{@i Giant of Seas and Skies}",
+                  {
+                    "type": "list",
+                    "style": "list-hang-notitle",
+                    "items": [
+                      {
+                        "type": "item",
+                        "name": "Habitat:",
+                        "entry": "{@filter Coastal|bestiary|environment=coastal}, {@filter Underwater|bestiary|environment=underwater}"
+                      },
+                      {
+                        "type": "item",
+                        "name": "Treasure:",
+                        "entry": "Armaments"
+                      }
+                    ]
+                  },
+                  "Among the tallest giants, storm giants live amid extreme forces of nature. In palaces at the bottom of the sea and castles floating amid the clouds, they revel in the power of mighty storms. When angered, they can shape the weather and call down devastating lightning. More often, though, these giants watch the rise and fall of nations and interpret supernatural omens, interfering in the world only when they're needed most."
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/XMM/Storm Giant.webp"
+                },
+                "credit": "Taras Susak",
+                "width": 1020,
+                "height": 2560
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

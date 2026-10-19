@@ -1,0 +1,41 @@
+{
+  "id": "subclassFeature.thief-s-reflexes.rogue.thief.thief-s-reflexes.17",
+  "name": "Thief's Reflexes",
+  "kind": "subclassFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Thief's Reflexes",
+        "className": "Rogue",
+        "classSource": "SRD51",
+        "subclassShortName": "Thief",
+        "subclassSource": "SRD51",
+        "level": 17,
+        "header": 2,
+        "entries": [
+          "When you reach 17th level, you have become adept at laying ambushes and quickly escaping danger. You can take two turns during the first round of any combat. You take your first turn at your normal initiative and your second turn at your initiative minus 10. You can't use this feature when you are {@status surprised}."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Thief's Reflexes",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "subclassShortName": "Thief",
+        "subclassSource": "SRD52",
+        "level": 17,
+        "header": 2,
+        "entries": [
+          "You are adept at laying ambushes and quickly escaping danger. You can take two turns during the first round of any combat. You take your first turn at your normal {@variantrule Initiative|SRD52} and your second turn at your {@variantrule Initiative|SRD52} minus 10."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "parentSubclass": "thief",
+  "classLevel": 17
+}

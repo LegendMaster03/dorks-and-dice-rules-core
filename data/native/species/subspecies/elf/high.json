@@ -1,0 +1,84 @@
+{
+  "id": "subspecies.high.elf.high",
+  "name": "High",
+  "kind": "subspecies",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "High",
+        "raceName": "Elf",
+        "raceSource": "SRD51",
+        "speed": 30,
+        "ability": [
+          {
+            "int": 1
+          }
+        ],
+        "heightAndWeight": {
+          "baseHeight": 54,
+          "heightMod": "2d10",
+          "baseWeight": 90,
+          "weightMod": "1d4"
+        },
+        "languageProficiencies": [
+          {
+            "common": true,
+            "elvish": true,
+            "anyStandard": 1
+          }
+        ],
+        "weaponProficiencies": [
+          {
+            "longsword|srd51": true,
+            "shortsword|srd51": true,
+            "shortbow|srd51": true,
+            "longbow|srd51": true
+          }
+        ],
+        "additionalSpells": [
+          {
+            "ability": "int",
+            "known": {
+              "1": {
+                "_": [
+                  {
+                    "choose": "level=0|class=Wizard"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "entries": [
+          {
+            "name": "Elf Weapon Training",
+            "entries": [
+              "You have proficiency with the {@item longsword|srd51}, {@item shortsword|srd51}, {@item shortbow|srd51}, and {@item longbow|srd51}."
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Cantrip",
+            "entries": [
+              "You know one {@filter cantrip of your choice from the wizard spell list|spells|level=0|class=Wizard}. Intelligence is your spellcasting ability for it."
+            ],
+            "type": "entries"
+          },
+          {
+            "name": "Extra Language",
+            "entries": [
+              "You can speak, read, and write one extra language of your choosing."
+            ],
+            "type": "entries"
+          }
+        ],
+        "overwrite": {
+          "languageProficiencies": true
+        }
+      }
+    }
+  ],
+  "parentSpecies": "species.elf"
+}

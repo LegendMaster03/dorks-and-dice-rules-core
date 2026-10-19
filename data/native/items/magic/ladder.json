@@ -1,0 +1,21 @@
+{
+  "id": "item.ladder",
+  "name": "Ladder",
+  "kind": "item",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Ladder",
+        "type": "G|SRD52",
+        "rarity": "none",
+        "weight": 25,
+        "value": 10,
+        "entries": [
+          "A Ladder is 10 feet tall. You must climb to move up or down it."
+        ]
+      }
+    }
+  ]
+}

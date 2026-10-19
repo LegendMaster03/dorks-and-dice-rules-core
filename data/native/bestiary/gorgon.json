@@ -1,0 +1,277 @@
+{
+  "id": "monster.gorgon",
+  "name": "Gorgon",
+  "kind": "monster",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Gorgon",
+        "size": [
+          "L"
+        ],
+        "type": "monstrosity",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          {
+            "ac": 19,
+            "from": [
+              "natural armor"
+            ]
+          }
+        ],
+        "hp": {
+          "average": 114,
+          "formula": "12d10 + 48"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 20,
+        "dex": 11,
+        "con": 18,
+        "int": 2,
+        "wis": 12,
+        "cha": 7,
+        "skill": {
+          "perception": "+4"
+        },
+        "senses": [
+          "darkvision 60 ft."
+        ],
+        "passive": 14,
+        "conditionImmune": [
+          "petrified"
+        ],
+        "cr": "5",
+        "trait": [
+          {
+            "name": "Trampling Charge",
+            "entries": [
+              "If the gorgon moves at least 20 feet straight toward a creature and then hits it with a gore attack on the same turn, that target must succeed on a {@dc 16} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the gorgon can make one attack with its hooves against it as a bonus action."
+            ]
+          }
+        ],
+        "action": [
+          {
+            "name": "Gore",
+            "entries": [
+              "{@atk mw} {@hit 8} to hit, reach 5 ft., one target. {@h}18 ({@damage 2d12 + 5}) piercing damage."
+            ]
+          },
+          {
+            "name": "Hooves",
+            "entries": [
+              "{@atk mw} {@hit 8} to hit, reach 5 ft., one target. {@h}16 ({@damage 2d10 + 5}) bludgeoning damage."
+            ]
+          },
+          {
+            "name": "Petrifying Breath {@recharge 5}",
+            "entries": [
+              "The gorgon exhales petrifying gas in a 30-foot cone. Each creature in that area must succeed on a {@dc 13} Constitution saving throw. On a failed save, a target begins to turn to stone and is {@condition restrained}. The {@condition restrained} target must repeat the saving throw at the end of its next turn. On a success, the effect ends on the target. On a failure, the target is {@condition petrified} until freed by the {@spell greater restoration} spell or other magic."
+            ]
+          }
+        ],
+        "environment": [
+          "grassland",
+          "forest",
+          "hill"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/gorgon.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Breath Weapon"
+        ],
+        "damageTags": [
+          "B",
+          "P"
+        ],
+        "miscTags": [
+          "AOE",
+          "MW"
+        ],
+        "conditionInflict": [
+          "petrified",
+          "prone",
+          "restrained"
+        ],
+        "savingThrowForced": [
+          "constitution",
+          "strength"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Gorgon",
+            "entries": [
+              {
+                "type": "entries",
+                "entries": [
+                  {
+                    "type": "entries",
+                    "entries": [
+                      "Few creatures that encounter a gorgon live to tell about it. Its body is covered in iron plates, and its nostrils fume with green vapor.",
+                      {
+                        "name": "Horrific Structure",
+                        "type": "entries",
+                        "entries": [
+                          "A gorgon's iron plates range from steely black to gleaming silver, but this natural armor in no way hinders its movement or mobility. The oils of its body lubricate the armor. A sick or inactive gorgon gathers rust like fungus or mange. When a rusty gorgon moves, its plates squeal as they rub together."
+                        ]
+                      },
+                      {
+                        "name": "Monstrous Predator",
+                        "type": "entries",
+                        "entries": [
+                          "When a gorgon spots potential prey, it charges with a hideous clamor of metal on metal. When the gorgon hits, it pulverizes the foe and sends its sprawling, then tramples it to death with its cruel hooves. Faced with multiple foes, the gorgon exhales its deadly vapor to overcome the creatures it touches by turning them to stone. When it grows hungry, it smashes its {@condition petrified} prey to rubble and uses its strong teeth to grind the stone into a powder that provides nourishment. The crisscrossing network of trampled trails and splintered trees that surrounds a gorgon lair is strewn with the uneaten fragments of its shattered foes."
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "images": [
+              {
+                "type": "image",
+                "href": {
+                  "type": "internal",
+                  "path": "bestiary/MM/Gorgon.webp"
+                },
+                "width": 1000,
+                "height": 653
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Gorgon",
+        "size": [
+          "L"
+        ],
+        "type": "construct",
+        "alignment": [
+          "U"
+        ],
+        "ac": [
+          19
+        ],
+        "hp": {
+          "average": 114,
+          "formula": "12d10 + 48"
+        },
+        "speed": {
+          "walk": 40
+        },
+        "str": 20,
+        "dex": 11,
+        "con": 18,
+        "int": 2,
+        "wis": 12,
+        "cha": 7,
+        "skill": {
+          "perception": "+7"
+        },
+        "senses": [
+          "Darkvision 60 ft."
+        ],
+        "passive": 17,
+        "conditionImmune": [
+          "exhaustion",
+          "petrified"
+        ],
+        "cr": "5",
+        "action": [
+          {
+            "name": "Gore",
+            "entries": [
+              "{@atkr m} {@hit 8}, reach 5 ft. {@h}18 ({@damage 2d12 + 5}) Piercing damage. If the target is a Large or smaller creature and the gorgon moved 20+ feet straight toward it immediately before the hit, the target has the {@condition Prone|SRD52} condition."
+            ]
+          },
+          {
+            "name": "Petrifying Breath {@recharge 5}",
+            "entries": [
+              "{@actSave con} {@dc 15}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail 1} The target has the {@condition Restrained|SRD52} condition and repeats the save at the end of its next turn if it is still {@condition Restrained|SRD52}, ending the effect on itself on a success. {@actSaveFail 2} The target has the {@condition Petrified|SRD52} condition instead of the {@condition Restrained|SRD52} condition."
+            ]
+          }
+        ],
+        "bonus": [
+          {
+            "name": "Trample",
+            "entries": [
+              "{@actSave dex} {@dc 16}, one creature within 5 feet that has the {@condition Prone|SRD52} condition. {@actSaveFail} 16 ({@damage 2d10 + 5}) Bludgeoning damage. {@actSaveSuccess} Half damage."
+            ]
+          }
+        ],
+        "environment": [
+          "forest",
+          "grassland",
+          "hill"
+        ],
+        "treasure": [
+          "any"
+        ],
+        "soundClip": {
+          "type": "internal",
+          "path": "bestiary/gorgon.opus"
+        },
+        "senseTags": [
+          "D"
+        ],
+        "actionTags": [
+          "Breath Weapon"
+        ],
+        "damageTags": [
+          "B",
+          "P"
+        ],
+        "miscTags": [
+          "MA"
+        ],
+        "conditionInflict": [
+          "petrified",
+          "prone",
+          "restrained"
+        ],
+        "savingThrowForced": [
+          "constitution",
+          "dexterity"
+        ],
+        "hasToken": true,
+        "lore": [
+          {
+            "name": "Gorgon",
+            "_copy": {
+              "name": "Gorgons",
+              "source": "SRD52",
+              "_mod": {
+                "entries": {
+                  "mode": "prependArr",
+                  "items": [
+                    {
+                      "type": "section",
+                      "entries": [
+                        "Most gorgons are iron bulls wreathed in clouds of petrifying gas. Their metal plates vary in sheen and color, from sleek silver to pitted black. The oldest gorgons might be covered in rust, but this rarely impedes their abilities. These gorgons' stomping grounds are littered with the shattered remains of {@condition petrified|SRD52} foes. Many gorgons outlive their creators by centuries, misleading some to believe these creations have natural origins and territories. Most such gorgons continue to follow age-old commands, guarding sites long fallen to ruin."
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

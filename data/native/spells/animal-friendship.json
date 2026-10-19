@@ -1,0 +1,134 @@
+{
+  "id": "spell.animal-friendship",
+  "name": "Animal Friendship",
+  "kind": "spell",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Animal Friendship",
+        "level": 1,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a morsel of food"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 24
+            }
+          }
+        ],
+        "entries": [
+          "This spell lets you convince a beast that you mean it no harm. Choose a beast that you can see within range. It must see and hear you. If the beast's Intelligence is 4 or higher, the spell fails. Otherwise, the beast must succeed on a Wisdom saving throw or be {@condition charmed} by you for the spell's duration. If you or one of your companions harms the target, the spell ends."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "At Higher Levels",
+            "entries": [
+              "When you cast this spell using a spell slot of 2nd level or higher, you can affect one additional beast for each slot level above 1st."
+            ]
+          }
+        ],
+        "conditionInflict": [
+          "charmed"
+        ],
+        "savingThrow": [
+          "wisdom"
+        ],
+        "affectsCreatureType": [
+          "beast"
+        ],
+        "miscTags": [
+          "SCT",
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Animal Friendship",
+        "level": 1,
+        "school": "E",
+        "time": [
+          {
+            "number": 1,
+            "unit": "action"
+          }
+        ],
+        "range": {
+          "type": "point",
+          "distance": {
+            "type": "feet",
+            "amount": 30
+          }
+        },
+        "components": {
+          "v": true,
+          "s": true,
+          "m": "a morsel of food"
+        },
+        "duration": [
+          {
+            "type": "timed",
+            "duration": {
+              "type": "hour",
+              "amount": 24
+            }
+          }
+        ],
+        "entries": [
+          "Target a Beast that you can see within range. The target must succeed on a Wisdom saving throw or have the {@condition Charmed|SRD52} condition for the duration. If you or one of your allies deals damage to the target, the spell ends."
+        ],
+        "entriesHigherLevel": [
+          {
+            "type": "entries",
+            "name": "Using a Higher-Level Spell Slot",
+            "entries": [
+              "You can target one additional Beast for each spell slot level above 1."
+            ]
+          }
+        ],
+        "conditionInflict": [
+          "charmed"
+        ],
+        "savingThrow": [
+          "wisdom"
+        ],
+        "affectsCreatureType": [
+          "beast"
+        ],
+        "miscTags": [
+          "SCT",
+          "SGT"
+        ],
+        "areaTags": [
+          "ST"
+        ]
+      }
+    }
+  ]
+}

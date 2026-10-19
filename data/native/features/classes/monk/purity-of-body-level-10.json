@@ -1,0 +1,22 @@
+{
+  "id": "classFeature.purity-of-body.monk.purity-of-body.10",
+  "name": "Purity of Body",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Purity of Body",
+        "className": "Monk",
+        "classSource": "SRD51",
+        "level": 10,
+        "entries": [
+          "At 10th level, your mastery of the ki flowing through you makes you immune to disease and poison."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.monk",
+  "classLevel": 10
+}

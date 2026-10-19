@@ -1,0 +1,35 @@
+{
+  "id": "classFeature.thieves-cant.rogue.thieves-cant.1",
+  "name": "Thieves' Cant",
+  "kind": "classFeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Thieves' Cant",
+        "className": "Rogue",
+        "classSource": "SRD51",
+        "level": 1,
+        "entries": [
+          "During your rogue training you learned thieves' cant, a secret mix of dialect, jargon, and code that allows you to hide messages in seemingly normal conversation. Only another creature that knows thieves' cant understands such messages. It takes four times longer to convey such a message than it does to speak the same idea plainly.",
+          "In addition, you understand a set of secret signs and symbols used to convey short, simple messages, such as whether an area is dangerous or the territory of a thieves' guild, whether loot is nearby, or whether the people in an area are easy marks or will provide a safe house for thieves on the run."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Thieves' Cant",
+        "className": "Rogue",
+        "classSource": "SRD52",
+        "level": 1,
+        "entries": [
+          "You picked up various languages in the communities where you plied your roguish talents. You know Thieves' Cant and one other language of your choice, which you choose from the language tables in {@book chapter 2|SRD52|2|Choose Languages}."
+        ]
+      }
+    }
+  ],
+  "parentClass": "class.rogue",
+  "classLevel": 1
+}

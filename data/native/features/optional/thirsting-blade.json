@@ -1,0 +1,58 @@
+{
+  "id": "optionalfeature.thirsting-blade",
+  "name": "Thirsting Blade",
+  "kind": "optionalfeature",
+  "baselineStatus": "pending-native-reconciliation",
+  "candidateDefinitions": [
+    {
+      "key": "candidate-a",
+      "content": {
+        "name": "Thirsting Blade",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "pact": "Blade",
+            "level": {
+              "level": 5,
+              "class": {
+                "name": "Warlock"
+              }
+            }
+          }
+        ],
+        "entries": [
+          "You can attack with your pact weapon twice, instead of once, whenever you take the {@action Attack} action on your turn."
+        ]
+      }
+    },
+    {
+      "key": "candidate-b",
+      "content": {
+        "name": "Thirsting Blade",
+        "featureType": [
+          "EI"
+        ],
+        "prerequisite": [
+          {
+            "level": {
+              "level": 5,
+              "class": {
+                "name": "Warlock",
+                "source": "SRD52",
+                "visibleStats": true
+              }
+            },
+            "optionalfeature": [
+              "pact of the blade|srd52"
+            ]
+          }
+        ],
+        "entries": [
+          "You gain the Extra Attack feature for your pact weapon only. With that feature, you can attack twice with the weapon instead of once when you take the {@action Attack|SRD52} action on your turn."
+        ]
+      }
+    }
+  ]
+}
