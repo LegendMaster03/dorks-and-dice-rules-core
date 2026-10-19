@@ -1,6 +1,6 @@
 # Recurring 5.x baseline reconciliation questions
 
-**Status: analysis and recommendations, not newly approved gameplay rules.**
+**Status: five general policies approved by the Owner (2026-10-18); family-specific unresolved decisions remain open.**
 
 The seed coverage manifest identifies **1,422** entries with multiple candidates after the 19 identical Item Type representations were collapsed. The candidates are not automatically distinct native rules or independently approved gameplay mechanics. Most conflicts recur across large rule families.
 
@@ -28,17 +28,21 @@ First three families: **998 / 1,422 (~70%)**. First five: **1,207 / 1,422 (~85%)
 
 **D4 — Prefer simplicity only where it does not erase approved mechanics.** Reformatting, terminology, reference syntax and identical numerical effects may be normalized. Real changes to odds, action cost, prerequisite, targeting, resource use or consequences can not be dismissed as cosmetic. Do not double-count the same defender impairment as both an AC penalty and a semantically equivalent attack Advantage grant.
 
-## Suggested reusable decision policies — NOT yet approved
+## Five approved general reconciliation rules
 
-**P1 — Independent source-only entries.** A valid entity appearing in only one SRD and not conflicting with native design becomes a single native entry; it does not require fabricating a missing alternative. Whether such entries are *automatically adopted* rather than merely staged requires an explicit policy. This could address much of the separate **1,057 single-candidate** inventory.
+**Approved by the Owner on 2026-10-18** and incorporated in `docs/rewrite/native-rules-design-specification.md`:
 
-**P2 — Compatible additions.** When two versions describe the same entity and one adds a genuinely independent, eligible mechanic, retain it in the unified definition without duplicating an existing consequence or bypassing prerequisites and resource costs. Do not confuse an added effect with a restated effect or implicitly give all characters an optional entitlement. Owner approval is needed for this blanket policy.
+1. **Merge equivalent mechanics into a single native definition.** Ignore superficial differences only after confirming unchanged mechanical consequences.
+2. **Retain unique compatible content.** An option appearing only in one imported baseline is eligible for the unified catalog when it does not conflict with Dorks & Dice design; retain prerequisites, grants and restrictions.
+3. **Combine genuinely compatible additions.** Keep distinct additional capabilities without duplicating consequences or lifting eligibility, actions, charges and resource costs. Apply consistently to monsters, spells, items, classes and other categories.
+4. **Resolve conflicting numerical values by category-specific policies.** Do not average, add or automatically prefer newer/older values. Establish the applicable field- and family-level rule with the Owner where the existing design is silent.
+5. **Escalate fundamentally different procedures.** A mechanical redesign is not a text merge. Apply already-approved design rulings first; ask the Owner only about remaining genuine conflicts, grouped by reusable rule family.
 
-**P3 — Conflicting quantitative values.** When both versions specify incompatible values for a given field (HP, damage, healing, range, duration, movement, spell scaling, charges, price, prerequisite level), do not average, add, or automatically select one version. A family-level rule could determine the default **for that field and entity family**, with explicit exceptions. No edition-wide winner has been selected.
+These rules **authorize compatible reconciliation**, not arbitrary best-of-both combinations. They also do not declare every imported candidate automatically compatible. For mechanical equivalence or additive compatibility, confirm the complete mechanic including restrictions and interactions. Differences that remain unclear stay unresolved.
 
-**P4 — Fundamental procedure redesign.** When the two effects are different in kind rather than different in magnitude, do not graft them together simply because they share a name. Decide the single native procedure at the relevant family level where possible, then identify exceptions.
+## Additional implementation guardrail: shared mechanical ownership
 
-**P5 — Mechanical ownership and progression.** Centralize shared mechanics (attack, damage, conditions, equipment properties, resource accounting and progression) rather than duplicating their full definitions into every monster, item, spell or class chapter. Preserve class/subclass acquisition levels and eligibility as native rules so reconciliations do not award the same feature twice.
+Centralize common effects (attack, damage, conditions, resource accounting, equipment properties, and progression) instead of copying their entire implementation into every spell, item, monster, and class. Preserve separately earned features and their acquisition levels. This is existing architectural direction, not a sixth newly approved gameplay ruling.
 
 ## Concrete recurring cases observed
 
@@ -54,11 +58,11 @@ First three families: **998 / 1,422 (~70%)**. First five: **1,207 / 1,422 (~85%)
 ## Efficient review order
 
 1. Finish safe semantic formatting/identity normalization and reuse D1–D4. Do not introduce new mechanics through this step.
-2. Decide **P1 and P2 once**, then apply across all eligible categories with automated tests checking scope, prerequisites and no duplicate effects.
+2. Apply approved Rules 2 and 3 across all eligible categories with automated tests checking scope, prerequisites and no duplicate effects.
 3. Decide one **monster baseline/capability reconciliation policy**, then flag numerical and redesigned-action exceptions.
 4. Decide **spell categories** separately for quantitative revisions, altered resolution procedures and fundamental redesigns. Do not force every spell into one indiscriminate merge rule.
 5. Reconcile **item activation, charges and effect grants** under shared action/resource rules; reconcile **equipment/mastery** as optional eligible properties.
 6. Reconcile **class progression and feature entitlements** as a dependency-aware group rather than independently from each class feature's text.
 7. Present remaining genuinely distinct decisions to the Owner as one mechanical question per recurring family wherever possible.
 
-**No auto-merge of mechanically incompatible rules, numerical tie-breaker, edition preference or new global additive policy is authorized by this report.** The owner makes missing gameplay decisions; the design specification resolves previously decided questions. The validation audit remains advisory until normalization is complete.
+**Approved:** compatible source-unique entries and genuinely compatible additions are retained. **Not approved:** silently merging incompatible mechanics, choosing a numerical winner without a category-specific policy, choosing one whole source edition by default, or granting optional features to ineligible characters. The Owner makes missing gameplay decisions; the design specification resolves previously decided questions. The validation audit remains advisory until normalization is complete.
