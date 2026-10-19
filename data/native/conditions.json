@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "status": "native-5x-and-selected-3x-condition-catalog; runtime-schema-integration-pending",
-    "note": "Twenty-eight canonical conditions, including the distinct 3.x Fatigued condition. SRD 5.1 six-tier Exhaustion remains unmodified; the historical 3.x Fatigued-to-Exhausted transition has no approved native Exhaustion-tier mapping."
+    "status": "selected-native-3x-condition-catalog; runtime-integration-pending",
+    "note": "Thirty native conditions; two further historical 3.x concepts added: Held (Helpless without automatic Incapacitated, mental actions possible) and Pinned (Grappled, not Helpless; attacker-relative -4 AC, optional silence and source-specific escape). Previous approved conditions unchanged."
   },
   "conditions": [
     {
@@ -520,6 +520,38 @@
       ]
     },
     {
+      "id": "condition.held",
+      "name": "Held",
+      "kind": "condition",
+      "description": "A Held creature is magically immobilized, remains conscious and able to breathe, and is Helpless. It cannot move, speak, or take physical actions, but may perform purely mental actions granted by its abilities. Held does not itself apply Incapacitated or automatically end Concentration.",
+      "appliesConditions": [
+        "condition.helpless"
+      ],
+      "effects": [
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
+        },
+        {
+          "type": "speech",
+          "availability": "none"
+        },
+        {
+          "type": "action-restriction",
+          "scope": "physical-actions",
+          "prohibited": [
+            "physical-action"
+          ],
+          "exceptions": [
+            "purely-mental-action"
+          ],
+          "doesNotAutomaticallyEndConcentration": true
+        }
+      ]
+    },
+    {
       "id": "condition.helpless",
       "name": "Helpless",
       "kind": "condition",
@@ -845,6 +877,111 @@
           "resumeWhenConditionEnds": true
         }
       ]
+    },
+    {
+      "id": "condition.pinned",
+      "name": "Pinned",
+      "kind": "condition",
+      "description": "A Pinned creature is immobilized within a grapple but is not Helpless. Against attackers other than the creature pinning it, it takes a further -4 Armor Class penalty in addition to any applicable Grappled defense adjustments. The pinning creature may prevent it from speaking. The creature may attempt to escape the pin with an opposed grapple check or the native Dexterity-based Escape Artist option; breaking the pin does not by itself break the grapple.",
+      "appliesConditions": [
+        "condition.grappled"
+      ],
+      "effects": [
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
+        },
+        {
+          "type": "defense-adjustment",
+          "operation": "add-modifier",
+          "defense": "armor-class",
+          "value": -4,
+          "when": {
+            "attackerRelationToPinner": "other-than-pinner"
+          },
+          "nonStackingGroup": "pin-exposure-per-attacker"
+        },
+        {
+          "type": "speech",
+          "availability": "none",
+          "when": {
+            "pinningCreatureElectsToSilence": true
+          }
+        },
+        {
+          "type": "movement-restriction",
+          "restriction": "held-immobile",
+          "exceptions": [
+            "successful-pin-escape",
+            "movement-by-pinner-under-grapple-rules"
+          ]
+        },
+        {
+          "type": "spellcasting-restriction",
+          "prohibitedComponents": [
+            "somatic"
+          ],
+          "materialComponents": "must-already-be-in-hand",
+          "focus": "must-already-be-in-hand",
+          "concentrationCheck": {
+            "baseDC": 20,
+            "perSpellLevel": 1
+          },
+          "runtimeMapping": "pending-native-spellcasting-reconciliation"
+        }
+      ],
+      "endsWhen": [
+        {
+          "event": "pin-duration-expires",
+          "durationRounds": 1,
+          "unless": {
+            "effectSpecifiesOtherwise": true
+          }
+        },
+        {
+          "event": "escapes-pin",
+          "result": "grappled-remains-unless-separately-ended"
+        },
+        {
+          "event": "pin-broken-by-another-creature",
+          "result": "grappled-remains-unless-separately-ended"
+        },
+        {
+          "event": "pinner-releases-hold",
+          "result": "grapple-with-pinner-ends"
+        },
+        {
+          "event": "pinner-becomes-incapacitated",
+          "result": "grapple-with-pinner-ends"
+        },
+        {
+          "event": "pinner-grapple-ends",
+          "result": "pin-ends"
+        }
+      ],
+      "escapeOptions": [
+        {
+          "method": "opposed-grapple-check",
+          "opposition": "pinning-creature-grapple-check",
+          "sourceActionCost": "replaces-one-attack",
+          "nativeActionMapping": "pending-combat-maneuver-reconciliation"
+        },
+        {
+          "method": "escape-artist",
+          "skill": "skill.escape-artist",
+          "ability": "dexterity",
+          "opposition": "pinning-creature-grapple-check",
+          "sourceActionCost": "standard-action",
+          "nativeActionMapping": "pending-combat-maneuver-reconciliation"
+        }
+      ],
+      "relationships": {
+        "pinner": "the-creature-maintaining-this-pin",
+        "preservesIndependentGrapples": true,
+        "helpless": false
+      }
     },
     {
       "id": "condition.poisoned",

@@ -1,0 +1,35 @@
+{
+  "id": "rule.pin-and-held",
+  "name": "Held and Pinned",
+  "kind": "rule",
+  "status": "native-data-selected; combat-maneuver-runtime-pending",
+  "entries": [
+    "Held represents the 3.0 magical condition in which a creature is physically frozen and Helpless while aware and able to use purely mental actions. It does not automatically imply the 5.x Incapacitated condition or forbid existing Concentration.",
+    "Pinned represents immobilization within a grapple. The pinned creature remains Grappled, but it is not Helpless. It continues to have the normal grappling limitations as well as the pin's specific effects.",
+    "Against the pinning creature, a pin does not grant the additional -4 AC penalty. Against outside attackers, apply the condition's -4 AC adjustment on top of the existing Grappled loss of applicable Dexterity and dodge defenses.",
+    "The creature maintaining the pin may choose to prevent the pinned target from speaking. A pin without that choice does not itself silence the target.",
+    "A successful pin escape removes Pinned while the original Grappled remains in effect. Release by the pinner instead ends the pinner's grapple. Other independent grapplers are unaffected.",
+    "A pin expires after one round unless an effect specifies a different duration or renews it. Independent applications retain their own source and expiration.",
+    "Pinning is a result of a qualifying grapple maneuver, not an automatic consequence of becoming Grappled. Its initiation cost and timing await the unified combat maneuver rules.",
+    "The 3.5 pinned spellcasting restrictions are preserved as source-specific candidate mechanics pending native spellcasting and action-cost reconciliation."
+  ],
+  "encounterSourceIdentity": {
+    "requires": "pinning-creature-or-effect-identifier",
+    "mayHaveMultipleGrapplers": true,
+    "grappledSource": "linked-pinner-grapple",
+    "escapeDoesNotEraseIndependentGrapples": true
+  },
+  "sourceProcedure": {
+    "pin": "opposed-grapple-check-in-place-of-attack",
+    "breakAnotherPin": "opposed-grapple-check-in-place-of-attack",
+    "escape": "opposed-grapple-check-or-dexterity-escape-artist",
+    "sourceDurationRounds": 1,
+    "runtimeActionCostStatus": "deferred"
+  },
+  "historicalEquivalence": {
+    "threeZeroHeld": "native-condition.held",
+    "threeFiveHoldPerson": "applies-condition.paralyzed",
+    "threeZeroAndThreeFivePinned": "native-condition.pinned",
+    "fiveOneGrapplerFeat": "separate-feature-application-of-restrained-not-automatically-pinned"
+  }
+}
