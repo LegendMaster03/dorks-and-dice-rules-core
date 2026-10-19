@@ -129,6 +129,27 @@ def main():
         REF / "structured/bestiary/bestiary-srd51.json")["monster"]}
     newer = {m["name"]: m for m in load(
         REF / "structured/bestiary/bestiary-srd52.json")["monster"]}
+    paired_ids = {"monster." + slug(name) for name in set(old) & set(newer)}
+    alias_ids = {"monster." + slug(name) for name in ALIAS_PAIRS}
+    already_paired = {
+        identity for identity in paired_ids
+        if by_id[identity]["status"] == "native-monster-role-default"
+    }
+    already_aliased = {
+        identity for identity in alias_ids
+        if by_id[identity]["status"] == "native-monster-identity-alias"
+    }
+    if already_paired or already_aliased:
+        if (already_paired != paired_ids or already_aliased != alias_ids
+                or not REVIEW.exists() or not FAMILIES.exists()):
+            raise ValueError("Partially reconciled monster catalog; manual review required")
+        print(json.dumps({
+            "status": "already-reconciled; no changes",
+            "pairedRoleDefaults": len(paired_ids),
+            "semanticAliases": len(alias_ids),
+            "reviewEntries": len(load(REVIEW)["entries"]),
+        }, indent=2))
+        return
     docs = {}
     changes = Counter()
     legacy_review = []
@@ -300,7 +321,6 @@ def main():
     report["monsterFamilyDefinitions"] = len(families)
     report["monsterLegacyVariantReviewEntries"] = len(legacy_review)
     report["monsterCompatibleTraitsTransferred"] = changes["compatibleTraitsTransferred"]
-    report["monsterOlderOnlySourceEntriesStillRetained"] = counts["native-single-source-retained"]  # broader aggregate, corrected below
     report["monsterOlderOnlySourceEntriesStillRetained"] = sum(
         row["kind"] == "monster" and row["status"] == "native-single-source-retained"
         for row in manifest["coverage"]
