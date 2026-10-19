@@ -93,7 +93,7 @@ class MonsterFamilyReconciliationTests(unittest.TestCase):
         statuses = Counter(row["status"] for row in self.rows.values())
         self.assertEqual(2522, sum(statuses.values()))
         self.assertEqual(285, statuses["native-monster-role-default"])
-        self.assertEqual(21, statuses["native-monster-identity-alias"])
+        self.assertEqual(23, statuses["native-monster-identity-alias"])
         self.assertEqual(
             statuses["multiple-candidates"] + statuses["single-candidate"],
             report["candidateRecordsStillUnresolved"])
