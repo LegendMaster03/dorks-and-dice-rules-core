@@ -48,3 +48,9 @@ The first pass retained 467 uniquely represented catalog entries, consolidated 3
 Selected monster records use a single `definition` plus `baselineStatus: "retained-native-definition"`. Identity aliases use `aliasOf` and have no competing native stat block. `monster-families.json` defines named Goblin/Hobgoblin/Bugbear variants. The original older abilities remain available in the reference source pack, with review work indexed by `data/reference/srd/monster-legacy-variant-review.json`.
 
 These definitions still require conversion of imported markup and validation under fully typed native mechanics. No retained source-only entry or older-ability review entry automatically grants a feature to an ineligible character. See `docs/rewrite/native-reconciliation-statistics.json` and `docs/rewrite/native-baseline-consistency-gate.md` for current counts and remaining approval gates.
+
+### Monster ability reconciliation
+
+Monster content is now keyed to 5.5e's role-specific stat blocks. The initial 84 compatible older traits were followed by **141 additional independent older abilities** and **33 missing spells** restored from SRD 5.1; the old attack suites were not concatenated into the new action lists. The **249 legacy review entries** record the entire audit, and just **6 open feature questions** remain: Assassinate, Lion/Panther/Saber-Toothed Tiger/Weretiger Pounce, and Priest Divine Eminence. Those questions concern mechanic conversion within existing creatures, not whether any newer-only creature should be imported.
+
+The current native creature definitions retain source markup pending the shared native mechanics/schema conversion. Their restored capabilities may warrant encounter-balance testing before release. The active audit is in `data/reference/srd/monster-legacy-variant-review.json` and the latest totals are in `docs/rewrite/native-reconciliation-statistics.json`.
