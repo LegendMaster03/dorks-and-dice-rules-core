@@ -31,6 +31,7 @@ RECONCILED_STATUSES = {
     "native-single-source-retained",
     "native-equivalent-reconciled",
     "native-compatible-merged",
+    "native-monster-role-default",
 }
 REFERENCE_KEYS = {
     "source", "page", "srd", "srd52", "classSource", "subclassSource",
