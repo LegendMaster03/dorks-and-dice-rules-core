@@ -68,6 +68,13 @@ class NativeSrdBaselineTests(unittest.TestCase):
                 self.assertNotIn("baselineStatus", native, cid)
                 self.assertIn("abbreviation", native, cid)
                 continue
+            if row["status"] in ("native-single-source-retained",
+                                 "native-equivalent-reconciled",
+                                 "native-compatible-merged"):
+                self.assertNotIn("candidateDefinitions", native, cid)
+                self.assertEqual("retained-native-definition", native["baselineStatus"])
+                self.assertIsInstance(native["definition"], dict)
+                continue
             self.assertEqual("pending-native-reconciliation",
                              native["baselineStatus"], cid)
             self.assertNotIn("activeDefinition", native, cid)
