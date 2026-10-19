@@ -26,9 +26,9 @@ class UnifiedConditionsTests(unittest.TestCase):
         return self.conditions["condition." + name.lower()]
 
     def test_one_native_definition_for_each_condition(self):
-        self.assertEqual(28, len(self.conditions))
-        self.assertEqual(28, len(self.data["conditions"]))
-        self.assertEqual(set(self.conditions) - { "condition.flat-footed", "condition.helpless", "condition.dazed", "condition.dazzled", "condition.entangled", "condition.fascinated", "condition.nauseated", "condition.sickened", "condition.shaken", "condition.panicked", "condition.cowering", "condition.fatigued" }, set(self.decisions))
+        self.assertEqual(30, len(self.conditions))
+        self.assertEqual(30, len(self.data["conditions"]))
+        self.assertEqual(set(self.conditions) - { "condition.flat-footed", "condition.helpless", "condition.dazed", "condition.dazzled", "condition.entangled", "condition.fascinated", "condition.nauseated", "condition.sickened", "condition.shaken", "condition.panicked", "condition.cowering", "condition.fatigued", "condition.held", "condition.pinned" }, set(self.decisions))
         self.assertIn("condition.wet", self.conditions)
         self.assertIn("condition.flat-footed", self.conditions)
         self.assertIn("condition.helpless", self.conditions)
@@ -42,7 +42,7 @@ class UnifiedConditionsTests(unittest.TestCase):
         self.assertEqual(30, len(self.original))
         for name in (x["name"] for x in self.data["conditions"] if x["name"] not in (
             "Wet", "Flat-Footed", "Helpless", "Dazed", "Dazzled", "Entangled",
-            "Fascinated", "Nauseated", "Sickened", "Shaken", "Panicked", "Cowering", "Fatigued"
+            "Fascinated", "Nauseated", "Sickened", "Shaken", "Panicked", "Cowering", "Fatigued", "Held", "Pinned"
         )):
             self.assertEqual({"SRD51", "SRD52"},
                              {x["source"] for x in self.original if x["name"] == name})

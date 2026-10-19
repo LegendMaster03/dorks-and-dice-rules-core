@@ -20,8 +20,8 @@ class SharedConditionReconciliationTests(unittest.TestCase):
         cls.source = get("data/reference/srd/structured/conditionsdiseases.json")["condition"]
 
     def test_native_coverage_and_external_edition_separation(self):
-        self.assertEqual(28, len(self.native))
-        self.assertEqual(set(self.native) - { "condition.flat-footed", "condition.helpless", "condition.dazed", "condition.dazzled", "condition.entangled", "condition.fascinated", "condition.nauseated", "condition.sickened", "condition.shaken", "condition.panicked", "condition.cowering", "condition.fatigued" }, set(self.decisions))
+        self.assertEqual(30, len(self.native))
+        self.assertEqual(set(self.native) - { "condition.flat-footed", "condition.helpless", "condition.dazed", "condition.dazzled", "condition.entangled", "condition.fascinated", "condition.nauseated", "condition.sickened", "condition.shaken", "condition.panicked", "condition.cowering", "condition.fatigued", "condition.held", "condition.pinned" }, set(self.decisions))
         self.assertEqual(set(), {
             key for key, value in self.native.items()
             if value.get("baselineStatus") == "pending-native-reconciliation"
