@@ -2,10 +2,10 @@
   "description": "Rule status counts for the pinned staged source pack; not a runtime readiness certificate.",
   "baselineEntries": 2522,
   "statuses": {
-    "single-candidate": 585,
-    "multiple-candidates": 1053,
-    "native-single-source-retained": 452,
-    "native-compatible-merged": 47,
+    "single-candidate": 569,
+    "multiple-candidates": 1043,
+    "native-single-source-retained": 468,
+    "native-compatible-merged": 57,
     "native-equivalent-reconciled": 34,
     "existing-native-covered": 24,
     "matching-candidates": 19,
@@ -14,16 +14,16 @@
   },
   "nativeCatalogRecords": 2522,
   "reconciledByApprovedGeneralRules": {
-    "native-compatible-merged": 47,
+    "native-compatible-merged": 57,
     "native-equivalent-reconciled": 34,
-    "native-single-source-retained": 452
+    "native-single-source-retained": 468
   },
-  "remainingWithMultipleCandidates": 1053,
-  "remainingWithOneCandidate": 585,
+  "remainingWithMultipleCandidates": 1043,
+  "remainingWithOneCandidate": 569,
   "retainedDefinitionsNeedingNativeShaping": 792,
   "previouslyMatchingItemTypes": 19,
   "preexistingApprovedNativeCoverage": 24,
-  "candidateRecordsStillUnresolved": 1638,
+  "candidateRecordsStillUnresolved": 1612,
   "remainingQuestions": [
     "Conflicting numeric values require field- and family-level decisions.",
     "Substantively different procedures require explicit decisions.",
@@ -64,5 +64,58 @@
     ],
     "activeFeatureRecords": 25,
     "inertHistoricalSourceAndSubclassRecords": 9
+  },
+  "approvedBardBand1": {
+    "levelRange": [
+      1,
+      20
+    ],
+    "activeFeatureRecords": 25,
+    "stagedHistoricalAndSubclassRecords": 10,
+    "legacyInlineFeatures": 12,
+    "leveledSpellsKnownByLevel": [
+      4,
+      5,
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      16,
+      17,
+      18,
+      19,
+      19,
+      20,
+      22,
+      22,
+      22
+    ],
+    "cantripsKnownByLevel": [
+      4,
+      5,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6,
+      6
+    ]
   }
 }

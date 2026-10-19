@@ -1,22 +1,21 @@
 {
   "id": "class-feature.bard.countercharm-level-7",
-  "name": "Countercharm",
+  "name": "Countercharm — Reprieve",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Countercharm",
-        "className": "Bard",
-        "classSource": "SRD52",
-        "level": 7,
-        "entries": [
-          "You can use musical notes or words of power to disrupt mind-influencing effects. If you or a creature within 30 feet of you fails a saving throw against an effect that applies the {@condition Charmed|SRD52} or {@condition Frightened|SRD52} condition, you can take a {@variantrule Reaction|SRD52} to cause the save to be rerolled, and the new roll has {@variantrule Advantage|SRD52}."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.bard",
-  "classLevel": 7
+  "classLevel": 7,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Countercharm — Reprieve",
+    "description": "Countercharm — Reprieve: unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "countercharm-reaction",
+      "action": "reaction",
+      "rangeFeet": 30,
+      "trigger": "bard-or-creature-fails-save-versus-effect-imposing-charmed-or-frightened",
+      "result": "reroll-save-with-advantage",
+      "sameFeatureAs": "class-feature.bard.countercharm-level-6",
+      "noNewResource": true
+    }
+  }
 }

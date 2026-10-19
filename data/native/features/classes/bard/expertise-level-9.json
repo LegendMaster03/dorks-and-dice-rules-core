@@ -1,22 +1,18 @@
 {
   "id": "class-feature.bard.expertise-level-9",
-  "name": "Expertise",
+  "name": "Expertise — Additional Choices",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Expertise",
-        "className": "Bard",
-        "classSource": "SRD52",
-        "level": 9,
-        "entries": [
-          "You gain {@variantrule Expertise|SRD52} in two of your Skill Proficiencies of your choice."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.bard",
-  "classLevel": 9
+  "classLevel": 9,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Expertise — Additional Choices",
+    "description": "Expertise — Additional Choices: unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "expertise-upgrade",
+      "additionalChoices": 2,
+      "mustHaveSkillProficiency": true,
+      "choicesDistinct": true
+    }
+  }
 }

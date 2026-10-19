@@ -2,21 +2,17 @@
   "id": "class-feature.bard.bardic-inspiration-d12-level-15",
   "name": "Bardic Inspiration (d12)",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Bardic Inspiration (d12)",
-        "className": "Bard",
-        "classSource": "SRD51",
-        "level": 15,
-        "entries": [
-          "At 15th level, your Bardic Inspiration die changes to a {@dice d12}."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.bard",
-  "classLevel": 15
+  "classLevel": 15,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Bardic Inspiration (d12)",
+    "description": "Bardic Inspiration (d12): unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "inspiration-die-upgrade",
+      "newDie": "d12",
+      "replacePreviousDie": true,
+      "sameResource": "bard.inspiration"
+    }
+  }
 }

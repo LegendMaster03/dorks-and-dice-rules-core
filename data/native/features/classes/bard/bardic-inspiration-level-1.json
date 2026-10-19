@@ -2,63 +2,44 @@
   "id": "class-feature.bard.bardic-inspiration-level-1",
   "name": "Bardic Inspiration",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Bardic Inspiration",
-        "className": "Bard",
-        "classSource": "SRD51",
-        "level": 1,
-        "entries": [
-          "You can inspire others through stirring words or music. To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a {@dice d6}.",
-          "Once within the next 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. The creature can wait until after it rolls the {@dice d20} before deciding to use the Bardic Inspiration die, but must decide before the DM says whether the roll succeeds or fails. Once the Bardic Inspiration die is rolled, it is lost. A creature can have only one Bardic Inspiration die at a time.",
-          "You can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain any expended uses when you finish a long rest.",
-          "Your Bardic Inspiration die changes when you reach certain levels in this class. The die becomes a {@dice d8} at 5th level, a {@dice d10} at 10th level, and a {@dice d12} at 15th level."
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Bardic Inspiration",
-        "className": "Bard",
-        "classSource": "SRD52",
-        "level": 1,
-        "entries": [
-          "You can supernaturally inspire others through words, music, or dance. This inspiration is represented by your Bardic Inspiration die, which is a {@dice d6}.",
-          {
-            "type": "entries",
-            "entries": [
-              {
-                "type": "entries",
-                "name": "Using Bardic Inspiration",
-                "entries": [
-                  "As a {@variantrule Bonus Action|SRD52}, you can inspire another creature within 60 feet of yourself who can see or hear you. That creature gains one of your Bardic Inspiration dice. A creature can have only one Bardic Inspiration die at a time.",
-                  "Once within the next hour when the creature fails a {@variantrule D20 Test|SRD52}, the creature can roll the Bardic Inspiration die and add the number rolled to the {@dice d20}, potentially turning the failure into a success. A Bardic Inspiration die is expended when it's rolled."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "Number of Uses",
-                "entries": [
-                  "You can confer a Bardic Inspiration die a number of times equal to your Charisma modifier (minimum of once), and you regain all expended uses when you finish a {@variantrule Long Rest|SRD52}."
-                ]
-              },
-              {
-                "type": "entries",
-                "name": "At Higher Levels",
-                "entries": [
-                  "Your Bardic Inspiration die changes when you reach certain Bard levels, as shown in the Bardic Die column of the Bard Features table. The die becomes a {@dice d8} at level 5, a {@dice d10} at level 10, and a {@dice d12} at level 15."
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ],
   "parentClass": "class.bard",
-  "classLevel": 1
+  "classLevel": 1,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Bardic Inspiration",
+    "description": "Bardic Inspiration: unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "inspiration-resource",
+      "medium": "any-eligible-artistic-expression",
+      "action": "bonus",
+      "distanceFeet": 60,
+      "target": "another-creature-perceiving-expression",
+      "uses": "max(1, charisma-modifier)",
+      "regain": "long-rest; short-or-long-rest-after-bard-level-5",
+      "dice": [
+        [
+          1,
+          "d6"
+        ],
+        [
+          5,
+          "d8"
+        ],
+        [
+          10,
+          "d10"
+        ],
+        [
+          15,
+          "d12"
+        ]
+      ],
+      "durationMinutes": 60,
+      "triggerToRoll": "recipient-fails-a-d20-test",
+      "applyBonusTo": "failed-d20-test",
+      "oneDieHeldPerCreature": true,
+      "dieExpendedOnRoll": true,
+      "notPerformanceResource": true
+    }
+  }
 }

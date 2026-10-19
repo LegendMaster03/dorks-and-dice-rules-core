@@ -2,21 +2,17 @@
   "id": "class-feature.bard.bardic-inspiration-d10-level-10",
   "name": "Bardic Inspiration (d10)",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Bardic Inspiration (d10)",
-        "className": "Bard",
-        "classSource": "SRD51",
-        "level": 10,
-        "entries": [
-          "At 10th level, your Bardic Inspiration die changes to a {@dice d10}."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.bard",
-  "classLevel": 10
+  "classLevel": 10,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Bardic Inspiration (d10)",
+    "description": "Bardic Inspiration (d10): unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "inspiration-die-upgrade",
+      "newDie": "d10",
+      "replacePreviousDie": true,
+      "sameResource": "bard.inspiration"
+    }
+  }
 }

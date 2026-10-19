@@ -2,21 +2,19 @@
   "id": "class-feature.bard.superior-inspiration-level-18",
   "name": "Superior Inspiration",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Superior Inspiration",
-        "className": "Bard",
-        "classSource": "SRD52",
-        "level": 18,
-        "entries": [
-          "When you roll {@variantrule Initiative|SRD52}, you regain expended uses of Bardic Inspiration until you have two if you have fewer than that."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.bard",
-  "classLevel": 18
+  "classLevel": 18,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Superior Inspiration",
+    "description": "Superior Inspiration: unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "initiative-recovery",
+      "resource": "bard.inspiration",
+      "when": "roll-initiative",
+      "restoreUntilCurrentUses": 2,
+      "onlyExpendedUses": true,
+      "notAboveResourceMaximum": true
+    }
+  }
 }

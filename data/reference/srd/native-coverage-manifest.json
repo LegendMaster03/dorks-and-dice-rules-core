@@ -2234,7 +2234,7 @@
     {
       "nativeId": "class.bard",
       "kind": "class",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/classes/base/bard.json",
       "candidates": [
@@ -2246,7 +2246,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class.cleric",
@@ -2948,7 +2949,7 @@
     {
       "nativeId": "class-feature.bard.ability-score-improvement-level-12",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/bard/ability-score-improvement-level-12.json",
       "candidates": [
@@ -2960,12 +2961,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.ability-score-improvement-level-16",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/bard/ability-score-improvement-level-16.json",
       "candidates": [
@@ -2977,12 +2979,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.ability-score-improvement-level-19",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/ability-score-improvement-level-19.json",
       "candidates": [
@@ -2990,12 +2993,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.ability-score-improvement-level-4",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/bard/ability-score-improvement-level-4.json",
       "candidates": [
@@ -3007,12 +3011,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.ability-score-improvement-level-8",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/bard/ability-score-improvement-level-8.json",
       "candidates": [
@@ -3024,7 +3029,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.bard-college-level-3",
@@ -3081,7 +3087,7 @@
     {
       "nativeId": "class-feature.bard.bardic-inspiration-level-1",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/bard/bardic-inspiration-level-1.json",
       "candidates": [
@@ -3093,12 +3099,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.bardic-inspiration-d10-level-10",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/bardic-inspiration-d10-level-10.json",
       "candidates": [
@@ -3106,12 +3113,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.bardic-inspiration-d12-level-15",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/bardic-inspiration-d12-level-15.json",
       "candidates": [
@@ -3119,12 +3127,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.bardic-inspiration-d8-level-5",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/bardic-inspiration-d8-level-5.json",
       "candidates": [
@@ -3132,12 +3141,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.countercharm-level-6",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/countercharm-level-6.json",
       "candidates": [
@@ -3145,12 +3155,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.countercharm-level-7",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/countercharm-level-7.json",
       "candidates": [
@@ -3158,7 +3169,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.epic-boon-level-19",
@@ -3189,7 +3201,7 @@
     {
       "nativeId": "class-feature.bard.expertise-level-2",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/expertise-level-2.json",
       "candidates": [
@@ -3197,7 +3209,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.expertise-level-3",
@@ -3215,7 +3228,7 @@
     {
       "nativeId": "class-feature.bard.expertise-level-9",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/expertise-level-9.json",
       "candidates": [
@@ -3223,12 +3236,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.font-of-inspiration-level-5",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/bard/font-of-inspiration-level-5.json",
       "candidates": [
@@ -3240,12 +3254,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.jack-of-all-trades-level-2",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/bard/jack-of-all-trades-level-2.json",
       "candidates": [
@@ -3257,12 +3272,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.magical-secrets-level-10",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/bard/magical-secrets-level-10.json",
       "candidates": [
@@ -3274,12 +3290,13 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.magical-secrets-level-14",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/magical-secrets-level-14.json",
       "candidates": [
@@ -3287,12 +3304,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.magical-secrets-level-18",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/magical-secrets-level-18.json",
       "candidates": [
@@ -3300,12 +3318,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.song-of-rest-d10-level-13",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/song-of-rest-d10-level-13.json",
       "candidates": [
@@ -3313,12 +3332,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.song-of-rest-d12-level-17",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/song-of-rest-d12-level-17.json",
       "candidates": [
@@ -3326,12 +3346,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.song-of-rest-d6-level-2",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/song-of-rest-d6-level-2.json",
       "candidates": [
@@ -3339,12 +3360,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.song-of-rest-d8-level-9",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/song-of-rest-d8-level-9.json",
       "candidates": [
@@ -3352,12 +3374,13 @@
           "key": "candidate-a",
           "source": "5.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.spellcasting-level-1",
       "kind": "classFeature",
-      "status": "multiple-candidates",
+      "status": "native-compatible-merged",
       "sourceRecords": 2,
       "path": "data/native/features/classes/bard/spellcasting-level-1.json",
       "candidates": [
@@ -3369,7 +3392,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.subclass-feature-level-14",
@@ -3400,7 +3424,7 @@
     {
       "nativeId": "class-feature.bard.superior-inspiration-level-18",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/superior-inspiration-level-18.json",
       "candidates": [
@@ -3408,7 +3432,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.bard.superior-inspiration-level-20",
@@ -3426,7 +3451,7 @@
     {
       "nativeId": "class-feature.bard.words-of-creation-level-20",
       "kind": "classFeature",
-      "status": "single-candidate",
+      "status": "native-single-source-retained",
       "sourceRecords": 1,
       "path": "data/native/features/classes/bard/words-of-creation-level-20.json",
       "candidates": [
@@ -3434,7 +3459,8 @@
           "key": "candidate-b",
           "source": "5.2.1"
         }
-      ]
+      ],
+      "nativeRuleReview": "approved-Bard-Band-1-2026-10-19"
     },
     {
       "nativeId": "class-feature.cleric.ability-score-improvement-level-12",
@@ -39694,10 +39720,10 @@
   "canonicalIdentifiersNormalized": 653,
   "reconciliationStatus": "5.5-monster-role-defaults-selected; legacy-variant-review-open",
   "reconciliationCounts": {
-    "single-candidate": 585,
-    "multiple-candidates": 1053,
-    "native-single-source-retained": 452,
-    "native-compatible-merged": 47,
+    "single-candidate": 569,
+    "multiple-candidates": 1043,
+    "native-single-source-retained": 468,
+    "native-compatible-merged": 57,
     "native-equivalent-reconciled": 34,
     "existing-native-covered": 24,
     "matching-candidates": 19,

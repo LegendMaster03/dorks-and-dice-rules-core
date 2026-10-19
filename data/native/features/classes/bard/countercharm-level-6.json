@@ -1,22 +1,29 @@
 {
   "id": "class-feature.bard.countercharm-level-6",
-  "name": "Countercharm",
+  "name": "Countercharm — Protection",
   "kind": "classFeature",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Countercharm",
-        "className": "Bard",
-        "classSource": "SRD51",
-        "level": 6,
-        "entries": [
-          "At 6th level, you gain the ability to use musical notes or words of power to disrupt mind-influencing effects. As an action, you can start a performance that lasts until the end of your next turn. During that time, you and any friendly creatures within 30 feet of you have advantage on saving throws against being {@condition frightened} or {@condition charmed}. A creature must be able to hear you to gain this benefit. The performance ends early if you are {@condition incapacitated} or silenced or if you voluntarily end it (no action required)."
-        ]
-      }
-    }
-  ],
   "parentClass": "class.bard",
-  "classLevel": 6
+  "classLevel": 6,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "name": "Countercharm — Protection",
+    "description": "Countercharm — Protection: unified Bard base-class mechanic using native Skills, Competencies, expression and spellcasting semantics.",
+    "mechanics": {
+      "kind": "countercharm-protection",
+      "action": "action",
+      "duration": "until-end-of-next-turn",
+      "rangeFeet": 30,
+      "target": "bard-and-friendly-creatures-perceiving-artistic-expression",
+      "advantageOnSavingThrowsAgainst": [
+        "charmed",
+        "frightened"
+      ],
+      "endsEarlyOn": [
+        "incapacitated",
+        "expression-interrupted",
+        "voluntary-ending"
+      ],
+      "noMusicRequirement": true
+    }
+  }
 }
