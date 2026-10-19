@@ -23,8 +23,8 @@ class ThreeXStandaloneConditionsTests(unittest.TestCase):
         return self.native["condition." + name]
 
     def test_six_unique_native_conditions_and_unchanged_srd_snapshot(self):
-        self.assertEqual(28, len(self.catalog["conditions"]))
-        self.assertEqual(28, len(self.native))
+        self.assertEqual(30, len(self.catalog["conditions"]))
+        self.assertEqual(30, len(self.native))
         self.assertEqual(set(self.native), set(self.chapter["conditionIds"]))
         for key in ("dazed", "dazzled", "entangled", "fascinated", "nauseated", "sickened"):
             entry = self.get(key)

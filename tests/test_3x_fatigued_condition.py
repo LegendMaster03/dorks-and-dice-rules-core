@@ -19,8 +19,8 @@ class FatiguedReconciliationTests(unittest.TestCase):
         cls.history = load("data/reference/3x/fatigue-exhaustion-reconciliation.json")
 
     def test_new_fatigued_condition_while_exhaustion_remains_six_levels(self):
-        self.assertEqual(28, len(self.catalog))
-        self.assertEqual(28, len(self.conditions))
+        self.assertEqual(30, len(self.catalog))
+        self.assertEqual(30, len(self.conditions))
         self.assertEqual(set(self.conditions), set(self.chapter["conditionIds"]))
         fatigued = self.conditions["condition.fatigued"]
         exhaustion = self.conditions["condition.exhaustion"]
