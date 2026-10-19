@@ -7994,8 +7994,8 @@
           },
           {
             "name": "Pounce (Tiger or Hybrid Form Only)",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Old Claw reference mapped to 5.5e Scratch; existing 5.5e Bite, 15-foot approach, DC 14 Strength save, Prone and Bonus Action cost preserved"
           }
         ],
         "action": [
@@ -8011,7 +8011,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.werewolf",
@@ -8579,10 +8579,10 @@
     "feature:already-present": 84,
     "feature:newer-successor": 95,
     "feature:possible-redesign": 3,
-    "feature:restored": 141,
-    "feature:review-needed": 3,
+    "feature:restored": 142,
+    "feature:review-needed": 2,
     "feature:revised-attack-suite": 333,
     "feature:spell-access-extended": 15,
-    "monstersWithOpenFeatureQuestions": 6
+    "monstersWithOpenFeatureQuestions": 5
   }
 }

@@ -3,14 +3,14 @@
     "feature:already-present": 84,
     "feature:newer-successor": 95,
     "feature:possible-redesign": 3,
-    "feature:restored": 141,
-    "feature:review-needed": 3,
+    "feature:restored": 142,
+    "feature:review-needed": 2,
     "feature:revised-attack-suite": 333,
     "feature:spell-access-extended": 15,
-    "monstersWithOpenFeatureQuestions": 6
+    "monstersWithOpenFeatureQuestions": 5
   },
   "featuresRestoredThisPass": 15,
-  "totalAdditionalOlderFeaturesRestored": 141,
+  "totalAdditionalOlderFeaturesRestored": 142,
   "additionalSpellsRestored": 33,
   "spellsAddedByMonster": {
     "monster.cloud-giant": [
@@ -71,12 +71,19 @@
       "water breathing"
     ]
   },
-  "unresolvedFeatureQuestions": 6,
-  "reviewEntriesWithOpenQuestions": 6,
+  "unresolvedFeatureQuestions": 5,
+  "reviewEntriesWithOpenQuestions": 5,
   "note": "5.5e stats, attack suites and spellcasting ability remain authoritative.",
   "finalPassChanges": {
     "traitsRestored": 14,
     "spellsRestored": 2,
     "legendaryRestored": 1
+  },
+  "weretigerPounceRestoration": {
+    "nativeId": "monster.weretiger",
+    "legacyAttackReference": "Claw",
+    "nativeAttackReference": "Scratch",
+    "nativeBonusAttack": "Bite (Tiger or Hybrid Form Only)",
+    "sameMovementSaveAndCost": true
   }
 }

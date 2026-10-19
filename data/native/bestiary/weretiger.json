@@ -226,6 +226,12 @@
         "entries": [
           "The weretiger has advantage on Wisdom ({@skill Perception}) checks that rely on hearing or smell."
         ]
+      },
+      {
+        "name": "Pounce (Tiger or Hybrid Form Only)",
+        "entries": [
+          "If the weretiger moves at least 15 feet straight toward a creature and then hits it with a Scratch attack on the same turn, that target must succeed on a {@dc 14} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the weretiger can make one Bite (Tiger or Hybrid Form Only) attack against it as a bonus action."
+        ]
       }
     ]
   }
