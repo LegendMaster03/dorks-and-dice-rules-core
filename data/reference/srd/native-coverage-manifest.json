@@ -467,7 +467,7 @@
       ]
     },
     {
-      "nativeId": "action.use-an-item",
+      "nativeId": "action.use-an-object",
       "kind": "action",
       "status": "single-candidate",
       "sourceRecords": 1,

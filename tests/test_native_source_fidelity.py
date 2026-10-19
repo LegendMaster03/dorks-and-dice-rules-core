@@ -49,6 +49,15 @@ class NativeSourceFidelityTests(unittest.TestCase):
         for stale in ["Twig Blight|srd52", "Nothic|srd52", "Carrion Crawler Mucus|srd52", "Lolth's Sting|srd52"]:
             self.assertNotIn(stale, toolbox)
 
+    def test_srd_51_use_an_object_action_name(self):
+        records = read("data/native/actions.json")["records"]
+        action = next(x for x in records if x["id"] == "action.use-an-object")
+        self.assertEqual("Use an Object", action["name"])
+        self.assertEqual("Use an Object", action["candidateDefinitions"][0]["content"]["name"])
+        self.assertFalse(any(x["id"] == "action.use-an-item" for x in records))
+        manifest = read("data/reference/srd/native-coverage-manifest.json")
+        self.assertEqual(1, sum(x["nativeId"] == "action.use-an-object" for x in manifest["coverage"]))
+
     def test_index_and_manifest_consistency(self):
         monster_list = json.dumps(read("data/native/rules/monsters-a-z.json"))
         self.assertNotIn("Psychic Gray Ooze", monster_list)

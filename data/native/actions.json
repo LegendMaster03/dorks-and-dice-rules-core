@@ -982,15 +982,15 @@
       ]
     },
     {
-      "id": "action.use-an-item",
-      "name": "Use an Item",
+      "id": "action.use-an-object",
+      "name": "Use an Object",
       "kind": "action",
       "baselineStatus": "pending-native-reconciliation",
       "candidateDefinitions": [
         {
           "key": "candidate-a",
           "content": {
-            "name": "Use an Item",
+            "name": "Use an Object",
             "time": [
               {
                 "number": 1,
