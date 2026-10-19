@@ -1,6 +1,6 @@
 {
   "status": "approved-band-1-base-class-decisions",
-  "scope": "Barbarian Band 1 (levels 1-20) only",
+  "scope": "Approved Band 1 base-class rules for reconciled classes; subclasses and prestige classes excluded.",
   "decisions": [
     {
       "nativeRuleId": "class.barbarian.rage-uses",
@@ -41,6 +41,96 @@
           "path": "data/reference/srd/structured/class/class-barbarian.json",
           "name": "Relentless Rage",
           "detail": "2 x Barbarian class level after success"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class-feature.bard.bardic-inspiration-level-1",
+      "state": "approved-native-rule",
+      "decision": "Use the SRD 5.2.1 Bardic Inspiration procedure: an artistic Bonus Action grants another eligible creature a die valid for 1 hour. After failing a d20 test the recipient can use that die. Retain 5.x die improvements and shared Charisma-based uses. Music is not compulsory.",
+      "decisionBasis": "Dorks & Dice Owner implementation authorization, 2026-10-19, following four-way Bard base-class reconciliation.",
+      "nativeLocation": "data/native/features/classes/bard/bardic-inspiration-level-1.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-bard.json",
+          "name": "Bardic Inspiration",
+          "detail": "before determination; 10 minutes"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-bard.json",
+          "name": "Bardic Inspiration",
+          "detail": "after failing d20 test; 1 hour"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "bard.inspire-courage",
+      "state": "approved-native-rule",
+      "decision": "Retain 3.0 +2 protection versus charm/fear at Bard level 1; charm/fear saves remain +2 until class level 14, +3 at 14 and +4 at 20. Attack/damage bonus follows 3.5 +1 at level 1, +2 at 8, +3 at 14, +4 at 20. One historical performance effect.",
+      "decisionBasis": "Dorks & Dice Owner implementation authorization, 2026-10-19, four-way Bard reconciliation.",
+      "nativeLocation": "data/native/classes/base/bard.json",
+      "evidence": [
+        {
+          "source": "3.0",
+          "path": "https://www.dragon.ee/30srd/bard.htm",
+          "name": "Inspire Courage",
+          "detail": "+2 charm/fear saves at start"
+        },
+        {
+          "source": "3.5",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Inspire Courage",
+          "detail": "increasing bonuses to attack, damage and saves"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "class-feature.bard.spellcasting-level-1",
+      "state": "approved-native-rule",
+      "decision": "Replace multiple editions' Bard level 1–20 leveled spell-access counts with the greater documented count at each class level, without summing the counts. Use the single shared 5.x full-caster spell-slot progression or native spell points as chosen by player; never daily preparation.",
+      "decisionBasis": "Dorks & Dice Owner implementation authorization, 2026-10-19, class-specific numeric reconciliation not universal edition precedence.",
+      "nativeLocation": "data/native/features/classes/bard/spellcasting-level-1.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-bard.json",
+          "name": "Spellcasting",
+          "detail": "Spells Known progression"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-bard.json",
+          "name": "Spellcasting",
+          "detail": "Prepared Spells count converted to accessible/known"
+        }
+      ]
+    },
+    {
+      "nativeRuleId": "bard.cantrips-known",
+      "state": "approved-native-rule",
+      "decision": "Retain 3.x Bard cantrips known 4 at Bard 1, 5 at Bard 2, and 6 from Bard 3 onward; cast them at will under native modern cantrip rules rather than importing historical cantrip slot limits.",
+      "decisionBasis": "Dorks & Dice Owner implementation authorization, 2026-10-19, specific numerical and procedural Bard ruling.",
+      "nativeLocation": "data/native/classes/base/bard.json",
+      "evidence": [
+        {
+          "source": "3.5",
+          "path": "data/reference/3x/band1-baseclasses/srd35/classes-i.md",
+          "name": "Bard Spells Known",
+          "detail": "4/5/6 cantrips at Bard levels 1/2/3"
+        },
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/class/class-bard.json",
+          "name": "Spellcasting",
+          "detail": "2/3/4 cantrip schedule"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/class/class-bard.json",
+          "name": "Spellcasting",
+          "detail": "2/3/4 cantrip schedule"
         }
       ]
     }

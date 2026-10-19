@@ -41,7 +41,7 @@ class BardBand1Tests(unittest.TestCase):
 
     def test_nonmusical_bards_have_base_class_access(self):
         self.assertTrue(self.definition["expression"]["musicNotRequired"])
-        self.assertFalse(self.definition["expression"]["audienceNotAutomaticallyRequired"] is False)
+        self.assertTrue(self.definition["expression"]["audienceNotAutomaticallyRequired"])
         self.assertFalse(self.definition["artisticTrainingChoices"]["musicalInstrumentRequired"])
         self.assertEqual(3, self.definition["artisticTrainingChoices"]["count"])
         self.assertIn("cooking", next(x for x in self.definition["inlineFeatures"]
