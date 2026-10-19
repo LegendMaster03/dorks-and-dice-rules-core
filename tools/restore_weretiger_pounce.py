@@ -86,8 +86,12 @@ def main():
     }
     # Set by reconciling current audit counts rather than incrementing on each run.
     stats["monsterAdditionalOlderFeaturesRestored"] = counts["feature:restored"]
-    assert stats["monsterRemainingFeatureQuestions"] == 5
-    assert stats["monsterReviewEntriesWithOpenQuestions"] == 5
+    assert stats["monsterRemainingFeatureQuestions"] == sum(
+        row["remainingFeatureQuestions"] for row in review["entries"]
+    )
+    assert stats["monsterReviewEntriesWithOpenQuestions"] == sum(
+        bool(row["remainingFeatureQuestions"]) for row in review["entries"]
+    )
     write(STATS, stats)
 
     results = load(RESULTS)
