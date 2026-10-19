@@ -2,23 +2,17 @@
   "id": "deity.aegir",
   "name": "Aegir",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Aegir",
-        "pantheon": "Norse",
-        "alignment": [
-          "N",
-          "E"
-        ],
-        "title": "God of the sea and storms",
-        "domains": [
-          "Tempest"
-        ],
-        "symbol": "Rough ocean waves"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Norse",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "title": "God of the sea and storms",
+    "domains": [
+      "Tempest"
+    ],
+    "symbol": "Rough ocean waves"
+  }
 }

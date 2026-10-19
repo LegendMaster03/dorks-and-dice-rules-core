@@ -2,482 +2,264 @@
   "id": "monster.oni",
   "name": "Oni",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Oni",
-        "size": [
-          "L"
-        ],
-        "type": "giant",
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 16,
-            "from": [
-              "{@item chain mail|srd51}"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 110,
-          "formula": "13d10 + 39"
-        },
-        "speed": {
-          "walk": 30,
-          "fly": 30
-        },
-        "str": 19,
-        "dex": 11,
-        "con": 16,
-        "int": 14,
-        "wis": 12,
-        "cha": 15,
-        "save": {
-          "dex": "+3",
-          "con": "+6",
-          "wis": "+4",
-          "cha": "+5"
-        },
-        "skill": {
-          "arcana": "+5",
-          "deception": "+8",
-          "perception": "+4"
-        },
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 14,
-        "languages": [
-          "Common",
-          "Giant"
-        ],
-        "cr": "7",
-        "spellcasting": [
-          {
-            "name": "Innate Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The oni's innate spellcasting ability is Charisma (spell save {@dc 13}). The oni can innately cast the following spells, requiring no material components:"
-            ],
-            "will": [
-              "{@spell darkness}",
-              "{@spell invisibility}"
-            ],
-            "daily": {
-              "1e": [
-                "{@spell charm person}",
-                "{@spell cone of cold}",
-                "{@spell gaseous form}",
-                "{@spell sleep}"
-              ]
-            },
-            "ability": "cha"
-          }
-        ],
-        "trait": [
-          {
-            "name": "Magic Weapons",
-            "entries": [
-              "The oni's weapon attacks are magical."
-            ]
-          },
-          {
-            "name": "Regeneration",
-            "entries": [
-              "The oni regains 10 hit points at the start of its turn if it has at least 1 hit point."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The oni makes two attacks, either with its claws or its glaive."
-            ]
-          },
-          {
-            "name": "Claw (Oni Form Only)",
-            "entries": [
-              "{@atk mw} {@hit 7} to hit, reach 5 ft., one target. {@h}8 ({@damage 1d8 + 4}) slashing damage."
-            ]
-          },
-          {
-            "name": "Glaive",
-            "entries": [
-              "{@atk mw} {@hit 7} to hit, reach 10 ft., one target. {@h}15 ({@damage 2d10 + 4}) slashing damage, or 9 ({@damage 1d10 + 4}) slashing damage in Small or Medium form."
-            ]
-          },
-          {
-            "name": "Change Shape",
-            "entries": [
-              "The oni magically polymorphs into a Small or Medium humanoid, into a Large giant, or back into its true form. Other than its size, its statistics are the same in each form. The only equipment that is transformed is its glaive, which shrinks so that it can be wielded in humanoid form. If the oni dies, it reverts to its true form, and its glaive reverts to its normal size."
-            ]
-          }
-        ],
-        "environment": [
-          "forest",
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/oni.opus"
-        },
-        "attachedItems": [
-          "glaive|srd51"
-        ],
-        "traitTags": [
-          "Magic Weapons",
-          "Regeneration"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack",
-          "Shapechanger"
-        ],
-        "languageTags": [
-          "C",
-          "GI"
-        ],
-        "damageTags": [
-          "S"
-        ],
-        "damageTagsSpell": [
-          "C"
-        ],
-        "spellcastingTags": [
-          "I"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW",
-          "RCH"
-        ],
-        "savingThrowForcedSpell": [
-          "constitution",
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Oni",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "In nursery rhymes, oni are fearsome bogeymen that haunt the nightmares of children and adults alike, yet they are very real and always hungry. They find human babies especially delicious. Oni look like demonic ogres with blue or green skin, dark hair, and a pair of short ivory horns protruding from their foreheads. Their eyes are dark with strikingly white pupils, and their teeth and claws are jet black.",
-                      {
-                        "name": "Night Haunters",
-                        "type": "entries",
-                        "entries": [
-                          "By the light of day, an oni hides its true form with magic, gaining the trust of those it intends to betray when darkness descends. These creatures can change their size as well as their shape, appearing as humanoids as they pass through towns, pretending to be travelers, woodcutters, or frontier folk. In such a form, an oni takes stock of the selection of humanoids in a settlement and devises ways to abduct and devour some of them."
-                        ]
-                      },
-                      {
-                        "name": "Magical Ogres",
-                        "type": "entries",
-                        "entries": [
-                          "Oni are sometimes called ogre mages because of their innate magical ability. Though they are only distantly related to true ogres, they share the ogres' habit of joining forces with other evil creatures. An oni serves a master if doing so proves lucrative or provides it with a luxurious, well-defended home. Oni covet magic, and they work for evil wizards and hags in exchange for useful magic items."
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "insetReadaloud",
-                    "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "Lock the door, blow out the light;",
-                          "The hungry oni haunts the night.",
-                          "Hide and tremble, little one;",
-                          "The oni wants to have some fun.",
-                          "Hear it scratching on the door;",
-                          "See its shadow cross the floor.",
-                          "The sun won't rise for quite a while;",
-                          "Till then, beware the oni's smile."
-                        ],
-                        "by": "Children's rhyme"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Oni.webp"
-                },
-                "width": 965,
-                "height": 1000
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "fiend",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 119,
+      "formula": "14d10 + 42"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "speed": {
+      "walk": 30,
+      "fly": {
+        "number": 30,
+        "condition": "(hover)"
+      },
+      "canHover": true
+    },
+    "str": 19,
+    "dex": 11,
+    "con": 16,
+    "int": 14,
+    "wis": 12,
+    "cha": 15,
+    "save": {
+      "dex": "+3",
+      "con": "+6",
+      "wis": "+4",
+      "cha": "+5"
+    },
+    "skill": {
+      "arcana": "+5",
+      "deception": "+8",
+      "perception": "+4"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 14,
+    "resist": [
+      "cold"
+    ],
+    "languages": [
+      "Common",
+      "Giant"
+    ],
+    "cr": "7",
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The oni casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 13}):"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Charm Person|SRD52} (level 2 version)",
+            "{@spell Darkness|SRD52}",
+            "{@spell Gaseous Form|SRD52}",
+            "{@spell Sleep|SRD52}",
+            "{@spell cone of cold}"
+          ]
+        },
+        "ability": "cha",
+        "displayAs": "action"
+      },
+      {
+        "name": "Invisibility",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The oni casts {@spell Invisibility|SRD52} on itself, requiring no spell components and using the same spellcasting ability as Spellcasting."
+        ],
+        "will": [
+          "{@spell Invisibility|SRD52}"
+        ],
+        "ability": "cha",
+        "displayAs": "bonus",
+        "hidden": [
+          "will"
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Regeneration",
+        "entries": [
+          "The oni regains 10 {@variantrule Hit Points|SRD52} at the start of each of its turns if it has at least 1 {@variantrule Hit Points|SRD52|Hit Point}."
+        ]
+      },
+      {
+        "name": "Magic Weapons",
+        "entries": [
+          "The oni's weapon attacks are magical."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The oni makes two Claw or Nightmare Ray attacks. It can replace one attack with a use of Spellcasting."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}10 ({@damage 1d12 + 4}) Slashing damage plus 9 ({@damage 2d8}) Necrotic damage."
+        ]
+      },
+      {
+        "name": "Nightmare Ray",
+        "entries": [
+          "{@atkr r} {@hit 5}, range 60 ft. {@h}9 ({@damage 2d6 + 2}) Psychic damage, and the target has the {@condition Frightened|SRD52} condition until the start of the oni's next turn."
+        ]
+      },
+      {
+        "name": "Shape-Shift",
+        "entries": [
+          "The oni shape-shifts into a Small or Medium Humanoid or a Large Giant, or it returns to its true form. Other than its size, its game statistics are the same in each form. Any equipment it is wearing or carrying isn't transformed."
+        ]
+      },
+      {
+        "name": "Change Shape",
+        "entries": [
+          "The oni magically polymorphs into a Small or Medium humanoid, into a Large giant, or back into its true form. Other than its size, its statistics are the same in each form. The only equipment that is transformed is its glaive, which shrinks so that it can be wielded in humanoid form. If the oni dies, it reverts to its true form, and its glaive reverts to its normal size."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "urban"
+    ],
+    "treasure": [
+      "armaments"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/oni.opus"
+    },
+    "traitTags": [
+      "Regeneration"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "GI"
+    ],
+    "damageTags": [
+      "N",
+      "S",
+      "Y"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "frightened"
+    ],
+    "conditionInflictSpell": [
+      "charmed",
+      "incapacitated",
+      "invisible",
+      "unconscious"
+    ],
+    "savingThrowForcedSpell": [
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Oni",
-        "size": [
-          "L"
-        ],
-        "type": "fiend",
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          17
-        ],
-        "hp": {
-          "average": 119,
-          "formula": "14d10 + 42"
-        },
-        "speed": {
-          "walk": 30,
-          "fly": {
-            "number": 30,
-            "condition": "(hover)"
-          },
-          "canHover": true
-        },
-        "str": 19,
-        "dex": 11,
-        "con": 16,
-        "int": 14,
-        "wis": 12,
-        "cha": 15,
-        "save": {
-          "dex": "+3",
-          "con": "+6",
-          "wis": "+4",
-          "cha": "+5"
-        },
-        "skill": {
-          "arcana": "+5",
-          "deception": "+8",
-          "perception": "+4"
-        },
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 14,
-        "resist": [
-          "cold"
-        ],
-        "languages": [
-          "Common",
-          "Giant"
-        ],
-        "cr": "7",
-        "spellcasting": [
+        "entries": [
           {
-            "name": "Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The oni casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 13}):"
-            ],
-            "daily": {
-              "1e": [
-                "{@spell Charm Person|SRD52} (level 2 version)",
-                "{@spell Darkness|SRD52}",
-                "{@spell Gaseous Form|SRD52}",
-                "{@spell Sleep|SRD52}"
-              ]
-            },
-            "ability": "cha",
-            "displayAs": "action"
-          },
-          {
-            "name": "Invisibility",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The oni casts {@spell Invisibility|SRD52} on itself, requiring no spell components and using the same spellcasting ability as Spellcasting."
-            ],
-            "will": [
-              "{@spell Invisibility|SRD52}"
-            ],
-            "ability": "cha",
-            "displayAs": "bonus",
-            "hidden": [
-              "will"
-            ]
-          }
-        ],
-        "trait": [
-          {
-            "name": "Regeneration",
-            "entries": [
-              "The oni regains 10 {@variantrule Hit Points|SRD52} at the start of each of its turns if it has at least 1 {@variantrule Hit Points|SRD52|Hit Point}."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The oni makes two Claw or Nightmare Ray attacks. It can replace one attack with a use of Spellcasting."
-            ]
-          },
-          {
-            "name": "Claw",
-            "entries": [
-              "{@atkr m} {@hit 7}, reach 10 ft. {@h}10 ({@damage 1d12 + 4}) Slashing damage plus 9 ({@damage 2d8}) Necrotic damage."
-            ]
-          },
-          {
-            "name": "Nightmare Ray",
-            "entries": [
-              "{@atkr r} {@hit 5}, range 60 ft. {@h}9 ({@damage 2d6 + 2}) Psychic damage, and the target has the {@condition Frightened|SRD52} condition until the start of the oni's next turn."
-            ]
-          },
-          {
-            "name": "Shape-Shift",
-            "entries": [
-              "The oni shape-shifts into a Small or Medium Humanoid or a Large Giant, or it returns to its true form. Other than its size, its game statistics are the same in each form. Any equipment it is wearing or carrying isn't transformed."
-            ]
-          }
-        ],
-        "environment": [
-          "forest",
-          "urban"
-        ],
-        "treasure": [
-          "armaments"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/oni.opus"
-        },
-        "traitTags": [
-          "Regeneration"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "GI"
-        ],
-        "damageTags": [
-          "N",
-          "S",
-          "Y"
-        ],
-        "spellcastingTags": [
-          "O"
-        ],
-        "miscTags": [
-          "MA",
-          "RA",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "frightened"
-        ],
-        "conditionInflictSpell": [
-          "charmed",
-          "incapacitated",
-          "invisible",
-          "unconscious"
-        ],
-        "savingThrowForcedSpell": [
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Oni",
             "entries": [
+              "{@i Wickedness Drawn to the Wicked}",
               {
-                "type": "section",
-                "name": "Oni",
-                "entries": [
-                  "{@i Wickedness Drawn to the Wicked}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Forest|bestiary|environment=forest}, {@filter Urban|bestiary|environment=urban}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Armaments"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Forest|bestiary|environment=forest}, {@filter Urban|bestiary|environment=urban}"
                   },
-                  "Oni are elusive entities that inhabit dark forests and other wildernesses. By shape-shifting into the form of an innocent or moving invisibly, oni encroach on communities and lonely roads. They frequently harass people of faith, testing the limits of their piousness, or torment selfish people, punishing them for their wickedness. Wise communities often have guardian statues, annual rituals, or local superstitions meant to keep oni at bay. In rare cases, an oni might gradually befriend such communities and protect them from other threats for generations.",
-                  "Oni torment villages that don't pay them or other supernatural forces respect. Roll on or choose a result from the Oni Troubles table to inspire how an oni menaces such communities.",
                   {
-                    "type": "table",
-                    "caption": "Oni Troubles",
-                    "colLabels": [
-                      "1d4",
-                      "The Oni Torments People By..."
-                    ],
-                    "colStyles": [
-                      "col-2 text-center",
-                      "col-10"
-                    ],
-                    "rows": [
-                      [
-                        "1",
-                        "Charming people to perform nasty tricks."
-                      ],
-                      [
-                        "2",
-                        "Claiming a bridge, gate, shrine, or trail and trying to eat anyone who comes near."
-                      ],
-                      [
-                        "3",
-                        "Luring other monsters to the settlement."
-                      ],
-                      [
-                        "4",
-                        "Playing drums that keep everyone awake."
-                      ]
-                    ]
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Armaments"
                   }
                 ]
-              }
-            ],
-            "images": [
+              },
+              "Oni are elusive entities that inhabit dark forests and other wildernesses. By shape-shifting into the form of an innocent or moving invisibly, oni encroach on communities and lonely roads. They frequently harass people of faith, testing the limits of their piousness, or torment selfish people, punishing them for their wickedness. Wise communities often have guardian statues, annual rituals, or local superstitions meant to keep oni at bay. In rare cases, an oni might gradually befriend such communities and protect them from other threats for generations.",
+              "Oni torment villages that don't pay them or other supernatural forces respect. Roll on or choose a result from the Oni Troubles table to inspire how an oni menaces such communities.",
               {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Oni.webp"
-                },
-                "credit": "John Grello",
-                "width": 1464,
-                "height": 1980
+                "type": "table",
+                "caption": "Oni Troubles",
+                "colLabels": [
+                  "1d4",
+                  "The Oni Torments People By..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Charming people to perform nasty tricks."
+                  ],
+                  [
+                    "2",
+                    "Claiming a bridge, gate, shrine, or trail and trying to eat anyone who comes near."
+                  ],
+                  [
+                    "3",
+                    "Luring other monsters to the settlement."
+                  ],
+                  [
+                    "4",
+                    "Playing drums that keep everyone awake."
+                  ]
+                ]
               }
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Oni.webp"
+            },
+            "credit": "John Grello",
+            "width": 1464,
+            "height": 1980
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

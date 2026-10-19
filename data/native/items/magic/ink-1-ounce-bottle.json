@@ -2,19 +2,13 @@
   "id": "item.ink-1-ounce-bottle",
   "name": "Ink (1-ounce bottle)",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Ink (1-ounce bottle)",
-        "type": "G",
-        "rarity": "none",
-        "value": 1000,
-        "miscTags": [
-          "CNS"
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "value": 1000,
+    "miscTags": [
+      "CNS"
+    ]
+  }
 }

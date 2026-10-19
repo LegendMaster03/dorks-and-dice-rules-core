@@ -2,22 +2,16 @@
   "id": "item.perfume",
   "name": "Perfume",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Perfume",
-        "type": "G|SRD52",
-        "rarity": "none",
-        "value": 500,
-        "entries": [
-          "Perfume comes in a 4-ounce vial. For 1 hour after applying Perfume to yourself, you have {@variantrule Advantage|SRD52} on Charisma ({@skill Persuasion|SRD52}) checks made to influence an Indifferent Humanoid within 5 feet of yourself."
-        ],
-        "miscTags": [
-          "CNS"
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 500,
+    "entries": [
+      "Perfume comes in a 4-ounce vial. For 1 hour after applying Perfume to yourself, you have {@variantrule Advantage|SRD52} on Charisma ({@skill Persuasion|SRD52}) checks made to influence an Indifferent Humanoid within 5 feet of yourself."
+    ],
+    "miscTags": [
+      "CNS"
+    ]
+  }
 }

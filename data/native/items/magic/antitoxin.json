@@ -2,22 +2,16 @@
   "id": "item.antitoxin",
   "name": "Antitoxin",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Antitoxin",
-        "type": "G|SRD52",
-        "rarity": "none",
-        "value": 5000,
-        "entries": [
-          "As a {@variantrule Bonus Action|SRD52}, you can drink a vial of Antitoxin to gain {@variantrule Advantage|SRD52} on saving throws to avoid or end the {@condition Poisoned|SRD52} condition for 1 hour."
-        ],
-        "miscTags": [
-          "CNS"
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 5000,
+    "entries": [
+      "As a {@variantrule Bonus Action|SRD52}, you can drink a vial of Antitoxin to gain {@variantrule Advantage|SRD52} on saving throws to avoid or end the {@condition Poisoned|SRD52} condition for 1 hour."
+    ],
+    "miscTags": [
+      "CNS"
+    ]
+  }
 }

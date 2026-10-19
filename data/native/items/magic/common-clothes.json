@@ -2,17 +2,11 @@
   "id": "item.common-clothes",
   "name": "Common Clothes",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Common Clothes",
-        "type": "G",
-        "rarity": "none",
-        "weight": 3,
-        "value": 50
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 3,
+    "value": 50
+  }
 }

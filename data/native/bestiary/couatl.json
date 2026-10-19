@@ -2,461 +2,225 @@
   "id": "monster.couatl",
   "name": "Couatl",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "celestial",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      19
+    ],
+    "hp": {
+      "average": 60,
+      "formula": "8d8 + 24"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 90
+    },
+    "str": 16,
+    "dex": 20,
+    "con": 17,
+    "int": 18,
+    "wis": 20,
+    "cha": 18,
+    "save": {
+      "con": "+5",
+      "wis": "+7"
+    },
+    "senses": [
+      "Truesight 120 ft."
+    ],
+    "passive": 15,
+    "resist": [
+      "bludgeoning",
+      "piercing",
+      "slashing"
+    ],
+    "immune": [
+      "psychic",
+      "radiant"
+    ],
+    "languages": [
+      "all; telepathy 120 ft."
+    ],
+    "cr": "4",
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The couatl casts one of the following spells, requiring no spell components and using Wisdom as the spellcasting ability (spell save {@dc 15}):"
+        ],
+        "will": [
+          "{@spell Detect Evil and Good|SRD52}",
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Detect Thoughts|SRD52}",
+          "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Create Food and Water|SRD52}",
+            "{@spell Dream|SRD52}",
+            "{@spell Greater Restoration|SRD52}",
+            "{@spell Scrying|SRD52}",
+            "{@spell Sleep|SRD52}"
+          ],
+          "3e": [
+            "{@spell cure wounds}",
+            "{@spell protection from poison}",
+            "{@spell shield}"
+          ]
+        },
+        "ability": "wis",
+        "displayAs": "action"
+      },
+      {
+        "name": "Divine Aid (2/Day)",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The couatl casts {@spell Bless|SRD52}, {@spell Lesser Restoration|SRD52}, or {@spell Sanctuary|SRD52}, requiring no spell components and using the same spellcasting ability as Spellcasting."
+        ],
+        "daily": {
+          "2": [
+            "{@spell Bless|SRD52}",
+            "{@spell Lesser Restoration|SRD52}",
+            "{@spell Sanctuary|SRD52}"
+          ]
+        },
+        "ability": "wis",
+        "displayAs": "bonus",
+        "hidden": [
+          "daily"
+        ]
+      }
+    ],
+    "trait": [
+      {
+        "name": "Shielded Mind",
+        "entries": [
+          "The couatl's thoughts can't be read by any means, and other creatures can communicate with it telepathically only if it allows them."
+        ]
+      },
+      {
+        "name": "Magic Weapons",
+        "entries": [
+          "The couatl's weapon attacks are magical."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}11 ({@damage 1d12 + 5}) Piercing damage, and the target has the {@condition Poisoned|SRD52} condition until the end of the couatl's next turn."
+        ]
+      },
+      {
+        "name": "Constrict",
+        "entries": [
+          "{@actSave str} {@dc 15}, one Medium or smaller creature the couatl can see within 5 feet. {@actSaveFail} 8 ({@damage 1d6 + 5}) Bludgeoning damage. The target has the {@condition Grappled|SRD52} condition (escape {@dc 13}), and it has the {@condition Restrained|SRD52} condition until the grapple ends."
+        ]
+      }
+    ],
+    "environment": [
+      "desert",
+      "forest",
+      "grassland",
+      "urban"
+    ],
+    "treasure": [
+      "relics"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/couatl.opus"
+    },
+    "senseTags": [
+      "U"
+    ],
+    "languageTags": [
+      "TP",
+      "XX"
+    ],
+    "damageTags": [
+      "B",
+      "P"
+    ],
+    "damageTagsSpell": [
+      "Y"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "grappled",
+      "poisoned",
+      "restrained"
+    ],
+    "conditionInflictSpell": [
+      "incapacitated",
+      "unconscious"
+    ],
+    "savingThrowForced": [
+      "strength"
+    ],
+    "savingThrowForcedSpell": [
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Couatl",
-        "size": [
-          "M"
-        ],
-        "type": "celestial",
-        "alignment": [
-          "L",
-          "G"
-        ],
-        "ac": [
+        "entries": [
           {
-            "ac": 19,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 97,
-          "formula": "13d8 + 39"
-        },
-        "speed": {
-          "walk": 30,
-          "fly": 90
-        },
-        "str": 16,
-        "dex": 20,
-        "con": 17,
-        "int": 18,
-        "wis": 20,
-        "cha": 18,
-        "save": {
-          "con": "+5",
-          "wis": "+7",
-          "cha": "+6"
-        },
-        "senses": [
-          "truesight 120 ft."
-        ],
-        "passive": 15,
-        "resist": [
-          "radiant"
-        ],
-        "immune": [
-          "psychic",
-          {
-            "immune": [
-              "bludgeoning",
-              "piercing",
-              "slashing"
-            ],
-            "note": "from nonmagical attacks",
-            "cond": true
-          }
-        ],
-        "languages": [
-          "all",
-          "telepathy 120 ft."
-        ],
-        "cr": "4",
-        "spellcasting": [
-          {
-            "name": "Innate Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The couatl's spellcasting ability is Charisma (spell save {@dc 14}). It can innately cast the following spells, requiring only verbal components:"
-            ],
-            "will": [
-              "{@spell detect evil and good}",
-              "{@spell detect magic}",
-              "{@spell detect thoughts}"
-            ],
-            "daily": {
-              "3e": [
-                "{@spell bless}",
-                "{@spell create food and water}",
-                "{@spell cure wounds}",
-                "{@spell lesser restoration}",
-                "{@spell protection from poison}",
-                "{@spell sanctuary}",
-                "{@spell shield}"
-              ],
-              "1e": [
-                "{@spell dream}",
-                "{@spell greater restoration}",
-                "{@spell scrying}"
-              ]
-            },
-            "ability": "cha"
-          }
-        ],
-        "trait": [
-          {
-            "name": "Magic Weapons",
-            "entries": [
-              "The couatl's weapon attacks are magical."
-            ]
-          },
-          {
-            "name": "Shielded Mind",
-            "entries": [
-              "The couatl is immune to scrying and to any effect that would sense its emotions, read its thoughts, or detect its location."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 8} to hit, reach 5 ft., one creature. {@h}8 ({@damage 1d6 + 5}) piercing damage, and the target must succeed on a {@dc 13} Constitution saving throw or be {@condition poisoned} for 24 hours. Until this poison ends, the target is {@condition unconscious}. Another creature can use an action to shake the target awake."
-            ]
-          },
-          {
-            "name": "Constrict",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 10 ft., one Medium or smaller creature. {@h}10 ({@damage 2d6 + 3}) bludgeoning damage, and the target is {@condition grappled} (escape {@dc 15}). Until this grapple ends, the target is {@condition restrained}, and the couatl can't constrict another target."
-            ]
-          },
-          {
-            "name": "Change Shape",
-            "entries": [
-              "The couatl magically polymorphs into a humanoid or beast that has a challenge rating equal to or less than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the couatl's choice).",
-              "In a new form, the couatl retains its game statistics and ability to speak, but its AC, movement modes, Strength, Dexterity, and other actions are replaced by those of the new form, and it gains any statistics and capabilities (except class features, legendary actions, and lair actions) that the new form has but that it lacks. If the new form has a bite attack, the couatl can use its bite in that form."
-            ]
-          }
-        ],
-        "environment": [
-          "grassland",
-          "forest",
-          "urban",
-          "desert"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/couatl.opus"
-        },
-        "traitTags": [
-          "Magic Weapons"
-        ],
-        "senseTags": [
-          "U"
-        ],
-        "actionTags": [
-          "Shapechanger"
-        ],
-        "languageTags": [
-          "TP",
-          "XX"
-        ],
-        "damageTags": [
-          "B",
-          "P"
-        ],
-        "damageTagsSpell": [
-          "Y"
-        ],
-        "spellcastingTags": [
-          "I"
-        ],
-        "miscTags": [
-          "MW",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "grappled",
-          "poisoned",
-          "restrained",
-          "unconscious"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "savingThrowForcedSpell": [
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Couatl",
             "entries": [
+              "{@i Guardian Manifestation of the Divine}",
               {
-                "type": "entries",
-                "entries": [
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "entries",
-                    "entries": [
-                      "Couatls are benevolent serpentine beings of great intellect and insight. Their brilliantly colored wings and gentle manner speak to their celestial origins.",
-                      {
-                        "name": "Divine Caretakers",
-                        "type": "entries",
-                        "entries": [
-                          "Couatls were created as guardians and caretakers by a benevolent god not worshiped since the dawn of time, and which is forgotten now by all but the couatls themselves. Most of the divine mandates given to these beings are long since fulfilled or failed. However, a number of couatls still watch over ancient power, await fulfillment of prophecy, or safeguard the heirs of creatures they once guided and protected. Regardless of a couatl's task, it prefers to remain hidden, revealing itself only as a last resort."
-                        ]
-                      },
-                      {
-                        "type": "entries",
-                        "name": "Truth Tellers",
-                        "entries": [
-                          "A couatl can't lie, but it can withhold information, answer questions vaguely, or allow others to jump to the wrong conclusions if doing so is necessary to protect something, to keep promises, or to hide the secret of its existence."
-                        ]
-                      },
-                      {
-                        "name": "Ancient and Few",
-                        "type": "entries",
-                        "entries": [
-                          "A couatl can live for ages without sustenance, even surviving without air, but these creatures can die of disease or the passage of time. A couatl can sense its end up to a century beforehand, but it has no insight into the manner of its demise. If a couatl has already accomplished what it set out to do, it accepts its fate. However, if its imminent death endangers the completion of its goals, it actively seeks out another couatl with which to produce offspring.",
-                          "The mating ritual of couatls is a beautiful and elaborate dance of magic and light, which results in a gem-like egg from which a new couatl hatches. The parent that sought out the mate raises the newborn couatl and instructs it as to its duties, so that it can complete whatever task the parent leaves unfinished."
-                        ]
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Desert|bestiary|environment=desert}, {@filter Forest|bestiary|environment=forest}, {@filter Grassland|bestiary|environment=grassland}, {@filter Urban|bestiary|environment=urban}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Relics"
                   }
                 ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Couatl.webp"
-                },
-                "width": 782,
-                "height": 1000
               },
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Couatl 2.webp"
-                },
-                "width": 804,
-                "height": 1000
-              }
+              "Embodiments of prophecy and protectors of divine secrets, couatls ensure fate unfolds as it should. They resemble serpents with rainbow wings, and each is a manifestation of a divine edict, a truth or fate that a righteous god decrees must hold true for all time. Most couatls appear in places of ancient power, where they guard hidden magic or ensure foretold acts do or don't come to pass. Rarely, couatls watch over communities or travel lands in disguise, interpreting omens or manipulating factors to set fate on its proper course.",
+              "Motivated by eternal mandates, couatls sometimes behave in inscrutable or antagonistic ways. They are inflexible and uncompromising, as their existences are fundamentally tied to their divine directives, but they harm other creatures only when absolutely necessary to achieve divine goals.",
+              "Each couatl goes through a period of renewal at the end of an age. In a couatl's lifecycle, an age might correspond to a celestial calendar or some divine chronology. Near the age's end, the couatl lays a wondrous, rainbow-hued egg. When the age ends, the couatl dies. For a period—perhaps a single day, perhaps until an annual solar event—the couatl's work is unattended. Once this time passes, the same couatl that laid the egg hatches from it, fully grown and renewed to serve for another age."
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Couatl.webp"
+            },
+            "credit": "Viktor Titov",
+            "width": 2310,
+            "height": 1650
           }
         ]
       }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Couatl",
-        "size": [
-          "M"
-        ],
-        "type": "celestial",
-        "alignment": [
-          "L",
-          "G"
-        ],
-        "ac": [
-          19
-        ],
-        "hp": {
-          "average": 60,
-          "formula": "8d8 + 24"
-        },
-        "speed": {
-          "walk": 30,
-          "fly": 90
-        },
-        "str": 16,
-        "dex": 20,
-        "con": 17,
-        "int": 18,
-        "wis": 20,
-        "cha": 18,
-        "save": {
-          "con": "+5",
-          "wis": "+7"
-        },
-        "senses": [
-          "Truesight 120 ft."
-        ],
-        "passive": 15,
-        "resist": [
-          "bludgeoning",
-          "piercing",
-          "slashing"
-        ],
-        "immune": [
-          "psychic",
-          "radiant"
-        ],
-        "languages": [
-          "all; telepathy 120 ft."
-        ],
-        "cr": "4",
-        "spellcasting": [
-          {
-            "name": "Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The couatl casts one of the following spells, requiring no spell components and using Wisdom as the spellcasting ability (spell save {@dc 15}):"
-            ],
-            "will": [
-              "{@spell Detect Evil and Good|SRD52}",
-              "{@spell Detect Magic|SRD52}",
-              "{@spell Detect Thoughts|SRD52}",
-              "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)"
-            ],
-            "daily": {
-              "1e": [
-                "{@spell Create Food and Water|SRD52}",
-                "{@spell Dream|SRD52}",
-                "{@spell Greater Restoration|SRD52}",
-                "{@spell Scrying|SRD52}",
-                "{@spell Sleep|SRD52}"
-              ]
-            },
-            "ability": "wis",
-            "displayAs": "action"
-          },
-          {
-            "name": "Divine Aid (2/Day)",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The couatl casts {@spell Bless|SRD52}, {@spell Lesser Restoration|SRD52}, or {@spell Sanctuary|SRD52}, requiring no spell components and using the same spellcasting ability as Spellcasting."
-            ],
-            "daily": {
-              "2": [
-                "{@spell Bless|SRD52}",
-                "{@spell Lesser Restoration|SRD52}",
-                "{@spell Sanctuary|SRD52}"
-              ]
-            },
-            "ability": "wis",
-            "displayAs": "bonus",
-            "hidden": [
-              "daily"
-            ]
-          }
-        ],
-        "trait": [
-          {
-            "name": "Shielded Mind",
-            "entries": [
-              "The couatl's thoughts can't be read by any means, and other creatures can communicate with it telepathically only if it allows them."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atkr m} {@hit 7}, reach 5 ft. {@h}11 ({@damage 1d12 + 5}) Piercing damage, and the target has the {@condition Poisoned|SRD52} condition until the end of the couatl's next turn."
-            ]
-          },
-          {
-            "name": "Constrict",
-            "entries": [
-              "{@actSave str} {@dc 15}, one Medium or smaller creature the couatl can see within 5 feet. {@actSaveFail} 8 ({@damage 1d6 + 5}) Bludgeoning damage. The target has the {@condition Grappled|SRD52} condition (escape {@dc 13}), and it has the {@condition Restrained|SRD52} condition until the grapple ends."
-            ]
-          }
-        ],
-        "environment": [
-          "desert",
-          "forest",
-          "grassland",
-          "urban"
-        ],
-        "treasure": [
-          "relics"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/couatl.opus"
-        },
-        "senseTags": [
-          "U"
-        ],
-        "languageTags": [
-          "TP",
-          "XX"
-        ],
-        "damageTags": [
-          "B",
-          "P"
-        ],
-        "damageTagsSpell": [
-          "Y"
-        ],
-        "spellcastingTags": [
-          "O"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflict": [
-          "grappled",
-          "poisoned",
-          "restrained"
-        ],
-        "conditionInflictSpell": [
-          "incapacitated",
-          "unconscious"
-        ],
-        "savingThrowForced": [
-          "strength"
-        ],
-        "savingThrowForcedSpell": [
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Couatl",
-            "entries": [
-              {
-                "type": "section",
-                "name": "Couatl",
-                "entries": [
-                  "{@i Guardian Manifestation of the Divine}",
-                  {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Desert|bestiary|environment=desert}, {@filter Forest|bestiary|environment=forest}, {@filter Grassland|bestiary|environment=grassland}, {@filter Urban|bestiary|environment=urban}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Relics"
-                      }
-                    ]
-                  },
-                  "Embodiments of prophecy and protectors of divine secrets, couatls ensure fate unfolds as it should. They resemble serpents with rainbow wings, and each is a manifestation of a divine edict, a truth or fate that a righteous god decrees must hold true for all time. Most couatls appear in places of ancient power, where they guard hidden magic or ensure foretold acts do or don't come to pass. Rarely, couatls watch over communities or travel lands in disguise, interpreting omens or manipulating factors to set fate on its proper course.",
-                  "Motivated by eternal mandates, couatls sometimes behave in inscrutable or antagonistic ways. They are inflexible and uncompromising, as their existences are fundamentally tied to their divine directives, but they harm other creatures only when absolutely necessary to achieve divine goals.",
-                  "Each couatl goes through a period of renewal at the end of an age. In a couatl's lifecycle, an age might correspond to a celestial calendar or some divine chronology. Near the age's end, the couatl lays a wondrous, rainbow-hued egg. When the age ends, the couatl dies. For a period—perhaps a single day, perhaps until an annual solar event—the couatl's work is unattended. Once this time passes, the same couatl that laid the egg hatches from it, fully grown and renewed to serve for another age."
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Couatl.webp"
-                },
-                "credit": "Viktor Titov",
-                "width": 2310,
-                "height": 1650
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
+    ]
+  }
 }

@@ -2,347 +2,188 @@
   "id": "monster.otyugh",
   "name": "Otyugh",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Otyugh",
-        "size": [
-          "L"
-        ],
-        "type": "aberration",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          {
-            "ac": 14,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 114,
-          "formula": "12d10 + 48"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 16,
-        "dex": 11,
-        "con": 19,
-        "int": 6,
-        "wis": 13,
-        "cha": 6,
-        "save": {
-          "con": "+7"
-        },
-        "senses": [
-          "darkvision 120 ft."
-        ],
-        "passive": 11,
-        "languages": [
-          "Otyugh"
-        ],
-        "cr": "5",
-        "trait": [
-          {
-            "name": "Limited Telepathy",
-            "entries": [
-              "The otyugh can magically transmit simple messages and images to any creature within 120 feet of it that can understand a language. This form of telepathy doesn't allow the receiving creature to telepathically respond."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The otyugh makes three attacks: one with its bite and two with its tentacles."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}12 ({@damage 2d8 + 3}) piercing damage. If the target is a creature, it must succeed on a {@dc 15} Constitution saving throw against disease or become {@condition poisoned} until the disease is cured. Every 24 hours that elapse, the target must repeat the saving throw, reducing its hit point maximum by 5 ({@dice 1d10}) on a failure. The disease is cured on a success. The target dies if the disease reduces its hit point maximum to 0. This reduction to the target's hit point maximum lasts until the disease is cured."
-            ]
-          },
-          {
-            "name": "Tentacle",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 10 ft., one target. {@h}7 ({@damage 1d8 + 3}) bludgeoning damage plus 4 ({@damage 1d8}) piercing damage. If the target is Medium or smaller, it is {@condition grappled} (escape {@dc 13}) and {@condition restrained} until the grapple ends. The otyugh has two tentacles, each of which can grapple one target."
-            ]
-          },
-          {
-            "name": "Tentacle Slam",
-            "entries": [
-              "The otyugh slams creatures {@condition grappled} by it into each other or a solid surface. Each creature must succeed on a {@dc 14} Constitution saving throw or take 10 ({@damage 2d6 + 3}) bludgeoning damage and be {@condition stunned} until the end of the otyugh's next turn. On a successful save, the target takes half the bludgeoning damage and isn't {@condition stunned}."
-            ]
-          }
-        ],
-        "environment": [
-          "underdark"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/otyugh.opus"
-        },
-        "senseTags": [
-          "SD"
-        ],
-        "actionTags": [
-          "Multiattack",
-          "Tentacles"
-        ],
-        "languageTags": [
-          "OTH"
-        ],
-        "damageTags": [
-          "B",
-          "P"
-        ],
-        "miscTags": [
-          "DIS",
-          "MW",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "grappled",
-          "poisoned",
-          "restrained",
-          "stunned"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Otyugh",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "An otyugh is a grotesque, bulbous creature borne along on three sturdy legs, its eyes and nose set along a vine-like stalk that snakes from the top of its bloated body. Two rubbery tentacles end in spiky, leaf-like appendages that the otyugh uses to shovel food into its gaping maw.",
-                      "An otyugh buries itself under mounds of offal and carrion, leaving only its sensory stalk exposed. When an edible creature happens by, the otyugh's tentacles erupt from the filth and grab hold of it.",
-                      "Otyughs make the most of any opportunity to ambush and devour prey. They use a limited form of telepathy to urge sentient creatures toward their lairs, sometimes by pretending to be something else.",
-                      {
-                        "name": "Dwellers in Darkness",
-                        "entries": [
-                          "Otyughs tolerate bright light only when considerable stores of carrion or garbage lie within reach. In the wilderness, they dwell in stagnant swamps, scum-filled ponds, and damp forest dells. The scent of graveyards, city sewers, village middens, and manure-filled animal pens attracts them to civilized areas.",
-                          "Since otyughs lack concern for anything but food, their nests sometimes accumulate a variety of treasures shed from their victims and mixed among the junk."
-                        ],
-                        "type": "entries"
-                      },
-                      {
-                        "name": "Symbiotic Guardians",
-                        "type": "entries",
-                        "entries": [
-                          "Sentient subterranean beings can coexist with otyughs, employing them as garbage disposals. With such plentiful sustenance, otyughs grow fat in their wallows, unmoved by any other drive or desire. This sedentary gluttony makes them reliable guardians. As long as it is fed, an otyugh refrains from attacking other creatures. However, would-be otyugh masters can easily underestimate the quantity of waste, carrion, and meat necessary to keep an otyugh from wandering off in search of food. More than one \"trained\" otyugh has eaten its keeper after devouring all the waste in its wallow."
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Otyugh.webp"
-                },
-                "width": 1000,
-                "height": 684
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "aberration",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 104,
+      "formula": "11d10 + 44"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "speed": {
+      "walk": 30
+    },
+    "str": 16,
+    "dex": 11,
+    "con": 19,
+    "int": 6,
+    "wis": 13,
+    "cha": 6,
+    "save": {
+      "con": "+7"
+    },
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 11,
+    "languages": [
+      "Otyugh; telepathy 120 ft. (doesn't allow the receiving creature to respond telepathically)"
+    ],
+    "cr": "5",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The otyugh makes one Bite attack and two Tentacle attacks."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}12 ({@damage 2d8 + 3}) Piercing damage, and the target has the {@condition Poisoned|SRD52} condition. Whenever the {@condition Poisoned|SRD52} target finishes a {@variantrule Long Rest|SRD52}, it is subjected to the following effect. {@actSave con} {@dc 15}. {@actSaveFail} The target's {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by 5 ({@dice 1d10}) and doesn't return to normal until the {@condition Poisoned|SRD52} condition ends on the target. {@actSaveSuccess} The {@condition Poisoned|SRD52} condition ends."
+        ]
+      },
+      {
+        "name": "Tentacle",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 10 ft. {@h}12 ({@damage 2d8 + 3}) Piercing damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 13}) from one of two tentacles."
+        ]
+      },
+      {
+        "name": "Tentacle Slam",
+        "entries": [
+          "{@actSave con} {@dc 14}, each creature {@condition Grappled|SRD52} by the otyugh. {@actSaveFail} 16 ({@damage 3d8 + 3}) Bludgeoning damage, and the target has the {@condition Stunned|SRD52} condition until the start of the otyugh's next turn. {@actSaveSuccess} Half damage only."
+        ]
+      }
+    ],
+    "environment": [
+      "underdark"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/otyugh.opus"
+    },
+    "senseTags": [
+      "SD"
+    ],
+    "actionTags": [
+      "Multiattack",
+      "Tentacles"
+    ],
+    "languageTags": [
+      "OTH",
+      "TP"
+    ],
+    "damageTags": [
+      "B",
+      "P"
+    ],
+    "miscTags": [
+      "HPR",
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "grappled",
+      "poisoned",
+      "stunned"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Otyugh",
-        "size": [
-          "L"
-        ],
-        "type": "aberration",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          14
-        ],
-        "hp": {
-          "average": 104,
-          "formula": "11d10 + 44"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 16,
-        "dex": 11,
-        "con": 19,
-        "int": 6,
-        "wis": 13,
-        "cha": 6,
-        "save": {
-          "con": "+7"
-        },
-        "senses": [
-          "Darkvision 120 ft."
-        ],
-        "passive": 11,
-        "languages": [
-          "Otyugh; telepathy 120 ft. (doesn't allow the receiving creature to respond telepathically)"
-        ],
-        "cr": "5",
-        "action": [
+        "entries": [
           {
-            "name": "Multiattack",
+            "type": "section",
+            "name": "Otyugh",
             "entries": [
-              "The otyugh makes one Bite attack and two Tentacle attacks."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atkr m} {@hit 6}, reach 5 ft. {@h}12 ({@damage 2d8 + 3}) Piercing damage, and the target has the {@condition Poisoned|SRD52} condition. Whenever the {@condition Poisoned|SRD52} target finishes a {@variantrule Long Rest|SRD52}, it is subjected to the following effect. {@actSave con} {@dc 15}. {@actSaveFail} The target's {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by 5 ({@dice 1d10}) and doesn't return to normal until the {@condition Poisoned|SRD52} condition ends on the target. {@actSaveSuccess} The {@condition Poisoned|SRD52} condition ends."
-            ]
-          },
-          {
-            "name": "Tentacle",
-            "entries": [
-              "{@atkr m} {@hit 6}, reach 10 ft. {@h}12 ({@damage 2d8 + 3}) Piercing damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 13}) from one of two tentacles."
-            ]
-          },
-          {
-            "name": "Tentacle Slam",
-            "entries": [
-              "{@actSave con} {@dc 14}, each creature {@condition Grappled|SRD52} by the otyugh. {@actSaveFail} 16 ({@damage 3d8 + 3}) Bludgeoning damage, and the target has the {@condition Stunned|SRD52} condition until the start of the otyugh's next turn. {@actSaveSuccess} Half damage only."
+              "{@i Garbage-Heap Gourmand}",
+              {
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Underdark|bestiary|environment=underdark}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Any"
+                  }
+                ]
+              },
+              "Otyughs live to eat—the more disgusting the meal, the better. They consider all non-otyughs that come within reach dishes in life's endless buffet. In dumps, sewers, polluted ruins, and similar murky depths, otyughs devour garbage, carcasses, and anything else their tentacles can cram in their expansive maws. Some creatures ply otyughs with trash to recruit them as watchful—if disgusting—guardians.",
+              "Otyughs often bury themselves amid trash heaps and observe their surroundings with their eye-studded stalk. They use glittery trash and telepathic urgings to coax creatures close, then burst from hiding, attacking with their spiny tentacles and filthy maws. Roll on or choose a result from the Otyugh Lures table to inspire how an otyugh tempts prey close.",
+              {
+                "type": "table",
+                "caption": "Otyugh Lures",
+                "colLabels": [
+                  "1d4",
+                  "To Attract Potential Meals, the Otyugh..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Disguises its tentacles with garbage puppets."
+                  ],
+                  [
+                    "2",
+                    "Sings an enticing song in Otyugh."
+                  ],
+                  [
+                    "3",
+                    "Telepathically transmits a message like \"Happy good stuff here!\" or \"Help now! I'm too delicious?\""
+                  ],
+                  [
+                    "4",
+                    "Telepathically transmits an image of a large gemstone, crooked weapon, or soggy pastry."
+                  ]
+                ]
+              }
             ]
           }
         ],
-        "environment": [
-          "underdark"
-        ],
-        "treasure": [
-          "any"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/otyugh.opus"
-        },
-        "senseTags": [
-          "SD"
-        ],
-        "actionTags": [
-          "Multiattack",
-          "Tentacles"
-        ],
-        "languageTags": [
-          "OTH",
-          "TP"
-        ],
-        "damageTags": [
-          "B",
-          "P"
-        ],
-        "miscTags": [
-          "HPR",
-          "MA",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "grappled",
-          "poisoned",
-          "stunned"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
+        "images": [
           {
-            "name": "Otyugh",
-            "entries": [
-              {
-                "type": "section",
-                "name": "Otyugh",
-                "entries": [
-                  "{@i Garbage-Heap Gourmand}",
-                  {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Underdark|bestiary|environment=underdark}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Any"
-                      }
-                    ]
-                  },
-                  "Otyughs live to eat—the more disgusting the meal, the better. They consider all non-otyughs that come within reach dishes in life's endless buffet. In dumps, sewers, polluted ruins, and similar murky depths, otyughs devour garbage, carcasses, and anything else their tentacles can cram in their expansive maws. Some creatures ply otyughs with trash to recruit them as watchful—if disgusting—guardians.",
-                  "Otyughs often bury themselves amid trash heaps and observe their surroundings with their eye-studded stalk. They use glittery trash and telepathic urgings to coax creatures close, then burst from hiding, attacking with their spiny tentacles and filthy maws. Roll on or choose a result from the Otyugh Lures table to inspire how an otyugh tempts prey close.",
-                  {
-                    "type": "table",
-                    "caption": "Otyugh Lures",
-                    "colLabels": [
-                      "1d4",
-                      "To Attract Potential Meals, the Otyugh..."
-                    ],
-                    "colStyles": [
-                      "col-2 text-center",
-                      "col-10"
-                    ],
-                    "rows": [
-                      [
-                        "1",
-                        "Disguises its tentacles with garbage puppets."
-                      ],
-                      [
-                        "2",
-                        "Sings an enticing song in Otyugh."
-                      ],
-                      [
-                        "3",
-                        "Telepathically transmits a message like \"Happy good stuff here!\" or \"Help now! I'm too delicious?\""
-                      ],
-                      [
-                        "4",
-                        "Telepathically transmits an image of a large gemstone, crooked weapon, or soggy pastry."
-                      ]
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Otyugh.webp"
-                },
-                "credit": "Néstor Ossandón Leal",
-                "width": 2560,
-                "height": 1752
-              }
-            ]
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Otyugh.webp"
+            },
+            "credit": "Néstor Ossandón Leal",
+            "width": 2560,
+            "height": 1752
           }
         ]
       }
-    }
-  ]
+    ],
+    "trait": [
+      {
+        "name": "Limited Telepathy",
+        "entries": [
+          "The otyugh can magically transmit simple messages and images to any creature within 120 feet of it that can understand a language. This form of telepathy doesn't allow the receiving creature to telepathically respond."
+        ]
+      }
+    ]
+  }
 }

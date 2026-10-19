@@ -2,251 +2,85 @@
   "id": "monster.warhorse",
   "name": "Warhorse",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Warhorse",
-        "size": [
-          "L"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          11
-        ],
-        "hp": {
-          "average": 19,
-          "formula": "3d10 + 3"
-        },
-        "speed": {
-          "walk": 60
-        },
-        "str": 18,
-        "dex": 12,
-        "con": 13,
-        "int": 2,
-        "wis": 12,
-        "cha": 7,
-        "passive": 11,
-        "cr": "1/2",
-        "trait": [
-          {
-            "name": "Trampling Charge",
-            "entries": [
-              "If the horse moves at least 20 feet straight toward a creature and then hits it with a hooves attack on the same turn, that target must succeed on a {@dc 14} Strength saving throw or be knocked {@condition prone}. If the target is {@condition prone}, the horse can make another attack with its hooves against it as a bonus action."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Hooves",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) bludgeoning damage."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/war-horse.opus"
-        },
-        "damageTags": [
-          "B"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "strength"
-        ],
-        "hasToken": true,
-        "_versions": [
-          {
-            "name": "Warhorse (Chain Mail Barding)",
-            "source": "SRD51",
-            "ac": [
-              {
-                "ac": 16,
-                "from": [
-                  "{@item chain mail barding|srd51}"
-                ]
-              }
-            ],
-            "variant": null
-          },
-          {
-            "name": "Warhorse (Leather Barding)",
-            "source": "SRD51",
-            "ac": [
-              {
-                "ac": 12,
-                "from": [
-                  "{@item leather barding|srd51}"
-                ]
-              }
-            ],
-            "variant": null
-          },
-          {
-            "name": "Warhorse (Plate Barding)",
-            "source": "SRD51",
-            "ac": [
-              {
-                "ac": 18,
-                "from": [
-                  "{@item plate barding|srd51}"
-                ]
-              }
-            ],
-            "variant": null
-          },
-          {
-            "name": "Warhorse (Ring Mail Barding)",
-            "source": "SRD51",
-            "ac": [
-              {
-                "ac": 14,
-                "from": [
-                  "{@item ring mail barding|srd51}"
-                ]
-              }
-            ],
-            "variant": null
-          },
-          {
-            "name": "Warhorse (Scale Mail Barding)",
-            "source": "SRD51",
-            "ac": [
-              {
-                "ac": 15,
-                "from": [
-                  "{@item scale mail barding|srd51}"
-                ]
-              }
-            ],
-            "variant": null
-          },
-          {
-            "name": "Warhorse (Splint Barding)",
-            "source": "SRD51",
-            "ac": [
-              {
-                "ac": 17,
-                "from": [
-                  "{@item splint barding|srd51}"
-                ]
-              }
-            ],
-            "variant": null
-          },
-          {
-            "name": "Warhorse (Studded Leather Barding)",
-            "source": "SRD51",
-            "ac": [
-              {
-                "ac": 13,
-                "from": [
-                  "{@item studded leather barding|srd51}"
-                ]
-              }
-            ],
-            "variant": null
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d10 + 3"
+    },
+    "speed": {
+      "walk": 60
+    },
+    "str": 18,
+    "dex": 12,
+    "con": 13,
+    "int": 2,
+    "wis": 12,
+    "cha": 7,
+    "save": {
+      "wis": "+3"
+    },
+    "passive": 11,
+    "cr": "1/2",
+    "action": [
+      {
+        "name": "Hooves",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}9 ({@damage 2d4 + 4}) Bludgeoning damage. If the target is a Large or smaller creature and the horse moved 20+ feet straight toward it immediately before the hit, the target takes an extra 5 ({@damage 2d4}) Bludgeoning damage and has the {@condition Prone|SRD52} condition."
         ]
       }
+    ],
+    "environment": [
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/war-horse.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "damageTags": [
+      "B"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Warhorse",
-        "size": [
-          "L"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          11
-        ],
-        "hp": {
-          "average": 19,
-          "formula": "3d10 + 3"
-        },
-        "speed": {
-          "walk": 60
-        },
-        "str": 18,
-        "dex": 12,
-        "con": 13,
-        "int": 2,
-        "wis": 12,
-        "cha": 7,
-        "save": {
-          "wis": "+3"
-        },
-        "passive": 11,
-        "cr": "1/2",
-        "action": [
-          {
-            "name": "Hooves",
-            "entries": [
-              "{@atkr m} {@hit 6}, reach 5 ft. {@h}9 ({@damage 2d4 + 4}) Bludgeoning damage. If the target is a Large or smaller creature and the horse moved 20+ feet straight toward it immediately before the hit, the target takes an extra 5 ({@damage 2d4}) Bludgeoning damage and has the {@condition Prone|SRD52} condition."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/war-horse.opus"
-        },
-        "damageTags": [
-          "B"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Warhorse",
-            "_copy": {
-              "name": "Animals",
-              "source": "SRD52",
-              "_mod": {
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Warhorse.webp"
-                      },
-                      "width": 1544,
-                      "height": 1440
-                    }
-                  ]
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Warhorse.webp"
+                  },
+                  "width": 1544,
+                  "height": 1440
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

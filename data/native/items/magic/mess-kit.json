@@ -2,20 +2,14 @@
   "id": "item.mess-kit",
   "name": "Mess Kit",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Mess Kit",
-        "type": "G",
-        "rarity": "none",
-        "weight": 1,
-        "value": 20,
-        "entries": [
-          "This tin box contains a cup and simple cutlery. The box clamps together, and one side can be used as a cooking pan and the other as a plate or shallow bowl."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 1,
+    "value": 20,
+    "entries": [
+      "This tin box contains a cup and simple cutlery. The box clamps together, and one side can be used as a cooking pan and the other as a plate or shallow bowl."
+    ]
+  }
 }

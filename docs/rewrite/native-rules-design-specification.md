@@ -61,6 +61,20 @@ Automated conversion must preserve semantic intent and meaningful mechanical dif
 
 **Boundary:** The owner favors this framework as a guide for design. Exact feats, additional reaction triggers, attack progressions, maneuver-resolution formulas and other rows are **not yet approved gameplay rules**. GM-awarded free combat feats remain explicit table exceptions, never a veteran entitlement or default feat progression policy.
 
+### Approved cross-baseline reconciliation policies — five general rules
+
+**Owner approval (2026-10-18):** The following are **approved general decision policies** for normalizing the complete SRD 5.1 / SRD 5.2.1 seed into one coherent Dorks & Dice native baseline. They apply across categories, subject to previously approved Dorks & Dice rulings and rule-specific eligibility. They are not a blanket preference for one edition.
+
+1. **Equivalent mechanics become one definition.** Different wording, markup, terminology or source presentation does not create an independent rule when the gameplay is substantively equivalent. Check the actual outcomes, costs, targets, prerequisites and restrictions before asserting equivalence.
+2. **Unique, compatible content is retained.** A valid rule or option present in only one baseline is retained in the unified native baseline when compatible with the Dorks & Dice design. Absence from the other baseline is not by itself a reason to discard it. This does not grant an optional feature to every character or waive its prerequisites.
+3. **Compatible additions are combined.** Where one version adds a genuinely distinct, compatible capability, include it in the coherent native definition, preserving acquisition, eligibility, action/resource costs, limitations, and optional complexity. Do not duplicate a restated consequence, grant the same benefit twice or append incompatible behaviors mechanically.
+4. **Conflicting values require category-specific rules.** Differences in damage, healing, Hit Points, spell ranges, duration, charges, progression and other quantitative fields are not automatically averaged, added, or selected by publication recency. Establish a coherent decision for the relevant rule family, with explicit exceptions where necessary. **No default value-selection policy has yet been approved for every family.**
+5. **Fundamentally different procedures require a decision.** A redesign of the actual procedure or outcome can not be unified just by merging prose. Apply existing design decisions if they settle the case; otherwise obtain an Owner decision, preferably once for a recurring family, before publishing an authoritative native ruling.
+
+**Operational rule:** One authoritative native definition per decided entity. Multiple staged candidates signal unfinished work, not selectable rule versions. Unresolved conflicts remain explicit, and never silently inherit a source edition default. No source-by-source comparison evidence is required within the native rules or Owner-facing decision queue; license and attribution obligations remain separately governed.
+
+**Boundary:** These are *general reconciliation policies*, not approval of any particular disputed numerical value, procedure redesign, monster stat block, class feature progression or spell effect. Record and validate their concrete applications.
+
 ### Reuse-first combat design — adapt existing procedures, resolve differences case by case
 
 **Owner direction (2026-10-18):** In many combat areas, 5e already supplies a more approachable descendant of a 3.x concept. Treat this as a **head start**, not as a requirement to invent independent procedures. Use established Dorks & Dice house rules and the shared-foundation/optional-depth matrix above, then settle genuine differences **case by case**. Avoid reopening mechanics whose outcomes and interactions are already compatible merely because they come from different editions.
@@ -291,6 +305,33 @@ Mechanic **eligibility, advancement progression, effect scaling, and prerequisit
 **To specify before implementing native Level Band advancement and its conversion slice** (not before writing the shared foundation): transition behavior when source data is silent; overlapping track effects; the semantics of paused versus terminated progression; effective level calculations for prestige spellcasting; effects of multiclassing on character-level grants; and whether a progression has a finite maximum. The foundation must represent generic track identities and explicit unknowns, but it must not presume every track supports indefinite advancement.
 
 Supersedes the *native-gameplay interpretation* of `docs/epic-content-modeling.md`, which documents the **legacy implementation's** epic-specific metadata. Keep that historical document available as evidence until its relevant design decisions and any retained data have been reviewed. This **does not** require a dual old/new runtime or deployment cutover.
+
+### NPC and monster spellcasting resources — general native ruling (2026-10-19)
+
+**Owner clarification:** The existing Spellcasting Resource Choice is a **general NPC and monster rule**, not a special exception for Priest. NPCs, monsters, and player characters use the same native spellcasting-resource framework where a creature is granted spellcasting. An eligible spellcaster may use spell slots or spell points under the selected campaign/caster profile; the GM chooses the applicable profile for NPCs and monsters. Do not force monsters into a permanently slotless mechanic because SRD 5.2.1 presents their spells as at-will or limited-use actions. Conversely, merely having a spell-like action does not supply a slot or point pool.
+
+**Separate the *existence of a resource system* from its *entitlement and quantity*:**
+
+- An explicit slot-granting spellcasting profile, source-supported pool, or ability that expends spell slots may justify a level-specific slot resource. Preserve the source's levels and quantities when a compatible older grant is deliberately retained; do not manufacture pools from creature CR, ability scores, spell lists, or edition defaults.
+- A spell-point profile is an alternative representation of the same qualifying expendable casting resource, **not an additional simultaneous pool**. Conversion rates, replenishment, spell level limits, and other points-specific execution details belong to the later native magic subsystem; do not invent them in the SRD import baseline.
+- At-will spells, spells with independent uses per day, innate spells, and other feature-specific charges retain their own permissions and limits. Do not silently pool them into slots/points, let slots bypass their use limits, or consume limited-use charges when casting a separate slot-authorized spell.
+- A resource pool does not itself grant a spell list or additional castable spells. Every expenditure must be authorized by the creature's actual spellcasting grants or an explicitly slot-expending ability; preserve casting time, components, spell level, and other relevant restrictions.
+- If a compatible older slot-costed feature is restored alongside a newer attack, its separately stated damage or other effects can apply **in addition** to newer baseline outcomes, but identical effects are not counted twice. Treat substantive numerical/procedural conflicts as separate decisions.
+- A creature with no supported expendable casting grant retains only its specified at-will/limited-use/innate features. The owner ruling establishes availability of the **system**, not an unconditional allocation of spell slots to all spellcasters.
+
+**Baseline application:** SRD 5.1 Priest grants slots by level (1st: 4, 2nd: 3, 3rd: 2); the unified Priest retains those as a source-supported casting resource for restored Divine Eminence while keeping the SRD 5.2.1 Mace, Radiant Flame, Spellcasting, and Divine Aid. Slot spending does not confer the older prepared-spell list automatically. The same evaluation applies to **every** NPC/monster, not just Priest. The pinned older monster source includes 12 slot-based spellcasters; those without a restored slot-expending ability require their own spell-access and resource reconciliation before automatically adding the old pool. Two of the 12 have older-only stat blocks, which already retain their original spellcasting data.
+
+**Native representation:** A selected monster/NPC definition may record an independent `spellcastingResources` grant (for example, `{"mode":"spell-slots","slotsByLevel":{"1":4,"2":3,"3":2}}`). Do not replace the existing imported `spellcasting` fields with this grant or interpret `spellcastingResources` as an engine-ready spell-point conversion. Authoritative rules describe the eligibility and usage; eventual typed native execution and source-to-native conversion are separate subsystem work.
+
+### Monster families and variant identities — 5.5e-style design direction
+
+**Owner clarification (2026-10-18):** Different combat tactics **do not justify separate creatures**. The DM already chooses how a creature uses its attacks, movement, positioning, targets and available abilities. Use **one coherent stat block** for a given monster identity, with the DM free to use whichever legal tactics fit the encounter.
+
+5.5e's larger collection of role-specific creatures remains the preferred roster model **when the differences genuinely change the creature**: for example, a Goblin Minion, Warrior and Boss have distinct statistics, capabilities and encounter roles. Do not create an extra monster simply because an older stat block favors ambushes while the newer one favors grappling. Older Hobgoblin and Bugbear names are semantic aliases of Hobgoblin Warrior and Bugbear Warrior, respectively.
+
+If older mechanics add compatible, nonredundant abilities to a creature, reconcile those abilities *within that creature's coherent definition*, following the five approved rules. If they change attack damage, resource costs, action economy or other mechanical effects, review the consequences instead of stacking them automatically. The DM's tactical discretion does not itself grant an additional mechanical option not present in the native definition. Meaningfully different statistical identities can still be distinct role variants, but **tactics alone are not a variant boundary**.
+
+See `docs/rewrite/monster-variant-family-model.md` for the family model, reviewed aliases, and older abilities pending integration. Do not introduce independent edition defaults or parallel runtime stat blocks.
 
 ## Core rules chapters to complete progressively by native subsystem
 

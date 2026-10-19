@@ -2,17 +2,11 @@
   "id": "hazard.deep-water",
   "name": "Deep Water",
   "kind": "hazard",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Deep Water",
-        "trapHazType": "ENV",
-        "entries": [
-          "Swimming through deep water (more than 100 feet deep) presents additional challenges because of the water's pressure and cold temperature. After each hour of swimming in deep water, a creature that lacks a Swim Speed must succeed on a {@dc 10} Constitution saving throw or gain 1 {@condition Exhaustion|SRD52} level."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "trapHazType": "ENV",
+    "entries": [
+      "Swimming through deep water (more than 100 feet deep) presents additional challenges because of the water's pressure and cold temperature. After each hour of swimming in deep water, a creature that lacks a Swim Speed must succeed on a {@dc 10} Constitution saving throw or gain 1 {@condition Exhaustion|SRD52} level."
+    ]
+  }
 }

@@ -40,7 +40,7 @@ class NativeSourceFidelityTests(unittest.TestCase):
             ("spider-s-sting.json", "Spider's Sting", "Lolth's Sting"),
         ]:
             item = read("data/native/items/magic/" + filename)
-            modern = next(x["content"] for x in item["candidateDefinitions"] if x["key"].startswith("candidate-b"))
+            modern = (item.get("definition") or next(x["content"] for x in item["candidateDefinitions"] if x["key"].startswith("candidate-b")))
             self.assertIn(good, json.dumps(modern))
             self.assertNotIn(bad, json.dumps(modern))
         toolbox = json.dumps(read("data/native/rules/gameplay-toolbox.json"))
@@ -83,8 +83,8 @@ class NativeSourceFidelityTests(unittest.TestCase):
     def test_black_dragon_official_spell_identity(self):
         for name in ("adult-black-dragon", "ancient-black-dragon"):
             with self.subTest(monster=name):
-                records = read(f"data/native/bestiary/{name}.json")["candidateDefinitions"]
-                modern = next(x["content"] for x in records if x["key"] == "candidate-b")
+                record = read(f"data/native/bestiary/{name}.json")
+                modern = record.get("definition") or next(x["content"] for x in record["candidateDefinitions"] if x["key"] == "candidate-b")
                 body = json.dumps(modern)
                 self.assertIn("Acid Arrow|SRD52", body)
                 self.assertNotIn("Melf's Acid Arrow", body)
@@ -111,9 +111,13 @@ class NativeSourceFidelityTests(unittest.TestCase):
         self.assertIn('see \\"Monsters\\"', body)
 
     def test_52_avatar_of_death_source_omission_repaired(self):
-        candidates = read("data/native/bestiary/avatar-of-death.json")["candidateDefinitions"]
-        self.assertEqual(["candidate-a", "candidate-b"], [c["key"] for c in candidates])
-        old, modern = [c["content"] for c in candidates]
+        record = read("data/native/bestiary/avatar-of-death.json")
+        self.assertEqual("retained-native-definition", record["baselineStatus"])
+        self.assertNotIn("candidateDefinitions", record)
+        modern = record["definition"]
+        old = next(x for x in read(
+            "data/reference/srd/structured/bestiary/bestiary-srd51.json"
+        )["monster"] if x["name"] == "Avatar of Death")
         self.assertIn("darkvision 60 ft.", old["senses"])
         self.assertEqual([20], modern["ac"])
         self.assertTrue(all(modern[attr] == 16 for attr in ("str", "dex", "con", "int", "wis", "cha")))
@@ -122,13 +126,15 @@ class NativeSourceFidelityTests(unittest.TestCase):
         self.assertEqual(0, modern["cr"]["xp"])
         self.assertIn("equals its summoner", modern["pbNote"])
         self.assertIn("exhaustion", modern["conditionImmune"])
-        self.assertEqual(["Incorporeal Movement"], [t["name"] for t in modern["trait"]])
+        self.assertEqual(["Incorporeal Movement", "Turning Immunity"],
+                         [t["name"] for t in modern["trait"]])
         self.assertEqual(["Multiattack", "Reaping Scythe"], [a["name"] for a in modern["action"]])
         self.assertIn("Automatic hit", json.dumps(modern["action"]))
         manifest = read("data/reference/srd/native-coverage-manifest.json")
         row = next(x for x in manifest["coverage"] if x["nativeId"] == "monster.avatar-of-death")
         self.assertEqual(2, row["sourceRecords"])
-        self.assertEqual([x["key"] for x in candidates], [x["key"] for x in row["candidates"]])
+        self.assertEqual(["candidate-a", "candidate-b"],
+                         [x["key"] for x in row["candidates"]])
         self.assertIn("official SRD 5.2.1 PDF", row["candidates"][1]["evidence"])
 
 
@@ -140,9 +146,9 @@ class NativeSourceFidelityTests(unittest.TestCase):
 
 
     def test_dragon_orb_lacks_non_srd_legacy_properties_and_lore(self):
-        candidates = read("data/native/items/magic/dragon-orb.json")["candidateDefinitions"]
-        self.assertEqual(["candidate-b"], [c["key"] for c in candidates])
-        modern = candidates[0]["content"]
+        record = read("data/native/items/magic/dragon-orb.json")
+        self.assertEqual("retained-native-definition", record["baselineStatus"])
+        modern = record["definition"]
         names = [e.get("name") for e in modern["entries"] if isinstance(e, dict)]
         self.assertNotIn("Random Properties", names)
         self.assertTrue(modern["entries"][0].startswith(
@@ -154,7 +160,7 @@ class NativeSourceFidelityTests(unittest.TestCase):
         self.assertIn("Dragon Orb has AC 20", content)
 
     def test_mysterious_deck_52_excludes_legacy_dm_advice(self):
-        modern = read("data/native/items/magic/mysterious-deck.json")["candidateDefinitions"][0]["content"]
+        modern = read("data/native/items/magic/mysterious-deck.json")["definition"]
         table = next(x for x in modern["entries"] if isinstance(x, dict) and x.get("type") == "table")
         self.assertEqual("Mysterious Deck", table["caption"])
         names = [x.get("name") for x in modern["entries"] if isinstance(x, dict)]

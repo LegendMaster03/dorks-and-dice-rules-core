@@ -2,473 +2,265 @@
   "id": "monster.ancient-silver-dragon",
   "name": "Ancient Silver Dragon",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Ancient Silver Dragon",
-        "group": [
-          "Metallic Dragon"
-        ],
-        "size": [
-          "G"
-        ],
-        "type": "dragon",
-        "alignment": [
-          "L",
-          "G"
-        ],
-        "ac": [
-          {
-            "ac": 22,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 487,
-          "formula": "25d20 + 225"
-        },
-        "speed": {
-          "walk": 40,
-          "fly": 80
-        },
-        "str": 30,
-        "dex": 10,
-        "con": 29,
-        "int": 18,
-        "wis": 15,
-        "cha": 23,
-        "save": {
-          "dex": "+7",
-          "con": "+16",
-          "wis": "+9",
-          "cha": "+13"
-        },
-        "skill": {
-          "arcana": "+11",
-          "history": "+11",
-          "perception": "+16",
-          "stealth": "+7"
-        },
-        "senses": [
-          "blindsight 60 ft.",
-          "darkvision 120 ft."
-        ],
-        "passive": 26,
-        "immune": [
-          "cold"
-        ],
-        "languages": [
-          "Common",
-          "Draconic"
-        ],
-        "cr": "23",
-        "trait": [
-          {
-            "name": "Legendary Resistance (3/Day)",
-            "entries": [
-              "If the dragon fails a saving throw, it can choose to succeed instead."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 17} to hit, reach 15 ft., one target. {@h}21 ({@damage 2d10 + 10}) piercing damage."
-            ]
-          },
-          {
-            "name": "Claw",
-            "entries": [
-              "{@atk mw} {@hit 17} to hit, reach 10 ft., one target. {@h}17 ({@damage 2d6 + 10}) slashing damage."
-            ]
-          },
-          {
-            "name": "Tail",
-            "entries": [
-              "{@atk mw} {@hit 17} to hit, reach 20 ft., one target. {@h}19 ({@damage 2d8 + 10}) bludgeoning damage."
-            ]
-          },
-          {
-            "name": "Frightful Presence",
-            "entries": [
-              "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 21} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
-            ]
-          },
-          {
-            "name": "Breath Weapons {@recharge 5}",
-            "entries": [
-              "The dragon uses one of the following breath weapons.",
-              {
-                "type": "list",
-                "style": "list-hang-notitle",
-                "items": [
-                  {
-                    "type": "item",
-                    "name": "Cold Breath",
-                    "entry": "The dragon exhales an icy blast in a 90-foot cone. Each creature in that area must make a {@dc 24} Constitution saving throw, taking 67 ({@damage 15d8}) cold damage on a failed save, or half as much damage on a successful one."
-                  },
-                  {
-                    "type": "item",
-                    "name": "Paralyzing Breath",
-                    "entry": "The dragon exhales paralyzing gas in a 90-foot cone. Each creature in that area must succeed on a {@dc 24} Constitution saving throw or be {@condition paralyzed} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "name": "Change Shape",
-            "entries": [
-              "The dragon magically polymorphs into a humanoid or beast that has a challenge rating no higher than its own, or back into its true form. It reverts to its true form if it dies. Any equipment it is wearing or carrying is absorbed or borne by the new form (the dragon's choice).",
-              "In a new form, the dragon retains its alignment, hit points, Hit Dice, ability to speak, proficiencies, Legendary Resistance, lair actions, and Intelligence, Wisdom, and Charisma scores, as well as this action. Its statistics and capabilities are otherwise replaced by those of the new form, except any class features or legendary actions of that form."
-            ]
-          }
-        ],
-        "legendary": [
-          {
-            "name": "Detect",
-            "entries": [
-              "The dragon makes a Wisdom ({@skill Perception}) check."
-            ]
-          },
-          {
-            "name": "Tail Attack",
-            "entries": [
-              "The dragon makes a tail attack."
-            ]
-          },
-          {
-            "name": "Wing Attack (Costs 2 Actions)",
-            "entries": [
-              "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 25} Dexterity saving throw or take 17 ({@damage 2d6 + 10}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
-            ]
-          }
-        ],
-        "environment": [
-          "mountain",
-          "urban"
-        ],
-        "dragonCastingColor": "silver",
-        "dragonAge": "ancient",
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/silver-dragon.opus"
-        },
-        "traitTags": [
-          "Legendary Resistances"
-        ],
-        "senseTags": [
-          "B",
-          "SD"
-        ],
-        "actionTags": [
-          "Breath Weapon",
-          "Frightful Presence",
-          "Multiattack",
-          "Shapechanger"
-        ],
-        "languageTags": [
-          "C",
-          "DR"
-        ],
-        "damageTags": [
-          "B",
-          "C",
-          "P",
-          "S"
-        ],
-        "damageTagsLegendary": [
-          "C"
-        ],
-        "miscTags": [
-          "AOE",
-          "MW",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "frightened",
-          "paralyzed",
-          "prone"
-        ],
-        "conditionInflictLegendary": [
-          "restrained"
-        ],
-        "savingThrowForced": [
-          "constitution",
-          "dexterity",
-          "wisdom"
-        ],
-        "savingThrowForcedLegendary": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Ancient Silver Dragon",
-            "_copy": {
-              "name": "Silver Dragon",
-              "source": "SRD51"
-            }
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Metallic Dragons"
+    ],
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
     },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Ancient Silver Dragon",
-        "group": [
-          "Metallic Dragons"
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "ac": [
+      22
+    ],
+    "hp": {
+      "average": 468,
+      "formula": "24d20 + 216"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 30,
+    "dex": 10,
+    "con": 29,
+    "int": 18,
+    "wis": 15,
+    "cha": 26,
+    "save": {
+      "dex": "+7",
+      "wis": "+9"
+    },
+    "skill": {
+      "history": "+11",
+      "perception": "+16",
+      "stealth": "+7"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 26,
+    "immune": [
+      "cold"
+    ],
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "23",
+      "xpLair": 62000
+    },
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 23}, {@hit 15} to hit with spell attacks):"
         ],
-        "size": [
-          "G"
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Hold Monster|SRD52}",
+          "{@spell Ice Knife|SRD52} (level 2 version)",
+          "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)"
         ],
-        "type": {
-          "type": "dragon",
-          "tags": [
-            "metallic"
+        "daily": {
+          "1e": [
+            "{@spell Control Weather|SRD52}",
+            "{@spell Ice Storm|SRD52} (level 7 version)",
+            "{@spell Teleport|SRD52}",
+            "{@spell Zone of Truth|SRD52}"
           ]
         },
-        "alignment": [
-          "L",
-          "G"
-        ],
-        "ac": [
-          22
-        ],
-        "hp": {
-          "average": 468,
-          "formula": "24d20 + 216"
-        },
-        "speed": {
-          "walk": 40,
-          "fly": 80
-        },
-        "initiative": {
-          "proficiency": 2
-        },
-        "str": 30,
-        "dex": 10,
-        "con": 29,
-        "int": 18,
-        "wis": 15,
-        "cha": 26,
-        "save": {
-          "dex": "+7",
-          "wis": "+9"
-        },
-        "skill": {
-          "history": "+11",
-          "perception": "+16",
-          "stealth": "+7"
-        },
-        "senses": [
-          "Blindsight 60 ft.",
-          "Darkvision 120 ft."
-        ],
-        "passive": 26,
-        "immune": [
-          "cold"
-        ],
-        "languages": [
-          "Common",
-          "Draconic"
-        ],
-        "cr": {
-          "cr": "23",
-          "xpLair": 62000
-        },
-        "spellcasting": [
-          {
-            "name": "Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 23}, {@hit 15} to hit with spell attacks):"
-            ],
-            "will": [
-              "{@spell Detect Magic|SRD52}",
-              "{@spell Hold Monster|SRD52}",
-              "{@spell Ice Knife|SRD52} (level 2 version)",
-              "{@spell Shapechange|SRD52} (Beast or Humanoid form only, no {@variantrule Temporary Hit Points|SRD52} gained from the spell, and no {@status Concentration|SRD52} or {@variantrule Temporary Hit Points|SRD52} required to maintain the spell)"
-            ],
-            "daily": {
-              "1e": [
-                "{@spell Control Weather|SRD52}",
-                "{@spell Ice Storm|SRD52} (level 7 version)",
-                "{@spell Teleport|SRD52}",
-                "{@spell Zone of Truth|SRD52}"
-              ]
-            },
-            "ability": "cha",
-            "displayAs": "action"
-          }
-        ],
-        "trait": [
-          {
-            "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
-            "entries": [
-              "If the dragon fails a saving throw, it can choose to succeed instead."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Paralyzing Breath or (B) Spellcasting to cast {@spell Ice Knife|SRD52} (level 2 version)."
-            ]
-          },
-          {
-            "name": "Rend",
-            "entries": [
-              "{@atkr m} {@hit 17}, reach 15 ft. {@h}19 ({@damage 2d8 + 10}) Slashing damage plus 9 ({@damage 2d8}) Cold damage."
-            ]
-          },
-          {
-            "name": "Cold Breath {@recharge 5}",
-            "entries": [
-              "{@actSave con} {@dc 24}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 67 ({@damage 15d8}) Cold damage. {@actSaveSuccess} Half damage."
-            ]
-          },
-          {
-            "name": "Paralyzing Breath",
-            "entries": [
-              "{@actSave con} {@dc 24}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail 1} The target has the {@condition Incapacitated|SRD52} condition until the end of its next turn, when it repeats the save. {@actSaveFail 2} The target has the {@condition Paralyzed|SRD52} condition, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
-            ]
-          }
-        ],
-        "legendaryActionsLair": 4,
-        "legendary": [
-          {
-            "name": "Chill",
-            "entries": [
-              "The dragon uses Spellcasting to cast {@spell Hold Monster|SRD52}. The dragon can't take this action again until the start of its next turn."
-            ]
-          },
-          {
-            "name": "Cold Gale",
-            "entries": [
-              "{@actSave dex} {@dc 23}, each creature in a 60-foot-long, 10-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 14 ({@damage 4d6}) Cold damage, and the target is pushed up to 30 feet straight away from the dragon. {@actSaveSuccess} Half damage only. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
-            ]
-          },
-          {
-            "name": "Pounce",
-            "entries": [
-              "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
-            ]
-          }
-        ],
-        "environment": [
-          "mountain",
-          "urban"
-        ],
-        "treasure": [
-          "arcana"
-        ],
-        "dragonAge": "ancient",
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/silver-dragon.opus"
-        },
-        "traitTags": [
-          "Legendary Resistances"
-        ],
-        "senseTags": [
-          "B",
-          "SD"
-        ],
-        "actionTags": [
-          "Breath Weapon",
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "DR"
-        ],
-        "damageTags": [
-          "C",
-          "S"
-        ],
-        "damageTagsSpell": [
-          "B",
-          "C",
-          "O",
-          "P"
-        ],
-        "spellcastingTags": [
-          "O"
-        ],
-        "miscTags": [
-          "MA",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "incapacitated",
-          "paralyzed"
-        ],
-        "conditionInflictSpell": [
-          "paralyzed"
-        ],
-        "savingThrowForced": [
-          "constitution",
-          "dexterity"
-        ],
-        "savingThrowForcedSpell": [
-          "charisma",
-          "dexterity",
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Ancient Silver Dragon",
-            "_copy": {
-              "name": "Silver Dragons",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Ancient silver dragons pursue world-wide change. They defend their communities and allies, encouraging them to perform deeds worthy of legend. Some set their sights on other worlds and planes of existence, creating extraplanar alliances or combating multiplanar threats. They might have guises in multiple societies and forge generation-spanning friendships with heroic families or valorous groups."
-                      ]
-                    }
-                  ]
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Ancient Silver Dragon.webp"
-                      },
-                      "title": "The sight of an ancient silver dragon can panic despicable evil-doers",
-                      "credit": "Anna Podedworna",
-                      "width": 1978,
-                      "height": 2560
-                    }
-                  ]
-                }
-              }
-            }
-          }
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "trait": [
+      {
+        "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
         ]
       }
-    }
-  ]
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of (A) Paralyzing Breath or (B) Spellcasting to cast {@spell Ice Knife|SRD52} (level 2 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 17}, reach 15 ft. {@h}19 ({@damage 2d8 + 10}) Slashing damage plus 9 ({@damage 2d8}) Cold damage."
+        ]
+      },
+      {
+        "name": "Cold Breath {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 24}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 67 ({@damage 15d8}) Cold damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Paralyzing Breath",
+        "entries": [
+          "{@actSave con} {@dc 24}, each creature in a 90-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail 1} The target has the {@condition Incapacitated|SRD52} condition until the end of its next turn, when it repeats the save. {@actSaveFail 2} The target has the {@condition Paralyzed|SRD52} condition, and it repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 21} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "legendary": [
+      {
+        "name": "Chill",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Hold Monster|SRD52}. The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Cold Gale",
+        "entries": [
+          "{@actSave dex} {@dc 23}, each creature in a 60-foot-long, 10-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 14 ({@damage 4d6}) Cold damage, and the target is pushed up to 30 feet straight away from the dragon. {@actSaveSuccess} Half damage only. {@actSaveSuccessOrFail} The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      },
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 25} Dexterity saving throw or take 17 ({@damage 2d6 + 10}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "environment": [
+      "mountain",
+      "urban"
+    ],
+    "treasure": [
+      "arcana"
+    ],
+    "dragonAge": "ancient",
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/silver-dragon.opus"
+    },
+    "traitTags": [
+      "Legendary Resistances"
+    ],
+    "senseTags": [
+      "B",
+      "SD"
+    ],
+    "actionTags": [
+      "Breath Weapon",
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "DR"
+    ],
+    "damageTags": [
+      "C",
+      "S"
+    ],
+    "damageTagsSpell": [
+      "B",
+      "C",
+      "O",
+      "P"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "incapacitated",
+      "paralyzed"
+    ],
+    "conditionInflictSpell": [
+      "paralyzed"
+    ],
+    "savingThrowForced": [
+      "constitution",
+      "dexterity"
+    ],
+    "savingThrowForcedSpell": [
+      "charisma",
+      "dexterity",
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Ancient Silver Dragon",
+        "_copy": {
+          "name": "Silver Dragons",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Ancient silver dragons pursue world-wide change. They defend their communities and allies, encouraging them to perform deeds worthy of legend. Some set their sights on other worlds and planes of existence, creating extraplanar alliances or combating multiplanar threats. They might have guises in multiple societies and forge generation-spanning friendships with heroic families or valorous groups."
+                  ]
+                }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Ancient Silver Dragon.webp"
+                  },
+                  "title": "The sight of an ancient silver dragon can panic despicable evil-doers",
+                  "credit": "Anna Podedworna",
+                  "width": 1978,
+                  "height": 2560
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
 }

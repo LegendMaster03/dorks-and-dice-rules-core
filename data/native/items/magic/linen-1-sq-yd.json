@@ -2,16 +2,10 @@
   "id": "item.linen-1-sq-yd",
   "name": "Linen (1 sq. yd.)",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Linen (1 sq. yd.)",
-        "type": "TG",
-        "rarity": "none",
-        "value": 500
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "value": 500
+  }
 }

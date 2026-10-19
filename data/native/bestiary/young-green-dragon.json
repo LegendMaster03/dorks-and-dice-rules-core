@@ -2,331 +2,171 @@
   "id": "monster.young-green-dragon",
   "name": "Young Green Dragon",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Young Green Dragon",
-        "group": [
-          "Chromatic Dragon"
-        ],
-        "size": [
-          "L"
-        ],
-        "type": "dragon",
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 18,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 136,
-          "formula": "16d10 + 48"
-        },
-        "speed": {
-          "walk": 40,
-          "fly": 80,
-          "swim": 40
-        },
-        "str": 19,
-        "dex": 12,
-        "con": 17,
-        "int": 16,
-        "wis": 13,
-        "cha": 15,
-        "save": {
-          "dex": "+4",
-          "con": "+6",
-          "wis": "+4",
-          "cha": "+5"
-        },
-        "skill": {
-          "deception": "+5",
-          "perception": "+7",
-          "stealth": "+4"
-        },
-        "senses": [
-          "blindsight 30 ft.",
-          "darkvision 120 ft."
-        ],
-        "passive": 17,
-        "immune": [
-          "poison"
-        ],
-        "conditionImmune": [
-          "poisoned"
-        ],
-        "languages": [
-          "Common",
-          "Draconic"
-        ],
-        "cr": "8",
-        "trait": [
-          {
-            "name": "Amphibious",
-            "entries": [
-              "The dragon can breathe air and water."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The dragon makes three attacks: one with its bite and two with its claws."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 7} to hit, reach 10 ft., one target. {@h}15 ({@damage 2d10 + 4}) piercing damage plus 7 ({@damage 2d6}) poison damage."
-            ]
-          },
-          {
-            "name": "Claw",
-            "entries": [
-              "{@atk mw} {@hit 7} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) slashing damage."
-            ]
-          },
-          {
-            "name": "Poison Breath {@recharge 5}",
-            "entries": [
-              "The dragon exhales poisonous gas in a 30-foot cone. Each creature in that area must make a {@dc 14} Constitution saving throw, taking 42 ({@damage 12d6}) poison damage on a failed save, or half as much damage on a successful one."
-            ]
-          }
-        ],
-        "environment": [
-          "forest"
-        ],
-        "dragonCastingColor": "green",
-        "dragonAge": "young",
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/green-dragon.opus"
-        },
-        "altArt": [
-          {
-            "name": "Young Green Dragon",
-            "source": "RMBRE"
-          }
-        ],
-        "traitTags": [
-          "Amphibious"
-        ],
-        "senseTags": [
-          "B",
-          "SD"
-        ],
-        "actionTags": [
-          "Breath Weapon",
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "DR"
-        ],
-        "damageTags": [
-          "I",
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "AOE",
-          "MW",
-          "RCH"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Young Green Dragon",
-            "_copy": {
-              "name": "Green Dragon",
-              "source": "SRD51"
-            }
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Chromatic Dragons"
+    ],
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 136,
+      "formula": "16d10 + 48"
+    },
+    "speed": {
+      "walk": 40,
+      "fly": 80,
+      "swim": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 19,
+    "dex": 12,
+    "con": 17,
+    "int": 16,
+    "wis": 13,
+    "cha": 15,
+    "save": {
+      "dex": "+4",
+      "wis": "+4"
+    },
+    "skill": {
+      "deception": "+5",
+      "perception": "+7",
+      "stealth": "+4"
+    },
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 17,
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "8",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}11 ({@damage 2d6 + 4}) Slashing damage plus 7 ({@damage 2d6}) Poison damage."
+        ]
+      },
+      {
+        "name": "Poison Breath {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 14}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 42 ({@damage 12d6}) Poison damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "environment": [
+      "forest"
+    ],
+    "treasure": [
+      "arcana"
+    ],
+    "dragonAge": "young",
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/green-dragon.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "traitTags": [
+      "Amphibious"
+    ],
+    "senseTags": [
+      "B",
+      "SD"
+    ],
+    "actionTags": [
+      "Breath Weapon",
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "DR"
+    ],
+    "damageTags": [
+      "I",
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Young Green Dragon",
-        "group": [
-          "Chromatic Dragons"
-        ],
-        "size": [
-          "L"
-        ],
-        "type": {
-          "type": "dragon",
-          "tags": [
-            "chromatic"
-          ]
-        },
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          18
-        ],
-        "hp": {
-          "average": 136,
-          "formula": "16d10 + 48"
-        },
-        "speed": {
-          "walk": 40,
-          "fly": 80,
-          "swim": 40
-        },
-        "initiative": {
-          "proficiency": 1
-        },
-        "str": 19,
-        "dex": 12,
-        "con": 17,
-        "int": 16,
-        "wis": 13,
-        "cha": 15,
-        "save": {
-          "dex": "+4",
-          "wis": "+4"
-        },
-        "skill": {
-          "deception": "+5",
-          "perception": "+7",
-          "stealth": "+4"
-        },
-        "senses": [
-          "Blindsight 30 ft.",
-          "Darkvision 120 ft."
-        ],
-        "passive": 17,
-        "immune": [
-          "poison"
-        ],
-        "conditionImmune": [
-          "poisoned"
-        ],
-        "languages": [
-          "Common",
-          "Draconic"
-        ],
-        "cr": "8",
-        "trait": [
-          {
-            "name": "Amphibious",
-            "entries": [
-              "The dragon can breathe air and water."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The dragon makes three Rend attacks."
-            ]
-          },
-          {
-            "name": "Rend",
-            "entries": [
-              "{@atkr m} {@hit 7}, reach 10 ft. {@h}11 ({@damage 2d6 + 4}) Slashing damage plus 7 ({@damage 2d6}) Poison damage."
-            ]
-          },
-          {
-            "name": "Poison Breath {@recharge 5}",
-            "entries": [
-              "{@actSave con} {@dc 14}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 42 ({@damage 12d6}) Poison damage. {@actSaveSuccess} Half damage."
-            ]
-          }
-        ],
-        "environment": [
-          "forest"
-        ],
-        "treasure": [
-          "arcana"
-        ],
-        "dragonAge": "young",
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/green-dragon.opus"
-        },
-        "traitTags": [
-          "Amphibious"
-        ],
-        "senseTags": [
-          "B",
-          "SD"
-        ],
-        "actionTags": [
-          "Breath Weapon",
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "DR"
-        ],
-        "damageTags": [
-          "I",
-          "S"
-        ],
-        "miscTags": [
-          "MA",
-          "RCH"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Young Green Dragon",
-            "_copy": {
-              "name": "Green Dragons",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Young green dragons frequently control groups of ettercaps, kobolds, thieves, or other cowardly servants. These dragons do so while avoiding other evil dragons, who would sabotage them. Gradually, oppressing weaker creatures and amassing meaningless fortunes bore young green dragons, and they pursue more ambitious ways to indulge their egos."
-                      ]
-                    }
-                  ]
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Green Dragon.webp"
-                      },
-                      "width": 1047,
-                      "height": 2560
-                    }
+        "_copy": {
+          "name": "Green Dragons",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Young green dragons frequently control groups of ettercaps, kobolds, thieves, or other cowardly servants. These dragons do so while avoiding other evil dragons, who would sabotage them. Gradually, oppressing weaker creatures and amassing meaningless fortunes bore young green dragons, and they pursue more ambitious ways to indulge their egos."
                   ]
                 }
-              }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Green Dragon.webp"
+                  },
+                  "width": 1047,
+                  "height": 2560
+                }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

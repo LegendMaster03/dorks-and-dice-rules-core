@@ -2,17 +2,11 @@
   "id": "item.wheat",
   "name": "Wheat",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Wheat",
-        "type": "TG",
-        "rarity": "none",
-        "weight": 1,
-        "value": 1
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "weight": 1,
+    "value": 1
+  }
 }

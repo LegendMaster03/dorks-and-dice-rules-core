@@ -2,23 +2,17 @@
   "id": "deity.apep",
   "name": "Apep",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Apep",
-        "pantheon": "Egyptian",
-        "alignment": [
-          "N",
-          "E"
-        ],
-        "title": "God of evil, fire, and serpents",
-        "domains": [
-          "Trickery"
-        ],
-        "symbol": "Flaming snake"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Egyptian",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "title": "God of evil, fire, and serpents",
+    "domains": [
+      "Trickery"
+    ],
+    "symbol": "Flaming snake"
+  }
 }

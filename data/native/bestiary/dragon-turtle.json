@@ -2,362 +2,170 @@
   "id": "monster.dragon-turtle",
   "name": "Dragon Turtle",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "G"
+    ],
+    "type": "dragon",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      20
+    ],
+    "hp": {
+      "average": 356,
+      "formula": "23d20 + 115"
+    },
+    "speed": {
+      "walk": 20,
+      "swim": 50
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 25,
+    "dex": 10,
+    "con": 20,
+    "int": 10,
+    "wis": 12,
+    "cha": 12,
+    "save": {
+      "con": "+11",
+      "wis": "+7"
+    },
+    "senses": [
+      "Darkvision 120 ft."
+    ],
+    "passive": 11,
+    "resist": [
+      "fire"
+    ],
+    "languages": [
+      "Draconic",
+      "Primordial (Aquan)"
+    ],
+    "cr": "17",
+    "trait": [
+      {
+        "name": "Amphibious",
+        "entries": [
+          "The dragon can breathe air and water."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Bite attacks. It can replace one attack with a Tail attack."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 13}, reach 15 ft. {@h}23 ({@damage 3d10 + 7}) Piercing damage plus 7 ({@damage 2d6}) Fire damage. Being underwater doesn't grant {@variantrule Resistance|SRD52} to this Fire damage."
+        ]
+      },
+      {
+        "name": "Tail",
+        "entries": [
+          "{@atkr m} {@hit 13}, reach 15 ft. {@h}18 ({@damage 2d10 + 7}) Bludgeoning damage. If the target is a Huge or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Steam Breath {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 19}, each creature in a 60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 56 ({@damage 16d6}) Fire damage. {@actSaveSuccess} Half damage. {@actSaveSuccessOrFail} Being underwater doesn't grant {@variantrule Resistance|SRD52} to this Fire damage."
+        ]
+      }
+    ],
+    "environment": [
+      "coastal",
+      "underwater"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/dragon-turtle.opus"
+    },
+    "traitTags": [
+      "Amphibious"
+    ],
+    "senseTags": [
+      "SD"
+    ],
+    "actionTags": [
+      "Breath Weapon",
+      "Multiattack"
+    ],
+    "languageTags": [
+      "AQ",
+      "DR",
+      "P"
+    ],
+    "damageTags": [
+      "B",
+      "F",
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Dragon Turtle",
-        "size": [
-          "G"
-        ],
-        "type": "dragon",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
+        "entries": [
           {
-            "ac": 20,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 341,
-          "formula": "22d20 + 110"
-        },
-        "speed": {
-          "walk": 20,
-          "swim": 40
-        },
-        "str": 25,
-        "dex": 10,
-        "con": 20,
-        "int": 10,
-        "wis": 12,
-        "cha": 12,
-        "save": {
-          "dex": "+6",
-          "con": "+11",
-          "wis": "+7"
-        },
-        "senses": [
-          "darkvision 120 ft."
-        ],
-        "passive": 11,
-        "resist": [
-          "fire"
-        ],
-        "languages": [
-          "Aquan",
-          "Draconic"
-        ],
-        "cr": "17",
-        "trait": [
-          {
-            "name": "Amphibious",
-            "entries": [
-              "The dragon turtle can breathe air and water."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The dragon turtle makes three attacks: one with its bite and two with its claws. It can make one tail attack in place of its two claw attacks."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 13} to hit, reach 15 ft., one target. {@h}26 ({@damage 3d12 + 7}) piercing damage."
-            ]
-          },
-          {
-            "name": "Claw",
-            "entries": [
-              "{@atk mw} {@hit 13} to hit, reach 10 ft., one target. {@h}16 ({@damage 2d8 + 7}) slashing damage."
-            ]
-          },
-          {
-            "name": "Tail",
-            "entries": [
-              "{@atk mw} {@hit 13} to hit, reach 15 ft., one target. {@h}26 ({@damage 3d12 + 7}) bludgeoning damage. If the target is a creature, it must succeed on a {@dc 20} Strength saving throw or be pushed up to 10 feet away from the dragon turtle and knocked {@condition prone}."
-            ]
-          },
-          {
-            "name": "Steam Breath {@recharge 5}",
-            "entries": [
-              "The dragon turtle exhales scalding steam in a 60-foot cone. Each creature in that area must make a {@dc 18} Constitution saving throw, taking 52 ({@damage 15d6}) fire damage on a failed save, or half as much damage on a successful one. Being underwater doesn't grant resistance against this damage."
-            ]
-          }
-        ],
-        "environment": [
-          "underwater",
-          "coastal"
-        ],
-        "dragonAge": "adult",
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/dragon-turtle.opus"
-        },
-        "traitTags": [
-          "Amphibious"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "actionTags": [
-          "Breath Weapon",
-          "Multiattack"
-        ],
-        "languageTags": [
-          "AQ",
-          "DR"
-        ],
-        "damageTags": [
-          "B",
-          "F",
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "AOE",
-          "MW",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "constitution",
-          "strength"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Dragon Turtle",
             "entries": [
+              "{@i Ancient Ruler of Undersea Realms}",
               {
-                "type": "entries",
-                "entries": [
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "entries",
-                    "entries": [
-                      "Dragon turtles are among the most fearsome creatures of the oceans. As large and voracious as the oldest of its land-based dragon kin, a dragon turtle strikes with its deadly jaws, steaming breath, and crushing tail.",
-                      "A dragon turtle's rough shell is the same dark green color as the deep water where this monster dwells. Silver highlights lining the shell resemble light dancing on open water, and a surfacing dragon turtle is sometimes mistaken for the reflection of the sun or moon on the waves.",
-                      {
-                        "type": "entries",
-                        "name": "Dragons of the Deep",
-                        "entries": [
-                          "Like true dragons, dragon turtles collect treasure, first by sinking ships and then by sifting through the wreckage for coins and other precious items. A dragon turtle swallows treasure for transport, then regurgitates it when it reaches its lair.",
-                          "Dragon turtles dwell in caves hidden in coral reefs or beneath the seafloor, or along rugged stretches of coastline. If a choice cave is already inhabited, a dragon turtle attacks its current residents in an attempt to take over."
-                        ]
-                      },
-                      {
-                        "name": "Mercenary Monsters",
-                        "type": "entries",
-                        "entries": [
-                          "A dragon turtle is smart enough to be bribed, and pirates sailing seas patrolled by these creatures quickly learn to offer them treasure in exchange for safe passage. Clever sahuagin sometimes ally with dragon turtles, enticing them with treasure to use their blistering breath weapons in sahuagin raids against ships and coastal settlements."
-                        ]
-                      },
-                      {
-                        "name": "Elemental Might",
-                        "type": "entries",
-                        "entries": [
-                          "Dragon turtles sometimes find their way through sunken planar rifts to the Elemental Plane of Water. Those monstrous specimens can often be found in the service of marids, which strap magnificent coral thrones to the backs of dragon turtles and ride them as mounts."
-                        ]
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Coastal|bestiary|environment=coastal}, {@filter Underwater|bestiary|environment=underwater}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Any"
                   }
                 ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Dragon Turtle.webp"
-                },
-                "width": 643,
-                "height": 1000
-              }
+              },
+              "Dragon turtles are mighty creatures with shells large enough to be mistaken for islands and jaws capable of snapping ships like twigs. While some of these aquatic dragons contentedly slumber in the depths, others jealously guard vast territories with their scalding breath and lay claim to anything that sinks into the depths or sails on the waves. Occasionally these dragons agree to aid pirates, aquatic peoples, or oceanic religions in return for contributions to their sunken treasure hoards.",
+              "Many dragon turtles live in secluded lairs or ruins deep underwater, and they might not be spotted by surface dwellers for generations. Like both their namesakes, dragon turtles can have exceptionally long lives. Some recall the wonders of ages past or remarkable individuals that passed through their realms long ago. Such dragon turtles might be convinced to share their tales or provide guidance through their territories in exchange for treasures they've never glimpsed on the ocean floor."
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Dragon Turtle.webp"
+            },
+            "credit": "Yigit Koroglu",
+            "width": 2550,
+            "height": 1650
           }
         ]
       }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Dragon Turtle",
-        "size": [
-          "G"
-        ],
-        "type": "dragon",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          20
-        ],
-        "hp": {
-          "average": 356,
-          "formula": "23d20 + 115"
-        },
-        "speed": {
-          "walk": 20,
-          "swim": 50
-        },
-        "initiative": {
-          "proficiency": 1
-        },
-        "str": 25,
-        "dex": 10,
-        "con": 20,
-        "int": 10,
-        "wis": 12,
-        "cha": 12,
-        "save": {
-          "con": "+11",
-          "wis": "+7"
-        },
-        "senses": [
-          "Darkvision 120 ft."
-        ],
-        "passive": 11,
-        "resist": [
-          "fire"
-        ],
-        "languages": [
-          "Draconic",
-          "Primordial (Aquan)"
-        ],
-        "cr": "17",
-        "trait": [
-          {
-            "name": "Amphibious",
-            "entries": [
-              "The dragon can breathe air and water."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The dragon makes three Bite attacks. It can replace one attack with a Tail attack."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atkr m} {@hit 13}, reach 15 ft. {@h}23 ({@damage 3d10 + 7}) Piercing damage plus 7 ({@damage 2d6}) Fire damage. Being underwater doesn't grant {@variantrule Resistance|SRD52} to this Fire damage."
-            ]
-          },
-          {
-            "name": "Tail",
-            "entries": [
-              "{@atkr m} {@hit 13}, reach 15 ft. {@h}18 ({@damage 2d10 + 7}) Bludgeoning damage. If the target is a Huge or smaller creature, it has the {@condition Prone|SRD52} condition."
-            ]
-          },
-          {
-            "name": "Steam Breath {@recharge 5}",
-            "entries": [
-              "{@actSave con} {@dc 19}, each creature in a 60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 56 ({@damage 16d6}) Fire damage. {@actSaveSuccess} Half damage. {@actSaveSuccessOrFail} Being underwater doesn't grant {@variantrule Resistance|SRD52} to this Fire damage."
-            ]
-          }
-        ],
-        "environment": [
-          "coastal",
-          "underwater"
-        ],
-        "treasure": [
-          "any"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/dragon-turtle.opus"
-        },
-        "traitTags": [
-          "Amphibious"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "actionTags": [
-          "Breath Weapon",
-          "Multiattack"
-        ],
-        "languageTags": [
-          "AQ",
-          "DR",
-          "P"
-        ],
-        "damageTags": [
-          "B",
-          "F",
-          "P"
-        ],
-        "miscTags": [
-          "MA",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Dragon Turtle",
-            "entries": [
-              {
-                "type": "section",
-                "name": "Dragon Turtle",
-                "entries": [
-                  "{@i Ancient Ruler of Undersea Realms}",
-                  {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Coastal|bestiary|environment=coastal}, {@filter Underwater|bestiary|environment=underwater}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Any"
-                      }
-                    ]
-                  },
-                  "Dragon turtles are mighty creatures with shells large enough to be mistaken for islands and jaws capable of snapping ships like twigs. While some of these aquatic dragons contentedly slumber in the depths, others jealously guard vast territories with their scalding breath and lay claim to anything that sinks into the depths or sails on the waves. Occasionally these dragons agree to aid pirates, aquatic peoples, or oceanic religions in return for contributions to their sunken treasure hoards.",
-                  "Many dragon turtles live in secluded lairs or ruins deep underwater, and they might not be spotted by surface dwellers for generations. Like both their namesakes, dragon turtles can have exceptionally long lives. Some recall the wonders of ages past or remarkable individuals that passed through their realms long ago. Such dragon turtles might be convinced to share their tales or provide guidance through their territories in exchange for treasures they've never glimpsed on the ocean floor."
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Dragon Turtle.webp"
-                },
-                "credit": "Yigit Koroglu",
-                "width": 2550,
-                "height": 1650
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
+    ]
+  }
 }

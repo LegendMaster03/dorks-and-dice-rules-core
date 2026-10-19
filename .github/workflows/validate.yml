@@ -51,3 +51,6 @@ jobs:
 
       - name: Verify native data and pinned structured SRD reference integrity
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: Audit native definition consistency (informational until normalized)
+        run: python3 tools/audit_native_baseline.py

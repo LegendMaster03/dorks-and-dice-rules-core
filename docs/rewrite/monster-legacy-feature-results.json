@@ -1,0 +1,135 @@
+{
+  "summary": {
+    "feature:already-present": 84,
+    "feature:newer-successor": 95,
+    "feature:restored": 146,
+    "feature:review-needed": 1,
+    "feature:revised-attack-suite": 333,
+    "feature:spell-access-extended": 15,
+    "monstersWithOpenFeatureQuestions": 1
+  },
+  "featuresRestoredThisPass": 15,
+  "totalAdditionalOlderFeaturesRestored": 146,
+  "additionalSpellsRestored": 33,
+  "spellsAddedByMonster": {
+    "monster.cloud-giant": [
+      "feather fall",
+      "fly"
+    ],
+    "monster.couatl": [
+      "cure wounds",
+      "protection from poison",
+      "shield"
+    ],
+    "monster.djinni": [
+      "conjure elemental",
+      "thunderwave"
+    ],
+    "monster.dryad": [
+      "barkskin",
+      "goodberry",
+      "shillelagh"
+    ],
+    "monster.efreeti": [
+      "conjure elemental",
+      "enlarge/reduce"
+    ],
+    "monster.green-hag": [
+      "vicious mockery"
+    ],
+    "monster.lamia": [
+      "charm person",
+      "mirror image",
+      "suggestion"
+    ],
+    "monster.night-hag": [
+      "ray of enfeeblement",
+      "sleep"
+    ],
+    "monster.oni": [
+      "cone of cold"
+    ],
+    "monster.planetar": [
+      "blade barrier",
+      "flame strike",
+      "insect plague"
+    ],
+    "monster.rakshasa": [
+      "charm person",
+      "dominate person",
+      "suggestion",
+      "true seeing"
+    ],
+    "monster.solar": [
+      "blade barrier",
+      "invisibility"
+    ],
+    "monster.storm-giant": [
+      "feather fall",
+      "levitate",
+      "water breathing"
+    ]
+  },
+  "unresolvedFeatureQuestions": 1,
+  "reviewEntriesWithOpenQuestions": 1,
+  "note": "5.5e stats, attack suites and spellcasting ability remain authoritative.",
+  "finalPassChanges": {
+    "traitsRestored": 14,
+    "spellsRestored": 2,
+    "legendaryRestored": 1
+  },
+  "weretigerPounceRestoration": {
+    "nativeId": "monster.weretiger",
+    "legacyAttackReference": "Claw",
+    "nativeAttackReference": "Scratch",
+    "nativeBonusAttack": "Bite (Tiger or Hybrid Form Only)",
+    "sameMovementSaveAndCost": true
+  },
+  "remainingOwnerQuestions": [
+    {
+      "nativeId": "monster.assassin",
+      "feature": "Assassinate",
+      "question": "How should the older automatic critical hit against a surprised target work under native surprise and critical escalation? The independent first-turn Advantage was restored."
+    }
+  ],
+  "finalPounceAdaptations": [
+    {
+      "nativeId": "monster.lion",
+      "triggerAttack": "Rend",
+      "bonusAttack": "Rend",
+      "approachFeet": 20,
+      "strengthSaveDc": 13,
+      "bonusActionRequired": true
+    },
+    {
+      "nativeId": "monster.panther",
+      "triggerAttack": "Rend",
+      "bonusAttack": "Rend",
+      "approachFeet": 20,
+      "strengthSaveDc": 12,
+      "bonusActionRequired": true
+    },
+    {
+      "nativeId": "monster.saber-toothed-tiger",
+      "triggerAttack": "Rend",
+      "bonusAttack": "Rend",
+      "approachFeet": 20,
+      "strengthSaveDc": 14,
+      "bonusActionRequired": true
+    }
+  ],
+  "assassinFirstTurnAdvantageRestored": true,
+  "priestDivineEminenceRestoration": {
+    "nativeId": "monster.priest",
+    "resourceMode": "spell-slots",
+    "slotsByLevel": {
+      "1": 4,
+      "2": 3,
+      "3": 2
+    },
+    "source": "SRD 5.1",
+    "benefit": "Bonus action consumes one slot; additional 3d6 Radiant damage on each melee weapon hit this turn, +1d6 for each slot level above 1st",
+    "preservesNewerSpellcasting": true,
+    "legacySpellListAdded": false
+  }
+}

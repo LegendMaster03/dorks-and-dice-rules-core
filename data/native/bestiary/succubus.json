@@ -2,389 +2,225 @@
   "id": "monster.succubus",
   "name": "Succubus",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Succubus",
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "shapechanger"
-          ]
-        },
-        "alignment": [
-          "N",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 15,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 66,
-          "formula": "12d8 + 12"
-        },
-        "speed": {
-          "walk": 30,
-          "fly": 60
-        },
-        "str": 8,
-        "dex": 17,
-        "con": 13,
-        "int": 15,
-        "wis": 12,
-        "cha": 20,
-        "skill": {
-          "deception": "+9",
-          "insight": "+5",
-          "perception": "+5",
-          "persuasion": "+9",
-          "stealth": "+7"
-        },
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 15,
-        "resist": [
-          "cold",
-          "fire",
-          "lightning",
-          "poison",
-          {
-            "resist": [
-              "bludgeoning",
-              "piercing",
-              "slashing"
-            ],
-            "note": "from nonmagical attacks",
-            "cond": true
-          }
-        ],
-        "languages": [
-          "Abyssal",
-          "Common",
-          "Infernal",
-          "telepathy 60 ft."
-        ],
-        "cr": "4",
-        "trait": [
-          {
-            "name": "Telepathic Bond",
-            "entries": [
-              "The fiend ignores the range restriction on its telepathy when communicating with a creature it has {@condition charmed}. The two don't even need to be on the same plane of existence."
-            ]
-          },
-          {
-            "name": "Shapechanger",
-            "entries": [
-              "The fiend can use its action to polymorph into a Small or Medium humanoid, or back into its true form. Without wings, the fiend loses its flying speed. Other than its size and speed, its statistics are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Claw (Fiend Form Only)",
-            "entries": [
-              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}6 ({@damage 1d6 + 3}) slashing damage."
-            ]
-          },
-          {
-            "name": "Charm",
-            "entries": [
-              "One humanoid the fiend can see within 30 feet of it must succeed on a {@dc 15} Wisdom saving throw or be magically {@condition charmed} for 1 day. The {@condition charmed} target obeys the fiend's verbal or telepathic commands. If the target suffers any harm or receives a suicidal command, it can repeat the saving throw, ending the effect on a success. If the target successfully saves against the effect, or if the effect on it ends, the target is immune to this fiend's Charm for the next 24 hours.",
-              "The fiend can have only one target {@condition charmed} at a time. If it charms another, the effect on the previous target ends."
-            ]
-          },
-          {
-            "name": "Draining Kiss",
-            "entries": [
-              "The fiend kisses a creature {@condition charmed} by it or a willing creature. The target must make a {@dc 15} Constitution saving throw against this magic, taking 32 ({@damage 5d10 + 5}) psychic damage on a failed save, or half as much damage on a successful one. The target's hit point maximum is reduced by an amount equal to the damage taken. This reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0."
-            ]
-          },
-          {
-            "name": "Etherealness",
-            "entries": [
-              "The fiend magically enters the Ethereal Plane from the Material Plane, or vice versa."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/succubus-incubus.opus"
-        },
-        "traitTags": [
-          "Shapechanger"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "languageTags": [
-          "AB",
-          "C",
-          "I",
-          "TP"
-        ],
-        "damageTags": [
-          "S",
-          "Y"
-        ],
-        "miscTags": [
-          "HPR",
-          "MW"
-        ],
-        "conditionInflict": [
-          "charmed"
-        ],
-        "savingThrowForced": [
-          "constitution",
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Succubus",
-            "_copy": {
-              "name": "Succubus/Incubus",
-              "source": "SRD51"
-            },
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Succubus.webp"
-                },
-                "width": 802,
-                "height": 1000
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "fiend",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 71,
+      "formula": "13d8 + 13"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60
+    },
+    "str": 8,
+    "dex": 17,
+    "con": 13,
+    "int": 15,
+    "wis": 12,
+    "cha": 20,
+    "skill": {
+      "deception": "+9",
+      "insight": "+5",
+      "perception": "+5",
+      "persuasion": "+9",
+      "stealth": "+7"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 15,
+    "resist": [
+      "cold",
+      "fire",
+      "poison",
+      "psychic"
+    ],
+    "languages": [
+      "Abyssal",
+      "Common",
+      "Infernal; telepathy 60 ft."
+    ],
+    "cr": "4",
+    "trait": [
+      {
+        "name": "Incubus Form",
+        "entries": [
+          "When the succubus finishes a {@variantrule Long Rest|SRD52}, it can shape-shift into an {@creature Incubus|SRD52}, using that stat block instead of this one."
+        ]
+      },
+      {
+        "name": "Telepathic Bond",
+        "entries": [
+          "The fiend ignores the range restriction on its telepathy when communicating with a creature it has {@condition charmed}. The two don't even need to be on the same plane of existence."
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The succubus makes one Fiendish Touch attack and uses Charm or Draining Kiss."
+        ]
+      },
+      {
+        "name": "Fiendish Touch",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}16 ({@damage 2d10 + 5}) Psychic damage."
+        ]
+      },
+      {
+        "name": "Charm",
+        "entries": [
+          "The succubus casts {@spell Dominate Person|SRD52} (level 8 version), requiring no spell components and using Charisma as the spellcasting ability (spell save {@dc 15})."
+        ]
+      },
+      {
+        "name": "Draining Kiss",
+        "entries": [
+          "{@actSave con} {@dc 15}, one creature {@condition Charmed|SRD52} by the succubus within 5 feet. {@actSaveFail} 13 ({@damage 3d8}) Psychic damage. {@actSaveSuccess} Half damage. {@actSaveSuccessOrFail} The target's {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by an amount equal to the damage taken."
+        ]
+      },
+      {
+        "name": "Etherealness",
+        "entries": [
+          "The fiend magically enters the Ethereal Plane from the Material Plane, or vice versa."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Shape-Shift",
+        "entries": [
+          "The succubus shape-shifts to resemble a Medium or Small Humanoid or back into its true form. Its game statistics are the same in each form, except its {@variantrule Fly Speed|SRD52} is available only in its true form. Any equipment it's wearing or carrying isn't transformed."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, lower",
+      "urban"
+    ],
+    "treasure": [
+      "implements"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/succubus-incubus.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "AB",
+      "C",
+      "I",
+      "TP"
+    ],
+    "damageTags": [
+      "Y"
+    ],
+    "miscTags": [
+      "HPR",
+      "MA"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Succubus",
-        "size": [
-          "M"
-        ],
-        "type": "fiend",
-        "alignment": [
-          "N",
-          "E"
-        ],
-        "ac": [
-          15
-        ],
-        "hp": {
-          "average": 71,
-          "formula": "13d8 + 13"
-        },
-        "speed": {
-          "walk": 30,
-          "fly": 60
-        },
-        "str": 8,
-        "dex": 17,
-        "con": 13,
-        "int": 15,
-        "wis": 12,
-        "cha": 20,
-        "skill": {
-          "deception": "+9",
-          "insight": "+5",
-          "perception": "+5",
-          "persuasion": "+9",
-          "stealth": "+7"
-        },
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 15,
-        "resist": [
-          "cold",
-          "fire",
-          "poison",
-          "psychic"
-        ],
-        "languages": [
-          "Abyssal",
-          "Common",
-          "Infernal; telepathy 60 ft."
-        ],
-        "cr": "4",
-        "trait": [
+        "entries": [
           {
-            "name": "Incubus Form",
-            "entries": [
-              "When the succubus finishes a {@variantrule Long Rest|SRD52}, it can shape-shift into an {@creature Incubus|SRD52}, using that stat block instead of this one."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The succubus makes one Fiendish Touch attack and uses Charm or Draining Kiss."
-            ]
-          },
-          {
-            "name": "Fiendish Touch",
-            "entries": [
-              "{@atkr m} {@hit 7}, reach 5 ft. {@h}16 ({@damage 2d10 + 5}) Psychic damage."
-            ]
-          },
-          {
-            "name": "Charm",
-            "entries": [
-              "The succubus casts {@spell Dominate Person|SRD52} (level 8 version), requiring no spell components and using Charisma as the spellcasting ability (spell save {@dc 15})."
-            ]
-          },
-          {
-            "name": "Draining Kiss",
-            "entries": [
-              "{@actSave con} {@dc 15}, one creature {@condition Charmed|SRD52} by the succubus within 5 feet. {@actSaveFail} 13 ({@damage 3d8}) Psychic damage. {@actSaveSuccess} Half damage. {@actSaveSuccessOrFail} The target's {@variantrule Hit Points|SRD52|Hit Point} maximum decreases by an amount equal to the damage taken."
-            ]
-          }
-        ],
-        "bonus": [
-          {
-            "name": "Shape-Shift",
-            "entries": [
-              "The succubus shape-shifts to resemble a Medium or Small Humanoid or back into its true form. Its game statistics are the same in each form, except its {@variantrule Fly Speed|SRD52} is available only in its true form. Any equipment it's wearing or carrying isn't transformed."
-            ]
-          }
-        ],
-        "environment": [
-          "planar, lower",
-          "urban"
-        ],
-        "treasure": [
-          "implements"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/succubus-incubus.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "AB",
-          "C",
-          "I",
-          "TP"
-        ],
-        "damageTags": [
-          "Y"
-        ],
-        "miscTags": [
-          "HPR",
-          "MA"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Succubus",
             "entries": [
+              "{@i Life-Draining Seducer}",
               {
-                "type": "section",
-                "name": "Succubus",
-                "entries": [
-                  "{@i Life-Draining Seducer}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Planar (Lower Planes)|bestiary|environment=planar, lower}, {@filter Urban|bestiary|environment=urban}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Implements"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Planar (Lower Planes)|bestiary|environment=planar, lower}, {@filter Urban|bestiary|environment=urban}"
                   },
-                  "Succubi prey on mortals physically and exploit their waking desires. They relish corrupting virtuous souls and the pain an individual's downfall can cause. Once their targets are at their lowest, succubi slay their victims with their essence-draining kiss.",
-                  "Through fiendish rites, succubi can transform into incubi to manipulate their prey in dreams as well as the waking world. They can also change shape to torment their victims. These tempters can dominate Humanoids, but they usually do so to reinforce their manipulations or defend themselves rather than controlling others outright. Roll on or choose a result from the Succubus Temptations table to inspire how a succubus toys with its victims.",
                   {
-                    "type": "table",
-                    "caption": "Succubus Temptations",
-                    "colLabels": [
-                      "1d6",
-                      "The Succubus Manipulates Its Target By..."
-                    ],
-                    "colStyles": [
-                      "col-2 text-center",
-                      "col-10"
-                    ],
-                    "rows": [
-                      [
-                        "1",
-                        "Adopting the form of a lost loved one."
-                      ],
-                      [
-                        "2",
-                        "Charming someone close to its target."
-                      ],
-                      [
-                        "3",
-                        "Isolating them from their loved ones."
-                      ],
-                      [
-                        "4",
-                        "Manipulating events to bring surprise fortune."
-                      ],
-                      [
-                        "5",
-                        "Posing as a flattering underling."
-                      ],
-                      [
-                        "6",
-                        "Taking the form of one in need of protection."
-                      ]
-                    ]
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Implements"
                   }
                 ]
-              }
-            ],
-            "images": [
+              },
+              "Succubi prey on mortals physically and exploit their waking desires. They relish corrupting virtuous souls and the pain an individual's downfall can cause. Once their targets are at their lowest, succubi slay their victims with their essence-draining kiss.",
+              "Through fiendish rites, succubi can transform into incubi to manipulate their prey in dreams as well as the waking world. They can also change shape to torment their victims. These tempters can dominate Humanoids, but they usually do so to reinforce their manipulations or defend themselves rather than controlling others outright. Roll on or choose a result from the Succubus Temptations table to inspire how a succubus toys with its victims.",
               {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Succubus.webp"
-                },
-                "credit": "Jodie Muir",
-                "width": 1463,
-                "height": 2560
+                "type": "table",
+                "caption": "Succubus Temptations",
+                "colLabels": [
+                  "1d6",
+                  "The Succubus Manipulates Its Target By..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Adopting the form of a lost loved one."
+                  ],
+                  [
+                    "2",
+                    "Charming someone close to its target."
+                  ],
+                  [
+                    "3",
+                    "Isolating them from their loved ones."
+                  ],
+                  [
+                    "4",
+                    "Manipulating events to bring surprise fortune."
+                  ],
+                  [
+                    "5",
+                    "Posing as a flattering underling."
+                  ],
+                  [
+                    "6",
+                    "Taking the form of one in need of protection."
+                  ]
+                ]
               }
             ]
           }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Succubus.webp"
+            },
+            "credit": "Jodie Muir",
+            "width": 1463,
+            "height": 2560
+          }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

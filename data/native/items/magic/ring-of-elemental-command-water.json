@@ -2,86 +2,80 @@
   "id": "item.ring-of-elemental-command-water",
   "name": "Ring of Elemental Command (Water)",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Ring of Elemental Command (Water)",
-        "type": "RG|SRD52",
-        "rarity": "legendary",
-        "reqAttune": true,
-        "grantsLanguage": true,
-        "recharge": "dawn",
-        "rechargeAmount": "{@dice 1d4 + 1}",
-        "charges": 5,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "RG|SRD52",
+    "rarity": "legendary",
+    "reqAttune": true,
+    "grantsLanguage": true,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d4 + 1}",
+    "charges": 5,
+    "entries": [
+      "The Ring of Elemental Command (water) is linked to the Elemental Plane of Water. Every Ring of Elemental Command has the following two properties:",
+      {
+        "type": "list",
+        "items": [
+          {
+            "type": "item",
+            "name": "Elemental Bane",
+            "entries": [
+              "While wearing the ring, you have {@variantrule Advantage|SRD52} on attack rolls against Elementals and they have {@variantrule Disadvantage|SRD52} on attack rolls against you."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Elemental Compulsion",
+            "entries": [
+              "While wearing the ring, you can take a {@action Magic|SRD52} action to try to compel an Elemental you see within 60 feet of yourself. The Elemental makes a {@dc 18} Wisdom saving throw. On a failed save, the Elemental has the {@condition Charmed|SRD52} condition until the start your next turn, and you determine what it does with its move and action on its next turn."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Elemental Focus",
         "entries": [
-          "The Ring of Elemental Command (water) is linked to the Elemental Plane of Water. Every Ring of Elemental Command has the following two properties:",
+          "While wearing the ring, you benefit from additional properties corresponding to the ring's linked Elemental Plane:",
           {
             "type": "list",
+            "style": "list-hang-notitle",
             "items": [
               {
                 "type": "item",
-                "name": "Elemental Bane",
+                "name": "Water",
                 "entries": [
-                  "While wearing the ring, you have {@variantrule Advantage|SRD52} on attack rolls against Elementals and they have {@variantrule Disadvantage|SRD52} on attack rolls against you."
-                ]
-              },
-              {
-                "type": "item",
-                "name": "Elemental Compulsion",
-                "entries": [
-                  "While wearing the ring, you can take a {@action Magic|SRD52} action to try to compel an Elemental you see within 60 feet of yourself. The Elemental makes a {@dc 18} Wisdom saving throw. On a failed save, the Elemental has the {@condition Charmed|SRD52} condition until the start your next turn, and you determine what it does with its move and action on its next turn."
+                  "You know Aquan, you gain a {@variantrule Swim Speed|SRD52} of 60 feet, and you can breathe underwater."
                 ]
               }
-            ]
-          },
-          {
-            "type": "entries",
-            "name": "Elemental Focus",
-            "entries": [
-              "While wearing the ring, you benefit from additional properties corresponding to the ring's linked Elemental Plane:",
-              {
-                "type": "list",
-                "style": "list-hang-notitle",
-                "items": [
-                  {
-                    "type": "item",
-                    "name": "Water",
-                    "entries": [
-                      "You know Aquan, you gain a {@variantrule Swim Speed|SRD52} of 60 feet, and you can breathe underwater."
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "entries",
-            "name": "Spellcasting",
-            "entries": [
-              "The ring has 5 charges and regains {@dice 1d4 + 1} expended charges daily at dawn. While wearing the ring, you can cast a spell from it. A spell cast from the ring has a save DC of 18. Choose the spell from the following list: {@spell Create or Destroy Water|SRD52} (1 charge), {@spell Ice Storm|SRD52} (2 charges), {@spell Tsunami|SRD52} (5 charges), {@spell Wall of Ice|SRD52} (3 charges), {@spell Water Walk|SRD52} (2 charges)"
             ]
           }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spellcasting",
+        "entries": [
+          "The ring has 5 charges and regains {@dice 1d4 + 1} expended charges daily at dawn. While wearing the ring, you can cast a spell from it. A spell cast from the ring has a save DC of 18. Choose the spell from the following list: {@spell Create or Destroy Water|SRD52} (1 charge), {@spell Ice Storm|SRD52} (2 charges), {@spell Tsunami|SRD52} (5 charges), {@spell Wall of Ice|SRD52} (3 charges), {@spell Water Walk|SRD52} (2 charges)"
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "create or destroy water|srd52"
         ],
-        "attachedSpells": {
-          "charges": {
-            "1": [
-              "create or destroy water|srd52"
-            ],
-            "2": [
-              "ice storm|srd52",
-              "water walk|srd52"
-            ],
-            "3": [
-              "wall of ice|srd52"
-            ],
-            "5": [
-              "tsunami|srd52"
-            ]
-          }
-        }
+        "2": [
+          "ice storm|srd52",
+          "water walk|srd52"
+        ],
+        "3": [
+          "wall of ice|srd52"
+        ],
+        "5": [
+          "tsunami|srd52"
+        ]
       }
     }
-  ]
+  }
 }

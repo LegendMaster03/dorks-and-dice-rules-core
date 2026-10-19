@@ -2,279 +2,121 @@
   "id": "monster.dretch",
   "name": "Dretch",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Dretch",
-        "size": [
-          "S"
-        ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "demon"
-          ]
-        },
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 11,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 18,
-          "formula": "4d6 + 4"
-        },
-        "speed": {
-          "walk": 20
-        },
-        "str": 11,
-        "dex": 11,
-        "con": 12,
-        "int": 5,
-        "wis": 8,
-        "cha": 3,
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 9,
-        "resist": [
-          "cold",
-          "fire",
-          "lightning"
-        ],
-        "immune": [
-          "poison"
-        ],
-        "conditionImmune": [
-          "poisoned"
-        ],
-        "languages": [
-          "Abyssal",
-          "telepathy 60 ft. (works only with creatures that understand Abyssal)"
-        ],
-        "cr": "1/4",
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The dretch makes two attacks: one with its bite and one with its claws."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 2} to hit, reach 5 ft., one target. {@h}3 ({@damage 1d6}) piercing damage."
-            ]
-          },
-          {
-            "name": "Claws",
-            "entries": [
-              "{@atk mw} {@hit 2} to hit, reach 5 ft., one target. {@h}5 ({@damage 2d4}) slashing damage."
-            ]
-          },
-          {
-            "name": "Fetid Cloud (1/Day)",
-            "entries": [
-              "A 10-foot radius of disgusting green gas extends out from the dretch. The gas spreads around corners, and its area is lightly obscured. It lasts for 1 minute or until a strong wind disperses it. Any creature that starts its turn in that area must succeed on a {@dc 11} Constitution saving throw or be {@condition poisoned} until the start of its next turn. While {@condition poisoned} in this way, the target can take either an action or a bonus action on its turn, not both, and can't take reactions."
-            ]
-          }
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/dretch.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "AB",
-          "TP"
-        ],
-        "damageTags": [
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "AOE",
-          "MW"
-        ],
-        "conditionInflict": [
-          "poisoned"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Dretch",
-            "_copy": {
-              "name": "Demons",
-              "source": "SRD51",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "entries",
-                    "entries": [
-                      {
-                        "type": "entries",
-                        "entries": [
-                          "Dretches are among the weakest of demons-repulsive, self-loathing creatures doomed to spend eternity in a state of perpetual discontent. Their low intelligence makes dretches unsuitable for anything but the simplest tasks. However, what they lack in potential, they make up for in sheer malice. Dretches mill about in mobs, voicing their displeasure as an unsettling din of hoots, snarls, and grunts."
-                        ]
-                      }
-                    ]
-                  }
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "image",
-                    "href": {
-                      "type": "internal",
-                      "path": "bestiary/MM/Dretch.webp"
-                    },
-                    "width": 744,
-                    "height": 1000
-                  }
-                }
-              }
-            }
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Demons"
+    ],
+    "size": [
+      "S"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "demon"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 18,
+      "formula": "4d6 + 4"
+    },
+    "speed": {
+      "walk": 20
+    },
+    "str": 12,
+    "dex": 11,
+    "con": 12,
+    "int": 5,
+    "wis": 8,
+    "cha": 3,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 9,
+    "resist": [
+      "cold",
+      "fire",
+      "lightning"
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "languages": [
+      "Abyssal; telepathy 60 ft. (works only with creatures that understand Abyssal)"
+    ],
+    "cr": "1/4",
+    "action": [
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}4 ({@damage 1d6 + 1}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Fetid Cloud (1/Day)",
+        "entries": [
+          "{@actSave con} {@dc 11}, each creature in a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the dretch. {@actSaveFail} The target has the {@condition Poisoned|SRD52} condition until the end of its next turn. While {@condition Poisoned|SRD52}, the creature can take either an action or a {@variantrule Bonus Action|SRD52} on its turn, not both, and it can't take Reactions."
         ]
       }
+    ],
+    "environment": [
+      "planar, abyss"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/dretch.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "senseTags": [
+      "D"
+    ],
+    "languageTags": [
+      "AB",
+      "TP"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "poisoned"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Dretch",
-        "group": [
-          "Demons"
-        ],
-        "size": [
-          "S"
-        ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "demon"
-          ]
-        },
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "ac": [
-          11
-        ],
-        "hp": {
-          "average": 18,
-          "formula": "4d6 + 4"
-        },
-        "speed": {
-          "walk": 20
-        },
-        "str": 12,
-        "dex": 11,
-        "con": 12,
-        "int": 5,
-        "wis": 8,
-        "cha": 3,
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 9,
-        "resist": [
-          "cold",
-          "fire",
-          "lightning"
-        ],
-        "immune": [
-          "poison"
-        ],
-        "conditionImmune": [
-          "poisoned"
-        ],
-        "languages": [
-          "Abyssal; telepathy 60 ft. (works only with creatures that understand Abyssal)"
-        ],
-        "cr": "1/4",
-        "action": [
-          {
-            "name": "Rend",
-            "entries": [
-              "{@atkr m} {@hit 3}, reach 5 ft. {@h}4 ({@damage 1d6 + 1}) Slashing damage."
-            ]
-          },
-          {
-            "name": "Fetid Cloud (1/Day)",
-            "entries": [
-              "{@actSave con} {@dc 11}, each creature in a 10-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the dretch. {@actSaveFail} The target has the {@condition Poisoned|SRD52} condition until the end of its next turn. While {@condition Poisoned|SRD52}, the creature can take either an action or a {@variantrule Bonus Action|SRD52} on its turn, not both, and it can't take Reactions."
-            ]
-          }
-        ],
-        "environment": [
-          "planar, abyss"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/dretch.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "languageTags": [
-          "AB",
-          "TP"
-        ],
-        "damageTags": [
-          "S"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflict": [
-          "poisoned"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Dretch",
-            "_copy": {
-              "name": "Dretches",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Lone dretches serve other demons or evil magic-users. They are erratic, filthy, and violent, and they demonstrate little sense of self-preservation."
-                      ]
-                    }
+        "_copy": {
+          "name": "Dretches",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Lone dretches serve other demons or evil magic-users. They are erratic, filthy, and violent, and they demonstrate little sense of self-preservation."
                   ]
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

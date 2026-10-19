@@ -2,23 +2,17 @@
   "id": "deity.dionysus",
   "name": "Dionysus",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Dionysus",
-        "pantheon": "Greek",
-        "alignment": [
-          "C",
-          "N"
-        ],
-        "title": "God of mirth and wine",
-        "domains": [
-          "Life"
-        ],
-        "symbol": "Thyrsus (staff tipped with pine cone)"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "C",
+      "N"
+    ],
+    "title": "God of mirth and wine",
+    "domains": [
+      "Life"
+    ],
+    "symbol": "Thyrsus (staff tipped with pine cone)"
+  }
 }

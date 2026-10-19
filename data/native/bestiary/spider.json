@@ -2,225 +2,119 @@
   "id": "monster.spider",
   "name": "Spider",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Spider",
-        "size": [
-          "T"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          12
-        ],
-        "hp": {
-          "average": 1,
-          "formula": "1d4 - 1"
-        },
-        "speed": {
-          "walk": 20,
-          "climb": 20
-        },
-        "str": 2,
-        "dex": 14,
-        "con": 8,
-        "int": 1,
-        "wis": 10,
-        "cha": 2,
-        "skill": {
-          "stealth": "+4"
-        },
-        "senses": [
-          "darkvision 30 ft."
-        ],
-        "passive": 10,
-        "cr": "0",
-        "trait": [
-          {
-            "name": "Spider Climb",
-            "entries": [
-              "The spider can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
-            ]
-          },
-          {
-            "name": "Web Sense",
-            "entries": [
-              "While in contact with a web, the spider knows the exact location of any other creature in contact with the same web."
-            ]
-          },
-          {
-            "name": "Web Walker",
-            "entries": [
-              "The spider ignores movement restrictions caused by webbing."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 4} to hit, reach 5 ft., one creature. {@h}1 piercing damage, and the target must succeed on a {@dc 9} Constitution saving throw or take 2 ({@damage 1d4}) poison damage."
-            ]
-          }
-        ],
-        "familiar": true,
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/spider.opus"
-        },
-        "traitTags": [
-          "Spider Climb",
-          "Web Sense",
-          "Web Walker"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "damageTags": [
-          "I",
-          "P"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Spider",
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Spider.webp"
-                },
-                "width": 1774,
-                "height": 1379
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "T"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 1,
+      "formula": "1d4 - 1"
+    },
+    "speed": {
+      "walk": 20,
+      "climb": 20
+    },
+    "str": 2,
+    "dex": 14,
+    "con": 8,
+    "int": 1,
+    "wis": 10,
+    "cha": 2,
+    "skill": {
+      "stealth": "+4"
+    },
+    "senses": [
+      "Darkvision 30 ft."
+    ],
+    "passive": 10,
+    "cr": "0",
+    "trait": [
+      {
+        "name": "Spider Climb",
+        "entries": [
+          "The spider can climb difficult surfaces, including along ceilings, without needing to make an ability check."
+        ]
+      },
+      {
+        "name": "Web Walker",
+        "entries": [
+          "The spider ignores movement restrictions caused by webs, and the spider knows the location of any other creature in contact with the same web."
+        ]
+      },
+      {
+        "name": "Web Sense",
+        "entries": [
+          "While in contact with a web, the spider knows the exact location of any other creature in contact with the same web."
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}1 Piercing damage plus 2 ({@damage 1d4}) Poison damage."
+        ]
+      }
+    ],
+    "environment": [
+      "desert",
+      "forest",
+      "swamp",
+      "underdark",
+      "urban"
+    ],
+    "familiar": true,
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/spider.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "traitTags": [
+      "Spider Climb",
+      "Web Walker"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "damageTags": [
+      "I",
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Spider",
-        "size": [
-          "T"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          12
-        ],
-        "hp": {
-          "average": 1,
-          "formula": "1d4 - 1"
-        },
-        "speed": {
-          "walk": 20,
-          "climb": 20
-        },
-        "str": 2,
-        "dex": 14,
-        "con": 8,
-        "int": 1,
-        "wis": 10,
-        "cha": 2,
-        "skill": {
-          "stealth": "+4"
-        },
-        "senses": [
-          "Darkvision 30 ft."
-        ],
-        "passive": 10,
-        "cr": "0",
-        "trait": [
-          {
-            "name": "Spider Climb",
-            "entries": [
-              "The spider can climb difficult surfaces, including along ceilings, without needing to make an ability check."
-            ]
-          },
-          {
-            "name": "Web Walker",
-            "entries": [
-              "The spider ignores movement restrictions caused by webs, and the spider knows the location of any other creature in contact with the same web."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atkr m} {@hit 4}, reach 5 ft. {@h}1 Piercing damage plus 2 ({@damage 1d4}) Poison damage."
-            ]
-          }
-        ],
-        "environment": [
-          "desert",
-          "forest",
-          "swamp",
-          "underdark",
-          "urban"
-        ],
-        "familiar": true,
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/spider.opus"
-        },
-        "traitTags": [
-          "Spider Climb",
-          "Web Walker"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "damageTags": [
-          "I",
-          "P"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Spider",
-            "_copy": {
-              "name": "Animals",
-              "source": "SRD52",
-              "_mod": {
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Spiders.webp"
-                      },
-                      "width": 1000,
-                      "height": 871
-                    }
-                  ]
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Spiders.webp"
+                  },
+                  "width": 1000,
+                  "height": 871
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

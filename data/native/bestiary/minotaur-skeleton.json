@@ -2,248 +2,112 @@
   "id": "monster.minotaur-skeleton",
   "name": "Minotaur Skeleton",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Minotaur Skeleton",
-        "size": [
-          "L"
-        ],
-        "type": "undead",
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 12,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 67,
-          "formula": "9d10 + 18"
-        },
-        "speed": {
-          "walk": 40
-        },
-        "str": 18,
-        "dex": 11,
-        "con": 15,
-        "int": 6,
-        "wis": 8,
-        "cha": 5,
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 9,
-        "immune": [
-          "poison"
-        ],
-        "vulnerable": [
-          "bludgeoning"
-        ],
-        "conditionImmune": [
-          "exhaustion",
-          "poisoned"
-        ],
-        "languages": [
-          "understands Abyssal but can't speak"
-        ],
-        "cr": "2",
-        "trait": [
-          {
-            "name": "Charge",
-            "entries": [
-              "If the skeleton moves at least 10 feet straight toward a target and then hits it with a gore attack on the same turn, the target takes an extra 9 ({@damage 2d8}) piercing damage. If the target is a creature, it must succeed on a {@dc 14} Strength saving throw or be pushed up to 10 feet away and knocked {@condition prone}."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Greataxe",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}17 ({@damage 2d12 + 4}) slashing damage."
-            ]
-          },
-          {
-            "name": "Gore",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}13 ({@damage 2d8 + 4}) piercing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "underdark"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/minotaur-skeleton.opus"
-        },
-        "attachedItems": [
-          "greataxe|srd51"
-        ],
-        "traitTags": [
-          "Charge"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "languageTags": [
-          "AB",
-          "CS"
-        ],
-        "damageTags": [
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "strength"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Minotaur Skeleton",
-            "_copy": {
-              "name": "Skeleton",
-              "source": "SRD51"
-            },
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Minotaur Skeleton.webp"
-                },
-                "width": 1000,
-                "height": 936
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "undead",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 45,
+      "formula": "6d10 + 12"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "str": 18,
+    "dex": 11,
+    "con": 15,
+    "int": 6,
+    "wis": 8,
+    "cha": 5,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 9,
+    "immune": [
+      "poison"
+    ],
+    "vulnerable": [
+      "bludgeoning"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "poisoned"
+    ],
+    "languages": [
+      "understands Abyssal but can't speak"
+    ],
+    "cr": "2",
+    "action": [
+      {
+        "name": "Gore",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}11 ({@damage 2d6 + 4}) Piercing damage. If the target is a Large or smaller creature and the skeleton moved 20+ feet straight toward it immediately before the hit, the target takes an extra 9 ({@damage 2d8}) Piercing damage and has the {@condition Prone|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}15 ({@damage 2d10 + 4}) Bludgeoning damage."
         ]
       }
+    ],
+    "environment": [
+      "planar, shadowfell",
+      "underdark",
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/minotaur-skeleton.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "senseTags": [
+      "D"
+    ],
+    "languageTags": [
+      "AB",
+      "CS"
+    ],
+    "damageTags": [
+      "B",
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Minotaur Skeleton",
-        "size": [
-          "L"
-        ],
-        "type": "undead",
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          12
-        ],
-        "hp": {
-          "average": 45,
-          "formula": "6d10 + 12"
-        },
-        "speed": {
-          "walk": 40
-        },
-        "str": 18,
-        "dex": 11,
-        "con": 15,
-        "int": 6,
-        "wis": 8,
-        "cha": 5,
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 9,
-        "immune": [
-          "poison"
-        ],
-        "vulnerable": [
-          "bludgeoning"
-        ],
-        "conditionImmune": [
-          "exhaustion",
-          "poisoned"
-        ],
-        "languages": [
-          "understands Abyssal but can't speak"
-        ],
-        "cr": "2",
-        "action": [
-          {
-            "name": "Gore",
-            "entries": [
-              "{@atkr m} {@hit 6}, reach 5 ft. {@h}11 ({@damage 2d6 + 4}) Piercing damage. If the target is a Large or smaller creature and the skeleton moved 20+ feet straight toward it immediately before the hit, the target takes an extra 9 ({@damage 2d8}) Piercing damage and has the {@condition Prone|SRD52} condition."
-            ]
-          },
-          {
-            "name": "Slam",
-            "entries": [
-              "{@atkr m} {@hit 6}, reach 5 ft. {@h}15 ({@damage 2d10 + 4}) Bludgeoning damage."
-            ]
-          }
-        ],
-        "environment": [
-          "planar, shadowfell",
-          "underdark",
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/minotaur-skeleton.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "languageTags": [
-          "AB",
-          "CS"
-        ],
-        "damageTags": [
-          "B",
-          "P"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Minotaur Skeleton",
-            "_copy": {
-              "name": "Skeletons",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Minotaur skeletons are the reanimated remains of minotaurs or the skeletons of multiple creatures merged into a minotaur-like shape. These hulking skeletons have greater speed and might than smaller skeletons. They menace the living with their horns and mighty greataxes."
-                      ]
-                    }
+        "_copy": {
+          "name": "Skeletons",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Minotaur skeletons are the reanimated remains of minotaurs or the skeletons of multiple creatures merged into a minotaur-like shape. These hulking skeletons have greater speed and might than smaller skeletons. They menace the living with their horns and mighty greataxes."
                   ]
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

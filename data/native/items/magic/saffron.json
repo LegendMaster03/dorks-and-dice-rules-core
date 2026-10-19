@@ -2,17 +2,11 @@
   "id": "item.saffron",
   "name": "Saffron",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Saffron",
-        "type": "TG",
-        "rarity": "none",
-        "weight": 1,
-        "value": 1500
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "weight": 1,
+    "value": 1500
+  }
 }

@@ -2,16 +2,10 @@
   "id": "item.ox",
   "name": "Ox",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Ox",
-        "type": "TG",
-        "rarity": "none",
-        "value": 1500
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "value": 1500
+  }
 }

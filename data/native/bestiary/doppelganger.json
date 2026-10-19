@@ -2,396 +2,237 @@
   "id": "monster.doppelganger",
   "name": "Doppelganger",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Doppelganger",
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "monstrosity",
-          "tags": [
-            "shapechanger"
-          ]
-        },
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          14
-        ],
-        "hp": {
-          "average": 52,
-          "formula": "8d8 + 16"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 11,
-        "dex": 18,
-        "con": 14,
-        "int": 11,
-        "wis": 12,
-        "cha": 14,
-        "skill": {
-          "deception": "+6",
-          "insight": "+3"
-        },
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 11,
-        "conditionImmune": [
-          "charmed"
-        ],
-        "languages": [
-          "Common"
-        ],
-        "cr": "3",
-        "trait": [
-          {
-            "name": "Shapechanger",
-            "entries": [
-              "The doppelganger can use its action to polymorph into a Small or Medium humanoid it has seen, or back into its true form. Its statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies."
-            ]
-          },
-          {
-            "name": "Ambusher",
-            "entries": [
-              "In the first round of a combat, the doppelganger has advantage on attack rolls against any creature it {@status surprised}."
-            ]
-          },
-          {
-            "name": "Surprise Attack",
-            "entries": [
-              "If the doppelganger surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 10 ({@damage 3d6}) damage from the attack."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The doppelganger makes two melee attacks."
-            ]
-          },
-          {
-            "name": "Slam",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}7 ({@damage 1d6 + 4}) bludgeoning damage."
-            ]
-          },
-          {
-            "name": "Read Thoughts",
-            "entries": [
-              "The doppelganger magically reads the surface thoughts of one creature within 60 feet of it. The effect can penetrate barriers, but 3 feet of wood or dirt, 2 feet of stone, 2 inches of metal, or a thin sheet of lead blocks it. While the target is in range, the doppelganger can continue reading its thoughts, as long as the doppelganger's {@status concentration} isn't broken (as if {@status concentration||concentrating} on a spell). While reading the target's mind, the doppelganger has advantage on Wisdom ({@skill Insight}) and Charisma ({@skill Deception}, {@skill Intimidation}, and {@skill Persuasion}) checks against the target."
-            ]
-          }
-        ],
-        "environment": [
-          "underdark",
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/doppelganger.opus"
-        },
-        "traitTags": [
-          "Ambusher",
-          "Shapechanger"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C"
-        ],
-        "damageTags": [
-          "B"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Doppelganger",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "Doppelgangers are devious shapeshifters that take on the appearance of other humanoids, throwing off pursuit or luring victims to their doom with misdirection and disguise. Few creatures spread fear, suspicion, and deceit better than doppelgangers. Found in every land and culture, they can take on the guise of any individual of any race.",
-                      {
-                        "name": "Stealing Secrets",
-                        "type": "entries",
-                        "entries": [
-                          "A doppelganger's adopted form allows it to blend into almost any group or community, but its transformation doesn't impart languages, mannerisms, memory, or personality. Doppelgangers often follow or capture creatures they intend to impersonate, studying them and probing their minds for secrets. A doppelganger can read a creature's surface thoughts, allowing it to glean that creature's name, desires, and fears, along with a few scattered memories. A doppelganger impersonating a specific creature as part of a long-term plot might keep its double alive and close at hand for weeks, probing the victim's mind daily to learn how to behave and speak authentically."
-                        ]
-                      },
-                      {
-                        "name": "Hedonistic Swindlers",
-                        "type": "entries",
-                        "entries": [
-                          "Doppelgangers work alone or in small groups, with group roles shifting from con to con. While one doppelganger takes the place of a murdered merchant or noble, the others take on a number of identities as circumstances warrant, playing the parts of family or servants while they live off the victim's riches."
-                        ]
-                      },
-                      {
-                        "name": "Changelings",
-                        "type": "entries",
-                        "entries": [
-                          "Doppelgangers are too lazy or self-interested to raise their young. They assume attractive male forms and seduce women, leaving them to raise their progeny. A doppelganger child appears to be a normal member of its mother's species until it reaches adolescence, at which point it discovers its true nature and is driven to seek out its kind to join them."
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Doppelganger.webp"
-                },
-                "width": 490,
-                "height": 1000
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 52,
+      "formula": "8d8 + 16"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "speed": {
+      "walk": 30
+    },
+    "str": 11,
+    "dex": 18,
+    "con": 14,
+    "int": 11,
+    "wis": 12,
+    "cha": 14,
+    "skill": {
+      "deception": "+6",
+      "insight": "+3"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 11,
+    "conditionImmune": [
+      "charmed"
+    ],
+    "languages": [
+      "Common plus three other languages"
+    ],
+    "cr": "3",
+    "spellcasting": [
+      {
+        "name": "Read Thoughts",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The doppelganger casts {@spell Detect Thoughts|SRD52}, requiring no spell components and using Charisma as the spellcasting ability (spell save {@dc 12})."
+        ],
+        "will": [
+          "{@spell Detect Thoughts|SRD52}"
+        ],
+        "ability": "cha",
+        "displayAs": "action",
+        "hidden": [
+          "will"
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The doppelganger makes two Slam attacks and uses Unsettling Visage if available."
+        ]
+      },
+      {
+        "name": "Slam",
+        "entries": [
+          "{@atkr m} {@hit 6} (with {@variantrule Advantage|SRD52} during the first round of each combat), reach 5 ft. {@h}11 ({@damage 2d6 + 4}) Bludgeoning damage."
+        ]
+      },
+      {
+        "name": "Unsettling Visage {@recharge}",
+        "entries": [
+          "{@actSave wis} {@dc 12}, each creature in a 15-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the doppelganger that can see the doppelganger. {@actSaveFail} The target has the {@condition Frightened|SRD52} condition and repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Shape-Shift",
+        "entries": [
+          "The doppelganger shape-shifts into a Medium or Small Humanoid, or it returns to its true form. Its game statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed."
+        ]
+      }
+    ],
+    "environment": [
+      "underdark",
+      "urban"
+    ],
+    "treasure": [
+      "individual"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/doppelganger.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C"
+    ],
+    "damageTags": [
+      "B"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "frightened"
+    ],
+    "savingThrowForced": [
+      "wisdom"
+    ],
+    "savingThrowForcedSpell": [
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Doppelganger",
-        "size": [
-          "M"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          14
-        ],
-        "hp": {
-          "average": 52,
-          "formula": "8d8 + 16"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 11,
-        "dex": 18,
-        "con": 14,
-        "int": 11,
-        "wis": 12,
-        "cha": 14,
-        "skill": {
-          "deception": "+6",
-          "insight": "+3"
-        },
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 11,
-        "conditionImmune": [
-          "charmed"
-        ],
-        "languages": [
-          "Common plus three other languages"
-        ],
-        "cr": "3",
-        "spellcasting": [
+        "entries": [
           {
-            "name": "Read Thoughts",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The doppelganger casts {@spell Detect Thoughts|SRD52}, requiring no spell components and using Charisma as the spellcasting ability (spell save {@dc 12})."
-            ],
-            "will": [
-              "{@spell Detect Thoughts|SRD52}"
-            ],
-            "ability": "cha",
-            "displayAs": "action",
-            "hidden": [
-              "will"
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The doppelganger makes two Slam attacks and uses Unsettling Visage if available."
-            ]
-          },
-          {
-            "name": "Slam",
-            "entries": [
-              "{@atkr m} {@hit 6} (with {@variantrule Advantage|SRD52} during the first round of each combat), reach 5 ft. {@h}11 ({@damage 2d6 + 4}) Bludgeoning damage."
-            ]
-          },
-          {
-            "name": "Unsettling Visage {@recharge}",
-            "entries": [
-              "{@actSave wis} {@dc 12}, each creature in a 15-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the doppelganger that can see the doppelganger. {@actSaveFail} The target has the {@condition Frightened|SRD52} condition and repeats the save at the end of each of its turns, ending the effect on itself on a success. After 1 minute, it succeeds automatically."
-            ]
-          }
-        ],
-        "bonus": [
-          {
-            "name": "Shape-Shift",
-            "entries": [
-              "The doppelganger shape-shifts into a Medium or Small Humanoid, or it returns to its true form. Its game statistics, other than its size, are the same in each form. Any equipment it is wearing or carrying isn't transformed."
-            ]
-          }
-        ],
-        "environment": [
-          "underdark",
-          "urban"
-        ],
-        "treasure": [
-          "individual"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/doppelganger.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C"
-        ],
-        "damageTags": [
-          "B"
-        ],
-        "spellcastingTags": [
-          "O"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflict": [
-          "frightened"
-        ],
-        "savingThrowForced": [
-          "wisdom"
-        ],
-        "savingThrowForcedSpell": [
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Doppelganger",
             "entries": [
+              "{@i Shape-Shifting Infiltrator}",
               {
-                "type": "section",
-                "name": "Doppelganger",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
+                  {
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Underdark|bestiary|environment=underdark}, {@filter Urban|bestiary|environment=urban}"
+                  },
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Individual"
+                  }
+                ]
+              },
+              "Doppelgangers are supernatural beings with the ability to shape-shift into any humanlike form. Their mind-reading abilities aid them in creating near-perfect disguises and plucking secrets from unguarded minds. Occasionally, doppelgangers use their shape-shifting ability in more overt ways, transforming into unsettling forms to frighten foes.",
+              "A doppelganger's agenda might relate to its mysterious magical origins or to more mercenary goals. Roll on or choose a result from the Doppelganger Deceptions table to inspire a doppelganger's plot.",
+              {
+                "type": "table",
+                "caption": "Doppelganger Deceptions",
+                "colLabels": [
+                  "1d6",
+                  "The Doppelganger Schemes To..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "Cause chaos within the temple of a deity that cursed it to live without a true form."
+                  ],
+                  [
+                    "2",
+                    "Conceal evidence of a vast conspiracy."
+                  ],
+                  [
+                    "3",
+                    "Control a community through fear by posing as a legendary bogeyman."
+                  ],
+                  [
+                    "4",
+                    "Replace a noble to enjoy a decadent lifestyle."
+                  ],
+                  [
+                    "5",
+                    "Spy on wizards to learn how to complete its own botched magical creation."
+                  ],
+                  [
+                    "6",
+                    "Take an influential position, acting as a sleeper agent for a doppelganger invasion."
+                  ]
+                ]
+              },
+              {
+                "type": "insetReadaloud",
                 "entries": [
-                  "{@i Shape-Shifting Infiltrator}",
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Underdark|bestiary|environment=underdark}, {@filter Urban|bestiary|environment=urban}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Individual"
-                      }
-                    ]
-                  },
-                  "Doppelgangers are supernatural beings with the ability to shape-shift into any humanlike form. Their mind-reading abilities aid them in creating near-perfect disguises and plucking secrets from unguarded minds. Occasionally, doppelgangers use their shape-shifting ability in more overt ways, transforming into unsettling forms to frighten foes.",
-                  "A doppelganger's agenda might relate to its mysterious magical origins or to more mercenary goals. Roll on or choose a result from the Doppelganger Deceptions table to inspire a doppelganger's plot.",
-                  {
-                    "type": "table",
-                    "caption": "Doppelganger Deceptions",
-                    "colLabels": [
-                      "1d6",
-                      "The Doppelganger Schemes To..."
-                    ],
-                    "colStyles": [
-                      "col-2 text-center",
-                      "col-10"
-                    ],
-                    "rows": [
-                      [
-                        "1",
-                        "Cause chaos within the temple of a deity that cursed it to live without a true form."
-                      ],
-                      [
-                        "2",
-                        "Conceal evidence of a vast conspiracy."
-                      ],
-                      [
-                        "3",
-                        "Control a community through fear by posing as a legendary bogeyman."
-                      ],
-                      [
-                        "4",
-                        "Replace a noble to enjoy a decadent lifestyle."
-                      ],
-                      [
-                        "5",
-                        "Spy on wizards to learn how to complete its own botched magical creation."
-                      ],
-                      [
-                        "6",
-                        "Take an influential position, acting as a sleeper agent for a doppelganger invasion."
-                      ]
-                    ]
-                  },
-                  {
-                    "type": "insetReadaloud",
+                    "type": "quote",
                     "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "Meeting yourself is the surest way to realize you're not as charming as you think you are."
-                        ],
-                        "by": "Someone claiming to be Lorhirin of Fearchor Keep"
-                      }
-                    ]
+                      "Meeting yourself is the surest way to realize you're not as charming as you think you are."
+                    ],
+                    "by": "Someone claiming to be Lorhirin of Fearchor Keep"
                   }
                 ]
               }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Doppelganger.webp"
-                },
-                "credit": "Sean Murray",
-                "width": 1220,
-                "height": 1582
-              }
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Doppelganger.webp"
+            },
+            "credit": "Sean Murray",
+            "width": 1220,
+            "height": 1582
           }
         ]
       }
-    }
-  ]
+    ],
+    "trait": [
+      {
+        "name": "Surprise Attack",
+        "entries": [
+          "If the doppelganger surprises a creature and hits it with an attack during the first round of combat, the target takes an extra 10 ({@damage 3d6}) damage from the attack."
+        ]
+      },
+      {
+        "name": "Ambusher",
+        "entries": [
+          "In the first round of a combat, the doppelganger has advantage on attack rolls against any creature it {@status surprised}."
+        ]
+      }
+    ]
+  }
 }

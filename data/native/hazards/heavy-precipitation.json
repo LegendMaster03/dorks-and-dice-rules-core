@@ -2,17 +2,11 @@
   "id": "hazard.heavy-precipitation",
   "name": "Heavy Precipitation",
   "kind": "hazard",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Heavy Precipitation",
-        "trapHazType": "ENV",
-        "entries": [
-          "Everything within an area of heavy rain or heavy snowfall is {@variantrule Lightly Obscured|SRD52}, and creatures in the area have {@variantrule Disadvantage|SRD52} on all Wisdom ({@skill Perception|SRD52}) checks. Heavy rain also extinguishes open flames."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "trapHazType": "ENV",
+    "entries": [
+      "Everything within an area of heavy rain or heavy snowfall is {@variantrule Lightly Obscured|SRD52}, and creatures in the area have {@variantrule Disadvantage|SRD52} on all Wisdom ({@skill Perception|SRD52}) checks. Heavy rain also extinguishes open flames."
+    ]
+  }
 }

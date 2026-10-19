@@ -2,22 +2,16 @@
   "id": "deity.skadi",
   "name": "Skadi",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Skadi",
-        "pantheon": "Norse",
-        "alignment": [
-          "N"
-        ],
-        "title": "God of earth and mountains",
-        "domains": [
-          "Nature"
-        ],
-        "symbol": "Mountain peak"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Norse",
+    "alignment": [
+      "N"
+    ],
+    "title": "God of earth and mountains",
+    "domains": [
+      "Nature"
+    ],
+    "symbol": "Mountain peak"
+  }
 }

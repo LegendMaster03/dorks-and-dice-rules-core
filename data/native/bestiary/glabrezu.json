@@ -2,439 +2,232 @@
   "id": "monster.glabrezu",
   "name": "Glabrezu",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Glabrezu",
-        "size": [
-          "L"
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Demons"
+    ],
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "demon"
+      ]
+    },
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 189,
+      "formula": "18d10 + 90"
+    },
+    "speed": {
+      "walk": 40
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 20,
+    "dex": 15,
+    "con": 21,
+    "int": 19,
+    "wis": 17,
+    "cha": 16,
+    "save": {
+      "str": "+9",
+      "con": "+9",
+      "wis": "+7",
+      "cha": "+7"
+    },
+    "skill": {
+      "deception": "+7",
+      "perception": "+7"
+    },
+    "senses": [
+      "Truesight 120 ft."
+    ],
+    "passive": 17,
+    "resist": [
+      "cold",
+      "fire",
+      "lightning"
+    ],
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "languages": [
+      "Abyssal; telepathy 120 ft."
+    ],
+    "cr": "9",
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The glabrezu casts one of the following spells, requiring no Material components and using Intelligence as the spellcasting ability (spell save {@dc 16}):"
         ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "demon"
+        "will": [
+          "{@spell Darkness|SRD52}",
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Dispel Magic|SRD52}"
+        ],
+        "daily": {
+          "1e": [
+            "{@spell Confusion|SRD52}",
+            "{@spell Fly|SRD52}",
+            "{@spell Power Word Stun|SRD52}"
           ]
         },
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 17,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 157,
-          "formula": "15d10 + 75"
-        },
-        "speed": {
-          "walk": 40
-        },
-        "str": 20,
-        "dex": 15,
-        "con": 21,
-        "int": 19,
-        "wis": 17,
-        "cha": 16,
-        "save": {
-          "str": "+9",
-          "con": "+9",
-          "wis": "+7",
-          "cha": "+7"
-        },
-        "senses": [
-          "truesight 120 ft."
-        ],
-        "passive": 13,
-        "resist": [
-          "cold",
-          "fire",
-          "lightning",
-          {
-            "resist": [
-              "bludgeoning",
-              "piercing",
-              "slashing"
-            ],
-            "note": "from nonmagical attacks",
-            "cond": true
-          }
-        ],
-        "immune": [
-          "poison"
-        ],
-        "conditionImmune": [
-          "poisoned"
-        ],
-        "languages": [
-          "Abyssal",
-          "telepathy 120 ft."
-        ],
-        "cr": "9",
-        "spellcasting": [
-          {
-            "name": "Innate Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The glabrezu's spellcasting ability is Intelligence (spell save {@dc 16}). The glabrezu can innately cast the following spells, requiring no material components:"
-            ],
-            "will": [
-              "{@spell darkness}",
-              "{@spell detect magic}",
-              "{@spell dispel magic}"
-            ],
-            "daily": {
-              "1e": [
-                "{@spell confusion}",
-                "{@spell fly}",
-                "{@spell power word stun}"
-              ]
-            },
-            "ability": "int"
-          }
-        ],
-        "trait": [
-          {
-            "name": "Magic Resistance",
-            "entries": [
-              "The glabrezu has advantage on saving throws against spells and other magical effects."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The glabrezu makes four attacks: two with its pincers and two with its fists. Alternatively, it makes two attacks with its pincers and casts one spell."
-            ]
-          },
-          {
-            "name": "Pincer",
-            "entries": [
-              "{@atk mw} {@hit 9} to hit, reach 10 ft., one target. {@h}16 ({@damage 2d10 + 5}) bludgeoning damage. If the target is a Medium or smaller creature, it is {@condition grappled} (escape {@dc 15}). The glabrezu has two pincers, each of which can grapple only one target."
-            ]
-          },
-          {
-            "name": "Fist",
-            "entries": [
-              "{@atk mw} {@hit 9} to hit, reach 5 ft., one target. {@h}7 ({@damage 2d4 + 2}) bludgeoning damage."
-            ]
-          }
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/glabrezu.opus"
-        },
-        "traitTags": [
-          "Magic Resistance"
-        ],
-        "senseTags": [
-          "U"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "AB",
-          "TP"
-        ],
-        "damageTags": [
-          "B"
-        ],
-        "spellcastingTags": [
-          "I"
-        ],
-        "miscTags": [
-          "MW",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "grappled"
-        ],
-        "conditionInflictSpell": [
-          "stunned"
-        ],
-        "savingThrowForcedSpell": [
-          "constitution",
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Glabrezu",
-            "_copy": {
-              "name": "Demons",
-              "source": "SRD51",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "entries",
-                    "entries": [
-                      {
-                        "type": "entries",
-                        "entries": [
-                          "A glabrezu takes great pleasure in destroying mortals through temptation, and these creatures are among the few demons to offer their service to creatures foolish enough to summon them.",
-                          "Although glabrezus are devastating in combat, they prefer to tempt victims into ruin, using power or wealth as a lure. Engaging in guile, trickery, and evil bargains, a glabrezu hoards riches that it uses to fulfill promises to shortsighted summoners and weak-willed mortals. However, if its attempts to entice or deceive fail, a glabrezu has the strength to fight and win."
-                        ]
-                      }
-                    ]
-                  }
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "image",
-                    "href": {
-                      "type": "internal",
-                      "path": "bestiary/MM/Glabrezu.webp"
-                    },
-                    "width": 1000,
-                    "height": 779
-                  }
-                }
-              }
-            }
-          }
+        "ability": "int",
+        "displayAs": "action"
+      }
+    ],
+    "trait": [
+      {
+        "name": "Demonic Restoration",
+        "entries": [
+          "If the glabrezu dies outside the Abyss, its body dissolves into ichor, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Abyss."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The glabrezu has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The glabrezu makes two Pincer attacks and uses Pummel or Spellcasting."
+        ]
+      },
+      {
+        "name": "Pincer",
+        "entries": [
+          "{@atkr m} {@hit 9}, reach 10 ft. {@h}16 ({@damage 2d10 + 5}) Slashing damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 15}) from one of two pincers."
+        ]
+      },
+      {
+        "name": "Pummel",
+        "entries": [
+          "{@actSave dex} {@dc 17}, one creature {@condition Grappled|SRD52} by the glabrezu. {@actSaveFail} 15 ({@damage 3d6 + 5}) Bludgeoning damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, abyss"
+    ],
+    "treasure": [
+      "relics"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/glabrezu.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "traitTags": [
+      "Magic Resistance"
+    ],
+    "senseTags": [
+      "U"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "AB",
+      "TP"
+    ],
+    "damageTags": [
+      "B",
+      "S"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "grappled"
+    ],
+    "conditionInflictSpell": [
+      "stunned"
+    ],
+    "savingThrowForced": [
+      "dexterity"
+    ],
+    "savingThrowForcedSpell": [
+      "constitution",
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Glabrezu",
-        "group": [
-          "Demons"
-        ],
-        "size": [
-          "L"
-        ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "demon"
-          ]
-        },
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "ac": [
-          17
-        ],
-        "hp": {
-          "average": 189,
-          "formula": "18d10 + 90"
-        },
-        "speed": {
-          "walk": 40
-        },
-        "initiative": {
-          "proficiency": 1
-        },
-        "str": 20,
-        "dex": 15,
-        "con": 21,
-        "int": 19,
-        "wis": 17,
-        "cha": 16,
-        "save": {
-          "str": "+9",
-          "con": "+9",
-          "wis": "+7",
-          "cha": "+7"
-        },
-        "skill": {
-          "deception": "+7",
-          "perception": "+7"
-        },
-        "senses": [
-          "Truesight 120 ft."
-        ],
-        "passive": 17,
-        "resist": [
-          "cold",
-          "fire",
-          "lightning"
-        ],
-        "immune": [
-          "poison"
-        ],
-        "conditionImmune": [
-          "poisoned"
-        ],
-        "languages": [
-          "Abyssal; telepathy 120 ft."
-        ],
-        "cr": "9",
-        "spellcasting": [
+        "entries": [
           {
-            "name": "Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The glabrezu casts one of the following spells, requiring no Material components and using Intelligence as the spellcasting ability (spell save {@dc 16}):"
-            ],
-            "will": [
-              "{@spell Darkness|SRD52}",
-              "{@spell Detect Magic|SRD52}",
-              "{@spell Dispel Magic|SRD52}"
-            ],
-            "daily": {
-              "1e": [
-                "{@spell Confusion|SRD52}",
-                "{@spell Fly|SRD52}",
-                "{@spell Power Word Stun|SRD52}"
-              ]
-            },
-            "ability": "int",
-            "displayAs": "action"
-          }
-        ],
-        "trait": [
-          {
-            "name": "Demonic Restoration",
-            "entries": [
-              "If the glabrezu dies outside the Abyss, its body dissolves into ichor, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Abyss."
-            ]
-          },
-          {
-            "name": "Magic Resistance",
-            "entries": [
-              "The glabrezu has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The glabrezu makes two Pincer attacks and uses Pummel or Spellcasting."
-            ]
-          },
-          {
-            "name": "Pincer",
-            "entries": [
-              "{@atkr m} {@hit 9}, reach 10 ft. {@h}16 ({@damage 2d10 + 5}) Slashing damage. If the target is a Medium or smaller creature, it has the {@condition Grappled|SRD52} condition (escape {@dc 15}) from one of two pincers."
-            ]
-          },
-          {
-            "name": "Pummel",
-            "entries": [
-              "{@actSave dex} {@dc 17}, one creature {@condition Grappled|SRD52} by the glabrezu. {@actSaveFail} 15 ({@damage 3d6 + 5}) Bludgeoning damage. {@actSaveSuccess} Half damage."
-            ]
-          }
-        ],
-        "environment": [
-          "planar, abyss"
-        ],
-        "treasure": [
-          "relics"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/glabrezu.opus"
-        },
-        "traitTags": [
-          "Magic Resistance"
-        ],
-        "senseTags": [
-          "U"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "AB",
-          "TP"
-        ],
-        "damageTags": [
-          "B",
-          "S"
-        ],
-        "spellcastingTags": [
-          "O"
-        ],
-        "miscTags": [
-          "MA",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "grappled"
-        ],
-        "conditionInflictSpell": [
-          "stunned"
-        ],
-        "savingThrowForced": [
-          "dexterity"
-        ],
-        "savingThrowForcedSpell": [
-          "constitution",
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Glabrezu",
             "entries": [
+              "{@i Demon of Delusion and Entrapment}",
               {
-                "type": "section",
-                "name": "Glabrezu",
-                "entries": [
-                  "{@i Demon of Delusion and Entrapment}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Planar (Abyss)|bestiary|environment=planar, abyss}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Relics"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Planar (Abyss)|bestiary|environment=planar, abyss}"
                   },
-                  "Glabrezus embody delusion and predatory guile. These cunning demons know the most effective traps are those that individuals devise for themselves. Despite having massive claws and overwhelming physicality, glabrezus excel at using flattery and misdirection to coerce victims into isolating themselves and harming others.",
-                  "In the Abyss, glabrezus act as lone hunters or deceitful advisers to greater demons. Glabrezus seek routes to the Material Plane and relish being summoned by magic-users. They eagerly serve mortals while tempting them to betray their allies and indulge in hubristic fantasies. A glabrezu strives to murder its summoner once the magic-user has committed irredeemable misdeeds and the mortal's soul is surely condemned to the Abyss.",
                   {
-                    "type": "insetReadaloud",
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Relics"
+                  }
+                ]
+              },
+              "Glabrezus embody delusion and predatory guile. These cunning demons know the most effective traps are those that individuals devise for themselves. Despite having massive claws and overwhelming physicality, glabrezus excel at using flattery and misdirection to coerce victims into isolating themselves and harming others.",
+              "In the Abyss, glabrezus act as lone hunters or deceitful advisers to greater demons. Glabrezus seek routes to the Material Plane and relish being summoned by magic-users. They eagerly serve mortals while tempting them to betray their allies and indulge in hubristic fantasies. A glabrezu strives to murder its summoner once the magic-user has committed irredeemable misdeeds and the mortal's soul is surely condemned to the Abyss.",
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
                     "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "Your companion's life, or what you've journeyed through infinity in search of! Make your choice."
-                        ],
-                        "by": "Gerrzog, Glabrezu of the Infinite Staircase"
-                      }
-                    ]
+                      "Your companion's life, or what you've journeyed through infinity in search of! Make your choice."
+                    ],
+                    "by": "Gerrzog, Glabrezu of the Infinite Staircase"
                   }
                 ]
               }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Glabrezu.webp"
-                },
-                "credit": "Richard Luong",
-                "width": 2550,
-                "height": 1650
-              }
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Glabrezu.webp"
+            },
+            "credit": "Richard Luong",
+            "width": 2550,
+            "height": 1650
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

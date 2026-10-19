@@ -2,17 +2,11 @@
   "id": "item.bit-and-bridle",
   "name": "Bit and bridle",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Bit and bridle",
-        "type": "TAH",
-        "rarity": "none",
-        "weight": 1,
-        "value": 200
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TAH",
+    "rarity": "none",
+    "weight": 1,
+    "value": 200
+  }
 }

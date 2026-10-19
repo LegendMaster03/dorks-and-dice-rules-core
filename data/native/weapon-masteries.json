@@ -8,137 +8,89 @@
       "id": "itemmastery.cleave",
       "name": "Cleave",
       "kind": "itemMastery",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Cleave",
-            "entries": [
-              "If you hit a creature with a melee attack roll using this weapon, you can make a melee attack roll with the weapon against a second creature within 5 feet of the first that is also within your reach. On a hit, the second creature takes the weapon's damage, but don't add your ability modifier to that damage unless that modifier is negative. You can make this extra attack only once per turn."
-            ]
-          }
-        }
-      ]
+      "baselineStatus": "retained-native-definition",
+      "definition": {
+        "entries": [
+          "If you hit a creature with a melee attack roll using this weapon, you can make a melee attack roll with the weapon against a second creature within 5 feet of the first that is also within your reach. On a hit, the second creature takes the weapon's damage, but don't add your ability modifier to that damage unless that modifier is negative. You can make this extra attack only once per turn."
+        ]
+      }
     },
     {
       "id": "itemmastery.graze",
       "name": "Graze",
       "kind": "itemMastery",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Graze",
-            "entries": [
-              "If your attack roll with this weapon misses a creature, you can deal damage to that creature equal to the ability modifier you used to make the attack roll. This damage is the same type dealt by the weapon, and the damage can be increased only by increasing the ability modifier."
-            ]
-          }
-        }
-      ]
+      "baselineStatus": "retained-native-definition",
+      "definition": {
+        "entries": [
+          "If your attack roll with this weapon misses a creature, you can deal damage to that creature equal to the ability modifier you used to make the attack roll. This damage is the same type dealt by the weapon, and the damage can be increased only by increasing the ability modifier."
+        ]
+      }
     },
     {
       "id": "itemmastery.nick",
       "name": "Nick",
       "kind": "itemMastery",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Nick",
-            "entries": [
-              "When you make the extra attack of the Light property, you can make it as part of the {@action Attack|SRD52} action instead of as a {@variantrule Bonus Action|SRD52}. You can make this extra attack only once per turn."
-            ]
-          }
-        }
-      ]
+      "baselineStatus": "retained-native-definition",
+      "definition": {
+        "entries": [
+          "When you make the extra attack of the Light property, you can make it as part of the {@action Attack|SRD52} action instead of as a {@variantrule Bonus Action|SRD52}. You can make this extra attack only once per turn."
+        ]
+      }
     },
     {
       "id": "itemmastery.push",
       "name": "Push",
       "kind": "itemMastery",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Push",
-            "entries": [
-              "If you hit a creature with this weapon, you can push the creature up to 10 feet straight away from yourself if it is Large or smaller."
-            ]
-          }
-        }
-      ]
+      "baselineStatus": "retained-native-definition",
+      "definition": {
+        "entries": [
+          "If you hit a creature with this weapon, you can push the creature up to 10 feet straight away from yourself if it is Large or smaller."
+        ]
+      }
     },
     {
       "id": "itemmastery.sap",
       "name": "Sap",
       "kind": "itemMastery",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Sap",
-            "entries": [
-              "If you hit a creature with this weapon, that creature has {@variantrule Disadvantage|SRD52} on its next attack roll before the start of your next turn."
-            ]
-          }
-        }
-      ]
+      "baselineStatus": "retained-native-definition",
+      "definition": {
+        "entries": [
+          "If you hit a creature with this weapon, that creature has {@variantrule Disadvantage|SRD52} on its next attack roll before the start of your next turn."
+        ]
+      }
     },
     {
       "id": "itemmastery.slow",
       "name": "Slow",
       "kind": "itemMastery",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Slow",
-            "entries": [
-              "If you hit a creature with this weapon and deal damage to it, you can reduce its {@variantrule Speed|SRD52} by 10 feet until the start of your next turn. If the creature is hit more than once by weapons that have this property, the {@variantrule Speed|SRD52} reduction doesn't exceed 10 feet."
-            ]
-          }
-        }
-      ]
+      "baselineStatus": "retained-native-definition",
+      "definition": {
+        "entries": [
+          "If you hit a creature with this weapon and deal damage to it, you can reduce its {@variantrule Speed|SRD52} by 10 feet until the start of your next turn. If the creature is hit more than once by weapons that have this property, the {@variantrule Speed|SRD52} reduction doesn't exceed 10 feet."
+        ]
+      }
     },
     {
       "id": "itemmastery.topple",
       "name": "Topple",
       "kind": "itemMastery",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Topple",
-            "entries": [
-              "If you hit a creature with this weapon, you can force the creature to make a Constitution saving throw ({@dc 8} plus the ability modifier used to make the attack roll and your {@variantrule Proficiency|SRD52|Proficiency Bonus}). On a failed save, the creature has the {@condition Prone|SRD52} condition."
-            ]
-          }
-        }
-      ]
+      "baselineStatus": "retained-native-definition",
+      "definition": {
+        "entries": [
+          "If you hit a creature with this weapon, you can force the creature to make a Constitution saving throw ({@dc 8} plus the ability modifier used to make the attack roll and your {@variantrule Proficiency|SRD52|Proficiency Bonus}). On a failed save, the creature has the {@condition Prone|SRD52} condition."
+        ]
+      }
     },
     {
       "id": "itemmastery.vex",
       "name": "Vex",
       "kind": "itemMastery",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Vex",
-            "entries": [
-              "If you hit a creature with this weapon and deal damage to the creature, you have {@variantrule Advantage|SRD52} on your next attack roll against that creature before the end of your next turn."
-            ]
-          }
-        }
-      ]
+      "baselineStatus": "retained-native-definition",
+      "definition": {
+        "entries": [
+          "If you hit a creature with this weapon and deal damage to the creature, you have {@variantrule Advantage|SRD52} on your next attack roll against that creature before the end of your next turn."
+        ]
+      }
     }
   ]
 }

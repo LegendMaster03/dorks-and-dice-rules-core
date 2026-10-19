@@ -2,24 +2,18 @@
   "id": "deity.hades",
   "name": "Hades",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Hades",
-        "pantheon": "Greek",
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "title": "God of the underworld",
-        "domains": [
-          "Death",
-          "Grave"
-        ],
-        "symbol": "Black ram"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "title": "God of the underworld",
+    "domains": [
+      "Death",
+      "Grave"
+    ],
+    "symbol": "Black ram"
+  }
 }

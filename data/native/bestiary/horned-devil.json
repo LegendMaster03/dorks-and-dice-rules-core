@@ -2,375 +2,191 @@
   "id": "monster.horned-devil",
   "name": "Horned Devil",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Horned Devil",
-        "size": [
-          "L"
-        ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "devil"
-          ]
-        },
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 18,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 178,
-          "formula": "17d10 + 85"
-        },
-        "speed": {
-          "walk": 20,
-          "fly": 60
-        },
-        "str": 22,
-        "dex": 17,
-        "con": 21,
-        "int": 12,
-        "wis": 16,
-        "cha": 17,
-        "save": {
-          "str": "+10",
-          "dex": "+7",
-          "wis": "+7",
-          "cha": "+7"
-        },
-        "senses": [
-          "darkvision 120 ft."
-        ],
-        "passive": 13,
-        "resist": [
-          "cold",
-          {
-            "resist": [
-              "bludgeoning",
-              "piercing",
-              "slashing"
-            ],
-            "note": "from nonmagical attacks that aren't silvered",
-            "cond": true
-          }
-        ],
-        "immune": [
-          "fire",
-          "poison"
-        ],
-        "conditionImmune": [
-          "poisoned"
-        ],
-        "languages": [
-          "Infernal",
-          "telepathy 120 ft."
-        ],
-        "cr": "11",
-        "trait": [
-          {
-            "name": "Devil's Sight",
-            "entries": [
-              "Magical darkness doesn't impede the devil's darkvision."
-            ]
-          },
-          {
-            "name": "Magic Resistance",
-            "entries": [
-              "The devil has advantage on saving throws against spells and other magical effects."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The devil makes three melee attacks: two with its fork and one with its tail. It can use Hurl Flame in place of any melee attack."
-            ]
-          },
-          {
-            "name": "Fork",
-            "entries": [
-              "{@atk mw} {@hit 10} to hit, reach 10 ft., one target. {@h}15 ({@damage 2d8 + 6}) piercing damage."
-            ]
-          },
-          {
-            "name": "Tail",
-            "entries": [
-              "{@atk mw} {@hit 10} to hit, reach 10 ft., one target. {@h}10 ({@damage 1d8 + 6}) piercing damage. If the target is a creature other than an undead or a construct, it must succeed on a {@dc 17} Constitution saving throw or lose 10 ({@dice 3d6}) hit points at the start of each of its turns due to an infernal wound. Each time the devil hits the wounded target with this attack, the damage dealt by the wound increases by 10 ({@damage 3d6}). Any creature can take an action to stanch the wound with a successful {@dc 12} Wisdom ({@skill Medicine}) check. The wound also closes if the target receives magical healing."
-            ]
-          },
-          {
-            "name": "Hurl Flame",
-            "entries": [
-              "{@atk rs} {@hit 7} to hit, range 150 ft., one target. {@h}14 ({@damage 4d6}) fire damage. If the target is a flammable object that isn't being worn or carried, it also catches fire."
-            ]
-          }
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/horned-devil.opus"
-        },
-        "traitTags": [
-          "Devil's Sight",
-          "Magic Resistance"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "I",
-          "TP"
-        ],
-        "damageTags": [
-          "F",
-          "P"
-        ],
-        "miscTags": [
-          "MW",
-          "RCH"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Horned Devil",
-            "_copy": {
-              "name": "Devils",
-              "source": "SRD51",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "entries",
-                    "entries": [
-                      {
-                        "type": "entries",
-                        "entries": [
-                          "Horned devils are lazy to the point of belligerence and reluctant to put themselves in harm's way. Moreover, they hate and fear any creature stronger than themselves. When they are sufficiently provoked or antagonized, the fury of these fiends can be terrifying.",
-                          "A malebranche stands as tall as an ogre and is sheathed in scales as tough as iron. The flying infantry of the hellish legions, horned devils follow orders to the letter. Their huge wings and sweeping horns create an intimidating presence as they drop from the sky and strike with deadly forks and lashing tails."
-                        ]
-                      }
-                    ]
-                  }
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "image",
-                    "href": {
-                      "type": "internal",
-                      "path": "bestiary/MM/Horned Devil.webp"
-                    },
-                    "credit": "Jim Pavelec",
-                    "width": 1000,
-                    "height": 925
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Devils"
+    ],
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "devil"
+      ]
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      18
+    ],
+    "hp": {
+      "average": 199,
+      "formula": "19d10 + 95"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 22,
+    "dex": 17,
+    "con": 21,
+    "int": 12,
+    "wis": 16,
+    "cha": 18,
+    "save": {
+      "str": "+10",
+      "dex": "+7",
+      "wis": "+7",
+      "cha": "+8"
+    },
+    "senses": [
+      "Darkvision 150 ft. (unimpeded by magical {@variantrule Darkness|SRD52})"
+    ],
+    "passive": 13,
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "languages": [
+      "Infernal; telepathy 120 ft."
+    ],
+    "cr": "11",
+    "trait": [
+      {
+        "name": "Diabolical Restoration",
+        "entries": [
+          "If the devil dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Nine Hells."
+        ]
+      },
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The devil has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Devil's Sight",
+        "entries": [
+          "Magical darkness doesn't impede the devil's darkvision."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The devil makes three attacks, using Searing Fork or Hurl Flame in any combination. It can replace one attack with a use of Infernal Tail."
+        ]
+      },
+      {
+        "name": "Searing Fork",
+        "entries": [
+          "{@atkr m} {@hit 10}, reach 10 ft. {@h}15 ({@damage 2d8 + 6}) Piercing damage plus 9 ({@damage 2d8}) Fire damage."
+        ]
+      },
+      {
+        "name": "Hurl Flame",
+        "entries": [
+          "{@atkr r} {@hit 8}, range 150 ft. {@h}26 ({@damage 5d8 + 4}) Fire damage. If the target is a flammable object that isn't being worn or carried, it starts {@hazard burning|SRD52}."
+        ]
+      },
+      {
+        "name": "Infernal Tail",
+        "entries": [
+          "{@actSave dex} {@dc 17}, one creature the devil can see within 10 feet. {@actSaveFail} 10 ({@damage 1d8 + 6}) Necrotic damage, and the target receives an infernal wound if it doesn't have one. While wounded, the target loses 10 ({@dice 3d6}) {@variantrule Hit Points|SRD52} at the start of each of its turns. The wound closes after 1 minute, after a spell restores {@variantrule Hit Points|SRD52} to the target, or after the target or a creature within 5 feet of it takes an action to stanch the wound, doing so by succeeding on a {@dc 17} Wisdom ({@skill Medicine|SRD52}) check."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, nine hells"
+    ],
+    "treasure": [
+      "relics"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/horned-devil.opus"
+    },
+    "traitTags": [
+      "Devil's Sight",
+      "Magic Resistance"
+    ],
+    "senseTags": [
+      "SD"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "I",
+      "TP"
+    ],
+    "damageTags": [
+      "F",
+      "N",
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "RA",
+      "RCH"
+    ],
+    "savingThrowForced": [
+      "dexterity"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Horned Devil",
-        "group": [
-          "Devils"
-        ],
-        "size": [
-          "L"
-        ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "devil"
-          ]
-        },
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          18
-        ],
-        "hp": {
-          "average": 199,
-          "formula": "19d10 + 95"
-        },
-        "speed": {
-          "walk": 30,
-          "fly": 60
-        },
-        "initiative": {
-          "proficiency": 1
-        },
-        "str": 22,
-        "dex": 17,
-        "con": 21,
-        "int": 12,
-        "wis": 16,
-        "cha": 18,
-        "save": {
-          "str": "+10",
-          "dex": "+7",
-          "wis": "+7",
-          "cha": "+8"
-        },
-        "senses": [
-          "Darkvision 150 ft. (unimpeded by magical {@variantrule Darkness|SRD52})"
-        ],
-        "passive": 13,
-        "immune": [
-          "fire",
-          "poison"
-        ],
-        "conditionImmune": [
-          "poisoned"
-        ],
-        "languages": [
-          "Infernal; telepathy 120 ft."
-        ],
-        "cr": "11",
-        "trait": [
+        "entries": [
           {
-            "name": "Diabolical Restoration",
-            "entries": [
-              "If the devil dies outside the Nine Hells, its body disappears in sulfurous smoke, and it gains a new body instantly, reviving with all its {@variantrule Hit Points|SRD52} somewhere in the Nine Hells."
-            ]
-          },
-          {
-            "name": "Magic Resistance",
-            "entries": [
-              "The devil has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The devil makes three attacks, using Searing Fork or Hurl Flame in any combination. It can replace one attack with a use of Infernal Tail."
-            ]
-          },
-          {
-            "name": "Searing Fork",
-            "entries": [
-              "{@atkr m} {@hit 10}, reach 10 ft. {@h}15 ({@damage 2d8 + 6}) Piercing damage plus 9 ({@damage 2d8}) Fire damage."
-            ]
-          },
-          {
-            "name": "Hurl Flame",
-            "entries": [
-              "{@atkr r} {@hit 8}, range 150 ft. {@h}26 ({@damage 5d8 + 4}) Fire damage. If the target is a flammable object that isn't being worn or carried, it starts {@hazard burning|SRD52}."
-            ]
-          },
-          {
-            "name": "Infernal Tail",
-            "entries": [
-              "{@actSave dex} {@dc 17}, one creature the devil can see within 10 feet. {@actSaveFail} 10 ({@damage 1d8 + 6}) Necrotic damage, and the target receives an infernal wound if it doesn't have one. While wounded, the target loses 10 ({@dice 3d6}) {@variantrule Hit Points|SRD52} at the start of each of its turns. The wound closes after 1 minute, after a spell restores {@variantrule Hit Points|SRD52} to the target, or after the target or a creature within 5 feet of it takes an action to stanch the wound, doing so by succeeding on a {@dc 17} Wisdom ({@skill Medicine|SRD52}) check."
-            ]
-          }
-        ],
-        "environment": [
-          "planar, nine hells"
-        ],
-        "treasure": [
-          "relics"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/horned-devil.opus"
-        },
-        "traitTags": [
-          "Devil's Sight",
-          "Magic Resistance"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "I",
-          "TP"
-        ],
-        "damageTags": [
-          "F",
-          "N",
-          "P"
-        ],
-        "miscTags": [
-          "MA",
-          "RA",
-          "RCH"
-        ],
-        "savingThrowForced": [
-          "dexterity"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Horned Devil",
             "entries": [
+              "{@i Devil of Hatred and Subjugation}",
               {
-                "type": "section",
-                "name": "Horned Devil",
-                "entries": [
-                  "{@i Devil of Hatred and Subjugation}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Planar (Nine Hells)|bestiary|environment=planar, nine hells}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Relics"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Planar (Nine Hells)|bestiary|environment=planar, nine hells}"
                   },
-                  "Horned devils, also known as cornugons or malebranche, are infernal warriors that exact the will of diabolical generals and lead other devils in battle. Their bodies and weapons are forged in the Nine Hells, and they torment their foes with diabolical flames and pernicious wounds."
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Relics"
+                  }
                 ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Horned Devil.webp"
-                },
-                "credit": "Yongjae Choi",
-                "width": 1047,
-                "height": 2560
-              }
+              },
+              "Horned devils, also known as cornugons or malebranche, are infernal warriors that exact the will of diabolical generals and lead other devils in battle. Their bodies and weapons are forged in the Nine Hells, and they torment their foes with diabolical flames and pernicious wounds."
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Horned Devil.webp"
+            },
+            "credit": "Yongjae Choi",
+            "width": 1047,
+            "height": 2560
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

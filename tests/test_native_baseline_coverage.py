@@ -64,8 +64,6 @@ class NativeSrdBaselineTests(unittest.TestCase):
                 native = load(path)
                 self.assertEqual(cid, native["id"], relative)
             if cid.startswith("condition.") or cid == "rule.conditions":
-                # The coverage manifest records the pinned SRD staging snapshot.
-                # Reconciled native definitions are no longer inert candidates.
                 self.assertNotIn("baselineStatus", native, cid)
                 self.assertNotIn("candidateDefinitions", native, cid)
                 if cid.startswith("condition."):
@@ -76,6 +74,25 @@ class NativeSrdBaselineTests(unittest.TestCase):
                     self.assertIn(cid, approved, cid)
                 else:
                     self.assertEqual(30, len(native["conditionIds"]))
+                continue
+            if row["status"] == "matching-candidates":
+                self.assertNotIn("candidateDefinitions", native, cid)
+                self.assertNotIn("baselineStatus", native, cid)
+                self.assertIn("abbreviation", native, cid)
+                continue
+            if row["status"] == "native-monster-identity-alias":
+                self.assertEqual("native-identity-alias", native["baselineStatus"], cid)
+                self.assertTrue(native["aliasOf"].startswith("monster."), cid)
+                self.assertNotIn("definition", native, cid)
+                self.assertNotIn("candidateDefinitions", native, cid)
+                continue
+            if row["status"] in ("native-single-source-retained",
+                                 "native-equivalent-reconciled",
+                                 "native-compatible-merged",
+                                 "native-monster-role-default"):
+                self.assertNotIn("candidateDefinitions", native, cid)
+                self.assertEqual("retained-native-definition", native["baselineStatus"])
+                self.assertIsInstance(native["definition"], dict)
                 continue
             self.assertEqual("pending-native-reconciliation",
                              native["baselineStatus"], cid)
@@ -129,14 +146,15 @@ class NativeSrdBaselineTests(unittest.TestCase):
             ("classes/subclasses/monk/open-hand.json", 2),
             ("spells/acid-splash.json", 2),
             ("species/base/dragonborn.json", 2),
-            ("bestiary/aboleth.json", 2),
+
         ]:
             d = load(NATIVE / path)
             self.assertEqual(expected, len(d["candidateDefinitions"]), path)
             self.assertTrue(all(v["content"] for v in d["candidateDefinitions"]))
             self.assertNotIn("fluff", path)
         aboleth = load(NATIVE / "bestiary/aboleth.json")
-        self.assertTrue(any("lore" in c["content"] for c in aboleth["candidateDefinitions"]))
+        self.assertEqual("retained-native-definition", aboleth["baselineStatus"])
+        self.assertIn("lore", aboleth["definition"])
         self.assertFalse(list(NATIVE.rglob("fluff-*.json")))
 
     def test_no_runtime_source_specific_switch_and_no_leftover_bootstrap(self):

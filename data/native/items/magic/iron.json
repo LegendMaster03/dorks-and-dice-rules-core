@@ -2,27 +2,11 @@
   "id": "item.iron",
   "name": "Iron",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Iron",
-        "type": "TG",
-        "rarity": "none",
-        "weight": 1,
-        "value": 10
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Iron",
-        "type": "TG|SRD52",
-        "rarity": "none",
-        "weight": 1,
-        "value": 10
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "weight": 1,
+    "value": 10
+  }
 }

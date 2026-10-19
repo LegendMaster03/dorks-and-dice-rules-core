@@ -2,18 +2,12 @@
   "id": "item.donkey",
   "name": "Donkey",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Donkey",
-        "type": "MNT",
-        "rarity": "none",
-        "value": 800,
-        "carryingCapacity": 420,
-        "speed": 40
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "MNT",
+    "rarity": "none",
+    "value": 800,
+    "carryingCapacity": 420,
+    "speed": 40
+  }
 }

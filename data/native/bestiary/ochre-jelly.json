@@ -2,324 +2,186 @@
   "id": "monster.ochre-jelly",
   "name": "Ochre Jelly",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Ochre Jelly",
-        "size": [
-          "L"
-        ],
-        "type": "ooze",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          8
-        ],
-        "hp": {
-          "average": 45,
-          "formula": "6d10 + 12"
-        },
-        "speed": {
-          "walk": 10,
-          "climb": 10
-        },
-        "str": 15,
-        "dex": 6,
-        "con": 14,
-        "int": 2,
-        "wis": 6,
-        "cha": 1,
-        "senses": [
-          "blindsight 60 ft. (blind beyond this radius)"
-        ],
-        "passive": 8,
-        "resist": [
-          "acid"
-        ],
-        "immune": [
-          "lightning",
-          "slashing"
-        ],
-        "conditionImmune": [
-          "blinded",
-          "charmed",
-          "deafened",
-          "exhaustion",
-          "frightened",
-          "prone"
-        ],
-        "cr": "2",
-        "trait": [
-          {
-            "name": "Amorphous",
-            "entries": [
-              "The jelly can move through a space as narrow as 1 inch wide without squeezing."
-            ]
-          },
-          {
-            "name": "Spider Climb",
-            "entries": [
-              "The jelly can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Pseudopod",
-            "entries": [
-              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}9 ({@damage 2d6 + 2}) bludgeoning damage plus 3 ({@damage 1d6}) acid damage."
-            ]
-          }
-        ],
-        "reaction": [
-          {
-            "name": "Split",
-            "entries": [
-              "When a jelly that is Medium or larger is subjected to lightning or slashing damage, it splits into two new jellies if it has at least 10 hit points. Each new jelly has hit points equal to half the original jelly's, rounded down. New jellies are one size smaller than the original jelly."
-            ]
-          }
-        ],
-        "environment": [
-          "underdark"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/ochre-jelly.opus"
-        },
-        "traitTags": [
-          "Amorphous",
-          "Spider Climb"
-        ],
-        "senseTags": [
-          "B"
-        ],
-        "damageTags": [
-          "A",
-          "B"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Ochre Jelly",
-            "_copy": {
-              "name": "Oozes",
-              "source": "SRD51",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    "Ochre jellies are yellowish blobs that can slide under doors and through narrow cracks in pursuit of creatures to devour. They have enough bestial cunning to avoid large groups of enemies.",
-                    "An ochre jelly follows at a safe distance as it pursues its meal. Its digestive enzymes dissolve flesh quickly but have no effect on other substances such as bone, wood, and metal."
-                  ]
-                }
-              }
-            },
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Ochre Jelly.webp"
-                },
-                "credit": "Conceptopolis",
-                "width": 1000,
-                "height": 853
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "ooze",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      8
+    ],
+    "hp": {
+      "average": 52,
+      "formula": "7d10 + 14"
+    },
+    "speed": {
+      "walk": 20,
+      "climb": 20
+    },
+    "str": 15,
+    "dex": 6,
+    "con": 14,
+    "int": 2,
+    "wis": 6,
+    "cha": 1,
+    "senses": [
+      "Blindsight 60 ft."
+    ],
+    "passive": 8,
+    "resist": [
+      "acid"
+    ],
+    "immune": [
+      "lightning",
+      "slashing"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "deafened",
+      "exhaustion",
+      "frightened",
+      "grappled",
+      "prone",
+      "restrained"
+    ],
+    "cr": "2",
+    "trait": [
+      {
+        "name": "Amorphous",
+        "entries": [
+          "The jelly can move through a space as narrow as 1 inch without expending extra movement to do so."
+        ]
+      },
+      {
+        "name": "Spider Climb",
+        "entries": [
+          "The jelly can climb difficult surfaces, including along ceilings, without needing to make an ability check."
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Pseudopod",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}12 ({@damage 3d6 + 2}) Acid damage."
+        ]
+      }
+    ],
+    "reaction": [
+      {
+        "name": "Split",
+        "entries": [
+          "{@actTrigger} While the jelly is Large or Medium and has 10+ {@variantrule Hit Points|SRD52}, it becomes {@status Bloodied|SRD52} or is subjected to Lightning or Slashing damage. {@actResponse} The jelly splits into two new Ochre Jellies. Each new jelly is one size smaller than the original jelly and acts on its {@variantrule Initiative|SRD52}. The original jelly's {@variantrule Hit Points|SRD52} are divided evenly between the new jellies (round down)."
+        ]
+      }
+    ],
+    "environment": [
+      "underdark"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/ochre-jelly.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "traitTags": [
+      "Amorphous",
+      "Spider Climb"
+    ],
+    "senseTags": [
+      "B"
+    ],
+    "damageTags": [
+      "A"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Ochre Jelly",
-        "size": [
-          "L"
-        ],
-        "type": "ooze",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          8
-        ],
-        "hp": {
-          "average": 52,
-          "formula": "7d10 + 14"
-        },
-        "speed": {
-          "walk": 20,
-          "climb": 20
-        },
-        "str": 15,
-        "dex": 6,
-        "con": 14,
-        "int": 2,
-        "wis": 6,
-        "cha": 1,
-        "senses": [
-          "Blindsight 60 ft."
-        ],
-        "passive": 8,
-        "resist": [
-          "acid"
-        ],
-        "immune": [
-          "lightning",
-          "slashing"
-        ],
-        "conditionImmune": [
-          "charmed",
-          "deafened",
-          "exhaustion",
-          "frightened",
-          "grappled",
-          "prone",
-          "restrained"
-        ],
-        "cr": "2",
-        "trait": [
+        "entries": [
           {
-            "name": "Amorphous",
-            "entries": [
-              "The jelly can move through a space as narrow as 1 inch without expending extra movement to do so."
-            ]
-          },
-          {
-            "name": "Spider Climb",
-            "entries": [
-              "The jelly can climb difficult surfaces, including along ceilings, without needing to make an ability check."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Pseudopod",
-            "entries": [
-              "{@atkr m} {@hit 4}, reach 5 ft. {@h}12 ({@damage 3d6 + 2}) Acid damage."
-            ]
-          }
-        ],
-        "reaction": [
-          {
-            "name": "Split",
-            "entries": [
-              "{@actTrigger} While the jelly is Large or Medium and has 10+ {@variantrule Hit Points|SRD52}, it becomes {@status Bloodied|SRD52} or is subjected to Lightning or Slashing damage. {@actResponse} The jelly splits into two new Ochre Jellies. Each new jelly is one size smaller than the original jelly and acts on its {@variantrule Initiative|SRD52}. The original jelly's {@variantrule Hit Points|SRD52} are divided evenly between the new jellies (round down)."
-            ]
-          }
-        ],
-        "environment": [
-          "underdark"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/ochre-jelly.opus"
-        },
-        "traitTags": [
-          "Amorphous",
-          "Spider Climb"
-        ],
-        "senseTags": [
-          "B"
-        ],
-        "damageTags": [
-          "A"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Ochre Jelly",
             "entries": [
+              "{@i Multiplying Amoeboid Hunter}",
               {
-                "type": "section",
-                "name": "Ochre Jelly",
-                "entries": [
-                  "{@i Multiplying Amoeboid Hunter}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Underdark|bestiary|environment=underdark}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "None"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Underdark|bestiary|environment=underdark}"
                   },
-                  "Ochre jellies are giant, yellow-brown amoebas that digest organic creatures. They tirelessly hunt any prey smaller than themselves, oozing over, under, and around obstacles in their path. Once they overwhelm their quarry, these acidic slimes dissolve the flesh, hair, and scales of their prey, leaving behind clothing, equipment, treated leather, and bone.",
-                  "If damaged by lightning or a slashing weapon, an ochre jelly splits in two. These smaller jellies work together to consume foes, but afterward they move on to hunt independently. Both eventually grow into full-size jellies.",
-                  "What ochre jellies can't dissolve they leave behind. Roll on or choose a result from the Ochre Jelly Leftovers table to inspire such remains.",
                   {
-                    "type": "table",
-                    "caption": "Ochre Jelly Leftovers",
-                    "colLabels": [
-                      "1d6",
-                      "After a Meal, the Ochre Jelly Leaves Behind..."
-                    ],
-                    "colStyles": [
-                      "col-2 text-center",
-                      "col-10"
-                    ],
-                    "rows": [
-                      [
-                        "1",
-                        "A bone etched with a word or an eerie symbol."
-                      ],
-                      [
-                        "2",
-                        "Broken dragonborn or tiefling horns."
-                      ],
-                      [
-                        "3",
-                        "An ornate prosthetic limb."
-                      ],
-                      [
-                        "4",
-                        "The skeleton of an explorer's pet (perhaps a small dog, monkey, or parrot)."
-                      ],
-                      [
-                        "5",
-                        "A skull with gold teeth worth {@dice 1d4} GP."
-                      ],
-                      [
-                        "6",
-                        "A spotless suit of metal armor."
-                      ]
-                    ]
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
                   }
                 ]
-              }
-            ],
-            "images": [
+              },
+              "Ochre jellies are giant, yellow-brown amoebas that digest organic creatures. They tirelessly hunt any prey smaller than themselves, oozing over, under, and around obstacles in their path. Once they overwhelm their quarry, these acidic slimes dissolve the flesh, hair, and scales of their prey, leaving behind clothing, equipment, treated leather, and bone.",
+              "If damaged by lightning or a slashing weapon, an ochre jelly splits in two. These smaller jellies work together to consume foes, but afterward they move on to hunt independently. Both eventually grow into full-size jellies.",
+              "What ochre jellies can't dissolve they leave behind. Roll on or choose a result from the Ochre Jelly Leftovers table to inspire such remains.",
               {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Ochre Jelly.webp"
-                },
-                "credit": "Mark Behm",
-                "width": 2550,
-                "height": 1702
+                "type": "table",
+                "caption": "Ochre Jelly Leftovers",
+                "colLabels": [
+                  "1d6",
+                  "After a Meal, the Ochre Jelly Leaves Behind..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "A bone etched with a word or an eerie symbol."
+                  ],
+                  [
+                    "2",
+                    "Broken dragonborn or tiefling horns."
+                  ],
+                  [
+                    "3",
+                    "An ornate prosthetic limb."
+                  ],
+                  [
+                    "4",
+                    "The skeleton of an explorer's pet (perhaps a small dog, monkey, or parrot)."
+                  ],
+                  [
+                    "5",
+                    "A skull with gold teeth worth {@dice 1d4} GP."
+                  ],
+                  [
+                    "6",
+                    "A spotless suit of metal armor."
+                  ]
+                ]
               }
             ]
           }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Ochre Jelly.webp"
+            },
+            "credit": "Mark Behm",
+            "width": 2550,
+            "height": 1702
+          }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

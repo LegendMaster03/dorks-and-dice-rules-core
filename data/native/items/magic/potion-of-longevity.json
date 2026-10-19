@@ -2,23 +2,17 @@
   "id": "item.potion-of-longevity",
   "name": "Potion of Longevity",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Potion of Longevity",
-        "type": "P|SRD52",
-        "rarity": "very rare",
-        "weight": 0.5,
-        "entries": [
-          "When you drink this potion, your physical age is reduced by {@dice 1d6 + 6} years, to a minimum of 13 years. Each time you subsequently drink a Potion of Longevity, there is 10 percent cumulative chance that you instead age by {@dice 1d6 + 6} years.",
-          "Suspended in this amber liquid is a tiny heart that, against all reason, is still beating. These ingredients vanish when the potion is opened."
-        ],
-        "miscTags": [
-          "CNS"
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "P|SRD52",
+    "rarity": "very rare",
+    "weight": 0.5,
+    "entries": [
+      "When you drink this potion, your physical age is reduced by {@dice 1d6 + 6} years, to a minimum of 13 years. Each time you subsequently drink a Potion of Longevity, there is 10 percent cumulative chance that you instead age by {@dice 1d6 + 6} years.",
+      "Suspended in this amber liquid is a tiny heart that, against all reason, is still beating. These ingredients vanish when the potion is opened."
+    ],
+    "miscTags": [
+      "CNS"
+    ]
+  }
 }

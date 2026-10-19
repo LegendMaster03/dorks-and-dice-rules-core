@@ -2,23 +2,17 @@
   "id": "deity.sif",
   "name": "Sif",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Sif",
-        "pantheon": "Norse",
-        "alignment": [
-          "C",
-          "G"
-        ],
-        "title": "Goddess of war",
-        "domains": [
-          "War"
-        ],
-        "symbol": "Upraised sword"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Norse",
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "title": "Goddess of war",
+    "domains": [
+      "War"
+    ],
+    "symbol": "Upraised sword"
+  }
 }

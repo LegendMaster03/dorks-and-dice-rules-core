@@ -2,46 +2,40 @@
   "id": "magicvariant.demon-armor",
   "name": "Demon Armor",
   "kind": "magicvariant",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Demon Armor",
-        "type": "GV|SRD52",
-        "requires": [
-          {
-            "type": "LA|SRD52"
-          },
-          {
-            "type": "MA|SRD52"
-          },
-          {
-            "type": "HA|SRD52"
-          }
-        ],
-        "inherits": {
-          "namePrefix": "Demon ",
-          "source": "SRD52",
-          "page": 218,
-          "rarity": "very rare",
-          "reqAttune": true,
-          "curse": true,
-          "grantsLanguage": true,
-          "bonusWeapon": "+1",
-          "bonusAc": "+1",
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "GV|SRD52",
+    "requires": [
+      {
+        "type": "LA|SRD52"
+      },
+      {
+        "type": "MA|SRD52"
+      },
+      {
+        "type": "HA|SRD52"
+      }
+    ],
+    "inherits": {
+      "namePrefix": "Demon ",
+      "source": "SRD52",
+      "page": 218,
+      "rarity": "very rare",
+      "reqAttune": true,
+      "curse": true,
+      "grantsLanguage": true,
+      "bonusWeapon": "+1",
+      "bonusAc": "+1",
+      "entries": [
+        "While wearing this armor, you gain a {=bonusAc} bonus to {@variantrule Armor Class|SRD52}, and you know Abyssal. In addition, the armor's clawed gauntlets allow your Unarmed Strikes to deal {@damage 1d8} Slashing damage instead of the usual Bludgeoning damage, and you gain a {=bonusWeapon} bonus to the attack and damage rolls of your Unarmed Strikes.",
+        {
+          "type": "entries",
+          "name": "Curse",
           "entries": [
-            "While wearing this armor, you gain a {=bonusAc} bonus to {@variantrule Armor Class|SRD52}, and you know Abyssal. In addition, the armor's clawed gauntlets allow your Unarmed Strikes to deal {@damage 1d8} Slashing damage instead of the usual Bludgeoning damage, and you gain a {=bonusWeapon} bonus to the attack and damage rolls of your Unarmed Strikes.",
-            {
-              "type": "entries",
-              "name": "Curse",
-              "entries": [
-                "Once you don this cursed armor, you can't doff it unless you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic. While wearing the armor, you have {@variantrule Disadvantage|SRD52} on attack rolls against demons and on saving throws against their spells and special abilities."
-              ]
-            }
+            "Once you don this cursed armor, you can't doff it unless you are targeted by a {@spell Remove Curse|SRD52} spell or similar magic. While wearing the armor, you have {@variantrule Disadvantage|SRD52} on attack rolls against demons and on saving throws against their spells and special abilities."
           ]
         }
-      }
+      ]
     }
-  ]
+  }
 }

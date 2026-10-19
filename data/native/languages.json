@@ -86,16 +86,10 @@
       "id": "language.common-sign-language",
       "name": "Common Sign Language",
       "kind": "language",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Common Sign Language",
-            "type": "standard"
-          }
-        }
-      ]
+      "baselineStatus": "retained-native-definition",
+      "definition": {
+        "type": "standard"
+      }
     },
     {
       "id": "language.deep-speech",

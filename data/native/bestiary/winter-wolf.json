@@ -2,308 +2,166 @@
   "id": "monster.winter-wolf",
   "name": "Winter Wolf",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Winter Wolf",
-        "size": [
-          "L"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "N",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 13,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 75,
-          "formula": "10d10 + 20"
-        },
-        "speed": {
-          "walk": 50
-        },
-        "str": 18,
-        "dex": 13,
-        "con": 14,
-        "int": 7,
-        "wis": 12,
-        "cha": 8,
-        "skill": {
-          "perception": "+5",
-          "stealth": "+3"
-        },
-        "passive": 15,
-        "immune": [
-          "cold"
-        ],
-        "languages": [
-          "Common",
-          "Giant",
-          "Winter Wolf"
-        ],
-        "cr": "3",
-        "trait": [
-          {
-            "name": "Keen Hearing and Smell",
-            "entries": [
-              "The wolf has advantage on Wisdom ({@skill Perception}) checks that rely on hearing or smell."
-            ]
-          },
-          {
-            "name": "Pack Tactics",
-            "entries": [
-              "The wolf has advantage on an attack roll against a creature if at least one of the wolf's allies is within 5 feet of the creature and the ally isn't {@condition incapacitated}."
-            ]
-          },
-          {
-            "name": "Snow Camouflage",
-            "entries": [
-              "The wolf has advantage on Dexterity ({@skill Stealth}) checks made to hide in snowy terrain."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) piercing damage. If the target is a creature, it must succeed on a {@dc 14} Strength saving throw or be knocked {@condition prone}."
-            ]
-          },
-          {
-            "name": "Cold Breath {@recharge 5}",
-            "entries": [
-              "The wolf exhales a blast of freezing wind in a 15-foot cone. Each creature in that area must make a {@dc 12} Dexterity saving throw, taking 18 ({@damage 4d8}) cold damage on a failed save, or half as much damage on a successful one."
-            ]
-          }
-        ],
-        "environment": [
-          "arctic"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/winter-wolf.opus"
-        },
-        "traitTags": [
-          "Camouflage",
-          "Keen Senses",
-          "Pack Tactics"
-        ],
-        "actionTags": [
-          "Breath Weapon"
-        ],
-        "languageTags": [
-          "C",
-          "GI",
-          "OTH"
-        ],
-        "damageTags": [
-          "C",
-          "P"
-        ],
-        "miscTags": [
-          "AOE",
-          "MW"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "dexterity",
-          "strength"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Winter Wolf",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "The arctic-dwelling winter wolf is as large as a dire wolf but has snow-white fur and pale blue eyes. Frost giants use these evil creatures as guards and hunting companions, putting the wolves' deadly breath weapon to use against their foes. Winter wolves communicate with one another using growls and barks, but they speak Common and Giant well enough to follow simple conversations."
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Winter Wolf.webp"
-                },
-                "width": 679,
-                "height": 1000
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 75,
+      "formula": "10d10 + 20"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "speed": {
+      "walk": 50
+    },
+    "str": 18,
+    "dex": 13,
+    "con": 14,
+    "int": 7,
+    "wis": 12,
+    "cha": 8,
+    "skill": {
+      "perception": "+5",
+      "stealth": "+5"
+    },
+    "passive": 15,
+    "immune": [
+      "cold"
+    ],
+    "languages": [
+      "Common",
+      "Giant"
+    ],
+    "cr": "3",
+    "trait": [
+      {
+        "name": "Pack Tactics",
+        "entries": [
+          "The wolf has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the wolf's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Keen Hearing and Smell",
+        "entries": [
+          "The wolf has advantage on Wisdom ({@skill Perception}) checks that rely on hearing or smell."
+        ]
+      },
+      {
+        "name": "Snow Camouflage",
+        "entries": [
+          "The wolf has advantage on Dexterity ({@skill Stealth}) checks made to hide in snowy terrain."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 6}, reach 5 ft. {@h}11 ({@damage 2d6 + 4}) Piercing damage. If the target is a Large or smaller creature, it has the {@condition Prone|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Cold Breath {@recharge 5}",
+        "entries": [
+          "{@actSave con} {@dc 12}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 18 ({@damage 4d8}) Cold damage. {@actSaveSuccess} Half damage."
+        ]
+      }
+    ],
+    "environment": [
+      "arctic"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/winter-wolf.opus"
+    },
+    "traitTags": [
+      "Pack Tactics"
+    ],
+    "actionTags": [
+      "Breath Weapon"
+    ],
+    "languageTags": [
+      "C",
+      "GI"
+    ],
+    "damageTags": [
+      "C",
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Winter Wolf",
-        "size": [
-          "L"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "N",
-          "E"
-        ],
-        "ac": [
-          13
-        ],
-        "hp": {
-          "average": 75,
-          "formula": "10d10 + 20"
-        },
-        "speed": {
-          "walk": 50
-        },
-        "str": 18,
-        "dex": 13,
-        "con": 14,
-        "int": 7,
-        "wis": 12,
-        "cha": 8,
-        "skill": {
-          "perception": "+5",
-          "stealth": "+5"
-        },
-        "passive": 15,
-        "immune": [
-          "cold"
-        ],
-        "languages": [
-          "Common",
-          "Giant"
-        ],
-        "cr": "3",
-        "trait": [
+        "entries": [
           {
-            "name": "Pack Tactics",
-            "entries": [
-              "The wolf has {@variantrule Advantage|SRD52} on an attack roll against a creature if at least one of the wolf's allies is within 5 feet of the creature and the ally doesn't have the {@condition Incapacitated|SRD52} condition."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atkr m} {@hit 6}, reach 5 ft. {@h}11 ({@damage 2d6 + 4}) Piercing damage. If the target is a Large or smaller creature, it has the {@condition Prone|SRD52} condition."
-            ]
-          },
-          {
-            "name": "Cold Breath {@recharge 5}",
-            "entries": [
-              "{@actSave con} {@dc 12}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 18 ({@damage 4d8}) Cold damage. {@actSaveSuccess} Half damage."
-            ]
-          }
-        ],
-        "environment": [
-          "arctic"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/winter-wolf.opus"
-        },
-        "traitTags": [
-          "Pack Tactics"
-        ],
-        "actionTags": [
-          "Breath Weapon"
-        ],
-        "languageTags": [
-          "C",
-          "GI"
-        ],
-        "damageTags": [
-          "C",
-          "P"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Winter Wolf",
             "entries": [
+              "{@i Cold-hearted Pack Hunter}",
               {
-                "type": "section",
-                "name": "Winter Wolf",
-                "entries": [
-                  "{@i Cold-hearted Pack Hunter}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Arctic|bestiary|environment=arctic}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "None"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Arctic|bestiary|environment=arctic}"
                   },
-                  "Winter wolves are horse-size, supernatural predators that prowl frigid wildernesses in deadly packs. With their great size and chilling breath, winter wolves pursue megafauna, arctic travelers, and any other creatures they catch on the tundra.",
-                  "Winter wolves are more intelligent than natural wolves and can speak. Most are predominantly concerned with their next meal, and while they might converse with other creatures in exchange for food, few concern themselves with long-term bargains or keeping their word unless they have something to gain. Winter wolves often hunt alongside frost giants that indulge them with frequent hunts and reliable meals.",
                   {
-                    "type": "insetReadaloud",
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
+                  }
+                ]
+              },
+              "Winter wolves are horse-size, supernatural predators that prowl frigid wildernesses in deadly packs. With their great size and chilling breath, winter wolves pursue megafauna, arctic travelers, and any other creatures they catch on the tundra.",
+              "Winter wolves are more intelligent than natural wolves and can speak. Most are predominantly concerned with their next meal, and while they might converse with other creatures in exchange for food, few concern themselves with long-term bargains or keeping their word unless they have something to gain. Winter wolves often hunt alongside frost giants that indulge them with frequent hunts and reliable meals.",
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
                     "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "Snowdrifts, driving hail, and wind fierce enough to strip the hairless skin off your bones—you lot have been through it all. But good news, there's a town full of warm hearths right over this rise.",
-                          "You'll never reach it, but at least your last thoughts will be warm."
-                        ],
-                        "by": "Koran, Winter Wolf"
-                      }
-                    ]
+                      "Snowdrifts, driving hail, and wind fierce enough to strip the hairless skin off your bones—you lot have been through it all. But good news, there's a town full of warm hearths right over this rise.",
+                      "You'll never reach it, but at least your last thoughts will be warm."
+                    ],
+                    "by": "Koran, Winter Wolf"
                   }
                 ]
               }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Winter Wolf.webp"
-                },
-                "credit": "Jonathan Kuo",
-                "width": 1800,
-                "height": 1440
-              }
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Winter Wolf.webp"
+            },
+            "credit": "Jonathan Kuo",
+            "width": 1800,
+            "height": 1440
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

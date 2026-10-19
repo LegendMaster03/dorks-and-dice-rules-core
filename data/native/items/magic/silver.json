@@ -2,27 +2,11 @@
   "id": "item.silver",
   "name": "Silver",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Silver",
-        "type": "TG",
-        "rarity": "none",
-        "weight": 1,
-        "value": 500
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Silver",
-        "type": "TG|SRD52",
-        "rarity": "none",
-        "weight": 1,
-        "value": 500
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "weight": 1,
+    "value": 500
+  }
 }

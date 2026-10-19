@@ -2,20 +2,14 @@
   "id": "item.robe",
   "name": "Robe",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Robe",
-        "type": "G|SRD52",
-        "rarity": "none",
-        "weight": 4,
-        "value": 100,
-        "entries": [
-          "A Robe has vocational or ceremonial significance. Some events and locations admit only people wearing a Robe bearing certain colors or symbols."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 4,
+    "value": 100,
+    "entries": [
+      "A Robe has vocational or ceremonial significance. Some events and locations admit only people wearing a Robe bearing certain colors or symbols."
+    ]
+  }
 }

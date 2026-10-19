@@ -2,276 +2,125 @@
   "id": "monster.ghoul",
   "name": "Ghoul",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Ghoul",
-        "size": [
-          "M"
-        ],
-        "type": "undead",
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "ac": [
-          12
-        ],
-        "hp": {
-          "average": 22,
-          "formula": "5d8"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 13,
-        "dex": 15,
-        "con": 10,
-        "int": 7,
-        "wis": 10,
-        "cha": 6,
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 10,
-        "immune": [
-          "poison"
-        ],
-        "conditionImmune": [
-          "charmed",
-          "exhaustion",
-          "poisoned"
-        ],
-        "languages": [
-          "Common"
-        ],
-        "cr": "1",
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 2} to hit, reach 5 ft., one creature. {@h}9 ({@damage 2d6 + 2}) piercing damage."
-            ]
-          },
-          {
-            "name": "Claws",
-            "entries": [
-              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}7 ({@damage 2d4 + 2}) slashing damage. If the target is a creature other than an elf or undead, it must succeed on a {@dc 10} Constitution saving throw or be {@condition paralyzed} for 1 minute. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
-            ]
-          }
-        ],
-        "environment": [
-          "underdark",
-          "swamp",
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/ghoul.opus"
-        },
-        "altArt": [
-          {
-            "name": "Ghoul",
-            "source": "DIP"
-          }
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "languageTags": [
-          "C"
-        ],
-        "damageTags": [
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "conditionInflict": [
-          "paralyzed"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Ghoul",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "Ghouls roam the night in packs, driven by an insatiable hunger for humanoid flesh.",
-                      {
-                        "name": "Devourers of Flesh",
-                        "type": "entries",
-                        "entries": [
-                          "Like maggots or carrion beetles, ghouls thrive in places rank with decay and death. A ghoul haunts a place where it can gorge on dead flesh and decomposing organs. When it can't feed on the dead, it pursues living creatures and attempts to make corpses of them. Though they gain no nourishment from the corpses they devour, ghouls are driven by an unending hunger that compels them to consume. A ghoul's undead flesh never rots, and this monster can persist in a crypt or tomb for untold ages without feeding."
-                        ]
-                      },
-                      {
-                        "name": "Abyssal Origins",
-                        "type": "entries",
-                        "entries": [
-                          "Ghouls trace their origins to the Abyss. Doresain, the first of their kind, was an elf worshiper of Orcus. Turning against his own people, he feasted on humanoid flesh to honor the Demon Prince of Undeath. As a reward for his service, Orcus transformed Doresain into the first ghoul. Doresain served Orcus faithfully in the Abyss, creating ghouls from the demon lord's other servants until an incursion by Yeenoghu, the demonic Gnoll Lord, robbed Doresain of his abyssal domain. When Orcus would not intervene on his behalf, Doresain turned to the elf gods for salvation, and they took pity on him and helped him escape certain destruction. Since then, elves have been immune to the ghouls' paralytic touch."
-                        ]
-                      },
-                      {
-                        "name": "Ghasts",
-                        "type": "entries",
-                        "entries": [
-                          "Orcus sometimes infuses a ghoul with a stronger dose of abyssal energy, making a ghast. Whereas ghouls are little more than savage beasts, a ghast is cunning and can inspire a pack of ghouls to follow its commands."
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Ghoul.webp"
-                },
-                "width": 583,
-                "height": 1000
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "undead",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 22,
+      "formula": "5d8"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 13,
+    "dex": 15,
+    "con": 10,
+    "int": 7,
+    "wis": 10,
+    "cha": 6,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "immune": [
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "exhaustion",
+      "poisoned"
+    ],
+    "languages": [
+      "Common"
+    ],
+    "cr": "1",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The ghoul makes two Bite attacks."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Piercing damage plus 3 ({@damage 1d6}) Necrotic damage."
+        ]
+      },
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}4 ({@damage 1d4 + 2}) Slashing damage. If the target is a creature that isn't an Undead or elf, it is subjected to the following effect. {@actSave con} {@dc 10}. {@actSaveFail} The target has the {@condition Paralyzed|SRD52} condition until the end of its next turn."
         ]
       }
+    ],
+    "environment": [
+      "swamp",
+      "underdark",
+      "urban"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/ghoul.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C"
+    ],
+    "damageTags": [
+      "N",
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "paralyzed"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Ghoul",
-        "size": [
-          "M"
-        ],
-        "type": "undead",
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "ac": [
-          12
-        ],
-        "hp": {
-          "average": 22,
-          "formula": "5d8"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 13,
-        "dex": 15,
-        "con": 10,
-        "int": 7,
-        "wis": 10,
-        "cha": 6,
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 10,
-        "immune": [
-          "poison"
-        ],
-        "conditionImmune": [
-          "charmed",
-          "exhaustion",
-          "poisoned"
-        ],
-        "languages": [
-          "Common"
-        ],
-        "cr": "1",
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The ghoul makes two Bite attacks."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Piercing damage plus 3 ({@damage 1d6}) Necrotic damage."
-            ]
-          },
-          {
-            "name": "Claw",
-            "entries": [
-              "{@atkr m} {@hit 4}, reach 5 ft. {@h}4 ({@damage 1d4 + 2}) Slashing damage. If the target is a creature that isn't an Undead or elf, it is subjected to the following effect. {@actSave con} {@dc 10}. {@actSaveFail} The target has the {@condition Paralyzed|SRD52} condition until the end of its next turn."
-            ]
-          }
-        ],
-        "environment": [
-          "swamp",
-          "underdark",
-          "urban"
-        ],
-        "treasure": [
-          "any"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/ghoul.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C"
-        ],
-        "damageTags": [
-          "N",
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflict": [
-          "paralyzed"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Ghoul",
-            "_copy": {
-              "name": "Ghouls",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Ghouls rise from the bodies of cannibals and villains with depraved hungers. They form packs out of shared voracity."
-                      ]
-                    }
+        "_copy": {
+          "name": "Ghouls",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Ghouls rise from the bodies of cannibals and villains with depraved hungers. They form packs out of shared voracity."
                   ]
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

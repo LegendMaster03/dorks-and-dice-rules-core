@@ -2,23 +2,17 @@
   "id": "deity.ares",
   "name": "Ares",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Ares",
-        "pantheon": "Greek",
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "title": "God of war and strife",
-        "domains": [
-          "War"
-        ],
-        "symbol": "Spear"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Greek",
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "title": "God of war and strife",
+    "domains": [
+      "War"
+    ],
+    "symbol": "Spear"
+  }
 }

@@ -2,35 +2,29 @@
   "id": "magicvariant.elven-chain",
   "name": "Elven Chain",
   "kind": "magicvariant",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Elven Chain",
-        "type": "GV|SRD52",
-        "requires": [
-          {
-            "name": "Chain Mail",
-            "source": "SRD52"
-          },
-          {
-            "name": "Chain Shirt",
-            "source": "SRD52"
-          }
-        ],
-        "inherits": {
-          "namePrefix": "Elven ",
-          "source": "SRD52",
-          "page": 220,
-          "rarity": "rare",
-          "grantsProficiency": true,
-          "bonusAc": "+1",
-          "entries": [
-            "You gain a {=bonusAc} bonus to {@variantrule Armor Class|SRD52} while you wear this armor. You are considered trained with this armor even if you lack training with Medium or Heavy armor."
-          ]
-        }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "GV|SRD52",
+    "requires": [
+      {
+        "name": "Chain Mail",
+        "source": "SRD52"
+      },
+      {
+        "name": "Chain Shirt",
+        "source": "SRD52"
       }
+    ],
+    "inherits": {
+      "namePrefix": "Elven ",
+      "source": "SRD52",
+      "page": 220,
+      "rarity": "rare",
+      "grantsProficiency": true,
+      "bonusAc": "+1",
+      "entries": [
+        "You gain a {=bonusAc} bonus to {@variantrule Armor Class|SRD52} while you wear this armor. You are considered trained with this armor even if you lack training with Medium or Heavy armor."
+      ]
     }
-  ]
+  }
 }

@@ -2,234 +2,108 @@
   "id": "monster.noble",
   "name": "Noble",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Noble",
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "humanoid",
-          "tags": [
-            "any race"
-          ]
-        },
-        "alignment": [
-          "A"
-        ],
-        "ac": [
-          {
-            "ac": 15,
-            "from": [
-              "{@item breastplate|srd51}"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 9,
-          "formula": "2d8"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 11,
-        "dex": 12,
-        "con": 11,
-        "int": 12,
-        "wis": 14,
-        "cha": 16,
-        "skill": {
-          "deception": "+5",
-          "insight": "+4",
-          "persuasion": "+5"
-        },
-        "passive": 12,
-        "languages": [
-          "any two languages"
-        ],
-        "cr": "1/8",
-        "action": [
-          {
-            "name": "Rapier",
-            "entries": [
-              "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d8 + 1}) piercing damage."
-            ]
-          }
-        ],
-        "reaction": [
-          {
-            "name": "Parry",
-            "entries": [
-              "The noble adds 2 to its AC against one melee attack that would hit it. To do so, the noble must see the attacker and be wielding a melee weapon."
-            ]
-          }
-        ],
-        "environment": [
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/noble.opus"
-        },
-        "attachedItems": [
-          "rapier|srd51"
-        ],
-        "actionTags": [
-          "Parry"
-        ],
-        "languageTags": [
-          "X"
-        ],
-        "damageTags": [
-          "P"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Noble",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "Nobles wield great authority and influence as members of the upper class, possessing wealth and connections that can make them as powerful as monarchs and generals. A noble often travels in the company of guards, as well as servants who are commoners.",
-                      "The noble's statistics can also be used to represent courtiers who aren't of noble birth."
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Noble.webp"
-                },
-                "credit": "Daniel Landerman",
-                "width": 605,
-                "height": 756
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 9,
+      "formula": "2d8"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 11,
+    "dex": 12,
+    "con": 11,
+    "int": 12,
+    "wis": 14,
+    "cha": 16,
+    "skill": {
+      "deception": "+5",
+      "insight": "+4",
+      "persuasion": "+5"
+    },
+    "passive": 12,
+    "languages": [
+      "Common plus two other languages"
+    ],
+    "cr": "1/8",
+    "gear": [
+      "breastplate|srd52",
+      "rapier|srd52"
+    ],
+    "action": [
+      {
+        "name": "Rapier",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}5 ({@damage 1d8 + 1}) Piercing damage."
         ]
       }
+    ],
+    "reaction": [
+      {
+        "name": "Parry",
+        "entries": [
+          "{@actTrigger} The noble is hit by a melee attack roll while holding a weapon. {@actResponse} The noble adds 2 to its AC against that attack, possibly causing it to miss."
+        ]
+      }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "individual"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/noble.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "actionTags": [
+      "Parry"
+    ],
+    "languageTags": [
+      "C",
+      "X"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Noble",
-        "size": [
-          "S",
-          "M"
-        ],
-        "type": "humanoid",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          15
-        ],
-        "hp": {
-          "average": 9,
-          "formula": "2d8"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 11,
-        "dex": 12,
-        "con": 11,
-        "int": 12,
-        "wis": 14,
-        "cha": 16,
-        "skill": {
-          "deception": "+5",
-          "insight": "+4",
-          "persuasion": "+5"
-        },
-        "passive": 12,
-        "languages": [
-          "Common plus two other languages"
-        ],
-        "cr": "1/8",
-        "gear": [
-          "breastplate|srd52",
-          "rapier|srd52"
-        ],
-        "action": [
-          {
-            "name": "Rapier",
-            "entries": [
-              "{@atkr m} {@hit 3}, reach 5 ft. {@h}5 ({@damage 1d8 + 1}) Piercing damage."
-            ]
-          }
-        ],
-        "reaction": [
-          {
-            "name": "Parry",
-            "entries": [
-              "{@actTrigger} The noble is hit by a melee attack roll while holding a weapon. {@actResponse} The noble adds 2 to its AC against that attack, possibly causing it to miss."
-            ]
-          }
-        ],
-        "environment": [
-          "any"
-        ],
-        "treasure": [
-          "individual"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/noble.opus"
-        },
-        "actionTags": [
-          "Parry"
-        ],
-        "languageTags": [
-          "C",
-          "X"
-        ],
-        "damageTags": [
-          "P"
-        ],
-        "miscTags": [
-          "MA",
-          "MLW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Noble",
-            "_copy": {
-              "name": "Nobles",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "A noble's social advantages typically grant the noble access to greater education and training than most common folk, while nobles' experience with business or politics makes many adept negotiators."
-                      ]
-                    }
+        "_copy": {
+          "name": "Nobles",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "A noble's social advantages typically grant the noble access to greater education and training than most common folk, while nobles' experience with business or politics makes many adept negotiators."
                   ]
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

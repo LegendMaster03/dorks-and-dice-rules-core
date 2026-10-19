@@ -2,23 +2,17 @@
   "id": "item.potion-of-vitality",
   "name": "Potion of Vitality",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Potion of Vitality",
-        "type": "P|SRD52",
-        "rarity": "very rare",
-        "weight": 0.5,
-        "entries": [
-          "When you drink this potion, it removes any {@condition Exhaustion|SRD52} levels you have and ends the {@condition Poisoned|SRD52} condition on you. For the next 24 hours, you regain the maximum number of {@variantrule Hit Points|SRD52} for any {@variantrule Hit Point Dice|SRD52|Hit Point Die} you spend.",
-          "This potion's crimson liquid regularly pulses with dull light, calling to mind a heartbeat."
-        ],
-        "miscTags": [
-          "CNS"
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "P|SRD52",
+    "rarity": "very rare",
+    "weight": 0.5,
+    "entries": [
+      "When you drink this potion, it removes any {@condition Exhaustion|SRD52} levels you have and ends the {@condition Poisoned|SRD52} condition on you. For the next 24 hours, you regain the maximum number of {@variantrule Hit Points|SRD52} for any {@variantrule Hit Point Dice|SRD52|Hit Point Die} you spend.",
+      "This potion's crimson liquid regularly pulses with dull light, calling to mind a heartbeat."
+    ],
+    "miscTags": [
+      "CNS"
+    ]
+  }
 }

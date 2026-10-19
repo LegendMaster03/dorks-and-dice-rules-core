@@ -2,29 +2,12 @@
   "id": "item.pony",
   "name": "Pony",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Pony",
-        "type": "MNT",
-        "rarity": "none",
-        "value": 3000,
-        "carryingCapacity": 225,
-        "speed": 40
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Pony",
-        "type": "MNT|SRD52",
-        "rarity": "none",
-        "value": 3000,
-        "carryingCapacity": 225,
-        "speed": 40
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "MNT",
+    "rarity": "none",
+    "value": 3000,
+    "carryingCapacity": 225,
+    "speed": 40
+  }
 }

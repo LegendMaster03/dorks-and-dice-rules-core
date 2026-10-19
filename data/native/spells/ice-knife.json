@@ -2,79 +2,73 @@
   "id": "spell.ice-knife",
   "name": "Ice Knife",
   "kind": "spell",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Ice Knife",
-        "level": 1,
-        "school": "C",
-        "time": [
-          {
-            "number": 1,
-            "unit": "action"
-          }
-        ],
-        "range": {
-          "type": "point",
-          "distance": {
-            "type": "feet",
-            "amount": 60
-          }
-        },
-        "components": {
-          "s": true,
-          "m": "a drop of water or a piece of ice"
-        },
-        "duration": [
-          {
-            "type": "instant"
-          }
-        ],
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "level": 1,
+    "school": "C",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "s": true,
+      "m": "a drop of water or a piece of ice"
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "You create a shard of ice and fling it at one creature within range. Make a ranged spell attack against the target. On a hit, the target takes {@damage 1d10} Piercing damage. Hit or miss, the shard then explodes. The target and each creature within 5 feet of it must succeed on a Dexterity saving throw or take {@damage 2d6} Cold damage."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
         "entries": [
-          "You create a shard of ice and fling it at one creature within range. Make a ranged spell attack against the target. On a hit, the target takes {@damage 1d10} Piercing damage. Hit or miss, the shard then explodes. The target and each creature within 5 feet of it must succeed on a Dexterity saving throw or take {@damage 2d6} Cold damage."
-        ],
-        "entriesHigherLevel": [
+          "The Cold damage increases by {@scaledamage 2d6|1-9|1d6} for each spell slot level above 1."
+        ]
+      }
+    ],
+    "damageInflict": [
+      "cold",
+      "piercing"
+    ],
+    "spellAttack": [
+      "R"
+    ],
+    "savingThrow": [
+      "dexterity"
+    ],
+    "areaTags": [
+      "ST"
+    ],
+    "lore": [
+      {
+        "name": "Ice Knife",
+        "images": [
           {
-            "type": "entries",
-            "name": "Using a Higher-Level Spell Slot",
-            "entries": [
-              "The Cold damage increases by {@scaledamage 2d6|1-9|1d6} for each spell slot level above 1."
-            ]
-          }
-        ],
-        "damageInflict": [
-          "cold",
-          "piercing"
-        ],
-        "spellAttack": [
-          "R"
-        ],
-        "savingThrow": [
-          "dexterity"
-        ],
-        "areaTags": [
-          "ST"
-        ],
-        "lore": [
-          {
-            "name": "Ice Knife",
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "spells/XPHB/Ice Knife.webp"
-                },
-                "credit": "Calder Moore",
-                "width": 696,
-                "height": 821
-              }
-            ]
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "spells/XPHB/Ice Knife.webp"
+            },
+            "credit": "Calder Moore",
+            "width": 696,
+            "height": 821
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

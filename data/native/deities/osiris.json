@@ -2,25 +2,19 @@
   "id": "deity.osiris",
   "name": "Osiris",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Osiris",
-        "pantheon": "Egyptian",
-        "alignment": [
-          "L",
-          "G"
-        ],
-        "title": "God of nature and the underworld",
-        "domains": [
-          "Grave",
-          "Life",
-          "Nature"
-        ],
-        "symbol": "Crook and flail"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Egyptian",
+    "alignment": [
+      "L",
+      "G"
+    ],
+    "title": "God of nature and the underworld",
+    "domains": [
+      "Grave",
+      "Life",
+      "Nature"
+    ],
+    "symbol": "Crook and flail"
+  }
 }

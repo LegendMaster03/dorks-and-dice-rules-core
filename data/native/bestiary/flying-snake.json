@@ -2,212 +2,101 @@
   "id": "monster.flying-snake",
   "name": "Flying Snake",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Flying Snake",
-        "size": [
-          "T"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          14
-        ],
-        "hp": {
-          "average": 5,
-          "formula": "2d4"
-        },
-        "speed": {
-          "walk": 30,
-          "fly": 60,
-          "swim": 30
-        },
-        "str": 4,
-        "dex": 18,
-        "con": 11,
-        "int": 2,
-        "wis": 12,
-        "cha": 5,
-        "senses": [
-          "blindsight 10 ft."
-        ],
-        "passive": 11,
-        "cr": "1/8",
-        "trait": [
-          {
-            "name": "Flyby",
-            "entries": [
-              "The snake doesn't provoke opportunity attacks when it flies out of an enemy's reach."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 6} to hit, reach 5 ft., one target. {@h}1 piercing damage plus 7 ({@damage 3d4}) poison damage."
-            ]
-          }
-        ],
-        "environment": [
-          "grassland",
-          "forest",
-          "urban",
-          "desert"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/flying-snake.opus"
-        },
-        "traitTags": [
-          "Flyby"
-        ],
-        "senseTags": [
-          "B"
-        ],
-        "damageTags": [
-          "I",
-          "P"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Flying Snake",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "A flying snake is a brightly colored, winged serpent found in remote jungles. Tribespeople and cultists sometimes domesticate flying snakes to serve as messengers that deliver scrolls wrapped in their coils."
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Flying Snake.webp"
-                },
-                "width": 611,
-                "height": 1000
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "T"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 5,
+      "formula": "2d4"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 60,
+      "swim": 30
+    },
+    "str": 4,
+    "dex": 15,
+    "con": 11,
+    "int": 2,
+    "wis": 12,
+    "cha": 5,
+    "senses": [
+      "Blindsight 10 ft."
+    ],
+    "passive": 11,
+    "cr": "1/8",
+    "trait": [
+      {
+        "name": "Flyby",
+        "entries": [
+          "The snake doesn't provoke an {@action Opportunity Attack|SRD52} when it flies out of an enemy's reach."
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}1 Piercing damage plus 5 ({@damage 2d4}) Poison damage."
+        ]
+      }
+    ],
+    "environment": [
+      "desert",
+      "forest",
+      "grassland"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/flying-snake.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "traitTags": [
+      "Flyby"
+    ],
+    "senseTags": [
+      "B"
+    ],
+    "damageTags": [
+      "I",
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Flying Snake",
-        "size": [
-          "T"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          14
-        ],
-        "hp": {
-          "average": 5,
-          "formula": "2d4"
-        },
-        "speed": {
-          "walk": 30,
-          "fly": 60,
-          "swim": 30
-        },
-        "str": 4,
-        "dex": 15,
-        "con": 11,
-        "int": 2,
-        "wis": 12,
-        "cha": 5,
-        "senses": [
-          "Blindsight 10 ft."
-        ],
-        "passive": 11,
-        "cr": "1/8",
-        "trait": [
-          {
-            "name": "Flyby",
-            "entries": [
-              "The snake doesn't provoke an {@action Opportunity Attack|SRD52} when it flies out of an enemy's reach."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atkr m} {@hit 4}, reach 5 ft. {@h}1 Piercing damage plus 5 ({@damage 2d4}) Poison damage."
-            ]
-          }
-        ],
-        "environment": [
-          "desert",
-          "forest",
-          "grassland"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/flying-snake.opus"
-        },
-        "traitTags": [
-          "Flyby"
-        ],
-        "senseTags": [
-          "B"
-        ],
-        "damageTags": [
-          "I",
-          "P"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Flying Snake",
-            "_copy": {
-              "name": "Animals",
-              "source": "SRD52",
-              "_mod": {
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Flying Snake.webp"
-                      },
-                      "width": 611,
-                      "height": 1000
-                    }
-                  ]
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Flying Snake.webp"
+                  },
+                  "width": 611,
+                  "height": 1000
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

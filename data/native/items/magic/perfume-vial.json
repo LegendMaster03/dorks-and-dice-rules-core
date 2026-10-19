@@ -2,19 +2,13 @@
   "id": "item.perfume-vial",
   "name": "Perfume (vial)",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Perfume (vial)",
-        "type": "G",
-        "rarity": "none",
-        "value": 500,
-        "miscTags": [
-          "CNS"
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "value": 500,
+    "miscTags": [
+      "CNS"
+    ]
+  }
 }

@@ -2,46 +2,40 @@
   "id": "spell.power-word-heal",
   "name": "Power Word Heal",
   "kind": "spell",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Power Word Heal",
-        "level": 9,
-        "school": "E",
-        "time": [
-          {
-            "number": 1,
-            "unit": "action"
-          }
-        ],
-        "range": {
-          "type": "point",
-          "distance": {
-            "type": "feet",
-            "amount": 60
-          }
-        },
-        "components": {
-          "v": true,
-          "s": true
-        },
-        "duration": [
-          {
-            "type": "instant"
-          }
-        ],
-        "entries": [
-          "A wave of healing energy washes over one creature you can see within range. The target regains all its {@variantrule Hit Points|SRD52}. If the creature has the {@condition Charmed|SRD52}, {@condition Frightened|SRD52}, {@condition Paralyzed|SRD52}, {@condition Poisoned|SRD52}, or {@condition Stunned|SRD52} condition, the condition ends. If the creature has the {@condition Prone|SRD52} condition, it can use its {@variantrule Reaction|SRD52} to stand up."
-        ],
-        "miscTags": [
-          "HL"
-        ],
-        "areaTags": [
-          "ST"
-        ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "level": 9,
+    "school": "E",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
       }
-    }
-  ]
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true
+    },
+    "duration": [
+      {
+        "type": "instant"
+      }
+    ],
+    "entries": [
+      "A wave of healing energy washes over one creature you can see within range. The target regains all its {@variantrule Hit Points|SRD52}. If the creature has the {@condition Charmed|SRD52}, {@condition Frightened|SRD52}, {@condition Paralyzed|SRD52}, {@condition Poisoned|SRD52}, or {@condition Stunned|SRD52} condition, the condition ends. If the creature has the {@condition Prone|SRD52} condition, it can use its {@variantrule Reaction|SRD52} to stand up."
+    ],
+    "miscTags": [
+      "HL"
+    ],
+    "areaTags": [
+      "ST"
+    ]
+  }
 }

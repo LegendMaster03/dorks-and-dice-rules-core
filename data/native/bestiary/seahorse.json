@@ -2,95 +2,89 @@
   "id": "monster.seahorse",
   "name": "Seahorse",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Seahorse",
-        "size": [
-          "T"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          12
-        ],
-        "hp": {
-          "average": 1,
-          "formula": "1d4 - 1"
-        },
-        "speed": {
-          "walk": 5,
-          "swim": 20
-        },
-        "str": 1,
-        "dex": 12,
-        "con": 8,
-        "int": 1,
-        "wis": 10,
-        "cha": 2,
-        "skill": {
-          "perception": "+2",
-          "stealth": "+5"
-        },
-        "passive": 12,
-        "cr": {
-          "cr": "0",
-          "xp": 0
-        },
-        "trait": [
-          {
-            "name": "Water Breathing",
-            "entries": [
-              "The seahorse can breathe only underwater."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bubble Dash",
-            "entries": [
-              "While underwater, the seahorse moves up to its {@variantrule Swim Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}."
-            ]
-          }
-        ],
-        "environment": [
-          "underwater"
-        ],
-        "familiar": true,
-        "traitTags": [
-          "Water Breathing"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Seahorse",
-            "_copy": {
-              "name": "Animals",
-              "source": "SRD52",
-              "_mod": {
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Seahorse.webp"
-                      },
-                      "width": 1160,
-                      "height": 1440
-                    }
-                  ]
-                }
-              }
-            }
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "T"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 1,
+      "formula": "1d4 - 1"
+    },
+    "speed": {
+      "walk": 5,
+      "swim": 20
+    },
+    "str": 1,
+    "dex": 12,
+    "con": 8,
+    "int": 1,
+    "wis": 10,
+    "cha": 2,
+    "skill": {
+      "perception": "+2",
+      "stealth": "+5"
+    },
+    "passive": 12,
+    "cr": {
+      "cr": "0",
+      "xp": 0
+    },
+    "trait": [
+      {
+        "name": "Water Breathing",
+        "entries": [
+          "The seahorse can breathe only underwater."
         ]
       }
-    }
-  ]
+    ],
+    "action": [
+      {
+        "name": "Bubble Dash",
+        "entries": [
+          "While underwater, the seahorse moves up to its {@variantrule Swim Speed|SRD52} without provoking {@action Opportunity Attack|SRD52|Opportunity Attacks}."
+        ]
+      }
+    ],
+    "environment": [
+      "underwater"
+    ],
+    "familiar": true,
+    "traitTags": [
+      "Water Breathing"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Seahorse",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Seahorse.webp"
+                  },
+                  "width": 1160,
+                  "height": 1440
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
 }

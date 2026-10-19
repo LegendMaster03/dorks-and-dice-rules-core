@@ -2,45 +2,20 @@
   "id": "item.longship",
   "name": "Longship",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Longship",
-        "type": "SHP",
-        "rarity": "none",
-        "value": 1000000,
-        "crew": 40,
-        "vehAc": 15,
-        "vehHp": 300,
-        "vehDmgThresh": 15,
-        "vehSpeed": 3,
-        "capPassenger": 150,
-        "capCargo": 10,
-        "seeAlsoVehicle": [
-          "Longship"
-        ]
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Longship",
-        "type": "SHP|SRD52",
-        "rarity": "none",
-        "value": 1000000,
-        "crew": 40,
-        "vehAc": 15,
-        "vehHp": 300,
-        "vehDmgThresh": 15,
-        "vehSpeed": 3,
-        "capPassenger": 150,
-        "capCargo": 10,
-        "seeAlsoVehicle": [
-          "Longship"
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "SHP",
+    "rarity": "none",
+    "value": 1000000,
+    "crew": 40,
+    "vehAc": 15,
+    "vehHp": 300,
+    "vehDmgThresh": 15,
+    "vehSpeed": 3,
+    "capPassenger": 150,
+    "capCargo": 10,
+    "seeAlsoVehicle": [
+      "Longship"
+    ]
+  }
 }

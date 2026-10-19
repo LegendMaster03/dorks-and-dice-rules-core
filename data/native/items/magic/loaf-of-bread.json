@@ -2,19 +2,13 @@
   "id": "item.loaf-of-bread",
   "name": "Loaf of Bread",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Loaf of Bread",
-        "type": "FD",
-        "rarity": "none",
-        "value": 2,
-        "miscTags": [
-          "CNS"
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "FD",
+    "rarity": "none",
+    "value": 2,
+    "miscTags": [
+      "CNS"
+    ]
+  }
 }

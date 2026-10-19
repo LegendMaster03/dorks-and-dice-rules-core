@@ -2,444 +2,249 @@
   "id": "monster.adult-red-dragon",
   "name": "Adult Red Dragon",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Adult Red Dragon",
-        "group": [
-          "Chromatic Dragon"
-        ],
-        "size": [
-          "H"
-        ],
-        "type": "dragon",
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 19,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 256,
-          "formula": "19d12 + 133"
-        },
-        "speed": {
-          "walk": 40,
-          "climb": 40,
-          "fly": 80
-        },
-        "str": 27,
-        "dex": 10,
-        "con": 25,
-        "int": 16,
-        "wis": 13,
-        "cha": 21,
-        "save": {
-          "dex": "+6",
-          "con": "+13",
-          "wis": "+7",
-          "cha": "+11"
-        },
-        "skill": {
-          "perception": "+13",
-          "stealth": "+6"
-        },
-        "senses": [
-          "blindsight 60 ft.",
-          "darkvision 120 ft."
-        ],
-        "passive": 23,
-        "immune": [
-          "fire"
-        ],
-        "languages": [
-          "Common",
-          "Draconic"
-        ],
-        "cr": "17",
-        "trait": [
-          {
-            "name": "Legendary Resistance (3/Day)",
-            "entries": [
-              "If the dragon fails a saving throw, it can choose to succeed instead."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 14} to hit, reach 10 ft., one target. {@h}19 ({@damage 2d10 + 8}) piercing damage plus 7 ({@damage 2d6}) fire damage."
-            ]
-          },
-          {
-            "name": "Claw",
-            "entries": [
-              "{@atk mw} {@hit 14} to hit, reach 5 ft., one target. {@h}15 ({@damage 2d6 + 8}) slashing damage."
-            ]
-          },
-          {
-            "name": "Tail",
-            "entries": [
-              "{@atk mw} {@hit 14} to hit, reach 15 ft., one target. {@h}17 ({@damage 2d8 + 8}) bludgeoning damage."
-            ]
-          },
-          {
-            "name": "Frightful Presence",
-            "entries": [
-              "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 19} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
-            ]
-          },
-          {
-            "name": "Fire Breath {@recharge 5}",
-            "entries": [
-              "The dragon exhales fire in a 60-foot cone. Each creature in that area must make a {@dc 21} Dexterity saving throw, taking 63 ({@damage 18d6}) fire damage on a failed save, or half as much damage on a successful one."
-            ]
-          }
-        ],
-        "legendary": [
-          {
-            "name": "Detect",
-            "entries": [
-              "The dragon makes a Wisdom ({@skill Perception}) check."
-            ]
-          },
-          {
-            "name": "Tail Attack",
-            "entries": [
-              "The dragon makes a tail attack."
-            ]
-          },
-          {
-            "name": "Wing Attack (Costs 2 Actions)",
-            "entries": [
-              "The dragon beats its wings. Each creature within 10 feet of the dragon must succeed on a {@dc 22} Dexterity saving throw or take 15 ({@damage 2d6 + 8}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
-            ]
-          }
-        ],
-        "environment": [
-          "mountain",
-          "hill"
-        ],
-        "dragonCastingColor": "red",
-        "dragonAge": "adult",
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/red-dragon.opus"
-        },
-        "traitTags": [
-          "Legendary Resistances"
-        ],
-        "senseTags": [
-          "B",
-          "SD"
-        ],
-        "actionTags": [
-          "Breath Weapon",
-          "Frightful Presence",
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "DR"
-        ],
-        "damageTags": [
-          "B",
-          "F",
-          "P",
-          "S"
-        ],
-        "damageTagsLegendary": [
-          "F"
-        ],
-        "miscTags": [
-          "AOE",
-          "MW",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "frightened",
-          "prone"
-        ],
-        "conditionInflictLegendary": [
-          "incapacitated",
-          "poisoned",
-          "prone"
-        ],
-        "savingThrowForced": [
-          "dexterity",
-          "wisdom"
-        ],
-        "savingThrowForcedLegendary": [
-          "constitution",
-          "dexterity"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Adult Red Dragon",
-            "_copy": {
-              "name": "Red Dragon",
-              "source": "SRD51"
-            },
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Adult Red Dragon.webp"
-                },
-                "width": 1700,
-                "height": 1468
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Chromatic Dragons"
+    ],
+    "size": [
+      "H"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
     },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Adult Red Dragon",
-        "group": [
-          "Chromatic Dragons"
+    "alignment": [
+      "C",
+      "E"
+    ],
+    "ac": [
+      19
+    ],
+    "hp": {
+      "average": 256,
+      "formula": "19d12 + 133"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 27,
+    "dex": 10,
+    "con": 25,
+    "int": 16,
+    "wis": 13,
+    "cha": 23,
+    "save": {
+      "dex": "+6",
+      "wis": "+7"
+    },
+    "skill": {
+      "perception": "+13",
+      "stealth": "+6"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 23,
+    "immune": [
+      "fire"
+    ],
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "17",
+      "xpLair": 20000
+    },
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 20}, {@hit 12} to hit with spell attacks):"
         ],
-        "size": [
-          "H"
+        "will": [
+          "{@spell Command|SRD52} (level 2 version)",
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Scorching Ray|SRD52}"
         ],
-        "type": {
-          "type": "dragon",
-          "tags": [
-            "chromatic"
+        "daily": {
+          "1": [
+            "{@spell Fireball|SRD52}"
           ]
         },
-        "alignment": [
-          "C",
-          "E"
-        ],
-        "ac": [
-          19
-        ],
-        "hp": {
-          "average": 256,
-          "formula": "19d12 + 133"
-        },
-        "speed": {
-          "walk": 40,
-          "climb": 40,
-          "fly": 80
-        },
-        "initiative": {
-          "proficiency": 2
-        },
-        "str": 27,
-        "dex": 10,
-        "con": 25,
-        "int": 16,
-        "wis": 13,
-        "cha": 23,
-        "save": {
-          "dex": "+6",
-          "wis": "+7"
-        },
-        "skill": {
-          "perception": "+13",
-          "stealth": "+6"
-        },
-        "senses": [
-          "Blindsight 60 ft.",
-          "Darkvision 120 ft."
-        ],
-        "passive": 23,
-        "immune": [
-          "fire"
-        ],
-        "languages": [
-          "Common",
-          "Draconic"
-        ],
-        "cr": {
-          "cr": "17",
-          "xpLair": 20000
-        },
-        "spellcasting": [
-          {
-            "name": "Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 20}, {@hit 12} to hit with spell attacks):"
-            ],
-            "will": [
-              "{@spell Command|SRD52} (level 2 version)",
-              "{@spell Detect Magic|SRD52}",
-              "{@spell Scorching Ray|SRD52}"
-            ],
-            "daily": {
-              "1": [
-                "{@spell Fireball|SRD52}"
-              ]
-            },
-            "ability": "cha",
-            "displayAs": "action"
-          }
-        ],
-        "trait": [
-          {
-            "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
-            "entries": [
-              "If the dragon fails a saving throw, it can choose to succeed instead."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Scorching Ray|SRD52}."
-            ]
-          },
-          {
-            "name": "Rend",
-            "entries": [
-              "{@atkr m} {@hit 14}, reach 10 ft. {@h}13 ({@damage 1d10 + 8}) Slashing damage plus 5 ({@damage 2d4}) Fire damage."
-            ]
-          },
-          {
-            "name": "Fire Breath {@recharge 5}",
-            "entries": [
-              "{@actSave dex} {@dc 21}, each creature in a 60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 59 ({@damage 17d6}) Fire damage. {@actSaveSuccess} Half damage."
-            ]
-          }
-        ],
-        "legendaryActionsLair": 4,
-        "legendary": [
-          {
-            "name": "Commanding Presence",
-            "entries": [
-              "The dragon uses Spellcasting to cast {@spell Command|SRD52} (level 2 version). The dragon can't take this action again until the start of its next turn."
-            ]
-          },
-          {
-            "name": "Fiery Rays",
-            "entries": [
-              "The dragon uses Spellcasting to cast {@spell Scorching Ray|SRD52}. The dragon can't take this action again until the start of its next turn."
-            ]
-          },
-          {
-            "name": "Pounce",
-            "entries": [
-              "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
-            ]
-          }
-        ],
-        "environment": [
-          "hill",
-          "mountain"
-        ],
-        "treasure": [
-          "any"
-        ],
-        "dragonAge": "adult",
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/red-dragon.opus"
-        },
-        "traitTags": [
-          "Legendary Resistances"
-        ],
-        "senseTags": [
-          "B",
-          "SD"
-        ],
-        "actionTags": [
-          "Breath Weapon",
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "DR"
-        ],
-        "damageTags": [
-          "F",
-          "S"
-        ],
-        "damageTagsSpell": [
-          "F"
-        ],
-        "spellcastingTags": [
-          "O"
-        ],
-        "miscTags": [
-          "MA",
-          "RCH"
-        ],
-        "conditionInflictSpell": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "dexterity"
-        ],
-        "savingThrowForcedLegendary": [
-          "constitution"
-        ],
-        "savingThrowForcedSpell": [
-          "dexterity",
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Adult Red Dragon",
-            "_copy": {
-              "name": "Red Dragons",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Adult red dragons are tyrants that claim vast domains and might command armies of followers or significant magical resources. Red dragons rarely pay attention to the nations and claims of smaller creatures, and they might consider entire cities part of their realm. Most red dragons are inattentive rulers, though, spending decades focused on their own comforts, hoards, or magical concerns within their lairs. But when their attention returns to their territories, if they find matters not to their liking, whole lands might burn."
-                      ]
-                    }
-                  ]
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Red Dragon.webp"
-                      },
-                      "title": "An adult red dragon unleashes its fury, reducing a city to ruin",
-                      "credit": "Joshua Raphael",
-                      "width": 2560,
-                      "height": 1657
-                    }
-                  ]
-                }
-              }
-            }
-          }
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "trait": [
+      {
+        "name": "Legendary Resistance (3/Day, or 4/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
         ]
       }
-    }
-  ]
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Scorching Ray|SRD52}."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 14}, reach 10 ft. {@h}13 ({@damage 1d10 + 8}) Slashing damage plus 5 ({@damage 2d4}) Fire damage."
+        ]
+      },
+      {
+        "name": "Fire Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 21}, each creature in a 60-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 59 ({@damage 17d6}) Fire damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 19} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "legendary": [
+      {
+        "name": "Commanding Presence",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Command|SRD52} (level 2 version). The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Fiery Rays",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Scorching Ray|SRD52}. The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Pounce",
+        "entries": [
+          "The dragon moves up to half its {@variantrule Speed|SRD52}, and it makes one Rend attack."
+        ]
+      },
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 10 feet of the dragon must succeed on a {@dc 22} Dexterity saving throw or take 15 ({@damage 2d6 + 8}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "environment": [
+      "hill",
+      "mountain"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "dragonAge": "adult",
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/red-dragon.opus"
+    },
+    "traitTags": [
+      "Legendary Resistances"
+    ],
+    "senseTags": [
+      "B",
+      "SD"
+    ],
+    "actionTags": [
+      "Breath Weapon",
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "DR"
+    ],
+    "damageTags": [
+      "F",
+      "S"
+    ],
+    "damageTagsSpell": [
+      "F"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflictSpell": [
+      "prone"
+    ],
+    "savingThrowForced": [
+      "dexterity"
+    ],
+    "savingThrowForcedLegendary": [
+      "constitution"
+    ],
+    "savingThrowForcedSpell": [
+      "dexterity",
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Adult Red Dragon",
+        "_copy": {
+          "name": "Red Dragons",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Adult red dragons are tyrants that claim vast domains and might command armies of followers or significant magical resources. Red dragons rarely pay attention to the nations and claims of smaller creatures, and they might consider entire cities part of their realm. Most red dragons are inattentive rulers, though, spending decades focused on their own comforts, hoards, or magical concerns within their lairs. But when their attention returns to their territories, if they find matters not to their liking, whole lands might burn."
+                  ]
+                }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Red Dragon.webp"
+                  },
+                  "title": "An adult red dragon unleashes its fury, reducing a city to ruin",
+                  "credit": "Joshua Raphael",
+                  "width": 2560,
+                  "height": 1657
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
 }

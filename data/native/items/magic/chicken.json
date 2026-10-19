@@ -2,16 +2,10 @@
   "id": "item.chicken",
   "name": "Chicken",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Chicken",
-        "type": "TG",
-        "rarity": "none",
-        "value": 2
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "value": 2
+  }
 }

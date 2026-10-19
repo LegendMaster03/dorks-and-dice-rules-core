@@ -2,17 +2,11 @@
   "id": "hazard.slippery-ice",
   "name": "Slippery Ice",
   "kind": "hazard",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Slippery Ice",
-        "trapHazType": "ENV",
-        "entries": [
-          "Slippery ice is {@variantrule Difficult Terrain|SRD52}. A creature that moves onto slippery ice for the first time on a turn or starts its turn there must succeed on a {@dc 10} Dexterity saving throw or have the {@condition Prone|SRD52} condition."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "trapHazType": "ENV",
+    "entries": [
+      "Slippery ice is {@variantrule Difficult Terrain|SRD52}. A creature that moves onto slippery ice for the first time on a turn or starts its turn there must succeed on a {@dc 10} Dexterity saving throw or have the {@condition Prone|SRD52} condition."
+    ]
+  }
 }

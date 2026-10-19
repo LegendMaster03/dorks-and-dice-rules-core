@@ -2,17 +2,11 @@
   "id": "item.miner-s-pick",
   "name": "Miner's Pick",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Miner's Pick",
-        "type": "G",
-        "rarity": "none",
-        "weight": 10,
-        "value": 200
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 10,
+    "value": 200
+  }
 }

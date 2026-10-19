@@ -2,17 +2,11 @@
   "id": "item.pepper",
   "name": "Pepper",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Pepper",
-        "type": "TG",
-        "rarity": "none",
-        "weight": 1,
-        "value": 200
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "weight": 1,
+    "value": 200
+  }
 }

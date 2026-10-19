@@ -2,19 +2,13 @@
   "id": "item.string",
   "name": "String",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "String",
-        "type": "G|SRD52",
-        "rarity": "none",
-        "value": 10,
-        "entries": [
-          "String is 10 feet long. You can tie a knot in it as a {@action Utilize|SRD52} action."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G|SRD52",
+    "rarity": "none",
+    "value": 10,
+    "entries": [
+      "String is 10 feet long. You can tie a knot in it as a {@action Utilize|SRD52} action."
+    ]
+  }
 }

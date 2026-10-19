@@ -2,33 +2,14 @@
   "id": "item.sprig-of-mistletoe",
   "name": "Sprig of Mistletoe",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Sprig of Mistletoe",
-        "group": [
-          "Druidic Focus"
-        ],
-        "type": "SCF",
-        "scfType": "druid",
-        "rarity": "none",
-        "value": 100
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Sprig of Mistletoe",
-        "group": [
-          "Druidic Focus"
-        ],
-        "type": "SCF|SRD52",
-        "scfType": "druid",
-        "rarity": "none",
-        "value": 100
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Druidic Focus"
+    ],
+    "type": "SCF",
+    "scfType": "druid",
+    "rarity": "none",
+    "value": 100
+  }
 }

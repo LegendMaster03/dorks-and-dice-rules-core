@@ -2,194 +2,107 @@
   "id": "monster.black-bear",
   "name": "Black Bear",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Black Bear",
-        "size": [
-          "M"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          {
-            "ac": 11,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 19,
-          "formula": "3d8 + 6"
-        },
-        "speed": {
-          "walk": 40,
-          "climb": 30
-        },
-        "str": 15,
-        "dex": 10,
-        "con": 14,
-        "int": 2,
-        "wis": 12,
-        "cha": 7,
-        "skill": {
-          "perception": "+3"
-        },
-        "passive": 13,
-        "cr": "1/2",
-        "trait": [
-          {
-            "name": "Keen Smell",
-            "entries": [
-              "The bear has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The bear makes two attacks: one with its bite and one with its claws."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d6 + 2}) piercing damage."
-            ]
-          },
-          {
-            "name": "Claws",
-            "entries": [
-              "{@atk mw} {@hit 4} to hit, reach 5 ft., one target. {@h}7 ({@damage 2d4 + 2}) slashing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "forest"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/black-bear.opus"
-        },
-        "traitTags": [
-          "Keen Senses"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "damageTags": [
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "hasToken": true
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "beast",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      11
+    ],
+    "hp": {
+      "average": 19,
+      "formula": "3d8 + 6"
     },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Black Bear",
-        "size": [
-          "M"
-        ],
-        "type": "beast",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          11
-        ],
-        "hp": {
-          "average": 19,
-          "formula": "3d8 + 6"
-        },
-        "speed": {
-          "walk": 30,
-          "climb": 30,
-          "swim": 30
-        },
-        "str": 15,
-        "dex": 12,
-        "con": 14,
-        "int": 2,
-        "wis": 12,
-        "cha": 7,
-        "skill": {
-          "perception": "+5"
-        },
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 15,
-        "cr": "1/2",
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The bear makes two Rend attacks."
-            ]
-          },
-          {
-            "name": "Rend",
-            "entries": [
-              "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Slashing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "forest"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/black-bear.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "damageTags": [
-          "S"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Black Bear",
-            "_copy": {
-              "name": "Animals",
-              "source": "SRD52",
-              "_mod": {
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Black Bear.webp"
-                      },
-                      "width": 1158,
-                      "height": 1122
-                    }
-                  ]
-                }
-              }
-            }
-          }
+    "speed": {
+      "walk": 30,
+      "climb": 30,
+      "swim": 30
+    },
+    "str": 15,
+    "dex": 12,
+    "con": 14,
+    "int": 2,
+    "wis": 12,
+    "cha": 7,
+    "skill": {
+      "perception": "+5"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 15,
+    "cr": "1/2",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The bear makes two Rend attacks."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 4}, reach 5 ft. {@h}5 ({@damage 1d6 + 2}) Slashing damage."
         ]
       }
-    }
-  ]
+    ],
+    "environment": [
+      "forest"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/black-bear.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Black Bear",
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Black Bear.webp"
+                  },
+                  "width": 1158,
+                  "height": 1122
+                }
+              ]
+            }
+          }
+        }
+      }
+    ],
+    "trait": [
+      {
+        "name": "Keen Smell",
+        "entries": [
+          "The bear has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
+        ]
+      }
+    ]
+  }
 }

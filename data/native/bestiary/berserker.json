@@ -2,224 +2,106 @@
   "id": "monster.berserker",
   "name": "Berserker",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Berserker",
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "humanoid",
-          "tags": [
-            "any race"
-          ]
-        },
-        "alignment": [
-          "C",
-          "G",
-          "NY",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 13,
-            "from": [
-              "{@item hide armor|srd51}"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 67,
-          "formula": "9d8 + 27"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 16,
-        "dex": 12,
-        "con": 17,
-        "int": 9,
-        "wis": 11,
-        "cha": 9,
-        "passive": 10,
-        "languages": [
-          "any one language (usually Common)"
-        ],
-        "cr": "2",
-        "trait": [
-          {
-            "name": "Reckless",
-            "entries": [
-              "At the start of its turn, the berserker can gain advantage on all melee weapon attack rolls during that turn, but attack rolls against it have advantage until the start of its next turn."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Greataxe",
-            "entries": [
-              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}9 ({@damage 1d12 + 3}) slashing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "coastal",
-          "mountain",
-          "hill",
-          "arctic",
-          "forest",
-          "desert"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/berserker.opus"
-        },
-        "altArt": [
-          {
-            "name": "Diabolical Berserker",
-            "source": "MTF",
-            "page": 18
-          }
-        ],
-        "attachedItems": [
-          "greataxe|srd51"
-        ],
-        "traitTags": [
-          "Reckless"
-        ],
-        "languageTags": [
-          "C",
-          "X"
-        ],
-        "damageTags": [
-          "S"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Berserker",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "Hailing from uncivilized lands, unpredictable berserkers come together in war parties and seek conflict wherever they can find it."
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 67,
+      "formula": "9d8 + 27"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 16,
+    "dex": 12,
+    "con": 17,
+    "int": 9,
+    "wis": 11,
+    "cha": 9,
+    "passive": 10,
+    "languages": [
+      "Common"
+    ],
+    "cr": "2",
+    "gear": [
+      "greataxe|srd52",
+      "hide armor|srd52"
+    ],
+    "trait": [
+      {
+        "name": "Bloodied Frenzy",
+        "entries": [
+          "While {@status Bloodied|SRD52}, the berserker has {@variantrule Advantage|SRD52} on attack rolls and saving throws."
+        ]
+      },
+      {
+        "name": "Reckless",
+        "entries": [
+          "At the start of its turn, the berserker can gain advantage on all melee weapon attack rolls during that turn, but attack rolls against it have advantage until the start of its next turn."
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Greataxe",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}9 ({@damage 1d12 + 3}) Slashing damage."
+        ]
+      }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "armaments",
+      "individual"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/berserker.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "languageTags": [
+      "C"
+    ],
+    "damageTags": [
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Berserker",
-        "size": [
-          "S",
-          "M"
-        ],
-        "type": "humanoid",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          13
-        ],
-        "hp": {
-          "average": 67,
-          "formula": "9d8 + 27"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 16,
-        "dex": 12,
-        "con": 17,
-        "int": 9,
-        "wis": 11,
-        "cha": 9,
-        "passive": 10,
-        "languages": [
-          "Common"
-        ],
-        "cr": "2",
-        "gear": [
-          "greataxe|srd52",
-          "hide armor|srd52"
-        ],
-        "trait": [
-          {
-            "name": "Bloodied Frenzy",
-            "entries": [
-              "While {@status Bloodied|SRD52}, the berserker has {@variantrule Advantage|SRD52} on attack rolls and saving throws."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Greataxe",
-            "entries": [
-              "{@atkr m} {@hit 5}, reach 5 ft. {@h}9 ({@damage 1d12 + 3}) Slashing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "any"
-        ],
-        "treasure": [
-          "armaments",
-          "individual"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/berserker.opus"
-        },
-        "languageTags": [
-          "C"
-        ],
-        "damageTags": [
-          "S"
-        ],
-        "miscTags": [
-          "MA",
-          "MLW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Berserker",
-            "_copy": {
-              "name": "Berserkers",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Berserkers might fight for personal glory or form motivated forces or howling hordes."
-                      ]
-                    }
+        "_copy": {
+          "name": "Berserkers",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Berserkers might fight for personal glory or form motivated forces or howling hordes."
                   ]
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

@@ -2,25 +2,19 @@
   "id": "deity.anubis",
   "name": "Anubis",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Anubis",
-        "pantheon": "Egyptian",
-        "alignment": [
-          "L",
-          "N"
-        ],
-        "title": "God of judgment and death",
-        "domains": [
-          "Death",
-          "Grave",
-          "Order"
-        ],
-        "symbol": "Black jackal"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Egyptian",
+    "alignment": [
+      "L",
+      "N"
+    ],
+    "title": "God of judgment and death",
+    "domains": [
+      "Death",
+      "Grave",
+      "Order"
+    ],
+    "symbol": "Black jackal"
+  }
 }

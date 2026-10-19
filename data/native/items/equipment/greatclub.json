@@ -2,46 +2,22 @@
   "id": "baseitem.greatclub",
   "name": "Greatclub",
   "kind": "baseitem",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Greatclub",
-        "type": "M",
-        "rarity": "none",
-        "weight": 10,
-        "value": 20,
-        "weaponCategory": "simple",
-        "property": [
-          "2H"
-        ],
-        "dmg1": "1d8",
-        "dmgType": "B",
-        "club": true,
-        "weapon": true
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Greatclub",
-        "type": "M|SRD52",
-        "rarity": "none",
-        "weight": 10,
-        "value": 20,
-        "weaponCategory": "simple",
-        "property": [
-          "2H|SRD52"
-        ],
-        "mastery": [
-          "Push|SRD52"
-        ],
-        "dmg1": "1d8",
-        "dmgType": "B",
-        "club": true,
-        "weapon": true
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "M|SRD52",
+    "rarity": "none",
+    "weight": 10,
+    "value": 20,
+    "weaponCategory": "simple",
+    "property": [
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Push|SRD52"
+    ],
+    "dmg1": "1d8",
+    "dmgType": "B",
+    "club": true,
+    "weapon": true
+  }
 }

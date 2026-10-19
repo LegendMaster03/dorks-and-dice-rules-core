@@ -2,17 +2,11 @@
   "id": "item.robes",
   "name": "Robes",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Robes",
-        "type": "G",
-        "rarity": "none",
-        "weight": 4,
-        "value": 100
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 4,
+    "value": 100
+  }
 }

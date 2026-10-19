@@ -2,236 +2,121 @@
   "id": "monster.swarm-of-rats",
   "name": "Swarm of Rats",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Swarm of Rats",
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "beast",
-          "swarmSize": "T"
-        },
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          10
-        ],
-        "hp": {
-          "average": 24,
-          "formula": "7d8 - 7"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 9,
-        "dex": 11,
-        "con": 9,
-        "int": 2,
-        "wis": 10,
-        "cha": 3,
-        "senses": [
-          "darkvision 30 ft."
-        ],
-        "passive": 10,
-        "resist": [
-          "bludgeoning",
-          "piercing",
-          "slashing"
-        ],
-        "conditionImmune": [
-          "charmed",
-          "frightened",
-          "grappled",
-          "paralyzed",
-          "petrified",
-          "prone",
-          "restrained",
-          "stunned"
-        ],
-        "cr": "1/4",
-        "trait": [
-          {
-            "name": "Keen Smell",
-            "entries": [
-              "The swarm has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
-            ]
-          },
-          {
-            "name": "Swarm",
-            "entries": [
-              "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny rat. The swarm can't regain hit points or gain temporary hit points."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bites",
-            "entries": [
-              "{@atk mw} {@hit 2} to hit, reach 0 ft., one target in the swarm's space. {@h}7 ({@damage 2d6}) piercing damage, or 3 ({@damage 1d6}) piercing damage if the swarm has half of its hit points or fewer."
-            ]
-          }
-        ],
-        "environment": [
-          "swamp",
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/swarm-of-rats.opus"
-        },
-        "traitTags": [
-          "Keen Senses"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "damageTags": [
-          "P"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Swarm of Rats",
-            "_copy": {
-              "name": "Generic Swarm",
-              "source": "SRD51"
-            },
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Swarm of Rats.webp"
-                },
-                "width": 1597,
-                "height": 1000
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "beast",
+      "swarmSize": "T"
+    },
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      10
+    ],
+    "hp": {
+      "average": 14,
+      "formula": "4d8 - 4"
+    },
+    "speed": {
+      "walk": 30,
+      "climb": 30
+    },
+    "str": 9,
+    "dex": 11,
+    "con": 9,
+    "int": 2,
+    "wis": 10,
+    "cha": 3,
+    "senses": [
+      "Darkvision 30 ft."
+    ],
+    "passive": 10,
+    "resist": [
+      "bludgeoning",
+      "piercing",
+      "slashing"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "frightened",
+      "grappled",
+      "paralyzed",
+      "petrified",
+      "prone",
+      "restrained",
+      "stunned"
+    ],
+    "cr": "1/4",
+    "trait": [
+      {
+        "name": "Swarm",
+        "entries": [
+          "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny rat. The swarm can't regain {@variantrule Hit Points|SRD52} or gain {@variantrule Temporary Hit Points|SRD52}."
+        ]
+      },
+      {
+        "name": "Keen Smell",
+        "entries": [
+          "The swarm has advantage on Wisdom ({@skill Perception}) checks that rely on smell."
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Bites",
+        "entries": [
+          "{@atkr m} {@hit 2}, reach 5 ft. {@h}5 ({@damage 2d4}) Piercing damage, or 2 ({@damage 1d4}) Piercing damage if the swarm is {@status Bloodied|SRD52}."
+        ]
+      }
+    ],
+    "environment": [
+      "forest",
+      "swamp",
+      "underdark",
+      "urban"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/swarm-of-rats.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "senseTags": [
+      "D"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Swarm of Rats",
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "beast",
-          "swarmSize": "T"
-        },
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          10
-        ],
-        "hp": {
-          "average": 14,
-          "formula": "4d8 - 4"
-        },
-        "speed": {
-          "walk": 30,
-          "climb": 30
-        },
-        "str": 9,
-        "dex": 11,
-        "con": 9,
-        "int": 2,
-        "wis": 10,
-        "cha": 3,
-        "senses": [
-          "Darkvision 30 ft."
-        ],
-        "passive": 10,
-        "resist": [
-          "bludgeoning",
-          "piercing",
-          "slashing"
-        ],
-        "conditionImmune": [
-          "charmed",
-          "frightened",
-          "grappled",
-          "paralyzed",
-          "petrified",
-          "prone",
-          "restrained",
-          "stunned"
-        ],
-        "cr": "1/4",
-        "trait": [
-          {
-            "name": "Swarm",
-            "entries": [
-              "The swarm can occupy another creature's space and vice versa, and the swarm can move through any opening large enough for a Tiny rat. The swarm can't regain {@variantrule Hit Points|SRD52} or gain {@variantrule Temporary Hit Points|SRD52}."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bites",
-            "entries": [
-              "{@atkr m} {@hit 2}, reach 5 ft. {@h}5 ({@damage 2d4}) Piercing damage, or 2 ({@damage 1d4}) Piercing damage if the swarm is {@status Bloodied|SRD52}."
-            ]
-          }
-        ],
-        "environment": [
-          "forest",
-          "swamp",
-          "underdark",
-          "urban"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/swarm-of-rats.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "damageTags": [
-          "P"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Swarm of Rats",
-            "_copy": {
-              "name": "Animals",
-              "source": "SRD52",
-              "_mod": {
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Rats.webp"
-                      },
-                      "width": 2539,
-                      "height": 1643
-                    }
-                  ]
+        "_copy": {
+          "name": "Animals",
+          "source": "SRD52",
+          "_mod": {
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Rats.webp"
+                  },
+                  "width": 2539,
+                  "height": 1643
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

@@ -2,447 +2,251 @@
   "id": "monster.ancient-blue-dragon",
   "name": "Ancient Blue Dragon",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Ancient Blue Dragon",
-        "group": [
-          "Chromatic Dragon"
-        ],
-        "size": [
-          "G"
-        ],
-        "type": "dragon",
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 22,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 481,
-          "formula": "26d20 + 208"
-        },
-        "speed": {
-          "walk": 40,
-          "burrow": 40,
-          "fly": 80
-        },
-        "str": 29,
-        "dex": 10,
-        "con": 27,
-        "int": 18,
-        "wis": 17,
-        "cha": 21,
-        "save": {
-          "dex": "+7",
-          "con": "+15",
-          "wis": "+10",
-          "cha": "+12"
-        },
-        "skill": {
-          "perception": "+17",
-          "stealth": "+7"
-        },
-        "senses": [
-          "blindsight 60 ft.",
-          "darkvision 120 ft."
-        ],
-        "passive": 27,
-        "immune": [
-          "lightning"
-        ],
-        "languages": [
-          "Common",
-          "Draconic"
-        ],
-        "cr": "23",
-        "trait": [
-          {
-            "name": "Legendary Resistance (3/Day)",
-            "entries": [
-              "If the dragon fails a saving throw, it can choose to succeed instead."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 16} to hit, reach 15 ft., one target. {@h}20 ({@damage 2d10 + 9}) piercing damage plus 11 ({@damage 2d10}) lightning damage."
-            ]
-          },
-          {
-            "name": "Claw",
-            "entries": [
-              "{@atk mw} {@hit 16} to hit, reach 10 ft., one target. {@h}16 ({@damage 2d6 + 9}) slashing damage."
-            ]
-          },
-          {
-            "name": "Tail",
-            "entries": [
-              "{@atk mw} {@hit 16} to hit, reach 20 ft., one target. {@h}18 ({@damage 2d8 + 9}) bludgeoning damage."
-            ]
-          },
-          {
-            "name": "Frightful Presence",
-            "entries": [
-              "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 20} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
-            ]
-          },
-          {
-            "name": "Lightning Breath {@recharge 5}",
-            "entries": [
-              "The dragon exhales lightning in a 120-foot line that is 10 feet wide. Each creature in that line must make a {@dc 23} Dexterity saving throw, taking 88 ({@damage 16d10}) lightning damage on a failed save, or half as much damage on a successful one."
-            ]
-          }
-        ],
-        "legendary": [
-          {
-            "name": "Detect",
-            "entries": [
-              "The dragon makes a Wisdom ({@skill Perception}) check."
-            ]
-          },
-          {
-            "name": "Tail Attack",
-            "entries": [
-              "The dragon makes a tail attack."
-            ]
-          },
-          {
-            "name": "Wing Attack (Costs 2 Actions)",
-            "entries": [
-              "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 24} Dexterity saving throw or take 16 ({@damage 2d6 + 9}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
-            ]
-          }
-        ],
-        "environment": [
-          "desert",
-          "coastal"
-        ],
-        "dragonCastingColor": "blue",
-        "dragonAge": "ancient",
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/blue-dragon.opus"
-        },
-        "traitTags": [
-          "Legendary Resistances"
-        ],
-        "senseTags": [
-          "B",
-          "SD"
-        ],
-        "actionTags": [
-          "Breath Weapon",
-          "Frightful Presence",
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "DR"
-        ],
-        "damageTags": [
-          "B",
-          "L",
-          "P",
-          "S"
-        ],
-        "damageTagsLegendary": [
-          "B",
-          "L"
-        ],
-        "miscTags": [
-          "AOE",
-          "MW",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "frightened",
-          "prone"
-        ],
-        "conditionInflictLegendary": [
-          "blinded",
-          "prone",
-          "restrained"
-        ],
-        "savingThrowForced": [
-          "dexterity",
-          "wisdom"
-        ],
-        "savingThrowForcedLegendary": [
-          "constitution",
-          "dexterity"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Ancient Blue Dragon",
-            "_copy": {
-              "name": "Blue Dragon",
-              "source": "SRD51"
-            },
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Ancient Blue Dragon.webp"
-                },
-                "width": 850,
-                "height": 1026
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Chromatic Dragons"
+    ],
+    "size": [
+      "G"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "chromatic"
+      ]
     },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Ancient Blue Dragon",
-        "group": [
-          "Chromatic Dragons"
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      22
+    ],
+    "hp": {
+      "average": 481,
+      "formula": "26d20 + 208"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 2
+    },
+    "str": 29,
+    "dex": 10,
+    "con": 27,
+    "int": 18,
+    "wis": 17,
+    "cha": 25,
+    "save": {
+      "dex": "+7",
+      "wis": "+10"
+    },
+    "skill": {
+      "perception": "+17",
+      "stealth": "+7"
+    },
+    "senses": [
+      "Blindsight 60 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 27,
+    "immune": [
+      "lightning"
+    ],
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": {
+      "cr": "23",
+      "xpLair": 62000
+    },
+    "spellcasting": [
+      {
+        "name": "Spellcasting",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 22}):"
         ],
-        "size": [
-          "G"
+        "will": [
+          "{@spell Detect Magic|SRD52}",
+          "{@spell Invisibility|SRD52}",
+          "{@spell Mage Hand|SRD52}",
+          "{@spell Shatter|SRD52} (level 3 version)"
         ],
-        "type": {
-          "type": "dragon",
-          "tags": [
-            "chromatic"
+        "daily": {
+          "1e": [
+            "{@spell Scrying|SRD52}",
+            "{@spell Sending|SRD52}"
           ]
         },
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          22
-        ],
-        "hp": {
-          "average": 481,
-          "formula": "26d20 + 208"
-        },
-        "speed": {
-          "walk": 40,
-          "burrow": 40,
-          "fly": 80
-        },
-        "initiative": {
-          "proficiency": 2
-        },
-        "str": 29,
-        "dex": 10,
-        "con": 27,
-        "int": 18,
-        "wis": 17,
-        "cha": 25,
-        "save": {
-          "dex": "+7",
-          "wis": "+10"
-        },
-        "skill": {
-          "perception": "+17",
-          "stealth": "+7"
-        },
-        "senses": [
-          "Blindsight 60 ft.",
-          "Darkvision 120 ft."
-        ],
-        "passive": 27,
-        "immune": [
-          "lightning"
-        ],
-        "languages": [
-          "Common",
-          "Draconic"
-        ],
-        "cr": {
-          "cr": "23",
-          "xpLair": 62000
-        },
-        "spellcasting": [
-          {
-            "name": "Spellcasting",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The dragon casts one of the following spells, requiring no Material components and using Charisma as the spellcasting ability (spell save {@dc 22}):"
-            ],
-            "will": [
-              "{@spell Detect Magic|SRD52}",
-              "{@spell Invisibility|SRD52}",
-              "{@spell Mage Hand|SRD52}",
-              "{@spell Shatter|SRD52} (level 3 version)"
-            ],
-            "daily": {
-              "1e": [
-                "{@spell Scrying|SRD52}",
-                "{@spell Sending|SRD52}"
-              ]
-            },
-            "ability": "cha",
-            "displayAs": "action"
-          }
-        ],
-        "trait": [
-          {
-            "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
-            "entries": [
-              "If the dragon fails a saving throw, it can choose to succeed instead."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Shatter|SRD52} (level 3 version)."
-            ]
-          },
-          {
-            "name": "Rend",
-            "entries": [
-              "{@atkr m} {@hit 16}, reach 15 ft. {@h}18 ({@damage 2d8 + 9}) Slashing damage plus 11 ({@damage 2d10}) Lightning damage."
-            ]
-          },
-          {
-            "name": "Lightning Breath {@recharge 5}",
-            "entries": [
-              "{@actSave dex} {@dc 23}, each creature in a 120-foot-long, 10-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 88 ({@damage 16d10}) Lightning damage. {@actSaveSuccess} Half damage."
-            ]
-          }
-        ],
-        "legendaryActionsLair": 4,
-        "legendary": [
-          {
-            "name": "Cloaked Flight",
-            "entries": [
-              "The dragon uses Spellcasting to cast {@spell Invisibility|SRD52} on itself, and it can fly up to half its {@variantrule Fly Speed|SRD52}. The dragon can't take this action again until the start of its next turn."
-            ]
-          },
-          {
-            "name": "Sonic Boom",
-            "entries": [
-              "The dragon uses Spellcasting to cast {@spell Shatter|SRD52} (level 3 version). The dragon can't take this action again until the start of its next turn."
-            ]
-          },
-          {
-            "name": "Tail Swipe",
-            "entries": [
-              "The dragon makes one Rend attack."
-            ]
-          }
-        ],
-        "environment": [
-          "coastal",
-          "desert"
-        ],
-        "treasure": [
-          "relics"
-        ],
-        "dragonAge": "ancient",
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/blue-dragon.opus"
-        },
-        "traitTags": [
-          "Legendary Resistances"
-        ],
-        "senseTags": [
-          "B",
-          "SD"
-        ],
-        "actionTags": [
-          "Breath Weapon",
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "DR"
-        ],
-        "damageTags": [
-          "L",
-          "S"
-        ],
-        "damageTagsSpell": [
-          "T"
-        ],
-        "spellcastingTags": [
-          "O"
-        ],
-        "miscTags": [
-          "MA",
-          "RCH"
-        ],
-        "conditionInflictSpell": [
-          "invisible"
-        ],
-        "savingThrowForced": [
-          "dexterity"
-        ],
-        "savingThrowForcedLegendary": [
-          "dexterity"
-        ],
-        "savingThrowForcedSpell": [
-          "constitution",
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Ancient Blue Dragon",
-            "_copy": {
-              "name": "Blue Dragons",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Ancient blue dragons think beyond dominating groups of short-lived servants. Instead, they seek to claim their places above other dragons and their world's most powerful inhabitants. If world domination seems too tedious or cliché, these dragons might seek to seize control of extraplanar realms, multi-world empires, or forces of reality—like life, storms, or time itself."
-                      ]
-                    }
-                  ]
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Ancient Blue Dragon.webp"
-                      },
-                      "title": "Shattering the enemy's defenses, an ancient blue dragon leads its armies in conquest",
-                      "credit": "Antonio José Manzanedo",
-                      "width": 1974,
-                      "height": 2560
-                    }
-                  ]
-                }
-              }
-            }
-          }
+        "ability": "cha",
+        "displayAs": "action"
+      }
+    ],
+    "trait": [
+      {
+        "name": "Legendary Resistance (4/Day, or 5/Day in Lair)",
+        "entries": [
+          "If the dragon fails a saving throw, it can choose to succeed instead."
         ]
       }
-    }
-  ]
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Spellcasting to cast {@spell Shatter|SRD52} (level 3 version)."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 16}, reach 15 ft. {@h}18 ({@damage 2d8 + 9}) Slashing damage plus 11 ({@damage 2d10}) Lightning damage."
+        ]
+      },
+      {
+        "name": "Lightning Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 23}, each creature in a 120-foot-long, 10-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 88 ({@damage 16d10}) Lightning damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Frightful Presence",
+        "entries": [
+          "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a {@dc 20} Wisdom saving throw or become {@condition frightened} for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours."
+        ]
+      }
+    ],
+    "legendaryActionsLair": 4,
+    "legendary": [
+      {
+        "name": "Cloaked Flight",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Invisibility|SRD52} on itself, and it can fly up to half its {@variantrule Fly Speed|SRD52}. The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Sonic Boom",
+        "entries": [
+          "The dragon uses Spellcasting to cast {@spell Shatter|SRD52} (level 3 version). The dragon can't take this action again until the start of its next turn."
+        ]
+      },
+      {
+        "name": "Tail Swipe",
+        "entries": [
+          "The dragon makes one Rend attack."
+        ]
+      },
+      {
+        "name": "Detect",
+        "entries": [
+          "The dragon makes a Wisdom ({@skill Perception}) check."
+        ]
+      },
+      {
+        "name": "Wing Attack (Costs 2 Actions)",
+        "entries": [
+          "The dragon beats its wings. Each creature within 15 feet of the dragon must succeed on a {@dc 24} Dexterity saving throw or take 16 ({@damage 2d6 + 9}) bludgeoning damage and be knocked {@condition prone}. The dragon can then fly up to half its flying speed."
+        ]
+      }
+    ],
+    "environment": [
+      "coastal",
+      "desert"
+    ],
+    "treasure": [
+      "relics"
+    ],
+    "dragonAge": "ancient",
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/blue-dragon.opus"
+    },
+    "traitTags": [
+      "Legendary Resistances"
+    ],
+    "senseTags": [
+      "B",
+      "SD"
+    ],
+    "actionTags": [
+      "Breath Weapon",
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "DR"
+    ],
+    "damageTags": [
+      "L",
+      "S"
+    ],
+    "damageTagsSpell": [
+      "T"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "conditionInflictSpell": [
+      "invisible"
+    ],
+    "savingThrowForced": [
+      "dexterity"
+    ],
+    "savingThrowForcedLegendary": [
+      "dexterity"
+    ],
+    "savingThrowForcedSpell": [
+      "constitution",
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Ancient Blue Dragon",
+        "_copy": {
+          "name": "Blue Dragons",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Ancient blue dragons think beyond dominating groups of short-lived servants. Instead, they seek to claim their places above other dragons and their world's most powerful inhabitants. If world domination seems too tedious or cliché, these dragons might seek to seize control of extraplanar realms, multi-world empires, or forces of reality—like life, storms, or time itself."
+                  ]
+                }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Ancient Blue Dragon.webp"
+                  },
+                  "title": "Shattering the enemy's defenses, an ancient blue dragon leads its armies in conquest",
+                  "credit": "Antonio José Manzanedo",
+                  "width": 1974,
+                  "height": 2560
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
 }

@@ -2,384 +2,197 @@
   "id": "monster.imp",
   "name": "Imp",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Imp",
-        "size": [
-          "T"
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Devils"
+    ],
+    "size": [
+      "T"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "devil"
+      ]
+    },
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 21,
+      "formula": "6d4 + 6"
+    },
+    "speed": {
+      "walk": 20,
+      "fly": 40
+    },
+    "str": 6,
+    "dex": 17,
+    "con": 13,
+    "int": 11,
+    "wis": 12,
+    "cha": 14,
+    "skill": {
+      "deception": "+4",
+      "insight": "+3",
+      "stealth": "+5"
+    },
+    "senses": [
+      "Darkvision 120 ft. (unimpeded by magical {@variantrule Darkness|SRD52})"
+    ],
+    "passive": 11,
+    "resist": [
+      "cold"
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "poisoned"
+    ],
+    "languages": [
+      "Common",
+      "Infernal"
+    ],
+    "cr": "1",
+    "spellcasting": [
+      {
+        "name": "Invisibility",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The imp casts {@spell Invisibility|SRD52} on itself, requiring no spell components and using Charisma as the spellcasting ability."
         ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "devil"
-          ]
-        },
-        "alignment": [
-          "L",
-          "E"
+        "will": [
+          "{@spell Invisibility|SRD52}"
         ],
-        "ac": [
-          13
-        ],
-        "hp": {
-          "average": 10,
-          "formula": "3d4 + 3"
-        },
-        "speed": {
-          "walk": 20,
-          "fly": 40
-        },
-        "str": 6,
-        "dex": 17,
-        "con": 13,
-        "int": 11,
-        "wis": 12,
-        "cha": 14,
-        "skill": {
-          "deception": "+4",
-          "insight": "+3",
-          "persuasion": "+4",
-          "stealth": "+5"
-        },
-        "senses": [
-          "darkvision 120 ft."
-        ],
-        "passive": 11,
-        "resist": [
-          "cold",
-          {
-            "resist": [
-              "bludgeoning",
-              "piercing",
-              "slashing"
-            ],
-            "note": "from nonmagical attacks not made with silvered weapons",
-            "cond": true
-          }
-        ],
-        "immune": [
-          "fire",
-          "poison"
-        ],
-        "conditionImmune": [
-          "poisoned"
-        ],
-        "languages": [
-          "Infernal",
-          "Common"
-        ],
-        "cr": "1",
-        "trait": [
-          {
-            "name": "Shapechanger",
-            "entries": [
-              "The imp can use its action to polymorph into a beast form that resembles a rat (speed 20 ft.), a raven (20 ft., fly 60 ft.), or a spider (20 ft., climb 20 ft.), or back into its true form. Its statistics are the same in each form, except for the speed changes noted. Any equipment it is wearing or carrying isn't transformed. It reverts to its true form if it dies."
-            ]
-          },
-          {
-            "name": "Devil's Sight",
-            "entries": [
-              "Magical darkness doesn't impede the imp's darkvision."
-            ]
-          },
-          {
-            "name": "Magic Resistance",
-            "entries": [
-              "The imp has advantage on saving throws against spells and other magical effects."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Sting (Bite in Beast Form)",
-            "entries": [
-              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}5 ({@damage 1d4 + 3}) piercing damage, and the target must make a {@dc 11} Constitution saving throw, taking 10 ({@damage 3d6}) poison damage on a failed save, or half as much damage on a successful one."
-            ]
-          },
-          {
-            "name": "Invisibility",
-            "entries": [
-              "The imp magically turns {@condition invisible} until it attacks, or until its {@status concentration} ends (as if {@status concentration||concentrating} on a spell). Any equipment the imp wears or carries is {@condition invisible} with it."
-            ]
-          }
-        ],
-        "familiar": true,
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/imp.opus"
-        },
-        "traitTags": [
-          "Devil's Sight",
-          "Magic Resistance",
-          "Shapechanger"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "languageTags": [
-          "C",
-          "I"
-        ],
-        "damageTags": [
-          "I",
-          "P"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "conditionInflict": [
-          "invisible"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Imp",
-            "_copy": {
-              "name": "Devils",
-              "source": "SRD51",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "entries",
-                    "entries": [
-                      {
-                        "type": "entries",
-                        "entries": [
-                          "Imps are found throughout the Lower Planes, either running errands for their infernal masters, spying on rivals, or misleading and waylaying mortals. An imp will proudly serve an evil master of any kind, but it can't be relied on to carry out tasks with any speed or efficiency.",
-                          "An imp can assume animal form at will, but in its natural state it resembles a diminutive red-skinned humanoid with a barbed tail, small horns, and leathery wings. It strikes while {@condition invisible}, attacking with its poison stinger.",
-                          {
-                            "type": "inset",
-                            "name": "Variant: Imp Familiar",
-                            "entries": [
-                              "Imps can be found in the service to mortal spellcasters, acting as advisors, spies, and familiars. An imp urges its master to acts of evil, knowing the mortal's soul is a prize the imp might ultimately claim. Imps display an unusual loyalty to their masters, and an imp can be quite dangerous if its master is threatened. Some such imps have the following trait.",
-                              {
-                                "name": "Familiar",
-                                "type": "entries",
-                                "entries": [
-                                  "The imp can enter into a contract to serve another creature as a familiar, forming a telepathic bond with its willing master. While the two are bonded, the master can sense what the imp senses as long as they are within 1 mile of each other. While the imp is within 10 feet of its master, the master shares the imp's Magic Resistance trait. If its master violates the terms of the contract, the imp can end its service as a familiar, ending the telepathic bond."
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "image",
-                    "href": {
-                      "type": "internal",
-                      "path": "bestiary/MM/Imp.webp"
-                    },
-                    "width": 744,
-                    "height": 1000
-                  }
-                }
-              }
-            }
-          }
+        "ability": "cha",
+        "displayAs": "action",
+        "hidden": [
+          "will"
         ]
       }
+    ],
+    "trait": [
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The imp has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Devil's Sight",
+        "entries": [
+          "Magical darkness doesn't impede the imp's darkvision."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Sting",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Piercing damage plus 7 ({@damage 2d6}) Poison damage."
+        ]
+      },
+      {
+        "name": "Shape-Shift",
+        "entries": [
+          "The imp shape-shifts to resemble a rat ({@variantrule Speed|SRD52} 20 ft.), a raven (20 ft., Fly 60 ft.), or a spider (20 ft., Climb 20 ft.), or it returns to its true form. Its statistics are the same in each form, except for its {@variantrule Speed|SRD52}. Any equipment it is wearing or carrying isn't transformed."
+        ]
+      }
+    ],
+    "environment": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/imp.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "traitTags": [
+      "Devil's Sight",
+      "Magic Resistance"
+    ],
+    "senseTags": [
+      "SD"
+    ],
+    "languageTags": [
+      "C",
+      "I"
+    ],
+    "damageTags": [
+      "I",
+      "P"
+    ],
+    "spellcastingTags": [
+      "O"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflictSpell": [
+      "invisible"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Imp",
-        "group": [
-          "Devils"
-        ],
-        "size": [
-          "T"
-        ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "devil"
-          ]
-        },
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          13
-        ],
-        "hp": {
-          "average": 21,
-          "formula": "6d4 + 6"
-        },
-        "speed": {
-          "walk": 20,
-          "fly": 40
-        },
-        "str": 6,
-        "dex": 17,
-        "con": 13,
-        "int": 11,
-        "wis": 12,
-        "cha": 14,
-        "skill": {
-          "deception": "+4",
-          "insight": "+3",
-          "stealth": "+5"
-        },
-        "senses": [
-          "Darkvision 120 ft. (unimpeded by magical {@variantrule Darkness|SRD52})"
-        ],
-        "passive": 11,
-        "resist": [
-          "cold"
-        ],
-        "immune": [
-          "fire",
-          "poison"
-        ],
-        "conditionImmune": [
-          "poisoned"
-        ],
-        "languages": [
-          "Common",
-          "Infernal"
-        ],
-        "cr": "1",
-        "spellcasting": [
+        "entries": [
           {
-            "name": "Invisibility",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The imp casts {@spell Invisibility|SRD52} on itself, requiring no spell components and using Charisma as the spellcasting ability."
-            ],
-            "will": [
-              "{@spell Invisibility|SRD52}"
-            ],
-            "ability": "cha",
-            "displayAs": "action",
-            "hidden": [
-              "will"
-            ]
-          }
-        ],
-        "trait": [
-          {
-            "name": "Magic Resistance",
-            "entries": [
-              "The imp has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Sting",
-            "entries": [
-              "{@atkr m} {@hit 5}, reach 5 ft. {@h}6 ({@damage 1d6 + 3}) Piercing damage plus 7 ({@damage 2d6}) Poison damage."
-            ]
-          },
-          {
-            "name": "Shape-Shift",
-            "entries": [
-              "The imp shape-shifts to resemble a rat ({@variantrule Speed|SRD52} 20 ft.), a raven (20 ft., Fly 60 ft.), or a spider (20 ft., Climb 20 ft.), or it returns to its true form. Its statistics are the same in each form, except for its {@variantrule Speed|SRD52}. Any equipment it is wearing or carrying isn't transformed."
-            ]
-          }
-        ],
-        "environment": [
-          "any"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/imp.opus"
-        },
-        "traitTags": [
-          "Devil's Sight",
-          "Magic Resistance"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "languageTags": [
-          "C",
-          "I"
-        ],
-        "damageTags": [
-          "I",
-          "P"
-        ],
-        "spellcastingTags": [
-          "O"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflictSpell": [
-          "invisible"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Imp",
             "entries": [
+              "{@i Devil of Pettiness and Suspicion}",
               {
-                "type": "section",
-                "name": "Imp",
-                "entries": [
-                  "{@i Devil of Pettiness and Suspicion}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Any|bestiary|environment=any}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "None"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Any|bestiary|environment=any}"
                   },
-                  "Known for their cowardice and toadying, imps serve devils and wicked magic-users. Their abilities to shape-shift and pass unseen make them skillful spies and adept at fleeing danger. Imps sent to surveil other creatures relate what they discover to their masters, but they frequently omit important details or cast events in the worst possible light to mislead their masters into following the imps' devilish council.",
-                  "Imps without masters delight in manipulating other creatures and inflating their own egos. They might take over bands of weaker monsters, or they might pose as helpful spirits and trick influential individuals into pursuing nefarious ends.",
                   {
-                    "type": "insetReadaloud",
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "None"
+                  }
+                ]
+              },
+              "Known for their cowardice and toadying, imps serve devils and wicked magic-users. Their abilities to shape-shift and pass unseen make them skillful spies and adept at fleeing danger. Imps sent to surveil other creatures relate what they discover to their masters, but they frequently omit important details or cast events in the worst possible light to mislead their masters into following the imps' devilish council.",
+              "Imps without masters delight in manipulating other creatures and inflating their own egos. They might take over bands of weaker monsters, or they might pose as helpful spirits and trick influential individuals into pursuing nefarious ends.",
+              {
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
                     "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "I can tell you what I know, but wouldn't you rather I tell you what'll let you do what you know you're going to do anyway?"
-                        ],
-                        "by": "Skeever, Imp Servant of Firan Zal'Honan"
-                      }
-                    ]
+                      "I can tell you what I know, but wouldn't you rather I tell you what'll let you do what you know you're going to do anyway?"
+                    ],
+                    "by": "Skeever, Imp Servant of Firan Zal'Honan"
                   }
                 ]
               }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Imp.webp"
-                },
-                "credit": "Patrik Hell",
-                "width": 1477,
-                "height": 1393
-              }
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Imp.webp"
+            },
+            "credit": "Patrik Hell",
+            "width": 1477,
+            "height": 1393
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

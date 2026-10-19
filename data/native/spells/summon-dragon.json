@@ -2,80 +2,74 @@
   "id": "spell.summon-dragon",
   "name": "Summon Dragon",
   "kind": "spell",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Summon Dragon",
-        "level": 5,
-        "school": "C",
-        "time": [
-          {
-            "number": 1,
-            "unit": "action"
-          }
-        ],
-        "range": {
-          "type": "point",
-          "distance": {
-            "type": "feet",
-            "amount": 60
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "level": 5,
+    "school": "C",
+    "time": [
+      {
+        "number": 1,
+        "unit": "action"
+      }
+    ],
+    "range": {
+      "type": "point",
+      "distance": {
+        "type": "feet",
+        "amount": 60
+      }
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": {
+        "text": "an object with the image of a dragon engraved on it worth 500+ GP",
+        "cost": 50000
+      }
+    },
+    "duration": [
+      {
+        "type": "timed",
+        "duration": {
+          "type": "hour",
+          "amount": 1
         },
-        "components": {
-          "v": true,
-          "s": true,
-          "m": {
-            "text": "an object with the image of a dragon engraved on it worth 500+ GP",
-            "cost": 50000
-          }
-        },
-        "duration": [
-          {
-            "type": "timed",
-            "duration": {
-              "type": "hour",
-              "amount": 1
-            },
-            "concentration": true
-          }
-        ],
+        "concentration": true
+      }
+    ],
+    "entries": [
+      "You call forth a Dragon spirit. It manifests in an unoccupied space that you can see within range and uses the {@creature Draconic Spirit|SRD52} stat block. The creature disappears when it drops to 0 {@variantrule Hit Points|SRD52} or when the spell ends.",
+      "The creature is an ally to you and your allies. In combat, the creature shares your {@variantrule Initiative|SRD52} count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the {@action Dodge|SRD52} action and uses its movement to avoid danger."
+    ],
+    "entriesHigherLevel": [
+      {
+        "type": "entries",
+        "name": "Using a Higher-Level Spell Slot",
         "entries": [
-          "You call forth a Dragon spirit. It manifests in an unoccupied space that you can see within range and uses the {@creature Draconic Spirit|SRD52} stat block. The creature disappears when it drops to 0 {@variantrule Hit Points|SRD52} or when the spell ends.",
-          "The creature is an ally to you and your allies. In combat, the creature shares your {@variantrule Initiative|SRD52} count, but it takes its turn immediately after yours. It obeys your verbal commands (no action required by you). If you don't issue any, it takes the {@action Dodge|SRD52} action and uses its movement to avoid danger."
-        ],
-        "entriesHigherLevel": [
+          "Use the spell slot's level for the spell's level in the stat block."
+        ]
+      }
+    ],
+    "miscTags": [
+      "SGT",
+      "SMN"
+    ],
+    "lore": [
+      {
+        "name": "Summon Dragon",
+        "images": [
           {
-            "type": "entries",
-            "name": "Using a Higher-Level Spell Slot",
-            "entries": [
-              "Use the spell slot's level for the spell's level in the stat block."
-            ]
-          }
-        ],
-        "miscTags": [
-          "SGT",
-          "SMN"
-        ],
-        "lore": [
-          {
-            "name": "Summon Dragon",
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "spells/XPHB/Summon Dragon.webp"
-                },
-                "credit": "Polar Engine",
-                "width": 850,
-                "height": 1059
-              }
-            ]
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "spells/XPHB/Summon Dragon.webp"
+            },
+            "credit": "Polar Engine",
+            "width": 850,
+            "height": 1059
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

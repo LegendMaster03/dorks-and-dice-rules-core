@@ -2,278 +2,128 @@
   "id": "monster.bulette",
   "name": "Bulette",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Bulette",
-        "size": [
-          "L"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          {
-            "ac": 17,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 94,
-          "formula": "9d10 + 45"
-        },
-        "speed": {
-          "walk": 40,
-          "burrow": 40
-        },
-        "str": 19,
-        "dex": 11,
-        "con": 21,
-        "int": 2,
-        "wis": 10,
-        "cha": 5,
-        "skill": {
-          "perception": "+6"
-        },
-        "senses": [
-          "darkvision 60 ft.",
-          "tremorsense 60 ft."
-        ],
-        "passive": 16,
-        "cr": "5",
-        "trait": [
-          {
-            "name": "Standing Leap",
-            "entries": [
-              "The bulette's long jump is up to 30 feet and its high jump is up to 15 feet, with or without a running start."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 7} to hit, reach 5 ft., one target. {@h}30 ({@damage 4d12 + 4}) piercing damage."
-            ]
-          },
-          {
-            "name": "Deadly Leap",
-            "entries": [
-              "If the bulette jumps at least 15 feet as part of its movement, it can then use this action to land on its feet in a space that contains one or more other creatures. Each of those creatures must succeed on a {@dc 16} Strength or Dexterity saving throw (target's choice) or be knocked {@condition prone} and take 14 ({@damage 3d6 + 4}) bludgeoning damage plus 14 ({@damage 3d6 + 4}) slashing damage. On a successful save, the creature takes only half the damage, isn't knocked {@condition prone}, and is pushed 5 feet out of the bulette's space into an unoccupied space of the creature's choice. If no unoccupied space is within range, the creature instead falls {@condition prone} in the bulette's space."
-            ]
-          }
-        ],
-        "environment": [
-          "mountain",
-          "grassland",
-          "hill"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/bulette.opus"
-        },
-        "senseTags": [
-          "D",
-          "T"
-        ],
-        "damageTags": [
-          "B",
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Bulette",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "A bulette is a massive predator that terrorizes any lands it inhabits. Also called a \"land shark,\" it lives only to feed. Irascible and rapacious, bulettes fear no other creature, and they attack with no regard for superior numbers or strength.",
-                      {
-                        "name": "Underground Hunters",
-                        "type": "entries",
-                        "entries": [
-                          "Bulettes use their powerful claws to tunnel through the earth when they hunt. Heedless of obstruction, they uproot trees, cause landslides in loose slopes, and leave sinkholes behind them. When vibrations in the soil and rock alert a bulette to movement, it shoots to the surface, its jaws spread wide as it attacks."
-                        ]
-                      },
-                      {
-                        "name": "Wandering Monster",
-                        "type": "entries",
-                        "entries": [
-                          "A bulette ranges across temperate lands, feeding on any animals and humanoids it comes across. These creatures dislike dwarf and elf flesh, although they often kill them before realizing what they are. A bulette loves halfling meat the most, and it is never happier than when chasing plump halflings across an open field.",
-                          "A bulette has no lair, but roams a hunting territory up to thirty miles wide. Its sole criterion for territory is availability of food, and when it has eaten everything in an area, a bulette moves on. These creatures often home in on humanoid settlements, terrorizing them until their panicked residents have fled, or until the bulette is slain.",
-                          "All creatures shun bulettes, which treat anything that moves as food-even other predators and bulettes. Bulettes come together only to mate, resulting in a bloody act of claws and teeth that usually ends with the male's death and consumption."
-                        ]
-                      },
-                      {
-                        "name": "Arcane Creation",
-                        "type": "entries",
-                        "entries": [
-                          "Some sages believe the bulette is the result of a mad wizard's experiments at crossbreeding snapping turtles and armadillos, within fusions of demon ichor. Bulettes have been thought to be extinct at different times, but after years without a sighting, the creatures inevitably reappear. Because their young are almost never seen, some sages suspect that bulettes maintain secret nesting grounds from which adults strike out into the world."
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Bulette.webp"
-                },
-                "width": 1000,
-                "height": 763
-              },
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Bulette 2.webp"
-                },
-                "width": 1000,
-                "height": 658
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "L"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 94,
+      "formula": "9d10 + 45"
+    },
+    "speed": {
+      "walk": 40,
+      "burrow": 40
+    },
+    "str": 19,
+    "dex": 11,
+    "con": 21,
+    "int": 2,
+    "wis": 10,
+    "cha": 5,
+    "skill": {
+      "perception": "+6"
+    },
+    "senses": [
+      "Darkvision 60 ft.",
+      "Tremorsense 120 ft."
+    ],
+    "passive": 16,
+    "cr": "5",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The bulette makes two Bite attacks."
+        ]
+      },
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 5 ft. {@h}17 ({@damage 2d12 + 4}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Deadly Leap",
+        "entries": [
+          "The bulette spends 5 feet of movement to jump to a space within 15 feet that contains one or more Large or smaller creatures. {@actSave dex} {@dc 15}, each creature in the bulette's destination space. {@actSaveFail} 19 ({@damage 3d12}) Bludgeoning damage, and the target has the {@condition Prone|SRD52} condition. {@actSaveSuccess} Half damage, and the target is pushed 5 feet straight away from the bulette."
         ]
       }
+    ],
+    "bonus": [
+      {
+        "name": "Leap",
+        "entries": [
+          "The bulette jumps up to 30 feet by spending 10 feet of movement."
+        ]
+      }
+    ],
+    "environment": [
+      "grassland",
+      "hill",
+      "mountain"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/bulette.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "senseTags": [
+      "D",
+      "T"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "damageTags": [
+      "B",
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "prone"
+    ],
+    "savingThrowForced": [
+      "dexterity"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Bulette",
-        "size": [
-          "L"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          17
-        ],
-        "hp": {
-          "average": 94,
-          "formula": "9d10 + 45"
-        },
-        "speed": {
-          "walk": 40,
-          "burrow": 40
-        },
-        "str": 19,
-        "dex": 11,
-        "con": 21,
-        "int": 2,
-        "wis": 10,
-        "cha": 5,
-        "skill": {
-          "perception": "+6"
-        },
-        "senses": [
-          "Darkvision 60 ft.",
-          "Tremorsense 120 ft."
-        ],
-        "passive": 16,
-        "cr": "5",
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The bulette makes two Bite attacks."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atkr m} {@hit 7}, reach 5 ft. {@h}17 ({@damage 2d12 + 4}) Piercing damage."
-            ]
-          },
-          {
-            "name": "Deadly Leap",
-            "entries": [
-              "The bulette spends 5 feet of movement to jump to a space within 15 feet that contains one or more Large or smaller creatures. {@actSave dex} {@dc 15}, each creature in the bulette's destination space. {@actSaveFail} 19 ({@damage 3d12}) Bludgeoning damage, and the target has the {@condition Prone|SRD52} condition. {@actSaveSuccess} Half damage, and the target is pushed 5 feet straight away from the bulette."
-            ]
-          }
-        ],
-        "bonus": [
-          {
-            "name": "Leap",
-            "entries": [
-              "The bulette jumps up to 30 feet by spending 10 feet of movement."
-            ]
-          }
-        ],
-        "environment": [
-          "grassland",
-          "hill",
-          "mountain"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/bulette.opus"
-        },
-        "senseTags": [
-          "D",
-          "T"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "damageTags": [
-          "B",
-          "P"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflict": [
-          "prone"
-        ],
-        "savingThrowForced": [
-          "dexterity"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Bulette",
-            "_copy": {
-              "name": "Bulettes",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Bulettes range under vast territories. They often threaten animal herds, and they can wipe out whole farming communities."
-                      ]
-                    }
+        "_copy": {
+          "name": "Bulettes",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Bulettes range under vast territories. They often threaten animal herds, and they can wipe out whole farming communities."
                   ]
                 }
-              }
+              ]
             }
           }
+        }
+      }
+    ],
+    "trait": [
+      {
+        "name": "Standing Leap",
+        "entries": [
+          "The bulette's long jump is up to 30 feet and its high jump is up to 15 feet, with or without a running start."
         ]
       }
-    }
-  ]
+    ]
+  }
 }

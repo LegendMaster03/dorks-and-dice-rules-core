@@ -2,328 +2,183 @@
   "id": "monster.basilisk",
   "name": "Basilisk",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Basilisk",
-        "size": [
-          "M"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          {
-            "ac": 15,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 52,
-          "formula": "8d8 + 16"
-        },
-        "speed": {
-          "walk": 20
-        },
-        "str": 16,
-        "dex": 8,
-        "con": 15,
-        "int": 2,
-        "wis": 8,
-        "cha": 7,
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 9,
-        "cr": "3",
-        "trait": [
-          {
-            "name": "Petrifying Gaze",
-            "entries": [
-              "If a creature starts its turn within 30 feet of the basilisk and the two of them can see each other, the basilisk can force the creature to make a {@dc 12} Constitution saving throw if the basilisk isn't {@condition incapacitated}. On a failed save, the creature magically begins to turn to stone and is {@condition restrained}. It must repeat the saving throw at the end of its next turn. On a success, the effect ends. On a failure, the creature is {@condition petrified} until freed by the {@spell greater restoration} spell or other magic.",
-              "A creature that isn't {@status surprised} can avert its eyes to avoid the saving throw at the start of its turn. If it does so, it can't see the basilisk until the start of its next turn, when it can avert its eyes again. If it looks at the basilisk in the meantime, it must immediately make the save.",
-              "If the basilisk sees its reflection within 30 feet of it in bright light, it mistakes itself for a rival and targets itself with its gaze."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 5} to hit, reach 5 ft., one target. {@h}10 ({@damage 2d6 + 3}) piercing damage plus 7 ({@damage 2d6}) poison damage."
-            ]
-          }
-        ],
-        "environment": [
-          "mountain"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/basilisk.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "damageTags": [
-          "I",
-          "P"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "conditionInflict": [
-          "petrified",
-          "restrained"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Basilisk",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "Travelers sometimes find objects that look like pieces of remarkably lifelike stone carvings of wildlife. Missing parts appear to have been bitten off. Seasoned explorers regard such relics as warnings, knowing that the basilisk that created them is likely to be nearby.",
-                      {
-                        "name": "Adaptable Predators",
-                        "type": "entries",
-                        "entries": [
-                          "Basilisks thrive in arid, temperate, or tropical climates. They lair in caves or other sheltered sites. Most often, basilisks are encountered underground.",
-                          "A basilisk born and raised in captivity can be domesticated and trained. Such a trained basilisk knows how to avoid meeting the eyes of those its master wishes to protect from its gaze, but it makes a daunting guardian beast. Because of this use, basilisk eggs are highly prized."
-                        ]
-                      },
-                      {
-                        "name": "Gaze of Stone",
-                        "type": "entries",
-                        "entries": [
-                          "Basilisks are ponderous for hunting creatures, but they needn't chase prey. Meeting a basilisk's supernatural gaze can be enough to affect a rapid transformation, transforming a victim into porous stone. Basilisks, with their strong jaws, are able to consume the stone. The stone returns to organic form in the basilisk's gullet.",
-                          "Some alchemists are said to know how to process the basilisk's gullet and the fluids contained within. Properly handled, the gullet produces an oil that can return {@condition petrified} creatures to flesh and life. Unfortunately for such a victim, any parts lost in stone form remain absent if the creature revives. Revivification using the oil is impossible if a vital part of the {@condition petrified} creature, such as its head, is detached."
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "insetReadaloud",
-                    "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "No one carves statues of frightened warriors. If you see one, keep your eyes closed and your ears open."
-                        ],
-                        "by": "X the Mystic's 4th rule of dungeon survival"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/MM/Basilisk.webp"
-                },
-                "width": 1000,
-                "height": 701
-              }
-            ]
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "M"
+    ],
+    "type": "monstrosity",
+    "alignment": [
+      "U"
+    ],
+    "ac": [
+      15
+    ],
+    "hp": {
+      "average": 52,
+      "formula": "8d8 + 16"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "speed": {
+      "walk": 20
+    },
+    "str": 16,
+    "dex": 8,
+    "con": 15,
+    "int": 2,
+    "wis": 8,
+    "cha": 7,
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 9,
+    "cr": "3",
+    "action": [
+      {
+        "name": "Bite",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Piercing damage plus 7 ({@damage 2d6}) Poison damage."
+        ]
+      }
+    ],
+    "bonus": [
+      {
+        "name": "Petrifying Gaze {@recharge 4}",
+        "entries": [
+          "{@actSave con} {@dc 12}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. If the basilisk sees its reflection within the {@variantrule Cone [Area of Effect]|SRD52|Cone}, the basilisk must make this save. {@actSaveFail 1} The target has the {@condition Restrained|SRD52} condition and repeats the save at the end of its next turn if it is still {@condition Restrained|SRD52}, ending the effect on itself on a success. {@actSaveFail 2} The target has the {@condition Petrified|SRD52} condition instead of the {@condition Restrained|SRD52} condition."
+        ]
+      }
+    ],
+    "environment": [
+      "mountain",
+      "underdark"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/basilisk.opus"
+    },
+    "senseTags": [
+      "D"
+    ],
+    "damageTags": [
+      "I",
+      "P"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "conditionInflict": [
+      "petrified",
+      "restrained"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Basilisk",
-        "size": [
-          "M"
-        ],
-        "type": "monstrosity",
-        "alignment": [
-          "U"
-        ],
-        "ac": [
-          15
-        ],
-        "hp": {
-          "average": 52,
-          "formula": "8d8 + 16"
-        },
-        "speed": {
-          "walk": 20
-        },
-        "str": 16,
-        "dex": 8,
-        "con": 15,
-        "int": 2,
-        "wis": 8,
-        "cha": 7,
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 9,
-        "cr": "3",
-        "action": [
+        "entries": [
           {
-            "name": "Bite",
-            "entries": [
-              "{@atkr m} {@hit 5}, reach 5 ft. {@h}10 ({@damage 2d6 + 3}) Piercing damage plus 7 ({@damage 2d6}) Poison damage."
-            ]
-          }
-        ],
-        "bonus": [
-          {
-            "name": "Petrifying Gaze {@recharge 4}",
-            "entries": [
-              "{@actSave con} {@dc 12}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. If the basilisk sees its reflection within the {@variantrule Cone [Area of Effect]|SRD52|Cone}, the basilisk must make this save. {@actSaveFail 1} The target has the {@condition Restrained|SRD52} condition and repeats the save at the end of its next turn if it is still {@condition Restrained|SRD52}, ending the effect on itself on a success. {@actSaveFail 2} The target has the {@condition Petrified|SRD52} condition instead of the {@condition Restrained|SRD52} condition."
-            ]
-          }
-        ],
-        "environment": [
-          "mountain",
-          "underdark"
-        ],
-        "treasure": [
-          "any"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/basilisk.opus"
-        },
-        "senseTags": [
-          "D"
-        ],
-        "damageTags": [
-          "I",
-          "P"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "conditionInflict": [
-          "petrified",
-          "restrained"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Basilisk",
             "entries": [
+              "{@i Reptilian Guardian with a Petrifying Gaze}",
               {
-                "type": "section",
-                "name": "Basilisk",
-                "entries": [
-                  "{@i Reptilian Guardian with a Petrifying Gaze}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Mountain|bestiary|environment=mountain}, {@filter Underdark|bestiary|environment=underdark}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Any"
-                      }
-                    ]
-                  },
-                  "Basilisks are ponderous predators with eight clawed legs, crystalline spines, and mighty jaws. Rather than chasing prey, they use their supernatural gaze to turn creatures to stone and then consume these victims at their leisure. While basilisks are most comfortable in subterranean lairs, many are captured and kept by unscrupulous folk seeking guardians for their treasures.",
-                  "The remains of {@condition Petrified|SRD52} creatures litter the area where a basilisk hunts. These might be mundane creatures or more unusual beings that had dire encounters with a basilisk. Roll on or choose a result from the Petrified Basilisk Victims table to inspire the statues that might appear in a basilisk's hunting grounds. There is a {@chance 50} chance that any of these statues are missing limbs or broken into pieces.",
-                  {
-                    "type": "insetReadaloud",
-                    "entries": [
-                      {
-                        "type": "quote",
-                        "entries": [
-                          "Rule 4: No one carves statues of frightened warriors. If you see one, keep your eyes closed and your ears open."
-                        ],
-                        "by": "X the Mystic's",
-                        "from": "Rules of Dungeon Survival"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Mountain|bestiary|environment=mountain}, {@filter Underdark|bestiary|environment=underdark}"
                   },
                   {
-                    "type": "table",
-                    "caption": "Petrified Basilisk Victims",
-                    "colLabels": [
-                      "1d8",
-                      "A Basilisk Used Its Gaze to Petrify..."
-                    ],
-                    "colStyles": [
-                      "col-2 text-center",
-                      "col-10"
-                    ],
-                    "rows": [
-                      [
-                        "1",
-                        "An adventurer with an ornate key hanging around their neck."
-                      ],
-                      [
-                        "2",
-                        "Animals like bats, bears, deer, or goats."
-                      ],
-                      [
-                        "3",
-                        "A climber clinging to a stalactite."
-                      ],
-                      [
-                        "4",
-                        "Itself using a large mirror or shiny surface."
-                      ],
-                      [
-                        "5",
-                        "A mimic disguised as a chest full of treasure."
-                      ],
-                      [
-                        "6",
-                        "A monster such as an umber hulk or a troglodyte."
-                      ],
-                      [
-                        "7",
-                        "Someone caught in a comic pose or making a regrettable face."
-                      ],
-                      [
-                        "8",
-                        "A victim now being used as a nest for insects or other vermin."
-                      ]
-                    ]
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Any"
                   }
                 ]
-              }
-            ],
-            "images": [
+              },
+              "Basilisks are ponderous predators with eight clawed legs, crystalline spines, and mighty jaws. Rather than chasing prey, they use their supernatural gaze to turn creatures to stone and then consume these victims at their leisure. While basilisks are most comfortable in subterranean lairs, many are captured and kept by unscrupulous folk seeking guardians for their treasures.",
+              "The remains of {@condition Petrified|SRD52} creatures litter the area where a basilisk hunts. These might be mundane creatures or more unusual beings that had dire encounters with a basilisk. Roll on or choose a result from the Petrified Basilisk Victims table to inspire the statues that might appear in a basilisk's hunting grounds. There is a {@chance 50} chance that any of these statues are missing limbs or broken into pieces.",
               {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Basilisk.webp"
-                },
-                "credit": "Brian Valeza",
-                "width": 2048,
-                "height": 2560
+                "type": "insetReadaloud",
+                "entries": [
+                  {
+                    "type": "quote",
+                    "entries": [
+                      "Rule 4: No one carves statues of frightened warriors. If you see one, keep your eyes closed and your ears open."
+                    ],
+                    "by": "X the Mystic's",
+                    "from": "Rules of Dungeon Survival"
+                  }
+                ]
+              },
+              {
+                "type": "table",
+                "caption": "Petrified Basilisk Victims",
+                "colLabels": [
+                  "1d8",
+                  "A Basilisk Used Its Gaze to Petrify..."
+                ],
+                "colStyles": [
+                  "col-2 text-center",
+                  "col-10"
+                ],
+                "rows": [
+                  [
+                    "1",
+                    "An adventurer with an ornate key hanging around their neck."
+                  ],
+                  [
+                    "2",
+                    "Animals like bats, bears, deer, or goats."
+                  ],
+                  [
+                    "3",
+                    "A climber clinging to a stalactite."
+                  ],
+                  [
+                    "4",
+                    "Itself using a large mirror or shiny surface."
+                  ],
+                  [
+                    "5",
+                    "A mimic disguised as a chest full of treasure."
+                  ],
+                  [
+                    "6",
+                    "A monster such as an umber hulk or a troglodyte."
+                  ],
+                  [
+                    "7",
+                    "Someone caught in a comic pose or making a regrettable face."
+                  ],
+                  [
+                    "8",
+                    "A victim now being used as a nest for insects or other vermin."
+                  ]
+                ]
               }
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Basilisk.webp"
+            },
+            "credit": "Brian Valeza",
+            "width": 2048,
+            "height": 2560
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

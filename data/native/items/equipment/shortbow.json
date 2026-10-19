@@ -2,52 +2,25 @@
   "id": "baseitem.shortbow",
   "name": "Shortbow",
   "kind": "baseitem",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Shortbow",
-        "type": "R",
-        "rarity": "none",
-        "weight": 2,
-        "value": 2500,
-        "weaponCategory": "simple",
-        "property": [
-          "A",
-          "2H"
-        ],
-        "range": "80/320",
-        "dmg1": "1d6",
-        "dmgType": "P",
-        "bow": true,
-        "weapon": true,
-        "ammoType": "arrow|srd51"
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Shortbow",
-        "type": "R|SRD52",
-        "rarity": "none",
-        "weight": 2,
-        "value": 2500,
-        "weaponCategory": "simple",
-        "property": [
-          "A|SRD52",
-          "2H|SRD52"
-        ],
-        "mastery": [
-          "Vex|SRD52"
-        ],
-        "range": "80/320",
-        "dmg1": "1d6",
-        "dmgType": "P",
-        "bow": true,
-        "weapon": true,
-        "ammoType": "arrow|srd52"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "R|SRD52",
+    "rarity": "none",
+    "weight": 2,
+    "value": 2500,
+    "weaponCategory": "simple",
+    "property": [
+      "A|SRD52",
+      "2H|SRD52"
+    ],
+    "mastery": [
+      "Vex|SRD52"
+    ],
+    "range": "80/320",
+    "dmg1": "1d6",
+    "dmgType": "P",
+    "bow": true,
+    "weapon": true,
+    "ammoType": "arrow|srd52"
+  }
 }

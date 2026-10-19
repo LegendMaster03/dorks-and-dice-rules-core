@@ -2,27 +2,11 @@
   "id": "item.wagon",
   "name": "Wagon",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Wagon",
-        "type": "VEH",
-        "rarity": "none",
-        "weight": 400,
-        "value": 3500
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Wagon",
-        "type": "VEH|SRD52",
-        "rarity": "none",
-        "weight": 400,
-        "value": 3500
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "VEH",
+    "rarity": "none",
+    "weight": 400,
+    "value": 3500
+  }
 }

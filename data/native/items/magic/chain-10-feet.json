@@ -2,20 +2,14 @@
   "id": "item.chain-10-feet",
   "name": "Chain (10 feet)",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Chain (10 feet)",
-        "type": "G",
-        "rarity": "none",
-        "weight": 10,
-        "value": 500,
-        "entries": [
-          "A chain has 10 hit points. It can be burst with a successful {@dc 20} Strength check."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 10,
+    "value": 500,
+    "entries": [
+      "A chain has 10 hit points. It can be burst with a successful {@dc 20} Strength check."
+    ]
+  }
 }

@@ -2,23 +2,17 @@
   "id": "deity.nuada",
   "name": "Nuada",
   "kind": "deity",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Nuada",
-        "pantheon": "Celtic",
-        "alignment": [
-          "N"
-        ],
-        "title": "God of war and warriors",
-        "domains": [
-          "War",
-          "Order"
-        ],
-        "symbol": "Silver hand on black background"
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "pantheon": "Celtic",
+    "alignment": [
+      "N"
+    ],
+    "title": "God of war and warriors",
+    "domains": [
+      "War",
+      "Order"
+    ],
+    "symbol": "Silver hand on black background"
+  }
 }

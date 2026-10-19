@@ -2,91 +2,85 @@
   "id": "item.ring-of-elemental-command-fire",
   "name": "Ring of Elemental Command (Fire)",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Ring of Elemental Command (Fire)",
-        "type": "RG|SRD52",
-        "immune": [
-          "fire"
-        ],
-        "resist": [
-          "fire"
-        ],
-        "rarity": "legendary",
-        "reqAttune": true,
-        "grantsLanguage": true,
-        "recharge": "dawn",
-        "rechargeAmount": "{@dice 1d4 + 1}",
-        "charges": 5,
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "RG|SRD52",
+    "immune": [
+      "fire"
+    ],
+    "resist": [
+      "fire"
+    ],
+    "rarity": "legendary",
+    "reqAttune": true,
+    "grantsLanguage": true,
+    "recharge": "dawn",
+    "rechargeAmount": "{@dice 1d4 + 1}",
+    "charges": 5,
+    "entries": [
+      "The Ring of Elemental Command (fire) is linked to the Elemental Plane of Fire. Every Ring of Elemental Command has the following two properties:",
+      {
+        "type": "list",
+        "items": [
+          {
+            "type": "item",
+            "name": "Elemental Bane",
+            "entries": [
+              "While wearing the ring, you have {@variantrule Advantage|SRD52} on attack rolls against Elementals and they have {@variantrule Disadvantage|SRD52} on attack rolls against you."
+            ]
+          },
+          {
+            "type": "item",
+            "name": "Elemental Compulsion",
+            "entries": [
+              "While wearing the ring, you can take a {@action Magic|SRD52} action to try to compel an Elemental you see within 60 feet of yourself. The Elemental makes a {@dc 18} Wisdom saving throw. On a failed save, the Elemental has the {@condition Charmed|SRD52} condition until the start your next turn, and you determine what it does with its move and action on its next turn."
+            ]
+          }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Elemental Focus",
         "entries": [
-          "The Ring of Elemental Command (fire) is linked to the Elemental Plane of Fire. Every Ring of Elemental Command has the following two properties:",
+          "While wearing the ring, you benefit from additional properties corresponding to the ring's linked Elemental Plane:",
           {
             "type": "list",
+            "style": "list-hang-notitle",
             "items": [
               {
                 "type": "item",
-                "name": "Elemental Bane",
+                "name": "Fire",
                 "entries": [
-                  "While wearing the ring, you have {@variantrule Advantage|SRD52} on attack rolls against Elementals and they have {@variantrule Disadvantage|SRD52} on attack rolls against you."
-                ]
-              },
-              {
-                "type": "item",
-                "name": "Elemental Compulsion",
-                "entries": [
-                  "While wearing the ring, you can take a {@action Magic|SRD52} action to try to compel an Elemental you see within 60 feet of yourself. The Elemental makes a {@dc 18} Wisdom saving throw. On a failed save, the Elemental has the {@condition Charmed|SRD52} condition until the start your next turn, and you determine what it does with its move and action on its next turn."
+                  "You know Ignan, and you have {@variantrule Immunity|SRD52} to Fire damage."
                 ]
               }
-            ]
-          },
-          {
-            "type": "entries",
-            "name": "Elemental Focus",
-            "entries": [
-              "While wearing the ring, you benefit from additional properties corresponding to the ring's linked Elemental Plane:",
-              {
-                "type": "list",
-                "style": "list-hang-notitle",
-                "items": [
-                  {
-                    "type": "item",
-                    "name": "Fire",
-                    "entries": [
-                      "You know Ignan, and you have {@variantrule Immunity|SRD52} to Fire damage."
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "type": "entries",
-            "name": "Spellcasting",
-            "entries": [
-              "The ring has 5 charges and regains {@dice 1d4 + 1} expended charges daily at dawn. While wearing the ring, you can cast a spell from it. A spell cast from the ring has a save DC of 18. Choose the spell from the following list: {@spell Burning Hands|SRD52} (1 charge), {@spell Fireball|SRD52} (2 charges), {@spell Fire Storm|SRD52} (4 charges), {@spell Wall of Fire|SRD52} (3 charges)"
             ]
           }
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Spellcasting",
+        "entries": [
+          "The ring has 5 charges and regains {@dice 1d4 + 1} expended charges daily at dawn. While wearing the ring, you can cast a spell from it. A spell cast from the ring has a save DC of 18. Choose the spell from the following list: {@spell Burning Hands|SRD52} (1 charge), {@spell Fireball|SRD52} (2 charges), {@spell Fire Storm|SRD52} (4 charges), {@spell Wall of Fire|SRD52} (3 charges)"
+        ]
+      }
+    ],
+    "attachedSpells": {
+      "charges": {
+        "1": [
+          "burning hands|srd52"
         ],
-        "attachedSpells": {
-          "charges": {
-            "1": [
-              "burning hands|srd52"
-            ],
-            "2": [
-              "fireball|srd52"
-            ],
-            "3": [
-              "wall of fire|srd52"
-            ],
-            "4": [
-              "fire storm|srd52"
-            ]
-          }
-        }
+        "2": [
+          "fireball|srd52"
+        ],
+        "3": [
+          "wall of fire|srd52"
+        ],
+        "4": [
+          "fire storm|srd52"
+        ]
       }
     }
-  ]
+  }
 }

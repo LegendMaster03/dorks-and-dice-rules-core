@@ -2,35 +2,15 @@
   "id": "baseitem.crystal",
   "name": "Crystal",
   "kind": "baseitem",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Crystal",
-        "group": [
-          "Arcane Focus"
-        ],
-        "type": "SCF",
-        "scfType": "arcane",
-        "rarity": "none",
-        "weight": 1,
-        "value": 1000
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Crystal",
-        "group": [
-          "Arcane Focus"
-        ],
-        "type": "SCF|SRD52",
-        "scfType": "arcane",
-        "rarity": "none",
-        "weight": 1,
-        "value": 1000
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Arcane Focus"
+    ],
+    "type": "SCF",
+    "scfType": "arcane",
+    "rarity": "none",
+    "weight": 1,
+    "value": 1000
+  }
 }

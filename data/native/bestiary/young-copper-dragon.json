@@ -2,321 +2,164 @@
   "id": "monster.young-copper-dragon",
   "name": "Young Copper Dragon",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Young Copper Dragon",
-        "group": [
-          "Metallic Dragon"
-        ],
-        "size": [
-          "L"
-        ],
-        "type": "dragon",
-        "alignment": [
-          "C",
-          "G"
-        ],
-        "ac": [
-          {
-            "ac": 17,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 119,
-          "formula": "14d10 + 42"
-        },
-        "speed": {
-          "walk": 40,
-          "climb": 40,
-          "fly": 80
-        },
-        "str": 19,
-        "dex": 12,
-        "con": 17,
-        "int": 16,
-        "wis": 13,
-        "cha": 15,
-        "save": {
-          "dex": "+4",
-          "con": "+6",
-          "wis": "+4",
-          "cha": "+5"
-        },
-        "skill": {
-          "deception": "+5",
-          "perception": "+7",
-          "stealth": "+4"
-        },
-        "senses": [
-          "blindsight 30 ft.",
-          "darkvision 120 ft."
-        ],
-        "passive": 17,
-        "immune": [
-          "acid"
-        ],
-        "languages": [
-          "Common",
-          "Draconic"
-        ],
-        "cr": "7",
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The dragon makes three attacks: one with its bite and two with its claws."
-            ]
-          },
-          {
-            "name": "Bite",
-            "entries": [
-              "{@atk mw} {@hit 7} to hit, reach 10 ft., one target. {@h}15 ({@damage 2d10 + 4}) piercing damage."
-            ]
-          },
-          {
-            "name": "Claw",
-            "entries": [
-              "{@atk mw} {@hit 7} to hit, reach 5 ft., one target. {@h}11 ({@damage 2d6 + 4}) slashing damage."
-            ]
-          },
-          {
-            "name": "Breath Weapons {@recharge 5}",
-            "entries": [
-              "The dragon uses one of the following breath weapons.",
-              {
-                "type": "list",
-                "style": "list-hang-notitle",
-                "items": [
-                  {
-                    "type": "item",
-                    "name": "Acid Breath",
-                    "entry": "The dragon exhales acid in a 40-foot line that is 5 feet wide. Each creature in that line must make a {@dc 14} Dexterity saving throw, taking 40 ({@damage 9d8}) acid damage on a failed save, or half as much damage on a successful one."
-                  },
-                  {
-                    "type": "item",
-                    "name": "Slowing Breath",
-                    "entry": "The dragon exhales gas in a 30-foot cone. Each creature in that area must succeed on a {@dc 14} Constitution saving throw. On a failed save, the creature can't use reactions, its speed is halved, and it can't make more than one attack on its turn. In addition, the creature can use either an action or a bonus action on its turn, but not both. These effects last for 1 minute. The creature can repeat the saving throw at the end of each of its turns, ending the effect on itself with a successful save."
-                  }
-                ]
-              }
-            ]
-          }
-        ],
-        "environment": [
-          "hill"
-        ],
-        "dragonCastingColor": "copper",
-        "dragonAge": "young",
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/copper-dragon.opus"
-        },
-        "senseTags": [
-          "B",
-          "SD"
-        ],
-        "actionTags": [
-          "Breath Weapon",
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "DR"
-        ],
-        "damageTags": [
-          "A",
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "AOE",
-          "MW",
-          "RCH"
-        ],
-        "savingThrowForced": [
-          "constitution",
-          "dexterity"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Young Copper Dragon",
-            "_copy": {
-              "name": "Copper Dragon",
-              "source": "SRD51"
-            }
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Metallic Dragons"
+    ],
+    "size": [
+      "L"
+    ],
+    "type": {
+      "type": "dragon",
+      "tags": [
+        "metallic"
+      ]
+    },
+    "alignment": [
+      "C",
+      "G"
+    ],
+    "ac": [
+      17
+    ],
+    "hp": {
+      "average": 119,
+      "formula": "14d10 + 42"
+    },
+    "speed": {
+      "walk": 40,
+      "climb": 40,
+      "fly": 80
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 19,
+    "dex": 12,
+    "con": 17,
+    "int": 16,
+    "wis": 13,
+    "cha": 15,
+    "save": {
+      "dex": "+4",
+      "wis": "+4"
+    },
+    "skill": {
+      "deception": "+5",
+      "perception": "+7",
+      "stealth": "+4"
+    },
+    "senses": [
+      "Blindsight 30 ft.",
+      "Darkvision 120 ft."
+    ],
+    "passive": 17,
+    "immune": [
+      "acid"
+    ],
+    "languages": [
+      "Common",
+      "Draconic"
+    ],
+    "cr": "7",
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The dragon makes three Rend attacks. It can replace one attack with a use of Slowing Breath."
+        ]
+      },
+      {
+        "name": "Rend",
+        "entries": [
+          "{@atkr m} {@hit 7}, reach 10 ft. {@h}15 ({@damage 2d10 + 4}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Acid Breath {@recharge 5}",
+        "entries": [
+          "{@actSave dex} {@dc 14}, each creature in a 40-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 40 ({@damage 9d8}) Acid damage. {@actSaveSuccess} Half damage."
+        ]
+      },
+      {
+        "name": "Slowing Breath",
+        "entries": [
+          "{@actSave con} {@dc 14}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target can't take Reactions; its {@variantrule Speed|SRD52} is halved; and it can take either an action or a {@variantrule Bonus Action|SRD52} on its turn, not both. This effect lasts until the end of its next turn."
         ]
       }
+    ],
+    "environment": [
+      "hill"
+    ],
+    "treasure": [
+      "arcana"
+    ],
+    "dragonAge": "young",
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/copper-dragon.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "senseTags": [
+      "B",
+      "SD"
+    ],
+    "actionTags": [
+      "Breath Weapon",
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "DR"
+    ],
+    "damageTags": [
+      "A",
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "RCH"
+    ],
+    "savingThrowForced": [
+      "constitution",
+      "dexterity"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Young Copper Dragon",
-        "group": [
-          "Metallic Dragons"
-        ],
-        "size": [
-          "L"
-        ],
-        "type": {
-          "type": "dragon",
-          "tags": [
-            "metallic"
-          ]
-        },
-        "alignment": [
-          "C",
-          "G"
-        ],
-        "ac": [
-          17
-        ],
-        "hp": {
-          "average": 119,
-          "formula": "14d10 + 42"
-        },
-        "speed": {
-          "walk": 40,
-          "climb": 40,
-          "fly": 80
-        },
-        "initiative": {
-          "proficiency": 1
-        },
-        "str": 19,
-        "dex": 12,
-        "con": 17,
-        "int": 16,
-        "wis": 13,
-        "cha": 15,
-        "save": {
-          "dex": "+4",
-          "wis": "+4"
-        },
-        "skill": {
-          "deception": "+5",
-          "perception": "+7",
-          "stealth": "+4"
-        },
-        "senses": [
-          "Blindsight 30 ft.",
-          "Darkvision 120 ft."
-        ],
-        "passive": 17,
-        "immune": [
-          "acid"
-        ],
-        "languages": [
-          "Common",
-          "Draconic"
-        ],
-        "cr": "7",
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The dragon makes three Rend attacks. It can replace one attack with a use of Slowing Breath."
-            ]
-          },
-          {
-            "name": "Rend",
-            "entries": [
-              "{@atkr m} {@hit 7}, reach 10 ft. {@h}15 ({@damage 2d10 + 4}) Slashing damage."
-            ]
-          },
-          {
-            "name": "Acid Breath {@recharge 5}",
-            "entries": [
-              "{@actSave dex} {@dc 14}, each creature in a 40-foot-long, 5-foot-wide {@variantrule Line [Area of Effect]|SRD52|Line}. {@actSaveFail} 40 ({@damage 9d8}) Acid damage. {@actSaveSuccess} Half damage."
-            ]
-          },
-          {
-            "name": "Slowing Breath",
-            "entries": [
-              "{@actSave con} {@dc 14}, each creature in a 30-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} The target can't take Reactions; its {@variantrule Speed|SRD52} is halved; and it can take either an action or a {@variantrule Bonus Action|SRD52} on its turn, not both. This effect lasts until the end of its next turn."
-            ]
-          }
-        ],
-        "environment": [
-          "hill"
-        ],
-        "treasure": [
-          "arcana"
-        ],
-        "dragonAge": "young",
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/copper-dragon.opus"
-        },
-        "senseTags": [
-          "B",
-          "SD"
-        ],
-        "actionTags": [
-          "Breath Weapon",
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "DR"
-        ],
-        "damageTags": [
-          "A",
-          "S"
-        ],
-        "miscTags": [
-          "MA",
-          "RCH"
-        ],
-        "savingThrowForced": [
-          "constitution",
-          "dexterity"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Young Copper Dragon",
-            "_copy": {
-              "name": "Copper Dragons",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Young copper dragons forge strong connections with a community or group of friends while flitting from one artistic fixation to the next."
-                      ]
-                    }
-                  ]
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Copper Dragon.webp"
-                      },
-                      "width": 2550,
-                      "height": 1602
-                    }
+        "_copy": {
+          "name": "Copper Dragons",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Young copper dragons forge strong connections with a community or group of friends while flitting from one artistic fixation to the next."
                   ]
                 }
-              }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Copper Dragon.webp"
+                  },
+                  "width": 2550,
+                  "height": 1602
+                }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

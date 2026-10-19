@@ -2,309 +2,145 @@
   "id": "monster.steam-mephit",
   "name": "Steam Mephit",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Steam Mephit",
-        "size": [
-          "S"
-        ],
-        "type": "elemental",
-        "alignment": [
-          "N",
-          "E"
-        ],
-        "ac": [
-          10
-        ],
-        "hp": {
-          "average": 21,
-          "formula": "6d6"
-        },
-        "speed": {
-          "walk": 30,
-          "fly": 30
-        },
-        "str": 5,
-        "dex": 11,
-        "con": 10,
-        "int": 11,
-        "wis": 10,
-        "cha": 12,
-        "senses": [
-          "darkvision 60 ft."
-        ],
-        "passive": 10,
-        "immune": [
-          "fire",
-          "poison"
-        ],
-        "conditionImmune": [
-          "poisoned"
-        ],
-        "languages": [
-          "Aquan",
-          "Ignan"
-        ],
-        "cr": "1/4",
-        "spellcasting": [
-          {
-            "name": "Innate Spellcasting (1/Day)",
-            "type": "spellcasting",
-            "headerEntries": [
-              "The mephit can innately cast {@spell blur}, requiring no material components. Its innate spellcasting ability is Charisma."
-            ],
-            "will": [
-              "{@spell blur}"
-            ],
-            "ability": "cha",
-            "hidden": [
-              "will"
-            ]
-          }
-        ],
-        "trait": [
-          {
-            "name": "Death Burst",
-            "entries": [
-              "When the mephit dies, it explodes in a cloud of steam. Each creature within 5 feet of the mephit must succeed on a {@dc 10} Dexterity saving throw or take 4 ({@damage 1d8}) fire damage."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Claws",
-            "entries": [
-              "{@atk mw} {@hit 2} to hit, reach 5 ft., one creature. {@h}2 ({@damage 1d4}) slashing damage plus 2 ({@damage 1d4}) fire damage."
-            ]
-          },
-          {
-            "name": "Steam Breath {@recharge}",
-            "entries": [
-              "The mephit exhales a 15-foot cone of scalding steam. Each creature in that area must succeed on a {@dc 10} Dexterity saving throw, taking 4 ({@damage 1d8}) fire damage on a failed save, or half as much damage on a successful one."
-            ]
-          }
-        ],
-        "environment": [
-          "underwater"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/steam-mephit.opus"
-        },
-        "traitTags": [
-          "Death Burst"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Breath Weapon"
-        ],
-        "languageTags": [
-          "AQ",
-          "IG"
-        ],
-        "damageTags": [
-          "F",
-          "S"
-        ],
-        "spellcastingTags": [
-          "I"
-        ],
-        "miscTags": [
-          "AOE",
-          "MW"
-        ],
-        "savingThrowForced": [
-          "dexterity"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Steam Mephit",
-            "_copy": {
-              "name": "Mephits",
-              "source": "SRD51",
-              "_mod": {
-                "entries": {
-                  "mode": "appendArr",
-                  "items": {
-                    "name": "Steam Mephit",
-                    "type": "entries",
-                    "entries": [
-                      {
-                        "type": "entries",
-                        "entries": [
-                          "Composed of fire and water, steam mephits leave trails of hot water wherever they go, and they hiss with tendrils of steam. Bossy and hypersensitive, they are the self-appointed overlords of all mephits."
-                        ]
-                      }
-                    ]
-                  }
-                },
-                "images": {
-                  "mode": "appendArr",
-                  "items": {
-                    "type": "image",
-                    "href": {
-                      "type": "internal",
-                      "path": "bestiary/MM/Steam Mephit.webp"
-                    },
-                    "width": 782,
-                    "height": 1000
-                  }
-                }
-              }
-            }
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S"
+    ],
+    "type": "elemental",
+    "alignment": [
+      "N",
+      "E"
+    ],
+    "ac": [
+      10
+    ],
+    "hp": {
+      "average": 17,
+      "formula": "5d6"
+    },
+    "speed": {
+      "walk": 30,
+      "fly": 30
+    },
+    "str": 5,
+    "dex": 11,
+    "con": 10,
+    "int": 11,
+    "wis": 10,
+    "cha": 12,
+    "skill": {
+      "stealth": "+2"
+    },
+    "senses": [
+      "Darkvision 60 ft."
+    ],
+    "passive": 10,
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "exhaustion",
+      "poisoned"
+    ],
+    "languages": [
+      "Primordial (Aquan, Ignan)"
+    ],
+    "cr": "1/4",
+    "trait": [
+      {
+        "name": "Blurred Form",
+        "entries": [
+          "Attack rolls against the mephit are made with {@variantrule Disadvantage|SRD52} unless the mephit has the {@condition Incapacitated|SRD52} condition."
+        ]
+      },
+      {
+        "name": "Death Burst",
+        "entries": [
+          "The mephit explodes when it dies. {@actSave dex} {@dc 10}, each creature in a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the mephit. {@actSaveFail} 5 ({@damage 2d4}) Fire damage. {@actSaveSuccess} Half damage."
         ]
       }
+    ],
+    "action": [
+      {
+        "name": "Claw",
+        "entries": [
+          "{@atkr m} {@hit 2}, reach 5 ft. {@h}2 ({@damage 1d4}) Slashing damage plus 2 ({@damage 1d4}) Fire damage."
+        ]
+      },
+      {
+        "name": "Steam Breath {@recharge}",
+        "entries": [
+          "{@actSave con} {@dc 10}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 5 ({@damage 2d4}) Fire damage, and the target's {@variantrule Speed|SRD52} decreases by 10 feet until the end of the mephit's next turn. {@actSaveSuccess} Half damage only. {@actSaveSuccessOrFail} Being underwater doesn't grant {@variantrule Resistance|SRD52} to this Fire damage."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, elemental"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/steam-mephit.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "traitTags": [
+      "Death Burst"
+    ],
+    "senseTags": [
+      "D"
+    ],
+    "actionTags": [
+      "Breath Weapon"
+    ],
+    "languageTags": [
+      "AQ",
+      "IG",
+      "P"
+    ],
+    "damageTags": [
+      "F",
+      "S"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "savingThrowForced": [
+      "constitution",
+      "dexterity"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Steam Mephit",
-        "size": [
-          "S"
-        ],
-        "type": "elemental",
-        "alignment": [
-          "N",
-          "E"
-        ],
-        "ac": [
-          10
-        ],
-        "hp": {
-          "average": 17,
-          "formula": "5d6"
-        },
-        "speed": {
-          "walk": 30,
-          "fly": 30
-        },
-        "str": 5,
-        "dex": 11,
-        "con": 10,
-        "int": 11,
-        "wis": 10,
-        "cha": 12,
-        "skill": {
-          "stealth": "+2"
-        },
-        "senses": [
-          "Darkvision 60 ft."
-        ],
-        "passive": 10,
-        "immune": [
-          "fire",
-          "poison"
-        ],
-        "conditionImmune": [
-          "exhaustion",
-          "poisoned"
-        ],
-        "languages": [
-          "Primordial (Aquan, Ignan)"
-        ],
-        "cr": "1/4",
-        "trait": [
-          {
-            "name": "Blurred Form",
-            "entries": [
-              "Attack rolls against the mephit are made with {@variantrule Disadvantage|SRD52} unless the mephit has the {@condition Incapacitated|SRD52} condition."
-            ]
-          },
-          {
-            "name": "Death Burst",
-            "entries": [
-              "The mephit explodes when it dies. {@actSave dex} {@dc 10}, each creature in a 5-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the mephit. {@actSaveFail} 5 ({@damage 2d4}) Fire damage. {@actSaveSuccess} Half damage."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Claw",
-            "entries": [
-              "{@atkr m} {@hit 2}, reach 5 ft. {@h}2 ({@damage 1d4}) Slashing damage plus 2 ({@damage 1d4}) Fire damage."
-            ]
-          },
-          {
-            "name": "Steam Breath {@recharge}",
-            "entries": [
-              "{@actSave con} {@dc 10}, each creature in a 15-foot {@variantrule Cone [Area of Effect]|SRD52|Cone}. {@actSaveFail} 5 ({@damage 2d4}) Fire damage, and the target's {@variantrule Speed|SRD52} decreases by 10 feet until the end of the mephit's next turn. {@actSaveSuccess} Half damage only. {@actSaveSuccessOrFail} Being underwater doesn't grant {@variantrule Resistance|SRD52} to this Fire damage."
-            ]
-          }
-        ],
-        "environment": [
-          "planar, elemental"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/steam-mephit.opus"
-        },
-        "traitTags": [
-          "Death Burst"
-        ],
-        "senseTags": [
-          "D"
-        ],
-        "actionTags": [
-          "Breath Weapon"
-        ],
-        "languageTags": [
-          "AQ",
-          "IG",
-          "P"
-        ],
-        "damageTags": [
-          "F",
-          "S"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "savingThrowForced": [
-          "constitution",
-          "dexterity"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Steam Mephit",
-            "_copy": {
-              "name": "Mephits",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "These arrogant mephits are made of heat and vaporous water. They often trick creatures into doing them favors, then renege on promised rewards."
-                      ]
-                    }
+        "_copy": {
+          "name": "Mephits",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "These arrogant mephits are made of heat and vaporous water. They often trick creatures into doing them favors, then renege on promised rewards."
                   ]
                 }
-              }
+              ]
+            }
+          }
+        },
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Smoke and Steam Mephits.webp"
             },
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Smoke and Steam Mephits.webp"
-                },
-                "width": 924,
-                "height": 1654
-              }
-            ]
+            "width": 924,
+            "height": 1654
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }

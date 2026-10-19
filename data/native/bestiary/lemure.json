@@ -2,278 +2,142 @@
   "id": "monster.lemure",
   "name": "Lemure",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Lemure",
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "devil"
-          ]
-        },
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          7
-        ],
-        "hp": {
-          "average": 13,
-          "formula": "3d8"
-        },
-        "speed": {
-          "walk": 15
-        },
-        "str": 10,
-        "dex": 5,
-        "con": 11,
-        "int": 1,
-        "wis": 11,
-        "cha": 3,
-        "senses": [
-          "darkvision 120 ft."
-        ],
-        "passive": 10,
-        "resist": [
-          "cold"
-        ],
-        "immune": [
-          "fire",
-          "poison"
-        ],
-        "conditionImmune": [
-          "charmed",
-          "frightened",
-          "poisoned"
-        ],
-        "languages": [
-          "understands Infernal but can't speak"
-        ],
-        "cr": "0",
-        "trait": [
-          {
-            "name": "Devil's Sight",
-            "entries": [
-              "Magical darkness doesn't impede the lemure's darkvision."
-            ]
-          },
-          {
-            "name": "Hellish Rejuvenation",
-            "entries": [
-              "A lemure that dies in the Nine Hells comes back to life with all its hit points in {@dice 1d10} days unless it is killed by a good-aligned creature with a {@spell bless} spell cast on that creature or its remains are sprinkled with {@item Holy Water (Flask)|SRD51|holy water}."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Fist",
-            "entries": [
-              "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}2 ({@damage 1d4}) bludgeoning damage."
-            ]
-          }
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/lemure.opus"
-        },
-        "traitTags": [
-          "Devil's Sight"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "languageTags": [
-          "CS",
-          "I"
-        ],
-        "damageTags": [
-          "B"
-        ],
-        "miscTags": [
-          "MW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Lemure",
-            "_copy": {
-              "name": "Devils",
-              "source": "SRD51",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "entries",
-                    "entries": [
-                      {
-                        "type": "entries",
-                        "entries": [
-                          "A lemure arises when a mortal soul is twisted by evil and banished to the Nine Hells for eternity. The lowest type of devil, lemures are repugnant, shapeless creatures doomed to suffer torment until they are promoted to a higher form of devil, most commonly an imp.",
-                          "A lemure resembles a molten mass of flesh with a vaguely humanoid head and torso. A permanent expression of anguish twists across its face, its feeble mouth babbling even though it can't speak."
-                        ]
-                      }
-                    ]
-                  }
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "image",
-                    "href": {
-                      "type": "internal",
-                      "path": "bestiary/MM/Lemure.webp"
-                    },
-                    "width": 682,
-                    "height": 1000
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Devils"
+    ],
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "devil"
+      ]
     },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Lemure",
-        "group": [
-          "Devils"
-        ],
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "devil"
-          ]
-        },
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          9
-        ],
-        "hp": {
-          "average": 9,
-          "formula": "2d8"
-        },
-        "speed": {
-          "walk": 20
-        },
-        "str": 10,
-        "dex": 5,
-        "con": 11,
-        "int": 1,
-        "wis": 11,
-        "cha": 3,
-        "senses": [
-          "Darkvision 120 ft. (unimpeded by magical {@variantrule Darkness|SRD52})"
-        ],
-        "passive": 10,
-        "resist": [
-          "cold"
-        ],
-        "immune": [
-          "fire",
-          "poison"
-        ],
-        "conditionImmune": [
-          "charmed",
-          "frightened",
-          "poisoned"
-        ],
-        "languages": [
-          "understands Infernal but can't speak"
-        ],
-        "cr": "0",
-        "trait": [
-          {
-            "name": "Hellish Restoration",
-            "entries": [
-              "If the lemure dies in the Nine Hells, it revives with all its {@variantrule Hit Points|SRD52} in {@dice 1d10} days unless it is killed by a creature under the effects of a {@spell Bless|SRD52} spell or its remains are sprinkled with {@item Holy Water|SRD52}."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Vile Slime",
-            "entries": [
-              "{@atkr m} {@hit 2}, reach 5 ft. {@h}2 ({@damage 1d4}) Poison damage."
-            ]
-          }
-        ],
-        "environment": [
-          "planar, nine hells"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/lemure.opus"
-        },
-        "traitTags": [
-          "Devil's Sight"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "languageTags": [
-          "CS",
-          "I"
-        ],
-        "damageTags": [
-          "I"
-        ],
-        "miscTags": [
-          "MA"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Lemure",
-            "_copy": {
-              "name": "Lemures",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Lemures torment weaker creatures, but in the Nine Hells, few such beings exist. To avoid greater suffering, they obey the orders of more powerful devils."
-                      ]
-                    }
-                  ]
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Lemure.webp"
-                      },
-                      "credit": "John Tedrick",
-                      "width": 1422,
-                      "height": 1786
-                    }
-                  ]
-                }
-              }
-            }
-          }
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      9
+    ],
+    "hp": {
+      "average": 9,
+      "formula": "2d8"
+    },
+    "speed": {
+      "walk": 20
+    },
+    "str": 10,
+    "dex": 5,
+    "con": 11,
+    "int": 1,
+    "wis": 11,
+    "cha": 3,
+    "senses": [
+      "Darkvision 120 ft. (unimpeded by magical {@variantrule Darkness|SRD52})"
+    ],
+    "passive": 10,
+    "resist": [
+      "cold"
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "charmed",
+      "frightened",
+      "poisoned"
+    ],
+    "languages": [
+      "understands Infernal but can't speak"
+    ],
+    "cr": "0",
+    "trait": [
+      {
+        "name": "Hellish Restoration",
+        "entries": [
+          "If the lemure dies in the Nine Hells, it revives with all its {@variantrule Hit Points|SRD52} in {@dice 1d10} days unless it is killed by a creature under the effects of a {@spell Bless|SRD52} spell or its remains are sprinkled with {@item Holy Water|SRD52}."
+        ]
+      },
+      {
+        "name": "Devil's Sight",
+        "entries": [
+          "Magical darkness doesn't impede the lemure's darkvision."
         ]
       }
-    }
-  ]
+    ],
+    "action": [
+      {
+        "name": "Vile Slime",
+        "entries": [
+          "{@atkr m} {@hit 2}, reach 5 ft. {@h}2 ({@damage 1d4}) Poison damage."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, nine hells"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/lemure.opus"
+    },
+    "traitTags": [
+      "Devil's Sight"
+    ],
+    "senseTags": [
+      "SD"
+    ],
+    "languageTags": [
+      "CS",
+      "I"
+    ],
+    "damageTags": [
+      "I"
+    ],
+    "miscTags": [
+      "MA"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Lemure",
+        "_copy": {
+          "name": "Lemures",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Lemures torment weaker creatures, but in the Nine Hells, few such beings exist. To avoid greater suffering, they obey the orders of more powerful devils."
+                  ]
+                }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Lemure.webp"
+                  },
+                  "credit": "John Tedrick",
+                  "width": 1422,
+                  "height": 1786
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
 }

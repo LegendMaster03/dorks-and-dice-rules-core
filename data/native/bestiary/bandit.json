@@ -2,232 +2,103 @@
   "id": "monster.bandit",
   "name": "Bandit",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Bandit",
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "humanoid",
-          "tags": [
-            "any race"
-          ]
-        },
-        "alignment": [
-          "NX",
-          "C",
-          "G",
-          "NY",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 12,
-            "from": [
-              "{@item leather armor|srd51}"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 11,
-          "formula": "2d8 + 2"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 11,
-        "dex": 12,
-        "con": 12,
-        "int": 10,
-        "wis": 10,
-        "cha": 10,
-        "passive": 10,
-        "languages": [
-          "any one language (usually Common)"
-        ],
-        "cr": "1/8",
-        "action": [
-          {
-            "name": "Scimitar",
-            "entries": [
-              "{@atk mw} {@hit 3} to hit, reach 5 ft., one target. {@h}4 ({@damage 1d6 + 1}) slashing damage."
-            ]
-          },
-          {
-            "name": "Light Crossbow",
-            "entries": [
-              "{@atk rw} {@hit 3} to hit, range 80/320 ft., one target. {@h}5 ({@damage 1d8 + 1}) piercing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "coastal",
-          "hill",
-          "arctic",
-          "urban",
-          "forest",
-          "desert"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/bandit.opus"
-        },
-        "altArt": [
-          {
-            "name": "Diabolical Bandit",
-            "source": "MTF",
-            "page": 18
-          },
-          {
-            "name": "Uttolot Elf Bandit",
-            "source": "EGW"
-          }
-        ],
-        "attachedItems": [
-          "light crossbow|srd51",
-          "scimitar|srd51"
-        ],
-        "languageTags": [
-          "C",
-          "X"
-        ],
-        "damageTags": [
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW",
-          "RNG",
-          "RW"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Bandit",
-            "entries": [
-              {
-                "type": "entries",
-                "entries": [
-                  {
-                    "type": "entries",
-                    "entries": [
-                      "Bandits rove in gangs and are sometimes led by thugs, veterans, or spellcasters. Not all bandits are evil. Oppression, drought, disease, or famine can often drive otherwise honest folk to a life of banditry.",
-                      "Pirates are bandits of the high seas. They might be freebooters interested only in treasure and murder, or they might be privateers sanctioned by the crown to attack and plunder an enemy nation's vessels."
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      12
+    ],
+    "hp": {
+      "average": 11,
+      "formula": "2d8 + 2"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 11,
+    "dex": 12,
+    "con": 12,
+    "int": 10,
+    "wis": 10,
+    "cha": 10,
+    "passive": 10,
+    "languages": [
+      "Common",
+      "Thieves' cant"
+    ],
+    "cr": "1/8",
+    "gear": [
+      "leather armor|srd52",
+      "light crossbow|srd52",
+      "scimitar|srd52"
+    ],
+    "action": [
+      {
+        "name": "Scimitar",
+        "entries": [
+          "{@atkr m} {@hit 3}, reach 5 ft. {@h}4 ({@damage 1d6 + 1}) Slashing damage."
+        ]
+      },
+      {
+        "name": "Light Crossbow",
+        "entries": [
+          "{@atkr r} {@hit 3}, range 80/320 ft. {@h}5 ({@damage 1d8 + 1}) Piercing damage."
         ]
       }
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "any"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/bandit.opus"
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "languageTags": [
+      "C",
+      "TC"
+    ],
+    "damageTags": [
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RA",
+      "RNG"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Bandit",
-        "size": [
-          "S",
-          "M"
-        ],
-        "type": "humanoid",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          12
-        ],
-        "hp": {
-          "average": 11,
-          "formula": "2d8 + 2"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 11,
-        "dex": 12,
-        "con": 12,
-        "int": 10,
-        "wis": 10,
-        "cha": 10,
-        "passive": 10,
-        "languages": [
-          "Common",
-          "Thieves' cant"
-        ],
-        "cr": "1/8",
-        "gear": [
-          "leather armor|srd52",
-          "light crossbow|srd52",
-          "scimitar|srd52"
-        ],
-        "action": [
-          {
-            "name": "Scimitar",
-            "entries": [
-              "{@atkr m} {@hit 3}, reach 5 ft. {@h}4 ({@damage 1d6 + 1}) Slashing damage."
-            ]
-          },
-          {
-            "name": "Light Crossbow",
-            "entries": [
-              "{@atkr r} {@hit 3}, range 80/320 ft. {@h}5 ({@damage 1d8 + 1}) Piercing damage."
-            ]
-          }
-        ],
-        "environment": [
-          "any"
-        ],
-        "treasure": [
-          "any"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/bandit.opus"
-        },
-        "languageTags": [
-          "C",
-          "TC"
-        ],
-        "damageTags": [
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "MA",
-          "MLW",
-          "RA",
-          "RNG"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Bandit",
-            "_copy": {
-              "name": "Bandits",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Bandits are inexperienced ne'er-do-wells who typically follow the orders of higher-ranking bandits."
-                      ]
-                    }
+        "_copy": {
+          "name": "Bandits",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Bandits are inexperienced ne'er-do-wells who typically follow the orders of higher-ranking bandits."
                   ]
                 }
-              }
+              ]
             }
           }
-        ]
+        }
       }
-    }
-  ]
+    ]
+  }
 }

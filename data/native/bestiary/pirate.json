@@ -2,142 +2,136 @@
   "id": "monster.pirate",
   "name": "Pirate",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Pirate",
-        "size": [
-          "S",
-          "M"
-        ],
-        "type": "humanoid",
-        "alignment": [
-          "N"
-        ],
-        "ac": [
-          14
-        ],
-        "hp": {
-          "average": 33,
-          "formula": "6d8 + 6"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "initiative": {
-          "proficiency": 1
-        },
-        "str": 10,
-        "dex": 16,
-        "con": 12,
-        "int": 8,
-        "wis": 12,
-        "cha": 14,
-        "save": {
-          "dex": "+5",
-          "cha": "+4"
-        },
-        "passive": 11,
-        "languages": [
-          "Common plus one other language"
-        ],
-        "cr": "1",
-        "gear": [
-          {
-            "item": "dagger|srd52",
-            "quantity": 6
-          },
-          "leather armor|srd52"
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The pirate makes two Dagger attacks. It can replace one attack with a use of Enthralling Panache."
-            ]
-          },
-          {
-            "name": "Dagger",
-            "entries": [
-              "{@atkr m,r} {@hit 5}, reach 5 ft. or range 20/60 ft. {@h}5 ({@damage 1d4 + 3}) Piercing damage."
-            ]
-          },
-          {
-            "name": "Enthralling Panache",
-            "entries": [
-              "{@actSave wis} {@dc 12}, one creature the pirate can see within 30 feet. {@actSaveFail} The target has the {@condition Charmed|SRD52} condition until the start of the pirate's next turn."
-            ]
-          }
-        ],
-        "environment": [
-          "any"
-        ],
-        "treasure": [
-          "implements",
-          "individual"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "C",
-          "X"
-        ],
-        "damageTags": [
-          "P"
-        ],
-        "miscTags": [
-          "MA",
-          "MLW",
-          "RA",
-          "THW"
-        ],
-        "conditionInflict": [
-          "charmed"
-        ],
-        "savingThrowForced": [
-          "wisdom"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Pirate",
-            "_copy": {
-              "name": "Pirates",
-              "source": "SRD52",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "section",
-                      "entries": [
-                        "Along with being competent warriors, pirates are accomplished seafarers who know how to sail and maintain a ship. While some loyally follow their captains' orders, others place greed, superstition, or self-preservation over duty."
-                      ]
-                    }
-                  ]
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": [
-                    {
-                      "type": "image",
-                      "href": {
-                        "type": "internal",
-                        "path": "bestiary/XMM/Pirate.webp"
-                      },
-                      "width": 397,
-                      "height": 1000
-                    }
-                  ]
-                }
-              }
-            }
-          }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "size": [
+      "S",
+      "M"
+    ],
+    "type": "humanoid",
+    "alignment": [
+      "N"
+    ],
+    "ac": [
+      14
+    ],
+    "hp": {
+      "average": 33,
+      "formula": "6d8 + 6"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "initiative": {
+      "proficiency": 1
+    },
+    "str": 10,
+    "dex": 16,
+    "con": 12,
+    "int": 8,
+    "wis": 12,
+    "cha": 14,
+    "save": {
+      "dex": "+5",
+      "cha": "+4"
+    },
+    "passive": 11,
+    "languages": [
+      "Common plus one other language"
+    ],
+    "cr": "1",
+    "gear": [
+      {
+        "item": "dagger|srd52",
+        "quantity": 6
+      },
+      "leather armor|srd52"
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The pirate makes two Dagger attacks. It can replace one attack with a use of Enthralling Panache."
+        ]
+      },
+      {
+        "name": "Dagger",
+        "entries": [
+          "{@atkr m,r} {@hit 5}, reach 5 ft. or range 20/60 ft. {@h}5 ({@damage 1d4 + 3}) Piercing damage."
+        ]
+      },
+      {
+        "name": "Enthralling Panache",
+        "entries": [
+          "{@actSave wis} {@dc 12}, one creature the pirate can see within 30 feet. {@actSaveFail} The target has the {@condition Charmed|SRD52} condition until the start of the pirate's next turn."
         ]
       }
-    }
-  ]
+    ],
+    "environment": [
+      "any"
+    ],
+    "treasure": [
+      "implements",
+      "individual"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "C",
+      "X"
+    ],
+    "damageTags": [
+      "P"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RA",
+      "THW"
+    ],
+    "conditionInflict": [
+      "charmed"
+    ],
+    "savingThrowForced": [
+      "wisdom"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
+        "name": "Pirate",
+        "_copy": {
+          "name": "Pirates",
+          "source": "SRD52",
+          "_mod": {
+            "entries": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "section",
+                  "entries": [
+                    "Along with being competent warriors, pirates are accomplished seafarers who know how to sail and maintain a ship. While some loyally follow their captains' orders, others place greed, superstition, or self-preservation over duty."
+                  ]
+                }
+              ]
+            },
+            "images": {
+              "mode": "prependArr",
+              "items": [
+                {
+                  "type": "image",
+                  "href": {
+                    "type": "internal",
+                    "path": "bestiary/XMM/Pirate.webp"
+                  },
+                  "width": 397,
+                  "height": 1000
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
 }

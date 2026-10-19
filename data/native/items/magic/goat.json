@@ -2,25 +2,10 @@
   "id": "item.goat",
   "name": "Goat",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Goat",
-        "type": "TG",
-        "rarity": "none",
-        "value": 100
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Goat",
-        "type": "TG|SRD52",
-        "rarity": "none",
-        "value": 100
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "TG",
+    "rarity": "none",
+    "value": 100
+  }
 }

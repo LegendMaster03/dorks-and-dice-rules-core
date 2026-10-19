@@ -2,17 +2,11 @@
   "id": "item.piton",
   "name": "Piton",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Piton",
-        "type": "G",
-        "rarity": "none",
-        "weight": 0.25,
-        "value": 5
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G",
+    "rarity": "none",
+    "weight": 0.25,
+    "value": 5
+  }
 }

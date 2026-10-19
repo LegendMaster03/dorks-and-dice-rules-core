@@ -2,40 +2,19 @@
   "id": "baseitem.mace",
   "name": "Mace",
   "kind": "baseitem",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Mace",
-        "type": "M",
-        "rarity": "none",
-        "weight": 4,
-        "value": 500,
-        "weaponCategory": "simple",
-        "dmg1": "1d6",
-        "dmgType": "B",
-        "mace": true,
-        "weapon": true
-      }
-    },
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Mace",
-        "type": "M|SRD52",
-        "rarity": "none",
-        "weight": 4,
-        "value": 500,
-        "weaponCategory": "simple",
-        "mastery": [
-          "Sap|SRD52"
-        ],
-        "dmg1": "1d6",
-        "dmgType": "B",
-        "mace": true,
-        "weapon": true
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "M|SRD52",
+    "rarity": "none",
+    "weight": 4,
+    "value": 500,
+    "weaponCategory": "simple",
+    "mastery": [
+      "Sap|SRD52"
+    ],
+    "dmg1": "1d6",
+    "dmgType": "B",
+    "mace": true,
+    "weapon": true
+  }
 }

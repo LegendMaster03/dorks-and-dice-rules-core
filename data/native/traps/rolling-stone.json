@@ -2,59 +2,53 @@
   "id": "trap.rolling-stone",
   "name": "Rolling Stone",
   "kind": "trap",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Rolling Stone",
-        "trapHazType": "TRP",
-        "rating": [
-          {
-            "tier": 3,
-            "threat": "deadly"
-          },
-          {
-            "tier": 4,
-            "threat": "nuisance"
-          }
-        ],
-        "trigger": [
-          "A creature moves onto a pressure plate"
-        ],
-        "duration": [
-          {
-            "type": "special",
-            "condition": "Until the stone stops rolling"
-          }
-        ],
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "trapHazType": "TRP",
+    "rating": [
+      {
+        "tier": 3,
+        "threat": "deadly"
+      },
+      {
+        "tier": 4,
+        "threat": "nuisance"
+      }
+    ],
+    "trigger": [
+      "A creature moves onto a pressure plate"
+    ],
+    "duration": [
+      {
+        "type": "special",
+        "condition": "Until the stone stops rolling"
+      }
+    ],
+    "entries": [
+      "When a creature moves onto a hidden pressure plate, a 5-foot-radius orb of solid stone is released from a secret compartment and begins to roll. The stone and all creatures nearby roll Initiative; the stone gets a +8 bonus on its Initiative roll.",
+      "On its turn, the stone moves 60 feet in one direction, changing course if redirected by an obstacle. The stone can move through creatures' spaces, and creatures can move through the stone's space, treating it as {@variantrule Difficult Terrain|SRD52}. Whenever the stone enters a creature's space for the first time on a turn or a creature enters the stone's space while the stone is rolling, that creature must succeed on a {@dc 15} Dexterity saving throw or take 55 ({@damage 10d10}) Bludgeoning damage and have the {@condition Prone|SRD52} condition.",
+      "The stone stops when it hits a wall or similar barrier. It can't go around corners, but creative dungeon builders incorporate curving turns into nearby passages that allow the stone to keep moving.",
+      {
+        "type": "entries",
+        "name": "Detect and Disarm",
         "entries": [
-          "When a creature moves onto a hidden pressure plate, a 5-foot-radius orb of solid stone is released from a secret compartment and begins to roll. The stone and all creatures nearby roll Initiative; the stone gets a +8 bonus on its Initiative roll.",
-          "On its turn, the stone moves 60 feet in one direction, changing course if redirected by an obstacle. The stone can move through creatures' spaces, and creatures can move through the stone's space, treating it as {@variantrule Difficult Terrain|SRD52}. Whenever the stone enters a creature's space for the first time on a turn or a creature enters the stone's space while the stone is rolling, that creature must succeed on a {@dc 15} Dexterity saving throw or take 55 ({@damage 10d10}) Bludgeoning damage and have the {@condition Prone|SRD52} condition.",
-          "The stone stops when it hits a wall or similar barrier. It can't go around corners, but creative dungeon builders incorporate curving turns into nearby passages that allow the stone to keep moving.",
-          {
-            "type": "entries",
-            "name": "Detect and Disarm",
-            "entries": [
-              "As a {@action Study|SRD52} action, a creature can examine the section of floor that forms the pressure plate and make a {@dc 15} Intelligence ({@skill Investigation|SRD52}) check, deducing the pressure plate's function on a successful check. Wedging an Iron Spike or a similar object under the pressure plate prevents the trap from triggering."
-            ]
-          },
-          {
-            "type": "entries",
-            "name": "Destroy the Stone",
-            "entries": [
-              "The stone is a Large object that has AC 17, HP 100, a {@variantrule Damage Threshold|SRD52} of 10, and {@variantrule Immunity|SRD52} to Poison and Psychic damage."
-            ]
-          },
-          {
-            "type": "entries",
-            "name": "Slow the Stone",
-            "entries": [
-              "As an action, a creature can try to slow down the stone with a {@dc 20} Strength ({@skill Athletics|SRD52}) check. If the check is successful, the distance the stone moves on its turn is reduced by 15 feet. If that distance drops to 0, it stops moving and is no longer a threat."
-            ]
-          }
+          "As a {@action Study|SRD52} action, a creature can examine the section of floor that forms the pressure plate and make a {@dc 15} Intelligence ({@skill Investigation|SRD52}) check, deducing the pressure plate's function on a successful check. Wedging an Iron Spike or a similar object under the pressure plate prevents the trap from triggering."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Destroy the Stone",
+        "entries": [
+          "The stone is a Large object that has AC 17, HP 100, a {@variantrule Damage Threshold|SRD52} of 10, and {@variantrule Immunity|SRD52} to Poison and Psychic damage."
+        ]
+      },
+      {
+        "type": "entries",
+        "name": "Slow the Stone",
+        "entries": [
+          "As an action, a creature can try to slow down the stone with a {@dc 20} Strength ({@skill Athletics|SRD52}) check. If the check is successful, the distance the stone moves on its turn is reduced by 15 feet. If that distance drops to 0, it stops moving and is no longer a threat."
         ]
       }
-    }
-  ]
+    ]
+  }
 }

@@ -2,20 +2,14 @@
   "id": "item.tent",
   "name": "Tent",
   "kind": "item",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-b",
-      "content": {
-        "name": "Tent",
-        "type": "G|SRD52",
-        "rarity": "none",
-        "weight": 20,
-        "value": 200,
-        "entries": [
-          "A Tent sleeps up to two Small or Medium creatures."
-        ]
-      }
-    }
-  ]
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "type": "G|SRD52",
+    "rarity": "none",
+    "weight": 20,
+    "value": 200,
+    "entries": [
+      "A Tent sleeps up to two Small or Medium creatures."
+    ]
+  }
 }

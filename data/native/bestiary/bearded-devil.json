@@ -2,370 +2,188 @@
   "id": "monster.bearded-devil",
   "name": "Bearded Devil",
   "kind": "monster",
-  "baselineStatus": "pending-native-reconciliation",
-  "candidateDefinitions": [
-    {
-      "key": "candidate-a",
-      "content": {
-        "name": "Bearded Devil",
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "devil"
-          ]
-        },
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          {
-            "ac": 13,
-            "from": [
-              "natural armor"
-            ]
-          }
-        ],
-        "hp": {
-          "average": 52,
-          "formula": "8d8 + 16"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 16,
-        "dex": 15,
-        "con": 15,
-        "int": 9,
-        "wis": 11,
-        "cha": 11,
-        "save": {
-          "str": "+5",
-          "con": "+4",
-          "wis": "+2"
-        },
-        "senses": [
-          "darkvision 120 ft."
-        ],
-        "passive": 10,
-        "resist": [
-          "cold",
-          {
-            "resist": [
-              "bludgeoning",
-              "piercing",
-              "slashing"
-            ],
-            "note": "from nonmagical attacks that aren't silvered",
-            "cond": true
-          }
-        ],
-        "immune": [
-          "fire",
-          "poison"
-        ],
-        "conditionImmune": [
-          "poisoned"
-        ],
-        "languages": [
-          "Infernal",
-          "telepathy 120 ft."
-        ],
-        "cr": "3",
-        "trait": [
-          {
-            "name": "Devil's Sight",
-            "entries": [
-              "Magical darkness doesn't impede the devil's darkvision."
-            ]
-          },
-          {
-            "name": "Magic Resistance",
-            "entries": [
-              "The devil has advantage on saving throws against spells and other magical effects."
-            ]
-          },
-          {
-            "name": "Steadfast",
-            "entries": [
-              "The devil can't be {@condition frightened} while it can see an allied creature within 30 feet of it."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The devil makes two attacks: one with its beard and one with its glaive."
-            ]
-          },
-          {
-            "name": "Beard",
-            "entries": [
-              "{@atk mw} {@hit 5} to hit, reach 5 ft., one creature. {@h}6 ({@damage 1d8 + 2}) piercing damage, and the target must succeed on a {@dc 12} Constitution saving throw or be {@condition poisoned} for 1 minute. While {@condition poisoned} in this way, the target can't regain hit points. The target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success."
-            ]
-          },
-          {
-            "name": "Glaive",
-            "entries": [
-              "{@atk mw} {@hit 5} to hit, reach 10 ft., one target. {@h}8 ({@damage 1d10 + 3}) slashing damage. If the target is a creature other than an undead or a construct, it must succeed on a {@dc 12} Constitution saving throw or lose 5 ({@dice 1d10}) hit points at the start of each of its turns due to an infernal wound. Each time the devil hits the wounded target with this attack, the damage dealt by the wound increases by 5 ({@damage 1d10}). Any creature can take an action to stanch the wound with a successful {@dc 12} Wisdom ({@skill Medicine}) check. The wound also closes if the target receives magical healing."
-            ]
-          }
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/bearded-devil.opus"
-        },
-        "attachedItems": [
-          "glaive|srd51"
-        ],
-        "traitTags": [
-          "Devil's Sight",
-          "Magic Resistance"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "I",
-          "TP"
-        ],
-        "damageTags": [
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "MLW",
-          "MW",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "poisoned"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
-            "name": "Bearded Devil",
-            "_copy": {
-              "name": "Devils",
-              "source": "SRD51",
-              "_mod": {
-                "entries": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "entries",
-                    "entries": [
-                      {
-                        "type": "entries",
-                        "entries": [
-                          "Bearded devils serve archdevils as shock troops, fighting shoulder-to-shoulder and reveling in the glory of battle. They respond with violence to any slight, real or imagined, gorging themselves on violence as their infernal saw-toothed glaives carve a path through their foes.",
-                          "A bearded devil is humanoid in form, with pointed ears, scaly skin, a long tail, and claws that clearly show its fiendish nature. These devils take their names from the snakelike growths that adorn their chins, which they use to lash and poison enemies, weakening them with their virulent venom."
-                        ]
-                      }
-                    ]
-                  }
-                },
-                "images": {
-                  "mode": "prependArr",
-                  "items": {
-                    "type": "image",
-                    "href": {
-                      "type": "internal",
-                      "path": "bestiary/MM/Bearded Devil.webp"
-                    },
-                    "width": 943,
-                    "height": 1000
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
+  "baselineStatus": "retained-native-definition",
+  "definition": {
+    "group": [
+      "Devils"
+    ],
+    "size": [
+      "M"
+    ],
+    "type": {
+      "type": "fiend",
+      "tags": [
+        "devil"
+      ]
     },
-    {
-      "key": "candidate-b",
-      "content": {
+    "alignment": [
+      "L",
+      "E"
+    ],
+    "ac": [
+      13
+    ],
+    "hp": {
+      "average": 58,
+      "formula": "9d8 + 18"
+    },
+    "speed": {
+      "walk": 30
+    },
+    "str": 16,
+    "dex": 15,
+    "con": 15,
+    "int": 9,
+    "wis": 11,
+    "cha": 14,
+    "save": {
+      "str": "+5",
+      "con": "+4",
+      "cha": "+4"
+    },
+    "senses": [
+      "Darkvision 120 ft. (unimpeded by magical {@variantrule Darkness|SRD52})"
+    ],
+    "passive": 10,
+    "resist": [
+      "cold"
+    ],
+    "immune": [
+      "fire",
+      "poison"
+    ],
+    "conditionImmune": [
+      "frightened",
+      "poisoned"
+    ],
+    "languages": [
+      "Infernal; telepathy 120 ft."
+    ],
+    "cr": "3",
+    "trait": [
+      {
+        "name": "Magic Resistance",
+        "entries": [
+          "The devil has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Devil's Sight",
+        "entries": [
+          "Magical darkness doesn't impede the devil's darkvision."
+        ]
+      },
+      {
+        "name": "Steadfast",
+        "entries": [
+          "The devil can't be {@condition frightened} while it can see an allied creature within 30 feet of it."
+        ]
+      }
+    ],
+    "action": [
+      {
+        "name": "Multiattack",
+        "entries": [
+          "The devil makes one Beard attack and one Infernal Glaive attack."
+        ]
+      },
+      {
+        "name": "Beard",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 5 ft. {@h}7 ({@damage 1d8 + 3}) Piercing damage, and the target has the {@condition Poisoned|SRD52} condition until the start of the devil's next turn. Until this poison ends, the target can't regain {@variantrule Hit Points|SRD52}."
+        ]
+      },
+      {
+        "name": "Infernal Glaive",
+        "entries": [
+          "{@atkr m} {@hit 5}, reach 10 ft. {@h}8 ({@damage 1d10 + 3}) Slashing damage. If the target is a creature and doesn't already have an infernal wound, it is subjected to the following effect. {@actSave con} {@dc 12}. {@actSaveFail} The target receives an infernal wound. While wounded, the target loses 5 ({@dice 1d10}) {@variantrule Hit Points|SRD52} at the start of each of its turns. The wound closes after 1 minute, after a spell restores {@variantrule Hit Points|SRD52} to the target, or after the target or a creature within 5 feet of it takes an action to stanch the wound, doing so by succeeding on a {@dc 12} Wisdom ({@skill Medicine|SRD52}) check."
+        ]
+      }
+    ],
+    "environment": [
+      "planar, nine hells"
+    ],
+    "treasure": [
+      "armaments"
+    ],
+    "soundClip": {
+      "type": "internal",
+      "path": "bestiary/bearded-devil.opus"
+    },
+    "traitTags": [
+      "Devil's Sight",
+      "Magic Resistance"
+    ],
+    "senseTags": [
+      "SD"
+    ],
+    "actionTags": [
+      "Multiattack"
+    ],
+    "languageTags": [
+      "I",
+      "TP"
+    ],
+    "damageTags": [
+      "P",
+      "S"
+    ],
+    "miscTags": [
+      "MA",
+      "MLW",
+      "RCH"
+    ],
+    "conditionInflict": [
+      "poisoned"
+    ],
+    "savingThrowForced": [
+      "constitution"
+    ],
+    "hasToken": true,
+    "lore": [
+      {
         "name": "Bearded Devil",
-        "group": [
-          "Devils"
-        ],
-        "size": [
-          "M"
-        ],
-        "type": {
-          "type": "fiend",
-          "tags": [
-            "devil"
-          ]
-        },
-        "alignment": [
-          "L",
-          "E"
-        ],
-        "ac": [
-          13
-        ],
-        "hp": {
-          "average": 58,
-          "formula": "9d8 + 18"
-        },
-        "speed": {
-          "walk": 30
-        },
-        "str": 16,
-        "dex": 15,
-        "con": 15,
-        "int": 9,
-        "wis": 11,
-        "cha": 14,
-        "save": {
-          "str": "+5",
-          "con": "+4",
-          "cha": "+4"
-        },
-        "senses": [
-          "Darkvision 120 ft. (unimpeded by magical {@variantrule Darkness|SRD52})"
-        ],
-        "passive": 10,
-        "resist": [
-          "cold"
-        ],
-        "immune": [
-          "fire",
-          "poison"
-        ],
-        "conditionImmune": [
-          "frightened",
-          "poisoned"
-        ],
-        "languages": [
-          "Infernal; telepathy 120 ft."
-        ],
-        "cr": "3",
-        "trait": [
+        "entries": [
           {
-            "name": "Magic Resistance",
-            "entries": [
-              "The devil has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
-            ]
-          }
-        ],
-        "action": [
-          {
-            "name": "Multiattack",
-            "entries": [
-              "The devil makes one Beard attack and one Infernal Glaive attack."
-            ]
-          },
-          {
-            "name": "Beard",
-            "entries": [
-              "{@atkr m} {@hit 5}, reach 5 ft. {@h}7 ({@damage 1d8 + 3}) Piercing damage, and the target has the {@condition Poisoned|SRD52} condition until the start of the devil's next turn. Until this poison ends, the target can't regain {@variantrule Hit Points|SRD52}."
-            ]
-          },
-          {
-            "name": "Infernal Glaive",
-            "entries": [
-              "{@atkr m} {@hit 5}, reach 10 ft. {@h}8 ({@damage 1d10 + 3}) Slashing damage. If the target is a creature and doesn't already have an infernal wound, it is subjected to the following effect. {@actSave con} {@dc 12}. {@actSaveFail} The target receives an infernal wound. While wounded, the target loses 5 ({@dice 1d10}) {@variantrule Hit Points|SRD52} at the start of each of its turns. The wound closes after 1 minute, after a spell restores {@variantrule Hit Points|SRD52} to the target, or after the target or a creature within 5 feet of it takes an action to stanch the wound, doing so by succeeding on a {@dc 12} Wisdom ({@skill Medicine|SRD52}) check."
-            ]
-          }
-        ],
-        "environment": [
-          "planar, nine hells"
-        ],
-        "treasure": [
-          "armaments"
-        ],
-        "soundClip": {
-          "type": "internal",
-          "path": "bestiary/bearded-devil.opus"
-        },
-        "traitTags": [
-          "Devil's Sight",
-          "Magic Resistance"
-        ],
-        "senseTags": [
-          "SD"
-        ],
-        "actionTags": [
-          "Multiattack"
-        ],
-        "languageTags": [
-          "I",
-          "TP"
-        ],
-        "damageTags": [
-          "P",
-          "S"
-        ],
-        "miscTags": [
-          "MA",
-          "MLW",
-          "RCH"
-        ],
-        "conditionInflict": [
-          "poisoned"
-        ],
-        "savingThrowForced": [
-          "constitution"
-        ],
-        "hasToken": true,
-        "lore": [
-          {
+            "type": "section",
             "name": "Bearded Devil",
             "entries": [
+              "{@i Devil of Force and Intimidation}",
               {
-                "type": "section",
-                "name": "Bearded Devil",
-                "entries": [
-                  "{@i Devil of Force and Intimidation}",
+                "type": "list",
+                "style": "list-hang-notitle",
+                "items": [
                   {
-                    "type": "list",
-                    "style": "list-hang-notitle",
-                    "items": [
-                      {
-                        "type": "item",
-                        "name": "Habitat:",
-                        "entry": "{@filter Planar (Nine Hells)|bestiary|environment=planar, nine hells}"
-                      },
-                      {
-                        "type": "item",
-                        "name": "Treasure:",
-                        "entry": "Armaments"
-                      }
-                    ]
+                    "type": "item",
+                    "name": "Habitat:",
+                    "entry": "{@filter Planar (Nine Hells)|bestiary|environment=planar, nine hells}"
                   },
-                  "Bearded devils, also known as barbazus, fill the legions of the Nine Hells. These cruel soldiers follow the orders of diabolical generals as they defend infernal realms, invade Material Plane worlds, and clash against demons in planes-spanning conflicts.",
-                  "Left to their own devices, bearded devils encourage mortals to act callously and abuse their power, inflating their egos and inspiring petty tyrannies. Villains aligned with the Nine Hells call on bearded devils to serve as guardians, enforce their will, or fight in wicked armies.",
-                  "Bearded devils' eponymous beards consist of grotesque, tentacle-like growths. These squirming, barb-riddled beards carry poison capable of preventing magical healing. Bearded devils are also known for their distinctive glaives, through which they channel hellish energy. Those struck by these unnatural weapons suffer infernal wounds that grow worse until stanched or magically healed."
+                  {
+                    "type": "item",
+                    "name": "Treasure:",
+                    "entry": "Armaments"
+                  }
                 ]
-              }
-            ],
-            "images": [
-              {
-                "type": "image",
-                "href": {
-                  "type": "internal",
-                  "path": "bestiary/XMM/Bearded Devil.webp"
-                },
-                "credit": "Yongjae Choi",
-                "width": 2125,
-                "height": 1883
-              }
+              },
+              "Bearded devils, also known as barbazus, fill the legions of the Nine Hells. These cruel soldiers follow the orders of diabolical generals as they defend infernal realms, invade Material Plane worlds, and clash against demons in planes-spanning conflicts.",
+              "Left to their own devices, bearded devils encourage mortals to act callously and abuse their power, inflating their egos and inspiring petty tyrannies. Villains aligned with the Nine Hells call on bearded devils to serve as guardians, enforce their will, or fight in wicked armies.",
+              "Bearded devils' eponymous beards consist of grotesque, tentacle-like growths. These squirming, barb-riddled beards carry poison capable of preventing magical healing. Bearded devils are also known for their distinctive glaives, through which they channel hellish energy. Those struck by these unnatural weapons suffer infernal wounds that grow worse until stanched or magically healed."
             ]
+          }
+        ],
+        "images": [
+          {
+            "type": "image",
+            "href": {
+              "type": "internal",
+              "path": "bestiary/XMM/Bearded Devil.webp"
+            },
+            "credit": "Yongjae Choi",
+            "width": 2125,
+            "height": 1883
           }
         ]
       }
-    }
-  ]
+    ]
+  }
 }
