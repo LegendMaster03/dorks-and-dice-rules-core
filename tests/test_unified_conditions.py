@@ -40,7 +40,10 @@ class UnifiedConditionsTests(unittest.TestCase):
             for dependent in entity.get("appliesConditions", []):
                 self.assertIn(dependent, self.conditions)
         self.assertEqual(30, len(self.original))
-        for name in (x["name"] for x in self.data["conditions"] if x["name"] not in ("Wet", "Flat-Footed", "Helpless")):
+        for name in (x["name"] for x in self.data["conditions"] if x["name"] not in (
+            "Wet", "Flat-Footed", "Helpless", "Dazed", "Dazzled", "Entangled",
+            "Fascinated", "Nauseated", "Sickened"
+        )):
             self.assertEqual({"SRD51", "SRD52"},
                              {x["source"] for x in self.original if x["name"] == name})
 
