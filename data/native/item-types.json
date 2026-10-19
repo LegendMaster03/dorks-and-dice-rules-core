@@ -8,23 +8,7 @@
       "id": "itemtype.adventuring-gear",
       "name": "Adventuring Gear",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Adventuring Gear",
-            "abbreviation": "G"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Adventuring Gear",
-            "abbreviation": "G"
-          }
-        }
-      ]
+      "abbreviation": "G"
     },
     {
       "id": "itemtype.ammunition",
@@ -107,45 +91,13 @@
       "id": "itemtype.explosive",
       "name": "Explosive",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Explosive",
-            "abbreviation": "EXP"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Explosive",
-            "abbreviation": "EXP"
-          }
-        }
-      ]
+      "abbreviation": "EXP"
     },
     {
       "id": "itemtype.food-and-drink",
       "name": "Food and Drink",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Food and Drink",
-            "abbreviation": "FD"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Food and Drink",
-            "abbreviation": "FD"
-          }
-        }
-      ]
+      "abbreviation": "FD"
     },
     {
       "id": "itemtype.gaming-set",
@@ -191,45 +143,13 @@
       "id": "itemtype.generic-variant",
       "name": "Generic Variant",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Generic Variant",
-            "abbreviation": "GV"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Generic Variant",
-            "abbreviation": "GV"
-          }
-        }
-      ]
+      "abbreviation": "GV"
     },
     {
       "id": "itemtype.heavy-armor",
       "name": "Heavy Armor",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Heavy Armor",
-            "abbreviation": "HA"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Heavy Armor",
-            "abbreviation": "HA"
-          }
-        }
-      ]
+      "abbreviation": "HA"
     },
     {
       "id": "itemtype.instrument",
@@ -275,133 +195,37 @@
       "id": "itemtype.light-armor",
       "name": "Light Armor",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Light Armor",
-            "abbreviation": "LA"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Light Armor",
-            "abbreviation": "LA"
-          }
-        }
-      ]
+      "abbreviation": "LA"
     },
     {
       "id": "itemtype.medium-armor",
       "name": "Medium Armor",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Medium Armor",
-            "abbreviation": "MA"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Medium Armor",
-            "abbreviation": "MA"
-          }
-        }
-      ]
+      "abbreviation": "MA"
     },
     {
       "id": "itemtype.melee-weapon",
       "name": "Melee Weapon",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Melee Weapon",
-            "abbreviation": "M"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Melee Weapon",
-            "abbreviation": "M"
-          }
-        }
-      ]
+      "abbreviation": "M"
     },
     {
       "id": "itemtype.mount",
       "name": "Mount",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Mount",
-            "abbreviation": "MNT"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Mount",
-            "abbreviation": "MNT"
-          }
-        }
-      ]
+      "abbreviation": "MNT"
     },
     {
       "id": "itemtype.other",
       "name": "Other",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Other",
-            "abbreviation": "OTH"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Other",
-            "abbreviation": "OTH"
-          }
-        }
-      ]
+      "abbreviation": "OTH"
     },
     {
       "id": "itemtype.potion",
       "name": "Potion",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Potion",
-            "abbreviation": "P"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Potion",
-            "abbreviation": "P"
-          }
-        }
-      ]
+      "abbreviation": "P"
     },
     {
       "id": "itemtype.ranged-weapon",
@@ -447,133 +271,37 @@
       "id": "itemtype.ring",
       "name": "Ring",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Ring",
-            "abbreviation": "RG"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Ring",
-            "abbreviation": "RG"
-          }
-        }
-      ]
+      "abbreviation": "RG"
     },
     {
       "id": "itemtype.rod",
       "name": "Rod",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Rod",
-            "abbreviation": "RD"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Rod",
-            "abbreviation": "RD"
-          }
-        }
-      ]
+      "abbreviation": "RD"
     },
     {
       "id": "itemtype.scroll",
       "name": "Scroll",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Scroll",
-            "abbreviation": "SC"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Scroll",
-            "abbreviation": "SC"
-          }
-        }
-      ]
+      "abbreviation": "SC"
     },
     {
       "id": "itemtype.shield",
       "name": "Shield",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Shield",
-            "abbreviation": "S"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Shield",
-            "abbreviation": "S"
-          }
-        }
-      ]
+      "abbreviation": "S"
     },
     {
       "id": "itemtype.spellcasting-focus",
       "name": "Spellcasting Focus",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Spellcasting Focus",
-            "abbreviation": "SCF"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Spellcasting Focus",
-            "abbreviation": "SCF"
-          }
-        }
-      ]
+      "abbreviation": "SCF"
     },
     {
       "id": "itemtype.tack-and-harness",
       "name": "Tack and Harness",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Tack and Harness",
-            "abbreviation": "TAH"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Tack and Harness",
-            "abbreviation": "TAH"
-          }
-        }
-      ]
+      "abbreviation": "TAH"
     },
     {
       "id": "itemtype.tool",
@@ -814,23 +542,7 @@
       "id": "itemtype.vehicle-land",
       "name": "Vehicle (Land)",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Vehicle (Land)",
-            "abbreviation": "VEH"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Vehicle (Land)",
-            "abbreviation": "VEH"
-          }
-        }
-      ]
+      "abbreviation": "VEH"
     },
     {
       "id": "itemtype.vehicle-water",
@@ -935,23 +647,7 @@
       "id": "itemtype.wand",
       "name": "Wand",
       "kind": "itemType",
-      "baselineStatus": "pending-native-reconciliation",
-      "candidateDefinitions": [
-        {
-          "key": "candidate-a",
-          "content": {
-            "name": "Wand",
-            "abbreviation": "WD"
-          }
-        },
-        {
-          "key": "candidate-b",
-          "content": {
-            "name": "Wand",
-            "abbreviation": "WD"
-          }
-        }
-      ]
+      "abbreviation": "WD"
     }
   ]
 }
