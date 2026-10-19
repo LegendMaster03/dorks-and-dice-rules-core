@@ -1,17 +1,17 @@
 {
   "summary": {
     "feature:already-present": 84,
-    "feature:newer-successor": 75,
-    "feature:possible-redesign": 36,
-    "feature:restored": 126,
-    "feature:review-needed": 9,
-    "feature:revised-attack-suite": 331,
-    "feature:spell-access-extended": 13,
-    "monstersWithOpenFeatureQuestions": 39
+    "feature:newer-successor": 94,
+    "feature:possible-redesign": 4,
+    "feature:restored": 141,
+    "feature:review-needed": 3,
+    "feature:revised-attack-suite": 333,
+    "feature:spell-access-extended": 15,
+    "monstersWithOpenFeatureQuestions": 7
   },
-  "featuresRestoredThisPass": 32,
-  "totalAdditionalOlderFeaturesRestored": 126,
-  "additionalSpellsRestored": 31,
+  "featuresRestoredThisPass": 15,
+  "totalAdditionalOlderFeaturesRestored": 141,
+  "additionalSpellsRestored": 33,
   "spellsAddedByMonster": {
     "monster.cloud-giant": [
       "feather fall",
@@ -71,7 +71,12 @@
       "water breathing"
     ]
   },
-  "unresolvedFeatureQuestions": 45,
-  "reviewEntriesWithOpenQuestions": 39,
-  "note": "5.5e stats, attack suites and spellcasting ability remain authoritative."
+  "unresolvedFeatureQuestions": 7,
+  "reviewEntriesWithOpenQuestions": 7,
+  "note": "5.5e stats, attack suites and spellcasting ability remain authoritative.",
+  "finalPassChanges": {
+    "traitsRestored": 14,
+    "spellsRestored": 2,
+    "legendaryRestored": 1
+  }
 }

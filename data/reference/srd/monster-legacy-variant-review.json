@@ -1584,12 +1584,12 @@
           },
           {
             "name": "Sneak Attack (1/Turn)",
-            "status": "possible-redesign",
-            "note": "Sneak Attack, Cunning Action"
+            "status": "restored",
+            "note": "Independent older ability restored; preserve its original restrictions"
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 1
     },
     {
       "nativeId": "monster.awakened-shrub",
@@ -1654,13 +1654,13 @@
         "trait": [
           {
             "name": "Heated Body",
-            "status": "possible-redesign",
-            "note": "Fire Aura"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Fire Aura"
           },
           {
             "name": "Heated Weapons",
-            "status": "possible-redesign",
-            "note": "Burning Hammer, Fire Aura"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Burning Hammer"
           }
         ],
         "action": [
@@ -1671,7 +1671,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.badger",
@@ -1714,8 +1714,8 @@
         "trait": [
           {
             "name": "Magic Weapons",
-            "status": "possible-redesign",
-            "note": "Magic Resistance, Magic Weapons"
+            "status": "restored",
+            "note": "Independent older ability restored; preserve its original restrictions"
           }
         ],
         "action": [
@@ -1731,7 +1731,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.bandit-captain",
@@ -2215,8 +2215,8 @@
         "trait": [
           {
             "name": "Brute",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Old extra damage die was included in old attack damage; 5.5e attack damage is authoritative"
           },
           {
             "name": "Surprise Attack",
@@ -2237,7 +2237,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.bulette",
@@ -2431,8 +2431,8 @@
         "trait": [
           {
             "name": "Magic Weapons",
-            "status": "possible-redesign",
-            "note": "Magic Resistance, Magic Weapons"
+            "status": "restored",
+            "note": "Independent older ability restored; preserve its original restrictions"
           }
         ],
         "action": [
@@ -2443,7 +2443,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.cloaker",
@@ -2601,8 +2601,8 @@
         "trait": [
           {
             "name": "Magic Weapons",
-            "status": "possible-redesign",
-            "note": "Magic Resistance, Magic Weapons"
+            "status": "restored",
+            "note": "Independent older ability restored; preserve its original restrictions"
           }
         ],
         "action": [
@@ -2620,7 +2620,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.cult-fanatic",
@@ -2783,8 +2783,8 @@
         "trait": [
           {
             "name": "Angelic Weapons",
-            "status": "possible-redesign",
-            "note": "Holy, Radiant"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Holy Mace"
           }
         ],
         "action": [
@@ -2812,7 +2812,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.dire-wolf",
@@ -2857,8 +2857,8 @@
         "trait": [
           {
             "name": "Elemental Demise",
-            "status": "possible-redesign",
-            "note": "Restoration"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Elemental Restoration"
           }
         ],
         "action": [
@@ -2876,7 +2876,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.doppelganger",
@@ -3011,12 +3011,12 @@
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": "Missing spell access without a compatible newer general Spellcasting feature: dancing lights"
+            "status": "spell-access-extended",
+            "note": "Restored missing at-will Dancing Lights without changing rechargeable 5.5e spellcasting"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.druid",
@@ -3150,8 +3150,8 @@
         "trait": [
           {
             "name": "Elemental Demise",
-            "status": "possible-redesign",
-            "note": "Restoration"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Elemental Restoration"
           }
         ],
         "action": [
@@ -3169,7 +3169,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.elephant",
@@ -3251,8 +3251,8 @@
         "trait": [
           {
             "name": "Hellish Weapons",
-            "status": "possible-redesign",
-            "note": "Infernal, Withering"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Withering Sword"
           }
         ],
         "action": [
@@ -3268,7 +3268,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.ettercap",
@@ -3406,12 +3406,12 @@
           },
           {
             "name": "Magic Weapons",
-            "status": "possible-redesign",
-            "note": "Magic Resistance, Magic Weapons"
+            "status": "restored",
+            "note": "Independent older ability restored; preserve its original restrictions"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.flying-sword",
@@ -4129,12 +4129,12 @@
           },
           {
             "name": "Brute",
-            "status": "review-needed",
-            "note": ""
+            "status": "revised-attack-suite",
+            "note": "Old extra damage die was included in old attack damage; 5.5e attack damage is authoritative"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.gnoll",
@@ -4473,8 +4473,8 @@
         "trait": [
           {
             "name": "Rejuvenation",
-            "status": "possible-redesign",
-            "note": "Restoration, Spirit Jar"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Celestial Restoration"
           }
         ],
         "action": [
@@ -4485,7 +4485,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.harpy",
@@ -4899,8 +4899,8 @@
           },
           {
             "name": "Shapechanger",
-            "status": "possible-redesign",
-            "note": "Shape-Shift"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Disguise Self"
           }
         ],
         "action": [
@@ -4926,7 +4926,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.invisible-stalker",
@@ -4978,8 +4978,8 @@
         "trait": [
           {
             "name": "Magic Weapons",
-            "status": "possible-redesign",
-            "note": "Magic Resistance, Magic Weapons"
+            "status": "restored",
+            "note": "Independent older ability restored; preserve its original restrictions"
           }
         ],
         "action": [
@@ -5000,7 +5000,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.jackal",
@@ -5237,8 +5237,8 @@
           },
           {
             "name": "Hellish Rejuvenation",
-            "status": "possible-redesign",
-            "note": "Restoration"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Hellish Restoration"
           }
         ],
         "action": [
@@ -5249,7 +5249,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.lich",
@@ -5269,8 +5269,8 @@
         "trait": [
           {
             "name": "Rejuvenation",
-            "status": "possible-redesign",
-            "note": "Restoration, Spirit Jar"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Spirit Jar"
           },
           {
             "name": "Turn Resistance",
@@ -5281,12 +5281,12 @@
         "legendary": [
           {
             "name": "Cantrip",
-            "status": "review-needed",
-            "note": ""
+            "status": "restored",
+            "note": "Additional choice within current legendary action budget"
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.lion",
@@ -5484,8 +5484,8 @@
         "trait": [
           {
             "name": "Magic Weapons",
-            "status": "possible-redesign",
-            "note": "Magic Resistance, Magic Weapons"
+            "status": "restored",
+            "note": "Independent older ability restored; preserve its original restrictions"
           }
         ],
         "action": [
@@ -5506,7 +5506,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.mastiff",
@@ -5717,8 +5717,8 @@
         "trait": [
           {
             "name": "Rejuvenation",
-            "status": "possible-redesign",
-            "note": "Restoration, Spirit Jar"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Undead Restoration"
           }
         ],
         "legendary": [
@@ -5739,7 +5739,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.nalfeshnee",
@@ -5883,8 +5883,8 @@
         "trait": [
           {
             "name": "Magic Weapons",
-            "status": "possible-redesign",
-            "note": "Magic Resistance, Magic Weapons"
+            "status": "restored",
+            "note": "Independent older ability restored; preserve its original restrictions"
           }
         ],
         "action": [
@@ -5907,7 +5907,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.otyugh",
@@ -6059,8 +6059,8 @@
         "trait": [
           {
             "name": "Magic Weapons",
-            "status": "possible-redesign",
-            "note": "Magic Resistance, Magic Weapons"
+            "status": "restored",
+            "note": "Independent older ability restored; preserve its original restrictions"
           }
         ],
         "action": [
@@ -6083,12 +6083,12 @@
         "spellcasting": [
           {
             "name": "Innate Spellcasting",
-            "status": "review-needed",
-            "note": "Missing spell access without a compatible newer general Spellcasting feature: detect magic"
+            "status": "spell-access-extended",
+            "note": "Restored missing at-will Detect Magic without modifying Hellfire Spellcasting"
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.planetar",
@@ -6111,8 +6111,8 @@
         "trait": [
           {
             "name": "Angelic Weapons",
-            "status": "possible-redesign",
-            "note": "Holy, Radiant"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Radiant Sword"
           }
         ],
         "action": [
@@ -6135,7 +6135,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.polar-bear",
@@ -6295,8 +6295,8 @@
         "trait": [
           {
             "name": "Limited Magic Immunity",
-            "status": "possible-redesign",
-            "note": "Greater Magic Resistance"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Greater Magic Resistance"
           }
         ],
         "action": [
@@ -6314,7 +6314,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.rat",
@@ -6374,12 +6374,12 @@
         "trait": [
           {
             "name": "Heated Body",
-            "status": "possible-redesign",
-            "note": "Fire Aura"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Heat Aura"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.rhinoceros",
@@ -6613,13 +6613,13 @@
         "trait": [
           {
             "name": "Heated Body",
-            "status": "possible-redesign",
-            "note": "Fire Aura"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Fire Aura"
           },
           {
             "name": "Heated Weapons",
-            "status": "possible-redesign",
-            "note": "Burning Hammer, Fire Aura"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Flame Spear"
           }
         ],
         "action": [
@@ -6635,7 +6635,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.satyr",
@@ -6866,8 +6866,8 @@
         "trait": [
           {
             "name": "Angelic Weapons",
-            "status": "possible-redesign",
-            "note": "Holy, Radiant"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Slaying Bow"
           }
         ],
         "action": [
@@ -6907,7 +6907,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.spider",
@@ -6997,8 +6997,8 @@
         "trait": [
           {
             "name": "Sneak Attack (1/Turn)",
-            "status": "possible-redesign",
-            "note": "Sneak Attack, Cunning Action"
+            "status": "restored",
+            "note": "Independent older ability restored; preserve its original restrictions"
           }
         ],
         "action": [
@@ -7009,7 +7009,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.steam-mephit",
@@ -7126,12 +7126,12 @@
         "trait": [
           {
             "name": "Magic Weapons",
-            "status": "possible-redesign",
-            "note": "Magic Resistance, Magic Weapons"
+            "status": "restored",
+            "note": "Independent older ability restored; preserve its original restrictions"
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.storm-giant",
@@ -7535,13 +7535,13 @@
         "trait": [
           {
             "name": "Charge",
-            "status": "possible-redesign",
-            "note": "Gore, Ram, Charge, Pounce"
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Charging Horn"
           },
           {
             "name": "Magic Weapons",
-            "status": "possible-redesign",
-            "note": "Magic Resistance, Magic Weapons"
+            "status": "restored",
+            "note": "Independent older ability restored; preserve its original restrictions"
           }
         ],
         "action": [
@@ -7576,7 +7576,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 2
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.vampire",
@@ -7608,8 +7608,8 @@
           },
           {
             "name": "Regeneration",
-            "status": "possible-redesign",
-            "note": "Regeneration, Bite, Misty Escape"
+            "status": "restored",
+            "note": "Independent older ability restored; preserve its original restrictions"
           },
           {
             "name": "Vampire Weaknesses",
@@ -7647,7 +7647,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.vampire-spawn",
@@ -7667,8 +7667,8 @@
         "trait": [
           {
             "name": "Regeneration",
-            "status": "possible-redesign",
-            "note": "Regeneration, Bite, Misty Escape"
+            "status": "restored",
+            "note": "Independent older ability restored; preserve its original restrictions"
           },
           {
             "name": "Vampire Weaknesses",
@@ -7684,7 +7684,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.veteran",
@@ -7899,8 +7899,8 @@
           },
           {
             "name": "Charge (Boar or Hybrid Form Only)",
-            "status": "review-needed",
-            "note": ""
+            "status": "newer-successor",
+            "note": "Selected 5.5e equivalent/reworked capability: Tusk"
           },
           {
             "name": "Relentless (Recharges after a Short or Long Rest)",
@@ -7921,7 +7921,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.wererat",
@@ -8577,12 +8577,12 @@
   "featureReviewPolicy": "Retain 5.5e attack values and procedures; restore genuinely independent 5e abilities; do not duplicate renamed or relocated abilities. Each remaining feature question is evaluated within one creature.",
   "summary": {
     "feature:already-present": 84,
-    "feature:newer-successor": 75,
-    "feature:possible-redesign": 36,
-    "feature:restored": 126,
-    "feature:review-needed": 9,
-    "feature:revised-attack-suite": 331,
-    "feature:spell-access-extended": 13,
-    "monstersWithOpenFeatureQuestions": 39
+    "feature:newer-successor": 94,
+    "feature:possible-redesign": 4,
+    "feature:restored": 141,
+    "feature:review-needed": 3,
+    "feature:revised-attack-suite": 333,
+    "feature:spell-access-extended": 15,
+    "monstersWithOpenFeatureQuestions": 7
   }
 }

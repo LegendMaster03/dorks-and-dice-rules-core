@@ -197,6 +197,12 @@
         "entries": [
           "{@actSave con} {@dc 20}, each creature that isn't an Undead in a 20-foot {@variantrule Emanation [Area of Effect]|SRD52|Emanation} originating from the lich. {@actSaveFail} 31 ({@damage 9d6}) Necrotic damage. {@actSaveSuccess} Half damage. {@actSaveSuccessOrFail} The lich can't take this action again until the start of its next turn."
         ]
+      },
+      {
+        "name": "Cantrip",
+        "entries": [
+          "The lich casts a cantrip."
+        ]
       }
     ],
     "environment": [

@@ -103,6 +103,12 @@
         "entries": [
           "The unicorn has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
         ]
+      },
+      {
+        "name": "Magic Weapons",
+        "entries": [
+          "The unicorn's weapon attacks are magical."
+        ]
       }
     ],
     "action": [

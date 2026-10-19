@@ -61,6 +61,18 @@
         "hidden": [
           "recharge"
         ]
+      },
+      {
+        "name": "Dancing Lights",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The drider casts {@spell Dancing Lights|SRD52} at will, requiring no Material components, using Wisdom as its spellcasting ability."
+        ],
+        "will": [
+          "{@spell Dancing Lights|SRD52}"
+        ],
+        "ability": "wis",
+        "displayAs": "action"
       }
     ],
     "trait": [

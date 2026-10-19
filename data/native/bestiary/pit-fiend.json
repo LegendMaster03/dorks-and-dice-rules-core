@@ -85,6 +85,18 @@
         "hidden": [
           "recharge"
         ]
+      },
+      {
+        "name": "Detect Magic",
+        "type": "spellcasting",
+        "headerEntries": [
+          "The pit fiend casts {@spell Detect Magic|SRD52} at will, requiring no Material components, using Charisma as its spellcasting ability."
+        ],
+        "will": [
+          "{@spell Detect Magic|SRD52}"
+        ],
+        "ability": "cha",
+        "displayAs": "action"
       }
     ],
     "trait": [
@@ -110,6 +122,12 @@
         "name": "Magic Resistance",
         "entries": [
           "The pit fiend has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
+        ]
+      },
+      {
+        "name": "Magic Weapons",
+        "entries": [
+          "The pit fiend's weapon attacks are magical."
         ]
       }
     ],

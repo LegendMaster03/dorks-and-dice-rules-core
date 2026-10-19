@@ -81,6 +81,12 @@
         "entries": [
           "The golem has {@variantrule Advantage|SRD52} on saving throws against spells and other magical effects."
         ]
+      },
+      {
+        "name": "Magic Weapons",
+        "entries": [
+          "The golem's weapon attacks are magical."
+        ]
       }
     ],
     "action": [

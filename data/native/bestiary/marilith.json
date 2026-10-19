@@ -86,6 +86,12 @@
         "entries": [
           "The marilith can take one {@variantrule Reaction|SRD52} on every turn of combat."
         ]
+      },
+      {
+        "name": "Magic Weapons",
+        "entries": [
+          "The marilith's weapon attacks are magical."
+        ]
       }
     ],
     "action": [

@@ -106,6 +106,12 @@
         "entries": [
           "The couatl's thoughts can't be read by any means, and other creatures can communicate with it telepathically only if it allows them."
         ]
+      },
+      {
+        "name": "Magic Weapons",
+        "entries": [
+          "The couatl's weapon attacks are magical."
+        ]
       }
     ],
     "action": [

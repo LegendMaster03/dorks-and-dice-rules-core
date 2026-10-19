@@ -97,6 +97,12 @@
         "entries": [
           "The oni regains 10 {@variantrule Hit Points|SRD52} at the start of each of its turns if it has at least 1 {@variantrule Hit Points|SRD52|Hit Point}."
         ]
+      },
+      {
+        "name": "Magic Weapons",
+        "entries": [
+          "The oni's weapon attacks are magical."
+        ]
       }
     ],
     "action": [
