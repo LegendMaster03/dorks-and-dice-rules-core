@@ -35,7 +35,7 @@ class FinalMonsterRemovedFeaturesTests(unittest.TestCase):
             if entry["remainingFeatureQuestions"]
         }
         self.assertEqual({
-            "monster.assassin", "monster.priest",
+            "monster.assassin",
         }, remaining)
 
     def test_weretiger_pounce_preserves_old_trigger_with_new_attacks(self):
@@ -94,16 +94,50 @@ class FinalMonsterRemovedFeaturesTests(unittest.TestCase):
         self.assertIn("Sneak Attack (1/Turn)",
                       [x["name"] for x in assassin["trait"]])
 
-    def test_priest_old_slot_cost_not_granted_without_native_resource(self):
+    def test_priest_slots_and_divine_eminence_reconciled_without_spell_replacement(self):
         priest = item("priest")["definition"]
-        self.assertNotIn("Divine Eminence",
-                         [x["name"] for x in priest.get("trait", [])])
-        self.assertIn("Radiant damage", next(
-            x for x in priest["action"] if x["name"] == "Mace"
-        )["entries"][0])
-        self.assertTrue(all(
-            "slots" not in x for x in priest["spellcasting"]
-        ))
+        legacy = json.loads(
+            (ROOT / "data/reference/srd/structured/bestiary/bestiary-srd51.json")
+            .read_text(encoding="utf-8")
+        )
+        current = json.loads(
+            (ROOT / "data/reference/srd/structured/bestiary/bestiary-srd52.json")
+            .read_text(encoding="utf-8")
+        )
+        older = next(x for x in legacy["monster"] if x["name"] == "Priest")
+        newer = next(x for x in current["monster"] if x["name"] == "Priest")
+        original_slots = {
+            level: details["slots"]
+            for level, details in older["spellcasting"][0]["spells"].items()
+            if "slots" in details
+        }
+        self.assertEqual(
+            {"mode": "spell-slots", "slotsByLevel": original_slots},
+            priest["spellcastingResources"]
+        )
+        self.assertEqual(newer["spellcasting"], priest["spellcasting"])
+        self.assertEqual(newer["action"], priest["action"])
+        self.assertEqual("2", priest["cr"])
+        self.assertEqual(1, sum(x["name"] == "Divine Eminence"
+                                for x in priest["trait"]))
+        rule = next(x for x in priest["trait"]
+                    if x["name"] == "Divine Eminence")["entries"][0]
+        self.assertIn("bonus action", rule)
+        self.assertIn("one spell slot", rule)
+        self.assertIn("{@damage 3d6}", rule)
+        self.assertIn("{@damage 1d6}", rule)
+        self.assertIn("each hit until the end of the current turn", rule)
+        self.assertIn("Mace attack's existing Radiant damage", rule)
+        self.assertIn("does not apply to Radiant Flame", rule)
+        self.assertNotIn("prepared", json.dumps(priest["spellcasting"]).lower())
+        ledger = json.loads(
+            (ROOT / "data/reference/srd/monster-legacy-variant-review.json").read_text()
+        )
+        review = next(x for x in ledger["entries"]
+                      if x["nativeId"] == "monster.priest")
+        self.assertEqual(0, review["remainingFeatureQuestions"])
+        self.assertEqual("restored",
+                         review["featureDisposition"]["trait"][0]["status"])
 
     def test_restoration_ledger_has_no_duplicated_grants(self):
         ledger = json.loads(
