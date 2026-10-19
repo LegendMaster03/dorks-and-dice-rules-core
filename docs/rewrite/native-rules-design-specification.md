@@ -306,6 +306,23 @@ Mechanic **eligibility, advancement progression, effect scaling, and prerequisit
 
 Supersedes the *native-gameplay interpretation* of `docs/epic-content-modeling.md`, which documents the **legacy implementation's** epic-specific metadata. Keep that historical document available as evidence until its relevant design decisions and any retained data have been reviewed. This **does not** require a dual old/new runtime or deployment cutover.
 
+### NPC and monster spellcasting resources — general native ruling (2026-10-19)
+
+**Owner clarification:** The existing Spellcasting Resource Choice is a **general NPC and monster rule**, not a special exception for Priest. NPCs, monsters, and player characters use the same native spellcasting-resource framework where a creature is granted spellcasting. An eligible spellcaster may use spell slots or spell points under the selected campaign/caster profile; the GM chooses the applicable profile for NPCs and monsters. Do not force monsters into a permanently slotless mechanic because SRD 5.2.1 presents their spells as at-will or limited-use actions. Conversely, merely having a spell-like action does not supply a slot or point pool.
+
+**Separate the *existence of a resource system* from its *entitlement and quantity*:**
+
+- An explicit slot-granting spellcasting profile, source-supported pool, or ability that expends spell slots may justify a level-specific slot resource. Preserve the source's levels and quantities when a compatible older grant is deliberately retained; do not manufacture pools from creature CR, ability scores, spell lists, or edition defaults.
+- A spell-point profile is an alternative representation of the same qualifying expendable casting resource, **not an additional simultaneous pool**. Conversion rates, replenishment, spell level limits, and other points-specific execution details belong to the later native magic subsystem; do not invent them in the SRD import baseline.
+- At-will spells, spells with independent uses per day, innate spells, and other feature-specific charges retain their own permissions and limits. Do not silently pool them into slots/points, let slots bypass their use limits, or consume limited-use charges when casting a separate slot-authorized spell.
+- A resource pool does not itself grant a spell list or additional castable spells. Every expenditure must be authorized by the creature's actual spellcasting grants or an explicitly slot-expending ability; preserve casting time, components, spell level, and other relevant restrictions.
+- If a compatible older slot-costed feature is restored alongside a newer attack, its separately stated damage or other effects can apply **in addition** to newer baseline outcomes, but identical effects are not counted twice. Treat substantive numerical/procedural conflicts as separate decisions.
+- A creature with no supported expendable casting grant retains only its specified at-will/limited-use/innate features. The owner ruling establishes availability of the **system**, not an unconditional allocation of spell slots to all spellcasters.
+
+**Baseline application:** SRD 5.1 Priest grants slots by level (1st: 4, 2nd: 3, 3rd: 2); the unified Priest retains those as a source-supported casting resource for restored Divine Eminence while keeping the SRD 5.2.1 Mace, Radiant Flame, Spellcasting, and Divine Aid. Slot spending does not confer the older prepared-spell list automatically. The same evaluation applies to **every** NPC/monster, not just Priest. The pinned older monster source includes 12 slot-based spellcasters; those without a restored slot-expending ability require their own spell-access and resource reconciliation before automatically adding the old pool. Two of the 12 have older-only stat blocks, which already retain their original spellcasting data.
+
+**Native representation:** A selected monster/NPC definition may record an independent `spellcastingResources` grant (for example, `{"mode":"spell-slots","slotsByLevel":{"1":4,"2":3,"3":2}}`). Do not replace the existing imported `spellcasting` fields with this grant or interpret `spellcastingResources` as an engine-ready spell-point conversion. Authoritative rules describe the eligibility and usage; eventual typed native execution and source-to-native conversion are separate subsystem work.
+
 ### Monster families and variant identities — 5.5e-style design direction
 
 **Owner clarification (2026-10-18):** Different combat tactics **do not justify separate creatures**. The DM already chooses how a creature uses its attacks, movement, positioning, targets and available abilities. Use **one coherent stat block** for a given monster identity, with the DM free to use whichever legal tactics fit the encounter.
