@@ -59,6 +59,34 @@
       ]
     },
     {
+      "nativeRuleId": "condition.grappled",
+      "state": "approved-native-rule",
+      "adoptedVariant": "SRD 5.1 movement and ending rules with SRD 5.2.1 attack penalty",
+      "decision": "The Grappled creature's Speed is 0 and can not increase. Its attack rolls against targets other than the grappler have Disadvantage; this condition does not impose that penalty on attacks against the grappler. End the grapple if the grappler becomes Incapacitated or an effect moves the grappled creature out of the grappler's reach.",
+      "decisionBasis": "Explicit Dorks & Dice Owner ruling; existing native Grapple initiation and escape procedure retained.",
+      "unaffectedDecisions": [
+        "3.x-derived initiation: touch attack against Touch AC, followed by opposed grapple check to establish the hold",
+        "Forceful escape: opposed grapple check; skill-based escape: Dexterity-based Escape Artist against holder's grapple check"
+      ],
+      "notYetReconciled": [
+        "Dragging and carrying movement cost, including differences between the two SRDs",
+        "Action economy, provocation, multiple-grappler cases, pinning, and complete conditional defense interactions"
+      ],
+      "nativeLocation": "data/native/conditions.json",
+      "evidence": [
+        {
+          "source": "SRD51",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Grappled"
+        },
+        {
+          "source": "SRD52",
+          "path": "data/reference/srd/structured/conditionsdiseases.json",
+          "name": "Grappled"
+        }
+      ]
+    },
+    {
       "nativeRuleId": "condition.poisoned",
       "state": "reconciled-identical-mechanics",
       "decisionBasis": "Direct comparison of matching SRD 5.1 and SRD 5.2.1 condition mechanical effects; wording and markup differences omitted.",

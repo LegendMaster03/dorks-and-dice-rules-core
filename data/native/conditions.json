@@ -1,7 +1,7 @@
 {
   "_meta": {
     "status": "approved-native-mechanics; execution-schema-not-yet-final",
-    "note": "Single native definitions for already reconciled conditions. Exhaustion uses the Owner-approved six-tier rule; Deafened, Frightened, Poisoned and Restrained preserve mechanics common to both imported SRDs. Other differences remain unresolved."
+    "note": "Native, edition-independent conditions. Exhaustion uses the approved SRD 5.1 tiered rule; Grappled combines the SRD 5.1 Speed and ending rules with SRD 5.2.1's specific attack penalty. Other listed conditions retain already reconciled effects."
   },
   "conditions": [
     {
@@ -138,6 +138,37 @@
           "type": "movement-restriction",
           "restriction": "cannot-willingly-move-closer",
           "relativeTo": "fear-source"
+        }
+      ]
+    },
+    {
+      "id": "condition.grappled",
+      "name": "Grappled",
+      "kind": "condition",
+      "effects": [
+        {
+          "type": "speed",
+          "operation": "set",
+          "value": 0,
+          "canIncrease": false
+        },
+        {
+          "type": "roll-mode",
+          "appliesTo": "attack-roll",
+          "mode": "disadvantage",
+          "subject": "attacks-by-affected-creature",
+          "when": {
+            "targetRelationToGrappler": "other-than-grappler"
+          }
+        }
+      ],
+      "endsWhen": [
+        {
+          "event": "grappler-becomes-incapacitated"
+        },
+        {
+          "event": "grappled-creature-moves-outside-grapple-reach",
+          "cause": "any-effect"
         }
       ]
     },

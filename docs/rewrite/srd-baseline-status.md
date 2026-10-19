@@ -109,8 +109,37 @@ have no source-edition dependency.
 
 **Unresolved conditions from the imported pair:** Blinded (its native
 attacker-side Disadvantage is previously decided, but the complete defensive
-interaction still requires care), Charmed, Grappled, Incapacitated,
+interaction still requires care), Charmed, Incapacitated,
 Invisible, Paralyzed, Petrified, Prone, Stunned and Unconscious. Some of
 these contain identical core effects and additional differences, or inherit
 the disputed rules of another condition; they remain staged, rather than
 partially claiming a completed native condition.
+
+## Approved reconciliation: Grappled
+
+The Owner selected the **SRD 5.2.1 targeted attack penalty** in addition
+to the **SRD 5.1 movement restrictions and ending triggers**:
+
+- Grappled creature: Speed 0; its Speed cannot increase.
+- Its attacks against **targets other than the grappler** have Disadvantage.
+  The Grappled condition does **not** apply that penalty to attacks targeting
+  the grappler. Other independent sources of Disadvantage can still apply.
+- The grapple ends if the grappler becomes Incapacitated, or the held creature
+  is moved out of reach by an effect.
+
+The existing native **3.x-style Grapple initiation** remains a touch attack
+against Touch AC followed by an opposed grapple check. Escaping by force
+uses an opposed grapple check, and skill-based escape uses Escape Artist
+(Dexterity) opposed by the holder's grapple check. Those procedures are
+already established in the native rules design specification; this condition
+data does not redefine or replace them.
+
+The additional **movement cost for dragging/carrying**, costs/triggers
+of grapple actions, multiple grapplers, pinning, and some attacker-relative
+defense effects still need integration. Adopting the target-specific penalty
+does not implicitly select either SRD's entire Grapple action procedure.
+
+The native definition is in `data/native/conditions.json`; the comparison
+and Owner decision remain in `data/reference/srd/reconciliation-decisions.json`.
+Structural tests verify the effect target, ending triggers, and preserved
+Exhaustion ruling. The engine does not yet execute this data.

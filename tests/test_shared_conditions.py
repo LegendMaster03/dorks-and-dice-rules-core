@@ -20,14 +20,14 @@ class SharedConditionReconciliationTests(unittest.TestCase):
         cls.source = get("data/reference/srd/structured/conditionsdiseases.json")["condition"]
 
     def test_native_coverage_and_external_edition_separation(self):
-        selected = {"condition.exhaustion", "condition.deafened",
-                    "condition.frightened", "condition.poisoned", "condition.restrained"}
+        selected = {"condition.exhaustion", "condition.deafened", "condition.frightened",
+                    "condition.grappled", "condition.poisoned", "condition.restrained"}
         self.assertEqual(selected, set(self.native))
         self.assertEqual(selected, set(self.decisions))
         for cond in self.native.values():
             for forbidden in ("source", "edition", "srd", "srd52", "sourceAliases"):
                 self.assertNotIn(forbidden, cond)
-        for name in ("Blinded", "Charmed", "Grappled", "Incapacitated",
+        for name in ("Blinded", "Charmed", "Incapacitated",
                      "Invisible", "Paralyzed", "Petrified", "Prone", "Stunned", "Unconscious"):
             self.assertNotIn("condition." + name.lower(), self.native)
 
@@ -64,6 +64,42 @@ class SharedConditionReconciliationTests(unittest.TestCase):
         self.assertEqual("attacks-by-affected-creature", effects[2]["subject"])
         self.assertEqual({"type": "roll-mode", "appliesTo": "saving-throw",
                           "ability": "dexterity", "mode": "disadvantage"}, effects[3])
+
+
+    def test_grappled_target_relative_attack_penalty_and_speed(self):
+        rule = self.native["condition.grappled"]
+        self.assertEqual("condition", rule["kind"])
+        self.assertEqual(2, len(rule["effects"]))
+        self.assertEqual(
+            {"type": "speed", "operation": "set", "value": 0, "canIncrease": False},
+            rule["effects"][0]
+        )
+        attack_penalty = rule["effects"][1]
+        self.assertEqual("roll-mode", attack_penalty["type"])
+        self.assertEqual("attack-roll", attack_penalty["appliesTo"])
+        self.assertEqual("disadvantage", attack_penalty["mode"])
+        self.assertEqual("attacks-by-affected-creature", attack_penalty["subject"])
+        self.assertEqual({"targetRelationToGrappler": "other-than-grappler"},
+                         attack_penalty["when"])
+        self.assertNotIn("attacks-against-affected-creature",
+                         [e.get("subject") for e in rule["effects"]])
+        self.assertNotIn("ability-check",
+                         [e.get("appliesTo") for e in rule["effects"]])
+
+    def test_grappled_ending_triggers_and_source_reconciliation(self):
+        rule = self.native["condition.grappled"]
+        self.assertEqual([
+            {"event": "grappler-becomes-incapacitated"},
+            {"event": "grappled-creature-moves-outside-grapple-reach", "cause": "any-effect"},
+        ], rule["endsWhen"])
+        choice = self.decisions["condition.grappled"]
+        self.assertEqual("approved-native-rule", choice["state"])
+        self.assertIn("SRD 5.1 movement", choice["adoptedVariant"])
+        self.assertIn("SRD 5.2.1 attack penalty", choice["adoptedVariant"])
+        self.assertEqual({"SRD51", "SRD52"}, {s["source"] for s in choice["evidence"]})
+        self.assertEqual({"SRD51", "SRD52"},
+                         {s["source"] for s in self.source if s["name"] == "Grappled"})
+        self.assertTrue(choice["notYetReconciled"])
 
     def test_evidence_pairs_and_approved_exhaustion_unchanged(self):
         original = self.native["condition.exhaustion"]
