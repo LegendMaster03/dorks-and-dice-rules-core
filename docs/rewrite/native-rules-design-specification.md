@@ -310,6 +310,12 @@ Mechanic **eligibility, advancement progression, effect scaling, and prerequisit
 
 Supersedes the *native-gameplay interpretation* of `docs/epic-content-modeling.md`, which documents the **legacy implementation's** epic-specific metadata. Keep that historical document available as evidence until its relevant design decisions and any retained data have been reviewed. This **does not** require a dual old/new runtime or deployment cutover.
 
+### Band 1 Barbarian Rage types — approved naming direction (2026-10-19)
+
+**Owner-approved direction:** A Band 1 Barbarian has distinct selectable **Battle Rage** and **Primal Rage** forms, rather than one unqualified Rage with a separately named enhancement. Their higher improvements carry parallel adjective-based names: **Greater Battle Rage** and **Mighty Battle Rage**; **Greater Primal Rage** and **Mighty Primal Rage**. These names indicate improvements to their respective Rage type, not new classes, extra Rage pools, or newly independent Rage activations. The normal base-class progression remains one unified Band 1 class.
+
+**Not yet approved:** Exact level thresholds for Battle Rage's Greater/Mighty naming; the amount and application of each Rage form's bonuses; interaction and resource rules; the ability-score increase and permanent cap; duration, fatigue, armor and concentration restrictions; and the specific class-level numerical conflicts. The historical 3.5 Greater Rage/Mighty Rage levels and the 5.x Rage Damage scaling are source evidence, not implicit Dorks & Dice rulings. Reconcile them in the Barbarian class review without involving subclasses or Band 2.
+
 ### NPC and monster spellcasting resources — general native ruling (2026-10-19)
 
 **Owner clarification:** The existing Spellcasting Resource Choice is a **general NPC and monster rule**, not a special exception for Priest. NPCs, monsters, and player characters use the same native spellcasting-resource framework where a creature is granted spellcasting. An eligible spellcaster may use spell slots or spell points under the selected campaign/caster profile; the GM chooses the applicable profile for NPCs and monsters. Do not force monsters into a permanently slotless mechanic because SRD 5.2.1 presents their spells as at-will or limited-use actions. Conversely, merely having a spell-like action does not supply a slot or point pool.
