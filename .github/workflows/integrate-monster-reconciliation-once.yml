@@ -33,7 +33,7 @@ jobs:
             python3 tools/resolve_rewrite_merge_once.py
           fi
           test -z "$(git diff --name-only --diff-filter=U)"
-      - name: Run all Python regression tests
+      - name: Run all Python regression tests after native/source reconciliation
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v
       - name: Audit native baseline
         run: python3 tools/audit_native_baseline.py
