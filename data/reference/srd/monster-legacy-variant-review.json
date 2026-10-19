@@ -1580,7 +1580,7 @@
           {
             "name": "Assassinate",
             "status": "review-needed",
-            "note": ""
+            "note": "First-turn attack-roll advantage retained as Assassinate (First-Turn Advantage); old guaranteed critical hits against surprised targets still require native surprise eligibility and critical-escalation integration."
           },
           {
             "name": "Sneak Attack (1/Turn)",
@@ -5314,8 +5314,8 @@
           },
           {
             "name": "Pounce",
-            "status": "possible-redesign",
-            "note": "Pounce, Roar, Rend, Scratch"
+            "status": "restored",
+            "note": "Older Claw and Bite references translated to the current Rend attack; retains 20-foot straight approach, DC 13 Strength save, Prone, and one bonus-action attack. No old attack suite restored."
           }
         ],
         "action": [
@@ -5331,7 +5331,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.mage",
@@ -6018,8 +6018,8 @@
           },
           {
             "name": "Pounce",
-            "status": "possible-redesign",
-            "note": "Pounce, Roar, Rend, Scratch"
+            "status": "restored",
+            "note": "Older Claw and Bite references translated to the current Rend attack; retains 20-foot straight approach, DC 12 Strength save, Prone, and one bonus-action attack. No old attack suite restored."
           }
         ],
         "action": [
@@ -6035,7 +6035,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.pit-fiend",
@@ -6191,7 +6191,7 @@
           {
             "name": "Divine Eminence",
             "status": "review-needed",
-            "note": ""
+            "note": "Older feature spends a spell slot as a bonus action for +3d6 Radiant damage on melee weapon hits through turn end (+1d6 per slot level above 1); current 5.5e Priest has no spell slots and Mace already deals +2d4 Radiant. Do not invent a resource or double-count damage."
           }
         ]
       },
@@ -6543,8 +6543,8 @@
           },
           {
             "name": "Pounce",
-            "status": "possible-redesign",
-            "note": "Pounce, Roar, Rend, Scratch"
+            "status": "restored",
+            "note": "Older Claw and Bite references translated to the current Rend attack; retains 20-foot straight approach, DC 14 Strength save, Prone, and one bonus-action attack. No old attack suite restored."
           }
         ],
         "action": [
@@ -6560,7 +6560,7 @@
           }
         ]
       },
-      "remainingFeatureQuestions": 1
+      "remainingFeatureQuestions": 0
     },
     {
       "nativeId": "monster.sahuagin",
@@ -8578,11 +8578,10 @@
   "summary": {
     "feature:already-present": 84,
     "feature:newer-successor": 95,
-    "feature:possible-redesign": 3,
-    "feature:restored": 142,
+    "feature:restored": 145,
     "feature:review-needed": 2,
     "feature:revised-attack-suite": 333,
     "feature:spell-access-extended": 15,
-    "monstersWithOpenFeatureQuestions": 5
+    "monstersWithOpenFeatureQuestions": 2
   }
 }
