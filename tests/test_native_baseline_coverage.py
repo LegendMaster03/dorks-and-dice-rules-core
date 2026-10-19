@@ -75,7 +75,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
                     }
                     self.assertIn(cid, approved, cid)
                 else:
-                    self.assertEqual(16, len(native["conditionIds"]))
+                    self.assertEqual(18, len(native["conditionIds"]))
                 continue
             self.assertEqual("pending-native-reconciliation",
                              native["baselineStatus"], cid)
@@ -96,7 +96,7 @@ class NativeSrdBaselineTests(unittest.TestCase):
         conditions = load(NATIVE / "conditions.json")["conditions"]
         self.assertEqual(88, len(skills))
         self.assertEqual(33, len(competencies))
-        self.assertEqual(16, len(conditions))
+        self.assertEqual(18, len(conditions))
         self.assertEqual(0, sum(x.get("baselineStatus") ==
                                 "pending-native-reconciliation" for x in conditions))
         ex = next(x for x in conditions if x["id"] == "condition.exhaustion")

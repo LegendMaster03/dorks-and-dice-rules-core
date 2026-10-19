@@ -1,0 +1,117 @@
+{
+  "scope": "3.x-to-native-defensive-condition-reconciliation",
+  "status": "owner-approved-native-defensive-profile; follow-on 3.x conditions pending",
+  "context": "Reconcile overlap with already approved 5.x native conditions and introduce only Flat-Footed and Helpless as distinct states. This is not an import of every 3.0/3.5 condition.",
+  "sourceMaterials": [
+    {
+      "edition": "D&D 3.5",
+      "name": "Condition Summary",
+      "url": "https://www.d20srd.org/srd/conditionSummary.htm",
+      "license": "OGL 1.0a",
+      "status": "consulted-public-transcription"
+    },
+    {
+      "edition": "D&D 3.5",
+      "name": "Combat Modifiers",
+      "url": "https://www.d20srd.org/srd/combat/combatModifiers.htm",
+      "license": "OGL 1.0a",
+      "status": "consulted-public-transcription"
+    },
+    {
+      "edition": "D&D 3.5",
+      "name": "Combat Statistics",
+      "url": "https://www.d20srd.org/srd/combat/combatStatistics.htm",
+      "license": "OGL 1.0a",
+      "status": "consulted-public-transcription"
+    },
+    {
+      "edition": "D&D 3.0",
+      "name": "Historical comparison",
+      "url": "https://opengamecontent.fandom.com/wiki/D20_System_v3.0_SRD/Condition_Summary",
+      "status": "historical-reference-unverified-in-this-pass"
+    }
+  ],
+  "nativeDefenseLocation": "data/native/defenses.json",
+  "nativeConditionLocation": "data/native/conditions.json",
+  "decisions": [
+    {
+      "id": "rule.defenses",
+      "change": "Normal, Touch and Flat-Footed AC share contribution-based resolution, with attack-target selection separate from defender status. Combined Touch and Dexterity-denied attacks are supported.",
+      "state": "approved"
+    },
+    {
+      "id": "condition.blinded",
+      "change": "Half Speed, deny positive Dexterity and dodge defenses, -2 AC, own attacks Disadvantage; replace attacks-against Advantage instead of stacking. No blind-only 50% miss roll.",
+      "state": "approved"
+    },
+    {
+      "id": "condition.grappled",
+      "change": "Deny positive Dexterity and dodge defenses against attackers other than the grappler; keep speed, targeting and ending provisions.",
+      "state": "approved"
+    },
+    {
+      "id": "condition.invisible",
+      "change": "An attack from an unseen Invisible creature denies target's positive Dexterity and dodge defenses; replaces this condition's attack Advantage. Attacks against Invisible still have Disadvantage when attacker cannot see it.",
+      "state": "approved"
+    },
+    {
+      "id": "condition.prone",
+      "change": "Replace attacks-against distance Advantage/Disadvantage with -4 AC melee/+4 AC ranged. Own attack Disadvantage and standing cost remain.",
+      "state": "approved"
+    },
+    {
+      "id": "condition.stunned",
+      "change": "Maintain half Speed and faltering speech; deny positive Dexterity/dodge and apply -2 AC instead of granting attacks-against Advantage. Do not automatically drop gear.",
+      "state": "approved"
+    },
+    {
+      "id": "condition.flat-footed",
+      "change": "Add distinct Flat-Footed condition: deny positive Dexterity and dodge defenses and disallow opportunity attacks, without automatically disallowing every Reaction.",
+      "state": "approved"
+    },
+    {
+      "id": "condition.helpless",
+      "change": "Add distinct Helpless condition: Dexterity treated as 0 for AC, -4 against melee from exposure; no unconsciousness or loss of actions implied by Helpless alone.",
+      "state": "approved"
+    },
+    {
+      "id": "condition.paralyzed",
+      "change": "Inherit Helpless in addition to Incapacitated, remove duplicate attacks-against Advantage; retain close-range automatic critical hits.",
+      "state": "approved"
+    },
+    {
+      "id": "condition.unconscious",
+      "change": "Inherit Helpless and Prone alongside Incapacitated; replace attacks-against Advantage with effective AC adjustments, retain critical hits, unawareness, object drop and recovery state.",
+      "state": "approved"
+    },
+    {
+      "id": "condition.petrified",
+      "change": "No additional implied Unconscious or Helpless. Preserve awareness flexibility, material defenses and current attack Advantage until separately decided.",
+      "state": "preserved-existing"
+    },
+    {
+      "id": "condition.deafened",
+      "change": "Preserve 5.x baseline; 3.x initiative -4 and verbal spellcasting failure are deferred.",
+      "state": "deferred"
+    },
+    {
+      "id": "condition.frightened",
+      "change": "Preserve 5.x baseline; compulsory flight and fear tier relationships deferred.",
+      "state": "deferred"
+    },
+    {
+      "id": "condition.restrained",
+      "change": "Preserve 5.x attack Advantage; no parallel AC conversion approved for this non-overlapping 3.x condition.",
+      "state": "preserved-existing"
+    }
+  ],
+  "deferred": [
+    "Other 3.0/3.5 conditions (Dazed, Dazzled, Entangled, etc.)",
+    "Source-specific grappling action economy and multiple-grappler targeting",
+    "Opportunity-attack/Rxn conversion beyond explicitly Flat-Footed",
+    "Deafened spellcasting/initiative, Frightened flight",
+    "Coup de grace and physical helplessness procedures",
+    "Cross-edition AC contributions and exception grants as runtime behavior"
+  ],
+  "rights": "Only paraphrased native mechanics are stored here; keep full upstream text, if imported later, with its appropriate Open Game License and attribution, separate from CC BY 4.0 5.x source pack."
+}

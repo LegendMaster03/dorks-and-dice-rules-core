@@ -26,10 +26,12 @@ class UnifiedConditionsTests(unittest.TestCase):
         return self.conditions["condition." + name.lower()]
 
     def test_one_native_definition_for_each_condition(self):
-        self.assertEqual(16, len(self.conditions))
-        self.assertEqual(16, len(self.data["conditions"]))
-        self.assertEqual(set(self.conditions), set(self.decisions))
-        self.assertEqual("condition.wet", self.data["conditions"][-1]["id"])
+        self.assertEqual(18, len(self.conditions))
+        self.assertEqual(18, len(self.data["conditions"]))
+        self.assertEqual(set(self.conditions) - {"condition.flat-footed", "condition.helpless"}, set(self.decisions))
+        self.assertIn("condition.wet", self.conditions)
+        self.assertIn("condition.flat-footed", self.conditions)
+        self.assertIn("condition.helpless", self.conditions)
         for entity in self.conditions.values():
             self.assertNotIn("candidateDefinitions", entity)
             self.assertNotIn("baselineStatus", entity)
@@ -38,7 +40,7 @@ class UnifiedConditionsTests(unittest.TestCase):
             for dependent in entity.get("appliesConditions", []):
                 self.assertIn(dependent, self.conditions)
         self.assertEqual(30, len(self.original))
-        for name in (x["name"] for x in self.data["conditions"] if x["name"] != "Wet"):
+        for name in (x["name"] for x in self.data["conditions"] if x["name"] not in ("Wet", "Flat-Footed", "Helpless")):
             self.assertEqual({"SRD51", "SRD52"},
                              {x["source"] for x in self.original if x["name"] == name})
 
@@ -55,8 +57,11 @@ class UnifiedConditionsTests(unittest.TestCase):
         self.assertIn({"type": "sense", "sense": "sight", "availability": "none"}, e)
         self.assertTrue(any(x.get("requiresSense") == "sight"
                             and x.get("result") == "automatic-failure" for x in e))
-        self.assertEqual({"advantage", "disadvantage"},
+        self.assertEqual({"disadvantage"},
                          {x["mode"] for x in e if x["type"] == "roll-mode"})
+        self.assertIn({"type": "speed", "operation": "multiply", "factor": 0.5}, e)
+        self.assertTrue(any(x["type"] == "defense-adjustment" and
+                            x.get("value") == -2 for x in e))
 
     def test_charmed_blocks_non_damage_harm(self):
         e = self.rule("Charmed")["effects"]
@@ -87,9 +92,11 @@ class UnifiedConditionsTests(unittest.TestCase):
                             for e in rule["effects"]))
         self.assertTrue(any(e["type"] == "targeting-protection" for e in rule["effects"]))
         attacks = [e for e in rule["effects"] if e["type"] == "roll-mode"]
-        self.assertEqual(2, len(attacks))
-        self.assertTrue(all("CanSeeAffectedCreature" in
-                            " ".join(e["when"].keys()) for e in attacks))
+        self.assertEqual(1, len(attacks))
+        self.assertEqual("attacks-against-affected-creature", attacks[0]["subject"])
+        self.assertTrue(any(e["type"] == "target-defense-adjustment" and
+                            e["when"] == {"targetCanSeeAffectedCreature": False}
+                            for e in rule["effects"]))
         self.assertFalse(any(e.get("appliesTo") == "initiative" for e in rule["effects"]))
 
     def test_paralyzed_automatic_critical_is_not_natural_twenty(self):
@@ -121,8 +128,10 @@ class UnifiedConditionsTests(unittest.TestCase):
         self.assertEqual({"strength", "dexterity"},
                          {x["ability"] for x in e if x["type"] == "saving-throw"
                           and x["result"] == "automatic-failure"})
-        self.assertTrue(any(x.get("subject") == "attacks-against-affected-creature"
-                            and x.get("mode") == "advantage" for x in e))
+        self.assertFalse(any(x.get("subject") == "attacks-against-affected-creature"
+                             and x.get("mode") == "advantage" for x in e))
+        self.assertTrue(any(x["type"] == "defense-adjustment" and
+                            x.get("value") == -2 for x in e))
 
     def test_prone_standing_cost_and_unconscious_recovery(self):
         prone = self.rule("Prone")
