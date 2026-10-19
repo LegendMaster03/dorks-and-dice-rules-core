@@ -28,6 +28,18 @@ class FinalMonsterRemovedFeaturesTests(unittest.TestCase):
         self.assertTrue(any("Hellfire Spellcasting" in s["name"]
                             for s in pit["spellcasting"]))
 
+    def test_remaining_decisions_are_explicit_not_extra_monsters(self):
+        ledger = json.loads((ROOT / "data/reference/srd/monster-legacy-variant-review.json").read_text())
+        remaining = {
+            entry["nativeId"] for entry in ledger["entries"]
+            if entry["remainingFeatureQuestions"]
+        }
+        self.assertEqual({
+            "monster.assassin", "monster.lion", "monster.panther",
+            "monster.priest", "monster.saber-toothed-tiger",
+            "monster.weretiger",
+        }, remaining)
+
     def test_reconciled_counts_are_consistent(self):
         ledger = json.loads((ROOT / "data/reference/srd/monster-legacy-variant-review.json").read_text())
         stats = json.loads((ROOT / "docs/rewrite/native-reconciliation-statistics.json").read_text())
