@@ -37,8 +37,23 @@ class FinalMonsterRemovedFeaturesTests(unittest.TestCase):
         self.assertEqual({
             "monster.assassin", "monster.lion", "monster.panther",
             "monster.priest", "monster.saber-toothed-tiger",
-            "monster.weretiger",
         }, remaining)
+
+    def test_weretiger_pounce_preserves_old_trigger_with_new_attacks(self):
+        weretiger = item("weretiger")["definition"]
+        pounce = [x for x in weretiger["trait"]
+                  if x["name"] == "Pounce (Tiger or Hybrid Form Only)"]
+        self.assertEqual(1, len(pounce))
+        rule = pounce[0]["entries"][0]
+        self.assertIn("15 feet", rule)
+        self.assertIn("Scratch attack", rule)
+        self.assertIn("Bite (Tiger or Hybrid Form Only) attack", rule)
+        self.assertIn("{@dc 14}", rule)
+        self.assertIn("bonus action", rule)
+        self.assertNotIn("claw attack", rule)
+        self.assertEqual(2, len([x for x in weretiger["action"]
+                                 if x["name"] in
+                                 ("Scratch", "Bite (Tiger or Hybrid Form Only)")]))
 
     def test_reconciled_counts_are_consistent(self):
         ledger = json.loads((ROOT / "data/reference/srd/monster-legacy-variant-review.json").read_text())
