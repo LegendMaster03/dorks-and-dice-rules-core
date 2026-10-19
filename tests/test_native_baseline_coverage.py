@@ -68,9 +68,16 @@ class NativeSrdBaselineTests(unittest.TestCase):
                 self.assertNotIn("baselineStatus", native, cid)
                 self.assertIn("abbreviation", native, cid)
                 continue
+            if row["status"] == "native-monster-identity-alias":
+                self.assertEqual("native-identity-alias", native["baselineStatus"], cid)
+                self.assertTrue(native["aliasOf"].startswith("monster."), cid)
+                self.assertNotIn("definition", native, cid)
+                self.assertNotIn("candidateDefinitions", native, cid)
+                continue
             if row["status"] in ("native-single-source-retained",
                                  "native-equivalent-reconciled",
-                                 "native-compatible-merged"):
+                                 "native-compatible-merged",
+                                 "native-monster-role-default"):
                 self.assertNotIn("candidateDefinitions", native, cid)
                 self.assertEqual("retained-native-definition", native["baselineStatus"])
                 self.assertIsInstance(native["definition"], dict)
@@ -127,14 +134,15 @@ class NativeSrdBaselineTests(unittest.TestCase):
             ("classes/subclasses/monk/open-hand.json", 2),
             ("spells/acid-splash.json", 2),
             ("species/base/dragonborn.json", 2),
-            ("bestiary/aboleth.json", 2),
+
         ]:
             d = load(NATIVE / path)
             self.assertEqual(expected, len(d["candidateDefinitions"]), path)
             self.assertTrue(all(v["content"] for v in d["candidateDefinitions"]))
             self.assertNotIn("fluff", path)
         aboleth = load(NATIVE / "bestiary/aboleth.json")
-        self.assertTrue(any("lore" in c["content"] for c in aboleth["candidateDefinitions"]))
+        self.assertEqual("retained-native-definition", aboleth["baselineStatus"])
+        self.assertIn("lore", aboleth["definition"])
         self.assertFalse(list(NATIVE.rglob("fluff-*.json")))
 
     def test_no_runtime_source_specific_switch_and_no_leftover_bootstrap(self):
