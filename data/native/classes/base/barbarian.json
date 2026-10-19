@@ -750,6 +750,61 @@
     "permanentAbilityScoreMaximum": null,
     "epicBoonTotalCharacterLevelMinimum": 21,
     "subclasses": "excluded-pending-subclass-pass",
-    "prestigeClasses": "excluded-pending-prestige-pass"
+    "prestigeClasses": "excluded-pending-prestige-pass",
+    "eligibleCraftAndProfessionCompetencies": {
+      "sourceConcepts": [
+        "Craft",
+        "Profession"
+      ],
+      "rule": "use-native-competency-eligibility-and-training-not-free-proficiency"
+    },
+    "startingEquipment": {
+      "chooseOnePackage": [
+        {
+          "name": "Traveling Warrior",
+          "choiceOfMartialMeleeWeapon": [
+            "greataxe",
+            "any-martial-melee-weapon"
+          ],
+          "secondWeapons": [
+            "two-handaxes",
+            "one-simple-weapon"
+          ],
+          "otherEquipment": [
+            "explorer-pack",
+            "four-javelins"
+          ]
+        },
+        {
+          "name": "Prepared Berserker",
+          "equipment": [
+            "greataxe",
+            "four-handaxes",
+            "explorer-pack"
+          ],
+          "currencyGP": 15
+        },
+        {
+          "name": "Starting Currency",
+          "currencyGP": 75
+        },
+        {
+          "name": "Variable Starting Currency",
+          "currencyFormulaGP": "2d4 * 10"
+        }
+      ],
+      "packagesMutuallyExclusive": true,
+      "itemsAlsoGrantedFromBackground": "according-to-native-background-rules"
+    },
+    "multiclassProficienciesWhenEntering": {
+      "armor": [
+        "shields"
+      ],
+      "weapons": [
+        "simple",
+        "martial"
+      ]
+    },
+    "skillTrainingNotes": "Ranked class skills express 3.x eligibility, not automatic proficiency in each listed skill. Craft and Profession map to native Competencies. Skill selections and ranks apply through the common character-creation and advancement rules."
   }
 }

@@ -47,7 +47,13 @@
           "slashing"
         ],
         "forbidSpellsAndConcentration": true,
-        "noHeavyArmor": true
+        "noHeavyArmor": true,
+        "endsEarlyOn": [
+          "incapacitated",
+          "heavy-armor",
+          "voluntary-end"
+        ],
+        "atClassLevel15IncapacitatedReplacedByUnconscious": true
       },
       "battle": {
         "names": [
@@ -137,7 +143,33 @@
         "postRage": "condition.fatigued",
         "fatigueExpires": "end-of-encounter",
         "fatigueRemovedAtLevel": 17,
-        "restrictionOnConcentrationMagicItemsAndMentalSkills": "retain-historical-primal-restrictions-with-native-ability-substitution"
+        "restrictionOnConcentrationMagicItemsAndMentalSkills": "retain-historical-primal-restrictions-with-native-ability-substitution",
+        "restrictions": {
+          "noActionsRequiringPatienceOrConcentration": true,
+          "forbiddenCheckAbilityBases": [
+            "charisma",
+            "dexterity",
+            "intelligence"
+          ],
+          "allowedSkillExceptions": [
+            "balance",
+            "escape-artist",
+            "intimidation",
+            "ride"
+          ],
+          "allowStrengthBasedSubstitutionsIfGranted": true,
+          "forbiddenMagicItemActivation": [
+            "command-word",
+            "spell-trigger",
+            "spell-completion"
+          ],
+          "blockedFeatFamilies": [
+            "combat-expertise",
+            "item-creation",
+            "metamagic"
+          ],
+          "blockedConcentrationSkill": true
+        }
       },
       "persistentUpgradeAt": 15
     }

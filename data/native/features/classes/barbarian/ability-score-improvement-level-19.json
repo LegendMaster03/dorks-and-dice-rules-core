@@ -7,7 +7,7 @@
   "baselineStatus": "retained-native-definition",
   "definition": {
     "name": "Ability Score Improvement",
-    "description": "At this level choose an ability score increase (+2 to one or +1 to two) or one eligible ordinary feat. Do not impose a permanent maximum.",
+    "description": "Increase one ability score by 2, two scores by 1 each, or select a feat for which all requirements are met. An Epic Boon is eligible only when total character level is at least 21. No permanent ability-score ceiling is imposed.",
     "mechanics": {
       "kind": "ability-improvement-or-feat",
       "abilityIncreases": [
@@ -21,7 +21,8 @@
       ],
       "featRequiresEligibility": true,
       "epicBoonTotalCharacterLevelMinimum": 21,
-      "abilityScoreMaximum": null
+      "abilityScoreMaximum": null,
+      "featChoices": "any-eligible-feat"
     }
   }
 }
