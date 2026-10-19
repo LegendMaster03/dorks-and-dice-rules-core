@@ -106,7 +106,8 @@ def classify(kind, record):
     key = (kind, class_slug if kind in ("subclass","classFeature","subclassFeature") else "",
            sub_slug if kind == "subclassFeature" else "",
            species_slug if kind == "subrace" else "",
-           slug(name), str(record.get("level","")) if kind in ("classFeature","subclassFeature") else "",
+           (slug(record.get("shortName") or name) if kind=="subclass" else slug(name)),
+           str(record.get("level","")) if kind in ("classFeature","subclassFeature") else "",
            str(record.get("shortName","")) if kind == "subclass" else "")
     return key, directory, token, str(name)
 
@@ -292,6 +293,8 @@ def build():
         if p in COMPACT.values():
             # Consolidated catalogs remain single files, without duplicating
             # existing approved native Skills or Conditions.
+            if cid in output[p]:
+                raise RuntimeError("Native compact catalog ID collision: "+p+" / "+cid)
             output[p][cid]=doc
         else:
             add_rel(p,doc,cid)

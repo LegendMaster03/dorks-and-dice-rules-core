@@ -58,3 +58,5 @@ jobs:
             git -c commit.gpgsign=false commit -m "data(rewrite): populate complete pending native SRD baseline without rule adjudication"
             git push origin HEAD:feature/rules-core-rewrite
           fi
+
+# Re-run after correcting subclass identity matching (parent class + shortName).
