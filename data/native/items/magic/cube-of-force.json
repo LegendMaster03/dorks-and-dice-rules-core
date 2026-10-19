@@ -135,15 +135,15 @@
                 "1"
               ],
               [
-                "{@spell Leomund's Tiny Hut|SRD52}",
+                "{@spell Tiny Hut|SRD52}",
                 "3"
               ],
               [
-                "{@spell Mordenkainen's Private Sanctum|SRD52}",
+                "{@spell Private Sanctum|SRD52}",
                 "4"
               ],
               [
-                "{@spell Otiluke's Resilient Sphere|SRD52}",
+                "{@spell Resilient Sphere|SRD52}",
                 "4"
               ],
               [
@@ -160,11 +160,11 @@
               "shield|srd52"
             ],
             "3": [
-              "leomund's tiny hut|srd52"
+              "tiny hut|srd52"
             ],
             "4": [
-              "mordenkainen's private sanctum|srd52",
-              "otiluke's resilient sphere|srd52"
+              "private sanctum|srd52",
+              "resilient sphere|srd52"
             ],
             "5": [
               "wall of force|srd52"

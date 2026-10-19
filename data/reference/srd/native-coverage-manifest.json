@@ -21684,13 +21684,18 @@
     {
       "nativeId": "monster.avatar-of-death",
       "kind": "monster",
-      "status": "single-candidate",
-      "sourceRecords": 1,
+      "status": "multiple-candidates",
+      "sourceRecords": 2,
       "path": "data/native/bestiary/avatar-of-death.json",
       "candidates": [
         {
           "key": "candidate-a",
           "source": "5.1"
+        },
+        {
+          "key": "candidate-b",
+          "source": "5.2.1",
+          "evidence": "official SRD 5.2.1 PDF, Mysterious Deck/Avatar of Death; omitted from pinned unofficial pack"
         }
       ]
     },
